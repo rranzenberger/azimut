@@ -147,14 +147,16 @@ function calculateRuleBasedScores(sessionData: SessionData): ScoringResult {
   });
 
   // Normalizar scores (máx 100)
-  Object.keys(scores).forEach(key => {
-    if (key.endsWith('Score')) {
-      scores[key as keyof ScoringResult] = Math.min(
-        100, 
-        scores[key as keyof ScoringResult] as number
-      );
-    }
-  });
+  scores.museumScore = Math.min(100, scores.museumScore);
+  scores.brandScore = Math.min(100, scores.brandScore);
+  scores.festivalScore = Math.min(100, scores.festivalScore);
+  scores.cityScore = Math.min(100, scores.cityScore);
+  scores.educationScore = Math.min(100, scores.educationScore);
+  scores.researchScore = Math.min(100, scores.researchScore);
+  scores.vrScore = Math.min(100, scores.vrScore);
+  scores.aiScore = Math.min(100, scores.aiScore);
+  scores.installationScore = Math.min(100, scores.installationScore);
+  scores.conversionScore = Math.min(100, scores.conversionScore);
 
   // Inferir tipo de visitante
   scores.visitorType = inferVisitorType(scores);

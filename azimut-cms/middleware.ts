@@ -67,10 +67,7 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  // Se Basic Auth estiver ativo, proteger tudo. Senão, só /admin e /login
-  matcher: process.env.BASIC_AUTH_ENABLED === 'true' 
-    ? ['/((?!_next/static|_next/image|favicon.ico|robots.txt).*)']
-    : ['/admin/:path*', '/login'],
+  matcher: ['/admin/:path*', '/login'],
 };
 
 
