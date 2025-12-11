@@ -5,7 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { calculateInterestScores, isQualifiedLead } from '@/lib/ai-scoring';
+import { calculateInterestScores, isQualifiedLead, SessionData } from '@/lib/ai-scoring';
 
 export async function POST(request: NextRequest) {
   try {
@@ -163,27 +163,34 @@ async function calculateScoresAsync(sessionId: string) {
 
     if (!session) return;
 
-    // Preparar dados para scoring
-    const sessionData = {
+    // Preparar dados para scoring (garantindo tipos compatíveis)
+    const sessionData: SessionData = {
       sessionId: session.sessionId,
-      country: session.country || undefined,
-      language: session.language || undefined,
-      pagesVisited: session.pageViews.map(pv => ({
-        slug: pv.pageSlug || '',
-        timeSpent: pv.timeSpent,
-        scrollDepth: pv.scrollDepth,
+      country: session.country ?? null,
+      language: session.language ?? null,
+      pagesVisited: (session.pageViews || []).map(pv => ({
+        slug: pv.pageSlug ?? '',
+        timeSpent: pv.timeSpent ?? 0,
+        scrollDepth: pv.scrollDepth ?? 0,
       })),
-      projectsViewed: session.pageViews
+      projectsViewed: (session.pageViews || [])
         .filter(pv => pv.project)
-        .map(pv => ({
-          projectId: pv.project!.id,
-          type: pv.project!.type,
-          tags: pv.project!.tags.map(t => t.labelEn),
-          timeSpent: pv.timeSpent,
-        })),
-      interactions: session.projectInteractions.map(pi => ({
-        type: pi.type,
-        projectId: pi.projectId,
+        .map(pv => {
+          const tags = (pv.project?.tags || [])
+            .map(t => t.labelEn)
+            .filter((t): t is string => Boolean(t));
+
+          return {
+            projectId: pv.project?.id ?? '',
+            type: pv.project?.type ?? '',
+            tags,
+            timeSpent: pv.timeSpent ?? 0,
+          };
+        })
+        .filter(p => p.projectId !== ''),
+      interactions: (session.projectInteractions || []).map(pi => ({
+        type: pi.type ?? '',
+        projectId: pi.projectId ?? null,
       })),
     };
 

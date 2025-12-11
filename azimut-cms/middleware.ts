@@ -1,5 +1,4 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { verifyAuthToken } from './src/lib/auth';
 
 // Basic Auth - ativar apenas quando necessário (variável de ambiente)
 const BASIC_AUTH_ENABLED = process.env.BASIC_AUTH_ENABLED === 'true';
@@ -43,11 +42,12 @@ export function middleware(req: NextRequest) {
 
   const { pathname } = req.nextUrl;
   const token = req.cookies.get('azimut_admin_token')?.value;
-  const session = token ? verifyAuthToken(token) : null;
+  // No middleware, não usamos crypto (Edge). Apenas checamos se o cookie existe.
+  const isAuthenticated = Boolean(token);
 
   // Bloquear acesso a /admin se não autenticado
   if (pathname.startsWith('/admin')) {
-    if (!session) {
+    if (!isAuthenticated) {
       const url = req.nextUrl.clone();
       url.pathname = '/login';
       url.search = `?next=${encodeURIComponent(pathname)}`;
@@ -57,7 +57,7 @@ export function middleware(req: NextRequest) {
   }
 
   // Se já autenticado, redirecionar /login para /admin
-  if (pathname === '/login' && session) {
+  if (pathname === '/login' && isAuthenticated) {
     const url = req.nextUrl.clone();
     url.pathname = '/admin';
     return NextResponse.redirect(url);

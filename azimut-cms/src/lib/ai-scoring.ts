@@ -6,24 +6,24 @@
 import { getAIProvider } from './ai-provider';
 import { prisma } from './prisma';
 
-interface SessionData {
+export interface SessionData {
   sessionId: string;
-  country?: string;
-  language?: string;
-  pagesVisited: {
+  country?: string | null;
+  language?: string | null;
+  pagesVisited?: {
     slug: string;
     timeSpent: number;
     scrollDepth: number;
   }[];
-  projectsViewed: {
+  projectsViewed?: {
     projectId: string;
     type: string;
     tags: string[];
     timeSpent: number;
   }[];
-  interactions: {
+  interactions?: {
     type: string;
-    projectId?: string;
+    projectId?: string | null;
   }[];
 }
 
@@ -88,7 +88,7 @@ function calculateRuleBasedScores(sessionData: SessionData): ScoringResult {
   };
 
   // Analisar páginas visitadas
-  sessionData.pagesVisited.forEach(page => {
+  (sessionData.pagesVisited || []).forEach(page => {
     if (page.slug === 'portfolio' || page.slug === 'work') {
       scores.conversionScore += 15;
     }
@@ -112,7 +112,7 @@ function calculateRuleBasedScores(sessionData: SessionData): ScoringResult {
   });
 
   // Analisar projetos visualizados
-  sessionData.projectsViewed.forEach(project => {
+  (sessionData.projectsViewed || []).forEach(project => {
     // Por tipo
     if (project.type === 'MUSEU') scores.museumScore += 15;
     if (project.type === 'MARCA') scores.brandScore += 15;
@@ -140,7 +140,7 @@ function calculateRuleBasedScores(sessionData: SessionData): ScoringResult {
   });
 
   // Analisar interações
-  sessionData.interactions.forEach(interaction => {
+  (sessionData.interactions || []).forEach(interaction => {
     if (interaction.type === 'CLICK') scores.conversionScore += 10;
     if (interaction.type === 'CONTACT') scores.conversionScore += 50;
     if (interaction.type === 'DOWNLOAD') scores.conversionScore += 30;
