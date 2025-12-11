@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Inferir tipo de visitante se não temos score
-    let inferredType = interestScore?.visitorType;
+    let inferredType: string | null = interestScore?.visitorType || null;
     if (!inferredType && projectType) {
       if (projectType.toLowerCase().includes('museu')) {
         inferredType = 'MUSEUM_CURATOR';
