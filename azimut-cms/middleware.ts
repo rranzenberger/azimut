@@ -1,0 +1,78 @@
+import { NextResponse, type NextRequest } from 'next/server';
+import { verifyAuthToken } from './src/lib/auth';
+
+// Basic Auth - ativar apenas quando necessário (variável de ambiente)
+const BASIC_AUTH_ENABLED = process.env.BASIC_AUTH_ENABLED === 'true';
+const BASIC_AUTH_USER = process.env.BASIC_AUTH_USER || 'admin';
+const BASIC_AUTH_PASS = process.env.BASIC_AUTH_PASS || 'azimut2025';
+
+function checkBasicAuth(req: NextRequest): NextResponse | null {
+  if (!BASIC_AUTH_ENABLED) return null;
+
+  const authHeader = req.headers.get('authorization');
+  
+  if (!authHeader || !authHeader.startsWith('Basic ')) {
+    return new NextResponse('Authentication required', {
+      status: 401,
+      headers: {
+        'WWW-Authenticate': 'Basic realm="Azimut Preview"',
+      },
+    });
+  }
+
+  const base64Credentials = authHeader.split(' ')[1];
+  const credentials = Buffer.from(base64Credentials, 'base64').toString('utf-8');
+  const [username, password] = credentials.split(':');
+
+  if (username !== BASIC_AUTH_USER || password !== BASIC_AUTH_PASS) {
+    return new NextResponse('Invalid credentials', {
+      status: 401,
+      headers: {
+        'WWW-Authenticate': 'Basic realm="Azimut Preview"',
+      },
+    });
+  }
+
+  return null; // Autenticado, continua
+}
+
+export function middleware(req: NextRequest) {
+  // Verificar Basic Auth primeiro (se ativado)
+  const basicAuthResponse = checkBasicAuth(req);
+  if (basicAuthResponse) return basicAuthResponse;
+
+  const { pathname } = req.nextUrl;
+  const token = req.cookies.get('azimut_admin_token')?.value;
+  const session = token ? verifyAuthToken(token) : null;
+
+  // Bloquear acesso a /admin se não autenticado
+  if (pathname.startsWith('/admin')) {
+    if (!session) {
+      const url = req.nextUrl.clone();
+      url.pathname = '/login';
+      url.search = `?next=${encodeURIComponent(pathname)}`;
+      return NextResponse.redirect(url);
+    }
+    return NextResponse.next();
+  }
+
+  // Se já autenticado, redirecionar /login para /admin
+  if (pathname === '/login' && session) {
+    const url = req.nextUrl.clone();
+    url.pathname = '/admin';
+    return NextResponse.redirect(url);
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  // Se Basic Auth estiver ativo, proteger tudo. Senão, só /admin e /login
+  matcher: process.env.BASIC_AUTH_ENABLED === 'true' 
+    ? ['/((?!_next/static|_next/image|favicon.ico|robots.txt).*)']
+    : ['/admin/:path*', '/login'],
+};
+
+
+
+

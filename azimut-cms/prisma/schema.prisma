@@ -1,0 +1,309 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum TagCategory {
+  TECHNOLOGY
+  INDUSTRY
+  FORMAT
+  OTHER
+}
+
+enum ServiceStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ProjectStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum PageStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum LeadType {
+  CONTACT_FORM
+  BUDGET_INQUIRY
+}
+
+enum LeadPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum LeadStatus {
+  NEW
+  IN_PROGRESS
+  WON
+  LOST
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+enum ProjectInteractionType {
+  VIEW
+  CLICK
+  LIKE
+  SHARE
+  CTA
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  password  String
+  role      Role     @default(EDITOR)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Market {
+  id              String    @id @default(uuid())
+  code            String    @unique
+  labelPt         String
+  labelEn         String
+  heroMessagePt   String?
+  heroMessageEn   String?
+  priority        Int       @default(0)
+  highlightProjects Project[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Media {
+  id           String   @id @default(uuid())
+  type         MediaType @default(IMAGE)
+  originalUrl  String
+  thumbnailUrl String?
+  mediumUrl    String?
+  largeUrl     String?
+  webpUrl      String?
+  avifUrl      String?
+  width        Int?
+  height       Int?
+  sizeBytes    Int?
+  durationSeconds Int?
+  format       String?
+  contentType  String?
+  altPt        String?
+  altEn        String?
+  altEs        String?
+  altFr        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  projectHero  Project?
+}
+
+model Tag {
+  id        String        @id @default(uuid())
+  slug      String        @unique
+  labelPt   String
+  labelEn   String
+  labelEs   String?
+  labelFr   String?
+  category  TagCategory
+  projects  Project[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model Service {
+  id             String        @id @default(uuid())
+  slug           String        @unique
+  titlePt        String
+  titleEn        String
+  titleEs        String?
+  titleFr        String?
+  descriptionPt  String?
+  descriptionEn  String?
+  descriptionEs  String?
+  descriptionFr  String?
+  icon           String?
+  status         ServiceStatus @default(PUBLISHED)
+  priority       Int           @default(0)
+  segments       String[]
+  projects       Project[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model Project {
+  id            String          @id @default(uuid())
+  slug          String          @unique
+  title         String
+  shortTitle    String?
+  summaryPt     String?
+  summaryEn     String?
+  summaryEs     String?
+  summaryFr     String?
+  city          String?
+  stateProvince String?
+  country       String?
+  year          Int?
+  client        String?
+  type          String?
+  featured      Boolean         @default(false)
+  priorityHome  Int             @default(0)
+  status        ProjectStatus   @default(DRAFT)
+  ctaLabelPt    String?
+  ctaLabelEn    String?
+  ctaUrl        String?
+  heroImage     Media?          @relation(fields: [heroImageId], references: [id])
+  heroImageId   String? @unique
+  market        Market?         @relation(fields: [marketId], references: [id])
+  marketId      String?
+  tags          Tag[]
+  services      Service[]
+  sections      Section[]       @relation("SectionProjects")
+  pageViews     PageView[]
+  interactions  ProjectInteraction[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+model Page {
+  id         String      @id @default(uuid())
+  name       String
+  slug       String      @unique
+  seoTitlePt String?
+  seoTitleEn String?
+  seoDescPt  String?
+  seoDescEn  String?
+  status     PageStatus  @default(PUBLISHED)
+  sections   Section[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Section {
+  id            String    @id @default(uuid())
+  page          Page      @relation(fields: [pageId], references: [id])
+  pageId        String
+  order         Int       @default(0)
+  type          String
+  layout        String?
+  titlePt       String?
+  titleEn       String?
+  titleEs       String?
+  titleFr       String?
+  bodyPt        String?
+  bodyEn        String?
+  bodyEs        String?
+  bodyFr        String?
+  linkedProjects Project[] @relation("SectionProjects")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model VisitorSession {
+  sessionId           String               @id
+  ipAddress           String?
+  userAgent           String?
+  language            String?
+  country             String?
+  region              String?
+  city                String?
+  duration            Int                  @default(0)
+  lastActivityAt      DateTime             @default(now())
+  lead               Lead?                @relation(fields: [leadId], references: [id])
+  leadId              String?
+  pageViews           PageView[]
+  projectInteractions ProjectInteraction[]
+  interestScore       InterestScore?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+}
+
+model PageView {
+  id          String         @id @default(uuid())
+  session     VisitorSession @relation(fields: [sessionId], references: [sessionId])
+  sessionId   String
+  pageSlug    String?
+  projectSlug String?
+  project     Project?       @relation(fields: [projectId], references: [id])
+  projectId   String?
+  timeSpent   Int            @default(0)
+  scrollDepth Int            @default(0)
+  viewedAt    DateTime       @default(now())
+}
+
+model ProjectInteraction {
+  id        String               @id @default(uuid())
+  session   VisitorSession       @relation(fields: [sessionId], references: [sessionId])
+  sessionId String
+  project   Project              @relation(fields: [projectId], references: [id])
+  projectId String
+  type      ProjectInteractionType @default(VIEW)
+  metadata  Json
+  createdAt DateTime             @default(now())
+}
+
+model InterestScore {
+  sessionId          String   @id
+  session            VisitorSession @relation(fields: [sessionId], references: [sessionId])
+  museumScore        Int      @default(0)
+  brandScore         Int      @default(0)
+  festivalScore      Int      @default(0)
+  cityScore          Int      @default(0)
+  educationScore     Int      @default(0)
+  researchScore      Int      @default(0)
+  vrScore            Int      @default(0)
+  aiScore            Int      @default(0)
+  installationScore  Int      @default(0)
+  conversionScore    Int      @default(0)
+  visitorType        String?
+  recommendedProjects Json?
+  suggestedAction    String?
+  suggestedPage      String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Lead {
+  id          String       @id @default(uuid())
+  name        String
+  email       String
+  phone       String?
+  company     String?
+  position    String?
+  leadType    LeadType     @default(CONTACT_FORM)
+  projectType String?
+  budget      String?
+  timeline    String?
+  description String?
+  sourceUrl   String?
+  referrer    String?
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  status      LeadStatus   @default(NEW)
+  priority    LeadPriority @default(MEDIUM)
+  sessions    VisitorSession[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+

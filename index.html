@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    
+    <!-- Título e descrição base (serão sobrescritos pelo React Helmet) -->
+    <title>Azimut – Immersive • Interactive • Cinematic Experiences</title>
+    <meta name="description" content="Experiências imersivas, interativas e cinematográficas para cultura, marcas e espaços híbridos – atuando entre Brasil e Canadá." />
+    
+    <!-- Favicon - Estrela Azimut -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/azimut-star-32.png" />
+    <link rel="icon" type="image/svg+xml" href="/logo-azimut-star.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/logo192.png" />
+    
+    <!-- Theme color para mobile browsers -->
+    <meta name="theme-color" content="#050814" />
+    
+    <!-- Open Graph base (serão sobrescritos por página) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Azimut" />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    
+    <!-- Twitter Cards base -->
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <!-- Preconnect para performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    
+    <!-- Schema.org JSON-LD para Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Azimut",
+      "description": "Immersive, interactive and cinematic experiences for culture, brands and hybrid spaces",
+      "url": "https://azimut.art",
+      "logo": "https://azimut.art/logo-azimut-horizontal.svg",
+      "sameAs": [
+        "https://youtube.com/@azimutart",
+        "https://instagram.com/azimut.art",
+        "https://linkedin.com/company/azimut-art",
+        "https://vimeo.com/azimutart",
+        "https://behance.net/azimutart"
+      ],
+      "address": [
+        {
+          "@type": "PostalAddress",
+          "addressCountry": "BR",
+          "addressLocality": "Rio de Janeiro"
+        },
+        {
+          "@type": "PostalAddress",
+          "addressCountry": "CA",
+          "addressLocality": "Vancouver"
+        }
+      ],
+      "areaServed": ["Brazil", "Canada"],
+      "knowsLanguage": ["pt", "en", "fr", "es"]
+    }
+    </script>
+  </head>
+  <body class="bg-azimut-bg text-slate-100">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

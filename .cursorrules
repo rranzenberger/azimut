@@ -1,0 +1,97 @@
+# ═══════════════════════════════════════════════════════════════
+# REGRAS DO CURSOR - CÓDIGO PROTEGIDO
+# ═══════════════════════════════════════════════════════════════
+
+## ⚠️ SEÇÕES QUE NÃO DEVEM SER MODIFICADAS
+
+### 1. Menu de Navegação (src/components/Layout.tsx)
+**🔒 TRAVADO DEFINITIVAMENTE - NÃO MODIFICAR EM HIPÓTESE ALGUMA:**
+- Logo: height: '56px', alinhada à esquerda
+- Botão CTA: minWidth: '130px', height: '48px', fontSize: '0.54rem'
+- Detecção de hamburger: baseada na largura da janela (não em medição de elementos)
+- Larguras do menu por idioma: PT: 460px, EN: 420px, FR: 480px, ES: 450px
+- Cálculo: totalNeeded = logoWidth(180) + menuWidth + rightSideWidth(220) + gaps(80)
+- Hamburger aparece quando: totalNeeded > windowWidth
+- Espaçamentos entre itens do menu (gap-1, gap-1.5, gap-2, gap-2.5, gap-3)
+- Tamanhos de fonte (text-[0.48rem] até text-[0.62rem])
+- Padding dos links (padding: '0 6px')
+- Efeito glow no hover e item ativo (text-shadow)
+- Barra vermelha abaixo dos itens (h-[1px], h-[1.5px], h-[2px])
+- Lógica de hover/ativo (shouldShowLine, activeRoute, hoveredRoute)
+- Cor vermelha dos itens ativos (#c92337)
+- **QUALQUER MODIFICAÇÃO QUEBRARÁ O SISTEMA DE DETECÇÃO E ALINHAMENTO**
+
+### 2. Seletor de Idiomas (src/components/Layout.tsx)
+**🔒 TRAVADO DEFINITIVAMENTE - NÃO MODIFICAR EM HIPÓTESE ALGUMA:**
+- Círculos entre idiomas: caractere ● (U+25CF)
+- Tamanho das bolinhas: fontSize: '0.65rem', transform: 'translateY(-2px)'
+- Separador "|": marginLeft: '5px', marginRight: '9px'
+- Estrutura: 🇨🇦EN●FR | 🇧🇷PT●ES (ultra compacto)
+- Bandeiras: gap: '1px', marginRight REMOVIDO (usa gap)
+- Botões idiomas: minWidth: '20px', fontSize: '0.6rem'
+- Container idiomas: gap: '1px' (ultra compacto)
+- rightSideWidth no cálculo: 220px
+- Alinhamento perfeito testado e aprovado
+- **QUALQUER MODIFICAÇÃO QUEBRARÁ O ALINHAMENTO PERFEITO**
+
+### 3. Estrela de Fundo (todas as páginas src/pages/*.tsx)
+**NÃO MODIFICAR:**
+- Arquivo: /logo-azimut-star.svg
+- Posicionamento: absolute -right-28 -bottom-40 (mobile), -right-40 -bottom-60 (desktop)
+- Opacidade: 0.3 (páginas normais), 0.15 (página 404)
+- Z-index: -5
+- Tamanhos: h-[520px] w-[520px] (mobile), h-[680px] w-[680px] (desktop)
+- pointer-events-none sempre presente
+
+### 4. Rodapé (src/components/Layout.tsx)
+**NÃO MODIFICAR:**
+- Grid de colunas: col-span-3, col-span-5, etc.
+- Linha vermelha superior: h-[3px] bg-azimut-red (sólida, não gradiente)
+- Espaçamentos entre seções (gap-3, gap-4, gap-8)
+- Distribuição de ícones sociais: grid grid-cols-3 min-[768px]:grid-cols-5
+- Background gradiente dark: linear-gradient(180deg, #0a0e18 0%, #060a12 100%)
+- Background gradiente light: linear-gradient(180deg, #2a2825 0%, #1e1c1a 100%)
+- Email sem quebra de linha: whiteSpace: 'nowrap'
+
+### 5. Cores e Temas (src/index.css e componentes)
+**NÃO MODIFICAR:**
+- Azimut Red: #c92337
+- Efeito glow tema escuro: text-shadow 12px/25px com rgba(201, 35, 55)
+- Opacidades de hover nos idiomas (0.7 quando não selecionado, 1 quando selecionado)
+- Cor do hamburger no tema light: #2a2825
+- Cor do hamburger no tema dark: #d3cec3
+
+### 6. Breakpoints e Responsividade
+**NÃO MODIFICAR:**
+- Breakpoints Tailwind padrão + min-[768px] customizado
+- Espaçamentos específicos para iPad (min-[768px])
+- Tamanhos responsivos do menu, idiomas e estrela
+
+## INSTRUÇÕES GERAIS
+
+### Antes de modificar qualquer código:
+1. SEMPRE verifique se está em uma seção protegida
+2. Se estiver, PERGUNTE ao usuário antes de fazer qualquer mudança
+3. NUNCA modifique espaçamentos, tamanhos ou cores das seções protegidas
+4. Se o usuário pedir mudanças gerais, PRESERVE estas seções
+
+### Ao adicionar novos recursos:
+- Não altere o menu existente
+- Não altere o seletor de idiomas
+- Não remova ou reposicione a estrela de fundo
+- Não altere o layout do rodapé
+- Não altere as cores já definidas
+
+### Se algo parecer quebrado:
+- Verifique se as mudanças afetaram seções protegidas
+- Restaure os valores documentados neste arquivo
+- Consulte PROTECTED_SECTIONS.md para valores exatos
+
+## LEMBRETE
+Estas seções foram cuidadosamente ajustadas para funcionar em:
+- Desktop (xl, lg, md)
+- Tablets (iPad Mini, iPad Air - min-[768px])
+- Mobile (smartphones pequenos e grandes)
+
+Qualquer mudança pode quebrar o layout responsivo!
+

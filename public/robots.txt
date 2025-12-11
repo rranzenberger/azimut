@@ -1,0 +1,24 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://azimut.com/sitemap.xml
+
+# Disallow admin/private areas (when implemented)
+# Disallow: /admin
+# Disallow: /api
+
+# Crawl delay for polite bots
+# Crawl-delay: 1
+
+
+
+
+
+
+
+
+
+
+
