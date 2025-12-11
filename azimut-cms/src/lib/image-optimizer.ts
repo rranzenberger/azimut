@@ -43,7 +43,15 @@ export async function optimizeAndUploadImage({
     { name: 'large', width: 1920, quality: 90 },
   ];
 
-  const urls: Record<string, string> = {};
+  const urls: OptimizedUrls = {
+    original: '',
+    thumbnail: '',
+    small: '',
+    medium: '',
+    large: '',
+    webp: '',
+    avif: undefined,
+  };
 
   // Upload original
   const { data: originalData, error: originalError} = await supabase.storage
