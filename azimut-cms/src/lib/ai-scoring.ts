@@ -223,8 +223,8 @@ Você é um assistente de IA para análise de comportamento de visitantes de um 
 DADOS DO VISITANTE:
 - País: ${sessionData.country || 'desconhecido'}
 - Idioma: ${sessionData.language || 'desconhecido'}
-- Páginas visitadas: ${sessionData.pagesVisited.map(p => p.slug).join(', ')}
-- Projetos visualizados: ${sessionData.projectsViewed.map(p => `${p.type} (${p.timeSpent}s)`).join(', ')}
+- Páginas visitadas: ${(sessionData.pagesVisited || []).map(p => p.slug).join(', ') || 'nenhuma'}
+- Projetos visualizados: ${(sessionData.projectsViewed || []).map(p => `${p.type} (${p.timeSpent}s)`).join(', ') || 'nenhum'}
 
 SCORES INICIAIS:
 - Museus: ${baseScores.museumScore}
