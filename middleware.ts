@@ -5,19 +5,24 @@
  * Para sites estáticos (Vite), a Vercel usa este middleware automaticamente
  */
 
+// @ts-ignore - Edge Runtime tem acesso a process.env via Vercel
+declare const process: { env: Record<string, string | undefined> };
+
 export default async function middleware(req: Request) {
   // Verificar se Basic Auth está ativado
-  // No Edge Runtime, as variáveis de ambiente são injetadas automaticamente
-  const env = (globalThis as any).process?.env || {};
-  const BASIC_AUTH_ENABLED = env.BASIC_AUTH_ENABLED === 'true';
+  // No Edge Runtime da Vercel, process.env é injetado automaticamente
+  // @ts-ignore - process.env disponível no Edge Runtime da Vercel
+  const BASIC_AUTH_ENABLED = typeof process !== 'undefined' && process.env?.BASIC_AUTH_ENABLED === 'true';
   
   if (!BASIC_AUTH_ENABLED) {
     // Se desativado, não faz nada - deixa o site funcionar normalmente
     return new Response(null, { status: 200 });
   }
 
-  const BASIC_AUTH_USER = env.BASIC_AUTH_USER || 'admin';
-  const BASIC_AUTH_PASS = env.BASIC_AUTH_PASS || 'azimut2025';
+  // @ts-ignore - process.env disponível no Edge Runtime da Vercel
+  const BASIC_AUTH_USER = (typeof process !== 'undefined' && process.env?.BASIC_AUTH_USER) || 'admin';
+  // @ts-ignore - process.env disponível no Edge Runtime da Vercel
+  const BASIC_AUTH_PASS = (typeof process !== 'undefined' && process.env?.BASIC_AUTH_PASS) || 'azimut2025';
 
   // Verificar Basic Auth
   const authHeader = req.headers.get('authorization');
