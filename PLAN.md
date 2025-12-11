@@ -1,15 +1,14 @@
 ## Plan to fix backoffice deploy errors
-1) Inspect failing files and types
-- Review `app/api/track/route.ts` and `src/lib/auth.ts` to see exact type expectations and runtime configs.
-- Confirm how `calculateInterestScores` is typed and what request body fields can be null/undefined.
+1) Revisar erro atual no build
+- Erro em `src/lib/image-optimizer.ts`: conversão de Record<string, string> para `OptimizedUrls` (faltam propriedades obrigatórias).
 
-2) Fix track route type errors
-- Allow nullable fields (`projectId`, `tags`, `projectsViewed`, `timeSpent`, `language`, `country`) and adjust types so `null`/`undefined` are permitted or normalized before use.
-- Ensure the payload sent to `calculateInterestScores` matches its interface (strings vs string|null) or add guards/defaults.
+2) Ajustar tipos em image-optimizer
+- Tipar `urls` como `OptimizedUrls` inicializando todas as chaves: original, thumbnail, small, medium, large, webp (strings vazias) e avif opcional.
+- Remover cast forçado; retornar `urls` já tipado.
 
-3) Resolve crypto/edge runtime issue
-- For endpoints needing Node `crypto`, set `export const runtime = 'nodejs'` (or use Web Crypto if appropriate) to avoid “crypto not supported in Edge”.
+3) Garantir variáveis de ambiente
+- Confirmar no projeto do backoffice (Vercel) se estão setadas: `DATABASE_URL`, `JWT_SECRET`, `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`.
 
-4) Redeploy and verify
-- Push fixes, redeploy backoffice on Vercel, and check that the build passes and pages load without Basic Auth prompt (already disabled via env).
+4) Redeploy
+- Rodar redeploy após o ajuste e verificar se o build passa.
 
