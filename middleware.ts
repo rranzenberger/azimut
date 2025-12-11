@@ -15,8 +15,8 @@ export default async function middleware(req: Request) {
   const BASIC_AUTH_ENABLED = typeof process !== 'undefined' && process.env?.BASIC_AUTH_ENABLED === 'true';
   
   if (!BASIC_AUTH_ENABLED) {
-    // Se desativado, não faz nada - deixa o site funcionar normalmente
-    return new Response(null, { status: 200 });
+    // Se desativado, não intercepta - deixa passar para o conteúdo estático
+    return;
   }
 
   // @ts-ignore - process.env disponível no Edge Runtime da Vercel
@@ -49,8 +49,8 @@ export default async function middleware(req: Request) {
     });
   }
 
-  // Autenticado - permite acesso (retorna null para continuar)
-  return new Response(null, { status: 200 });
+  // Autenticado - não retorna nada para deixar passar para o conteúdo estático
+  return;
 }
 
 export const config = {
