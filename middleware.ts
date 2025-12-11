@@ -7,15 +7,17 @@
 
 export default async function middleware(req: Request) {
   // Verificar se Basic Auth está ativado
-  const BASIC_AUTH_ENABLED = process.env.BASIC_AUTH_ENABLED === 'true';
+  // No Edge Runtime, as variáveis de ambiente são injetadas automaticamente
+  const env = (globalThis as any).process?.env || {};
+  const BASIC_AUTH_ENABLED = env.BASIC_AUTH_ENABLED === 'true';
   
   if (!BASIC_AUTH_ENABLED) {
     // Se desativado, não faz nada - deixa o site funcionar normalmente
     return new Response(null, { status: 200 });
   }
 
-  const BASIC_AUTH_USER = process.env.BASIC_AUTH_USER || 'admin';
-  const BASIC_AUTH_PASS = process.env.BASIC_AUTH_PASS || 'azimut2025';
+  const BASIC_AUTH_USER = env.BASIC_AUTH_USER || 'admin';
+  const BASIC_AUTH_PASS = env.BASIC_AUTH_PASS || 'azimut2025';
 
   // Verificar Basic Auth
   const authHeader = req.headers.get('authorization');
