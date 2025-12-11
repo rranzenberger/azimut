@@ -68,3 +68,4 @@ BASIC_AUTH_PASS=sua_senha_forte
 
 **Dúvidas?** O Basic Auth é temporário e será removido quando o site estiver 100% pronto! 🚀
 
+

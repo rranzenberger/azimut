@@ -406,3 +406,4 @@ function analyzeJourney(journey: UserJourney): {
 
 
 
+

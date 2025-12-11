@@ -43,3 +43,4 @@ winget install --id Git.Git -e --source winget
 
 **Instale o Git e me avise quando terminar!** 🚀
 
+
