@@ -3,12 +3,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { type Lang } from './i18n'
 import { useTheme } from './hooks/useTheme'
 import BrowserCompatibility from './components/BrowserCompatibility'
-import Layout from './components/Layout'
 import ScrollToTop from './components/ScrollToTop'
 import LoadingSkeleton from './components/LoadingSkeleton'
 import StructuredData from './components/StructuredData'
 import InstallPrompt from './components/InstallPrompt'
 import PlausibleScript from './components/PlausibleScript'
+import AppLayout from './components/AppLayout'
 
 // Lazy loading de páginas para melhor performance
 const Home = lazy(() => import('./pages/Home'))
@@ -19,6 +19,8 @@ const Research = lazy(() => import('./pages/Research'))
 const Academy = lazy(() => import('./pages/Academy'))
 const Contact = lazy(() => import('./pages/Contact'))
 const NotFound = lazy(() => import('./pages/NotFound'))
+const Login = lazy(() => import('./pages/Login'))
+import ProtectedRoute from './components/ProtectedRoute'
 
 const App: React.FC = () => {
   // Carregar idioma do localStorage ou usar 'pt' como padrão
@@ -59,22 +61,82 @@ const App: React.FC = () => {
         {/* PWA Install Prompt */}
         <InstallPrompt />
         
-        <Layout lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
+        <AppLayout lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
           <Suspense fallback={<LoadingSkeleton />}>
             <Routes>
-              <Route path="/" element={<Home lang={lang} />} />
-              <Route path="/home" element={<Home lang={lang} />} />
-              <Route path="/what" element={<WhatWeDo lang={lang} />} />
-              <Route path="/work" element={<Work lang={lang} />} />
-              <Route path="/studio" element={<Studio lang={lang} />} />
-              <Route path="/research" element={<Research lang={lang} />} />
-              <Route path="/academy" element={<Academy lang={lang} />} />
-              <Route path="/contact" element={<Contact lang={lang} />} />
+              {/* Rota de Login */}
+              <Route path="/login" element={<Login />} />
+              
+              {/* Rotas protegidas */}
+              <Route 
+                path="/" 
+                element={
+                  <ProtectedRoute>
+                    <Home lang={lang} />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/home" 
+                element={
+                  <ProtectedRoute>
+                    <Home lang={lang} />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/what" 
+                element={
+                  <ProtectedRoute>
+                    <WhatWeDo lang={lang} />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/work" 
+                element={
+                  <ProtectedRoute>
+                    <Work lang={lang} />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/studio" 
+                element={
+                  <ProtectedRoute>
+                    <Studio lang={lang} />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/research" 
+                element={
+                  <ProtectedRoute>
+                    <Research lang={lang} />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/academy" 
+                element={
+                  <ProtectedRoute>
+                    <Academy lang={lang} />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/contact" 
+                element={
+                  <ProtectedRoute>
+                    <Contact lang={lang} />
+                  </ProtectedRoute>
+                } 
+              />
               {/* Rota 404 - captura qualquer URL não encontrada */}
               <Route path="*" element={<NotFound lang={lang} />} />
             </Routes>
           </Suspense>
-        </Layout>
+        </AppLayout>
       </BrowserRouter>
     </BrowserCompatibility>
   )

@@ -9,13 +9,14 @@
 declare const process: { env: Record<string, string | undefined> };
 
 export default async function middleware(req: Request) {
-  // Verificar se Basic Auth está ativado
-  // No Edge Runtime da Vercel, process.env é injetado automaticamente
+  // Basic Auth desabilitado - usando página de login customizada
+  // Se precisar reativar, mude BASIC_AUTH_ENABLED para 'true' na Vercel
   // @ts-ignore - process.env disponível no Edge Runtime da Vercel
   const BASIC_AUTH_ENABLED = typeof process !== 'undefined' && process.env?.BASIC_AUTH_ENABLED === 'true';
   
   if (!BASIC_AUTH_ENABLED) {
     // Se desativado, não intercepta - deixa passar para o conteúdo estático
+    // A proteção agora é feita no frontend via página de login customizada
     return;
   }
 

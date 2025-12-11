@@ -9,15 +9,19 @@ export const config = {
 
 export default async function handler(req) {
   // Verificar se Basic Auth está ativado
-  const BASIC_AUTH_ENABLED = process.env.BASIC_AUTH_ENABLED === 'true';
+  const BASIC_AUTH_ENABLED = req.headers.get('x-vercel-env') !== 'development' 
+    ? (await import('@vercel/env')).env?.BASIC_AUTH_ENABLED === 'true'
+    : false;
   
   if (!BASIC_AUTH_ENABLED) {
     // Se desativado, apenas retorna 404 para não interferir no site
     return new Response(null, { status: 404 });
   }
 
-  const BASIC_AUTH_USER = process.env.BASIC_AUTH_USER || 'admin';
-  const BASIC_AUTH_PASS = process.env.BASIC_AUTH_PASS || 'azimut2025';
+  // Acessar variáveis de ambiente no Edge Runtime
+  const env = process.env || {};
+  const BASIC_AUTH_USER = env.BASIC_AUTH_USER || 'admin';
+  const BASIC_AUTH_PASS = env.BASIC_AUTH_PASS || 'azimut2025';
 
   // Verificar Basic Auth
   const authHeader = req.headers.get('authorization');
@@ -48,5 +52,3 @@ export default async function handler(req) {
   // O Basic Auth será verificado pelo middleware do Vercel
   return new Response(null, { status: 404 });
 }
-
-
