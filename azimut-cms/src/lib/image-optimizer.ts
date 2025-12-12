@@ -75,7 +75,11 @@ export async function optimizeAndUploadImage({
       });
 
     if (jpegData) {
-      urls[version.name] = supabase.storage.from('media').getPublicUrl(jpegData.path).data.publicUrl;
+      const publicUrl = supabase.storage.from('media').getPublicUrl(jpegData.path).data.publicUrl;
+      if (version.name === 'thumbnail') urls.thumbnail = publicUrl;
+      else if (version.name === 'small') urls.small = publicUrl;
+      else if (version.name === 'medium') urls.medium = publicUrl;
+      else if (version.name === 'large') urls.large = publicUrl;
     }
 
     // WebP
