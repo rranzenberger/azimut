@@ -12,17 +12,9 @@ interface OptimizeOptions {
   folder?: string;
 }
 
-interface OptimizedUrls {
-  original: string;
-  thumbnail: string;
-  small: string;
-  medium: string;
-  large: string;
-  webp: string;
-  avif?: string;
-  // Permite indexação por chave de versão (thumbnail, small, medium, large, webp, avif)
-  [key: string]: string | undefined;
-}
+type OptimizedUrlKey = 'original' | 'thumbnail' | 'small' | 'medium' | 'large' | 'webp';
+
+type OptimizedUrls = Record<OptimizedUrlKey, string> & { avif?: string };
 
 export async function optimizeAndUploadImage({
   file,
@@ -38,7 +30,7 @@ export async function optimizeAndUploadImage({
   const metadata = await image.metadata();
 
   // Gerar versões otimizadas
-  const versions = [
+  const versions: Array<{ name: OptimizedUrlKey; width: number; quality: number }> = [
     { name: 'thumbnail', width: 200, quality: 80 },
     { name: 'small', width: 640, quality: 85 },
     { name: 'medium', width: 1024, quality: 85 },
@@ -129,7 +121,7 @@ export async function optimizeAndUploadImage({
     }
   }
 
-  return urls as OptimizedUrls;
+  return urls;
 }
 
 // Extrair cores dominantes
