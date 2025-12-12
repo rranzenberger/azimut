@@ -20,6 +20,8 @@ interface OptimizedUrls {
   large: string;
   webp: string;
   avif?: string;
+  // Permite indexação por chave de versão (thumbnail, small, medium, large, webp, avif)
+  [key: string]: string | undefined;
 }
 
 export async function optimizeAndUploadImage({
