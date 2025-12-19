@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { verifyAuthToken } from '@/lib/auth';
 
+export const runtime = 'nodejs'; // Necessário para usar crypto
+
 export async function GET(req: NextRequest) {
   try {
     const token = req.cookies.get('azimut_admin_token')?.value;
@@ -26,6 +28,8 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Erro interno' }, { status: 500 });
   }
 }
+
+
 
 
 

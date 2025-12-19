@@ -3,6 +3,8 @@ import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/prisma';
 import { createAuthToken } from '@/lib/auth';
 
+export const runtime = 'nodejs'; // Necessário para usar crypto
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -60,6 +62,8 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+
 
 
 
