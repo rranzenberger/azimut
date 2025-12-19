@@ -4,8 +4,8 @@ import { optimizeAndUploadImage } from '@/lib/image-optimizer';
 import { verifyAuthToken } from '@/lib/auth';
 import { createClient } from '@supabase/supabase-js';
 import sharp from 'sharp';
-import fs from 'fs/promises';
-import path from 'path';
+
+export const runtime = 'nodejs'; // Necessário para usar fs/path
 
 const MAX_IMAGE_MB = 8;
 const MAX_VIDEO_MB = 25;
@@ -15,12 +15,14 @@ const UPLOAD_BASE = process.env.UPLOAD_BASE || 'uploads';
 const hasSupabase =
   !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-const supabase = hasSupabase
-  ? createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    )
-  : null;
+// Cliente Supabase criado dentro da função para evitar problemas no build
+function getSupabaseClient() {
+  if (!hasSupabase) return null;
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -58,6 +60,7 @@ export async function POST(req: NextRequest) {
     const contentType = file.type || 'application/octet-stream';
 
     let mediaRecord;
+    const supabase = getSupabaseClient();
 
     if (type === 'IMAGE') {
       if (hasSupabase && supabase) {
@@ -255,6 +258,9 @@ async function processLocalVideo(params: {
 }
 
 async function saveFileLocal(relPath: string, data: Buffer) {
+  // Dynamic import para evitar problemas no build
+  const fs = await import('fs/promises');
+  const path = await import('path');
   const fullPath = path.join(process.cwd(), 'public', relPath);
   await fs.mkdir(path.dirname(fullPath), { recursive: true });
   await fs.writeFile(fullPath, data);
