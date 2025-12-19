@@ -1,0 +1,17 @@
+# Ignorar arquivos da raiz do monorepo
+../*.md
+../DEPLOY*.md
+../CHECKLIST*.md
+../ENV*.md
+../dist
+../build
+../node_modules
+../.git
+../public/cases
+
+# Ignorar arquivos locais
+*.log
+.DS_Store
+.env.local
+.env.*.local
+
