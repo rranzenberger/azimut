@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Output standalone para evitar problemas com micromatch
-  output: 'standalone',
-  
   images: {
     remotePatterns: [
       {
@@ -14,22 +11,6 @@ const nextConfig = {
         hostname: 'cdn.azimut.com.br',
       },
     ],
-  },
-  
-  // Configuração experimental para limitar file tracing
-  experimental: {
-    outputFileTracingRoot: require('path').join(__dirname),
-    outputFileTracingExcludes: {
-      '*': [
-        'node_modules/@swc/**',
-        'node_modules/@esbuild/**',
-        '../node_modules/**',
-        '../dist/**',
-        '../build/**',
-        '../.git/**',
-        '../*.md',
-      ],
-    },
   },
   
   // Excluir arquivos desnecessários do build
