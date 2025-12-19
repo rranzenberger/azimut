@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { createAuthToken } from '@/lib/auth';
 
 export const runtime = 'nodejs'; // Necessário para usar crypto
+export const dynamic = 'force-dynamic'; // Força renderização dinâmica
 
 export async function POST(req: NextRequest) {
   try {

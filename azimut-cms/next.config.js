@@ -12,6 +12,21 @@ const nextConfig = {
       },
     ],
   },
+  // Otimizações para evitar "Maximum call stack size exceeded"
+  experimental: {
+    optimizePackageImports: ['sharp', '@supabase/supabase-js'],
+  },
+  // Excluir arquivos desnecessários do build
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        path: false,
+      };
+    }
+    return config;
+  },
   async headers() {
     return [
       {
@@ -28,6 +43,9 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+
+
+
 
 
 

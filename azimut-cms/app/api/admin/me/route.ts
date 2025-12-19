@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { verifyAuthToken } from '@/lib/auth';
 
 export const runtime = 'nodejs'; // Necessário para usar crypto
+export const dynamic = 'force-dynamic'; // Força renderização dinâmica (usa cookies)
 
 export async function GET(req: NextRequest) {
   try {
