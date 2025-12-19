@@ -1,10 +1,16 @@
 import sharp from 'sharp';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+// Cliente Supabase criado dentro da função para evitar problemas no build
+function getSupabaseClient() {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    throw new Error('Supabase credentials not configured');
+  }
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
+}
 
 interface OptimizeOptions {
   file: Buffer;
@@ -48,6 +54,7 @@ export async function optimizeAndUploadImage({
   };
 
   // Upload original
+  const supabase = getSupabaseClient();
   const { data: originalData, error: originalError} = await supabase.storage
     .from('media')
     .upload(`${baseFolder}/original.${metadata.format}`, file, {
