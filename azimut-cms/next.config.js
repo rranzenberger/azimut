@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Output standalone para reduzir processamento de arquivos
-  output: 'standalone',
-  
   images: {
     remotePatterns: [
       {
@@ -16,12 +13,19 @@ const nextConfig = {
     ],
   },
   
-  // Otimizações para evitar "Maximum call stack size exceeded"
+  // CRÍTICO: Desabilitar completamente o tracing de arquivos
   experimental: {
-    optimizePackageImports: ['sharp', '@supabase/supabase-js'],
-    // Desabilitar file tracing para evitar micromatch
-    outputFileTracingRoot: undefined,
+    outputFileTracingExcludes: {
+      '*': [
+        'node_modules/@swc/core-linux-x64-gnu',
+        'node_modules/@swc/core-linux-x64-musl',
+        'node_modules/@esbuild/linux-x64',
+      ],
+    },
   },
+  
+  // Desabilitar geração de standalone (causa o problema do micromatch)
+  outputFileTracing: false,
   
   // Excluir arquivos desnecessários do build
   webpack: (config, { isServer }) => {
@@ -32,23 +36,13 @@ const nextConfig = {
         path: false,
       };
     }
-    
-    // Desabilitar cache para evitar problemas
-    config.cache = false;
-    
-    // Limitar processamento de arquivos de forma mais agressiva
-    config.watchOptions = {
-      ...config.watchOptions,
-      ignored: ['**/*'],
-    };
-    
     return config;
   },
   
   // Excluir arquivos da raiz do projeto do build
   pageExtensions: ['ts', 'tsx', 'js', 'jsx'],
   
-  // Desabilitar otimizações que podem causar problemas
+  // Usar SWC minify
   swcMinify: true,
   
   async headers() {
