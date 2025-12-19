@@ -13,20 +13,6 @@ const nextConfig = {
     ],
   },
   
-  // CRÍTICO: Desabilitar completamente o tracing de arquivos
-  experimental: {
-    outputFileTracingExcludes: {
-      '*': [
-        'node_modules/@swc/core-linux-x64-gnu',
-        'node_modules/@swc/core-linux-x64-musl',
-        'node_modules/@esbuild/linux-x64',
-      ],
-    },
-  },
-  
-  // Desabilitar geração de standalone (causa o problema do micromatch)
-  outputFileTracing: false,
-  
   // Excluir arquivos desnecessários do build
   webpack: (config, { isServer }) => {
     if (!isServer) {
