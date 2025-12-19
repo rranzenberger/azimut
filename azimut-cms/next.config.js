@@ -25,8 +25,28 @@ const nextConfig = {
         path: false,
       };
     }
+    // Limitar processamento de arquivos
+    config.watchOptions = {
+      ...config.watchOptions,
+      ignored: [
+        '**/node_modules/**',
+        '**/.next/**',
+        '**/dist/**',
+        '**/build/**',
+        '**/.git/**',
+        '**/public/cases/**',
+        '**/*.md',
+        '**/DEPLOY*.md',
+        '**/CHECKLIST*.md',
+        '**/ENV*.md',
+      ],
+    };
     return config;
   },
+  // Excluir arquivos da raiz do projeto do build
+  pageExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  // Desabilitar otimizações que podem causar problemas
+  swcMinify: true,
   async headers() {
     return [
       {
