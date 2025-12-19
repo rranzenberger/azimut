@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Diretório de saída padrão do Next.js
+  distDir: '.next',
+  
   images: {
     remotePatterns: [
       {
