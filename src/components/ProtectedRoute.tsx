@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 
 interface ProtectedRouteProps {
@@ -8,18 +8,31 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
   const location = useLocation()
+  const hasCheckedRef = useRef(false)
 
   useEffect(() => {
+    // Evitar múltiplas verificações na mesma rota
+    if (hasCheckedRef.current && location.pathname === location.pathname) {
+      return
+    }
+
     // Verificar autenticação de forma síncrona (não async para evitar delay)
     const checkAuth = () => {
       try {
         const authToken = sessionStorage.getItem('azimut_preview_auth')
         const authenticated = authToken === 'authenticated'
+        
+        console.log(`[ProtectedRoute] Verificando autenticação para: ${location.pathname}`)
+        console.log(`[ProtectedRoute] Auth token: ${authToken ? 'presente' : 'ausente'}`)
+        console.log(`[ProtectedRoute] Autenticado: ${authenticated}`)
+        
         setIsAuthenticated(authenticated)
+        hasCheckedRef.current = true
       } catch (error) {
         // Se houver erro ao acessar sessionStorage, considerar não autenticado
-        console.warn('Erro ao verificar autenticação:', error)
+        console.error('[ProtectedRoute] Erro ao verificar autenticação:', error)
         setIsAuthenticated(false)
+        hasCheckedRef.current = true
       }
     }
     
@@ -29,6 +42,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   // Aguardar verificação inicial (apenas no primeiro render)
   if (isAuthenticated === null) {
+    console.log(`[ProtectedRoute] Aguardando verificação para: ${location.pathname}`)
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--theme-bg)' }}>
         <div className="text-center">
@@ -41,10 +55,17 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   // Se não autenticado, redirecionar para login
   if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />
+    console.log(`[ProtectedRoute] Não autenticado, redirecionando para /login de: ${location.pathname}`)
+    // Evitar loop: só redirecionar se não estiver já na página de login
+    if (location.pathname !== '/login') {
+      return <Navigate to="/login" state={{ from: location }} replace />
+    }
+    // Se já está em /login, mostrar login (não redirecionar)
+    return <>{children}</>
   }
 
   // Se autenticado, mostrar conteúdo protegido
+  console.log(`[ProtectedRoute] Autenticado, mostrando conteúdo para: ${location.pathname}`)
   return <>{children}</>
 }
 

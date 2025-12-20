@@ -148,7 +148,7 @@ const App: React.FC = () => {
         <AppLayout lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
           <Suspense fallback={<LoadingSkeleton />}>
             <Routes>
-              {/* Rota de Login */}
+              {/* Rota de Login - SEM ProtectedRoute */}
               <Route path="/login" element={<Login />} />
               
               {/* Rotas protegidas */}
