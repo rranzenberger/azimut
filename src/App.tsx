@@ -23,11 +23,48 @@ const Login = lazy(() => import('./pages/Login'))
 import ProtectedRoute from './components/ProtectedRoute'
 
 const App: React.FC = () => {
-  // Carregar idioma do localStorage ou usar 'pt' como padrão
+  // Carregar idioma do localStorage ou detectar automaticamente
   const [lang, setLang] = useState<Lang>(() => {
     try {
       const savedLang = localStorage.getItem('azimut-lang') as Lang | null
-      return savedLang && ['pt', 'en', 'fr', 'es'].includes(savedLang) ? savedLang : 'pt'
+      if (savedLang && ['pt', 'en', 'fr', 'es'].includes(savedLang)) {
+        return savedLang
+      }
+      
+      // Se não tem idioma salvo, detectar via timezone
+      try {
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+        
+        // Detectar país via timezone
+        if (timezone.includes('America/New_York') || timezone.includes('America/Chicago') || 
+            timezone.includes('America/Denver') || timezone.includes('America/Los_Angeles') ||
+            timezone.includes('America/Detroit') || timezone.includes('America/Indianapolis') ||
+            timezone.includes('America/Phoenix') || timezone.includes('America/Seattle')) {
+          // US -> EN
+          localStorage.setItem('azimut-lang', 'en')
+          return 'en'
+        } else if (timezone.includes('America/Toronto') || timezone.includes('America/Vancouver') ||
+                   timezone.includes('America/Montreal') || timezone.includes('America/Winnipeg')) {
+          // CA -> EN
+          localStorage.setItem('azimut-lang', 'en')
+          return 'en'
+        } else if (timezone.includes('America/Sao_Paulo') || timezone.includes('America/Rio') ||
+                   timezone.includes('America/Fortaleza') || timezone.includes('America/Recife') ||
+                   timezone.includes('America/Manaus') || timezone.includes('America/Belem')) {
+          // BR -> PT
+          localStorage.setItem('azimut-lang', 'pt')
+          return 'pt'
+        }
+      } catch (e) {
+        // Fallback: usar idioma do navegador
+        const browserLang = navigator.language.startsWith('pt') ? 'pt' :
+                           navigator.language.startsWith('fr') ? 'fr' :
+                           navigator.language.startsWith('es') ? 'es' : 'en'
+        localStorage.setItem('azimut-lang', browserLang)
+        return browserLang
+      }
+      
+      return 'pt' // Padrão
     } catch (e) {
       // Fallback se localStorage não estiver disponível
       return 'pt'
