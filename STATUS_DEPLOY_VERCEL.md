@@ -109,3 +109,4 @@ Após executar o seed:
 
 **Tudo pronto! Só falta configurar as variáveis na Vercel!** 🚀
 
+

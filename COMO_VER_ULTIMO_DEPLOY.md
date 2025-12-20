@@ -118,3 +118,4 @@ git push
 
 **Agora você sabe como verificar e forçar um novo deploy!** 🚀
 
+

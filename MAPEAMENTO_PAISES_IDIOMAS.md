@@ -169,3 +169,4 @@ if (countryCode === 'MX' || countryCode === 'AR') return 'es'
 
 **Agora o sistema funciona para todos os países!** 🌍
 
+

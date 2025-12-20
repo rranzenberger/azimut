@@ -55,11 +55,17 @@ const App: React.FC = () => {
   })
 
   // Detectar país via IP (funciona com VPN) e ajustar idioma se necessário
+  // IMPORTANTE: Executar apenas uma vez no mount, não a cada navegação
   useEffect(() => {
+    let mounted = true
+    
     const detectAndUpdateLanguage = async () => {
       try {
         const { detectCountryFromIP, getLanguageFromCountry } = await import('./utils/geoDetection')
         const ipGeo = await detectCountryFromIP()
+        
+        // Verificar se componente ainda está montado antes de atualizar
+        if (!mounted) return
         
         if (ipGeo && ipGeo.countryCode !== 'DEFAULT') {
           const detectedLang = getLanguageFromCountry(ipGeo.countryCode)
@@ -81,9 +87,14 @@ const App: React.FC = () => {
       }
     }
     
-    // Executar detecção via IP após renderização inicial
+    // Executar detecção via IP após renderização inicial (apenas uma vez)
     detectAndUpdateLanguage()
-  }, [])
+    
+    // Cleanup: marcar como desmontado
+    return () => {
+      mounted = false
+    }
+  }, []) // Executar apenas uma vez no mount
 
   // Hook de tema (escuro/claro)
   const { theme, toggleTheme } = useTheme()

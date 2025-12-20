@@ -104,3 +104,4 @@ O CMS está compilando e deployando corretamente. Só falta:
 
 **Você tem acesso ao Supabase ou precisa criar/configurar?** 🤔
 
+

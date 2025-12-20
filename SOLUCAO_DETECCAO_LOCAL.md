@@ -156,3 +156,4 @@ fetch(`${API_URL}/geo`) // Não bloqueia
 
 **Problema resolvido!** 🎉
 
+

@@ -84,3 +84,4 @@ O aviso é apenas informativo. Sua variável está correta e segura. Clique em "
 
 **Resumo: Ignore o aviso → Clique em Save → Faça redeploy → Pronto!** ✅
 
+

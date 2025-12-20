@@ -92,3 +92,4 @@
 
 **Agora a detecção de local funciona mesmo se a API estiver offline!** 🎉
 
+

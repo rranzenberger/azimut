@@ -122,3 +122,4 @@ VITE_PREVIEW_PASS=sua-senha-segura
 
 **A variável mais importante é `VITE_CMS_API_URL`!** 🚀
 
+

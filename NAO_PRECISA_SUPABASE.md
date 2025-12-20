@@ -92,3 +92,4 @@ Se quiser storage persistente na Vercel, opções:
 
 **Resumo: Não precisa adicionar nada do Supabase! O CMS já funciona sem ele.** 🎉
 
+

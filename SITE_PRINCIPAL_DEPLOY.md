@@ -85,3 +85,4 @@ git push
 
 **Verifique primeiro se a variável está configurada!** 🔍
 
+

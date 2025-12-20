@@ -180,3 +180,4 @@ Write-Host "JWT_SECRET para Vercel:" -ForegroundColor Yellow
 Write-Host $jwtSecret -ForegroundColor White -BackgroundColor DarkBlue
 Write-Host ""
 
+

@@ -52,3 +52,4 @@ Isso mostra se o CMS está configurado corretamente.
 
 **Adicione a variável e depois envie o print do CMS!** 🚀
 
+

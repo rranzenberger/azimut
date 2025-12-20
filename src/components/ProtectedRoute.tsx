@@ -10,10 +10,10 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const location = useLocation()
 
   useEffect(() => {
-    // Verificar se está autenticado
+    // Verificar se está autenticado (verificar a cada mudança de rota)
     const authToken = sessionStorage.getItem('azimut_preview_auth')
     setIsAuthenticated(authToken === 'authenticated')
-  }, [])
+  }, [location.pathname]) // Verificar quando a rota muda
 
   // Aguardar verificação
   if (isAuthenticated === null) {

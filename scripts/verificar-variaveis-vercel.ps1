@@ -47,3 +47,4 @@ Write-Host "Para gerar JWT_SECRET:" -ForegroundColor Yellow
 Write-Host "  openssl rand -base64 32" -ForegroundColor Gray
 Write-Host ""
 
+

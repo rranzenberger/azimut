@@ -225,3 +225,4 @@ Write-Host "Proximo passo: Conectar o site principal" -ForegroundColor Cyan
 Write-Host "  Leia: DEPLOY_E_INTEGRACAO_COMPLETA.md (PRIORIDADE 2)" -ForegroundColor Yellow
 Write-Host ""
 
+

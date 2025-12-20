@@ -85,16 +85,17 @@ export function useAzimutContent(options: ContentOptions = {}) {
                 console.log('🌍 País confirmado via CMS:', country);
                 
                 // Ajustar idioma se API confirmar país diferente
+                // REMOVIDO: window.location.reload() estava causando problemas na navegação
+                // O idioma já é atualizado via App.tsx useEffect, não precisa recarregar
                 if (!savedLang && country !== 'DEFAULT') {
                   const geo = detectGeoFromTimezone();
                   const apiLanguage = geo.language;
                   
                   if (lang !== apiLanguage) {
-                    lang = apiLanguage;
+                    // Apenas atualizar localStorage, App.tsx vai detectar e atualizar
                     localStorage.setItem('azimut-lang', apiLanguage);
                     console.log(`🌐 Idioma ajustado para ${apiLanguage.toUpperCase()} (confirmado pela API)`);
-                    // Recarregar página para aplicar novo idioma
-                    window.location.reload();
+                    // Não recarregar - deixar App.tsx gerenciar a atualização
                   }
                 }
               }
