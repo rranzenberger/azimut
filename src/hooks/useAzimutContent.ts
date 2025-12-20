@@ -39,14 +39,54 @@ export function useAzimutContent(options: ContentOptions = {}) {
         
         if (autoDetectGeo) {
           try {
-            const geoRes = await fetch(`${API_URL}/geo`);
-            const geoData = await geoRes.json();
-            if (geoData.detected) {
-              country = geoData.country;
-              console.log('🌍 País detectado:', country);
+            // Tentar API do CMS primeiro
+            const geoRes = await fetch(`${API_URL}/geo`, {
+              signal: AbortSignal.timeout(3000), // Timeout de 3s
+            });
+            
+            if (geoRes.ok) {
+              const geoData = await geoRes.json();
+              if (geoData.detected && geoData.country) {
+                country = geoData.country;
+                console.log('🌍 País detectado via CMS:', country);
+              }
             }
           } catch (err) {
-            console.warn('Geo detection failed, using default');
+            // Fallback: detectar via timezone e idioma do navegador
+            console.warn('Geo detection via CMS failed, trying fallback...');
+            
+            try {
+              // Detectar país via timezone (mais confiável que idioma)
+              const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+              
+              // Mapear timezones comuns para países
+              if (timezone.includes('America/New_York') || timezone.includes('America/Chicago') || 
+                  timezone.includes('America/Denver') || timezone.includes('America/Los_Angeles')) {
+                country = 'US';
+                console.log('🌍 País detectado via timezone: US');
+              } else if (timezone.includes('America/Sao_Paulo') || timezone.includes('America/Rio')) {
+                country = 'BR';
+                console.log('🌍 País detectado via timezone: BR');
+              } else if (timezone.includes('America/Toronto') || timezone.includes('America/Vancouver')) {
+                country = 'CA';
+                console.log('🌍 País detectado via timezone: CA');
+              } else if (timezone.includes('Europe')) {
+                country = 'EU';
+                console.log('🌍 País detectado via timezone: EU');
+              } else {
+                // Fallback final: usar idioma do navegador
+                const browserCountry = navigator.language.includes('pt') ? 'BR' :
+                                      navigator.language.includes('en-US') ? 'US' :
+                                      navigator.language.includes('en-CA') ? 'CA' :
+                                      navigator.language.includes('en') ? 'US' :
+                                      navigator.language.includes('fr') ? 'CA' :
+                                      'DEFAULT';
+                country = browserCountry;
+                console.log('🌍 País detectado via idioma:', country);
+              }
+            } catch (fallbackErr) {
+              console.warn('Fallback geo detection failed, using DEFAULT');
+            }
           }
         }
         
