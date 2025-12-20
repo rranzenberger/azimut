@@ -32,7 +32,7 @@ export function useAzimutContent(options: ContentOptions = {}) {
         
         // Verificar se usuário já escolheu idioma manualmente
         const savedLang = localStorage.getItem('azimut-lang');
-        const lang = savedLang || browserLang;
+        let lang = savedLang || browserLang;
         
         // 2. Detectar país (se habilitado)
         let country = 'DEFAULT';
@@ -83,6 +83,17 @@ export function useAzimutContent(options: ContentOptions = {}) {
                                       'DEFAULT';
                 country = browserCountry;
                 console.log('🌍 País detectado via idioma:', country);
+              }
+              
+              // Ajustar idioma baseado no país detectado (se não foi salvo manualmente)
+              if (!savedLang && country !== 'DEFAULT') {
+                if (country === 'US' || country === 'CA') {
+                  lang = 'en';
+                  console.log('🌐 Idioma ajustado para EN baseado no país:', country);
+                } else if (country === 'BR') {
+                  lang = 'pt';
+                  console.log('🌐 Idioma ajustado para PT baseado no país:', country);
+                }
               }
             } catch (fallbackErr) {
               console.warn('Fallback geo detection failed, using DEFAULT');
