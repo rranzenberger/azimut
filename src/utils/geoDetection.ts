@@ -261,3 +261,30 @@ export function detectLanguageFromBrowser(): 'pt' | 'en' | 'fr' | 'es' {
   return 'en';
 }
 
+/**
+ * Detecta país via IP usando API externa (funciona com VPN)
+ * Não depende do backoffice
+ */
+export async function detectCountryFromIP(): Promise<{ country: string; countryCode: string } | null> {
+  try {
+    // Usar ipapi.co (gratuito até 30k req/mês, sem CORS issues)
+    const response = await fetch('https://ipapi.co/json/', {
+      signal: AbortSignal.timeout(3000),
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      if (data.country_code) {
+        return {
+          country: data.country_name || 'Unknown',
+          countryCode: data.country_code,
+        };
+      }
+    }
+  } catch (error) {
+    console.warn('IP detection failed:', error);
+  }
+  
+  return null;
+}
+

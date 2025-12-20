@@ -54,6 +54,37 @@ const App: React.FC = () => {
     }
   })
 
+  // Detectar país via IP (funciona com VPN) e ajustar idioma se necessário
+  useEffect(() => {
+    const detectAndUpdateLanguage = async () => {
+      try {
+        const { detectCountryFromIP, getLanguageFromCountry } = await import('./utils/geoDetection')
+        const ipGeo = await detectCountryFromIP()
+        
+        if (ipGeo && ipGeo.countryCode !== 'DEFAULT') {
+          const detectedLang = getLanguageFromCountry(ipGeo.countryCode)
+          const currentLang = localStorage.getItem('azimut-lang') as Lang | null
+          
+          // Se idioma detectado é diferente do atual, atualizar
+          if (currentLang !== detectedLang) {
+            console.log(`🌍 País detectado via IP: ${ipGeo.country} (${ipGeo.countryCode})`)
+            console.log(`🌐 Idioma detectado: ${detectedLang.toUpperCase()}, atual: ${currentLang?.toUpperCase() || 'nenhum'}`)
+            
+            // Atualizar idioma
+            setLang(detectedLang)
+            localStorage.setItem('azimut-lang', detectedLang)
+            console.log(`✅ Idioma atualizado para ${detectedLang.toUpperCase()}`)
+          }
+        }
+      } catch (error) {
+        // Silencioso - não é crítico
+      }
+    }
+    
+    // Executar detecção via IP após renderização inicial
+    detectAndUpdateLanguage()
+  }, [])
+
   // Hook de tema (escuro/claro)
   const { theme, toggleTheme } = useTheme()
 
