@@ -73,18 +73,12 @@ export default function MediaPage() {
   }
 
   return (
-    <main
-      style={{
-        minHeight: '100vh',
-        background: '#0a0e18',
-        color: '#d3cec3',
-        fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
-        padding: '24px',
-      }}
-    >
-      <div style={{ maxWidth: 900, margin: '0 auto' }}>
-        <h1 style={{ margin: 0, fontSize: 24 }}>Mídias</h1>
-        <p style={{ margin: '6px 0 16px', color: '#c0bccf' }}>
+    <div style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box' }}>
+      <div style={{ maxWidth: 900, margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
+        <h1 style={{ margin: 0, fontSize: 32, fontWeight: 700, marginBottom: 8, letterSpacing: '-0.5px' }}>
+          Mídias
+        </h1>
+        <p style={{ margin: '0 0 24px', color: '#c0bccf', fontSize: 16 }}>
           Envie imagens ou vídeos. Imagens até {MAX_IMAGE_MB}MB, vídeos até {MAX_VIDEO_MB}MB. Alt text até {MAX_ALT} caracteres.
           Imagens: JPEG/PNG/WebP recomendados. Vídeo: MP4/MOV.
         </p>
@@ -114,58 +108,60 @@ export default function MediaPage() {
         <form
           onSubmit={handleSubmit}
           style={{
-            padding: 16,
-            borderRadius: 12,
+            padding: '24px',
+            borderRadius: 16,
             border: '1px solid rgba(255,255,255,0.08)',
             background: 'rgba(255,255,255,0.03)',
             display: 'grid',
-            gap: 12,
+            gap: 16,
+            width: '100%',
+            boxSizing: 'border-box',
           }}
         >
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14 }}>Tipo</label>
+          <div style={{ display: 'grid', gap: 10, width: '100%', boxSizing: 'border-box' }}>
+            <label style={{ fontSize: 15, fontWeight: 600 }}>Tipo</label>
             <select
               value={type}
               onChange={(e) => setType(e.target.value as 'IMAGE' | 'VIDEO')}
-              style={inputStyle}
+              style={{ ...inputStyle, width: '100%', boxSizing: 'border-box' }}
             >
               <option value="IMAGE">Imagem (otimiza e gera webp/avif)</option>
               <option value="VIDEO">Vídeo (mantém original)</option>
             </select>
           </div>
 
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14 }}>Arquivo (máx. 12MB)</label>
+          <div style={{ display: 'grid', gap: 10, width: '100%', boxSizing: 'border-box' }}>
+            <label style={{ fontSize: 15, fontWeight: 600 }}>Arquivo (máx. 12MB)</label>
             <input
               type="file"
               accept={type === 'IMAGE' ? 'image/*' : 'video/*'}
               onChange={(e) => setFile(e.target.files?.[0] || null)}
-              style={{ color: '#fff' }}
+              style={{ color: '#fff', width: '100%', boxSizing: 'border-box' }}
             />
           </div>
 
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14 }}>
-              Alt (PT) <span style={{ color: '#8f8ba2' }}>(máx {MAX_ALT})</span>
+          <div style={{ display: 'grid', gap: 10, width: '100%', boxSizing: 'border-box' }}>
+            <label style={{ fontSize: 15, fontWeight: 600 }}>
+              Alt (PT) <span style={{ color: '#8f8ba2', fontWeight: 400 }}>(máx {MAX_ALT})</span>
             </label>
             <input
               value={altPt}
               onChange={(e) => setAltPt(e.target.value)}
               maxLength={MAX_ALT}
-              style={inputStyle}
+              style={{ ...inputStyle, width: '100%', boxSizing: 'border-box' }}
               placeholder="Descrição curta da imagem/vídeo em PT"
             />
           </div>
 
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14 }}>
-              Alt (EN) <span style={{ color: '#8f8ba2' }}>(máx {MAX_ALT})</span>
+          <div style={{ display: 'grid', gap: 10, width: '100%', boxSizing: 'border-box' }}>
+            <label style={{ fontSize: 15, fontWeight: 600 }}>
+              Alt (EN) <span style={{ color: '#8f8ba2', fontWeight: 400 }}>(máx {MAX_ALT})</span>
             </label>
             <input
               value={altEn}
               onChange={(e) => setAltEn(e.target.value)}
               maxLength={MAX_ALT}
-              style={inputStyle}
+              style={{ ...inputStyle, width: '100%', boxSizing: 'border-box' }}
               placeholder="Short alt text in EN"
             />
           </div>
@@ -201,14 +197,30 @@ export default function MediaPage() {
             type="submit"
             disabled={loading}
             style={{
-              height: 44,
-              borderRadius: 10,
+              height: 48,
+              borderRadius: 12,
               border: 'none',
               background: '#c92337',
               color: '#fff',
               fontWeight: 700,
+              fontSize: 15,
               cursor: 'pointer',
               opacity: loading ? 0.8 : 1,
+              width: '100%',
+              boxSizing: 'border-box',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              if (!loading) {
+                e.currentTarget.style.background = '#b01e2f';
+                e.currentTarget.style.transform = 'translateY(-1px)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!loading) {
+                e.currentTarget.style.background = '#c92337';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }
             }}
           >
             {loading ? 'Enviando...' : 'Enviar mídia'}
@@ -241,19 +253,20 @@ export default function MediaPage() {
           </div>
         )}
       </div>
-    </main>
+    </div>
   );
 }
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
-  height: 42,
-  borderRadius: 8,
+  height: 44,
+  borderRadius: 12,
   border: '1px solid rgba(255,255,255,0.12)',
   background: 'rgba(255,255,255,0.04)',
   color: '#fff',
-  padding: '0 12px',
+  padding: '0 16px',
   outline: 'none',
-  fontSize: 14,
+  fontSize: 15,
+  boxSizing: 'border-box',
 };
 

@@ -61,3 +61,11 @@ echo "💡 Dica: Use vídeos curtos (5-10s) em loop sem áudio!"
 
 
 
+
+
+
+
+
+
+
+

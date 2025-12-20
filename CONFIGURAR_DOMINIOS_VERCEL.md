@@ -90,3 +90,11 @@ A Vercel gera certificados SSL automaticamente para todos os domínios adicionad
 
 **Pronto! Agora é só seguir os passos acima!** 🚀
 
+
+
+
+
+
+
+
+

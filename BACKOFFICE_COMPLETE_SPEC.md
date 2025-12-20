@@ -676,3 +676,11 @@ Quer que eu crie agora um exemplo de implementação ou mockup visual do backoff
 
 
 
+
+
+
+
+
+
+
+

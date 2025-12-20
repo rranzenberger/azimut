@@ -70,3 +70,11 @@ Agora o site está:
 
 **Aguarde a propagação DNS (alguns minutos) e teste!** 🚀
 
+
+
+
+
+
+
+
+

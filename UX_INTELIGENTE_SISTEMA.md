@@ -407,3 +407,11 @@ function analyzeJourney(journey: UserJourney): {
 
 
 
+
+
+
+
+
+
+
+

@@ -18,3 +18,32 @@
 *.log
 desktop.ini
 
+
+
+
+
+../*
+!../azimut-cms
+!../.git
+
+# Excluir documentação
+*.md
+!README.md
+
+# Excluir arquivos de build do site principal
+../dist
+../public
+../src
+../scripts
+
+# Excluir arquivos temporários
+*.zip
+*.log
+desktop.ini
+
+
+
+
+
+
+

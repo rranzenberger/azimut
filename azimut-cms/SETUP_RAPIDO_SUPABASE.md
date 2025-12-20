@@ -178,3 +178,11 @@ Se quiser ativar a IA:
 
 
 
+
+
+
+
+
+
+
+

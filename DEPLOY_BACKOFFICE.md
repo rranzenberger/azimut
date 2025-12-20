@@ -120,3 +120,11 @@ Ou configure na Vercel:
 
 **Pronto! Agora é só seguir os passos acima!** 🚀
 
+
+
+
+
+
+
+
+
