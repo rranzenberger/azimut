@@ -106,21 +106,35 @@ export function useAzimutContent(options: ContentOptions = {}) {
         }
         
         // 3. Buscar conteúdo (com sessionId para personalização)
-        const sessionId = getSessionId();
-        const contentRes = await fetch(
-          `${API_URL}/public/content?lang=${lang}&country=${country}&page=${page}&sessionId=${sessionId}`
-        );
-        
-        if (!contentRes.ok) {
-          throw new Error('Failed to fetch content');
+        // IMPORTANTE: Não bloquear renderização se CMS falhar
+        try {
+          const sessionId = getSessionId();
+          const contentRes = await fetch(
+            `${API_URL}/public/content?lang=${lang}&country=${country}&page=${page}&sessionId=${sessionId}`,
+            {
+              signal: AbortSignal.timeout(5000), // Timeout de 5s
+            }
+          );
+          
+          if (contentRes.ok) {
+            const data = await contentRes.json();
+            setContent(data);
+          } else {
+            // Se falhar, não é crítico - site funciona sem CMS
+            console.warn(`[CMS] Falha ao buscar conteúdo (${contentRes.status}), usando conteúdo local`);
+            setContent(null); // null = usar conteúdo local
+          }
+        } catch (fetchErr) {
+          // Erro de fetch (CORS, timeout, etc) - não é crítico
+          console.warn('[CMS] Erro ao buscar conteúdo do CMS, usando conteúdo local:', fetchErr);
+          setContent(null); // null = usar conteúdo local
         }
         
-        const data = await contentRes.json();
-        setContent(data);
-        
       } catch (err) {
+        // Erro geral - não quebrar renderização
+        console.warn('[CMS] Erro geral, usando conteúdo local:', err);
         setError(err as Error);
-        console.error('Content fetch error:', err);
+        setContent(null); // null = usar conteúdo local
       } finally {
         setLoading(false);
       }

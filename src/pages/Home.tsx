@@ -18,10 +18,16 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   // Integração com CMS - conteúdo personalizado
   const { content: cmsContent, loading: cmsLoading } = useAzimutContent({ page: 'home' })
   
-  // Tracking de página
+  // Tracking de página (não bloqueia renderização)
   useEffect(() => {
-    const cleanup = trackPageView('home')
-    return cleanup
+    try {
+      const cleanup = trackPageView('home')
+      return cleanup
+    } catch (error) {
+      // Se tracking falhar, não quebrar renderização
+      console.warn('Tracking error:', error)
+      return () => {} // Cleanup vazio
+    }
   }, [])
   
   const [recommended, setRecommended] = useState(() => contentModel.cases.slice(0, 3))

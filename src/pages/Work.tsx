@@ -14,10 +14,16 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   const seo = seoData.work[lang]
   const cases = contentModel.cases
   
-  // Tracking de página
+  // Tracking de página (não bloqueia renderização)
   useEffect(() => {
-    const cleanup = trackPageView('work')
-    return cleanup
+    try {
+      const cleanup = trackPageView('work')
+      return cleanup
+    } catch (error) {
+      // Se tracking falhar, não quebrar renderização
+      console.warn('Tracking error:', error)
+      return () => {} // Cleanup vazio
+    }
   }, [])
   const locale = (entry: { pt: string; en: string; es: string }) => {
     if (lang === 'fr') return entry.en // Fallback para francês usar inglês

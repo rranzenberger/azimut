@@ -16,7 +16,7 @@ function getSessionId(): string {
 const API_URL = import.meta.env.VITE_CMS_API_URL || 'http://localhost:3001/api';
 
 // Track page view
-export async function trackPageView(pageSlug: string) {
+export function trackPageView(pageSlug: string): () => void {
   const sessionId = getSessionId();
   const startTime = Date.now();
 
@@ -27,6 +27,7 @@ export async function trackPageView(pageSlug: string) {
       (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
     );
 
+    // Não bloquear renderização se fetch falhar
     fetch(`${API_URL}/track`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -48,6 +49,7 @@ export async function trackPageView(pageSlug: string) {
   window.addEventListener('beforeunload', sendData);
   
   // Enviar dados também ao trocar de rota (SPA)
+  // Retornar função de cleanup
   return () => {
     sendData();
     window.removeEventListener('beforeunload', sendData);

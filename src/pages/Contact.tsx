@@ -35,10 +35,16 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
   const seo = seoData.contact[lang]
   const { trackInteraction } = useUserTracking()
   
-  // Tracking de página
+  // Tracking de página (não bloqueia renderização)
   useEffect(() => {
-    const cleanup = trackPageView('contact')
-    return cleanup
+    try {
+      const cleanup = trackPageView('contact')
+      return cleanup
+    } catch (error) {
+      // Se tracking falhar, não quebrar renderização
+      console.warn('Tracking error:', error)
+      return () => {} // Cleanup vazio
+    }
   }, [])
   
   // Estado para controlar qual modo está ativo
