@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import contentModel, { CaseItem } from '../data/content'
 import { useUserTracking } from '../hooks/useUserTracking'
+import { trackPageView, trackProjectInteraction } from '../utils/analytics'
 
 interface WorkProps {
   lang: Lang
@@ -12,6 +13,12 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   const { trackInteraction } = useUserTracking()
   const seo = seoData.work[lang]
   const cases = contentModel.cases
+  
+  // Tracking de página
+  useEffect(() => {
+    const cleanup = trackPageView('work')
+    return cleanup
+  }, [])
   const locale = (entry: { pt: string; en: string; es: string }) => {
     if (lang === 'fr') return entry.en // Fallback para francês usar inglês
     return entry[lang as 'pt' | 'en' | 'es'] || entry.en
@@ -53,7 +60,10 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           {cases.length > 0 && (
               <article
                 className="mb-8 overflow-hidden rounded-3xl border border-white/10 card-adaptive shadow-[0_32px_80px_rgba(0,0,0,0.6)]"
-                onClick={() => trackInteraction('project_view', cases[0].slug)}
+                onClick={() => {
+                  trackInteraction('project_view', cases[0].slug)
+                  trackProjectInteraction(cases[0].slug, 'CLICK')
+                }}
               >
               <div className="grid md:grid-cols-2">
                 {/* Image/Video Area - BACKOFFICE: cases[0].mediaPoster ou mediaLoop */}
@@ -139,7 +149,11 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               <article
                 key={item.slug}
                 className="group rounded-2xl border border-white/10 card-adaptive overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all hover:border-white/20 hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)]"
-                onClick={() => trackInteraction('project_view', item.slug)}
+                onClick={() => {
+                  trackInteraction('project_view', item.slug)
+                  trackProjectInteraction(item.slug, 'CLICK')
+                }}
+                onMouseEnter={() => trackProjectInteraction(item.slug, 'HOVER')}
               >
                 {/* Image placeholder - BACKOFFICE: item.mediaPoster */}
                 <div className="relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">

@@ -1,0 +1,62 @@
+═══════════════════════════════════════════════════════════════
+VARIAVEIS DE AMBIENTE - SITE PRINCIPAL (AZIMUT)
+═══════════════════════════════════════════════════════════════
+
+VARIAVEL OBRIGATÓRIA:
+───────────────────────────────────────────────────────────────
+Key:
+VITE_CMS_API_URL
+
+Value:
+https://backoffice.azmt.com.br/api
+
+Environments:
+All Environments
+
+Sensitive:
+Disabled
+
+───────────────────────────────────────────────────────────────
+
+VARIAVEIS OPCIONAIS (só se usar área de preview):
+───────────────────────────────────────────────────────────────
+
+Key:
+VITE_PREVIEW_USER
+
+Value:
+azimut
+
+───────────────────────────────────────────────────────────────
+
+Key:
+VITE_PREVIEW_PASS
+
+Value:
+Azimut2025!Preview
+
+───────────────────────────────────────────────────────────────
+
+═══════════════════════════════════════════════════════════════
+INSTRUÇÕES:
+═══════════════════════════════════════════════════════════════
+
+1. Copie o Key e cole no campo "Key"
+2. Copie o Value e cole no campo "Value"
+3. Deixe "All Environments" selecionado
+4. Deixe "Sensitive" como "Disabled"
+5. Clique em "Save"
+6. Depois faça redeploy
+
+═══════════════════════════════════════════════════════════════
+SOBRE O AVISO "VITE_ expõe ao navegador":
+═══════════════════════════════════════════════════════════════
+
+✅ É NORMAL e SEGURO!
+- Todas variáveis VITE_ são públicas no frontend
+- Isso é necessário para o Vite funcionar
+- A URL da API é pública mesmo (não tem segredos)
+- Pode ignorar o aviso e continuar
+
+═══════════════════════════════════════════════════════════════
+

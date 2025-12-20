@@ -6,6 +6,7 @@ import { type UserProfile } from '../components/BudgetWizard'
 import { useUserTracking } from '../hooks/useUserTracking'
 import CredibilidadeEditais from '../components/CredibilidadeEditais'
 import OportunidadesAtivas from '../components/OportunidadesAtivas'
+import { trackPageView, submitLead } from '../utils/analytics'
 
 interface ContactProps {
   lang: Lang
@@ -33,6 +34,12 @@ type FormState = {
 const Contact: React.FC<ContactProps> = ({ lang }) => {
   const seo = seoData.contact[lang]
   const { trackInteraction } = useUserTracking()
+  
+  // Tracking de página
+  useEffect(() => {
+    const cleanup = trackPageView('contact')
+    return cleanup
+  }, [])
   
   // Estado para controlar qual modo está ativo
   const [mode, setMode] = useState<'wizard' | 'form'>('wizard')
@@ -156,40 +163,75 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
     setForm(prev => ({ ...prev, [field]: e.target.value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Placeholder: integrate with backend /api/brief
-    console.log('Brief data:', form)
-    alert(lang === 'pt' ? 'Brief enviado! Retornaremos em breve.' : lang === 'es' ? 'Brief enviado. Responderemos pronto.' : 'Brief sent! We will reply soon.')
-    setForm({
-      name: '',
-      email: '',
-      phone: '',
-      org: '',
-      countryCity: '',
-      projectType: '',
-      objective: '',
-      place: '',
-      timeframe: '',
-      budget: '',
-      audience: '',
-      references: '',
-      themes: '',
-      message: ''
-    })
+    
+    try {
+      // Enviar lead para o CMS
+      await submitLead({
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        company: form.org,
+        position: form.projectType,
+        projectType: form.projectType,
+        budget: form.budget,
+        timeline: form.timeframe,
+        description: `${form.objective}\n\nLocal: ${form.place}\nPúblico: ${form.audience}\nTemas: ${form.themes}\nReferências: ${form.references}\n\nMensagem: ${form.message}`
+      })
+      
+      alert(lang === 'pt' ? '✅ Brief enviado! Retornaremos em breve.' : lang === 'es' ? '✅ Brief enviado. Responderemos pronto.' : '✅ Brief sent! We will reply soon.')
+      
+      setForm({
+        name: '',
+        email: '',
+        phone: '',
+        org: '',
+        countryCity: '',
+        projectType: '',
+        objective: '',
+        place: '',
+        timeframe: '',
+        budget: '',
+        audience: '',
+        references: '',
+        themes: '',
+        message: ''
+      })
+    } catch (error) {
+      console.error('Erro ao enviar lead:', error)
+      alert(lang === 'pt' ? 'Erro ao enviar. Tente novamente.' : lang === 'es' ? 'Error al enviar. Intente de nuevo.' : 'Error sending. Please try again.')
+    }
   }
 
   // Handler para quando o wizard completar
   const handleWizardComplete = async (profile: UserProfile & { leadScore?: number; priority?: string }) => {
-    const successMessage = {
-      pt: '✅ Brief enviado com sucesso! Analisaremos seu projeto e retornaremos em breve.',
-      en: '✅ Brief sent successfully! We will review your project and get back to you soon.',
-      es: '✅ Brief enviado con éxito! Revisaremos su proyecto y responderemos pronto.',
-      fr: '✅ Brief sent successfully! We will review your project and get back to you soon.'
+    try {
+      // Enviar lead para o CMS
+      await submitLead({
+        name: profile.name || '',
+        email: profile.email || '',
+        phone: profile.phone || '',
+        company: profile.organization || '',
+        projectType: profile.needs?.join(', ') || '',
+        budget: profile.budget || '',
+        timeline: profile.timeline || '',
+        description: `Objetivo: ${profile.objective || ''}\nLocalização: ${profile.location || ''}\nPúblico: ${profile.audience || ''}\n\nScore: ${profile.leadScore || 0}/10\nPrioridade: ${profile.priority || 'MEDIUM'}`
+      })
+      
+      const successMessage = {
+        pt: '✅ Brief enviado com sucesso! Analisaremos seu projeto e retornaremos em breve.',
+        en: '✅ Brief sent successfully! We will review your project and get back to you soon.',
+        es: '✅ Brief enviado con éxito! Revisaremos su proyecto y responderemos pronto.',
+        fr: '✅ Brief sent successfully! We will review your project and get back to you soon.'
+      }
+      
+      alert(successMessage[lang])
+      setWizardOpen(false)
+    } catch (error) {
+      console.error('Erro ao enviar lead:', error)
+      alert(lang === 'pt' ? 'Erro ao enviar. Tente novamente.' : lang === 'es' ? 'Error al enviar. Intente de nuevo.' : 'Error sending. Please try again.')
     }
-    
-    alert(successMessage[lang])
-    setWizardOpen(false)
   }
 
   return (

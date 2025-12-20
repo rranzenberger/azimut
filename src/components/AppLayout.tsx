@@ -29,3 +29,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, lang, setLang, theme, t
 
 export default AppLayout
 
+
+
+
+
+
+
+
+

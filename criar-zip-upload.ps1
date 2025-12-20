@@ -31,3 +31,11 @@ Write-Host "✅ ZIP criado: azimut-para-github.zip"
 Write-Host "📤 Agora você pode fazer upload deste arquivo no GitHub!"
 
 
+
+
+
+
+
+
+
+

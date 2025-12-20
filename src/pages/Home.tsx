@@ -4,6 +4,8 @@ import SEO, { seoData } from '../components/SEO'
 import contentModel from '../data/content'
 import { getRecommendations } from '../utils/reco'
 import { useUserTracking } from '../hooks/useUserTracking'
+import { trackPageView } from '../utils/analytics'
+import { useAzimutContent } from '../hooks/useAzimutContent'
 
 interface HomeProps {
   lang: Lang
@@ -12,6 +14,16 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = ({ lang }) => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
   useUserTracking()
+  
+  // Integração com CMS - conteúdo personalizado
+  const { content: cmsContent, loading: cmsLoading } = useAzimutContent({ page: 'home' })
+  
+  // Tracking de página
+  useEffect(() => {
+    const cleanup = trackPageView('home')
+    return cleanup
+  }, [])
+  
   const [recommended, setRecommended] = useState(() => contentModel.cases.slice(0, 3))
   const locale = (entry: { pt: string; en: string; es: string }) => {
     if (lang === 'fr') return entry.en // Fallback para francês usar inglês
