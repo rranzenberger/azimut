@@ -56,11 +56,27 @@ const App: React.FC = () => {
 
   // Detectar país via IP (funciona com VPN) e ajustar idioma se necessário
   // IMPORTANTE: Executar apenas uma vez no mount, não a cada navegação
+  // CORREÇÃO: Só atualizar se realmente necessário (VPN ativa ou país diferente)
   useEffect(() => {
     let mounted = true
     
     const detectAndUpdateLanguage = async () => {
       try {
+        // Verificar se já tem idioma salvo E se timezone já detectou corretamente
+        const savedLang = localStorage.getItem('azimut-lang') as Lang | null
+        const timezoneGeo = detectGeoFromTimezone()
+        
+        // Se timezone já detectou corretamente e tem idioma salvo, não sobrescrever
+        if (savedLang && timezoneGeo.countryCode !== 'DEFAULT') {
+          const timezoneLang = timezoneGeo.language
+          // Se idioma salvo corresponde ao timezone, não fazer nada (usuário está no país correto)
+          if (savedLang === timezoneLang) {
+            console.log(`✅ Idioma já correto (${savedLang.toUpperCase()}) baseado em timezone`)
+            return
+          }
+        }
+        
+        // Só detectar via IP se necessário (VPN ou país diferente)
         const { detectCountryFromIP, getLanguageFromCountry } = await import('./utils/geoDetection')
         const ipGeo = await detectCountryFromIP()
         
@@ -71,19 +87,25 @@ const App: React.FC = () => {
           const detectedLang = getLanguageFromCountry(ipGeo.countryCode)
           const currentLang = localStorage.getItem('azimut-lang') as Lang | null
           
-          // Se idioma detectado é diferente do atual, atualizar
-          if (currentLang !== detectedLang) {
+          // Só atualizar se:
+          // 1. País detectado via IP é diferente do timezone (VPN ativa)
+          // 2. E idioma detectado é diferente do atual
+          if (ipGeo.countryCode !== timezoneGeo.countryCode && currentLang !== detectedLang) {
             console.log(`🌍 País detectado via IP: ${ipGeo.country} (${ipGeo.countryCode})`)
+            console.log(`🌍 País detectado via timezone: ${timezoneGeo.country} (${timezoneGeo.countryCode})`)
             console.log(`🌐 Idioma detectado: ${detectedLang.toUpperCase()}, atual: ${currentLang?.toUpperCase() || 'nenhum'}`)
             
-            // Atualizar idioma
+            // Atualizar idioma apenas se realmente necessário (VPN detectada)
             setLang(detectedLang)
             localStorage.setItem('azimut-lang', detectedLang)
-            console.log(`✅ Idioma atualizado para ${detectedLang.toUpperCase()}`)
+            console.log(`✅ Idioma atualizado para ${detectedLang.toUpperCase()} (VPN detectada)`)
+          } else {
+            console.log(`ℹ️ Idioma mantido (${currentLang?.toUpperCase() || 'nenhum'}) - sem VPN ou já correto`)
           }
         }
       } catch (error) {
         // Silencioso - não é crítico
+        console.warn('Detecção via IP falhou (não crítico):', error)
       }
     }
     

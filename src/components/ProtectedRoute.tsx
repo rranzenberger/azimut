@@ -10,12 +10,24 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const location = useLocation()
 
   useEffect(() => {
-    // Verificar se está autenticado (verificar a cada mudança de rota)
-    const authToken = sessionStorage.getItem('azimut_preview_auth')
-    setIsAuthenticated(authToken === 'authenticated')
+    // Verificar autenticação de forma síncrona (não async para evitar delay)
+    const checkAuth = () => {
+      try {
+        const authToken = sessionStorage.getItem('azimut_preview_auth')
+        const authenticated = authToken === 'authenticated'
+        setIsAuthenticated(authenticated)
+      } catch (error) {
+        // Se houver erro ao acessar sessionStorage, considerar não autenticado
+        console.warn('Erro ao verificar autenticação:', error)
+        setIsAuthenticated(false)
+      }
+    }
+    
+    // Verificar imediatamente
+    checkAuth()
   }, [location.pathname]) // Verificar quando a rota muda
 
-  // Aguardar verificação
+  // Aguardar verificação inicial (apenas no primeiro render)
   if (isAuthenticated === null) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--theme-bg)' }}>
