@@ -15,6 +15,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
   useUserTracking()
   
+  // Função locale deve ser definida ANTES de ser usada
+  const locale = (entry: { pt: string; en: string; es: string }) => {
+    if (lang === 'fr') return entry.en // Fallback para francês usar inglês
+    return entry[lang as 'pt' | 'en' | 'es'] || entry.en
+  }
+  
   // Integração com CMS - conteúdo personalizado
   const { content: cmsContent, loading: cmsLoading } = useAzimutContent({ page: 'home' })
   
@@ -34,10 +40,6 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   }, [])
   
   const [recommended, setRecommended] = useState(() => contentModel.cases.slice(0, 3))
-  const locale = (entry: { pt: string; en: string; es: string }) => {
-    if (lang === 'fr') return entry.en // Fallback para francês usar inglês
-    return entry[lang as 'pt' | 'en' | 'es'] || entry.en
-  }
   
   useEffect(() => {
     // Detectar tema do documento
