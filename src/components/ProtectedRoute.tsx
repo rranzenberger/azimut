@@ -11,11 +11,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const hasCheckedRef = useRef(false)
 
   useEffect(() => {
-    // Evitar múltiplas verificações na mesma rota
-    if (hasCheckedRef.current && location.pathname === location.pathname) {
-      return
-    }
-
     // Verificar autenticação de forma síncrona (não async para evitar delay)
     const checkAuth = () => {
       try {
@@ -27,14 +22,15 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
         console.log(`[ProtectedRoute] Autenticado: ${authenticated}`)
         
         setIsAuthenticated(authenticated)
-        hasCheckedRef.current = true
       } catch (error) {
         // Se houver erro ao acessar sessionStorage, considerar não autenticado
         console.error('[ProtectedRoute] Erro ao verificar autenticação:', error)
         setIsAuthenticated(false)
-        hasCheckedRef.current = true
       }
     }
+    
+    // Resetar ref quando a rota muda
+    hasCheckedRef.current = false
     
     // Verificar imediatamente
     checkAuth()

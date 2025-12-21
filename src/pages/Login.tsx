@@ -37,8 +37,8 @@ const Login: React.FC = () => {
       // Autenticar e salvar sessão
       sessionStorage.setItem('azimut_preview_auth', 'authenticated')
       const returnTo = (location.state as any)?.from?.pathname || '/'
+      // Navegar sem reload - React Router já atualiza tudo
       navigate(returnTo, { replace: true })
-      window.location.reload() // Recarregar para garantir que tudo atualize
     } else {
       setError('Credenciais inválidas. Tente novamente.')
       setLoading(false)
