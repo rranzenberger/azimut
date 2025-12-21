@@ -8,37 +8,48 @@
 ../node_modules
 ../.git
 ../public/cases
+../src
 
-# Ignorar arquivos locais
+# Ignorar arquivos locais e documentação
 *.log
 .DS_Store
 .env.local
 .env.*.local
 
+# Ignorar todos os arquivos de documentação dentro do azimut-cms
+*.md
+!README.md
 
+# Ignorar diretórios desnecessários
+azimut-cms/
+src/
+*.md
+COMO_*.md
+CHECKLIST_*.md
+DEPLOY_*.md
+ENV_*.md
+DIAGNOSTICAR_*.md
+SOLUCAO_*.md
+VERIFICAR_*.md
+NAO_*.md
+O_QUE_*.md
+PASSO_*.md
+PROXIMOS_*.md
+REPOSITORIO_*.md
+CONFIGURAR_*.md
+DIGITE_*.md
+ERRO_*.md
+CLIQUE_*.md
+CLICAR_*.md
+MIGRATION_*.md
+SETUP_*.md
+INTEGRATION_*.md
+BACKOFFICE_*.md
+QUICK_START.md
 
-
-
-../*.md
-../DEPLOY*.md
-../CHECKLIST*.md
-../ENV*.md
-../dist
-../build
-../node_modules
-../.git
-../public/cases
-
-# Ignorar arquivos locais
-*.log
-.DS_Store
-.env.local
-.env.*.local
-
-
-
-
-
-
-
-
+# Ignorar arquivos de build e cache
+.next/
+out/
+.vercel/
+.turbo/
+*.tsbuildinfo

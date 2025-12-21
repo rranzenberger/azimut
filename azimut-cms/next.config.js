@@ -37,6 +37,28 @@ const nextConfig = {
   // Usar SWC minify
   swcMinify: true,
   
+  // Limitar arquivos processados durante build traces
+  experimental: {
+    // Desabilitar otimizações que podem causar stack overflow
+    optimizePackageImports: [],
+  },
+  
+  // Excluir arquivos desnecessários do build traces
+  outputFileTracingExcludes: {
+    '*': [
+      '**/*.md',
+      '**/COMO_*.md',
+      '**/CHECKLIST_*.md',
+      '**/DEPLOY_*.md',
+      '**/DIAGNOSTICAR_*.md',
+      '**/SOLUCAO_*.md',
+      '**/VERIFICAR_*.md',
+      '**/azimut-cms/azimut-cms/**',
+      '**/src/**',
+      '../**',
+    ],
+  },
+  
   async headers() {
     return [
       {
