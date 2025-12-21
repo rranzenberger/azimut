@@ -20,6 +20,7 @@ export default async function AdminLayout({
   }
 
   // Buscar dados do usuário
+  // Updated: Force rebuild to fix pages menu
   let user = null;
   try {
     user = await prisma.user.findUnique({
@@ -147,4 +148,5 @@ export default async function AdminLayout({
     </div>
   );
 }
+
 
