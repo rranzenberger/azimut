@@ -62,7 +62,13 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   // Se autenticado, mostrar conteúdo protegido
   console.log(`[ProtectedRoute] Autenticado, mostrando conteúdo para: ${location.pathname}`)
-  return <>{children}</>
+  
+  // Forçar re-render para garantir que o conteúdo seja exibido
+  return (
+    <div key={location.pathname}>
+      {children}
+    </div>
+  )
 }
 
 export default ProtectedRoute

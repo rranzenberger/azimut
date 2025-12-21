@@ -9,6 +9,7 @@ import StructuredData from './components/StructuredData'
 import InstallPrompt from './components/InstallPrompt'
 import PlausibleScript from './components/PlausibleScript'
 import AppLayout from './components/AppLayout'
+import ErrorBoundary from './components/ErrorBoundary'
 import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDetection'
 
 // Lazy loading de páginas para melhor performance
@@ -145,8 +146,12 @@ const App: React.FC = () => {
         <InstallPrompt />
         
         <AppLayout lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
-          <Suspense fallback={<LoadingSkeleton />}>
-            <Routes>
+          <Suspense 
+            fallback={<LoadingSkeleton />}
+            // Error boundary para capturar erros no lazy loading
+          >
+            <ErrorBoundary>
+              <Routes>
               {/* Rota de Login - SEM ProtectedRoute */}
               <Route path="/login" element={<Login />} />
               
@@ -210,6 +215,7 @@ const App: React.FC = () => {
               {/* Rota 404 - captura qualquer URL não encontrada */}
               <Route path="*" element={<NotFound lang={lang} />} />
             </Routes>
+            </ErrorBoundary>
           </Suspense>
         </AppLayout>
       </BrowserRouter>
