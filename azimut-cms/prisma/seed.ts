@@ -215,7 +215,12 @@ async function main() {
   console.log('\nCreating pages...');
   const homePage = await prisma.page.upsert({
     where: { slug: 'home' },
-    update: {},
+    update: {
+      heroSloganPt: 'Experiências que Conectam Mundos',
+      heroSloganEn: 'Experiences that Connect Worlds',
+      heroSloganEs: 'Experiencias que Conectan Mundos',
+      heroSloganFr: 'Expériences qui Connectent les Mondes',
+    },
     create: {
       name: 'Home',
       slug: 'home',
@@ -223,6 +228,10 @@ async function main() {
       seoTitleEn: 'Azimut - Immersive, Interactive and Cinematic Experiences',
       seoDescPt: 'Estúdio criativo-tecnológico especializado em cenografia digital, VR/XR e IA.',
       seoDescEn: 'Creative-tech studio specialized in digital scenography, VR/XR and AI.',
+      heroSloganPt: 'Experiências que Conectam Mundos',
+      heroSloganEn: 'Experiences that Connect Worlds',
+      heroSloganEs: 'Experiencias que Conectan Mundos',
+      heroSloganFr: 'Expériences qui Connectent les Mondes',
       status: 'PUBLISHED',
     },
   });

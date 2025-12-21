@@ -18,6 +18,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   // Integração com CMS - conteúdo personalizado
   const { content: cmsContent, loading: cmsLoading } = useAzimutContent({ page: 'home' })
   
+  // Slogan do hero: CMS ou fallback local
+  const heroSlogan = cmsContent?.page?.heroSlogan || locale(contentModel.home.hero.title)
+  
   // Tracking de página (não bloqueia renderização)
   useEffect(() => {
     try {
@@ -98,10 +101,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               <span className="text-azimut-red font-semibold">AZIMUT</span>
             </div>
 
-            {/* Título em inglês - impacto internacional */}
+            {/* Título - slogan complementar ao header (sem redundância) - vem do CMS */}
             <h1 className="mb-3 sm:mb-4 font-handel text-[1.8rem] leading-[1.15] tracking-[0.12em] uppercase sm:text-[2.1rem] sm:tracking-[0.14em] md:text-[2.5rem] md:tracking-[0.16em] lg:text-[2.8rem] animate-fade-in-up opacity-0" style={{ animationDelay: '0.2s', color: 'var(--theme-text)' }}>
-              <span className="block">IMMERSIVE • INTERACTIVE</span>
-              <span className="block">CINEMATIC EXPERIENCES</span>
+              {heroSlogan.toUpperCase()}
             </h1>
 
             <p className="mb-4 sm:mb-6 max-w-xl text-[0.85rem] sm:text-[0.9rem] md:text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0" style={{ animationDelay: '0.3s', color: 'var(--theme-text-muted)' }}>

@@ -49,11 +49,16 @@ export interface LabItem {
 
 export const homeContent = {
   hero: {
-    title: 'Immersive • Interactive • Cinematic Experiences',
+    title: {
+      pt: 'Experiências que Conectam Mundos',
+      en: 'Experiences that Connect Worlds',
+      es: 'Experiencias que Conectan Mundos',
+      fr: 'Expériences qui Connectent les Mondes'
+    },
     subtitle: {
-      pt: 'Estúdio binacional Brasil–Canadá que une cinema, tecnologia e design para criar museus, instalações imersivas, filmes VR/IA e ativações interativas.',
-      en: 'A Brazil–Canada studio blending film, technology and design to create museums, immersive installations, VR/AI films and interactive brand experiences.',
-      es: 'Estudio binacional Brasil–Canadá que une cine, tecnología y diseño para museos, instalaciones inmersivas, films VR/IA y activaciones interactivas.'
+      pt: 'Após 30 anos explorando diferentes caminhos, descobrimos que nossa combinação de curadoria de festivais, produção comercial, educação e pesquisa é única. Transformamos espaços culturais, marcas e experiências imersivas entre Brasil e Canadá.',
+      en: 'After 30 years exploring different paths, we discovered our combination of festival curation, commercial production, education and research is unique. We transform cultural spaces, brands and immersive experiences between Brazil and Canada.',
+      es: 'Tras 30 años explorando diferentes caminos, descubrimos que nuestra combinación de curaduría de festivales, producción comercial, educación e investigación es única. Transformamos espacios culturales, marcas y experiencias inmersivas entre Brasil y Canadá.'
     }
   },
   pillars: [
@@ -99,9 +104,9 @@ export const services: ServiceItem[] = [
       es: 'Cine & AV'
     },
     shortDescription: {
-      pt: 'Captação 4K/6K/8K, direção, fotografia, som, edição, cor, VFX, motion e finalização.',
-      en: '4K/6K/8K capture, directing, DP, sound, editing, color, VFX, motion and finishing.',
-      es: 'Captura 4K/6K/8K, dirección, foto, sonido, edición, color, VFX, motion y finishing.'
+      pt: 'Criamos narrativas cinematográficas que conectam audiências. Do conceito à finalização, entregamos conteúdo de alta qualidade para museus, festivais e marcas, com expertise técnica de 30 anos.',
+      en: 'We create cinematic narratives that connect audiences. From concept to finishing, we deliver high-quality content for museums, festivals and brands, with 30 years of technical expertise.',
+      es: 'Creamos narrativas cinematográficas que conectan audiencias. Del concepto a la finalización, entregamos contenido de alta calidad para museos, festivales y marcas, con expertise técnica de 30 años.'
     }
   },
   {
@@ -112,9 +117,9 @@ export const services: ServiceItem[] = [
       es: 'Animación 2D/3D'
     },
     shortDescription: {
-      pt: 'Modelagem orgânica/hard, rig, acting, render, composição; storyboard e animatic.',
-      en: 'Organic/hard modeling, rig, acting, render, comp; storyboard and animatic.',
-      es: 'Modelado orgánico/hard, rig, acting, render, comp; storyboard y animatic.'
+      pt: 'Damos vida a personagens e mundos através de animação 2D/3D. Nossa expertise técnica permite criar narrativas visuais envolventes, desde storyboards até finalização completa.',
+      en: 'We bring characters and worlds to life through 2D/3D animation. Our technical expertise enables us to create engaging visual narratives, from storyboards to complete finishing.',
+      es: 'Damos vida a personajes y mundos a través de animación 2D/3D. Nuestra expertise técnica nos permite crear narrativas visuales envolventes, desde storyboards hasta finalización completa.'
     }
   },
   {
@@ -125,9 +130,9 @@ export const services: ServiceItem[] = [
       es: 'XR / Interactivo'
     },
     shortDescription: {
-      pt: 'Cinematic VR 360, apps VR para HMD, AR/MR para museus/marcas, ambientes imersivos e mapping.',
-      en: 'Cinematic VR 360, VR apps for HMD, AR/MR for museums/brands, immersive rooms and mapping.',
-      es: 'VR 360 cinematográfico, apps VR para HMD, AR/MR para museos/marcas, salas inmersivas y mapping.'
+      pt: 'Criamos experiências imersivas que transportam pessoas para novos mundos. De filmes VR 360° a instalações interativas, nossa curadoria em festivais nos dá uma visão única do que funciona em narrativas imersivas.',
+      en: 'We create immersive experiences that transport people to new worlds. From 360° VR films to interactive installations, our festival curation gives us unique insight into what works in immersive storytelling.',
+      es: 'Creamos experiencias inmersivas que transportan personas a nuevos mundos. De películas VR 360° a instalaciones interactivas, nuestra curaduría en festivales nos da una visión única de lo que funciona en narrativas inmersivas.'
     }
   },
   {
@@ -138,9 +143,9 @@ export const services: ServiceItem[] = [
       es: 'Arte Técnica / CAD / Revit'
     },
     shortDescription: {
-      pt: 'Modelagem geométrica, props, cenários; plantas, BIM, as-built; integração AV + espaço.',
-      en: 'Geometric modeling, props, sets; CAD/BIM/as-built; AV + space integration.',
-      es: 'Modelado geométrico, props, sets; CAD/BIM/as-built; integración AV + espacio.'
+      pt: 'Conectamos o digital ao físico. Nossa expertise em CAD/BIM e arte técnica permite integrar conteúdo audiovisual com espaços arquitetônicos, criando experiências que respeitam tanto a narrativa quanto o espaço.',
+      en: 'We connect digital to physical. Our expertise in CAD/BIM and technical art allows us to integrate audiovisual content with architectural spaces, creating experiences that respect both narrative and space.',
+      es: 'Conectamos lo digital con lo físico. Nuestra expertise en CAD/BIM y arte técnica nos permite integrar contenido audiovisual con espacios arquitectónicos, creando experiencias que respetan tanto la narrativa como el espacio.'
     }
   },
   {
@@ -151,22 +156,35 @@ export const services: ServiceItem[] = [
       es: 'IA Creativa'
     },
     shortDescription: {
-      pt: 'Vídeo/filme IA, personagens/assets IA, campanhas IA, pipelines IA + cinema, consultoria IA.',
-      en: 'AI-driven video/film, characters/assets, AI campaigns, AI+cinema pipelines, AI consulting.',
-      es: 'Video/film IA, personajes/assets IA, campañas IA, pipelines IA+cine, consultoría IA.'
+      pt: 'Exploramos o potencial da IA generativa para narrativas. Nossa pesquisa desde 1997 e experiência prática nos permite criar pipelines únicos que combinam IA com linguagem cinematográfica tradicional.',
+      en: 'We explore the potential of generative AI for storytelling. Our research since 1997 and practical experience enables us to create unique pipelines that combine AI with traditional cinematic language.',
+      es: 'Exploramos el potencial de la IA generativa para narrativas. Nuestra investigación desde 1997 y experiencia práctica nos permite crear pipelines únicos que combinan IA con lenguaje cinematográfico tradicional.'
     }
   },
   {
     slug: 'education',
     title: {
-      pt: 'Educação & Consultoria',
-      en: 'Education & Consulting',
-      es: 'Educación & Consultoría'
+      pt: 'Educação & Formação',
+      en: 'Education & Training',
+      es: 'Educación & Formación'
     },
     shortDescription: {
-      pt: 'Workshops IA/VR/VFX/3D, mentorias, curadoria VR/IA, orientação acadêmica (VFS/VanArts).',
-      en: 'AI/VR/VFX/3D workshops, mentoring, VR/AI curation, academic guidance (VFS/VanArts).',
-      es: 'Workshops IA/VR/VFX/3D, mentoría, curaduría VR/IA, guía académica (VFS/VanArts).'
+      pt: 'Compartilhamos conhecimento acumulado em 30 anos. Nossos workshops e mentorias formaram centenas de profissionais, enquanto nossa curadoria em festivais nos permite identificar e apresentar as melhores práticas do setor.',
+      en: 'We share knowledge accumulated over 30 years. Our workshops and mentoring have trained hundreds of professionals, while our festival curation allows us to identify and present the industry\'s best practices.',
+      es: 'Compartimos conocimiento acumulado en 30 años. Nuestros workshops y mentorías han formado cientos de profesionales, mientras nuestra curaduría en festivales nos permite identificar y presentar las mejores prácticas del sector.'
+    }
+  },
+  {
+    slug: 'consulting',
+    title: {
+      pt: 'Consultoria & Estratégia',
+      en: 'Consulting & Strategy',
+      es: 'Consultoría & Estrategia'
+    },
+    shortDescription: {
+      pt: 'Acompanhamos projetos desde a concepção até a execução. Nossa experiência em captação de recursos (editais nacionais e internacionais) e estratégia de IA permite que clientes realizem projetos que de outra forma não conseguiriam.',
+      en: 'We support projects from conception to execution. Our experience in funding (national and international grants) and AI strategy enables clients to realize projects they otherwise could not.',
+      es: 'Acompañamos proyectos desde la concepción hasta la ejecución. Nuestra experiencia en captación de recursos (editais nacionales e internacionales) y estrategia de IA permite que clientes realicen proyectos que de otra forma no podrían.'
     }
   }
 ]

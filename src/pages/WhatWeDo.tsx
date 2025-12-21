@@ -38,11 +38,17 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
         </div>
 
         <div className="mx-auto max-w-5xl px-6">
-          <h1 className="mb-8 font-handel text-4xl uppercase tracking-[0.16em] md:text-5xl" style={{ color: 'var(--theme-text)' }}>
+          <h1 className="mb-4 font-handel text-4xl uppercase tracking-[0.16em] md:text-5xl" style={{ color: 'var(--theme-text)' }}>
             {t(lang, 'navWhat')}
           </h1>
-          <p className="mb-8 text-lg leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
-            {t(lang, 'cardBody')}
+          <p className="mb-8 max-w-3xl text-lg md:text-xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+            {lang === 'pt' 
+              ? 'Combinamos cinema, design interativo, storytelling espacial e pipelines com IA para criar instalações narrativas, ambientes híbridos e experiências temporais. Nossa abordagem única integra pesquisa, produção e educação, permitindo projetos que outros estúdios não conseguem realizar.'
+              : lang === 'es'
+              ? 'Combinamos cine, diseño interactivo, narrativa espacial y pipelines con IA para crear instalaciones narrativas, entornos híbridos y experiencias temporales. Nuestro enfoque único integra investigación, producción y educación, permitiendo proyectos que otros estudios no pueden realizar.'
+              : lang === 'fr'
+              ? 'Nous combinons cinéma, design interactif, narration spatiale et pipelines avec IA pour créer des installations narratives, des environnements hybrides et des expériences temporelles. Notre approche unique intègre recherche, production et éducation, permettant des projets que d\'autres studios ne peuvent pas réaliser.'
+              : 'We combine cinema, interactive design, spatial storytelling and AI pipelines to create narrative installations, hybrid environments and time-based experiences. Our unique approach integrates research, production and education, enabling projects other studios cannot deliver.'}
           </p>
 
           <div className="grid gap-6 sm:grid-cols-2">

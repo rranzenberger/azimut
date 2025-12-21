@@ -4,7 +4,6 @@ import SEO, { seoData } from '../components/SEO'
 import { studioContent } from '../data/studioContent'
 import { useUserTracking } from '../hooks/useUserTracking'
 import CredibilidadeEditais from '../components/CredibilidadeEditais'
-import OportunidadesAtivas from '../components/OportunidadesAtivas'
 
 interface StudioProps {
   lang: Lang
@@ -334,50 +333,136 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         </div>
 
         <div className="mx-auto max-w-6xl px-6">
-          {/* Header da página */}
-          <div className="mb-12 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+          {/* ═══════════════════════════════════════════════════════════════
+              HERO SECTION - IMPACTANTE
+              ═══════════════════════════════════════════════════════════ */}
+          <div className="mb-16 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
             <span className="mb-2 block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
               {content.pageLabel}
             </span>
-            <h1 className="font-handel text-4xl uppercase tracking-[0.12em] md:text-5xl lg:text-6xl" style={{ color: 'var(--theme-text)' }}>
+            <h1 className="mb-6 font-handel text-4xl uppercase tracking-[0.12em] md:text-5xl lg:text-6xl" style={{ color: 'var(--theme-text)' }}>
               {content.pageTitle}
             </h1>
+            
+            {/* Hero Message - Destaque Único */}
+            <div className="card-dark-fixed rounded-2xl p-6 md:p-8 mb-8 border-l-4" style={{ borderLeftColor: '#c92337' }}>
+              <p className="mb-4 font-handel text-xl md:text-2xl uppercase tracking-[0.08em] text-azimut-red">
+                {lang === 'pt' 
+                  ? 'Após 30 anos, descobrimos que nossa combinação é única:'
+                  : lang === 'es'
+                  ? 'Tras 30 años, descubrimos que nuestra combinación es única:'
+                  : lang === 'fr'
+                  ? 'Après 30 ans, nous avons découvert que notre combinaison est unique:'
+                  : 'After 30 years, we discovered our combination is unique:'}
+              </p>
+              <p className="mb-6 text-sm md:text-base leading-relaxed" style={{ color: 'var(--theme-card-text, var(--theme-text-secondary))' }}>
+                {lang === 'pt' 
+                  ? 'Não encontramos outro estúdio no mundo que integre curadoria de festivais, produção comercial, educação e pesquisa da forma como fazemos. Isso nos permite criar projetos que outros não conseguem.'
+                  : lang === 'es'
+                  ? 'No encontramos otro estudio en el mundo que integre curaduría de festivales, producción comercial, educación e investigación como lo hacemos. Esto nos permite crear proyectos que otros no pueden.'
+                  : lang === 'fr'
+                  ? 'Nous n\'avons pas trouvé d\'autre studio au monde qui intègre curation de festivals, production commerciale, éducation et recherche comme nous le faisons. Cela nous permet de créer des projets que d\'autres ne peuvent pas.'
+                  : 'We haven\'t found another studio in the world that integrates festival curation, commercial production, education and research the way we do. This allows us to create projects others cannot.'}
+              </p>
+              <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3 mt-4">
+                {[
+                  { pt: 'Curadoria', en: 'Curation', es: 'Curaduría', fr: 'Curation' },
+                  { pt: 'Tecnologia', en: 'Technology', es: 'Tecnología', fr: 'Technologie' },
+                  { pt: 'Audiovisual', en: 'Audiovisual', es: 'Audiovisual', fr: 'Audiovisuel' },
+                  { pt: 'Imersividade', en: 'Immersivity', es: 'Inmersividad', fr: 'Immersion' },
+                  { pt: 'Academia', en: 'Academy', es: 'Academia', fr: 'Académie' },
+                  { pt: 'Binacional', en: 'Binational', es: 'Binacional', fr: 'Binational' }
+                ].map((item, idx) => {
+                  const locale = (entry: { pt: string; en: string; es: string; fr?: string }) => {
+                    if (lang === 'fr') return entry.fr || entry.en
+                    return entry[lang as 'pt' | 'en' | 'es'] || entry.en
+                  }
+                  return (
+                    <div key={idx} className="flex items-center gap-2">
+                      <span className="text-azimut-red text-lg">✓</span>
+                      <span className="font-sora text-sm" style={{ color: 'var(--theme-card-text, var(--theme-text-secondary))' }}>
+                        {locale(item)}
+                      </span>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
           </div>
 
           {/* ═══════════════════════════════════════════════════════════════
-              SEÇÃO: 30 ANOS DE INOVAÇÃO
+              SEÇÃO: 30 ANOS DE INOVAÇÃO - MELHORADA COM GRÁFICOS
               ═══════════════════════════════════════════════════════════ */}
           <section className="mb-16 animate-fade-in-up opacity-0" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
             <div className="card-dark-fixed rounded-2xl p-6 md:p-8">
-              <h2 className="mb-4 font-handel text-2xl uppercase tracking-[0.12em] md:text-3xl" style={{ color: 'var(--theme-card-text, #d3cec3)' }}>
-                {studio.heritage.title}
-              </h2>
-              <div className="prose prose-invert max-w-none mb-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-1 h-12 bg-azimut-red"></div>
+                <h2 className="font-handel text-2xl uppercase tracking-[0.12em] md:text-3xl" style={{ color: 'var(--theme-card-text, #d3cec3)' }}>
+                  {studio.heritage.title}
+                </h2>
+              </div>
+              <div className="prose prose-invert max-w-none mb-8">
                 {studio.heritage.body.split('\n\n').map((paragraph, idx) => (
                   <p key={idx} className="mb-4 text-[0.95rem] leading-[1.8]" style={{ color: 'var(--theme-card-text, var(--theme-text-secondary))' }}>
                     {paragraph}
                   </p>
                 ))}
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-6">
+              
+              {/* Estatísticas em Grid Melhorado */}
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6 mt-8 pt-8 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}>
                 {studio.heritage.stats.map((stat, idx) => (
-                  <div key={idx} className="text-center">
-                    <div className="font-handel text-2xl md:text-3xl text-azimut-red mb-1">{stat.value}</div>
-                    <div className="font-sora text-[0.7rem] uppercase tracking-[0.1em]" style={{ color: 'var(--theme-card-text, var(--theme-text-muted))' }}>{stat.label}</div>
+                  <div key={idx} className="text-center group">
+                    <div className="font-handel text-3xl md:text-4xl lg:text-5xl text-azimut-red mb-2 transition-transform group-hover:scale-110">
+                      {stat.value}
+                    </div>
+                    <div className="font-sora text-[0.7rem] uppercase tracking-[0.1em] leading-tight" style={{ color: 'var(--theme-card-text, var(--theme-text-muted))' }}>
+                      {stat.label}
+                    </div>
                   </div>
                 ))}
+              </div>
+
+              {/* Badge de Credibilidade */}
+              <div className="mt-8 pt-6 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}>
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="font-sora text-[0.65rem] uppercase tracking-[0.2em]" style={{ color: 'var(--theme-card-text, var(--theme-text-muted))' }}>
+                    {lang === 'pt' ? 'Credenciais Exclusivas:' : lang === 'es' ? 'Credenciales Exclusivas:' : lang === 'fr' ? 'Crédentials Exclusives:' : 'Exclusive Credentials:'}
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { pt: 'Rio Olympic Museum', en: 'Rio Olympic Museum', es: 'Museo Olímpico de Río', fr: 'Musée Olympique de Rio' },
+                      { pt: 'Gramado VR', en: 'Gramado VR', es: 'Gramado VR', fr: 'Gramado VR' },
+                      { pt: 'Autodesk', en: 'Autodesk', es: 'Autodesk', fr: 'Autodesk' },
+                      { pt: 'XRBR Association', en: 'XRBR Association', es: 'Asociación XRBR', fr: 'Association XRBR' }
+                    ].map((badge, idx) => {
+                      const locale = (entry: { pt: string; en: string; es: string; fr?: string }) => {
+                        if (lang === 'fr') return entry.fr || entry.en
+                        return entry[lang as 'pt' | 'en' | 'es'] || entry.en
+                      }
+                      return (
+                        <span 
+                          key={idx}
+                          className="rounded-full px-3 py-1.5 font-sora text-[0.65rem] uppercase tracking-[0.12em] border"
+                          style={{ 
+                            borderColor: 'rgba(201, 35, 55, 0.5)',
+                            backgroundColor: 'rgba(201, 35, 55, 0.1)',
+                            color: '#c92337'
+                          }}
+                        >
+                          {locale(badge)}
+                        </span>
+                      )
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
           </section>
 
-          {/* Bloco de credibilidade (editais/coprodução) */}
+          {/* Bloco de credibilidade (histórico/credenciais) - mostra o que já fizemos */}
           <section className="mb-16 animate-fade-in-up opacity-0" style={{ animationDelay: '0.18s', animationFillMode: 'forwards' }}>
             <CredibilidadeEditais lang={lang} />
-          </section>
-
-          {/* Oportunidades (versão enxuta) */}
-          <section className="mb-16 animate-fade-in-up opacity-0" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
-            <OportunidadesAtivas lang={lang} limit={5} />
           </section>
 
           {/* ═══════════════════════════════════════════════════════════════
@@ -571,6 +656,19 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                     {paragraph}
                   </p>
                 ))}
+              </div>
+              
+              {/* Mensagem sobre unicidade - tom humilde mas impactante */}
+              <div className="mt-8 pt-8 border-t rounded-xl p-6" style={{ borderColor: 'var(--theme-border)', backgroundColor: 'rgba(201, 35, 55, 0.05)' }}>
+                <p className="text-[0.9rem] leading-relaxed italic" style={{ color: 'var(--theme-text-secondary)' }}>
+                  {lang === 'pt' 
+                    ? 'Após 30 anos explorando diferentes caminhos, descobrimos que nossa combinação de curadoria, produção, educação e pesquisa é algo que não encontramos em nenhum outro estúdio. Não é sobre ser melhor, é sobre ser diferente – e essa diferença nos permite criar projetos únicos.'
+                    : lang === 'es'
+                    ? 'Tras 30 años explorando diferentes caminos, descubrimos que nuestra combinación de curaduría, producción, educación e investigación es algo que no encontramos en ningún otro estudio. No se trata de ser mejor, se trata de ser diferente – y esa diferencia nos permite crear proyectos únicos.'
+                    : lang === 'fr'
+                    ? 'Après 30 ans à explorer différents chemins, nous avons découvert que notre combinaison de curation, production, éducation et recherche est quelque chose que nous ne trouvons dans aucun autre studio. Il ne s\'agit pas d\'être meilleur, il s\'agit d\'être différent – et cette différence nous permet de créer des projets uniques.'
+                    : 'After 30 years exploring different paths, we discovered our combination of curation, production, education and research is something we haven\'t found in any other studio. It\'s not about being better, it\'s about being different – and that difference allows us to create unique projects.'}
+                </p>
               </div>
 
               {/* Credenciais */}

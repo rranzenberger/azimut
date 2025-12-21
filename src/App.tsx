@@ -16,7 +16,6 @@ const Home = lazy(() => import('./pages/Home'))
 const WhatWeDo = lazy(() => import('./pages/WhatWeDo'))
 const Work = lazy(() => import('./pages/Work'))
 const Studio = lazy(() => import('./pages/Studio'))
-const Research = lazy(() => import('./pages/Research'))
 const Academy = lazy(() => import('./pages/Academy'))
 const Contact = lazy(() => import('./pages/Contact'))
 const NotFound = lazy(() => import('./pages/NotFound'))
@@ -189,14 +188,6 @@ const App: React.FC = () => {
                 element={
                   <ProtectedRoute>
                     <Studio lang={lang} />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/research" 
-                element={
-                  <ProtectedRoute>
-                    <Research lang={lang} />
                   </ProtectedRoute>
                 } 
               />

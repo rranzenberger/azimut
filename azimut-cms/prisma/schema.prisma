@@ -186,17 +186,21 @@ model Project {
 }
 
 model Page {
-  id         String      @id @default(uuid())
-  name       String
-  slug       String      @unique
-  seoTitlePt String?
-  seoTitleEn String?
-  seoDescPt  String?
-  seoDescEn  String?
-  status     PageStatus  @default(PUBLISHED)
-  sections   Section[]
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  id            String      @id @default(uuid())
+  name          String
+  slug          String      @unique
+  seoTitlePt    String?
+  seoTitleEn    String?
+  seoDescPt     String?
+  seoDescEn     String?
+  heroSloganPt  String?     // Slogan do hero (editable via CMS)
+  heroSloganEn  String?
+  heroSloganEs  String?
+  heroSloganFr  String?
+  status        PageStatus  @default(PUBLISHED)
+  sections      Section[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 }
 
 model Section {

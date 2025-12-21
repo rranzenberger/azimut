@@ -85,8 +85,7 @@ const Login: React.FC = () => {
               className="text-sm font-sora uppercase tracking-[0.14em] leading-relaxed"
               style={{ color: 'var(--theme-text-secondary)', letterSpacing: '0.14em' }}
             >
-              <span className="block">IMMERSIVE • INTERACTIVE</span>
-              <span className="block mt-1">CINEMATIC EXPERIENCES</span>
+              <span className="block">EXPERIENCES THAT CONNECT WORLDS</span>
             </div>
           </div>
 

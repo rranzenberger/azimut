@@ -124,7 +124,6 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
     if (path === '/what') return 'what'
     if (path === '/work') return 'work'
     if (path === '/studio') return 'studio'
-    if (path === '/research') return 'research'
     if (path === '/academy') return 'academy'
     if (path === '/contact') return null // Contact não é um item do menu principal
     return null // Não retorna 'home' por padrão para evitar linha fixa
@@ -289,30 +288,6 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 style={{ 
                   width: shouldShowLine('studio') ? '100%' : '0%',
                   opacity: shouldShowLine('studio') ? 1 : 0
-                }}
-              ></span>
-            </Link>
-            <Link 
-              to="/research" 
-              className="nav-link-glow relative whitespace-nowrap pb-1 shrink-0"
-              onMouseEnter={() => setHoveredRoute('research')}
-              onMouseLeave={() => setHoveredRoute(null)}
-              style={{ 
-                padding: '0 6px', 
-                minHeight: '44px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                position: 'relative',
-                color: activeRoute === 'research' ? '#c92337' : undefined,
-                textShadow: activeRoute === 'research' && theme === 'dark' ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' : undefined
-              }}
-            >
-              <span>{t(lang, 'navResearch')}</span>
-              <span 
-                className="absolute bottom-0 left-0 h-[1px] min-[768px]:h-[1.5px] md:h-[1.5px] lg:h-[2px] xl:h-[2px] bg-azimut-red transition-all duration-200 ease-in-out"
-                style={{ 
-                  width: shouldShowLine('research') ? '100%' : '0%',
-                  opacity: shouldShowLine('research') ? 1 : 0
                 }}
               ></span>
             </Link>
@@ -594,20 +569,6 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 {t(lang, 'navStudio')}
               </Link>
               <Link
-                to="/research"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block py-3 px-3 sm:px-4 font-sora text-[0.7rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors rounded-lg touch-manipulation"
-                style={{ 
-                  color: activeRoute === 'research' ? '#c92337' : 'var(--theme-text-secondary)',
-                  backgroundColor: activeRoute === 'research' ? 'rgba(201, 35, 55, 0.1)' : 'transparent',
-                  minHeight: '44px',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}
-              >
-                {t(lang, 'navResearch')}
-              </Link>
-              <Link
                 to="/academy"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block py-3 px-3 sm:px-4 font-sora text-[0.7rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors rounded-lg touch-manipulation"
@@ -789,7 +750,6 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 {lang === 'en' ? 'Explore' : lang === 'fr' ? 'Explorer' : lang === 'es' ? 'Explorar' : 'Explorar'}
               </h4>
               <nav className="flex flex-col gap-1.5 sm:gap-2 min-[768px]:gap-1.5 md:gap-2.5">
-                <Link to="/research" className="text-[0.7rem] sm:text-[0.75rem] min-[768px]:text-[0.72rem] md:text-[0.82rem] text-slate-300 transition-colors hover:text-azimut-red">{t(lang, 'navResearch')}</Link>
                 <Link to="/academy" className="text-[0.7rem] sm:text-[0.75rem] min-[768px]:text-[0.72rem] md:text-[0.82rem] text-slate-300 transition-colors hover:text-azimut-red">{t(lang, 'navAcademy')}</Link>
                 <Link to="/contact" className="text-[0.7rem] sm:text-[0.75rem] min-[768px]:text-[0.72rem] md:text-[0.82rem] text-slate-300 transition-colors hover:text-azimut-red">{t(lang, 'ctaLabel')}</Link>
               </nav>

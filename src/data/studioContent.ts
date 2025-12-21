@@ -50,7 +50,7 @@ export const studioContent: Record<'pt' | 'en' | 'fr' | 'es', StudioContent> = {
   pt: {
     heritage: {
       title: '30 Anos de Inovação',
-      body: 'Desde 1996, unimos arte, tecnologia e educação em projetos pioneiros. Do primeiro centro de treinamento Autodesk da América do Sul à direção técnica do Rio Museu Olímpico, nossa trajetória reflete 30 anos de inovação em computação gráfica, VR/XR, IA e experiências imersivas.\n\nSomos únicos: pesquisa + produção + educação + curadoria em um só estúdio.',
+      body: 'Desde 1996, unimos arte, tecnologia e educação em projetos pioneiros. Do primeiro centro de treinamento Autodesk da América do Sul à direção técnica do Rio Museu Olímpico, nossa trajetória reflete 30 anos de inovação em computação gráfica, VR/XR, IA e experiências imersivas.\n\nApós décadas explorando diferentes caminhos, descobrimos que nossa combinação única de pesquisa, produção, educação e curadoria em um só estúdio é algo que não encontramos em nenhum outro lugar do mundo. Isso nos permite criar projetos que outros não conseguem.',
       stats: [
         { label: 'Anos de experiência', value: '30' },
         { label: 'Centro de Treinamento Autodesk', value: '1996-2018' },
@@ -62,12 +62,12 @@ export const studioContent: Record<'pt' | 'en' | 'fr' | 'es', StudioContent> = {
     unique: {
       title: 'O que nos torna únicos',
       items: [
-        'Pesquisa acadêmica + Produção comercial',
-        'Educação (formamos centenas) + Curadoria de festivais',
-        'Arquitetura/BIM + Cinema/VFX + VR/XR/IA',
-        'Time com 30 anos de bagagem internacional',
-        'Operação binacional Brasil-Canadá',
-        'Não somos apenas um estúdio. Somos um ecossistema completo.'
+        'Pesquisa acadêmica + Produção comercial (raramente encontradas juntas)',
+        'Educação (formamos centenas) + Curadoria de festivais (Gramado VR desde 2017)',
+        'Arquitetura/BIM + Cinema/VFX + VR/XR/IA (expertise técnica ampla)',
+        'Time com 30 anos de bagagem internacional (desde 1996)',
+        'Operação binacional Brasil-Canadá (conectando ecossistemas criativos)',
+        'Não somos apenas um estúdio. Somos um ecossistema que integra conhecimento, criação e transformação.'
       ]
     },
     vision: {

@@ -4,6 +4,9 @@ import SEO, { seoData } from '../components/SEO'
 import contentModel, { CaseItem } from '../data/content'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { trackPageView, trackProjectInteraction } from '../utils/analytics'
+import OportunidadesAtivas from '../components/OportunidadesAtivas'
+import CredibilidadeEditais from '../components/CredibilidadeEditais'
+import CuradoriaFestivais from '../components/CuradoriaFestivais'
 
 interface WorkProps {
   lang: Lang
@@ -54,12 +57,14 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           <h1 className="mb-4 font-handel text-4xl uppercase tracking-[0.16em] md:text-5xl" style={{ color: 'var(--theme-text)' }}>
             {t(lang, 'navWork')}
           </h1>
-          <p className="mb-12 max-w-2xl text-lg leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+          <p className="mb-12 max-w-3xl text-lg md:text-xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
             {lang === 'pt' 
-              ? 'Projetos que unem narrativa, tecnologia e design para criar experiências memoráveis.'
+              ? 'Projetos que transformam espaços, marcas e experiências. De museus olímpicos a curadoria de festivais internacionais, cada trabalho é uma oportunidade de criar narrativas imersivas que conectam pessoas e histórias de forma única.'
               : lang === 'es'
-              ? 'Proyectos que unen narrativa, tecnología y diseño para crear experiencias memorables.'
-              : 'Projects that blend storytelling, technology and design to create memorable experiences.'}
+              ? 'Proyectos que transforman espacios, marcas y experiencias. De museos olímpicos a curaduría de festivales internacionales, cada trabajo es una oportunidad de crear narrativas inmersivas que conectan personas e historias de forma única.'
+              : lang === 'fr'
+              ? 'Projets qui transforment espaces, marques et expériences. De musées olympiques à la curation de festivals internationaux, chaque travail est une opportunité de créer des narrations immersives qui connectent personnes et histoires de manière unique.'
+              : 'Projects that transform spaces, brands and experiences. From Olympic museums to international festival curation, each work is an opportunity to create immersive narratives that uniquely connect people and stories.'}
           </p>
 
           {/* Featured Project - Full Width */}
@@ -150,7 +155,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           )}
 
           {/* Other Projects Grid */}
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
             {cases.slice(1).map((item: CaseItem) => (
               <article
                 key={item.slug}
@@ -215,6 +220,81 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               </article>
             ))}
           </div>
+
+          {/* ═══════════════════════════════════════════════════════════════
+              SEÇÃO: CUADORIA & FESTIVAIS
+              ═══════════════════════════════════════════════════════════ */}
+          <section id="curation" className="mb-16">
+            <CuradoriaFestivais lang={lang} />
+          </section>
+
+          {/* ═══════════════════════════════════════════════════════════════
+              SEÇÃO: OPORTUNIDADES ATIVAS
+              ═══════════════════════════════════════════════════════════ */}
+          <section id="opportunities" className="mb-16">
+            <div className="mb-8">
+              <h2 className="mb-4 font-handel text-3xl uppercase tracking-[0.12em] md:text-4xl" style={{ color: 'var(--theme-text)' }}>
+                {lang === 'pt' 
+                  ? 'Quer Trabalhar Conosco?'
+                  : lang === 'es'
+                  ? '¿Quieres Trabajar Con Nosotros?'
+                  : lang === 'fr'
+                  ? 'Voulez-vous Travailler Avec Nous?'
+                  : 'Want to Work With Us?'}
+              </h2>
+              <p className="mb-6 max-w-2xl text-lg leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                {lang === 'pt' 
+                  ? 'Veja nossos projetos realizados e descubra oportunidades de editais abertos, coprodução e parcerias.'
+                  : lang === 'es'
+                  ? 'Ve nuestros proyectos realizados y descubre oportunidades de editais abiertos, coproducción y alianzas.'
+                  : lang === 'fr'
+                  ? 'Découvrez nos projets réalisés et les opportunités d\'appels ouverts, coproduction et partenariats.'
+                  : 'See our completed projects and discover opportunities for open grants, co-production and partnerships.'}
+              </p>
+            </div>
+
+            {/* Credibilidade (histórico de editais/coprodução) */}
+            <div className="mb-8">
+              <CredibilidadeEditais lang={lang} />
+            </div>
+
+            {/* Oportunidades Ativas (editais abertos) */}
+            <div className="mb-8">
+              <OportunidadesAtivas lang={lang} limit={10} />
+            </div>
+
+            {/* CTA Final */}
+            <div className="mt-12 rounded-2xl border border-azimut-red/60 bg-azimut-red/10 p-8 text-center">
+              <h3 className="mb-4 font-handel text-2xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
+                {lang === 'pt' 
+                  ? 'Queremos Revisar Seu Projeto/Edital'
+                  : lang === 'es'
+                  ? 'Queremos Revisar Tu Proyecto/Edital'
+                  : lang === 'fr'
+                  ? 'Nous Voulons Examiner Votre Projet/Financement'
+                  : 'We Want to Review Your Project/Grant'}
+              </h3>
+              <p className="mb-6 text-lg" style={{ color: 'var(--theme-text-secondary)' }}>
+                {lang === 'pt' 
+                  ? 'Tem um projeto em mente? Vamos conversar sobre como podemos trabalhar juntos.'
+                  : lang === 'es'
+                  ? '¿Tienes un proyecto en mente? Hablemos sobre cómo podemos trabajar juntos.'
+                  : lang === 'fr'
+                  ? 'Vous avez un projet en tête? Parlons de la façon dont nous pouvons travailler ensemble.'
+                  : 'Have a project in mind? Let\'s talk about how we can work together.'}
+              </p>
+              <a 
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-xl border border-azimut-red/80 bg-azimut-red/20 px-8 py-4 font-sora text-sm font-semibold uppercase tracking-[0.14em] transition-all hover:bg-azimut-red/30 hover:shadow-[0_0_30px_rgba(201,35,55,0.4)]"
+                style={{ color: 'var(--theme-text)' }}
+              >
+                {lang === 'pt' ? 'Iniciar Conversa' : lang === 'es' ? 'Iniciar Conversación' : lang === 'fr' ? 'Démarrer la Conversation' : 'Start Conversation'}
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+            </div>
+          </section>
         </div>
       </main>
     </>

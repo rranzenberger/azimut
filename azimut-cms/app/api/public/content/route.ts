@@ -120,9 +120,22 @@ export async function GET(request: NextRequest) {
       orderBy: { priority: 'desc' },
     });
     
-    // 6. Formatar resposta com tradução
+    // 6. Buscar slogan do hero da página (se for home)
+    let heroSlogan = null;
+    if (page === 'home' && pageData) {
+      const sloganField = `heroSlogan${lang === 'pt' ? 'Pt' : lang === 'es' ? 'Es' : lang === 'fr' ? 'Fr' : 'En'}`;
+      heroSlogan = (pageData as any)[sloganField] || null;
+      
+      // Fallback: se não tiver no idioma, tenta EN
+      if (!heroSlogan && lang !== 'en') {
+        heroSlogan = (pageData as any).heroSloganEn || null;
+      }
+    }
+    
+    // 7. Formatar resposta com tradução
     const response = {
       lang,
+      heroSlogan,
       market: market ? {
         code: market.code,
         label: lang === 'pt' ? market.labelPt : market.labelEn,
@@ -136,6 +149,7 @@ export async function GET(request: NextRequest) {
           title: lang === 'pt' ? pageData.seoTitlePt : pageData.seoTitleEn,
           description: lang === 'pt' ? pageData.seoDescPt : pageData.seoDescEn,
         },
+        heroSlogan: heroSlogan || null,
         sections: pageData.sections.map(section => ({
           type: section.type,
           title: lang === 'pt' ? section.titlePt : section.titleEn,
