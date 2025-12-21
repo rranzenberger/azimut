@@ -1,3 +1,4 @@
+// API route for media uploads (images and videos)
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { optimizeAndUploadImage } from '@/lib/image-optimizer';
