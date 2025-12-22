@@ -7,9 +7,11 @@
 .env.local
 .env.*.local
 
-# Ignorar todos os arquivos de documentação dentro do azimut-cms
+# Ignorar TODOS os arquivos de documentação (prevenir stack overflow)
 *.md
-!README.md
+*.txt
+**/*.md
+**/*.txt
 
 # Ignorar arquivos de build e cache
 .next/
@@ -17,3 +19,16 @@ out/
 .vercel/
 .turbo/
 *.tsbuildinfo
+
+# Ignorar arquivos do site principal
+../dist/
+../public/
+../src/
+../scripts/
+../node_modules/
+
+# Ignorar arquivos temporários
+*.zip
+*.tar.gz
+desktop.ini
+Thumbs.db

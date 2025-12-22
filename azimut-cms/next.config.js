@@ -43,10 +43,11 @@ const nextConfig = {
     optimizePackageImports: [],
   },
   
-  // Excluir arquivos desnecessários do build traces
+  // Excluir arquivos desnecessários do build traces - PREVENIR STACK OVERFLOW
   outputFileTracingExcludes: {
     '*': [
       '**/*.md',
+      '**/*.txt',
       '**/COMO_*.md',
       '**/CHECKLIST_*.md',
       '**/DEPLOY_*.md',
@@ -56,7 +57,26 @@ const nextConfig = {
       '**/azimut-cms/azimut-cms/**',
       '**/src/**',
       '../**',
+      '**/node_modules/**',
+      '**/.git/**',
+      '**/dist/**',
+      '**/.next/**',
+      '**/public/cases/**',
+      '**/scripts/**',
     ],
+  },
+  
+  // Desabilitar build traces para evitar stack overflow
+  experimental: {
+    outputFileTracingIncludes: {},
+    outputFileTracingExcludes: {
+      '*': [
+        '**/*.md',
+        '**/*.txt',
+        '../**',
+        '**/node_modules/**',
+      ],
+    },
   },
   
   async headers() {
