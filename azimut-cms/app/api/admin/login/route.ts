@@ -23,9 +23,18 @@ export async function POST(request: NextRequest) {
     }
 
     // Buscar usuário no banco
-    const user = await prisma.user.findUnique({
-      where: { email: email.toLowerCase().trim() },
-    });
+    let user;
+    try {
+      user = await prisma.user.findUnique({
+        where: { email: email.toLowerCase().trim() },
+      });
+    } catch (dbError: any) {
+      console.error('Database error:', dbError);
+      return NextResponse.json(
+        { error: 'Erro ao conectar ao banco de dados. Verifique se DATABASE_URL está configurada e se o seed foi executado.' },
+        { status: 500 }
+      );
+    }
 
     if (!user) {
       return NextResponse.json(
