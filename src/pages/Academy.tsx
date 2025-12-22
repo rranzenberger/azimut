@@ -212,31 +212,34 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
             <div className="flex flex-wrap gap-4 mb-8 border-b" style={{ borderColor: 'var(--theme-border)' }}>
               <button
                 onClick={() => setActiveSection('research')}
-                className={`pb-3 px-4 font-sora text-sm md:text-base uppercase tracking-[0.1em] transition-colors ${
-                  activeSection === 'research' 
-                    ? 'text-azimut-red border-b-2 border-azimut-red font-semibold' 
-                    : 'text-slate-400 hover:text-slate-300'
-                }`}
+                className="pb-3 px-4 font-sora text-sm md:text-base uppercase tracking-[0.1em] transition-colors"
+                style={{
+                  color: activeSection === 'research' ? '#8B2332' : 'var(--theme-text-muted)',
+                  borderBottom: activeSection === 'research' ? '2px solid #8B2332' : 'none',
+                  fontWeight: activeSection === 'research' ? '600' : '400'
+                }}
               >
                 {labels.tabs.research[lang]}
               </button>
               <button
                 onClick={() => setActiveSection('courses')}
-                className={`pb-3 px-4 font-sora text-sm md:text-base uppercase tracking-[0.1em] transition-colors ${
-                  activeSection === 'courses' 
-                    ? 'text-azimut-red border-b-2 border-azimut-red font-semibold' 
-                    : 'text-slate-400 hover:text-slate-300'
-                }`}
+                className="pb-3 px-4 font-sora text-sm md:text-base uppercase tracking-[0.1em] transition-colors"
+                style={{
+                  color: activeSection === 'courses' ? '#8B2332' : 'var(--theme-text-muted)',
+                  borderBottom: activeSection === 'courses' ? '2px solid #8B2332' : 'none',
+                  fontWeight: activeSection === 'courses' ? '600' : '400'
+                }}
               >
                 {labels.tabs.courses[lang]}
               </button>
               <button
                 onClick={() => setActiveSection('corporate')}
-                className={`pb-3 px-4 font-sora text-sm md:text-base uppercase tracking-[0.1em] transition-colors ${
-                  activeSection === 'corporate' 
-                    ? 'text-azimut-red border-b-2 border-azimut-red font-semibold' 
-                    : 'text-slate-400 hover:text-slate-300'
-                }`}
+                className="pb-3 px-4 font-sora text-sm md:text-base uppercase tracking-[0.1em] transition-colors"
+                style={{
+                  color: activeSection === 'corporate' ? '#8B2332' : 'var(--theme-text-muted)',
+                  borderBottom: activeSection === 'corporate' ? '2px solid #8B2332' : 'none',
+                  fontWeight: activeSection === 'corporate' ? '600' : '400'
+                }}
               >
                 {labels.tabs.corporate[lang]}
               </button>
@@ -264,7 +267,11 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                     key={item.slug}
                     className="group rounded-2xl border border-white/10 card-adaptive p-6 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all hover:border-white/20 hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)]"
                   >
-                    <div className="mb-3 inline-block rounded-full border border-azimut-red/30 bg-azimut-red/10 px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.2em] text-azimut-red">
+                    <div className="mb-3 inline-block rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.2em]" style={{ 
+                      borderColor: 'rgba(139, 35, 50, 0.8)',
+                      backgroundColor: 'rgba(139, 35, 50, 0.25)',
+                      color: '#ffffff'
+                    }}>
                       {item.type === 'experiment' ? (lang === 'pt' ? 'Experimento' : lang === 'es' ? 'Experimento' : lang === 'fr' ? 'Expérience' : 'Experiment') : 
                        item.type === 'workshop' ? (lang === 'pt' ? 'Workshop' : lang === 'es' ? 'Workshop' : lang === 'fr' ? 'Atelier' : 'Workshop') :
                        (lang === 'pt' ? 'Mentoria' : lang === 'es' ? 'Mentoría' : lang === 'fr' ? 'Mentorat' : 'Mentoring')}
@@ -329,7 +336,11 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                     className="group rounded-2xl border border-white/10 card-adaptive p-6 md:p-8 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all hover:border-white/20 hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)]"
                   >
                     <div className="mb-4 flex items-center justify-between flex-wrap gap-2">
-                      <span className="rounded-full border border-azimut-red/30 bg-azimut-red/10 px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.2em] text-azimut-red">
+                      <span className="rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.2em]" style={{ 
+                        borderColor: 'rgba(139, 35, 50, 0.8)',
+                        backgroundColor: 'rgba(139, 35, 50, 0.25)',
+                        color: '#ffffff'
+                      }}>
                         {locale(workshop.level)}
                       </span>
                       <span className="font-sora text-sm text-slate-400">
@@ -362,8 +373,20 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                 </p>
                 <a 
                   href="/contact"
-                  className="inline-flex items-center gap-2 rounded-xl border border-azimut-red/80 bg-azimut-red/20 px-8 py-4 font-sora text-sm font-semibold uppercase tracking-[0.14em] transition-all hover:bg-azimut-red/30 hover:shadow-[0_0_30px_rgba(201,35,55,0.4)]"
-                  style={{ color: 'var(--theme-text)' }}
+                  className="inline-flex items-center gap-2 rounded-xl border px-8 py-4 font-sora text-sm font-semibold uppercase tracking-[0.14em] transition-all hover:shadow-[0_0_30px_rgba(139,35,50,0.5)]"
+                  style={{ 
+                    color: '#ffffff',
+                    borderColor: 'rgba(139, 35, 50, 0.9)',
+                    backgroundColor: 'rgba(139, 35, 50, 0.3)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(139, 35, 50, 0.45)'
+                    e.currentTarget.style.borderColor = 'rgba(139, 35, 50, 1)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(139, 35, 50, 0.3)'
+                    e.currentTarget.style.borderColor = 'rgba(139, 35, 50, 0.9)'
+                  }}
                 >
                   {lang === 'pt' ? 'Solicitar Informações' : lang === 'es' ? 'Solicitar Información' : lang === 'fr' ? 'Demander des Informations' : 'Request Information'}
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -459,8 +482,20 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                 </p>
                 <a 
                   href="/contact"
-                  className="inline-flex items-center gap-2 rounded-xl border border-azimut-red/80 bg-azimut-red/20 px-8 py-4 font-sora text-sm font-semibold uppercase tracking-[0.14em] transition-all hover:bg-azimut-red/30 hover:shadow-[0_0_30px_rgba(201,35,55,0.4)]"
-                  style={{ color: 'var(--theme-text)' }}
+                  className="inline-flex items-center gap-2 rounded-xl border px-8 py-4 font-sora text-sm font-semibold uppercase tracking-[0.14em] transition-all hover:shadow-[0_0_30px_rgba(139,35,50,0.5)]"
+                  style={{ 
+                    color: '#ffffff',
+                    borderColor: 'rgba(139, 35, 50, 0.9)',
+                    backgroundColor: 'rgba(139, 35, 50, 0.3)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(139, 35, 50, 0.45)'
+                    e.currentTarget.style.borderColor = 'rgba(139, 35, 50, 1)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(139, 35, 50, 0.3)'
+                    e.currentTarget.style.borderColor = 'rgba(139, 35, 50, 0.9)'
+                  }}
                 >
                   {lang === 'pt' ? 'Solicitar Proposta' : lang === 'es' ? 'Solicitar Propuesta' : lang === 'fr' ? 'Demander une Proposition' : 'Request Proposal'}
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
