@@ -1,9 +1,9 @@
 "use client";
 
-import { FormEvent, useState, type CSSProperties } from 'react';
+import { FormEvent, useState, Suspense, type CSSProperties } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const search = useSearchParams();
   const [email, setEmail] = useState('admin@azimut.com.br');
@@ -11,7 +11,7 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const next = search.get('next') || '/admin';
+  const next = search?.get('next') || '/admin';
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -40,19 +40,7 @@ export default function LoginPage() {
   }
 
   return (
-    <main
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#0a0e18',
-        color: '#d3cec3',
-        fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
-        padding: '24px',
-      }}
-    >
-      <form
+    <form
         onSubmit={handleSubmit}
         style={{
           width: '100%',
@@ -139,6 +127,26 @@ export default function LoginPage() {
           Default: admin@azimut.com.br / Azimut2025!
         </p>
       </form>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <main
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: '#0a0e18',
+        color: '#d3cec3',
+        fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+        padding: '24px',
+      }}
+    >
+      <Suspense fallback={<div style={{ color: '#d3cec3' }}>Carregando...</div>}>
+        <LoginForm />
+      </Suspense>
     </main>
   );
 }
