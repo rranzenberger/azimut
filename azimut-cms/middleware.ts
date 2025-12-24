@@ -56,13 +56,11 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // Se já autenticado, redirecionar /login para /admin
-  if (pathname === '/login' && isAuthenticated) {
-    const url = req.nextUrl.clone();
-    url.pathname = '/admin';
-    return NextResponse.redirect(url);
-  }
-
+  // REMOVIDO: redirect automático de /login para /admin
+  // Estava causando problema quando cookie era inválido
+  // Agora usuário pode acessar /login mesmo com cookie antigo
+  // A página /login fará logout automático se necessário
+  
   return NextResponse.next();
 }
 

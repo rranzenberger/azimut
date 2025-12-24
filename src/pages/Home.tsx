@@ -61,10 +61,24 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   }, [])
   const seo = seoData.home[lang]
 
-  // Recomendações simples (client-side) usando geo/tags fictícios
+  // Recomendações usando detecção real de geo
   useEffect(() => {
-    // Placeholder geo; ideal: resolver via backend/edge com consentimento
-    const geo = { country: 'BR', state: '', city: '' }
+    // Detectar país via timezone como fallback
+    const detectCountry = () => {
+      try {
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+        // Mapeamento simples timezone -> país
+        if (timezone.includes('America/Toronto') || timezone.includes('America/Vancouver')) return 'CA'
+        if (timezone.includes('America/Sao_Paulo') || timezone.includes('America/Fortaleza')) return 'BR'
+        if (timezone.includes('America/New_York') || timezone.includes('America/Chicago')) return 'US'
+        if (timezone.includes('Europe/Paris') || timezone.includes('Europe/Madrid')) return 'ES'
+        return 'BR' // fallback Brasil
+      } catch {
+        return 'BR'
+      }
+    }
+    
+    const geo = { country: detectCountry(), state: '', city: '' }
     const tagsRecentes: string[] = []
     const recs = getRecommendations({ lang: lang === 'fr' ? 'en' : lang as 'pt' | 'en' | 'es', geo, tagsRecentes, max: 3 })
     setRecommended(recs)
