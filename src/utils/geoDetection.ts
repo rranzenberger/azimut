@@ -51,6 +51,16 @@ export function detectCountryFromTimezone(timezone: string): { country: string; 
     return { country: 'French Guiana', countryCode: 'GF', region: 'French Guiana' };
   }
 
+  // MARTINICA - FRANCÊS (território francês)
+  if (timezone.includes('America/Martinique')) {
+    return { country: 'Martinique', countryCode: 'MQ', region: 'Martinique' };
+  }
+
+  // GUADALUPE - FRANCÊS (território francês)
+  if (timezone.includes('America/Guadeloupe')) {
+    return { country: 'Guadeloupe', countryCode: 'GP', region: 'Guadeloupe' };
+  }
+
   // MÉXICO - ESPANHOL
   if (timezone.includes('America/Mexico_City') || timezone.includes('America/Cancun') ||
       timezone.includes('America/Merida') || timezone.includes('America/Monterrey') ||
@@ -85,12 +95,33 @@ export function detectCountryFromTimezone(timezone: string): { country: string; 
     return { country: 'Venezuela', countryCode: 'VE' };
   }
 
+  // EQUADOR - ESPANHOL
+  if (timezone.includes('America/Guayaquil') || timezone.includes('Pacific/Galapagos')) {
+    return { country: 'Ecuador', countryCode: 'EC' };
+  }
+
+  // BOLÍVIA - ESPANHOL
+  if (timezone.includes('America/La_Paz')) {
+    return { country: 'Bolivia', countryCode: 'BO' };
+  }
+
+  // PARAGUAI - ESPANHOL
+  if (timezone.includes('America/Asuncion')) {
+    return { country: 'Paraguay', countryCode: 'PY' };
+  }
+
+  // URUGUAI - ESPANHOL
+  if (timezone.includes('America/Montevideo')) {
+    return { country: 'Uruguay', countryCode: 'UY' };
+  }
+
   // OUTROS PAÍSES LATINO-AMERICANOS - ESPANHOL
+  // América Central + Cuba + República Dominicana
   if (timezone.includes('America/Guatemala') || timezone.includes('America/El_Salvador') ||
       timezone.includes('America/Managua') || timezone.includes('America/Costa_Rica') ||
       timezone.includes('America/Panama') || timezone.includes('America/Havana') ||
-      timezone.includes('America/La_Paz') || timezone.includes('America/Asuncion') ||
-      timezone.includes('America/Montevideo') || timezone.includes('America/Guayaquil')) {
+      timezone.includes('America/Tegucigalpa') || timezone.includes('America/Belize') ||
+      timezone.includes('America/Santo_Domingo') || timezone.includes('America/Port-au-Prince')) {
     return { country: 'Latin America', countryCode: 'LATAM' };
   }
 
@@ -110,8 +141,13 @@ export function detectCountryFromTimezone(timezone: string): { country: string; 
   }
 
   // PORTUGAL - PORTUGUÊS
-  if (timezone.includes('Europe/Lisbon')) {
+  if (timezone.includes('Europe/Lisbon') || timezone.includes('Atlantic/Azores') || timezone.includes('Atlantic/Madeira')) {
     return { country: 'Portugal', countryCode: 'PT' };
+  }
+
+  // CABO VERDE - PORTUGUÊS
+  if (timezone.includes('Atlantic/Cape_Verde')) {
+    return { country: 'Cape Verde', countryCode: 'CV' };
   }
 
   // ESPANHA - ESPANHOL
@@ -140,8 +176,33 @@ export function detectCountryFromTimezone(timezone: string): { country: string; 
   }
 
   // ÁFRICA DO SUL - INGLÊS
-  if (timezone.includes('Africa/Johannesburg')) {
+  if (timezone.includes('Africa/Johannesburg') || timezone.includes('Africa/Cape_Town')) {
     return { country: 'South Africa', countryCode: 'ZA' };
+  }
+
+  // MOÇAMBIQUE - PORTUGUÊS
+  if (timezone.includes('Africa/Maputo')) {
+    return { country: 'Mozambique', countryCode: 'MZ' };
+  }
+
+  // ANGOLA - PORTUGUÊS
+  if (timezone.includes('Africa/Luanda')) {
+    return { country: 'Angola', countryCode: 'AO' };
+  }
+
+  // GUINÉ-BISSAU - PORTUGUÊS
+  if (timezone.includes('Africa/Bissau')) {
+    return { country: 'Guinea-Bissau', countryCode: 'GW' };
+  }
+
+  // SÃO TOMÉ E PRÍNCIPE - PORTUGUÊS
+  if (timezone.includes('Africa/Sao_Tome')) {
+    return { country: 'Sao Tome and Principe', countryCode: 'ST' };
+  }
+
+  // GUINÉ EQUATORIAL - ESPANHOL (maioria) / FRANCÊS / PORTUGUÊS
+  if (timezone.includes('Africa/Malabo')) {
+    return { country: 'Equatorial Guinea', countryCode: 'GQ' };
   }
 
   // AUSTRÁLIA - INGLÊS
@@ -156,6 +217,16 @@ export function detectCountryFromTimezone(timezone: string): { country: string; 
     return { country: 'New Zealand', countryCode: 'NZ' };
   }
 
+  // POLINÉSIA FRANCESA - FRANCÊS (território francês)
+  if (timezone.includes('Pacific/Tahiti') || timezone.includes('Pacific/Marquesas') || timezone.includes('Pacific/Gambier')) {
+    return { country: 'French Polynesia', countryCode: 'PF', region: 'French Polynesia' };
+  }
+
+  // NOVA CALEDÔNIA - FRANCÊS (território francês)
+  if (timezone.includes('Pacific/Noumea')) {
+    return { country: 'New Caledonia', countryCode: 'NC', region: 'New Caledonia' };
+  }
+
   // CHINA - CHINÊS (fallback: inglês)
   if (timezone.includes('Asia/Shanghai') || timezone.includes('Asia/Beijing') ||
       timezone.includes('Asia/Chongqing') || timezone.includes('Asia/Hong_Kong')) {
@@ -165,6 +236,21 @@ export function detectCountryFromTimezone(timezone: string): { country: string; 
   // JAPÃO - JAPONÊS (fallback: inglês)
   if (timezone.includes('Asia/Tokyo')) {
     return { country: 'Japan', countryCode: 'JP' };
+  }
+
+  // TIMOR-LESTE - PORTUGUÊS
+  if (timezone.includes('Asia/Dili')) {
+    return { country: 'East Timor', countryCode: 'TL' };
+  }
+
+  // ILHA REUNIÃO - FRANCÊS (território francês no Índico)
+  if (timezone.includes('Indian/Reunion')) {
+    return { country: 'Reunion', countryCode: 'RE', region: 'Reunion' };
+  }
+
+  // MAIOTE - FRANCÊS (território francês no Índico)
+  if (timezone.includes('Indian/Mayotte')) {
+    return { country: 'Mayotte', countryCode: 'YT', region: 'Mayotte' };
   }
 
   // OUTROS PAÍSES EUROPEUS - FALLBACK: INGLÊS
@@ -191,26 +277,32 @@ export function detectCountryFromTimezone(timezone: string): { country: string; 
  * Fallback: Inglês (língua internacional)
  */
 export function getLanguageFromCountry(countryCode: string, region?: string): 'pt' | 'en' | 'fr' | 'es' {
-  // PORTUGUÊS
-  if (countryCode === 'BR' || countryCode === 'PT') {
+  // PORTUGUÊS (Brasil + Portugal + Países Lusófonos Africanos + Timor-Leste)
+  if (countryCode === 'BR' || countryCode === 'PT' || 
+      countryCode === 'MZ' || countryCode === 'AO' || countryCode === 'CV' ||
+      countryCode === 'GW' || countryCode === 'ST' || countryCode === 'TL') {
     return 'pt';
   }
 
-  // FRANCÊS
+  // FRANCÊS (França + Canadá-Quebec + Territórios Franceses)
   if (countryCode === 'FR' || countryCode === 'GF' || 
+      countryCode === 'MQ' || countryCode === 'GP' || 
+      countryCode === 'PF' || countryCode === 'NC' || 
+      countryCode === 'RE' || countryCode === 'YT' ||
       (countryCode === 'CA' && region === 'Quebec') ||
       countryCode === 'BE' || countryCode === 'CH') {
     return 'fr';
   }
 
-  // ESPANHOL
+  // ESPANHOL (Espanha + América Latina + Guiné Equatorial)
   if (countryCode === 'MX' || countryCode === 'AR' || countryCode === 'CO' ||
       countryCode === 'CL' || countryCode === 'PE' || countryCode === 'VE' ||
-      countryCode === 'ES' || countryCode === 'LATAM') {
+      countryCode === 'EC' || countryCode === 'BO' || countryCode === 'PY' || countryCode === 'UY' ||
+      countryCode === 'ES' || countryCode === 'GQ' || countryCode === 'LATAM') {
     return 'es';
   }
 
-  // INGLÊS (padrão internacional)
+  // INGLÊS (EUA + Reino Unido + Canadá + Austrália + África do Sul + outros)
   if (countryCode === 'US' || countryCode === 'CA' || countryCode === 'GB' ||
       countryCode === 'IE' || countryCode === 'AU' || countryCode === 'NZ' ||
       countryCode === 'ZA') {
@@ -218,7 +310,7 @@ export function getLanguageFromCountry(countryCode: string, region?: string): 'p
   }
 
   // FALLBACK: INGLÊS (língua internacional)
-  // Para países como Alemanha, China, Japão, etc.
+  // Para países como Alemanha, China, Japão, Índia, etc.
   return 'en';
 }
 
