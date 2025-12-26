@@ -381,5 +381,132 @@ Get-ChildItem -Recurse -File -Exclude node_modules | Measure-Object | Select-Obj
 
 ---
 
+---
+
+## 🔐 CREDENCIAIS E ACESSOS
+
+### 🌐 VERCEL
+
+**Site Principal (azmt.com.br):**
+- **URL:** https://vercel.com/rranzenbergers-projects
+- **Projeto:** azimut
+- **Repositório GitHub:** https://github.com/rranzenberger/azimut
+- **Domínio:** azmt.com.br
+- **Framework:** Vite
+- **Root Directory:** `/` (raiz)
+
+**Backoffice (CMS):**
+- **URL:** https://vercel.com/rranzenbergers-projects
+- **Projeto:** azimut-backoffice
+- **Repositório GitHub:** https://github.com/rranzenberger/azimut-backoffice
+- **Framework:** Next.js
+- **Root Directory:** `azimut-cms` ⚠️ **CRUCIAL!**
+
+### 💾 NEON DB (PostgreSQL)
+
+**Banco de Dados do Backoffice:**
+- **Provider:** Neon.tech
+- **URL:** https://console.neon.tech
+- **Region:** South America (São Paulo) - `sa-east-1`
+- **Database:** `neondb`
+- **Host:** `ep-crimson-firefly-ac8akobs-pooler.sa-east-1.aws.neon.tech`
+- **Connection String:**
+  ```
+  postgresql://neondb_owner:npg_W8VkhFvGTHj2@ep-crimson-firefly-ac8akobs-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require
+  ```
+
+**Tabelas:**
+- `User` - Usuários admin
+- `Page` - Páginas do site (multilíngue)
+- `Project` - Projetos/cases
+- `Lead` - Leads capturados
+- `Visit` - Visitas rastreadas
+- `VisitorInterest` - Interesses dos visitantes (IA)
+
+### 🔑 BACKOFFICE - LOGIN
+
+**URL:** https://[seu-dominio-backoffice].vercel.app/login
+
+**Usuário Admin Padrão:**
+- **Email:** `admin@azimut.com`
+- **Senha:** `azimut2024`
+
+⚠️ **IMPORTANTE:** Mude a senha após primeiro login!
+
+### 🐙 GITHUB
+
+**Repositórios:**
+
+1. **Site Principal:**
+   - **URL:** https://github.com/rranzenberger/azimut
+   - **Branch principal:** `main`
+   - **Deploy automático:** ✅ Sim (Vercel)
+
+2. **Backoffice:**
+   - **URL:** https://github.com/rranzenberger/azimut-backoffice
+   - **Branch principal:** `main`
+   - **Deploy automático:** ✅ Sim (Vercel)
+   - **Root Directory no Vercel:** `azimut-cms`
+
+### 🔐 VARIÁVEIS DE AMBIENTE
+
+**Site Principal:** Nenhuma necessária
+
+**Backoffice (.env.local):**
+```env
+# Banco de dados Neon
+DATABASE_URL="postgresql://neondb_owner:npg_W8VkhFvGTHj2@ep-crimson-firefly-ac8akobs-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require"
+
+# URL do site principal (CORS)
+SITE_URL="https://azmt.com.br"
+
+# JWT Secret (gerar com: node -e "console.log(require('crypto').randomBytes(32).toString('base64'))")
+JWT_SECRET="[gerar_novo_na_producao]"
+```
+
+**No Vercel (Backoffice):**
+- `DATABASE_URL` → Neon connection string
+- `SITE_URL` → https://azmt.com.br
+- `JWT_SECRET` → (gerar novo para produção)
+
+### 📊 DOMÍNIOS
+
+**Site Principal:**
+- **Domínio:** azmt.com.br
+- **Configuração DNS:** Apontando para Vercel
+- **SSL:** ✅ Automático (Vercel)
+
+**Backoffice:**
+- **Domínio temporário:** [projeto].vercel.app
+- **Domínio customizado:** (configurar se necessário)
+
+### 🔧 TECNOLOGIAS
+
+**Site Principal:**
+- React 18
+- TypeScript
+- Vite
+- TailwindCSS
+- i18next (multilíngue: PT, EN, FR, ES)
+- Plausible Analytics
+
+**Backoffice:**
+- Next.js 14 (App Router)
+- TypeScript
+- Prisma ORM
+- PostgreSQL (Neon)
+- TailwindCSS
+- OpenRouter (IA para scoring de leads)
+
+---
+
+## 📞 SUPORTE E CONTATOS
+
+**Desenvolvedor:** Ranz Ranzenberger  
+**Email:** contato@azmt.com.br  
+**Website:** https://azmt.com.br
+
+---
+
 **🎉 PROJETO LIMPO E ORGANIZADO!**
 
