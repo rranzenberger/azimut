@@ -55,7 +55,8 @@ export const studioContent: Record<'pt' | 'en' | 'fr' | 'es', StudioContent> = {
         { label: 'Desde', value: '1996' },
         { label: 'Autodesk', value: '1996-2018' },
         { label: 'Rio Museum', value: 'Atual' },
-        { label: 'Gramado VR', value: 'Desde 2017' }
+        { label: 'Gramado', value: '2017' },
+        { label: 'Binacional', value: 'BR-CA' }
       ]
     },
     unique: {
@@ -201,7 +202,8 @@ export const studioContent: Record<'pt' | 'en' | 'fr' | 'es', StudioContent> = {
         { label: 'Since', value: '1996' },
         { label: 'Autodesk', value: '1996-2018' },
         { label: 'Rio Museum', value: 'Current' },
-        { label: 'Gramado VR', value: 'Since 2017' }
+        { label: 'Gramado', value: '2017' },
+        { label: 'Binational', value: 'BR-CA' }
       ]
     },
     unique: {
