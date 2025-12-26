@@ -115,14 +115,28 @@ export function detectCountryFromTimezone(timezone: string): { country: string; 
     return { country: 'Uruguay', countryCode: 'UY' };
   }
 
+  // PORTO RICO - ESPANHOL (território dos EUA, mas hispano-falante)
+  if (timezone.includes('America/Puerto_Rico')) {
+    return { country: 'Puerto Rico', countryCode: 'PR' };
+  }
+
   // OUTROS PAÍSES LATINO-AMERICANOS - ESPANHOL
-  // América Central + Cuba + República Dominicana
+  // América Central + Caribe hispano-falante
   if (timezone.includes('America/Guatemala') || timezone.includes('America/El_Salvador') ||
       timezone.includes('America/Managua') || timezone.includes('America/Costa_Rica') ||
       timezone.includes('America/Panama') || timezone.includes('America/Havana') ||
-      timezone.includes('America/Tegucigalpa') || timezone.includes('America/Belize') ||
-      timezone.includes('America/Santo_Domingo') || timezone.includes('America/Port-au-Prince')) {
+      timezone.includes('America/Tegucigalpa') || timezone.includes('America/Santo_Domingo')) {
     return { country: 'Latin America', countryCode: 'LATAM' };
+  }
+
+  // BELIZE - INGLÊS (América Central, mas NÃO hispano-falante)
+  if (timezone.includes('America/Belize')) {
+    return { country: 'Belize', countryCode: 'BZ' };
+  }
+
+  // HAITI - FRANCÊS/CRIOULO (Caribe, mas NÃO hispano-falante)
+  if (timezone.includes('America/Port-au-Prince')) {
+    return { country: 'Haiti', countryCode: 'HT' };
   }
 
   // FRANÇA - FRANCÊS
@@ -284,28 +298,28 @@ export function getLanguageFromCountry(countryCode: string, region?: string): 'p
     return 'pt';
   }
 
-  // FRANCÊS (França + Canadá-Quebec + Territórios Franceses)
+  // FRANCÊS (França + Canadá-Quebec + Territórios Franceses + Haiti)
   if (countryCode === 'FR' || countryCode === 'GF' || 
       countryCode === 'MQ' || countryCode === 'GP' || 
       countryCode === 'PF' || countryCode === 'NC' || 
-      countryCode === 'RE' || countryCode === 'YT' ||
+      countryCode === 'RE' || countryCode === 'YT' || countryCode === 'HT' ||
       (countryCode === 'CA' && region === 'Quebec') ||
       countryCode === 'BE' || countryCode === 'CH') {
     return 'fr';
   }
 
-  // ESPANHOL (Espanha + América Latina + Guiné Equatorial)
+  // ESPANHOL (Espanha + América Latina + Porto Rico + Guiné Equatorial)
   if (countryCode === 'MX' || countryCode === 'AR' || countryCode === 'CO' ||
       countryCode === 'CL' || countryCode === 'PE' || countryCode === 'VE' ||
       countryCode === 'EC' || countryCode === 'BO' || countryCode === 'PY' || countryCode === 'UY' ||
-      countryCode === 'ES' || countryCode === 'GQ' || countryCode === 'LATAM') {
+      countryCode === 'PR' || countryCode === 'ES' || countryCode === 'GQ' || countryCode === 'LATAM') {
     return 'es';
   }
 
-  // INGLÊS (EUA + Reino Unido + Canadá + Austrália + África do Sul + outros)
+  // INGLÊS (EUA + Reino Unido + Canadá + Austrália + África do Sul + Belize + outros)
   if (countryCode === 'US' || countryCode === 'CA' || countryCode === 'GB' ||
       countryCode === 'IE' || countryCode === 'AU' || countryCode === 'NZ' ||
-      countryCode === 'ZA') {
+      countryCode === 'ZA' || countryCode === 'BZ') {
     return 'en';
   }
 
