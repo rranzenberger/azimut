@@ -448,7 +448,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                         style={{ 
                           borderColor: 'rgba(201, 35, 55, 0.5)',
                           backgroundColor: 'rgba(201, 35, 55, 0.1)',
-                          color: '#c92337'
+                          color: '#ffffff' /* Branco para contraste no fundo vermelho */
                         }}
                       >
                         {locale(badge)}

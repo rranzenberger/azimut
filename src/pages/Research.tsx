@@ -56,7 +56,7 @@ const Research: React.FC<ResearchProps> = ({ lang }) => {
                 key={item.slug}
                 className="group rounded-2xl border border-white/10 card-adaptive p-6 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all hover:border-white/20 hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)]"
               >
-                <div className="mb-3 inline-block rounded-full border border-azimut-red/30 bg-azimut-red/10 px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.2em] text-azimut-red">
+                <div className="mb-3 inline-block rounded-full border border-azimut-red/30 bg-azimut-red/10 px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.2em] text-white">
                   {item.type}
                 </div>
                 <h3 className="mb-3 font-sora text-xl text-white">

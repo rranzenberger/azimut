@@ -98,7 +98,7 @@ const CuradoriaFestivais: React.FC<CuradoriaFestivaisProps> = ({ lang }) => {
             <div className="flex items-start gap-4 mb-4">
               <div className="text-4xl">{festival.icon}</div>
               <div className="flex-1">
-                <div className="mb-2 inline-block rounded-full border border-azimut-red/30 bg-azimut-red/10 px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.2em] text-azimut-red">
+                <div className="mb-2 inline-block rounded-full border border-azimut-red/30 bg-azimut-red/10 px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.2em] text-white">
                   {locale(festival.role)}
                 </div>
                 <h3 className="mb-1 font-sora text-xl text-white">
