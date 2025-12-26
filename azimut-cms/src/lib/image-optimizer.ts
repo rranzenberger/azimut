@@ -1,16 +1,6 @@
 import sharp from 'sharp';
-import { createClient } from '@supabase/supabase-js';
-
-// Cliente Supabase criado dentro da função para evitar problemas no build
-function getSupabaseClient() {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    throw new Error('Supabase credentials not configured');
-  }
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
-  );
-}
+import { writeFile, mkdir } from 'fs/promises';
+import { join } from 'path';
 
 interface OptimizeOptions {
   file: Buffer;
@@ -30,6 +20,10 @@ export async function optimizeAndUploadImage({
   const timestamp = Date.now();
   const baseName = filename.replace(/\.[^/.]+$/, '');
   const baseFolder = `${folder}/${timestamp}-${baseName}`;
+  
+  // Caminho local para salvar (public/uploads)
+  const uploadDir = join(process.cwd(), 'public', 'uploads', baseFolder);
+  await mkdir(uploadDir, { recursive: true });
 
   // Obter metadata da imagem original
   const image = sharp(file);
@@ -53,19 +47,12 @@ export async function optimizeAndUploadImage({
     avif: undefined,
   };
 
-  // Upload original
-  const supabase = getSupabaseClient();
-  const { data: originalData, error: originalError} = await supabase.storage
-    .from('media')
-    .upload(`${baseFolder}/original.${metadata.format}`, file, {
-      contentType: `image/${metadata.format}`,
-      cacheControl: '31536000',
-    });
+  // Salvar original
+  const originalPath = join(uploadDir, `original.${metadata.format}`);
+  await writeFile(originalPath, file);
+  urls.original = `/uploads/${baseFolder}/original.${metadata.format}`;
 
-  if (originalError) throw originalError;
-  urls.original = supabase.storage.from('media').getPublicUrl(originalData.path).data.publicUrl;
-
-  // Gerar e fazer upload das versões
+  // Gerar e salvar as versões
   for (const version of versions) {
     // JPEG otimizado
     const jpegBuffer = await image
@@ -74,20 +61,9 @@ export async function optimizeAndUploadImage({
       .jpeg({ quality: version.quality, progressive: true })
       .toBuffer();
 
-    const { data: jpegData } = await supabase.storage
-      .from('media')
-      .upload(`${baseFolder}/${version.name}.jpg`, jpegBuffer, {
-        contentType: 'image/jpeg',
-        cacheControl: '31536000',
-      });
-
-    if (jpegData) {
-      const publicUrl = supabase.storage.from('media').getPublicUrl(jpegData.path).data.publicUrl;
-      if (version.name === 'thumbnail') urls.thumbnail = publicUrl;
-      else if (version.name === 'small') urls.small = publicUrl;
-      else if (version.name === 'medium') urls.medium = publicUrl;
-      else if (version.name === 'large') urls.large = publicUrl;
-    }
+    const jpegPath = join(uploadDir, `${version.name}.jpg`);
+    await writeFile(jpegPath, jpegBuffer);
+    urls[version.name] = `/uploads/${baseFolder}/${version.name}.jpg`;
 
     // WebP
     const webpBuffer = await image
@@ -96,15 +72,11 @@ export async function optimizeAndUploadImage({
       .webp({ quality: version.quality - 10 })
       .toBuffer();
 
-    const { data: webpData } = await supabase.storage
-      .from('media')
-      .upload(`${baseFolder}/${version.name}.webp`, webpBuffer, {
-        contentType: 'image/webp',
-        cacheControl: '31536000',
-      });
-
-    if (version.name === 'large' && webpData) {
-      urls.webp = supabase.storage.from('media').getPublicUrl(webpData.path).data.publicUrl;
+    const webpPath = join(uploadDir, `${version.name}.webp`);
+    await writeFile(webpPath, webpBuffer);
+    
+    if (version.name === 'large') {
+      urls.webp = `/uploads/${baseFolder}/${version.name}.webp`;
     }
 
     // AVIF (apenas para large)
@@ -116,16 +88,9 @@ export async function optimizeAndUploadImage({
           .avif({ quality: version.quality - 20 })
           .toBuffer();
 
-        const { data: avifData } = await supabase.storage
-          .from('media')
-          .upload(`${baseFolder}/large.avif`, avifBuffer, {
-            contentType: 'image/avif',
-            cacheControl: '31536000',
-          });
-
-        if (avifData) {
-          urls.avif = supabase.storage.from('media').getPublicUrl(avifData.path).data.publicUrl;
-        }
+        const avifPath = join(uploadDir, 'large.avif');
+        await writeFile(avifPath, avifBuffer);
+        urls.avif = `/uploads/${baseFolder}/large.avif`;
       } catch (error) {
         console.warn('AVIF generation failed:', error);
       }
