@@ -52,11 +52,11 @@ export const studioContent: Record<'pt' | 'en' | 'fr' | 'es', StudioContent> = {
       title: 'Brasil-Canadá | Arte + Tech desde 1996',
       body: 'Unimos arte, tecnologia e narrativa em projetos que transformam. Do primeiro centro de treinamento Autodesk da América do Sul à direção técnica do Rio Museu Olímpico, criamos experiências imersivas entre Brasil e Canadá.\n\nCombinamos pesquisa, produção, educação e curadoria em um só estúdio — algo raro no mundo. Isso nos permite criar projetos que outros não conseguem.',
       stats: [
-        { label: 'Desde', value: '1996' },
+        { label: 'Experiência', value: '1996' },
         { label: 'Autodesk', value: '1996-2018' },
         { label: 'Rio Museum', value: 'Atual' },
-        { label: 'Gramado VR', value: '2017-Atual' },
-        { label: 'Brasil-Canadá', value: 'Binacional' }
+        { label: 'Gramado VR', value: '2017' },
+        { label: 'BR-CA', value: 'Binacional' }
       ]
     },
     unique: {
@@ -199,11 +199,11 @@ export const studioContent: Record<'pt' | 'en' | 'fr' | 'es', StudioContent> = {
       title: 'Brazil-Canada | Art + Tech since 1996',
       body: 'We unite art, technology and narrative in transformative projects. From South America\'s first Autodesk training center to Rio Olympic Museum\'s technical direction, we create immersive experiences between Brazil and Canada.\n\nWe combine research, production, education and curation in one studio — rare worldwide. This allows us to create projects others cannot.',
       stats: [
-        { label: 'Since', value: '1996' },
+        { label: 'Experience', value: '1996' },
         { label: 'Autodesk', value: '1996-2018' },
         { label: 'Rio Museum', value: 'Current' },
-        { label: 'Gramado VR', value: '2017-Now' },
-        { label: 'Brazil-Canada', value: 'Binational' }
+        { label: 'Gramado VR', value: '2017' },
+        { label: 'BR-CA', value: 'Binational' }
       ]
     },
     unique: {
