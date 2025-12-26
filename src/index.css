@@ -835,9 +835,9 @@ select.input-adaptive:disabled {
 }
 
 [data-theme="light"] .card-dark-adaptive {
-  border: 1px solid rgba(201, 35, 55, 0.2);
-  background: rgba(255, 255, 255, 0.6);
-  color: var(--theme-text);
+  border: 1px solid rgba(201, 35, 55, 0.3);
+  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
+  color: #d3cec3; /* Texto creme para contraste */
 }
 
 /* Card escuro alternativo (gradiente mais escuro) */
@@ -849,9 +849,9 @@ select.input-adaptive:disabled {
 }
 
 [data-theme="light"] .card-dark-alt-adaptive {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background: rgba(255, 255, 255, 0.5);
-  color: var(--theme-text);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, #1a1f2e 0%, #252a38 100%);
+  color: #d3cec3; /* Texto creme para contraste */
 }
 
 /* Card escuro fixo - sempre mantém fundo azul escuro, mesmo no tema claro */
@@ -871,11 +871,11 @@ select.input-adaptive:disabled {
 }
 
 [data-theme="light"] .card-adaptive {
-  /* No tema light: fundo CLARO com texto escuro (coerente com o site) */
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  background: rgba(255, 255, 255, 0.4);
+  /* No tema light: INVERSÃO - fundo ESCURO com texto CLARO para contraste */
+  border: 1px solid rgba(201, 35, 55, 0.3);
+  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
   backdrop-filter: blur(12px);
-  color: var(--theme-text); /* Texto escuro no tema claro */
+  color: #d3cec3; /* Texto creme (mesmo da logo) para contraste */
 }
 
 /* Pills/badges adaptativos */
@@ -886,9 +886,9 @@ select.input-adaptive:disabled {
 }
 
 [data-theme="light"] .pill-adaptive {
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  background: rgba(26, 31, 46, 0.85);
-  color: #ffffff;
+  border: 1px solid rgba(201, 35, 55, 0.5);
+  background: rgba(201, 35, 55, 0.15);
+  color: #ffffff; /* Texto branco */
 }
 
 /* Badge status adaptativo */
@@ -898,8 +898,8 @@ select.input-adaptive:disabled {
 }
 
 [data-theme="light"] .badge-adaptive {
-  background: rgba(26, 31, 46, 0.75);
-  color: #ffffff;
+  background: rgba(201, 35, 55, 0.2);
+  color: #ffffff; /* Texto branco */
 }
 
 /* Texto adaptativo */
@@ -922,8 +922,8 @@ select.input-adaptive:disabled {
 }
 
 [data-theme="light"] .card-adaptive * {
-  /* Textos escuros em cards claros no tema claro */
-  color: var(--theme-text);
+  /* Textos CLAROS em cards escuros no tema claro (inversão para contraste) */
+  color: #d3cec3;
 }
 
 [data-theme="light"] .card-adaptive .text-azimut-red,
@@ -932,7 +932,7 @@ select.input-adaptive:disabled {
   color: #c92337;
 }
 
-/* Garantir que títulos, textos e badges nos cards fiquem escuros no tema light */
+/* Garantir que títulos, textos e badges nos cards fiquem CLAROS no tema light (inversão) */
 [data-theme="light"] .card-adaptive h1,
 [data-theme="light"] .card-adaptive h2,
 [data-theme="light"] .card-adaptive h3,
@@ -940,7 +940,7 @@ select.input-adaptive:disabled {
 [data-theme="light"] .card-adaptive p,
 [data-theme="light"] .card-adaptive span,
 [data-theme="light"] .card-adaptive div {
-  color: var(--theme-text);
+  color: #d3cec3; /* Texto creme para contraste no fundo escuro */
 }
 
 /* Texto com gradiente - vermelho puro Azimut */
