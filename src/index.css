@@ -9,7 +9,7 @@
   --color-azimut-bg: #050814;
   --color-azimut-bg-light: #d3cec3;
   --color-azimut-red: #c92337;
-  --color-azimut-red-light: #e03d4a;
+  --color-azimut-red-light: #c92337; /* Mesmo vermelho para hover */
   --color-azimut-red-dark: #8B2332;
   --color-azimut-gold: #F7C400;
   --color-azimut-cream: #d3cec3;
@@ -44,7 +44,7 @@
   --theme-bg-secondary: #b0ab9f;
   --theme-text: #0d0d0d;           /* Preto puro para máximo contraste */
   --theme-text-secondary: #1a1a1a; /* Quase preto */
-  --theme-text-muted: #3a3a3a;     /* Cinza escuro */
+  --theme-text-muted: #1a1a1a;     /* Preto em vez de cinza */
   --theme-border: rgba(0, 0, 0, 0.25); /* Bordas mais visíveis */
   --theme-card-bg: rgba(30, 35, 45, 0.95); /* Card ESCURO no tema claro */
   --theme-overlay: rgba(185, 180, 170, 0.98);
@@ -928,8 +928,8 @@ select.input-adaptive:disabled {
 
 [data-theme="light"] .card-adaptive .text-azimut-red,
 [data-theme="light"] .card-adaptive .bg-azimut-red {
-  /* Manter vermelho visível */
-  color: #ff4757;
+  /* Manter vermelho forte visível no tema claro */
+  color: #c92337;
 }
 
 /* Garantir que títulos, textos e badges nos cards fiquem escuros no tema light */
@@ -943,9 +943,9 @@ select.input-adaptive:disabled {
   color: var(--theme-text);
 }
 
-/* Texto com gradiente */
+/* Texto com gradiente - vermelho puro Azimut */
 .text-gradient-red {
-  background: linear-gradient(135deg, #c92337 0%, #e03d4a 50%, #8B2332 100%);
+  background: linear-gradient(135deg, #c92337 0%, #c92337 50%, #8B2332 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

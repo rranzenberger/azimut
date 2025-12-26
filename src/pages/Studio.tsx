@@ -379,7 +379,9 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   }
                   return (
                     <div key={idx} className="flex items-center gap-2">
-                      <span className="text-azimut-red text-lg">✓</span>
+                      <svg className="w-5 h-5 text-azimut-red shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
                       <span className="font-sora text-sm" style={{ color: 'var(--theme-card-text, var(--theme-text-secondary))' }}>
                         {locale(item)}
                       </span>
@@ -425,36 +427,34 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
 
               {/* Badge de Credibilidade */}
               <div className="mt-8 pt-6 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}>
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="font-sora text-[0.65rem] uppercase tracking-[0.2em]" style={{ color: 'var(--theme-card-text, var(--theme-text-muted))' }}>
-                    {lang === 'pt' ? 'Credenciais Exclusivas:' : lang === 'es' ? 'Credenciales Exclusivas:' : lang === 'fr' ? 'Crédentials Exclusives:' : 'Exclusive Credentials:'}
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    {[
-                      { pt: 'Rio Olympic Museum', en: 'Rio Olympic Museum', es: 'Museo Olímpico de Río', fr: 'Musée Olympique de Rio' },
-                      { pt: 'Gramado VR', en: 'Gramado VR', es: 'Gramado VR', fr: 'Gramado VR' },
-                      { pt: 'Autodesk', en: 'Autodesk', es: 'Autodesk', fr: 'Autodesk' },
-                      { pt: 'XRBR Association', en: 'XRBR Association', es: 'Asociación XRBR', fr: 'Association XRBR' }
-                    ].map((badge, idx) => {
-                      const locale = (entry: { pt: string; en: string; es: string; fr?: string }) => {
-                        if (lang === 'fr') return entry.fr || entry.en
-                        return entry[lang as 'pt' | 'en' | 'es'] || entry.en
-                      }
-                      return (
-                        <span 
-                          key={idx}
-                          className="rounded-full px-3 py-1.5 font-sora text-[0.65rem] uppercase tracking-[0.12em] border"
-                          style={{ 
-                            borderColor: 'rgba(201, 35, 55, 0.5)',
-                            backgroundColor: 'rgba(201, 35, 55, 0.1)',
-                            color: '#c92337'
-                          }}
-                        >
-                          {locale(badge)}
-                        </span>
-                      )
-                    })}
-                  </div>
+                <span className="mb-3 block font-sora text-[0.65rem] uppercase tracking-[0.2em]" style={{ color: 'var(--theme-card-text, var(--theme-text-muted))' }}>
+                  {lang === 'pt' ? 'Credenciais Exclusivas:' : lang === 'es' ? 'Credenciales Exclusivas:' : lang === 'fr' ? 'Crédentials Exclusives:' : 'Exclusive Credentials:'}
+                </span>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+                  {[
+                    { pt: 'Rio Olympic Museum', en: 'Rio Olympic Museum', es: 'Museo Olímpico de Río', fr: 'Musée Olympique de Rio' },
+                    { pt: 'Gramado VR', en: 'Gramado VR', es: 'Gramado VR', fr: 'Gramado VR' },
+                    { pt: 'Autodesk', en: 'Autodesk', es: 'Autodesk', fr: 'Autodesk' },
+                    { pt: 'XRBR Association', en: 'XRBR Association', es: 'Asociación XRBR', fr: 'Association XRBR' }
+                  ].map((badge, idx) => {
+                    const locale = (entry: { pt: string; en: string; es: string; fr?: string }) => {
+                      if (lang === 'fr') return entry.fr || entry.en
+                      return entry[lang as 'pt' | 'en' | 'es'] || entry.en
+                    }
+                    return (
+                      <span 
+                        key={idx}
+                        className="rounded-full px-3 py-1.5 font-sora text-[0.65rem] uppercase tracking-[0.12em] border text-center"
+                        style={{ 
+                          borderColor: 'rgba(201, 35, 55, 0.5)',
+                          backgroundColor: 'rgba(201, 35, 55, 0.1)',
+                          color: '#c92337'
+                        }}
+                      >
+                        {locale(badge)}
+                      </span>
+                    )
+                  })}
                 </div>
               </div>
             </div>
@@ -478,7 +478,9 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   key={idx}
                   className="card-dark-alt-adaptive flex items-start gap-3 p-4 rounded-xl"
                 >
-                  <span className="text-azimut-red text-xl mt-0.5 shrink-0">✓</span>
+                  <svg className="w-5 h-5 text-azimut-red shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
                   <p className="text-[0.9rem] leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
                     {item}
                   </p>
