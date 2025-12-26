@@ -411,8 +411,18 @@ export function detectCountryFromTimezone(timezone: string): { country: string; 
 
   // CHINA - CHINÊS (fallback: inglês)
   if (timezone.includes('Asia/Shanghai') || timezone.includes('Asia/Beijing') ||
-      timezone.includes('Asia/Chongqing') || timezone.includes('Asia/Hong_Kong')) {
+      timezone.includes('Asia/Chongqing')) {
     return { country: 'China', countryCode: 'CN' };
+  }
+
+  // HONG KONG - INGLÊS/CANTONÊS (Região Administrativa Especial da China)
+  if (timezone.includes('Asia/Hong_Kong')) {
+    return { country: 'Hong Kong', countryCode: 'HK' };
+  }
+
+  // MACAU - PORTUGUÊS/CANTONÊS (Região Administrativa Especial da China)
+  if (timezone.includes('Asia/Macau') || timezone.includes('Asia/Macao')) {
+    return { country: 'Macau', countryCode: 'MO' };
   }
 
   // JAPÃO - JAPONÊS (fallback: inglês)
@@ -642,10 +652,11 @@ export function detectCountryFromTimezone(timezone: string): { country: string; 
  * Fallback: Inglês (língua internacional)
  */
 export function getLanguageFromCountry(countryCode: string, region?: string): 'pt' | 'en' | 'fr' | 'es' {
-  // PORTUGUÊS (Brasil + Portugal + Países Lusófonos Africanos + Timor-Leste)
+  // PORTUGUÊS (Brasil + Portugal + Países Lusófonos Africanos + Timor-Leste + Macau)
   if (countryCode === 'BR' || countryCode === 'PT' || 
       countryCode === 'MZ' || countryCode === 'AO' || countryCode === 'CV' ||
-      countryCode === 'GW' || countryCode === 'ST' || countryCode === 'TL') {
+      countryCode === 'GW' || countryCode === 'ST' || countryCode === 'TL' ||
+      countryCode === 'MO') { // Macau (Região Administrativa Especial da China)
     return 'pt';
   }
 
@@ -689,7 +700,8 @@ export function getLanguageFromCountry(countryCode: string, region?: string): 'p
       // Oceania
       countryCode === 'FJ' || countryCode === 'PG' || countryCode === 'WS' ||
       countryCode === 'TO' || countryCode === 'CK' || countryCode === 'GU' || countryCode === 'MP' ||
-      // Sudeste Asiático (inglês amplamente usado)
+      // Leste/Sudeste Asiático (inglês amplamente usado)
+      countryCode === 'HK' || // Hong Kong (Região Administrativa Especial da China)
       countryCode === 'PH' || countryCode === 'SG' || countryCode === 'MY' ||
       // Sul da Ásia (inglês como segunda língua oficial)
       countryCode === 'IN' || countryCode === 'PK' || countryCode === 'BD' ||
