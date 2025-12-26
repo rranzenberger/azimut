@@ -51,6 +51,34 @@ azimut-cms/.next/
 azimut-cms/node_modules/
 azimut-cms/.env.local
 
+# Cursor IDE
+.cursor/
+*.cursor/
+
+# Backups
+*backup*/
+azimut-backups/
+
+# Scripts temporários
+*.ps1
+*.sh
+
+# Documentação temporária
+docs/
+ANALISE_*.md
+STATUS_*.md
+DEPLOY_*.md
+SOLUCAO_*.md
+DIAGNOSTICO_*.md
+PROBLEMA_*.md
+COMANDOS_*.md
+VARIAVEIS_*.md
+CONFIGURAR_*.md
+RODAR_*.md
+VERIFICAR_*.md
+ADICIONAR_*.md
+REMOVER_*.md
+
 
 
 
