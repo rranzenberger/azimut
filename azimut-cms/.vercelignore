@@ -1,0 +1,36 @@
+# Node modules (já ignorado por padrão, mas garantindo)
+node_modules
+
+# Cursor/IDE
+.cursor
+.vscode
+.idea
+
+# Documentação e casos
+docs
+public/cases
+
+# Scripts
+scripts
+
+# Arquivos de desenvolvimento
+*.log
+*.local
+.env.local
+.env.*.local
+
+# Build artifacts
+.next
+out
+dist
+build
+
+# Testing
+coverage
+.nyc_output
+
+# Misc
+.DS_Store
+*.pem
+.turbo
+
