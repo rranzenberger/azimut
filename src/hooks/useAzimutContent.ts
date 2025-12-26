@@ -5,7 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import { getSessionId } from '../utils/analytics';
-import { detectGeoFromTimezone, detectLanguageFromBrowser } from '../utils/geoDetection';
+import { detectGeoFromTimezone, detectLanguageFromBrowser, detectCountryFromIP, getLanguageFromCountry } from '../utils/geoDetection';
 
 const API_URL = import.meta.env.VITE_CMS_API_URL || 'http://localhost:3001/api';
 
@@ -39,24 +39,38 @@ export function useAzimutContent(options: ContentOptions = {}) {
         let country = 'DEFAULT';
         
         if (autoDetectGeo) {
-          // ESTRATÉGIA: Detectar PRIMEIRO via timezone (mais confiável)
-          // Depois tentar API apenas como confirmação (não bloqueia)
+          // ESTRATÉGIA ATUALIZADA: Detectar PRIMEIRO via IP (funciona com VPN!)
+          // Fallback: timezone (se IP falhar)
           try {
-            // Detectar país e idioma via timezone
-            const geo = detectGeoFromTimezone();
-            country = geo.countryCode;
+            // 1. Tentar detectar por IP (detecta VPN corretamente!)
+            const ipGeo = await detectCountryFromIP();
             
-            console.log(`🌍 País detectado via timezone: ${geo.country} (${geo.countryCode})`);
-            if (geo.region) {
-              console.log(`📍 Região: ${geo.region}`);
-            }
-            
-            // Ajustar idioma baseado no país detectado (se não foi salvo manualmente)
-            if (!savedLang && country !== 'DEFAULT') {
-              lang = geo.language;
-              console.log(`🌐 Idioma ajustado para ${geo.language.toUpperCase()} baseado no país: ${geo.country}`);
-              // Salvar no localStorage para persistir
-              localStorage.setItem('azimut-lang', geo.language);
+            if (ipGeo && ipGeo.countryCode && ipGeo.countryCode !== 'DEFAULT') {
+              country = ipGeo.countryCode;
+              console.log(`🌍 País detectado via IP (VPN-aware): ${ipGeo.country} (${ipGeo.countryCode})`);
+              
+              // Ajustar idioma baseado no país detectado (se não foi salvo manualmente)
+              if (!savedLang) {
+                lang = getLanguageFromCountry(ipGeo.countryCode);
+                console.log(`🌐 Idioma ajustado para ${lang.toUpperCase()} baseado no país: ${ipGeo.country}`);
+                localStorage.setItem('azimut-lang', lang);
+              }
+            } else {
+              // 2. Fallback: Detectar via timezone (se IP falhar)
+              const geo = detectGeoFromTimezone();
+              country = geo.countryCode;
+              
+              console.log(`🌍 País detectado via timezone (fallback): ${geo.country} (${geo.countryCode})`);
+              if (geo.region) {
+                console.log(`📍 Região: ${geo.region}`);
+              }
+              
+              // Ajustar idioma baseado no país detectado (se não foi salvo manualmente)
+              if (!savedLang && country !== 'DEFAULT') {
+                lang = geo.language;
+                console.log(`🌐 Idioma ajustado para ${geo.language.toUpperCase()} baseado no país: ${geo.country}`);
+                localStorage.setItem('azimut-lang', geo.language);
+              }
             }
           } catch (fallbackErr) {
             console.warn('Geo detection failed, using browser language');
