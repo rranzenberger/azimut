@@ -49,14 +49,14 @@ export interface StudioContent {
 export const studioContent: Record<'pt' | 'en' | 'fr' | 'es', StudioContent> = {
   pt: {
     heritage: {
-      title: '30 Anos de Inovação',
-      body: 'Desde 1996, unimos arte, tecnologia e educação em projetos pioneiros. Do primeiro centro de treinamento Autodesk da América do Sul à direção técnica do Rio Museu Olímpico, nossa trajetória reflete 30 anos de inovação em computação gráfica, VR/XR, IA e experiências imersivas.\n\nApós décadas explorando diferentes caminhos, descobrimos que nossa combinação única de pesquisa, produção, educação e curadoria em um só estúdio é algo que não encontramos em nenhum outro lugar do mundo. Isso nos permite criar projetos que outros não conseguem.',
+      title: 'Brasil-Canadá | Arte + Tech desde 1996',
+      body: 'Unimos arte, tecnologia e narrativa em projetos que transformam. Do primeiro centro de treinamento Autodesk da América do Sul à direção técnica do Rio Museu Olímpico, criamos experiências imersivas entre Brasil e Canadá.\n\nCombinamos pesquisa, produção, educação e curadoria em um só estúdio — algo raro no mundo. Isso nos permite criar projetos que outros não conseguem.',
       stats: [
-        { label: 'Anos de experiência', value: '30' },
-        { label: 'Centro de Treinamento Autodesk', value: '1996-2018' },
-        { label: 'Direção Técnica Rio Museu Olímpico', value: 'Atual' },
-        { label: 'Curadoria VR Gramado', value: 'Desde 2017' },
-        { label: 'Único Flame Trainer no Brasil', value: 'Certificado' }
+        { label: 'Desde', value: '1996' },
+        { label: 'Autodesk', value: '1996-2018' },
+        { label: 'Rio Museum', value: 'Atual' },
+        { label: 'Gramado VR', value: '2017-Atual' },
+        { label: 'Brasil-Canadá', value: 'Binacional' }
       ]
     },
     unique: {
@@ -196,14 +196,14 @@ export const studioContent: Record<'pt' | 'en' | 'fr' | 'es', StudioContent> = {
   },
   en: {
     heritage: {
-      title: '30 Years of Innovation',
-      body: 'Since 1996, we\'ve blended art, technology and education in pioneering projects. From South America\'s first Autodesk training center to the technical direction of Rio Olympic Museum, our journey reflects 30 years of innovation in CG, VR/XR, AI and immersive experiences.\n\nWe\'re unique: research + production + education + curation in one studio.',
+      title: 'Brazil-Canada | Art + Tech since 1996',
+      body: 'We unite art, technology and narrative in transformative projects. From South America\'s first Autodesk training center to Rio Olympic Museum\'s technical direction, we create immersive experiences between Brazil and Canada.\n\nWe combine research, production, education and curation in one studio — rare worldwide. This allows us to create projects others cannot.',
       stats: [
-        { label: 'Years of experience', value: '30' },
-        { label: 'Autodesk Training Center', value: '1996-2018' },
-        { label: 'Technical Direction Rio Olympic Museum', value: 'Current' },
-        { label: 'VR Curation Gramado', value: 'Since 2017' },
-        { label: 'Only Flame Trainer in Brazil', value: 'Certified' }
+        { label: 'Since', value: '1996' },
+        { label: 'Autodesk', value: '1996-2018' },
+        { label: 'Rio Museum', value: 'Current' },
+        { label: 'Gramado VR', value: '2017-Now' },
+        { label: 'Brazil-Canada', value: 'Binational' }
       ]
     },
     unique: {
