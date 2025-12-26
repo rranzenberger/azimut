@@ -144,14 +144,183 @@ export function detectCountryFromTimezone(timezone: string): { country: string; 
     return { country: 'France', countryCode: 'FR' };
   }
 
-  // BÉLGICA - FRANCÊS/HOLANDÊS (prioriza francês)
+  // LUXEMBURGO - MULTILÍNGUE (francês/alemão/luxemburguês)
+  if (timezone.includes('Europe/Luxembourg')) {
+    return { country: 'Luxembourg', countryCode: 'LU' };
+  }
+
+  // BÉLGICA - MULTILÍNGUE (holandês 60%, francês 40%)
+  // Fallback: INGLÊS (universal, pois não temos holandês)
   if (timezone.includes('Europe/Brussels')) {
     return { country: 'Belgium', countryCode: 'BE' };
   }
 
-  // SUÍÇA - FRANCÊS/ALEMÃO/ITALIANO (prioriza francês)
+  // SUÍÇA - MULTILÍNGUE (alemão 63%, francês 23%, italiano 8%)
+  // Fallback: INGLÊS (universal, pois não temos alemão/italiano)
   if (timezone.includes('Europe/Zurich')) {
     return { country: 'Switzerland', countryCode: 'CH' };
+  }
+
+  // HOLANDA - HOLANDÊS
+  if (timezone.includes('Europe/Amsterdam')) {
+    return { country: 'Netherlands', countryCode: 'NL' };
+  }
+
+  // ÁUSTRIA - ALEMÃO
+  if (timezone.includes('Europe/Vienna')) {
+    return { country: 'Austria', countryCode: 'AT' };
+  }
+
+  // POLÔNIA - POLONÊS
+  if (timezone.includes('Europe/Warsaw')) {
+    return { country: 'Poland', countryCode: 'PL' };
+  }
+
+  // REPÚBLICA TCHECA - TCHECO
+  if (timezone.includes('Europe/Prague')) {
+    return { country: 'Czech Republic', countryCode: 'CZ' };
+  }
+
+  // ESLOVÁQUIA - ESLOVACO
+  if (timezone.includes('Europe/Bratislava')) {
+    return { country: 'Slovakia', countryCode: 'SK' };
+  }
+
+  // HUNGRIA - HÚNGARO
+  if (timezone.includes('Europe/Budapest')) {
+    return { country: 'Hungary', countryCode: 'HU' };
+  }
+
+  // ROMÊNIA - ROMENO
+  if (timezone.includes('Europe/Bucharest')) {
+    return { country: 'Romania', countryCode: 'RO' };
+  }
+
+  // BULGÁRIA - BÚLGARO
+  if (timezone.includes('Europe/Sofia')) {
+    return { country: 'Bulgaria', countryCode: 'BG' };
+  }
+
+  // GRÉCIA - GREGO
+  if (timezone.includes('Europe/Athens')) {
+    return { country: 'Greece', countryCode: 'GR' };
+  }
+
+  // ESCANDINÁVIA
+
+  // NORUEGA - NORUEGUÊS
+  if (timezone.includes('Europe/Oslo')) {
+    return { country: 'Norway', countryCode: 'NO' };
+  }
+
+  // SUÉCIA - SUECO
+  if (timezone.includes('Europe/Stockholm')) {
+    return { country: 'Sweden', countryCode: 'SE' };
+  }
+
+  // FINLÂNDIA - FINLANDÊS
+  if (timezone.includes('Europe/Helsinki')) {
+    return { country: 'Finland', countryCode: 'FI' };
+  }
+
+  // DINAMARCA - DINAMARQUÊS
+  if (timezone.includes('Europe/Copenhagen')) {
+    return { country: 'Denmark', countryCode: 'DK' };
+  }
+
+  // ISLÂNDIA - ISLANDÊS
+  if (timezone.includes('Atlantic/Reykjavik')) {
+    return { country: 'Iceland', countryCode: 'IS' };
+  }
+
+  // BÁLTICOS
+
+  // ESTÔNIA - ESTONIANO
+  if (timezone.includes('Europe/Tallinn')) {
+    return { country: 'Estonia', countryCode: 'EE' };
+  }
+
+  // LETÔNIA - LETÃO
+  if (timezone.includes('Europe/Riga')) {
+    return { country: 'Latvia', countryCode: 'LV' };
+  }
+
+  // LITUÂNIA - LITUANO
+  if (timezone.includes('Europe/Vilnius')) {
+    return { country: 'Lithuania', countryCode: 'LT' };
+  }
+
+  // BALCÃS
+
+  // CROÁCIA - CROATA
+  if (timezone.includes('Europe/Zagreb')) {
+    return { country: 'Croatia', countryCode: 'HR' };
+  }
+
+  // SÉRVIA - SÉRVIO
+  if (timezone.includes('Europe/Belgrade')) {
+    return { country: 'Serbia', countryCode: 'RS' };
+  }
+
+  // BÓSNIA - BÓSNIO
+  if (timezone.includes('Europe/Sarajevo')) {
+    return { country: 'Bosnia and Herzegovina', countryCode: 'BA' };
+  }
+
+  // MONTENEGRO - MONTENEGRINO
+  if (timezone.includes('Europe/Podgorica')) {
+    return { country: 'Montenegro', countryCode: 'ME' };
+  }
+
+  // ALBÂNIA - ALBANÊS
+  if (timezone.includes('Europe/Tirane')) {
+    return { country: 'Albania', countryCode: 'AL' };
+  }
+
+  // MACEDÔNIA DO NORTE - MACEDÔNIO
+  if (timezone.includes('Europe/Skopje')) {
+    return { country: 'North Macedonia', countryCode: 'MK' };
+  }
+
+  // KOSOVO - ALBANÊS/SÉRVIO
+  if (timezone.includes('Europe/Pristina')) {
+    return { country: 'Kosovo', countryCode: 'XK' };
+  }
+
+  // ESLOVÊNIA - ESLOVENO
+  if (timezone.includes('Europe/Ljubljana')) {
+    return { country: 'Slovenia', countryCode: 'SI' };
+  }
+
+  // UCRÂNIA - UCRANIANO
+  if (timezone.includes('Europe/Kiev') || timezone.includes('Europe/Kyiv')) {
+    return { country: 'Ukraine', countryCode: 'UA' };
+  }
+
+  // BIELORRÚSSIA - BIELORRUSSO
+  if (timezone.includes('Europe/Minsk')) {
+    return { country: 'Belarus', countryCode: 'BY' };
+  }
+
+  // MOLDÁVIA - ROMENO
+  if (timezone.includes('Europe/Chisinau')) {
+    return { country: 'Moldova', countryCode: 'MD' };
+  }
+
+  // RÚSSIA - RUSSO
+  if (timezone.includes('Europe/Moscow') || timezone.includes('Asia/Yekaterinburg') || 
+      timezone.includes('Asia/Novosibirsk') || timezone.includes('Asia/Vladivostok')) {
+    return { country: 'Russia', countryCode: 'RU' };
+  }
+
+  // MALTA - MALTÊS/INGLÊS
+  if (timezone.includes('Europe/Malta')) {
+    return { country: 'Malta', countryCode: 'MT' };
+  }
+
+  // CHIPRE - GREGO/TURCO/INGLÊS
+  if (timezone.includes('Asia/Nicosia')) {
+    return { country: 'Cyprus', countryCode: 'CY' };
   }
 
   // PORTUGAL - PORTUGUÊS
@@ -660,13 +829,13 @@ export function getLanguageFromCountry(countryCode: string, region?: string): 'p
     return 'pt';
   }
 
-  // FRANCÊS (França + Canadá-Quebec + Territórios Franceses + África Francófona + Haiti + Líbano)
+  // FRANCÊS (França + Canadá-Quebec + Territórios Franceses + África Francófona + Haiti + Líbano + Luxemburgo)
   if (countryCode === 'FR' || countryCode === 'GF' || 
       countryCode === 'MQ' || countryCode === 'GP' || 
       countryCode === 'PF' || countryCode === 'NC' || 
       countryCode === 'RE' || countryCode === 'YT' || countryCode === 'HT' ||
       (countryCode === 'CA' && region === 'Quebec') ||
-      countryCode === 'BE' || countryCode === 'CH' ||
+      countryCode === 'LU' || // Luxemburgo (multilíngue, mas francês é comum)
       // Magrebe (Norte da África)
       countryCode === 'TN' || countryCode === 'DZ' || countryCode === 'MA' ||
       // África Ocidental Francófona
@@ -693,10 +862,21 @@ export function getLanguageFromCountry(countryCode: string, region?: string): 'p
     return 'es';
   }
 
-  // INGLÊS (Anglofonia + Países com forte presença do inglês)
+  // INGLÊS (Anglofonia + Países com forte presença do inglês + Europa sem PT/FR/ES)
   if (countryCode === 'US' || countryCode === 'CA' || countryCode === 'GB' ||
       countryCode === 'IE' || countryCode === 'AU' || countryCode === 'NZ' ||
       countryCode === 'ZA' || countryCode === 'BZ' ||
+      // Europa (países que não falam PT/FR/ES - usam inglês como lingua franca)
+      countryCode === 'BE' || countryCode === 'CH' || // Bélgica e Suíça (multilíngues)
+      countryCode === 'NL' || countryCode === 'AT' || countryCode === 'DE' || // Holanda, Áustria, Alemanha
+      countryCode === 'PL' || countryCode === 'CZ' || countryCode === 'SK' || countryCode === 'HU' || // Europa Central
+      countryCode === 'RO' || countryCode === 'BG' || countryCode === 'GR' || // Europa Oriental/Balcãs
+      countryCode === 'NO' || countryCode === 'SE' || countryCode === 'FI' || countryCode === 'DK' || countryCode === 'IS' || // Escandinávia
+      countryCode === 'EE' || countryCode === 'LV' || countryCode === 'LT' || // Bálticos
+      countryCode === 'HR' || countryCode === 'RS' || countryCode === 'BA' || countryCode === 'ME' || // Balcãs
+      countryCode === 'AL' || countryCode === 'MK' || countryCode === 'XK' || countryCode === 'SI' || // Balcãs
+      countryCode === 'UA' || countryCode === 'BY' || countryCode === 'MD' || countryCode === 'RU' || // Europa Oriental/Rússia
+      countryCode === 'MT' || countryCode === 'CY' || countryCode === 'IT' || countryCode === 'TR' || // Mediterrâneo
       // Oceania
       countryCode === 'FJ' || countryCode === 'PG' || countryCode === 'WS' ||
       countryCode === 'TO' || countryCode === 'CK' || countryCode === 'GU' || countryCode === 'MP' ||
