@@ -481,7 +481,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   <svg className="w-5 h-5 text-azimut-red shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                   </svg>
-                  <p className="text-[0.9rem] leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                  <p className="text-[0.9rem] leading-relaxed" style={{ color: '#d3cec3' }}>
                     {item}
                   </p>
                 </div>
@@ -499,7 +499,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                 <h3 className="mb-3 font-handel text-xl uppercase tracking-[0.1em] text-azimut-red">
                   {studio.vision.title}
                 </h3>
-                <p className="text-[0.9rem] leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                <p className="text-[0.9rem] leading-relaxed" style={{ color: '#d3cec3' }}>
                   {studio.vision.body}
                 </p>
               </div>
