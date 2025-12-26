@@ -889,14 +889,14 @@ select.input-adaptive:disabled {
 [data-theme="light"] .pill-adaptive {
   border: 1px solid rgba(201, 35, 55, 0.5);
   background: rgba(201, 35, 55, 0.15);
-  color: #ffffff; /* Branco para contraste no fundo vermelho */
+  color: #d3cec3; /* Creme da logo - elegante e com contraste */
 }
 
-/* Badges vermelhos sempre com texto branco (contraste) */
+/* Badges vermelhos sempre com texto creme da logo (elegante + contraste) */
 .badge-red-bg {
   background: rgba(201, 35, 55, 0.1);
   border: 1px solid rgba(201, 35, 55, 0.3);
-  color: #ffffff !important; /* Branco para contraste */
+  color: #d3cec3 !important; /* Creme da logo */
 }
 
 /* Badge status adaptativo */
