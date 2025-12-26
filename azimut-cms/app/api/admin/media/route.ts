@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { optimizeAndUploadImage } from '@/lib/image-optimizer';
 import { verifyAuthToken } from '@/lib/auth';
-import { createClient } from '@supabase/supabase-js';
 import sharp from 'sharp';
 
 export const runtime = 'nodejs'; // Necessário para usar fs/path
@@ -12,18 +11,6 @@ const MAX_IMAGE_MB = 8;
 const MAX_VIDEO_MB = 25;
 const MAX_ALT = 160;
 const UPLOAD_BASE = process.env.UPLOAD_BASE || 'uploads';
-
-const hasSupabase =
-  !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-// Cliente Supabase criado dentro da função para evitar problemas no build
-function getSupabaseClient() {
-  if (!hasSupabase) return null;
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
-}
 
 export async function POST(req: NextRequest) {
   try {
@@ -61,83 +48,24 @@ export async function POST(req: NextRequest) {
     const contentType = file.type || 'application/octet-stream';
 
     let mediaRecord;
-    const supabase = getSupabaseClient();
 
     if (type === 'IMAGE') {
-      if (hasSupabase && supabase) {
-        const urls = await optimizeAndUploadImage({
-          file: buffer,
-          filename: file.name,
-          folder: 'projects',
-        });
-
-        const { width, height, format, size } = await sharp(buffer).metadata();
-
-        mediaRecord = await prisma.media.create({
-          data: {
-            type: 'IMAGE',
-            originalUrl: urls.original,
-            thumbnailUrl: urls.thumbnail,
-            mediumUrl: urls.medium,
-            largeUrl: urls.large,
-            webpUrl: urls.webp,
-            avifUrl: urls.avif,
-            width: width || null,
-            height: height || null,
-            sizeBytes: size || buffer.byteLength,
-            format: format || null,
-            contentType,
-            altPt: altPt || null,
-            altEn: altEn || null,
-          },
-        });
-      } else {
-        mediaRecord = await processLocalImage({
-          buffer,
-          filename: file.name,
-          contentType,
-          altPt,
-          altEn,
-        });
-      }
+      mediaRecord = await processLocalImage({
+        buffer,
+        filename: file.name,
+        contentType,
+        altPt,
+        altEn,
+      });
     } else {
       // Vídeo
-      if (hasSupabase && supabase) {
-        const fileExt = file.name.split('.').pop() || 'mp4';
-        const storagePath = `videos/${Date.now()}-${file.name}`;
-        const upload = await supabase.storage
-          .from('media')
-          .upload(storagePath, buffer, {
-            contentType,
-            cacheControl: '31536000',
-          });
-
-        if (upload.error) {
-          throw upload.error;
-        }
-
-        const publicUrl = supabase.storage.from('media').getPublicUrl(storagePath).data.publicUrl;
-
-        mediaRecord = await prisma.media.create({
-          data: {
-            type: 'VIDEO',
-            originalUrl: publicUrl,
-            format: fileExt,
-            contentType,
-            sizeBytes: buffer.byteLength,
-            altPt: altPt || null,
-            altEn: altEn || null,
-          },
-        });
-      } else {
-        mediaRecord = await processLocalVideo({
-          buffer,
-          filename: file.name,
-          contentType,
-          altPt,
-          altEn,
-        });
-      }
+      mediaRecord = await processLocalVideo({
+        buffer,
+        filename: file.name,
+        contentType,
+        altPt,
+        altEn,
+      });
     }
 
     return NextResponse.json({ success: true, media: mediaRecord });
