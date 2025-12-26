@@ -1,0 +1,22 @@
+# ═══════════════════════════════════════════════════════════════
+# COPIE ESTE CONTEÚDO PARA O ARQUIVO .env.local
+# ═══════════════════════════════════════════════════════════════
+
+# 1️⃣ BANCO DE DADOS NEON
+# Pegar no Neon Console: https://console.neon.tech
+DATABASE_URL="postgresql://neondb_owner:SUBSTITUA_PELA_SENHA@ep-xxx.us-east-2.aws.neon.tech/neondb?sslmode=require"
+
+# 2️⃣ JWT SECRET (para login)
+JWT_SECRET=7007c0aecf3e73bc9d628c122850a9441d57ac0cf7142873e13463b31f5410c3
+
+# ═══════════════════════════════════════════════════════════════
+# PASSO A PASSO:
+# ═══════════════════════════════════════════════════════════════
+# 1. Criar arquivo .env.local em: azimut-cms/.env.local
+# 2. Copiar este conteúdo para dentro
+# 3. Substituir DATABASE_URL pela string do Neon
+# 4. Salvar
+# 5. Reiniciar backoffice (Ctrl+C e npm run dev)
+# ═══════════════════════════════════════════════════════════════
+
+
