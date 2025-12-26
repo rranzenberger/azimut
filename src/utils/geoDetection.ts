@@ -194,6 +194,130 @@ export function detectCountryFromTimezone(timezone: string): { country: string; 
     return { country: 'South Africa', countryCode: 'ZA' };
   }
 
+  // MAGREBE (NORTE DA ÁFRICA) - FRANCÊS
+  // Países árabes com forte presença do francês
+
+  // TUNÍSIA - ÁRABE/FRANCÊS
+  if (timezone.includes('Africa/Tunis')) {
+    return { country: 'Tunisia', countryCode: 'TN' };
+  }
+
+  // ARGÉLIA - ÁRABE/FRANCÊS
+  if (timezone.includes('Africa/Algiers')) {
+    return { country: 'Algeria', countryCode: 'DZ' };
+  }
+
+  // MARROCOS - ÁRABE/FRANCÊS
+  if (timezone.includes('Africa/Casablanca')) {
+    return { country: 'Morocco', countryCode: 'MA' };
+  }
+
+  // ÁFRICA OCIDENTAL FRANCÓFONA
+
+  // SENEGAL - FRANCÊS
+  if (timezone.includes('Africa/Dakar')) {
+    return { country: 'Senegal', countryCode: 'SN' };
+  }
+
+  // COSTA DO MARFIM - FRANCÊS
+  if (timezone.includes('Africa/Abidjan')) {
+    return { country: 'Ivory Coast', countryCode: 'CI' };
+  }
+
+  // MALI - FRANCÊS
+  if (timezone.includes('Africa/Bamako')) {
+    return { country: 'Mali', countryCode: 'ML' };
+  }
+
+  // BURKINA FASO - FRANCÊS
+  if (timezone.includes('Africa/Ouagadougou')) {
+    return { country: 'Burkina Faso', countryCode: 'BF' };
+  }
+
+  // NÍGER - FRANCÊS
+  if (timezone.includes('Africa/Niamey')) {
+    return { country: 'Niger', countryCode: 'NE' };
+  }
+
+  // BENIN - FRANCÊS
+  if (timezone.includes('Africa/Porto-Novo')) {
+    return { country: 'Benin', countryCode: 'BJ' };
+  }
+
+  // TOGO - FRANCÊS
+  if (timezone.includes('Africa/Lome')) {
+    return { country: 'Togo', countryCode: 'TG' };
+  }
+
+  // ÁFRICA CENTRAL FRANCÓFONA
+
+  // CAMARÕES - FRANCÊS/INGLÊS
+  if (timezone.includes('Africa/Douala')) {
+    return { country: 'Cameroon', countryCode: 'CM' };
+  }
+
+  // GABÃO - FRANCÊS
+  if (timezone.includes('Africa/Libreville')) {
+    return { country: 'Gabon', countryCode: 'GA' };
+  }
+
+  // CONGO (Brazzaville) - FRANCÊS
+  if (timezone.includes('Africa/Brazzaville')) {
+    return { country: 'Congo', countryCode: 'CG' };
+  }
+
+  // R.D. CONGO (Kinshasa) - FRANCÊS
+  if (timezone.includes('Africa/Kinshasa') || timezone.includes('Africa/Lubumbashi')) {
+    return { country: 'DR Congo', countryCode: 'CD' };
+  }
+
+  // REPÚBLICA CENTRO-AFRICANA - FRANCÊS
+  if (timezone.includes('Africa/Bangui')) {
+    return { country: 'Central African Republic', countryCode: 'CF' };
+  }
+
+  // CHAD - FRANCÊS/ÁRABE
+  if (timezone.includes('Africa/Ndjamena')) {
+    return { country: 'Chad', countryCode: 'TD' };
+  }
+
+  // ÁFRICA ORIENTAL FRANCÓFONA
+
+  // RUANDA - FRANCÊS/INGLÊS/KINYARWANDA
+  if (timezone.includes('Africa/Kigali')) {
+    return { country: 'Rwanda', countryCode: 'RW' };
+  }
+
+  // BURUNDI - FRANCÊS
+  if (timezone.includes('Africa/Bujumbura')) {
+    return { country: 'Burundi', countryCode: 'BI' };
+  }
+
+  // DJIBOUTI - FRANCÊS/ÁRABE
+  if (timezone.includes('Africa/Djibouti')) {
+    return { country: 'Djibouti', countryCode: 'DJ' };
+  }
+
+  // MADAGÁSCAR - FRANCÊS/MALGAXE
+  if (timezone.includes('Indian/Antananarivo')) {
+    return { country: 'Madagascar', countryCode: 'MG' };
+  }
+
+  // COMORES - FRANCÊS/ÁRABE
+  if (timezone.includes('Indian/Comoro')) {
+    return { country: 'Comoros', countryCode: 'KM' };
+  }
+
+  // SEYCHELLES - FRANCÊS/INGLÊS/CRIOULO
+  if (timezone.includes('Indian/Mahe')) {
+    return { country: 'Seychelles', countryCode: 'SC' };
+  }
+
+  // MAURÍCIO - FRANCÊS/INGLÊS
+  if (timezone.includes('Indian/Mauritius')) {
+    return { country: 'Mauritius', countryCode: 'MU' };
+  }
+
   // MOÇAMBIQUE - PORTUGUÊS
   if (timezone.includes('Africa/Maputo')) {
     return { country: 'Mozambique', countryCode: 'MZ' };
@@ -298,13 +422,24 @@ export function getLanguageFromCountry(countryCode: string, region?: string): 'p
     return 'pt';
   }
 
-  // FRANCÊS (França + Canadá-Quebec + Territórios Franceses + Haiti)
+  // FRANCÊS (França + Canadá-Quebec + Territórios Franceses + África Francófona + Haiti)
   if (countryCode === 'FR' || countryCode === 'GF' || 
       countryCode === 'MQ' || countryCode === 'GP' || 
       countryCode === 'PF' || countryCode === 'NC' || 
       countryCode === 'RE' || countryCode === 'YT' || countryCode === 'HT' ||
       (countryCode === 'CA' && region === 'Quebec') ||
-      countryCode === 'BE' || countryCode === 'CH') {
+      countryCode === 'BE' || countryCode === 'CH' ||
+      // Magrebe (Norte da África)
+      countryCode === 'TN' || countryCode === 'DZ' || countryCode === 'MA' ||
+      // África Ocidental Francófona
+      countryCode === 'SN' || countryCode === 'CI' || countryCode === 'ML' ||
+      countryCode === 'BF' || countryCode === 'NE' || countryCode === 'BJ' || countryCode === 'TG' ||
+      // África Central Francófona
+      countryCode === 'CM' || countryCode === 'GA' || countryCode === 'CG' ||
+      countryCode === 'CD' || countryCode === 'CF' || countryCode === 'TD' ||
+      // África Oriental Francófona + Ilhas do Índico
+      countryCode === 'RW' || countryCode === 'BI' || countryCode === 'DJ' ||
+      countryCode === 'MG' || countryCode === 'KM' || countryCode === 'SC' || countryCode === 'MU') {
     return 'fr';
   }
 
