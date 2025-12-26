@@ -355,6 +355,8 @@ export function detectCountryFromTimezone(timezone: string): { country: string; 
     return { country: 'New Zealand', countryCode: 'NZ' };
   }
 
+  // OCEANIA - ILHAS DO PACÍFICO
+
   // POLINÉSIA FRANCESA - FRANCÊS (território francês)
   if (timezone.includes('Pacific/Tahiti') || timezone.includes('Pacific/Marquesas') || timezone.includes('Pacific/Gambier')) {
     return { country: 'French Polynesia', countryCode: 'PF', region: 'French Polynesia' };
@@ -364,6 +366,48 @@ export function detectCountryFromTimezone(timezone: string): { country: string; 
   if (timezone.includes('Pacific/Noumea')) {
     return { country: 'New Caledonia', countryCode: 'NC', region: 'New Caledonia' };
   }
+
+  // VANUATU - FRANCÊS/INGLÊS/BISLAMA
+  if (timezone.includes('Pacific/Efate')) {
+    return { country: 'Vanuatu', countryCode: 'VU' };
+  }
+
+  // FIJI - INGLÊS/FIJIANO
+  if (timezone.includes('Pacific/Fiji')) {
+    return { country: 'Fiji', countryCode: 'FJ' };
+  }
+
+  // PAPUA NOVA GUINÉ - INGLÊS
+  if (timezone.includes('Pacific/Port_Moresby')) {
+    return { country: 'Papua New Guinea', countryCode: 'PG' };
+  }
+
+  // SAMOA - INGLÊS/SAMOANO
+  if (timezone.includes('Pacific/Apia')) {
+    return { country: 'Samoa', countryCode: 'WS' };
+  }
+
+  // TONGA - INGLÊS/TONGANÊS
+  if (timezone.includes('Pacific/Tongatapu')) {
+    return { country: 'Tonga', countryCode: 'TO' };
+  }
+
+  // ILHAS COOK - INGLÊS (território da Nova Zelândia)
+  if (timezone.includes('Pacific/Rarotonga')) {
+    return { country: 'Cook Islands', countryCode: 'CK' };
+  }
+
+  // GUAM - INGLÊS (território dos EUA)
+  if (timezone.includes('Pacific/Guam')) {
+    return { country: 'Guam', countryCode: 'GU' };
+  }
+
+  // ILHAS MARIANAS DO NORTE - INGLÊS (território dos EUA)
+  if (timezone.includes('Pacific/Saipan')) {
+    return { country: 'Northern Mariana Islands', countryCode: 'MP' };
+  }
+
+  // ÁSIA - LESTE ASIÁTICO
 
   // CHINA - CHINÊS (fallback: inglês)
   if (timezone.includes('Asia/Shanghai') || timezone.includes('Asia/Beijing') ||
@@ -379,6 +423,189 @@ export function detectCountryFromTimezone(timezone: string): { country: string; 
   // TIMOR-LESTE - PORTUGUÊS
   if (timezone.includes('Asia/Dili')) {
     return { country: 'East Timor', countryCode: 'TL' };
+  }
+
+  // COREIA DO SUL - COREANO (fallback: inglês)
+  if (timezone.includes('Asia/Seoul')) {
+    return { country: 'South Korea', countryCode: 'KR' };
+  }
+
+  // COREIA DO NORTE - COREANO (fallback: inglês)
+  if (timezone.includes('Asia/Pyongyang')) {
+    return { country: 'North Korea', countryCode: 'KP' };
+  }
+
+  // TAIWAN - CHINÊS (fallback: inglês)
+  if (timezone.includes('Asia/Taipei')) {
+    return { country: 'Taiwan', countryCode: 'TW' };
+  }
+
+  // MONGÓLIA - MONGOL (fallback: inglês)
+  if (timezone.includes('Asia/Ulaanbaatar')) {
+    return { country: 'Mongolia', countryCode: 'MN' };
+  }
+
+  // ÁSIA - SUDESTE ASIÁTICO
+
+  // FILIPINAS - INGLÊS/FILIPINO
+  if (timezone.includes('Asia/Manila')) {
+    return { country: 'Philippines', countryCode: 'PH' };
+  }
+
+  // SINGAPURA - INGLÊS/MANDARIM/MALAIO/TAMIL
+  if (timezone.includes('Asia/Singapore')) {
+    return { country: 'Singapore', countryCode: 'SG' };
+  }
+
+  // MALÁSIA - MALAIO/INGLÊS
+  if (timezone.includes('Asia/Kuala_Lumpur')) {
+    return { country: 'Malaysia', countryCode: 'MY' };
+  }
+
+  // INDONÉSIA - INDONÉSIO (fallback: inglês)
+  if (timezone.includes('Asia/Jakarta') || timezone.includes('Asia/Makassar') || timezone.includes('Asia/Jayapura')) {
+    return { country: 'Indonesia', countryCode: 'ID' };
+  }
+
+  // TAILÂNDIA - TAILANDÊS (fallback: inglês)
+  if (timezone.includes('Asia/Bangkok')) {
+    return { country: 'Thailand', countryCode: 'TH' };
+  }
+
+  // VIETNÃ - VIETNAMITA (fallback: inglês)
+  if (timezone.includes('Asia/Ho_Chi_Minh') || timezone.includes('Asia/Hanoi')) {
+    return { country: 'Vietnam', countryCode: 'VN' };
+  }
+
+  // CAMBOJA - KHMER (fallback: inglês)
+  if (timezone.includes('Asia/Phnom_Penh')) {
+    return { country: 'Cambodia', countryCode: 'KH' };
+  }
+
+  // LAOS - LAO (fallback: inglês)
+  if (timezone.includes('Asia/Vientiane')) {
+    return { country: 'Laos', countryCode: 'LA' };
+  }
+
+  // MYANMAR - BIRMANÊS (fallback: inglês)
+  if (timezone.includes('Asia/Yangon')) {
+    return { country: 'Myanmar', countryCode: 'MM' };
+  }
+
+  // ÁSIA - SUL DA ÁSIA
+
+  // ÍNDIA - HINDI/INGLÊS
+  if (timezone.includes('Asia/Kolkata') || timezone.includes('Asia/Calcutta')) {
+    return { country: 'India', countryCode: 'IN' };
+  }
+
+  // PAQUISTÃO - URDU/INGLÊS
+  if (timezone.includes('Asia/Karachi')) {
+    return { country: 'Pakistan', countryCode: 'PK' };
+  }
+
+  // BANGLADESH - BENGALI/INGLÊS
+  if (timezone.includes('Asia/Dhaka')) {
+    return { country: 'Bangladesh', countryCode: 'BD' };
+  }
+
+  // SRI LANKA - CINGALÊS/TÂMIL/INGLÊS
+  if (timezone.includes('Asia/Colombo')) {
+    return { country: 'Sri Lanka', countryCode: 'LK' };
+  }
+
+  // NEPAL - NEPALÊS/INGLÊS
+  if (timezone.includes('Asia/Kathmandu')) {
+    return { country: 'Nepal', countryCode: 'NP' };
+  }
+
+  // MALDIVAS - DIVEHI/INGLÊS
+  if (timezone.includes('Indian/Maldives')) {
+    return { country: 'Maldives', countryCode: 'MV' };
+  }
+
+  // ÁSIA - ORIENTE MÉDIO
+
+  // EMIRADOS ÁRABES UNIDOS - ÁRABE/INGLÊS
+  if (timezone.includes('Asia/Dubai')) {
+    return { country: 'United Arab Emirates', countryCode: 'AE' };
+  }
+
+  // ARÁBIA SAUDITA - ÁRABE
+  if (timezone.includes('Asia/Riyadh')) {
+    return { country: 'Saudi Arabia', countryCode: 'SA' };
+  }
+
+  // CATAR - ÁRABE/INGLÊS
+  if (timezone.includes('Asia/Qatar')) {
+    return { country: 'Qatar', countryCode: 'QA' };
+  }
+
+  // KUWAIT - ÁRABE/INGLÊS
+  if (timezone.includes('Asia/Kuwait')) {
+    return { country: 'Kuwait', countryCode: 'KW' };
+  }
+
+  // OMÃ - ÁRABE/INGLÊS
+  if (timezone.includes('Asia/Muscat')) {
+    return { country: 'Oman', countryCode: 'OM' };
+  }
+
+  // BAHREIN - ÁRABE/INGLÊS
+  if (timezone.includes('Asia/Bahrain')) {
+    return { country: 'Bahrain', countryCode: 'BH' };
+  }
+
+  // IRAQUE - ÁRABE
+  if (timezone.includes('Asia/Baghdad')) {
+    return { country: 'Iraq', countryCode: 'IQ' };
+  }
+
+  // IRÃ - PERSA/FARSI
+  if (timezone.includes('Asia/Tehran')) {
+    return { country: 'Iran', countryCode: 'IR' };
+  }
+
+  // ISRAEL - HEBRAICO/INGLÊS
+  if (timezone.includes('Asia/Jerusalem')) {
+    return { country: 'Israel', countryCode: 'IL' };
+  }
+
+  // PALESTINA - ÁRABE
+  if (timezone.includes('Asia/Gaza') || timezone.includes('Asia/Hebron')) {
+    return { country: 'Palestine', countryCode: 'PS' };
+  }
+
+  // JORDÂNIA - ÁRABE/INGLÊS
+  if (timezone.includes('Asia/Amman')) {
+    return { country: 'Jordan', countryCode: 'JO' };
+  }
+
+  // LÍBANO - ÁRABE/FRANCÊS/INGLÊS
+  if (timezone.includes('Asia/Beirut')) {
+    return { country: 'Lebanon', countryCode: 'LB' };
+  }
+
+  // SÍRIA - ÁRABE
+  if (timezone.includes('Asia/Damascus')) {
+    return { country: 'Syria', countryCode: 'SY' };
+  }
+
+  // TURQUIA - TURCO
+  if (timezone.includes('Europe/Istanbul')) {
+    return { country: 'Turkey', countryCode: 'TR' };
+  }
+
+  // ÁSIA CENTRAL
+
+  // CAZAQUISTÃO - CAZAQUE/RUSSO
+  if (timezone.includes('Asia/Almaty')) {
+    return { country: 'Kazakhstan', countryCode: 'KZ' };
+  }
+
+  // UZBEQUISTÃO - UZBEQUE
+  if (timezone.includes('Asia/Tashkent')) {
+    return { country: 'Uzbekistan', countryCode: 'UZ' };
   }
 
   // ILHA REUNIÃO - FRANCÊS (território francês no Índico)
@@ -422,7 +649,7 @@ export function getLanguageFromCountry(countryCode: string, region?: string): 'p
     return 'pt';
   }
 
-  // FRANCÊS (França + Canadá-Quebec + Territórios Franceses + África Francófona + Haiti)
+  // FRANCÊS (França + Canadá-Quebec + Territórios Franceses + África Francófona + Haiti + Líbano)
   if (countryCode === 'FR' || countryCode === 'GF' || 
       countryCode === 'MQ' || countryCode === 'GP' || 
       countryCode === 'PF' || countryCode === 'NC' || 
@@ -439,7 +666,11 @@ export function getLanguageFromCountry(countryCode: string, region?: string): 'p
       countryCode === 'CD' || countryCode === 'CF' || countryCode === 'TD' ||
       // África Oriental Francófona + Ilhas do Índico
       countryCode === 'RW' || countryCode === 'BI' || countryCode === 'DJ' ||
-      countryCode === 'MG' || countryCode === 'KM' || countryCode === 'SC' || countryCode === 'MU') {
+      countryCode === 'MG' || countryCode === 'KM' || countryCode === 'SC' || countryCode === 'MU' ||
+      // Oriente Médio
+      countryCode === 'LB' || // Líbano (árabe/francês)
+      // Oceania
+      countryCode === 'VU') { // Vanuatu (francês/inglês/bislama) - prioriza francês
     return 'fr';
   }
 
@@ -451,10 +682,21 @@ export function getLanguageFromCountry(countryCode: string, region?: string): 'p
     return 'es';
   }
 
-  // INGLÊS (EUA + Reino Unido + Canadá + Austrália + África do Sul + Belize + outros)
+  // INGLÊS (Anglofonia + Países com forte presença do inglês)
   if (countryCode === 'US' || countryCode === 'CA' || countryCode === 'GB' ||
       countryCode === 'IE' || countryCode === 'AU' || countryCode === 'NZ' ||
-      countryCode === 'ZA' || countryCode === 'BZ') {
+      countryCode === 'ZA' || countryCode === 'BZ' ||
+      // Oceania
+      countryCode === 'FJ' || countryCode === 'PG' || countryCode === 'WS' ||
+      countryCode === 'TO' || countryCode === 'CK' || countryCode === 'GU' || countryCode === 'MP' ||
+      // Sudeste Asiático (inglês amplamente usado)
+      countryCode === 'PH' || countryCode === 'SG' || countryCode === 'MY' ||
+      // Sul da Ásia (inglês como segunda língua oficial)
+      countryCode === 'IN' || countryCode === 'PK' || countryCode === 'BD' ||
+      countryCode === 'LK' || countryCode === 'NP' || countryCode === 'MV' ||
+      // Oriente Médio (inglês amplamente usado)
+      countryCode === 'AE' || countryCode === 'QA' || countryCode === 'KW' ||
+      countryCode === 'OM' || countryCode === 'BH' || countryCode === 'IL' || countryCode === 'JO') {
     return 'en';
   }
 
