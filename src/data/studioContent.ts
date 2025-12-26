@@ -49,14 +49,13 @@ export interface StudioContent {
 export const studioContent: Record<'pt' | 'en' | 'fr' | 'es', StudioContent> = {
   pt: {
     heritage: {
-      title: 'Experiência Global | Brasil-Canadá',
-      body: 'Desde 1996, unimos arte, tecnologia e narrativa em projetos que transformam. Do primeiro centro de treinamento Autodesk da América do Sul à direção técnica do Rio Museu Olímpico, criamos experiências imersivas entre Brasil e Canadá.\n\nCombinamos pesquisa, produção, educação e curadoria — algo raro no mundo.',
+      title: 'Desde 1996 | Brasil-Canadá',
+      body: 'Unimos arte, tecnologia e educação em projetos pioneiros. Do primeiro centro de treinamento Autodesk da América do Sul à direção técnica do Rio Museu Olímpico, criamos experiências imersivas entre Brasil e Canadá.',
       stats: [
-        { label: 'Experiência', value: '1996' },
+        { label: 'Desde', value: '1996' },
         { label: 'Autodesk', value: '1996-2018' },
         { label: 'Rio Museum', value: 'Atual' },
-        { label: 'Gramado VR', value: '2017' },
-        { label: 'BR-CA', value: 'Binacional' }
+        { label: 'Gramado VR', value: 'Desde 2017' }
       ]
     },
     unique: {
@@ -196,14 +195,13 @@ export const studioContent: Record<'pt' | 'en' | 'fr' | 'es', StudioContent> = {
   },
   en: {
     heritage: {
-      title: 'Global Experience | Brazil-Canada',
-      body: 'Since 1996, we unite art, technology and narrative in transformative projects. From South America\'s first Autodesk training center to Rio Olympic Museum\'s technical direction, we create immersive experiences between Brazil and Canada.\n\nWe combine research, production, education and curation — rare worldwide.',
+      title: 'Since 1996 | Brazil-Canada',
+      body: 'We blend art, technology and education in pioneering projects. From South America\'s first Autodesk training center to Rio Olympic Museum\'s technical direction, we create immersive experiences between Brazil and Canada.',
       stats: [
-        { label: 'Experience', value: '1996' },
+        { label: 'Since', value: '1996' },
         { label: 'Autodesk', value: '1996-2018' },
         { label: 'Rio Museum', value: 'Current' },
-        { label: 'Gramado VR', value: '2017' },
-        { label: 'BR-CA', value: 'Binational' }
+        { label: 'Gramado VR', value: 'Since 2017' }
       ]
     },
     unique: {
