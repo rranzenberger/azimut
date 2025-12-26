@@ -1,5 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // OTIMIZAÇÕES PARA EVITAR STACK OVERFLOW NO VERCEL
+  experimental: {
+    outputFileTracingIncludes: {
+      '/api/**': ['./prisma/**/*'],
+    },
+    outputFileTracingExcludes: {
+      '*': [
+        'node_modules/@swc/core-linux-x64-gnu',
+        'node_modules/@swc/core-linux-x64-musl',
+        'node_modules/@esbuild',
+        'node_modules/webpack',
+        '.git',
+      ],
+    },
+  },
+  
   images: {
     remotePatterns: [
       {
@@ -28,6 +44,11 @@ const nextConfig = {
       ignored: ['**/node_modules', '../**'],
     };
     
+    // Reduzir recursão
+    config.infrastructureLogging = {
+      level: 'error',
+    };
+    
     return config;
   },
   
@@ -36,6 +57,9 @@ const nextConfig = {
   
   // Usar SWC minify
   swcMinify: true,
+  
+  // Otimizar output
+  output: 'standalone',
   
   async headers() {
     return [
