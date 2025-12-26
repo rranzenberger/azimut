@@ -49,8 +49,8 @@ export interface StudioContent {
 export const studioContent: Record<'pt' | 'en' | 'fr' | 'es', StudioContent> = {
   pt: {
     heritage: {
-      title: 'Brasil-Canadá | Arte + Tech desde 1996',
-      body: 'Unimos arte, tecnologia e narrativa em projetos que transformam. Do primeiro centro de treinamento Autodesk da América do Sul à direção técnica do Rio Museu Olímpico, criamos experiências imersivas entre Brasil e Canadá.\n\nCombinamos pesquisa, produção, educação e curadoria em um só estúdio — algo raro no mundo. Isso nos permite criar projetos que outros não conseguem.',
+      title: 'Experiência Global | Brasil-Canadá',
+      body: 'Desde 1996, unimos arte, tecnologia e narrativa em projetos que transformam. Do primeiro centro de treinamento Autodesk da América do Sul à direção técnica do Rio Museu Olímpico, criamos experiências imersivas entre Brasil e Canadá.\n\nCombinamos pesquisa, produção, educação e curadoria — algo raro no mundo.',
       stats: [
         { label: 'Experiência', value: '1996' },
         { label: 'Autodesk', value: '1996-2018' },
@@ -196,8 +196,8 @@ export const studioContent: Record<'pt' | 'en' | 'fr' | 'es', StudioContent> = {
   },
   en: {
     heritage: {
-      title: 'Brazil-Canada | Art + Tech since 1996',
-      body: 'We unite art, technology and narrative in transformative projects. From South America\'s first Autodesk training center to Rio Olympic Museum\'s technical direction, we create immersive experiences between Brazil and Canada.\n\nWe combine research, production, education and curation in one studio — rare worldwide. This allows us to create projects others cannot.',
+      title: 'Global Experience | Brazil-Canada',
+      body: 'Since 1996, we unite art, technology and narrative in transformative projects. From South America\'s first Autodesk training center to Rio Olympic Museum\'s technical direction, we create immersive experiences between Brazil and Canada.\n\nWe combine research, production, education and curation — rare worldwide.',
       stats: [
         { label: 'Experience', value: '1996' },
         { label: 'Autodesk', value: '1996-2018' },
