@@ -206,8 +206,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 padding: '0 6px', 
                 position: 'relative',
                 color: activeRoute === 'home' 
-                  ? (theme === 'light' ? '#8B2332' : '#c92337')
-                  : (hoveredRoute === 'home' ? '#d97706' : 'var(--theme-text-secondary)'),
+                  ? (theme === 'light' ? '#c92337' : '#c92337')
+                  : (hoveredRoute === 'home' ? '#c92337' : 'var(--theme-text-secondary)'),
                 textShadow: activeRoute === 'home' && theme === 'dark' ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' : undefined,
                 lineHeight: '1'
               }}
@@ -233,8 +233,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 alignItems: 'center', 
                 position: 'relative',
                 color: activeRoute === 'what' 
-                  ? (theme === 'light' ? '#8B2332' : '#c92337')
-                  : (hoveredRoute === 'what' ? '#d97706' : 'var(--theme-text-secondary)'),
+                  ? (theme === 'light' ? '#c92337' : '#c92337')
+                  : (hoveredRoute === 'what' ? '#c92337' : 'var(--theme-text-secondary)'),
                 textShadow: activeRoute === 'what' && theme === 'dark' ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' : undefined
               }}
             >
@@ -259,8 +259,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 alignItems: 'center', 
                 position: 'relative',
                 color: activeRoute === 'work' 
-                  ? (theme === 'light' ? '#8B2332' : '#c92337')
-                  : (hoveredRoute === 'work' ? '#d97706' : 'var(--theme-text-secondary)'),
+                  ? (theme === 'light' ? '#c92337' : '#c92337')
+                  : (hoveredRoute === 'work' ? '#c92337' : 'var(--theme-text-secondary)'),
                 textShadow: activeRoute === 'work' && theme === 'dark' ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' : undefined
               }}
             >
@@ -285,8 +285,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 alignItems: 'center', 
                 position: 'relative',
                 color: activeRoute === 'studio' 
-                  ? (theme === 'light' ? '#8B2332' : '#c92337')
-                  : (hoveredRoute === 'studio' ? '#d97706' : 'var(--theme-text-secondary)'),
+                  ? (theme === 'light' ? '#c92337' : '#c92337')
+                  : (hoveredRoute === 'studio' ? '#c92337' : 'var(--theme-text-secondary)'),
                 textShadow: activeRoute === 'studio' && theme === 'dark' ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' : undefined
               }}
             >
@@ -311,8 +311,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 alignItems: 'center', 
                 position: 'relative',
                 color: activeRoute === 'academy' 
-                  ? (theme === 'light' ? '#8B2332' : '#c92337')
-                  : (hoveredRoute === 'academy' ? '#d97706' : 'var(--theme-text-secondary)'),
+                  ? (theme === 'light' ? '#c92337' : '#c92337')
+                  : (hoveredRoute === 'academy' ? '#c92337' : 'var(--theme-text-secondary)'),
                 textShadow: activeRoute === 'academy' && theme === 'dark' ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' : undefined
               }}
             >

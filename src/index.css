@@ -362,8 +362,8 @@ html {
 }
 
 .nav-link-glow:hover {
-  color: var(--theme-text);
-  text-shadow: 0 0 25px rgba(201, 35, 55, 0.6), 0 0 50px rgba(201, 35, 55, 0.3);
+  color: #c92337 !important; /* Vermelho puro Azimut - sem laranja */
+  text-shadow: 0 0 25px rgba(201, 35, 55, 0.8), 0 0 50px rgba(201, 35, 55, 0.5);
 }
 
 .nav-link-glow:hover::before {
@@ -373,7 +373,8 @@ html {
 
 /* Glow mais intenso no tema escuro */
 [data-theme="dark"] .nav-link-glow:hover {
-  text-shadow: 0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4);
+  color: #c92337 !important; /* Vermelho puro Azimut - sem laranja */
+  text-shadow: 0 0 12px rgba(201, 35, 55, 0.9), 0 0 25px rgba(201, 35, 55, 0.6);
 }
 
 [data-theme="dark"] .nav-link-glow:hover::before {
