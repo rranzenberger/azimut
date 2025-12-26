@@ -264,17 +264,19 @@ export function detectLanguageFromBrowser(): 'pt' | 'en' | 'fr' | 'es' {
 /**
  * Detecta país via IP usando API externa (funciona com VPN)
  * Não depende do backoffice
+ * ⚠️ NÃO BLOQUEIA: Timeout de 5s, fallback silencioso
  */
 export async function detectCountryFromIP(): Promise<{ country: string; countryCode: string } | null> {
   try {
     // Usar ipapi.co (gratuito até 30k req/mês, sem CORS issues)
     const response = await fetch('https://ipapi.co/json/', {
-      signal: AbortSignal.timeout(3000),
+      signal: AbortSignal.timeout(5000), // ✅ 5 segundos (não 3)
     });
     
     if (response.ok) {
       const data = await response.json();
       if (data.country_code) {
+        console.log(`🌍 País detectado via IP: ${data.country_name} (${data.country_code})`);
         return {
           country: data.country_name || 'Unknown',
           countryCode: data.country_code,
@@ -282,7 +284,7 @@ export async function detectCountryFromIP(): Promise<{ country: string; countryC
       }
     }
   } catch (error) {
-    console.warn('IP detection failed:', error);
+    console.warn('⚠️ IP detection failed (normal se VPN/firewall):', error);
   }
   
   return null;

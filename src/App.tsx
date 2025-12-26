@@ -41,13 +41,16 @@ const App: React.FC = () => {
           return geo.language
         }
       } catch (e) {
-        // Fallback: usar idioma do navegador
-        const browserLang = detectLanguageFromBrowser()
-        localStorage.setItem('azimut-lang', browserLang)
-        return browserLang
-      }
-      
-      return 'en' // Padrão: Inglês (língua internacional)
+      // Fallback: usar idioma do navegador se timezone falhar
+      const browserLang = detectLanguageFromBrowser()
+      localStorage.setItem('azimut-lang', browserLang)
+      console.log(`🌐 Fallback: idioma do navegador (${browserLang.toUpperCase()})`)
+      return browserLang
+    }
+    
+    // Último fallback: INGLÊS (língua internacional, não PT)
+    console.log('🌐 Último fallback: EN (internacional)')
+    return 'en'
     } catch (e) {
       // Fallback se localStorage não estiver disponível
       return 'pt'
