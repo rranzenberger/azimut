@@ -508,7 +508,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                 <h3 className="mb-3 font-handel text-xl uppercase tracking-[0.1em] text-azimut-red">
                   {studio.mission.title}
                 </h3>
-                <p className="text-[0.9rem] leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                <p className="text-[0.9rem] leading-relaxed" style={{ color: '#d3cec3' }}>
                   {studio.mission.body}
                 </p>
               </div>
