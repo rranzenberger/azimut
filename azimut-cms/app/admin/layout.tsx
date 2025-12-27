@@ -97,7 +97,7 @@ export default async function AdminLayout({
         >
           <AdminLink href="/admin" label="Dashboard" />
           <AdminLink href="/admin/projects" label="Projetos" />
-          <AdminLink href="/admin/pages" label="Páginas" />
+          <AdminLink href="/admin/site-pages" label="Páginas" />
           <AdminLink href="/admin/media" label="Mídias" />
           <div
             style={{
