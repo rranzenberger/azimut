@@ -10,6 +10,7 @@ import InstallPrompt from './components/InstallPrompt'
 import PlausibleScript from './components/PlausibleScript'
 import AppLayout from './components/AppLayout'
 import ErrorBoundary from './components/ErrorBoundary'
+import Chatbot from './components/Chatbot'
 import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDetection'
 
 // Lazy loading de páginas para melhor performance
@@ -231,6 +232,9 @@ const App: React.FC = () => {
             </ErrorBoundary>
           </Suspense>
         </AppLayout>
+        
+        {/* Chatbot - Assistente Virtual com DeepSeek */}
+        <Chatbot lang={lang} />
       </BrowserRouter>
     </BrowserCompatibility>
   )

@@ -58,6 +58,35 @@ enum LeadStatus {
   LOST
 }
 
+enum EditalType {
+  FEDERAL
+  ESTADUAL
+  MUNICIPAL
+  PRIVADO
+  ONG
+  INSTITUTO
+  PROVINCIAL // Canadá (BC, ON, QC, etc.)
+  NATIONAL // Canadá (National Film Board, etc.)
+}
+
+enum EditalStatus {
+  ABERTO
+  FECHADO
+  ENVIADO
+  GANHO
+  PERDIDO
+}
+
+enum LeadEditalStatus {
+  PENDING
+  CONTACTED
+  EMAIL_SENT
+  CALL_SCHEDULED
+  PROPOSAL_SENT
+  WON
+  LOST
+}
+
 enum MediaType {
   IMAGE
   VIDEO
@@ -82,78 +111,78 @@ model User {
 }
 
 model Market {
-  id              String    @id @default(uuid())
-  code            String    @unique
-  labelPt         String
-  labelEn         String
-  heroMessagePt   String?
-  heroMessageEn   String?
-  priority        Int       @default(0)
+  id                String    @id @default(uuid())
+  code              String    @unique
+  labelPt           String
+  labelEn           String
+  heroMessagePt     String?
+  heroMessageEn     String?
+  priority          Int       @default(0)
   highlightProjects Project[]
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 }
 
 model Media {
-  id           String   @id @default(uuid())
-  type         MediaType @default(IMAGE)
-  originalUrl  String
-  thumbnailUrl String?
-  mediumUrl    String?
-  largeUrl     String?
-  webpUrl      String?
-  avifUrl      String?
-  width        Int?
-  height       Int?
-  sizeBytes    Int?
+  id              String    @id @default(uuid())
+  type            MediaType @default(IMAGE)
+  originalUrl     String
+  thumbnailUrl    String?
+  mediumUrl       String?
+  largeUrl        String?
+  webpUrl         String?
+  avifUrl         String?
+  width           Int?
+  height          Int?
+  sizeBytes       Int?
   durationSeconds Int?
-  format       String?
-  contentType  String?
-  altPt        String?
-  altEn        String?
-  altEs        String?
-  altFr        String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  projectHero  Project?
+  format          String?
+  contentType     String?
+  altPt           String?
+  altEn           String?
+  altEs           String?
+  altFr           String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  projectHero     Project?
 }
 
 model Tag {
-  id        String        @id @default(uuid())
-  slug      String        @unique
+  id        String      @id @default(uuid())
+  slug      String      @unique
   labelPt   String
   labelEn   String
   labelEs   String?
   labelFr   String?
   category  TagCategory
   projects  Project[]
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
 model Service {
-  id             String        @id @default(uuid())
-  slug           String        @unique
-  titlePt        String
-  titleEn        String
-  titleEs        String?
-  titleFr        String?
-  descriptionPt  String?
-  descriptionEn  String?
-  descriptionEs  String?
-  descriptionFr  String?
-  icon           String?
-  status         ServiceStatus @default(PUBLISHED)
-  priority       Int           @default(0)
-  segments       String[]
-  projects       Project[]
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
+  id            String        @id @default(uuid())
+  slug          String        @unique
+  titlePt       String
+  titleEn       String
+  titleEs       String?
+  titleFr       String?
+  descriptionPt String?
+  descriptionEn String?
+  descriptionEs String?
+  descriptionFr String?
+  icon          String?
+  status        ServiceStatus @default(PUBLISHED)
+  priority      Int           @default(0)
+  segments      String[]
+  projects      Project[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
 model Project {
-  id            String          @id @default(uuid())
-  slug          String          @unique
+  id            String               @id @default(uuid())
+  slug          String               @unique
   title         String
   shortTitle    String?
   summaryPt     String?
@@ -166,61 +195,61 @@ model Project {
   year          Int?
   client        String?
   type          String?
-  featured      Boolean         @default(false)
-  priorityHome  Int             @default(0)
-  status        ProjectStatus   @default(DRAFT)
+  featured      Boolean              @default(false)
+  priorityHome  Int                  @default(0)
+  status        ProjectStatus        @default(DRAFT)
   ctaLabelPt    String?
   ctaLabelEn    String?
   ctaUrl        String?
-  heroImage     Media?          @relation(fields: [heroImageId], references: [id])
-  heroImageId   String? @unique
-  market        Market?         @relation(fields: [marketId], references: [id])
+  heroImage     Media?               @relation(fields: [heroImageId], references: [id])
+  heroImageId   String?              @unique
+  market        Market?              @relation(fields: [marketId], references: [id])
   marketId      String?
   tags          Tag[]
   services      Service[]
-  sections      Section[]       @relation("SectionProjects")
+  sections      Section[]            @relation("SectionProjects")
   pageViews     PageView[]
   interactions  ProjectInteraction[]
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
 }
 
 model Page {
-  id            String      @id @default(uuid())
-  name          String
-  slug          String      @unique
-  seoTitlePt    String?
-  seoTitleEn    String?
-  seoDescPt     String?
-  seoDescEn     String?
-  heroSloganPt  String?     // Slogan do hero (editable via CMS)
-  heroSloganEn  String?
-  heroSloganEs  String?
-  heroSloganFr  String?
-  status        PageStatus  @default(PUBLISHED)
-  sections      Section[]
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  id           String     @id @default(uuid())
+  name         String
+  slug         String     @unique
+  seoTitlePt   String?
+  seoTitleEn   String?
+  seoDescPt    String?
+  seoDescEn    String?
+  heroSloganPt String? // Slogan do hero (editable via CMS)
+  heroSloganEn String?
+  heroSloganEs String?
+  heroSloganFr String?
+  status       PageStatus @default(PUBLISHED)
+  sections     Section[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 }
 
 model Section {
-  id            String    @id @default(uuid())
-  page          Page      @relation(fields: [pageId], references: [id])
-  pageId        String
-  order         Int       @default(0)
-  type          String
-  layout        String?
-  titlePt       String?
-  titleEn       String?
-  titleEs       String?
-  titleFr       String?
-  bodyPt        String?
-  bodyEn        String?
-  bodyEs        String?
-  bodyFr        String?
+  id             String    @id @default(uuid())
+  page           Page      @relation(fields: [pageId], references: [id])
+  pageId         String
+  order          Int       @default(0)
+  type           String
+  layout         String?
+  titlePt        String?
+  titleEn        String?
+  titleEs        String?
+  titleFr        String?
+  bodyPt         String?
+  bodyEn         String?
+  bodyEs         String?
+  bodyFr         String?
   linkedProjects Project[] @relation("SectionProjects")
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 }
 
 model VisitorSession {
@@ -233,7 +262,7 @@ model VisitorSession {
   city                String?
   duration            Int                  @default(0)
   lastActivityAt      DateTime             @default(now())
-  lead               Lead?                @relation(fields: [leadId], references: [id])
+  lead                Lead?                @relation(fields: [leadId], references: [id])
   leadId              String?
   pageViews           PageView[]
   projectInteractions ProjectInteraction[]
@@ -256,45 +285,45 @@ model PageView {
 }
 
 model ProjectInteraction {
-  id        String               @id @default(uuid())
-  session   VisitorSession       @relation(fields: [sessionId], references: [sessionId])
+  id        String                 @id @default(uuid())
+  session   VisitorSession         @relation(fields: [sessionId], references: [sessionId])
   sessionId String
-  project   Project              @relation(fields: [projectId], references: [id])
+  project   Project                @relation(fields: [projectId], references: [id])
   projectId String
   type      ProjectInteractionType @default(VIEW)
   metadata  Json
-  createdAt DateTime             @default(now())
+  createdAt DateTime               @default(now())
 }
 
 model InterestScore {
-  sessionId          String   @id
-  session            VisitorSession @relation(fields: [sessionId], references: [sessionId])
-  museumScore        Int      @default(0)
-  brandScore         Int      @default(0)
-  festivalScore      Int      @default(0)
-  cityScore          Int      @default(0)
-  educationScore     Int      @default(0)
-  researchScore      Int      @default(0)
-  vrScore            Int      @default(0)
-  aiScore            Int      @default(0)
-  installationScore  Int      @default(0)
-  conversionScore    Int      @default(0)
-  visitorType        String?
+  sessionId           String         @id
+  session             VisitorSession @relation(fields: [sessionId], references: [sessionId])
+  museumScore         Int            @default(0)
+  brandScore          Int            @default(0)
+  festivalScore       Int            @default(0)
+  cityScore           Int            @default(0)
+  educationScore      Int            @default(0)
+  researchScore       Int            @default(0)
+  vrScore             Int            @default(0)
+  aiScore             Int            @default(0)
+  installationScore   Int            @default(0)
+  conversionScore     Int            @default(0)
+  visitorType         String?
   recommendedProjects Json?
-  suggestedAction    String?
-  suggestedPage      String?
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  suggestedAction     String?
+  suggestedPage       String?
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
 }
 
 model Lead {
-  id          String       @id @default(uuid())
+  id          String           @id @default(uuid())
   name        String
   email       String
   phone       String?
   company     String?
   position    String?
-  leadType    LeadType     @default(CONTACT_FORM)
+  leadType    LeadType         @default(CONTACT_FORM)
   projectType String?
   budget      String?
   timeline    String?
@@ -304,10 +333,75 @@ model Lead {
   utmSource   String?
   utmMedium   String?
   utmCampaign String?
-  status      LeadStatus   @default(NEW)
-  priority    LeadPriority @default(MEDIUM)
+  status      LeadStatus       @default(NEW)
+  priority    LeadPriority     @default(MEDIUM)
   sessions    VisitorSession[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  editalLeads LeadEdital[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 }
 
+model Edital {
+  id                  String       @id @default(uuid())
+  name                String
+  source              String // Fonte (Rouanet, Secretaria SP, CMF, NFB, Creative BC, etc.)
+  sourceUrl           String
+  country             String // BR, CA, US, etc.
+  type                EditalType
+  area                String // Cultura, Tecnologia, Museus, VR/AR, Audiovisual, etc.
+  categories          String[] // VR, AR, XR, Museus Interativos, Tecnologia, Audiovisual, FX, Acervos Digitais
+  minValue            Float?
+  maxValue            Float?
+  currency            String       @default("BRL") // BRL, CAD, USD
+  deadline            DateTime?
+  applicationDeadline DateTime? // Prazo para envio de proposta
+  status              EditalStatus @default(ABERTO)
+  eligibility         String?      @db.Text // Quem pode aplicar
+  applicationSteps    String?      @db.Text // Passo a passo para aplicar
+  requiredDocs        String[] // Documentos necessários
+  description         String?      @db.Text
+  requirements        String?      @db.Text
+  relevanceScore      Int          @default(0) // 0-100
+  matchedServices     String[] // Serviços Azimut que se encaixam
+  matchedProjects     String[] // IDs de projetos relevantes
+  azimutFitNotes      String?      @db.Text // Por que este edital é relevante para Azimut
+  contactEmail        String?
+  contactName         String?
+  contactPhone        String?
+  contactLinkedIn     String?
+  scrapedAt           DateTime     @default(now())
+  lastChecked         DateTime? // Última vez que verificamos se ainda está aberto
+  leads               LeadEdital[]
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  @@index([status])
+  @@index([deadline])
+  @@index([country])
+  @@index([relevanceScore])
+  @@index([source])
+}
+
+model LeadEdital {
+  id              String           @id @default(uuid())
+  edital          Edital           @relation(fields: [editalId], references: [id], onDelete: Cascade)
+  editalId        String
+  lead            Lead             @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  leadId          String
+  emailSent       Boolean          @default(false)
+  emailSentAt     DateTime?
+  callScheduled   Boolean          @default(false)
+  callScheduledAt DateTime?
+  callLink        String? // Link Calendly/Zoom
+  portfolioSent   Boolean          @default(false)
+  portfolioSentAt DateTime?
+  proposalSent    Boolean          @default(false)
+  proposalSentAt  DateTime?
+  status          LeadEditalStatus @default(PENDING)
+  notes           String?          @db.Text
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@unique([editalId, leadId])
+  @@index([status])
+}
