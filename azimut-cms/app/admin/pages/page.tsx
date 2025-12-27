@@ -1,15 +1,23 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
 /**
- * Página de Gerenciamento de Páginas
- * 
- * WORKAROUND: Esta rota específica (/admin/pages) tem um bug no Next.js/Vercel
- * que causa erro 1798066378 quando usa Server Component.
- * Solução: Tornar tudo Client Component para evitar o problema.
+ * Redirect de /admin/pages para /admin/site-pages
+ * Rota /admin/pages tem bug no Next.js/Vercel (erro 1798066378)
+ * Solução: Redirect para rota funcional
  */
-
-import PagesPageClient from './page-client';
-
 export default function PagesPage() {
-  return <PagesPageClient />;
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace('/admin/site-pages');
+  }, [router]);
+
+  return (
+    <div style={{ padding: 40, textAlign: 'center', color: '#c0bccf' }}>
+      Redirecionando...
+    </div>
+  );
 }
