@@ -49,7 +49,8 @@ function LoginForm() {
           background: 'rgba(255,255,255,0.04)',
           border: '1px solid rgba(255,255,255,0.08)',
           borderRadius: 12,
-          padding: '28px 24px',
+          padding: '28px 20px',
+          margin: '0 auto',
           boxShadow: '0 10px 30px rgba(0,0,0,0.35)',
         }}
       >
@@ -184,7 +185,7 @@ export default function LoginPage() {
         background: '#0a0e18',
         color: '#d3cec3',
         fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
-        padding: '24px',
+        padding: '20px',
       }}
     >
       <Suspense fallback={<div style={{ color: '#d3cec3' }}>Carregando...</div>}>
@@ -196,13 +197,14 @@ export default function LoginPage() {
 
 const inputStyle: CSSProperties = {
   width: '100%',
-  height: 42,
+  height: 44,
   borderRadius: 8,
   border: '1px solid rgba(255,255,255,0.12)',
   background: 'rgba(255,255,255,0.04)',
   color: '#fff',
-  padding: '0 12px',
+  padding: '0 14px',
   outline: 'none',
   fontSize: 14,
+  boxSizing: 'border-box',
 };
 
