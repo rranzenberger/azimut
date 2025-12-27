@@ -1,7 +1,6 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export function AdminLink({
   href,
@@ -13,11 +12,21 @@ export function AdminLink({
   disabled?: boolean;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
   const isActive = pathname === href;
 
-  // Usar div wrapper com onClick para evitar passar event handlers ao Link
-  const linkContent = (
+  const handleClick = (e: React.MouseEvent) => {
+    if (disabled) {
+      e.preventDefault();
+      return;
+    }
+    e.preventDefault();
+    router.push(href);
+  };
+
+  return (
     <div
+      onClick={handleClick}
       style={{
         padding: '12px 16px',
         borderRadius: 12,
@@ -52,15 +61,4 @@ export function AdminLink({
       {label}
     </div>
   );
-
-  if (disabled) {
-    return linkContent;
-  }
-
-  return (
-    <Link href={href} style={{ textDecoration: 'none', display: 'block' }}>
-      {linkContent}
-    </Link>
-  );
 }
-
