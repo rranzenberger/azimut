@@ -3,6 +3,18 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
+// Estilos CSS para hover (evita passar event handlers como props)
+const cardLinkStyle = {
+  display: 'block',
+  padding: 20,
+  borderRadius: 12,
+  background: 'rgba(255,255,255,0.02)',
+  border: '1px solid rgba(255,255,255,0.05)',
+  textDecoration: 'none',
+  color: 'inherit',
+  transition: 'all 0.2s',
+} as React.CSSProperties;
+
 interface Page {
   id: string;
   name: string;
@@ -108,6 +120,7 @@ export default function PagesPageClient() {
             <Link
               key={page.id}
               href={`/admin/pages/${page.slug}/edit`}
+              className="page-card-link"
               style={{
                 display: 'block',
                 padding: 20,
@@ -117,14 +130,6 @@ export default function PagesPageClient() {
                 textDecoration: 'none',
                 color: 'inherit',
                 transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
-                e.currentTarget.style.borderColor = 'rgba(201,35,55,0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)';
               }}
             >
               <div style={{ marginBottom: 12 }}>
@@ -186,7 +191,7 @@ export default function PagesPageClient() {
                   {page.status}
                 </span>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       )}
