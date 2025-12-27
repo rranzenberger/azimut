@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * Página de Gerenciamento de Páginas
  * 
@@ -5,8 +7,6 @@
  * que causa erro 1798066378 quando usa Server Component.
  * Solução: Tornar tudo Client Component para evitar o problema.
  */
-
-'use client';
 
 import PagesPageClient from './page-client';
 
