@@ -58,13 +58,13 @@ const App: React.FC = () => {
   })
 
   // Detectar país via IP (funciona com VPN) - PRIORIDADE MÁXIMA
-  // ⚠️ IP DETECTION SEMPRE EXECUTA (não bloquear para VPN funcionar)
+  // ⚠️ NUNCA TRAVA O SITE: 3 APIs de fallback + timezone backup
   useEffect(() => {
     let mounted = true
     
     const detectAndUpdateLanguage = async () => {
       try {
-        console.log('🔍 Iniciando detecção via IP (VPN-aware)...')
+        console.log('🔍 Iniciando detecção de idioma...')
         
         // SEMPRE tentar detectar via IP primeiro (funciona com VPN)
         const { detectCountryFromIP, getLanguageFromCountry } = await import('./utils/geoDetection')
@@ -74,13 +74,14 @@ const App: React.FC = () => {
         if (!mounted) return
         
         if (ipGeo && ipGeo.countryCode) {
+          // ✅ IP detectado com sucesso
           const detectedLang = getLanguageFromCountry(ipGeo.countryCode)
           const currentLang = localStorage.getItem('azimut-lang') as Lang | null
           
           console.log(`🌍 GEO: IP detectado - ${ipGeo.countryCode} → lang: ${detectedLang}`)
           console.log(`🌐 AZIMUT: Idioma detectado → ${detectedLang}`)
           
-          // ✅ SEMPRE atualizar se o idioma detectado for diferente
+          // Atualizar se o idioma detectado for diferente
           if (currentLang !== detectedLang) {
             console.log(`🌐 AZIMUT: Atualizando idioma de ${currentLang || 'nenhum'} para ${detectedLang}`)
             setLang(detectedLang)
@@ -90,8 +91,8 @@ const App: React.FC = () => {
             console.log(`✅ AZIMUT: Idioma já correto (${detectedLang})`)
           }
         } else {
-          // IP detection falhou, usar timezone como fallback
-          console.log('⚠️ GEO: IP API falhou, tentando timezone...')
+          // ⚠️ TODAS as APIs de IP falharam - usar timezone como fallback
+          console.log('⚠️ GEO: APIs de IP indisponíveis, usando timezone...')
           const timezoneGeo = detectGeoFromTimezone()
           const detectedLang = timezoneGeo.language
           const currentLang = localStorage.getItem('azimut-lang') as Lang | null
@@ -99,22 +100,29 @@ const App: React.FC = () => {
           console.log(`🌍 GEO: Timezone detectado - ${timezoneGeo.timeZone || 'unknown'} → lang: ${detectedLang}`)
           
           if (currentLang !== detectedLang) {
+            console.log(`🌐 AZIMUT: Idioma detectado via timezone → ${detectedLang}`)
             setLang(detectedLang)
             localStorage.setItem('azimut-lang', detectedLang)
           }
         }
       } catch (error) {
-        console.error('❌ GEO: Detecção falhou completamente:', error)
-        // Fallback final: manter idioma atual ou usar navegador
-        const browserLang = detectLanguageFromBrowser()
-        if (!localStorage.getItem('azimut-lang')) {
+        // ❌ ERRO CRÍTICO: usar navegador ou manter idioma atual
+        console.error('❌ GEO: Erro crítico na detecção:', error)
+        
+        const currentLang = localStorage.getItem('azimut-lang') as Lang | null
+        if (!currentLang) {
+          // Se não tem idioma salvo, usar navegador
+          const browserLang = detectLanguageFromBrowser()
+          console.log(`🌐 AZIMUT: Fallback final → navegador (${browserLang})`)
           setLang(browserLang)
           localStorage.setItem('azimut-lang', browserLang)
+        } else {
+          console.log(`✅ AZIMUT: Mantendo idioma atual (${currentLang})`)
         }
       }
     }
     
-    // Executar detecção via IP após renderização inicial
+    // Executar detecção (não bloqueia renderização)
     detectAndUpdateLanguage()
     
     // Cleanup

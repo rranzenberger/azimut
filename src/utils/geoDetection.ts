@@ -939,35 +939,78 @@ export function detectLanguageFromBrowser(): 'pt' | 'en' | 'fr' | 'es' {
 }
 
 /**
- * Detecta país via IP usando API externa (funciona com VPN)
+ * Detecta país via IP usando MÚLTIPLAS APIs de fallback
  * Não depende do backoffice
- * ⚠️ NÃO BLOQUEIA: Timeout de 5s, fallback silencioso
+ * ⚠️ GARANTIDO: Tenta 3 APIs diferentes, NUNCA bloqueia o site
  */
 export async function detectCountryFromIP(): Promise<{ country: string; countryCode: string } | null> {
+  console.log('🌍 GEO: Tentando detectar via IP (3 APIs disponíveis)...');
+  
+  // ✅ API 1: ipapi.co (limite: 1k/dia)
   try {
-    console.log('🌍 GEO: Tentando detectar via IP...');
-    
-    // Usar ipapi.co (gratuito até 30k req/mês, sem CORS issues)
     const response = await fetch('https://ipapi.co/json/', {
-      signal: AbortSignal.timeout(5000), // ✅ 5 segundos (não 3)
+      signal: AbortSignal.timeout(3000),
     });
     
     if (response.ok) {
       const data = await response.json();
       if (data.country_code) {
-        console.log(`🌍 País detectado via IP: ${data.country_name} (${data.country_code})`);
+        console.log(`✅ GEO: IP detectado (ipapi.co) - ${data.country_name} (${data.country_code})`);
         return {
           country: data.country_name || 'Unknown',
           countryCode: data.country_code,
         };
       }
     }
-    
-    console.warn('⚠️ IP API não retornou country_code');
-    return null;
+    console.warn('⚠️ ipapi.co: não retornou country_code');
   } catch (error) {
-    console.warn('⚠️ IP detection failed (normal se VPN/firewall):', error);
-    return null;
+    console.warn('⚠️ ipapi.co falhou (tentando próxima API):', error);
   }
+  
+  // ✅ API 2: ip-api.com (limite: 45 req/min, sem chave)
+  try {
+    const response = await fetch('http://ip-api.com/json/?fields=country,countryCode', {
+      signal: AbortSignal.timeout(3000),
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      if (data.countryCode) {
+        console.log(`✅ GEO: IP detectado (ip-api.com) - ${data.country} (${data.countryCode})`);
+        return {
+          country: data.country || 'Unknown',
+          countryCode: data.countryCode,
+        };
+      }
+    }
+    console.warn('⚠️ ip-api.com: não retornou countryCode');
+  } catch (error) {
+    console.warn('⚠️ ip-api.com falhou (tentando próxima API):', error);
+  }
+  
+  // ✅ API 3: ipwhois.app (sem limite conhecido, gratuito)
+  try {
+    const response = await fetch('https://ipwhois.app/json/', {
+      signal: AbortSignal.timeout(3000),
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      if (data.country_code) {
+        console.log(`✅ GEO: IP detectado (ipwhois.app) - ${data.country} (${data.country_code})`);
+        return {
+          country: data.country || 'Unknown',
+          countryCode: data.country_code,
+        };
+      }
+    }
+    console.warn('⚠️ ipwhois.app: não retornou country_code');
+  } catch (error) {
+    console.warn('⚠️ ipwhois.app falhou');
+  }
+  
+  // ❌ TODAS as APIs falharam - retornar null (fallback para timezone)
+  console.warn('❌ GEO: Todas as APIs de IP falharam - usando timezone como fallback');
+  return null;
 }
 
