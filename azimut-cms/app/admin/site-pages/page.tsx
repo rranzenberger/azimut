@@ -1,32 +1,40 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import { verifyAuthToken } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
-import Link from 'next/link';
+'use client';
 
-export const revalidate = 0;
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default async function PagesPage() {
-  const cookieStore = cookies();
-  const token = cookieStore.get('azimut_admin_token')?.value;
-  const session = token ? verifyAuthToken(token) : null;
+interface Page {
+  id: string;
+  name: string;
+  slug: string;
+  status: string;
+  heroSloganPt?: string;
+}
 
-  if (!session) {
-    redirect('/login');
-  }
+export default function PagesPage() {
+  const router = useRouter();
+  const [pages, setPages] = useState<Page[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  let pages: any[] = [];
-  let error: string | null = null;
-
-  try {
-    pages = await prisma.page.findMany({
-      orderBy: { createdAt: 'desc' },
-      take: 100,
-    });
-  } catch (err: any) {
-    console.error('Pages fetch error:', err);
-    error = 'Erro ao carregar páginas. Verifique a conexão com o banco.';
-  }
+  useEffect(() => {
+    async function fetchPages() {
+      try {
+        const res = await fetch('/api/admin/pages');
+        if (!res.ok) {
+          throw new Error('Erro ao carregar páginas');
+        }
+        const data = await res.json();
+        setPages(data.pages || []);
+      } catch (err: any) {
+        console.error('Pages fetch error:', err);
+        setError('Erro ao carregar páginas. Verifique a conexão.');
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchPages();
+  }, []);
 
   return (
     <div style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box' }}>
@@ -50,6 +58,12 @@ export default async function PagesPage() {
         </div>
       </header>
 
+      {loading && (
+        <div style={{ padding: 40, textAlign: 'center', color: '#c0bccf' }}>
+          Carregando páginas...
+        </div>
+      )}
+
       {error && (
         <div
           style={{
@@ -65,7 +79,7 @@ export default async function PagesPage() {
         </div>
       )}
 
-      {pages.length === 0 && !error && (
+      {!loading && !error && pages.length === 0 && (
         <div
           style={{
             padding: 40,
@@ -80,7 +94,7 @@ export default async function PagesPage() {
         </div>
       )}
 
-      {pages.length > 0 && (
+      {!loading && !error && pages.length > 0 && (
         <div
           style={{
             display: 'grid',
@@ -89,18 +103,16 @@ export default async function PagesPage() {
           }}
         >
           {pages.map((page) => (
-            <Link
+            <div
               key={page.id}
-              href={`/admin/pages/${page.slug}/edit`}
               style={{
                 display: 'block',
                 padding: 20,
                 borderRadius: 12,
                 background: 'rgba(255,255,255,0.02)',
                 border: '1px solid rgba(255,255,255,0.05)',
-                textDecoration: 'none',
-                color: 'inherit',
                 transition: 'all 0.2s',
+                cursor: 'pointer',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
@@ -109,6 +121,9 @@ export default async function PagesPage() {
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
                 e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)';
+              }}
+              onClick={() => {
+                router.push(`/admin/pages/${page.slug}/edit`);
               }}
             >
               <div style={{ marginBottom: 12 }}>
@@ -170,7 +185,7 @@ export default async function PagesPage() {
                   {page.status}
                 </span>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       )}
