@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Output standalone para builds mínimos
-  output: 'standalone',
-  
   // Desabilitar completamente features desnecessárias
   poweredByHeader: false,
   compress: true,
