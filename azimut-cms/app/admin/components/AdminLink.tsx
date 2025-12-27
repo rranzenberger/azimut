@@ -15,9 +15,9 @@ export function AdminLink({
   const pathname = usePathname();
   const isActive = pathname === href;
 
-  return (
-    <Link
-      href={disabled ? '#' : href}
+  // Usar div wrapper com onClick para evitar passar event handlers ao Link
+  const linkContent = (
+    <div
       style={{
         padding: '12px 16px',
         borderRadius: 12,
@@ -48,13 +48,18 @@ export function AdminLink({
           e.currentTarget.style.transform = 'translateX(0)';
         }
       }}
-      onClick={(e) => {
-        if (disabled) {
-          e.preventDefault();
-        }
-      }}
     >
       {label}
+    </div>
+  );
+
+  if (disabled) {
+    return linkContent;
+  }
+
+  return (
+    <Link href={href} style={{ textDecoration: 'none', display: 'block' }}>
+      {linkContent}
     </Link>
   );
 }
