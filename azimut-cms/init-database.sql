@@ -135,6 +135,10 @@ CREATE TABLE "Page" (
     "seoTitleEn" TEXT,
     "seoDescPt" TEXT,
     "seoDescEn" TEXT,
+    "heroSloganPt" TEXT,
+    "heroSloganEn" TEXT,
+    "heroSloganEs" TEXT,
+    "heroSloganFr" TEXT,
     status "PageStatus" DEFAULT 'PUBLISHED',
     "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -431,6 +435,10 @@ CREATE TABLE "Page" (
     "seoTitleEn" TEXT,
     "seoDescPt" TEXT,
     "seoDescEn" TEXT,
+    "heroSloganPt" TEXT,
+    "heroSloganEn" TEXT,
+    "heroSloganEs" TEXT,
+    "heroSloganFr" TEXT,
     status "PageStatus" DEFAULT 'PUBLISHED',
     "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP

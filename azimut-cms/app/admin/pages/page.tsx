@@ -1,3 +1,9 @@
+/**
+ * Página de Gerenciamento de Páginas
+ * Lista todas as páginas do site com opção de edição
+ * Atualizado: 2025-12-27 - Fix para campos heroSlogan
+ */
+
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { verifyAuthToken } from '@/lib/auth';
