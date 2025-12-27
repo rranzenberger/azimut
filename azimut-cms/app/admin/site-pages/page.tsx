@@ -1,40 +1,37 @@
-'use client';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { verifyAuthToken } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
+import { PageCard } from './components/PageCard';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+export const revalidate = 0;
 
-interface Page {
-  id: string;
-  name: string;
-  slug: string;
-  status: string;
-  heroSloganPt?: string;
-}
+export default async function PagesPage() {
+  const cookieStore = cookies();
+  const token = cookieStore.get('azimut_admin_token')?.value;
+  const session = token ? verifyAuthToken(token) : null;
 
-export default function PagesPage() {
-  const router = useRouter();
-  const [pages, setPages] = useState<Page[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  if (!session) {
+    redirect('/login');
+  }
 
-  useEffect(() => {
-    async function fetchPages() {
-      try {
-        const res = await fetch('/api/admin/pages');
-        if (!res.ok) {
-          throw new Error('Erro ao carregar páginas');
-        }
-        const data = await res.json();
-        setPages(data.pages || []);
-      } catch (err: any) {
-        console.error('Pages fetch error:', err);
-        setError('Erro ao carregar páginas. Verifique a conexão.');
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchPages();
-  }, []);
+  let pages: any[] = [];
+  let error: string | null = null;
+
+  try {
+    pages = await prisma.page.findMany({
+      orderBy: { createdAt: 'desc' },
+      include: {
+        sections: {
+          orderBy: { order: 'asc' },
+        },
+      },
+      take: 100,
+    });
+  } catch (err: any) {
+    console.error('Pages fetch error:', err);
+    error = 'Erro ao carregar páginas. Verifique a conexão com o banco.';
+  }
 
   return (
     <div style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box' }}>
@@ -58,12 +55,6 @@ export default function PagesPage() {
         </div>
       </header>
 
-      {loading && (
-        <div style={{ padding: 40, textAlign: 'center', color: '#c0bccf' }}>
-          Carregando páginas...
-        </div>
-      )}
-
       {error && (
         <div
           style={{
@@ -79,7 +70,7 @@ export default function PagesPage() {
         </div>
       )}
 
-      {!loading && !error && pages.length === 0 && (
+      {pages.length === 0 && !error && (
         <div
           style={{
             padding: 40,
@@ -94,7 +85,7 @@ export default function PagesPage() {
         </div>
       )}
 
-      {!loading && !error && pages.length > 0 && (
+      {pages.length > 0 && (
         <div
           style={{
             display: 'grid',
@@ -103,93 +94,10 @@ export default function PagesPage() {
           }}
         >
           {pages.map((page) => (
-            <div
-              key={page.id}
-              style={{
-                display: 'block',
-                padding: 20,
-                borderRadius: 12,
-                background: 'rgba(255,255,255,0.02)',
-                border: '1px solid rgba(255,255,255,0.05)',
-                transition: 'all 0.2s',
-                cursor: 'pointer',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
-                e.currentTarget.style.borderColor = 'rgba(201,35,55,0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)';
-              }}
-              onClick={() => {
-                router.push(`/admin/pages/${page.slug}/edit`);
-              }}
-            >
-              <div style={{ marginBottom: 12 }}>
-                <h3
-                  style={{
-                    margin: 0,
-                    fontSize: 18,
-                    fontWeight: 600,
-                    marginBottom: 4,
-                    color: '#fff',
-                  }}
-                >
-                  {page.name}
-                </h3>
-                <p
-                  style={{
-                    margin: 0,
-                    fontSize: 14,
-                    color: '#c0bccf',
-                    fontFamily: 'monospace',
-                  }}
-                >
-                  /{page.slug}
-                </p>
-              </div>
-
-              {page.heroSloganPt && (
-                <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                  <p style={{ margin: 0, fontSize: 12, color: '#a0a0a0', marginBottom: 4 }}>
-                    Slogan Hero (PT):
-                  </p>
-                  <p style={{ margin: 0, fontSize: 14, color: '#fff', fontStyle: 'italic' }}>
-                    {page.heroSloganPt}
-                  </p>
-                </div>
-              )}
-
-              <div style={{ marginTop: 12, display: 'flex', gap: 8, alignItems: 'center' }}>
-                <span
-                  style={{
-                    padding: '4px 8px',
-                    borderRadius: 6,
-                    fontSize: 12,
-                    fontWeight: 500,
-                    background:
-                      page.status === 'PUBLISHED'
-                        ? 'rgba(34,197,94,0.15)'
-                        : page.status === 'DRAFT'
-                        ? 'rgba(251,191,36,0.15)'
-                        : 'rgba(107,114,128,0.15)',
-                    color:
-                      page.status === 'PUBLISHED'
-                        ? '#86efac'
-                        : page.status === 'DRAFT'
-                        ? '#fde047'
-                        : '#9ca3af',
-                  }}
-                >
-                  {page.status}
-                </span>
-              </div>
-            </div>
+            <PageCard key={page.id} page={page} />
           ))}
         </div>
       )}
     </div>
   );
 }
-
