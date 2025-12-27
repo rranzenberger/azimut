@@ -2,6 +2,10 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 
+/**
+ * AdminLink - Navigation link for admin menu
+ * Uses router.push() instead of Link to avoid Next.js event handler issues
+ */
 export function AdminLink({
   href,
   label,
