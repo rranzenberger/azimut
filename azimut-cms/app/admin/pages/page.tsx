@@ -1,10 +1,12 @@
 /**
  * Página de Gerenciamento de Páginas
  * 
- * WORKAROUND: Usando Client Component porque Server Component está quebrando
- * na rota /admin/pages especificamente (erro 1798066378 na Vercel).
- * A API /api/admin/pages funciona perfeitamente, então usamos fetch do lado cliente.
+ * WORKAROUND: Esta rota específica (/admin/pages) tem um bug no Next.js/Vercel
+ * que causa erro 1798066378 quando usa Server Component.
+ * Solução: Tornar tudo Client Component para evitar o problema.
  */
+
+'use client';
 
 import PagesPageClient from './page-client';
 
