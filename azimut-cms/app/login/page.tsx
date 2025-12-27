@@ -54,7 +54,7 @@ function LoginForm() {
           boxShadow: '0 10px 30px rgba(0,0,0,0.35)',
         }}
       >
-        <h1 style={{ margin: 0, marginBottom: 16, fontSize: 22 }}>Login Backoffice Azimut - CMS</h1>
+        <h1 style={{ margin: 0, marginBottom: 16, fontSize: 24, fontWeight: 700 }}>Login Backoffice Azimut - CMS</h1>
         <p style={{ margin: 0, marginBottom: 20, color: '#c0bccf' }}>
           Acesse com as credenciais seed ou seu usuário admin.
         </p>
