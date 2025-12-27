@@ -9,6 +9,7 @@ export interface GeoDetectionResult {
   countryCode: string;
   language: 'pt' | 'en' | 'fr' | 'es';
   region?: string;
+  timeZone?: string;
 }
 
 /**
@@ -911,6 +912,7 @@ export function detectGeoFromTimezone(): GeoDetectionResult {
       countryCode: geo.countryCode,
       language,
       region: geo.region,
+      timeZone: timezone,
     };
   } catch (error) {
     // Fallback: Inglês
@@ -943,6 +945,8 @@ export function detectLanguageFromBrowser(): 'pt' | 'en' | 'fr' | 'es' {
  */
 export async function detectCountryFromIP(): Promise<{ country: string; countryCode: string } | null> {
   try {
+    console.log('🌍 GEO: Tentando detectar via IP...');
+    
     // Usar ipapi.co (gratuito até 30k req/mês, sem CORS issues)
     const response = await fetch('https://ipapi.co/json/', {
       signal: AbortSignal.timeout(5000), // ✅ 5 segundos (não 3)
@@ -958,10 +962,12 @@ export async function detectCountryFromIP(): Promise<{ country: string; countryC
         };
       }
     }
+    
+    console.warn('⚠️ IP API não retornou country_code');
+    return null;
   } catch (error) {
     console.warn('⚠️ IP detection failed (normal se VPN/firewall):', error);
+    return null;
   }
-  
-  return null;
 }
 
