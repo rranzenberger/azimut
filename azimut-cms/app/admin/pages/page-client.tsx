@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface Page {
   id: string;
@@ -14,6 +15,7 @@ interface Page {
 }
 
 export default function PagesPageClient() {
+  const router = useRouter();
   const [pages, setPages] = useState<Page[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -124,7 +126,7 @@ export default function PagesPageClient() {
                 e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)';
               }}
               onClick={() => {
-                window.location.href = `/admin/pages/${page.slug}/edit`;
+                router.push(`/admin/pages/${page.slug}/edit`);
               }}
             >
               <div style={{ marginBottom: 12 }}>
