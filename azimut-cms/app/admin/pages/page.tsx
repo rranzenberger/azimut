@@ -25,13 +25,9 @@ export default async function PagesPage() {
   let error: string | null = null;
 
   try {
+    // Buscar páginas SEM includes primeiro (debug)
     pages = await prisma.page.findMany({
       orderBy: { createdAt: 'desc' },
-      include: {
-        sections: {
-          orderBy: { order: 'asc' },
-        },
-      },
       take: 100,
     });
   } catch (err: any) {
@@ -180,9 +176,6 @@ export default async function PagesPage() {
                   }}
                 >
                   {page.status}
-                </span>
-                <span style={{ fontSize: 12, color: '#6b7280' }}>
-                  {page.sections?.length || 0} seções
                 </span>
               </div>
             </Link>
