@@ -1,11 +1,42 @@
-// WORKAROUND: Usando Client Component porque Server Component está quebrando
-// na rota /admin/pages especificamente (erro 1798066378 na Vercel)
-// A API funciona perfeitamente, então usamos fetch do lado cliente
+'use client';
 
-import PagesPageClient from './page-client';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
-export default function PagesPage() {
-  return <PagesPageClient />;
+interface Page {
+  id: string;
+  name: string;
+  slug: string;
+  status: string;
+  heroSloganPt?: string;
+  heroSloganEn?: string;
+  heroSloganEs?: string;
+  heroSloganFr?: string;
+}
+
+export default function PagesPageClient() {
+  const [pages, setPages] = useState<Page[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchPages() {
+      try {
+        const res = await fetch('/api/admin/pages');
+        if (!res.ok) {
+          throw new Error('Erro ao carregar páginas');
+        }
+        const data = await res.json();
+        setPages(data.pages || []);
+      } catch (err: any) {
+        console.error('Pages fetch error:', err);
+        setError('Erro ao carregar páginas. Verifique a conexão.');
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchPages();
+  }, []);
 
   return (
     <div style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box' }}>
@@ -29,6 +60,12 @@ export default function PagesPage() {
         </div>
       </header>
 
+      {loading && (
+        <div style={{ padding: 40, textAlign: 'center', color: '#c0bccf' }}>
+          Carregando páginas...
+        </div>
+      )}
+
       {error && (
         <div
           style={{
@@ -44,7 +81,7 @@ export default function PagesPage() {
         </div>
       )}
 
-      {pages.length === 0 && !error && (
+      {!loading && !error && pages.length === 0 && (
         <div
           style={{
             padding: 40,
@@ -59,7 +96,7 @@ export default function PagesPage() {
         </div>
       )}
 
-      {pages.length > 0 && (
+      {!loading && !error && pages.length > 0 && (
         <div
           style={{
             display: 'grid',
