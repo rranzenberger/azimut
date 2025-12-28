@@ -27,7 +27,7 @@ export async function GET(
     const edital = await prisma.edital.findUnique({
       where: { id: params.id },
       include: {
-        editalLeads: {
+        leads: {
           include: {
             lead: {
               select: {
