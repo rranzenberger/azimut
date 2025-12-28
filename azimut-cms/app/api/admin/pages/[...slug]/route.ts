@@ -1,6 +1,7 @@
 /**
  * API de Página Individual
  * GET, PUT, DELETE de uma página específica
+ * Suporta slugs com barras usando catch-all route [...slug]
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -13,7 +14,7 @@ export const runtime = 'nodejs';
 // GET - Buscar página por slug
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: { slug: string | string[] } }
 ) {
   try {
     const cookieStore = cookies();
@@ -24,8 +25,11 @@ export async function GET(
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
     }
 
+    // Suporta slugs com barras: ['studio', 'about'] -> 'studio/about'
+    const slug = Array.isArray(params.slug) ? params.slug.join('/') : params.slug;
+
     const page = await prisma.page.findUnique({
-      where: { slug: params.slug },
+      where: { slug },
       include: {
         sections: {
           orderBy: { order: 'asc' },
@@ -47,7 +51,7 @@ export async function GET(
 // PUT - Atualizar página
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: { slug: string | string[] } }
 ) {
   try {
     const cookieStore = cookies();
@@ -57,6 +61,9 @@ export async function PUT(
     if (!session) {
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
     }
+
+    // Suporta slugs com barras: ['studio', 'about'] -> 'studio/about'
+    const slug = Array.isArray(params.slug) ? params.slug.join('/') : params.slug;
 
     const body = await request.json();
     const {
@@ -69,11 +76,15 @@ export async function PUT(
       heroSloganEn,
       heroSloganEs,
       heroSloganFr,
+      heroSubtitlePt,
+      heroSubtitleEn,
+      heroSubtitleEs,
+      heroSubtitleFr,
       status,
     } = body;
 
     const page = await prisma.page.update({
-      where: { slug: params.slug },
+      where: { slug },
       data: {
         ...(name && { name }),
         ...(seoTitlePt !== undefined && { seoTitlePt }),
@@ -84,6 +95,10 @@ export async function PUT(
         ...(heroSloganEn !== undefined && { heroSloganEn }),
         ...(heroSloganEs !== undefined && { heroSloganEs }),
         ...(heroSloganFr !== undefined && { heroSloganFr }),
+        ...(heroSubtitlePt !== undefined && { heroSubtitlePt }),
+        ...(heroSubtitleEn !== undefined && { heroSubtitleEn }),
+        ...(heroSubtitleEs !== undefined && { heroSubtitleEs }),
+        ...(heroSubtitleFr !== undefined && { heroSubtitleFr }),
         ...(status && { status }),
       },
     });
@@ -98,10 +113,10 @@ export async function PUT(
   }
 }
 
-// DELETE - Deletar página
+// DELETE - Deletar página (futuro)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: { slug: string | string[] } }
 ) {
   try {
     const cookieStore = cookies();
@@ -112,8 +127,11 @@ export async function DELETE(
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
     }
 
+    // Suporta slugs com barras: ['studio', 'about'] -> 'studio/about'
+    const slug = Array.isArray(params.slug) ? params.slug.join('/') : params.slug;
+
     await prisma.page.delete({
-      where: { slug: params.slug },
+      where: { slug },
     });
 
     return NextResponse.json({ success: true });
@@ -125,4 +143,5 @@ export async function DELETE(
     return NextResponse.json({ error: 'Erro ao deletar página' }, { status: 500 });
   }
 }
+
 

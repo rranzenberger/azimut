@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma';
 import { AdminLogo } from './components/Logo';
 import { AdminLink } from './components/AdminLink';
 import { LogoutButton } from './components/LogoutButton';
+import { ViewSiteButton } from './components/ViewSiteButton';
 
 export default async function AdminLayout({
   children,
@@ -119,11 +120,20 @@ export default async function AdminLayout({
           <AdminLink href="#" label="Configurações" disabled />
         </nav>
 
-        {/* Botão Sair */}
+        {/* Link para Site Principal */}
         <div
           style={{
             padding: '20px',
             borderTop: '1px solid rgba(255,255,255,0.08)',
+          }}
+        >
+          <ViewSiteButton />
+        </div>
+
+        {/* Botão Sair */}
+        <div
+          style={{
+            padding: '0 20px 20px 20px',
           }}
         >
           <LogoutButton />

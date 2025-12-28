@@ -27,6 +27,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   // Slogan do hero: CMS ou fallback local
   const heroSlogan = cmsContent?.page?.heroSlogan || locale(contentModel.home.hero.title)
   
+  // Subtitle do hero: CMS ou fallback local
+  const heroSubtitle = cmsContent?.page?.heroSubtitle || locale(contentModel.home.hero.subtitle)
+  
   // Tracking de página (não bloqueia renderização)
   useEffect(() => {
     try {
@@ -123,7 +126,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             </h1>
 
             <p className="mb-4 sm:mb-6 max-w-xl text-[0.85rem] sm:text-[0.9rem] md:text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0" style={{ animationDelay: '0.3s', color: 'var(--theme-text-muted)' }}>
-              {locale(contentModel.home.hero.subtitle)}
+              {heroSubtitle}
             </p>
 
             <div className="flex flex-wrap gap-2 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>

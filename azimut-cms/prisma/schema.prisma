@@ -215,21 +215,25 @@ model Project {
 }
 
 model Page {
-  id           String     @id @default(uuid())
-  name         String
-  slug         String     @unique
-  seoTitlePt   String?
-  seoTitleEn   String?
-  seoDescPt    String?
-  seoDescEn    String?
-  heroSloganPt String? // Slogan do hero (editable via CMS)
-  heroSloganEn String?
-  heroSloganEs String?
-  heroSloganFr String?
-  status       PageStatus @default(PUBLISHED)
-  sections     Section[]
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  id             String     @id @default(uuid())
+  name           String
+  slug           String     @unique
+  seoTitlePt     String?
+  seoTitleEn     String?
+  seoDescPt      String?
+  seoDescEn      String?
+  heroSloganPt   String?    // Slogan do hero (editable via CMS) - Máx: 200 caracteres
+  heroSloganEn   String?    // Máx: 200 caracteres
+  heroSloganEs   String?    // Máx: 200 caracteres
+  heroSloganFr   String?    // Máx: 200 caracteres
+  heroSubtitlePt String?    // Subtitle do hero - Máx: 500 caracteres
+  heroSubtitleEn String?    // Máx: 500 caracteres
+  heroSubtitleEs String?    // Máx: 500 caracteres
+  heroSubtitleFr String?    // Máx: 500 caracteres
+  status         PageStatus @default(PUBLISHED)
+  sections       Section[]
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 }
 
 model Section {

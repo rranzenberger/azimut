@@ -120,15 +120,23 @@ export async function GET(request: NextRequest) {
       orderBy: { priority: 'desc' },
     });
     
-    // 6. Buscar slogan do hero da página (se for home)
+    // 6. Buscar slogan e subtitle do hero da página (se for home)
     let heroSlogan = null;
+    let heroSubtitle = null;
     if (page === 'home' && pageData) {
-      const sloganField = `heroSlogan${lang === 'pt' ? 'Pt' : lang === 'es' ? 'Es' : lang === 'fr' ? 'Fr' : 'En'}`;
+      const langSuffix = lang === 'pt' ? 'Pt' : lang === 'es' ? 'Es' : lang === 'fr' ? 'Fr' : 'En';
+      const sloganField = `heroSlogan${langSuffix}`;
+      const subtitleField = `heroSubtitle${langSuffix}`;
+      
       heroSlogan = (pageData as any)[sloganField] || null;
+      heroSubtitle = (pageData as any)[subtitleField] || null;
       
       // Fallback: se não tiver no idioma, tenta EN
       if (!heroSlogan && lang !== 'en') {
         heroSlogan = (pageData as any).heroSloganEn || null;
+      }
+      if (!heroSubtitle && lang !== 'en') {
+        heroSubtitle = (pageData as any).heroSubtitleEn || null;
       }
     }
     
@@ -136,6 +144,7 @@ export async function GET(request: NextRequest) {
     const response = {
       lang,
       heroSlogan,
+      heroSubtitle,
       market: market ? {
         code: market.code,
         label: lang === 'pt' ? market.labelPt : market.labelEn,
@@ -150,6 +159,7 @@ export async function GET(request: NextRequest) {
           description: lang === 'pt' ? pageData.seoDescPt : pageData.seoDescEn,
         },
         heroSlogan: heroSlogan || null,
+        heroSubtitle: heroSubtitle || null,
         sections: pageData.sections.map(section => ({
           type: section.type,
           title: lang === 'pt' ? section.titlePt : section.titleEn,

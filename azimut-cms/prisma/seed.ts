@@ -211,15 +211,21 @@ async function main() {
   });
   console.log('✅ Project created: Natal Rio Bonito 2025');
   
-  // 6. Criar página Home
+  // 6. Criar página Home (com conteúdo completo migrado do código estático)
   console.log('\nCreating pages...');
   const homePage = await prisma.page.upsert({
     where: { slug: 'home' },
     update: {
+      // Hero Slogan (já estava)
       heroSloganPt: 'Experiências que Conectam Mundos',
       heroSloganEn: 'Experiences that Connect Worlds',
       heroSloganEs: 'Experiencias que Conectan Mundos',
       heroSloganFr: 'Expériences qui Connectent les Mondes',
+      // Hero Subtitle (MIGRADO do código estático)
+      heroSubtitlePt: 'Após 30 anos explorando diferentes caminhos, descobrimos que nossa combinação de curadoria de festivais, produção comercial, educação e pesquisa é única. Transformamos espaços culturais, marcas e experiências imersivas entre Brasil e Canadá.',
+      heroSubtitleEn: 'After 30 years exploring different paths, we discovered our combination of festival curation, commercial production, education and research is unique. We transform cultural spaces, brands and immersive experiences between Brazil and Canada.',
+      heroSubtitleEs: 'Tras 30 años explorando diferentes caminos, descubrimos que nuestra combinación de curaduría de festivales, producción comercial, educación e investigación es única. Transformamos espacios culturales, marcas y experiencias inmersivas entre Brasil y Canadá.',
+      heroSubtitleFr: 'Après 30 ans à explorer différents chemins, nous avons découvert que notre combinaison de curation de festivals, production commerciale, éducation et recherche est unique. Nous transformons les espaces culturels, les marques et les expériences immersives entre le Brésil et le Canada.',
     },
     create: {
       name: 'Home',
@@ -228,13 +234,51 @@ async function main() {
       seoTitleEn: 'Azimut - Immersive, Interactive and Cinematic Experiences',
       seoDescPt: 'Estúdio criativo-tecnológico especializado em cenografia digital, VR/XR e IA.',
       seoDescEn: 'Creative-tech studio specialized in digital scenography, VR/XR and AI.',
+      // Hero Slogan
       heroSloganPt: 'Experiências que Conectam Mundos',
       heroSloganEn: 'Experiences that Connect Worlds',
       heroSloganEs: 'Experiencias que Conectan Mundos',
       heroSloganFr: 'Expériences qui Connectent les Mondes',
+      // Hero Subtitle (MIGRADO do código estático - src/data/content.ts)
+      heroSubtitlePt: 'Após 30 anos explorando diferentes caminhos, descobrimos que nossa combinação de curadoria de festivais, produção comercial, educação e pesquisa é única. Transformamos espaços culturais, marcas e experiências imersivas entre Brasil e Canadá.',
+      heroSubtitleEn: 'After 30 years exploring different paths, we discovered our combination of festival curation, commercial production, education and research is unique. We transform cultural spaces, brands and immersive experiences between Brazil and Canada.',
+      heroSubtitleEs: 'Tras 30 años explorando diferentes caminos, descubrimos que nuestra combinación de curaduría de festivales, producción comercial, educación e investigación es única. Transformamos espacios culturales, marcas y experiencias inmersivas entre Brasil y Canadá.',
+      heroSubtitleFr: 'Après 30 ans à explorer différents chemins, nous avons découvert que notre combinaison de curation de festivals, production commerciale, éducation et recherche est unique. Nous transformons les espaces culturels, les marques et les expériences immersives entre le Brésil et le Canada.',
       status: 'PUBLISHED',
     },
   });
+  
+  // Criar todas as páginas do site
+  const pagesToCreate = [
+    { name: 'Home', slug: 'home', status: 'PUBLISHED' },
+    { name: 'Soluções', slug: 'what', status: 'PUBLISHED' },
+    { name: 'Projetos', slug: 'work', status: 'PUBLISHED' },
+    { name: 'Estúdio', slug: 'studio', status: 'PUBLISHED' },
+    { name: 'Sobre', slug: 'studio/about', status: 'PUBLISHED' },
+    { name: 'Equipe', slug: 'studio/team', status: 'PUBLISHED' },
+    { name: 'Academy', slug: 'academy', status: 'PUBLISHED' },
+    { name: 'Pesquisa', slug: 'academy/research', status: 'PUBLISHED' },
+    { name: 'Cursos', slug: 'academy/courses', status: 'PUBLISHED' },
+    { name: 'Corporate', slug: 'academy/corporate', status: 'PUBLISHED' },
+    { name: 'Contato', slug: 'contact', status: 'PUBLISHED' },
+  ];
+
+  for (const pageData of pagesToCreate) {
+    if (pageData.slug !== 'home') {
+      await prisma.page.upsert({
+        where: { slug: pageData.slug },
+        update: {
+          name: pageData.name,
+          status: pageData.status as any,
+        },
+        create: {
+          name: pageData.name,
+          slug: pageData.slug,
+          status: pageData.status as any,
+        },
+      });
+    }
+  }
   
   console.log('✅ Pages created');
   
