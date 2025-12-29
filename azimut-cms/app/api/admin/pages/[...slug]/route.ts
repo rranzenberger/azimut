@@ -14,7 +14,7 @@ export const runtime = 'nodejs';
 // GET - Buscar página por slug
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string | string[] } }
+  { params }: { params: Promise<{ slug: string | string[] }> | { slug: string | string[] } }
 ) {
   try {
     const cookieStore = cookies();
@@ -25,8 +25,13 @@ export async function GET(
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
     }
 
+    // Next.js 14+ pode retornar params como Promise
+    const resolvedParams = await Promise.resolve(params);
     // Suporta slugs com barras: ['studio', 'about'] -> 'studio/about'
-    const slug = Array.isArray(params.slug) ? params.slug.join('/') : params.slug;
+    const slug = Array.isArray(resolvedParams.slug) ? resolvedParams.slug.join('/') : resolvedParams.slug;
+    
+    console.log('[API] GET /api/admin/pages/[...slug] - slug recebido:', slug);
+    console.log('[API] params recebidos:', resolvedParams);
 
     const page = await prisma.page.findUnique({
       where: { slug },
@@ -51,7 +56,7 @@ export async function GET(
 // PUT - Atualizar página
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { slug: string | string[] } }
+  { params }: { params: Promise<{ slug: string | string[] }> | { slug: string | string[] } }
 ) {
   try {
     const cookieStore = cookies();
@@ -62,8 +67,10 @@ export async function PUT(
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
     }
 
+    // Next.js 14+ pode retornar params como Promise
+    const resolvedParams = await Promise.resolve(params);
     // Suporta slugs com barras: ['studio', 'about'] -> 'studio/about'
-    const slug = Array.isArray(params.slug) ? params.slug.join('/') : params.slug;
+    const slug = Array.isArray(resolvedParams.slug) ? resolvedParams.slug.join('/') : resolvedParams.slug;
 
     const body = await request.json();
     const {
@@ -116,7 +123,7 @@ export async function PUT(
 // DELETE - Deletar página (futuro)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { slug: string | string[] } }
+  { params }: { params: Promise<{ slug: string | string[] }> | { slug: string | string[] } }
 ) {
   try {
     const cookieStore = cookies();
@@ -127,8 +134,10 @@ export async function DELETE(
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
     }
 
+    // Next.js 14+ pode retornar params como Promise
+    const resolvedParams = await Promise.resolve(params);
     // Suporta slugs com barras: ['studio', 'about'] -> 'studio/about'
-    const slug = Array.isArray(params.slug) ? params.slug.join('/') : params.slug;
+    const slug = Array.isArray(resolvedParams.slug) ? resolvedParams.slug.join('/') : resolvedParams.slug;
 
     await prisma.page.delete({
       where: { slug },
