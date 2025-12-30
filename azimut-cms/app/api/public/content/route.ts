@@ -120,10 +120,10 @@ export async function GET(request: NextRequest) {
       orderBy: { priority: 'desc' },
     });
     
-    // 6. Buscar slogan e subtitle do hero da página (se for home)
+    // 6. Buscar slogan e subtitle do hero da página (todas as páginas)
     let heroSlogan = null;
     let heroSubtitle = null;
-    if (page === 'home' && pageData) {
+    if (pageData) {
       const langSuffix = lang === 'pt' ? 'Pt' : lang === 'es' ? 'Es' : lang === 'fr' ? 'Fr' : 'En';
       const sloganField = `heroSlogan${langSuffix}`;
       const subtitleField = `heroSubtitle${langSuffix}`;
@@ -168,8 +168,14 @@ export async function GET(request: NextRequest) {
         heroSubtitle: heroSubtitle || null,
         sections: pageData.sections.map(section => ({
           type: section.type,
-          title: lang === 'pt' ? section.titlePt : section.titleEn,
-          body: lang === 'pt' ? section.bodyPt : section.bodyEn,
+          title: lang === 'pt' ? section.titlePt 
+                : lang === 'es' ? (section.titleEs || section.titleEn)
+                : lang === 'fr' ? (section.titleFr || section.titleEn)
+                : section.titleEn,
+          body: lang === 'pt' ? section.bodyPt 
+               : lang === 'es' ? (section.bodyEs || section.bodyEn)
+               : lang === 'fr' ? (section.bodyFr || section.bodyEn)
+               : section.bodyEn,
           layout: section.layout,
           projects: section.linkedProjects.map(p => formatProject(p, lang)),
         })),
@@ -228,7 +234,10 @@ function formatProject(project: any, lang: string) {
     year: project.year,
     client: project.client,
     tags: project.tags?.map((t: any) => 
-      lang === 'pt' ? t.labelPt : t.labelEn
+      lang === 'pt' ? t.labelPt 
+      : lang === 'es' ? (t.labelEs || t.labelEn)
+      : lang === 'fr' ? (t.labelFr || t.labelEn)
+      : t.labelEn
     ) || [],
     heroImage: project.heroImage ? {
       original: project.heroImage.originalUrl,
@@ -237,7 +246,10 @@ function formatProject(project: any, lang: string) {
       large: project.heroImage.largeUrl,
       webp: project.heroImage.webpUrl,
       avif: project.heroImage.avifUrl,
-      alt: lang === 'pt' ? project.heroImage.altPt : project.heroImage.altEn,
+      alt: lang === 'pt' ? project.heroImage.altPt 
+           : lang === 'es' ? (project.heroImage.altEs || project.heroImage.altEn)
+           : lang === 'fr' ? (project.heroImage.altFr || project.heroImage.altEn)
+           : project.heroImage.altEn,
     } : null,
     cta: {
       label: lang === 'pt' ? project.ctaLabelPt : project.ctaLabelEn,
