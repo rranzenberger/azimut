@@ -247,10 +247,15 @@ export default function EditPagePage() {
   useEffect(() => {
     async function fetchPage() {
       try {
+        console.log('[EditPage] Buscando página com slug:', slug);
+        console.log('[EditPage] URL da API:', `/api/admin/pages/${slug}`);
         // Buscar página atual
         const res = await fetch(`/api/admin/pages/${slug}`);
+        console.log('[EditPage] Resposta da API:', res.status, res.statusText);
         if (!res.ok) {
-          throw new Error('Página não encontrada');
+          const errorText = await res.text();
+          console.error('[EditPage] Erro da API:', errorText);
+          throw new Error(`Página não encontrada: ${res.status} - ${errorText}`);
         }
         const data = await res.json();
         setPage(data);
