@@ -67,12 +67,20 @@ export async function POST(request: NextRequest) {
       slug,
       seoTitlePt,
       seoTitleEn,
+      seoTitleEs,     // NOVO: SEO ES
+      seoTitleFr,     // NOVO: SEO FR
       seoDescPt,
       seoDescEn,
+      seoDescEs,      // NOVO: SEO ES
+      seoDescFr,      // NOVO: SEO FR
       heroSloganPt,
       heroSloganEn,
       heroSloganEs,
       heroSloganFr,
+      heroSubtitlePt, // NOVO: Hero Subtitle
+      heroSubtitleEn, // NOVO: Hero Subtitle
+      heroSubtitleEs, // NOVO: Hero Subtitle
+      heroSubtitleFr, // NOVO: Hero Subtitle
       status,
     } = body;
 
@@ -86,12 +94,20 @@ export async function POST(request: NextRequest) {
         slug,
         seoTitlePt,
         seoTitleEn,
+        seoTitleEs,    // NOVO: SEO ES
+        seoTitleFr,    // NOVO: SEO FR
         seoDescPt,
         seoDescEn,
+        seoDescEs,     // NOVO: SEO ES
+        seoDescFr,     // NOVO: SEO FR
         heroSloganPt,
         heroSloganEn,
         heroSloganEs,
         heroSloganFr,
+        heroSubtitlePt, // NOVO: Hero Subtitle
+        heroSubtitleEn, // NOVO: Hero Subtitle
+        heroSubtitleEs, // NOVO: Hero Subtitle
+        heroSubtitleFr, // NOVO: Hero Subtitle
         status: status || 'PUBLISHED',
       },
     });

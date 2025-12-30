@@ -77,8 +77,12 @@ export async function PUT(
       name,
       seoTitlePt,
       seoTitleEn,
+      seoTitleEs,     // NOVO: SEO ES
+      seoTitleFr,     // NOVO: SEO FR
       seoDescPt,
       seoDescEn,
+      seoDescEs,      // NOVO: SEO ES
+      seoDescFr,      // NOVO: SEO FR
       heroSloganPt,
       heroSloganEn,
       heroSloganEs,
@@ -96,8 +100,12 @@ export async function PUT(
         ...(name && { name }),
         ...(seoTitlePt !== undefined && { seoTitlePt }),
         ...(seoTitleEn !== undefined && { seoTitleEn }),
+        ...(seoTitleEs !== undefined && { seoTitleEs }),    // NOVO: SEO ES
+        ...(seoTitleFr !== undefined && { seoTitleFr }),    // NOVO: SEO FR
         ...(seoDescPt !== undefined && { seoDescPt }),
         ...(seoDescEn !== undefined && { seoDescEn }),
+        ...(seoDescEs !== undefined && { seoDescEs }),      // NOVO: SEO ES
+        ...(seoDescFr !== undefined && { seoDescFr }),      // NOVO: SEO FR
         ...(heroSloganPt !== undefined && { heroSloganPt }),
         ...(heroSloganEn !== undefined && { heroSloganEn }),
         ...(heroSloganEs !== undefined && { heroSloganEs }),

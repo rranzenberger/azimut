@@ -155,8 +155,14 @@ export async function GET(request: NextRequest) {
         name: pageData.name,
         slug: pageData.slug,
         seo: {
-          title: lang === 'pt' ? pageData.seoTitlePt : pageData.seoTitleEn,
-          description: lang === 'pt' ? pageData.seoDescPt : pageData.seoDescEn,
+          title: lang === 'pt' ? pageData.seoTitlePt 
+                : lang === 'es' ? pageData.seoTitleEs 
+                : lang === 'fr' ? pageData.seoTitleFr 
+                : pageData.seoTitleEn,
+          description: lang === 'pt' ? pageData.seoDescPt 
+                      : lang === 'es' ? pageData.seoDescEs 
+                      : lang === 'fr' ? pageData.seoDescFr 
+                      : pageData.seoDescEn,
         },
         heroSlogan: heroSlogan || null,
         heroSubtitle: heroSubtitle || null,
