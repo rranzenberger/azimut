@@ -147,8 +147,14 @@ export async function GET(request: NextRequest) {
       heroSubtitle,
       market: market ? {
         code: market.code,
-        label: lang === 'pt' ? market.labelPt : market.labelEn,
-        heroMessage: lang === 'pt' ? market.heroMessagePt : market.heroMessageEn,
+        label: lang === 'pt' ? market.labelPt 
+              : lang === 'es' ? (market.labelEs || market.labelEn)
+              : lang === 'fr' ? (market.labelFr || market.labelEn)
+              : market.labelEn,
+        heroMessage: lang === 'pt' ? market.heroMessagePt 
+                    : lang === 'es' ? (market.heroMessageEs || market.heroMessageEn)
+                    : lang === 'fr' ? (market.heroMessageFr || market.heroMessageEn)
+                    : market.heroMessageEn,
       } : null,
       
       page: pageData ? {

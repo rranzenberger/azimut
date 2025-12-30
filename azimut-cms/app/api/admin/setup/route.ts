@@ -53,8 +53,12 @@ export async function POST(request: NextRequest) {
           code: 'BR',
           labelPt: 'Brasil',
           labelEn: 'Brazil',
+          labelEs: 'Brasil',
+          labelFr: 'Brésil',
           heroMessagePt: 'Experiências imersivas, interativas e cinematográficas para cultura, marcas e espaços híbridos no Brasil.',
           heroMessageEn: 'Immersive, interactive and cinematic experiences for culture, brands and hybrid spaces in Brazil.',
+          heroMessageEs: 'Experiencias inmersivas, interactivas y cinematográficas para cultura, marcas y espacios híbridos en Brasil.',
+          heroMessageFr: 'Expériences immersives, interactives et cinématographiques pour la culture, les marques et les espaces hybrides au Brésil.',
           priority: 1,
         },
       });
@@ -66,8 +70,12 @@ export async function POST(request: NextRequest) {
           code: 'CA',
           labelPt: 'Canadá',
           labelEn: 'Canada',
+          labelEs: 'Canadá',
+          labelFr: 'Canada',
           heroMessagePt: 'Pesquisa, VR/XR e IA para museus, marcas e instituições no Canadá.',
           heroMessageEn: 'Research, VR/XR and AI for museums, brands and institutions in Canada.',
+          heroMessageEs: 'Investigación, VR/XR e IA para museos, marcas e instituciones en Canadá.',
+          heroMessageFr: 'Recherche, VR/XR et IA pour les musées, les marques et les institutions au Canada.',
           priority: 2,
         },
       });
@@ -79,8 +87,12 @@ export async function POST(request: NextRequest) {
           code: 'DEFAULT',
           labelPt: 'Internacional',
           labelEn: 'International',
+          labelEs: 'Internacional',
+          labelFr: 'International',
           heroMessagePt: 'Estúdio criativo-tecnológico entre Brasil e Canadá.',
           heroMessageEn: 'Creative-tech studio between Brazil and Canada.',
+          heroMessageEs: 'Estudio creativo-tecnológico entre Brasil y Canadá.',
+          heroMessageFr: 'Studio créatif-technologique entre le Brésil et le Canada.',
           priority: 0,
         },
       });
@@ -109,6 +121,8 @@ export async function POST(request: NextRequest) {
     await prisma.$disconnect();
   }
 }
+
+
 
 
 

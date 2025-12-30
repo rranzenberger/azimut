@@ -115,8 +115,12 @@ model Market {
   code              String    @unique
   labelPt           String
   labelEn           String
+  labelEs           String?
+  labelFr           String?
   heroMessagePt     String?
   heroMessageEn     String?
+  heroMessageEs     String?
+  heroMessageFr     String?
   priority          Int       @default(0)
   highlightProjects Project[]
   createdAt         DateTime  @default(now())
@@ -220,20 +224,20 @@ model Page {
   slug           String     @unique
   seoTitlePt     String?
   seoTitleEn     String?
-  seoTitleEs     String?    // SEO ES adicionado
-  seoTitleFr     String?    // SEO FR adicionado
+  seoTitleEs     String? // SEO ES adicionado
+  seoTitleFr     String? // SEO FR adicionado
   seoDescPt      String?
   seoDescEn      String?
-  seoDescEs      String?    // SEO ES adicionado
-  seoDescFr      String?    // SEO FR adicionado
-  heroSloganPt   String?    // Slogan do hero (editable via CMS) - Máx: 200 caracteres
-  heroSloganEn   String?    // Máx: 200 caracteres
-  heroSloganEs   String?    // Máx: 200 caracteres
-  heroSloganFr   String?    // Máx: 200 caracteres
-  heroSubtitlePt String?    // Subtitle do hero - Máx: 500 caracteres
-  heroSubtitleEn String?    // Máx: 500 caracteres
-  heroSubtitleEs String?    // Máx: 500 caracteres
-  heroSubtitleFr String?    // Máx: 500 caracteres
+  seoDescEs      String? // SEO ES adicionado
+  seoDescFr      String? // SEO FR adicionado
+  heroSloganPt   String? // Slogan do hero (editable via CMS) - Máx: 200 caracteres
+  heroSloganEn   String? // Máx: 200 caracteres
+  heroSloganEs   String? // Máx: 200 caracteres
+  heroSloganFr   String? // Máx: 200 caracteres
+  heroSubtitlePt String? // Subtitle do hero - Máx: 500 caracteres
+  heroSubtitleEn String? // Máx: 500 caracteres
+  heroSubtitleEs String? // Máx: 500 caracteres
+  heroSubtitleFr String? // Máx: 500 caracteres
   status         PageStatus @default(PUBLISHED)
   sections       Section[]
   createdAt      DateTime   @default(now())
