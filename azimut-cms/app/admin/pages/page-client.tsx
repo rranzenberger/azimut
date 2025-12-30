@@ -126,7 +126,7 @@ export default function PagesPageClient() {
                 e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)';
               }}
               onClick={() => {
-                router.push(`/admin/pages/${page.slug}/edit`);
+                router.push(`/admin/pages/edit/${page.slug}`);
               }}
             >
               <div style={{ marginBottom: 12 }}>

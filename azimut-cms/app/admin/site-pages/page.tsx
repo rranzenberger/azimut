@@ -96,7 +96,7 @@ export default async function PagesPage() {
           {pages.map((page) => (
             <Link
               key={page.id}
-              href={`/admin/pages/${page.slug}/edit`}
+              href={`/admin/pages/edit/${page.slug}`}
               style={{
                 display: 'block',
                 padding: 20,
