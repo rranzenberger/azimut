@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+// Force rebuild: 2025-12-30
 
 interface Section {
   id: string;
