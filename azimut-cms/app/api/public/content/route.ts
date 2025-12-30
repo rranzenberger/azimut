@@ -208,10 +208,14 @@ export async function GET(request: NextRequest) {
       })),
     };
     
-    // 7. Cache header (1 hora)
+    // 7. Cache header e CORS (1 hora)
     return NextResponse.json(response, {
       headers: {
         'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200',
+        // CORS - Permitir site principal acessar
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET',
+        'Access-Control-Allow-Headers': 'Content-Type',
       },
     });
     
@@ -264,7 +268,17 @@ function formatProject(project: any, lang: string) {
   };
 }
 
-
+// Opções CORS para preflight
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
+}
 
 
 
