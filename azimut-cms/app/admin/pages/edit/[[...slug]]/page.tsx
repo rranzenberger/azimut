@@ -24,8 +24,12 @@ interface Page {
   slug: string;
   seoTitlePt?: string;
   seoTitleEn?: string;
+  seoTitleEs?: string;    // NOVO: SEO ES
+  seoTitleFr?: string;    // NOVO: SEO FR
   seoDescPt?: string;
   seoDescEn?: string;
+  seoDescEs?: string;     // NOVO: SEO ES
+  seoDescFr?: string;     // NOVO: SEO FR
   heroSloganPt?: string;
   heroSloganEn?: string;
   heroSloganEs?: string;
@@ -43,8 +47,12 @@ const FIELD_LIMITS: Record<string, { max: number; label: string; location: strin
   name: { max: 100, label: 'Nome da Página', location: 'Páginas > Informações Básicas' },
   seoTitlePt: { max: 60, label: 'Título SEO (PT)', location: 'Páginas > SEO > Título' },
   seoTitleEn: { max: 60, label: 'Título SEO (EN)', location: 'Páginas > SEO > Título' },
+  seoTitleEs: { max: 60, label: 'Título SEO (ES)', location: 'Páginas > SEO > Título' },
+  seoTitleFr: { max: 60, label: 'Título SEO (FR)', location: 'Páginas > SEO > Título' },
   seoDescPt: { max: 160, label: 'Descrição SEO (PT)', location: 'Páginas > SEO > Descrição' },
   seoDescEn: { max: 160, label: 'Descrição SEO (EN)', location: 'Páginas > SEO > Descrição' },
+  seoDescEs: { max: 160, label: 'Descrição SEO (ES)', location: 'Páginas > SEO > Descrição' },
+  seoDescFr: { max: 160, label: 'Descrição SEO (FR)', location: 'Páginas > SEO > Descrição' },
   heroSloganPt: { max: 200, label: 'Hero Slogan (PT)', location: 'Páginas > Hero > Slogan' },
   heroSloganEn: { max: 200, label: 'Hero Slogan (EN)', location: 'Páginas > Hero > Slogan' },
   heroSloganEs: { max: 200, label: 'Hero Slogan (ES)', location: 'Páginas > Hero > Slogan' },
@@ -233,8 +241,12 @@ export default function EditPagePage() {
     name: '',
     seoTitlePt: '',
     seoTitleEn: '',
+    seoTitleEs: '',    // NOVO: SEO ES
+    seoTitleFr: '',    // NOVO: SEO FR
     seoDescPt: '',
     seoDescEn: '',
+    seoDescEs: '',     // NOVO: SEO ES
+    seoDescFr: '',     // NOVO: SEO FR
     heroSloganPt: '',
     heroSloganEn: '',
     heroSloganEs: '',
@@ -265,8 +277,12 @@ export default function EditPagePage() {
           name: data.name || '',
           seoTitlePt: data.seoTitlePt || '',
           seoTitleEn: data.seoTitleEn || '',
+          seoTitleEs: data.seoTitleEs || '',    // NOVO: SEO ES
+          seoTitleFr: data.seoTitleFr || '',    // NOVO: SEO FR
           seoDescPt: data.seoDescPt || '',
           seoDescEn: data.seoDescEn || '',
+          seoDescEs: data.seoDescEs || '',      // NOVO: SEO ES
+          seoDescFr: data.seoDescFr || '',      // NOVO: SEO FR
           heroSloganPt: data.heroSloganPt || '',
           heroSloganEn: data.heroSloganEn || '',
           heroSloganEs: data.heroSloganEs || '',
@@ -781,6 +797,28 @@ export default function EditPagePage() {
           />
 
           <MultilangTextField
+            label="Título SEO (Español)"
+            location="Páginas > SEO > Título > Español"
+            fieldKey="seoTitleEs"
+            value={formData.seoTitleEs}
+            onChange={(value) => setFormData({ ...formData, seoTitleEs: value })}
+            maxLength={FIELD_LIMITS.seoTitleEs.max}
+            onTranslate={(lang) => handleTranslate('seoTitle', lang as 'en' | 'es' | 'fr')}
+            translating={translating?.startsWith('seoTitle-') || false}
+          />
+
+          <MultilangTextField
+            label="Título SEO (Français)"
+            location="Páginas > SEO > Título > Français"
+            fieldKey="seoTitleFr"
+            value={formData.seoTitleFr}
+            onChange={(value) => setFormData({ ...formData, seoTitleFr: value })}
+            maxLength={FIELD_LIMITS.seoTitleFr.max}
+            onTranslate={(lang) => handleTranslate('seoTitle', lang as 'en' | 'es' | 'fr')}
+            translating={translating?.startsWith('seoTitle-') || false}
+          />
+
+          <MultilangTextField
             label="Descrição SEO (Português)"
             location="Páginas > SEO > Descrição > Português"
             fieldKey="seoDescPt"
@@ -798,6 +836,30 @@ export default function EditPagePage() {
             value={formData.seoDescEn}
             onChange={(value) => setFormData({ ...formData, seoDescEn: value })}
             maxLength={FIELD_LIMITS.seoDescEn.max}
+            multiline
+            onTranslate={(lang) => handleTranslate('seoDesc', lang as 'en' | 'es' | 'fr')}
+            translating={translating?.startsWith('seoDesc-') || false}
+          />
+
+          <MultilangTextField
+            label="Descrição SEO (Español)"
+            location="Páginas > SEO > Descrição > Español"
+            fieldKey="seoDescEs"
+            value={formData.seoDescEs}
+            onChange={(value) => setFormData({ ...formData, seoDescEs: value })}
+            maxLength={FIELD_LIMITS.seoDescEs.max}
+            multiline
+            onTranslate={(lang) => handleTranslate('seoDesc', lang as 'en' | 'es' | 'fr')}
+            translating={translating?.startsWith('seoDesc-') || false}
+          />
+
+          <MultilangTextField
+            label="Descrição SEO (Français)"
+            location="Páginas > SEO > Descrição > Français"
+            fieldKey="seoDescFr"
+            value={formData.seoDescFr}
+            onChange={(value) => setFormData({ ...formData, seoDescFr: value })}
+            maxLength={FIELD_LIMITS.seoDescFr.max}
             multiline
             onTranslate={(lang) => handleTranslate('seoDesc', lang as 'en' | 'es' | 'fr')}
             translating={translating?.startsWith('seoDesc-') || false}

@@ -220,8 +220,12 @@ model Page {
   slug           String     @unique
   seoTitlePt     String?
   seoTitleEn     String?
+  seoTitleEs     String?    // SEO ES adicionado
+  seoTitleFr     String?    // SEO FR adicionado
   seoDescPt      String?
   seoDescEn      String?
+  seoDescEs      String?    // SEO ES adicionado
+  seoDescFr      String?    // SEO FR adicionado
   heroSloganPt   String?    // Slogan do hero (editable via CMS) - Máx: 200 caracteres
   heroSloganEn   String?    // Máx: 200 caracteres
   heroSloganEs   String?    // Máx: 200 caracteres
