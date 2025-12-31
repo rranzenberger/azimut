@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { verifyAuthToken } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { SettingsForm } from './components/SettingsForm';
+import { UsersManagement } from './components/UsersManagement';
 
 export const revalidate = 0;
 
@@ -159,7 +160,12 @@ export default async function SettingsPage() {
         </div>
       )}
 
-      {settings && <SettingsForm settings={settings} />}
+      {settings && (
+        <>
+          <SettingsForm settings={settings} />
+          <UsersManagement />
+        </>
+      )}
     </div>
   );
 }
