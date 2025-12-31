@@ -1,8 +1,8 @@
 import React from 'react'
 import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
-import contentModel, { ServiceItem } from '../data/content'
 import { useUserTracking } from '../hooks/useUserTracking'
+import { useAzimutContent } from '../hooks/useAzimutContent'
 
 interface WhatWeDoProps {
   lang: Lang
@@ -11,11 +11,10 @@ interface WhatWeDoProps {
 const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   const { trackInteraction } = useUserTracking()
   const seo = seoData.what[lang]
-  const services = contentModel.services
-  const locale = (entry: { pt: string; en: string; es: string }) => {
-    if (lang === 'fr') return entry.en // Fallback para francês usar inglês
-    return entry[lang as 'pt' | 'en' | 'es'] || entry.en
-  }
+  
+  // Buscar serviços do backoffice (100% backoffice)
+  const { content: cmsContent, loading: cmsLoading } = useAzimutContent({ page: 'what' })
+  const services = cmsContent?.services || []
 
   return (
     <>
@@ -52,17 +51,17 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
           </p>
 
           <div className="grid gap-6 sm:grid-cols-2">
-            {services.map((service: ServiceItem) => (
+            {services.map((service: any) => (
               <article
                 key={service.slug}
                 className="rounded-2xl border border-white/10 card-adaptive p-4 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur"
                 onClick={() => trackInteraction('service_view', service.slug)}
               >
                 <h3 className="mb-2 font-sora text-[1.05rem] text-white">
-                  {locale(service.title)}
+                  {service.title}
                 </h3>
                 <p className="text-sm leading-relaxed text-slate-200">
-                  {locale(service.shortDescription)}
+                  {service.description}
                 </p>
               </article>
             ))}

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
-import contentModel from '../data/content'
 import { useUserTracking } from '../hooks/useUserTracking'
+import { useBackofficeContent } from '../hooks/useBackofficeContent'
 
 interface AcademyProps {
   lang: Lang
@@ -11,12 +11,13 @@ interface AcademyProps {
 const Academy: React.FC<AcademyProps> = ({ lang }) => {
   useUserTracking()
   const seo = seoData.academy[lang]
-  const labItems = contentModel.lab
-
-  const locale = (entry: { pt: string; en: string; es: string; fr?: string }) => {
-    if (lang === 'fr') return entry.fr || entry.en
-    return entry[lang as 'pt' | 'en' | 'es'] || entry.en
-  }
+  
+  // Buscar conteúdo da página academy do backoffice
+  const { page: academyPage, loading: pageLoading } = useBackofficeContent('academy', lang)
+  
+  // Lab items não estão no banco ainda - deixar vazio por enquanto
+  // TODO: Implementar modelo Lab no banco ou usar seções da página
+  const labItems: any[] = []
 
   const [activeSection, setActiveSection] = useState<'research' | 'courses' | 'corporate'>('research')
 
@@ -261,30 +262,40 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
               </div>
 
               {/* Projetos de Pesquisa */}
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {labItems.map((item) => (
-                  <article
-                    key={item.slug}
-                    className="group rounded-2xl border border-white/10 card-adaptive p-6 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all hover:border-white/20 hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)]"
-                  >
-                    <div className="mb-3 inline-block rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.2em]" style={{ 
-                      borderColor: 'rgba(139, 35, 50, 0.8)',
-                      backgroundColor: 'rgba(139, 35, 50, 0.25)',
-                      color: '#ffffff'
-                    }}>
-                      {item.type === 'experiment' ? (lang === 'pt' ? 'Experimento' : lang === 'es' ? 'Experimento' : lang === 'fr' ? 'Expérience' : 'Experiment') : 
-                       item.type === 'workshop' ? (lang === 'pt' ? 'Workshop' : lang === 'es' ? 'Workshop' : lang === 'fr' ? 'Atelier' : 'Workshop') :
-                       (lang === 'pt' ? 'Mentoria' : lang === 'es' ? 'Mentoría' : lang === 'fr' ? 'Mentorat' : 'Mentoring')}
-                    </div>
-                    <h3 className="mb-3 font-sora text-xl text-white">
-                      {locale(item.title)}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-slate-200">
-                      {locale(item.description)}
-                    </p>
-                  </article>
-                ))}
-              </div>
+              {/* TODO: Lab items não estão no banco ainda - implementar quando necessário */}
+              {labItems.length > 0 ? (
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {labItems.map((item: any) => (
+                    <article
+                      key={item.slug}
+                      className="group rounded-2xl border border-white/10 card-adaptive p-6 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all hover:border-white/20 hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)]"
+                    >
+                      <div className="mb-3 inline-block rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.2em]" style={{ 
+                        borderColor: 'rgba(139, 35, 50, 0.8)',
+                        backgroundColor: 'rgba(139, 35, 50, 0.25)',
+                        color: '#ffffff'
+                      }}>
+                        {item.type === 'experiment' ? (lang === 'pt' ? 'Experimento' : lang === 'es' ? 'Experimento' : lang === 'fr' ? 'Expérience' : 'Experiment') : 
+                         item.type === 'workshop' ? (lang === 'pt' ? 'Workshop' : lang === 'es' ? 'Workshop' : lang === 'fr' ? 'Atelier' : 'Workshop') :
+                         (lang === 'pt' ? 'Mentoria' : lang === 'es' ? 'Mentoría' : lang === 'fr' ? 'Mentorat' : 'Mentoring')}
+                      </div>
+                      <h3 className="mb-3 font-sora text-xl text-white">
+                        {item.title}
+                      </h3>
+                      <p className="text-sm leading-relaxed text-slate-200">
+                        {item.description}
+                      </p>
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-slate-400 italic">
+                  {lang === 'pt' ? 'Conteúdo de pesquisa em desenvolvimento.' : 
+                   lang === 'es' ? 'Contenido de investigación en desarrollo.' :
+                   lang === 'fr' ? 'Contenu de recherche en développement.' :
+                   'Research content in development.'}
+                </p>
+              )}
 
               {/* Áreas de Pesquisa */}
               <section className="mt-16">

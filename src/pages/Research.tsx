@@ -1,8 +1,8 @@
 import React from 'react'
 import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
-import contentModel from '../data/content'
 import { useUserTracking } from '../hooks/useUserTracking'
+import { useBackofficeContent } from '../hooks/useBackofficeContent'
 
 interface ResearchProps {
   lang: Lang
@@ -11,11 +11,13 @@ interface ResearchProps {
 const Research: React.FC<ResearchProps> = ({ lang }) => {
   useUserTracking()
   const seo = seoData.research[lang]
-  const labItems = contentModel.lab
-  const locale = (entry: { pt: string; en: string; es: string }) => {
-    if (lang === 'fr') return entry.en // Fallback para francês usar inglês
-    return entry[lang as 'pt' | 'en' | 'es'] || entry.en
-  }
+  
+  // Buscar conteúdo da página research do backoffice
+  const { page: researchPage, loading: pageLoading } = useBackofficeContent('academy/research', lang)
+  
+  // Lab items não estão no banco ainda - deixar vazio por enquanto
+  // TODO: Implementar modelo Lab no banco ou usar seções da página
+  const labItems: any[] = []
 
   return (
     <>
@@ -50,24 +52,34 @@ const Research: React.FC<ResearchProps> = ({ lang }) => {
           </p>
 
           {/* Lab & Experiments */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {labItems.map((item) => (
-              <article
-                key={item.slug}
-                className="group rounded-2xl border border-white/10 card-adaptive p-6 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all hover:border-white/20 hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)]"
-              >
-                <div className="mb-3 inline-block rounded-full border border-azimut-red/30 bg-azimut-red/10 px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.2em]" style={{ color: '#d3cec3' }}>
-                  {item.type}
-                </div>
-                <h3 className="mb-3 font-sora text-xl text-white">
-                  {locale(item.title)}
-                </h3>
-                <p className="text-sm leading-relaxed text-slate-200">
-                  {locale(item.description)}
-                </p>
-              </article>
-            ))}
-          </div>
+          {/* TODO: Lab items não estão no banco ainda - implementar quando necessário */}
+          {labItems.length > 0 ? (
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {labItems.map((item: any) => (
+                <article
+                  key={item.slug}
+                  className="group rounded-2xl border border-white/10 card-adaptive p-6 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all hover:border-white/20 hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)]"
+                >
+                  <div className="mb-3 inline-block rounded-full border border-azimut-red/30 bg-azimut-red/10 px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.2em]" style={{ color: '#d3cec3' }}>
+                    {item.type}
+                  </div>
+                  <h3 className="mb-3 font-sora text-xl text-white">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-slate-200">
+                    {item.description}
+                  </p>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <p className="text-slate-400 italic">
+              {lang === 'pt' ? 'Conteúdo de pesquisa em desenvolvimento.' : 
+               lang === 'es' ? 'Contenido de investigación en desarrollo.' :
+               lang === 'fr' ? 'Contenu de recherche en développement.' :
+               'Research content in development.'}
+            </p>
+          )}
 
           {/* Research Areas */}
           <section className="mt-16">
@@ -88,7 +100,7 @@ const Research: React.FC<ResearchProps> = ({ lang }) => {
                   className="rounded-xl border border-white/10 card-adaptive p-4 text-center backdrop-blur"
                 >
                   <span className="font-sora text-sm text-white">
-                    {locale(area)}
+                    {lang === 'pt' ? area.pt : lang === 'es' ? area.es : area.en}
                   </span>
                 </div>
               ))}
