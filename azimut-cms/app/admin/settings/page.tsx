@@ -39,7 +39,12 @@ export default async function SettingsPage() {
     }
   } catch (err: any) {
     console.error('Settings fetch error:', err);
-    error = 'Erro ao carregar configurações. Verifique a conexão com o banco.';
+    // Verificar se é erro de tabela não existente (migration não aplicada)
+    if (err.code === 'P2021' || err.message?.includes('does not exist') || err.message?.includes('relation') || err.message?.includes('table')) {
+      error = 'Tabela Settings não encontrada. A migration precisa ser aplicada no banco de dados.';
+    } else {
+      error = `Erro ao carregar configurações: ${err.message || 'Verifique a conexão com o banco.'}`;
+    }
   }
 
   return (

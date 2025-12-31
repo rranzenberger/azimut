@@ -43,6 +43,19 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ settings });
   } catch (error: any) {
     console.error('Settings GET error:', error);
+    
+    // Verificar se é erro de tabela não existente
+    if (error.code === 'P2021' || error.message?.includes('does not exist') || error.message?.includes('relation') || error.message?.includes('table')) {
+      return NextResponse.json(
+        { 
+          error: 'Tabela Settings não encontrada',
+          details: 'A migration precisa ser aplicada no banco de dados. Execute: npx prisma migrate deploy',
+          code: 'MIGRATION_REQUIRED'
+        },
+        { status: 500 }
+      );
+    }
+    
     return NextResponse.json(
       { error: 'Erro ao buscar configurações', details: error.message },
       { status: 500 }
