@@ -26,7 +26,7 @@ function PasswordField({
           onChange={(e) => onChange(e.target.value)}
           style={{
             ...inputStyle,
-            paddingRight: '40px',
+            paddingRight: '42px',
           }}
           placeholder={placeholder}
         />
@@ -35,7 +35,7 @@ function PasswordField({
           onClick={() => setShowPassword(!showPassword)}
           style={{
             position: 'absolute',
-            right: '10px',
+            right: '12px',
             top: '50%',
             transform: 'translateY(-50%)',
             background: 'transparent',
@@ -434,14 +434,14 @@ export function SettingsForm({ settings }: { settings: any }) {
                 appearance: 'none',
                 backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239f9bb0' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
                 backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'right 14px center',
-                paddingRight: '40px',
+                backgroundPosition: 'right 12px center',
+                paddingRight: '32px',
               }}
             >
-              <option value="pt" style={{ background: '#1a1625', color: '#fff' }}>Português</option>
-              <option value="en" style={{ background: '#1a1625', color: '#fff' }}>English</option>
-              <option value="es" style={{ background: '#1a1625', color: '#fff' }}>Español</option>
-              <option value="fr" style={{ background: '#1a1625', color: '#fff' }}>Français</option>
+              <option value="pt" style={{ background: '#0a0e18', color: '#fff' }}>Português</option>
+              <option value="en" style={{ background: '#0a0e18', color: '#fff' }}>English</option>
+              <option value="es" style={{ background: '#0a0e18', color: '#fff' }}>Español</option>
+              <option value="fr" style={{ background: '#0a0e18', color: '#fff' }}>Français</option>
             </select>
           </div>
           <div style={{ display: 'grid', gap: 8 }}>
