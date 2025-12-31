@@ -1,5 +1,15 @@
-// Centralized content model for backoffice/CMS integration.
-// Texts are kept multilingual (pt, en, es) and organized by feature.
+/**
+ * @deprecated This file is deprecated. The site now uses 100% backoffice CMS.
+ * All content is managed via the backoffice and fetched from the API.
+ * 
+ * This file is kept for reference only and should not be used in new code.
+ * Use hooks like useAzimutContent, useBackofficeContent, useBackofficeProjects, useBackofficeServices instead.
+ * 
+ * Migration completed: 2025-01-27
+ * 
+ * Centralized content model for backoffice/CMS integration.
+ * Texts are kept multilingual (pt, en, es) and organized by feature.
+ */
 
 type LocaleString = {
   pt: string
