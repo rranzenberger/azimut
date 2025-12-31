@@ -323,7 +323,7 @@ function isGovernmentIP(ip: string | null): boolean {
  */
 async function getRecommendedServices(scores: any) {
   const services = await prisma.service.findMany({
-    where: { status: 'ACTIVE' },
+    where: { status: 'PUBLISHED' }, // ServiceStatus enum: DRAFT, PUBLISHED, ARCHIVED
   });
 
   // Ordenar por relevância baseado em scores
