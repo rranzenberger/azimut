@@ -102,9 +102,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                       <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-azimut-red/30 bg-azimut-red/10 px-4 py-1.5 backdrop-blur">
                         <span className="h-2 w-2 animate-pulse rounded-full bg-azimut-red"></span>
                         <span className="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-200">
-                          {cases[0].status === 'active' 
-                            ? (lang === 'pt' ? 'Ativo' : lang === 'es' ? 'Activo' : 'Active')
-                            : (lang === 'pt' ? 'Em Desenvolvimento' : lang === 'es' ? 'En Desarrollo' : 'In Development')}
+                          {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
                         </span>
                       </div>
                       <p className="text-xs text-slate-500 uppercase tracking-wider">
@@ -117,9 +115,6 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
 
                 {/* Content */}
                 <div className="p-6 md:p-8">
-                  <div className="mb-3 text-[0.72rem] uppercase tracking-[0.14em] text-azimut-red">
-                    {cases[0].category}
-                  </div>
                   <h2 className="mb-3 font-handel text-3xl uppercase tracking-[0.12em] text-white">
                     {cases[0].title}
                   </h2>
