@@ -107,7 +107,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             </div>
 
             {/* Título - slogan complementar ao header (sem redundância) - vem do CMS */}
-            <h1 className="mb-3 sm:mb-4 font-handel text-[1.8rem] leading-[1.15] tracking-[0.12em] uppercase sm:text-[2.1rem] sm:tracking-[0.14em] md:text-[2.5rem] md:tracking-[0.16em] lg:text-[2.8rem] animate-fade-in-up opacity-0" style={{ animationDelay: '0.2s', color: 'var(--theme-text)' }}>
+            <h1 className="mb-3 sm:mb-4 font-handel text-[1.9rem] leading-[1.15] tracking-[0.12em] uppercase sm:text-[2.2rem] sm:tracking-[0.14em] md:text-[2.7rem] md:tracking-[0.16em] lg:text-[3rem] xl:text-[3.2rem] animate-fade-in-up opacity-0" style={{ animationDelay: '0.2s', color: 'var(--theme-text)' }}>
               {heroSlogan.toUpperCase()}
             </h1>
 

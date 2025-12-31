@@ -54,7 +54,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         </div>
 
         <div className="mx-auto max-w-6xl px-6">
-          <h1 className="mb-4 font-handel text-4xl uppercase tracking-[0.16em] md:text-5xl" style={{ color: 'var(--theme-text)' }}>
+          <h1 className="mb-4 font-handel text-4xl uppercase tracking-[0.16em] md:text-5xl lg:text-6xl" style={{ color: 'var(--theme-text)' }}>
             {t(lang, 'navWork')}
           </h1>
           <p className="mb-12 max-w-3xl text-lg md:text-xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
