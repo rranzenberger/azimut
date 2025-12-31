@@ -13,7 +13,8 @@
     "prisma:studio": "prisma studio",
     "prisma:seed": "tsx prisma/seed.ts",
     "prisma:push": "prisma db push",
-    "migrate:settings": "tsx prisma/apply-settings-migration.ts"
+    "migrate:settings": "tsx prisma/apply-settings-migration.ts",
+    "populate:all": "tsx scripts/populate-all-content.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.8.0",
