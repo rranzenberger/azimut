@@ -131,7 +131,7 @@ export async function POST(request: NextRequest) {
       interestScore,
       session,
       inferredType,
-      notificationEmail: settings.notificationEmail || process.env.NOTIFICATION_EMAIL,
+      notificationEmail: settings?.notificationEmail || process.env.NOTIFICATION_EMAIL || null,
     });
 
     return NextResponse.json({
