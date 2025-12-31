@@ -128,27 +128,28 @@ model Market {
 }
 
 model Media {
-  id              String    @id @default(uuid())
-  type            MediaType @default(IMAGE)
-  originalUrl     String
-  thumbnailUrl    String?
-  mediumUrl       String?
-  largeUrl        String?
-  webpUrl         String?
-  avifUrl         String?
-  width           Int?
-  height          Int?
-  sizeBytes       Int?
-  durationSeconds Int?
-  format          String?
-  contentType     String?
-  altPt           String?
-  altEn           String?
-  altEs           String?
-  altFr           String?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  projectHero     Project?
+  id               String         @id @default(uuid())
+  type             MediaType      @default(IMAGE)
+  originalUrl      String
+  thumbnailUrl     String?
+  mediumUrl        String?
+  largeUrl         String?
+  webpUrl          String?
+  avifUrl          String?
+  width            Int?
+  height           Int?
+  sizeBytes        Int?
+  durationSeconds  Int?
+  format           String?
+  contentType      String?
+  altPt            String?
+  altEn            String?
+  altEs            String?
+  altFr            String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  projectHero      Project?
+  projectGalleries ProjectMedia[]
 }
 
 model Tag {
@@ -193,6 +194,10 @@ model Project {
   summaryEn     String?
   summaryEs     String?
   summaryFr     String?
+  descriptionPt String?              @db.Text // Descrição completa/rich text
+  descriptionEn String?              @db.Text
+  descriptionEs String?              @db.Text
+  descriptionFr String?              @db.Text
   city          String?
   stateProvince String?
   country       String?
@@ -212,6 +217,7 @@ model Project {
   tags          Tag[]
   services      Service[]
   sections      Section[]            @relation("SectionProjects")
+  gallery       ProjectMedia[]
   pageViews     PageView[]
   interactions  ProjectInteraction[]
   createdAt     DateTime             @default(now())
@@ -255,13 +261,27 @@ model Section {
   titleEn        String?
   titleEs        String?
   titleFr        String?
-  bodyPt         String?
-  bodyEn         String?
-  bodyEs         String?
-  bodyFr         String?
+  bodyPt         String?   @db.Text
+  bodyEn         String?   @db.Text
+  bodyEs         String?   @db.Text
+  bodyFr         String?   @db.Text
   linkedProjects Project[] @relation("SectionProjects")
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
+}
+
+model ProjectMedia {
+  id        String   @id @default(uuid())
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+  media     Media    @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  mediaId   String
+  order     Int      @default(0) // Ordem na galeria
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([projectId, mediaId])
+  @@index([projectId, order])
 }
 
 model VisitorSession {

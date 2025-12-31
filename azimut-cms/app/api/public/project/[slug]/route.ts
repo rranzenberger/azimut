@@ -26,6 +26,14 @@ export async function GET(
         market: true,
         tags: true,
         services: true,
+        gallery: {
+          include: {
+            media: true,
+          },
+          orderBy: {
+            order: 'asc',
+          },
+        },
       },
     });
 
@@ -45,6 +53,10 @@ export async function GET(
                lang === 'en' ? project.summaryEn :
                lang === 'fr' ? (project.summaryFr || project.summaryEn) :
                (project.summaryEs || project.summaryEn),
+      description: lang === 'pt' ? project.descriptionPt :
+                   lang === 'en' ? project.descriptionEn :
+                   lang === 'fr' ? (project.descriptionFr || project.descriptionEn) :
+                   (project.descriptionEs || project.descriptionEn),
       city: project.city,
       stateProvince: project.stateProvince,
       country: project.country,
@@ -87,6 +99,23 @@ export async function GET(
         label: lang === 'pt' ? project.ctaLabelPt : project.ctaLabelEn,
         url: project.ctaUrl,
       },
+      gallery: project.gallery?.map((pm: any) => ({
+        id: pm.media.id,
+        type: pm.media.type,
+        original: pm.media.originalUrl,
+        thumbnail: pm.media.thumbnailUrl,
+        medium: pm.media.mediumUrl,
+        large: pm.media.largeUrl,
+        webp: pm.media.webpUrl,
+        avif: pm.media.avifUrl,
+        width: pm.media.width,
+        height: pm.media.height,
+        alt: lang === 'pt' ? pm.media.altPt 
+             : lang === 'es' ? (pm.media.altEs || pm.media.altEn)
+             : lang === 'fr' ? (pm.media.altFr || pm.media.altEn)
+             : pm.media.altEn,
+        order: pm.order,
+      })) || [],
     };
 
     return NextResponse.json(formatted, {

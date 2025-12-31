@@ -9,6 +9,7 @@ interface ProjectData {
   title: string;
   shortTitle?: string;
   summary?: string;
+  description?: string; // Descrição completa/rich text
   city?: string;
   stateProvince?: string;
   country?: string;
@@ -26,6 +27,20 @@ interface ProjectData {
     avif?: string;
     alt?: string;
   } | null;
+  gallery?: Array<{
+    id: string;
+    type: 'IMAGE' | 'VIDEO';
+    original: string;
+    thumbnail?: string;
+    medium?: string;
+    large?: string;
+    webp?: string;
+    avif?: string;
+    width?: number;
+    height?: number;
+    alt?: string;
+    order: number;
+  }>;
   market?: {
     code: string;
     label: string;

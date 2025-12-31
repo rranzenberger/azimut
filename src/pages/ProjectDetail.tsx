@@ -248,13 +248,56 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
             </div>
           </div>
 
-          {/* Description */}
-          {project.summary && (
+          {/* Description - Prioriza description completa, fallback para summary */}
+          {(project.description || project.summary) && (
             <div className="mb-12">
               <div className="prose prose-invert max-w-none">
-                <p className="text-lg leading-relaxed text-slate-300 whitespace-pre-line">
-                  {project.summary}
-                </p>
+                <div 
+                  className="text-lg leading-relaxed text-slate-300"
+                  dangerouslySetInnerHTML={{ 
+                    __html: project.description 
+                      ? project.description.replace(/\n/g, '<br />')
+                      : (project.summary || '').replace(/\n/g, '<br />')
+                  }}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Gallery */}
+          {project.gallery && project.gallery.length > 0 && (
+            <div className="mb-12">
+              <h2 className="mb-6 font-handel text-2xl uppercase tracking-[0.12em] text-white">
+                {lang === 'pt' ? 'Galeria' : lang === 'es' ? 'Galería' : lang === 'fr' ? 'Galerie' : 'Gallery'}
+              </h2>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {project.gallery.map((media: any) => (
+                  <div
+                    key={media.id}
+                    className="group relative aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 cursor-pointer"
+                    onClick={() => {
+                      // TODO: Abrir lightbox (implementar depois se necessário)
+                      window.open(media.large || media.original, '_blank')
+                    }}
+                  >
+                    {media.type === 'IMAGE' ? (
+                      <img
+                        src={media.medium || media.thumbnail || media.original}
+                        alt={media.alt || project.title}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center bg-slate-900">
+                        <svg className="w-16 h-16 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
+                ))}
               </div>
             </div>
           )}
