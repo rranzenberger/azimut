@@ -7,7 +7,9 @@ import { useState, useEffect } from 'react';
 import { getSessionId } from '../utils/analytics';
 import { detectGeoFromTimezone, detectLanguageFromBrowser, detectCountryFromIP, getLanguageFromCountry } from '../utils/geoDetection';
 
-const API_URL = import.meta.env.VITE_CMS_API_URL || 'http://localhost:3001/api';
+// Usar VITE_BACKOFFICE_URL se disponível, senão VITE_CMS_API_URL, senão fallback
+const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br';
+const API_URL = `${BACKOFFICE_URL}/api`;
 
 interface ContentOptions {
   page?: string;
