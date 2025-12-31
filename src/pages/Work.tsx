@@ -273,6 +273,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                       <img
                         src={cases[0].heroImage.large}
                         alt={cases[0].heroImage.alt || cases[0].title}
+                        loading="lazy"
                         className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105"
                       />
                       {/* Overlay gradient para legibilidade */}

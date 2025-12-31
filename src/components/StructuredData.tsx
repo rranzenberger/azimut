@@ -8,7 +8,7 @@ interface StructuredDataProps {
 
 const StructuredData: React.FC<StructuredDataProps> = ({ type = 'organization', data = {} }) => {
   const getStructuredData = () => {
-    const baseUrl = 'https://azimut.com' // TODO: usar variável de ambiente
+    const baseUrl = 'https://azmt.com.br' // Domínio real do site
     
     switch (type) {
       case 'organization':

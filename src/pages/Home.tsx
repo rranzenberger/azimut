@@ -198,6 +198,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                           <img
                             src={featured.heroImage.large}
                             alt={featured.heroImage.alt || featured.title}
+                            loading="lazy"
                             className="absolute inset-0 h-full w-full object-cover"
                           />
                         )}
