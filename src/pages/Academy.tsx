@@ -12,12 +12,19 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
   useUserTracking()
   const seo = seoData.academy[lang]
   
-  // Buscar conteúdo da página academy do backoffice
+  // Buscar conteúdo da página academy do backoffice (opcional, para SEO)
   const { page: academyPage, loading: pageLoading } = useBackofficeContent('academy', lang)
   
   // Lab items não estão no banco ainda - deixar vazio por enquanto
   // TODO: Implementar modelo Lab no banco ou usar seções da página
   const labItems: any[] = []
+  
+  // Função locale para conteúdo estático (workshops, áreas, etc)
+  // Academy mantém conteúdo estático por enquanto devido à complexidade dos submenus
+  const locale = (entry: { pt: string; en: string; es: string; fr?: string }) => {
+    if (lang === 'fr') return entry.fr || entry.en
+    return entry[lang as 'pt' | 'en' | 'es'] || entry.en
+  }
 
   const [activeSection, setActiveSection] = useState<'research' | 'courses' | 'corporate'>('research')
 
