@@ -147,7 +147,18 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               {heroSubtitle}
             </p>
 
-            {/* Pillars removidos - se necessário, adicionar como seção no backoffice */}
+            {/* Pillars - Restaurado */}
+            <div className="mt-6 sm:mt-8 flex flex-wrap gap-3 sm:gap-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+              <span className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10">
+                {lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture'}
+              </span>
+              <span className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10">
+                {lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events'}
+              </span>
+              <span className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10">
+                {lang === 'pt' ? 'Educação & Pesquisa' : lang === 'es' ? 'Educación & Investigación' : lang === 'fr' ? 'Éducation & Recherche' : 'Education & Research'}
+              </span>
+            </div>
             </div>
 
           {/* Card lateral - sempre escuro com texto claro */}
@@ -269,16 +280,17 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* Recomendações */}
-        <section className="pb-12 sm:pb-16 md:pb-20">
-          <div className="mx-auto max-w-5xl px-3 sm:px-4 md:px-6">
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="font-handel text-2xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
-                {lang === 'pt' ? 'Sugestões para você' : lang === 'es' ? 'Sugerencias para ti' : 'Suggested for you'}
-              </h2>
-            </div>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {recommended.slice(1).map((item: any, index: number) => (
+        {/* Recomendações - Só mostra se houver projetos */}
+        {recommended.length > 1 && (
+          <section className="pb-12 sm:pb-16 md:pb-20">
+            <div className="mx-auto max-w-5xl px-3 sm:px-4 md:px-6">
+              <div className="mb-6 flex items-center justify-between">
+                <h2 className="font-handel text-2xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
+                  {lang === 'pt' ? 'Projetos Recomendados' : lang === 'es' ? 'Proyectos Recomendados' : lang === 'fr' ? 'Projets Recommandés' : 'Recommended Projects'}
+                </h2>
+              </div>
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {recommended.slice(1).map((item: any, index: number) => (
                 <article
                   key={item.slug}
                   className="group rounded-2xl border border-white/10 card-adaptive p-4 shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(201,35,55,0.3)]"
@@ -305,10 +317,11 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     </div>
                   )}
                 </article>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
       </main>
     </>
   )
