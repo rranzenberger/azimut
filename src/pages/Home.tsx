@@ -147,18 +147,19 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               {heroSubtitle}
             </p>
 
-            {/* Pillars - Restaurado */}
-            <div className="mt-6 sm:mt-8 flex flex-wrap gap-3 sm:gap-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
-              <span className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10">
-                {lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture'}
-              </span>
-              <span className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10">
-                {lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events'}
-              </span>
-              <span className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10">
-                {lang === 'pt' ? 'Educação & Pesquisa' : lang === 'es' ? 'Educación & Investigación' : lang === 'fr' ? 'Éducation & Recherche' : 'Education & Research'}
-              </span>
-            </div>
+            {/* Pillars - Do backoffice */}
+            {cmsContent?.page?.pillars && cmsContent.page.pillars.length > 0 && (
+              <div className="mt-6 sm:mt-8 flex flex-wrap gap-3 sm:gap-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+                {cmsContent.page.pillars.map((pillar: string, index: number) => (
+                  <span 
+                    key={index}
+                    className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10"
+                  >
+                    {pillar}
+                  </span>
+                ))}
+              </div>
+            )}
             </div>
 
           {/* Card lateral - sempre escuro com texto claro */}

@@ -120,9 +120,10 @@ export async function GET(request: NextRequest) {
       orderBy: { priority: 'desc' },
     });
     
-    // 6. Buscar slogan e subtitle do hero da página (todas as páginas)
+    // 6. Buscar slogan, subtitle e pillars do hero da página (todas as páginas)
     let heroSlogan = null;
     let heroSubtitle = null;
+    let pillars = null;
     if (pageData) {
       const langSuffix = lang === 'pt' ? 'Pt' : lang === 'es' ? 'Es' : lang === 'fr' ? 'Fr' : 'En';
       const sloganField = `heroSlogan${langSuffix}`;
@@ -130,6 +131,15 @@ export async function GET(request: NextRequest) {
       
       heroSlogan = (pageData as any)[sloganField] || null;
       heroSubtitle = (pageData as any)[subtitleField] || null;
+      
+      // Buscar pillars (apenas se existirem)
+      const pillar1 = (pageData as any)[`pillar1${langSuffix}`] || (pageData as any).pillar1En || null;
+      const pillar2 = (pageData as any)[`pillar2${langSuffix}`] || (pageData as any).pillar2En || null;
+      const pillar3 = (pageData as any)[`pillar3${langSuffix}`] || (pageData as any).pillar3En || null;
+      
+      if (pillar1 || pillar2 || pillar3) {
+        pillars = [pillar1, pillar2, pillar3].filter(Boolean);
+      }
       
       // Fallback: se não tiver no idioma, tenta EN
       if (!heroSlogan && lang !== 'en') {
@@ -172,6 +182,7 @@ export async function GET(request: NextRequest) {
         },
         heroSlogan: heroSlogan || null,
         heroSubtitle: heroSubtitle || null,
+        pillars: pillars || null, // Array de 3 pillars ou null
         sections: pageData.sections.map(section => ({
           type: section.type,
           title: lang === 'pt' ? section.titlePt 

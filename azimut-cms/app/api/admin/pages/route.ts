@@ -81,6 +81,19 @@ export async function POST(request: NextRequest) {
       heroSubtitleEn, // NOVO: Hero Subtitle
       heroSubtitleEs, // NOVO: Hero Subtitle
       heroSubtitleFr, // NOVO: Hero Subtitle
+      // Pillars
+      pillar1Pt,
+      pillar1En,
+      pillar1Es,
+      pillar1Fr,
+      pillar2Pt,
+      pillar2En,
+      pillar2Es,
+      pillar2Fr,
+      pillar3Pt,
+      pillar3En,
+      pillar3Es,
+      pillar3Fr,
       status,
     } = body;
 
@@ -108,6 +121,19 @@ export async function POST(request: NextRequest) {
         heroSubtitleEn, // NOVO: Hero Subtitle
         heroSubtitleEs, // NOVO: Hero Subtitle
         heroSubtitleFr, // NOVO: Hero Subtitle
+        // Pillars
+        pillar1Pt,
+        pillar1En,
+        pillar1Es,
+        pillar1Fr,
+        pillar2Pt,
+        pillar2En,
+        pillar2Es,
+        pillar2Fr,
+        pillar3Pt,
+        pillar3En,
+        pillar3Es,
+        pillar3Fr,
         status: status || 'PUBLISHED',
       },
     });

@@ -38,6 +38,19 @@ interface Page {
   heroSubtitleEn?: string;
   heroSubtitleEs?: string;
   heroSubtitleFr?: string;
+  // Pillars
+  pillar1Pt?: string;
+  pillar1En?: string;
+  pillar1Es?: string;
+  pillar1Fr?: string;
+  pillar2Pt?: string;
+  pillar2En?: string;
+  pillar2Es?: string;
+  pillar2Fr?: string;
+  pillar3Pt?: string;
+  pillar3En?: string;
+  pillar3Es?: string;
+  pillar3Fr?: string;
   status: string;
   sections?: Section[];
 }
@@ -61,6 +74,19 @@ const FIELD_LIMITS: Record<string, { max: number; label: string; location: strin
   heroSubtitleEn: { max: 500, label: 'Hero Subtitle (EN)', location: 'Páginas > Hero > Subtitle' },
   heroSubtitleEs: { max: 500, label: 'Hero Subtitle (ES)', location: 'Páginas > Hero > Subtitle' },
   heroSubtitleFr: { max: 500, label: 'Hero Subtitle (FR)', location: 'Páginas > Hero > Subtitle' },
+  // Pillars
+  pillar1Pt: { max: 50, label: 'Pillar 1 (PT)', location: 'Páginas > Hero > Pillars' },
+  pillar1En: { max: 50, label: 'Pillar 1 (EN)', location: 'Páginas > Hero > Pillars' },
+  pillar1Es: { max: 50, label: 'Pillar 1 (ES)', location: 'Páginas > Hero > Pillars' },
+  pillar1Fr: { max: 50, label: 'Pillar 1 (FR)', location: 'Páginas > Hero > Pillars' },
+  pillar2Pt: { max: 50, label: 'Pillar 2 (PT)', location: 'Páginas > Hero > Pillars' },
+  pillar2En: { max: 50, label: 'Pillar 2 (EN)', location: 'Páginas > Hero > Pillars' },
+  pillar2Es: { max: 50, label: 'Pillar 2 (ES)', location: 'Páginas > Hero > Pillars' },
+  pillar2Fr: { max: 50, label: 'Pillar 2 (FR)', location: 'Páginas > Hero > Pillars' },
+  pillar3Pt: { max: 50, label: 'Pillar 3 (PT)', location: 'Páginas > Hero > Pillars' },
+  pillar3En: { max: 50, label: 'Pillar 3 (EN)', location: 'Páginas > Hero > Pillars' },
+  pillar3Es: { max: 50, label: 'Pillar 3 (ES)', location: 'Páginas > Hero > Pillars' },
+  pillar3Fr: { max: 50, label: 'Pillar 3 (FR)', location: 'Páginas > Hero > Pillars' },
 };
 
 function MultilangTextField({
@@ -255,6 +281,19 @@ export default function EditPagePage() {
     heroSubtitleEn: '',
     heroSubtitleEs: '',
     heroSubtitleFr: '',
+    // Pillars
+    pillar1Pt: '',
+    pillar1En: '',
+    pillar1Es: '',
+    pillar1Fr: '',
+    pillar2Pt: '',
+    pillar2En: '',
+    pillar2Es: '',
+    pillar2Fr: '',
+    pillar3Pt: '',
+    pillar3En: '',
+    pillar3Es: '',
+    pillar3Fr: '',
     status: 'PUBLISHED',
   });
 
@@ -291,6 +330,19 @@ export default function EditPagePage() {
           heroSubtitleEn: data.heroSubtitleEn || '',
           heroSubtitleEs: data.heroSubtitleEs || '',
           heroSubtitleFr: data.heroSubtitleFr || '',
+          // Pillars
+          pillar1Pt: data.pillar1Pt || '',
+          pillar1En: data.pillar1En || '',
+          pillar1Es: data.pillar1Es || '',
+          pillar1Fr: data.pillar1Fr || '',
+          pillar2Pt: data.pillar2Pt || '',
+          pillar2En: data.pillar2En || '',
+          pillar2Es: data.pillar2Es || '',
+          pillar2Fr: data.pillar2Fr || '',
+          pillar3Pt: data.pillar3Pt || '',
+          pillar3En: data.pillar3En || '',
+          pillar3Es: data.pillar3Es || '',
+          pillar3Fr: data.pillar3Fr || '',
           status: data.status || 'PUBLISHED',
         });
 
@@ -758,6 +810,156 @@ export default function EditPagePage() {
             translating={translating?.startsWith('heroSubtitle-') || false}
           />
         </section>
+
+        {/* Pillars - Apenas para home */}
+        {slug === 'home' && (
+          <section
+            style={{
+              padding: 28,
+              borderRadius: 12,
+              border: '1px solid rgba(255,255,255,0.08)',
+              background: 'rgba(255,255,255,0.03)',
+            }}
+          >
+            <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
+              🏛️ Pillars (Pilares da Home)
+            </h2>
+            <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
+              Três textos curtos exibidos como badges/pills na página inicial. Ex: "Museus & Cultura", "Marcas & Eventos", "Educação & Pesquisa".
+            </p>
+
+            <div style={{ display: 'grid', gap: 24 }}>
+              {/* Pillar 1 */}
+              <div style={{ padding: 20, borderRadius: 8, border: '1px solid rgba(255,255,255,0.05)', background: 'rgba(255,255,255,0.02)' }}>
+                <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 600, color: '#e8e6f2' }}>Pillar 1</h3>
+                <MultilangTextField
+                  label="Pillar 1 (Português)"
+                  location="Páginas > Hero > Pillars > Pillar 1 > Português"
+                  fieldKey="pillar1Pt"
+                  value={formData.pillar1Pt}
+                  onChange={(value) => setFormData({ ...formData, pillar1Pt: value })}
+                  maxLength={FIELD_LIMITS.pillar1Pt.max}
+                />
+                <MultilangTextField
+                  label="Pillar 1 (English)"
+                  location="Páginas > Hero > Pillars > Pillar 1 > English"
+                  fieldKey="pillar1En"
+                  value={formData.pillar1En}
+                  onChange={(value) => setFormData({ ...formData, pillar1En: value })}
+                  maxLength={FIELD_LIMITS.pillar1En.max}
+                  onTranslate={(lang) => handleTranslate('pillar1', lang as 'en' | 'es' | 'fr')}
+                  translating={translating?.startsWith('pillar1-') || false}
+                />
+                <MultilangTextField
+                  label="Pillar 1 (Español)"
+                  location="Páginas > Hero > Pillars > Pillar 1 > Español"
+                  fieldKey="pillar1Es"
+                  value={formData.pillar1Es}
+                  onChange={(value) => setFormData({ ...formData, pillar1Es: value })}
+                  maxLength={FIELD_LIMITS.pillar1Es.max}
+                  onTranslate={(lang) => handleTranslate('pillar1', lang as 'en' | 'es' | 'fr')}
+                  translating={translating?.startsWith('pillar1-') || false}
+                />
+                <MultilangTextField
+                  label="Pillar 1 (Français)"
+                  location="Páginas > Hero > Pillars > Pillar 1 > Français"
+                  fieldKey="pillar1Fr"
+                  value={formData.pillar1Fr}
+                  onChange={(value) => setFormData({ ...formData, pillar1Fr: value })}
+                  maxLength={FIELD_LIMITS.pillar1Fr.max}
+                  onTranslate={(lang) => handleTranslate('pillar1', lang as 'en' | 'es' | 'fr')}
+                  translating={translating?.startsWith('pillar1-') || false}
+                />
+              </div>
+
+              {/* Pillar 2 */}
+              <div style={{ padding: 20, borderRadius: 8, border: '1px solid rgba(255,255,255,0.05)', background: 'rgba(255,255,255,0.02)' }}>
+                <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 600, color: '#e8e6f2' }}>Pillar 2</h3>
+                <MultilangTextField
+                  label="Pillar 2 (Português)"
+                  location="Páginas > Hero > Pillars > Pillar 2 > Português"
+                  fieldKey="pillar2Pt"
+                  value={formData.pillar2Pt}
+                  onChange={(value) => setFormData({ ...formData, pillar2Pt: value })}
+                  maxLength={FIELD_LIMITS.pillar2Pt.max}
+                />
+                <MultilangTextField
+                  label="Pillar 2 (English)"
+                  location="Páginas > Hero > Pillars > Pillar 2 > English"
+                  fieldKey="pillar2En"
+                  value={formData.pillar2En}
+                  onChange={(value) => setFormData({ ...formData, pillar2En: value })}
+                  maxLength={FIELD_LIMITS.pillar2En.max}
+                  onTranslate={(lang) => handleTranslate('pillar2', lang as 'en' | 'es' | 'fr')}
+                  translating={translating?.startsWith('pillar2-') || false}
+                />
+                <MultilangTextField
+                  label="Pillar 2 (Español)"
+                  location="Páginas > Hero > Pillars > Pillar 2 > Español"
+                  fieldKey="pillar2Es"
+                  value={formData.pillar2Es}
+                  onChange={(value) => setFormData({ ...formData, pillar2Es: value })}
+                  maxLength={FIELD_LIMITS.pillar2Es.max}
+                  onTranslate={(lang) => handleTranslate('pillar2', lang as 'en' | 'es' | 'fr')}
+                  translating={translating?.startsWith('pillar2-') || false}
+                />
+                <MultilangTextField
+                  label="Pillar 2 (Français)"
+                  location="Páginas > Hero > Pillars > Pillar 2 > Français"
+                  fieldKey="pillar2Fr"
+                  value={formData.pillar2Fr}
+                  onChange={(value) => setFormData({ ...formData, pillar2Fr: value })}
+                  maxLength={FIELD_LIMITS.pillar2Fr.max}
+                  onTranslate={(lang) => handleTranslate('pillar2', lang as 'en' | 'es' | 'fr')}
+                  translating={translating?.startsWith('pillar2-') || false}
+                />
+              </div>
+
+              {/* Pillar 3 */}
+              <div style={{ padding: 20, borderRadius: 8, border: '1px solid rgba(255,255,255,0.05)', background: 'rgba(255,255,255,0.02)' }}>
+                <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 600, color: '#e8e6f2' }}>Pillar 3</h3>
+                <MultilangTextField
+                  label="Pillar 3 (Português)"
+                  location="Páginas > Hero > Pillars > Pillar 3 > Português"
+                  fieldKey="pillar3Pt"
+                  value={formData.pillar3Pt}
+                  onChange={(value) => setFormData({ ...formData, pillar3Pt: value })}
+                  maxLength={FIELD_LIMITS.pillar3Pt.max}
+                />
+                <MultilangTextField
+                  label="Pillar 3 (English)"
+                  location="Páginas > Hero > Pillars > Pillar 3 > English"
+                  fieldKey="pillar3En"
+                  value={formData.pillar3En}
+                  onChange={(value) => setFormData({ ...formData, pillar3En: value })}
+                  maxLength={FIELD_LIMITS.pillar3En.max}
+                  onTranslate={(lang) => handleTranslate('pillar3', lang as 'en' | 'es' | 'fr')}
+                  translating={translating?.startsWith('pillar3-') || false}
+                />
+                <MultilangTextField
+                  label="Pillar 3 (Español)"
+                  location="Páginas > Hero > Pillars > Pillar 3 > Español"
+                  fieldKey="pillar3Es"
+                  value={formData.pillar3Es}
+                  onChange={(value) => setFormData({ ...formData, pillar3Es: value })}
+                  maxLength={FIELD_LIMITS.pillar3Es.max}
+                  onTranslate={(lang) => handleTranslate('pillar3', lang as 'en' | 'es' | 'fr')}
+                  translating={translating?.startsWith('pillar3-') || false}
+                />
+                <MultilangTextField
+                  label="Pillar 3 (Français)"
+                  location="Páginas > Hero > Pillars > Pillar 3 > Français"
+                  fieldKey="pillar3Fr"
+                  value={formData.pillar3Fr}
+                  onChange={(value) => setFormData({ ...formData, pillar3Fr: value })}
+                  maxLength={FIELD_LIMITS.pillar3Fr.max}
+                  onTranslate={(lang) => handleTranslate('pillar3', lang as 'en' | 'es' | 'fr')}
+                  translating={translating?.startsWith('pillar3-') || false}
+                />
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* SEO */}
         <section

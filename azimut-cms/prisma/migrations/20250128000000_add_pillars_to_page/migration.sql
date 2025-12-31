@@ -1,0 +1,14 @@
+-- AlterTable
+ALTER TABLE "Page" ADD COLUMN "pillar1Pt" TEXT,
+ADD COLUMN "pillar1En" TEXT,
+ADD COLUMN "pillar1Es" TEXT,
+ADD COLUMN "pillar1Fr" TEXT,
+ADD COLUMN "pillar2Pt" TEXT,
+ADD COLUMN "pillar2En" TEXT,
+ADD COLUMN "pillar2Es" TEXT,
+ADD COLUMN "pillar2Fr" TEXT,
+ADD COLUMN "pillar3Pt" TEXT,
+ADD COLUMN "pillar3En" TEXT,
+ADD COLUMN "pillar3Es" TEXT,
+ADD COLUMN "pillar3Fr" TEXT;
+

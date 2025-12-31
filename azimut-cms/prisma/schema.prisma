@@ -244,6 +244,19 @@ model Page {
   heroSubtitleEn String? // Máx: 500 caracteres
   heroSubtitleEs String? // Máx: 500 caracteres
   heroSubtitleFr String? // Máx: 500 caracteres
+  // Pillars (3 textos curtos para home)
+  pillar1Pt      String? // Pillar 1 - PT
+  pillar1En      String? // Pillar 1 - EN
+  pillar1Es      String? // Pillar 1 - ES
+  pillar1Fr      String? // Pillar 1 - FR
+  pillar2Pt      String? // Pillar 2 - PT
+  pillar2En      String? // Pillar 2 - EN
+  pillar2Es      String? // Pillar 2 - ES
+  pillar2Fr      String? // Pillar 2 - FR
+  pillar3Pt      String? // Pillar 3 - PT
+  pillar3En      String? // Pillar 3 - EN
+  pillar3Es      String? // Pillar 3 - ES
+  pillar3Fr      String? // Pillar 3 - FR
   status         PageStatus @default(PUBLISHED)
   sections       Section[]
   createdAt      DateTime   @default(now())
