@@ -367,8 +367,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           )}
 
           {/* Other Projects Grid */}
+          {cases.length > 1 && (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
-            {cases.length > 1 ? cases.slice(1).map((item: any, index: number) => (
+            {cases.slice(1).map((item: any, index: number) => (
               <article
                 key={item.slug}
                 className="group rounded-2xl border border-white/10 card-adaptive overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(201,35,55,0.3)]"
@@ -536,6 +537,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               </article>
             ))}
           </div>
+          )}
 
           {/* ═══════════════════════════════════════════════════════════════
               SEÇÃO: CUADORIA & FESTIVAIS
