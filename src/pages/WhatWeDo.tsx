@@ -25,16 +25,8 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
         path="/what"
       />
       <main className="relative py-16 md:py-20">
-        {/* Star background on the side */}
-        <div 
-          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-32 md:-right-40 md:h-[680px] md:w-[680px]" 
-          style={{ 
-            opacity: 0.3,
-            zIndex: -5
-          }}
-        >
-          <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" />
-        </div>
+        {/* Star background on the side - Parallax sutil */}
+        <StarBackground />
 
         <div className="mx-auto max-w-5xl px-6">
           <h1 className="mb-4 font-handel text-4xl uppercase tracking-[0.16em] md:text-5xl" style={{ color: 'var(--theme-text)' }}>

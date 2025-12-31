@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -14,6 +14,7 @@ interface WorkProps {
 
 const Work: React.FC<WorkProps> = ({ lang }) => {
   const { trackInteraction } = useUserTracking()
+  const starRef = useRef<HTMLDivElement>(null)
   const seo = seoData.work[lang]
   
   // Buscar projetos do backoffice (100% backoffice)
@@ -31,6 +32,35 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
       return () => {} // Cleanup vazio
     }
   }, [])
+
+  // Parallax sutil na estrela de fundo
+  useEffect(() => {
+    const star = starRef.current
+    if (!star) return
+
+    let ticking = false
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrolled = window.pageYOffset || document.documentElement.scrollTop
+          // Parallax muito sutil (0.3x) - movimento suave
+          const parallax = scrolled * 0.3
+          
+          if (star) {
+            star.style.transform = `translateY(${parallax}px)`
+          }
+          
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   // Dados já vêm traduzidos do backoffice
 
   return (
@@ -42,12 +72,14 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         path="/work"
       />
       <main className="relative py-16 md:py-20">
-        {/* Star background on the side */}
+        {/* Star background on the side - Parallax sutil */}
         <div 
-          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-32 md:-right-40 md:h-[680px] md:w-[680px]" 
+          ref={starRef}
+          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-32 md:-right-40 md:h-[680px] md:w-[680px] transition-transform duration-75 ease-out" 
           style={{ 
             opacity: 0.3,
-            zIndex: -5
+            zIndex: -5,
+            willChange: 'transform'
           }}
         >
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" />

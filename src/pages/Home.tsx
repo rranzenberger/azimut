@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -12,6 +12,7 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({ lang }) => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
+  const starRef = useRef<HTMLDivElement>(null)
   useUserTracking()
   
   // Integração com CMS - conteúdo personalizado (100% backoffice)
@@ -82,12 +83,14 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         path="/"
       />
       <main className="relative">
-        {/* Star background on the side */}
+        {/* Star background on the side - Parallax sutil */}
         <div 
-          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-32 md:-right-40 md:h-[680px] md:w-[680px]" 
+          ref={starRef}
+          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-32 md:-right-40 md:h-[680px] md:w-[680px] transition-transform duration-75 ease-out" 
           style={{ 
             opacity: 0.3,
-            zIndex: -5
+            zIndex: -5,
+            willChange: 'transform'
           }}
         >
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" />
