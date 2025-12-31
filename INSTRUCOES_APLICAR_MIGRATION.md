@@ -12,13 +12,19 @@
 3. Certifique-se que `DATABASE_URL` está configurada
 4. Vá em **Deployments** → **Redeploy** (isso aplicará migrations automaticamente)
 
-### Opção 2: Via Terminal Local
+### Opção 2: Via Script Automático (Recomendado)
+```bash
+cd azimut-cms
+npm run migrate:settings
+```
+
+### Opção 3: Via Prisma Migrate
 ```bash
 cd azimut-cms
 npx prisma migrate deploy
 ```
 
-### Opção 3: Aplicar Migration Manualmente
+### Opção 4: Aplicar Migration Manualmente (SQL Direto)
 Execute o SQL abaixo no banco de dados:
 
 ```sql
