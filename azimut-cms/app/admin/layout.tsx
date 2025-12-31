@@ -101,6 +101,7 @@ export default async function AdminLayout({
           <AdminLink href="/admin/site-pages" label="Páginas" />
           <AdminLink href="/admin/media" label="Mídias" />
           <AdminLink href="/admin/leads" label="Leads" />
+          <AdminLink href="/admin/services" label="Serviços" />
           <div
             style={{
               color: '#8f8ba2',
@@ -114,9 +115,8 @@ export default async function AdminLayout({
               letterSpacing: '0.5px',
             }}
           >
-            Em breve:
+            Em desenvolvimento:
           </div>
-          <AdminLink href="#" label="Serviços" disabled />
           <AdminLink href="#" label="Configurações" disabled />
         </nav>
 
