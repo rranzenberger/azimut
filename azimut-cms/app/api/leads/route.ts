@@ -5,7 +5,20 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getSettings } from '@/lib/settings';
+
+// Helper local para buscar settings com fallback
+async function getSettings() {
+  try {
+    const settings = await prisma.settings.findUnique({
+      where: { id: 'singleton' },
+    });
+    return settings;
+  } catch (error: any) {
+    // Se falhar, retornar null (usar env var como fallback)
+    console.warn('⚠️ Erro ao buscar Settings. Usando env var.', error.message);
+    return null;
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {

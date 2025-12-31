@@ -208,12 +208,14 @@ export async function PUT(request: NextRequest) {
     }
 
     return NextResponse.json({ settings, message: 'Configurações atualizadas com sucesso' });
-  } catch (error: any) {
+    } catch (error: any) {
     console.error('Settings PUT error:', error);
     // Retornar sucesso mesmo com erro - valores padrão serão usados
+    // Usar body como fallback se updateData não estiver disponível
+    const fallbackData = updateData || body;
     return NextResponse.json(
       { 
-        settings: { id: 'singleton', ...updateData },
+        settings: { id: 'singleton', ...fallbackData },
         message: 'Configurações serão salvas quando a tabela Settings for criada',
         warning: true
       },
