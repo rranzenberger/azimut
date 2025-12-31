@@ -188,15 +188,22 @@ export async function GET(request: NextRequest) {
       isQualifiedLead: scores.conversionScore > 50,
       isHotLead: scores.conversionScore > 75,
 
-      // Recomendações
+      // Recomendações - usar mesmo formato da API pública
       recommendedProjects: recommendedProjects.map(p => ({
         id: p.id,
         slug: p.slug,
         title: p.title,
-        summary: p.summaryPt || p.summaryEn || '',
+        summary: p.summaryPt || p.summaryEn || p.summaryEs || p.summaryFr || '',
         type: p.type || '',
-        tags: p.tags.map(t => t.labelPt || t.labelEn),
-        heroImage: p.heroImage?.url || null,
+        tags: p.tags.map(t => t.labelPt || t.labelEn || t.labelEs || t.labelFr || ''),
+        heroImage: p.heroImage ? {
+          original: p.heroImage.originalUrl,
+          thumbnail: p.heroImage.thumbnailUrl || null,
+          medium: p.heroImage.mediumUrl || null,
+          large: p.heroImage.largeUrl || null,
+          webp: p.heroImage.webpUrl || null,
+          avif: p.heroImage.avifUrl || null,
+        } : null,
       })),
       recommendedServices,
       recommendedEditais: recommendedEditais.map(e => ({
@@ -362,7 +369,7 @@ async function getRecommendedServices(scores: any) {
       id: item.service.id,
       slug: item.service.slug,
       title: item.service.titlePt || item.service.titleEn,
-      summary: item.service.summaryPt || item.service.summaryEn,
+      summary: item.service.descriptionPt || item.service.descriptionEn || item.service.descriptionEs || item.service.descriptionFr || '',
       icon: item.service.icon,
     }));
 }

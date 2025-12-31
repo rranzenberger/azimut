@@ -38,7 +38,14 @@ export interface VisitorProfile {
     summary: string;
     type: string;
     tags: string[];
-    heroImage?: string;
+    heroImage?: {
+      original: string;
+      thumbnail: string | null;
+      medium: string | null;
+      large: string | null;
+      webp: string | null;
+      avif: string | null;
+    } | null;
   }>;
   recommendedServices: Array<{
     id: string;
@@ -178,10 +185,11 @@ export function usePersonalizedContent(): UsePersonalizedContentReturn {
     };
 
     // Aguardar um pouco antes de buscar (para ter dados de tracking)
-    const timer = setTimeout(fetchProfile, 2000);
+    // Primeira busca após 3s (tempo para tracking coletar dados)
+    const timer = setTimeout(fetchProfile, 3000);
 
-    // Re-buscar a cada 30s para atualizar perfil
-    const interval = setInterval(fetchProfile, 30000);
+    // Re-buscar a cada 60s para atualizar perfil (não muito frequente)
+    const interval = setInterval(fetchProfile, 60000);
 
     return () => {
       cancelled = true;
