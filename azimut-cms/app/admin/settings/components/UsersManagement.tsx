@@ -783,43 +783,36 @@ function ChangePasswordModal({
         )}
 
         <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 16 }}>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 13, fontWeight: 600 }}>Senha Atual *</label>
-            <input
-              type="password"
-              value={formData.currentPassword}
-              onChange={(e) => setFormData({ ...formData, currentPassword: e.target.value })}
-              required
-              style={inputStyle}
-            />
-          </div>
+          <PasswordField
+            label="Senha Atual"
+            value={formData.currentPassword}
+            onChange={(value) => setFormData({ ...formData, currentPassword: value })}
+            required
+            style={{ height: 40 }}
+          />
 
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 13, fontWeight: 600 }}>Nova Senha *</label>
-            <input
-              type="password"
+          <div>
+            <PasswordField
+              label="Nova Senha"
               value={formData.newPassword}
-              onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
+              onChange={(value) => setFormData({ ...formData, newPassword: value })}
               required
-              style={inputStyle}
               minLength={6}
+              style={{ height: 40 }}
             />
-            <small style={{ color: '#8f8ba2', fontSize: 12 }}>
+            <small style={{ color: '#8f8ba2', fontSize: 12, marginTop: 4, display: 'block' }}>
               Mínimo 6 caracteres
             </small>
           </div>
 
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 13, fontWeight: 600 }}>Confirmar Nova Senha *</label>
-            <input
-              type="password"
-              value={formData.confirmPassword}
-              onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-              required
-              style={inputStyle}
-              minLength={6}
-            />
-          </div>
+          <PasswordField
+            label="Confirmar Nova Senha"
+            value={formData.confirmPassword}
+            onChange={(value) => setFormData({ ...formData, confirmPassword: value })}
+            required
+            minLength={6}
+            style={{ height: 40 }}
+          />
 
           <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
             <button
