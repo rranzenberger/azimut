@@ -10,11 +10,39 @@ interface WhatWeDoProps {
 
 const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   const { trackInteraction } = useUserTracking()
+  const starRef = useRef<HTMLDivElement>(null)
   const seo = seoData.what[lang]
   
   // Buscar serviços do backoffice (100% backoffice)
   const { content: cmsContent, loading: cmsLoading } = useAzimutContent({ page: 'what' })
   const services = cmsContent?.services || []
+
+  // Parallax sutil na estrela de fundo
+  useEffect(() => {
+    const star = starRef.current
+    if (!star) return
+
+    let ticking = false
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrolled = window.pageYOffset || document.documentElement.scrollTop
+          const parallax = scrolled * 0.3
+          
+          if (star) {
+            star.style.transform = `translateY(${parallax}px)`
+          }
+          
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
     <>

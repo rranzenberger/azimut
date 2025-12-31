@@ -72,6 +72,35 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     
     return () => observer.disconnect()
   }, [])
+
+  // Parallax sutil na estrela de fundo
+  useEffect(() => {
+    const star = starRef.current
+    if (!star) return
+
+    let ticking = false
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrolled = window.pageYOffset || document.documentElement.scrollTop
+          // Parallax muito sutil (0.3x) - movimento suave
+          const parallax = scrolled * 0.3
+          
+          if (star) {
+            star.style.transform = `translateY(${parallax}px)`
+          }
+          
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   const seo = seoData.home[lang]
 
   return (
