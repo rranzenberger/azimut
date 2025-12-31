@@ -17,9 +17,12 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
         const authToken = sessionStorage.getItem('azimut_preview_auth')
         const authenticated = authToken === 'authenticated'
         
-        console.log(`[ProtectedRoute] Verificando autenticação para: ${location.pathname}`)
-        console.log(`[ProtectedRoute] Auth token: ${authToken ? 'presente' : 'ausente'}`)
-        console.log(`[ProtectedRoute] Autenticado: ${authenticated}`)
+        // Log apenas em desenvolvimento
+        if (import.meta.env.DEV) {
+          console.log(`[ProtectedRoute] Verificando autenticação para: ${location.pathname}`)
+          console.log(`[ProtectedRoute] Auth token: ${authToken ? 'presente' : 'ausente'}`)
+          console.log(`[ProtectedRoute] Autenticado: ${authenticated}`)
+        }
         
         setIsAuthenticated(authenticated)
       } catch (error) {
@@ -38,7 +41,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   // Aguardar verificação inicial (apenas no primeiro render)
   if (isAuthenticated === null) {
-    console.log(`[ProtectedRoute] Aguardando verificação para: ${location.pathname}`)
+    if (import.meta.env.DEV) {
+      console.log(`[ProtectedRoute] Aguardando verificação para: ${location.pathname}`)
+    }
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--theme-bg)' }}>
         <div className="text-center">

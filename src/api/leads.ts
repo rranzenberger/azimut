@@ -40,14 +40,9 @@ export async function submitLead(profile: UserProfile): Promise<Lead> {
   // })
   // return response.json()
   
-  // Por enquanto: salvar localmente e logar
-  console.log('📊 LEAD CAPTURADO:', lead)
-  
-  // Salvar em localStorage para debug (remover em produção)
-  if (typeof window !== 'undefined') {
-    const existingLeads = JSON.parse(localStorage.getItem('azimut_leads') || '[]')
-    existingLeads.push(lead)
-    localStorage.setItem('azimut_leads', JSON.stringify(existingLeads))
+  // Log apenas em desenvolvimento
+  if (import.meta.env.DEV) {
+    console.log('📊 LEAD CAPTURADO:', lead)
   }
   
   return lead
