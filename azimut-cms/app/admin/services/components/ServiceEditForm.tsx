@@ -46,7 +46,7 @@ export function ServiceEditForm({ service }: { service: any }) {
     try {
       // Converter segments de string para array
       const segmentsArray = formData.segments
-        ? formData.segments.split(',').map(s => s.trim()).filter(s => s)
+        ? formData.segments.split(',').map((s: string) => s.trim()).filter((s: string) => s)
         : [];
 
       const res = await fetch(`/api/admin/services/${service.id}`, {

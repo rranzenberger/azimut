@@ -5,7 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getSettings } from '@/src/lib/settings';
+import { getSettings } from '@/lib/settings';
 
 export async function POST(request: NextRequest) {
   try {
