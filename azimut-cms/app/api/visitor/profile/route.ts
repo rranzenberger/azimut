@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
             },
           },
           orderBy: {
-            createdAt: 'desc',
+            viewedAt: 'desc',
           },
           take: 20,
         },
