@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { optimizeAndUploadImage } from '@/lib/image-optimizer';
 import { verifyAuthToken } from '@/lib/auth';
+import { cookies } from 'next/headers';
 import sharp from 'sharp';
 
 export const runtime = 'nodejs'; // Necessário para usar fs/path

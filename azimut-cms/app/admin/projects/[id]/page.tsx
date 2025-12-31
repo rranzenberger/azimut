@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import { GalleryManager } from '../components/GalleryManager';
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
@@ -22,6 +23,7 @@ export default function EditProjectPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [gallery, setGallery] = useState<any[]>([]);
   const [formData, setFormData] = useState({
     title: '',
     shortTitle: '',
@@ -58,6 +60,12 @@ export default function EditProjectPage() {
         }
 
         const project = data.project;
+        
+        // Carregar galeria
+        if (project.gallery) {
+          setGallery(project.gallery);
+        }
+        
         setFormData({
           title: project.title || '',
           shortTitle: project.shortTitle || '',
@@ -401,6 +409,9 @@ export default function EditProjectPage() {
             Projeto em destaque
           </label>
         </div>
+
+        {/* Galeria de Mídias */}
+        <GalleryManager projectId={id} initialGallery={gallery} />
 
         <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
           <button
