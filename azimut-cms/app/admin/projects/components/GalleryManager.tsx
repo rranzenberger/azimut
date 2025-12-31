@@ -83,8 +83,20 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
         return;
       }
 
-      // Atualizar galeria
-      setGallery([...gallery, data.projectMedia]);
+      // Atualizar galeria - buscar galeria atualizada do servidor
+      const updatedRes = await fetch(`/api/admin/projects/${projectId}`);
+      if (updatedRes.ok) {
+        const updatedData = await updatedRes.json();
+        if (updatedData.project?.gallery) {
+          setGallery(updatedData.project.gallery);
+        } else {
+          // Fallback: adicionar manualmente
+          setGallery([...gallery, data.projectMedia]);
+        }
+      } else {
+        // Fallback: adicionar manualmente
+        setGallery([...gallery, data.projectMedia]);
+      }
       setSelectedMediaId('');
       setShowMediaSelector(false);
     } catch (err) {
