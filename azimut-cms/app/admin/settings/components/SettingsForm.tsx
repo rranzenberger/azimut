@@ -426,12 +426,20 @@ export function SettingsForm({ settings }: { settings: any }) {
             <select
               value={formData.defaultLanguage}
               onChange={(e) => setFormData({ ...formData, defaultLanguage: e.target.value })}
-              style={inputStyle}
+              style={{
+                ...inputStyle,
+                cursor: 'pointer',
+                appearance: 'none',
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239f9bb0' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right 14px center',
+                paddingRight: '40px',
+              }}
             >
-              <option value="pt">Português</option>
-              <option value="en">English</option>
-              <option value="es">Español</option>
-              <option value="fr">Français</option>
+              <option value="pt" style={{ background: '#1a1625', color: '#fff' }}>Português</option>
+              <option value="en" style={{ background: '#1a1625', color: '#fff' }}>English</option>
+              <option value="es" style={{ background: '#1a1625', color: '#fff' }}>Español</option>
+              <option value="fr" style={{ background: '#1a1625', color: '#fff' }}>Français</option>
             </select>
           </div>
           <div style={{ display: 'grid', gap: 8 }}>
@@ -439,21 +447,43 @@ export function SettingsForm({ settings }: { settings: any }) {
             <select
               value={formData.defaultCountry}
               onChange={(e) => setFormData({ ...formData, defaultCountry: e.target.value })}
-              style={inputStyle}
+              style={{
+                ...inputStyle,
+                cursor: 'pointer',
+                appearance: 'none',
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239f9bb0' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right 14px center',
+                paddingRight: '40px',
+              }}
             >
-              <option value="BR">Brasil</option>
-              <option value="CA">Canadá</option>
-              <option value="US">Estados Unidos</option>
+              <option value="BR" style={{ background: '#1a1625', color: '#fff' }}>Brasil</option>
+              <option value="CA" style={{ background: '#1a1625', color: '#fff' }}>Canadá</option>
+              <option value="US" style={{ background: '#1a1625', color: '#fff' }}>Estados Unidos</option>
             </select>
           </div>
           <div style={{ display: 'grid', gap: 8 }}>
             <label style={{ fontSize: 14, fontWeight: 600 }}>Timezone</label>
-            <input
-              type="text"
+            <select
               value={formData.timezone}
               onChange={(e) => setFormData({ ...formData, timezone: e.target.value })}
-              style={inputStyle}
-            />
+              style={{
+                ...inputStyle,
+                cursor: 'pointer',
+                appearance: 'none',
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239f9bb0' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right 14px center',
+                paddingRight: '40px',
+              }}
+            >
+              <option value="America/Sao_Paulo" style={{ background: '#1a1625', color: '#fff' }}>America/Sao_Paulo (BRT)</option>
+              <option value="America/New_York" style={{ background: '#1a1625', color: '#fff' }}>America/New_York (EST)</option>
+              <option value="America/Los_Angeles" style={{ background: '#1a1625', color: '#fff' }}>America/Los_Angeles (PST)</option>
+              <option value="America/Toronto" style={{ background: '#1a1625', color: '#fff' }}>America/Toronto (EST)</option>
+              <option value="Europe/London" style={{ background: '#1a1625', color: '#fff' }}>Europe/London (GMT)</option>
+              <option value="Europe/Paris" style={{ background: '#1a1625', color: '#fff' }}>Europe/Paris (CET)</option>
+            </select>
           </div>
         </div>
       </div>
