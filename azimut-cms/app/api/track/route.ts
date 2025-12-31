@@ -7,6 +7,21 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { calculateInterestScores, isQualifiedLead, SessionData } from '@/lib/ai-scoring';
 
+// CORS headers
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+// OPTIONS para preflight
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: corsHeaders,
+  });
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -19,7 +34,10 @@ export async function POST(request: NextRequest) {
     if (!sessionId || !event) {
       return NextResponse.json(
         { error: 'sessionId e event são obrigatórios' },
-        { status: 400 }
+        { 
+          status: 400,
+          headers: corsHeaders,
+        }
       );
     }
 
@@ -72,6 +90,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ 
       success: true,
       sessionId,
+    }, {
+      headers: corsHeaders,
     });
 
   } catch (error) {

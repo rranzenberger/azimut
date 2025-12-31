@@ -20,7 +20,22 @@ const Work = lazy(() => import('./pages/Work'))
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
 const Studio = lazy(() => import('./pages/Studio'))
 const Academy = lazy(() => import('./pages/Academy'))
-const Contact = lazy(() => import('./pages/Contact'))
+// Contact com tratamento de erro melhorado
+const Contact = lazy(() => 
+  import('./pages/Contact').catch((error) => {
+    console.error('Erro ao carregar Contact:', error)
+    // Retornar um componente de fallback
+    return {
+      default: () => (
+        <div style={{ padding: '40px', textAlign: 'center', color: '#fff' }}>
+          <h1>Erro ao carregar página</h1>
+          <p>Por favor, recarregue a página ou tente novamente mais tarde.</p>
+          <button onClick={() => window.location.reload()}>Recarregar</button>
+        </div>
+      )
+    }
+  })
+)
 const NotFound = lazy(() => import('./pages/NotFound'))
 const Login = lazy(() => import('./pages/Login'))
 import ProtectedRoute from './components/ProtectedRoute'

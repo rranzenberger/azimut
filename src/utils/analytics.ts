@@ -13,7 +13,9 @@ function getSessionId(): string {
   return sessionId;
 }
 
-const API_URL = import.meta.env.VITE_CMS_API_URL || 'http://localhost:3001/api';
+// Usar VITE_BACKOFFICE_URL se disponível, senão VITE_CMS_API_URL, senão fallback
+const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br';
+const API_URL = `${BACKOFFICE_URL}/api`;
 
 // Track page view
 export function trackPageView(pageSlug: string): () => void {
