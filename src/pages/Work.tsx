@@ -368,8 +368,8 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
 
           {/* Other Projects Grid */}
           {cases.length > 1 && (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
-            {cases.slice(1).map((item: any, index: number) => (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
+              {cases.slice(1).map((item: any, index: number) => (
               <article
                 key={item.slug}
                 className="group rounded-2xl border border-white/10 card-adaptive overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(201,35,55,0.3)]"
@@ -452,91 +452,8 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   </Link>
                 </div>
               </article>
-            )) : cases.map((item: any, index: number) => (
-              <article
-                key={item.slug}
-                className="group rounded-2xl border border-white/10 card-adaptive overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(201,35,55,0.3)] cursor-pointer"
-                style={{
-                  animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
-                }}
-                onClick={() => {
-                  trackInteraction('project_view', item.slug)
-                  trackProjectInteraction(item.slug, 'CLICK')
-                  navigate(`/work/${item.slug}`)
-                }}
-                onMouseEnter={() => trackProjectInteraction(item.slug, 'HOVER')}
-              >
-                {/* Image - BACKOFFICE: item.heroImage */}
-                <div className="relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">
-                  {/* Renderizar imagem se disponível */}
-                  {item.heroImage?.medium || item.heroImage?.large ? (
-                    <>
-                      <img
-                        src={item.heroImage.large || item.heroImage.medium}
-                        alt={item.heroImage.alt || item.title}
-                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none opacity-100 group-hover:from-azimut-red/20 group-hover:via-slate-950/40 transition-all duration-300"></div>
-                    </>
-                  ) : (
-                    /* Placeholder quando não há imagem */
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-800/50 to-slate-900 transition-all duration-300 group-hover:from-azimut-red/20 group-hover:to-slate-900/80">
-                      <div className="text-center p-4">
-                        <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur transition-transform duration-300 group-hover:scale-110 group-hover:border-azimut-red/50">
-                          <svg className="h-6 w-6 text-slate-400 group-hover:text-azimut-red transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                <div className="p-4 relative z-10">
-                  <h3 className="mb-2 font-sora text-[1.05rem] text-white group-hover:text-azimut-red transition-colors duration-300">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-slate-200 mb-3 group-hover:text-slate-100 transition-colors duration-300">
-                    {item.summary || item.shortTitle}
-                  </p>
-                  <div className="flex flex-wrap items-center justify-between gap-2 mt-3">
-                    {item.tags && item.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2 text-[0.68rem] text-slate-400">
-                        {item.tags.slice(0, 3).map((tag: string, idx: number) => (
-                          <span 
-                            key={idx} 
-                            className="rounded-full border border-white/10 px-2 py-0.5 transition-all duration-300 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:text-slate-300"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                    {item.year && (
-                      <span className="text-xs text-slate-500 font-medium">
-                        {item.year}
-                      </span>
-                    )}
-                  </div>
-                  {/* CTA */}
-                  <Link
-                    to={`/work/${item.slug}`}
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      trackInteraction('project_view', item.slug)
-                      trackProjectInteraction(item.slug, 'CLICK')
-                    }}
-                    className="mt-3 inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-4 py-2 font-sora text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-white hover:bg-azimut-red/20 transition-all w-full justify-center"
-                  >
-                    {lang === 'pt' ? 'Ver Projeto' : lang === 'es' ? 'Ver Proyecto' : lang === 'fr' ? 'Voir' : 'View'}
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
+              ))}
+            </div>
           )}
 
           {/* ═══════════════════════════════════════════════════════════════
