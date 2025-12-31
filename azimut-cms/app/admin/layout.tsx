@@ -100,6 +100,7 @@ export default async function AdminLayout({
           <AdminLink href="/admin/projects" label="Projetos" />
           <AdminLink href="/admin/site-pages" label="Páginas" />
           <AdminLink href="/admin/media" label="Mídias" />
+          <AdminLink href="/admin/leads" label="Leads" />
           <div
             style={{
               color: '#8f8ba2',
@@ -115,7 +116,6 @@ export default async function AdminLayout({
           >
             Em breve:
           </div>
-          <AdminLink href="#" label="Leads" disabled />
           <AdminLink href="#" label="Serviços" disabled />
           <AdminLink href="#" label="Configurações" disabled />
         </nav>
