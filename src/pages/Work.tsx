@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
-import contentModel, { CaseItem } from '../data/content'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { trackPageView, trackProjectInteraction } from '../utils/analytics'
+import { useAzimutContent } from '../hooks/useAzimutContent'
 import OportunidadesAtivas from '../components/OportunidadesAtivas'
 import CredibilidadeEditais from '../components/CredibilidadeEditais'
 import CuradoriaFestivais from '../components/CuradoriaFestivais'
@@ -15,7 +15,10 @@ interface WorkProps {
 const Work: React.FC<WorkProps> = ({ lang }) => {
   const { trackInteraction } = useUserTracking()
   const seo = seoData.work[lang]
-  const cases = contentModel.cases
+  
+  // Buscar projetos do backoffice (100% backoffice)
+  const { content: cmsContent, loading: cmsLoading } = useAzimutContent({ page: 'work' })
+  const cases = cmsContent?.highlightProjects || []
   
   // Tracking de página (não bloqueia renderização)
   useEffect(() => {
@@ -28,10 +31,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
       return () => {} // Cleanup vazio
     }
   }, [])
-  const locale = (entry: { pt: string; en: string; es: string }) => {
-    if (lang === 'fr') return entry.en // Fallback para francês usar inglês
-    return entry[lang as 'pt' | 'en' | 'es'] || entry.en
-  }
+  // Dados já vêm traduzidos do backoffice
 
   return (
     <>
@@ -77,27 +77,16 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 }}
               >
               <div className="grid md:grid-cols-2">
-                {/* Image/Video Area - BACKOFFICE: cases[0].mediaPoster ou mediaLoop */}
+                {/* Image Area - BACKOFFICE: cases[0].heroImage */}
                 <div className="relative aspect-video md:aspect-auto md:min-h-[400px] bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden group">
-                  {/* Renderizar mídia se disponível, senão mostrar placeholder */}
-                  {cases[0].mediaLoop || cases[0].mediaPoster ? (
+                  {/* Renderizar imagem se disponível */}
+                  {cases[0].heroImage?.large ? (
                     <>
-                      {cases[0].mediaLoop ? (
-                        <video
-                          src={cases[0].mediaLoop}
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                          className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105"
-                        />
-                      ) : cases[0].mediaPoster ? (
-                        <img
-                          src={cases[0].mediaPoster}
-                          alt={locale(cases[0].title)}
-                          className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105"
-                        />
-                      ) : null}
+                      <img
+                        src={cases[0].heroImage.large}
+                        alt={cases[0].heroImage.alt || cases[0].title}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105"
+                      />
                       {/* Overlay gradient para legibilidade */}
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none"></div>
                     </>
@@ -132,23 +121,25 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                     {cases[0].category}
                   </div>
                   <h2 className="mb-3 font-handel text-3xl uppercase tracking-[0.12em] text-white">
-                    {locale(cases[0].title)}
+                    {cases[0].title}
                   </h2>
                   <p className="mb-4 text-base leading-relaxed text-slate-200">
-                    {locale(cases[0].shortDescription)}
+                    {cases[0].summary || cases[0].shortTitle}
                   </p>
-                  {cases[0].location && (
+                  {(cases[0].city || cases[0].country) && (
                     <p className="mb-4 text-sm text-slate-300">
-                      📍 {cases[0].location}
+                      📍 {[cases[0].city, cases[0].country].filter(Boolean).join(', ')}
                     </p>
                   )}
-                  <div className="flex flex-wrap gap-2">
-                    {cases[0].services.map(service => (
-                      <span key={service} className="pill-adaptive rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.18em]">
-                        {service}
-                      </span>
-                    ))}
-                  </div>
+                  {cases[0].tags && cases[0].tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {cases[0].tags.slice(0, 3).map((tag: string, idx: number) => (
+                        <span key={idx} className="pill-adaptive rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.18em]">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </article>
@@ -156,7 +147,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
 
           {/* Other Projects Grid */}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
-            {cases.slice(1).map((item: CaseItem) => (
+            {cases.slice(1).map((item: any) => (
               <article
                 key={item.slug}
                 className="group rounded-2xl border border-white/10 card-adaptive overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all hover:border-white/20 hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)]"
@@ -166,14 +157,14 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 }}
                 onMouseEnter={() => trackProjectInteraction(item.slug, 'HOVER')}
               >
-                {/* Image placeholder - BACKOFFICE: item.mediaPoster */}
+                {/* Image - BACKOFFICE: item.heroImage */}
                 <div className="relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">
                   {/* Renderizar imagem se disponível */}
-                  {item.mediaPoster ? (
+                  {item.heroImage?.medium || item.heroImage?.large ? (
                     <>
                       <img
-                        src={item.mediaPoster}
-                        alt={locale(item.title)}
+                        src={item.heroImage.large || item.heroImage.medium}
+                        alt={item.heroImage.alt || item.title}
                         className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none"></div>
@@ -181,41 +172,33 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   ) : (
                     /* Placeholder quando não há imagem */
                     <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-800/50 to-slate-900 transition-all group-hover:from-azimut-red/10">
-                    <div className="text-center p-4">
-                      <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur">
-                        <svg className="h-6 w-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
+                      <div className="text-center p-4">
+                        <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur">
+                          <svg className="h-6 w-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                        </div>
                       </div>
-                      <span className="block font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-400 transition-colors group-hover:text-slate-300">
-                        {item.category}
-                      </span>
-                    </div>
                     </div>
                   )}
                 </div>
 
                 <div className="p-4">
-                  <div className="mb-2 flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.14em] text-slate-400">
-                    <span className="badge-adaptive rounded-full px-2 py-0.5 text-[0.64rem]">
-                      {item.status === 'active' 
-                        ? (lang === 'pt' ? 'Ativo' : lang === 'es' ? 'Activo' : 'Active')
-                        : (lang === 'pt' ? 'Em Desenvolvimento' : lang === 'es' ? 'En Desarrollo' : 'In Development')}
-                    </span>
-                  </div>
                   <h3 className="mb-2 font-sora text-[1.05rem] text-white">
-                    {locale(item.title)}
+                    {item.title}
                   </h3>
                   <p className="text-sm leading-relaxed text-slate-200 mb-3">
-                    {locale(item.shortDescription)}
+                    {item.summary || item.shortTitle}
                   </p>
-                  <div className="flex flex-wrap gap-2 text-[0.68rem] text-slate-400">
-                    {item.services.slice(0, 3).map(service => (
-                      <span key={service} className="rounded-full border border-white/10 px-2 py-0.5">
-                        {service}
-                      </span>
-                    ))}
-                  </div>
+                  {item.tags && item.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2 text-[0.68rem] text-slate-400">
+                      {item.tags.slice(0, 3).map((tag: string, idx: number) => (
+                        <span key={idx} className="rounded-full border border-white/10 px-2 py-0.5">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </article>
             ))}
