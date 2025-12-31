@@ -245,21 +245,27 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </h2>
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {recommended.slice(1).map(item => (
+              {recommended.slice(1).map((item: any, index: number) => (
                 <article
                   key={item.slug}
-                  className="rounded-2xl border border-white/10 card-adaptive p-4 shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur"
+                  className="group rounded-2xl border border-white/10 card-adaptive p-4 shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(201,35,55,0.3)]"
+                  style={{
+                    animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+                  }}
                 >
-                  <h3 className="mb-2 font-sora text-[1.05rem] text-white">
+                  <h3 className="mb-2 font-sora text-[1.05rem] text-white group-hover:text-azimut-red transition-colors duration-300">
                     {item.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-slate-200">
+                  <p className="text-sm leading-relaxed text-slate-200 group-hover:text-slate-100 transition-colors duration-300">
                     {item.summary || item.shortTitle}
                   </p>
                   {item.tags && item.tags.length > 0 && (
                     <div className="mt-3 flex flex-wrap gap-2 text-[0.7rem] text-slate-400">
                       {item.tags.slice(0, 3).map((tag: string, idx: number) => (
-                        <span key={idx} className="rounded-full border border-white/10 px-2 py-0.5">
+                        <span 
+                          key={idx} 
+                          className="rounded-full border border-white/10 px-2 py-0.5 transition-all duration-300 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:text-slate-300"
+                        >
                           {tag}
                         </span>
                       ))}
