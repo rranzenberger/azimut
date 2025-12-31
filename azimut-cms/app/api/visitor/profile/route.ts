@@ -153,7 +153,7 @@ export async function GET(request: NextRequest) {
               { country: session.country || 'BR' },
               { country: 'DEFAULT' },
             ],
-            status: 'ACTIVE',
+            status: 'ABERTO', // EditalStatus enum: ABERTO, FECHADO, ENVIADO, GANHO, PERDIDO
           },
           take: 3,
           orderBy: {
