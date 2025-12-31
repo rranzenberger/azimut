@@ -325,16 +325,12 @@ export function SettingsForm({ settings }: { settings: any }) {
           Integrações
         </h2>
         <div style={{ display: 'grid', gap: 16 }}>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Kabbam API Key</label>
-            <input
-              type="password"
-              value={formData.kabbamApiKey}
-              onChange={(e) => setFormData({ ...formData, kabbamApiKey: e.target.value })}
-              style={inputStyle}
-              placeholder="••••••••"
-            />
-          </div>
+          <PasswordField
+            label="Kabbam API Key"
+            value={formData.kabbamApiKey}
+            onChange={(value) => setFormData({ ...formData, kabbamApiKey: value })}
+            placeholder="••••••••"
+          />
           <div style={{ display: 'grid', gap: 8 }}>
             <label style={{ fontSize: 14, fontWeight: 600 }}>Kabbam API URL</label>
             <input
@@ -344,16 +340,12 @@ export function SettingsForm({ settings }: { settings: any }) {
               style={inputStyle}
             />
           </div>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>DeepSeek API Key</label>
-            <input
-              type="password"
-              value={formData.deepseekApiKey}
-              onChange={(e) => setFormData({ ...formData, deepseekApiKey: e.target.value })}
-              style={inputStyle}
-              placeholder="••••••••"
-            />
-          </div>
+          <PasswordField
+            label="DeepSeek API Key"
+            value={formData.deepseekApiKey}
+            onChange={(value) => setFormData({ ...formData, deepseekApiKey: value })}
+            placeholder="••••••••"
+          />
           <div style={{ display: 'grid', gap: 8 }}>
             <label style={{ fontSize: 14, fontWeight: 600 }}>Email para Notificações</label>
             <input
