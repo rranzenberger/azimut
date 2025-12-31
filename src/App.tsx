@@ -17,6 +17,7 @@ import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDet
 const Home = lazy(() => import('./pages/Home'))
 const WhatWeDo = lazy(() => import('./pages/WhatWeDo'))
 const Work = lazy(() => import('./pages/Work'))
+const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
 const Studio = lazy(() => import('./pages/Studio'))
 const Academy = lazy(() => import('./pages/Academy'))
 const Contact = lazy(() => import('./pages/Contact'))
@@ -199,6 +200,14 @@ const App: React.FC = () => {
                 element={
                   <ProtectedRoute>
                     <Work lang={lang} />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/work/:slug" 
+                element={
+                  <ProtectedRoute>
+                    <ProjectDetail lang={lang} />
                   </ProtectedRoute>
                 } 
               />
