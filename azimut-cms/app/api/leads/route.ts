@@ -5,6 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { sendEmail } from '@/lib/email';
 
 // Helper local para buscar settings com fallback
 async function getSettings() {
@@ -220,20 +221,17 @@ async function sendLeadNotification(data: {
     return;
   }
 
-  // Aqui você implementaria o envio real de email
-  // usando Nodemailer, SendGrid, etc.
-  console.log('📧 Notificação de lead:', {
-    to: notificationEmail,
-    subject: `[${lead.priority}] Novo Lead: ${lead.name} - ${context.visitorType}`,
-    html: emailHtml,
-  });
-
-  // TODO: Implementar envio real de email usando SMTP do Settings
-  // await sendEmail({
-  //   to: notificationEmail,
-  //   subject: `[${lead.priority}] Novo Lead: ${lead.name}`,
-  //   html: emailHtml,
-  // });
+  // Enviar email usando SMTP do Settings
+  try {
+    await sendEmail({
+      to: notificationEmail,
+      subject: `[${lead.priority.toUpperCase()}] Novo Lead: ${lead.name} - ${context.visitorType}`,
+      html: emailHtml,
+    });
+  } catch (error) {
+    // Erro já é logado dentro de sendEmail, não precisa fazer nada aqui
+    // O lead já foi salvo, então não queremos que falhe por causa do email
+  }
 }
 
 
