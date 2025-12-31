@@ -63,14 +63,16 @@ function PasswordField({
 }
 
 const inputStyle = {
-  padding: '10px 14px',
-  borderRadius: 8,
-  border: '1px solid rgba(255,255,255,0.1)',
-  background: 'rgba(0,0,0,0.2)',
-  color: '#fff',
-  fontSize: 14,
-  outline: 'none',
   width: '100%',
+  height: 42,
+  borderRadius: 8,
+  border: '1px solid rgba(255,255,255,0.12)',
+  background: 'rgba(255,255,255,0.04)',
+  color: '#fff',
+  padding: '0 12px',
+  outline: 'none',
+  fontSize: 14,
+  fontFamily: 'inherit',
   boxSizing: 'border-box' as const,
 };
 
@@ -453,13 +455,13 @@ export function SettingsForm({ settings }: { settings: any }) {
                 appearance: 'none',
                 backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239f9bb0' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
                 backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'right 14px center',
-                paddingRight: '40px',
+                backgroundPosition: 'right 12px center',
+                paddingRight: '32px',
               }}
             >
-              <option value="BR" style={{ background: '#1a1625', color: '#fff' }}>Brasil</option>
-              <option value="CA" style={{ background: '#1a1625', color: '#fff' }}>Canadá</option>
-              <option value="US" style={{ background: '#1a1625', color: '#fff' }}>Estados Unidos</option>
+              <option value="BR" style={{ background: '#0a0e18', color: '#fff' }}>Brasil</option>
+              <option value="CA" style={{ background: '#0a0e18', color: '#fff' }}>Canadá</option>
+              <option value="US" style={{ background: '#0a0e18', color: '#fff' }}>Estados Unidos</option>
             </select>
           </div>
           <div style={{ display: 'grid', gap: 8 }}>
@@ -473,16 +475,16 @@ export function SettingsForm({ settings }: { settings: any }) {
                 appearance: 'none',
                 backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239f9bb0' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
                 backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'right 14px center',
-                paddingRight: '40px',
+                backgroundPosition: 'right 12px center',
+                paddingRight: '32px',
               }}
             >
-              <option value="America/Sao_Paulo" style={{ background: '#1a1625', color: '#fff' }}>America/Sao_Paulo (BRT)</option>
-              <option value="America/New_York" style={{ background: '#1a1625', color: '#fff' }}>America/New_York (EST)</option>
-              <option value="America/Los_Angeles" style={{ background: '#1a1625', color: '#fff' }}>America/Los_Angeles (PST)</option>
-              <option value="America/Toronto" style={{ background: '#1a1625', color: '#fff' }}>America/Toronto (EST)</option>
-              <option value="Europe/London" style={{ background: '#1a1625', color: '#fff' }}>Europe/London (GMT)</option>
-              <option value="Europe/Paris" style={{ background: '#1a1625', color: '#fff' }}>Europe/Paris (CET)</option>
+              <option value="America/Sao_Paulo" style={{ background: '#0a0e18', color: '#fff' }}>America/Sao_Paulo (BRT)</option>
+              <option value="America/New_York" style={{ background: '#0a0e18', color: '#fff' }}>America/New_York (EST)</option>
+              <option value="America/Los_Angeles" style={{ background: '#0a0e18', color: '#fff' }}>America/Los_Angeles (PST)</option>
+              <option value="America/Toronto" style={{ background: '#0a0e18', color: '#fff' }}>America/Toronto (EST)</option>
+              <option value="Europe/London" style={{ background: '#0a0e18', color: '#fff' }}>Europe/London (GMT)</option>
+              <option value="Europe/Paris" style={{ background: '#0a0e18', color: '#fff' }}>Europe/Paris (CET)</option>
             </select>
           </div>
         </div>
