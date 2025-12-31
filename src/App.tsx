@@ -20,17 +20,49 @@ const Work = lazy(() => import('./pages/Work'))
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
 const Studio = lazy(() => import('./pages/Studio'))
 const Academy = lazy(() => import('./pages/Academy'))
-// Contact com tratamento de erro melhorado
+// Contact com tratamento de erro melhorado e retry
 const Contact = lazy(() => 
   import('./pages/Contact').catch((error) => {
     console.error('Erro ao carregar Contact:', error)
-    // Retornar um componente de fallback
+    // Se for erro de módulo não encontrado, tentar recarregar a página
+    if (error.message?.includes('Failed to fetch dynamically imported module')) {
+      // Aguardar um pouco e tentar novamente
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          window.location.reload()
+        }, 1000)
+        // Retornar componente temporário enquanto recarrega
+        resolve({
+          default: () => (
+            <div style={{ padding: '40px', textAlign: 'center', color: '#fff', minHeight: '50vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+              <h1 style={{ fontSize: '24px', marginBottom: '16px' }}>Carregando...</h1>
+              <p style={{ marginBottom: '24px', opacity: 0.8 }}>Por favor, aguarde enquanto recarregamos a página.</p>
+            </div>
+          )
+        })
+      })
+    }
+    // Retornar um componente de fallback para outros erros
     return {
       default: () => (
-        <div style={{ padding: '40px', textAlign: 'center', color: '#fff' }}>
-          <h1>Erro ao carregar página</h1>
-          <p>Por favor, recarregue a página ou tente novamente mais tarde.</p>
-          <button onClick={() => window.location.reload()}>Recarregar</button>
+        <div style={{ padding: '40px', textAlign: 'center', color: '#fff', minHeight: '50vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <h1 style={{ fontSize: '24px', marginBottom: '16px' }}>Erro ao carregar página</h1>
+          <p style={{ marginBottom: '24px', opacity: 0.8 }}>Por favor, recarregue a página ou tente novamente mais tarde.</p>
+          <button 
+            onClick={() => window.location.reload()}
+            style={{
+              padding: '12px 24px',
+              borderRadius: '8px',
+              border: 'none',
+              background: '#c92337',
+              color: '#fff',
+              fontSize: '14px',
+              fontWeight: 600,
+              cursor: 'pointer',
+            }}
+          >
+            Recarregar Página
+          </button>
         </div>
       )
     }

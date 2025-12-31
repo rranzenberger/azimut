@@ -20,6 +20,19 @@ export default defineConfig({
         drop_console: true, // Remover console em produção (melhor performance)
       },
     },
+    // Rollup options para melhorar chunking
+    rollupOptions: {
+      output: {
+        // Manter nomes de arquivos mais estáveis (menos mudanças de hash)
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
+        // Separar vendor chunks
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+        },
+      },
+    },
   },
   // Polyfills automáticos via Vite
   optimizeDeps: {
