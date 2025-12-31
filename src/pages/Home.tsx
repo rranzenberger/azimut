@@ -4,6 +4,7 @@ import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { trackPageView } from '../utils/analytics'
 import { useAzimutContent } from '../hooks/useAzimutContent'
+import { usePersonalizedContent } from '../hooks/usePersonalizedContent'
 
 interface HomeProps {
   lang: Lang
@@ -16,12 +17,26 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   // Integração com CMS - conteúdo personalizado (100% backoffice)
   const { content: cmsContent, loading: cmsLoading } = useAzimutContent({ page: 'home' })
   
-  // Slogan e subtitle do hero: APENAS do backoffice (sem fallback)
-  const heroSlogan = cmsContent?.page?.heroSlogan || 'Experiências que Conectam Mundos'
-  const heroSubtitle = cmsContent?.page?.heroSubtitle || 'Criamos experiências imersivas entre Brasil e Canadá.'
+  // Personalização baseada em IA - perfil do visitante
+  const {
+    profile,
+    recommendedProjects: personalizedProjects,
+    heroMessage: personalizedHeroMessage,
+    heroSubtitle: personalizedHeroSubtitle,
+    ctaText: personalizedCtaText,
+    ctaLink: personalizedCtaLink,
+    shouldShowEditais,
+    loading: personalizationLoading,
+  } = usePersonalizedContent()
   
-  // Projetos do backoffice
-  const projects = cmsContent?.highlightProjects || []
+  // Slogan e subtitle do hero: Personalizado por IA OU do backoffice (fallback)
+  const heroSlogan = personalizedHeroMessage || cmsContent?.page?.heroSlogan || 'Experiências que Conectam Mundos'
+  const heroSubtitle = personalizedHeroSubtitle || cmsContent?.page?.heroSubtitle || 'Criamos experiências imersivas entre Brasil e Canadá.'
+  
+  // Projetos: Personalizados por IA OU do backoffice (fallback)
+  const projects = personalizedProjects.length > 0 
+    ? personalizedProjects 
+    : cmsContent?.highlightProjects || []
   
   // Tracking de página (não bloqueia renderização)
   useEffect(() => {

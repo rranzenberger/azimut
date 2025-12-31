@@ -71,7 +71,11 @@ export function useUserTracking() {
     addInteraction(type, target)
   }
 
-  return { trackInteraction }
+  // Obter sessionId para personalização
+  const session = getOrCreateSession()
+  const sessionId = session.sessionId
+
+  return { trackInteraction, sessionId }
 }
 
 // Helpers
