@@ -116,6 +116,9 @@ export async function GET(request: NextRequest) {
 
 // PUT - Atualizar configurações
 export async function PUT(request: NextRequest) {
+  let body: any = {};
+  let updateData: any = {};
+  
   try {
     const cookieStore = cookies();
     const token = cookieStore.get('azimut_admin_token')?.value;
@@ -125,7 +128,7 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
     }
 
-    const body = await request.json();
+    body = await request.json();
 
     // Validar campos permitidos
     const allowedFields = [
