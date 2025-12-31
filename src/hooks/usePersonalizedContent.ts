@@ -196,7 +196,7 @@ export function usePersonalizedContent(): UsePersonalizedContentReturn {
       clearTimeout(timer);
       clearInterval(interval);
     };
-  }, [sessionId]);
+  }, []); // sessionId é obtido dentro do effect, não precisa estar nas dependências
 
   // Helpers para personalização
   const heroMessage = useMemo(() => {
