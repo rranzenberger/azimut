@@ -193,10 +193,10 @@ export async function GET(request: NextRequest) {
         id: p.id,
         slug: p.slug,
         title: p.title,
-        summary: p.summaryPt || p.summaryEn,
-        type: p.type,
+        summary: p.summaryPt || p.summaryEn || '',
+        type: p.type || '',
         tags: p.tags.map(t => t.labelPt || t.labelEn),
-        heroImage: p.heroImage?.url,
+        heroImage: p.heroImage?.url || null,
       })),
       recommendedServices,
       recommendedEditais: recommendedEditais.map(e => ({
@@ -324,29 +324,29 @@ function isGovernmentIP(ip: string | null): boolean {
 async function getRecommendedServices(scores: any) {
   const services = await prisma.service.findMany({
     where: { status: 'ACTIVE' },
-    include: { tags: true },
   });
 
   // Ordenar por relevância baseado em scores
+  // Como Service não tem relação direta com Tag, vamos usar os segmentos
   const scoredServices = services.map(service => {
     let relevance = 0;
 
-    // Verificar tags do serviço
-    service.tags.forEach(tag => {
-      const tagLabel = (tag.labelEn || tag.labelPt || '').toLowerCase();
-      if (tagLabel.includes('museum') || tagLabel.includes('museu')) {
+    // Verificar segmentos do serviço
+    service.segments.forEach(segment => {
+      const segmentLower = segment.toLowerCase();
+      if (segmentLower.includes('museum') || segmentLower.includes('museu')) {
         relevance += scores.museumScore || 0;
       }
-      if (tagLabel.includes('brand') || tagLabel.includes('marca')) {
+      if (segmentLower.includes('brand') || segmentLower.includes('marca')) {
         relevance += scores.brandScore || 0;
       }
-      if (tagLabel.includes('festival')) {
+      if (segmentLower.includes('festival')) {
         relevance += scores.festivalScore || 0;
       }
-      if (tagLabel.includes('vr') || tagLabel.includes('xr')) {
+      if (segmentLower.includes('vr') || segmentLower.includes('xr')) {
         relevance += scores.vrScore || 0;
       }
-      if (tagLabel.includes('ai') || tagLabel.includes('ia')) {
+      if (segmentLower.includes('ai') || segmentLower.includes('ia')) {
         relevance += scores.aiScore || 0;
       }
     });
