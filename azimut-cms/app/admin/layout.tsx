@@ -102,22 +102,7 @@ export default async function AdminLayout({
           <AdminLink href="/admin/media" label="Mídias" />
           <AdminLink href="/admin/leads" label="Leads" />
           <AdminLink href="/admin/services" label="Serviços" />
-          <div
-            style={{
-              color: '#8f8ba2',
-              fontSize: 12,
-              padding: '12px 12px',
-              marginTop: 12,
-              borderTop: '1px solid rgba(255,255,255,0.05)',
-              paddingTop: 20,
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              letterSpacing: '0.5px',
-            }}
-          >
-            Em desenvolvimento:
-          </div>
-          <AdminLink href="#" label="Configurações" disabled />
+          <AdminLink href="/admin/settings" label="Configurações" />
         </nav>
 
         {/* Link para Site Principal */}

@@ -417,3 +417,38 @@ model LeadEdital {
   @@unique([editalId, leadId])
   @@index([status])
 }
+
+model Settings {
+  id                     String   @id @default("singleton") // Sempre um único registro
+  // Configurações Gerais
+  siteName               String?  @default("Azimut")
+  siteUrl                String?  @default("https://azmt.com.br")
+  contactEmail           String?
+  contactPhone           String?
+  // SEO Global
+  defaultMetaDescription String?  @db.Text
+  defaultKeywords        String?
+  ogImageUrl             String?
+  // Redes Sociais
+  facebookUrl            String?
+  instagramUrl           String?
+  linkedinUrl            String?
+  twitterUrl             String?
+  youtubeUrl             String?
+  // Integrações
+  kabbamApiKey           String?
+  kabbamApiUrl           String?
+  smtpHost               String?
+  smtpPort               Int?
+  smtpUser               String?
+  smtpPassword           String?
+  smtpFromEmail          String?
+  deepseekApiKey         String?
+  notificationEmail      String?
+  // Outros
+  defaultLanguage        String?  @default("pt")
+  defaultCountry         String?  @default("BR")
+  timezone               String?  @default("America/Sao_Paulo")
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+}
