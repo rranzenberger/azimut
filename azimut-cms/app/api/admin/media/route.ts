@@ -13,6 +13,48 @@ const MAX_VIDEO_MB = 25;
 const MAX_ALT = 160;
 const UPLOAD_BASE = process.env.UPLOAD_BASE || 'uploads';
 
+// GET - Listar mídias disponíveis
+export async function GET(request: NextRequest) {
+  try {
+    const cookieStore = cookies();
+    const token = cookieStore.get('azimut_admin_token')?.value;
+    const session = token ? verifyAuthToken(token) : null;
+
+    if (!session) {
+      return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
+    }
+
+    const { searchParams } = new URL(request.url);
+    const limit = parseInt(searchParams.get('limit') || '100');
+    const offset = parseInt(searchParams.get('offset') || '0');
+    const type = searchParams.get('type'); // 'IMAGE' ou 'VIDEO'
+
+    const where: any = {};
+    if (type && (type === 'IMAGE' || type === 'VIDEO')) {
+      where.type = type;
+    }
+
+    const media = await prisma.media.findMany({
+      where,
+      skip: offset,
+      take: limit,
+      orderBy: { createdAt: 'desc' },
+    });
+
+    const total = await prisma.media.count({ where });
+
+    return NextResponse.json({
+      media,
+      total,
+      limit,
+      offset,
+    });
+  } catch (error) {
+    console.error('Media GET error:', error);
+    return NextResponse.json({ error: 'Erro ao listar mídias' }, { status: 500 });
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const token = req.cookies.get('azimut_admin_token')?.value;
