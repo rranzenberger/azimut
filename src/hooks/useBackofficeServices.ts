@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect } from 'react';
+import { createTimeoutSignal } from '../utils/fetchWithTimeout';
 
 const API_URL = import.meta.env.VITE_CMS_API_URL || 'http://localhost:3001/api';
 
@@ -41,7 +42,7 @@ export function useBackofficeServices(lang: 'pt' | 'en' | 'es' | 'fr' = 'pt'): U
         const response = await fetch(
           `${API_URL}/public/content?lang=${lang}&page=what`,
           {
-            signal: AbortSignal.timeout(5000),
+            signal: createTimeoutSignal(5000),
             headers: {
               'Accept': 'application/json',
             },

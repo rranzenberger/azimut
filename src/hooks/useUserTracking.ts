@@ -30,6 +30,19 @@ export function useUserTracking() {
   const location = useLocation()
   const startTimeRef = useRef<number>(Date.now())
   const maxScrollRef = useRef<number>(0)
+  const sessionIdRef = useRef<string>('')
+
+  // Inicializar sessionId de forma segura (dentro de useEffect)
+  useEffect(() => {
+    try {
+      const session = getOrCreateSession()
+      sessionIdRef.current = session.sessionId
+    } catch (error) {
+      // Se houver erro, criar um sessionId temporário
+      console.warn('Erro ao criar sessão de tracking:', error)
+      sessionIdRef.current = `temp_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`
+    }
+  }, [])
 
   // Tracking de scroll depth
   useEffect(() => {
@@ -58,24 +71,35 @@ export function useUserTracking() {
     startTimeRef.current = startTime
     maxScrollRef.current = 0
 
-    trackPageView(path)
+    try {
+      trackPageView(path)
+    } catch (error) {
+      // Se tracking falhar, não quebrar renderização
+      console.warn('Erro ao rastrear page view:', error)
+    }
 
     return () => {
-      const timeSpent = Math.round((Date.now() - startTimeRef.current) / 1000)
-      updatePageVisit(path, timeSpent, maxScrollRef.current)
+      try {
+        const timeSpent = Math.round((Date.now() - startTimeRef.current) / 1000)
+        updatePageVisit(path, timeSpent, maxScrollRef.current)
+      } catch (error) {
+        // Silencioso - não quebrar renderização
+        console.warn('Erro ao atualizar page visit:', error)
+      }
     }
   }, [location.pathname])
 
   // Para interações explícitas (CTA, projeto, idioma)
   const trackInteraction = (type: InteractionType, target: string) => {
-    addInteraction(type, target)
+    try {
+      addInteraction(type, target)
+    } catch (error) {
+      // Se tracking falhar, não quebrar aplicação
+      console.warn('Erro ao rastrear interação:', error)
+    }
   }
 
-  // Obter sessionId para personalização
-  const session = getOrCreateSession()
-  const sessionId = session.sessionId
-
-  return { trackInteraction, sessionId }
+  return { trackInteraction, sessionId: sessionIdRef.current }
 }
 
 // Helpers

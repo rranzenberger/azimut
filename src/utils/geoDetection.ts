@@ -4,6 +4,8 @@
  * Fallback: Inglês (língua internacional)
  */
 
+import { createTimeoutSignal } from './fetchWithTimeout';
+
 export interface GeoDetectionResult {
   country: string;
   countryCode: string;
@@ -949,7 +951,7 @@ export async function detectCountryFromIP(): Promise<{ country: string; countryC
   // ✅ API 1: ipapi.co (limite: 1k/dia)
   try {
     const response = await fetch('https://ipapi.co/json/', {
-      signal: AbortSignal.timeout(3000),
+      signal: createTimeoutSignal(3000),
     });
     
     if (response.ok) {
@@ -991,7 +993,7 @@ export async function detectCountryFromIP(): Promise<{ country: string; countryC
   // ✅ API 3: ipwhois.app (sem limite conhecido, gratuito)
   try {
     const response = await fetch('https://ipwhois.app/json/', {
-      signal: AbortSignal.timeout(3000),
+      signal: createTimeoutSignal(3000),
     });
     
     if (response.ok) {

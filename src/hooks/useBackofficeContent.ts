@@ -8,6 +8,7 @@
  */
 
 import { useState, useEffect } from 'react';
+import { createTimeoutSignal } from '../utils/fetchWithTimeout';
 
 // URL do backoffice (produção)
 const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br';
@@ -59,7 +60,7 @@ export function useBackofficeContent(
         const response = await fetch(
           `${BACKOFFICE_URL}/api/public/page/${slug}`,
           {
-            signal: AbortSignal.timeout(5000), // Timeout de 5s
+            signal: createTimeoutSignal(5000), // Timeout de 5s (compatível)
             headers: {
               'Accept': 'application/json',
             },

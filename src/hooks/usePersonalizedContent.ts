@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect, useMemo } from 'react';
+import { createTimeoutSignal } from '../utils/fetchWithTimeout';
 
 export interface VisitorProfile {
   // Identificação
@@ -145,14 +146,14 @@ export function usePersonalizedContent(): UsePersonalizedContentReturn {
         setError(null);
 
         const response = await fetch(
-          `${API_URL}/api/visitor/profile?sessionId=${sessionId}`,
+          `${API_URL}/api/visitor/profile?sessionId=${encodeURIComponent(sessionId)}`,
           {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
             },
-            // Timeout de 5s
-            signal: AbortSignal.timeout(5000),
+            // Timeout de 5s (compatível com navegadores antigos)
+            signal: createTimeoutSignal(5000),
           }
         );
 

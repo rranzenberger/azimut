@@ -6,6 +6,7 @@
 import { useState, useEffect } from 'react';
 import { getSessionId } from '../utils/analytics';
 import { detectGeoFromTimezone, detectLanguageFromBrowser, detectCountryFromIP, getLanguageFromCountry } from '../utils/geoDetection';
+import { createTimeoutSignal } from '../utils/fetchWithTimeout';
 
 // Usar VITE_BACKOFFICE_URL se disponível, senão VITE_CMS_API_URL, senão fallback
 const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br';
@@ -87,7 +88,7 @@ export function useAzimutContent(options: ContentOptions = {}) {
           // Tentar API do CMS apenas como confirmação (não bloqueia, executa em paralelo)
           // Se API funcionar, usa o país da API (mais preciso)
           fetch(`${API_URL}/geo`, {
-            signal: AbortSignal.timeout(2000), // Timeout menor (2s)
+            signal: createTimeoutSignal(2000), // Timeout menor (2s)
           })
             .then(geoRes => {
               if (geoRes.ok) {
@@ -124,11 +125,11 @@ export function useAzimutContent(options: ContentOptions = {}) {
         // 3. Buscar conteúdo (com sessionId para personalização)
         // IMPORTANTE: Não bloquear renderização se CMS falhar
         try {
-          const sessionId = getSessionId();
+          const sessionId = getSessionId() || 'anonymous';
           const contentRes = await fetch(
-            `${API_URL}/public/content?lang=${lang}&country=${country}&page=${page}&sessionId=${sessionId}`,
+            `${API_URL}/public/content?lang=${lang}&country=${country}&page=${page}&sessionId=${encodeURIComponent(sessionId)}`,
             {
-              signal: AbortSignal.timeout(5000), // Timeout de 5s
+              signal: createTimeoutSignal(5000), // Timeout de 5s (compatível)
             }
           );
           
