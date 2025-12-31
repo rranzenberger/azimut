@@ -2,6 +2,66 @@
 
 import { FormEvent, useState } from 'react';
 
+// Componente para campo de senha com olhinho
+function PasswordField({
+  label,
+  value,
+  onChange,
+  placeholder,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+}) {
+  const [showPassword, setShowPassword] = useState(false);
+
+  return (
+    <div style={{ display: 'grid', gap: 8 }}>
+      <label style={{ fontSize: 14, fontWeight: 600 }}>{label}</label>
+      <div style={{ position: 'relative' }}>
+        <input
+          type={showPassword ? 'text' : 'password'}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          style={{
+            ...inputStyle,
+            paddingRight: '40px',
+          }}
+          placeholder={placeholder}
+        />
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          style={{
+            position: 'absolute',
+            right: '10px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            background: 'transparent',
+            border: 'none',
+            color: '#9f9bb0',
+            cursor: 'pointer',
+            fontSize: 18,
+            padding: '4px 8px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = '#fff';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = '#9f9bb0';
+          }}
+        >
+          {showPassword ? '👁️' : '👁️‍🗨️'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 const inputStyle = {
   padding: '10px 14px',
   borderRadius: 8,
@@ -345,16 +405,12 @@ export function SettingsForm({ settings }: { settings: any }) {
               style={inputStyle}
             />
           </div>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>SMTP Password</label>
-            <input
-              type="password"
-              value={formData.smtpPassword}
-              onChange={(e) => setFormData({ ...formData, smtpPassword: e.target.value })}
-              style={inputStyle}
-              placeholder="••••••••"
-            />
-          </div>
+          <PasswordField
+            label="SMTP Password"
+            value={formData.smtpPassword}
+            onChange={(value) => setFormData({ ...formData, smtpPassword: value })}
+            placeholder="••••••••"
+          />
           <div style={{ display: 'grid', gap: 8 }}>
             <label style={{ fontSize: 14, fontWeight: 600 }}>Email Remetente</label>
             <input
