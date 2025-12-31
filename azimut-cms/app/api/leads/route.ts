@@ -5,6 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { getSettings } from '@/src/lib/settings';
 
 export async function POST(request: NextRequest) {
   try {
@@ -111,11 +112,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Enviar notificação por email
+    const settings = await getSettings();
     await sendLeadNotification({
       lead,
       interestScore,
       session,
       inferredType,
+      notificationEmail: settings.notificationEmail || process.env.NOTIFICATION_EMAIL,
     });
 
     return NextResponse.json({
@@ -141,8 +144,9 @@ async function sendLeadNotification(data: {
   interestScore: any;
   session: any;
   inferredType: string | null;
+  notificationEmail?: string | null;
 }) {
-  const { lead, interestScore, session, inferredType } = data;
+  const { lead, interestScore, session, inferredType, notificationEmail } = data;
 
   // Preparar contexto comportamental
   const context = {
@@ -194,17 +198,26 @@ async function sendLeadNotification(data: {
     <p><small>Lead ID: ${lead.id}</small></p>
   `;
 
+  // Se não tiver email configurado, apenas logar
+  if (!notificationEmail) {
+    console.log('📧 Notificação de lead (email não configurado):', {
+      subject: `[${lead.priority}] Novo Lead: ${lead.name} - ${context.visitorType}`,
+      html: emailHtml,
+    });
+    return;
+  }
+
   // Aqui você implementaria o envio real de email
   // usando Nodemailer, SendGrid, etc.
   console.log('📧 Notificação de lead:', {
-    to: process.env.NOTIFICATION_EMAIL,
+    to: notificationEmail,
     subject: `[${lead.priority}] Novo Lead: ${lead.name} - ${context.visitorType}`,
     html: emailHtml,
   });
 
-  // TODO: Implementar envio real de email
+  // TODO: Implementar envio real de email usando SMTP do Settings
   // await sendEmail({
-  //   to: process.env.NOTIFICATION_EMAIL,
+  //   to: notificationEmail,
   //   subject: `[${lead.priority}] Novo Lead: ${lead.name}`,
   //   html: emailHtml,
   // });
