@@ -68,16 +68,18 @@ export async function GET(request: NextRequest) {
       sessionId,
       country: session.country,
       language: session.language,
-      pagesVisited: session.pageViews.map(pv => ({
-        slug: pv.pageSlug,
-        timeSpent: pv.timeSpent || 0,
-        scrollDepth: pv.scrollDepth || 0,
-      })),
+      pagesVisited: session.pageViews
+        .filter(pv => pv.pageSlug !== null) // Filtrar apenas páginas com slug
+        .map(pv => ({
+          slug: pv.pageSlug!, // Agora sabemos que não é null
+          timeSpent: pv.timeSpent || 0,
+          scrollDepth: pv.scrollDepth || 0,
+        })),
       projectsViewed: session.pageViews
         .filter(pv => pv.project)
         .map(pv => ({
           projectId: pv.project!.id,
-          type: pv.project!.type,
+          type: pv.project!.type || '',
           tags: pv.project!.tags.map(t => t.labelEn || t.labelPt),
           timeSpent: pv.timeSpent || 0,
         })),
