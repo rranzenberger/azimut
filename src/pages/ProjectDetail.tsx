@@ -120,7 +120,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
   }
 
   const seoTitle = `${project.title} | ${seoData.work[lang].title}`
-  const seoDescription = project.summary || seoData.work[lang].description
+  const seoDescription = project.description || project.summary || seoData.work[lang].description
 
   return (
     <>
