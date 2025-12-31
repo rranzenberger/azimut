@@ -13,6 +13,12 @@ export default function NewProjectPage() {
     slug: '',
     summaryPt: '',
     summaryEn: '',
+    summaryEs: '',
+    summaryFr: '',
+    descriptionPt: '',
+    descriptionEn: '',
+    descriptionEs: '',
+    descriptionFr: '',
     city: '',
     country: '',
     year: '',
@@ -131,6 +137,87 @@ export default function NewProjectPage() {
               rows={3}
               style={{ ...inputStyle, resize: 'vertical' }}
               placeholder="Brief description in English"
+            />
+          </div>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+          <div style={{ display: 'grid', gap: 8 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Resumo (ES)</label>
+            <textarea
+              value={formData.summaryEs}
+              onChange={(e) => setFormData({ ...formData, summaryEs: e.target.value })}
+              rows={3}
+              style={{ ...inputStyle, resize: 'vertical' }}
+              placeholder="Breve descripción en español"
+            />
+          </div>
+          <div style={{ display: 'grid', gap: 8 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Resumo (FR)</label>
+            <textarea
+              value={formData.summaryFr}
+              onChange={(e) => setFormData({ ...formData, summaryFr: e.target.value })}
+              rows={3}
+              style={{ ...inputStyle, resize: 'vertical' }}
+              placeholder="Brève description en français"
+            />
+          </div>
+        </div>
+
+        <div style={{ marginTop: 8, marginBottom: 8, padding: '12px 16px', background: 'rgba(201,35,55,0.1)', borderRadius: 8, border: '1px solid rgba(201,35,55,0.3)' }}>
+          <p style={{ margin: 0, fontSize: 13, color: '#fca5a5' }}>
+            💡 <strong>Descrição Completa:</strong> Use os campos abaixo para textos longos/rich text que aparecerão na página de detalhe do projeto.
+          </p>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+          <div style={{ display: 'grid', gap: 8 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Descrição Completa (PT)</label>
+            <textarea
+              value={formData.descriptionPt}
+              onChange={(e) => setFormData({ ...formData, descriptionPt: e.target.value })}
+              rows={6}
+              style={{ ...inputStyle, resize: 'vertical' }}
+              placeholder="Descrição completa em português (texto longo/rich text)"
+            />
+            <small style={{ color: '#8f8ba2', fontSize: 12 }}>
+              Texto completo que aparece na página de detalhe. Suporta quebras de linha.
+            </small>
+          </div>
+          <div style={{ display: 'grid', gap: 8 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Descrição Completa (EN)</label>
+            <textarea
+              value={formData.descriptionEn}
+              onChange={(e) => setFormData({ ...formData, descriptionEn: e.target.value })}
+              rows={6}
+              style={{ ...inputStyle, resize: 'vertical' }}
+              placeholder="Full description in English (long text/rich text)"
+            />
+            <small style={{ color: '#8f8ba2', fontSize: 12 }}>
+              Full text that appears on the detail page. Supports line breaks.
+            </small>
+          </div>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+          <div style={{ display: 'grid', gap: 8 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Descrição Completa (ES)</label>
+            <textarea
+              value={formData.descriptionEs}
+              onChange={(e) => setFormData({ ...formData, descriptionEs: e.target.value })}
+              rows={6}
+              style={{ ...inputStyle, resize: 'vertical' }}
+              placeholder="Descripción completa en español"
+            />
+          </div>
+          <div style={{ display: 'grid', gap: 8 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Descrição Completa (FR)</label>
+            <textarea
+              value={formData.descriptionFr}
+              onChange={(e) => setFormData({ ...formData, descriptionFr: e.target.value })}
+              rows={6}
+              style={{ ...inputStyle, resize: 'vertical' }}
+              placeholder="Description complète en français"
             />
           </div>
         </div>
