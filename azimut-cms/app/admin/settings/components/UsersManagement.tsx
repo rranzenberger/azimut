@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { PasswordField } from './PasswordField';
 import Link from 'next/link';
 
 const inputStyle = {
@@ -381,28 +382,22 @@ function CreateUserForm({ onSuccess, onCancel }: { onSuccess: () => void; onCanc
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 13, fontWeight: 600 }}>Senha *</label>
-            <input
-              type="password"
-              value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              required
-              style={inputStyle}
-              minLength={6}
-            />
-          </div>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 13, fontWeight: 600 }}>Confirmar Senha *</label>
-            <input
-              type="password"
-              value={formData.confirmPassword}
-              onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-              required
-              style={inputStyle}
-              minLength={6}
-            />
-          </div>
+          <PasswordField
+            label="Senha"
+            value={formData.password}
+            onChange={(value) => setFormData({ ...formData, password: value })}
+            required
+            minLength={6}
+            style={{ height: 40 }}
+          />
+          <PasswordField
+            label="Confirmar Senha"
+            value={formData.confirmPassword}
+            onChange={(value) => setFormData({ ...formData, confirmPassword: value })}
+            required
+            minLength={6}
+            style={{ height: 40 }}
+          />
         </div>
 
         <div style={{ display: 'grid', gap: 8 }}>
