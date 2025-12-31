@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
-import contentModel from '../data/content'
-import { getRecommendations } from '../utils/reco'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { trackPageView } from '../utils/analytics'
 import { useAzimutContent } from '../hooks/useAzimutContent'
@@ -15,20 +13,15 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
   useUserTracking()
   
-  // Função locale deve ser definida ANTES de ser usada
-  const locale = (entry: { pt: string; en: string; es: string }) => {
-    if (lang === 'fr') return entry.en // Fallback para francês usar inglês
-    return entry[lang as 'pt' | 'en' | 'es'] || entry.en
-  }
-  
-  // Integração com CMS - conteúdo personalizado
+  // Integração com CMS - conteúdo personalizado (100% backoffice)
   const { content: cmsContent, loading: cmsLoading } = useAzimutContent({ page: 'home' })
   
-  // Slogan do hero: CMS ou fallback local
-  const heroSlogan = cmsContent?.page?.heroSlogan || locale(contentModel.home.hero.title)
+  // Slogan e subtitle do hero: APENAS do backoffice (sem fallback)
+  const heroSlogan = cmsContent?.page?.heroSlogan || 'Experiências que Conectam Mundos'
+  const heroSubtitle = cmsContent?.page?.heroSubtitle || 'Criamos experiências imersivas entre Brasil e Canadá.'
   
-  // Subtitle do hero: CMS ou fallback local
-  const heroSubtitle = cmsContent?.page?.heroSubtitle || locale(contentModel.home.hero.subtitle)
+  // Projetos do backoffice
+  const projects = cmsContent?.highlightProjects || []
   
   // Tracking de página (não bloqueia renderização)
   useEffect(() => {
@@ -42,7 +35,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     }
   }, [])
   
-  const [recommended, setRecommended] = useState(() => contentModel.cases.slice(0, 3))
+  // Projetos recomendados do backoffice (primeiros 3)
+  const recommended = projects.slice(0, 3)
   
   useEffect(() => {
     // Detectar tema do documento
@@ -63,29 +57,6 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     return () => observer.disconnect()
   }, [])
   const seo = seoData.home[lang]
-
-  // Recomendações usando detecção real de geo
-  useEffect(() => {
-    // Detectar país via timezone como fallback
-    const detectCountry = () => {
-      try {
-        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
-        // Mapeamento simples timezone -> país
-        if (timezone.includes('America/Toronto') || timezone.includes('America/Vancouver')) return 'CA'
-        if (timezone.includes('America/Sao_Paulo') || timezone.includes('America/Fortaleza')) return 'BR'
-        if (timezone.includes('America/New_York') || timezone.includes('America/Chicago')) return 'US'
-        if (timezone.includes('Europe/Paris') || timezone.includes('Europe/Madrid')) return 'ES'
-        return 'BR' // fallback Brasil
-      } catch {
-        return 'BR'
-      }
-    }
-    
-    const geo = { country: detectCountry(), state: '', city: '' }
-    const tagsRecentes: string[] = []
-    const recs = getRecommendations({ lang: lang === 'fr' ? 'en' : lang as 'pt' | 'en' | 'es', geo, tagsRecentes, max: 3 })
-    setRecommended(recs)
-  }, [lang])
 
   return (
     <>
@@ -129,13 +100,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               {heroSubtitle}
             </p>
 
-            <div className="flex flex-wrap gap-2 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
-              {contentModel.home.pillars.map((pill, idx) => (
-                <span key={idx} className="pill-adaptive rounded-full border px-3 py-1.5 font-sora text-[0.68rem] uppercase tracking-[0.18em]">
-                  {lang === 'fr' ? pill.en : (pill[lang as 'pt' | 'en' | 'es'] || pill.en)}
-                </span>
-              ))}
-            </div>
+            {/* Pillars removidos - se necessário, adicionar como seção no backoffice */}
             </div>
 
           {/* Card lateral - sempre escuro com texto claro */}
@@ -174,7 +139,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           <div className="mx-auto max-w-6xl px-3 sm:px-4 md:px-6">
             {recommended.length > 0 && (() => {
               const featured = recommended[0]
-              const hasMedia = featured.mediaPoster || featured.mediaLoop
+              const hasMedia = featured.heroImage
               return (
                 <div className="relative overflow-hidden rounded-3xl card-adaptive shadow-[0_32px_80px_rgba(0,0,0,0.6)]">
                   {/* Featured Image/Video Area - BACKOFFICE: mediaPoster ou mediaLoop */}
@@ -182,22 +147,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     {/* Renderizar mídia se disponível, senão mostrar placeholder */}
                     {hasMedia ? (
                       <>
-                        {featured.mediaLoop ? (
-                          <video
-                            src={featured.mediaLoop}
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                            className="absolute inset-0 h-full w-full object-cover"
-                          />
-                        ) : featured.mediaPoster ? (
+                        {featured.heroImage?.large && (
                           <img
-                            src={featured.mediaPoster}
-                            alt={locale(featured.title)}
+                            src={featured.heroImage.large}
+                            alt={featured.heroImage.alt || featured.title}
                             className="absolute inset-0 h-full w-full object-cover"
                           />
-                        ) : null}
+                        )}
                         {/* Overlay gradient para legibilidade do texto */}
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/40 to-transparent pointer-events-none"></div>
                         {/* Badge e título sobre a imagem */}
@@ -210,10 +166,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                               </span>
                             </div>
                             <h3 className="font-handel text-3xl uppercase tracking-[0.12em] text-slate-100 md:text-4xl drop-shadow-lg">
-                              {locale(featured.title)}
+                              {featured.title}
                             </h3>
                             <p className="mt-2 text-slate-300 drop-shadow-md">
-                              {locale(featured.shortDescription)}
+                              {featured.summary || featured.shortTitle}
                             </p>
                           </div>
                         </div>
@@ -221,49 +177,41 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     ) : (
                       /* Placeholder quando não há mídia */
                       <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-azimut-red/10 via-slate-900 to-slate-950">
-                  <div className="text-center p-6">
-                    {/* Animated placeholder */}
-                    <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full border-2 border-azimut-red/30 bg-azimut-red/10 backdrop-blur">
-                      <svg className="h-8 w-8 text-azimut-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 backdrop-blur">
-                      <span className="h-2 w-2 animate-pulse rounded-full bg-azimut-red"></span>
-                      <span className="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-200">
-                        {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
-                      </span>
-                    </div>
-                    <h3 className="font-handel text-3xl uppercase tracking-[0.12em] text-slate-100 md:text-4xl">
-                      Rio Olympic Museum
-                    </h3>
-                    <p className="mt-2 text-slate-400">
-                      {lang === 'pt' ? 'Direção tecnológica e audiovisual' : lang === 'es' ? 'Dirección tecnológica y audiovisual' : 'Tech & AV direction'}
-                    </p>
-                        <p className="mt-4 text-xs text-slate-500 uppercase tracking-wider">
-                          {lang === 'pt' ? '📹 Vídeo/Imagem do Backoffice' : lang === 'es' ? '📹 Video/Imagen del Backoffice' : '📹 Video/Image from Backoffice'}
-                        </p>
+                        <div className="text-center p-6">
+                          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 backdrop-blur">
+                            <span className="h-2 w-2 animate-pulse rounded-full bg-azimut-red"></span>
+                            <span className="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-200">
+                              {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
+                            </span>
+                          </div>
+                          <h3 className="font-handel text-3xl uppercase tracking-[0.12em] text-slate-100 md:text-4xl">
+                            {featured.title}
+                          </h3>
+                          <p className="mt-2 text-slate-400">
+                            {featured.summary || featured.shortTitle}
+                          </p>
+                        </div>
                       </div>
-                    </div>
                     )}
                   </div>
                   
                   {/* Project Info */}
                   <div className="p-6 md:p-8">
-                    <div className="flex flex-wrap items-center gap-3 mb-4">
-                      {featured.services.slice(0, 3).map(service => (
-                        <span key={service} className="pill-adaptive rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.18em]">
-                          {service}
-                        </span>
-                      ))}
-                    </div>
+                    {featured.tags && featured.tags.length > 0 && (
+                      <div className="flex flex-wrap items-center gap-3 mb-4">
+                        {featured.tags.slice(0, 3).map((tag: string, idx: number) => (
+                          <span key={idx} className="pill-adaptive rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.18em]">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                     <p className="text-slate-300 leading-relaxed">
-                      {locale(featured.shortDescription)}
+                      {featured.summary || featured.shortTitle}
                     </p>
-                    {featured.location && (
+                    {(featured.city || featured.country) && (
                       <p className="mt-4 text-sm text-slate-400">
-                        📍 {featured.location}
+                        📍 {[featured.city, featured.country].filter(Boolean).join(', ')}
                       </p>
                     )}
                   </div>
@@ -282,40 +230,26 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </h2>
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {recommended.map(item => (
+              {recommended.slice(1).map(item => (
                 <article
                   key={item.slug}
                   className="rounded-2xl border border-white/10 card-adaptive p-4 shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur"
                 >
-                  <div className="mb-2 flex items-center gap-2 text-[0.72rem] uppercase tracking-[0.14em] text-slate-400">
-                    <span>{item.category}</span>
-                    <span className="badge-adaptive rounded-full px-2 py-0.5 text-[0.64rem]">
-                      {item.status === 'active'
-                        ? lang === 'pt'
-                          ? 'Ativo'
-                          : lang === 'es'
-                          ? 'Activo'
-                          : 'Active'
-                        : lang === 'pt'
-                        ? 'Em desenvolvimento'
-                        : lang === 'es'
-                        ? 'En desarrollo'
-                        : 'In development'}
-                    </span>
-                  </div>
                   <h3 className="mb-2 font-sora text-[1.05rem] text-white">
-                    {locale(item.title)}
+                    {item.title}
                   </h3>
                   <p className="text-sm leading-relaxed text-slate-200">
-                    {locale(item.shortDescription)}
+                    {item.summary || item.shortTitle}
                   </p>
-                  <div className="mt-3 flex flex-wrap gap-2 text-[0.7rem] text-slate-400">
-                    {item.services.slice(0, 3).map(service => (
-                      <span key={service} className="rounded-full border border-white/10 px-2 py-0.5">
-                        {service}
-                      </span>
-                    ))}
-                  </div>
+                  {item.tags && item.tags.length > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-2 text-[0.7rem] text-slate-400">
+                      {item.tags.slice(0, 3).map((tag: string, idx: number) => (
+                        <span key={idx} className="rounded-full border border-white/10 px-2 py-0.5">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </article>
               ))}
             </div>
