@@ -84,8 +84,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         // 🔒 VALORES TRAVADOS - NÃO MODIFICAR
         // ═══════════════════════════════════════════════════════════════
         // Larguras estimadas (baseadas nos componentes) - ULTRA COMPACTO
-        const logoWidth = 180 // Logo tem ~180px de largura
-        const rightSideWidth = 220 // Tema + Idiomas + CTA = ~220px (ultra compacto)
+        // IMPORTANTE: Em mobile, elementos podem ser menores
+        const logoWidth = windowWidth < 640 ? 160 : 180 // Logo menor em mobile
+        // Em mobile, CTA e idiomas não aparecem, então rightSideWidth é menor
+        const rightSideWidth = windowWidth < 640 ? 60 : (windowWidth < 768 ? 100 : 220) // Mobile: só tema + hamburger, Tablet: tema + hamburger, Desktop: tudo
         
         // Larguras do menu por idioma (estimativa conservadora baseada no texto)
         const menuWidths: Record<typeof lang, number> = {
@@ -100,21 +102,25 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         
         // Espaço necessário total (logo + menu + direita + gaps)
         // Gaps: padding do container + espaçamentos entre elementos
-        // IMPORTANTE: Padding varia por tamanho de tela
-        const containerPadding = windowWidth < 640 ? 16 : (windowWidth < 768 ? 32 : 48) // Mobile: 16px, Tablet: 32px, Desktop: 48px
-        const elementGaps = 64 // Espaçamentos entre elementos (gap do grid, etc)
+        // IMPORTANTE: Padding varia por tamanho de tela - REDUZIDO para mobile
+        // Mobile: 8px cada lado = 16px total (mínimo para não cortar hamburger)
+        // Tablet: 16px cada lado = 32px total
+        // Desktop: 24px cada lado = 48px total
+        const containerPadding = windowWidth < 640 ? 16 : (windowWidth < 768 ? 32 : 48)
+        // Espaçamentos entre elementos reduzidos em mobile
+        const elementGaps = windowWidth < 640 ? 40 : 64 // Mobile: 40px (reduzido), Desktop: 64px
         const gaps = containerPadding + elementGaps
         const totalNeeded = logoWidth + currentMenuWidth + rightSideWidth + gaps
         
         // Se espaço necessário > largura disponível = TREPA (hamburger aparece)
         // IMPORTANTE: Calcula para TODAS as resoluções, não apenas desktop
-        // Em iPhones pequenos (< 430px), sempre usar hamburger se não couber menu horizontal
         let overlaps = totalNeeded > windowWidth
         
-        // Garantir que em iPhones muito pequenos, hamburger aparece se menu não cabe
-        // iPhone SE: 375px, iPhone 10/11: 375px, iPhone 12: 390px
-        if (windowWidth < 430 && totalNeeded > windowWidth) {
-          overlaps = true
+        // GARANTIR que em iPhones pequenos (< 430px), hamburger SEMPRE aparece
+        // iPhone SE: 375px, iPhone X/10/11: 375px, iPhone 12: 390px, iPhone 13: 390px
+        // Nestes casos, menu horizontal NUNCA cabe, então hamburger deve aparecer
+        if (windowWidth < 430) {
+          overlaps = true // Forçar hamburger em iPhones pequenos
         }
         
         setMenuOverlaps(overlaps)
@@ -174,7 +180,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           paddingRight: 'env(safe-area-inset-right, 0px)'
         }}
       >
-        <div ref={containerRef} className="mx-auto grid min-h-[64px] w-full max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-1 px-2 sm:px-4 sm:h-20 sm:gap-2 min-[768px]:px-6 min-[768px]:gap-3 md:gap-4 lg:gap-5 xl:gap-6" style={{ overflow: 'visible', position: 'relative', minWidth: 0, maxWidth: '100%' }}>
+        <div ref={containerRef} className="mx-auto grid min-h-[64px] w-full max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-0.5 sm:gap-1 sm:px-4 sm:h-20 sm:gap-2 min-[768px]:px-6 min-[768px]:gap-3 md:gap-4 lg:gap-5 xl:gap-6" style={{ overflow: 'visible', position: 'relative', minWidth: 0, maxWidth: '100%', paddingLeft: '4px', paddingRight: '4px', boxSizing: 'border-box' }}>
           {/* ═══════════════════════════════════════════════════════════════
               🔒 LOGO - NÃO MODIFICAR: height: 56px, alinhada à esquerda
               ═══════════════════════════════════════════════════════════ */}
@@ -377,7 +383,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               Ultra compacto, bolinhas alinhadas, separador centralizado
               ═══════════════════════════════════════════════════════════ */}
           {/* CONTAINER FIXO - Tema, Idiomas e CTA - ALINHADO À DIREITA - AGLOMERADO */}
-          <div className="flex items-center gap-0.5 sm:gap-1 md:gap-2 shrink-0" style={{ flexShrink: 0, justifySelf: 'end', alignItems: 'center', height: '100%', marginLeft: 'auto', minWidth: 0, maxWidth: '100%', overflow: 'visible' }}>
+          <div className="flex items-center gap-0 sm:gap-0.5 md:gap-2 shrink-0" style={{ flexShrink: 0, justifySelf: 'end', alignItems: 'center', height: '100%', marginLeft: 'auto', minWidth: 0, maxWidth: '100%', overflow: 'visible', paddingRight: '0' }}>
             {/* Toggle de tema - ALINHADO */}
             <div className="touch-manipulation shrink-0" style={{ width: '36px', minWidth: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <ThemeToggle theme={theme} onToggle={toggleTheme} />
@@ -533,7 +539,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             {/* Botão Hambúrguer - Aparece APENAS quando menu não cabe na tela (menuOverlaps = true) */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`flex flex-col gap-1.5 p-2 touch-manipulation shrink-0 ${menuOverlaps ? 'flex' : 'hidden'}`}
+              className={`flex flex-col gap-1.5 touch-manipulation shrink-0 ${menuOverlaps ? 'flex' : 'hidden'}`}
               // Aparece apenas quando menuOverlaps é true (menu não cabe)
               aria-label="Menu"
               style={{ 
@@ -549,7 +555,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 flexShrink: 0,
                 zIndex: 10,
                 position: 'relative',
-                marginLeft: 'auto',
+                marginLeft: '4px', // Mínimo espaço do CTA
+                marginRight: '0',
+                padding: '10px 8px', // Padding interno otimizado
+                boxSizing: 'border-box',
+                // Garantir que não corta em nenhum iPhone
+                flexBasis: '44px'
                 marginRight: '0',
                 padding: '8px', // Padding interno para área de toque maior
                 boxSizing: 'border-box' // Garantir que padding não aumenta tamanho
