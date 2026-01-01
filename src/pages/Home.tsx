@@ -366,22 +366,46 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             {(() => {
               // GARANTIR que sempre há pelo menos um projeto
               const featured = recommended[0] || defaultProjects[0]
-              const hasMedia = featured?.heroImage
+              const hasMedia = featured?.heroImage && (featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.thumbnail || featured.heroImage?.original)
               return (
                 <div className="relative overflow-hidden rounded-3xl card-adaptive shadow-[0_32px_80px_rgba(0,0,0,0.6)]">
                   {/* Featured Image/Video Area - BACKOFFICE: mediaPoster ou mediaLoop */}
                   <div className="relative aspect-video w-full overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900">
                     {/* Renderizar mídia se disponível, senão mostrar placeholder */}
-                    {hasMedia ? (
+                    {hasMedia && (featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.original) ? (
                       <>
-                        {featured.heroImage?.large && (
-                          <img
-                            src={featured.heroImage.large}
-                            alt={featured.heroImage.alt || featured.title}
-                            loading="lazy"
-                            className="absolute inset-0 h-full w-full object-cover"
-                          />
-                        )}
+                        <img
+                          src={featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.original}
+                          alt={featured.heroImage?.alt || featured.title}
+                          loading="lazy"
+                          className="absolute inset-0 h-full w-full object-cover"
+                          onError={(e) => {
+                            // Se imagem falhar, mostrar placeholder
+                            const target = e.currentTarget;
+                            target.style.display = 'none';
+                            const parent = target.parentElement;
+                            if (parent) {
+                              parent.innerHTML = `
+                                <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-azimut-red/10 via-slate-900 to-slate-950">
+                                  <div class="text-center p-6 z-10">
+                                    <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 backdrop-blur">
+                                      <span class="h-2 w-2 animate-pulse rounded-full bg-azimut-red"></span>
+                                      <span class="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-200">
+                                        ${lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
+                                      </span>
+                                    </div>
+                                    <h3 class="font-handel text-3xl uppercase tracking-[0.12em] text-slate-100 md:text-4xl">
+                                      ${featured.title}
+                                    </h3>
+                                    <p class="mt-2 text-slate-400 text-sm">
+                                      ${lang === 'pt' ? 'Aguardando imagem do backoffice' : lang === 'es' ? 'Esperando imagen del backoffice' : lang === 'fr' ? 'En attente d\'image du backoffice' : 'Awaiting backoffice image'}
+                                    </p>
+                                  </div>
+                                </div>
+                              `;
+                            }
+                          }}
+                        />
                         {/* Overlay gradient para legibilidade do texto */}
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/40 to-transparent pointer-events-none"></div>
                         {/* Badge e título sobre a imagem */}
@@ -489,14 +513,41 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
                   }}
                 >
-                  {item.heroImage?.thumbnail && (
-                    <div className="mb-4 aspect-video w-full overflow-hidden rounded-lg">
+                  {item.heroImage?.thumbnail || item.heroImage?.medium || item.heroImage?.large ? (
+                    <div className="mb-4 aspect-video w-full overflow-hidden rounded-lg bg-gradient-to-br from-slate-800 to-slate-900">
                       <img
-                        src={item.heroImage.thumbnail}
-                        alt={item.title}
+                        src={item.heroImage?.large || item.heroImage?.medium || item.heroImage?.thumbnail}
+                        alt={item.heroImage?.alt || item.title}
                         className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                         loading="lazy"
+                        onError={(e) => {
+                          // Se imagem falhar, mostrar placeholder visual
+                          const target = e.currentTarget;
+                          target.style.display = 'none';
+                          const parent = target.parentElement;
+                          if (parent) {
+                            parent.innerHTML = `
+                              <div class="flex items-center justify-center h-full bg-gradient-to-br from-azimut-red/10 via-slate-800 to-slate-900">
+                                <div class="text-center p-4">
+                                  <svg class="w-16 h-16 mx-auto mb-2 text-azimut-red/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                  </svg>
+                                  <p class="text-xs text-slate-400 uppercase tracking-wider">${lang === 'pt' ? 'Aguardando Imagem' : lang === 'es' ? 'Esperando Imagen' : lang === 'fr' ? 'En Attente d\'Image' : 'Awaiting Image'}</p>
+                                </div>
+                              </div>
+                            `;
+                          }
+                        }}
                       />
+                    </div>
+                  ) : (
+                    <div className="mb-4 aspect-video w-full overflow-hidden rounded-lg bg-gradient-to-br from-azimut-red/10 via-slate-800 to-slate-900 flex items-center justify-center">
+                      <div className="text-center p-4">
+                        <svg className="w-16 h-16 mx-auto mb-2 text-azimut-red/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        <p className="text-xs text-slate-400 uppercase tracking-wider">{lang === 'pt' ? 'Aguardando Imagem' : lang === 'es' ? 'Esperando Imagen' : lang === 'fr' ? 'En Attente d\'Image' : 'Awaiting Image'}</p>
+                      </div>
                     </div>
                   )}
                   <h3 className="mb-2 font-sora text-[1.05rem] font-semibold text-white group-hover:text-azimut-red transition-colors duration-300">
