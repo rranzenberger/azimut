@@ -4,9 +4,9 @@ import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { trackPageView } from '../utils/analytics'
-// PONTO DE CONTROLE: Integração com backoffice DESATIVADA
-// import { useAzimutContent } from '../hooks/useAzimutContent'
-// import { usePersonalizedContent } from '../hooks/usePersonalizedContent'
+// MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
+import { useAzimutContent } from '../hooks/useAzimutContent'
+import { usePersonalizedContent } from '../hooks/usePersonalizedContent'
 
 interface HomeProps {
   lang: Lang
@@ -17,13 +17,25 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   const starRef = useRef<HTMLDivElement>(null)
   useUserTracking()
   
-  // PONTO DE CONTROLE: Integração com backoffice DESATIVADA - usando conteúdo estático
-  // const { content: cmsContent, loading: cmsLoading } = useAzimutContent({ page: 'home' })
-  // const { profile, recommendedProjects: personalizedProjects, heroMessage: personalizedHeroMessage, heroSubtitle: personalizedHeroSubtitle, ctaText: personalizedCtaText, ctaLink: personalizedCtaLink, shouldShowEditais, loading: personalizationLoading } = usePersonalizedContent()
+  // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
+  // Tenta buscar do backoffice, mas sempre tem fallback estático seguro
+  const { content: cmsContent, loading: cmsLoading, error: cmsError } = useAzimutContent({ page: 'home' })
   
-  // Slogan e subtitle do hero: ESTÁTICO (sem chamadas de API)
-  const heroSlogan = 'Experiências que Conectam Mundos'
-  const heroSubtitle = 'Criamos experiências imersivas entre Brasil e Canadá.'
+  // Personalização de IA (opcional - não bloqueia se falhar)
+  const {
+    profile,
+    recommendedProjects: personalizedProjects,
+    heroMessage: personalizedHeroMessage,
+    heroSubtitle: personalizedHeroSubtitle,
+    ctaText: personalizedCtaText,
+    ctaLink: personalizedCtaLink,
+    shouldShowEditais,
+    loading: personalizationLoading,
+  } = usePersonalizedContent()
+  
+  // ESTRATÉGIA: Backoffice → Estático (sempre funciona)
+  const heroSlogan = personalizedHeroMessage || cmsContent?.page?.heroSlogan || 'Experiências que Conectam Mundos'
+  const heroSubtitle = personalizedHeroSubtitle || cmsContent?.page?.heroSubtitle || 'Criamos experiências imersivas entre Brasil e Canadá.'
   
   // Fallback: Projetos padrão quando backoffice está vazio
   const defaultProjects = useMemo(() => [
@@ -73,10 +85,23 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   }, [])
   
   // Projetos: Personalizados por IA OU do backoffice OU padrão (fallback)
-  // PONTO DE CONTROLE: Usar SEMPRE os projetos padrão (sem backoffice)
+  // MIGRAÇÃO GRADUAL: Prioridade Backoffice → Personalização IA → Estático
+  // SEMPRE tem fallback - nunca quebra!
   const projects = useMemo(() => {
+    // 1º: Tentar projetos personalizados por IA (se disponível)
+    if (personalizedProjects && Array.isArray(personalizedProjects) && personalizedProjects.length > 0) {
+      console.log('✅ Usando projetos personalizados por IA');
+      return personalizedProjects;
+    } 
+    // 2º: Tentar projetos do backoffice (se disponível)
+    if (cmsContent?.highlightProjects && Array.isArray(cmsContent.highlightProjects) && cmsContent.highlightProjects.length > 0) {
+      console.log('✅ Usando projetos do backoffice');
+      return cmsContent.highlightProjects;
+    }
+    // 3º: Fallback estático (SEMPRE funciona)
+    console.log('⚠️ Usando projetos estáticos (fallback) - Preencher no backoffice!');
     return defaultProjects;
-  }, [defaultProjects]);
+  }, [personalizedProjects, cmsContent?.highlightProjects, defaultProjects]);
   
   // Projetos recomendados (primeiros 3) - SEMPRE tem pelo menos os padrões
   // Garantir que sempre seja um array válido com pelo menos 3 itens
@@ -181,13 +206,16 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               {heroSubtitle}
             </p>
 
-            {/* Pillars - ESTÁTICO (sem backoffice) */}
+            {/* Pillars - MIGRAÇÃO GRADUAL: Backoffice → Estático */}
             <div className="mt-6 sm:mt-8 flex flex-wrap gap-3 sm:gap-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
-              {[
-                lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture',
-                lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events',
-                lang === 'pt' ? 'Educação & Pesquisa' : lang === 'es' ? 'Educación & Investigación' : lang === 'fr' ? 'Éducation & Recherche' : 'Education & Research'
-              ].map((pillar: string, index: number) => (
+              {(cmsContent?.page?.pillars && cmsContent.page.pillars.length > 0 
+                ? cmsContent.page.pillars 
+                : [
+                    lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture',
+                    lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events',
+                    lang === 'pt' ? 'Educação & Pesquisa' : lang === 'es' ? 'Educación & Investigación' : lang === 'fr' ? 'Éducation & Recherche' : 'Education & Research'
+                  ]
+              ).map((pillar: string, index: number) => (
                 <span 
                   key={index}
                   className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10"
@@ -243,8 +271,32 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 {lang === 'pt' ? 'Ver Todos →' : lang === 'es' ? 'Ver Todos →' : lang === 'fr' ? 'Voir Tout →' : 'View All →'}
               </Link>
             </div>
-            {/* PONTO DE CONTROLE: Sempre mostrar serviços padrão (sem backoffice) */}
-            {true && (
+            {/* MIGRAÇÃO GRADUAL: Backoffice → Estático */}
+            {(cmsContent?.services && cmsContent.services.length > 0) ? (
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {cmsContent.services.slice(0, 6).map((service: any, index: number) => (
+                  <article
+                    key={service.slug}
+                    className="group rounded-2xl border border-white/10 card-adaptive p-5 shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(201,35,55,0.3)] cursor-pointer"
+                    style={{
+                      animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+                    }}
+                    onClick={() => window.location.href = `/what#${service.slug}`}
+                  >
+                    {service.icon && (
+                      <div className="mb-3 text-3xl">{service.icon}</div>
+                    )}
+                    <h3 className="mb-2 font-sora text-[1.05rem] font-semibold text-white group-hover:text-azimut-red transition-colors duration-300">
+                      {service.title}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-slate-200 group-hover:text-slate-100 transition-colors duration-300">
+                      {service.description}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              /* Fallback estático - mostra quando backoffice não tem conteúdo */
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {[
                   { 

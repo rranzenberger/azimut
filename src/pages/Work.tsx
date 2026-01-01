@@ -4,8 +4,8 @@ import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { trackPageView, trackProjectInteraction } from '../utils/analytics'
-// PONTO DE CONTROLE: Integração com backoffice DESATIVADA
-// import { useAzimutContent } from '../hooks/useAzimutContent'
+// MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
+import { useAzimutContent } from '../hooks/useAzimutContent'
 import OportunidadesAtivas from '../components/OportunidadesAtivas'
 import CredibilidadeEditais from '../components/CredibilidadeEditais'
 import CuradoriaFestivais from '../components/CuradoriaFestivais'
@@ -26,11 +26,10 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   const [selectedYear, setSelectedYear] = useState<number | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   
-  // PONTO DE CONTROLE: Integração com backoffice DESATIVADA - usando projetos padrão
-  // const { content: cmsContent, loading: cmsLoading } = useAzimutContent({ page: 'work' })
-  const cmsLoading = false // Não está carregando porque não tem API
+  // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
+  const { content: cmsContent, loading: cmsLoading, error: cmsError } = useAzimutContent({ page: 'work' })
   
-  // Projetos de exemplo (sempre mostrados - sem chamadas de API)
+  // Fallback: Projetos de exemplo quando backoffice está vazio ou falha
   const defaultCases = useMemo(() => [
     {
       slug: 'projeto-exemplo-1',
@@ -70,10 +69,15 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     },
   ], [lang])
   
-  // PONTO DE CONTROLE: Usar SEMPRE os projetos padrão (sem backoffice)
+  // MIGRAÇÃO GRADUAL: Backoffice → Estático (sempre funciona)
   const allCases = useMemo(() => {
+    if (cmsContent?.highlightProjects && Array.isArray(cmsContent.highlightProjects) && cmsContent.highlightProjects.length > 0) {
+      console.log('✅ Usando projetos do backoffice');
+      return cmsContent.highlightProjects;
+    }
+    console.log('⚠️ Usando projetos estáticos (fallback) - Preencher no backoffice!');
     return defaultCases;
-  }, [defaultCases])
+  }, [cmsContent?.highlightProjects, defaultCases])
   
   // Filtrar projetos
   const cases = useMemo(() => {

@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from 'react'
 import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
-// PONTO DE CONTROLE: Integração com backoffice DESATIVADA
-// import { useAzimutContent } from '../hooks/useAzimutContent'
+// MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
+import { useAzimutContent } from '../hooks/useAzimutContent'
 
 interface WhatWeDoProps {
   lang: Lang
@@ -14,11 +14,11 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   const starRef = useRef<HTMLDivElement>(null)
   const seo = seoData.what[lang]
   
-  // PONTO DE CONTROLE: Usar SEMPRE os serviços padrão (sem backoffice)
-  // const { content: cmsContent, loading: cmsLoading } = useAzimutContent({ page: 'what' })
+  // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
+  const { content: cmsContent, loading: cmsLoading, error: cmsError } = useAzimutContent({ page: 'what' })
   
-  // Serviços padrão SEMPRE mostrados (sem chamadas de API)
-  const services = [
+  // Fallback: Serviços padrão quando backoffice está vazio ou falha
+  const defaultServices = [
     { 
       slug: 'cinema-audiovisual',
       title: lang === 'pt' ? 'Cinema & Audiovisual' : lang === 'es' ? 'Cine & Audiovisual' : lang === 'fr' ? 'Cinéma & Audiovisuel' : 'Cinema & Audiovisual',
@@ -57,8 +57,16 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
     }
   ]
   
-  // PONTO DE CONTROLE: Removida lógica de escolha entre backoffice e padrão
-  // const services = (cmsContent?.services && cmsContent.services.length > 0) ? cmsContent.services : defaultServices
+  // MIGRAÇÃO GRADUAL: Backoffice → Estático (sempre funciona)
+  const services = (cmsContent?.services && cmsContent.services.length > 0) 
+    ? (() => {
+        console.log('✅ Usando serviços do backoffice');
+        return cmsContent.services;
+      })()
+    : (() => {
+        console.log('⚠️ Usando serviços estáticos (fallback) - Preencher no backoffice!');
+        return defaultServices;
+      })()
 
   // Parallax sutil na estrela de fundo
   useEffect(() => {
