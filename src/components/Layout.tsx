@@ -555,15 +555,13 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 flexShrink: 0,
                 zIndex: 10,
                 position: 'relative',
-                marginLeft: '4px', // Mínimo espaço do CTA
+                marginLeft: '2px', // Mínimo espaço do CTA
                 marginRight: '0',
-                padding: '10px 8px', // Padding interno otimizado
+                padding: '10px 6px', // Padding interno reduzido
                 boxSizing: 'border-box',
                 // Garantir que não corta em nenhum iPhone
-                flexBasis: '44px'
-                marginRight: '0',
-                padding: '8px', // Padding interno para área de toque maior
-                boxSizing: 'border-box' // Garantir que padding não aumenta tamanho
+                flexBasis: '44px',
+                overflow: 'visible'
               }}
             >
               <span 
