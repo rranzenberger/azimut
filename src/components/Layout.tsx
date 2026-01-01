@@ -57,13 +57,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [hoveredRoute, setHoveredRoute] = useState<string | null>(null)
   const [isWizardOpen, setIsWizardOpen] = useState(false)
-  // Em mobile (< 768px), menu sempre trepa (hamburger sempre aparece)
-  // Em desktop (>= 768px), calculado dinamicamente
+  // Menu trepa quando não cabe na tela (calculado dinamicamente para TODAS as resoluções)
   const [menuOverlaps, setMenuOverlaps] = useState(() => {
-    // Inicializar como true se for mobile (garante hamburger visível em mobile)
-    if (typeof window !== 'undefined' && window.innerWidth < 768) {
-      return true
-    }
+    // Inicializar como false - será calculado no useEffect
     return false
   })
   
@@ -84,12 +80,6 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         // Largura da janela
         const windowWidth = window.innerWidth
         
-        // Em mobile (< 768px), SEMPRE usar hamburger (menu sempre trepa)
-        if (windowWidth < 768) {
-          setMenuOverlaps(true)
-          return
-        }
-        
         // ═══════════════════════════════════════════════════════════════
         // 🔒 VALORES TRAVADOS - NÃO MODIFICAR
         // ═══════════════════════════════════════════════════════════════
@@ -108,10 +98,13 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         
         const currentMenuWidth = menuWidths[lang] || menuWidths['en']
         
-        // Espaço necessário total
-        const totalNeeded = logoWidth + currentMenuWidth + rightSideWidth + 80 // 80px gaps
+        // Espaço necessário total (logo + menu + direita + gaps)
+        // Gaps: padding do container + espaçamentos entre elementos
+        const gaps = 80 // 80px de gaps/padding total
+        const totalNeeded = logoWidth + currentMenuWidth + rightSideWidth + gaps
         
-        // Se espaço necessário > largura disponível = TREPA
+        // Se espaço necessário > largura disponível = TREPA (hamburger aparece)
+        // IMPORTANTE: Calcula para TODAS as resoluções, não apenas desktop
         const overlaps = totalNeeded > windowWidth
         
         setMenuOverlaps(overlaps)
@@ -527,11 +520,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <span className="block whitespace-nowrap" style={{ fontSize: 'inherit', fontWeight: '700' }}>{getCtaLines(lang)[1]}</span>
                 </Link>
 
-            {/* Botão Hambúrguer - SEMPRE aparece em mobile (< 768px), aparece em desktop (>= 768px) apenas se menu trepar */}
+            {/* Botão Hambúrguer - Aparece APENAS quando menu não cabe na tela (menuOverlaps = true) */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`flex flex-col gap-1.5 p-2 touch-manipulation shrink-0 ${menuOverlaps ? 'min-[768px]:flex' : 'min-[768px]:hidden'}`}
-              // Garantir que sempre aparece em mobile: flex está sempre presente, min-[768px]:* só afeta >= 768px
+              className={`flex flex-col gap-1.5 p-2 touch-manipulation shrink-0 ${menuOverlaps ? 'flex' : 'hidden'}`}
+              // Aparece apenas quando menuOverlaps é true (menu não cabe)
               aria-label="Menu"
               style={{ 
                 minWidth: '44px', 
@@ -571,8 +564,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         {/* Linha fina de separação */}
         <div className="h-px w-full bg-white/10"></div>
 
-        {/* Menu Mobile - mobile (< 768px) OU quando menu trepa na logo */}
-        <div className={`block overflow-hidden transition-all duration-300 ease-in-out ${menuOverlaps ? 'min-[768px]:block' : 'min-[768px]:hidden'} ${isMobileMenuOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
+        {/* Menu Mobile - Aparece APENAS quando menu não cabe na tela (menuOverlaps = true) */}
+        <div className={`block overflow-hidden transition-all duration-300 ease-in-out ${menuOverlaps ? 'block' : 'hidden'} ${isMobileMenuOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
           <nav className="border-t backdrop-blur-md" style={{ borderColor: 'var(--theme-border)', backgroundColor: 'var(--theme-overlay)' }}>
             <div className="mx-auto max-w-7xl px-3 py-4 sm:px-4 sm:py-6 space-y-1">
               <Link
