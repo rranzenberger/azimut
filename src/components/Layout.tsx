@@ -100,12 +100,22 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         
         // Espaço necessário total (logo + menu + direita + gaps)
         // Gaps: padding do container + espaçamentos entre elementos
-        const gaps = 80 // 80px de gaps/padding total
+        // IMPORTANTE: Padding varia por tamanho de tela
+        const containerPadding = windowWidth < 640 ? 16 : (windowWidth < 768 ? 32 : 48) // Mobile: 16px, Tablet: 32px, Desktop: 48px
+        const elementGaps = 64 // Espaçamentos entre elementos (gap do grid, etc)
+        const gaps = containerPadding + elementGaps
         const totalNeeded = logoWidth + currentMenuWidth + rightSideWidth + gaps
         
         // Se espaço necessário > largura disponível = TREPA (hamburger aparece)
         // IMPORTANTE: Calcula para TODAS as resoluções, não apenas desktop
-        const overlaps = totalNeeded > windowWidth
+        // Em iPhones pequenos (< 430px), sempre usar hamburger se não couber menu horizontal
+        let overlaps = totalNeeded > windowWidth
+        
+        // Garantir que em iPhones muito pequenos, hamburger aparece se menu não cabe
+        // iPhone SE: 375px, iPhone 10/11: 375px, iPhone 12: 390px
+        if (windowWidth < 430 && totalNeeded > windowWidth) {
+          overlaps = true
+        }
         
         setMenuOverlaps(overlaps)
       })
@@ -164,7 +174,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           paddingRight: 'env(safe-area-inset-right, 0px)'
         }}
       >
-        <div ref={containerRef} className="mx-auto grid min-h-[64px] w-full max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-1 px-3 sm:px-4 sm:h-20 sm:gap-2 min-[768px]:px-6 min-[768px]:gap-3 md:gap-4 lg:gap-5 xl:gap-6" style={{ overflow: 'visible', position: 'relative' }}>
+        <div ref={containerRef} className="mx-auto grid min-h-[64px] w-full max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-1 px-2 sm:px-4 sm:h-20 sm:gap-2 min-[768px]:px-6 min-[768px]:gap-3 md:gap-4 lg:gap-5 xl:gap-6" style={{ overflow: 'visible', position: 'relative', minWidth: 0, maxWidth: '100%' }}>
           {/* ═══════════════════════════════════════════════════════════════
               🔒 LOGO - NÃO MODIFICAR: height: 56px, alinhada à esquerda
               ═══════════════════════════════════════════════════════════ */}
@@ -367,7 +377,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               Ultra compacto, bolinhas alinhadas, separador centralizado
               ═══════════════════════════════════════════════════════════ */}
           {/* CONTAINER FIXO - Tema, Idiomas e CTA - ALINHADO À DIREITA - AGLOMERADO */}
-          <div className="flex items-center gap-1.5 md:gap-2 shrink-0" style={{ flexShrink: 0, justifySelf: 'end', alignItems: 'center', height: '100%', marginLeft: 'auto' }}>
+          <div className="flex items-center gap-0.5 sm:gap-1 md:gap-2 shrink-0" style={{ flexShrink: 0, justifySelf: 'end', alignItems: 'center', height: '100%', marginLeft: 'auto', minWidth: 0, maxWidth: '100%', overflow: 'visible' }}>
             {/* Toggle de tema - ALINHADO */}
             <div className="touch-manipulation shrink-0" style={{ width: '36px', minWidth: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <ThemeToggle theme={theme} onToggle={toggleTheme} />
@@ -512,7 +522,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     fontSize: '0.7rem', // Aumentado de 0.54rem para 0.7rem (~11.2px)
                     lineHeight: '1.3',
                     letterSpacing: '0.05em', // Aumentado para mais legibilidade
-                    marginLeft: '12px',
+                    marginLeft: '8px', // Reduzido para dar mais espaço ao hamburger em mobile
                     gap: '2px'
                   }}
                 >
@@ -531,12 +541,18 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 minHeight: '44px', 
                 width: '44px',
                 height: '44px',
+                maxWidth: '44px',
+                maxHeight: '44px',
                 justifyContent: 'center',
                 alignItems: 'center',
-                display: 'flex', // Forçar display flex sempre
+                display: 'flex',
                 flexShrink: 0,
                 zIndex: 10,
-                position: 'relative'
+                position: 'relative',
+                marginLeft: 'auto',
+                marginRight: '0',
+                padding: '8px', // Padding interno para área de toque maior
+                boxSizing: 'border-box' // Garantir que padding não aumenta tamanho
               }}
             >
               <span 
