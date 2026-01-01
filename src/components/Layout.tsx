@@ -171,7 +171,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           paddingRight: 'env(safe-area-inset-right, 0px)'
         }}
       >
-        <div ref={containerRef} className="mx-auto grid min-h-[64px] w-full max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-1 px-6 sm:h-20 sm:gap-2 min-[768px]:gap-3 md:gap-4 lg:gap-5 xl:gap-6" style={{ overflow: 'visible' }}>
+        <div ref={containerRef} className="mx-auto grid min-h-[64px] w-full max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-1 px-3 sm:px-4 sm:h-20 sm:gap-2 min-[768px]:px-6 min-[768px]:gap-3 md:gap-4 lg:gap-5 xl:gap-6" style={{ overflow: 'visible', position: 'relative' }}>
           {/* ═══════════════════════════════════════════════════════════════
               🔒 LOGO - NÃO MODIFICAR: height: 56px, alinhada à esquerda
               ═══════════════════════════════════════════════════════════ */}
@@ -536,8 +536,14 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               style={{ 
                 minWidth: '44px', 
                 minHeight: '44px', 
+                width: '44px',
+                height: '44px',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                display: 'flex', // Forçar display flex sempre
+                flexShrink: 0,
+                zIndex: 10,
+                position: 'relative'
               }}
             >
               <span 
@@ -566,7 +572,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         <div className="h-px w-full bg-white/10"></div>
 
         {/* Menu Mobile - mobile (< 768px) OU quando menu trepa na logo */}
-        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${menuOverlaps ? 'min-[768px]:block' : 'min-[768px]:hidden'} ${isMobileMenuOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div className={`block overflow-hidden transition-all duration-300 ease-in-out ${menuOverlaps ? 'min-[768px]:block' : 'min-[768px]:hidden'} ${isMobileMenuOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
           <nav className="border-t backdrop-blur-md" style={{ borderColor: 'var(--theme-border)', backgroundColor: 'var(--theme-overlay)' }}>
             <div className="mx-auto max-w-7xl px-3 py-4 sm:px-4 sm:py-6 space-y-1">
               <Link
