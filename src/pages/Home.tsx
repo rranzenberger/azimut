@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { trackPageView } from '../utils/analytics'
-import { useAzimutContent } from '../hooks/useAzimutContent'
-import { usePersonalizedContent } from '../hooks/usePersonalizedContent'
+// PONTO DE CONTROLE: Integração com backoffice DESATIVADA
+// import { useAzimutContent } from '../hooks/useAzimutContent'
+// import { usePersonalizedContent } from '../hooks/usePersonalizedContent'
 
 interface HomeProps {
   lang: Lang
@@ -15,29 +17,48 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   const starRef = useRef<HTMLDivElement>(null)
   useUserTracking()
   
-  // Integração com CMS - conteúdo personalizado (100% backoffice)
-  const { content: cmsContent, loading: cmsLoading } = useAzimutContent({ page: 'home' })
+  // PONTO DE CONTROLE: Integração com backoffice DESATIVADA - usando conteúdo estático
+  // const { content: cmsContent, loading: cmsLoading } = useAzimutContent({ page: 'home' })
+  // const { profile, recommendedProjects: personalizedProjects, heroMessage: personalizedHeroMessage, heroSubtitle: personalizedHeroSubtitle, ctaText: personalizedCtaText, ctaLink: personalizedCtaLink, shouldShowEditais, loading: personalizationLoading } = usePersonalizedContent()
   
-  // Personalização baseada em IA - perfil do visitante
-  const {
-    profile,
-    recommendedProjects: personalizedProjects,
-    heroMessage: personalizedHeroMessage,
-    heroSubtitle: personalizedHeroSubtitle,
-    ctaText: personalizedCtaText,
-    ctaLink: personalizedCtaLink,
-    shouldShowEditais,
-    loading: personalizationLoading,
-  } = usePersonalizedContent()
+  // Slogan e subtitle do hero: ESTÁTICO (sem chamadas de API)
+  const heroSlogan = 'Experiências que Conectam Mundos'
+  const heroSubtitle = 'Criamos experiências imersivas entre Brasil e Canadá.'
   
-  // Slogan e subtitle do hero: Personalizado por IA OU do backoffice (fallback)
-  const heroSlogan = personalizedHeroMessage || cmsContent?.page?.heroSlogan || 'Experiências que Conectam Mundos'
-  const heroSubtitle = personalizedHeroSubtitle || cmsContent?.page?.heroSubtitle || 'Criamos experiências imersivas entre Brasil e Canadá.'
-  
-  // Projetos: Personalizados por IA OU do backoffice (fallback)
-  const projects = personalizedProjects.length > 0 
-    ? personalizedProjects 
-    : cmsContent?.highlightProjects || []
+  // Fallback: Projetos padrão quando backoffice está vazio
+  const defaultProjects = useMemo(() => [
+    {
+      slug: 'projeto-destaque-home',
+      title: lang === 'pt' ? 'Instalação Imersiva' : lang === 'es' ? 'Instalación Inmersiva' : lang === 'fr' ? 'Installation Immersive' : 'Immersive Installation',
+      shortTitle: lang === 'pt' ? 'Experiência Visual Interativa' : lang === 'es' ? 'Experiencia Visual Interactiva' : lang === 'fr' ? 'Expérience Visuelle Interactive' : 'Interactive Visual Experience',
+      summary: lang === 'pt' ? 'Uma instalação interativa que combina narrativa cinematográfica com tecnologia imersiva para criar uma experiência única que conecta audiências de diferentes culturas.' : lang === 'es' ? 'Una instalación interactiva que combina narrativa cinematográfica con tecnología inmersiva para crear una experiencia única que conecta audiencias de diferentes culturas.' : lang === 'fr' ? 'Une installation interactive qui combine narration cinématographique et technologie immersive pour créer une expérience unique qui connecte des audiences de différentes cultures.' : 'An interactive installation that combines cinematic storytelling with immersive technology to create a unique experience that connects audiences from different cultures.',
+      city: lang === 'pt' ? 'São Paulo' : 'São Paulo',
+      country: lang === 'pt' ? 'Brasil' : lang === 'es' ? 'Brasil' : lang === 'fr' ? 'Brésil' : 'Brazil',
+      year: 2024,
+      tags: [lang === 'pt' ? 'Imersivo' : lang === 'es' ? 'Inmersivo' : lang === 'fr' ? 'Immersif' : 'Immersive', lang === 'pt' ? 'Interativo' : lang === 'es' ? 'Interactivo' : lang === 'fr' ? 'Interactif' : 'Interactive', lang === 'pt' ? 'Cinema' : lang === 'es' ? 'Cine' : lang === 'fr' ? 'Cinéma' : 'Cinema'],
+      heroImage: null,
+    },
+    {
+      slug: 'projeto-sugestao-1',
+      title: lang === 'pt' ? 'Exposição Digital' : lang === 'es' ? 'Exposición Digital' : lang === 'fr' ? 'Exposition Numérique' : 'Digital Exhibition',
+      shortTitle: lang === 'pt' ? 'Narrativa Espacial' : lang === 'es' ? 'Narrativa Espacial' : lang === 'fr' ? 'Narration Spatiale' : 'Spatial Narrative',
+      summary: lang === 'pt' ? 'Uma exposição que utiliza realidade aumentada e projeções mapeadas para contar histórias através do espaço físico.' : lang === 'es' ? 'Una exposición que utiliza realidad aumentada y proyecciones mapeadas para contar historias a través del espacio físico.' : lang === 'fr' ? 'Une exposition qui utilise la réalité augmentée et les projections mappées pour raconter des histoires à travers l\'espace physique.' : 'An exhibition that uses augmented reality and mapped projections to tell stories through physical space.',
+      city: lang === 'pt' ? 'Montreal' : 'Montreal',
+      country: lang === 'pt' ? 'Canadá' : lang === 'es' ? 'Canadá' : lang === 'fr' ? 'Canada' : 'Canada',
+      tags: [lang === 'pt' ? 'AR' : 'AR', lang === 'pt' ? 'Educação' : lang === 'es' ? 'Educación' : lang === 'fr' ? 'Éducation' : 'Education'],
+      heroImage: null,
+    },
+    {
+      slug: 'projeto-sugestao-2',
+      title: lang === 'pt' ? 'Filme VR 360°' : lang === 'es' ? 'Película VR 360°' : lang === 'fr' ? 'Film VR 360°' : '360° VR Film',
+      shortTitle: lang === 'pt' ? 'Experiência Virtual' : lang === 'es' ? 'Experiencia Virtual' : lang === 'fr' ? 'Expérience Virtuelle' : 'Virtual Experience',
+      summary: lang === 'pt' ? 'Um filme de realidade virtual que transporta o espectador para diferentes locais e momentos históricos.' : lang === 'es' ? 'Una película de realidad virtual que transporta al espectador a diferentes lugares y momentos históricos.' : lang === 'fr' ? 'Un film de réalité virtuelle qui transporte le spectateur vers différents lieux et moments historiques.' : 'A virtual reality film that transports the viewer to different locations and historical moments.',
+      city: lang === 'pt' ? 'Rio de Janeiro' : lang === 'es' ? 'Río de Janeiro' : lang === 'fr' ? 'Rio de Janeiro' : 'Rio de Janeiro',
+      country: lang === 'pt' ? 'Brasil' : lang === 'es' ? 'Brasil' : lang === 'fr' ? 'Brésil' : 'Brazil',
+      tags: [lang === 'pt' ? 'VR' : 'VR', lang === 'pt' ? '360°' : '360°', lang === 'pt' ? 'Cinema' : lang === 'es' ? 'Cine' : lang === 'fr' ? 'Cinéma' : 'Cinema'],
+      heroImage: null,
+    },
+  ], [lang])
   
   // Tracking de página (não bloqueia renderização)
   useEffect(() => {
@@ -51,8 +72,21 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     }
   }, [])
   
-  // Projetos recomendados do backoffice (primeiros 3)
-  const recommended = projects.slice(0, 3)
+  // Projetos: Personalizados por IA OU do backoffice OU padrão (fallback)
+  // PONTO DE CONTROLE: Usar SEMPRE os projetos padrão (sem backoffice)
+  const projects = useMemo(() => {
+    return defaultProjects;
+  }, [defaultProjects]);
+  
+  // Projetos recomendados (primeiros 3) - SEMPRE tem pelo menos os padrões
+  // Garantir que sempre seja um array válido com pelo menos 3 itens
+  const recommended = useMemo(() => {
+    const projs = projects && Array.isArray(projects) && projects.length > 0 
+      ? projects 
+      : defaultProjects;
+    // Garantir que sempre retorna pelo menos 3 itens
+    return projs.slice(0, Math.max(3, projs.length));
+  }, [projects, defaultProjects]);
   
   useEffect(() => {
     // Detectar tema do documento
@@ -147,19 +181,21 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               {heroSubtitle}
             </p>
 
-            {/* Pillars - Do backoffice */}
-            {cmsContent?.page?.pillars && cmsContent.page.pillars.length > 0 && (
-              <div className="mt-6 sm:mt-8 flex flex-wrap gap-3 sm:gap-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
-                {cmsContent.page.pillars.map((pillar: string, index: number) => (
-                  <span 
-                    key={index}
-                    className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10"
-                  >
-                    {pillar}
-                  </span>
-                ))}
-              </div>
-            )}
+            {/* Pillars - ESTÁTICO (sem backoffice) */}
+            <div className="mt-6 sm:mt-8 flex flex-wrap gap-3 sm:gap-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+              {[
+                lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture',
+                lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events',
+                lang === 'pt' ? 'Educação & Pesquisa' : lang === 'es' ? 'Educación & Investigación' : lang === 'fr' ? 'Éducation & Recherche' : 'Education & Research'
+              ].map((pillar: string, index: number) => (
+                <span 
+                  key={index}
+                  className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10"
+                >
+                  {pillar}
+                </span>
+              ))}
+            </div>
             </div>
 
           {/* Card lateral - sempre escuro com texto claro */}
@@ -193,12 +229,92 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* Featured Project - Hero Visual */}
+        {/* Nossas Soluções - Grid de Serviços - SEMPRE MOSTRA */}
         <section className="py-12 sm:py-16 md:py-20">
           <div className="mx-auto max-w-6xl px-3 sm:px-4 md:px-6">
-            {recommended.length > 0 && (() => {
-              const featured = recommended[0]
-              const hasMedia = featured.heroImage
+            <div className="mb-8 flex items-center justify-between">
+              <h2 className="font-handel text-2xl uppercase tracking-[0.12em] md:text-3xl" style={{ color: 'var(--theme-text)' }}>
+                {lang === 'pt' ? 'Nossas Soluções' : lang === 'es' ? 'Nuestras Soluciones' : lang === 'fr' ? 'Nos Solutions' : 'Our Solutions'}
+              </h2>
+              <Link
+                to="/what"
+                className="text-sm font-sora uppercase tracking-[0.1em] text-azimut-red hover:text-azimut-red/80 transition-colors"
+              >
+                {lang === 'pt' ? 'Ver Todos →' : lang === 'es' ? 'Ver Todos →' : lang === 'fr' ? 'Voir Tout →' : 'View All →'}
+              </Link>
+            </div>
+            {/* PONTO DE CONTROLE: Sempre mostrar serviços padrão (sem backoffice) */}
+            {true && (
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {[
+                  { 
+                    slug: 'cinema-audiovisual',
+                    title: lang === 'pt' ? 'Cinema & Audiovisual' : lang === 'es' ? 'Cine & Audiovisual' : lang === 'fr' ? 'Cinéma & Audiovisuel' : 'Cinema & Audiovisual',
+                    description: lang === 'pt' ? 'Narrativas cinematográficas de alta qualidade' : lang === 'es' ? 'Narrativas cinematográficas de alta calidad' : lang === 'fr' ? 'Récits cinématographiques de haute qualité' : 'High-quality cinematic narratives',
+                    icon: '🎬'
+                  },
+                  { 
+                    slug: 'animacao-2d-3d',
+                    title: lang === 'pt' ? 'Animação 2D/3D' : lang === 'es' ? 'Animación 2D/3D' : lang === 'fr' ? 'Animation 2D/3D' : '2D/3D Animation',
+                    description: lang === 'pt' ? 'Personagens e mundos animados' : lang === 'es' ? 'Personajes y mundos animados' : lang === 'fr' ? 'Personnages et mondes animés' : 'Animated characters and worlds',
+                    icon: '🎨'
+                  },
+                  { 
+                    slug: 'xr-interatividade',
+                    title: lang === 'pt' ? 'XR / Interatividade' : lang === 'es' ? 'XR / Interactivo' : lang === 'fr' ? 'XR / Interactif' : 'XR / Interactive',
+                    description: lang === 'pt' ? 'Experiências imersivas VR/AR' : lang === 'es' ? 'Experiencias inmersivas VR/AR' : lang === 'fr' ? 'Expériences immersives VR/AR' : 'Immersive VR/AR experiences',
+                    icon: '🥽'
+                  },
+                  { 
+                    slug: 'ia-criativa',
+                    title: lang === 'pt' ? 'IA Criativa' : lang === 'es' ? 'IA Creativa' : lang === 'fr' ? 'IA Créative' : 'Creative AI',
+                    description: lang === 'pt' ? 'Pipelines com inteligência artificial' : lang === 'es' ? 'Pipelines con inteligencia artificial' : lang === 'fr' ? 'Pipelines avec intelligence artificielle' : 'AI-powered pipelines',
+                    icon: '🤖'
+                  },
+                  { 
+                    slug: 'educacao-formacao',
+                    title: lang === 'pt' ? 'Educação & Formação' : lang === 'es' ? 'Educación & Formación' : lang === 'fr' ? 'Éducation & Formation' : 'Education & Training',
+                    description: lang === 'pt' ? 'Workshops e mentorias especializadas' : lang === 'es' ? 'Workshops y mentorías especializadas' : lang === 'fr' ? 'Ateliers et mentorats spécialisés' : 'Specialized workshops and mentoring',
+                    icon: '📚'
+                  },
+                  { 
+                    slug: 'consultoria-estrategia',
+                    title: lang === 'pt' ? 'Consultoria & Estratégia' : lang === 'es' ? 'Consultoría & Estrategia' : lang === 'fr' ? 'Conseil & Stratégie' : 'Consulting & Strategy',
+                    description: lang === 'pt' ? 'Acompanhamento de projetos end-to-end' : lang === 'es' ? 'Acompañamiento de proyectos end-to-end' : lang === 'fr' ? 'Accompagnement de projets end-to-end' : 'End-to-end project support',
+                    icon: '💡'
+                  }
+                ].map((service: any, index: number) => (
+                  <article
+                    key={service.slug}
+                    className="group rounded-2xl border border-white/10 card-adaptive p-5 shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(201,35,55,0.3)] cursor-pointer"
+                    style={{
+                      animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+                    }}
+                    onClick={() => window.location.href = `/what#${service.slug}`}
+                  >
+                    {service.icon && (
+                      <div className="mb-3 text-3xl">{service.icon}</div>
+                    )}
+                    <h3 className="mb-2 font-sora text-[1.05rem] font-semibold text-white group-hover:text-azimut-red transition-colors duration-300">
+                      {service.title}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-slate-200 group-hover:text-slate-100 transition-colors duration-300">
+                      {service.description}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Featured Project - Hero Visual - SEMPRE MOSTRA, mesmo sem dados */}
+        <section className="py-12 sm:py-16 md:py-20">
+          <div className="mx-auto max-w-6xl px-3 sm:px-4 md:px-6">
+            {(() => {
+              // GARANTIR que sempre há pelo menos um projeto
+              const featured = recommended[0] || defaultProjects[0]
+              const hasMedia = featured?.heroImage
               return (
                 <div className="relative overflow-hidden rounded-3xl card-adaptive shadow-[0_32px_80px_rgba(0,0,0,0.6)]">
                   {/* Featured Image/Video Area - BACKOFFICE: mediaPoster ou mediaLoop */}
@@ -266,14 +382,29 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         ))}
                       </div>
                     )}
-                    <p className="text-slate-300 leading-relaxed">
+                    <p className="text-slate-300 leading-relaxed mb-4">
                       {featured.summary || featured.shortTitle}
                     </p>
                     {(featured.city || featured.country) && (
-                      <p className="mt-4 text-sm text-slate-400">
+                      <p className="mb-4 text-sm text-slate-400">
                         📍 {[featured.city, featured.country].filter(Boolean).join(', ')}
                       </p>
                     )}
+                    {/* CTAs melhorados */}
+                    <div className="flex flex-wrap gap-3 mt-6">
+                      <Link
+                        to={`/work/${featured.slug}`}
+                        className="inline-flex items-center justify-center rounded-lg bg-azimut-red px-6 py-2.5 font-sora text-sm uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/90 hover:scale-105"
+                      >
+                        {lang === 'pt' ? 'Ver Projeto' : lang === 'es' ? 'Ver Proyecto' : lang === 'fr' ? 'Voir Projet' : 'View Project'}
+                      </Link>
+                      <Link
+                        to="/contact?interest=similar"
+                        className="inline-flex items-center justify-center rounded-lg border border-azimut-red px-6 py-2.5 font-sora text-sm uppercase tracking-[0.1em] text-azimut-red transition-all duration-300 hover:bg-azimut-red/10 hover:scale-105"
+                      >
+                        {lang === 'pt' ? 'Falar sobre Projeto Similar' : lang === 'es' ? 'Hablar sobre Proyecto Similar' : lang === 'fr' ? 'Parler d\'un Projet Similaire' : 'Discuss Similar Project'}
+                      </Link>
+                    </div>
                   </div>
                 </div>
               )
@@ -281,28 +412,45 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* Recomendações - Só mostra se houver projetos */}
-        {recommended.length > 1 && (
-          <section className="pb-12 sm:pb-16 md:pb-20">
-            <div className="mx-auto max-w-5xl px-3 sm:px-4 md:px-6">
-              <div className="mb-6 flex items-center justify-between">
-                <h2 className="font-handel text-2xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
-                  {lang === 'pt' ? 'Projetos Recomendados' : lang === 'es' ? 'Proyectos Recomendados' : lang === 'fr' ? 'Projets Recommandés' : 'Recommended Projects'}
-                </h2>
-              </div>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {recommended.slice(1).map((item: any, index: number) => (
-                <article
+        {/* Recomendações - SEMPRE MOSTRA, mesmo sem projetos */}
+        <section className="pb-12 sm:pb-16 md:pb-20">
+          <div className="mx-auto max-w-5xl px-3 sm:px-4 md:px-6">
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="font-handel text-2xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
+                {lang === 'pt' ? 'Sugestões para você' : lang === 'es' ? 'Sugerencias para ti' : lang === 'fr' ? 'Suggestions pour vous' : 'Suggested for you'}
+              </h2>
+              <Link
+                to="/work"
+                className="text-sm font-sora uppercase tracking-[0.1em] text-azimut-red hover:text-azimut-red/80 transition-colors"
+              >
+                {lang === 'pt' ? 'Ver Todos →' : lang === 'es' ? 'Ver Todos →' : lang === 'fr' ? 'Voir Tout →' : 'View All →'}
+              </Link>
+            </div>
+            {/* Sempre mostra projetos - recommended sempre tem pelo menos 3 itens */}
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {(recommended.length > 1 ? recommended.slice(1, 4) : defaultProjects.slice(1, Math.min(4, defaultProjects.length))).map((item: any, index: number) => (
+                <Link
                   key={item.slug}
-                  className="group rounded-2xl border border-white/10 card-adaptive p-4 shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(201,35,55,0.3)]"
+                  to={`/work/${item.slug}`}
+                  className="group rounded-2xl border border-white/10 card-adaptive p-4 shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(201,35,55,0.3)] block"
                   style={{
                     animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
                   }}
                 >
-                  <h3 className="mb-2 font-sora text-[1.05rem] text-white group-hover:text-azimut-red transition-colors duration-300">
+                  {item.heroImage?.thumbnail && (
+                    <div className="mb-4 aspect-video w-full overflow-hidden rounded-lg">
+                      <img
+                        src={item.heroImage.thumbnail}
+                        alt={item.title}
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                  <h3 className="mb-2 font-sora text-[1.05rem] font-semibold text-white group-hover:text-azimut-red transition-colors duration-300">
                     {item.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-slate-200 group-hover:text-slate-100 transition-colors duration-300">
+                  <p className="text-sm leading-relaxed text-slate-200 group-hover:text-slate-100 transition-colors duration-300 mb-3">
                     {item.summary || item.shortTitle}
                   </p>
                   {item.tags && item.tags.length > 0 && (
@@ -317,12 +465,15 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       ))}
                     </div>
                   )}
-                </article>
-                ))}
-              </div>
+                  <div className="mt-4 text-xs font-sora uppercase tracking-[0.1em] text-azimut-red opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    {lang === 'pt' ? 'Ver Projeto →' : lang === 'es' ? 'Ver Proyecto →' : lang === 'fr' ? 'Voir Projet →' : 'View Project →'}
+                  </div>
+                </Link>
+              ))}
             </div>
-          </section>
-        )}
+          </div>
+        </section>
+
       </main>
     </>
   )

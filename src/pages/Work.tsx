@@ -4,7 +4,8 @@ import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { trackPageView, trackProjectInteraction } from '../utils/analytics'
-import { useAzimutContent } from '../hooks/useAzimutContent'
+// PONTO DE CONTROLE: Integração com backoffice DESATIVADA
+// import { useAzimutContent } from '../hooks/useAzimutContent'
 import OportunidadesAtivas from '../components/OportunidadesAtivas'
 import CredibilidadeEditais from '../components/CredibilidadeEditais'
 import CuradoriaFestivais from '../components/CuradoriaFestivais'
@@ -25,9 +26,54 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   const [selectedYear, setSelectedYear] = useState<number | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   
-  // Buscar projetos do backoffice (100% backoffice)
-  const { content: cmsContent, loading: cmsLoading } = useAzimutContent({ page: 'work' })
-  const allCases = cmsContent?.highlightProjects || []
+  // PONTO DE CONTROLE: Integração com backoffice DESATIVADA - usando projetos padrão
+  // const { content: cmsContent, loading: cmsLoading } = useAzimutContent({ page: 'work' })
+  const cmsLoading = false // Não está carregando porque não tem API
+  
+  // Projetos de exemplo (sempre mostrados - sem chamadas de API)
+  const defaultCases = useMemo(() => [
+    {
+      slug: 'projeto-exemplo-1',
+      title: lang === 'pt' ? 'Instalação Imersiva' : lang === 'es' ? 'Instalación Inmersiva' : lang === 'fr' ? 'Installation Immersive' : 'Immersive Installation',
+      shortTitle: lang === 'pt' ? 'Experiência Visual Interativa' : lang === 'es' ? 'Experiencia Visual Interactiva' : lang === 'fr' ? 'Expérience Visuelle Interactive' : 'Interactive Visual Experience',
+      summary: lang === 'pt' ? 'Uma instalação interativa que combina narrativa cinematográfica com tecnologia imersiva para criar uma experiência única que conecta audiências de diferentes culturas.' : lang === 'es' ? 'Una instalación interactiva que combina narrativa cinematográfica con tecnología inmersiva para crear una experiencia única que conecta audiencias de diferentes culturas.' : lang === 'fr' ? 'Une installation interactive qui combine narration cinématographique et technologie immersive pour créer une expérience unique qui connecte des audiences de différentes cultures.' : 'An interactive installation that combines cinematic storytelling with immersive technology to create a unique experience that connects audiences from different cultures.',
+      city: lang === 'pt' ? 'São Paulo' : 'São Paulo',
+      country: lang === 'pt' ? 'Brasil' : lang === 'es' ? 'Brasil' : lang === 'fr' ? 'Brésil' : 'Brazil',
+      year: 2024,
+      tags: [lang === 'pt' ? 'Imersivo' : lang === 'es' ? 'Inmersivo' : lang === 'fr' ? 'Immersif' : 'Immersive', lang === 'pt' ? 'Interativo' : lang === 'es' ? 'Interactivo' : lang === 'fr' ? 'Interactif' : 'Interactive', lang === 'pt' ? 'Cinema' : lang === 'es' ? 'Cine' : lang === 'fr' ? 'Cinéma' : 'Cinema'],
+      type: 'INSTALLATION',
+      heroImage: null,
+    },
+    {
+      slug: 'projeto-exemplo-2',
+      title: lang === 'pt' ? 'Exposição Digital' : lang === 'es' ? 'Exposición Digital' : lang === 'fr' ? 'Exposition Numérique' : 'Digital Exhibition',
+      shortTitle: lang === 'pt' ? 'Narrativa Espacial' : lang === 'es' ? 'Narrativa Espacial' : lang === 'fr' ? 'Narration Spatiale' : 'Spatial Narrative',
+      summary: lang === 'pt' ? 'Uma exposição que utiliza realidade aumentada e projeções mapeadas para contar histórias através do espaço físico, criando uma experiência educacional envolvente.' : lang === 'es' ? 'Una exposición que utiliza realidad aumentada y proyecciones mapeadas para contar historias a través del espacio físico, creando una experiencia educativa envolvente.' : lang === 'fr' ? 'Une exposition qui utilise la réalité augmentée et les projections mappées pour raconter des histoires à travers l\'espace physique, créant une expérience éducative engageante.' : 'An exhibition that uses augmented reality and mapped projections to tell stories through physical space, creating an engaging educational experience.',
+      city: lang === 'pt' ? 'Montreal' : 'Montreal',
+      country: lang === 'pt' ? 'Canadá' : lang === 'es' ? 'Canadá' : lang === 'fr' ? 'Canada' : 'Canada',
+      year: 2024,
+      tags: [lang === 'pt' ? 'AR' : 'AR', lang === 'pt' ? 'Educação' : lang === 'es' ? 'Educación' : lang === 'fr' ? 'Éducation' : 'Education', lang === 'pt' ? 'Museu' : lang === 'es' ? 'Museo' : lang === 'fr' ? 'Musée' : 'Museum'],
+      type: 'EXHIBITION',
+      heroImage: null,
+    },
+    {
+      slug: 'projeto-exemplo-3',
+      title: lang === 'pt' ? 'Filme VR 360°' : lang === 'es' ? 'Película VR 360°' : lang === 'fr' ? 'Film VR 360°' : '360° VR Film',
+      shortTitle: lang === 'pt' ? 'Experiência Virtual' : lang === 'es' ? 'Experiencia Virtual' : lang === 'fr' ? 'Expérience Virtuelle' : 'Virtual Experience',
+      summary: lang === 'pt' ? 'Um filme de realidade virtual que transporta o espectador para diferentes locais e momentos históricos, criando uma imersão completa através de narrativa cinematográfica.' : lang === 'es' ? 'Una película de realidad virtual que transporta al espectador a diferentes lugares y momentos históricos, creando una inmersión completa a través de narrativa cinematográfica.' : lang === 'fr' ? 'Un film de réalité virtuelle qui transporte le spectateur vers différents lieux et moments historiques, créant une immersion complète grâce à la narration cinématographique.' : 'A virtual reality film that transports the viewer to different locations and historical moments, creating complete immersion through cinematic storytelling.',
+      city: lang === 'pt' ? 'Rio de Janeiro' : lang === 'es' ? 'Río de Janeiro' : lang === 'fr' ? 'Rio de Janeiro' : 'Rio de Janeiro',
+      country: lang === 'pt' ? 'Brasil' : lang === 'es' ? 'Brasil' : lang === 'fr' ? 'Brésil' : 'Brazil',
+      year: 2023,
+      tags: [lang === 'pt' ? 'VR' : 'VR', lang === 'pt' ? '360°' : '360°', lang === 'pt' ? 'Cinema' : lang === 'es' ? 'Cine' : lang === 'fr' ? 'Cinéma' : 'Cinema'],
+      type: 'VR_FILM',
+      heroImage: null,
+    },
+  ], [lang])
+  
+  // PONTO DE CONTROLE: Usar SEMPRE os projetos padrão (sem backoffice)
+  const allCases = useMemo(() => {
+    return defaultCases;
+  }, [defaultCases])
   
   // Filtrar projetos
   const cases = useMemo(() => {
@@ -254,7 +300,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               : `Showing ${cases.length} ${cases.length === 1 ? 'project' : 'projects'}${hasActiveFilters ? ' (filtered)' : ''}`}
           </div>
 
-          {/* Featured Project - Full Width */}
+          {/* Featured Project - Full Width - SEMPRE MOSTRA, mesmo sem dados */}
           {cases.length > 0 && (
               <article
                 className="mb-8 overflow-hidden rounded-3xl border border-white/10 card-adaptive shadow-[0_32px_80px_rgba(0,0,0,0.6)] cursor-pointer"
@@ -282,23 +328,23 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   ) : (
                     /* Placeholder quando não há mídia */
                     <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-azimut-red/10 via-slate-900 to-slate-950 transition-all group-hover:from-azimut-red/15">
-                    <div className="text-center p-6">
-                      <div className="mb-4 inline-flex h-20 w-20 items-center justify-center rounded-full border-2 border-azimut-red/30 bg-azimut-red/10 backdrop-blur transition-all group-hover:scale-110">
-                        <svg className="h-10 w-10 text-azimut-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
+                      <div className="text-center p-6">
+                        <div className="mb-4 inline-flex h-20 w-20 items-center justify-center rounded-full border-2 border-azimut-red/30 bg-azimut-red/10 backdrop-blur transition-all group-hover:scale-110">
+                          <svg className="h-10 w-10 text-azimut-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                        </div>
+                        <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-azimut-red/30 bg-azimut-red/10 px-4 py-1.5 backdrop-blur">
+                          <span className="h-2 w-2 animate-pulse rounded-full bg-azimut-red"></span>
+                          <span className="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-200">
+                            {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-500 uppercase tracking-wider">
+                          {lang === 'pt' ? '🖼️ Imagem/Vídeo do Backoffice' : lang === 'es' ? '🖼️ Imagen/Video del Backoffice' : '🖼️ Image/Video from Backoffice'}
+                        </p>
                       </div>
-                      <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-azimut-red/30 bg-azimut-red/10 px-4 py-1.5 backdrop-blur">
-                        <span className="h-2 w-2 animate-pulse rounded-full bg-azimut-red"></span>
-                        <span className="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-200">
-                          {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-500 uppercase tracking-wider">
-                        {lang === 'pt' ? '🖼️ Imagem/Vídeo do Backoffice' : lang === 'es' ? '🖼️ Imagen/Video del Backoffice' : '🖼️ Image/Video from Backoffice'}
-                      </p>
                     </div>
-                  </div>
                   )}
                 </div>
 
