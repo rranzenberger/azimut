@@ -149,6 +149,23 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           overlaps = true // Forçar hamburger em TODOS os grupos mobile
         }
         
+        // Calcular padding dinâmico baseado em grupos de viewport
+        let paddingValue: string
+        if (windowWidth < 360) {
+          paddingValue = '2px' // Legacy/Android entrada (360px crítico)
+        } else if (windowWidth < 375) {
+          paddingValue = '3px' // Entre Legacy e Standard
+        } else if (windowWidth < 412) {
+          paddingValue = '4px' // Standard (375-410px)
+        } else if (windowWidth < 640) {
+          paddingValue = '6px' // Large (412-430px)
+        } else if (windowWidth < 768) {
+          paddingValue = '16px' // Tablet
+        } else {
+          paddingValue = '24px' // Desktop
+        }
+        setContainerPadding({ left: paddingValue, right: paddingValue })
+        
         setMenuOverlaps(overlaps)
       })
     }
