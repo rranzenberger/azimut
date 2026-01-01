@@ -13,64 +13,19 @@ import ErrorBoundary from './components/ErrorBoundary'
 import Chatbot from './components/Chatbot'
 import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDetection'
 
-// Lazy loading de páginas para melhor performance
+// CORREÇÃO: Import direto das páginas problemáticas (Studio, Academy, Contact)
+// Lazy loading estava causando erro "Failed to fetch dynamically imported module"
+import Studio from './pages/Studio'
+import Academy from './pages/Academy'
+import Contact from './pages/Contact'
+
+// Lazy loading apenas para páginas que funcionam bem
 const Home = lazy(() => import('./pages/Home'))
 const WhatWeDo = lazy(() => import('./pages/WhatWeDo'))
 const Work = lazy(() => import('./pages/Work'))
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
-const Studio = lazy(() => import('./pages/Studio'))
-const Academy = lazy(() => import('./pages/Academy'))
-// Contact com tratamento de erro melhorado e retry
-const Contact = lazy(() => 
-  import('./pages/Contact').catch((error) => {
-    console.error('Erro ao carregar Contact:', error)
-    // Se for erro de módulo não encontrado, tentar recarregar a página
-    if (error.message?.includes('Failed to fetch dynamically imported module')) {
-      // Aguardar um pouco e tentar novamente
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          window.location.reload()
-        }, 1000)
-        // Retornar componente temporário enquanto recarrega
-        resolve({
-          default: () => (
-            <div style={{ padding: '40px', textAlign: 'center', color: '#fff', minHeight: '50vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-              <h1 style={{ fontSize: '24px', marginBottom: '16px' }}>Carregando...</h1>
-              <p style={{ marginBottom: '24px', opacity: 0.8 }}>Por favor, aguarde enquanto recarregamos a página.</p>
-            </div>
-          )
-        })
-      })
-    }
-    // Retornar um componente de fallback para outros erros
-    return {
-      default: () => (
-        <div style={{ padding: '40px', textAlign: 'center', color: '#fff', minHeight: '50vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-          <h1 style={{ fontSize: '24px', marginBottom: '16px' }}>Erro ao carregar página</h1>
-          <p style={{ marginBottom: '24px', opacity: 0.8 }}>Por favor, recarregue a página ou tente novamente mais tarde.</p>
-          <button 
-            onClick={() => window.location.reload()}
-            style={{
-              padding: '12px 24px',
-              borderRadius: '8px',
-              border: 'none',
-              background: '#c92337',
-              color: '#fff',
-              fontSize: '14px',
-              fontWeight: 600,
-              cursor: 'pointer',
-            }}
-          >
-            Recarregar Página
-          </button>
-        </div>
-      )
-    }
-  })
-)
 const NotFound = lazy(() => import('./pages/NotFound'))
 const Login = lazy(() => import('./pages/Login'))
-import ProtectedRoute from './components/ProtectedRoute'
 
 const App: React.FC = () => {
   // Carregar idioma do localStorage ou detectar automaticamente
@@ -217,71 +172,15 @@ const App: React.FC = () => {
               {/* Rota de Login - SEM ProtectedRoute */}
               <Route path="/login" element={<Login />} />
               
-              {/* Rotas protegidas */}
-              <Route 
-                path="/" 
-                element={
-                  <ProtectedRoute>
-                    <Home lang={lang} />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/home" 
-                element={
-                  <ProtectedRoute>
-                    <Home lang={lang} />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/what" 
-                element={
-                  <ProtectedRoute>
-                    <WhatWeDo lang={lang} />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/work" 
-                element={
-                  <ProtectedRoute>
-                    <Work lang={lang} />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/work/:slug" 
-                element={
-                  <ProtectedRoute>
-                    <ProjectDetail lang={lang} />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/studio" 
-                element={
-                  <ProtectedRoute>
-                    <Studio lang={lang} />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/academy" 
-                element={
-                  <ProtectedRoute>
-                    <Academy lang={lang} />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/contact" 
-                element={
-                  <ProtectedRoute>
-                    <Contact lang={lang} />
-                  </ProtectedRoute>
-                } 
-              />
+              {/* Rotas públicas - SEM proteção */}
+              <Route path="/" element={<Home lang={lang} />} />
+              <Route path="/home" element={<Home lang={lang} />} />
+              <Route path="/what" element={<WhatWeDo lang={lang} />} />
+              <Route path="/work" element={<Work lang={lang} />} />
+              <Route path="/work/:slug" element={<ProjectDetail lang={lang} />} />
+              <Route path="/studio" element={<Studio lang={lang} />} />
+              <Route path="/academy" element={<Academy lang={lang} />} />
+              <Route path="/contact" element={<Contact lang={lang} />} />
               {/* Rota 404 - captura qualquer URL não encontrada */}
               <Route path="*" element={<NotFound lang={lang} />} />
             </Routes>
