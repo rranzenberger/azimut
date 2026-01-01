@@ -206,7 +206,19 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           paddingRight: 'env(safe-area-inset-right, 0px)'
         }}
       >
-        <div ref={containerRef} className="mx-auto grid min-h-[64px] w-full max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-0.5 sm:gap-1 sm:px-4 sm:h-20 sm:gap-2 min-[768px]:px-6 min-[768px]:gap-3 md:gap-4 lg:gap-5 xl:gap-6" style={{ overflow: 'visible', position: 'relative', minWidth: 0, maxWidth: '100%', paddingLeft: typeof window !== 'undefined' && window.innerWidth < 360 ? '2px' : (window.innerWidth < 375 ? '3px' : (window.innerWidth < 412 ? '4px' : (window.innerWidth < 640 ? '6px' : (window.innerWidth < 768 ? '16px' : '24px')))), paddingRight: typeof window !== 'undefined' && window.innerWidth < 360 ? '2px' : (window.innerWidth < 375 ? '3px' : (window.innerWidth < 412 ? '4px' : (window.innerWidth < 640 ? '6px' : (window.innerWidth < 768 ? '16px' : '24px'))), boxSizing: 'border-box' }}>
+        <div 
+          ref={containerRef} 
+          className="mx-auto grid min-h-[64px] w-full max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-0.5 sm:gap-1 sm:px-4 sm:h-20 sm:gap-2 min-[768px]:px-6 min-[768px]:gap-3 md:gap-4 lg:gap-5 xl:gap-6" 
+          style={{ 
+            overflow: 'visible', 
+            position: 'relative', 
+            minWidth: 0, 
+            maxWidth: '100%', 
+            paddingLeft: containerPadding.left,
+            paddingRight: containerPadding.right,
+            boxSizing: 'border-box' 
+          }}
+        >
           {/* ═══════════════════════════════════════════════════════════════
               🔒 LOGO - NÃO MODIFICAR: height: 56px, alinhada à esquerda
               ═══════════════════════════════════════════════════════════ */}
