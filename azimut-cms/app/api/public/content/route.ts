@@ -279,6 +279,7 @@ function formatProject(project: any, lang: string) {
       : t.labelEn
     ) || [],
     heroImage: project.heroImage ? {
+      type: project.heroImage.type, // 'IMAGE' ou 'VIDEO'
       original: project.heroImage.originalUrl,
       thumbnail: project.heroImage.thumbnailUrl,
       medium: project.heroImage.mediumUrl,
@@ -289,6 +290,7 @@ function formatProject(project: any, lang: string) {
            : lang === 'es' ? (project.heroImage.altEs || project.heroImage.altEn)
            : lang === 'fr' ? (project.heroImage.altFr || project.heroImage.altEn)
            : project.heroImage.altEn,
+      format: project.heroImage.format, // 'YOUTUBE', 'VIMEO', etc
     } : null,
     cta: {
       label: lang === 'pt' ? project.ctaLabelPt : project.ctaLabelEn,

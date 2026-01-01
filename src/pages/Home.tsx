@@ -7,6 +7,7 @@ import { trackPageView } from '../utils/analytics'
 // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
 import { useAzimutContent } from '../hooks/useAzimutContent'
 import { usePersonalizedContent } from '../hooks/usePersonalizedContent'
+import { VideoPlayer } from '../components/VideoPlayer'
 
 interface HomeProps {
   lang: Lang
@@ -374,57 +375,71 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     {/* Renderizar mídia se disponível, senão mostrar placeholder */}
                     {hasMedia && (featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.original) ? (
                       <>
-                        <img
-                          src={featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.original}
-                          alt={featured.heroImage?.alt || featured.title}
-                          loading="lazy"
-                          className="absolute inset-0 h-full w-full object-cover"
-                          onError={(e) => {
-                            // Se imagem falhar, mostrar placeholder
-                            const target = e.currentTarget;
-                            target.style.display = 'none';
-                            const parent = target.parentElement;
-                            if (parent) {
-                              parent.innerHTML = `
-                                <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-azimut-red/10 via-slate-900 to-slate-950">
-                                  <div class="text-center p-6 z-10">
-                                    <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 backdrop-blur">
-                                      <span class="h-2 w-2 animate-pulse rounded-full bg-azimut-red"></span>
-                                      <span class="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-200">
-                                        ${lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
-                                      </span>
+                        {/* Verificar se é vídeo */}
+                        {featured.heroImage?.type === 'VIDEO' && featured.heroImage?.original ? (
+                          <VideoPlayer
+                            videoUrl={featured.heroImage.original}
+                            thumbnailUrl={featured.heroImage.thumbnail || featured.heroImage.large}
+                            alt={featured.heroImage?.alt || featured.title}
+                            className="absolute inset-0 h-full w-full"
+                          />
+                        ) : (
+                          <img
+                            src={featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.original}
+                            alt={featured.heroImage?.alt || featured.title}
+                            loading="lazy"
+                            className="absolute inset-0 h-full w-full object-cover"
+                            onError={(e) => {
+                              // Se imagem falhar, mostrar placeholder
+                              const target = e.currentTarget;
+                              target.style.display = 'none';
+                              const parent = target.parentElement;
+                              if (parent) {
+                                parent.innerHTML = `
+                                  <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-azimut-red/10 via-slate-900 to-slate-950">
+                                    <div class="text-center p-6 z-10">
+                                      <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 backdrop-blur">
+                                        <span class="h-2 w-2 animate-pulse rounded-full bg-azimut-red"></span>
+                                        <span class="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-200">
+                                          ${lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
+                                        </span>
+                                      </div>
+                                      <h3 class="font-handel text-3xl uppercase tracking-[0.12em] text-slate-100 md:text-4xl">
+                                        ${featured.title}
+                                      </h3>
+                                      <p class="mt-2 text-slate-400 text-sm">
+                                        ${lang === 'pt' ? 'Aguardando imagem do backoffice' : lang === 'es' ? 'Esperando imagen del backoffice' : lang === 'fr' ? 'En attente d\'image du backoffice' : 'Awaiting backoffice image'}
+                                      </p>
                                     </div>
-                                    <h3 class="font-handel text-3xl uppercase tracking-[0.12em] text-slate-100 md:text-4xl">
-                                      ${featured.title}
-                                    </h3>
-                                    <p class="mt-2 text-slate-400 text-sm">
-                                      ${lang === 'pt' ? 'Aguardando imagem do backoffice' : lang === 'es' ? 'Esperando imagen del backoffice' : lang === 'fr' ? 'En attente d\'image du backoffice' : 'Awaiting backoffice image'}
-                                    </p>
                                   </div>
-                                </div>
-                              `;
-                            }
-                          }}
-                        />
-                        {/* Overlay gradient para legibilidade do texto */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/40 to-transparent pointer-events-none"></div>
-                        {/* Badge e título sobre a imagem */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="text-center p-6 z-10">
-                            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 backdrop-blur">
-                              <span className="h-2 w-2 animate-pulse rounded-full bg-azimut-red"></span>
-                              <span className="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-200">
-                                {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
-                              </span>
+                                `;
+                              }
+                            }}
+                          />
+                        )}
+                        {/* Overlay gradient para legibilidade do texto (apenas se não for vídeo) */}
+                        {featured.heroImage?.type !== 'VIDEO' && (
+                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/40 to-transparent pointer-events-none"></div>
+                        )}
+                        {/* Badge e título sobre a mídia (apenas se não for vídeo) */}
+                        {featured.heroImage?.type !== 'VIDEO' && (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center p-6 z-10">
+                              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 backdrop-blur">
+                                <span className="h-2 w-2 animate-pulse rounded-full bg-azimut-red"></span>
+                                <span className="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-200">
+                                  {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
+                                </span>
+                              </div>
+                              <h3 className="font-handel text-3xl uppercase tracking-[0.12em] text-slate-100 md:text-4xl drop-shadow-lg">
+                                {featured.title}
+                              </h3>
+                              <p className="mt-2 text-slate-300 drop-shadow-md">
+                                {featured.summary || featured.shortTitle}
+                              </p>
                             </div>
-                            <h3 className="font-handel text-3xl uppercase tracking-[0.12em] text-slate-100 md:text-4xl drop-shadow-lg">
-                              {featured.title}
-                            </h3>
-                            <p className="mt-2 text-slate-300 drop-shadow-md">
-                              {featured.summary || featured.shortTitle}
-                            </p>
                           </div>
-                        </div>
+                        )}
                       </>
                     ) : (
                       /* Placeholder quando não há mídia */
