@@ -62,6 +62,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
     // Inicializar como false - será calculado no useEffect
     return false
   })
+  // Padding dinâmico baseado em grupos de viewport
+  const [containerPadding, setContainerPadding] = useState({ left: '4px', right: '4px' })
   
   // Refs para medir sobreposição
   const logoRef = React.useRef<HTMLAnchorElement>(null)
@@ -84,10 +86,14 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         // 🔒 VALORES TRAVADOS - NÃO MODIFICAR
         // ═══════════════════════════════════════════════════════════════
         // Larguras estimadas (baseadas nos componentes) - ULTRA COMPACTO
-        // IMPORTANTE: Em mobile, elementos podem ser menores
-        const logoWidth = windowWidth < 640 ? 160 : 180 // Logo menor em mobile
-        // Em mobile, CTA e idiomas não aparecem, então rightSideWidth é menor
-        const rightSideWidth = windowWidth < 640 ? 60 : (windowWidth < 768 ? 100 : 220) // Mobile: só tema + hamburger, Tablet: tema + hamburger, Desktop: tudo
+        // IMPORTANTE: Ajustado para grupos de viewport do mercado
+        // Grupo 320-374px (Legacy): Logo menor, só tema + hamburger
+        // Grupo 375-410px (Standard): Logo médio, só tema + hamburger
+        // Grupo 412-430px (Large): Logo médio, só tema + hamburger
+        // Grupo 768px+ (Tablet/Desktop): Logo completo, tudo visível
+        const logoWidth = windowWidth < 375 ? 150 : (windowWidth < 640 ? 160 : 180)
+        // rightSideWidth ajustado por grupo de viewport
+        const rightSideWidth = windowWidth < 375 ? 50 : (windowWidth < 640 ? 60 : (windowWidth < 768 ? 100 : 220))
         
         // Larguras do menu por idioma (estimativa conservadora baseada no texto)
         const menuWidths: Record<typeof lang, number> = {
@@ -102,13 +108,30 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         
         // Espaço necessário total (logo + menu + direita + gaps)
         // Gaps: padding do container + espaçamentos entre elementos
-        // IMPORTANTE: Padding varia por tamanho de tela - REDUZIDO para mobile
-        // Mobile: 8px cada lado = 16px total (mínimo para não cortar hamburger)
-        // Tablet: 16px cada lado = 32px total
+        // IMPORTANTE: Padding ajustado por GRUPOS DE VIEWPORT do mercado
+        // Grupo 320-360px (Legacy/Android entrada): 2px cada lado = 4px total (mínimo absoluto)
+        // Grupo 375-410px (Standard): 4px cada lado = 8px total
+        // Grupo 412-430px (Large): 6px cada lado = 12px total
+        // Tablet 768px+: 16px cada lado = 32px total
         // Desktop: 24px cada lado = 48px total
-        const containerPadding = windowWidth < 640 ? 16 : (windowWidth < 768 ? 32 : 48)
-        // Espaçamentos entre elementos reduzidos em mobile
-        const elementGaps = windowWidth < 640 ? 40 : 64 // Mobile: 40px (reduzido), Desktop: 64px
+        let containerPadding: number
+        if (windowWidth < 360) {
+          containerPadding = 4 // 2px cada lado - Legacy/Android entrada (360px crítico)
+        } else if (windowWidth < 375) {
+          containerPadding = 6 // 3px cada lado - Entre Legacy e Standard
+        } else if (windowWidth < 412) {
+          containerPadding = 8 // 4px cada lado - Standard (375-410px)
+        } else if (windowWidth < 640) {
+          containerPadding = 12 // 6px cada lado - Large (412-430px)
+        } else if (windowWidth < 768) {
+          containerPadding = 32 // 16px cada lado - Tablet
+        } else {
+          containerPadding = 48 // 24px cada lado - Desktop
+        }
+        
+        // Espaçamentos entre elementos ajustados por grupo
+        // Legacy/Android entrada: 30px (mínimo), Standard: 35px, Large: 40px, Desktop: 64px
+        const elementGaps = windowWidth < 360 ? 30 : (windowWidth < 375 ? 32 : (windowWidth < 412 ? 35 : (windowWidth < 640 ? 40 : 64)))
         const gaps = containerPadding + elementGaps
         const totalNeeded = logoWidth + currentMenuWidth + rightSideWidth + gaps
         
@@ -116,11 +139,14 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         // IMPORTANTE: Calcula para TODAS as resoluções, não apenas desktop
         let overlaps = totalNeeded > windowWidth
         
-        // GARANTIR que em iPhones pequenos (< 430px), hamburger SEMPRE aparece
-        // iPhone SE: 375px, iPhone X/10/11: 375px, iPhone 12: 390px, iPhone 13: 390px
-        // Nestes casos, menu horizontal NUNCA cabe, então hamburger deve aparecer
+        // GARANTIR que em TODOS os grupos mobile (< 430px), hamburger SEMPRE aparece
+        // Cobre: Legacy (320-374px), Standard (375-410px), Large (412-430px)
+        // iPhone SE: 375px, iPhone X/10/11: 375px, iPhone 12/13/14: 390px
+        // Android entrada (Galaxy A04, Moto E): 360px
+        // Xiaomi Redmi Note: 393px
+        // Samsung A54, Motorola G: 412px
         if (windowWidth < 430) {
-          overlaps = true // Forçar hamburger em iPhones pequenos
+          overlaps = true // Forçar hamburger em TODOS os grupos mobile
         }
         
         setMenuOverlaps(overlaps)
@@ -180,7 +206,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           paddingRight: 'env(safe-area-inset-right, 0px)'
         }}
       >
-        <div ref={containerRef} className="mx-auto grid min-h-[64px] w-full max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-0.5 sm:gap-1 sm:px-4 sm:h-20 sm:gap-2 min-[768px]:px-6 min-[768px]:gap-3 md:gap-4 lg:gap-5 xl:gap-6" style={{ overflow: 'visible', position: 'relative', minWidth: 0, maxWidth: '100%', paddingLeft: '4px', paddingRight: '4px', boxSizing: 'border-box' }}>
+        <div ref={containerRef} className="mx-auto grid min-h-[64px] w-full max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-0.5 sm:gap-1 sm:px-4 sm:h-20 sm:gap-2 min-[768px]:px-6 min-[768px]:gap-3 md:gap-4 lg:gap-5 xl:gap-6" style={{ overflow: 'visible', position: 'relative', minWidth: 0, maxWidth: '100%', paddingLeft: typeof window !== 'undefined' && window.innerWidth < 360 ? '2px' : (window.innerWidth < 375 ? '3px' : (window.innerWidth < 412 ? '4px' : (window.innerWidth < 640 ? '6px' : (window.innerWidth < 768 ? '16px' : '24px')))), paddingRight: typeof window !== 'undefined' && window.innerWidth < 360 ? '2px' : (window.innerWidth < 375 ? '3px' : (window.innerWidth < 412 ? '4px' : (window.innerWidth < 640 ? '6px' : (window.innerWidth < 768 ? '16px' : '24px'))), boxSizing: 'border-box' }}>
           {/* ═══════════════════════════════════════════════════════════════
               🔒 LOGO - NÃO MODIFICAR: height: 56px, alinhada à esquerda
               ═══════════════════════════════════════════════════════════ */}
