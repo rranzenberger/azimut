@@ -4,6 +4,7 @@ import { t, type Lang } from '../i18n'
 import ThemeToggle from './ThemeToggle'
 import BudgetWizardModal from './BudgetWizardModal'
 import SkipLink from './SkipLink'
+import NavDropdown from './NavDropdown'
 import { type UserProfile } from './BudgetWizard'
 import { trackCTA, trackLanguageChange } from '../utils/analytics'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -56,7 +57,15 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [hoveredRoute, setHoveredRoute] = useState<string | null>(null)
   const [isWizardOpen, setIsWizardOpen] = useState(false)
-  const [menuOverlaps, setMenuOverlaps] = useState(false) // false = menu aparece, true = hamburger
+  // Em mobile (< 768px), menu sempre trepa (hamburger sempre aparece)
+  // Em desktop (>= 768px), calculado dinamicamente
+  const [menuOverlaps, setMenuOverlaps] = useState(() => {
+    // Inicializar como true se for mobile (garante hamburger visível em mobile)
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      return true
+    }
+    return false
+  })
   
   // Refs para medir sobreposição
   const logoRef = React.useRef<HTMLAnchorElement>(null)
@@ -74,6 +83,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
       rafId = requestAnimationFrame(() => {
         // Largura da janela
         const windowWidth = window.innerWidth
+        
+        // Em mobile (< 768px), SEMPRE usar hamburger (menu sempre trepa)
+        if (windowWidth < 768) {
+          setMenuOverlaps(true)
+          return
+        }
         
         // ═══════════════════════════════════════════════════════════════
         // 🔒 VALORES TRAVADOS - NÃO MODIFICAR
@@ -221,58 +236,85 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 }}
               ></span>
             </Link>
-            <Link 
-              to="/what" 
-              className="nav-link-glow relative whitespace-nowrap pb-1 shrink-0 transition-colors duration-200 font-sora font-semibold"
+            {/* Soluções com submenu */}
+            <NavDropdown
+              label={t(lang, 'navWhat')}
+              items={[
+                {
+                  label: lang === 'pt' ? 'Todas as Soluções' : lang === 'es' ? 'Todas las Soluciones' : lang === 'fr' ? 'Toutes les Solutions' : 'All Solutions',
+                  href: '/what',
+                  description: lang === 'pt' ? 'Visão geral completa' : lang === 'es' ? 'Vista general completa' : lang === 'fr' ? 'Vue d\'ensemble complète' : 'Complete overview'
+                },
+                {
+                  label: lang === 'pt' ? 'Cinema & Audiovisual' : lang === 'es' ? 'Cine & Audiovisual' : lang === 'fr' ? 'Cinéma & Audiovisuel' : 'Cinema & Audiovisual',
+                  href: '/what#cinema-av',
+                  description: lang === 'pt' ? 'Narrativas cinematográficas' : lang === 'es' ? 'Narrativas cinematográficas' : lang === 'fr' ? 'Récits cinématographiques' : 'Cinematic narratives'
+                },
+                {
+                  label: lang === 'pt' ? 'Animação 2D/3D' : lang === 'es' ? 'Animación 2D/3D' : lang === 'fr' ? 'Animation 2D/3D' : '2D/3D Animation',
+                  href: '/what#animation',
+                  description: lang === 'pt' ? 'Personagens e mundos' : lang === 'es' ? 'Personajes y mundos' : lang === 'fr' ? 'Personnages et mondes' : 'Characters and worlds'
+                },
+                {
+                  label: lang === 'pt' ? 'XR / Interatividade' : lang === 'es' ? 'XR / Interactivo' : lang === 'fr' ? 'XR / Interactif' : 'XR / Interactive',
+                  href: '/what#xr',
+                  description: lang === 'pt' ? 'Experiências imersivas' : lang === 'es' ? 'Experiencias inmersivas' : lang === 'fr' ? 'Expériences immersives' : 'Immersive experiences'
+                },
+                {
+                  label: lang === 'pt' ? 'IA Criativa' : lang === 'es' ? 'IA Creativa' : lang === 'fr' ? 'IA Créative' : 'Creative AI',
+                  href: '/what#creative-ai',
+                  description: lang === 'pt' ? 'Pipelines com IA' : lang === 'es' ? 'Pipelines con IA' : lang === 'fr' ? 'Pipelines avec IA' : 'AI pipelines'
+                },
+                {
+                  label: lang === 'pt' ? 'Educação & Formação' : lang === 'es' ? 'Educación & Formación' : lang === 'fr' ? 'Éducation & Formation' : 'Education & Training',
+                  href: '/what#education',
+                  description: lang === 'pt' ? 'Workshops e mentorias' : lang === 'es' ? 'Workshops y mentorías' : lang === 'fr' ? 'Ateliers et mentorats' : 'Workshops and mentoring'
+                }
+              ]}
+              lang={lang}
+              theme={theme}
+              isActive={activeRoute === 'what'}
               onMouseEnter={() => setHoveredRoute('what')}
               onMouseLeave={() => setHoveredRoute(null)}
-              style={{ 
-                padding: '0 6px', 
-                minHeight: '44px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                position: 'relative',
-                color: activeRoute === 'what' 
-                  ? (theme === 'light' ? '#c92337' : '#c92337')
-                  : (hoveredRoute === 'what' ? '#c92337' : 'var(--theme-text-secondary)'),
-                textShadow: activeRoute === 'what' && theme === 'dark' ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' : undefined
-              }}
-            >
-              <span>{t(lang, 'navWhat')}</span>
-              <span 
-                className="absolute bottom-0 left-0 h-[1px] min-[768px]:h-[1.5px] md:h-[1.5px] lg:h-[2px] xl:h-[2px] bg-azimut-red transition-all duration-200 ease-in-out"
-                style={{ 
-                  width: shouldShowLine('what') ? '100%' : '0%',
-                  opacity: shouldShowLine('what') ? 1 : 0
-                }}
-              ></span>
-            </Link>
-            <Link 
-              to="/work" 
-              className="nav-link-glow relative whitespace-nowrap pb-1 shrink-0 transition-colors duration-200 font-sora font-semibold"
+              hovered={hoveredRoute === 'what'}
+            />
+            {/* Projetos com submenu */}
+            <NavDropdown
+              label={t(lang, 'navWork')}
+              items={[
+                {
+                  label: lang === 'pt' ? 'Todos os Projetos' : lang === 'es' ? 'Todos los Proyectos' : lang === 'fr' ? 'Tous les Projets' : 'All Projects',
+                  href: '/work',
+                  description: lang === 'pt' ? 'Portfólio completo' : lang === 'es' ? 'Portafolio completo' : lang === 'fr' ? 'Portfolio complet' : 'Complete portfolio'
+                },
+                {
+                  label: lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture',
+                  href: '/work?type=museum',
+                  description: lang === 'pt' ? 'Instalações culturais' : lang === 'es' ? 'Instalaciones culturales' : lang === 'fr' ? 'Installations culturelles' : 'Cultural installations'
+                },
+                {
+                  label: lang === 'pt' ? 'Festivais' : lang === 'es' ? 'Festivales' : lang === 'fr' ? 'Festivals' : 'Festivals',
+                  href: '/work?type=festival',
+                  description: lang === 'pt' ? 'Curadoria e produção' : lang === 'es' ? 'Curaduría y producción' : lang === 'fr' ? 'Curation et production' : 'Curation and production'
+                },
+                {
+                  label: lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events',
+                  href: '/work?type=brand',
+                  description: lang === 'pt' ? 'Ativações de marca' : lang === 'es' ? 'Activaciones de marca' : lang === 'fr' ? 'Activations de marque' : 'Brand activations'
+                },
+                {
+                  label: lang === 'pt' ? 'VR & XR' : lang === 'es' ? 'VR & XR' : lang === 'fr' ? 'VR & XR' : 'VR & XR',
+                  href: '/work?tag=vr',
+                  description: lang === 'pt' ? 'Experiências imersivas' : lang === 'es' ? 'Experiencias inmersivas' : lang === 'fr' ? 'Expériences immersives' : 'Immersive experiences'
+                }
+              ]}
+              lang={lang}
+              theme={theme}
+              isActive={activeRoute === 'work'}
               onMouseEnter={() => setHoveredRoute('work')}
               onMouseLeave={() => setHoveredRoute(null)}
-              style={{ 
-                padding: '0 6px', 
-                minHeight: '44px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                position: 'relative',
-                color: activeRoute === 'work' 
-                  ? (theme === 'light' ? '#c92337' : '#c92337')
-                  : (hoveredRoute === 'work' ? '#c92337' : 'var(--theme-text-secondary)'),
-                textShadow: activeRoute === 'work' && theme === 'dark' ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' : undefined
-              }}
-            >
-              <span>{t(lang, 'navWork')}</span>
-              <span 
-                className="absolute bottom-0 left-0 h-[1px] min-[768px]:h-[1.5px] md:h-[1.5px] lg:h-[2px] xl:h-[2px] bg-azimut-red transition-all duration-200 ease-in-out"
-                style={{ 
-                  width: shouldShowLine('work') ? '100%' : '0%',
-                  opacity: shouldShowLine('work') ? 1 : 0
-                }}
-              ></span>
-            </Link>
+              hovered={hoveredRoute === 'work'}
+            />
             <Link 
               to="/studio" 
               className="nav-link-glow relative whitespace-nowrap pb-1 shrink-0 transition-colors duration-200 font-sora font-semibold"
@@ -449,19 +491,23 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               </span>
             </div>
 
-            {/* Botão CTA - MUITO GRANDE - CABE TUDO */}
+            {/* Botão CTA - MELHORADO: Fonte maior, bold, mais impacto visual */}
                 <Link
                   to="/contact"
                   onClick={() => {
                     trackCTA('header', 'Start Project')
                     trackInteraction('cta_click', 'header_start_project')
                   }}
-                  className="hidden rounded-lg text-center font-sora font-medium uppercase min-[768px]:inline-flex min-[768px]:flex-col min-[768px]:items-center min-[768px]:justify-center transition-all duration-300 shrink-0 cursor-pointer"
+                  className="hidden rounded-lg text-center font-sora font-bold uppercase min-[768px]:inline-flex min-[768px]:flex-col min-[768px]:items-center min-[768px]:justify-center transition-all duration-300 shrink-0 cursor-pointer hover:scale-105 hover:shadow-[0_4px_12px_rgba(201,35,55,0.3)]"
                   style={{ 
-                    color: theme === 'light' ? 'var(--theme-text-secondary)' : 'var(--theme-text-secondary)',
-                    background: 'rgba(201, 35, 55, 0.08)',
-                    border: '1px solid rgba(201, 35, 55, 0.5)',
-                    boxShadow: 'none',
+                    color: '#c92337', // Azimut Red direto para mais contraste
+                    background: theme === 'dark' 
+                      ? 'rgba(201, 35, 55, 0.12)' 
+                      : 'rgba(201, 35, 55, 0.08)',
+                    border: '1.5px solid rgba(201, 35, 55, 0.7)', // Borda mais grossa e visível
+                    boxShadow: theme === 'dark' 
+                      ? '0 2px 8px rgba(201, 35, 55, 0.2)' 
+                      : '0 2px 8px rgba(201, 35, 55, 0.15)',
                     minWidth: '130px',
                     width: '130px',
                     maxWidth: '130px',
@@ -470,21 +516,22 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     padding: '10px 12px',
                     alignSelf: 'center',
                     flexShrink: 0,
-                    fontSize: '0.54rem',
-                    lineHeight: '1.4',
-                    letterSpacing: '0.03em',
+                    fontSize: '0.7rem', // Aumentado de 0.54rem para 0.7rem (~11.2px)
+                    lineHeight: '1.3',
+                    letterSpacing: '0.05em', // Aumentado para mais legibilidade
                     marginLeft: '12px',
-                    gap: '3px'
+                    gap: '2px'
                   }}
                 >
-                  <span className="block whitespace-nowrap" style={{ fontSize: 'inherit' }}>{getCtaLines(lang)[0]}</span>
-                  <span className="block whitespace-nowrap" style={{ fontSize: 'inherit' }}>{getCtaLines(lang)[1]}</span>
+                  <span className="block whitespace-nowrap" style={{ fontSize: 'inherit', fontWeight: '700' }}>{getCtaLines(lang)[0]}</span>
+                  <span className="block whitespace-nowrap" style={{ fontSize: 'inherit', fontWeight: '700' }}>{getCtaLines(lang)[1]}</span>
                 </Link>
 
-            {/* Botão Hambúrguer - mobile OU quando menu trepa na logo */}
+            {/* Botão Hambúrguer - SEMPRE aparece em mobile (< 768px), aparece em desktop (>= 768px) apenas se menu trepar */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className={`flex flex-col gap-1.5 p-2 touch-manipulation shrink-0 ${menuOverlaps ? 'min-[768px]:flex' : 'min-[768px]:hidden'}`}
+              // Garantir que sempre aparece em mobile: flex está sempre presente, min-[768px]:* só afeta >= 768px
               aria-label="Menu"
               style={{ 
                 minWidth: '44px', 

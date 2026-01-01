@@ -232,9 +232,27 @@ export async function GET(request: NextRequest) {
     
   } catch (error) {
     console.error('Content API error:', error);
+    // Em caso de erro (ex: banco inacessível), retornar estrutura vazia
+    // Isso permite que o frontend use fallbacks locais
     return NextResponse.json(
-      { error: 'Failed to fetch content' },
-      { status: 500 }
+      {
+        lang: lang || 'pt',
+        heroSlogan: null,
+        heroSubtitle: null,
+        market: null,
+        page: null,
+        highlightProjects: [],
+        services: [],
+      },
+      { 
+        status: 200, // Retornar 200 com dados vazios para não quebrar frontend
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
+        },
+      }
     );
   }
 }

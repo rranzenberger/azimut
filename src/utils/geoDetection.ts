@@ -971,8 +971,8 @@ export async function detectCountryFromIP(): Promise<{ country: string; countryC
   
   // ✅ API 2: ip-api.com (limite: 45 req/min, sem chave)
   try {
-    const response = await fetch('http://ip-api.com/json/?fields=country,countryCode', {
-      signal: AbortSignal.timeout(3000),
+    const response = await fetch('https://ip-api.com/json/?fields=country,countryCode', {
+      signal: createTimeoutSignal(3000),
     });
     
     if (response.ok) {

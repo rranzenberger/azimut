@@ -41,8 +41,27 @@ export async function GET(request: NextRequest) {
     city: vercelGeo?.city,
     ip: ip !== 'unknown' ? ip.substring(0, 7) + '***' : 'unknown', // Privacy
     detected: countryCode !== 'DEFAULT',
+  }, {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
   });
 }
+
+// CORS preflight handler
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
+}
+
 
 
 

@@ -103,15 +103,89 @@ const texts = {
 const CredibilidadeEditais: React.FC<CredibilidadeEditaisProps> = ({ lang }) => {
   const t = texts[lang] || texts.en
 
+  const statsLabels = {
+    pt: {
+      years: 'Anos de Experiência',
+      projects: 'Projetos Publicados',
+      binational: 'Operação Binacional',
+      supported: 'Apoiado por'
+    },
+    en: {
+      years: 'Years of Experience',
+      projects: 'Published Projects',
+      binational: 'Binational Operation',
+      supported: 'Supported by'
+    },
+    es: {
+      years: 'Años de Experiencia',
+      projects: 'Proyectos Publicados',
+      binational: 'Operación Binacional',
+      supported: 'Apoyado por'
+    },
+    fr: {
+      years: 'Ans d\'Expérience',
+      projects: 'Projets Publiés',
+      binational: 'Opération Binationale',
+      supported: 'Soutenu par'
+    }
+  }
+
+  const labels = statsLabels[lang] || statsLabels.en
+
   return (
     <div className="card-adaptive rounded-2xl border border-white/10 p-6 sm:p-7 md:p-8 shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
+      {/* Stats em destaque */}
+      <div className="mb-8 pb-8 border-b border-white/10">
+        <h2 className="mb-6 font-handel text-2xl uppercase tracking-[0.12em] sm:text-3xl text-center" style={{ color: 'var(--theme-text)' }}>
+          {lang === 'pt' ? '30 Anos Criando Experiências' : lang === 'es' ? '30 Años Creando Experiencias' : lang === 'fr' ? '30 Ans à Créer des Expériences' : '30 Years Creating Experiences'}
+        </h2>
+        
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
+          <div className="text-center">
+            <div className="text-4xl md:text-5xl font-handel text-azimut-red mb-2">30</div>
+            <div className="text-sm font-sora uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text-secondary)' }}>
+              {labels.years}
+            </div>
+          </div>
+          <div className="text-center">
+            <div className="text-4xl md:text-5xl font-handel text-azimut-red mb-2">8+</div>
+            <div className="text-sm font-sora uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text-secondary)' }}>
+              {labels.projects}
+            </div>
+          </div>
+          <div className="text-center">
+            <div className="text-4xl md:text-5xl font-handel text-azimut-red mb-2">BR-CA</div>
+            <div className="text-sm font-sora uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text-secondary)' }}>
+              {labels.binational}
+            </div>
+          </div>
+        </div>
+
+        {/* Editais e Parceiros */}
+        <div className="border-t border-white/10 pt-6">
+          <p className="text-center text-sm font-sora uppercase tracking-[0.1em] mb-4" style={{ color: 'var(--theme-text-muted)' }}>
+            {labels.supported}
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-4 text-xs font-sora uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text-secondary)' }}>
+            <span>Rouanet</span>
+            <span className="text-azimut-red">•</span>
+            <span>CMF</span>
+            <span className="text-azimut-red">•</span>
+            <span>NFB</span>
+            <span className="text-azimut-red">•</span>
+            <span>Creative BC</span>
+          </div>
+        </div>
+      </div>
+
       <div className="mb-4">
         <p className="font-sora text-[0.8rem] font-semibold uppercase tracking-[0.18em]" style={{ color: 'var(--theme-text-muted)' }}>
           {t.subtitle}
         </p>
-        <h2 className="font-handel text-2xl uppercase tracking-[0.12em] sm:text-3xl" style={{ color: 'var(--theme-text)' }}>
+        <h3 className="font-handel text-xl uppercase tracking-[0.12em] sm:text-2xl" style={{ color: 'var(--theme-text)' }}>
           {t.title}
-        </h2>
+        </h3>
       </div>
 
       {/* Badges */}
