@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { LeadsList } from './components/LeadsList';
 import { LeadsFilters } from './components/LeadsFilters';
+import { KanbanBoard } from './components/KanbanBoard';
 
 export const revalidate = 0;
 
@@ -28,11 +29,13 @@ export default async function LeadsPage({
   const dateFrom = searchParams.dateFrom as string | undefined;
   const dateTo = searchParams.dateTo as string | undefined;
   const search = searchParams.search as string | undefined;
+  const view = (searchParams.view as string) || 'list'; // 'list' ou 'kanban'
   const page = parseInt((searchParams.page as string) || '1');
   const limit = 50;
   const offset = (page - 1) * limit;
 
   let leads: any[] = [];
+  let allLeads: any[] = []; // Para Kanban (sem paginação)
   let total = 0;
   let error: string | null = null;
 
@@ -70,6 +73,24 @@ export default async function LeadsPage({
       ];
     }
 
+    // Para Kanban: buscar todos os leads (sem paginação)
+    if (view === 'kanban') {
+      allLeads = await prisma.lead.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        include: {
+          assignedTo: {
+            select: {
+              id: true,
+              email: true,
+              name: true,
+            },
+          },
+        },
+      });
+    }
+
+    // Para Lista: buscar com paginação
     const [leadsData, totalCount] = await Promise.all([
       prisma.lead.findMany({
         where,
@@ -77,6 +98,13 @@ export default async function LeadsPage({
         take: limit,
         orderBy: { createdAt: 'desc' },
         include: {
+          assignedTo: {
+            select: {
+              id: true,
+              email: true,
+              name: true,
+            },
+          },
           sessions: {
             take: 1,
             orderBy: { createdAt: 'desc' },
@@ -122,6 +150,77 @@ export default async function LeadsPage({
           <p style={{ margin: 0, color: '#c0bccf', fontSize: 16 }}>
             Gerencie todos os leads capturados do site.
           </p>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            gap: 8,
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            borderRadius: 10,
+            padding: 4,
+          }}
+        >
+          <Link
+            href={`/admin/leads?${new URLSearchParams({
+              ...(status && { status }),
+              ...(priority && { priority }),
+              ...(leadType && { leadType }),
+              ...(dateFrom && { dateFrom }),
+              ...(dateTo && { dateTo }),
+              ...(search && { search }),
+              view: 'list',
+            }).toString()}`}
+            style={{
+              padding: '8px 16px',
+              borderRadius: 8,
+              textDecoration: 'none',
+              fontSize: 14,
+              fontWeight: 600,
+              transition: 'all 0.2s',
+              ...(view === 'list'
+                ? {
+                    background: '#c92337',
+                    color: '#fff',
+                  }
+                : {
+                    background: 'transparent',
+                    color: '#9f9bb0',
+                  }),
+            }}
+          >
+            📋 Lista
+          </Link>
+          <Link
+            href={`/admin/leads?${new URLSearchParams({
+              ...(status && { status }),
+              ...(priority && { priority }),
+              ...(leadType && { leadType }),
+              ...(dateFrom && { dateFrom }),
+              ...(dateTo && { dateTo }),
+              ...(search && { search }),
+              view: 'kanban',
+            }).toString()}`}
+            style={{
+              padding: '8px 16px',
+              borderRadius: 8,
+              textDecoration: 'none',
+              fontSize: 14,
+              fontWeight: 600,
+              transition: 'all 0.2s',
+              ...(view === 'kanban'
+                ? {
+                    background: '#c92337',
+                    color: '#fff',
+                  }
+                : {
+                    background: 'transparent',
+                    color: '#9f9bb0',
+                  }),
+            }}
+          >
+            🔲 Kanban
+          </Link>
         </div>
       </header>
 
@@ -172,7 +271,7 @@ export default async function LeadsPage({
           </div>
         )}
 
-        {leads.length > 0 && (
+        {leads.length > 0 && view === 'list' && (
           <>
             <LeadsList leads={leads} />
             
@@ -241,6 +340,29 @@ export default async function LeadsPage({
                 )}
               </div>
             )}
+          </>
+        )}
+
+        {view === 'kanban' && (
+          <>
+            {allLeads.length === 0 && !error && (
+              <div
+                style={{
+                  padding: 40,
+                  textAlign: 'center',
+                  borderRadius: 12,
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  background: 'rgba(255,255,255,0.03)',
+                  color: '#9f9bb0',
+                }}
+              >
+                <p style={{ margin: 0, fontSize: 16 }}>Nenhum lead encontrado.</p>
+                <p style={{ margin: '8px 0 0', fontSize: 14, color: '#8f8ba2' }}>
+                  Tente ajustar os filtros ou aguarde novos leads.
+                </p>
+              </div>
+            )}
+            {allLeads.length > 0 && <KanbanBoard leads={allLeads} />}
           </>
         )}
       </div>
