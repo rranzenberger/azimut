@@ -434,14 +434,38 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </div>
 
           {/* ═══════════════════════════════════════════════════════════════
-              SEÇÃO: 30 ANOS DE INOVAÇÃO - MELHORADA COM GRÁFICOS
+              NAVEGAÇÃO INTERNA - SEÇÕES DA PÁGINA
               ═══════════════════════════════════════════════════════════ */}
-          <section className="mb-16 animate-fade-in-up opacity-0" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
+          <PageNavigation
+            lang={lang}
+            sections={[
+              { 
+                id: 'unique', 
+                label: lang === 'pt' ? 'O Que Nos Torna Únicos' : lang === 'es' ? 'Lo Que Nos Hace Únicos' : lang === 'fr' ? 'Ce Qui Nous Rend Uniques' : 'What Makes Us Unique', 
+                icon: '✨' 
+              },
+              { 
+                id: 'team', 
+                label: lang === 'pt' ? 'Conheça a Equipe' : lang === 'es' ? 'Conoce el Equipo' : lang === 'fr' ? 'Rencontrez l\'Équipe' : 'Meet the Team', 
+                icon: '👥' 
+              },
+              { 
+                id: 'credentials', 
+                label: lang === 'pt' ? 'Credenciais & Timeline' : lang === 'es' ? 'Credenciales & Timeline' : lang === 'fr' ? 'Références & Timeline' : 'Credentials & Timeline', 
+                icon: '🏆' 
+              }
+            ]}
+          />
+
+          {/* ═══════════════════════════════════════════════════════════════
+              SEÇÃO 1: O QUE NOS TORNA ÚNICOS
+              ═══════════════════════════════════════════════════════════ */}
+          <section id="unique" className="mb-16 animate-fade-in-up opacity-0 scroll-mt-24" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
             <div className="card-dark-fixed rounded-2xl p-6 md:p-8">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1 h-12 bg-azimut-red"></div>
                 <h2 className="font-handel text-2xl uppercase tracking-[0.12em] md:text-3xl" style={{ color: 'var(--theme-card-text, #d3cec3)' }}>
-                  {studio.heritage.title}
+                  {lang === 'pt' ? 'Nossa Combinação Única' : lang === 'es' ? 'Nuestra Combinación Única' : lang === 'fr' ? 'Notre Combinaison Unique' : 'Our Unique Combination'}
                 </h2>
               </div>
               <div className="prose prose-invert max-w-none mb-8">
@@ -501,8 +525,10 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
             </div>
           </section>
 
-          {/* Bloco de credibilidade (histórico/credenciais) - mostra o que já fizemos */}
-          <section className="mb-16 animate-fade-in-up opacity-0" style={{ animationDelay: '0.18s', animationFillMode: 'forwards' }}>
+          {/* ═══════════════════════════════════════════════════════════════
+              SEÇÃO 3: CREDENCIAIS & TIMELINE (NO FINAL)
+              ═══════════════════════════════════════════════════════════ */}
+          <section id="credentials" className="mb-16 animate-fade-in-up opacity-0 scroll-mt-24" style={{ animationDelay: '0.18s', animationFillMode: 'forwards' }}>
             <CredibilidadeEditais lang={lang} />
           </section>
 
@@ -754,11 +780,11 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* ═══════════════════════════════════════════════════════════════
-              SEÇÃO: EQUIPE
+              SEÇÃO 2: EQUIPE (APÓS O DIFERENCIAL)
               ═══════════════════════════════════════════════════════════ */}
-          <section className="mb-16 animate-fade-in-up opacity-0" style={{ animationDelay: '0.55s', animationFillMode: 'forwards' }}>
+          <section id="team" className="mb-16 animate-fade-in-up opacity-0 scroll-mt-24" style={{ animationDelay: '0.55s', animationFillMode: 'forwards' }}>
             <h2 className="mb-8 font-handel text-2xl uppercase tracking-[0.12em] md:text-3xl" style={{ color: 'var(--theme-text)' }}>
-              Equipe
+              {lang === 'pt' ? 'Equipe' : lang === 'es' ? 'Equipo' : lang === 'fr' ? 'Équipe' : 'Team'}
             </h2>
             <div className="space-y-6">
               {content.team.map((member, idx) => (
