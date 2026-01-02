@@ -98,9 +98,9 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
                   ? '#c92337' 
                   : 'var(--theme-text-secondary)',
                 backgroundColor: 'transparent',
-                opacity: isActive ? 1 : 0.7,
+                opacity: isActive ? 1 : 0.6, // Diminuído de 0.7 para 0.6
                 textShadow: isActive 
-                  ? '0 0 12px rgba(201, 35, 55, 0.9), 0 0 25px rgba(201, 35, 55, 0.6)' 
+                  ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' // Diminuído de 0.9/0.6
                   : 'none',
                 border: '1px solid transparent'
               }}
@@ -108,14 +108,14 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
                 if (!isActive) {
                   e.currentTarget.style.opacity = '1'
                   e.currentTarget.style.color = '#c92337'
-                  e.currentTarget.style.textShadow = '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)'
+                  e.currentTarget.style.textShadow = '0 0 12px rgba(201, 35, 55, 0.6), 0 0 25px rgba(201, 35, 55, 0.3)' // Hover mais sutil
                   e.currentTarget.style.backgroundColor = 'transparent'
                   e.currentTarget.style.transform = 'translateY(-1px)'
                 }
               }}
               onMouseLeave={(e) => {
                 if (!isActive) {
-                  e.currentTarget.style.opacity = '0.7'
+                  e.currentTarget.style.opacity = '0.6' // Volta para 0.6
                   e.currentTarget.style.color = 'var(--theme-text-secondary)'
                   e.currentTarget.style.textShadow = 'none'
                   e.currentTarget.style.backgroundColor = 'transparent'
@@ -138,13 +138,13 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
               {/* Label */}
               <span>{item.label}</span>
               
-              {/* Linha vermelha embaixo - sutil como menu superior */}
+              {/* Linha vermelha SOMENTE embaixo do texto - como menu superior */}
               {isActive && (
                 <span 
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[50%] h-[1.5px] bg-azimut-red rounded-full"
+                  className="absolute bottom-0 left-0 right-0 h-[1px] bg-azimut-red"
                   style={{ 
-                    opacity: 0.5,
-                    boxShadow: '0 0 8px rgba(201, 35, 55, 0.4)'
+                    opacity: 0.6,
+                    boxShadow: 'none'
                   }}
                   aria-hidden="true"
                 />
