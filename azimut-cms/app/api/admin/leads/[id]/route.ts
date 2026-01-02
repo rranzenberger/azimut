@@ -30,6 +30,13 @@ export async function GET(
     const lead = await prisma.lead.findUnique({
       where: { id },
       include: {
+        assignedTo: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+          },
+        },
         sessions: {
           orderBy: { createdAt: 'desc' },
           include: {
@@ -110,6 +117,9 @@ export async function PUT(
       'budget',
       'timeline',
       'description',
+      'assignedToId',
+      'notes',
+      'lastContactAt',
     ];
 
     const updateData: any = {};
@@ -120,10 +130,25 @@ export async function PUT(
       }
     }
 
+    // Se assignedToId foi atualizado, também atualizar assignedAt
+    if (updateData.assignedToId !== undefined) {
+      if (updateData.assignedToId) {
+        updateData.assignedAt = new Date();
+      } else {
+        // Se removido, limpar assignedAt também
+        updateData.assignedAt = null;
+      }
+    }
+
+    // Se lastContactAt não foi fornecido mas status mudou para CONTACTED, atualizar automaticamente
+    if (updateData.status === 'CONTACTED' && !updateData.lastContactAt && !body.lastContactAt) {
+      updateData.lastContactAt = new Date();
+    }
+
     // Validar enums
-    if (updateData.status && !['NEW', 'IN_PROGRESS', 'WON', 'LOST'].includes(updateData.status)) {
+    if (updateData.status && !['NEW', 'CONTACTED', 'PROPOSAL_SENT', 'NEGOTIATION', 'WON', 'LOST'].includes(updateData.status)) {
       return NextResponse.json(
-        { error: 'Status inválido. Use: NEW, IN_PROGRESS, WON, LOST' },
+        { error: 'Status inválido. Use: NEW, CONTACTED, PROPOSAL_SENT, NEGOTIATION, WON, LOST' },
         { status: 400 }
       );
     }
@@ -139,6 +164,13 @@ export async function PUT(
       where: { id },
       data: updateData,
       include: {
+        assignedTo: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+          },
+        },
         sessions: {
           take: 1,
           orderBy: { createdAt: 'desc' },

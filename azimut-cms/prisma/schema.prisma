@@ -52,10 +52,12 @@ enum LeadPriority {
 }
 
 enum LeadStatus {
-  NEW
-  IN_PROGRESS
-  WON
-  LOST
+  NEW // 🆕 Novo Lead (capturado do site)
+  CONTACTED // 📞 1º Contato Feito (qualificado)
+  PROPOSAL_SENT // 💼 Proposta Enviada
+  NEGOTIATION // 🤝 Em Negociação
+  WON // ✅ Fechado (projeto ganho)
+  LOST // ❌ Perdido (arquivado)
 }
 
 enum EditalType {
@@ -101,13 +103,14 @@ enum ProjectInteractionType {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  name      String?
-  password  String
-  role      Role     @default(EDITOR)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String   @id @default(uuid())
+  email         String   @unique
+  name          String?
+  password      String
+  role          Role     @default(EDITOR)
+  assignedLeads Lead[]   @relation("LeadAssignedTo")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model Market {
@@ -362,28 +365,38 @@ model InterestScore {
 }
 
 model Lead {
-  id          String           @id @default(uuid())
-  name        String
-  email       String
-  phone       String?
-  company     String?
-  position    String?
-  leadType    LeadType         @default(CONTACT_FORM)
-  projectType String?
-  budget      String?
-  timeline    String?
-  description String?
-  sourceUrl   String?
-  referrer    String?
-  utmSource   String?
-  utmMedium   String?
-  utmCampaign String?
-  status      LeadStatus       @default(NEW)
-  priority    LeadPriority     @default(MEDIUM)
-  sessions    VisitorSession[]
-  editalLeads LeadEdital[]
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
+  id            String           @id @default(uuid())
+  name          String
+  email         String
+  phone         String?
+  company       String?
+  position      String?
+  leadType      LeadType         @default(CONTACT_FORM)
+  projectType   String?
+  budget        String?
+  timeline      String?
+  description   String?
+  sourceUrl     String?
+  referrer      String?
+  utmSource     String?
+  utmMedium     String?
+  utmCampaign   String?
+  status        LeadStatus       @default(NEW)
+  priority      LeadPriority     @default(MEDIUM)
+  assignedTo    User?            @relation("LeadAssignedTo", fields: [assignedToId], references: [id])
+  assignedToId  String?
+  assignedAt    DateTime?
+  notes         String?          @db.Text
+  lastContactAt DateTime?
+  sessions      VisitorSession[]
+  editalLeads   LeadEdital[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  @@index([status])
+  @@index([priority])
+  @@index([assignedToId])
+  @@index([createdAt])
 }
 
 model Edital {

@@ -95,10 +95,12 @@ export function LeadsFilters({
           }}
         >
           <option value="">Todos os status</option>
-          <option value="NEW">Novo</option>
-          <option value="IN_PROGRESS">Em Progresso</option>
-          <option value="WON">Ganho</option>
-          <option value="LOST">Perdido</option>
+          <option value="NEW">🆕 Novo Lead</option>
+          <option value="CONTACTED">📞 Contato Feito</option>
+          <option value="PROPOSAL_SENT">💼 Proposta Enviada</option>
+          <option value="NEGOTIATION">🤝 Em Negociação</option>
+          <option value="WON">✅ Ganho</option>
+          <option value="LOST">❌ Perdido</option>
         </select>
 
         <select

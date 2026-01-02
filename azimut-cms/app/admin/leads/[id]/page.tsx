@@ -22,12 +22,30 @@ export default async function LeadDetailPage({
   }
 
   let lead: any = null;
+  let users: any[] = [];
   let error: string | null = null;
 
   try {
+    // Buscar lista de usuários para o dropdown de responsável
+    users = await prisma.user.findMany({
+      select: {
+        id: true,
+        email: true,
+        name: true,
+      },
+      orderBy: { email: 'asc' },
+    });
+
     lead = await prisma.lead.findUnique({
       where: { id: params.id },
       include: {
+        assignedTo: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+          },
+        },
         sessions: {
           orderBy: { createdAt: 'desc' },
           include: {
@@ -155,7 +173,7 @@ export default async function LeadDetailPage({
           <LeadDetails lead={lead} />
         </div>
         <div>
-          <LeadEditForm lead={lead} />
+          <LeadEditForm lead={lead} users={users} />
         </div>
       </div>
     </div>

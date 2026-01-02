@@ -1,10 +1,12 @@
 'use client';
 
 const statusLabels: Record<string, string> = {
-  NEW: 'Novo',
-  IN_PROGRESS: 'Em Progresso',
-  WON: 'Ganho',
-  LOST: 'Perdido',
+  NEW: '🆕 Novo Lead',
+  CONTACTED: '📞 Contato Feito',
+  PROPOSAL_SENT: '💼 Proposta Enviada',
+  NEGOTIATION: '🤝 Em Negociação',
+  WON: '✅ Ganho',
+  LOST: '❌ Perdido',
 };
 
 const priorityLabels: Record<string, string> = {
@@ -129,6 +131,50 @@ export function LeadDetails({ lead }: { lead: any }) {
               Descrição
             </label>
             <div style={{ color: '#d3cec3', fontSize: 14, whiteSpace: 'pre-wrap' }}>{lead.description}</div>
+          </div>
+        )}
+
+        {lead.assignedTo && (
+          <div>
+            <label style={{ color: '#9f9bb0', fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 6, display: 'block' }}>
+              Responsável
+            </label>
+            <div style={{ color: '#d3cec3', fontSize: 14 }}>
+              {lead.assignedTo.name || lead.assignedTo.email}
+              {lead.assignedAt && (
+                <span style={{ color: '#8f8ba2', fontSize: 12, marginLeft: 8 }}>
+                  (atribuído em {new Date(lead.assignedAt).toLocaleDateString('pt-BR')})
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
+        {lead.notes && (
+          <div>
+            <label style={{ color: '#9f9bb0', fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 6, display: 'block' }}>
+              Notas Internas
+            </label>
+            <div style={{ color: '#d3cec3', fontSize: 14, whiteSpace: 'pre-wrap', padding: '12px', background: 'rgba(255,255,255,0.02)', borderRadius: 8 }}>
+              {lead.notes}
+            </div>
+          </div>
+        )}
+
+        {lead.lastContactAt && (
+          <div>
+            <label style={{ color: '#9f9bb0', fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 6, display: 'block' }}>
+              Último Contato
+            </label>
+            <div style={{ color: '#d3cec3', fontSize: 14 }}>
+              {new Date(lead.lastContactAt).toLocaleString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </div>
           </div>
         )}
 

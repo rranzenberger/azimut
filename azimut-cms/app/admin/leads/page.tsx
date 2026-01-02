@@ -40,7 +40,7 @@ export default async function LeadsPage({
     // Construir where clause
     const where: any = {};
     
-    if (status && ['NEW', 'IN_PROGRESS', 'WON', 'LOST'].includes(status)) {
+    if (status && ['NEW', 'CONTACTED', 'PROPOSAL_SENT', 'NEGOTIATION', 'WON', 'LOST'].includes(status)) {
       where.status = status;
     }
     

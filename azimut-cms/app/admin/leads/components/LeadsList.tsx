@@ -4,7 +4,9 @@ import Link from 'next/link';
 
 const statusColors: Record<string, { bg: string; border: string; text: string }> = {
   NEW: { bg: 'rgba(59,130,246,0.15)', border: 'rgba(59,130,246,0.35)', text: '#93c5fd' },
-  IN_PROGRESS: { bg: 'rgba(251,191,36,0.15)', border: 'rgba(251,191,36,0.35)', text: '#fde047' },
+  CONTACTED: { bg: 'rgba(139,92,246,0.15)', border: 'rgba(139,92,246,0.35)', text: '#c4b5fd' },
+  PROPOSAL_SENT: { bg: 'rgba(251,191,36,0.15)', border: 'rgba(251,191,36,0.35)', text: '#fde047' },
+  NEGOTIATION: { bg: 'rgba(249,115,22,0.15)', border: 'rgba(249,115,22,0.35)', text: '#fdba74' },
   WON: { bg: 'rgba(34,197,94,0.15)', border: 'rgba(34,197,94,0.35)', text: '#86efac' },
   LOST: { bg: 'rgba(239,68,68,0.15)', border: 'rgba(239,68,68,0.35)', text: '#fca5a5' },
 };
@@ -17,10 +19,12 @@ const priorityColors: Record<string, { bg: string; border: string; text: string 
 };
 
 const statusLabels: Record<string, string> = {
-  NEW: 'Novo',
-  IN_PROGRESS: 'Em Progresso',
-  WON: 'Ganho',
-  LOST: 'Perdido',
+  NEW: '🆕 Novo',
+  CONTACTED: '📞 Contato Feito',
+  PROPOSAL_SENT: '💼 Proposta Enviada',
+  NEGOTIATION: '🤝 Em Negociação',
+  WON: '✅ Ganho',
+  LOST: '❌ Perdido',
 };
 
 const priorityLabels: Record<string, string> = {

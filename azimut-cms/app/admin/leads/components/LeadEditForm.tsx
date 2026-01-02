@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export function LeadEditForm({ lead }: { lead: any }) {
+export function LeadEditForm({ lead, users }: { lead: any; users: any[] }) {
   const router = useRouter();
   const [status, setStatus] = useState(lead.status);
   const [priority, setPriority] = useState(lead.priority);
+  const [assignedToId, setAssignedToId] = useState(lead.assignedToId || '');
+  const [notes, setNotes] = useState(lead.notes || '');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
@@ -19,7 +21,12 @@ export function LeadEditForm({ lead }: { lead: any }) {
       const response = await fetch(`/api/admin/leads/${lead.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status, priority }),
+        body: JSON.stringify({ 
+          status, 
+          priority,
+          assignedToId: assignedToId || null,
+          notes: notes || null,
+        }),
       });
 
       const data = await response.json();
@@ -80,10 +87,12 @@ export function LeadEditForm({ lead }: { lead: any }) {
                 cursor: 'pointer',
               }}
             >
-              <option value="NEW">Novo</option>
-              <option value="IN_PROGRESS">Em Progresso</option>
-              <option value="WON">Ganho</option>
-              <option value="LOST">Perdido</option>
+              <option value="NEW">🆕 Novo Lead</option>
+              <option value="CONTACTED">📞 Contato Feito</option>
+              <option value="PROPOSAL_SENT">💼 Proposta Enviada</option>
+              <option value="NEGOTIATION">🤝 Em Negociação</option>
+              <option value="WON">✅ Ganho</option>
+              <option value="LOST">❌ Perdido</option>
             </select>
           </div>
 
@@ -120,6 +129,76 @@ export function LeadEditForm({ lead }: { lead: any }) {
               <option value="HIGH">Alta</option>
               <option value="URGENT">Urgente</option>
             </select>
+          </div>
+
+          <div>
+            <label
+              style={{
+                color: '#9f9bb0',
+                fontSize: 12,
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                marginBottom: 8,
+                display: 'block',
+              }}
+            >
+              Responsável
+            </label>
+            <select
+              value={assignedToId}
+              onChange={(e) => setAssignedToId(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '10px 14px',
+                borderRadius: 8,
+                border: '1px solid rgba(255,255,255,0.1)',
+                background: 'rgba(0,0,0,0.2)',
+                color: '#fff',
+                fontSize: 14,
+                outline: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              <option value="">Nenhum (não atribuído)</option>
+              {users.map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.name || user.email}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label
+              style={{
+                color: '#9f9bb0',
+                fontSize: 12,
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                marginBottom: 8,
+                display: 'block',
+              }}
+            >
+              Notas Internas
+            </label>
+            <textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="Adicione notas sobre este lead..."
+              rows={4}
+              style={{
+                width: '100%',
+                padding: '10px 14px',
+                borderRadius: 8,
+                border: '1px solid rgba(255,255,255,0.1)',
+                background: 'rgba(0,0,0,0.2)',
+                color: '#fff',
+                fontSize: 14,
+                outline: 'none',
+                resize: 'vertical',
+                fontFamily: 'inherit',
+              }}
+            />
           </div>
 
           {message && (
