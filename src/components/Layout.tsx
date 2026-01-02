@@ -139,15 +139,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         // IMPORTANTE: Calcula para TODAS as resoluções, não apenas desktop
         let overlaps = totalNeeded > windowWidth
         
-        // GARANTIR que em TODOS os grupos mobile (< 430px), hamburger SEMPRE aparece
-        // Cobre: Legacy (320-374px), Standard (375-410px), Large (412-430px)
-        // iPhone SE: 375px, iPhone X/10/11: 375px, iPhone 12/13/14: 390px
-        // Android entrada (Galaxy A04, Moto E): 360px
-        // Xiaomi Redmi Note: 393px
-        // Samsung A54, Motorola G: 412px
-        if (windowWidth < 430) {
-          overlaps = true // Forçar hamburger em TODOS os grupos mobile
-        }
+        // NÃO forçar hamburger - deixar cálculo natural decidir
+        // O hamburger só aparece se totalNeeded > windowWidth (menu não cabe)
+        // Isso garante que em desktop, quando menu cabe, hamburger não aparece
         
         // Calcular padding dinâmico baseado em grupos de viewport
         let paddingValue: string
