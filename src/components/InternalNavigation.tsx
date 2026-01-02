@@ -97,29 +97,28 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
                 color: isActive 
                   ? '#c92337' 
                   : 'var(--theme-text-secondary)',
-                backgroundColor: isActive 
-                  ? 'rgba(201, 35, 55, 0.05)' 
-                  : 'transparent',
-                opacity: isActive ? 1 : 0.85,
-                border: isActive 
-                  ? '1px solid rgba(201, 35, 55, 0.15)' 
-                  : '1px solid transparent'
+                backgroundColor: 'transparent', // SEM background - só glow!
+                opacity: isActive ? 1 : 0.7,
+                textShadow: isActive 
+                  ? '0 0 12px rgba(201, 35, 55, 0.6), 0 0 25px rgba(201, 35, 55, 0.3)' 
+                  : 'none',
+                border: '1px solid transparent' // SEM borda
               }}
               onMouseEnter={(e) => {
                 if (!isActive) {
                   e.currentTarget.style.opacity = '1'
-                  e.currentTarget.style.color = 'var(--theme-text)'
-                  e.currentTarget.style.backgroundColor = 'rgba(201, 35, 55, 0.04)'
-                  e.currentTarget.style.border = '1px solid rgba(201, 35, 55, 0.1)'
+                  e.currentTarget.style.color = '#c92337'
+                  e.currentTarget.style.textShadow = '0 0 8px rgba(201, 35, 55, 0.4), 0 0 16px rgba(201, 35, 55, 0.2)'
+                  e.currentTarget.style.backgroundColor = 'transparent'
                   e.currentTarget.style.transform = 'translateY(-1px)'
                 }
               }}
               onMouseLeave={(e) => {
                 if (!isActive) {
-                  e.currentTarget.style.opacity = '0.85'
+                  e.currentTarget.style.opacity = '0.7'
                   e.currentTarget.style.color = 'var(--theme-text-secondary)'
+                  e.currentTarget.style.textShadow = 'none'
                   e.currentTarget.style.backgroundColor = 'transparent'
-                  e.currentTarget.style.border = '1px solid transparent'
                   e.currentTarget.style.transform = 'translateY(0)'
                 }
               }}
@@ -139,11 +138,14 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
               {/* Label */}
               <span>{item.label}</span>
               
-              {/* Linha vermelha embaixo quando ativo - SUTIL como menu superior */}
+              {/* Linha vermelha embaixo - sutil como menu superior */}
               {isActive && (
                 <span 
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[60%] h-[1px] bg-azimut-red rounded-full"
-                  style={{ opacity: 0.5 }}
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[50%] h-[1.5px] bg-azimut-red rounded-full"
+                  style={{ 
+                    opacity: 0.5,
+                    boxShadow: '0 0 8px rgba(201, 35, 55, 0.4)'
+                  }}
                   aria-hidden="true"
                 />
               )}
