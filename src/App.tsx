@@ -11,6 +11,7 @@ import PlausibleScript from './components/PlausibleScript'
 import AppLayout from './components/AppLayout'
 import ErrorBoundary from './components/ErrorBoundary'
 import Chatbot from './components/Chatbot'
+import SimplePasswordGate from './components/SimplePasswordGate'
 import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDetection'
 
 // CORREÇÃO: Import direto das páginas problemáticas (Studio, Academy, Contact)
@@ -148,45 +149,47 @@ const App: React.FC = () => {
 
   return (
     <BrowserCompatibility>
-      <BrowserRouter>
-        <ScrollToTop />
-        {/* Structured Data para SEO */}
-        <StructuredData type="organization" />
-        <StructuredData type="website" />
-        {/* Analytics - Plausible */}
-        <PlausibleScript />
-        {/* Vinheta cinematográfica - efeito de bordas escuras */}
-        <div className="cinematic-vignette" aria-hidden="true" />
-        
-        {/* PWA Install Prompt */}
-        <InstallPrompt />
-        
-        <AppLayout lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
-          <Suspense 
-            fallback={<LoadingSkeleton />}
-            // Error boundary para capturar erros no lazy loading
-          >
-            <ErrorBoundary>
-              <Routes>
-              {/* Todas as rotas públicas */}
-              <Route path="/" element={<Home lang={lang} />} />
-              <Route path="/home" element={<Home lang={lang} />} />
-              <Route path="/what" element={<WhatWeDo lang={lang} />} />
-              <Route path="/work" element={<Work lang={lang} />} />
-              <Route path="/work/:slug" element={<ProjectDetail lang={lang} />} />
-              <Route path="/studio" element={<Studio lang={lang} />} />
-              <Route path="/academy" element={<Academy lang={lang} />} />
-              <Route path="/contact" element={<Contact lang={lang} />} />
-              {/* Rota 404 - captura qualquer URL não encontrada */}
-              <Route path="*" element={<NotFound lang={lang} />} />
-            </Routes>
-            </ErrorBoundary>
-          </Suspense>
-        </AppLayout>
-        
-        {/* Chatbot - Assistente Virtual com DeepSeek */}
-        <Chatbot lang={lang} />
-      </BrowserRouter>
+      <SimplePasswordGate>
+        <BrowserRouter>
+          <ScrollToTop />
+          {/* Structured Data para SEO */}
+          <StructuredData type="organization" />
+          <StructuredData type="website" />
+          {/* Analytics - Plausible */}
+          <PlausibleScript />
+          {/* Vinheta cinematográfica - efeito de bordas escuras */}
+          <div className="cinematic-vignette" aria-hidden="true" />
+          
+          {/* PWA Install Prompt */}
+          <InstallPrompt />
+          
+          <AppLayout lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
+            <Suspense 
+              fallback={<LoadingSkeleton />}
+              // Error boundary para capturar erros no lazy loading
+            >
+              <ErrorBoundary>
+                <Routes>
+                {/* Todas as rotas públicas */}
+                <Route path="/" element={<Home lang={lang} />} />
+                <Route path="/home" element={<Home lang={lang} />} />
+                <Route path="/what" element={<WhatWeDo lang={lang} />} />
+                <Route path="/work" element={<Work lang={lang} />} />
+                <Route path="/work/:slug" element={<ProjectDetail lang={lang} />} />
+                <Route path="/studio" element={<Studio lang={lang} />} />
+                <Route path="/academy" element={<Academy lang={lang} />} />
+                <Route path="/contact" element={<Contact lang={lang} />} />
+                {/* Rota 404 - captura qualquer URL não encontrada */}
+                <Route path="*" element={<NotFound lang={lang} />} />
+              </Routes>
+              </ErrorBoundary>
+            </Suspense>
+          </AppLayout>
+          
+          {/* Chatbot - Assistente Virtual com DeepSeek */}
+          <Chatbot lang={lang} />
+        </BrowserRouter>
+      </SimplePasswordGate>
     </BrowserCompatibility>
   )
 }
