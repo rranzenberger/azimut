@@ -97,12 +97,13 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         // Hamburger só é adicionado se menu não couber (calculado depois)
         const rightSideWidth = windowWidth < 375 ? 50 : (windowWidth < 640 ? 60 : (windowWidth < 768 ? 100 : 220))
         
-        // Larguras do menu por idioma (estimativa conservadora baseada no texto)
+        // Larguras do menu por idioma (estimativa REALISTA baseada no texto)
+        // IMPORTANTE: Valores ajustados para serem mais precisos e não superestimar
         const menuWidths: Record<typeof lang, number> = {
-          'pt': 460, // INÍCIO, O QUE FAZEMOS, PROJETOS, ESTÚDIO, P&D, ACADEMIA
-          'en': 420, // HOME, SERVICES, PROJECTS, STUDIO, R&D, ACADEMY  
-          'fr': 480, // ACCUEIL, SERVICES, PROJETS, STUDIO, R&D, ACADÉMIE
-          'es': 450  // INICIO, SERVICIOS, PROYECTOS, ESTUDIO, I+D, ACADEMIA
+          'pt': 420, // INÍCIO, O QUE FAZEMOS, PROJETOS, ESTÚDIO, P&D, ACADEMIA (reduzido de 460)
+          'en': 380, // HOME, SERVICES, PROJECTS, STUDIO, R&D, ACADEMY (reduzido de 420)
+          'fr': 440, // ACCUEIL, SERVICES, PROJETS, STUDIO, R&D, ACADÉMIE (reduzido de 480)
+          'es': 410  // INICIO, SERVICIOS, PROYECTOS, ESTUDIO, I+D, ACADEMIA (reduzido de 450)
         }
         // ═══════════════════════════════════════════════════════════════
         
@@ -132,22 +133,27 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         }
         
         // Espaçamentos entre elementos ajustados por grupo
-        // Legacy/Android entrada: 30px (mínimo), Standard: 35px, Large: 40px, Desktop: 64px
-        const elementGaps = windowWidth < 360 ? 30 : (windowWidth < 375 ? 32 : (windowWidth < 412 ? 35 : (windowWidth < 640 ? 40 : 64)))
+        // Legacy/Android entrada: 30px (mínimo), Standard: 35px, Large: 40px, Desktop: 50px (reduzido de 64)
+        const elementGaps = windowWidth < 360 ? 30 : (windowWidth < 375 ? 32 : (windowWidth < 412 ? 35 : (windowWidth < 640 ? 40 : 50)))
         const gaps = containerPadding + elementGaps
         
         // IMPORTANTE: Em desktop, não incluir hamburger no cálculo inicial
         // Se menu não couber, hamburger será adicionado depois
-        const totalNeeded = logoWidth + currentMenuWidth + rightSideWidth + gaps
+        // Adicionar margem de segurança de 20px para evitar aparecer quando está "quase" cabendo
+        const totalNeeded = logoWidth + currentMenuWidth + rightSideWidth + gaps + (windowWidth >= 768 ? 20 : 0)
         
         // Se espaço necessário > largura disponível = TREPA (hamburger aparece)
         // IMPORTANTE: Calcula para TODAS as resoluções, não apenas desktop
         // Em desktop (>= 768px), se menu couber, overlaps = false (hamburger não aparece)
         let overlaps = totalNeeded > windowWidth
         
+        // NÃO forçar hamburger - deixar cálculo natural decidir
+        // O hamburger só aparece se totalNeeded > windowWidth (menu não cabe)
+        // Isso garante que em desktop, quando menu cabe, hamburger não aparece
+        
         // DEBUG: Log para verificar cálculo (remover depois)
-        if (windowWidth >= 768) {
-          console.log('Desktop cálculo:', {
+        if (windowWidth >= 768 && overlaps) {
+          console.log('⚠️ Hamburger aparecendo em desktop - verificar cálculo:', {
             windowWidth,
             logoWidth,
             currentMenuWidth,
@@ -159,10 +165,6 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             overlaps
           })
         }
-        
-        // NÃO forçar hamburger - deixar cálculo natural decidir
-        // O hamburger só aparece se totalNeeded > windowWidth (menu não cabe)
-        // Isso garante que em desktop, quando menu cabe, hamburger não aparece
         
         // Calcular padding dinâmico baseado em grupos de viewport
         let paddingValue: string
