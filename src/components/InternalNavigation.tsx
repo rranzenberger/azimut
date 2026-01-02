@@ -145,10 +145,10 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
                 {/* Label */}
                 <span>{item.label}</span>
                 
-                {/* Linha vermelha embaixo do conteúdo - EXATA */}
+                {/* Linha vermelha embaixo do conteúdo - SOBRE a linha branca */}
                 {shouldShowLine && (
                   <span 
-                    className="absolute -bottom-2 left-0 right-0 h-[2px] bg-azimut-red transition-opacity duration-200"
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-azimut-red transition-opacity duration-200"
                     style={{ 
                       opacity: isActive ? 0.6 : 0.4
                     }}
