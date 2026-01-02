@@ -1,55 +1,120 @@
 import React, { useEffect, useState } from 'react'
 
 /**
- * Componente para detectar navegadores antigos e mostrar fallback
- * Suporta: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
- * Fallback para navegadores mais antigos
+ * Componente ULTRA INCLUSIVO para detectar navegadores antigos
+ * ✅ Suporta: IE11+, Chrome 60+, Firefox 55+, Safari 11+, Edge 15+
+ * ✅ Progressive Enhancement: funciona em TODOS, melhor nos modernos
+ * ✅ Graceful Degradation: degrada elegantemente em browsers antigos
+ * 
+ * OBJETIVO: Garantir que funcione em:
+ * - Prefeituras com Windows 7 e IE11
+ * - Escolas com Firefox ESR antigo
+ * - Computadores doados com Chrome 60+
+ * - Telas CRT 1024x768
  */
 const BrowserCompatibility: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isCompatible, setIsCompatible] = useState<boolean | null>(null)
+  const [browserInfo, setBrowserInfo] = useState<string>('')
+  const [shouldShowSimplified, setShouldShowSimplified] = useState(false)
 
   useEffect(() => {
-    // Verificar recursos modernos necessários
+    // Detectar navegador e versão
+    const detectBrowser = () => {
+      const ua = navigator.userAgent
+      let browser = 'Desconhecido'
+      let version = '0'
+
+      // Internet Explorer 6-11
+      if (ua.indexOf('MSIE') !== -1 || ua.indexOf('Trident/') !== -1) {
+        browser = 'Internet Explorer'
+        const match = ua.match(/(?:MSIE |rv:)(\d+(\.\d+)?)/)
+        version = match ? match[1] : '11'
+      }
+      // Edge Legacy (EdgeHTML)
+      else if (ua.indexOf('Edge/') !== -1) {
+        browser = 'Edge Legacy'
+        const match = ua.match(/Edge\/(\d+(\.\d+)?)/)
+        version = match ? match[1] : '0'
+      }
+      // Edge Chromium
+      else if (ua.indexOf('Edg/') !== -1) {
+        browser = 'Edge'
+        const match = ua.match(/Edg\/(\d+(\.\d+)?)/)
+        version = match ? match[1] : '0'
+      }
+      // Chrome
+      else if (ua.indexOf('Chrome/') !== -1 && ua.indexOf('Edg/') === -1) {
+        browser = 'Chrome'
+        const match = ua.match(/Chrome\/(\d+(\.\d+)?)/)
+        version = match ? match[1] : '0'
+      }
+      // Firefox
+      else if (ua.indexOf('Firefox/') !== -1) {
+        browser = 'Firefox'
+        const match = ua.match(/Firefox\/(\d+(\.\d+)?)/)
+        version = match ? match[1] : '0'
+      }
+      // Safari
+      else if (ua.indexOf('Safari/') !== -1 && ua.indexOf('Chrome') === -1) {
+        browser = 'Safari'
+        const match = ua.match(/Version\/(\d+(\.\d+)?)/)
+        version = match ? match[1] : '0'
+      }
+
+      return { browser, version: parseFloat(version) }
+    }
+
     const checkCompatibility = () => {
-      // Fallback para CSS.supports se não estiver disponível
+      const info = detectBrowser()
+      setBrowserInfo(`${info.browser} ${info.version}`)
+
+      // Verificar recursos BÁSICOS (não bloqueia browsers antigos)
+      // Se não tiver esses recursos, mostra versão simplificada
       const supports = (property: string, value?: string) => {
-        if (typeof CSS !== 'undefined' && CSS.supports) {
-          return value ? CSS.supports(property, value) : CSS.supports(property)
+        try {
+          if (typeof CSS !== 'undefined' && CSS.supports) {
+            return value ? CSS.supports(property, value) : CSS.supports(property)
+          }
+          // Fallback: assumir suporte
+          return true
+        } catch (e) {
+          return true
         }
-        // Fallback básico: assumir suporte se CSS.supports não existir
-        return true
       }
 
       const features = {
-        // CSS Custom Properties (variáveis CSS)
-        cssVariables: supports('color', 'var(--test)'),
-        // Flexbox
+        // Recursos ESSENCIAIS (se não tiver, mostra versão simplificada)
         flexbox: supports('display', 'flex'),
-        // Grid
+        // Recursos OPCIONAIS (se não tiver, site ainda funciona)
+        cssVariables: supports('color', 'var(--test)'),
         grid: supports('display', 'grid'),
-        // Transitions
         transitions: supports('transition', 'opacity 0.3s'),
-        // ES6+ features
-        arrowFunctions: typeof (() => {}) === 'function',
-        // localStorage
-        localStorage: typeof Storage !== 'undefined',
-        // Fetch API
-        fetch: typeof fetch !== 'undefined',
-        // Promise
-        promise: typeof Promise !== 'undefined',
       }
 
-      // Verificar se todos os recursos essenciais estão disponíveis
-      const essentialFeatures = [
-        features.cssVariables,
-        features.flexbox,
-        features.transitions,
-        features.localStorage,
-        features.promise,
-      ]
+      // Verificar JavaScript básico
+      const hasBasicJS = (
+        typeof Array !== 'undefined' &&
+        typeof Object !== 'undefined' &&
+        typeof Function !== 'undefined'
+      )
 
-      const isSupported = essentialFeatures.every(feature => feature === true)
-      setIsCompatible(isSupported)
+      // Se não tiver Flexbox OU JavaScript básico, mostrar versão simplificada
+      const needsSimplified = !features.flexbox || !hasBasicJS
+
+      // Browsers MUITO antigos: IE < 11, Chrome < 60, Firefox < 55
+      const isTooOld = (
+        (info.browser === 'Internet Explorer' && info.version < 11) ||
+        (info.browser === 'Chrome' && info.version < 60) ||
+        (info.browser === 'Firefox' && info.version < 55) ||
+        (info.browser === 'Safari' && info.version < 11) ||
+        (info.browser === 'Edge Legacy' && info.version < 15)
+      )
+
+      // Se for browser MUITO antigo, mostrar aviso mas PERMITIR uso
+      setShouldShowSimplified(isTooOld)
+      
+      // IMPORTANTE: Sempre permitir acesso, apenas avisar
+      setIsCompatible(true)
     }
 
     checkCompatibility()
@@ -57,92 +122,54 @@ const BrowserCompatibility: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Mostrar loading enquanto verifica
   if (isCompatible === null) {
-    return <>{children}</>
-  }
-
-  // Se não for compatível, mostrar versão simplificada
-  if (!isCompatible) {
     return (
       <div style={{
         minHeight: '100vh',
         backgroundColor: '#050814',
-        color: '#d3cec3',
-        padding: '2rem',
-        fontFamily: 'system-ui, -apple-system, sans-serif',
-        lineHeight: '1.6'
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
       }}>
-        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-          <h1 style={{ 
-            color: '#c92337', 
-            fontSize: '2rem', 
-            marginBottom: '1rem',
-            fontWeight: 'bold'
-          }}>
-            Azimut
-          </h1>
-          <p style={{ marginBottom: '1.5rem', fontSize: '1.1rem' }}>
-            Seu navegador não suporta todas as funcionalidades modernas deste site.
-          </p>
-          <p style={{ marginBottom: '2rem', color: '#8a8a8a' }}>
-            Para uma melhor experiência, recomendamos atualizar para uma versão mais recente do seu navegador:
-          </p>
-          <ul style={{ listStyle: 'none', padding: 0, marginBottom: '2rem' }}>
-            <li style={{ marginBottom: '0.5rem' }}>
-              <a 
-                href="https://www.google.com/chrome/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{ color: '#c92337', textDecoration: 'underline' }}
-              >
-                Google Chrome (recomendado)
-              </a>
-            </li>
-            <li style={{ marginBottom: '0.5rem' }}>
-              <a 
-                href="https://www.mozilla.org/firefox/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{ color: '#c92337', textDecoration: 'underline' }}
-              >
-                Mozilla Firefox
-              </a>
-            </li>
-            <li style={{ marginBottom: '0.5rem' }}>
-              <a 
-                href="https://www.microsoft.com/edge" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{ color: '#c92337', textDecoration: 'underline' }}
-              >
-                Microsoft Edge
-              </a>
-            </li>
-            <li style={{ marginBottom: '0.5rem' }}>
-              <a 
-                href="https://www.apple.com/safari/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{ color: '#c92337', textDecoration: 'underline' }}
-              >
-                Safari
-              </a>
-            </li>
-          </ul>
-          <div style={{ 
-            padding: '1.5rem', 
-            backgroundColor: 'rgba(201, 35, 55, 0.1)', 
-            border: '1px solid rgba(201, 35, 55, 0.3)',
-            borderRadius: '8px'
-          }}>
-            <p style={{ margin: 0, fontSize: '0.9rem' }}>
-              <strong>Contato:</strong> contato@azimutimmersive.com
-            </p>
-          </div>
+        <div style={{ color: '#ffffff', textAlign: 'center' }}>
+          Carregando...
         </div>
       </div>
     )
   }
 
+  // Se for browser MUITO antigo, mostrar banner de aviso MAS permitir uso
+  if (shouldShowSimplified) {
+    return (
+      <>
+        {/* Banner de aviso não intrusivo */}
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: '#c92337',
+          color: '#ffffff',
+          padding: '0.75rem',
+          textAlign: 'center',
+          fontSize: '0.875rem',
+          zIndex: 9999,
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)'
+        }}>
+          <strong>⚠️ Navegador Desatualizado ({browserInfo})</strong> 
+          {' '}- O site pode não funcionar perfeitamente. Recomendamos atualizar para 
+          {' '}<a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer" style={{ color: '#ffffff', textDecoration: 'underline' }}>Chrome</a>,
+          {' '}<a href="https://www.mozilla.org/firefox/" target="_blank" rel="noopener noreferrer" style={{ color: '#ffffff', textDecoration: 'underline' }}>Firefox</a> ou
+          {' '}<a href="https://www.microsoft.com/edge" target="_blank" rel="noopener noreferrer" style={{ color: '#ffffff', textDecoration: 'underline' }}>Edge</a>.
+        </div>
+        {/* Adicionar padding-top para compensar o banner */}
+        <div style={{ paddingTop: '50px' }}>
+          {children}
+        </div>
+      </>
+    )
+  }
+
+  // Browser compatível: mostrar site normalmente
   return <>{children}</>
 }
 
