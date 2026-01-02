@@ -1,16 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { studioContent } from '../data/studioContent'
 import { useUserTracking } from '../hooks/useUserTracking'
 import CredibilidadeEditais from '../components/CredibilidadeEditais'
+import { getYearsNumber } from '../utils/yearsOfExperience'
 
 interface StudioProps {
   lang: Lang
 }
 
-// Dados da equipe com fotos
-const teamData = {
+// Factory function que RETORNA os dados com anos calculados
+const getTeamData = () => {
+  const years = getYearsNumber()
+  
+  return {
   en: {
     pageLabel: 'ABOUT',
     pageTitle: 'Studio & Team',
@@ -45,7 +49,7 @@ With roots in Brazil and Canada, our practice moves between cinema, design, engi
           'Only Autodesk Canada contract in South America',
           'Only certified Flame Trainer in Brazil',
           'Post-graduate professor in Creative Media',
-          '30 years in CG, VR/XR and AI for audiovisual'
+          `${years} years in CG, VR/XR and AI for audiovisual`
         ],
         photo: '/Ranz.jpeg',
         linkedin: 'https://ca.linkedin.com/in/ranzenberger'
@@ -118,7 +122,7 @@ Avec des racines au Brésil et au Canada, notre pratique évolue entre le ciném
           'Seul contrat Canada Autodesk en Amérique du Sud',
           'Seul Flame Trainer certifié au Brésil',
           'Professeur en médias créatifs (pós-graduação)',
-          '30 ans en CG, VR/XR et IA pour audiovisuel'
+          `${years} ans en CG, VR/XR et IA pour audiovisuel`
         ],
         photo: '/Ranz.jpeg',
         linkedin: 'https://ca.linkedin.com/in/ranzenberger'
@@ -191,7 +195,7 @@ Com raízes no Brasil e no Canadá, nossa prática transita entre cinema, design
           'Único contrato Canadá Autodesk na América do Sul',
           'Único Flame Trainer certificado no Brasil',
           'Professor pós-graduação em Mídias Criativas',
-          '30 anos em CG, VR/XR e IA para audiovisual'
+          `${years} anos em CG, VR/XR e IA para audiovisual`
         ],
         photo: '/Ranz.jpeg',
         linkedin: 'https://ca.linkedin.com/in/ranzenberger'
@@ -264,7 +268,7 @@ Con raíces en Brasil y Canadá, nuestra práctica se mueve entre el cine, el di
           'Único contrato Canadá Autodesk en América del Sur',
           'Único Flame Trainer certificado en Brasil',
           'Profesor pós-graduação en Medios Creativos',
-          '30 años en CG, VR/XR e IA para audiovisual'
+          `${years} años en CG, VR/XR e IA para audiovisual`
         ],
         photo: '/Ranz.jpeg',
         linkedin: 'https://ca.linkedin.com/in/ranzenberger'
@@ -303,12 +307,18 @@ Con raíces en Brasil y Canadá, nuestra práctica se mueve entre el cine, el di
     ctaText: '¿Interesado en trabajar con nosotros?',
     ctaButton: 'Iniciar un proyecto'
   }
+  } // FIM da factory function
 }
 
 const Studio: React.FC<StudioProps> = ({ lang }) => {
   useUserTracking()
   const seo = seoData.studio[lang]
+  
+  // Calcular anos e obter dados da equipe com useMemo para performance
+  const teamData = useMemo(() => getTeamData(), [])
   const content = teamData[lang]
+  const yearsOfExperience = getYearsNumber()
+  
   const studio = studioContent[lang === 'fr' ? 'en' : lang] || studioContent.en
   const [timelineExpanded, setTimelineExpanded] = useState(false)
 
@@ -348,12 +358,12 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
             <div className="card-dark-fixed rounded-2xl p-6 md:p-8 mb-8 border-l-4" style={{ borderLeftColor: '#c92337' }}>
               <p className="mb-4 font-handel text-xl md:text-2xl uppercase tracking-[0.08em] text-azimut-red">
                 {lang === 'pt' 
-                  ? 'Após 30 anos, descobrimos que nossa combinação é única:'
+                  ? `Após ${yearsOfExperience} anos, descobrimos que nossa combinação é única:`
                   : lang === 'es'
-                  ? 'Tras 30 años, descubrimos que nuestra combinación es única:'
+                  ? `Tras ${yearsOfExperience} años, descubrimos que nuestra combinación es única:`
                   : lang === 'fr'
-                  ? 'Après 30 ans, nous avons découvert que notre combinaison est unique:'
-                  : 'After 30 years, we discovered our combination is unique:'}
+                  ? `Après ${yearsOfExperience} ans, nous avons découvert que notre combinaison est unique:`
+                  : `After ${yearsOfExperience} years, we discovered our combination is unique:`}
               </p>
               <p className="mb-6 text-sm md:text-base leading-relaxed" style={{ color: 'var(--theme-card-text, var(--theme-text-secondary))' }}>
                 {lang === 'pt' 
