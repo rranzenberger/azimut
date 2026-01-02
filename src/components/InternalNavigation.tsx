@@ -76,7 +76,7 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
   return (
     <nav 
       className={`mb-12 border-b ${className}`}
-      style={{ borderColor: 'rgba(255, 255, 255, 0.08)' }}
+      style={{ borderColor: 'var(--theme-border, rgba(0, 0, 0, 0.08))' }}
       aria-label="Internal navigation"
     >
       <div className="flex flex-wrap gap-2 -mb-px">
@@ -92,10 +92,6 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
                 px-4 py-2.5 rounded-lg
                 font-sora text-sm font-medium uppercase tracking-[0.08em]
                 transition-all duration-300 ease-out
-                ${isActive 
-                  ? 'text-azimut-red' 
-                  : 'hover:text-white'
-                }
               `}
               style={{
                 color: isActive 
@@ -104,17 +100,19 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
                 backgroundColor: isActive 
                   ? 'rgba(201, 35, 55, 0.06)' 
                   : 'transparent',
-                opacity: isActive ? 1 : 0.75
+                opacity: isActive ? 1 : 0.8
               }}
               onMouseEnter={(e) => {
                 if (!isActive) {
                   e.currentTarget.style.opacity = '1'
-                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.04)'
+                  e.currentTarget.style.color = 'var(--theme-text)'
+                  e.currentTarget.style.backgroundColor = 'var(--theme-hover-bg, rgba(0, 0, 0, 0.04))'
                 }
               }}
               onMouseLeave={(e) => {
                 if (!isActive) {
-                  e.currentTarget.style.opacity = '0.75'
+                  e.currentTarget.style.opacity = '0.8'
+                  e.currentTarget.style.color = 'var(--theme-text-secondary)'
                   e.currentTarget.style.backgroundColor = 'transparent'
                 }
               }}
