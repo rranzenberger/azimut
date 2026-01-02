@@ -1,9 +1,11 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { studioContent } from '../data/studioContent'
 import { useUserTracking } from '../hooks/useUserTracking'
 import CredibilidadeEditais from '../components/CredibilidadeEditais'
+import PageNavigation from '../components/PageNavigation'
 import { getYearsNumber } from '../utils/yearsOfExperience'
 
 interface StudioProps {
@@ -313,6 +315,8 @@ Con raíces en Brasil y Canadá, nuestra práctica se mueve entre el cine, el di
 const Studio: React.FC<StudioProps> = ({ lang }) => {
   useUserTracking()
   const seo = seoData.studio[lang]
+  const location = useLocation()
+  const navigate = useNavigate()
   
   // Calcular anos e obter dados da equipe com useMemo para performance
   const teamData = useMemo(() => getTeamData(), [])
@@ -321,6 +325,33 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
   
   const studio = studioContent[lang === 'fr' ? 'en' : lang] || studioContent.en
   const [timelineExpanded, setTimelineExpanded] = useState(false)
+  
+  // Detectar seção ativa baseada no hash da URL
+  const [activeSection, setActiveSection] = useState<string>(() => {
+    const hash = location.hash.replace('#', '')
+    return hash || 'unique'
+  })
+
+  // Sincronizar activeSection com hash da URL
+  useEffect(() => {
+    const hash = location.hash.replace('#', '')
+    if (hash) setActiveSection(hash)
+    else setActiveSection('unique')
+  }, [location.hash])
+
+  // Função para scroll suave para seção
+  const scrollToSection = (sectionId: string) => {
+    setActiveSection(sectionId)
+    navigate(`/studio#${sectionId}`, { replace: true })
+    
+    // Scroll suave
+    setTimeout(() => {
+      const element = document.getElementById(sectionId)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, 100)
+  }
 
   return (
     <>

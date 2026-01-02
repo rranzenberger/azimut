@@ -316,32 +316,38 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               onMouseLeave={() => setHoveredRoute(null)}
               hovered={hoveredRoute === 'work'}
             />
-            <Link 
-              to="/studio" 
-              className="nav-link-glow relative whitespace-nowrap pb-1 shrink-0 transition-colors duration-200 font-sora font-semibold"
+            {/* Studio com submenu */}
+            <NavDropdown
+              label={t(lang, 'navStudio')}
+              items={[
+                {
+                  label: lang === 'pt' ? 'Studio & Team' : lang === 'es' ? 'Estudio & Equipo' : lang === 'fr' ? 'Studio & Équipe' : 'Studio & Team',
+                  href: '/studio',
+                  description: lang === 'pt' ? 'Visão geral completa' : lang === 'es' ? 'Vista general completa' : lang === 'fr' ? 'Vue d\'ensemble complète' : 'Complete overview'
+                },
+                {
+                  label: lang === 'pt' ? 'O Que Nos Torna Únicos' : lang === 'es' ? 'Lo Que Nos Hace Únicos' : lang === 'fr' ? 'Ce Qui Nous Rend Uniques' : 'What Makes Us Unique',
+                  href: '/studio#unique',
+                  description: lang === 'pt' ? 'Nossa combinação especial' : lang === 'es' ? 'Nuestra combinación especial' : lang === 'fr' ? 'Notre combinaison spéciale' : 'Our special combination'
+                },
+                {
+                  label: lang === 'pt' ? 'Conheça a Equipe' : lang === 'es' ? 'Conoce el Equipo' : lang === 'fr' ? 'Rencontrez l\'Équipe' : 'Meet the Team',
+                  href: '/studio#team',
+                  description: lang === 'pt' ? 'Quem somos' : lang === 'es' ? 'Quiénes somos' : lang === 'fr' ? 'Qui nous sommes' : 'Who we are'
+                },
+                {
+                  label: lang === 'pt' ? 'Credenciais & Timeline' : lang === 'es' ? 'Credenciales & Timeline' : lang === 'fr' ? 'Références & Timeline' : 'Credentials & Timeline',
+                  href: '/studio#credentials',
+                  description: lang === 'pt' ? 'Nossa trajetória' : lang === 'es' ? 'Nuestro recorrido' : lang === 'fr' ? 'Notre parcours' : 'Our journey'
+                }
+              ]}
+              lang={lang}
+              theme={theme}
+              isActive={activeRoute === 'studio'}
               onMouseEnter={() => setHoveredRoute('studio')}
               onMouseLeave={() => setHoveredRoute(null)}
-              style={{ 
-                padding: '0 6px', 
-                minHeight: '44px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                position: 'relative',
-                color: activeRoute === 'studio' 
-                  ? (theme === 'light' ? '#c92337' : '#c92337')
-                  : (hoveredRoute === 'studio' ? '#c92337' : 'var(--theme-text-secondary)'),
-                textShadow: activeRoute === 'studio' && theme === 'dark' ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' : undefined
-              }}
-            >
-              <span>{t(lang, 'navStudio')}</span>
-              <span 
-                className="absolute bottom-0 left-0 h-[1px] min-[768px]:h-[1.5px] md:h-[1.5px] lg:h-[2px] xl:h-[2px] bg-azimut-red transition-all duration-200 ease-in-out"
-                style={{ 
-                  width: shouldShowLine('studio') ? '100%' : '0%',
-                  opacity: shouldShowLine('studio') ? 1 : 0
-                }}
-              ></span>
-            </Link>
+              hovered={hoveredRoute === 'studio'}
+            />
             {/* Academy com submenu */}
             <NavDropdown
               label={t(lang, 'navAcademy')}
