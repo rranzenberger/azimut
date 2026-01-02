@@ -76,10 +76,10 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
   return (
     <nav 
       className={`mb-12 border-b ${className}`}
-      style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}
+      style={{ borderColor: 'rgba(255, 255, 255, 0.08)' }}
       aria-label="Internal navigation"
     >
-      <div className="flex flex-wrap gap-1 -mb-px">
+      <div className="flex flex-wrap gap-2 -mb-px">
         {items.map((item) => {
           const isActive = activeId === item.id
           
@@ -89,24 +89,44 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
               onClick={() => handleClick(item)}
               className={`
                 relative flex items-center gap-2 
-                px-5 py-3
-                font-sora text-sm font-semibold uppercase tracking-[0.1em]
-                transition-all duration-200
+                px-4 py-2.5 rounded-lg
+                font-sora text-sm font-medium uppercase tracking-[0.08em]
+                transition-all duration-300 ease-out
                 ${isActive 
                   ? 'text-azimut-red' 
-                  : 'text-slate-400 hover:text-white'
+                  : 'hover:text-white'
                 }
               `}
               style={{
+                color: isActive 
+                  ? '#c92337' 
+                  : 'var(--theme-text-secondary)',
                 backgroundColor: isActive 
-                  ? 'rgba(201, 35, 55, 0.08)' 
-                  : 'transparent'
+                  ? 'rgba(201, 35, 55, 0.06)' 
+                  : 'transparent',
+                opacity: isActive ? 1 : 0.75
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive) {
+                  e.currentTarget.style.opacity = '1'
+                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.04)'
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) {
+                  e.currentTarget.style.opacity = '0.75'
+                  e.currentTarget.style.backgroundColor = 'transparent'
+                }
               }}
               aria-current={isActive ? 'page' : undefined}
             >
               {/* Ícone */}
               {item.icon && (
-                <span className="text-lg leading-none" aria-hidden="true">
+                <span 
+                  className="text-base leading-none" 
+                  aria-hidden="true"
+                  style={{ opacity: isActive ? 1 : 0.7 }}
+                >
                   {item.icon}
                 </span>
               )}
@@ -114,10 +134,11 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
               {/* Label */}
               <span>{item.label}</span>
               
-              {/* Linha vermelha embaixo quando ativo */}
+              {/* Linha FINA vermelha embaixo quando ativo - SUTIL */}
               {isActive && (
                 <span 
-                  className="absolute bottom-0 left-0 right-0 h-[2px] bg-azimut-red"
+                  className="absolute bottom-0 left-0 right-0 h-[1px] bg-azimut-red"
+                  style={{ opacity: 0.6 }}
                   aria-hidden="true"
                 />
               )}
