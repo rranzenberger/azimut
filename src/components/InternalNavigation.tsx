@@ -129,30 +129,33 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
               }}
               aria-current={isActive ? 'page' : undefined}
             >
-              {/* Ícone */}
-              {item.icon && (
-                <span 
-                  className="text-base leading-none" 
-                  aria-hidden="true"
-                  style={{ opacity: isActive ? 1 : 0.7 }}
-                >
-                  {item.icon}
-                </span>
-              )}
-              
-              {/* Label */}
-              <span>{item.label}</span>
-              
-              {/* Linha vermelha embaixo do ÍCONE + TEXTO - aparece no ATIVO ou no HOVER */}
-              {shouldShowLine && (
-                <span 
-                  className="absolute bottom-0 left-6 right-6 h-[2px] bg-azimut-red transition-opacity duration-200"
-                  style={{ 
-                    opacity: isActive ? 0.6 : 0.4
-                  }}
-                  aria-hidden="true"
-                />
-              )}
+              {/* Wrapper para ícone + texto + linha */}
+              <span className="relative inline-flex items-center gap-2">
+                {/* Ícone */}
+                {item.icon && (
+                  <span 
+                    className="text-base leading-none" 
+                    aria-hidden="true"
+                    style={{ opacity: isActive ? 1 : 0.7 }}
+                  >
+                    {item.icon}
+                  </span>
+                )}
+                
+                {/* Label */}
+                <span>{item.label}</span>
+                
+                {/* Linha vermelha embaixo do conteúdo - EXATA */}
+                {shouldShowLine && (
+                  <span 
+                    className="absolute -bottom-2 left-0 right-0 h-[2px] bg-azimut-red transition-opacity duration-200"
+                    style={{ 
+                      opacity: isActive ? 0.6 : 0.4
+                    }}
+                    aria-hidden="true"
+                  />
+                )}
+              </span>
             </button>
           )
         })}
