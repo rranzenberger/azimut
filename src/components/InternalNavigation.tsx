@@ -140,21 +140,19 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
                 </span>
               )}
               
-              {/* Label com linha embaixo */}
-              <span className="relative inline-block">
-                {item.label}
-                
-                {/* Linha vermelha embaixo do TEXTO - aparece no ATIVO ou no HOVER */}
-                {shouldShowLine && (
-                  <span 
-                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-azimut-red transition-opacity duration-200"
-                    style={{ 
-                      opacity: isActive ? 0.6 : 0.4
-                    }}
-                    aria-hidden="true"
-                  />
-                )}
-              </span>
+              {/* Label */}
+              <span>{item.label}</span>
+              
+              {/* Linha vermelha embaixo do ÍCONE + TEXTO - aparece no ATIVO ou no HOVER */}
+              {shouldShowLine && (
+                <span 
+                  className="absolute bottom-0 left-6 right-6 h-[2px] bg-azimut-red transition-opacity duration-200"
+                  style={{ 
+                    opacity: isActive ? 0.6 : 0.4
+                  }}
+                  aria-hidden="true"
+                />
+              )}
             </button>
           )
         })}
