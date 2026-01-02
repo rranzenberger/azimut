@@ -141,10 +141,10 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
               {/* Linha vermelha SOMENTE embaixo do texto - como menu superior */}
               {isActive && (
                 <span 
-                  className="absolute bottom-0 left-0 right-0 h-[1px] bg-azimut-red"
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[1px] bg-azimut-red"
                   style={{ 
-                    opacity: 0.6,
-                    boxShadow: 'none'
+                    width: 'calc(100% - 48px)', // Largura do texto (padding descontado)
+                    opacity: 0.6
                   }}
                   aria-hidden="true"
                 />
