@@ -209,7 +209,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
 
             {/* Pillars - MIGRAÇÃO GRADUAL: Backoffice → Estático */}
             <div className="mt-6 sm:mt-8 flex flex-wrap gap-3 sm:gap-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
-              {((cmsContent?.page?.pillars && Array.isArray(cmsContent.page.pillars) && cmsContent.page.pillars.length > 0)
+              {(Array.isArray(cmsContent?.page?.pillars) && cmsContent.page.pillars.length > 0
                 ? cmsContent.page.pillars 
                 : [
                     lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture',
@@ -273,7 +273,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </Link>
             </div>
             {/* MIGRAÇÃO GRADUAL: Backoffice → Estático */}
-            {(cmsContent?.services && cmsContent.services.length > 0) ? (
+            {(Array.isArray(cmsContent?.services) && cmsContent.services.length > 0) ? (
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {cmsContent.services.slice(0, 6).map((service: any, index: number) => (
                   <article
@@ -519,7 +519,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             </div>
             {/* Sempre mostra projetos - recommended sempre tem pelo menos 3 itens */}
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {(recommended.length > 1 ? recommended.slice(1, 4) : defaultProjects.slice(1, Math.min(4, defaultProjects.length))).map((item: any, index: number) => (
+              {(Array.isArray(recommended) && recommended.length > 1 
+                ? recommended.slice(1, 4) 
+                : Array.isArray(defaultProjects) ? defaultProjects.slice(1, Math.min(4, defaultProjects.length)) : []
+              ).map((item: any, index: number) => (
                 <Link
                   key={item.slug}
                   to={`/work/${item.slug}`}
