@@ -33,6 +33,7 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
   className = '' 
 }) => {
   const [activeId, setActiveId] = useState<string>(defaultActive || items[0]?.id || '')
+  const [hoveredId, setHoveredId] = useState<string | null>(null)
 
   // Detectar hash na URL e ativar tab correspondente
   useEffect(() => {
@@ -82,6 +83,8 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
       <div className="flex flex-wrap gap-2 -mb-px">
         {items.map((item) => {
           const isActive = activeId === item.id
+          const isHovered = hoveredId === item.id
+          const shouldShowLine = isActive || isHovered // Linha aparece no ativo OU no hover
           
           return (
             <button
@@ -105,17 +108,19 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
                 border: '1px solid transparent'
               }}
               onMouseEnter={(e) => {
+                setHoveredId(item.id) // Marcar como hovered
                 if (!isActive) {
                   e.currentTarget.style.opacity = '1'
                   e.currentTarget.style.color = '#c92337'
-                  e.currentTarget.style.textShadow = '0 0 12px rgba(201, 35, 55, 0.6), 0 0 25px rgba(201, 35, 55, 0.3)' // Hover mais sutil
+                  e.currentTarget.style.textShadow = '0 0 12px rgba(201, 35, 55, 0.6), 0 0 25px rgba(201, 35, 55, 0.3)'
                   e.currentTarget.style.backgroundColor = 'transparent'
                   e.currentTarget.style.transform = 'translateY(-1px)'
                 }
               }}
               onMouseLeave={(e) => {
+                setHoveredId(null) // Remover hover
                 if (!isActive) {
-                  e.currentTarget.style.opacity = '0.6' // Volta para 0.6
+                  e.currentTarget.style.opacity = '0.6'
                   e.currentTarget.style.color = 'var(--theme-text-secondary)'
                   e.currentTarget.style.textShadow = 'none'
                   e.currentTarget.style.backgroundColor = 'transparent'
@@ -138,13 +143,13 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
               {/* Label */}
               <span>{item.label}</span>
               
-              {/* Linha vermelha SOMENTE embaixo do texto - como menu superior */}
-              {isActive && (
+              {/* Linha vermelha embaixo do texto - aparece no ATIVO ou no HOVER */}
+              {shouldShowLine && (
                 <span 
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[1px] bg-azimut-red"
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[1px] bg-azimut-red transition-opacity duration-200"
                   style={{ 
-                    width: 'calc(100% - 48px)', // Largura do texto (padding descontado)
-                    opacity: 0.6
+                    width: 'calc(100% - 48px)',
+                    opacity: isActive ? 0.6 : 0.4 // Ativo = 0.6, Hover = 0.4
                   }}
                   aria-hidden="true"
                 />
