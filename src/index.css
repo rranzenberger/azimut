@@ -36,6 +36,55 @@
   --pattern-opacity: 0.12;
   --grain-opacity: 0.65;
   --gradient-overlay: linear-gradient(135deg, rgba(201, 35, 55, 0.15) 0%, transparent 50%, rgba(68, 27, 68, 0.12) 100%);
+  
+  /* ═══════════════════════════════════════════════════════════════
+     DESIGN SYSTEM PREMIUM - Adicionado 02/01/2026
+     ═══════════════════════════════════════════════════════════════ */
+  
+  /* ESPAÇAMENTOS (Sistema 4px base) */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;  /* 4px */
+  --spacing-2: 0.5rem;   /* 8px */
+  --spacing-3: 0.75rem;  /* 12px */
+  --spacing-4: 1rem;     /* 16px */
+  --spacing-5: 1.25rem;  /* 20px */
+  --spacing-6: 1.5rem;   /* 24px */
+  --spacing-8: 2rem;     /* 32px */
+  --spacing-10: 2.5rem;  /* 40px */
+  --spacing-12: 3rem;    /* 48px */
+  --spacing-16: 4rem;    /* 64px */
+  --spacing-20: 5rem;    /* 80px */
+  --spacing-24: 6rem;    /* 96px */
+  
+  /* BORDER RADIUS (Consistente) */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+  
+  /* TRANSIÇÕES (Suaves e Naturais) */
+  --transition-fast: 150ms;
+  --transition-base: 250ms;
+  --transition-slow: 400ms;
+  --transition-slowest: 600ms;
+  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* SOMBRAS (Cinematográficas) */
+  --shadow-xs: 0 1px 4px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.5);
+  --glow-red: 0 0 12px rgba(201, 35, 55, 0.4);
+  --glow-red-strong: 0 0 24px rgba(201, 35, 55, 0.6);
+  
+  /* HOVER/FOCUS STATES */
+  --theme-hover-bg: rgba(255, 255, 255, 0.05);
+  --theme-focus-ring: 0 0 0 2px rgba(201, 35, 55, 0.3);
 }
 
 [data-theme="light"] {
@@ -54,6 +103,10 @@
   /* Cores específicas para tema claro */
   --theme-card-text: #d3cec3;      /* Texto creme (mesma cor da logo clara) no card escuro - NÃO usar branco puro */
   --theme-card-border: rgba(211, 206, 195, 0.3);
+  
+  /* HOVER/FOCUS STATES - Tema Claro */
+  --theme-hover-bg: rgba(0, 0, 0, 0.04);
+  --theme-focus-ring: 0 0 0 2px rgba(201, 35, 55, 0.2);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -346,17 +399,17 @@ body::after {
   inset: 0;
   z-index: -8;
   background-image: url('/fundo grao.png');
-  background-size: 150px 150px;
+  background-size: 200px 200px; /* Aumentado para menos repetição */
   background-repeat: repeat;
   mix-blend-mode: overlay;
-  opacity: 0.6;
+  opacity: 0.05; /* SUTIL - Estilo The Mill/Vercel (era 0.6, muito forte) */
   pointer-events: none;
   animation: grainShift 0.4s steps(4) infinite;
 }
 
 [data-theme="light"] #root::after {
   mix-blend-mode: soft-light;
-  opacity: 0.3;
+  opacity: 0.03; /* SUTIL no tema claro também (era 0.3) */
 }
 
 /* Animação de grain cinematográfico */
