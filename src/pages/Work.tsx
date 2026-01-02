@@ -82,6 +82,8 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   
   // Filtrar projetos
   const cases = useMemo(() => {
+    if (!Array.isArray(allCases)) return []
+    
     return allCases.filter((project: any) => {
       // Filtro por tag
       if (selectedTag && (!project.tags || !project.tags.includes(selectedTag))) {
@@ -116,25 +118,33 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   // Extrair valores únicos para filtros
   const allTags = useMemo(() => {
     const tags = new Set<string>()
-    allCases.forEach((project: any) => {
-      project.tags?.forEach((tag: string) => tags.add(tag))
-    })
+    if (Array.isArray(allCases)) {
+      allCases.forEach((project: any) => {
+        if (project?.tags && Array.isArray(project.tags)) {
+          project.tags.forEach((tag: string) => tags.add(tag))
+        }
+      })
+    }
     return Array.from(tags).sort()
   }, [allCases])
   
   const allTypes = useMemo(() => {
     const types = new Set<string>()
-    allCases.forEach((project: any) => {
-      if (project.type) types.add(project.type)
-    })
+    if (Array.isArray(allCases)) {
+      allCases.forEach((project: any) => {
+        if (project?.type) types.add(project.type)
+      })
+    }
     return Array.from(types).sort()
   }, [allCases])
   
   const allYears = useMemo(() => {
     const years = new Set<number>()
-    allCases.forEach((project: any) => {
-      if (project.year) years.add(project.year)
-    })
+    if (Array.isArray(allCases)) {
+      allCases.forEach((project: any) => {
+        if (project?.year) years.add(project.year)
+      })
+    }
     return Array.from(years).sort((a, b) => b - a) // Mais recente primeiro
   }, [allCases])
   
