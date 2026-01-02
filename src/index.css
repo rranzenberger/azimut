@@ -402,14 +402,14 @@ body::after {
   background-size: 200px 200px; /* Aumentado para menos repetição */
   background-repeat: repeat;
   mix-blend-mode: overlay;
-  opacity: 0.45; /* VISÍVEL - Textura cinematográfica forte (ajuste do usuário) */
+  opacity: 0.65; /* FORTE - Textura bem visível no escuro (ajuste do usuário) */
   pointer-events: none;
   animation: grainShift 0.4s steps(4) infinite;
 }
 
 [data-theme="light"] #root::after {
   mix-blend-mode: soft-light;
-  opacity: 0.25; /* VISÍVEL no tema claro também */
+  opacity: 0.35; /* VISÍVEL no tema claro também */
 }
 
 /* Animação de grain cinematográfico */
