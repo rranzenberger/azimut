@@ -147,7 +147,7 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
                 {/* Linha vermelha embaixo do TEXTO - aparece no ATIVO ou no HOVER */}
                 {shouldShowLine && (
                   <span 
-                    className="absolute -bottom-1 left-0 right-0 h-[1px] bg-azimut-red transition-opacity duration-200"
+                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-azimut-red transition-opacity duration-200"
                     style={{ 
                       opacity: isActive ? 0.6 : 0.4
                     }}
