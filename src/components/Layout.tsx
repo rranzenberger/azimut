@@ -1212,10 +1212,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               </div>
             </div>
 
-            {/* 4. NEWSLETTER (2 colunas quando couber, 12 abaixo de 900px) - REORGANIZADO: TÍTULO + FORM NO TOPO, TEXTO ABAIXO */}
-            <div className="min-[900px]:col-span-2 max-[899px]:col-span-12 mb-3 min-[768px]:mb-0 max-[899px]:mt-6" style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minWidth: 0, paddingLeft: '1rem' }}>
-              <div style={{ minWidth: 0 }}>
-                <h4 className="font-sora text-[0.65rem] sm:text-[0.7rem] font-semibold uppercase tracking-[0.15em] mb-2.5 sm:mb-3 text-white">
+            {/* 4. NEWSLETTER (2 colunas quando couber, 12 no mobile) */}
+            <div className="sm:col-span-2 min-[768px]:col-span-2 mb-4 sm:mb-0" style={{ width: '100%' }}>
+              <h4 className="font-sora text-[0.65rem] sm:text-[0.7rem] font-semibold uppercase tracking-[0.15em] mb-2 sm:mb-3 text-white">
                   {lang === 'en' ? 'Newsletter' : lang === 'es' ? 'Boletín' : 'Newsletter'}
                 </h4>
               </div>
@@ -1241,23 +1240,23 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 <input
                   type="email"
                   placeholder={lang === 'en' ? 'seu@email.com' : lang === 'es' ? 'tu@email.com' : 'seu@email.com'}
-                  className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 placeholder-slate-500 text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] focus:outline-none focus:border-azimut-red/50 focus:bg-white/8 transition-colors"
+                  required
+                  className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 placeholder-slate-500 text-[0.7rem] focus:outline-none focus:border-azimut-red/50 focus:bg-white/8 transition-colors"
                   style={{ 
                     color: theme === 'dark' ? '#8a8a8a' : '#ffffff',
-                    height: '42px',
+                    height: '38px',
                     width: '100%',
-                    maxWidth: '100%',
                     boxSizing: 'border-box'
                   }}
                 />
                 <button
                   type="submit"
-                  className="w-full px-4 py-2.5 rounded-lg text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] font-medium transition-all duration-300"
+                  className="w-full px-4 py-2 rounded-lg text-[0.7rem] font-medium transition-all duration-300"
                   style={{ 
                     background: 'rgba(201, 35, 55, 0.12)',
                     border: '1px solid rgba(201, 35, 55, 0.4)',
                     color: '#ffffff',
-                    height: '42px',
+                    height: '38px',
                     width: '100%',
                     maxWidth: '100%',
                     boxSizing: 'border-box'
