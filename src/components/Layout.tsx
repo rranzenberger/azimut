@@ -57,149 +57,69 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [hoveredRoute, setHoveredRoute] = useState<string | null>(null)
   const [isWizardOpen, setIsWizardOpen] = useState(false)
-  // Menu trepa quando não cabe na tela (calculado dinamicamente para TODAS as resoluções)
-  const [menuOverlaps, setMenuOverlaps] = useState(() => {
-    // Inicializar como false - será calculado no useEffect
+  
+  // NOVA ABORDAGEM SIMPLES: hamburger só aparece em mobile (< 768px)
+  // Em desktop, menu sempre visível, hamburger NUNCA aparece
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 768
+    }
     return false
   })
+  
+  // Detectar mobile/desktop no resize
+  React.useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768
+      setIsMobile(mobile)
+      // Se mudou para desktop, fechar menu mobile
+      if (!mobile) {
+        setIsMobileMenuOpen(false)
+      }
+    }
+    
+    window.addEventListener('resize', handleResize)
+    // Verificar inicialmente
+    handleResize()
+    
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+  
   // Padding dinâmico baseado em grupos de viewport
   const [containerPadding, setContainerPadding] = useState({ left: '4px', right: '4px' })
   
-  // Refs para medir sobreposição
+  // Refs para medir sobreposição (mantidos para compatibilidade)
   const logoRef = React.useRef<HTMLAnchorElement>(null)
   const navRef = React.useRef<HTMLElement>(null)
   const containerRef = React.useRef<HTMLDivElement>(null)
   
-  // ═══════════════════════════════════════════════════════════════
-  // 🔒 DETECÇÃO DE HAMBURGER - NÃO MODIFICAR
-  // ═══════════════════════════════════════════════════════════════
-  // Detectar se menu trepa - SOLUÇÃO ROBUSTA: calcular baseado na largura da janela
+  // Atualizar padding baseado no tamanho da tela
   React.useEffect(() => {
-    let rafId: number | null = null
-    
-    const checkOverlap = () => {
-      rafId = requestAnimationFrame(() => {
-        // Largura da janela
-        const windowWidth = window.innerWidth
-        
-        // ═══════════════════════════════════════════════════════════════
-        // 🔒 VALORES TRAVADOS - NÃO MODIFICAR
-        // ═══════════════════════════════════════════════════════════════
-        // Larguras estimadas (baseadas nos componentes) - ULTRA COMPACTO
-        // IMPORTANTE: Ajustado para grupos de viewport do mercado
-        // Grupo 320-374px (Legacy): Logo menor, só tema + hamburger
-        // Grupo 375-410px (Standard): Logo médio, só tema + hamburger
-        // Grupo 412-430px (Large): Logo médio, só tema + hamburger
-        // Grupo 768px+ (Tablet/Desktop): Logo completo, tudo visível (SEM hamburger se couber)
-        const logoWidth = windowWidth < 375 ? 150 : (windowWidth < 640 ? 160 : 180)
-        // rightSideWidth ajustado por grupo de viewport
-        // IMPORTANTE: Em desktop (>= 768px), rightSideWidth NÃO inclui hamburger
-        // Hamburger só é adicionado se menu não couber (calculado depois)
-        const rightSideWidth = windowWidth < 375 ? 50 : (windowWidth < 640 ? 60 : (windowWidth < 768 ? 100 : 220))
-        
-        // Larguras do menu por idioma (estimativa REALISTA baseada no texto)
-        // IMPORTANTE: Valores ajustados para serem mais precisos e não superestimar
-        const menuWidths: Record<typeof lang, number> = {
-          'pt': 420, // INÍCIO, O QUE FAZEMOS, PROJETOS, ESTÚDIO, P&D, ACADEMIA (reduzido de 460)
-          'en': 380, // HOME, SERVICES, PROJECTS, STUDIO, R&D, ACADEMY (reduzido de 420)
-          'fr': 440, // ACCUEIL, SERVICES, PROJETS, STUDIO, R&D, ACADÉMIE (reduzido de 480)
-          'es': 410  // INICIO, SERVICIOS, PROYECTOS, ESTUDIO, I+D, ACADEMIA (reduzido de 450)
-        }
-        // ═══════════════════════════════════════════════════════════════
-        
-        const currentMenuWidth = menuWidths[lang] || menuWidths['en']
-        
-        // Espaço necessário total (logo + menu + direita + gaps)
-        // Gaps: padding do container + espaçamentos entre elementos
-        // IMPORTANTE: Padding ajustado por GRUPOS DE VIEWPORT do mercado
-        // Grupo 320-360px (Legacy/Android entrada): 2px cada lado = 4px total (mínimo absoluto)
-        // Grupo 375-410px (Standard): 4px cada lado = 8px total
-        // Grupo 412-430px (Large): 6px cada lado = 12px total
-        // Tablet 768px+: 16px cada lado = 32px total
-        // Desktop: 24px cada lado = 48px total
-        let containerPadding: number
-        if (windowWidth < 360) {
-          containerPadding = 4 // 2px cada lado - Legacy/Android entrada (360px crítico)
-        } else if (windowWidth < 375) {
-          containerPadding = 6 // 3px cada lado - Entre Legacy e Standard
-        } else if (windowWidth < 412) {
-          containerPadding = 8 // 4px cada lado - Standard (375-410px)
-        } else if (windowWidth < 640) {
-          containerPadding = 12 // 6px cada lado - Large (412-430px)
-        } else if (windowWidth < 768) {
-          containerPadding = 32 // 16px cada lado - Tablet
-        } else {
-          containerPadding = 48 // 24px cada lado - Desktop
-        }
-        
-        // Espaçamentos entre elementos ajustados por grupo
-        // Legacy/Android entrada: 30px (mínimo), Standard: 35px, Large: 40px, Desktop: 50px (reduzido de 64)
-        const elementGaps = windowWidth < 360 ? 30 : (windowWidth < 375 ? 32 : (windowWidth < 412 ? 35 : (windowWidth < 640 ? 40 : 50)))
-        const gaps = containerPadding + elementGaps
-        
-        // IMPORTANTE: Em desktop, não incluir hamburger no cálculo inicial
-        // Se menu não couber, hamburger será adicionado depois
-        // Adicionar margem de segurança de 20px para evitar aparecer quando está "quase" cabendo
-        const totalNeeded = logoWidth + currentMenuWidth + rightSideWidth + gaps + (windowWidth >= 768 ? 20 : 0)
-        
-        // Se espaço necessário > largura disponível = TREPA (hamburger aparece)
-        // IMPORTANTE: Calcula para TODAS as resoluções, não apenas desktop
-        // Em desktop (>= 768px), se menu couber, overlaps = false (hamburger não aparece)
-        let overlaps = totalNeeded > windowWidth
-        
-        // NÃO forçar hamburger - deixar cálculo natural decidir
-        // O hamburger só aparece se totalNeeded > windowWidth (menu não cabe)
-        // Isso garante que em desktop, quando menu cabe, hamburger não aparece
-        
-        // DEBUG: Log para verificar cálculo (remover depois)
-        if (windowWidth >= 768 && overlaps) {
-          console.log('⚠️ Hamburger aparecendo em desktop - verificar cálculo:', {
-            windowWidth,
-            logoWidth,
-            currentMenuWidth,
-            rightSideWidth,
-            containerPadding,
-            elementGaps,
-            gaps,
-            totalNeeded,
-            overlaps
-          })
-        }
-        
-        // Calcular padding dinâmico baseado em grupos de viewport
-        let paddingValue: string
-        if (windowWidth < 360) {
-          paddingValue = '2px' // Legacy/Android entrada (360px crítico)
-        } else if (windowWidth < 375) {
-          paddingValue = '3px' // Entre Legacy e Standard
-        } else if (windowWidth < 412) {
-          paddingValue = '4px' // Standard (375-410px)
-        } else if (windowWidth < 640) {
-          paddingValue = '6px' // Large (412-430px)
-        } else if (windowWidth < 768) {
-          paddingValue = '16px' // Tablet
-        } else {
-          paddingValue = '24px' // Desktop
-        }
-        setContainerPadding({ left: paddingValue, right: paddingValue })
-        
-        setMenuOverlaps(overlaps)
-      })
+    const updatePadding = () => {
+      const windowWidth = window.innerWidth
+      let paddingValue: string
+      
+      if (windowWidth < 360) {
+        paddingValue = '2px'
+      } else if (windowWidth < 375) {
+        paddingValue = '3px'
+      } else if (windowWidth < 412) {
+        paddingValue = '4px'
+      } else if (windowWidth < 640) {
+        paddingValue = '6px'
+      } else if (windowWidth < 768) {
+        paddingValue = '16px'
+      } else {
+        paddingValue = '24px'
+      }
+      setContainerPadding({ left: paddingValue, right: paddingValue })
     }
     
-    // Verificar inicialmente
-    setTimeout(checkOverlap, 100)
+    updatePadding()
+    window.addEventListener('resize', updatePadding)
     
-    // Event listeners
-    window.addEventListener('resize', checkOverlap)
-    window.addEventListener('orientationchange', checkOverlap)
-    
-    return () => {
-      window.removeEventListener('resize', checkOverlap)
-      window.removeEventListener('orientationchange', checkOverlap)
-      if (rafId) cancelAnimationFrame(rafId)
-    }
-  }, [lang, location])
+    return () => window.removeEventListener('resize', updatePadding)
+  }, [])
 
   // Determinar página ativa baseado na rota
   const getActiveRoute = () => {
@@ -284,10 +204,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             />
           </Link>
 
-          {/* Nav desktop - aparece em tablets (768px+) - ESCONDE se trepar */}
+          {/* Nav desktop - aparece em tablets (768px+) - SEMPRE VISÍVEL EM DESKTOP */}
           <nav 
             ref={navRef}
-            className={`items-center justify-center font-sora text-[0.48rem] font-medium uppercase tracking-[0.06em] min-[768px]:gap-2.5 min-[768px]:text-[0.48rem] md:gap-3 md:text-[0.52rem] lg:text-[0.58rem] lg:gap-3.5 xl:gap-4 xl:text-[0.62rem] ${menuOverlaps ? 'hidden' : 'hidden min-[768px]:flex'}`} 
+            className="hidden items-center justify-center font-sora text-[0.48rem] font-medium uppercase tracking-[0.06em] min-[768px]:gap-2.5 min-[768px]:text-[0.48rem] md:gap-3 md:text-[0.52rem] lg:text-[0.58rem] lg:gap-3.5 xl:gap-4 xl:text-[0.62rem] min-[768px]:flex" 
             style={{ color: 'var(--theme-text-secondary)', overflow: 'visible', alignItems: 'center', flexWrap: 'nowrap' }}
           >
             <Link 
@@ -608,11 +528,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <span className="block whitespace-nowrap" style={{ fontSize: 'inherit', fontWeight: '700' }}>{getCtaLines(lang)[1]}</span>
                 </Link>
 
-            {/* Botão Hambúrguer - Aparece APENAS quando menu não cabe na tela (menuOverlaps = true) */}
+            {/* Botão Hambúrguer - Aparece APENAS em mobile (< 768px) */}
+            {isMobile && (
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`flex flex-col gap-1.5 touch-manipulation shrink-0 ${menuOverlaps ? 'flex' : 'hidden'}`}
-              // Aparece apenas quando menuOverlaps é true (menu não cabe)
+              className="flex flex-col gap-1.5 touch-manipulation shrink-0"
               aria-label="Menu"
               style={{ 
                 minWidth: '44px', 
@@ -623,7 +543,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 maxHeight: '44px',
                 justifyContent: 'center',
                 alignItems: 'center',
-                display: 'flex',
+                // REMOVIDO display: 'flex' - deixar classe CSS controlar (hidden/flex)
                 flexShrink: 0,
                 zIndex: 10,
                 position: 'relative',
@@ -655,14 +575,16 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 }}
               ></span>
             </button>
+            )}
           </div>
         </div>
         
         {/* Linha fina de separação */}
         <div className="h-px w-full bg-white/10"></div>
 
-        {/* Menu Mobile - Aparece APENAS quando menu não cabe na tela (menuOverlaps = true) */}
-        <div className={`block overflow-hidden transition-all duration-300 ease-in-out ${menuOverlaps ? 'block' : 'hidden'} ${isMobileMenuOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
+        {/* Menu Mobile - Aparece APENAS em mobile (< 768px) */}
+        {isMobile && (
+        <div className={`block overflow-hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
           <nav className="border-t backdrop-blur-md" style={{ borderColor: 'var(--theme-border)', backgroundColor: 'var(--theme-overlay)' }}>
             <div className="mx-auto max-w-7xl px-3 py-4 sm:px-4 sm:py-6 space-y-1">
               <Link
@@ -837,6 +759,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             </div>
           </nav>
         </div>
+        )}
       </header>
 
       {/* Conteúdo da página */}

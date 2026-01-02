@@ -11,6 +11,7 @@ import PlausibleScript from './components/PlausibleScript'
 import AppLayout from './components/AppLayout'
 import ErrorBoundary from './components/ErrorBoundary'
 import Chatbot from './components/Chatbot'
+import ProtectedRoute from './components/ProtectedRoute'
 import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDetection'
 
 // CORREÇÃO: Import direto das páginas problemáticas (Studio, Academy, Contact)
@@ -169,20 +170,56 @@ const App: React.FC = () => {
           >
             <ErrorBoundary>
               <Routes>
-              {/* Rota de Login - SEM ProtectedRoute */}
+              {/* Rota de Login - SEM ProtectedRoute (pública) */}
               <Route path="/login" element={<Login />} />
               
-              {/* Rotas públicas - SEM proteção */}
-              <Route path="/" element={<Home lang={lang} />} />
-              <Route path="/home" element={<Home lang={lang} />} />
-              <Route path="/what" element={<WhatWeDo lang={lang} />} />
-              <Route path="/work" element={<Work lang={lang} />} />
-              <Route path="/work/:slug" element={<ProjectDetail lang={lang} />} />
-              <Route path="/studio" element={<Studio lang={lang} />} />
-              <Route path="/academy" element={<Academy lang={lang} />} />
-              <Route path="/contact" element={<Contact lang={lang} />} />
+              {/* Rotas protegidas - requerem autenticação para preview */}
+              <Route path="/" element={
+                <ProtectedRoute>
+                  <Home lang={lang} />
+                </ProtectedRoute>
+              } />
+              <Route path="/home" element={
+                <ProtectedRoute>
+                  <Home lang={lang} />
+                </ProtectedRoute>
+              } />
+              <Route path="/what" element={
+                <ProtectedRoute>
+                  <WhatWeDo lang={lang} />
+                </ProtectedRoute>
+              } />
+              <Route path="/work" element={
+                <ProtectedRoute>
+                  <Work lang={lang} />
+                </ProtectedRoute>
+              } />
+              <Route path="/work/:slug" element={
+                <ProtectedRoute>
+                  <ProjectDetail lang={lang} />
+                </ProtectedRoute>
+              } />
+              <Route path="/studio" element={
+                <ProtectedRoute>
+                  <Studio lang={lang} />
+                </ProtectedRoute>
+              } />
+              <Route path="/academy" element={
+                <ProtectedRoute>
+                  <Academy lang={lang} />
+                </ProtectedRoute>
+              } />
+              <Route path="/contact" element={
+                <ProtectedRoute>
+                  <Contact lang={lang} />
+                </ProtectedRoute>
+              } />
               {/* Rota 404 - captura qualquer URL não encontrada */}
-              <Route path="*" element={<NotFound lang={lang} />} />
+              <Route path="*" element={
+                <ProtectedRoute>
+                  <NotFound lang={lang} />
+                </ProtectedRoute>
+              } />
             </Routes>
             </ErrorBoundary>
           </Suspense>
