@@ -469,7 +469,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                 </h2>
               </div>
               <div className="prose prose-invert max-w-none mb-8">
-                {studio.heritage.body.split('\n\n').map((paragraph, idx) => (
+                {((studio?.heritage?.body || '').split('\n\n').filter(Boolean)).map((paragraph, idx) => (
                   <p key={idx} className="mb-4 text-[0.95rem] leading-[1.8]" style={{ color: 'var(--theme-card-text, var(--theme-text-secondary))' }}>
                     {paragraph}
                   </p>
@@ -478,7 +478,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               
               {/* Estatísticas em Grid Melhorado */}
               <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6 mt-8 pt-8 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}>
-                {studio.heritage.stats.map((stat, idx) => (
+                {((studio?.heritage?.stats && Array.isArray(studio.heritage.stats)) ? studio.heritage.stats : []).map((stat, idx) => (
                   <div key={idx} className="text-center group">
                     <div className="font-handel text-3xl md:text-4xl lg:text-5xl text-azimut-red mb-2 transition-transform group-hover:scale-110">
                       {stat.value}
@@ -540,7 +540,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               {studio.unique.title}
             </h2>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {studio.unique.items.map((item, idx) => (
+              {((studio?.unique?.items && Array.isArray(studio.unique.items)) ? studio.unique.items : []).map((item, idx) => (
                 <div 
                   key={idx}
                   className="card-dark-alt-adaptive flex items-start gap-3 p-4 rounded-xl"
@@ -585,7 +585,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   {studio.values.title}
                 </h3>
                 <div className="space-y-3">
-                  {studio.values.items.map((value, idx) => (
+                  {((studio?.values?.items && Array.isArray(studio.values.items)) ? studio.values.items : []).map((value, idx) => (
                     <div key={idx}>
                       <h4 className="mb-1 font-sora text-[0.8rem] font-semibold uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>
                         {value.title}
@@ -608,7 +608,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               🚀 Pilares da Azimut
             </h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {studio.pillars.map((pillar, idx) => (
+              {((studio?.pillars && Array.isArray(studio.pillars)) ? studio.pillars : []).map((pillar, idx) => (
                 <div 
                   key={idx}
                   className="card-dark-fixed rounded-xl p-6 transition-all duration-300 hover:scale-[1.02]"
@@ -633,7 +633,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               🧭 {studio.strategy.title}
             </h2>
             <div className="grid gap-4 md:grid-cols-2">
-              {studio.strategy.items.map((item, idx) => (
+              {((studio?.strategy?.items && Array.isArray(studio.strategy.items)) ? studio.strategy.items : []).map((item, idx) => (
                 <div 
                   key={idx}
                   className="card-dark-alt-adaptive p-5 rounded-xl"
@@ -680,7 +680,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                 </button>
               </div>
               <div className={`space-y-6 ${timelineExpanded ? 'block' : 'hidden md:block'}`}>
-                {studio.timeline.map((period, idx) => (
+                {((studio?.timeline && Array.isArray(studio.timeline)) ? studio.timeline : []).map((period, idx) => (
                   <div key={idx} className="border-l-2 border-azimut-red pl-6 pb-6 last:pb-0">
                     <div className="flex items-baseline gap-3 mb-2">
                       <span className="font-handel text-lg uppercase tracking-[0.1em] text-azimut-red">
@@ -691,7 +691,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                       </span>
                     </div>
                     <ul className="space-y-1.5 mt-3">
-                      {period.items.map((item, itemIdx) => (
+                      {((period?.items && Array.isArray(period.items)) ? period.items : []).map((item, itemIdx) => (
                         <li key={itemIdx} className="flex items-start gap-2 text-[0.85rem]" style={{ color: 'var(--theme-text-secondary)' }}>
                           <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-azimut-red shrink-0"></span>
                           {item}
@@ -720,7 +720,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           <section className="mb-16 animate-fade-in-up opacity-0" style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}>
             <div className="max-w-3xl">
               <div className="prose prose-invert max-w-none">
-                {content.studioDescription.split('\n\n').map((paragraph, idx) => (
+                {((content?.studioDescription || '').split('\n\n').filter(Boolean)).map((paragraph, idx) => (
                   <p key={idx} className="mb-6 text-[0.95rem] leading-[1.8]" style={{ color: 'var(--theme-text-secondary)' }}>
                     {paragraph}
                   </p>
@@ -746,7 +746,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   {content.credentialsTitle}
                 </h3>
                 <ul className="space-y-2">
-                  {content.credentials.map((cred, idx) => (
+                  {((content?.credentials && Array.isArray(content.credentials)) ? content.credentials : []).map((cred, idx) => (
                     <li key={idx} className="flex items-start gap-2 text-[0.85rem]" style={{ color: 'var(--theme-text-secondary)' }}>
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-azimut-red shrink-0"></span>
                       {cred}
@@ -761,7 +761,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   {content.areasTitle}
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {content.areas.map((area, idx) => (
+                  {((content?.areas && Array.isArray(content.areas)) ? content.areas : []).map((area, idx) => (
                     <span 
                       key={idx}
                       className="rounded-full px-3 py-1.5 font-sora text-[0.68rem] uppercase tracking-[0.12em]"
@@ -788,7 +788,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               {lang === 'pt' ? 'Equipe' : lang === 'es' ? 'Equipo' : lang === 'fr' ? 'Équipe' : 'Team'}
             </h2>
             <div className="space-y-6">
-              {content.team.map((member, idx) => (
+              {((content?.team && Array.isArray(content.team)) ? content.team : []).map((member, idx) => (
                 <div 
                   key={idx}
                   className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500 animate-fade-in-up opacity-0"
@@ -844,7 +844,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                             {lang === 'pt' ? 'Credenciais' : lang === 'es' ? 'Credenciales' : lang === 'fr' ? 'Crédentials' : 'Credentials'}
                           </h4>
                           <ul className="space-y-1.5">
-                            {member.credentials.map((cred, credIdx) => (
+                            {((member?.credentials && Array.isArray(member.credentials)) ? member.credentials : []).map((cred, credIdx) => (
                               <li key={credIdx} className="flex items-start gap-2 text-[0.8rem]" style={{ color: 'var(--theme-card-text, var(--theme-text-secondary))' }}>
                                 <span className="mt-1.5 w-1 h-1 rounded-full bg-azimut-red shrink-0"></span>
                                 {cred}

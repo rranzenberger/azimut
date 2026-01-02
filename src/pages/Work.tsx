@@ -399,7 +399,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   )}
                   {cases[0].tags && cases[0].tags.length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {cases[0].tags.slice(0, 3).map((tag: string, idx: number) => (
+                      {((cases[0]?.tags && Array.isArray(cases[0].tags)) ? cases[0].tags : []).slice(0, 3).map((tag: string, idx: number) => (
                         <span key={idx} className="pill-adaptive rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.18em]">
                           {tag}
                         </span>
@@ -502,7 +502,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   <div className="flex flex-wrap items-center justify-between gap-2 mt-3">
                     {item.tags && item.tags.length > 0 && (
                       <div className="flex flex-wrap gap-2 text-[0.68rem] text-slate-400">
-                        {item.tags.slice(0, 3).map((tag: string, idx: number) => (
+                        {((item?.tags && Array.isArray(item.tags)) ? item.tags : []).slice(0, 3).map((tag: string, idx: number) => (
                           <span 
                             key={idx} 
                             className="rounded-full border border-white/10 px-2 py-0.5 transition-all duration-300 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:text-slate-300"

@@ -209,14 +209,14 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
 
             {/* Pillars - MIGRAÇÃO GRADUAL: Backoffice → Estático */}
             <div className="mt-6 sm:mt-8 flex flex-wrap gap-3 sm:gap-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
-              {(cmsContent?.page?.pillars && cmsContent.page.pillars.length > 0 
+              {((cmsContent?.page?.pillars && Array.isArray(cmsContent.page.pillars) && cmsContent.page.pillars.length > 0)
                 ? cmsContent.page.pillars 
                 : [
                     lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture',
                     lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events',
                     lang === 'pt' ? 'Educação & Pesquisa' : lang === 'es' ? 'Educación & Investigación' : lang === 'fr' ? 'Éducation & Recherche' : 'Education & Research'
                   ]
-              ).map((pillar: string, index: number) => (
+              ).filter(Boolean).map((pillar: string, index: number) => (
                 <span 
                   key={index}
                   className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10"
@@ -466,7 +466,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   <div className="p-6 md:p-8">
                     {featured.tags && featured.tags.length > 0 && (
                       <div className="flex flex-wrap items-center gap-3 mb-4">
-                        {featured.tags.slice(0, 3).map((tag: string, idx: number) => (
+                        {((featured?.tags && Array.isArray(featured.tags)) ? featured.tags : []).slice(0, 3).map((tag: string, idx: number) => (
                           <span key={idx} className="pill-adaptive rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.18em]">
                             {tag}
                           </span>
@@ -573,7 +573,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   </p>
                   {item.tags && item.tags.length > 0 && (
                     <div className="mt-3 flex flex-wrap gap-2 text-[0.7rem] text-slate-400">
-                      {item.tags.slice(0, 3).map((tag: string, idx: number) => (
+                      {((item?.tags && Array.isArray(item.tags)) ? item.tags : []).slice(0, 3).map((tag: string, idx: number) => (
                         <span 
                           key={idx} 
                           className="rounded-full border border-white/10 px-2 py-0.5 transition-all duration-300 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:text-slate-300"
