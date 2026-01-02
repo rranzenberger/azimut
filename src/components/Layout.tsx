@@ -90,9 +90,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         // Grupo 320-374px (Legacy): Logo menor, só tema + hamburger
         // Grupo 375-410px (Standard): Logo médio, só tema + hamburger
         // Grupo 412-430px (Large): Logo médio, só tema + hamburger
-        // Grupo 768px+ (Tablet/Desktop): Logo completo, tudo visível
+        // Grupo 768px+ (Tablet/Desktop): Logo completo, tudo visível (SEM hamburger se couber)
         const logoWidth = windowWidth < 375 ? 150 : (windowWidth < 640 ? 160 : 180)
         // rightSideWidth ajustado por grupo de viewport
+        // IMPORTANTE: Em desktop (>= 768px), rightSideWidth NÃO inclui hamburger
+        // Hamburger só é adicionado se menu não couber (calculado depois)
         const rightSideWidth = windowWidth < 375 ? 50 : (windowWidth < 640 ? 60 : (windowWidth < 768 ? 100 : 220))
         
         // Larguras do menu por idioma (estimativa conservadora baseada no texto)
@@ -133,10 +135,14 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         // Legacy/Android entrada: 30px (mínimo), Standard: 35px, Large: 40px, Desktop: 64px
         const elementGaps = windowWidth < 360 ? 30 : (windowWidth < 375 ? 32 : (windowWidth < 412 ? 35 : (windowWidth < 640 ? 40 : 64)))
         const gaps = containerPadding + elementGaps
+        
+        // IMPORTANTE: Em desktop, não incluir hamburger no cálculo inicial
+        // Se menu não couber, hamburger será adicionado depois
         const totalNeeded = logoWidth + currentMenuWidth + rightSideWidth + gaps
         
         // Se espaço necessário > largura disponível = TREPA (hamburger aparece)
         // IMPORTANTE: Calcula para TODAS as resoluções, não apenas desktop
+        // Em desktop (>= 768px), se menu couber, overlaps = false (hamburger não aparece)
         let overlaps = totalNeeded > windowWidth
         
         // NÃO forçar hamburger - deixar cálculo natural decidir
