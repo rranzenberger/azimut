@@ -45,9 +45,9 @@ const SimplePasswordGate: React.FC<SimplePasswordGateProps> = ({ children }) => 
         {/* Logo */}
         <div className="flex justify-center mb-8">
           <img 
-            src="/logo-azimut-symbol.svg" 
+            src="/logo-azimut-star.svg" 
             alt="Azimut" 
-            className="h-16 w-16 opacity-90"
+            className="h-20 w-20 opacity-90"
           />
         </div>
 
