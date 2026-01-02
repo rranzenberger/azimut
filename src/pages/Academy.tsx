@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { useBackofficeContent } from '../hooks/useBackofficeContent'
-import PageNavigation from '../components/PageNavigation'
+import InternalNavigation from '../components/InternalNavigation'
 
 interface AcademyProps {
   lang: Lang
@@ -247,30 +247,35 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
               {labels.hero.subtitle[lang]}
             </p>
 
-            {/* Navegação Interna - igual ao dropdown do header */}
-            <PageNavigation
+            {/* Navegação Interna - Padrão Universal Azimut */}
+            <InternalNavigation
               items={[
                 {
-                  label: lang === 'pt' ? 'Azimut Academy' : lang === 'es' ? 'Academia Azimut' : lang === 'fr' ? 'Académie Azimut' : 'Azimut Academy',
+                  id: 'overview',
+                  label: lang === 'pt' ? 'Visão Geral' : lang === 'es' ? 'Visión General' : lang === 'fr' ? 'Vue d\'ensemble' : 'Overview',
                   href: '/academy',
                   icon: '✦'
                 },
                 {
+                  id: 'research',
                   label: lang === 'pt' ? 'Pesquisa & Inovação' : lang === 'es' ? 'Investigación & Innovación' : lang === 'fr' ? 'Recherche & Innovation' : 'Research & Innovation',
                   href: '/academy#research',
                   icon: '🔬'
                 },
                 {
+                  id: 'courses',
                   label: lang === 'pt' ? 'Cursos & Workshops' : lang === 'es' ? 'Cursos & Workshops' : lang === 'fr' ? 'Cours & Workshops' : 'Courses & Workshops',
                   href: '/academy#courses',
                   icon: '📚'
                 },
                 {
+                  id: 'corporate',
                   label: lang === 'pt' ? 'Treinamento Corporativo' : lang === 'es' ? 'Entrenamiento Corporativo' : lang === 'fr' ? 'Formation d\'Entreprise' : 'Corporate Training',
                   href: '/academy#corporate',
                   icon: '🏢'
                 }
               ]}
+              defaultActive={activeSection === 'research' ? 'overview' : activeSection}
             />
 
             {/* Tabs para alternar entre seções */}

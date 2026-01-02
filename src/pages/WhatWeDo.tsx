@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
-import PageNavigation from '../components/PageNavigation'
+import InternalNavigation from '../components/InternalNavigation'
 // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
 import { useAzimutContent } from '../hooks/useAzimutContent'
 
@@ -142,35 +142,41 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
               : 'We combine cinema, interactive design, spatial storytelling and AI pipelines to create narrative installations, hybrid environments and time-based experiences. Our unique approach integrates research, production and education, enabling projects other studios cannot deliver.'}
           </p>
 
-          {/* Navegação Interna - igual ao dropdown do header */}
-          <PageNavigation
+          {/* Navegação Interna - Padrão Universal Azimut */}
+          <InternalNavigation
             items={[
               {
+                id: 'all',
                 label: lang === 'pt' ? 'Todas as Soluções' : lang === 'es' ? 'Todas las Soluciones' : lang === 'fr' ? 'Toutes les Solutions' : 'All Solutions',
                 href: '/what',
                 icon: '✦'
               },
               {
+                id: 'cinema-av',
                 label: lang === 'pt' ? 'Cinema & Audiovisual' : lang === 'es' ? 'Cine & Audiovisual' : lang === 'fr' ? 'Cinéma & Audiovisuel' : 'Cinema & Audiovisual',
                 href: '/what#cinema-av',
                 icon: '🎬'
               },
               {
+                id: 'animation',
                 label: lang === 'pt' ? 'Animação 2D/3D' : lang === 'es' ? 'Animación 2D/3D' : lang === 'fr' ? 'Animation 2D/3D' : '2D/3D Animation',
                 href: '/what#animation',
                 icon: '🎨'
               },
               {
+                id: 'xr',
                 label: lang === 'pt' ? 'XR / Interativo' : lang === 'es' ? 'XR / Interactivo' : lang === 'fr' ? 'XR / Interactif' : 'XR / Interactive',
                 href: '/what#xr',
                 icon: '🥽'
               },
               {
+                id: 'ai',
                 label: lang === 'pt' ? 'IA Criativa' : lang === 'es' ? 'IA Creativa' : lang === 'fr' ? 'IA Créative' : 'Creative AI',
                 href: '/what#ai',
                 icon: '🤖'
               },
               {
+                id: 'education',
                 label: lang === 'pt' ? 'Educação & Formação' : lang === 'es' ? 'Educación & Formación' : lang === 'fr' ? 'Éducation & Formation' : 'Education & Training',
                 href: '/what#education',
                 icon: '📚'

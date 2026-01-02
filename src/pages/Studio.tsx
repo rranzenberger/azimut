@@ -5,7 +5,7 @@ import SEO, { seoData } from '../components/SEO'
 import { studioContent } from '../data/studioContent'
 import { useUserTracking } from '../hooks/useUserTracking'
 import CredibilidadeEditais from '../components/CredibilidadeEditais'
-import PageNavigation from '../components/PageNavigation'
+import InternalNavigation from '../components/InternalNavigation'
 import { getYearsNumber } from '../utils/yearsOfExperience'
 
 interface StudioProps {
@@ -434,11 +434,10 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </div>
 
           {/* ═══════════════════════════════════════════════════════════════
-              NAVEGAÇÃO INTERNA - SEÇÕES DA PÁGINA
+              NAVEGAÇÃO INTERNA - Padrão Universal Azimut
               ═══════════════════════════════════════════════════════════ */}
-          <PageNavigation
-            lang={lang}
-            sections={[
+          <InternalNavigation
+            items={[
               { 
                 id: 'unique', 
                 label: lang === 'pt' ? 'O Que Nos Torna Únicos' : lang === 'es' ? 'Lo Que Nos Hace Únicos' : lang === 'fr' ? 'Ce Qui Nous Rend Uniques' : 'What Makes Us Unique', 
