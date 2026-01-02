@@ -145,6 +145,21 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         // Em desktop (>= 768px), se menu couber, overlaps = false (hamburger não aparece)
         let overlaps = totalNeeded > windowWidth
         
+        // DEBUG: Log para verificar cálculo (remover depois)
+        if (windowWidth >= 768) {
+          console.log('Desktop cálculo:', {
+            windowWidth,
+            logoWidth,
+            currentMenuWidth,
+            rightSideWidth,
+            containerPadding,
+            elementGaps,
+            gaps,
+            totalNeeded,
+            overlaps
+          })
+        }
+        
         // NÃO forçar hamburger - deixar cálculo natural decidir
         // O hamburger só aparece se totalNeeded > windowWidth (menu não cabe)
         // Isso garante que em desktop, quando menu cabe, hamburger não aparece
