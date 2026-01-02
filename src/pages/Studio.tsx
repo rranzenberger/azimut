@@ -755,7 +755,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                 </ul>
               </div>
 
-              {/* Áreas de atuação */}
+              {/* Áreas de atuação - COMENTADO: aparece dentro de cada membro
               <div className="mt-10 pt-8 border-t" style={{ borderColor: 'var(--theme-border)' }}>
                 <h3 className="mb-4 font-sora text-[0.7rem] font-semibold uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
                   {content.areasTitle}
@@ -776,6 +776,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   ))}
                 </div>
               </div>
+              */}
             </div>
           </section>
 
