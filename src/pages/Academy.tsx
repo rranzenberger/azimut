@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { t, type Lang } from '../i18n'
+import { useLocation, useNavigate } from 'react-router-dom'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { useBackofficeContent } from '../hooks/useBackofficeContent'
+import PageNavigation from '../components/PageNavigation'
 
 interface AcademyProps {
   lang: Lang
@@ -11,6 +13,8 @@ interface AcademyProps {
 const Academy: React.FC<AcademyProps> = ({ lang }) => {
   useUserTracking()
   const seo = seoData.academy[lang]
+  const location = useLocation()
+  const navigate = useNavigate()
   
   // Buscar conteúdo da página academy do backoffice (opcional, para SEO)
   const { page: academyPage, loading: pageLoading } = useBackofficeContent('academy', lang)
@@ -26,7 +30,30 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
     return entry[lang as 'pt' | 'en' | 'es'] || entry.en
   }
 
-  const [activeSection, setActiveSection] = useState<'research' | 'courses' | 'corporate'>('research')
+  // Detectar seção ativa baseada no hash da URL
+  const [activeSection, setActiveSection] = useState<'research' | 'courses' | 'corporate'>(() => {
+    const hash = location.hash.replace('#', '')
+    if (hash === 'courses') return 'courses'
+    if (hash === 'corporate') return 'corporate'
+    return 'research'
+  })
+
+  // Sincronizar activeSection com hash da URL
+  useEffect(() => {
+    const hash = location.hash.replace('#', '')
+    if (hash === 'courses') setActiveSection('courses')
+    else if (hash === 'corporate') setActiveSection('corporate')
+    else if (hash === 'research') setActiveSection('research')
+    else if (!hash) setActiveSection('research')
+  }, [location.hash])
+
+  // Função para mudar seção (atualiza URL e state)
+  const changeSection = (section: 'research' | 'courses' | 'corporate') => {
+    setActiveSection(section)
+    navigate(`/academy#${section}`, { replace: true })
+    // Scroll suave para o topo
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   // ═══════════════════════════════════════════════════════════════
   // WORKSHOPS E CURSOS
@@ -216,10 +243,36 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
               {labels.hero.subtitle[lang]}
             </p>
 
+            {/* Navegação Interna - igual ao dropdown do header */}
+            <PageNavigation
+              items={[
+                {
+                  label: lang === 'pt' ? 'Azimut Academy' : lang === 'es' ? 'Academia Azimut' : lang === 'fr' ? 'Académie Azimut' : 'Azimut Academy',
+                  href: '/academy',
+                  icon: '✦'
+                },
+                {
+                  label: lang === 'pt' ? 'Pesquisa & Inovação' : lang === 'es' ? 'Investigación & Innovación' : lang === 'fr' ? 'Recherche & Innovation' : 'Research & Innovation',
+                  href: '/academy#research',
+                  icon: '🔬'
+                },
+                {
+                  label: lang === 'pt' ? 'Cursos & Workshops' : lang === 'es' ? 'Cursos & Workshops' : lang === 'fr' ? 'Cours & Workshops' : 'Courses & Workshops',
+                  href: '/academy#courses',
+                  icon: '📚'
+                },
+                {
+                  label: lang === 'pt' ? 'Treinamento Corporativo' : lang === 'es' ? 'Entrenamiento Corporativo' : lang === 'fr' ? 'Formation d\'Entreprise' : 'Corporate Training',
+                  href: '/academy#corporate',
+                  icon: '🏢'
+                }
+              ]}
+            />
+
             {/* Tabs para alternar entre seções */}
             <div className="flex flex-wrap gap-4 mb-8 border-b" style={{ borderColor: 'var(--theme-border)' }}>
               <button
-                onClick={() => setActiveSection('research')}
+                onClick={() => changeSection('research')}
                 className="pb-3 px-4 font-sora text-sm md:text-base uppercase tracking-[0.1em] transition-colors"
                 style={{
                   color: activeSection === 'research' ? '#8B2332' : 'var(--theme-text-muted)',
@@ -230,7 +283,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                 {labels.tabs.research[lang]}
               </button>
               <button
-                onClick={() => setActiveSection('courses')}
+                onClick={() => changeSection('courses')}
                 className="pb-3 px-4 font-sora text-sm md:text-base uppercase tracking-[0.1em] transition-colors"
                 style={{
                   color: activeSection === 'courses' ? '#8B2332' : 'var(--theme-text-muted)',
@@ -241,7 +294,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                 {labels.tabs.courses[lang]}
               </button>
               <button
-                onClick={() => setActiveSection('corporate')}
+                onClick={() => changeSection('corporate')}
                 className="pb-3 px-4 font-sora text-sm md:text-base uppercase tracking-[0.1em] transition-colors"
                 style={{
                   color: activeSection === 'corporate' ? '#8B2332' : 'var(--theme-text-muted)',

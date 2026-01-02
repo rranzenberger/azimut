@@ -342,32 +342,38 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 }}
               ></span>
             </Link>
-            <Link 
-              to="/academy" 
-              className="nav-link-glow relative whitespace-nowrap pb-1 shrink-0 transition-colors duration-200 font-sora font-semibold"
+            {/* Academy com submenu */}
+            <NavDropdown
+              label={t(lang, 'navAcademy')}
+              items={[
+                {
+                  label: lang === 'pt' ? 'Azimut Academy' : lang === 'es' ? 'Academia Azimut' : lang === 'fr' ? 'Académie Azimut' : 'Azimut Academy',
+                  href: '/academy',
+                  description: lang === 'pt' ? 'Visão geral completa' : lang === 'es' ? 'Vista general completa' : lang === 'fr' ? 'Vue d\'ensemble complète' : 'Complete overview'
+                },
+                {
+                  label: lang === 'pt' ? 'Pesquisa & Inovação' : lang === 'es' ? 'Investigación & Innovación' : lang === 'fr' ? 'Recherche & Innovation' : 'Research & Innovation',
+                  href: '/academy#research',
+                  description: lang === 'pt' ? 'Explorando novas fronteiras' : lang === 'es' ? 'Explorando nuevas fronteras' : lang === 'fr' ? 'Explorer de nouvelles frontières' : 'Exploring new frontiers'
+                },
+                {
+                  label: lang === 'pt' ? 'Cursos & Workshops' : lang === 'es' ? 'Cursos & Workshops' : lang === 'fr' ? 'Cours & Workshops' : 'Courses & Workshops',
+                  href: '/academy#courses',
+                  description: lang === 'pt' ? 'Aprendizado prático' : lang === 'es' ? 'Aprendizaje práctico' : lang === 'fr' ? 'Apprentissage pratique' : 'Hands-on learning'
+                },
+                {
+                  label: lang === 'pt' ? 'Treinamento Corporativo' : lang === 'es' ? 'Entrenamiento Corporativo' : lang === 'fr' ? 'Formation d\'Entreprise' : 'Corporate Training',
+                  href: '/academy#corporate',
+                  description: lang === 'pt' ? 'Programas personalizados' : lang === 'es' ? 'Programas personalizados' : lang === 'fr' ? 'Programmes personnalisés' : 'Tailored programs'
+                }
+              ]}
+              lang={lang}
+              theme={theme}
+              isActive={activeRoute === 'academy'}
               onMouseEnter={() => setHoveredRoute('academy')}
               onMouseLeave={() => setHoveredRoute(null)}
-              style={{ 
-                padding: '0 6px', 
-                minHeight: '44px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                position: 'relative',
-                color: activeRoute === 'academy' 
-                  ? (theme === 'light' ? '#c92337' : '#c92337')
-                  : (hoveredRoute === 'academy' ? '#c92337' : 'var(--theme-text-secondary)'),
-                textShadow: activeRoute === 'academy' && theme === 'dark' ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' : undefined
-              }}
-            >
-              <span>{t(lang, 'navAcademy')}</span>
-              <span 
-                className="absolute bottom-0 left-0 h-[1px] min-[768px]:h-[1.5px] md:h-[1.5px] lg:h-[2px] xl:h-[2px] bg-azimut-red transition-all duration-200 ease-in-out"
-                style={{ 
-                  width: shouldShowLine('academy') ? '100%' : '0%',
-                  opacity: shouldShowLine('academy') ? 1 : 0
-                }}
-              ></span>
-            </Link>
+              hovered={hoveredRoute === 'academy'}
+            />
           </nav>
 
           {/* ═══════════════════════════════════════════════════════════════
