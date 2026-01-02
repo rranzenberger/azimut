@@ -65,7 +65,8 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   ]
   
   // MIGRAÇÃO GRADUAL: Backoffice → Estático (sempre funciona)
-  const services = (cmsContent?.services && cmsContent.services.length > 0) 
+  // PROTEÇÃO TOTAL: Garantir que services SEMPRE seja um array
+  const services = (cmsContent?.services && Array.isArray(cmsContent.services) && cmsContent.services.length > 0) 
     ? (() => {
         console.log('✅ Usando serviços do backoffice');
         return cmsContent.services;
@@ -74,6 +75,9 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
         console.log('⚠️ Usando serviços estáticos (fallback) - Preencher no backoffice!');
         return defaultServices;
       })()
+  
+  // GARANTIA FINAL: Se ainda assim for undefined, usar defaultServices
+  const safeServices = (services && Array.isArray(services) && services.length > 0) ? services : defaultServices
 
   // Parallax sutil na estrela de fundo
   useEffect(() => {
@@ -176,7 +180,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
 
           {/* Grid de Serviços - SEMPRE MOSTRA (backoffice OU padrão) */}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((service: any, index: number) => (
+            {((safeServices && Array.isArray(safeServices)) ? safeServices : defaultServices).map((service: any, index: number) => (
               <article
                 key={service.slug || index}
                 id={service.id || service.slug}

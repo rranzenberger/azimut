@@ -14,11 +14,12 @@ import Chatbot from './components/Chatbot'
 import ProtectedRoute from './components/ProtectedRoute'
 import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDetection'
 
-// CORREÇÃO: Import direto das páginas problemáticas (Studio, Academy, Contact)
+// CORREÇÃO: Import direto das páginas problemáticas (Studio, Academy, Contact, Login)
 // Lazy loading estava causando erro "Failed to fetch dynamically imported module"
 import Studio from './pages/Studio'
 import Academy from './pages/Academy'
 import Contact from './pages/Contact'
+import Login from './pages/Login'
 
 // Lazy loading apenas para páginas que funcionam bem
 const Home = lazy(() => import('./pages/Home'))
@@ -26,7 +27,6 @@ const WhatWeDo = lazy(() => import('./pages/WhatWeDo'))
 const Work = lazy(() => import('./pages/Work'))
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
 const NotFound = lazy(() => import('./pages/NotFound'))
-const Login = lazy(() => import('./pages/Login'))
 
 const App: React.FC = () => {
   // Carregar idioma do localStorage ou detectar automaticamente
@@ -173,7 +173,7 @@ const App: React.FC = () => {
               {/* Rota de Login - SEM ProtectedRoute (pública) */}
               <Route path="/login" element={<Login />} />
               
-              {/* Rotas protegidas - requerem autenticação para preview */}
+              {/* Rotas protegidas - proteção controlada por VITE_PREVIEW_ENABLED */}
               <Route path="/" element={
                 <ProtectedRoute>
                   <Home lang={lang} />

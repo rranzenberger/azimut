@@ -10,6 +10,22 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const location = useLocation()
   const hasCheckedRef = useRef(false)
 
+  // ═══════════════════════════════════════════════════════════════
+  // 🔐 CONTROLE DE PROTEÇÃO POR VARIÁVEL DE AMBIENTE
+  // ═══════════════════════════════════════════════════════════════
+  // Para ATIVAR proteção: VITE_PREVIEW_ENABLED=true
+  // Para DESATIVAR proteção: VITE_PREVIEW_ENABLED=false (ou não definir)
+  // ═══════════════════════════════════════════════════════════════
+  const PREVIEW_ENABLED = import.meta.env.VITE_PREVIEW_ENABLED === 'true'
+
+  // ═══════════════════════════════════════════════════════════════
+  // OTIMIZAÇÃO: Se proteção desabilitada, retornar direto SEM useEffect
+  // Isso evita re-renders desnecessários durante navegação
+  // ═══════════════════════════════════════════════════════════════
+  if (!PREVIEW_ENABLED) {
+    return <>{children}</>
+  }
+
   useEffect(() => {
     // Verificar autenticação de forma síncrona (não async para evitar delay)
     const checkAuth = () => {
@@ -19,6 +35,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
         
         // Log apenas em desenvolvimento
         if (import.meta.env.DEV) {
+          console.log(`[ProtectedRoute] Proteção: ATIVA`)
           console.log(`[ProtectedRoute] Verificando autenticação para: ${location.pathname}`)
           console.log(`[ProtectedRoute] Auth token: ${authToken ? 'presente' : 'ausente'}`)
           console.log(`[ProtectedRoute] Autenticado: ${authenticated}`)

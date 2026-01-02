@@ -21,6 +21,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
   
   // Lab items não estão no banco ainda - deixar vazio por enquanto
   // TODO: Implementar modelo Lab no banco ou usar seções da página
+  // PROTEÇÃO: Garantir que sempre seja array
   const labItems: any[] = []
   
   // Função locale para conteúdo estático (workshops, áreas, etc)
@@ -128,6 +129,9 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
       audience: { pt: 'Designers, animadores, criadores', en: 'Designers, animators, creators', es: 'Diseñadores, animadores, creadores', fr: 'Designers, animateurs, créateurs' }
     }
   ]
+
+  // PROTEÇÃO: Garantir que workshops sempre seja array válido (DEPOIS da declaração)
+  const safeWorkshops = Array.isArray(workshops) && workshops.length > 0 ? workshops : []
 
   // ═══════════════════════════════════════════════════════════════
   // LABELS E TEXTS
@@ -323,9 +327,9 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
 
               {/* Projetos de Pesquisa */}
               {/* TODO: Lab items não estão no banco ainda - implementar quando necessário */}
-              {labItems.length > 0 ? (
+              {((labItems && Array.isArray(labItems) && labItems.length > 0) ? labItems : []).length > 0 ? (
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                  {labItems.map((item: any) => (
+                  {((labItems && Array.isArray(labItems)) ? labItems : []).map((item: any) => (
                     <article
                       key={item.slug}
                       className="group rounded-2xl border border-white/10 card-adaptive p-6 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all hover:border-white/20 hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)]"
@@ -401,7 +405,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
 
               {/* Workshops Grid */}
               <div className="grid gap-6 md:grid-cols-2">
-                {workshops.map((workshop, idx) => (
+                {((safeWorkshops && Array.isArray(safeWorkshops) && safeWorkshops.length > 0) ? safeWorkshops : []).map((workshop, idx) => (
                   <article
                     key={idx}
                     className="group rounded-2xl border border-white/10 card-adaptive p-6 md:p-8 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all hover:border-white/20 hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)]"
