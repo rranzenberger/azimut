@@ -97,18 +97,18 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
                 color: isActive 
                   ? '#c92337' 
                   : 'var(--theme-text-secondary)',
-                backgroundColor: 'transparent', // SEM background - só glow!
+                backgroundColor: 'transparent',
                 opacity: isActive ? 1 : 0.7,
                 textShadow: isActive 
-                  ? '0 0 12px rgba(201, 35, 55, 0.6), 0 0 25px rgba(201, 35, 55, 0.3)' 
+                  ? '0 0 12px rgba(201, 35, 55, 0.9), 0 0 25px rgba(201, 35, 55, 0.6)' 
                   : 'none',
-                border: '1px solid transparent' // SEM borda
+                border: '1px solid transparent'
               }}
               onMouseEnter={(e) => {
                 if (!isActive) {
                   e.currentTarget.style.opacity = '1'
                   e.currentTarget.style.color = '#c92337'
-                  e.currentTarget.style.textShadow = '0 0 8px rgba(201, 35, 55, 0.4), 0 0 16px rgba(201, 35, 55, 0.2)'
+                  e.currentTarget.style.textShadow = '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)'
                   e.currentTarget.style.backgroundColor = 'transparent'
                   e.currentTarget.style.transform = 'translateY(-1px)'
                 }
