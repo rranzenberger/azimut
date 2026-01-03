@@ -76,13 +76,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
   
-  // Calcular opacidade do degradê (desaparece conforme scroll)
-  // Máximo em 0px, desaparece completamente em 200px
-  // Usa easing para transição mais suave
-  const fadeOpacity = Math.max(0, Math.min(1, 1 - (scrollPosition / 200)))
-  
-  // Debug: log para verificar (remover depois)
-  // console.log('Scroll:', scrollPosition, 'FadeOpacity:', fadeOpacity)
+  // Calcular opacidade do FADE DO CONTEÚDO (não do gradiente!)
+  // Quando scroll = 0, conteúdo totalmente visível
+  // Quando scroll aumenta, conteúdo vai sumindo no topo (fade out)
+  // Isso cria "respiro" visual para não ter corte seco
+  const contentFadeOpacity = Math.max(0, Math.min(1, 1 - (scrollPosition / 150)))
   
   // NOVA ABORDAGEM SIMPLES: hamburger só aparece em mobile (< 768px)
   // Em desktop, menu sempre visível, hamburger NUNCA aparece
@@ -841,35 +839,61 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           position: 'relative'
         }}
       >
-        {/* GRADIENTE VERMELHO LATERAL (135deg) que desaparece com scroll */}
-        {fadeOpacity > 0 && (
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: '200px',
-              background: theme === 'dark'
-                ? `linear-gradient(135deg, 
-                    rgba(201, 35, 55, ${fadeOpacity * 0.4}) 0%, 
-                    rgba(201, 35, 55, ${fadeOpacity * 0.25}) 30%,
-                    transparent 60%, 
-                    rgba(68, 27, 68, ${fadeOpacity * 0.2}) 100%)`
-                : `linear-gradient(135deg, 
-                    rgba(201, 35, 55, ${fadeOpacity * 0.35}) 0%, 
-                    rgba(201, 35, 55, ${fadeOpacity * 0.2}) 30%,
-                    transparent 60%, 
-                    rgba(201, 35, 55, ${fadeOpacity * 0.15}) 100%)`,
-              pointerEvents: 'none',
-              zIndex: 1,
-              willChange: 'opacity',
-              opacity: fadeOpacity, // Opacidade direta baseada no scroll
-              transition: 'opacity 0.15s ease-out'
-            }}
-          />
-        )}
-        <div style={{ position: 'relative', zIndex: 2 }}>
+        {/* GRADIENTE VERMELHO LATERAL (135deg) - SEMPRE VISÍVEL (constante) */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '120px',
+            background: theme === 'dark'
+              ? `linear-gradient(135deg, 
+                  rgba(201, 35, 55, 0.15) 0%, 
+                  transparent 50%, 
+                  rgba(68, 27, 68, 0.12) 100%)`
+              : `linear-gradient(135deg, 
+                  rgba(201, 35, 55, 0.12) 0%, 
+                  transparent 50%, 
+                  rgba(201, 35, 55, 0.08) 100%)`,
+            pointerEvents: 'none',
+            zIndex: 1
+          }}
+        />
+        
+        {/* OVERLAY ESCURO que faz o CONTEÚDO sumir quando sobe (fade out) */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '120px',
+            background: theme === 'dark'
+              ? `linear-gradient(to bottom, 
+                  rgba(6, 10, 18, ${1 - contentFadeOpacity}) 0%,
+                  rgba(6, 10, 18, ${(1 - contentFadeOpacity) * 0.7}) 50%,
+                  rgba(6, 10, 18, ${(1 - contentFadeOpacity) * 0.3}) 80%,
+                  transparent 100%)`
+              : `linear-gradient(to bottom, 
+                  rgba(30, 28, 26, ${1 - contentFadeOpacity}) 0%,
+                  rgba(30, 28, 26, ${(1 - contentFadeOpacity) * 0.7}) 50%,
+                  rgba(30, 28, 26, ${(1 - contentFadeOpacity) * 0.3}) 80%,
+                  transparent 100%)`,
+            pointerEvents: 'none',
+            zIndex: 2,
+            willChange: 'opacity',
+            transition: 'opacity 0.1s ease-out'
+          }}
+        />
+        
+        {/* CONTEÚDO com fade out quando sobe */}
+        <div style={{ 
+          position: 'relative', 
+          zIndex: 3,
+          opacity: contentFadeOpacity,
+          transition: 'opacity 0.15s ease-out'
+        }}>
           {children}
         </div>
       </main>
