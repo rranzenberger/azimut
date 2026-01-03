@@ -491,7 +491,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       </Link>
                       <Link
                         to="/contact?interest=similar"
-                        className="inline-flex items-center justify-center rounded-lg border border-azimut-red px-6 py-2.5 font-sora text-sm uppercase tracking-[0.1em] text-azimut-red transition-all duration-300 hover:bg-azimut-red/10 hover:scale-105"
+                        className="inline-flex items-center justify-center rounded-lg border border-azimut-red px-6 py-2.5 font-sora text-sm uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/10 hover:scale-105"
                       >
                         {lang === 'pt' ? 'Falar sobre Projeto Similar' : lang === 'es' ? 'Hablar sobre Proyecto Similar' : lang === 'fr' ? 'Parler d\'un Projet Similaire' : 'Discuss Similar Project'}
                       </Link>
