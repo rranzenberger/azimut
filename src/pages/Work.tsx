@@ -391,7 +391,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                             {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
                           </span>
                         </div>
-                        <p className="text-xs text-slate-500 uppercase tracking-wider">
+                        <p className="text-xs text-slate-800 dark:text-slate-500 uppercase tracking-wider">
                           {lang === 'pt' ? '🖼️ Imagem/Vídeo do Backoffice' : lang === 'es' ? '🖼️ Imagen/Video del Backoffice' : '🖼️ Image/Video from Backoffice'}
                         </p>
                       </div>
@@ -528,7 +528,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                       </div>
                     )}
                     {item.year && (
-                      <span className="text-xs text-slate-500 font-medium">
+                      <span className="text-xs text-slate-800 dark:text-slate-500 font-medium">
                         {item.year}
                       </span>
                     )}
