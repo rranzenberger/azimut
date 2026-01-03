@@ -235,17 +235,17 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
 
           {/* Card lateral - sempre escuro com texto claro */}
           <aside 
-            className="relative rounded-2xl sm:rounded-3xl p-4 sm:p-5 md:p-6 shadow-[0_24px_60px_rgba(0,0,0,0.6)] animate-fade-in-up opacity-0" 
+            className="card-dark-fixed relative rounded-2xl sm:rounded-3xl p-4 sm:p-5 md:p-6 shadow-[0_24px_60px_rgba(0,0,0,0.6)] animate-fade-in-up opacity-0" 
             style={{ 
               animationDelay: '0.5s',
               background: 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)',
               border: '1px solid rgba(255, 255, 255, 0.1)'
             }}
           >
-              <h2 className="mb-3 font-sora text-[0.72rem] uppercase tracking-[0.24em] text-slate-50 dark:text-slate-200">
+              <h2 className="mb-3 font-sora text-[0.72rem] uppercase tracking-[0.24em]" style={{ color: 'var(--theme-card-text, #e2e8f0)' }}>
                 {t(lang, 'cardTitle')}
               </h2>
-              <p className="mb-4 text-[0.9rem] leading-relaxed text-white">
+              <p className="mb-4 text-[0.9rem] leading-relaxed" style={{ color: '#ffffff' }}>
                 {t(lang, 'cardBody')}
               </p>
               <div className="mb-4 flex flex-wrap gap-2">
@@ -259,7 +259,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   {t(lang, 'tag3')}
                 </span>
               </div>
-              <p className="text-[0.8rem] text-slate-900 dark:text-slate-300">{t(lang, 'cities')}</p>
+              <p className="text-[0.8rem]" style={{ color: 'var(--theme-card-text, #cbd5e1)' }}>{t(lang, 'cities')}</p>
             </aside>
           </div>
         </section>
