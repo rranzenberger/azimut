@@ -14,15 +14,15 @@ import Chatbot from './components/Chatbot'
 import SimplePasswordGate from './components/SimplePasswordGate'
 import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDetection'
 
-// CORREÇÃO: Import direto das páginas problemáticas (Studio, Academy, Contact)
+// CORREÇÃO: Import direto das páginas problemáticas
 // Lazy loading estava causando erro "Failed to fetch dynamically imported module"
 import Studio from './pages/Studio'
 import Academy from './pages/Academy'
 import Contact from './pages/Contact'
+import WhatWeDo from './pages/WhatWeDo'
 
 // Lazy loading apenas para páginas que funcionam bem
 const Home = lazy(() => import('./pages/Home'))
-const WhatWeDo = lazy(() => import('./pages/WhatWeDo'))
 const Work = lazy(() => import('./pages/Work'))
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
 const NotFound = lazy(() => import('./pages/NotFound'))
