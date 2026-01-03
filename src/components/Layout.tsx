@@ -454,7 +454,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   }}
                   className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
                   style={{ 
-                    color: lang === 'en' ? '#c92337' : 'var(--theme-text-muted)', 
+                    color: lang === 'en' ? (theme === 'light' ? '#8b1a28' : '#c92337') : 'var(--theme-text-muted)', 
                     opacity: lang === 'en' ? 1 : 0.7,
                     minWidth: '20px',
                     height: '100%',
@@ -726,7 +726,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       onClick={() => setLang('en')}
                       className="transition-all duration-200 touch-manipulation"
                       style={{ 
-                        color: lang === 'en' ? '#c92337' : 'var(--theme-text-muted)', 
+                        color: lang === 'en' ? (theme === 'light' ? '#8b1a28' : '#c92337') : 'var(--theme-text-muted)', 
                         opacity: lang === 'en' ? 1 : 0.7,
                         minWidth: '28px',
                         minHeight: '32px',
