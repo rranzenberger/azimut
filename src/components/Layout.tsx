@@ -189,7 +189,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           ref={containerRef} 
           className="mx-auto grid w-full max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-0.5 sm:gap-1 sm:px-4 sm:gap-2 min-[768px]:px-6 min-[768px]:gap-3 md:gap-4 lg:gap-5 xl:gap-6 transition-all duration-300" 
           style={{ 
-            minHeight: isScrolled ? '64px' : '80px', // Compacta no scroll
+            minHeight: isScrolled ? '52px' : '60px', // Compacto: 60px → 52px
             overflow: 'visible', 
             position: 'relative', 
             minWidth: 0, 
@@ -223,7 +223,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               alt="Azimut – Immersive • Interactive • Cinematic Experiences"
               className="transition-all duration-300"
               style={{ 
-                height: isScrolled ? '48px' : '56px', // Logo menor no scroll
+                height: isScrolled ? '38px' : '44px', // Logo compacta: 44px → 38px
                 width: 'auto',
                 maxWidth: 'none',
                 display: 'block'
@@ -239,7 +239,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           >
             <Link 
               to="/" 
-              className="nav-link-glow relative whitespace-nowrap pb-1 touch-manipulation shrink-0 transition-colors duration-200 font-sora font-semibold"
+              className="nav-link-glow relative whitespace-nowrap pb-0.5 touch-manipulation shrink-0 transition-colors duration-200 font-sora font-semibold"
               onMouseEnter={() => setHoveredRoute('home')}
               onMouseLeave={() => setHoveredRoute(null)}
               style={{ 
