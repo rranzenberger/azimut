@@ -1110,11 +1110,11 @@ select.input-adaptive:disabled {
   color: #d3cec3;
 }
 
-[data-theme="light"] .card-adaptive .text-azimut-red,
+/* REMOVIDO: estava forçando texto vermelho em botões vermelhos no tema claro */
+/* [data-theme="light"] .card-adaptive .text-azimut-red,
 [data-theme="light"] .card-adaptive .bg-azimut-red {
-  /* Manter vermelho forte visível no tema claro */
   color: #c92337;
-}
+} */
 
 /* Garantir que títulos, textos e badges nos cards fiquem CLAROS no tema light (inversão) */
 [data-theme="light"] .card-adaptive h1,
