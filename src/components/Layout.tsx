@@ -434,17 +434,17 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               Ultra compacto, bolinhas alinhadas, separador centralizado
               ═══════════════════════════════════════════════════════════ */}
           {/* CONTAINER FIXO - Tema, Idiomas e CTA - ALINHADO À DIREITA - AGLOMERADO */}
-          <div className="flex items-center gap-0 sm:gap-0.5 md:gap-2 shrink-0" style={{ flexShrink: 0, justifySelf: 'end', alignItems: 'center', height: '100%', marginLeft: 'auto', minWidth: 0, maxWidth: '100%', overflow: 'visible', paddingRight: '0' }}>
+          <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 shrink-0" style={{ flexShrink: 0, justifySelf: 'end', alignItems: 'center', height: '100%', marginLeft: 'auto', minWidth: 0, maxWidth: '100%', overflow: 'visible', paddingRight: '0' }}>
             {/* Toggle de tema - ALINHADO */}
-            <div className="touch-manipulation shrink-0" style={{ width: '36px', minWidth: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <div className="touch-manipulation shrink-0" style={{ width: '36px', minWidth: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginRight: '2px' }}>
               <ThemeToggle theme={theme} onToggle={toggleTheme} />
             </div>
             
             {/* Separador visual */}
-            <div className="hidden h-4 w-px min-[768px]:block shrink-0" style={{ backgroundColor: 'var(--theme-border)', flexShrink: 0, alignSelf: 'center' }}></div>
+            <div className="hidden h-4 w-px min-[768px]:block shrink-0" style={{ backgroundColor: 'var(--theme-border)', flexShrink: 0, alignSelf: 'center', marginLeft: '2px', marginRight: '4px' }}></div>
             
             {/* Idiomas - ALINHAMENTO PERFEITO */}
-            <div className="hidden min-[768px]:flex shrink-0" style={{ alignItems: 'center', height: '100%', display: 'flex', gap: '0' }}>
+            <div className="hidden min-[768px]:flex shrink-0" style={{ alignItems: 'center', height: '100%', display: 'flex', gap: '0', marginLeft: '2px' }}>
               {/* Grupo Canadá - EN e FR - ULTRA COMPACTO */}
               <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '1px' }}>
                 <img src="/flag-ca.svg" alt="Canada" className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block' }} />
@@ -618,19 +618,19 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               <span 
                 className={`h-0.5 w-6 transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}
                 style={{ 
-                  backgroundColor: theme === 'light' ? '#2a2825' : '#d3cec3'
+                  backgroundColor: theme === 'light' ? '#d3cec3' : '#d3cec3'
                 }}
               ></span>
               <span 
                 className={`h-0.5 w-6 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}
                 style={{ 
-                  backgroundColor: theme === 'light' ? '#2a2825' : '#d3cec3'
+                  backgroundColor: theme === 'light' ? '#d3cec3' : '#d3cec3'
                 }}
               ></span>
               <span 
                 className={`h-0.5 w-6 transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}
                 style={{ 
-                  backgroundColor: theme === 'light' ? '#2a2825' : '#d3cec3'
+                  backgroundColor: theme === 'light' ? '#d3cec3' : '#d3cec3'
                 }}
               ></span>
             </button>
