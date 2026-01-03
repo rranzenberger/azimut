@@ -1,6 +1,88 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════
+   CORREÇÕES DE CONTRASTE - PRIORIDADE MÁXIMA (ANTES DE @theme)
+   DEVE VIR LOGO APÓS @import PARA TER MÁXIMA PRECEDÊNCIA
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════
+   TEMA ESCURO: CARDS COM TEXTO CLARO SEMPRE
+   ═══════════════════════════════════════════════════════════════ */
+html[data-theme="dark"] .card-adaptive,
+html[data-theme="dark"] .card-adaptive *,
+html[data-theme="dark"] .card-dark-adaptive,
+html[data-theme="dark"] .card-dark-adaptive *,
+html[data-theme="dark"] [class*="bg-slate-8"],
+html[data-theme="dark"] [class*="bg-slate-8"] *,
+html[data-theme="dark"] [class*="bg-slate-9"],
+html[data-theme="dark"] [class*="bg-slate-9"] * {
+  color: #d3cec3 !important;
+}
+
+/* Títulos sempre brancos no tema escuro */
+html[data-theme="dark"] .card-adaptive h1,
+html[data-theme="dark"] .card-adaptive h2,
+html[data-theme="dark"] .card-adaptive h3 {
+  color: #ffffff !important;
+}
+
+/* Forçar .text-slate-900 a ser claro no tema escuro */
+html[data-theme="dark"] .text-slate-900 {
+  color: #d3cec3 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TEMA CLARO: TEXTO ESCURO NO FUNDO BEGE (EXCETO CARDS ESCUROS)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Texto branco → escuro no tema claro (exceto em cards escuros) */
+html[data-theme="light"] .text-white:not([class*="bg-slate-8"] *):not([class*="bg-slate-9"] *):not(.card-adaptive *):not(.bg-azimut-red):not(.bg-azimut-red *) {
+  color: #0f172a !important;
+}
+
+/* Texto slate claro → escuro no tema claro */
+html[data-theme="light"] .text-slate-50:not([class*="bg-slate-8"] *):not(.card-adaptive *),
+html[data-theme="light"] .text-slate-100:not([class*="bg-slate-8"] *):not(.card-adaptive *),
+html[data-theme="light"] .text-slate-200:not([class*="bg-slate-8"] *):not(.card-adaptive *),
+html[data-theme="light"] .text-slate-300:not([class*="bg-slate-8"] *):not(.card-adaptive *) {
+  color: #1e293b !important;
+}
+
+/* Texto slate-900 → preto no tema claro (fora de cards escuros) */
+html[data-theme="light"] .text-slate-900:not([class*="bg-slate-8"] *):not(.card-adaptive *) {
+  color: #0f172a !important;
+}
+
+/* Azuis claros → azul marinho no tema claro */
+html[data-theme="light"] .text-slate-400,
+html[data-theme="light"] .text-slate-500,
+html[data-theme="light"] .text-blue-200,
+html[data-theme="light"] .text-blue-300 {
+  color: #1e3a5f !important;
+}
+
+/* Cards escuros no tema claro mantêm texto claro */
+html[data-theme="light"] .card-adaptive,
+html[data-theme="light"] .card-adaptive *,
+html[data-theme="light"] [class*="bg-slate-8"],
+html[data-theme="light"] [class*="bg-slate-8"] *,
+html[data-theme="light"] [class*="bg-slate-9"],
+html[data-theme="light"] [class*="bg-slate-9"] * {
+  color: #d3cec3 !important;
+}
+
+/* Botões vermelhos sempre com texto branco */
+html[data-theme="light"] .bg-azimut-red,
+html[data-theme="light"] .bg-azimut-red * {
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .bg-azimut-red,
+html[data-theme="dark"] .bg-azimut-red * {
+  color: #ffffff !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    TEMA PERSONALIZADO - Azimut 2026
    Cinematographic • Immersive • Interactive
    ═══════════════════════════════════════════════════════════════ */
@@ -1266,135 +1348,4 @@ select.input-adaptive:disabled {
   0% { transform: translateX(-100%); }
   50% { transform: translateX(100%); }
   100% { transform: translateX(100%); }
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   CORREÇÃO DEFINITIVA: CARDS "OUR SOLUTIONS" E OUTROS NO TEMA ESCURO
-   ═══════════════════════════════════════════════════════════════ */
-
-/* PROBLEMA: No tema escuro, cards com .card-adaptive têm texto escuro (text-slate-900)
-   que só fica legível no hover. Isso afeta Home, Work, Studio. */
-
-/* SOLUÇÃO: Forçar texto CLARO em TODOS os cards com fundo escuro no tema ESCURO */
-
-/* 1. Garantir que cards .card-adaptive SEMPRE tenham texto claro no tema ESCURO */
-html[data-theme="dark"] .card-adaptive,
-html[data-theme="dark"] .card-dark-adaptive,
-html[data-theme="dark"] .card-dark-fixed,
-html[data-theme="dark"] [class*="from-slate-8"],
-html[data-theme="dark"] [class*="from-slate-9"],
-html[data-theme="dark"] [class*="to-slate-8"],
-html[data-theme="dark"] [class*="to-slate-9"],
-html[data-theme="dark"] [class*="bg-slate-8"],
-html[data-theme="dark"] [class*="bg-slate-9"] {
-  color: #d3cec3 !important; /* Texto creme claro */
-}
-
-/* 2. Forçar TODOS os elementos filhos dentro de cards escuros */
-html[data-theme="dark"] .card-adaptive *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="dark"] .card-dark-adaptive *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="dark"] .card-dark-fixed *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="dark"] [class*="from-slate-8"] *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="dark"] [class*="from-slate-9"] *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="dark"] [class*="to-slate-8"] *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="dark"] [class*="to-slate-9"] *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="dark"] [class*="bg-slate-8"] *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="dark"] [class*="bg-slate-9"] *:not(.bg-azimut-red):not(.bg-azimut-red *) {
-  color: #d3cec3 !important; /* Texto creme claro */
-}
-
-/* 3. ESPECÍFICO: Corrigir .text-slate-900 (texto escuro) dentro de cards no tema ESCURO */
-html[data-theme="dark"] .card-adaptive .text-slate-900,
-html[data-theme="dark"] .card-dark-adaptive .text-slate-900,
-html[data-theme="dark"] [class*="bg-slate-8"] .text-slate-900,
-html[data-theme="dark"] [class*="bg-slate-9"] .text-slate-900 {
-  color: #d3cec3 !important; /* Forçar texto claro */
-}
-
-/* 4. ESPECÍFICO: Títulos sempre brancos antes do hover */
-html[data-theme="dark"] .card-adaptive h3,
-html[data-theme="dark"] .card-adaptive h2,
-html[data-theme="dark"] .card-adaptive h1 {
-  color: #ffffff !important;
-}
-
-/* 5. ESPECÍFICO: Descrições sempre claras */
-html[data-theme="dark"] .card-adaptive p,
-html[data-theme="dark"] .card-adaptive span {
-  color: #d3cec3 !important;
-}
-
-/* 6. Preservar efeito hover: título fica vermelho */
-html[data-theme="dark"] .group:hover .card-adaptive h3,
-html[data-theme="dark"] .group:hover .card-adaptive h2,
-html[data-theme="dark"] .group:hover .card-adaptive h1 {
-  color: #c92337 !important;
-}
-
-/* 7. Preservar efeito hover: descrição fica um pouco mais clara */
-html[data-theme="dark"] .group:hover .card-adaptive p,
-html[data-theme="dark"] .group:hover .card-adaptive span {
-  color: #e8e3d8 !important; /* Creme mais claro */
-}
-
-/* 8. Garantir que dark:text-slate-200 funcione corretamente */
-html[data-theme="dark"] .dark\:text-slate-200 {
-  color: #e2e8f0 !important;
-}
-
-/* 9. Garantir que dark:text-slate-300 funcione corretamente */
-html[data-theme="dark"] .dark\:text-slate-300 {
-  color: #cbd5e1 !important;
-}
-
-/* 10. Garantir que dark:text-slate-400 funcione corretamente */
-html[data-theme="dark"] .dark\:text-slate-400 {
-  color: #94a3b8 !important;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   REFORÇO: GARANTIR QUE TEMA CLARO FUNCIONE CORRETAMENTE
-   ═══════════════════════════════════════════════════════════════ */
-
-/* PROBLEMA: Mesmo com as regras anteriores, alguns textos .text-slate-900
-   continuam claros no tema light. Isso acontece porque as classes Tailwind
-   inline têm alta especificidade. */
-
-/* SOLUÇÃO: Regras ULTRA-ESPECÍFICAS para FORÇAR texto escuro no tema claro
-   (exceto dentro de cards escuros e botões vermelhos) */
-
-/* 1. FORÇAR .text-slate-900 a ser ESCURO no tema claro (fora de cards escuros) */
-html[data-theme="light"] body .text-slate-900:not([class*="from-slate-8"] *):not([class*="from-slate-9"] *):not([class*="to-slate-8"] *):not([class*="to-slate-9"] *):not([class*="bg-slate-8"] *):not([class*="bg-slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red *):not([class*="bg-azimut-red"] *) {
-  color: #0f172a !important; /* Slate-900 real */
-}
-
-/* 2. FORÇAR .text-slate-800 a ser ESCURO no tema claro (fora de cards escuros) */
-html[data-theme="light"] body .text-slate-800:not([class*="from-slate-8"] *):not([class*="from-slate-9"] *):not([class*="to-slate-8"] *):not([class*="to-slate-9"] *):not([class*="bg-slate-8"] *):not([class*="bg-slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red *):not([class*="bg-azimut-red"] *) {
-  color: #1e293b !important; /* Slate-800 real */
-}
-
-/* 3. FORÇAR .text-slate-700 a ser ESCURO no tema claro (fora de cards escuros) */
-html[data-theme="light"] body .text-slate-700:not([class*="from-slate-8"] *):not([class*="from-slate-9"] *):not([class*="to-slate-8"] *):not([class*="to-slate-9"] *):not([class*="bg-slate-8"] *):not([class*="bg-slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red *):not([class*="bg-azimut-red"] *) {
-  color: #334155 !important; /* Slate-700 real */
-}
-
-/* 4. FORÇAR .text-slate-600 a ser ESCURO no tema claro (fora de cards escuros) */
-html[data-theme="light"] body .text-slate-600:not([class*="from-slate-8"] *):not([class*="from-slate-9"] *):not([class*="to-slate-8"] *):not([class*="to-slate-9"] *):not([class*="bg-slate-8"] *):not([class*="bg-slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red *):not([class*="bg-azimut-red"] *) {
-  color: #475569 !important; /* Slate-600 real */
-}
-
-/* 5. Garantir que tags com group-hover:text-slate-900 fiquem escuras no hover */
-html[data-theme="light"] .group:hover .group-hover\:text-slate-900 {
-  color: #0f172a !important;
-}
-
-/* 6. CACHE BUSTER: Forçar re-renderização com timestamp invisível */
-html[data-theme="light"]::after,
-html[data-theme="dark"]::after {
-  content: "v2025-01-03-19:30";
-  position: absolute;
-  width: 0;
-  height: 0;
-  opacity: 0;
-  pointer-events: none;
 }
