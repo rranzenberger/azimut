@@ -187,7 +187,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
       >
         <div 
           ref={containerRef} 
-          className="mx-auto grid w-full max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-0.5 sm:gap-1 sm:px-4 sm:gap-2 min-[768px]:px-6 min-[768px]:gap-3 md:gap-4 lg:gap-5 xl:gap-6 transition-all duration-300" 
+          className="mx-auto grid w-full max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-0.5 sm:gap-1 sm:px-4 sm:gap-2 min-[768px]:px-6 min-[768px]:gap-3 md:gap-4 lg:gap-5 xl:gap-6 transition-all duration-300 relative" 
           style={{ 
             minHeight: isScrolled ? '52px' : '60px', // Compacto: 60px → 52px
             overflow: 'visible', 
@@ -196,9 +196,23 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             maxWidth: '100%', 
             paddingLeft: containerPadding.left,
             paddingRight: containerPadding.right,
-            boxSizing: 'border-box' 
+            boxSizing: 'border-box',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.1)' // Linha branca fina
           }}
         >
+          {/* Linha vermelha SOBRE a linha branca - estilo rodapé */}
+          <div 
+            className="absolute left-0 right-0"
+            style={{
+              bottom: '-1px', // Sobrepõe a linha branca!
+              height: '1px',
+              background: 'linear-gradient(90deg, transparent 0%, #c92337 28%, #c92337 72%, transparent 100%)',
+              boxShadow: '0 0 2px rgba(201, 35, 55, 0.2), 0 0 4px rgba(201, 35, 55, 0.1)',
+              width: '100%',
+              pointerEvents: 'none',
+              zIndex: 10
+            }}
+          ></div>
           {/* ═══════════════════════════════════════════════════════════════
               🔒 LOGO - height: 52px, alinhada à esquerda (AUMENTADA AO MÁXIMO!)
               ═══════════════════════════════════════════════════════════ */}
@@ -234,21 +248,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           {/* Nav desktop - aparece em tablets (768px+) - SEMPRE VISÍVEL EM DESKTOP */}
           <nav 
             ref={navRef}
-            className="hidden items-center justify-center font-sora text-[0.48rem] font-medium uppercase tracking-[0.06em] min-[768px]:gap-2.5 min-[768px]:text-[0.48rem] md:gap-3 md:text-[0.52rem] lg:text-[0.58rem] lg:gap-3.5 xl:gap-4 xl:text-[0.62rem] min-[768px]:flex relative" 
+            className="hidden items-center justify-center font-sora text-[0.48rem] font-medium uppercase tracking-[0.06em] min-[768px]:gap-2.5 min-[768px]:text-[0.48rem] md:gap-3 md:text-[0.52rem] lg:text-[0.58rem] lg:gap-3.5 xl:gap-4 xl:text-[0.62rem] min-[768px]:flex" 
             style={{ color: 'var(--theme-text-secondary)', overflow: 'visible', alignItems: 'center', flexWrap: 'nowrap' }}
           >
-            {/* Linha vermelha ABAIXO do nav - estilo rodapé */}
-            <div 
-              className="absolute left-0 right-0"
-              style={{
-                bottom: '-1px', // Colada no fundo do nav
-                height: '1px',
-                background: 'linear-gradient(90deg, transparent 0%, #c92337 20%, #c92337 80%, transparent 100%)',
-                boxShadow: '0 0 2px rgba(201, 35, 55, 0.2), 0 0 4px rgba(201, 35, 55, 0.1)',
-                width: '100%',
-                pointerEvents: 'none'
-              }}
-            ></div>
             <Link 
               to="/" 
               className="nav-link-glow relative whitespace-nowrap touch-manipulation shrink-0 transition-colors duration-200 font-sora font-semibold"
