@@ -836,28 +836,6 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           position: 'relative'
         }}
       >
-        {/* GRADIENTE VERMELHO LATERAL (135deg) - SEMPRE VISÍVEL (constante) */}
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: '120px',
-            background: theme === 'dark'
-              ? `linear-gradient(135deg, 
-                  rgba(201, 35, 55, 0.15) 0%, 
-                  transparent 50%, 
-                  rgba(68, 27, 68, 0.12) 100%)`
-              : `linear-gradient(135deg, 
-                  rgba(201, 35, 55, 0.12) 0%, 
-                  transparent 50%, 
-                  rgba(201, 35, 55, 0.08) 100%)`,
-            pointerEvents: 'none',
-            zIndex: 1
-          }}
-        />
-        
         {/* OVERLAY LEVE FIXO abaixo da linha vermelha - faz conteúdo ficar semi-transparente */}
         {/* Apenas nos primeiros pixels, sem corte seco */}
         <div
@@ -879,7 +857,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   rgba(30, 28, 26, 0.3) 60%,
                   transparent 100%)`,
             pointerEvents: 'none',
-            zIndex: 2 // Acima do gradiente, abaixo do conteúdo
+            zIndex: 1
           }}
         />
         
