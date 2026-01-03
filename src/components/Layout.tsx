@@ -531,7 +531,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               </span>
             </div>
 
-            {/* Botão CTA - MELHORADO: Fonte maior, bold, mais impacto visual */}
+            {/* Botão CTA - ULTRA COMPACTO: Otimizado para ganhar espaço */}
                 <Link
                   to="/contact"
                   onClick={() => {
@@ -540,26 +540,26 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   }}
                   className="hidden rounded-lg text-center font-sora font-bold uppercase min-[768px]:inline-flex min-[768px]:flex-col min-[768px]:items-center min-[768px]:justify-center transition-all duration-300 shrink-0 cursor-pointer hover:scale-105 hover:shadow-[0_4px_12px_rgba(201,35,55,0.3)]"
                   style={{ 
-                    color: 'var(--theme-text-secondary)', // Mesma cor do texto da logo
+                    color: 'var(--theme-text-secondary)',
                     background: theme === 'dark' 
                       ? 'rgba(201, 35, 55, 0.12)' 
                       : 'rgba(201, 35, 55, 0.08)',
-                    border: '1.5px solid rgba(201, 35, 55, 0.7)', // Borda mais grossa e visível
+                    border: '1px solid rgba(201, 35, 55, 0.7)', // Borda mais fina
                     boxShadow: theme === 'dark' 
                       ? '0 2px 8px rgba(201, 35, 55, 0.2)' 
                       : '0 2px 8px rgba(201, 35, 55, 0.15)',
-                    minWidth: '130px',
-                    width: '130px',
-                    maxWidth: '130px',
-                    height: '48px',
-                    minHeight: '48px',
-                    padding: '10px 12px',
+                    minWidth: '110px', // Reduzido de 130px
+                    width: '110px',
+                    maxWidth: '110px',
+                    height: '40px', // Reduzido de 48px
+                    minHeight: '40px',
+                    padding: '8px 10px', // Reduzido
                     alignSelf: 'center',
                     flexShrink: 0,
-                    fontSize: '0.7rem', // Aumentado de 0.54rem para 0.7rem (~11.2px)
+                    fontSize: '0.65rem', // Reduzido de 0.7rem
                     lineHeight: '1.3',
-                    letterSpacing: '0.05em', // Aumentado para mais legibilidade
-                    marginLeft: '8px', // Reduzido para dar mais espaço ao hamburger em mobile
+                    letterSpacing: '0.05em',
+                    marginLeft: '8px',
                     gap: '2px'
                   }}
                 >
