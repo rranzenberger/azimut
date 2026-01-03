@@ -14,6 +14,14 @@ import Chatbot from './components/Chatbot'
 import SimplePasswordGate from './components/SimplePasswordGate'
 import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDetection'
 
+// ═══════════════════════════════════════════════════════════════
+// 🔒 CONTROLE DE LOGIN DO SITE
+// ═══════════════════════════════════════════════════════════════
+// Mude para "false" para DESABILITAR o login temporariamente
+// Mude para "true" para ATIVAR o login novamente
+const SITE_PROTECTED = false // ← ON/OFF aqui!
+// ═══════════════════════════════════════════════════════════════
+
 // CORREÇÃO: Import direto das páginas problemáticas
 // Lazy loading estava causando erro "Failed to fetch dynamically imported module"
 import Studio from './pages/Studio'
@@ -150,16 +158,17 @@ const App: React.FC = () => {
 
   return (
     <BrowserCompatibility>
-      <SimplePasswordGate>
-        <BrowserRouter>
-          <ScrollToTop />
-          {/* Structured Data para SEO */}
-          <StructuredData type="organization" />
-          <StructuredData type="website" />
-          {/* Analytics - Plausible */}
-          <PlausibleScript />
-          {/* Vinheta cinematográfica - efeito de bordas escuras */}
-          <div className="cinematic-vignette" aria-hidden="true" />
+      {SITE_PROTECTED ? (
+        <SimplePasswordGate>
+          <BrowserRouter>
+            <ScrollToTop />
+            {/* Structured Data para SEO */}
+            <StructuredData type="organization" />
+            <StructuredData type="website" />
+            {/* Analytics - Plausible */}
+            <PlausibleScript />
+            {/* Vinheta cinematográfica - efeito de bordas escuras */}
+            <div className="cinematic-vignette" aria-hidden="true" />
           
           {/* PWA Install Prompt */}
           <InstallPrompt />
@@ -191,7 +200,41 @@ const App: React.FC = () => {
           {/* Chatbot - Assistente Virtual com DeepSeek */}
           <Chatbot lang={lang} />
         </BrowserRouter>
-      </SimplePasswordGate>
+        </SimplePasswordGate>
+      ) : (
+        <BrowserRouter>
+          <ScrollToTop />
+          {/* Structured Data para SEO */}
+          <StructuredData type="organization" />
+          <StructuredData type="website" />
+          {/* Analytics - Plausible */}
+          <PlausibleScript />
+          {/* Vinheta cinematográfica - efeito de bordas escuras */}
+          <div className="cinematic-vignette" aria-hidden="true" />
+          
+          <AppLayout lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
+            <Suspense fallback={<LoadingSkeleton />}>
+              <ErrorBoundary>
+              <Routes>
+                <Route path="/" element={<Home lang={lang} />} />
+                <Route path="/what" element={<WhatWeDo lang={lang} />} />
+                <Route path="/work" element={<Work lang={lang} />} />
+                <Route path="/studio" element={<Studio lang={lang} />} />
+                <Route path="/academy" element={<Academy lang={lang} />} />
+                <Route path="/contact" element={<Contact lang={lang} />} />
+                <Route path="/press" element={<Press lang={lang} />} />
+                <Route path="/project/:slug" element={<ProjectDetail lang={lang} />} />
+                {/* Rota 404 - captura qualquer URL não encontrada */}
+                <Route path="*" element={<NotFound lang={lang} />} />
+              </Routes>
+              </ErrorBoundary>
+            </Suspense>
+          </AppLayout>
+          
+          {/* Chatbot - Assistente Virtual com DeepSeek */}
+          <Chatbot lang={lang} />
+        </BrowserRouter>
+      )}
     </BrowserCompatibility>
   )
 }
