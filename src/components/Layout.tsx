@@ -171,14 +171,18 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         className="fixed top-0 left-0 right-0 z-30 w-full transition-all duration-300 ease-out" 
         style={{ 
           backgroundColor: isScrolled 
-            ? (theme === 'dark' ? 'rgba(10, 14, 24, 0.95)' : 'rgba(42, 40, 37, 0.95)')
-            : (theme === 'dark' ? 'rgba(10, 14, 24, 0.7)' : 'rgba(42, 40, 37, 0.7)'),
+            ? (theme === 'dark' 
+                ? 'rgba(10, 14, 24, 0.95)'    // Dark: fundo escuro
+                : 'rgba(255, 255, 255, 0.95)') // Light: fundo CLARO! ✅
+            : (theme === 'dark' 
+                ? 'rgba(10, 14, 24, 0.7)'     // Dark: fundo escuro transparente
+                : 'rgba(255, 255, 255, 0.7)'), // Light: fundo CLARO transparente! ✅
           backdropFilter: isScrolled ? 'blur(16px)' : 'blur(12px)',
           WebkitBackdropFilter: isScrolled ? 'blur(16px)' : 'blur(12px)',
           boxShadow: isScrolled 
             ? (theme === 'dark' 
                 ? '0 2px 20px rgba(0, 0, 0, 0.3)' 
-                : '0 2px 20px rgba(0, 0, 0, 0.15)')
+                : '0 2px 20px rgba(0, 0, 0, 0.08)') // Light: sombra mais suave
             : 'none',
           paddingTop: 'env(safe-area-inset-top, 0px)',
           paddingLeft: 'env(safe-area-inset-left, 0px)',
