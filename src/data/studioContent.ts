@@ -76,7 +76,7 @@ export const studioContent: Record<'pt' | 'en' | 'fr' | 'es', StudioContent> = {
     },
     mission: {
       title: 'Missão',
-      body: 'Criar experiências imersivas de ponta a ponta que conectam pessoas, histórias e espaços através de tecnologia criativa, design cinematográfico e narrativas envolventes, sempre em colaboração com instituições, marcas e comunidades.'
+      body: 'Criar experiências imersivas de ponta a ponta que conectam pessoas, histórias e espaços através de tecnologia criativa, design cinematográfico e narrativas envolventes, sempre em colaboração com instituições, marcas e comunidades.\n\nTransformamos conceitos em jornadas memoráveis que ressoam emocional e culturalmente — operando na interseção entre arte, tecnologia e conexão humana, construindo pontes entre os ecossistemas criativos do Brasil e do Canadá.'
     },
     values: {
       title: 'Valores',
@@ -223,7 +223,7 @@ export const studioContent: Record<'pt' | 'en' | 'fr' | 'es', StudioContent> = {
     },
     mission: {
       title: 'Mission',
-      body: 'Create cutting-edge immersive experiences end-to-end that connect people, stories and spaces through creative technology, cinematic design and engaging narratives, always in collaboration with institutions, brands and communities.'
+      body: 'Create cutting-edge immersive experiences end-to-end that connect people, stories and spaces through creative technology, cinematic design and engaging narratives, always in collaboration with institutions, brands and communities.\n\nWe transform concepts into memorable journeys that resonate emotionally and culturally — operating at the intersection of art, technology and human connection, bridging creative ecosystems between Brazil and Canada.'
     },
     values: {
       title: 'Values',
@@ -370,7 +370,7 @@ export const studioContent: Record<'pt' | 'en' | 'fr' | 'es', StudioContent> = {
     },
     mission: {
       title: 'Mission',
-      body: 'Créer des expériences immersives de pointe de bout en bout qui connectent les gens, les histoires et les espaces grâce à la technologie créative, au design cinématographique et aux narrations engageantes, toujours en collaboration avec les institutions, marques et communautés.'
+      body: 'Créer des expériences immersives de pointe de bout en bout qui connectent les gens, les histoires et les espaces grâce à la technologie créative, au design cinématographique et aux narrations engageantes, toujours en collaboration avec les institutions, marques et communautés.\n\nNous transformons les concepts en parcours mémorables qui résonnent émotionnellement et culturellement — opérant à l\'intersection de l\'art, de la technologie et de la connexion humaine, créant des ponts entre les écosystèmes créatifs du Brésil et du Canada.'
     },
     values: {
       title: 'Valeurs',
@@ -517,7 +517,7 @@ export const studioContent: Record<'pt' | 'en' | 'fr' | 'es', StudioContent> = {
     },
     mission: {
       title: 'Misión',
-      body: 'Crear experiencias inmersivas de vanguardia de principio a fin que conectan personas, historias y espacios a través de tecnología creativa, diseño cinematográfico y narrativas envolventes, siempre en colaboración con instituciones, marcas y comunidades.'
+      body: 'Crear experiencias inmersivas de vanguardia de principio a fin que conectan personas, historias y espacios a través de tecnología creativa, diseño cinematográfico y narrativas envolventes, siempre en colaboración con instituciones, marcas y comunidades.\n\nTransformamos conceptos en viajes memorables que resuenan emocional y culturalmente — operando en la intersección del arte, la tecnología y la conexión humana, construyendo puentes entre los ecosistemas creativos de Brasil y Canadá.'
     },
     values: {
       title: 'Valores',
