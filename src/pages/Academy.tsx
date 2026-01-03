@@ -308,14 +308,14 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                       <h3 className="mb-3 font-sora text-xl text-white">
                         {item.title}
                       </h3>
-                      <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+                      <p className="text-sm leading-relaxed text-slate-900 dark:text-slate-200">
                         {item.description}
                       </p>
                     </article>
                   ))}
                 </div>
               ) : (
-                <p className="text-slate-600 dark:text-slate-400 italic">
+                <p className="text-slate-800 dark:text-slate-400 italic">
                   {lang === 'pt' ? 'Conteúdo de pesquisa em desenvolvimento.' : 
                    lang === 'es' ? 'Contenido de investigación en desarrollo.' :
                    lang === 'fr' ? 'Contenu de recherche en développement.' :
@@ -380,17 +380,17 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                       }}>
                         {locale(workshop.level)}
                       </span>
-                      <span className="font-sora text-sm text-slate-600 dark:text-slate-400">
+                      <span className="font-sora text-sm text-slate-800 dark:text-slate-400">
                         ⏱️ {workshop.duration}
                       </span>
                     </div>
                     <h3 className="mb-3 font-sora text-xl md:text-2xl text-white">
                       {locale(workshop.title)}
                     </h3>
-                    <p className="text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-200 mb-4">
+                    <p className="text-sm md:text-base leading-relaxed text-slate-900 dark:text-slate-200 mb-4">
                       {locale(workshop.description)}
                     </p>
-                    <p className="text-xs text-slate-600 dark:text-slate-400 italic">
+                    <p className="text-xs text-slate-800 dark:text-slate-400 italic">
                       👥 {locale(workshop.audience)}
                     </p>
                   </article>
@@ -490,7 +490,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                     <h3 className="mb-3 font-sora text-lg md:text-xl text-white">
                       {locale(format.title)}
                     </h3>
-                    <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                    <p className="text-sm leading-relaxed text-slate-900 dark:text-slate-300">
                       {locale(format.desc)}
                     </p>
                   </div>

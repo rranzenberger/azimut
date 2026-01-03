@@ -280,7 +280,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 placeholder={lang === 'pt' ? 'Buscar projetos...' : lang === 'es' ? 'Buscar proyectos...' : lang === 'fr' ? 'Rechercher...' : 'Search projects...'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-slate-600 dark:text-slate-400 focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
+                className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-slate-800 dark:text-slate-400 focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
               />
             </div>
             
@@ -341,7 +341,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           </div>
           
           {/* Contador de resultados */}
-          <div className="mb-6 text-sm text-slate-600 dark:text-slate-400">
+          <div className="mb-6 text-sm text-slate-800 dark:text-slate-400">
             {lang === 'pt' 
               ? `Mostrando ${cases.length} ${cases.length === 1 ? 'projeto' : 'projetos'}${hasActiveFilters ? ' (filtrado)' : ''}`
               : lang === 'es'
@@ -387,7 +387,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                         </div>
                         <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-azimut-red/30 bg-azimut-red/10 px-4 py-1.5 backdrop-blur">
                           <span className="h-2 w-2 animate-pulse rounded-full bg-azimut-red"></span>
-                          <span className="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-700 dark:text-slate-200">
+                          <span className="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-900 dark:text-slate-200">
                             {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
                           </span>
                         </div>
@@ -404,11 +404,11 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   <h2 className="mb-3 font-handel text-3xl uppercase tracking-[0.12em] text-white">
                     {cases[0].title}
                   </h2>
-                  <p className="mb-4 text-base leading-relaxed text-slate-700 dark:text-slate-200">
+                  <p className="mb-4 text-base leading-relaxed text-slate-900 dark:text-slate-200">
                     {cases[0].summary || cases[0].shortTitle}
                   </p>
                   {(cases[0].city || cases[0].country) && (
-                    <p className="mb-4 text-sm text-slate-700 dark:text-slate-300">
+                    <p className="mb-4 text-sm text-slate-900 dark:text-slate-300">
                       📍 {[cases[0].city, cases[0].country].filter(Boolean).join(', ')}
                     </p>
                   )}
@@ -444,7 +444,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           {/* Mensagem quando não há resultados */}
           {cases.length === 0 && !cmsLoading && (
             <div className="py-16 text-center">
-              <p className="text-lg text-slate-600 dark:text-slate-400 mb-4">
+              <p className="text-lg text-slate-800 dark:text-slate-400 mb-4">
                 {lang === 'pt' 
                   ? 'Nenhum projeto encontrado com os filtros selecionados.'
                   : lang === 'es'
@@ -498,7 +498,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                     <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-800/50 to-slate-900 transition-all duration-300 group-hover:from-azimut-red/20 group-hover:to-slate-900/80">
                       <div className="text-center p-4">
                         <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur transition-transform duration-300 group-hover:scale-110 group-hover:border-azimut-red/50">
-                          <svg className="h-6 w-6 text-slate-600 dark:text-slate-400 group-hover:text-azimut-red transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg className="h-6 w-6 text-slate-800 dark:text-slate-400 group-hover:text-azimut-red transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
                         </div>
@@ -511,16 +511,16 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   <h3 className="mb-2 font-sora text-[1.05rem] text-white group-hover:text-azimut-red transition-colors duration-300">
                     {item.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-200 mb-3 group-hover:text-slate-100 transition-colors duration-300">
+                  <p className="text-sm leading-relaxed text-slate-900 dark:text-slate-200 mb-3 group-hover:text-slate-100 transition-colors duration-300">
                     {item.summary || item.shortTitle}
                   </p>
                   <div className="flex flex-wrap items-center justify-between gap-2 mt-3">
                     {item.tags && item.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2 text-[0.68rem] text-slate-600 dark:text-slate-400">
+                      <div className="flex flex-wrap gap-2 text-[0.68rem] text-slate-800 dark:text-slate-400">
                         {((item?.tags && Array.isArray(item.tags)) ? item.tags : []).slice(0, 3).map((tag: string, idx: number) => (
                           <span 
                             key={idx} 
-                            className="rounded-full border border-white/10 px-2 py-0.5 transition-all duration-300 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:text-slate-700 dark:text-slate-300"
+                            className="rounded-full border border-white/10 px-2 py-0.5 transition-all duration-300 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:text-slate-900 dark:text-slate-300"
                           >
                             {tag}
                           </span>

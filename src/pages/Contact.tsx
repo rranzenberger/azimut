@@ -131,7 +131,7 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
           className="select-trigger"
           onClick={() => setOpen(o => !o)}
         >
-          <span className={value ? 'text-slate-100' : 'text-slate-600 dark:text-slate-400'}>
+          <span className={value ? 'text-slate-100' : 'text-slate-800 dark:text-slate-400'}>
             {currentLabel}
           </span>
           <svg
@@ -273,7 +273,7 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
           <h1 className="mb-8 font-handel text-4xl uppercase tracking-[0.16em] md:text-5xl">
             {t(lang, 'contactTitle')}
           </h1>
-          <p className="mb-6 text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <p className="mb-6 text-lg leading-relaxed text-slate-900 dark:text-slate-300">
             {t(lang, 'contactNote')}
           </p>
 
@@ -379,35 +379,35 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
               >
               <div>
                 <h2 className="mb-1 font-sora text-[1rem] text-slate-50">{i18n(labels.title)}</h2>
-                <p className="text-sm text-slate-600 dark:text-slate-400">{i18n(labels.intro)}</p>
+                <p className="text-sm text-slate-800 dark:text-slate-400">{i18n(labels.intro)}</p>
               </div>
 
               <div className="grid gap-3 sm:grid-cols-2">
-                <label className="flex flex-col gap-1 text-sm text-slate-700 dark:text-slate-200">
+                <label className="flex flex-col gap-1 text-sm text-slate-900 dark:text-slate-200">
                   {i18n(labels.name)}
                   <input className="input-adaptive" value={form.name} onChange={handleChange('name')} required />
                 </label>
-                <label className="flex flex-col gap-1 text-sm text-slate-700 dark:text-slate-200">
+                <label className="flex flex-col gap-1 text-sm text-slate-900 dark:text-slate-200">
                   {i18n(labels.email)}
                   <input className="input-adaptive" type="email" value={form.email} onChange={handleChange('email')} required />
                 </label>
-                <label className="flex flex-col gap-1 text-sm text-slate-700 dark:text-slate-200">
+                <label className="flex flex-col gap-1 text-sm text-slate-900 dark:text-slate-200">
                   {i18n(labels.phone)}
                   <input className="input-adaptive" value={form.phone} onChange={handleChange('phone')} />
                 </label>
-                <label className="flex flex-col gap-1 text-sm text-slate-700 dark:text-slate-200">
+                <label className="flex flex-col gap-1 text-sm text-slate-900 dark:text-slate-200">
                   {i18n(labels.org)}
                   <input className="input-adaptive" value={form.org} onChange={handleChange('org')} />
                 </label>
               </div>
 
-              <label className="flex flex-col gap-1 text-sm text-slate-700 dark:text-slate-200">
+              <label className="flex flex-col gap-1 text-sm text-slate-900 dark:text-slate-200">
                 {i18n(labels.countryCity)}
                 <input className="input-adaptive" value={form.countryCity} onChange={handleChange('countryCity')} />
               </label>
 
               <div className="grid gap-3 sm:grid-cols-2">
-                <label className="flex flex-col gap-1 text-sm text-slate-700 dark:text-slate-200">
+                <label className="flex flex-col gap-1 text-sm text-slate-900 dark:text-slate-200">
                   {i18n(labels.projectType)}
                   <SelectField
                     value={form.projectType}
@@ -425,7 +425,7 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
                     ]}
                   />
                 </label>
-                <label className="flex flex-col gap-1 text-sm text-slate-700 dark:text-slate-200">
+                <label className="flex flex-col gap-1 text-sm text-slate-900 dark:text-slate-200">
                   {i18n(labels.objective)}
                   <SelectField
                     value={form.objective}
@@ -444,7 +444,7 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
               </div>
 
               <div className="grid gap-3 sm:grid-cols-2">
-                <label className="flex flex-col gap-1 text-sm text-slate-700 dark:text-slate-200">
+                <label className="flex flex-col gap-1 text-sm text-slate-900 dark:text-slate-200">
                   {i18n(labels.place)}
                   <SelectField
                     value={form.place}
@@ -459,14 +459,14 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
                     ]}
                   />
                 </label>
-                <label className="flex flex-col gap-1 text-sm text-slate-700 dark:text-slate-200">
+                <label className="flex flex-col gap-1 text-sm text-slate-900 dark:text-slate-200">
                   {i18n(labels.timeframe)}
                   <input className="input-adaptive" placeholder={lang === 'pt' ? 'Mês/ano ou urgência' : lang === 'es' ? 'Mes/año o urgencia' : 'Month/year or urgency'} value={form.timeframe} onChange={handleChange('timeframe')} />
                 </label>
               </div>
 
               <div className="grid gap-3 sm:grid-cols-2">
-                <label className="flex flex-col gap-1 text-sm text-slate-700 dark:text-slate-200">
+                <label className="flex flex-col gap-1 text-sm text-slate-900 dark:text-slate-200">
                   {i18n(labels.budget)}
                   <SelectField
                     value={form.budget}
@@ -481,23 +481,23 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
                     ]}
                   />
                 </label>
-                <label className="flex flex-col gap-1 text-sm text-slate-700 dark:text-slate-200">
+                <label className="flex flex-col gap-1 text-sm text-slate-900 dark:text-slate-200">
                   {i18n(labels.audience)}
                   <input className="input-adaptive" placeholder={lang === 'pt' ? 'Ex.: jovens, famílias, corporativo' : lang === 'es' ? 'Ej.: jóvenes, familias, corporativo' : 'e.g. youth, families, corporate'} value={form.audience} onChange={handleChange('audience')} />
                 </label>
               </div>
 
-              <label className="flex flex-col gap-1 text-sm text-slate-700 dark:text-slate-200">
+              <label className="flex flex-col gap-1 text-sm text-slate-900 dark:text-slate-200">
                 {i18n(labels.references)}
                 <textarea className="input-adaptive min-h-[70px]" value={form.references} onChange={handleChange('references')} placeholder="Links ou ideias (YouTube, Vimeo, sites de referência)" />
               </label>
 
-              <label className="flex flex-col gap-1 text-sm text-slate-700 dark:text-slate-200">
+              <label className="flex flex-col gap-1 text-sm text-slate-900 dark:text-slate-200">
                 {i18n(labels.themes)}
                 <input className="input-adaptive" value={form.themes} onChange={handleChange('themes')} placeholder={lang === 'pt' ? 'Amazônia, patrimônio, inclusão...' : lang === 'es' ? 'Amazonia, patrimonio, inclusión...' : 'Amazon, heritage, inclusion...'} />
               </label>
 
-              <label className="flex flex-col gap-1 text-sm text-slate-700 dark:text-slate-200">
+              <label className="flex flex-col gap-1 text-sm text-slate-900 dark:text-slate-200">
                 {i18n(labels.message)}
                 <textarea className="input-adaptive min-h-[70px]" value={form.message} onChange={handleChange('message')} />
               </label>
@@ -515,13 +515,13 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
 
             <aside className="space-y-4 rounded-2xl border border-white/10 card-adaptive p-5 shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur">
               <h3 className="font-sora text-[1rem] text-slate-50">Como funciona</h3>
-              <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
+              <ul className="space-y-2 text-sm text-slate-900 dark:text-slate-300">
                 <li>1. Você responde em poucos passos.</li>
                 <li>2. Recomendamos rota criativa + faixa de investimento.</li>
                 <li>3. Se fizer sentido, encaixamos em edital (Rouanet/PROAC/Creative BC/CMF/Telefilm).</li>
                 <li>4. Entregamos timeline resumida e próximos passos.</li>
               </ul>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-3 text-sm text-slate-700 dark:text-slate-200">
+              <div className="rounded-lg border border-white/10 bg-white/5 p-3 text-sm text-slate-900 dark:text-slate-200">
                 <p className="font-semibold text-slate-50">Dica</p>
                 <p>Se tiver referências, links ou mood (YouTube/Vimeo/Instagram), cole no campo de referências.</p>
               </div>
