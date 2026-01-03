@@ -76,11 +76,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
   
-  // Calcular opacidade do FADE DO CONTEÚDO (não do gradiente!)
-  // Quando scroll = 0, conteúdo totalmente visível
-  // Quando scroll aumenta, conteúdo vai sumindo no topo (fade out)
-  // Isso cria "respiro" visual para não ter corte seco
-  const contentFadeOpacity = Math.max(0, Math.min(1, 1 - (scrollPosition / 150)))
+  // NÃO precisa calcular fade baseado em scroll!
+  // O overlay é FIXO e sempre presente abaixo da linha vermelha
   
   // NOVA ABORDAGEM SIMPLES: hamburger só aparece em mobile (< 768px)
   // Em desktop, menu sempre visível, hamburger NUNCA aparece
@@ -861,38 +858,35 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           }}
         />
         
-        {/* OVERLAY ESCURO que faz o CONTEÚDO sumir quando sobe (fade out) */}
+        {/* OVERLAY LEVE FIXO abaixo da linha vermelha - faz conteúdo ficar semi-transparente */}
+        {/* Apenas nos primeiros pixels, sem corte seco */}
         <div
           style={{
             position: 'absolute',
             top: 0,
             left: 0,
             right: 0,
-            height: '120px',
+            height: '80px', // Apenas primeiros pixels abaixo da linha vermelha
             background: theme === 'dark'
               ? `linear-gradient(to bottom, 
-                  rgba(6, 10, 18, ${1 - contentFadeOpacity}) 0%,
-                  rgba(6, 10, 18, ${(1 - contentFadeOpacity) * 0.7}) 50%,
-                  rgba(6, 10, 18, ${(1 - contentFadeOpacity) * 0.3}) 80%,
+                  rgba(6, 10, 18, 0.85) 0%,
+                  rgba(6, 10, 18, 0.6) 30%,
+                  rgba(6, 10, 18, 0.3) 60%,
                   transparent 100%)`
               : `linear-gradient(to bottom, 
-                  rgba(30, 28, 26, ${1 - contentFadeOpacity}) 0%,
-                  rgba(30, 28, 26, ${(1 - contentFadeOpacity) * 0.7}) 50%,
-                  rgba(30, 28, 26, ${(1 - contentFadeOpacity) * 0.3}) 80%,
+                  rgba(30, 28, 26, 0.85) 0%,
+                  rgba(30, 28, 26, 0.6) 30%,
+                  rgba(30, 28, 26, 0.3) 60%,
                   transparent 100%)`,
             pointerEvents: 'none',
-            zIndex: 2,
-            willChange: 'opacity',
-            transition: 'opacity 0.1s ease-out'
+            zIndex: 2 // Acima do gradiente, abaixo do conteúdo
           }}
         />
         
-        {/* CONTEÚDO com fade out quando sobe */}
+        {/* CONTEÚDO - SEM fade, sempre 100% visível */}
         <div style={{ 
           position: 'relative', 
-          zIndex: 3,
-          opacity: contentFadeOpacity,
-          transition: 'opacity 0.15s ease-out'
+          zIndex: 3
         }}>
           {children}
         </div>
