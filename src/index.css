@@ -281,6 +281,7 @@ html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"] *
   --gradient-overlay: linear-gradient(135deg, rgba(201, 35, 55, 0.25) 0%, transparent 50%, rgba(201, 35, 55, 0.15) 100%); /* GRADIENTE VERMELHO LATERAL MAIS VISÍVEL! */
   /* Cores específicas para tema claro */
   --theme-card-text: #d3cec3;      /* Texto creme (mesma cor da logo clara) no card escuro - NÃO usar branco puro */
+  --theme-card-text-secondary: #cbd5e1; /* Cinza claro para descrições em cards escuros */
   --theme-card-border: rgba(211, 206, 195, 0.3);
   
   /* COR VERMELHA ADAPTATIVA - VERMELHO ESCURO NO TEMA CLARO (não rosa!) */
