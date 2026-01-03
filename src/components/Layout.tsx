@@ -848,18 +848,20 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             background: theme === 'dark'
               ? `linear-gradient(to bottom, 
                   rgba(6, 10, 18, ${fadeOpacity}), 
-                  rgba(6, 10, 18, ${fadeOpacity * 0.7}), 
-                  rgba(6, 10, 18, ${fadeOpacity * 0.3}), 
-                  transparent)`
+                  rgba(6, 10, 18, ${fadeOpacity * 0.8}) 30%, 
+                  rgba(6, 10, 18, ${fadeOpacity * 0.5}) 60%, 
+                  rgba(6, 10, 18, ${fadeOpacity * 0.2}) 85%, 
+                  transparent 100%)`
               : `linear-gradient(to bottom, 
                   rgba(30, 28, 26, ${fadeOpacity}), 
-                  rgba(30, 28, 26, ${fadeOpacity * 0.7}), 
-                  rgba(30, 28, 26, ${fadeOpacity * 0.3}), 
-                  transparent)`,
+                  rgba(30, 28, 26, ${fadeOpacity * 0.8}) 30%, 
+                  rgba(30, 28, 26, ${fadeOpacity * 0.5}) 60%, 
+                  rgba(30, 28, 26, ${fadeOpacity * 0.2}) 85%, 
+                  transparent 100%)`,
             pointerEvents: 'none',
             zIndex: 1,
-            transition: 'opacity 0.2s ease-out',
-            opacity: fadeOpacity > 0.1 ? 1 : 0 // Força renderização quando visível
+            willChange: 'opacity', // Otimização de performance
+            transition: 'opacity 0.15s ease-out'
           }}
         />
         <div style={{ position: 'relative', zIndex: 2 }}>
