@@ -622,9 +622,9 @@ body::after {
 }
 
 [data-theme="light"] .pill-adaptive {
-  border-color: rgba(160, 26, 42, 0.95); /* Borda vermelha escura QUASE SÓLIDA */
-  color: #f8f8f8; /* Off-white suave (não branco puro) */
-  background: rgba(160, 26, 42, 0.22); /* Fundo vermelho rico e presente */
+  border-color: rgba(160, 26, 42, 0.4); /* Borda vermelha suave - mesma filosofia do tema escuro */
+  color: #2a2a2a; /* Texto escuro mas legível */
+  background: rgba(160, 26, 42, 0.08); /* Fundo muito sutil - coerência com tema escuro */
 }
 
 /* Texto adaptativo - garante legibilidade */
