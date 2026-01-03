@@ -76,8 +76,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
   
-  // NÃO precisa calcular fade baseado em scroll!
-  // O overlay é FIXO e sempre presente abaixo da linha vermelha
+  // Calcular opacidade do conteúdo quando sobe (para não ter corte seco)
+  // Quando scroll = 0, conteúdo 100% visível
+  // Quando scroll aumenta, conteúdo nos primeiros pixels fica semi-transparente
+  // Isso cria transição suave sem corte seco
+  const contentTopOpacity = Math.max(0.7, Math.min(1, 1 - (scrollPosition / 100)))
   
   // NOVA ABORDAGEM SIMPLES: hamburger só aparece em mobile (< 768px)
   // Em desktop, menu sempre visível, hamburger NUNCA aparece
@@ -861,10 +864,19 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           }}
         />
         
-        {/* CONTEÚDO - SEM fade, sempre 100% visível */}
+        {/* CONTEÚDO com opacidade suave quando sobe (evita corte seco) */}
         <div style={{ 
           position: 'relative', 
-          zIndex: 3
+          zIndex: 3,
+          // Aplicar opacidade apenas nos primeiros 80px (onde está o overlay)
+          maskImage: `linear-gradient(to bottom, 
+            rgba(0, 0, 0, ${contentTopOpacity}) 0%,
+            rgba(0, 0, 0, ${contentTopOpacity}) 80px,
+            rgba(0, 0, 0, 1) 100px)`,
+          WebkitMaskImage: `linear-gradient(to bottom, 
+            rgba(0, 0, 0, ${contentTopOpacity}) 0%,
+            rgba(0, 0, 0, ${contentTopOpacity}) 80px,
+            rgba(0, 0, 0, 1) 100px)`
         }}>
           {children}
         </div>
