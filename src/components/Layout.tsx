@@ -58,13 +58,15 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   const [hoveredRoute, setHoveredRoute] = useState<string | null>(null)
   const [isWizardOpen, setIsWizardOpen] = useState(false)
   
-  // 🆕 Detectar scroll para compactar header
+  // 🆕 Detectar scroll para compactar header e controlar degradê
   const [isScrolled, setIsScrolled] = useState(false)
+  const [scrollPosition, setScrollPosition] = useState(0)
   
   React.useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY
-      setIsScrolled(scrollPosition > 50) // Compacta após 50px de scroll
+      const scroll = window.scrollY
+      setScrollPosition(scroll)
+      setIsScrolled(scroll > 50) // Compacta após 50px de scroll
     }
     
     // Verificar posição inicial
@@ -73,6 +75,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+  
+  // Calcular opacidade do degradê (desaparece conforme scroll)
+  // Máximo em 0px, desaparece completamente em 200px
+  const fadeOpacity = Math.max(0, 1 - (scrollPosition / 200))
   
   // NOVA ABORDAGEM SIMPLES: hamburger só aparece em mobile (< 768px)
   // Em desktop, menu sempre visível, hamburger NUNCA aparece
@@ -820,17 +826,36 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         )}
       </header>
 
-      {/* Conteúdo da página - PADDING TOP para compensar header fixo + RESPIRO VISUAL */}
+      {/* Conteúdo da página - PADDING TOP para compensar header fixo + RESPIRO VISUAL + DEGRADÊ */}
       <main 
         id="main-content" 
         role="main" 
         tabIndex={-1}
         style={{ 
-          paddingTop: isScrolled ? '72px' : '80px', // +20px de "respiro" visual!
-          minHeight: '100vh'
+          paddingTop: isScrolled ? '92px' : '100px', // +40px de "respiro" visual!
+          minHeight: '100vh',
+          position: 'relative'
         }}
       >
-        {children}
+        {/* Degradê que desaparece com scroll */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '120px',
+            background: theme === 'dark'
+              ? `linear-gradient(to bottom, rgba(6, 10, 18, ${fadeOpacity * 0.95}), transparent)`
+              : `linear-gradient(to bottom, rgba(30, 28, 26, ${fadeOpacity * 0.95}), transparent)`,
+            pointerEvents: 'none',
+            zIndex: 1,
+            transition: 'opacity 0.1s ease-out'
+          }}
+        />
+        <div style={{ position: 'relative', zIndex: 2 }}>
+          {children}
+        </div>
       </main>
 
       {/* FOOTER - Escuro em ambos os temas para consistência */}
