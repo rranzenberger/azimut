@@ -208,6 +208,24 @@ export const seoData: Record<string, Record<Lang, { title: string; description: 
       title: 'Iniciar un Proyecto',
       description: 'Contáctenos para iniciar su proyecto inmersivo. Trabajamos con museos, marcas, festivales e instituciones de investigación en Brasil y Canadá.'
     }
+  },
+  press: {
+    en: {
+      title: 'Press',
+      description: 'Press materials and communication support from Azimut. Download press kits, access media materials and contact our press team.'
+    },
+    fr: {
+      title: 'Presse',
+      description: 'Matériel de presse et support communication d\'Azimut. Téléchargez les kits presse, accédez aux matériaux média et contactez notre équipe presse.'
+    },
+    pt: {
+      title: 'Imprensa',
+      description: 'Material de imprensa e assessoria de comunicação da Azimut. Baixe kits de imprensa, acesse materiais de mídia e entre em contato com nossa equipe.'
+    },
+    es: {
+      title: 'Prensa',
+      description: 'Material de prensa y asesoría de comunicación de Azimut. Descargue kits de prensa, acceda a materiales de medios y contacte a nuestro equipo.'
+    }
   }
 }
 

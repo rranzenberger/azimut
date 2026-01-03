@@ -6,6 +6,7 @@ import { useUserTracking } from '../hooks/useUserTracking'
 import { trackPageView } from '../utils/analytics'
 import { useProject } from '../hooks/useProject'
 import { useAzimutContent } from '../hooks/useAzimutContent'
+import ProjectGalleryStatus from '../components/ProjectGalleryStatus'
 
 interface ProjectDetailProps {
   lang: Lang
@@ -20,6 +21,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
   const { project, loading, error } = useProject(slug || '', lang)
   const { content: cmsContent } = useAzimutContent({ page: 'work' })
   const allProjects = cmsContent?.highlightProjects || []
+  
+  // Estados para filtros da galeria (apenas Museu Olímpico)
+  const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null)
+  const [showTier1Only, setShowTier1Only] = React.useState(false)
   
   // Projetos relacionados (mesmo tipo ou tags similares, excluindo o atual)
   const relatedProjects = React.useMemo(() => {
@@ -191,7 +196,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
 
             {/* Title and Meta */}
             <div className="mb-6">
-              <h1 className="mb-4 font-handel text-4xl md:text-5xl lg:text-6xl uppercase tracking-[0.12em] text-white">
+              <h1 className="mb-4 font-handel text-4xl md:text-5xl lg:text-6xl uppercase tracking-[0.12em] text-white dark:text-white" style={{ color: 'var(--theme-text)' }}>
                 {project.title}
               </h1>
               
@@ -225,7 +230,29 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    {[project.city, project.country].filter(Boolean).join(', ')}
+                    {project.slug === 'museu-olimpico-rio' 
+                      ? lang === 'pt' 
+                        ? 'Velódromo, Parque Olímpico, Barra da Tijuca, Rio de Janeiro'
+                        : lang === 'es'
+                        ? 'Velódromo, Parque Olímpico, Barra da Tijuca, Río de Janeiro'
+                        : lang === 'fr'
+                        ? 'Vélodrome, Parc Olympique, Barra da Tijuca, Rio de Janeiro'
+                        : 'Velodrome, Olympic Park, Barra da Tijuca, Rio de Janeiro'
+                      : [project.city, project.country].filter(Boolean).join(', ')}
+                  </span>
+                )}
+                {project.slug === 'museu-olimpico-rio' && (
+                  <span className="flex items-center gap-2 text-xs" style={{ color: 'var(--theme-text-muted)' }}>
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {lang === 'pt' 
+                      ? 'Próximo ao Parque Rita Lee'
+                      : lang === 'es'
+                      ? 'Cerca del Parque Rita Lee'
+                      : lang === 'fr'
+                      ? 'Près du Parc Rita Lee'
+                      : 'Near Rita Lee Park'}
                   </span>
                 )}
                 {project.type && (
@@ -253,7 +280,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
             <div className="mb-12">
               <div className="prose prose-invert max-w-none">
                 <div 
-                  className="text-lg leading-relaxed text-slate-300"
+                  className="text-lg leading-relaxed"
+                  style={{ color: 'var(--theme-text-secondary)' }}
                   dangerouslySetInnerHTML={{ 
                     __html: project.description 
                       ? project.description.replace(/\n/g, '<br />')
@@ -264,41 +292,320 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
             </div>
           )}
 
-          {/* Gallery */}
+          {/* Status da Galeria - Apenas para Museu Olímpico */}
+          {project.slug === 'museu-olimpico-rio' && project.gallery && project.gallery.length > 0 && (
+            <ProjectGalleryStatus gallery={project.gallery} lang={lang} />
+          )}
+
+          {/* Seções Temáticas - Apenas para Museu Olímpico */}
+          {project.slug === 'museu-olimpico-rio' && project.gallery && project.gallery.length > 0 && (
+            <div className="mb-12 space-y-8">
+              <h2 className="font-handel text-2xl uppercase tracking-[0.12em] mb-6" style={{ color: 'var(--theme-text)' }}>
+                {lang === 'pt' ? 'Seções Temáticas' : lang === 'es' ? 'Secciones Temáticas' : lang === 'fr' ? 'Sections Thématiques' : 'Thematic Sections'}
+              </h2>
+
+              {/* Seção: Na Mídia */}
+              {project.gallery.some((m: any) => (m.original || '').toLowerCase().includes('jornal')) && (
+                <div className="rounded-2xl border border-white/10 card-adaptive p-6 bg-white/5 backdrop-blur">
+                  <h3 className="mb-4 font-handel text-xl uppercase tracking-[0.12em] text-white">
+                    📰 {lang === 'pt' ? 'Na Mídia' : lang === 'es' ? 'En los Medios' : lang === 'fr' ? 'Dans les Médias' : 'In the Media'}
+                  </h3>
+                  <p className="mb-4" style={{ color: 'var(--theme-card-text, #d3cec3)' }}>
+                    {lang === 'pt' 
+                      ? 'O projeto foi destaque no jornal O Globo, com reconhecimento explícito do papel da Azimut como diretor de Tecnologia-Audiovisual.'
+                      : lang === 'es'
+                      ? 'El proyecto fue destacado en el periódico O Globo, con reconocimiento explícito del papel de Azimut como director de Tecnología-Audiovisual.'
+                      : lang === 'fr'
+                      ? 'Le projet a été mis en avant dans le journal O Globo, avec une reconnaissance explicite du rôle d\'Azimut en tant que directeur Technologie-Audiovisuel.'
+                      : 'The project was featured in O Globo newspaper, with explicit recognition of Azimut\'s role as Technology-Audiovisual Director.'}
+                  </p>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {project.gallery
+                      .filter((m: any) => (m.original || '').toLowerCase().includes('jornal'))
+                      .map((media: any) => (
+                        <div
+                          key={media.id}
+                          className="group relative aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 cursor-pointer ring-2 ring-azimut-red/50"
+                          onClick={() => window.open(media.large || media.original, '_blank')}
+                        >
+                          <img
+                            src={media.medium || media.thumbnail || media.original}
+                            alt={media.alt || 'Jornal O Globo'}
+                            className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Seção: Instalações Interativas */}
+              {project.gallery.some((m: any) => (m.original || '').toLowerCase().includes('semi-esfera') || (m.original || '').toLowerCase().includes('bicicleta') || (m.original || '').toLowerCase().includes('tela-interativa')) && (
+                <div className="rounded-2xl border border-white/10 card-adaptive p-6 bg-white/5 backdrop-blur">
+                  <h3 className="mb-4 font-handel text-xl uppercase tracking-[0.12em] text-white">
+                    🎮 {lang === 'pt' ? 'Instalações Interativas' : lang === 'es' ? 'Instalaciones Interactivas' : lang === 'fr' ? 'Installations Interactives' : 'Interactive Installations'}
+                  </h3>
+                  <p className="mb-4" style={{ color: 'var(--theme-card-text, #d3cec3)' }}>
+                    {lang === 'pt' 
+                      ? 'Tecnologia inovadora desenvolvida pela Azimut: semi-esfera, games interativos, telas interativas e integração perfeita entre cenografia, tecnologia e audiovisual.'
+                      : lang === 'es'
+                      ? 'Tecnología innovadora desarrollada por Azimut: semi-esfera, juegos interactivos, pantallas interactivas e integración perfecta entre escenografía, tecnología y audiovisual.'
+                      : lang === 'fr'
+                      ? 'Technologie innovante développée par Azimut: semi-sphère, jeux interactifs, écrans interactifs et intégration parfaite entre scénographie, technologie et audiovisuel.'
+                      : 'Innovative technology developed by Azimut: semi-sphere, interactive games, interactive screens and perfect integration between scenography, technology and audiovisual.'}
+                  </p>
+                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {project.gallery
+                      .filter((m: any) => {
+                        const url = (m.original || '').toLowerCase()
+                        return url.includes('semi-esfera') || url.includes('bicicleta') || url.includes('tela-interativa') || url.includes('velodromo-exterior')
+                      })
+                      .map((media: any) => (
+                        <div
+                          key={media.id}
+                          className="group relative aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 cursor-pointer"
+                          onClick={() => window.open(media.large || media.original, '_blank')}
+                        >
+                          <img
+                            src={media.medium || media.thumbnail || media.original}
+                            alt={media.alt || 'Instalação interativa'}
+                            className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Seção: Ginástica Artística */}
+              {project.gallery.some((m: any) => (m.original || '').toLowerCase().includes('ginastica')) && (
+                <div className="rounded-2xl border border-white/10 card-adaptive p-6 bg-white/5 backdrop-blur">
+                  <h3 className="mb-4 font-handel text-xl uppercase tracking-[0.12em] text-white">
+                    🤸 {lang === 'pt' ? 'Ginástica Artística' : lang === 'es' ? 'Gimnasia Artística' : lang === 'fr' ? 'Gymnastique Artistique' : 'Artistic Gymnastics'}
+                  </h3>
+                  <p className="mb-4 text-slate-300">
+                    {lang === 'pt' 
+                      ? 'Exemplo de curadoria e integração perfeita: 5 áreas temáticas com equipamentos físicos Rio 2016, vídeos de atletas e tecnologia interativa.'
+                      : lang === 'es'
+                      ? 'Ejemplo de curaduría e integración perfecta: 5 áreas temáticas con equipos físicos Rio 2016, videos de atletas y tecnología interactiva.'
+                      : lang === 'fr'
+                      ? 'Exemple de curation et intégration parfaite: 5 zones thématiques avec équipements physiques Rio 2016, vidéos d\'athlètes et technologie interactive.'
+                      : 'Example of curation and perfect integration: 5 thematic areas with Rio 2016 physical equipment, athlete videos and interactive technology.'}
+                  </p>
+                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {project.gallery
+                      .filter((m: any) => (m.original || '').toLowerCase().includes('ginastica'))
+                      .map((media: any) => (
+                        <div
+                          key={media.id}
+                          className="group relative aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 cursor-pointer"
+                          onClick={() => window.open(media.large || media.original, '_blank')}
+                        >
+                          <img
+                            src={media.medium || media.thumbnail || media.original}
+                            alt={media.alt || 'Ginástica Artística'}
+                            className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Link para site oficial - apenas para Museu Olímpico */}
+          {project.slug === 'museu-olimpico-rio' && (
+            <div className="mb-12 rounded-2xl border border-white/10 card-adaptive p-6 bg-white/5 backdrop-blur">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                  <h3 className="mb-2 font-handel text-xl uppercase tracking-[0.12em] text-white">
+                    {lang === 'pt' ? 'Site Oficial do Projeto' : lang === 'es' ? 'Sitio Oficial del Proyecto' : lang === 'fr' ? 'Site Officiel du Projet' : 'Official Project Website'}
+                  </h3>
+                  <p className="text-sm text-slate-300">
+                    {lang === 'pt' 
+                      ? 'Visite o site oficial do Museu Olímpico do Rio para conhecer mais sobre este projeto da Prefeitura do Rio de Janeiro.'
+                      : lang === 'es'
+                      ? 'Visite el sitio oficial del Museo Olímpico de Río para conocer más sobre este proyecto de la Prefectura de Río de Janeiro.'
+                      : lang === 'fr'
+                      ? 'Visitez le site officiel du Musée Olympique de Rio pour en savoir plus sur ce projet de la Mairie de Rio de Janeiro.'
+                      : 'Visit the official Rio Olympic Museum website to learn more about this City of Rio de Janeiro project.'}
+                  </p>
+                </div>
+                <a
+                  href="https://museuolimpico.rio/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackInteraction('external_link', 'museu_olimpico_site')}
+                  className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-6 py-3 font-sora text-sm font-medium uppercase tracking-[0.1em] text-white transition-all hover:bg-azimut-red/20 hover:border-azimut-red/80 whitespace-nowrap"
+                >
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  {lang === 'pt' ? 'Visitar Site' : lang === 'es' ? 'Visitar Sitio' : lang === 'fr' ? 'Visiter le Site' : 'Visit Website'}
+                </a>
+              </div>
+            </div>
+          )}
+
+          {/* Gallery com Filtros e Curadoria - Apenas para Museu Olímpico */}
           {project.gallery && project.gallery.length > 0 && (
             <div className="mb-12">
-              <h2 className="mb-6 font-handel text-2xl uppercase tracking-[0.12em] text-white">
-                {lang === 'pt' ? 'Galeria' : lang === 'es' ? 'Galería' : lang === 'fr' ? 'Galerie' : 'Gallery'}
-              </h2>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {project.gallery.map((media: any) => (
-                  <div
-                    key={media.id}
-                    className="group relative aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 cursor-pointer"
-                    onClick={() => {
-                      // TODO: Abrir lightbox (implementar depois se necessário)
-                      window.open(media.large || media.original, '_blank')
-                    }}
-                  >
-                    {media.type === 'IMAGE' ? (
-                      <img
-                        src={media.medium || media.thumbnail || media.original}
-                        alt={media.alt || project.title}
-                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center bg-slate-900">
-                        <svg className="w-16 h-16 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <h2 className="font-handel text-2xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
+                  {lang === 'pt' ? 'Galeria' : lang === 'es' ? 'Galería' : lang === 'fr' ? 'Galerie' : 'Gallery'}
+                </h2>
+                
+                {/* Filtros - Apenas para Museu Olímpico */}
+                {project.slug === 'museu-olimpico-rio' && (
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      onClick={() => {
+                        setShowTier1Only(!showTier1Only)
+                        setSelectedCategory(null)
+                        trackInteraction('filter_click', 'tier1_only')
+                      }}
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                        showTier1Only
+                          ? 'bg-azimut-red text-white'
+                          : 'bg-white/10 hover:bg-white/20'
+                      }`}
+                      style={!showTier1Only ? { color: 'var(--theme-text-secondary)' } : undefined}
+                    >
+                      ⭐ {lang === 'pt' ? 'Destaques' : lang === 'es' ? 'Destacados' : lang === 'fr' ? 'En vedette' : 'Highlights'}
+                    </button>
+                    {['jornal', 'instalacoes', 'ginastica', 'eventos', 'making-of'].map((cat) => {
+                      const labels: Record<string, Record<Lang, string>> = {
+                        jornal: { pt: 'Jornal', en: 'Press', es: 'Prensa', fr: 'Presse' },
+                        instalacoes: { pt: 'Instalações', en: 'Installations', es: 'Instalaciones', fr: 'Installations' },
+                        ginastica: { pt: 'Ginástica', en: 'Gymnastics', es: 'Gimnasia', fr: 'Gymnastique' },
+                        eventos: { pt: 'Eventos', en: 'Events', es: 'Eventos', fr: 'Événements' },
+                        'making-of': { pt: 'Making-of', en: 'Making-of', es: 'Making-of', fr: 'Making-of' }
+                      }
+                      return (
+                        <button
+                          key={cat}
+                          onClick={() => {
+                            setSelectedCategory(selectedCategory === cat ? null : cat)
+                            setShowTier1Only(false)
+                            trackInteraction('filter_click', `category_${cat}`)
+                          }}
+                          className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                            selectedCategory === cat
+                              ? 'bg-azimut-red text-white'
+                              : 'bg-white/10 hover:bg-white/20'
+                          }`}
+                          style={selectedCategory !== cat ? { color: 'var(--theme-text-secondary)' } : undefined}
+                        >
+                          {labels[cat]?.[lang] || cat}
+                        </button>
+                      )
+                    })}
                   </div>
-                ))}
+                )}
               </div>
+
+              {/* Galeria Filtrada */}
+              {(() => {
+                let filteredGallery = project.gallery
+                
+                // Filtrar por categoria (baseado no nome do arquivo ou alt text)
+                if (selectedCategory) {
+                  filteredGallery = project.gallery.filter((media: any) => {
+                    const alt = (media.alt || '').toLowerCase()
+                    const url = (media.original || '').toLowerCase()
+                    return alt.includes(selectedCategory) || url.includes(selectedCategory)
+                  })
+                }
+                
+                // Filtrar apenas TIER 1 (arquivos específicos)
+                if (showTier1Only) {
+                  const tier1Files = [
+                    'jornal-o-globo-capa',
+                    'velodromo-exterior',
+                    'semi-esfera-verde',
+                    'bicicleta-interativa',
+                    'tela-interativa-mapa'
+                  ]
+                  filteredGallery = project.gallery.filter((media: any) => {
+                    const url = (media.original || '').toLowerCase()
+                    return tier1Files.some(file => url.includes(file))
+                  })
+                }
+
+                if (filteredGallery.length === 0) {
+                  return (
+                    <div className="text-center py-12 text-slate-400">
+                      {lang === 'pt' 
+                        ? 'Nenhuma imagem encontrada com os filtros selecionados.'
+                        : lang === 'es'
+                        ? 'No se encontraron imágenes con los filtros seleccionados.'
+                        : lang === 'fr'
+                        ? 'Aucune image trouvée avec les filtres sélectionnés.'
+                        : 'No images found with selected filters.'}
+                    </div>
+                  )
+                }
+
+                return (
+                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {filteredGallery.map((media: any, index: number) => {
+                      // Verificar se é TIER 1 para destacar
+                      const isTier1 = [
+                        'jornal-o-globo-capa',
+                        'velodromo-exterior',
+                        'semi-esfera-verde',
+                        'bicicleta-interativa',
+                        'tela-interativa-mapa'
+                      ].some(file => (media.original || '').toLowerCase().includes(file))
+                      
+                      return (
+                        <div
+                          key={media.id}
+                          className={`group relative aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 cursor-pointer transition-all ${
+                            isTier1 ? 'ring-2 ring-azimut-red/50 shadow-lg shadow-azimut-red/20' : ''
+                          }`}
+                          onClick={() => {
+                            trackInteraction('gallery_image_click', media.id)
+                            window.open(media.large || media.original, '_blank')
+                          }}
+                        >
+                          {media.type === 'IMAGE' ? (
+                            <img
+                              src={media.medium || media.thumbnail || media.original}
+                              alt={media.alt || project.title}
+                              className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <div className="absolute inset-0 flex items-center justify-center bg-slate-900">
+                              <svg className="w-16 h-16 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                            </div>
+                          )}
+                          {isTier1 && (
+                            <div className="absolute top-2 right-2 bg-azimut-red text-white px-2 py-1 rounded text-xs font-bold">
+                              ⭐
+                            </div>
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            {media.alt && (
+                              <div className="absolute bottom-0 left-0 right-0 p-4 text-white text-sm">
+                                {media.alt}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )
+              })()}
             </div>
           )}
 
@@ -312,7 +619,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                 {project.services.map((service: any) => (
                   <span 
                     key={service.slug}
-                    className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300"
+                    className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm"
+                    style={{ color: 'var(--theme-text-secondary)' }}
                   >
                     {service.title}
                   </span>
@@ -324,7 +632,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
           {/* Related Projects */}
           {relatedProjects.length > 0 && (
             <div className="mb-12">
-              <h2 className="mb-6 font-handel text-2xl uppercase tracking-[0.12em] text-white">
+              <h2 className="mb-6 font-handel text-2xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
                 {lang === 'pt' ? 'Projetos Relacionados' : lang === 'es' ? 'Proyectos Relacionados' : lang === 'fr' ? 'Projets connexes' : 'Related Projects'}
               </h2>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -349,7 +657,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                         {related.title}
                       </h3>
                       {related.summary && (
-                        <p className="text-sm leading-relaxed text-slate-300 line-clamp-2 mb-2">
+                        <p className="text-sm leading-relaxed line-clamp-2 mb-2" style={{ color: 'var(--theme-text-secondary)' }}>
                           {related.summary}
                         </p>
                       )}
@@ -365,7 +673,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
 
           {/* CTA */}
           <div className="rounded-3xl border border-azimut-red/50 bg-gradient-to-br from-azimut-red/10 to-transparent p-8 md:p-12 text-center">
-            <h2 className="mb-4 font-handel text-3xl uppercase tracking-[0.12em] text-white">
+            <h2 className="mb-4 font-handel text-3xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
               {lang === 'pt' 
                 ? 'Quer um projeto similar?'
                 : lang === 'es'
@@ -374,7 +682,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                 ? 'Vous voulez un projet similaire?'
                 : 'Want a similar project?'}
             </h2>
-            <p className="mb-6 text-lg text-slate-300 max-w-2xl mx-auto">
+            <p className="mb-6 text-lg max-w-2xl mx-auto" style={{ color: 'var(--theme-text-secondary)' }}>
               {lang === 'pt' 
                 ? 'Vamos conversar sobre como podemos criar uma experiência imersiva para seu projeto.'
                 : lang === 'es'

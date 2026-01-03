@@ -195,3 +195,4 @@ aumentada, e inteligência artificial aplicada à cultura.
 **Data:** 02/01/2026  
 **Versão:** 1.0
 
+

@@ -20,6 +20,7 @@ import Studio from './pages/Studio'
 import Academy from './pages/Academy'
 import Contact from './pages/Contact'
 import WhatWeDo from './pages/WhatWeDo'
+import Press from './pages/Press'
 
 // Lazy loading apenas para páginas que funcionam bem
 const Home = lazy(() => import('./pages/Home'))
@@ -179,6 +180,7 @@ const App: React.FC = () => {
                 <Route path="/studio" element={<Studio lang={lang} />} />
                 <Route path="/academy" element={<Academy lang={lang} />} />
                 <Route path="/contact" element={<Contact lang={lang} />} />
+                <Route path="/press" element={<Press lang={lang} />} />
                 {/* Rota 404 - captura qualquer URL não encontrada */}
                 <Route path="*" element={<NotFound lang={lang} />} />
               </Routes>

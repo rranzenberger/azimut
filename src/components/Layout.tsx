@@ -143,6 +143,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
     if (path === '/' || path === '/home') return 'home'
     if (path === '/what') return 'what'
     if (path === '/work') return 'work'
+    if (path === '/press') return 'press'
     if (path === '/studio') return 'studio'
     if (path === '/academy') return 'academy'
     if (path === '/contact') return null // Contact não é um item do menu principal
@@ -715,6 +716,20 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               >
                 {t(lang, 'navAcademy')}
               </Link>
+              <Link
+                to="/press"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block py-3 px-3 sm:px-4 font-sora text-[0.7rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors rounded-lg touch-manipulation"
+                style={{ 
+                  color: activeRoute === 'press' ? '#c92337' : 'var(--theme-text-secondary)',
+                  backgroundColor: activeRoute === 'press' ? 'rgba(201, 35, 55, 0.1)' : 'transparent',
+                  minHeight: '44px',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
+              >
+                {t(lang, 'navPress')}
+              </Link>
               
               {/* Idiomas e CTA no menu mobile */}
               <div className="pt-3 mt-3 sm:pt-4 sm:mt-4 border-t space-y-2 sm:space-y-3" style={{ borderColor: 'var(--theme-border)' }}>
@@ -953,6 +968,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   </h4>
                   <Link to="/contact" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                     {lang === 'pt' ? 'Iniciar Conversa' : lang === 'es' ? 'Iniciar Conversación' : lang === 'fr' ? 'Démarrer la Conversation' : 'Start Conversation'}
+                  </Link>
+                  <Link to="/press" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
+                    {t(lang, 'navPress')}
                   </Link>
                   <Link to="/work/review" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                     {lang === 'pt' ? 'Revisar Projeto' : lang === 'es' ? 'Revisar Proyecto' : lang === 'fr' ? 'Réviser le Projet' : 'Review Project'}

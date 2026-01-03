@@ -3,7 +3,7 @@
  * Baseado no caso real e papel da Azimut
  * 
  * Direção Geral e Tecnologia: Azimut (Ranz Ranzenberger)
- * Direção Audiovisual: Alberto Barreto
+ * Direção Audiovisual: Alberto Moura
  * Parceiro: YDreams Global
  * Cliente: Prefeitura do Rio de Janeiro
  * 
@@ -74,7 +74,7 @@ O Museu Olímpico do Rio representa um marco na preservação da memória olímp
 - ✅ **Coordenação Multidisciplinar**: Gestão de múltiplas equipes e fornecedores
 
 ### Direção Audiovisual
-**Alberto Barreto** (Azimut) liderou a direção audiovisual, incluindo:
+**Alberto Moura** (Azimut) liderou a direção audiovisual, incluindo:
 
 - 🎬 Curadoria de conteúdo narrativo
 - 🎨 Direção de arte das instalações
@@ -111,7 +111,7 @@ O Museu Olímpico do Rio representa um marco na preservação da memória olímp
 **Cliente**: Prefeitura do Rio de Janeiro  
 **Parceiro Tecnológico**: YDreams Global  
 **Direção Geral e Tecnologia**: Ranz Ranzenberger (Azimut)  
-**Direção Audiovisual**: Alberto Barreto (Azimut)  
+**Direção Audiovisual**: Alberto Moura (Azimut)  
 **Duração**: 9 meses  
 **Ano**: 2016  
 **Localização**: Rio de Janeiro, Brasil  
@@ -138,7 +138,7 @@ The Rio Olympic Museum represents a milestone in preserving Brazilian Olympic me
 - ✅ **Multidisciplinary Coordination**: Management of multiple teams and suppliers
 
 ### Audiovisual Direction
-**Alberto Barreto** (Azimut) led audiovisual direction, including:
+**Alberto Moura** (Azimut) led audiovisual direction, including:
 
 - 🎬 Narrative content curation
 - 🎨 Art direction of installations
@@ -175,7 +175,7 @@ The Rio Olympic Museum represents a milestone in preserving Brazilian Olympic me
 **Client**: Rio de Janeiro City Hall  
 **Technology Partner**: YDreams Global  
 **General Direction and Technology**: Ranz Ranzenberger (Azimut)  
-**Audiovisual Direction**: Alberto Barreto (Azimut)  
+**Audiovisual Direction**: Alberto Moura (Azimut)  
 **Duration**: 9 months  
 **Year**: 2016  
 **Location**: Rio de Janeiro, Brazil  
@@ -202,7 +202,7 @@ El Museo Olímpico de Río representa un hito en la preservación de la memoria 
 - ✅ **Coordinación Multidisciplinar**: Gestión de múltiples equipos y proveedores
 
 ### Dirección Audiovisual
-**Alberto Barreto** (Azimut) lideró la dirección audiovisual, incluyendo:
+**Alberto Moura** (Azimut) lideró la dirección audiovisual, incluyendo:
 
 - 🎬 Curaduría de contenido narrativo
 - 🎨 Dirección de arte de las instalaciones
@@ -239,7 +239,7 @@ El Museo Olímpico de Río representa un hito en la preservación de la memoria 
 **Cliente**: Prefectura de Río de Janeiro  
 **Socio Tecnológico**: YDreams Global  
 **Dirección General y Tecnología**: Ranz Ranzenberger (Azimut)  
-**Dirección Audiovisual**: Alberto Barreto (Azimut)  
+**Dirección Audiovisual**: Alberto Moura (Azimut)  
 **Duración**: 9 meses  
 **Año**: 2016  
 **Localización**: Río de Janeiro, Brasil  
@@ -266,7 +266,7 @@ Le Musée Olympique de Rio représente une étape importante dans la préservati
 - ✅ **Coordination Multidisciplinaire**: Gestion de multiples équipes et fournisseurs
 
 ### Direction Audiovisuelle
-**Alberto Barreto** (Azimut) a dirigé la direction audiovisuelle, incluant:
+**Alberto Moura** (Azimut) a dirigé la direction audiovisuelle, incluant:
 
 - 🎬 Curation de contenu narratif
 - 🎨 Direction artistique des installations
@@ -303,7 +303,7 @@ Le Musée Olympique de Rio représente une étape importante dans la préservati
 **Client**: Mairie de Rio de Janeiro  
 **Partenaire Technologique**: YDreams Global  
 **Direction Générale et Technologie**: Ranz Ranzenberger (Azimut)  
-**Direction Audiovisuelle**: Alberto Barreto (Azimut)  
+**Direction Audiovisuelle**: Alberto Moura (Azimut)  
 **Durée**: 9 mois  
 **Année**: 2016  
 **Localisation**: Rio de Janeiro, Brésil  
@@ -315,6 +315,11 @@ Le Musée Olympique de Rio représente une étape importante dans la préservati
         // OUTROS CAMPOS
         client: 'Prefeitura do Rio de Janeiro',
         type: 'MUSEUM_DIRECTION',
+        
+        // LOCALIZAÇÃO DETALHADA
+        city: 'Rio de Janeiro',
+        stateProvince: 'RJ',
+        country: 'Brasil',
         
         // CTAs atualizados
         ctaLabelPt: 'Ver Detalhes do Projeto',
@@ -333,7 +338,7 @@ Le Musée Olympique de Rio représente une étape importante dans la préservati
     console.log('   🏆 Cliente: Prefeitura do Rio de Janeiro')
     console.log('   🤝 Parceiro Tecnológico: YDreams Global')
     console.log('   👨‍💼 Direção Geral e Tecnologia: Ranz Ranzenberger (Azimut)')
-    console.log('   🎬 Direção Audiovisual: Alberto Barreto (Azimut)')
+    console.log('   🎬 Direção Audiovisual: Alberto Moura (Azimut)')
     console.log('   ⏱️  Duração: 9 meses')
     console.log('   📅 Ano: 2016\n')
 

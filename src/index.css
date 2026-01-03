@@ -832,6 +832,67 @@ html {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   CORREÇÕES DE CONTRASTE - TEMA CLARO
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Variáveis adicionais para tema claro */
+html[data-theme="light"] {
+  /* Azul marinho para substituir azuis claros */
+  --blue-navy: #1e3a5f; /* Azul marinho forte */
+  --blue-navy-dark: #0f1f35; /* Azul marinho mais escuro */
+}
+
+/* IMPORTANTE: Estas regras têm ALTA especificidade para sobrescrever Tailwind */
+
+/* 1. Texto branco/claro -> ESCURO no tema claro (exceto em cards escuros e botões vermelhos) */
+html[data-theme="light"] body:not(.card-adaptive):not(.card-dark-adaptive):not(.card-dark-fixed) .text-white:not(.bg-azimut-red):not(.bg-azimut-red *):not([class*="bg-azimut-red"]),
+html[data-theme="light"] body:not(.card-adaptive):not(.card-dark-adaptive):not(.card-dark-fixed) h1.text-white:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
+html[data-theme="light"] body:not(.card-adaptive):not(.card-dark-adaptive):not(.card-dark-fixed) h2.text-white:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
+html[data-theme="light"] body:not(.card-adaptive):not(.card-dark-adaptive):not(.card-dark-fixed) h3.text-white:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
+html[data-theme="light"] body:not(.card-adaptive):not(.card-dark-adaptive):not(.card-dark-fixed) p.text-white:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
+html[data-theme="light"] body:not(.card-adaptive):not(.card-dark-adaptive):not(.card-dark-fixed) span.text-white:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
+html[data-theme="light"] body:not(.card-adaptive):not(.card-dark-adaptive):not(.card-dark-fixed) div.text-white:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red):not([class*="bg-azimut-red"]) {
+  color: #0d0d0d !important;
+}
+
+/* 2. Slate claro -> ESCURO no tema claro (exceto em cards escuros e botões vermelhos) */
+html[data-theme="light"] .text-slate-50:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red *):not([class*="bg-azimut-red"]),
+html[data-theme="light"] .text-slate-100:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red *):not([class*="bg-azimut-red"]),
+html[data-theme="light"] .text-slate-200:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red *):not([class*="bg-azimut-red"]),
+html[data-theme="light"] .text-slate-300:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red *):not([class*="bg-azimut-red"]) {
+  color: #1a1a1a !important;
+}
+
+/* 3. Azul claro/bebê -> AZUL MARINHO no tema claro */
+html[data-theme="light"] .text-blue-100,
+html[data-theme="light"] .text-blue-200,
+html[data-theme="light"] .text-blue-300,
+html[data-theme="light"] .text-blue-400,
+html[data-theme="light"] .text-sky-100,
+html[data-theme="light"] .text-sky-200,
+html[data-theme="light"] .text-sky-300,
+html[data-theme="light"] .text-sky-400,
+html[data-theme="light"] .text-cyan-100,
+html[data-theme="light"] .text-cyan-200,
+html[data-theme="light"] .text-cyan-300,
+html[data-theme="light"] .text-cyan-400 {
+  color: #1e3a5f !important;
+}
+
+/* 4. Slate-400/500 (azul acinzentado) -> AZUL MARINHO/ESCURO no tema claro */
+html[data-theme="light"] .text-slate-400:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *),
+html[data-theme="light"] .text-slate-500:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *) {
+  color: #1e3a5f !important;
+}
+
+/* 5. Garantir que botões vermelhos SEMPRE tenham texto branco */
+html[data-theme="light"] .bg-azimut-red,
+html[data-theme="light"] .bg-azimut-red *,
+html[data-theme="light"] [class*="bg-azimut-red"] {
+  color: #ffffff !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    UTILITÁRIOS EXTRAS
    ═══════════════════════════════════════════════════════════════ */
 
@@ -996,11 +1057,11 @@ select.input-adaptive:disabled {
 }
 
 [data-theme="light"] .card-adaptive {
-  /* No tema light: fundo CLARO com texto escuro (coerente com o site) */
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  background: rgba(255, 255, 255, 0.5);
+  /* CORREÇÃO: No tema light, cards MANTÊM fundo escuro com texto CLARO */
+  border: 1px solid rgba(201, 35, 55, 0.3);
+  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
   backdrop-filter: blur(12px);
-  color: var(--theme-text); /* Texto escuro no tema claro */
+  color: #d3cec3; /* Texto creme para contraste no fundo escuro */
 }
 
 /* Card escuro adaptativo - escuro no dark, claro no light */
@@ -1047,13 +1108,7 @@ select.input-adaptive:disabled {
   color: #d3cec3; /* Texto creme para contraste no fundo escuro */
 }
 
-[data-theme="light"] .card-adaptive {
-  /* No tema light: INVERSÃO - fundo ESCURO com texto CLARO para contraste */
-  border: 1px solid rgba(201, 35, 55, 0.3);
-  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
-  backdrop-filter: blur(12px);
-  color: #d3cec3; /* Texto creme (mesmo da logo) para contraste */
-}
+/* REMOVIDA A REGRA DUPLICADA E CONFLITANTE */
 
 /* Pills/badges adaptativos */
 .pill-adaptive {

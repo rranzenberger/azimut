@@ -208,3 +208,4 @@ Todas as páginas principais (Home, Studio) foram corrigidas com verificações 
 **Data:** 02/01/2026  
 **Versão:** 1.0
 
+

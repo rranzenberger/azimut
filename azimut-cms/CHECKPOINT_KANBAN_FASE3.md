@@ -149,3 +149,4 @@ npm run seed:kanban
 **Commit:** `fefbbbc`  
 **Tag:** `checkpoint-kanban-fase3`
 
+
