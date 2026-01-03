@@ -101,24 +101,22 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
                   ? '#c92337' 
                   : 'var(--theme-text-secondary)',
                 backgroundColor: 'transparent',
-                opacity: isActive ? 1 : 0.6, // Diminuído de 0.7 para 0.6
-                textShadow: isActive 
-                  ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' // Diminuído de 0.9/0.6
-                  : 'none',
+                opacity: isActive ? 1 : 0.6,
+                textShadow: 'none', // SEM GLOW
                 border: '1px solid transparent'
               }}
               onMouseEnter={(e) => {
-                setHoveredId(item.id) // Marcar como hovered
+                setHoveredId(item.id)
                 if (!isActive) {
                   e.currentTarget.style.opacity = '1'
                   e.currentTarget.style.color = '#c92337'
-                  e.currentTarget.style.textShadow = '0 0 12px rgba(201, 35, 55, 0.6), 0 0 25px rgba(201, 35, 55, 0.3)'
+                  e.currentTarget.style.textShadow = 'none' // SEM GLOW no hover
                   e.currentTarget.style.backgroundColor = 'transparent'
                   e.currentTarget.style.transform = 'translateY(-1px)'
                 }
               }}
               onMouseLeave={(e) => {
-                setHoveredId(null) // Remover hover
+                setHoveredId(null)
                 if (!isActive) {
                   e.currentTarget.style.opacity = '0.6'
                   e.currentTarget.style.color = 'var(--theme-text-secondary)'
