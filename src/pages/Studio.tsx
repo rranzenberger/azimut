@@ -556,42 +556,53 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* ═══════════════════════════════════════════════════════════════
-              SEÇÃO: VISÃO, MISSÃO E VALORES
+              SEÇÃO: VISÃO, MISSÃO E VALORES - LAYOUT HERO VERTICAL
+              Padrão premium: Visão em destaque (full width hero)
+              Missão + Valores lado a lado (balanceados)
               ═══════════════════════════════════════════════════════════ */}
           <section className="mb-16 animate-fade-in-up opacity-0" style={{ animationDelay: '0.25s', animationFillMode: 'forwards' }}>
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {/* Visão */}
-              <div className="lg:col-span-1">
-                <h3 className="mb-3 font-handel text-xl uppercase tracking-[0.1em] text-azimut-red">
-                  {studio.vision.title}
-                </h3>
-                <p className="text-[0.9rem] leading-relaxed text-slate-900 dark:text-slate-300">
-                  {studio.vision.body}
-                </p>
-              </div>
+            {/* Visão - HERO (Full Width, Destaque Máximo) */}
+            <div className="mb-12 rounded-2xl bg-gradient-to-br from-azimut-red/10 to-azimut-red/5 p-8 md:p-10 lg:p-12 border border-azimut-red/20 backdrop-blur-sm">
+              <h3 className="mb-5 font-handel text-2xl md:text-3xl uppercase tracking-[0.12em] text-azimut-red flex items-center gap-3">
+                <span className="text-3xl">🎯</span>
+                {studio.vision.title}
+              </h3>
+              <p className="text-[1.05rem] md:text-[1.15rem] leading-relaxed font-light max-w-4xl text-slate-900 dark:text-slate-200">
+                {studio.vision.body}
+              </p>
+            </div>
+
+            {/* Missão + Valores - Grid 2 Colunas (Balanceado) */}
+            <div className="grid gap-8 md:grid-cols-2">
               {/* Missão */}
-              <div className="lg:col-span-1">
-                <h3 className="mb-3 font-handel text-xl uppercase tracking-[0.1em] text-azimut-red">
+              <div className="card-dark-alt-adaptive rounded-xl p-6 md:p-8">
+                <h3 className="mb-4 font-handel text-xl md:text-2xl uppercase tracking-[0.1em] text-azimut-red flex items-center gap-3">
+                  <span className="text-2xl">💡</span>
                   {studio.mission.title}
                 </h3>
-                <p className="text-[0.9rem] leading-relaxed text-slate-900 dark:text-slate-300">
+                <p className="text-[0.95rem] leading-relaxed text-slate-900 dark:text-slate-300">
                   {studio.mission.body}
                 </p>
               </div>
+
               {/* Valores */}
-              <div className="lg:col-span-1">
-                <h3 className="mb-4 font-handel text-xl uppercase tracking-[0.1em] text-azimut-red">
+              <div className="card-dark-alt-adaptive rounded-xl p-6 md:p-8">
+                <h3 className="mb-5 font-handel text-xl md:text-2xl uppercase tracking-[0.1em] text-azimut-red flex items-center gap-3">
+                  <span className="text-2xl">✨</span>
                   {studio.values.title}
                 </h3>
-                <div className="space-y-3">
+                <div className="space-y-4">
                   {((studio?.values?.items && Array.isArray(studio.values.items)) ? studio.values.items : []).map((value, idx) => (
-                    <div key={idx}>
-                      <h4 className="mb-1 font-sora text-[0.8rem] font-semibold uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>
-                        {value.title}
-                      </h4>
-                      <p className="text-[0.85rem] leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
-                        {value.description}
-                      </p>
+                    <div key={idx} className="flex items-start gap-3">
+                      <div className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-azimut-red"></div>
+                      <div className="flex-1">
+                        <h4 className="mb-1 font-sora text-[0.85rem] font-semibold uppercase tracking-[0.08em]" style={{ color: 'var(--theme-text)' }}>
+                          {value.title}
+                        </h4>
+                        <p className="text-[0.85rem] leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                          {value.description}
+                        </p>
+                      </div>
                     </div>
                   ))}
                 </div>
