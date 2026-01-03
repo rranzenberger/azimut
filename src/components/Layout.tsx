@@ -58,14 +58,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   const [hoveredRoute, setHoveredRoute] = useState<string | null>(null)
   const [isWizardOpen, setIsWizardOpen] = useState(false)
   
-  // 🆕 Detectar scroll para compactar header e controlar degradê
+  // 🆕 Detectar scroll para compactar header
   const [isScrolled, setIsScrolled] = useState(false)
-  const [scrollPosition, setScrollPosition] = useState(0)
   
   React.useEffect(() => {
     const handleScroll = () => {
       const scroll = window.scrollY
-      setScrollPosition(scroll)
       setIsScrolled(scroll > 50) // Compacta após 50px de scroll
     }
     
@@ -75,12 +73,6 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-  
-  // Calcular opacidade do conteúdo quando sobe (para não ter corte seco)
-  // Quando scroll = 0, conteúdo 100% visível
-  // Quando scroll aumenta, conteúdo nos primeiros pixels fica semi-transparente
-  // Isso cria transição suave sem corte seco
-  const contentTopOpacity = Math.max(0.7, Math.min(1, 1 - (scrollPosition / 100)))
   
   // NOVA ABORDAGEM SIMPLES: hamburger só aparece em mobile (< 768px)
   // Em desktop, menu sempre visível, hamburger NUNCA aparece
@@ -828,58 +820,18 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         )}
       </header>
 
-      {/* Conteúdo da página - PADDING TOP para compensar header fixo + RESPIRO VISUAL + DEGRADÊ */}
+      {/* Conteúdo da página - PADDING TOP para compensar header fixo */}
       <main 
         id="main-content" 
         role="main" 
         tabIndex={-1}
         style={{ 
-          paddingTop: isScrolled ? '100px' : '120px', // MAIS RESPIRO para não cortar na linha vermelha!
+          paddingTop: isScrolled ? '72px' : '80px',
           minHeight: '100vh',
           position: 'relative'
         }}
       >
-        {/* OVERLAY LEVE FIXO abaixo da linha vermelha - faz conteúdo ficar semi-transparente */}
-        {/* Apenas nos primeiros pixels, sem corte seco */}
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: '80px', // Apenas primeiros pixels abaixo da linha vermelha
-            background: theme === 'dark'
-              ? `linear-gradient(to bottom, 
-                  rgba(6, 10, 18, 0.85) 0%,
-                  rgba(6, 10, 18, 0.6) 30%,
-                  rgba(6, 10, 18, 0.3) 60%,
-                  transparent 100%)`
-              : `linear-gradient(to bottom, 
-                  rgba(30, 28, 26, 0.85) 0%,
-                  rgba(30, 28, 26, 0.6) 30%,
-                  rgba(30, 28, 26, 0.3) 60%,
-                  transparent 100%)`,
-            pointerEvents: 'none',
-            zIndex: 1
-          }}
-        />
-        
-        {/* CONTEÚDO com opacidade suave quando sobe (evita corte seco) */}
-        <div style={{ 
-          position: 'relative', 
-          zIndex: 3,
-          // Aplicar opacidade apenas nos primeiros 80px (onde está o overlay)
-          maskImage: `linear-gradient(to bottom, 
-            rgba(0, 0, 0, ${contentTopOpacity}) 0%,
-            rgba(0, 0, 0, ${contentTopOpacity}) 80px,
-            rgba(0, 0, 0, 1) 100px)`,
-          WebkitMaskImage: `linear-gradient(to bottom, 
-            rgba(0, 0, 0, ${contentTopOpacity}) 0%,
-            rgba(0, 0, 0, ${contentTopOpacity}) 80px,
-            rgba(0, 0, 0, 1) 100px)`
-        }}>
-          {children}
-        </div>
+        {children}
       </main>
 
       {/* FOOTER - Escuro em ambos os temas para consistência */}
