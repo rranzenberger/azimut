@@ -820,13 +820,13 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         )}
       </header>
 
-      {/* Conteúdo da página - PADDING TOP para compensar header fixo */}
+      {/* Conteúdo da página - PADDING TOP para compensar header fixo + RESPIRO VISUAL */}
       <main 
         id="main-content" 
         role="main" 
         tabIndex={-1}
         style={{ 
-          paddingTop: isScrolled ? '52px' : '60px', // Compensa altura do header fixo
+          paddingTop: isScrolled ? '72px' : '80px', // +20px de "respiro" visual!
           minHeight: '100vh'
         }}
       >
