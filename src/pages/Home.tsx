@@ -236,7 +236,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               border: '1px solid rgba(255, 255, 255, 0.1)'
             }}
           >
-              <h2 className="mb-3 font-sora text-[0.72rem] uppercase tracking-[0.24em] text-slate-200">
+              <h2 className="mb-3 font-sora text-[0.72rem] uppercase tracking-[0.24em] text-slate-700 dark:text-slate-200">
                 {t(lang, 'cardTitle')}
               </h2>
               <p className="mb-4 text-[0.9rem] leading-relaxed text-white">
@@ -253,7 +253,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   {t(lang, 'tag3')}
                 </span>
               </div>
-              <p className="text-[0.8rem] text-slate-300">{t(lang, 'cities')}</p>
+              <p className="text-[0.8rem] text-slate-700 dark:text-slate-300">{t(lang, 'cities')}</p>
             </aside>
           </div>
         </section>
@@ -290,7 +290,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     <h3 className="mb-2 font-sora text-[1.05rem] font-semibold text-white group-hover:text-azimut-red transition-colors duration-300">
                       {service.title}
                     </h3>
-                    <p className="text-sm leading-relaxed text-slate-200 group-hover:text-slate-100 transition-colors duration-300">
+                    <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-200 group-hover:text-slate-100 transition-colors duration-300">
                       {service.description}
                     </p>
                   </article>
@@ -351,7 +351,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     <h3 className="mb-2 font-sora text-[1.05rem] font-semibold text-white group-hover:text-azimut-red transition-colors duration-300">
                       {service.title}
                     </h3>
-                    <p className="text-sm leading-relaxed text-slate-200 group-hover:text-slate-100 transition-colors duration-300">
+                    <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-200 group-hover:text-slate-100 transition-colors duration-300">
                       {service.description}
                     </p>
                   </article>
@@ -400,14 +400,14 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                                     <div class="text-center p-6 z-10">
                                       <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 backdrop-blur">
                                         <span class="h-2 w-2 animate-pulse rounded-full bg-azimut-red"></span>
-                                        <span class="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-200">
+                                        <span class="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-700 dark:text-slate-200">
                                           ${lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
                                         </span>
                                       </div>
                                       <h3 class="font-handel text-3xl uppercase tracking-[0.12em] text-slate-100 md:text-4xl">
                                         ${featured.title}
                                       </h3>
-                                      <p class="mt-2 text-slate-400 text-sm">
+                                      <p class="mt-2 text-slate-600 dark:text-slate-400 text-sm">
                                         ${lang === 'pt' ? 'Aguardando imagem do backoffice' : lang === 'es' ? 'Esperando imagen del backoffice' : lang === 'fr' ? 'En attente d\'image du backoffice' : 'Awaiting backoffice image'}
                                       </p>
                                     </div>
@@ -427,14 +427,14 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                             <div className="text-center p-6 z-10">
                               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 backdrop-blur">
                                 <span className="h-2 w-2 animate-pulse rounded-full bg-azimut-red"></span>
-                                <span className="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-200">
+                                <span className="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-700 dark:text-slate-200">
                                   {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
                                 </span>
                               </div>
                               <h3 className="font-handel text-3xl uppercase tracking-[0.12em] text-slate-100 md:text-4xl drop-shadow-lg">
                                 {featured.title}
                               </h3>
-                              <p className="mt-2 text-slate-300 drop-shadow-md">
+                              <p className="mt-2 text-slate-700 dark:text-slate-300 drop-shadow-md">
                                 {featured.summary || featured.shortTitle}
                               </p>
                             </div>
@@ -447,14 +447,14 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         <div className="text-center p-6">
                           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 backdrop-blur">
                             <span className="h-2 w-2 animate-pulse rounded-full bg-azimut-red"></span>
-                            <span className="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-200">
+                            <span className="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-700 dark:text-slate-200">
                               {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
                             </span>
                           </div>
                           <h3 className="font-handel text-3xl uppercase tracking-[0.12em] text-slate-100 md:text-4xl">
                             {featured.title}
                           </h3>
-                          <p className="mt-2 text-slate-400">
+                          <p className="mt-2 text-slate-600 dark:text-slate-400">
                             {featured.summary || featured.shortTitle}
                           </p>
                         </div>
@@ -473,11 +473,11 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         ))}
                       </div>
                     )}
-                    <p className="text-slate-300 leading-relaxed mb-4">
+                    <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
                       {featured.summary || featured.shortTitle}
                     </p>
                     {(featured.city || featured.country) && (
-                      <p className="mb-4 text-sm text-slate-400">
+                      <p className="mb-4 text-sm text-slate-600 dark:text-slate-400">
                         📍 {[featured.city, featured.country].filter(Boolean).join(', ')}
                       </p>
                     )}
@@ -550,7 +550,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                                   <svg class="w-16 h-16 mx-auto mb-2 text-azimut-red/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                   </svg>
-                                  <p class="text-xs text-slate-400 uppercase tracking-wider">${lang === 'pt' ? 'Aguardando Imagem' : lang === 'es' ? 'Esperando Imagen' : lang === 'fr' ? 'En Attente d\'Image' : 'Awaiting Image'}</p>
+                                  <p class="text-xs text-slate-600 dark:text-slate-400 uppercase tracking-wider">${lang === 'pt' ? 'Aguardando Imagem' : lang === 'es' ? 'Esperando Imagen' : lang === 'fr' ? 'En Attente d\'Image' : 'Awaiting Image'}</p>
                                 </div>
                               </div>
                             `;
@@ -564,22 +564,22 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         <svg className="w-16 h-16 mx-auto mb-2 text-azimut-red/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
-                        <p className="text-xs text-slate-400 uppercase tracking-wider">{lang === 'pt' ? 'Aguardando Imagem' : lang === 'es' ? 'Esperando Imagen' : lang === 'fr' ? 'En Attente d\'Image' : 'Awaiting Image'}</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 uppercase tracking-wider">{lang === 'pt' ? 'Aguardando Imagem' : lang === 'es' ? 'Esperando Imagen' : lang === 'fr' ? 'En Attente d\'Image' : 'Awaiting Image'}</p>
                       </div>
                     </div>
                   )}
                   <h3 className="mb-2 font-sora text-[1.05rem] font-semibold text-white group-hover:text-azimut-red transition-colors duration-300">
                     {item.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-slate-200 group-hover:text-slate-100 transition-colors duration-300 mb-3">
+                  <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-200 group-hover:text-slate-100 transition-colors duration-300 mb-3">
                     {item.summary || item.shortTitle}
                   </p>
                   {item.tags && item.tags.length > 0 && (
-                    <div className="mt-3 flex flex-wrap gap-2 text-[0.7rem] text-slate-400">
+                    <div className="mt-3 flex flex-wrap gap-2 text-[0.7rem] text-slate-600 dark:text-slate-400">
                       {((item?.tags && Array.isArray(item.tags)) ? item.tags : []).slice(0, 3).map((tag: string, idx: number) => (
                         <span 
                           key={idx} 
-                          className="rounded-full border border-white/10 px-2 py-0.5 transition-all duration-300 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:text-slate-300"
+                          className="rounded-full border border-white/10 px-2 py-0.5 transition-all duration-300 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:text-slate-700 dark:text-slate-300"
                         >
                           {tag}
                         </span>
