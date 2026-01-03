@@ -58,6 +58,22 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   const [hoveredRoute, setHoveredRoute] = useState<string | null>(null)
   const [isWizardOpen, setIsWizardOpen] = useState(false)
   
+  // 🆕 Detectar scroll para compactar header
+  const [isScrolled, setIsScrolled] = useState(false)
+  
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY
+      setIsScrolled(scrollPosition > 50) // Compacta após 50px de scroll
+    }
+    
+    // Verificar posição inicial
+    handleScroll()
+    
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+  
   // NOVA ABORDAGEM SIMPLES: hamburger só aparece em mobile (< 768px)
   // Em desktop, menu sempre visível, hamburger NUNCA aparece
   const [isMobile, setIsMobile] = useState(() => {
@@ -150,11 +166,20 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
       {/* Skip to content - Accessibility */}
       <SkipLink />
       
-      {/* HEADER - Glassmorphism 2026 */}
+      {/* HEADER - Glassmorphism 2026 - STICKY OTIMIZADO */}
       <header 
-        className="glass sticky top-0 z-30 w-full" 
+        className="glass sticky top-0 z-30 w-full transition-all duration-300 ease-out" 
         style={{ 
-          backgroundColor: 'var(--theme-overlay)',
+          backgroundColor: isScrolled 
+            ? (theme === 'dark' ? 'rgba(10, 14, 24, 0.95)' : 'rgba(42, 40, 37, 0.95)')
+            : (theme === 'dark' ? 'rgba(10, 14, 24, 0.7)' : 'rgba(42, 40, 37, 0.7)'),
+          backdropFilter: isScrolled ? 'blur(16px)' : 'blur(12px)',
+          WebkitBackdropFilter: isScrolled ? 'blur(16px)' : 'blur(12px)',
+          boxShadow: isScrolled 
+            ? (theme === 'dark' 
+                ? '0 2px 20px rgba(0, 0, 0, 0.3)' 
+                : '0 2px 20px rgba(0, 0, 0, 0.15)')
+            : 'none',
           paddingTop: 'env(safe-area-inset-top, 0px)',
           paddingLeft: 'env(safe-area-inset-left, 0px)',
           paddingRight: 'env(safe-area-inset-right, 0px)'
@@ -162,8 +187,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
       >
         <div 
           ref={containerRef} 
-          className="mx-auto grid min-h-[64px] w-full max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-0.5 sm:gap-1 sm:px-4 sm:h-20 sm:gap-2 min-[768px]:px-6 min-[768px]:gap-3 md:gap-4 lg:gap-5 xl:gap-6" 
+          className="mx-auto grid w-full max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-0.5 sm:gap-1 sm:px-4 sm:gap-2 min-[768px]:px-6 min-[768px]:gap-3 md:gap-4 lg:gap-5 xl:gap-6 transition-all duration-300" 
           style={{ 
+            minHeight: isScrolled ? '64px' : '80px', // Compacta no scroll
             overflow: 'visible', 
             position: 'relative', 
             minWidth: 0, 
@@ -195,8 +221,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             <img
               src={theme === 'dark' ? '/logo-topo-site.svg' : '/logo-topo-preto-site.svg'}
               alt="Azimut – Immersive • Interactive • Cinematic Experiences"
+              className="transition-all duration-300"
               style={{ 
-                height: '56px',
+                height: isScrolled ? '48px' : '56px', // Logo menor no scroll
                 width: 'auto',
                 maxWidth: 'none',
                 display: 'block'
