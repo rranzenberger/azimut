@@ -37,6 +37,9 @@
   --grain-opacity: 0.65;
   --gradient-overlay: linear-gradient(135deg, rgba(201, 35, 55, 0.15) 0%, transparent 50%, rgba(68, 27, 68, 0.12) 100%);
   
+  /* COR VERMELHA ADAPTATIVA */
+  --theme-accent-red: #c92337; /* Vermelho original para tema escuro! */
+  
   /* ═══════════════════════════════════════════════════════════════
      DESIGN SYSTEM PREMIUM - Adicionado 02/01/2026
      ═══════════════════════════════════════════════════════════════ */

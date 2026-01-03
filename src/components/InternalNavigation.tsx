@@ -98,7 +98,7 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
               `}
               style={{
                 color: isActive 
-                  ? '#c92337' 
+                  ? 'var(--theme-accent-red)' // Usa cor adaptativa do tema!
                   : 'var(--theme-text-secondary)',
                 backgroundColor: 'transparent',
                 opacity: isActive ? 1 : 0.6,
@@ -109,7 +109,7 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
                 setHoveredId(item.id)
                 if (!isActive) {
                   e.currentTarget.style.opacity = '1'
-                  e.currentTarget.style.color = '#c92337'
+                  e.currentTarget.style.color = 'var(--theme-accent-red)' // Usa cor adaptativa!
                   e.currentTarget.style.textShadow = 'none' // SEM GLOW no hover
                   e.currentTarget.style.backgroundColor = 'transparent'
                   e.currentTarget.style.transform = 'translateY(-1px)'
