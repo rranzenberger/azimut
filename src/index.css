@@ -118,6 +118,19 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   SMOOTH SCROLL COM "RESPIRO" NO TOPO
+   ═══════════════════════════════════════════════════════════════ */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Espaço para header fixo + respiro visual */
+}
+
+/* Todos os elementos scrolláveis também têm o respiro */
+* {
+  scroll-margin-top: 80px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    FONT FACES
    ═══════════════════════════════════════════════════════════════ */
 @font-face {
