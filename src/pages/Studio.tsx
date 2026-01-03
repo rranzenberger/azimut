@@ -590,7 +590,10 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   <span className="text-2xl">💡</span>
                   {studio.mission.title}
                 </h3>
-                <p className="text-[0.95rem] leading-relaxed text-slate-900 dark:text-slate-300">
+                <p 
+                  className="text-[0.95rem] leading-relaxed"
+                  style={{ color: 'var(--theme-card-text, #d3cec3)' }}
+                >
                   {studio.mission.body}
                 </p>
               </div>
@@ -606,10 +609,16 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                     <div key={idx} className="flex items-start gap-3">
                       <div className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-azimut-red"></div>
                       <div className="flex-1">
-                        <h4 className="mb-1 font-sora text-[0.85rem] font-semibold uppercase tracking-[0.08em]" style={{ color: 'var(--theme-text)' }}>
+                        <h4 
+                          className="mb-1 font-sora text-[0.85rem] font-semibold uppercase tracking-[0.08em]" 
+                          style={{ color: 'var(--theme-card-text, #d3cec3)' }}
+                        >
                           {value.title}
                         </h4>
-                        <p className="text-[0.85rem] leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                        <p 
+                          className="text-[0.85rem] leading-relaxed" 
+                          style={{ color: 'var(--theme-card-text-secondary, #cbd5e1)' }}
+                        >
                           {value.description}
                         </p>
                       </div>
