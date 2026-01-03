@@ -75,13 +75,13 @@ const PageNavigation: React.FC<PageNavigationProps> = ({ sections, items, lang }
           <button
             key={item.id || item.href || index}
             onClick={() => handleClick(item)}
-            className={`flex items-center gap-2 rounded-lg px-4 py-2 font-sora text-sm font-medium uppercase tracking-[0.08em] transition-colors duration-200 ${
+            className={`flex items-center gap-2 rounded-lg px-4 py-2 font-sora text-sm font-semibold uppercase tracking-[0.08em] transition-colors duration-200 ${
               isActive
                 ? 'bg-azimut-red/15 text-azimut-red shadow-inner shadow-azimut-red/20'
-                : 'bg-transparent hover:bg-white/5 hover:text-white'
+                : 'bg-transparent text-slate-700 dark:text-slate-300 hover:bg-white/5 hover:text-slate-900 dark:hover:text-white'
             }`}
             style={{
-              color: isActive ? '#c92337' : 'var(--theme-text-secondary)'
+              color: isActive ? '#c92337' : undefined
             }}
           >
             {item.icon && <span className="text-lg">{item.icon}</span>}
