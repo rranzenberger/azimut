@@ -837,7 +837,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           position: 'relative'
         }}
       >
-        {/* Degradê que desaparece com scroll - SUPER VISÍVEL! */}
+        {/* GRADIENTE VERMELHO LATERAL (135deg) que desaparece com scroll */}
         <div
           style={{
             position: 'absolute',
@@ -846,24 +846,28 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             right: 0,
             height: '180px',
             background: theme === 'dark'
-              ? `linear-gradient(to bottom, 
-                  rgba(0, 0, 0, ${fadeOpacity * 0.6}), 
-                  rgba(6, 10, 18, ${fadeOpacity * 0.5}) 25%, 
-                  rgba(6, 10, 18, ${fadeOpacity * 0.3}) 50%, 
-                  rgba(6, 10, 18, ${fadeOpacity * 0.15}) 75%, 
-                  transparent 100%)`
-              : `linear-gradient(to bottom, 
-                  rgba(20, 18, 16, ${fadeOpacity * 0.6}), 
-                  rgba(30, 28, 26, ${fadeOpacity * 0.5}) 25%, 
-                  rgba(30, 28, 26, ${fadeOpacity * 0.3}) 50%, 
-                  rgba(30, 28, 26, ${fadeOpacity * 0.15}) 75%, 
-                  transparent 100%)`,
+              ? `linear-gradient(135deg, 
+                  rgba(201, 35, 55, ${fadeOpacity * 0.15}) 0%, 
+                  transparent 50%, 
+                  rgba(68, 27, 68, ${fadeOpacity * 0.12}) 100%)`
+              : `linear-gradient(135deg, 
+                  rgba(201, 35, 55, ${fadeOpacity * 0.12}) 0%, 
+                  transparent 50%, 
+                  rgba(201, 35, 55, ${fadeOpacity * 0.08}) 100%)`,
+            maskImage: `linear-gradient(to bottom, 
+              rgba(0, 0, 0, 1) 0%,
+              rgba(0, 0, 0, 0.8) 50%,
+              rgba(0, 0, 0, 0.4) 80%,
+              rgba(0, 0, 0, 0) 100%)`,
+            WebkitMaskImage: `linear-gradient(to bottom, 
+              rgba(0, 0, 0, 1) 0%,
+              rgba(0, 0, 0, 0.8) 50%,
+              rgba(0, 0, 0, 0.4) 80%,
+              rgba(0, 0, 0, 0) 100%)`,
             pointerEvents: 'none',
             zIndex: 1,
             willChange: 'opacity',
-            transition: 'opacity 0.2s ease-out',
-            // Debug: descomente para ver borda vermelha temporária
-            // border: '1px solid red'
+            transition: 'opacity 0.2s ease-out'
           }}
         />
         <div style={{ position: 'relative', zIndex: 2 }}>
