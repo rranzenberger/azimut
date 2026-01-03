@@ -837,31 +837,33 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           position: 'relative'
         }}
       >
-        {/* Degradê que desaparece com scroll - MAIS VISÍVEL! */}
+        {/* Degradê que desaparece com scroll - SUPER VISÍVEL! */}
         <div
           style={{
             position: 'absolute',
             top: 0,
             left: 0,
             right: 0,
-            height: '150px',
+            height: '180px',
             background: theme === 'dark'
               ? `linear-gradient(to bottom, 
-                  rgba(6, 10, 18, ${fadeOpacity}), 
-                  rgba(6, 10, 18, ${fadeOpacity * 0.8}) 30%, 
-                  rgba(6, 10, 18, ${fadeOpacity * 0.5}) 60%, 
-                  rgba(6, 10, 18, ${fadeOpacity * 0.2}) 85%, 
+                  rgba(0, 0, 0, ${fadeOpacity * 0.6}), 
+                  rgba(6, 10, 18, ${fadeOpacity * 0.5}) 25%, 
+                  rgba(6, 10, 18, ${fadeOpacity * 0.3}) 50%, 
+                  rgba(6, 10, 18, ${fadeOpacity * 0.15}) 75%, 
                   transparent 100%)`
               : `linear-gradient(to bottom, 
-                  rgba(30, 28, 26, ${fadeOpacity}), 
-                  rgba(30, 28, 26, ${fadeOpacity * 0.8}) 30%, 
-                  rgba(30, 28, 26, ${fadeOpacity * 0.5}) 60%, 
-                  rgba(30, 28, 26, ${fadeOpacity * 0.2}) 85%, 
+                  rgba(20, 18, 16, ${fadeOpacity * 0.6}), 
+                  rgba(30, 28, 26, ${fadeOpacity * 0.5}) 25%, 
+                  rgba(30, 28, 26, ${fadeOpacity * 0.3}) 50%, 
+                  rgba(30, 28, 26, ${fadeOpacity * 0.15}) 75%, 
                   transparent 100%)`,
             pointerEvents: 'none',
             zIndex: 1,
-            willChange: 'opacity', // Otimização de performance
-            transition: 'opacity 0.15s ease-out'
+            willChange: 'opacity',
+            transition: 'opacity 0.2s ease-out',
+            // Debug: descomente para ver borda vermelha temporária
+            // border: '1px solid red'
           }}
         />
         <div style={{ position: 'relative', zIndex: 2 }}>
