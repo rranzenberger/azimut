@@ -41,15 +41,22 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   // Fallback: Projetos padrão quando backoffice está vazio
   const defaultProjects = useMemo(() => [
     {
-      slug: 'projeto-destaque-home',
-      title: lang === 'pt' ? 'Instalação Imersiva' : lang === 'es' ? 'Instalación Inmersiva' : lang === 'fr' ? 'Installation Immersive' : 'Immersive Installation',
-      shortTitle: lang === 'pt' ? 'Experiência Visual Interativa' : lang === 'es' ? 'Experiencia Visual Interactiva' : lang === 'fr' ? 'Expérience Visuelle Interactive' : 'Interactive Visual Experience',
-      summary: lang === 'pt' ? 'Uma instalação interativa que combina narrativa cinematográfica com tecnologia imersiva para criar uma experiência única que conecta audiências de diferentes culturas.' : lang === 'es' ? 'Una instalación interactiva que combina narrativa cinematográfica con tecnología inmersiva para crear una experiencia única que conecta audiencias de diferentes culturas.' : lang === 'fr' ? 'Une installation interactive qui combine narration cinématographique et technologie immersive pour créer une expérience unique qui connecte des audiences de différentes cultures.' : 'An interactive installation that combines cinematic storytelling with immersive technology to create a unique experience that connects audiences from different cultures.',
-      city: lang === 'pt' ? 'São Paulo' : 'São Paulo',
+      slug: 'museu-olimpico-rio',
+      title: lang === 'pt' ? 'Museu do Amanhã - Rio' : lang === 'es' ? 'Museo del Mañana - Río' : lang === 'fr' ? 'Musée de Demain - Rio' : 'Museum of Tomorrow - Rio',
+      shortTitle: lang === 'pt' ? 'Experiência Imersiva Olímpica' : lang === 'es' ? 'Experiencia Inmersiva Olímpica' : lang === 'fr' ? 'Expérience Immersive Olympique' : 'Olympic Immersive Experience',
+      summary: lang === 'pt' ? 'Direção geral e curadoria de conteúdo para o Museu Olímpico do Rio. Uma experiência imersiva que celebra a história olímpica através de instalações audiovisuais interativas e narrativas cinematográficas.' : lang === 'es' ? 'Dirección general y curaduría de contenido para el Museo Olímpico de Río. Una experiencia inmersiva que celebra la historia olímpica a través de instalaciones audiovisuales interactivas y narrativas cinematográficas.' : lang === 'fr' ? 'Direction générale et curation de contenu pour le Musée Olympique de Rio. Une expérience immersive qui célèbre l\'histoire olympique à travers des installations audiovisuelles interactives et des récits cinématographiques.' : 'General direction and content curation for the Rio Olympic Museum. An immersive experience that celebrates Olympic history through interactive audiovisual installations and cinematic narratives.',
+      city: lang === 'pt' ? 'Rio de Janeiro' : lang === 'es' ? 'Río de Janeiro' : 'Rio de Janeiro',
       country: lang === 'pt' ? 'Brasil' : lang === 'es' ? 'Brasil' : lang === 'fr' ? 'Brésil' : 'Brazil',
-      year: 2024,
-      tags: [lang === 'pt' ? 'Imersivo' : lang === 'es' ? 'Inmersivo' : lang === 'fr' ? 'Immersif' : 'Immersive', lang === 'pt' ? 'Interativo' : lang === 'es' ? 'Interactivo' : lang === 'fr' ? 'Interactif' : 'Interactive', lang === 'pt' ? 'Cinema' : lang === 'es' ? 'Cine' : lang === 'fr' ? 'Cinéma' : 'Cinema'],
-      heroImage: null,
+      year: 2016,
+      tags: [lang === 'pt' ? 'Imersivo' : lang === 'es' ? 'Inmersivo' : lang === 'fr' ? 'Immersif' : 'Immersive', lang === 'pt' ? 'Institucional' : lang === 'es' ? 'Institucional' : lang === 'fr' ? 'Institutionnel' : 'Institutional', lang === 'pt' ? 'Museu' : lang === 'es' ? 'Museo' : lang === 'fr' ? 'Musée' : 'Museum'],
+      heroImage: {
+        type: 'VIDEO',
+        // VÍDEO DE TESTE: Museu do Amanhã (YouTube público)
+        // SUBSTITUA pela URL do seu vídeo real quando tiver!
+        original: 'https://www.youtube.com/watch?v=1EiC9bvVGnk',
+        thumbnail: 'https://img.youtube.com/vi/1EiC9bvVGnk/maxresdefault.jpg',
+        alt: lang === 'pt' ? 'Vídeo Museu Olímpico Rio' : lang === 'es' ? 'Video Museo Olímpico Río' : 'Rio Olympic Museum Video'
+      },
     },
     {
       slug: 'projeto-sugestao-1',
