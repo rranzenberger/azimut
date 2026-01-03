@@ -172,17 +172,17 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         style={{ 
           backgroundColor: isScrolled 
             ? (theme === 'dark' 
-                ? 'rgba(10, 14, 24, 0.95)'    // Dark: fundo escuro
-                : 'rgba(42, 40, 37, 0.95)')   // Light: mesma cor do rodapé! ✅
+                ? 'rgba(6, 10, 18, 0.98)'      // Dark: mais escuro (#060a12)
+                : 'rgba(30, 28, 26, 0.98)')    // Light: COR MAIS ESCURA DO RODAPÉ! (#1e1c1a)
             : (theme === 'dark' 
-                ? 'rgba(10, 14, 24, 0.7)'     // Dark: fundo escuro transparente
-                : 'rgba(42, 40, 37, 0.7)'),   // Light: mesma cor do rodapé transparente! ✅
+                ? 'rgba(6, 10, 18, 0.85)'      // Dark: mais escuro transparente
+                : 'rgba(30, 28, 26, 0.85)'),   // Light: COR MAIS ESCURA DO RODAPÉ transparente!
           backdropFilter: isScrolled ? 'blur(16px)' : 'blur(12px)',
           WebkitBackdropFilter: isScrolled ? 'blur(16px)' : 'blur(12px)',
           boxShadow: isScrolled 
             ? (theme === 'dark' 
                 ? '0 2px 20px rgba(0, 0, 0, 0.3)' 
-                : '0 2px 20px rgba(0, 0, 0, 0.15)') // Light: sombra média
+                : '0 2px 20px rgba(0, 0, 0, 0.2)') // Light: sombra mais forte
             : 'none',
           paddingTop: 'env(safe-area-inset-top, 0px)',
           paddingLeft: 'env(safe-area-inset-left, 0px)',
@@ -267,8 +267,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 padding: '0 6px', 
                 position: 'relative',
                 color: activeRoute === 'home' 
-                  ? (theme === 'light' ? '#8b1a28' : '#c92337') // Light: vinho escuro! Dark: vermelho
-                  : (hoveredRoute === 'home' ? (theme === 'light' ? '#8b1a28' : '#c92337') : (theme === 'light' ? '#d3cec3' : 'var(--theme-text-secondary)')), // Texto CLARO no light!
+                  ? (theme === 'light' ? '#ff5a6e' : '#c92337') // Light: vermelho vibrante! Dark: vermelho original
+                  : (hoveredRoute === 'home' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-secondary)')), // Texto CLARO no light!
                 textShadow: activeRoute === 'home' && theme === 'dark' ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' : undefined,
                 lineHeight: '1'
               }}

@@ -75,8 +75,8 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
           alignItems: 'center',
           position: 'relative',
           color: isActive || hasActiveItem || hovered
-            ? (theme === 'light' ? '#8b1a28' : '#c92337') // Vinho no light, vermelho no dark
-            : (theme === 'light' ? '#d3cec3' : 'var(--theme-text-secondary)'), // Texto CLARO no light!
+            ? (theme === 'light' ? '#ff5a6e' : '#c92337') // Vermelho vibrante no light, vermelho no dark
+            : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-secondary)'), // Texto CLARO no light!
           textShadow: (isActive || hasActiveItem) && theme === 'dark' 
             ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' 
             : undefined
