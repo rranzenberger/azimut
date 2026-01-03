@@ -257,8 +257,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             >
               <span>{t(lang, 'navHome')}</span>
               <span 
-                className="absolute bottom-0 left-0 h-[1px] min-[768px]:h-[1.5px] md:h-[1.5px] lg:h-[2px] xl:h-[2px] bg-azimut-red transition-all duration-200 ease-in-out"
+                className="absolute left-0 h-[1px] min-[768px]:h-[1.5px] md:h-[1.5px] lg:h-[2px] xl:h-[2px] bg-azimut-red transition-all duration-200 ease-in-out"
                 style={{ 
+                  bottom: '3px', // Sobe 3px para ficar mais próxima do texto, mas sem sobrepor
                   width: shouldShowLine('home') ? '100%' : '0%',
                   opacity: shouldShowLine('home') ? 1 : 0
                 }}
