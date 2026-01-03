@@ -103,7 +103,7 @@
   --theme-overlay: rgba(185, 180, 170, 0.98);
   --pattern-opacity: 0.06;
   --grain-opacity: 0.45; /* Aumentado de 0.12 para 0.45 - MAIS VISÍVEL! */
-  --gradient-overlay: linear-gradient(135deg, rgba(201, 35, 55, 0.25) 0%, transparent 50%, rgba(201, 35, 55, 0.15) 100%); /* Gradiente MAIS FORTE! */
+  --gradient-overlay: linear-gradient(135deg, rgba(201, 35, 55, 0.35) 0%, transparent 50%, rgba(201, 35, 55, 0.25) 100%); /* Gradiente AINDA MAIS FORTE! */
   /* Cores específicas para tema claro */
   --theme-card-text: #d3cec3;      /* Texto creme (mesma cor da logo clara) no card escuro - NÃO usar branco puro */
   --theme-card-border: rgba(211, 206, 195, 0.3);
