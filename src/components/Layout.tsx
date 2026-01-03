@@ -801,8 +801,16 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         )}
       </header>
 
-      {/* Conteúdo da página */}
-      <main id="main-content" role="main" tabIndex={-1}>
+      {/* Conteúdo da página - PADDING TOP para compensar header fixo */}
+      <main 
+        id="main-content" 
+        role="main" 
+        tabIndex={-1}
+        style={{ 
+          paddingTop: isScrolled ? '52px' : '60px', // Compensa altura do header fixo
+          minHeight: '100vh'
+        }}
+      >
         {children}
       </main>
 
