@@ -559,7 +559,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   }}
                   className="hidden rounded-lg text-center font-sora font-bold uppercase min-[768px]:inline-flex min-[768px]:flex-col min-[768px]:items-center min-[768px]:justify-center transition-all duration-300 shrink-0 cursor-pointer hover:scale-105 hover:shadow-[0_4px_12px_rgba(201,35,55,0.3)]"
                   style={{ 
-                    color: 'var(--theme-text-secondary)',
+                    color: theme === 'light' ? '#d3cec3' : 'var(--theme-text-secondary)', // Texto CLARO no tema claro!
                     background: theme === 'dark' 
                       ? 'rgba(201, 35, 55, 0.12)' 
                       : 'rgba(201, 35, 55, 0.08)',
