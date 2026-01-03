@@ -86,7 +86,7 @@ const NotFound: React.FC<NotFoundProps> = ({ lang }) => {
         {/* Botão de voltar */}
         <Link
           to="/"
-          className="inline-flex items-center gap-2 rounded-xl border border-azimut-red/80 px-6 py-3 font-sora text-sm uppercase tracking-[0.14em] text-white transition-all duration-300 hover:border-azimut-red hover:bg-azimut-red/10"
+          className="inline-flex items-center gap-2 rounded-xl border border-azimut-red/80 px-6 py-3 font-sora text-sm uppercase tracking-[0.14em] text-slate-900 dark:text-white transition-all duration-300 hover:border-azimut-red hover:bg-azimut-red/10"
         >
           <svg 
             className="w-4 h-4" 

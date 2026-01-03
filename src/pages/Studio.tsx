@@ -890,7 +890,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                 </p>
                 <a 
                   href="/contact"
-                  className="cta-glow inline-flex items-center gap-2 rounded-xl border border-azimut-red/80 px-6 py-3 font-sora text-[0.72rem] font-medium uppercase tracking-[0.14em] transition-all hover:bg-azimut-red/20"
+                  className="cta-glow inline-flex items-center gap-2 rounded-xl border border-azimut-red/80 px-6 py-3 font-sora text-[0.72rem] font-medium uppercase tracking-[0.14em] transition-all hover:bg-azimut-red/20 text-slate-900 dark:text-white"
                   style={{ color: 'var(--theme-text)' }}
                 >
                   {content.ctaButton}

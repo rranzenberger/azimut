@@ -363,7 +363,7 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
 
                 <button
                   onClick={() => setWizardOpen(true)}
-                  className="w-full rounded-xl bg-azimut-red px-6 py-4 font-sora text-sm font-semibold uppercase tracking-[0.12em] transition hover:brightness-110 shadow-[0_8px_24px_rgba(var(--theme-accent-red-rgb),0.3)]"
+                  className="w-full rounded-xl bg-azimut-red px-6 py-4 font-sora text-sm font-semibold uppercase tracking-[0.12em] transition hover:brightness-110 shadow-[0_8px_24px_rgba(var(--theme-accent-red-rgb),0.3)] text-slate-900 dark:text-white"
                   style={{ color: '#ffffff' }}
                 >
                   {lang === 'pt' ? '🚀 Iniciar Brief Rápido' : lang === 'es' ? '🚀 Iniciar Brief Rápido' : '🚀 Start Quick Brief'}
@@ -505,7 +505,7 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  className="rounded-md bg-azimut-red px-4 py-2 text-sm font-semibold uppercase tracking-[0.12em] text-white transition hover:brightness-110"
+                  className="rounded-md bg-azimut-red px-4 py-2 text-sm font-semibold uppercase tracking-[0.12em] text-slate-900 dark:text-white transition hover:brightness-110"
                 >
                   {i18n(labels.submit)}
                 </button>

@@ -485,7 +485,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     <div className="flex flex-wrap gap-3 mt-6">
                       <Link
                         to={`/work/${featured.slug}`}
-                        className="inline-flex items-center justify-center rounded-lg bg-azimut-red px-6 py-2.5 font-sora text-sm uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/90 hover:scale-105"
+                        className="inline-flex items-center justify-center rounded-lg bg-azimut-red px-6 py-2.5 font-sora text-sm uppercase tracking-[0.1em] text-slate-900 dark:text-white transition-all duration-300 hover:bg-azimut-red/90 hover:scale-105"
                       >
                         {lang === 'pt' ? 'Ver Projeto' : lang === 'es' ? 'Ver Proyecto' : lang === 'fr' ? 'Voir Projet' : 'View Project'}
                       </Link>

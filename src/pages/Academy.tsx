@@ -299,7 +299,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                       <div className="mb-3 inline-block rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.2em]" style={{ 
                         borderColor: 'rgba(var(--theme-accent-red-rgb), 0.8)',
                         backgroundColor: 'rgba(var(--theme-accent-red-rgb), 0.25)',
-                        color: '#ffffff'
+                        color: 'var(--theme-bg)' // Usa cor de fundo (branco no claro, escuro no dark)
                       }}>
                         {item.type === 'experiment' ? (lang === 'pt' ? 'Experimento' : lang === 'es' ? 'Experimento' : lang === 'fr' ? 'Expérience' : 'Experiment') : 
                          item.type === 'workshop' ? (lang === 'pt' ? 'Workshop' : lang === 'es' ? 'Workshop' : lang === 'fr' ? 'Atelier' : 'Workshop') :

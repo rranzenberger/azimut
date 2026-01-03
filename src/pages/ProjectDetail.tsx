@@ -110,7 +110,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
           </p>
           <Link
             to="/work"
-            className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-sm font-semibold uppercase tracking-[0.1em] text-white hover:bg-azimut-red/20 transition-all"
+            className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-sm font-semibold uppercase tracking-[0.1em] text-slate-900 dark:text-white hover:bg-azimut-red/20 transition-all"
           >
             {lang === 'pt' ? 'Voltar para Projetos' : lang === 'es' ? 'Volver a Proyectos' : lang === 'fr' ? 'Retour aux projets' : 'Back to Projects'}
           </Link>
@@ -386,7 +386,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
             <Link
               to="/contact"
               onClick={() => trackInteraction('cta_click', 'project_detail_cta')}
-              className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/80 bg-azimut-red px-6 py-3 font-sora text-sm font-semibold uppercase tracking-[0.1em] text-white hover:bg-azimut-red/90 transition-all"
+              className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/80 bg-azimut-red px-6 py-3 font-sora text-sm font-semibold uppercase tracking-[0.1em] text-slate-900 dark:text-white hover:bg-azimut-red/90 transition-all"
             >
               {lang === 'pt' ? 'Iniciar um Projeto' : lang === 'es' ? 'Iniciar un Proyecto' : lang === 'fr' ? 'Commencer un projet' : 'Start a Project'}
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

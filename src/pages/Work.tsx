@@ -333,7 +333,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
             {hasActiveFilters && (
               <button
                 onClick={clearFilters}
-                className="rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-4 py-2 text-sm text-white hover:bg-azimut-red/20 transition-colors"
+                className="rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-4 py-2 text-sm text-slate-900 dark:text-white hover:bg-azimut-red/20 transition-colors"
               >
                 {lang === 'pt' ? 'Limpar' : lang === 'es' ? 'Limpiar' : lang === 'fr' ? 'Effacer' : 'Clear'}
               </button>
@@ -429,7 +429,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                       trackInteraction('project_view', cases[0].slug)
                       trackProjectInteraction(cases[0].slug, 'CLICK')
                     }}
-                    className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-white hover:bg-azimut-red/20 transition-all mt-4"
+                    className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-slate-900 dark:text-white hover:bg-azimut-red/20 transition-all mt-4"
                   >
                     {lang === 'pt' ? 'Ver Projeto' : lang === 'es' ? 'Ver Proyecto' : lang === 'fr' ? 'Voir le projet' : 'View Project'}
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -456,7 +456,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               {hasActiveFilters && (
                 <button
                   onClick={clearFilters}
-                  className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-sm font-semibold uppercase tracking-[0.1em] text-white hover:bg-azimut-red/20 transition-all"
+                  className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-sm font-semibold uppercase tracking-[0.1em] text-slate-900 dark:text-white hover:bg-azimut-red/20 transition-all"
                 >
                   {lang === 'pt' ? 'Limpar Filtros' : lang === 'es' ? 'Limpiar Filtros' : lang === 'fr' ? 'Effacer les filtres' : 'Clear Filters'}
                 </button>
@@ -541,7 +541,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                       trackInteraction('project_view', item.slug)
                       trackProjectInteraction(item.slug, 'CLICK')
                     }}
-                    className="mt-3 inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-4 py-2 font-sora text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-white hover:bg-azimut-red/20 transition-all w-full justify-center"
+                    className="mt-3 inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-4 py-2 font-sora text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-slate-900 dark:text-white hover:bg-azimut-red/20 transition-all w-full justify-center"
                   >
                     {lang === 'pt' ? 'Ver Projeto' : lang === 'es' ? 'Ver Proyecto' : lang === 'fr' ? 'Voir' : 'View'}
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -618,7 +618,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               </p>
               <a 
                 href="/contact"
-                className="inline-flex items-center gap-2 rounded-xl border border-azimut-red/80 bg-azimut-red/20 px-8 py-4 font-sora text-sm font-semibold uppercase tracking-[0.14em] transition-all hover:bg-azimut-red/30 hover:shadow-[0_0_30px_rgba(var(--theme-accent-red-rgb),0.4)]"
+                className="inline-flex items-center gap-2 rounded-xl border border-azimut-red/80 bg-azimut-red/20 px-8 py-4 font-sora text-sm font-semibold uppercase tracking-[0.14em] transition-all hover:bg-azimut-red/30 hover:shadow-[0_0_30px_rgba(var(--theme-accent-red-rgb),0.4)] text-slate-900 dark:text-white"
                 style={{ color: 'var(--theme-text)' }}
               >
                 {lang === 'pt' ? 'Iniciar Conversa' : lang === 'es' ? 'Iniciar Conversación' : lang === 'fr' ? 'Démarrer la Conversation' : 'Start Conversation'}
