@@ -562,12 +562,22 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               ═══════════════════════════════════════════════════════════ */}
           <section className="mb-16 animate-fade-in-up opacity-0" style={{ animationDelay: '0.25s', animationFillMode: 'forwards' }}>
             {/* Visão - HERO (Full Width, Destaque Máximo) */}
-            <div className="mb-12 rounded-2xl bg-gradient-to-br from-azimut-red/10 to-azimut-red/5 p-8 md:p-10 lg:p-12 border border-azimut-red/20 backdrop-blur-sm">
+            <div 
+              className="mb-12 rounded-2xl p-8 md:p-10 lg:p-12 border-2 backdrop-blur-sm shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.01]"
+              style={{
+                background: 'var(--theme-bg, #1a1f2e)',
+                borderColor: '#c92337',
+                boxShadow: '0 8px 32px rgba(201, 35, 55, 0.15), inset 0 1px 0 rgba(201, 35, 55, 0.1)'
+              }}
+            >
               <h3 className="mb-5 font-handel text-2xl md:text-3xl uppercase tracking-[0.12em] text-azimut-red flex items-center gap-3">
                 <span className="text-3xl">🎯</span>
                 {studio.vision.title}
               </h3>
-              <p className="text-[1.05rem] md:text-[1.15rem] leading-relaxed font-light max-w-4xl text-slate-900 dark:text-slate-200">
+              <p 
+                className="text-[1.05rem] md:text-[1.15rem] leading-relaxed max-w-4xl"
+                style={{ color: 'var(--theme-text)' }}
+              >
                 {studio.vision.body}
               </p>
             </div>
