@@ -251,12 +251,6 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
             <InternalNavigation
               items={[
                 {
-                  id: 'overview',
-                  label: lang === 'pt' ? 'Visão Geral' : lang === 'es' ? 'Visión General' : lang === 'fr' ? 'Vue d\'ensemble' : 'Overview',
-                  href: '/academy',
-                  icon: '✦'
-                },
-                {
                   id: 'research',
                   label: lang === 'pt' ? 'Pesquisa & Inovação' : lang === 'es' ? 'Investigación & Innovación' : lang === 'fr' ? 'Recherche & Innovation' : 'Research & Innovation',
                   href: '/academy#research',
@@ -275,45 +269,8 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                   icon: '🏢'
                 }
               ]}
-              defaultActive={activeSection === 'research' ? 'overview' : activeSection}
+              defaultActive={activeSection}
             />
-
-            {/* Tabs para alternar entre seções */}
-            <div className="flex flex-wrap gap-4 mb-8 border-b" style={{ borderColor: 'var(--theme-border)' }}>
-              <button
-                onClick={() => changeSection('research')}
-                className="pb-3 px-4 font-sora text-sm md:text-base uppercase tracking-[0.1em] transition-colors"
-                style={{
-                  color: activeSection === 'research' ? '#8B2332' : 'var(--theme-text-muted)',
-                  borderBottom: activeSection === 'research' ? '2px solid #8B2332' : 'none',
-                  fontWeight: activeSection === 'research' ? '600' : '400'
-                }}
-              >
-                {labels.tabs.research[lang]}
-              </button>
-              <button
-                onClick={() => changeSection('courses')}
-                className="pb-3 px-4 font-sora text-sm md:text-base uppercase tracking-[0.1em] transition-colors"
-                style={{
-                  color: activeSection === 'courses' ? '#8B2332' : 'var(--theme-text-muted)',
-                  borderBottom: activeSection === 'courses' ? '2px solid #8B2332' : 'none',
-                  fontWeight: activeSection === 'courses' ? '600' : '400'
-                }}
-              >
-                {labels.tabs.courses[lang]}
-              </button>
-              <button
-                onClick={() => changeSection('corporate')}
-                className="pb-3 px-4 font-sora text-sm md:text-base uppercase tracking-[0.1em] transition-colors"
-                style={{
-                  color: activeSection === 'corporate' ? '#8B2332' : 'var(--theme-text-muted)',
-                  borderBottom: activeSection === 'corporate' ? '2px solid #8B2332' : 'none',
-                  fontWeight: activeSection === 'corporate' ? '600' : '400'
-                }}
-              >
-                {labels.tabs.corporate[lang]}
-              </button>
-            </div>
           </div>
 
           {/* ═══════════════════════════════════════════════════════════════

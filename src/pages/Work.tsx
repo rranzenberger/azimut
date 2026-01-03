@@ -4,7 +4,7 @@ import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { trackPageView, trackProjectInteraction } from '../utils/analytics'
-import PageNavigation from '../components/PageNavigation'
+import InternalNavigation from '../components/InternalNavigation'
 // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
 import { useAzimutContent } from '../hooks/useAzimutContent'
 import OportunidadesAtivas from '../components/OportunidadesAtivas'
@@ -235,32 +235,37 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               : 'Projects that transform spaces, brands and experiences. From Olympic museums to international festival curation, each work is an opportunity to create immersive narratives that uniquely connect people and stories.'}
           </p>
 
-          {/* Navegação Interna - igual ao dropdown do header */}
-          <PageNavigation
+          {/* Navegação Interna - Padrão Universal Azimut */}
+          <InternalNavigation
             items={[
               {
+                id: 'all',
                 label: lang === 'pt' ? 'Todos os Projetos' : lang === 'es' ? 'Todos los Proyectos' : lang === 'fr' ? 'Tous les Projets' : 'All Projects',
                 href: '/work',
                 icon: '✦'
               },
               {
+                id: 'museum',
                 label: lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture',
-                href: '/work?type=museum',
+                href: '/work#museum',
                 icon: '🏛️'
               },
               {
+                id: 'festival',
                 label: lang === 'pt' ? 'Festivais' : lang === 'es' ? 'Festivales' : lang === 'fr' ? 'Festivals' : 'Festivals',
-                href: '/work?type=festival',
+                href: '/work#festival',
                 icon: '🎪'
               },
               {
+                id: 'brand',
                 label: lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events',
-                href: '/work?type=brand',
+                href: '/work#brand',
                 icon: '🎯'
               },
               {
+                id: 'vr-xr',
                 label: lang === 'pt' ? 'VR & XR' : lang === 'es' ? 'VR & XR' : lang === 'fr' ? 'VR & XR' : 'VR & XR',
-                href: '/work?type=vr-xr',
+                href: '/work#vr-xr',
                 icon: '🥽'
               }
             ]}
