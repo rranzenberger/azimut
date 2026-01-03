@@ -166,9 +166,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
       {/* Skip to content - Accessibility */}
       <SkipLink />
       
-      {/* HEADER - Glassmorphism 2026 - STICKY OTIMIZADO */}
+      {/* HEADER - Glassmorphism 2026 - FIXED (não some ao rolar!) */}
       <header 
-        className="glass sticky top-0 z-30 w-full transition-all duration-300 ease-out" 
+        className="fixed top-0 left-0 right-0 z-30 w-full transition-all duration-300 ease-out" 
         style={{ 
           backgroundColor: isScrolled 
             ? (theme === 'dark' ? 'rgba(10, 14, 24, 0.95)' : 'rgba(42, 40, 37, 0.95)')
@@ -239,7 +239,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           >
             <Link 
               to="/" 
-              className="nav-link-glow relative whitespace-nowrap pb-0.5 touch-manipulation shrink-0 transition-colors duration-200 font-sora font-semibold"
+              className="nav-link-glow relative whitespace-nowrap touch-manipulation shrink-0 transition-colors duration-200 font-sora font-semibold"
               onMouseEnter={() => setHoveredRoute('home')}
               onMouseLeave={() => setHoveredRoute(null)}
               style={{ 
