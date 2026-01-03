@@ -83,6 +83,78 @@ html[data-theme="dark"] .bg-azimut-red * {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   CORREÇÃO ESPECÍFICA: CARDS COM FUNDO ESCURO INLINE
+   ═══════════════════════════════════════════════════════════════ */
+
+/* PROBLEMA: Elementos com background inline (style="background: linear-gradient(...)")
+   que usam var(--theme-text) ou var(--theme-text-secondary) não são detectados
+   pelas regras anteriores baseadas em classes. */
+
+/* SOLUÇÃO: Detectar cards com classes conhecidas (.card-dark-fixed, .card-dark-alt-adaptive)
+   e FORÇAR que var(--theme-text) e var(--theme-text-secondary) sejam sempre CLAROS */
+
+/* 1. Cards com .card-dark-fixed (Pilares, etc.) */
+html[data-theme="light"] .card-dark-fixed,
+html[data-theme="light"] .card-dark-fixed * {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: #d3cec3 !important;
+  --theme-card-text: #d3cec3 !important;
+  color: #d3cec3 !important;
+}
+
+html[data-theme="dark"] .card-dark-fixed,
+html[data-theme="dark"] .card-dark-fixed * {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: #d3cec3 !important;
+  color: #d3cec3 !important;
+}
+
+/* 2. Cards com .card-dark-alt-adaptive (Strategy & Positioning) */
+html[data-theme="light"] .card-dark-alt-adaptive,
+html[data-theme="light"] .card-dark-alt-adaptive * {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: #d3cec3 !important;
+  color: #d3cec3 !important;
+}
+
+html[data-theme="dark"] .card-dark-alt-adaptive,
+html[data-theme="dark"] .card-dark-alt-adaptive * {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: #d3cec3 !important;
+  color: #d3cec3 !important;
+}
+
+/* 3. Cards com .card-dark-adaptive (Modelo de Cocriação, Timeline) */
+html[data-theme="light"] .card-dark-adaptive,
+html[data-theme="light"] .card-dark-adaptive * {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: #d3cec3 !important;
+  color: #d3cec3 !important;
+}
+
+html[data-theme="dark"] .card-dark-adaptive,
+html[data-theme="dark"] .card-dark-adaptive * {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: #d3cec3 !important;
+  color: #d3cec3 !important;
+}
+
+/* 4. Elementos com background inline escuro (detecta por ancestral com estilo inline) */
+html[data-theme="light"] [style*="background: linear-gradient(135deg, #0a0f1a"],
+html[data-theme="light"] [style*="background: linear-gradient(135deg, #0a0f1a"] * {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: #d3cec3 !important;
+  color: #d3cec3 !important;
+}
+
+html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"],
+html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"] * {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: #d3cec3 !important;
+  color: #d3cec3 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    TEMA PERSONALIZADO - Azimut 2026
    Cinematographic • Immersive • Interactive
    ═══════════════════════════════════════════════════════════════ */
