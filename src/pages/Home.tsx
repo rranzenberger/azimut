@@ -236,7 +236,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               border: '1px solid rgba(255, 255, 255, 0.1)'
             }}
           >
-              <h2 className="mb-3 font-sora text-[0.72rem] uppercase tracking-[0.24em] text-slate-900 dark:text-slate-200">
+              <h2 className="mb-3 font-sora text-[0.72rem] uppercase tracking-[0.24em] text-slate-50 dark:text-slate-200">
                 {t(lang, 'cardTitle')}
               </h2>
               <p className="mb-4 text-[0.9rem] leading-relaxed text-white">

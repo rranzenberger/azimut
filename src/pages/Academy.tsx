@@ -308,7 +308,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                       <h3 className="mb-3 font-sora text-xl text-white">
                         {item.title}
                       </h3>
-                      <p className="text-sm leading-relaxed text-slate-900 dark:text-slate-200">
+                      <p className="text-sm leading-relaxed text-slate-50 dark:text-slate-200">
                         {item.description}
                       </p>
                     </article>
@@ -387,9 +387,9 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                     <h3 className="mb-3 font-sora text-xl md:text-2xl text-white">
                       {locale(workshop.title)}
                     </h3>
-                    <p className="text-sm md:text-base leading-relaxed text-slate-900 dark:text-slate-200 mb-4">
-                      {locale(workshop.description)}
-                    </p>
+                      <p className="text-sm md:text-base leading-relaxed text-slate-50 dark:text-slate-200 mb-4">
+                        {locale(workshop.description)}
+                      </p>
                     <p className="text-xs text-slate-800 dark:text-slate-400 italic">
                       👥 {locale(workshop.audience)}
                     </p>
@@ -490,7 +490,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                     <h3 className="mb-3 font-sora text-lg md:text-xl text-white">
                       {locale(format.title)}
                     </h3>
-                    <p className="text-sm leading-relaxed text-slate-900 dark:text-slate-300">
+                    <p className="text-sm leading-relaxed text-slate-50 dark:text-slate-300">
                       {locale(format.desc)}
                     </p>
                   </div>
