@@ -268,7 +268,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 position: 'relative',
                 color: activeRoute === 'home' 
                   ? (theme === 'light' ? '#8b1a28' : '#c92337') // Light: vinho escuro! Dark: vermelho
-                  : (hoveredRoute === 'home' ? (theme === 'light' ? '#8b1a28' : '#c92337') : 'var(--theme-text-secondary)'),
+                  : (hoveredRoute === 'home' ? (theme === 'light' ? '#8b1a28' : '#c92337') : (theme === 'light' ? '#d3cec3' : 'var(--theme-text-secondary)')), // Texto CLARO no light!
                 textShadow: activeRoute === 'home' && theme === 'dark' ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' : undefined,
                 lineHeight: '1'
               }}
@@ -277,7 +277,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               <span 
                 className="absolute left-0 h-[1px] min-[768px]:h-[1.5px] md:h-[1.5px] lg:h-[2px] xl:h-[2px] bg-azimut-red transition-all duration-200 ease-in-out"
                 style={{ 
-                  bottom: '8px', // Mais perto do texto! (subiu mais!)
+                  bottom: '10px', // Mais perto do texto! (subiu ainda mais!)
                   width: shouldShowLine('home') ? '100%' : '0%',
                   opacity: shouldShowLine('home') ? 1 : 0
                 }}
