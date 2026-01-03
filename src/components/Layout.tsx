@@ -77,8 +77,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   }, [])
   
   // Calcular opacidade do degradê (desaparece conforme scroll)
-  // Máximo em 0px, desaparece completamente em 200px
-  const fadeOpacity = Math.max(0, 1 - (scrollPosition / 200))
+  // Máximo em 0px, desaparece completamente em 300px (mais gradual)
+  const fadeOpacity = Math.max(0, Math.min(1, 1 - (scrollPosition / 300)))
   
   // NOVA ABORDAGEM SIMPLES: hamburger só aparece em mobile (< 768px)
   // Em desktop, menu sempre visível, hamburger NUNCA aparece
@@ -837,20 +837,29 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           position: 'relative'
         }}
       >
-        {/* Degradê que desaparece com scroll */}
+        {/* Degradê que desaparece com scroll - MAIS VISÍVEL! */}
         <div
           style={{
             position: 'absolute',
             top: 0,
             left: 0,
             right: 0,
-            height: '120px',
+            height: '150px',
             background: theme === 'dark'
-              ? `linear-gradient(to bottom, rgba(6, 10, 18, ${fadeOpacity * 0.95}), transparent)`
-              : `linear-gradient(to bottom, rgba(30, 28, 26, ${fadeOpacity * 0.95}), transparent)`,
+              ? `linear-gradient(to bottom, 
+                  rgba(6, 10, 18, ${fadeOpacity}), 
+                  rgba(6, 10, 18, ${fadeOpacity * 0.7}), 
+                  rgba(6, 10, 18, ${fadeOpacity * 0.3}), 
+                  transparent)`
+              : `linear-gradient(to bottom, 
+                  rgba(30, 28, 26, ${fadeOpacity}), 
+                  rgba(30, 28, 26, ${fadeOpacity * 0.7}), 
+                  rgba(30, 28, 26, ${fadeOpacity * 0.3}), 
+                  transparent)`,
             pointerEvents: 'none',
             zIndex: 1,
-            transition: 'opacity 0.1s ease-out'
+            transition: 'opacity 0.2s ease-out',
+            opacity: fadeOpacity > 0.1 ? 1 : 0 // Força renderização quando visível
           }}
         />
         <div style={{ position: 'relative', zIndex: 2 }}>
