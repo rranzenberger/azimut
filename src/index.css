@@ -468,9 +468,9 @@ body::after {
 }
 
 [data-theme="light"] .pill-adaptive {
-  border-color: rgba(201, 35, 55, 0.5); /* Borda vermelha Azimut */
+  border-color: rgba(160, 26, 42, 0.6); /* Borda vermelha escura (não rosa!) */
   color: #1a1a1a;
-  background: rgba(201, 35, 55, 0.08);
+  background: rgba(160, 26, 42, 0.1); /* Fundo vermelho escuro sutil */
 }
 
 /* Texto adaptativo - garante legibilidade */
@@ -1063,9 +1063,9 @@ select.input-adaptive:disabled {
 }
 
 [data-theme="light"] .pill-adaptive {
-  border: 1px solid rgba(201, 35, 55, 0.5);
-  background: rgba(201, 35, 55, 0.15);
-  color: #d3cec3; /* Creme da logo - elegante e com contraste */
+  border: 1px solid rgba(160, 26, 42, 0.6); /* Borda vermelha escura (não rosa!) */
+  background: rgba(160, 26, 42, 0.1); /* Fundo vermelho escuro sutil */
+  color: #1a1a1a; /* Texto escuro para contraste */
 }
 
 /* Badges vermelhos sempre com texto creme da logo (elegante + contraste) */
