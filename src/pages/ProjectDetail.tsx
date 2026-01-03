@@ -331,7 +331,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                 {relatedProjects.map((related: any) => (
                   <article
                     key={related.slug}
-                    className="group rounded-2xl border border-white/10 card-adaptive overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(201,35,55,0.3)] cursor-pointer"
+                    className="group rounded-2xl border border-white/10 card-adaptive overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(var(--theme-accent-red-rgb),0.3)] cursor-pointer"
                     onClick={() => navigate(`/work/${related.slug}`)}
                   >
                     {related.heroImage?.medium || related.heroImage?.large ? (

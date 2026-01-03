@@ -39,6 +39,7 @@
   
   /* COR VERMELHA ADAPTATIVA */
   --theme-accent-red: #c92337; /* Vermelho original para tema escuro! */
+  --theme-accent-red-rgb: 201, 35, 55; /* RGB para rgba() */
   
   /* ═══════════════════════════════════════════════════════════════
      DESIGN SYSTEM PREMIUM - Adicionado 02/01/2026
@@ -101,11 +102,15 @@
   --theme-card-bg: rgba(30, 35, 45, 0.95); /* Card ESCURO no tema claro */
   --theme-overlay: rgba(185, 180, 170, 0.98);
   --pattern-opacity: 0.06;
-  --gradient-overlay: linear-gradient(135deg, rgba(139, 35, 50, 0.08) 0%, transparent 50%, rgba(201, 35, 55, 0.05) 100%);
-  --grain-opacity: 0.12;
+  --grain-opacity: 0.45; /* Aumentado de 0.12 para 0.45 - MAIS VISÍVEL! */
+  --gradient-overlay: linear-gradient(135deg, rgba(201, 35, 55, 0.25) 0%, transparent 50%, rgba(201, 35, 55, 0.15) 100%); /* Gradiente MAIS FORTE! */
   /* Cores específicas para tema claro */
   --theme-card-text: #d3cec3;      /* Texto creme (mesma cor da logo clara) no card escuro - NÃO usar branco puro */
   --theme-card-border: rgba(211, 206, 195, 0.3);
+  
+  /* COR VERMELHA ADAPTATIVA - VERMELHO VIBRANTE NO TEMA CLARO! */
+  --theme-accent-red: #ff5a6e; /* Vermelho vibrante para tema claro! */
+  --theme-accent-red-rgb: 255, 90, 110; /* RGB para rgba() */
   
   /* HOVER/FOCUS STATES - Tema Claro */
   --theme-hover-bg: rgba(0, 0, 0, 0.04);

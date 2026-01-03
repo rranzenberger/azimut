@@ -63,7 +63,7 @@ const NotFound: React.FC<NotFoundProps> = ({ lang }) => {
           <span 
             className="font-handel text-[8rem] md:text-[12rem] leading-none tracking-[0.1em] opacity-20"
             style={{ 
-              background: 'linear-gradient(180deg, #c92337 0%, #441b44 100%)',
+              background: 'linear-gradient(180deg, var(--theme-accent-red) 0%, #441b44 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'

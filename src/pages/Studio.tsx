@@ -386,7 +386,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
             </h1>
             
             {/* Hero Message - Destaque Único */}
-            <div className="card-dark-fixed rounded-2xl p-6 md:p-8 mb-8 border-l-4" style={{ borderLeftColor: '#c92337' }}>
+            <div className="card-dark-fixed rounded-2xl p-6 md:p-8 mb-8 border-l-4" style={{ borderLeftColor: 'var(--theme-accent-red)' }}>
               <p className="mb-4 font-handel text-xl md:text-2xl uppercase tracking-[0.08em] text-azimut-red">
                 {lang === 'pt' 
                   ? `Após ${yearsOfExperience} anos, descobrimos que nossa combinação é única:`
@@ -510,8 +510,8 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                         key={idx}
                         className="inline-block rounded-full px-3 py-1.5 font-sora text-[0.65rem] uppercase tracking-[0.12em] border whitespace-nowrap"
                         style={{ 
-                          borderColor: 'rgba(201, 35, 55, 0.5)',
-                          backgroundColor: 'rgba(201, 35, 55, 0.1)',
+                          borderColor: 'rgba(var(--theme-accent-red-rgb), 0.5)',
+                          backgroundColor: 'rgba(var(--theme-accent-red-rgb), 0.1)',
                           color: '#d3cec3' /* Creme da logo - elegante e com contraste */
                         }}
                       >
@@ -727,7 +727,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               </div>
               
               {/* Mensagem sobre unicidade - tom humilde mas impactante */}
-              <div className="mt-8 pt-8 border-t rounded-xl p-6" style={{ borderColor: 'var(--theme-border)', backgroundColor: 'rgba(201, 35, 55, 0.05)' }}>
+              <div className="mt-8 pt-8 border-t rounded-xl p-6" style={{ borderColor: 'var(--theme-border)', backgroundColor: 'rgba(var(--theme-accent-red-rgb), 0.05)' }}>
                 <p className="text-[0.9rem] leading-relaxed italic" style={{ color: 'var(--theme-text-secondary)' }}>
                   {lang === 'pt' 
                     ? 'Após 30 anos explorando diferentes caminhos, descobrimos que nossa combinação de curadoria, produção, educação e pesquisa é algo que não encontramos em nenhum outro estúdio. Não é sobre ser melhor, é sobre ser diferente – e essa diferença nos permite criar projetos únicos.'
@@ -766,7 +766,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                       className="rounded-full px-3 py-1.5 font-sora text-[0.68rem] uppercase tracking-[0.12em]"
                       style={{ 
                         background: 'linear-gradient(135deg, #1a1f2e 0%, #252a38 100%)', 
-                        border: '1px solid rgba(201, 35, 55, 0.6)',
+                        border: '1px solid rgba(var(--theme-accent-red-rgb), 0.6)',
                         color: '#d3cec3'
                       }}
                     >

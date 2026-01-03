@@ -363,7 +363,7 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
 
                 <button
                   onClick={() => setWizardOpen(true)}
-                  className="w-full rounded-xl bg-azimut-red px-6 py-4 font-sora text-sm font-semibold uppercase tracking-[0.12em] transition hover:brightness-110 shadow-[0_8px_24px_rgba(201,35,55,0.3)]"
+                  className="w-full rounded-xl bg-azimut-red px-6 py-4 font-sora text-sm font-semibold uppercase tracking-[0.12em] transition hover:brightness-110 shadow-[0_8px_24px_rgba(var(--theme-accent-red-rgb),0.3)]"
                   style={{ color: '#ffffff' }}
                 >
                   {lang === 'pt' ? '🚀 Iniciar Brief Rápido' : lang === 'es' ? '🚀 Iniciar Brief Rápido' : '🚀 Start Quick Brief'}

@@ -297,8 +297,8 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                       className="group rounded-2xl border border-white/10 card-adaptive p-6 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all hover:border-white/20 hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)]"
                     >
                       <div className="mb-3 inline-block rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.2em]" style={{ 
-                        borderColor: 'rgba(139, 35, 50, 0.8)',
-                        backgroundColor: 'rgba(139, 35, 50, 0.25)',
+                        borderColor: 'rgba(var(--theme-accent-red-rgb), 0.8)',
+                        backgroundColor: 'rgba(var(--theme-accent-red-rgb), 0.25)',
                         color: '#ffffff'
                       }}>
                         {item.type === 'experiment' ? (lang === 'pt' ? 'Experimento' : lang === 'es' ? 'Experimento' : lang === 'fr' ? 'Expérience' : 'Experiment') : 
@@ -374,8 +374,8 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                   >
                     <div className="mb-4 flex items-center justify-between flex-wrap gap-2">
                       <span className="rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.2em]" style={{ 
-                        borderColor: 'rgba(139, 35, 50, 0.8)',
-                        backgroundColor: 'rgba(139, 35, 50, 0.25)',
+                        borderColor: 'rgba(var(--theme-accent-red-rgb), 0.8)',
+                        backgroundColor: 'rgba(var(--theme-accent-red-rgb), 0.25)',
                         color: '#ffffff'
                       }}>
                         {locale(workshop.level)}
@@ -410,19 +410,19 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                 </p>
                 <a 
                   href="/contact"
-                  className="inline-flex items-center gap-2 rounded-xl border px-8 py-4 font-sora text-sm font-semibold uppercase tracking-[0.14em] transition-all hover:shadow-[0_0_30px_rgba(139,35,50,0.5)]"
+                  className="inline-flex items-center gap-2 rounded-xl border px-8 py-4 font-sora text-sm font-semibold uppercase tracking-[0.14em] transition-all hover:shadow-[0_0_30px_rgba(var(--theme-accent-red-rgb),0.5)]"
                   style={{ 
                     color: '#ffffff',
-                    borderColor: 'rgba(139, 35, 50, 0.9)',
-                    backgroundColor: 'rgba(139, 35, 50, 0.3)'
+                    borderColor: 'rgba(var(--theme-accent-red-rgb), 0.9)',
+                    backgroundColor: 'rgba(var(--theme-accent-red-rgb), 0.3)'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(139, 35, 50, 0.45)'
-                    e.currentTarget.style.borderColor = 'rgba(139, 35, 50, 1)'
+                    e.currentTarget.style.backgroundColor = 'rgba(var(--theme-accent-red-rgb), 0.45)'
+                    e.currentTarget.style.borderColor = 'rgba(var(--theme-accent-red-rgb), 1)'
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(139, 35, 50, 0.3)'
-                    e.currentTarget.style.borderColor = 'rgba(139, 35, 50, 0.9)'
+                    e.currentTarget.style.backgroundColor = 'rgba(var(--theme-accent-red-rgb), 0.3)'
+                    e.currentTarget.style.borderColor = 'rgba(var(--theme-accent-red-rgb), 0.9)'
                   }}
                 >
                   {lang === 'pt' ? 'Solicitar Informações' : lang === 'es' ? 'Solicitar Información' : lang === 'fr' ? 'Demander des Informations' : 'Request Information'}
@@ -519,19 +519,19 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
                 </p>
                 <a 
                   href="/contact"
-                  className="inline-flex items-center gap-2 rounded-xl border px-8 py-4 font-sora text-sm font-semibold uppercase tracking-[0.14em] transition-all hover:shadow-[0_0_30px_rgba(139,35,50,0.5)]"
+                  className="inline-flex items-center gap-2 rounded-xl border px-8 py-4 font-sora text-sm font-semibold uppercase tracking-[0.14em] transition-all hover:shadow-[0_0_30px_rgba(var(--theme-accent-red-rgb),0.5)]"
                   style={{ 
                     color: '#ffffff',
-                    borderColor: 'rgba(139, 35, 50, 0.9)',
-                    backgroundColor: 'rgba(139, 35, 50, 0.3)'
+                    borderColor: 'rgba(var(--theme-accent-red-rgb), 0.9)',
+                    backgroundColor: 'rgba(var(--theme-accent-red-rgb), 0.3)'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(139, 35, 50, 0.45)'
-                    e.currentTarget.style.borderColor = 'rgba(139, 35, 50, 1)'
+                    e.currentTarget.style.backgroundColor = 'rgba(var(--theme-accent-red-rgb), 0.45)'
+                    e.currentTarget.style.borderColor = 'rgba(var(--theme-accent-red-rgb), 1)'
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(139, 35, 50, 0.3)'
-                    e.currentTarget.style.borderColor = 'rgba(139, 35, 50, 0.9)'
+                    e.currentTarget.style.backgroundColor = 'rgba(var(--theme-accent-red-rgb), 0.3)'
+                    e.currentTarget.style.borderColor = 'rgba(var(--theme-accent-red-rgb), 0.9)'
                   }}
                 >
                   {lang === 'pt' ? 'Solicitar Proposta' : lang === 'es' ? 'Solicitar Propuesta' : lang === 'fr' ? 'Demander une Proposition' : 'Request Proposal'}
