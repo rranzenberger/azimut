@@ -83,6 +83,26 @@ html[data-theme="dark"] .bg-azimut-red * {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   PILLS - REGRA ESPECÍFICA COM MÁXIMA PRIORIDADE
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Pills tema claro - TEXTO ESCURO */
+html[data-theme="light"] span.pill-adaptive,
+html[data-theme="light"] .pill-adaptive {
+  border-color: rgba(160, 26, 42, 0.4) !important;
+  color: #2a2a2a !important; /* TEXTO ESCURO - FORÇAR AQUI */
+  background: rgba(160, 26, 42, 0.08) !important;
+}
+
+/* Pills tema escuro - TEXTO CLARO */
+html[data-theme="dark"] span.pill-adaptive,
+html[data-theme="dark"] .pill-adaptive {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #f1f5f9 !important;
+  background: transparent !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    CORREÇÃO ESPECÍFICA: CARDS COM FUNDO ESCURO INLINE
    ═══════════════════════════════════════════════════════════════ */
 
