@@ -42,7 +42,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   const defaultProjects = useMemo(() => [
     {
       slug: 'museu-olimpico-rio',
-      title: lang === 'pt' ? 'Museu do Amanhã - Rio' : lang === 'es' ? 'Museo del Mañana - Río' : lang === 'fr' ? 'Musée de Demain - Rio' : 'Museum of Tomorrow - Rio',
+      title: lang === 'pt' ? 'Museu Olímpico do Rio' : lang === 'es' ? 'Museo Olímpico de Río' : lang === 'fr' ? 'Musée Olympique de Rio' : 'Rio Olympic Museum',
       shortTitle: lang === 'pt' ? 'Experiência Imersiva Olímpica' : lang === 'es' ? 'Experiencia Inmersiva Olímpica' : lang === 'fr' ? 'Expérience Immersive Olympique' : 'Olympic Immersive Experience',
       summary: lang === 'pt' ? 'Direção geral e curadoria de conteúdo para o Museu Olímpico do Rio. Uma experiência imersiva que celebra a história olímpica através de instalações audiovisuais interativas e narrativas cinematográficas.' : lang === 'es' ? 'Dirección general y curaduría de contenido para el Museo Olímpico de Río. Una experiencia inmersiva que celebra la historia olímpica a través de instalaciones audiovisuales interactivas y narrativas cinematográficas.' : lang === 'fr' ? 'Direction générale et curation de contenu pour le Musée Olympique de Rio. Une expérience immersive qui célèbre l\'histoire olympique à travers des installations audiovisuelles interactives et des récits cinématographiques.' : 'General direction and content curation for the Rio Olympic Museum. An immersive experience that celebrates Olympic history through interactive audiovisual installations and cinematic narratives.',
       city: lang === 'pt' ? 'Rio de Janeiro' : lang === 'es' ? 'Río de Janeiro' : 'Rio de Janeiro',
@@ -51,10 +51,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
       tags: [lang === 'pt' ? 'Imersivo' : lang === 'es' ? 'Inmersivo' : lang === 'fr' ? 'Immersif' : 'Immersive', lang === 'pt' ? 'Institucional' : lang === 'es' ? 'Institucional' : lang === 'fr' ? 'Institutionnel' : 'Institutional', lang === 'pt' ? 'Museu' : lang === 'es' ? 'Museo' : lang === 'fr' ? 'Musée' : 'Museum'],
       heroImage: {
         type: 'VIDEO',
-        // VÍDEO DE TESTE: Museu do Amanhã (YouTube público)
-        // SUBSTITUA pela URL do seu vídeo real quando tiver!
-        original: 'https://www.youtube.com/watch?v=1EiC9bvVGnk',
-        thumbnail: 'https://img.youtube.com/vi/1EiC9bvVGnk/maxresdefault.jpg',
+        // VÍDEO OFICIAL: Museu Olímpico do Rio (YouTube)
+        original: 'https://www.youtube.com/watch?v=1Pcoi_E9SXI',
+        thumbnail: 'https://img.youtube.com/vi/1Pcoi_E9SXI/maxresdefault.jpg',
         alt: lang === 'pt' ? 'Vídeo Museu Olímpico Rio' : lang === 'es' ? 'Video Museo Olímpico Río' : 'Rio Olympic Museum Video'
       },
     },
