@@ -77,8 +77,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   }, [])
   
   // Calcular opacidade do degradê (desaparece conforme scroll)
-  // Máximo em 0px, desaparece completamente em 300px (mais gradual)
-  const fadeOpacity = Math.max(0, Math.min(1, 1 - (scrollPosition / 300)))
+  // Máximo em 0px, desaparece completamente em 200px
+  // Usa easing para transição mais suave
+  const fadeOpacity = Math.max(0, Math.min(1, 1 - (scrollPosition / 200)))
+  
+  // Debug: log para verificar (remover depois)
+  // console.log('Scroll:', scrollPosition, 'FadeOpacity:', fadeOpacity)
   
   // NOVA ABORDAGEM SIMPLES: hamburger só aparece em mobile (< 768px)
   // Em desktop, menu sempre visível, hamburger NUNCA aparece
@@ -837,32 +841,34 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           position: 'relative'
         }}
       >
-        {/* GRADIENTE VERMELHO LATERAL (135deg) SUPER VISÍVEL que desaparece com scroll */}
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: '200px',
-            background: theme === 'dark'
-              ? `linear-gradient(135deg, 
-                  rgba(201, 35, 55, ${fadeOpacity * 0.4}) 0%, 
-                  rgba(201, 35, 55, ${fadeOpacity * 0.25}) 30%,
-                  transparent 60%, 
-                  rgba(68, 27, 68, ${fadeOpacity * 0.2}) 100%)`
-              : `linear-gradient(135deg, 
-                  rgba(201, 35, 55, ${fadeOpacity * 0.35}) 0%, 
-                  rgba(201, 35, 55, ${fadeOpacity * 0.2}) 30%,
-                  transparent 60%, 
-                  rgba(201, 35, 55, ${fadeOpacity * 0.15}) 100%)`,
-            pointerEvents: 'none',
-            zIndex: 1,
-            willChange: 'opacity',
-            transition: 'opacity 0.2s ease-out',
-            opacity: fadeOpacity > 0.05 ? 1 : 0 // Força renderização
-          }}
-        />
+        {/* GRADIENTE VERMELHO LATERAL (135deg) que desaparece com scroll */}
+        {fadeOpacity > 0 && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: '200px',
+              background: theme === 'dark'
+                ? `linear-gradient(135deg, 
+                    rgba(201, 35, 55, ${fadeOpacity * 0.4}) 0%, 
+                    rgba(201, 35, 55, ${fadeOpacity * 0.25}) 30%,
+                    transparent 60%, 
+                    rgba(68, 27, 68, ${fadeOpacity * 0.2}) 100%)`
+                : `linear-gradient(135deg, 
+                    rgba(201, 35, 55, ${fadeOpacity * 0.35}) 0%, 
+                    rgba(201, 35, 55, ${fadeOpacity * 0.2}) 30%,
+                    transparent 60%, 
+                    rgba(201, 35, 55, ${fadeOpacity * 0.15}) 100%)`,
+              pointerEvents: 'none',
+              zIndex: 1,
+              willChange: 'opacity',
+              opacity: fadeOpacity, // Opacidade direta baseada no scroll
+              transition: 'opacity 0.15s ease-out'
+            }}
+          />
+        )}
         <div style={{ position: 'relative', zIndex: 2 }}>
           {children}
         </div>
