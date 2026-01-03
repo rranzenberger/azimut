@@ -832,42 +832,35 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         role="main" 
         tabIndex={-1}
         style={{ 
-          paddingTop: isScrolled ? '92px' : '100px', // +40px de "respiro" visual!
+          paddingTop: isScrolled ? '100px' : '120px', // MAIS RESPIRO para não cortar na linha vermelha!
           minHeight: '100vh',
           position: 'relative'
         }}
       >
-        {/* GRADIENTE VERMELHO LATERAL (135deg) que desaparece com scroll */}
+        {/* GRADIENTE VERMELHO LATERAL (135deg) SUPER VISÍVEL que desaparece com scroll */}
         <div
           style={{
             position: 'absolute',
             top: 0,
             left: 0,
             right: 0,
-            height: '180px',
+            height: '200px',
             background: theme === 'dark'
               ? `linear-gradient(135deg, 
-                  rgba(201, 35, 55, ${fadeOpacity * 0.15}) 0%, 
-                  transparent 50%, 
-                  rgba(68, 27, 68, ${fadeOpacity * 0.12}) 100%)`
+                  rgba(201, 35, 55, ${fadeOpacity * 0.4}) 0%, 
+                  rgba(201, 35, 55, ${fadeOpacity * 0.25}) 30%,
+                  transparent 60%, 
+                  rgba(68, 27, 68, ${fadeOpacity * 0.2}) 100%)`
               : `linear-gradient(135deg, 
-                  rgba(201, 35, 55, ${fadeOpacity * 0.12}) 0%, 
-                  transparent 50%, 
-                  rgba(201, 35, 55, ${fadeOpacity * 0.08}) 100%)`,
-            maskImage: `linear-gradient(to bottom, 
-              rgba(0, 0, 0, 1) 0%,
-              rgba(0, 0, 0, 0.8) 50%,
-              rgba(0, 0, 0, 0.4) 80%,
-              rgba(0, 0, 0, 0) 100%)`,
-            WebkitMaskImage: `linear-gradient(to bottom, 
-              rgba(0, 0, 0, 1) 0%,
-              rgba(0, 0, 0, 0.8) 50%,
-              rgba(0, 0, 0, 0.4) 80%,
-              rgba(0, 0, 0, 0) 100%)`,
+                  rgba(201, 35, 55, ${fadeOpacity * 0.35}) 0%, 
+                  rgba(201, 35, 55, ${fadeOpacity * 0.2}) 30%,
+                  transparent 60%, 
+                  rgba(201, 35, 55, ${fadeOpacity * 0.15}) 100%)`,
             pointerEvents: 'none',
             zIndex: 1,
             willChange: 'opacity',
-            transition: 'opacity 0.2s ease-out'
+            transition: 'opacity 0.2s ease-out',
+            opacity: fadeOpacity > 0.05 ? 1 : 0 // Força renderização
           }}
         />
         <div style={{ position: 'relative', zIndex: 2 }}>
