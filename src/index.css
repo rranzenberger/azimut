@@ -108,9 +108,9 @@
   --theme-card-text: #d3cec3;      /* Texto creme (mesma cor da logo clara) no card escuro - NÃO usar branco puro */
   --theme-card-border: rgba(211, 206, 195, 0.3);
   
-  /* COR VERMELHA ADAPTATIVA - VERMELHO VIBRANTE NO TEMA CLARO! */
-  --theme-accent-red: #ff5a6e; /* Vermelho vibrante para tema claro! */
-  --theme-accent-red-rgb: 255, 90, 110; /* RGB para rgba() */
+  /* COR VERMELHA ADAPTATIVA - VERMELHO ESCURO NO TEMA CLARO (não rosa!) */
+  --theme-accent-red: #a01a2a; /* Vermelho escuro para tema claro (não rosa!) */
+  --theme-accent-red-rgb: 160, 26, 42; /* RGB para rgba() */
   
   /* HOVER/FOCUS STATES - Tema Claro */
   --theme-hover-bg: rgba(0, 0, 0, 0.04);
