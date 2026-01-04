@@ -50,6 +50,11 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
     }
   }, [isOpen])
 
+  // Fechar dropdown quando a rota mudar
+  useEffect(() => {
+    setIsOpen(false)
+  }, [location.pathname])
+
   // Limpar timeout ao desmontar
   useEffect(() => {
     return () => {
@@ -158,10 +163,6 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
                   key={idx}
                   to={item.href}
                   className="block px-4 py-3 rounded-md transition-all duration-200 group"
-                  onClick={() => {
-                    // Fechar dropdown ao clicar
-                    setIsOpen(false)
-                  }}
                   style={{
                     backgroundColor: isItemActive
                       ? 'rgba(201, 35, 55, 0.15)'
