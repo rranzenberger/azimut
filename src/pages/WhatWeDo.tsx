@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { t, type Lang } from '../i18n'
+import { useLocation } from 'react-router-dom'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
@@ -15,6 +16,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   const { trackInteraction } = useUserTracking()
   const starRef = useRef<HTMLDivElement>(null)
   const seo = seoData.what[lang]
+  const location = useLocation()
   
   // Ler filtro da URL (?filter=culture)
   const [activeFilter, setActiveFilter] = useState<FilterCategory>(() => {
@@ -27,6 +29,17 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
     }
     return 'all'
   })
+
+  // Atualizar filtro quando a URL mudar (navegação via dropdown)
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const filter = params.get('filter')
+    if (filter && ['culture', 'brands', 'production', 'technology'].includes(filter)) {
+      setActiveFilter(filter as FilterCategory)
+    } else {
+      setActiveFilter('all')
+    }
+  }, [location.search])
   
   // Mapeamento de categorias para cada serviço
   const serviceCategoryMap: Record<string, FilterCategory> = {

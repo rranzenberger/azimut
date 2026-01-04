@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -19,13 +19,33 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   const { trackInteraction } = useUserTracking()
   const starRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
+  const location = useLocation()
   const seo = seoData.work[lang]
   
-  // Filtros
-  const [selectedTag, setSelectedTag] = useState<string | null>(null)
-  const [selectedType, setSelectedType] = useState<string | null>(null)
+  // Filtros - Inicializar com valores da URL
+  const [selectedTag, setSelectedTag] = useState<string | null>(() => {
+    const params = new URLSearchParams(window.location.search)
+    return params.get('tag')
+  })
+  const [selectedType, setSelectedType] = useState<string | null>(() => {
+    const params = new URLSearchParams(window.location.search)
+    return params.get('type')
+  })
   const [selectedYear, setSelectedYear] = useState<number | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
+
+  // Atualizar filtros quando a URL mudar (navegação via dropdown)
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const tag = params.get('tag')
+    const type = params.get('type')
+    
+    setSelectedTag(tag)
+    setSelectedType(type)
+    
+    // Scroll para o topo ao mudar filtros via dropdown
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [location.search])
   
   // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
   const { content: cmsContent, loading: cmsLoading, error: cmsError } = useAzimutContent({ 
