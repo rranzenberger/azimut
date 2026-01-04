@@ -39,6 +39,9 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
     } else {
       setActiveFilter('all')
     }
+    
+    // 🆕 SCROLL TO TOP quando filtro mudar via URL
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [location.search])
   
   // Mapeamento de categorias para cada serviço

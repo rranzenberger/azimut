@@ -35,6 +35,13 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
   const [activeId, setActiveId] = useState<string>(defaultActive || items[0]?.id || '')
   const [hoveredId, setHoveredId] = useState<string | null>(null)
 
+  // 🆕 Sincronizar activeId com defaultActive quando prop mudar (navegação via dropdown externo)
+  useEffect(() => {
+    if (defaultActive) {
+      setActiveId(defaultActive)
+    }
+  }, [defaultActive])
+
   // Detectar hash na URL e ativar tab correspondente
   useEffect(() => {
     const handleHashChange = () => {

@@ -16,6 +16,7 @@ interface NavDropdownProps {
   onMouseEnter: () => void
   onMouseLeave: () => void
   hovered: boolean
+  mainHref?: string // 🆕 Link principal ao clicar no label
 }
 
 const NavDropdown: React.FC<NavDropdownProps> = ({
@@ -26,7 +27,8 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
   isActive,
   onMouseEnter,
   onMouseLeave,
-  hovered
+  hovered,
+  mainHref // 🆕 Link principal
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
@@ -96,51 +98,90 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Link principal */}
-      <button
-        onClick={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          setIsOpen(!isOpen)
-        }}
-        className="nav-link-glow relative whitespace-nowrap pb-1 shrink-0 transition-colors duration-200 font-sora font-semibold"
-        style={{
-          padding: '0 6px',
-          minHeight: '44px',
-          display: 'flex',
-          alignItems: 'center',
-          position: 'relative',
-          background: 'none',
-          border: 'none',
-          cursor: 'pointer',
-          color: isActive || hasActiveItem || hovered
-            ? (theme === 'light' ? '#ff5a6e' : '#c92337') // Vermelho vibrante no light, vermelho no dark
-            : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-secondary)'), // Texto CLARO no light!
-          textShadow: (isActive || hasActiveItem) && theme === 'dark' 
-            ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' 
-            : undefined
-        }}
-      >
-        <span>{label}</span>
-        {/* Seta indicadora */}
-        <svg
-          className={`ml-1 w-3 h-3 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-        {/* Linha vermelha */}
-        <span
-          className="absolute bottom-0 left-0 h-[1px] min-[768px]:h-[1.5px] md:h-[1.5px] lg:h-[2px] xl:h-[2px] bg-azimut-red transition-all duration-200 ease-in-out"
+      {/* Link principal - Se tem mainHref, NAVEGA ao clicar, abre dropdown ao hover */}
+      {mainHref ? (
+        <LangLink
+          to={mainHref}
+          className="nav-link-glow relative whitespace-nowrap pb-1 shrink-0 transition-colors duration-200 font-sora font-semibold flex items-center"
           style={{
-            width: (isActive || hasActiveItem || hovered) ? '100%' : '0%',
-            opacity: (isActive || hasActiveItem || hovered) ? 1 : 0,
-            bottom: '10px' // Mais perto do texto! ✅
+            padding: '0 6px',
+            minHeight: '44px',
+            position: 'relative',
+            color: isActive || hasActiveItem || hovered
+              ? (theme === 'light' ? '#ff5a6e' : '#c92337') // Vermelho vibrante no light, vermelho no dark
+              : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-secondary)'), // Texto CLARO no light!
+            textShadow: (isActive || hasActiveItem) && theme === 'dark' 
+              ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' 
+              : undefined
           }}
-        ></span>
-      </button>
+        >
+          <span>{label}</span>
+          {/* Seta indicadora */}
+          <svg
+            className={`ml-1 w-3 h-3 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+          {/* Linha vermelha */}
+          <span
+            className="absolute bottom-0 left-0 h-[1px] min-[768px]:h-[1.5px] md:h-[1.5px] lg:h-[2px] xl:h-[2px] bg-azimut-red transition-all duration-200 ease-in-out"
+            style={{
+              width: (isActive || hasActiveItem || hovered) ? '100%' : '0%',
+              opacity: (isActive || hasActiveItem || hovered) ? 1 : 0,
+              bottom: '10px' // Mais perto do texto! ✅
+            }}
+          ></span>
+        </LangLink>
+      ) : (
+        // Sem mainHref: botão que apenas abre/fecha dropdown
+        <button
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            setIsOpen(!isOpen)
+          }}
+          className="nav-link-glow relative whitespace-nowrap pb-1 shrink-0 transition-colors duration-200 font-sora font-semibold"
+          style={{
+            padding: '0 6px',
+            minHeight: '44px',
+            display: 'flex',
+            alignItems: 'center',
+            position: 'relative',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            color: isActive || hasActiveItem || hovered
+              ? (theme === 'light' ? '#ff5a6e' : '#c92337') // Vermelho vibrante no light, vermelho no dark
+              : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-secondary)'), // Texto CLARO no light!
+            textShadow: (isActive || hasActiveItem) && theme === 'dark' 
+              ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' 
+              : undefined
+          }}
+        >
+          <span>{label}</span>
+          {/* Seta indicadora */}
+          <svg
+            className={`ml-1 w-3 h-3 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+          {/* Linha vermelha */}
+          <span
+            className="absolute bottom-0 left-0 h-[1px] min-[768px]:h-[1.5px] md:h-[1.5px] lg:h-[2px] xl:h-[2px] bg-azimut-red transition-all duration-200 ease-in-out"
+            style={{
+              width: (isActive || hasActiveItem || hovered) ? '100%' : '0%',
+              opacity: (isActive || hasActiveItem || hovered) ? 1 : 0,
+              bottom: '10px' // Mais perto do texto! ✅
+            }}
+          ></span>
+        </button>
+      )}
 
       {/* Dropdown menu */}
       {isOpen && (

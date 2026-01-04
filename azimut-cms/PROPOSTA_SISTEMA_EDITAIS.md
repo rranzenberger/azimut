@@ -411,3 +411,4 @@ Editais por Categoria:
 **Conclusão:** Sistema proposto oferece base sólida para gestão ativa de editais, transformando oportunidades em projetos.
 
 
+

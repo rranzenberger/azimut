@@ -291,6 +291,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             {/* Soluções com submenu */}
             <NavDropdown
               label={t(lang, 'navWhat')}
+              mainHref="/what"
               items={[
                 {
                   label: lang === 'pt' ? 'Todas as Soluções' : lang === 'es' ? 'Todas las Soluciones' : lang === 'fr' ? 'Toutes les Solutions' : 'All Solutions',
@@ -328,6 +329,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             {/* Projetos com submenu */}
             <NavDropdown
               label={t(lang, 'navWork')}
+              mainHref="/work"
               items={[
                 {
                   label: lang === 'pt' ? 'Todos os Projetos' : lang === 'es' ? 'Todos los Proyectos' : lang === 'fr' ? 'Tous les Projets' : 'All Projects',
