@@ -1098,7 +1098,7 @@ export const servicesData: Service[] = [
       'Pruebas técnicas y ensayos',
       'Operación durante temporada'
     ],
-    technologies: ['Notch', 'TouchDesigner', 'Resolume', 'Stable Diffusion', 'Runway ML', 'QLab', 'LED Panels (ROE, Absen)'],
+    technologies: ['Notch', 'TouchDesigner', 'Resolume', 'D3', 'Disguise', 'QLab', 'Ableton Live', 'Reaper', 'Adobe After Effects', 'Adobe Premiere', 'Adobe Photoshop', 'Adobe Illustrator', 'Blender', '3ds Max', 'Cinema 4D', 'Houdini', 'Python', 'Processing', 'Max/MSP', 'vvvv', 'Runway ML', 'Pika Labs', 'Sora', 'Midjourney', 'DALL-E', 'Stable Diffusion', 'ComfyUI', 'LED Panels (ROE, Absen, Unilumin)', 'Timecode Sync', 'DMX/ArtNet', 'OSC Protocol', 'MIDI'],
     projectCategories: ['theater', 'live-events', 'led-screens', 'ai-content', 'motion-design', 'interactive']
   },
   {
