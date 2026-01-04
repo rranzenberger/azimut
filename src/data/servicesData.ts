@@ -1434,13 +1434,13 @@ export const servicesData: Service[] = [
     titleEn: 'Education & Training',
     titleFr: 'Éducation & Formation',
     titleEs: 'Educación & Capacitación',
-    shortDescPt: 'Desenvolvemos programas educacionais e treinamentos corporativos usando XR, gamificação e narrativas interativas. Nossa expertise transforma aprendizado em experiências memoráveis.',
-    shortDescEn: 'We develop educational programs and corporate training using XR, gamification and interactive narratives. Our expertise transforms learning into memorable experiences.',
-    shortDescFr: 'Nous développons des programmes éducatifs et formations corporate utilisant XR, gamification et récits interactifs. Notre expertise transforme l\'apprentissage en expériences mémorables.',
-    shortDescEs: 'Desarrollamos programas educacionales y capacitaciones corporativas usando XR, gamificación y narrativas interactivas. Nuestra expertise transforma aprendizaje en experiencias memorables.',
+    shortDescPt: 'Oferecemos workshops, minicursos e treinamentos em arte, tecnologia, IA, VR/XR, audiovisual, Web3 e marketing para novas mídias. Da iniciação à masterclass, formamos profissionais em tecnologias imersivas, IA generativa, blockchain, NFC e integração criativa de tecnologias emergentes.',
+    shortDescEn: 'We offer workshops, short courses and training in art, technology, AI, VR/XR, audiovisual, Web3 and marketing for new media. From beginner to masterclass, we train professionals in immersive technologies, generative AI, blockchain, NFC and creative integration of emerging technologies.',
+    shortDescFr: 'Nous offrons ateliers, mini-cours et formations en art, technologie, IA, VR/XR, audiovisuel, Web3 et marketing pour nouveaux médias. De l\'initiation à la masterclass, nous formons professionnels en technologies immersives, IA générative, blockchain, NFC et intégration créative de technologies émergentes.',
+    shortDescEs: 'Ofrecemos talleres, minicursos y capacitaciones en arte, tecnología, IA, VR/XR, audiovisual, Web3 y marketing para nuevos medios. De iniciación a masterclass, formamos profesionales en tecnologías inmersivas, IA generativa, blockchain, NFC e integración creativa de tecnologías emergentes.',
     longDescPt: [
-      'Especializados em criar experiências educacionais imersivas para instituições de ensino e empresas. Usamos VR/AR, gamificação e narrativas interativas para aumentar engajamento e retenção de conhecimento.',
-      'Oferecemos desde workshops práticos até desenvolvimento de plataformas educacionais completas, sempre com foco em resultados mensuráveis.',
+      'Capacitamos profissionais e equipes com workshops práticos e minicursos intensivos em tecnologias emergentes. Nossos treinamentos cobrem IA generativa (Midjourney, Runway, ChatGPT), VR/XR (Unity, Unreal), Web3/blockchain (NFTs, smart contracts), audiovisual imersivo (360°, drones), marketing digital para novas mídias e integração criativa de tecnologias (NFC, QR Code, sensores, IoT).',
+      'Oferecemos desde iniciação para curiosos até masterclasses técnicas para profissionais. Todos os cursos incluem prática hands-on com equipamentos reais (Oculus, câmeras 360°, painéis LED) e certificado digital. Formatos: workshops (4h-8h), minicursos (3 dias), treinamentos corporativos customizados e programas de inovação para empresas.',
       'Nossa experiência inclui treinamentos corporativos, cursos de extensão e programas educacionais para museus e centros culturais.'
     ],
     longDescEn: [
@@ -1530,7 +1530,7 @@ export const servicesData: Service[] = [
       'Implementación',
       'Evaluación y mejora'
     ],
-    technologies: ['Meta Quest', 'Unity', 'Moodle', 'Articulate', 'Kahoot', 'Google Classroom'],
+    technologies: ['Meta Quest', 'HTC Vive', 'Unity', 'Unreal Engine', 'Midjourney', 'Runway ML', 'ChatGPT', 'Claude', 'Stable Diffusion', 'TouchDesigner', 'Resolume', 'Adobe Creative Suite', 'DaVinci Resolve', 'Insta360', 'DJI Drones', 'Solidity', 'MetaMask', 'Hardhat', 'NFC Tags', 'Arduino', 'Raspberry Pi', 'OBS Studio', 'Notion', 'Miro', 'Figma', 'Blender', '3ds Max', 'After Effects', 'Moodle', 'Google Classroom', 'Zoom', 'Discord', 'Kahoot', 'Mentimeter'],
     projectCategories: ['education', 'training', 'corporate', 'elearning']
   },
   {
