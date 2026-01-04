@@ -7,6 +7,7 @@ import ThemeToggle from './ThemeToggle'
 import BudgetWizardModal from './BudgetWizardModal'
 import SkipLink from './SkipLink'
 import NavDropdown from './NavDropdown'
+import MegaMenu from './MegaMenu'
 import { type UserProfile } from './BudgetWizard'
 import { trackCTA, trackLanguageChange } from '../utils/analytics'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -60,6 +61,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [hoveredRoute, setHoveredRoute] = useState<string | null>(null)
   const [isWizardOpen, setIsWizardOpen] = useState(false)
+  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false)
   
   // 🆕 Detectar scroll para compactar header
   const [isScrolled, setIsScrolled] = useState(false)
@@ -288,43 +290,51 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 }}
               ></span>
             </LangLink>
-            {/* Soluções com submenu */}
-            <NavDropdown
-              label={t(lang, 'navWhat')}
-              items={[
-                {
-                  label: lang === 'pt' ? 'Todas as Soluções' : lang === 'es' ? 'Todas las Soluciones' : lang === 'fr' ? 'Toutes les Solutions' : 'All Solutions',
-                  href: '/what',
-                  description: lang === 'pt' ? 'Visão geral completa (16)' : lang === 'es' ? 'Vista general completa (16)' : lang === 'fr' ? 'Vue d\'ensemble complète (16)' : 'Complete overview (16)'
-                },
-                {
-                  label: lang === 'pt' ? 'Cultura & Instituições' : lang === 'es' ? 'Cultura & Instituciones' : lang === 'fr' ? 'Culture & Institutions' : 'Culture & Institutions',
-                  href: '/what?filter=culture',
-                  description: lang === 'pt' ? 'Museus, festivais, educação' : lang === 'es' ? 'Museos, festivales, educación' : lang === 'fr' ? 'Musées, festivals, éducation' : 'Museums, festivals, education'
-                },
-                {
-                  label: lang === 'pt' ? 'Marcas & Experiências' : lang === 'es' ? 'Marcas & Experiencias' : lang === 'fr' ? 'Marques & Expériences' : 'Brands & Experiences',
-                  href: '/what?filter=brands',
-                  description: lang === 'pt' ? 'Ativações, VR, branded content' : lang === 'es' ? 'Activaciones, VR, branded content' : lang === 'fr' ? 'Activations, VR, branded content' : 'Activations, VR, branded content'
-                },
-                {
-                  label: lang === 'pt' ? 'Produção Audiovisual' : lang === 'es' ? 'Producción Audiovisual' : lang === 'fr' ? 'Production Audiovisuelle' : 'Audiovisual Production',
-                  href: '/what?filter=production',
-                  description: lang === 'pt' ? 'Cinema, VFX, animação, games' : lang === 'es' ? 'Cine, VFX, animación, juegos' : lang === 'fr' ? 'Cinéma, VFX, animation, jeux' : 'Cinema, VFX, animation, games'
-                },
-                {
-                  label: lang === 'pt' ? 'Tecnologia & Estratégia' : lang === 'es' ? 'Tecnología & Estrategia' : lang === 'fr' ? 'Technologie & Stratégie' : 'Technology & Strategy',
-                  href: '/what?filter=technology',
-                  description: lang === 'pt' ? 'IA, arquitetura, consultoria' : lang === 'es' ? 'IA, arquitectura, consultoría' : lang === 'fr' ? 'IA, architecture, conseil' : 'AI, architecture, consulting'
-                }
-              ]}
-              lang={lang}
-              theme={theme}
-              isActive={activeRoute === 'what'}
+            {/* Soluções com Mega Menu */}
+            <button
+              onClick={() => setIsMegaMenuOpen(!isMegaMenuOpen)}
               onMouseEnter={() => setHoveredRoute('what')}
               onMouseLeave={() => setHoveredRoute(null)}
-              hovered={hoveredRoute === 'what'}
-            />
+              className="relative font-sora font-medium uppercase tracking-[0.15em] transition-all duration-200 ease-in-out touch-manipulation flex items-center gap-1"
+              style={{
+                fontSize: menuFontSize,
+                color: (activeRoute === 'what' || hoveredRoute === 'what') ? '#c92337' : 'var(--theme-text)',
+                textShadow: (activeRoute === 'what' || hoveredRoute === 'what')
+                  ? theme === 'dark'
+                    ? '0 0 12px rgba(201, 35, 55, 0.6), 0 0 25px rgba(201, 35, 55, 0.3)'
+                    : 'none'
+                  : 'none',
+                padding: '0 6px',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer'
+              }}
+              aria-expanded={isMegaMenuOpen}
+              aria-haspopup="true"
+            >
+              {t(lang, 'navWhat')}
+              <svg 
+                className="transition-transform duration-200" 
+                style={{ 
+                  width: '10px', 
+                  height: '10px',
+                  transform: isMegaMenuOpen ? 'rotate(180deg)' : 'rotate(0deg)'
+                }}
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
+              </svg>
+              <span 
+                className="absolute left-0 h-[1px] min-[768px]:h-[1.5px] md:h-[1.5px] lg:h-[2px] xl:h-[2px] bg-azimut-red transition-all duration-200 ease-in-out"
+                style={{ 
+                  bottom: '10px',
+                  width: shouldShowLine('what') ? '100%' : '0%',
+                  opacity: shouldShowLine('what') ? 1 : 0
+                }}
+              ></span>
+            </button>
             {/* Projetos com submenu */}
             <NavDropdown
               label={t(lang, 'navWork')}
@@ -638,6 +648,16 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         
         {/* Linha fina de separação */}
         <div className="h-px w-full bg-white/10"></div>
+        
+        {/* Mega Menu - Aparece APENAS em desktop quando aberto */}
+        {!isMobile && (
+          <MegaMenu
+            lang={lang}
+            theme={theme}
+            isOpen={isMegaMenuOpen}
+            onClose={() => setIsMegaMenuOpen(false)}
+          />
+        )}
 
         {/* Menu Mobile - Aparece APENAS em mobile (< 768px) */}
         {isMobile && (
