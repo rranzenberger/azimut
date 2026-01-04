@@ -353,35 +353,35 @@ export const servicesData: Service[] = [
   },
   {
     id: '4',
-    slug: 'xr-interatividade',
-    icon: '🥽',
-    titlePt: 'XR / Interatividade',
-    titleEn: 'XR / Interactivity',
-    titleFr: 'XR / Interactivité',
-    titleEs: 'XR / Interactividad',
-    shortDescPt: 'Criamos experiências imersivas que transportam pessoas para novos mundos. De filmes VR 360° a instalações interativas, nossa curadoria em festivais nos dá uma visão única do que funciona em narrativas imersivas.',
-    shortDescEn: 'We create immersive experiences that transport people to new worlds. From VR 360° films to interactive installations, our festival curation gives us unique insight into what works in immersive narratives.',
-    shortDescFr: 'Nous créons des expériences immersives qui transportent les gens vers de nouveaux mondes. Des films VR 360° aux installations interactives, notre curation de festivals nous donne une vision unique de ce qui fonctionne en récits immersifs.',
-    shortDescEs: 'Creamos experiencias inmersivas que transportan personas a nuevos mundos. De películas VR 360° a instalaciones interactivas, nuestra curaduría en festivales nos da una visión única de lo que funciona en narrativas inmersivas.',
+    slug: 'xr-interatividade-web3',
+    icon: '🌐',
+    titlePt: 'XR, Interatividade & Web3',
+    titleEn: 'XR, Interactivity & Web3',
+    titleFr: 'XR, Interactivité & Web3',
+    titleEs: 'XR, Interactividad & Web3',
+    shortDescPt: 'Criamos experiências imersivas que conectam mundos físicos, digitais e blockchain. De VR/AR a metaverso, NFTs e instalações interativas com sensores. Pioneiros em XR desde 2015, curadores do festival Immerso XR e desenvolvedores Web3.',
+    shortDescEn: 'We create immersive experiences connecting physical, digital and blockchain worlds. From VR/AR to metaverse, NFTs and interactive installations with sensors. XR pioneers since 2015, Immerso XR festival curators and Web3 developers.',
+    shortDescFr: 'Nous créons des expériences immersives connectant mondes physiques, numériques et blockchain. De VR/AR au métavers, NFTs et installations interactives avec capteurs. Pionniers XR depuis 2015, curateurs festival Immerso XR et développeurs Web3.',
+    shortDescEs: 'Creamos experiencias inmersivas que conectan mundos físicos, digitales y blockchain. De VR/AR a metaverso, NFTs e instalaciones interactivas con sensores. Pioneros XR desde 2015, curadores festival Immerso XR y desarrolladores Web3.',
     longDescPt: [
-      'Pioneiros em XR no Brasil desde 2015, desenvolvemos experiências que vão de VR/AR a instalações interativas multiplataforma. Nossa expertise abrange todo o espectro de realidades estendidas.',
-      'Como curadores do festival Immerso XR, testamos e validamos centenas de experiências imersivas, desenvolvendo profundo conhecimento sobre linguagem, UX espacial e storytelling imersivo.',
-      'Especializados em projetos para museus e espaços culturais, onde a interatividade se torna ferramenta de educação e encantamento.'
+      'Pioneiros em XR no Brasil desde 2015, desenvolvemos experiências que vão de VR/AR a metaverso com economia crypto. Nossa expertise abrange realidades estendidas, instalações interativas com sensores (Kinect, Leap Motion, NFC), smart contracts (Solidity, NFTs) e mundos virtuais com blockchain integrado.',
+      'Como curadores do festival Immerso XR, testamos e validamos centenas de experiências imersivas, desenvolvendo profundo conhecimento sobre linguagem, UX espacial e storytelling. Combinamos isso com desenvolvimento Web3 para criar experiências onde assets digitais têm valor real (NFTs, tokens, DAOs).',
+      'Especializados em museus, exposições e branded experiences onde XR se encontra com Web3: NFT wearables em VR, play-to-earn games, metaverso com LAND tokenizado, ativações phygital (NFC + blockchain), e instalações interativas com wallet integration.'
     ],
     longDescEn: [
-      'Pioneers in XR in Brazil since 2015, we develop experiences ranging from VR/AR to multiplatform interactive installations. Our expertise spans the full spectrum of extended realities.',
-      'As curators of the Immerso XR festival, we test and validate hundreds of immersive experiences, developing deep knowledge about language, spatial UX and immersive storytelling.',
-      'Specialized in projects for museums and cultural spaces, where interactivity becomes a tool for education and enchantment.'
+      'XR pioneers in Brazil since 2015, we develop experiences ranging from VR/AR to metaverse with crypto economy. Our expertise spans extended realities, interactive installations with sensors (Kinect, Leap Motion, NFC), smart contracts (Solidity, NFTs) and virtual worlds with integrated blockchain.',
+      'As curators of the Immerso XR festival, we test and validate hundreds of immersive experiences, developing deep knowledge about language, spatial UX and storytelling. We combine this with Web3 development to create experiences where digital assets have real value (NFTs, tokens, DAOs).',
+      'Specialized in museums, exhibitions and branded experiences where XR meets Web3: NFT wearables in VR, play-to-earn games, metaverse with tokenized LAND, phygital activations (NFC + blockchain), and interactive installations with wallet integration.'
     ],
     longDescFr: [
-      'Pionniers en XR au Brésil depuis 2015, nous développons des expériences allant de VR/AR aux installations interactives multiplateformes. Notre expertise couvre tout le spectre des réalités étendues.',
-      'En tant que curateurs du festival Immerso XR, nous testons et validons des centaines d\'expériences immersives, développant une connaissance approfondie du langage, de l\'UX spatial et du storytelling immersif.',
-      'Spécialisés dans les projets pour musées et espaces culturels, où l\'interactivité devient un outil d\'éducation et d\'enchantement.'
+      'Pionniers XR au Brésil depuis 2015, nous développons des expériences allant de VR/AR au métavers avec économie crypto. Notre expertise couvre réalités étendues, installations interactives avec capteurs (Kinect, Leap Motion, NFC), smart contracts (Solidity, NFTs) et mondes virtuels avec blockchain intégrée.',
+      'En tant que curateurs du festival Immerso XR, nous testons et validons des centaines d\'expériences immersives, développant une connaissance approfondie du langage, de l\'UX spatial et du storytelling. Nous combinons cela avec développement Web3 pour créer des expériences où les actifs numériques ont une valeur réelle (NFTs, tokens, DAOs).',
+      'Spécialisés dans musées, expositions et branded experiences où XR rencontre Web3: NFT wearables en VR, jeux play-to-earn, métavers avec LAND tokenisé, activations phygital (NFC + blockchain), et installations interactives avec intégration wallet.'
     ],
     longDescEs: [
-      'Pioneros en XR en Brasil desde 2015, desarrollamos experiencias que van de VR/AR a instalaciones interactivas multiplataforma. Nuestra expertise abarca todo el espectro de realidades extendidas.',
-      'Como curadores del festival Immerso XR, probamos y validamos cientos de experiencias inmersivas, desarrollando profundo conocimiento sobre lenguaje, UX espacial y storytelling inmersivo.',
-      'Especializados en proyectos para museos y espacios culturales, donde la interactividad se convierte en herramienta de educación y encanto.'
+      'Pioneros XR en Brasil desde 2015, desarrollamos experiencias que van de VR/AR a metaverso con economía crypto. Nuestra expertise abarca realidades extendidas, instalaciones interactivas con sensores (Kinect, Leap Motion, NFC), smart contracts (Solidity, NFTs) y mundos virtuales con blockchain integrado.',
+      'Como curadores del festival Immerso XR, probamos y validamos cientos de experiencias inmersivas, desarrollando profundo conocimiento sobre lenguaje, UX espacial y storytelling. Combinamos esto con desarrollo Web3 para crear experiencias donde activos digitales tienen valor real (NFTs, tokens, DAOs).',
+      'Especializados en museos, exposiciones y branded experiences donde XR se encuentra con Web3: NFT wearables en VR, juegos play-to-earn, metaverso con LAND tokenizado, activaciones phygital (NFC + blockchain), e instalaciones interactivas con integración wallet.'
     ],
     deliverablesPt: [
       'Filmes VR 360° / 180° / 3DoF',
@@ -455,8 +455,8 @@ export const servicesData: Service[] = [
       'Optimización y pulido',
       'Deploy y soporte'
     ],
-    technologies: ['Unity', 'Unreal Engine', 'Meta Quest', 'ARKit', 'ARCore', 'WebXR', 'TouchDesigner', 'Python', 'Processing', 'OpenFrameworks', 'Max/MSP', 'Insta360 X5', 'Insta360 Pro 2', 'Kandao Obsidian', 'Spatial Audio', 'Ambisonics'],
-    projectCategories: ['xr', 'vr', 'ar', 'interactive', 'immersive']
+    technologies: ['Unity', 'Unreal Engine', 'Meta Quest', 'HTC Vive', 'PSVR2', 'ARKit', 'ARCore', 'WebXR', 'Vuforia', '8th Wall', 'TouchDesigner', 'Notch', 'Resolume', 'Python', 'Processing', 'OpenFrameworks', 'Max/MSP', 'Kinect', 'Leap Motion', 'LiDAR', 'NFC Tags', 'Arduino', 'Raspberry Pi', 'OSC/MIDI/DMX', 'Insta360 X5', 'Insta360 Pro 2', 'Kandao Obsidian', 'Spatial Audio', 'Ambisonics', 'Solidity', 'Rust', 'Hardhat', 'Foundry', 'Remix', 'Ethereum', 'Solana', 'Polygon', 'BSC', 'MetaMask', 'WalletConnect', 'Web3.js', 'Ethers.js', 'Wagmi', 'Chainlink', 'IPFS', 'OpenZeppelin', 'ERC-721', 'ERC-1155', 'NFT.Storage', 'Decentraland SDK', 'The Sandbox', 'Unity Blockchain SDK', 'Unreal Web3', 'Moralis', 'Alchemy'],
+    projectCategories: ['xr', 'vr', 'ar', 'interactive', 'immersive', 'web3', 'nft', 'metaverse', 'blockchain']
   },
   {
     id: '5',
@@ -1746,125 +1746,6 @@ export const servicesData: Service[] = [
     ],
     technologies: ['AutoCAD', 'Revit', 'SketchUp', '3ds Max', 'V-Ray', 'Corona', 'Unreal Engine', 'Twinmotion'],
     projectCategories: ['architecture', 'bim', 'real-estate', 'visualization']
-  }
-  {
-    id: '17',
-    slug: 'web3-blockchain-metaverso',
-    icon: '🔗',
-    titlePt: 'Web3, Blockchain & Metaverso',
-    titleEn: 'Web3, Blockchain & Metaverse',
-    titleFr: 'Web3, Blockchain & Métavers',
-    titleEs: 'Web3, Blockchain & Metaverso',
-    shortDescPt: 'Desenvolvemos soluções Web3 com smart contracts, NFTs, tokenização e experiências no metaverso. Da consultoria blockchain à implementação de wallets (MetaMask), oráculos e DeFi, integramos crypto em games, marketing e aplicações corporativas.',
-    shortDescEn: 'We develop Web3 solutions with smart contracts, NFTs, tokenization and metaverse experiences. From blockchain consulting to wallet implementation (MetaMask), oracles and DeFi, we integrate crypto into games, marketing and corporate applications.',
-    shortDescFr: 'Nous développons des solutions Web3 avec smart contracts, NFTs, tokenisation et expériences métavers. Du conseil blockchain à l\'implémentation de wallets (MetaMask), oracles et DeFi, nous intégrons crypto dans jeux, marketing et applications corporatives.',
-    shortDescEs: 'Desarrollamos soluciones Web3 con smart contracts, NFTs, tokenización y experiencias metaverso. De consultoría blockchain a implementación de wallets (MetaMask), oráculos y DeFi, integramos crypto en juegos, marketing y aplicaciones corporativas.',
-    longDescPt: [
-      'Oferecemos consultoria e desenvolvimento end-to-end em tecnologias Web3 e blockchain. Criamos smart contracts em Solidity, implementamos sistemas de tokenização (stablecoins, utility tokens, NFTs), integramos wallets descentralizadas e desenvolvemos experiências imersivas no metaverso com economia crypto nativa.',
-      'Nossa expertise cobre Ethereum, Solana, Polygon e outras blockchains, incluindo oráculos (Chainlink), DeFi, NFT marketplaces, DAOs e integração de pagamentos crypto. Ideal para games play-to-earn, campanhas de marketing Web3, loyalty programs tokenizados e aplicações corporativas descentralizadas.'
-    ],
-    longDescEn: [
-      'We offer end-to-end consulting and development in Web3 and blockchain technologies. We create smart contracts in Solidity, implement tokenization systems (stablecoins, utility tokens, NFTs), integrate decentralized wallets and develop immersive metaverse experiences with native crypto economy.',
-      'Our expertise covers Ethereum, Solana, Polygon and other blockchains, including oracles (Chainlink), DeFi, NFT marketplaces, DAOs and crypto payment integration. Ideal for play-to-earn games, Web3 marketing campaigns, tokenized loyalty programs and decentralized corporate applications.'
-    ],
-    longDescFr: [
-      'Nous offrons conseil et développement end-to-end en technologies Web3 et blockchain. Nous créons smart contracts en Solidity, implémentons systèmes de tokenisation (stablecoins, utility tokens, NFTs), intégrons wallets décentralisés et développons expériences immersives métavers avec économie crypto native.',
-      'Notre expertise couvre Ethereum, Solana, Polygon et autres blockchains, incluant oracles (Chainlink), DeFi, NFT marketplaces, DAOs et intégration paiements crypto. Idéal pour jeux play-to-earn, campagnes marketing Web3, programmes fidélité tokenisés et applications corporatives décentralisées.'
-    ],
-    longDescEs: [
-      'Ofrecemos consultoría y desarrollo end-to-end en tecnologías Web3 y blockchain. Creamos smart contracts en Solidity, implementamos sistemas de tokenización (stablecoins, utility tokens, NFTs), integramos wallets descentralizadas y desarrollamos experiencias inmersivas metaverso con economía crypto nativa.',
-      'Nuestra expertise cubre Ethereum, Solana, Polygon y otras blockchains, incluyendo oráculos (Chainlink), DeFi, NFT marketplaces, DAOs e integración de pagos crypto. Ideal para juegos play-to-earn, campañas marketing Web3, programas lealtad tokenizados y aplicaciones corporativas descentralizadas.'
-    ],
-    deliverablesPt: [
-      'Consultoria estratégica Web3 e roadmap blockchain',
-      'Smart contracts auditados (Solidity, Rust)',
-      'Tokenomics e whitepaper técnico',
-      'NFT collection (arte + metadata + mint)',
-      'Wallet integration (MetaMask, WalletConnect)',
-      'DApp frontend (React + Web3.js/Ethers.js)',
-      'Oracle integration (Chainlink, API3)',
-      'Metaverse environment (Unity/Unreal + blockchain)',
-      'Marketplace NFT customizado',
-      'DAO governance structure',
-      'Documentação técnica e API'
-    ],
-    deliverablesEn: [
-      'Web3 strategic consulting and blockchain roadmap',
-      'Audited smart contracts (Solidity, Rust)',
-      'Tokenomics and technical whitepaper',
-      'NFT collection (art + metadata + mint)',
-      'Wallet integration (MetaMask, WalletConnect)',
-      'DApp frontend (React + Web3.js/Ethers.js)',
-      'Oracle integration (Chainlink, API3)',
-      'Metaverse environment (Unity/Unreal + blockchain)',
-      'Custom NFT marketplace',
-      'DAO governance structure',
-      'Technical documentation and API'
-    ],
-    deliverablesFr: [
-      'Conseil stratégique Web3 et roadmap blockchain',
-      'Smart contracts audités (Solidity, Rust)',
-      'Tokenomics et livre blanc technique',
-      'Collection NFT (art + metadata + mint)',
-      'Intégration wallet (MetaMask, WalletConnect)',
-      'Frontend DApp (React + Web3.js/Ethers.js)',
-      'Intégration oracle (Chainlink, API3)',
-      'Environnement métavers (Unity/Unreal + blockchain)',
-      'Marketplace NFT personnalisé',
-      'Structure gouvernance DAO',
-      'Documentation technique et API'
-    ],
-    deliverablesEs: [
-      'Consultoría estratégica Web3 y roadmap blockchain',
-      'Smart contracts auditados (Solidity, Rust)',
-      'Tokenomics y whitepaper técnico',
-      'Colección NFT (arte + metadata + mint)',
-      'Integración wallet (MetaMask, WalletConnect)',
-      'Frontend DApp (React + Web3.js/Ethers.js)',
-      'Integración oráculo (Chainlink, API3)',
-      'Entorno metaverso (Unity/Unreal + blockchain)',
-      'Marketplace NFT personalizado',
-      'Estructura gobernanza DAO',
-      'Documentación técnica y API'
-    ],
-    processPt: [
-      'Discovery e estratégia Web3',
-      'Tokenomics design e whitepaper',
-      'Smart contract development + audit',
-      'Frontend DApp + wallet integration',
-      'Testnet deployment e QA',
-      'Mainnet launch e monitoring',
-      'Suporte pós-lançamento'
-    ],
-    processEn: [
-      'Discovery and Web3 strategy',
-      'Tokenomics design and whitepaper',
-      'Smart contract development + audit',
-      'DApp frontend + wallet integration',
-      'Testnet deployment and QA',
-      'Mainnet launch and monitoring',
-      'Post-launch support'
-    ],
-    processFr: [
-      'Discovery et stratégie Web3',
-      'Design tokenomics et livre blanc',
-      'Développement smart contract + audit',
-      'Frontend DApp + intégration wallet',
-      'Déploiement testnet et QA',
-      'Lancement mainnet et monitoring',
-      'Support post-lancement'
-    ],
-    processEs: [
-      'Discovery y estrategia Web3',
-      'Diseño tokenomics y whitepaper',
-      'Desarrollo smart contract + auditoría',
-      'Frontend DApp + integración wallet',
-      'Deploy testnet y QA',
-      'Lanzamiento mainnet y monitoreo',
-      'Soporte post-lanzamiento'
-    ],
-    technologies: ['Solidity', 'Rust', 'C++', 'Python', 'JavaScript/TypeScript', 'Hardhat', 'Truffle', 'Foundry', 'Remix', 'Ethereum', 'Solana', 'Polygon', 'Binance Smart Chain', 'Avalanche', 'Arbitrum', 'Optimism', 'MetaMask', 'WalletConnect', 'Web3.js', 'Ethers.js', 'Wagmi', 'RainbowKit', 'Chainlink Oracles', 'API3', 'The Graph', 'IPFS', 'Arweave', 'Pinata', 'OpenZeppelin', 'ERC-20', 'ERC-721', 'ERC-1155', 'NFT.Storage', 'OpenSea SDK', 'Rarible Protocol', 'Snapshot (DAO)', 'Gnosis Safe', 'Moralis', 'Alchemy', 'Infura', 'QuickNode', 'Unity + Blockchain SDK', 'Unreal Engine + Web3', 'Decentraland SDK', 'The Sandbox', 'React', 'Next.js', 'Vite', 'Tailwind CSS'],
-    projectCategories: ['web3', 'blockchain', 'nft', 'defi', 'metaverse', 'crypto', 'dao', 'smart-contracts']
   }
 ]
 
