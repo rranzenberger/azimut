@@ -562,7 +562,7 @@ export const servicesData: Service[] = [
       'Prototipado',
       'Seguimiento de obra'
     ],
-    technologies: ['SketchUp', 'Rhino', 'AutoCAD', 'Adobe Creative Suite', 'V-Ray', 'MadMapper', 'Resolume'],
+    technologies: ['SketchUp', 'Rhino', '3ds Max', 'AutoCAD', 'Revit', 'Adobe Creative Suite', 'V-Ray', 'Corona', 'Lumion', 'Enscape', 'MadMapper', 'Resolume'],
     projectCategories: ['spatial-design', 'scenography', 'museum', 'exhibition']
   },
   {
