@@ -776,7 +776,7 @@ export const servicesData: Service[] = [
       'Integración con workflow existente',
       'Documentación y transferencia'
     ],
-    technologies: ['Stable Diffusion', 'Midjourney', 'RunwayML', 'ComfyUI', 'Automatic1111', 'Python', 'TensorFlow'],
+    technologies: ['Claude', 'ChatGPT', 'Gemini', 'Perplexity', 'Cursor', 'Midjourney', 'DALL-E', 'Stable Diffusion', 'Leonardo.ai', 'Runway ML', 'Pika Labs', 'Sora', 'DomoAI', 'Topaz', 'Magnific AI', 'Waifu2x', 'ComfyUI', 'Automatic1111', 'Notion AI', 'Google Workspace', 'Python'],
     projectCategories: ['ai', 'research', 'innovation', 'concept-art']
   },
   {
