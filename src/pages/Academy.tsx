@@ -53,7 +53,7 @@ const Academy: React.FC<AcademyProps> = ({ lang, section }) => {
   // Função para mudar seção (navega para a rota correta)
   const changeSection = (newSection: 'research' | 'courses' | 'corporate') => {
     setActiveSection(newSection)
-    navigate(`/academy/${newSection}`)
+    navigate(`/${lang}/academy/${newSection}`)
   }
 
   // ═══════════════════════════════════════════════════════════════

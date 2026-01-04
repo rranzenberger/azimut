@@ -227,6 +227,21 @@ const App: React.FC = () => {
                     {(routeLang) => <Academy lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
+                <Route path="/:lang/academy/research" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Academy lang={routeLang} section="research" />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/academy/courses" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Academy lang={routeLang} section="courses" />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/academy/corporate" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Academy lang={routeLang} section="corporate" />}
+                  </LangRouteWrapper>
+                } />
                 <Route path="/:lang/contact" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <Contact lang={routeLang} />}
@@ -248,6 +263,9 @@ const App: React.FC = () => {
                 <Route path="/work" element={<Navigate to={`/${lang}/work`} replace />} />
                 <Route path="/studio" element={<Navigate to={`/${lang}/studio`} replace />} />
                 <Route path="/academy" element={<Navigate to={`/${lang}/academy`} replace />} />
+                <Route path="/academy/research" element={<Navigate to={`/${lang}/academy/research`} replace />} />
+                <Route path="/academy/courses" element={<Navigate to={`/${lang}/academy/courses`} replace />} />
+                <Route path="/academy/corporate" element={<Navigate to={`/${lang}/academy/corporate`} replace />} />
                 <Route path="/contact" element={<Navigate to={`/${lang}/contact`} replace />} />
                 <Route path="/press" element={<Navigate to={`/${lang}/press`} replace />} />
                 <Route path="/project/:slug" element={<Navigate to={`/${lang}/project/:slug`} replace />} />
@@ -332,6 +350,9 @@ const App: React.FC = () => {
                 <Route path="/work" element={<Navigate to={`/${lang}/work`} replace />} />
                 <Route path="/studio" element={<Navigate to={`/${lang}/studio`} replace />} />
                 <Route path="/academy" element={<Navigate to={`/${lang}/academy`} replace />} />
+                <Route path="/academy/research" element={<Navigate to={`/${lang}/academy/research`} replace />} />
+                <Route path="/academy/courses" element={<Navigate to={`/${lang}/academy/courses`} replace />} />
+                <Route path="/academy/corporate" element={<Navigate to={`/${lang}/academy/corporate`} replace />} />
                 <Route path="/contact" element={<Navigate to={`/${lang}/contact`} replace />} />
                 <Route path="/press" element={<Navigate to={`/${lang}/press`} replace />} />
                 <Route path="/project/:slug" element={<Navigate to={`/${lang}/project/:slug`} replace />} />

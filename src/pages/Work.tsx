@@ -361,7 +361,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 onClick={() => {
                   trackInteraction('project_view', cases[0].slug)
                   trackProjectInteraction(cases[0].slug, 'CLICK')
-                  navigate(`/work/${cases[0].slug}`)
+                  navigate(`/${lang}/work/${cases[0].slug}`)
                 }}
               >
               <div className="grid md:grid-cols-2">
@@ -480,7 +480,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 onClick={() => {
                   trackInteraction('project_view', item.slug)
                   trackProjectInteraction(item.slug, 'CLICK')
-                  navigate(`/work/${item.slug}`)
+                  navigate(`/${lang}/work/${item.slug}`)
                 }}
                 onMouseEnter={() => trackProjectInteraction(item.slug, 'HOVER')}
               >

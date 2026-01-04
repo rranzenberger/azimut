@@ -405,17 +405,17 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 },
                 {
                   label: lang === 'pt' ? 'Pesquisa & Inovação' : lang === 'es' ? 'Investigación & Innovación' : lang === 'fr' ? 'Recherche & Innovation' : 'Research & Innovation',
-                  href: '/academy#research',
+                  href: '/academy/research',
                   description: lang === 'pt' ? 'Explorando novas fronteiras' : lang === 'es' ? 'Explorando nuevas fronteras' : lang === 'fr' ? 'Explorer de nouvelles frontières' : 'Exploring new frontiers'
                 },
                 {
                   label: lang === 'pt' ? 'Cursos & Workshops' : lang === 'es' ? 'Cursos & Workshops' : lang === 'fr' ? 'Cours & Workshops' : 'Courses & Workshops',
-                  href: '/academy#courses',
+                  href: '/academy/courses',
                   description: lang === 'pt' ? 'Aprendizado prático' : lang === 'es' ? 'Aprendizaje práctico' : lang === 'fr' ? 'Apprentissage pratique' : 'Hands-on learning'
                 },
                 {
                   label: lang === 'pt' ? 'Treinamento Corporativo' : lang === 'es' ? 'Entrenamiento Corporativo' : lang === 'fr' ? 'Formation d\'Entreprise' : 'Corporate Training',
-                  href: '/academy#corporate',
+                  href: '/academy/corporate',
                   description: lang === 'pt' ? 'Programas personalizados' : lang === 'es' ? 'Programas personalizados' : lang === 'fr' ? 'Programmes personnalisés' : 'Tailored programs'
                 }
               ]}

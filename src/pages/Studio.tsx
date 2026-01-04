@@ -342,7 +342,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
   // Função para scroll suave para seção
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId)
-    navigate(`/studio#${sectionId}`, { replace: true })
+    navigate(`/${lang}/studio#${sectionId}`, { replace: true })
     
     // Scroll suave
     setTimeout(() => {
