@@ -348,7 +348,7 @@ export const servicesData: Service[] = [
       'Compositing y finalización',
       'Entrega'
     ],
-    technologies: ['Blender', '3ds Max', 'Maya', 'After Effects', 'Toon Boom', 'Unreal Engine'],
+    technologies: ['Blender', '3ds Max', 'Maya', 'After Effects', 'Toon Boom', 'Unreal Engine', 'Runway ML', 'Pika Labs', 'Sora'],
     projectCategories: ['animation', '3d', 'motion-design', 'educational']
   },
   {
