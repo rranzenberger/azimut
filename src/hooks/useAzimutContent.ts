@@ -15,10 +15,11 @@ const API_URL = `${BACKOFFICE_URL}/api`;
 interface ContentOptions {
   page?: string;
   autoDetectGeo?: boolean;
+  lang?: 'pt' | 'en' | 'fr' | 'es'; // Idioma do conteúdo
 }
 
 export function useAzimutContent(options: ContentOptions = {}) {
-  const { page = 'home', autoDetectGeo = true } = options;
+  const { page = 'home', autoDetectGeo = true, lang: propLang } = options;
   
   const [content, setContent] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -29,14 +30,14 @@ export function useAzimutContent(options: ContentOptions = {}) {
       try {
         setLoading(true);
         
-        // 1. Detectar idioma do navegador
+        // 1. Detectar idioma (prioridade: prop > localStorage > navegador)
         const browserLang = navigator.language.startsWith('pt') ? 'pt' :
                            navigator.language.startsWith('fr') ? 'fr' :
                            navigator.language.startsWith('es') ? 'es' : 'en';
         
         // Verificar se usuário já escolheu idioma manualmente
         const savedLang = localStorage.getItem('azimut-lang');
-        let lang = savedLang || browserLang;
+        let lang = propLang || savedLang || browserLang;
         
         // 2. Detectar país e idioma (100% client-side, não depende de API)
         let country = 'DEFAULT';
@@ -158,7 +159,7 @@ export function useAzimutContent(options: ContentOptions = {}) {
     }
     
     fetchContent();
-  }, [page, autoDetectGeo]);
+  }, [page, autoDetectGeo, propLang]); // Adicionar propLang como dependência
   
   return { content, loading, error };
 }

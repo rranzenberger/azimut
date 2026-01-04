@@ -28,7 +28,10 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   const [searchQuery, setSearchQuery] = useState('')
   
   // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
-  const { content: cmsContent, loading: cmsLoading, error: cmsError } = useAzimutContent({ page: 'work' })
+  const { content: cmsContent, loading: cmsLoading, error: cmsError } = useAzimutContent({ 
+    page: 'work',
+    lang // Passar idioma para backoffice
+  })
   
   // Fallback: Projetos de exemplo quando backoffice está vazio ou falha
   const defaultCases = useMemo(() => [

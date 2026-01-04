@@ -16,7 +16,10 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   const seo = seoData.what[lang]
   
   // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
-  const { content: cmsContent, loading: cmsLoading, error: cmsError } = useAzimutContent({ page: 'what' })
+  const { content: cmsContent, loading: cmsLoading, error: cmsError } = useAzimutContent({ 
+    page: 'what',
+    lang // Passar idioma para backoffice
+  })
   
   // Fallback: Serviços padrão quando backoffice está vazio ou falha - GRID 3×3
   const defaultServices = [

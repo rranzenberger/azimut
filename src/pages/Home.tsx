@@ -20,7 +20,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   
   // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
   // Tenta buscar do backoffice, mas sempre tem fallback estático seguro
-  const { content: cmsContent, loading: cmsLoading, error: cmsError } = useAzimutContent({ page: 'home' })
+  const { content: cmsContent, loading: cmsLoading, error: cmsError } = useAzimutContent({ 
+    page: 'home',
+    lang // Passar idioma para backoffice
+  })
   
   // Personalização de IA (opcional - não bloqueia se falhar)
   const {
