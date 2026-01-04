@@ -1747,6 +1747,125 @@ export const servicesData: Service[] = [
     technologies: ['AutoCAD', 'Revit', 'SketchUp', '3ds Max', 'V-Ray', 'Corona', 'Unreal Engine', 'Twinmotion'],
     projectCategories: ['architecture', 'bim', 'real-estate', 'visualization']
   }
+  {
+    id: '17',
+    slug: 'web3-blockchain-metaverso',
+    icon: '🔗',
+    titlePt: 'Web3, Blockchain & Metaverso',
+    titleEn: 'Web3, Blockchain & Metaverse',
+    titleFr: 'Web3, Blockchain & Métavers',
+    titleEs: 'Web3, Blockchain & Metaverso',
+    shortDescPt: 'Desenvolvemos soluções Web3 com smart contracts, NFTs, tokenização e experiências no metaverso. Da consultoria blockchain à implementação de wallets (MetaMask), oráculos e DeFi, integramos crypto em games, marketing e aplicações corporativas.',
+    shortDescEn: 'We develop Web3 solutions with smart contracts, NFTs, tokenization and metaverse experiences. From blockchain consulting to wallet implementation (MetaMask), oracles and DeFi, we integrate crypto into games, marketing and corporate applications.',
+    shortDescFr: 'Nous développons des solutions Web3 avec smart contracts, NFTs, tokenisation et expériences métavers. Du conseil blockchain à l\'implémentation de wallets (MetaMask), oracles et DeFi, nous intégrons crypto dans jeux, marketing et applications corporatives.',
+    shortDescEs: 'Desarrollamos soluciones Web3 con smart contracts, NFTs, tokenización y experiencias metaverso. De consultoría blockchain a implementación de wallets (MetaMask), oráculos y DeFi, integramos crypto en juegos, marketing y aplicaciones corporativas.',
+    longDescPt: [
+      'Oferecemos consultoria e desenvolvimento end-to-end em tecnologias Web3 e blockchain. Criamos smart contracts em Solidity, implementamos sistemas de tokenização (stablecoins, utility tokens, NFTs), integramos wallets descentralizadas e desenvolvemos experiências imersivas no metaverso com economia crypto nativa.',
+      'Nossa expertise cobre Ethereum, Solana, Polygon e outras blockchains, incluindo oráculos (Chainlink), DeFi, NFT marketplaces, DAOs e integração de pagamentos crypto. Ideal para games play-to-earn, campanhas de marketing Web3, loyalty programs tokenizados e aplicações corporativas descentralizadas.'
+    ],
+    longDescEn: [
+      'We offer end-to-end consulting and development in Web3 and blockchain technologies. We create smart contracts in Solidity, implement tokenization systems (stablecoins, utility tokens, NFTs), integrate decentralized wallets and develop immersive metaverse experiences with native crypto economy.',
+      'Our expertise covers Ethereum, Solana, Polygon and other blockchains, including oracles (Chainlink), DeFi, NFT marketplaces, DAOs and crypto payment integration. Ideal for play-to-earn games, Web3 marketing campaigns, tokenized loyalty programs and decentralized corporate applications.'
+    ],
+    longDescFr: [
+      'Nous offrons conseil et développement end-to-end en technologies Web3 et blockchain. Nous créons smart contracts en Solidity, implémentons systèmes de tokenisation (stablecoins, utility tokens, NFTs), intégrons wallets décentralisés et développons expériences immersives métavers avec économie crypto native.',
+      'Notre expertise couvre Ethereum, Solana, Polygon et autres blockchains, incluant oracles (Chainlink), DeFi, NFT marketplaces, DAOs et intégration paiements crypto. Idéal pour jeux play-to-earn, campagnes marketing Web3, programmes fidélité tokenisés et applications corporatives décentralisées.'
+    ],
+    longDescEs: [
+      'Ofrecemos consultoría y desarrollo end-to-end en tecnologías Web3 y blockchain. Creamos smart contracts en Solidity, implementamos sistemas de tokenización (stablecoins, utility tokens, NFTs), integramos wallets descentralizadas y desarrollamos experiencias inmersivas metaverso con economía crypto nativa.',
+      'Nuestra expertise cubre Ethereum, Solana, Polygon y otras blockchains, incluyendo oráculos (Chainlink), DeFi, NFT marketplaces, DAOs e integración de pagos crypto. Ideal para juegos play-to-earn, campañas marketing Web3, programas lealtad tokenizados y aplicaciones corporativas descentralizadas.'
+    ],
+    deliverablesPt: [
+      'Consultoria estratégica Web3 e roadmap blockchain',
+      'Smart contracts auditados (Solidity, Rust)',
+      'Tokenomics e whitepaper técnico',
+      'NFT collection (arte + metadata + mint)',
+      'Wallet integration (MetaMask, WalletConnect)',
+      'DApp frontend (React + Web3.js/Ethers.js)',
+      'Oracle integration (Chainlink, API3)',
+      'Metaverse environment (Unity/Unreal + blockchain)',
+      'Marketplace NFT customizado',
+      'DAO governance structure',
+      'Documentação técnica e API'
+    ],
+    deliverablesEn: [
+      'Web3 strategic consulting and blockchain roadmap',
+      'Audited smart contracts (Solidity, Rust)',
+      'Tokenomics and technical whitepaper',
+      'NFT collection (art + metadata + mint)',
+      'Wallet integration (MetaMask, WalletConnect)',
+      'DApp frontend (React + Web3.js/Ethers.js)',
+      'Oracle integration (Chainlink, API3)',
+      'Metaverse environment (Unity/Unreal + blockchain)',
+      'Custom NFT marketplace',
+      'DAO governance structure',
+      'Technical documentation and API'
+    ],
+    deliverablesFr: [
+      'Conseil stratégique Web3 et roadmap blockchain',
+      'Smart contracts audités (Solidity, Rust)',
+      'Tokenomics et livre blanc technique',
+      'Collection NFT (art + metadata + mint)',
+      'Intégration wallet (MetaMask, WalletConnect)',
+      'Frontend DApp (React + Web3.js/Ethers.js)',
+      'Intégration oracle (Chainlink, API3)',
+      'Environnement métavers (Unity/Unreal + blockchain)',
+      'Marketplace NFT personnalisé',
+      'Structure gouvernance DAO',
+      'Documentation technique et API'
+    ],
+    deliverablesEs: [
+      'Consultoría estratégica Web3 y roadmap blockchain',
+      'Smart contracts auditados (Solidity, Rust)',
+      'Tokenomics y whitepaper técnico',
+      'Colección NFT (arte + metadata + mint)',
+      'Integración wallet (MetaMask, WalletConnect)',
+      'Frontend DApp (React + Web3.js/Ethers.js)',
+      'Integración oráculo (Chainlink, API3)',
+      'Entorno metaverso (Unity/Unreal + blockchain)',
+      'Marketplace NFT personalizado',
+      'Estructura gobernanza DAO',
+      'Documentación técnica y API'
+    ],
+    processPt: [
+      'Discovery e estratégia Web3',
+      'Tokenomics design e whitepaper',
+      'Smart contract development + audit',
+      'Frontend DApp + wallet integration',
+      'Testnet deployment e QA',
+      'Mainnet launch e monitoring',
+      'Suporte pós-lançamento'
+    ],
+    processEn: [
+      'Discovery and Web3 strategy',
+      'Tokenomics design and whitepaper',
+      'Smart contract development + audit',
+      'DApp frontend + wallet integration',
+      'Testnet deployment and QA',
+      'Mainnet launch and monitoring',
+      'Post-launch support'
+    ],
+    processFr: [
+      'Discovery et stratégie Web3',
+      'Design tokenomics et livre blanc',
+      'Développement smart contract + audit',
+      'Frontend DApp + intégration wallet',
+      'Déploiement testnet et QA',
+      'Lancement mainnet et monitoring',
+      'Support post-lancement'
+    ],
+    processEs: [
+      'Discovery y estrategia Web3',
+      'Diseño tokenomics y whitepaper',
+      'Desarrollo smart contract + auditoría',
+      'Frontend DApp + integración wallet',
+      'Deploy testnet y QA',
+      'Lanzamiento mainnet y monitoreo',
+      'Soporte post-lanzamiento'
+    ],
+    technologies: ['Solidity', 'Rust', 'C++', 'Python', 'JavaScript/TypeScript', 'Hardhat', 'Truffle', 'Foundry', 'Remix', 'Ethereum', 'Solana', 'Polygon', 'Binance Smart Chain', 'Avalanche', 'Arbitrum', 'Optimism', 'MetaMask', 'WalletConnect', 'Web3.js', 'Ethers.js', 'Wagmi', 'RainbowKit', 'Chainlink Oracles', 'API3', 'The Graph', 'IPFS', 'Arweave', 'Pinata', 'OpenZeppelin', 'ERC-20', 'ERC-721', 'ERC-1155', 'NFT.Storage', 'OpenSea SDK', 'Rarible Protocol', 'Snapshot (DAO)', 'Gnosis Safe', 'Moralis', 'Alchemy', 'Infura', 'QuickNode', 'Unity + Blockchain SDK', 'Unreal Engine + Web3', 'Decentraland SDK', 'The Sandbox', 'React', 'Next.js', 'Vite', 'Tailwind CSS'],
+    projectCategories: ['web3', 'blockchain', 'nft', 'defi', 'metaverse', 'crypto', 'dao', 'smart-contracts']
+  }
 ]
 
 export function getServiceBySlug(slug: string): Service | undefined {
