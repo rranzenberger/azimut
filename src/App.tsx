@@ -30,6 +30,7 @@ import Studio from './pages/Studio'
 import Academy from './pages/Academy'
 import Contact from './pages/Contact'
 import WhatWeDo from './pages/WhatWeDo'
+import ServiceDetail from './pages/ServiceDetail'
 import Press from './pages/Press'
 
 // Lazy loading apenas para páginas que funcionam bem
@@ -199,6 +200,11 @@ const App: React.FC = () => {
                 <Route path="/:lang/what" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <WhatWeDo lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/what/:slug" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <ServiceDetail lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/work" element={

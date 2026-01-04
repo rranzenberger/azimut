@@ -3,8 +3,10 @@ import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import InternalNavigation from '../components/InternalNavigation'
+import LangLink from '../components/LangLink'
 // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
 import { useAzimutContent } from '../hooks/useAzimutContent'
+import { servicesData, getServiceTitle, getServiceShortDesc } from '../data/servicesData'
 
 interface WhatWeDoProps {
   lang: Lang
@@ -232,25 +234,29 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
           {/* Grid de Serviços - SEMPRE MOSTRA (backoffice OU padrão) */}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {((safeServices && Array.isArray(safeServices)) ? safeServices : defaultServices).map((service: any, index: number) => (
-              <article
+              <LangLink
                 key={service.slug || index}
-                id={service.id || service.slug}
-                className="group rounded-2xl border border-white/10 card-adaptive p-4 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(var(--theme-accent-red-rgb),0.3)] cursor-pointer scroll-mt-24"
-                style={{
-                  animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
-                }}
+                to={`/what/${service.slug}`}
                 onClick={() => trackInteraction('service_view', service.slug || 'default')}
               >
-                {service.icon && (
-                  <div className="mb-3 text-3xl">{service.icon}</div>
-                )}
-                <h3 className="mb-2 font-sora text-[1.05rem] font-semibold text-white group-hover:text-azimut-red transition-colors duration-300">
-                  {service.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-slate-200 group-hover:text-slate-100 transition-colors duration-300">
-                  {service.description || service.desc}
-                </p>
-              </article>
+                <article
+                  id={service.id || service.slug}
+                  className="group rounded-2xl border border-white/10 card-adaptive p-4 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(var(--theme-accent-red-rgb),0.3)] cursor-pointer scroll-mt-24"
+                  style={{
+                    animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+                  }}
+                >
+                  {service.icon && (
+                    <div className="mb-3 text-3xl">{service.icon}</div>
+                  )}
+                  <h3 className="mb-2 font-sora text-[1.05rem] font-semibold text-white group-hover:text-azimut-red transition-colors duration-300">
+                    {service.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-slate-200 group-hover:text-slate-100 transition-colors duration-300">
+                    {service.description || service.desc}
+                  </p>
+                </article>
+              </LangLink>
             ))}
           </div>
         </div>
