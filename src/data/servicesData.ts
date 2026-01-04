@@ -241,7 +241,7 @@ export const servicesData: Service[] = [
       'Revisión y ajustes',
       'Entrega final'
     ],
-    technologies: ['DaVinci Resolve', 'After Effects', 'Nuke', 'Houdini', 'Premiere Pro', 'Fusion'],
+    technologies: ['DaVinci Resolve', 'After Effects', 'Nuke', 'Flame', 'Mocha', 'Houdini', 'Premiere Pro', 'Fusion'],
     projectCategories: ['vfx', 'motion-design', 'post-production', 'audiovisual']
   },
   {
