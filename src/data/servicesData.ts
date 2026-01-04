@@ -455,7 +455,7 @@ export const servicesData: Service[] = [
       'Optimización y pulido',
       'Deploy y soporte'
     ],
-    technologies: ['Unity', 'Unreal Engine', 'Meta Quest', 'ARKit', 'ARCore', 'WebXR', 'TouchDesigner', 'Insta360 X5', 'Insta360 Pro 2', 'Kandao Obsidian', 'Spatial Audio', 'Ambisonics'],
+    technologies: ['Unity', 'Unreal Engine', 'Meta Quest', 'ARKit', 'ARCore', 'WebXR', 'TouchDesigner', 'Python', 'Processing', 'OpenFrameworks', 'Max/MSP', 'Insta360 X5', 'Insta360 Pro 2', 'Kandao Obsidian', 'Spatial Audio', 'Ambisonics'],
     projectCategories: ['xr', 'vr', 'ar', 'interactive', 'immersive']
   },
   {
