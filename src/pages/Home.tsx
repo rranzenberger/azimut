@@ -34,9 +34,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     loading: personalizationLoading,
   } = usePersonalizedContent()
   
-  // ESTRATÉGIA: Personalizado → Backoffice → i18n.ts (sempre funciona)
-  const heroSlogan = personalizedHeroMessage || cmsContent?.page?.heroSlogan || t(lang, 'heroTitle')
-  const heroSubtitle = personalizedHeroSubtitle || cmsContent?.page?.heroSubtitle || t(lang, 'heroSubtitle')
+  // ESTRATÉGIA CORRIGIDA: i18n.ts → Personalizado → Backoffice
+  // Priorizar i18n.ts (sempre correto por idioma) sobre backoffice (que pode estar desatualizado)
+  const heroSlogan = t(lang, 'heroTitle') || personalizedHeroMessage || cmsContent?.page?.heroSlogan
+  const heroSubtitle = t(lang, 'heroSubtitle') || personalizedHeroSubtitle || cmsContent?.page?.heroSubtitle
   
   // Fallback: Projetos padrão quando backoffice está vazio
   const defaultProjects = useMemo(() => [
