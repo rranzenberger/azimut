@@ -990,7 +990,7 @@ export const servicesData: Service[] = [
       'Ejecución y coordinación',
       'Rendición de cuentas'
     ],
-    technologies: ['Notion', 'Miro', 'Google Workspace', 'Asana', 'Monday', 'Slack'],
+    technologies: ['Notion', 'Miro', 'FigJam', 'Google Workspace', 'Asana', 'Monday.com', 'ClickUp', 'Trello', 'Jira', 'Slack', 'Zoom', 'Mural', 'OKR Tools', 'Power BI', 'Tableau', 'Airtable'],
     projectCategories: ['consulting', 'strategy', 'funding', 'management']
   },
   // ========== NOVOS SERVIÇOS ==========
