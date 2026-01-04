@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { t, type Lang } from '../i18n'
+import { useLanguageRoute } from '../hooks/useLanguageRoute'
+import LangLink from './LangLink'
 import ThemeToggle from './ThemeToggle'
 import BudgetWizardModal from './BudgetWizardModal'
 import SkipLink from './SkipLink'
@@ -54,6 +56,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleTheme }) => {
   const location = useLocation()
   const { trackInteraction } = useUserTracking()
+  const { changeLang } = useLanguageRoute()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [hoveredRoute, setHoveredRoute] = useState<string | null>(null)
   const [isWizardOpen, setIsWizardOpen] = useState(false)
@@ -139,10 +142,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
 
   // Determinar página ativa baseado na rota
   const getActiveRoute = () => {
-    const path = location.pathname
+    // Remover prefixo de idioma (/pt, /en, /fr, /es)
+    const path = location.pathname.replace(/^\/(pt|en|fr|es)(\/|$)/, '/')
+    
     if (path === '/' || path === '/home') return 'home'
     if (path === '/what') return 'what'
-    if (path === '/work') return 'work'
+    if (path === '/work' || path.startsWith('/work/') || path.startsWith('/project/')) return 'work'
     if (path === '/press') return 'press'
     if (path === '/studio') return 'studio'
     if (path === '/academy') return 'academy'
@@ -222,7 +227,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               🔒 LOGO - height: 52px, alinhada à esquerda (AUMENTADA AO MÁXIMO!)
               ═══════════════════════════════════════════════════════════ */}
           {/* Logo topo - GRANDE - ALINHADA À ESQUERDA */}
-          <Link 
+          <LangLink 
             ref={logoRef}
             to="/" 
             className="shrink-0 transition-opacity hover:opacity-90 touch-manipulation"
@@ -248,7 +253,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 display: 'block'
               }}
             />
-          </Link>
+          </LangLink>
 
           {/* Nav desktop - aparece em tablets (768px+) - SEMPRE VISÍVEL EM DESKTOP */}
           <nav 
@@ -256,8 +261,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             className="hidden items-center justify-center font-sora text-[0.48rem] font-medium uppercase tracking-[0.06em] min-[768px]:gap-2.5 min-[768px]:text-[0.48rem] md:gap-3 md:text-[0.52rem] lg:text-[0.58rem] lg:gap-3.5 xl:gap-4 xl:text-[0.62rem] min-[768px]:flex" 
             style={{ color: 'var(--theme-text-secondary)', overflow: 'visible', alignItems: 'center', flexWrap: 'nowrap' }}
           >
-            <Link 
-              to="/" 
+            <LangLink to="/" 
               className="nav-link-glow relative whitespace-nowrap touch-manipulation shrink-0 transition-colors duration-200 font-sora font-semibold"
               onMouseEnter={() => setHoveredRoute('home')}
               onMouseLeave={() => setHoveredRoute(null)}
@@ -283,7 +287,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   opacity: shouldShowLine('home') ? 1 : 0
                 }}
               ></span>
-            </Link>
+            </LangLink>
             {/* Soluções com submenu */}
             <NavDropdown
               label={t(lang, 'navWhat')}
@@ -451,7 +455,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 <button
                   onClick={() => {
                     trackLanguageChange(lang, 'en')
-                    setLang('en')
+                    changeLang('en')
                   }}
                   className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
                   style={{ 
@@ -475,7 +479,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 <button
                   onClick={() => {
                     trackLanguageChange(lang, 'fr')
-                    setLang('fr')
+                    changeLang('fr')
                   }}
                   className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
                   style={{ 
@@ -504,7 +508,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 <button
                   onClick={() => {
                     trackLanguageChange(lang, 'pt')
-                    setLang('pt')
+                    changeLang('pt')
                   }}
                   className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
                   style={{ 
@@ -528,7 +532,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 <button
                   onClick={() => {
                     trackLanguageChange(lang, 'es')
-                    setLang('es')
+                    changeLang('es')
                   }}
                   className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
                   style={{ 
@@ -552,8 +556,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             </div>
 
             {/* Botão CTA - ULTRA COMPACTO: Otimizado para ganhar espaço */}
-                <Link
-                  to="/contact"
+                <LangLink to="/contact"
                   onClick={() => {
                     trackCTA('header', 'Start Project')
                     trackInteraction('cta_click', 'header_start_project')
@@ -585,7 +588,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 >
                   <span className="block whitespace-nowrap" style={{ fontSize: 'inherit', fontWeight: '700' }}>{getCtaLines(lang)[0]}</span>
                   <span className="block whitespace-nowrap" style={{ fontSize: 'inherit', fontWeight: '700' }}>{getCtaLines(lang)[1]}</span>
-                </Link>
+                </LangLink>
 
             {/* Botão Hambúrguer - Aparece APENAS em mobile (< 768px) */}
             {isMobile && (
@@ -646,8 +649,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         <div className={`block overflow-hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
           <nav className="border-t backdrop-blur-md" style={{ borderColor: 'var(--theme-border)', backgroundColor: 'var(--theme-overlay)' }}>
             <div className="mx-auto max-w-7xl px-3 py-4 sm:px-4 sm:py-6 space-y-1">
-              <Link
-                to="/"
+              <LangLink to="/"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block py-3 px-3 sm:px-4 font-sora text-[0.7rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors rounded-lg touch-manipulation"
                 style={{ 
@@ -659,9 +661,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 }}
               >
                 {t(lang, 'navHome')}
-              </Link>
-              <Link
-                to="/what"
+              </LangLink>
+              <LangLink to="/what"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block py-3 px-3 sm:px-4 font-sora text-[0.7rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors rounded-lg touch-manipulation"
                 style={{ 
@@ -673,9 +674,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 }}
               >
                 {t(lang, 'navWhat')}
-              </Link>
-              <Link
-                to="/work"
+              </LangLink>
+              <LangLink to="/work"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block py-3 px-3 sm:px-4 font-sora text-[0.7rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors rounded-lg touch-manipulation"
                 style={{ 
@@ -687,9 +687,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 }}
               >
                 {t(lang, 'navWork')}
-              </Link>
-              <Link
-                to="/studio"
+              </LangLink>
+              <LangLink to="/studio"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block py-3 px-3 sm:px-4 font-sora text-[0.7rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors rounded-lg touch-manipulation"
                 style={{ 
@@ -701,9 +700,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 }}
               >
                 {t(lang, 'navStudio')}
-              </Link>
-              <Link
-                to="/academy"
+              </LangLink>
+              <LangLink to="/academy"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block py-3 px-3 sm:px-4 font-sora text-[0.7rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors rounded-lg touch-manipulation"
                 style={{ 
@@ -715,9 +713,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 }}
               >
                 {t(lang, 'navAcademy')}
-              </Link>
-              <Link
-                to="/press"
+              </LangLink>
+              <LangLink to="/press"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block py-3 px-3 sm:px-4 font-sora text-[0.7rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors rounded-lg touch-manipulation"
                 style={{ 
@@ -729,7 +726,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 }}
               >
                 {t(lang, 'navPress')}
-              </Link>
+              </LangLink>
               
               {/* Idiomas e CTA no menu mobile */}
               <div className="pt-3 mt-3 sm:pt-4 sm:mt-4 border-t space-y-2 sm:space-y-3" style={{ borderColor: 'var(--theme-border)' }}>
@@ -738,7 +735,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <span className="inline-flex items-center gap-0" style={{ alignItems: 'center' }}>
                     <img src="/flag-ca.svg" alt="Canada" className="h-3.5 w-auto rounded-[2px] opacity-90 mr-0.5" style={{ display: 'block' }} />
                     <button
-                      onClick={() => setLang('en')}
+                      onClick={() => changeLang('en')}
                       className="transition-all duration-200 touch-manipulation"
                       style={{ 
                         color: lang === 'en' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
@@ -754,7 +751,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     </button>
                     <span className="mx-[2px] opacity-70 text-[0.6rem] sm:text-[0.65rem] flex items-center" style={{ lineHeight: '1', display: 'inline-flex' }}>●</span>
                     <button
-                      onClick={() => setLang('fr')}
+                      onClick={() => changeLang('fr')}
                       className="transition-all duration-200 touch-manipulation"
                       style={{ 
                         color: lang === 'fr' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
@@ -775,7 +772,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <span className="inline-flex items-center gap-0" style={{ alignItems: 'center' }}>
                     <img src="/flag-br.svg" alt="Brasil" className="h-3.5 w-auto rounded-[2px] opacity-90 mr-1" style={{ display: 'block' }} />
                     <button
-                      onClick={() => setLang('pt')}
+                      onClick={() => changeLang('pt')}
                       className="transition-all duration-200 touch-manipulation"
                       style={{ 
                         color: lang === 'pt' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
@@ -791,7 +788,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     </button>
                     <span className="mx-[2px] opacity-70 text-[0.6rem] sm:text-[0.65rem] flex items-center" style={{ lineHeight: '1', display: 'inline-flex' }}>●</span>
                     <button
-                      onClick={() => setLang('es')}
+                      onClick={() => changeLang('es')}
                       className="transition-all duration-200 touch-manipulation"
                       style={{ 
                         color: lang === 'es' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
@@ -884,7 +881,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             {/* 1. BRANDING - Logo e Tagline (3 colunas quando newsletter ao lado, 3 quando abaixo) - REDUZIDO PADDING PARA GANHAR ESPAÇO */}
             <div className="min-[900px]:col-span-3 max-[899px]:col-span-3 mb-3 min-[768px]:mb-0" style={{ width: '100%', paddingRight: '0.5rem' }}>
               <div className="mb-1" style={{ width: '100%', maxWidth: '130px' }}>
-                <Link to="/" style={{ display: 'block', width: '100%' }}>
+                <LangLink to="/" style={{ display: 'block', width: '100%' }}>
                   <img 
                     src="/logo-topo-site.svg"
                     alt="Azimut" 
@@ -902,7 +899,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       target.src = '/logo-topo-site.svg'
                     }}
                   />
-                </Link>
+                </LangLink>
               </div>
               <p className="text-[0.54rem] sm:text-[0.58rem] md:text-[0.62rem] leading-snug" style={{ 
                 color: '#94a3b8', 
@@ -942,10 +939,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <h4 className="font-sora text-[0.65rem] sm:text-[0.7rem] font-semibold uppercase tracking-[0.15em] mb-2 sm:mb-2.5 text-white">
                     {lang === 'en' ? 'Navigate' : lang === 'fr' ? 'Navigation' : lang === 'es' ? 'Navegar' : 'Navegação'}
                   </h4>
-                  <Link to="/" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navHome')}</Link>
-                  <Link to="/what" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navWhat')}</Link>
-                  <Link to="/work" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navWork')}</Link>
-                  <Link to="/studio" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navStudio')}</Link>
+                  <LangLink to="/" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navHome')}</LangLink>
+                  <LangLink to="/what" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navWhat')}</LangLink>
+                  <LangLink to="/work" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navWork')}</LangLink>
+                  <LangLink to="/studio" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navStudio')}</LangLink>
                 </nav>
 
                 {/* Coluna 2: Academy */}
@@ -953,11 +950,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <h4 className="font-sora text-[0.65rem] sm:text-[0.7rem] font-semibold uppercase tracking-[0.15em] mb-2 sm:mb-2.5 text-white">
                     {lang === 'en' ? 'Academy & More' : lang === 'fr' ? 'Académie & Plus' : lang === 'es' ? 'Academia & Más' : 'Academy & Mais'}
                   </h4>
-                  <Link to="/academy" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors hover:text-[#8B2332] font-medium" style={{ color: '#cbd5e1' }}>{t(lang, 'navAcademy')}</Link>
+                  <LangLink to="/academy" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors hover:text-[#8B2332] font-medium" style={{ color: '#cbd5e1' }}>{t(lang, 'navAcademy')}</LangLink>
                   <div className="mt-1 flex flex-col gap-0.5">
-                    <Link to="/academy/research" className="text-[0.65rem] sm:text-[0.68rem] transition-colors hover:text-[#8B2332] ml-3" style={{ color: '#94a3b8' }}>└─ {lang === 'pt' ? 'Pesquisa' : lang === 'es' ? 'Investigación' : lang === 'fr' ? 'Recherche' : 'Research'}</Link>
-                    <Link to="/academy/courses" className="text-[0.65rem] sm:text-[0.68rem] transition-colors hover:text-[#8B2332] ml-3" style={{ color: '#94a3b8' }}>└─ {lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses'}</Link>
-                    <Link to="/academy/corporate" className="text-[0.65rem] sm:text-[0.68rem] transition-colors hover:text-[#8B2332] ml-3" style={{ color: '#94a3b8' }}>└─ {lang === 'pt' ? 'Corporate' : lang === 'es' ? 'Corporativo' : lang === 'fr' ? 'Entreprise' : 'Corporate'}</Link>
+                    <LangLink to="/academy/research" className="text-[0.65rem] sm:text-[0.68rem] transition-colors hover:text-[#8B2332] ml-3" style={{ color: '#94a3b8' }}>└─ {lang === 'pt' ? 'Pesquisa' : lang === 'es' ? 'Investigación' : lang === 'fr' ? 'Recherche' : 'Research'}</LangLink>
+                    <LangLink to="/academy/courses" className="text-[0.65rem] sm:text-[0.68rem] transition-colors hover:text-[#8B2332] ml-3" style={{ color: '#94a3b8' }}>└─ {lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses'}</LangLink>
+                    <LangLink to="/academy/corporate" className="text-[0.65rem] sm:text-[0.68rem] transition-colors hover:text-[#8B2332] ml-3" style={{ color: '#94a3b8' }}>└─ {lang === 'pt' ? 'Corporate' : lang === 'es' ? 'Corporativo' : lang === 'fr' ? 'Entreprise' : 'Corporate'}</LangLink>
                   </div>
                 </nav>
 
@@ -966,19 +963,18 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <h4 className="font-sora text-[0.65rem] sm:text-[0.7rem] font-semibold uppercase tracking-[0.15em] mb-2 sm:mb-2.5 text-white">
                     {lang === 'en' ? 'Get Started' : lang === 'fr' ? 'Commencer' : lang === 'es' ? 'Comenzar' : 'Começar'}
                   </h4>
-                  <Link to="/contact" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
+                  <LangLink to="/contact" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                     {lang === 'pt' ? 'Iniciar Conversa' : lang === 'es' ? 'Iniciar Conversación' : lang === 'fr' ? 'Démarrer la Conversation' : 'Start Conversation'}
-                  </Link>
-                  <Link to="/press" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
+                  </LangLink>
+                  <LangLink to="/press" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                     {t(lang, 'navPress')}
-                  </Link>
-                  <Link to="/work/review" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
+                  </LangLink>
+                  <LangLink to="/work/review" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                     {lang === 'pt' ? 'Revisar Projeto' : lang === 'es' ? 'Revisar Proyecto' : lang === 'fr' ? 'Réviser le Projet' : 'Review Project'}
-                  </Link>
+                  </LangLink>
                   {/* Botão CTA movido para cá - COMPACTO EM 2 LINHAS COMO NO HEADER - DESCIDO PARA ALINHAR COM 6ª COLUNA */}
                   <div className="mt-4 pt-3.5 border-t border-white/10">
-                    <Link 
-                      to="/contact" 
+                    <LangLink to="/contact" 
                       className="flex flex-col items-center justify-center rounded-xl border px-3 py-2 text-[0.65rem] sm:text-[0.68rem] md:text-[0.7rem] font-medium transition-all w-full"
                       style={{ 
                         color: '#ffffff',
@@ -1003,7 +999,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     >
                       <span className="block whitespace-nowrap" style={{ fontSize: 'inherit' }}>{getCtaLines(lang)[0]}</span>
                       <span className="block whitespace-nowrap" style={{ fontSize: 'inherit' }}>{getCtaLines(lang)[1]}</span>
-                    </Link>
+                    </LangLink>
                   </div>
                 </nav>
               </div>
@@ -1436,6 +1432,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
 }
 
 export default Layout
+
+
+
+
+
+
 
 
 

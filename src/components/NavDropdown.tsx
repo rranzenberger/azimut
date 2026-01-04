@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import type { Lang } from '../i18n'
+import LangLink from './LangLink'
 
 interface NavDropdownProps {
   label: string
@@ -29,6 +30,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const location = useLocation()
 
   // Fechar dropdown se clicar fora
@@ -48,25 +50,49 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
     }
   }, [isOpen])
 
+  // Limpar timeout ao desmontar
+  useEffect(() => {
+    return () => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current)
+      }
+    }
+  }, [])
+
   // Verificar se algum item está ativo
-  const hasActiveItem = items.some(item => location.pathname === item.href || location.pathname.startsWith(item.href + '/'))
+  const hasActiveItem = items.some(item => {
+    const pathWithoutLang = location.pathname.replace(/^\/(pt|en|fr|es)/, '')
+    const hrefWithoutLang = item.href.replace(/^\/(pt|en|fr|es)/, '')
+    return pathWithoutLang === hrefWithoutLang || pathWithoutLang.startsWith(hrefWithoutLang + '/')
+  })
+
+  // Função para abrir com cancelamento de timeout
+  const handleMouseEnter = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current)
+      closeTimeoutRef.current = null
+    }
+    setIsOpen(true)
+    onMouseEnter()
+  }
+
+  // Função para fechar com delay
+  const handleMouseLeave = () => {
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsOpen(false)
+      onMouseLeave()
+    }, 200) // 200ms de delay
+  }
 
   return (
     <div
       ref={dropdownRef}
       className="relative"
-      onMouseEnter={() => {
-        setIsOpen(true)
-        onMouseEnter()
-      }}
-      onMouseLeave={() => {
-        setIsOpen(false)
-        onMouseLeave()
-      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {/* Link principal */}
-      <Link
-        to={items[0]?.href || '#'}
+      <LangLink to={items[0]?.href || '#'}
         className="nav-link-glow relative whitespace-nowrap pb-1 shrink-0 transition-colors duration-200 font-sora font-semibold"
         style={{
           padding: '0 6px',
@@ -101,7 +127,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
             bottom: '10px' // Mais perto do texto! ✅
           }}
         ></span>
-      </Link>
+      </LangLink>
 
       {/* Dropdown menu */}
       {isOpen && (
@@ -113,12 +139,14 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
               : 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(250, 250, 250, 0.98) 100%)',
             animation: 'fadeInUp 0.2s ease-out'
           }}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
           <div className="p-2">
             {items.map((item, idx) => {
               const isItemActive = location.pathname === item.href || location.pathname.startsWith(item.href + '/')
               return (
-                <Link
+                <LangLink
                   key={idx}
                   to={item.href}
                   className="block px-4 py-3 rounded-md transition-all duration-200 group"
@@ -149,7 +177,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
                       {item.description}
                     </div>
                   )}
-                </Link>
+                </LangLink>
               )
             })}
           </div>
@@ -160,6 +188,9 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
 }
 
 export default NavDropdown
+
+
+
 
 
 

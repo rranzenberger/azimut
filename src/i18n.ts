@@ -6,6 +6,11 @@ type Dict = {
 
 export const translations: Dict = {
   en: {
+    // Hero Home
+    heroTitle: 'EXPERIENCES THAT CONNECT WORLDS',
+    heroSubtitle: 'We create immersive experiences between Brazil and Canada.',
+    
+    // Navigation
     navHome: 'Home',
     navWhat: 'Solutions',
     navWork: 'Work',
@@ -31,6 +36,11 @@ export const translations: Dict = {
     footer: '© {year} Azimut Projetos Audiovisuais Ltda. · Brazil ↔ Canada.',
   },
   fr: {
+    // Hero Home
+    heroTitle: 'EXPÉRIENCES QUI CONNECTENT LES MONDES',
+    heroSubtitle: 'Nous créons des expériences immersives entre le Brésil et le Canada.',
+    
+    // Navigation
     navHome: 'Accueil',
     navWhat: 'Services',
     navWork: 'Projets',
@@ -81,6 +91,11 @@ export const translations: Dict = {
     footer: '© {year} Azimut Projetos Audiovisuais Ltda. · Brasil ↔ Canadá.',
   },
   es: {
+    // Hero Home
+    heroTitle: 'EXPERIENCIAS QUE CONECTAN MUNDOS',
+    heroSubtitle: 'Creamos experiencias inmersivas entre Brasil y Canadá.',
+    
+    // Navigation
     navHome: 'Inicio',
     navWhat: 'Servicios',
     navWork: 'Proyectos',

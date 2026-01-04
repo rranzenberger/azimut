@@ -1,5 +1,5 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom'
 import { type Lang } from './i18n'
 import { useTheme } from './hooks/useTheme'
 import BrowserCompatibility from './components/BrowserCompatibility'
@@ -12,6 +12,8 @@ import AppLayout from './components/AppLayout'
 import ErrorBoundary from './components/ErrorBoundary'
 import Chatbot from './components/Chatbot'
 import SimplePasswordGate from './components/SimplePasswordGate'
+import LangRouteWrapper from './components/LangRouteWrapper'
+import LangRedirect from './components/LangRedirect'
 import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDetection'
 
 // ═══════════════════════════════════════════════════════════════
@@ -19,7 +21,7 @@ import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDet
 // ═══════════════════════════════════════════════════════════════
 // Mude para "false" para DESABILITAR o login temporariamente
 // Mude para "true" para ATIVAR o login novamente
-const SITE_PROTECTED = false // ← ON/OFF aqui!
+const SITE_PROTECTED = true // ← SITE TRAVADO! (Login ativo)
 // ═══════════════════════════════════════════════════════════════
 
 // CORREÇÃO: Import direto das páginas problemáticas
@@ -180,18 +182,76 @@ const App: React.FC = () => {
             >
               <ErrorBoundary>
                 <Routes>
-                {/* Todas as rotas públicas */}
-                <Route path="/" element={<Home lang={lang} />} />
-                <Route path="/home" element={<Home lang={lang} />} />
-                <Route path="/what" element={<WhatWeDo lang={lang} />} />
-                <Route path="/work" element={<Work lang={lang} />} />
-                <Route path="/work/:slug" element={<ProjectDetail lang={lang} />} />
-                <Route path="/studio" element={<Studio lang={lang} />} />
-                <Route path="/academy" element={<Academy lang={lang} />} />
-                <Route path="/contact" element={<Contact lang={lang} />} />
-                <Route path="/press" element={<Press lang={lang} />} />
+                {/* Redirect / para idioma detectado */}
+                <Route path="/" element={<LangRedirect />} />
+                
+                {/* Rotas COM prefixo de idioma (PREMIUM) */}
+                <Route path="/:lang" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Home lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/home" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Home lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/what" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <WhatWeDo lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/work" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Work lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/work/:slug" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <ProjectDetail lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/studio" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Studio lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/academy" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Academy lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/contact" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Contact lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/press" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Press lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/project/:slug" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <ProjectDetail lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                
+                {/* Backwards compatibility: rotas SEM prefixo redirecionam */}
+                <Route path="/what" element={<Navigate to={`/${lang}/what`} replace />} />
+                <Route path="/work" element={<Navigate to={`/${lang}/work`} replace />} />
+                <Route path="/studio" element={<Navigate to={`/${lang}/studio`} replace />} />
+                <Route path="/academy" element={<Navigate to={`/${lang}/academy`} replace />} />
+                <Route path="/contact" element={<Navigate to={`/${lang}/contact`} replace />} />
+                <Route path="/press" element={<Navigate to={`/${lang}/press`} replace />} />
+                <Route path="/project/:slug" element={<Navigate to={`/${lang}/project/:slug`} replace />} />
+                
                 {/* Rota 404 - captura qualquer URL não encontrada */}
-                <Route path="*" element={<NotFound lang={lang} />} />
+                <Route path="*" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <NotFound lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
               </Routes>
               </ErrorBoundary>
             </Suspense>
@@ -216,16 +276,66 @@ const App: React.FC = () => {
             <Suspense fallback={<LoadingSkeleton />}>
               <ErrorBoundary>
               <Routes>
-                <Route path="/" element={<Home lang={lang} />} />
-                <Route path="/what" element={<WhatWeDo lang={lang} />} />
-                <Route path="/work" element={<Work lang={lang} />} />
-                <Route path="/studio" element={<Studio lang={lang} />} />
-                <Route path="/academy" element={<Academy lang={lang} />} />
-                <Route path="/contact" element={<Contact lang={lang} />} />
-                <Route path="/press" element={<Press lang={lang} />} />
-                <Route path="/project/:slug" element={<ProjectDetail lang={lang} />} />
+                {/* Redirect / para idioma detectado */}
+                <Route path="/" element={<LangRedirect />} />
+                
+                {/* Rotas COM prefixo de idioma (PREMIUM) */}
+                <Route path="/:lang" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Home lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/what" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <WhatWeDo lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/work" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Work lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/studio" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Studio lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/academy" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Academy lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/contact" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Contact lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/press" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Press lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/project/:slug" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <ProjectDetail lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                
+                {/* Backwards compatibility: rotas SEM prefixo redirecionam */}
+                <Route path="/what" element={<Navigate to={`/${lang}/what`} replace />} />
+                <Route path="/work" element={<Navigate to={`/${lang}/work`} replace />} />
+                <Route path="/studio" element={<Navigate to={`/${lang}/studio`} replace />} />
+                <Route path="/academy" element={<Navigate to={`/${lang}/academy`} replace />} />
+                <Route path="/contact" element={<Navigate to={`/${lang}/contact`} replace />} />
+                <Route path="/press" element={<Navigate to={`/${lang}/press`} replace />} />
+                <Route path="/project/:slug" element={<Navigate to={`/${lang}/project/:slug`} replace />} />
+                
                 {/* Rota 404 - captura qualquer URL não encontrada */}
-                <Route path="*" element={<NotFound lang={lang} />} />
+                <Route path="*" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <NotFound lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
               </Routes>
               </ErrorBoundary>
             </Suspense>
@@ -240,3 +350,5 @@ const App: React.FC = () => {
 }
 
 export default App
+
+

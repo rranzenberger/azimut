@@ -8,9 +8,10 @@ import InternalNavigation from '../components/InternalNavigation'
 
 interface AcademyProps {
   lang: Lang
+  section?: 'research' | 'courses' | 'corporate'
 }
 
-const Academy: React.FC<AcademyProps> = ({ lang }) => {
+const Academy: React.FC<AcademyProps> = ({ lang, section }) => {
   useUserTracking()
   const seo = seoData.academy[lang]
   const location = useLocation()
@@ -31,29 +32,28 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
     return entry[lang as 'pt' | 'en' | 'es'] || entry.en
   }
 
-  // Detectar seção ativa baseada no hash da URL
+  // Detectar seção ativa baseada no prop section ou hash
   const [activeSection, setActiveSection] = useState<'research' | 'courses' | 'corporate'>(() => {
+    if (section) return section
     const hash = location.hash.replace('#', '')
     if (hash === 'courses') return 'courses'
     if (hash === 'corporate') return 'corporate'
     return 'research'
   })
 
-  // Sincronizar activeSection com hash da URL
+  // Sincronizar activeSection com prop section
   useEffect(() => {
-    const hash = location.hash.replace('#', '')
-    if (hash === 'courses') setActiveSection('courses')
-    else if (hash === 'corporate') setActiveSection('corporate')
-    else if (hash === 'research') setActiveSection('research')
-    else if (!hash) setActiveSection('research')
-  }, [location.hash])
+    if (section) {
+      setActiveSection(section)
+      // Scroll para o topo ao mudar de seção
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }, [section])
 
-  // Função para mudar seção (atualiza URL e state)
-  const changeSection = (section: 'research' | 'courses' | 'corporate') => {
-    setActiveSection(section)
-    navigate(`/academy#${section}`, { replace: true })
-    // Scroll suave para o topo
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+  // Função para mudar seção (navega para a rota correta)
+  const changeSection = (newSection: 'research' | 'courses' | 'corporate') => {
+    setActiveSection(newSection)
+    navigate(`/academy/${newSection}`)
   }
 
   // ═══════════════════════════════════════════════════════════════

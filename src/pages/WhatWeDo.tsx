@@ -18,8 +18,9 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
   const { content: cmsContent, loading: cmsLoading, error: cmsError } = useAzimutContent({ page: 'what' })
   
-  // Fallback: Serviços padrão quando backoffice está vazio ou falha
+  // Fallback: Serviços padrão quando backoffice está vazio ou falha - GRID 3×3
   const defaultServices = [
+    // LINHA 1: AUDIOVISUAL CORE
     { 
       slug: 'cinema-audiovisual',
       id: 'cinema-av',
@@ -28,12 +29,20 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
       icon: '🎬'
     },
     { 
+      slug: 'pos-producao-vfx',
+      id: 'post-vfx',
+      title: lang === 'pt' ? 'Pós-Produção & VFX' : lang === 'es' ? 'Post-Producción & VFX' : lang === 'fr' ? 'Post-Production & VFX' : 'Post-Production & VFX',
+      description: lang === 'pt' ? 'Fazemos desde o básico até o complexo: composição de vídeo, edição, motion design, VFX e grafismo. Pipeline completo com padrão cinematográfico para projetos de alta exigência técnica.' : lang === 'es' ? 'Hacemos desde lo básico hasta lo complejo: composición de vídeo, edición, motion design, VFX y grafismo. Pipeline completo con estándar cinematográfico para proyectos de alta exigencia técnica.' : lang === 'fr' ? 'Nous faisons du basique au complexe: composition vidéo, montage, motion design, VFX et graphisme. Pipeline complet avec standard cinématographique pour projets à haute exigence technique.' : 'We do everything from basic to complex: video compositing, editing, motion design, VFX and graphics. Complete pipeline with cinematic standards for high-demand technical projects.',
+      icon: '🎞️'
+    },
+    { 
       slug: 'animacao-2d-3d',
       id: 'animation',
       title: lang === 'pt' ? 'Animação 2D/3D' : lang === 'es' ? 'Animación 2D/3D' : lang === 'fr' ? 'Animation 2D/3D' : '2D/3D Animation',
       description: lang === 'pt' ? 'Damos vida a personagens e mundos através de animação 2D/3D. Nossa expertise técnica permite criar narrativas visuais envolventes, desde storyboards até finalização completa.' : lang === 'es' ? 'Damos vida a personajes y mundos a través de animación 2D/3D. Nuestra expertise técnica nos permite crear narrativas visuales envolventes, desde storyboards hasta finalización completa.' : lang === 'fr' ? 'Nous donnons vie aux personnages et mondes grâce à l\'animation 2D/3D. Notre expertise technique nous permet de créer des narrations visuelles engageantes, des storyboards à la finalisation complète.' : 'We bring characters and worlds to life through 2D/3D animation. Our technical expertise enables us to create engaging visual narratives, from storyboards to complete finishing.',
       icon: '🎨'
     },
+    // LINHA 2: EXPERIÊNCIAS ESPACIAIS
     { 
       slug: 'xr-interatividade',
       id: 'xr',
@@ -42,6 +51,21 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
       icon: '🥽'
     },
     { 
+      slug: 'cenografia-design',
+      id: 'scenography',
+      title: lang === 'pt' ? 'Cenografia & Design Espacial' : lang === 'es' ? 'Escenografía & Diseño Espacial' : lang === 'fr' ? 'Scénographie & Design Spatial' : 'Scenography & Spatial Design',
+      description: lang === 'pt' ? 'Projetamos espaços que contam histórias: cenografia virtual, sinalética, design gráfico e direção de arte. Integramos tecnologia, audiovisual e design para criar ambientes memoráveis.' : lang === 'es' ? 'Diseñamos espacios que cuentan historias: escenografía virtual, señalética, diseño gráfico y dirección de arte. Integramos tecnología, audiovisual y diseño para crear ambientes memorables.' : lang === 'fr' ? 'Nous concevons des espaces qui racontent des histoires: scénographie virtuelle, signalétique, design graphique et direction artistique. Nous intégrons technologie, audiovisuel et design pour créer des environnements mémorables.' : 'We design spaces that tell stories: virtual scenography, wayfinding, graphic design and art direction. We integrate technology, audiovisual and design to create memorable environments.',
+      icon: '🏗️'
+    },
+    { 
+      slug: 'games-interativos',
+      id: 'games',
+      title: lang === 'pt' ? 'Games & Interativos' : lang === 'es' ? 'Games & Interactivos' : lang === 'fr' ? 'Jeux & Interactifs' : 'Games & Interactive',
+      description: lang === 'pt' ? 'Desenvolvemos jogos e experiências interativas para museus, marcas e educação. De jogos sérios a narrativas não-lineares, criamos experiências que engajam e educam.' : lang === 'es' ? 'Desarrollamos juegos y experiencias interactivas para museos, marcas y educación. De juegos serios a narrativas no lineales, creamos experiencias que enganchan y educan.' : lang === 'fr' ? 'Nous développons des jeux et expériences interactives pour musées, marques et éducation. Des serious games aux narrations non-linéaires, nous créons des expériences qui engagent et éduquent.' : 'We develop games and interactive experiences for museums, brands and education. From serious games to non-linear narratives, we create experiences that engage and educate.',
+      icon: '🎮'
+    },
+    // LINHA 3: INTELIGÊNCIA & ESTRATÉGIA
+    { 
       slug: 'ia-criativa',
       id: 'ai',
       title: lang === 'pt' ? 'IA Criativa' : lang === 'es' ? 'IA Creativa' : lang === 'fr' ? 'IA Créative' : 'Creative AI',
@@ -49,11 +73,11 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
       icon: '🤖'
     },
     { 
-      slug: 'educacao-formacao',
-      id: 'education',
-      title: lang === 'pt' ? 'Educação & Formação' : lang === 'es' ? 'Educación & Formación' : lang === 'fr' ? 'Éducation & Formation' : 'Education & Training',
-      description: lang === 'pt' ? 'Compartilhamos conhecimento acumulado em 30 anos. Nossos workshops e mentorias formaram centenas de profissionais, enquanto nossa curadoria em festivais nos permite identificar e apresentar as melhores práticas do setor.' : lang === 'es' ? 'Compartimos conocimiento acumulado en 30 años. Nuestros workshops y mentorías han formado cientos de profesionales, mientras nuestra curaduría en festivales nos permite identificar y presentar las mejores prácticas del sector.' : lang === 'fr' ? 'Nous partageons les connaissances accumulées sur 30 ans. Nos ateliers et mentorats ont formé des centaines de professionnels, tandis que notre curation de festivals nous permet d\'identifier et présenter les meilleures pratiques de l\'industrie.' : 'We share knowledge accumulated over 30 years. Our workshops and mentoring have trained hundreds of professionals, while our festival curation allows us to identify and present the industry\'s best practices.',
-      icon: '📚'
+      slug: 'direcao-arte',
+      id: 'art-direction',
+      title: lang === 'pt' ? 'Direção de Arte & Criativa' : lang === 'es' ? 'Dirección de Arte & Creativa' : lang === 'fr' ? 'Direction Artistique & Créative' : 'Art & Creative Direction',
+      description: lang === 'pt' ? 'Lideramos a visão criativa de projetos complexos: direção de arte, direção criativa e identidade visual. Coordenamos equipes multidisciplinares para garantir coerência estética e narrativa.' : lang === 'es' ? 'Lideramos la visión creativa de proyectos complejos: dirección de arte, dirección creativa e identidad visual. Coordinamos equipos multidisciplinarios para garantizar coherencia estética y narrativa.' : lang === 'fr' ? 'Nous dirigeons la vision créative de projets complexes: direction artistique, direction créative et identité visuelle. Nous coordonnons des équipes multidisciplinaires pour garantir cohérence esthétique et narrative.' : 'We lead the creative vision of complex projects: art direction, creative direction and visual identity. We coordinate multidisciplinary teams to ensure aesthetic and narrative coherence.',
+      icon: '🎭'
     },
     { 
       slug: 'consultoria-estrategia',
@@ -142,7 +166,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
               : 'We combine cinema, interactive design, spatial storytelling and AI pipelines to create narrative installations, hybrid environments and time-based experiences. Our unique approach integrates research, production and education, enabling projects other studios cannot deliver.'}
           </p>
 
-          {/* Navegação Interna - Padrão Universal Azimut */}
+          {/* Navegação Interna - Padrão Universal Azimut - 9 SOLUÇÕES */}
           <InternalNavigation
             items={[
               {
@@ -153,33 +177,51 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
               },
               {
                 id: 'cinema-av',
-                label: lang === 'pt' ? 'Cinema & Audiovisual' : lang === 'es' ? 'Cine & Audiovisual' : lang === 'fr' ? 'Cinéma & Audiovisuel' : 'Cinema & Audiovisual',
+                label: lang === 'pt' ? 'Cinema & AV' : lang === 'es' ? 'Cine & AV' : lang === 'fr' ? 'Cinéma & AV' : 'Cinema & AV',
                 href: '/what#cinema-av',
                 icon: '🎬'
               },
               {
+                id: 'post-vfx',
+                label: lang === 'pt' ? 'Pós & VFX' : lang === 'es' ? 'Post & VFX' : lang === 'fr' ? 'Post & VFX' : 'Post & VFX',
+                href: '/what#post-vfx',
+                icon: '🎞️'
+              },
+              {
                 id: 'animation',
-                label: lang === 'pt' ? 'Animação 2D/3D' : lang === 'es' ? 'Animación 2D/3D' : lang === 'fr' ? 'Animation 2D/3D' : '2D/3D Animation',
+                label: lang === 'pt' ? 'Animação' : lang === 'es' ? 'Animación' : lang === 'fr' ? 'Animation' : 'Animation',
                 href: '/what#animation',
                 icon: '🎨'
               },
               {
                 id: 'xr',
-                label: lang === 'pt' ? 'XR / Interativo' : lang === 'es' ? 'XR / Interactivo' : lang === 'fr' ? 'XR / Interactif' : 'XR / Interactive',
+                label: lang === 'pt' ? 'XR' : lang === 'es' ? 'XR' : lang === 'fr' ? 'XR' : 'XR',
                 href: '/what#xr',
                 icon: '🥽'
               },
               {
+                id: 'scenography',
+                label: lang === 'pt' ? 'Cenografia' : lang === 'es' ? 'Escenografía' : lang === 'fr' ? 'Scénographie' : 'Scenography',
+                href: '/what#scenography',
+                icon: '🏗️'
+              },
+              {
+                id: 'games',
+                label: lang === 'pt' ? 'Games' : lang === 'es' ? 'Games' : lang === 'fr' ? 'Jeux' : 'Games',
+                href: '/what#games',
+                icon: '🎮'
+              },
+              {
                 id: 'ai',
-                label: lang === 'pt' ? 'IA Criativa' : lang === 'es' ? 'IA Creativa' : lang === 'fr' ? 'IA Créative' : 'Creative AI',
+                label: lang === 'pt' ? 'IA' : lang === 'es' ? 'IA' : lang === 'fr' ? 'IA' : 'AI',
                 href: '/what#ai',
                 icon: '🤖'
               },
               {
-                id: 'education',
-                label: lang === 'pt' ? 'Educação & Formação' : lang === 'es' ? 'Educación & Formación' : lang === 'fr' ? 'Éducation & Formation' : 'Education & Training',
-                href: '/what#education',
-                icon: '📚'
+                id: 'art-direction',
+                label: lang === 'pt' ? 'Dir. Arte' : lang === 'es' ? 'Dir. Arte' : lang === 'fr' ? 'Dir. Art.' : 'Art Dir.',
+                href: '/what#art-direction',
+                icon: '🎭'
               }
             ]}
           />

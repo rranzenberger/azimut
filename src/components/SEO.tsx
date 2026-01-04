@@ -25,7 +25,9 @@ const SEO: React.FC<SEOProps> = ({
     ? 'Azimut – Immersive • Interactive • Cinematic Experiences'
     : `${title} | Azimut`
   
-  const canonicalUrl = `${SITE_URL}${path}`
+  // Construir URLs com prefixo de idioma (/pt, /en, /fr, /es)
+  const pathWithoutLang = path.replace(/^\/(pt|en|fr|es)/, '') || '/'
+  const canonicalUrl = `${SITE_URL}/${lang}${pathWithoutLang}`
   const imageUrl = image.startsWith('http') ? image : `${SITE_URL}${image}`
   
   // Mapeamento de idioma para código de localidade
@@ -61,12 +63,12 @@ const SEO: React.FC<SEOProps> = ({
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={imageUrl} />
 
-      {/* Hreflang - ajuda Google a entender versões em outros idiomas */}
-      <link rel="alternate" hrefLang="en" href={`${SITE_URL}${path}?lang=en`} />
-      <link rel="alternate" hrefLang="fr" href={`${SITE_URL}${path}?lang=fr`} />
-      <link rel="alternate" hrefLang="pt" href={`${SITE_URL}${path}?lang=pt`} />
-      <link rel="alternate" hrefLang="es" href={`${SITE_URL}${path}?lang=es`} />
-      <link rel="alternate" hrefLang="x-default" href={`${SITE_URL}${path}`} />
+      {/* Hreflang - URLs com prefixo de idioma (/pt, /en, /fr, /es) */}
+      <link rel="alternate" hrefLang="en" href={`${SITE_URL}/en${pathWithoutLang}`} />
+      <link rel="alternate" hrefLang="fr" href={`${SITE_URL}/fr${pathWithoutLang}`} />
+      <link rel="alternate" hrefLang="pt" href={`${SITE_URL}/pt${pathWithoutLang}`} />
+      <link rel="alternate" hrefLang="es" href={`${SITE_URL}/es${pathWithoutLang}`} />
+      <link rel="alternate" hrefLang="x-default" href={`${SITE_URL}/en${pathWithoutLang}`} />
 
       {/* Extras para SEO */}
       <meta name="robots" content="index, follow" />

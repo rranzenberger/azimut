@@ -34,9 +34,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     loading: personalizationLoading,
   } = usePersonalizedContent()
   
-  // ESTRATÉGIA: Backoffice → Estático (sempre funciona)
-  const heroSlogan = personalizedHeroMessage || cmsContent?.page?.heroSlogan || 'Experiências que Conectam Mundos'
-  const heroSubtitle = personalizedHeroSubtitle || cmsContent?.page?.heroSubtitle || 'Criamos experiências imersivas entre Brasil e Canadá.'
+  // ESTRATÉGIA: Personalizado → Backoffice → i18n.ts (sempre funciona)
+  const heroSlogan = personalizedHeroMessage || cmsContent?.page?.heroSlogan || t(lang, 'heroTitle')
+  const heroSubtitle = personalizedHeroSubtitle || cmsContent?.page?.heroSubtitle || t(lang, 'heroSubtitle')
   
   // Fallback: Projetos padrão quando backoffice está vazio
   const defaultProjects = useMemo(() => [
