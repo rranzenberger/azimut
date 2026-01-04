@@ -669,7 +669,7 @@ export const servicesData: Service[] = [
       'Playtesting',
       'Deploy y soporte'
     ],
-    technologies: ['Unity', 'Unreal Engine', 'Godot', 'WebGL', 'Arduino', 'Raspberry Pi'],
+    technologies: ['Unity', 'Unreal Engine', 'Godot', 'Python', 'Blender', '3ds Max', 'Adobe Creative Suite', 'Substance Painter', 'WebGL', 'Arduino', 'Raspberry Pi', 'Kinect', 'Leap Motion', 'Touch Screens', 'PlayCanvas', 'Phaser'],
     projectCategories: ['games', 'interactive', 'educational', 'gamification']
   },
   {
