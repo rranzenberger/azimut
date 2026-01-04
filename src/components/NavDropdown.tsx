@@ -92,7 +92,12 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
       onMouseLeave={handleMouseLeave}
     >
       {/* Link principal */}
-      <LangLink to={items[0]?.href || '#'}
+      <button
+        onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          setIsOpen(!isOpen)
+        }}
         className="nav-link-glow relative whitespace-nowrap pb-1 shrink-0 transition-colors duration-200 font-sora font-semibold"
         style={{
           padding: '0 6px',
@@ -100,6 +105,9 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
           display: 'flex',
           alignItems: 'center',
           position: 'relative',
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
           color: isActive || hasActiveItem || hovered
             ? (theme === 'light' ? '#ff5a6e' : '#c92337') // Vermelho vibrante no light, vermelho no dark
             : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-secondary)'), // Texto CLARO no light!
@@ -127,7 +135,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
             bottom: '10px' // Mais perto do texto! ✅
           }}
         ></span>
-      </LangLink>
+      </button>
 
       {/* Dropdown menu */}
       {isOpen && (
