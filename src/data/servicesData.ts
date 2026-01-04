@@ -1316,7 +1316,7 @@ export const servicesData: Service[] = [
       'Desarrollo de interactivos',
       'Implementación y apertura'
     ],
-    technologies: ['Unity', 'Unreal Engine', 'TouchDesigner', 'Notch', 'Resolume', 'Adobe After Effects', 'Adobe Premiere', 'Adobe Photoshop', 'Adobe Illustrator', 'Adobe InDesign', 'DaVinci Resolve', 'Blender', '3ds Max', 'Cinema 4D', 'SketchUp', 'Revit', 'AutoCAD', 'V-Ray', 'Corona', 'Enscape', 'Oculus Quest', 'HTC Vive', 'Insta360 X5', 'Insta360 Pro 2', 'DJI Drones', 'Câmeras DSLR/Mirrorless', 'Painéis LED', 'Projeção Mapeada', 'Telas Touch (Elo, Philips)', 'Sensores (Kinect, Leap Motion, LiDAR)', 'RFID/NFC', 'Arduíno', 'Raspberry Pi', 'OSC/MIDI/DMX', 'Servidores (Dell, HP)', 'Networking (Ubiquiti, Cisco)', 'UPS/NoBreak', 'Sistemas Áudio (QSC, Bose)', 'Acessibilidade (Libras, Audiodescrição)', 'CMS Acervo (PastPerfect, TMS)', 'Runway ML', 'Pika Labs', 'Sora', 'Midjourney', 'DALL-E', 'Stable Diffusion', 'Topaz', 'Magnific AI', 'Claude', 'ChatGPT', 'Gemini', 'Perplexity', 'Stock Media (Shutterstock, Getty, Envato)', 'Notion', 'Asana', 'Monday.com', 'Trello', 'ClickUp', 'Slack', 'Miro', 'FigJam', 'Google Workspace', 'Microsoft Project', 'Roteirização (Final Draft, Celtx)', 'Pesquisa (Zotero, Mendeley)'],
+    technologies: ['Unity', 'Unreal Engine', 'TouchDesigner', 'Notch', 'Resolume', 'Adobe After Effects', 'Adobe Premiere', 'Adobe Photoshop', 'Adobe Illustrator', 'Adobe InDesign', 'DaVinci Resolve', 'Blender', '3ds Max', 'Cinema 4D', 'SketchUp', 'Revit', 'AutoCAD', 'V-Ray', 'Corona', 'Enscape', 'Oculus Quest', 'HTC Vive', 'Insta360 X5', 'Insta360 Pro 2', 'DJI Drones', 'Câmeras DSLR/Mirrorless', 'Painéis LED', 'Projeção Mapeada', 'Telas Touch (Elo, Philips)', 'Sensores (Kinect, Leap Motion, LiDAR)', 'QR Code', 'RFID/NFC', 'Beacons BLE', 'Web Apps PWA', 'Arduíno', 'Raspberry Pi', 'OSC/MIDI/DMX', 'Servidores (Dell, HP)', 'Networking (Ubiquiti, Cisco)', 'UPS/NoBreak', 'Sistemas Áudio (QSC, Bose)', 'Acessibilidade (Libras, Audiodescrição)', 'CMS Acervo (PastPerfect, TMS)', 'Runway ML', 'Pika Labs', 'Sora', 'Midjourney', 'DALL-E', 'Stable Diffusion', 'Topaz', 'Magnific AI', 'Claude', 'ChatGPT', 'Gemini', 'Perplexity', 'Stock Media (Shutterstock, Getty, Envato)', 'Notion', 'Asana', 'Monday.com', 'Trello', 'ClickUp', 'Slack', 'Miro', 'FigJam', 'Google Workspace', 'Microsoft Project', 'Roteirização (Final Draft, Celtx)', 'Pesquisa (Zotero, Mendeley)'],
     projectCategories: ['museum', 'exhibition', 'cultural', 'heritage']
   },
   {
@@ -1423,7 +1423,7 @@ export const servicesData: Service[] = [
       'Documentación',
       'Informe final'
     ],
-    technologies: ['Meta Quest', 'PSVR2', 'HTC Vive', 'Projeção', 'Som espacial'],
+    technologies: ['Meta Quest', 'PSVR2', 'HTC Vive', 'Projeção', 'Som espacial', 'QR Code', 'Web Apps', 'Streaming (OBS, vMix)', 'Notion', 'Airtable', 'Eventbrite', 'Redes Sociais'],
     projectCategories: ['festival', 'curation', 'event', 'vr', 'culture']
   },
   {
