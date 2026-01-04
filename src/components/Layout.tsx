@@ -295,32 +295,27 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 {
                   label: lang === 'pt' ? 'Todas as Soluções' : lang === 'es' ? 'Todas las Soluciones' : lang === 'fr' ? 'Toutes les Solutions' : 'All Solutions',
                   href: '/what',
-                  description: lang === 'pt' ? 'Visão geral completa' : lang === 'es' ? 'Vista general completa' : lang === 'fr' ? 'Vue d\'ensemble complète' : 'Complete overview'
+                  description: lang === 'pt' ? 'Visão geral completa (16)' : lang === 'es' ? 'Vista general completa (16)' : lang === 'fr' ? 'Vue d\'ensemble complète (16)' : 'Complete overview (16)'
                 },
                 {
-                  label: lang === 'pt' ? 'Cinema & Audiovisual' : lang === 'es' ? 'Cine & Audiovisual' : lang === 'fr' ? 'Cinéma & Audiovisuel' : 'Cinema & Audiovisual',
-                  href: '/what#cinema-av',
-                  description: lang === 'pt' ? 'Narrativas cinematográficas' : lang === 'es' ? 'Narrativas cinematográficas' : lang === 'fr' ? 'Récits cinématographiques' : 'Cinematic narratives'
+                  label: lang === 'pt' ? 'Cultura & Instituições' : lang === 'es' ? 'Cultura & Instituciones' : lang === 'fr' ? 'Culture & Institutions' : 'Culture & Institutions',
+                  href: '/what?filter=culture',
+                  description: lang === 'pt' ? 'Museus, festivais, educação' : lang === 'es' ? 'Museos, festivales, educación' : lang === 'fr' ? 'Musées, festivals, éducation' : 'Museums, festivals, education'
                 },
                 {
-                  label: lang === 'pt' ? 'Animação 2D/3D' : lang === 'es' ? 'Animación 2D/3D' : lang === 'fr' ? 'Animation 2D/3D' : '2D/3D Animation',
-                  href: '/what#animation',
-                  description: lang === 'pt' ? 'Personagens e mundos' : lang === 'es' ? 'Personajes y mundos' : lang === 'fr' ? 'Personnages et mondes' : 'Characters and worlds'
+                  label: lang === 'pt' ? 'Marcas & Experiências' : lang === 'es' ? 'Marcas & Experiencias' : lang === 'fr' ? 'Marques & Expériences' : 'Brands & Experiences',
+                  href: '/what?filter=brands',
+                  description: lang === 'pt' ? 'Ativações, VR, branded content' : lang === 'es' ? 'Activaciones, VR, branded content' : lang === 'fr' ? 'Activations, VR, branded content' : 'Activations, VR, branded content'
                 },
                 {
-                  label: lang === 'pt' ? 'XR / Interatividade' : lang === 'es' ? 'XR / Interactivo' : lang === 'fr' ? 'XR / Interactif' : 'XR / Interactive',
-                  href: '/what#xr',
-                  description: lang === 'pt' ? 'Experiências imersivas' : lang === 'es' ? 'Experiencias inmersivas' : lang === 'fr' ? 'Expériences immersives' : 'Immersive experiences'
+                  label: lang === 'pt' ? 'Produção Audiovisual' : lang === 'es' ? 'Producción Audiovisual' : lang === 'fr' ? 'Production Audiovisuelle' : 'Audiovisual Production',
+                  href: '/what?filter=production',
+                  description: lang === 'pt' ? 'Cinema, VFX, animação, games' : lang === 'es' ? 'Cine, VFX, animación, juegos' : lang === 'fr' ? 'Cinéma, VFX, animation, jeux' : 'Cinema, VFX, animation, games'
                 },
                 {
-                  label: lang === 'pt' ? 'IA Criativa' : lang === 'es' ? 'IA Creativa' : lang === 'fr' ? 'IA Créative' : 'Creative AI',
-                  href: '/what#creative-ai',
-                  description: lang === 'pt' ? 'Pipelines com IA' : lang === 'es' ? 'Pipelines con IA' : lang === 'fr' ? 'Pipelines avec IA' : 'AI pipelines'
-                },
-                {
-                  label: lang === 'pt' ? 'Educação & Formação' : lang === 'es' ? 'Educación & Formación' : lang === 'fr' ? 'Éducation & Formation' : 'Education & Training',
-                  href: '/what#education',
-                  description: lang === 'pt' ? 'Workshops e mentorias' : lang === 'es' ? 'Workshops y mentorías' : lang === 'fr' ? 'Ateliers et mentorats' : 'Workshops and mentoring'
+                  label: lang === 'pt' ? 'Tecnologia & Estratégia' : lang === 'es' ? 'Tecnología & Estrategia' : lang === 'fr' ? 'Technologie & Stratégie' : 'Technology & Strategy',
+                  href: '/what?filter=technology',
+                  description: lang === 'pt' ? 'IA, arquitetura, consultoria' : lang === 'es' ? 'IA, arquitectura, consultoría' : lang === 'fr' ? 'IA, architecture, conseil' : 'AI, architecture, consulting'
                 }
               ]}
               lang={lang}

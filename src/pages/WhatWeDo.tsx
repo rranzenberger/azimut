@@ -16,7 +16,17 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   const starRef = useRef<HTMLDivElement>(null)
   const seo = seoData.what[lang]
   
-  const [activeFilter, setActiveFilter] = useState<FilterCategory>('all')
+  // Ler filtro da URL (?filter=culture)
+  const [activeFilter, setActiveFilter] = useState<FilterCategory>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search)
+      const filter = params.get('filter')
+      if (filter && ['culture', 'brands', 'production', 'technology'].includes(filter)) {
+        return filter as FilterCategory
+      }
+    }
+    return 'all'
+  })
   
   // Mapeamento de categorias para cada serviço
   const serviceCategoryMap: Record<string, FilterCategory> = {
