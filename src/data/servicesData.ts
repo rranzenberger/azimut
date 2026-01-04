@@ -883,7 +883,7 @@ export const servicesData: Service[] = [
       'Supervisión y QA',
       'Entrega y documentación'
     ],
-    technologies: ['Adobe Creative Suite', 'Figma', 'Miro', 'Frame.io', 'Asana', 'Monday'],
+    technologies: ['Adobe Creative Suite', 'Figma', 'Sketch', 'Miro', 'FigJam', 'Frame.io', 'Notion', 'Slack', 'Asana', 'Monday.com', 'ClickUp', 'Trello', 'Google Workspace', 'Microsoft Teams', 'Zoom', 'Loom', 'Pitch', 'Canva'],
     projectCategories: ['art-direction', 'branding', 'museum', 'cultural']
   },
   {
