@@ -992,6 +992,760 @@ export const servicesData: Service[] = [
     ],
     technologies: ['Notion', 'Miro', 'Google Workspace', 'Asana', 'Monday', 'Slack'],
     projectCategories: ['consulting', 'strategy', 'funding', 'management']
+  },
+  // ========== NOVOS SERVIÇOS ==========
+  {
+    id: '10',
+    slug: 'teatro-espetaculos-imersivos',
+    icon: '🎭',
+    titlePt: 'Teatro & Espetáculos Imersivos',
+    titleEn: 'Theater & Immersive Shows',
+    titleFr: 'Théâtre & Spectacles Immersifs',
+    titleEs: 'Teatro & Espectáculos Inmersivos',
+    shortDescPt: 'Criamos cenografias virtuais interativas para teatro e espetáculos ao vivo. Com animações geradas por IA, painéis LED sincronizados e compositing em tempo real, integramos atores com mundos virtuais em camadas visuais inovadoras.',
+    shortDescEn: 'We create interactive virtual scenographies for theater and live shows. With AI-generated animations, synchronized LED panels and real-time compositing, we integrate actors with virtual worlds in innovative visual layers.',
+    shortDescFr: 'Nous créons des scénographies virtuelles interactives pour théâtre et spectacles en direct. Avec des animations générées par IA, panneaux LED synchronisés et compositing en temps réel, nous intégrons acteurs avec mondes virtuels en couches visuelles innovantes.',
+    shortDescEs: 'Creamos escenografías virtuales interactivas para teatro y espectáculos en vivo. Con animaciones generadas por IA, paneles LED sincronizados y compositing en tiempo real, integramos actores con mundos virtuales en capas visuales innovadoras.',
+    longDescPt: [
+      'Desenvolvemos tecnologia e conteúdo para espetáculos teatrais imersivos, integrando atores ao vivo com animações e mundos virtuais. Nossa expertise em compositing, painéis LED e IA generativa permite criar cenografias dinâmicas que respondem à narrativa.',
+      'No espetáculo "Fala Sério, Mãe!" (estreia 2026), criamos animações de fundo geradas por IA que interagem com os atores em camadas visuais, onde personagens "saem" dos painéis LED, criando uma experiência híbrida entre teatro tradicional e narrativa digital.',
+      'Oferecemos desde o conceito visual até a operação ao vivo, garantindo sincronização perfeita entre atores, luz, som e projeções. Essa é a nova fronteira do teatro: onde IA, motion design e interatividade se encontram.'
+    ],
+    longDescEn: [
+      'We develop technology and content for immersive theatrical shows, integrating live actors with animations and virtual worlds. Our expertise in compositing, LED panels and generative AI enables creating dynamic scenographies that respond to the narrative.',
+      'In the show "Fala Sério, Mãe!" (premiere 2026), we create AI-generated background animations that interact with actors in visual layers, where characters "emerge" from LED panels, creating a hybrid experience between traditional theater and digital narrative.',
+      'We offer everything from visual concept to live operation, ensuring perfect synchronization between actors, lights, sound and projections. This is the new frontier of theater: where AI, motion design and interactivity meet.'
+    ],
+    longDescFr: [
+      'Nous développons technologie et contenu pour spectacles théâtraux immersifs, intégrant acteurs en direct avec animations et mondes virtuels. Notre expertise en compositing, panneaux LED et IA générative permet de créer des scénographies dynamiques qui répondent au récit.',
+      'Dans le spectacle "Fala Sério, Mãe!" (première 2026), nous créons des animations de fond générées par IA qui interagissent avec les acteurs en couches visuelles, où les personnages "sortent" des panneaux LED, créant une expérience hybride entre théâtre traditionnel et récit numérique.',
+      'Nous offrons du concept visuel à l\'opération en direct, garantissant une synchronisation parfaite entre acteurs, lumières, son et projections. C\'est la nouvelle frontière du théâtre : où IA, motion design et interactivité se rencontrent.'
+    ],
+    longDescEs: [
+      'Desarrollamos tecnología y contenido para espectáculos teatrales inmersivos, integrando actores en vivo con animaciones y mundos virtuales. Nuestra expertise en compositing, paneles LED e IA generativa permite crear escenografías dinámicas que responden a la narrativa.',
+      'En el espectáculo "Fala Sério, Mãe!" (estreno 2026), creamos animaciones de fondo generadas por IA que interactúan con los actores en capas visuales, donde personajes "salen" de los paneles LED, creando una experiencia híbrida entre teatro tradicional y narrativa digital.',
+      'Ofrecemos desde el concepto visual hasta la operación en vivo, garantizando sincronización perfecta entre actores, luz, sonido y proyecciones. Esta es la nueva frontera del teatro: donde IA, motion design e interactividad se encuentran.'
+    ],
+    deliverablesPt: [
+      'Conceito visual e storyboard',
+      'Animações para painéis LED (geradas por IA)',
+      'Conteúdo generativo (backgrounds, efeitos)',
+      'Compositing em tempo real',
+      'Programação de cenas sincronizadas',
+      'Operação técnica ao vivo',
+      'Treinamento de equipe técnica',
+      'Sistema de backup e redundância'
+    ],
+    deliverablesEn: [
+      'Visual concept and storyboard',
+      'LED panel animations (AI-generated)',
+      'Generative content (backgrounds, effects)',
+      'Real-time compositing',
+      'Synchronized scene programming',
+      'Live technical operation',
+      'Technical team training',
+      'Backup and redundancy system'
+    ],
+    deliverablesFr: [
+      'Concept visuel et storyboard',
+      'Animations pour panneaux LED (générées par IA)',
+      'Contenu génératif (arrière-plans, effets)',
+      'Compositing en temps réel',
+      'Programmation de scènes synchronisées',
+      'Opération technique en direct',
+      'Formation équipe technique',
+      'Système de sauvegarde et redondance'
+    ],
+    deliverablesEs: [
+      'Concepto visual y storyboard',
+      'Animaciones para paneles LED (generadas por IA)',
+      'Contenido generativo (fondos, efectos)',
+      'Compositing en tiempo real',
+      'Programación de escenas sincronizadas',
+      'Operación técnica en vivo',
+      'Capacitación equipo técnico',
+      'Sistema de respaldo y redundancia'
+    ],
+    processPt: [
+      'Leitura do roteiro e conceito',
+      'Design visual e animatic',
+      'Geração de assets (IA + manual)',
+      'Programação e sincronização',
+      'Testes técnicos e ensaios',
+      'Operação durante temporada'
+    ],
+    processEn: [
+      'Script reading and concept',
+      'Visual design and animatic',
+      'Asset generation (AI + manual)',
+      'Programming and synchronization',
+      'Technical tests and rehearsals',
+      'Operation during season'
+    ],
+    processFr: [
+      'Lecture du scénario et concept',
+      'Design visuel et animatique',
+      'Génération d\'assets (IA + manuel)',
+      'Programmation et synchronisation',
+      'Tests techniques et répétitions',
+      'Opération pendant saison'
+    ],
+    processEs: [
+      'Lectura del guion y concepto',
+      'Diseño visual y animatic',
+      'Generación de assets (IA + manual)',
+      'Programación y sincronización',
+      'Pruebas técnicas y ensayos',
+      'Operación durante temporada'
+    ],
+    technologies: ['Notch', 'TouchDesigner', 'Resolume', 'Stable Diffusion', 'Runway ML', 'QLab', 'LED Panels (ROE, Absen)'],
+    projectCategories: ['theater', 'live-events', 'led-screens', 'ai-content', 'motion-design', 'interactive']
+  },
+  {
+    id: '11',
+    slug: 'branded-experiences-ativacoes',
+    icon: '🎯',
+    titlePt: 'Branded Experiences & Ativações',
+    titleEn: 'Branded Experiences & Activations',
+    titleFr: 'Expériences de Marque & Activations',
+    titleEs: 'Branded Experiences & Activaciones',
+    shortDescPt: 'Criamos experiências imersivas para marcas aumentarem engajamento e vendas. Do filme 360° do Flamengo distribuído em lojas a estandes com VR em shoppings, integramos tecnologia e narrativa para ativações que convertem.',
+    shortDescEn: 'We create immersive experiences for brands to increase engagement and sales. From Flamengo\'s 360° film distributed in stores to VR stands in malls, we integrate technology and narrative for activations that convert.',
+    shortDescFr: 'Nous créons des expériences immersives pour que les marques augmentent engagement et ventes. Du film 360° de Flamengo distribué en magasins aux stands VR en centres commerciaux, nous intégrons technologie et récit pour activations qui convertissent.',
+    shortDescEs: 'Creamos experiencias inmersivas para marcas aumentar engagement y ventas. De la película 360° del Flamengo distribuida en tiendas a estands con VR en shoppings, integramos tecnología y narrativa para activaciones que convierten.',
+    longDescPt: [
+      'Desenvolvemos ativações de marca que vão além do tradicional. Usando VR, AR e conteúdo imersivo, criamos experiências memoráveis em pontos de venda, eventos e ações de marketing que geram engajamento real e aumentam vendas.',
+      'Nossa abordagem integra produção de conteúdo (filmes 360°, experiências interativas) com fornecimento de tecnologia (aluguel de equipamentos VR) e mensuração de resultados, garantindo ROI para marcas.',
+      'Do Flamengo 360 (distribuído em lojas para aumentar vendas) a estandes experienciais em shoppings (Cenna Tower), criamos branded content que emociona e converte. Oferecemos desde o conceito até operação em campo e analytics.'
+    ],
+    longDescEn: [
+      'We develop brand activations that go beyond traditional. Using VR, AR and immersive content, we create memorable experiences at points of sale, events and marketing actions that generate real engagement and increase sales.',
+      'Our approach integrates content production (360° films, interactive experiences) with technology supply (VR equipment rental) and results measurement, ensuring ROI for brands.',
+      'From Flamengo 360 (distributed in stores to increase sales) to experiential stands in malls (Cenna Tower), we create branded content that moves and converts. We offer everything from concept to field operation and analytics.'
+    ],
+    longDescFr: [
+      'Nous développons des activations de marque qui vont au-delà du traditionnel. Utilisant VR, AR et contenu immersif, nous créons des expériences mémorables en points de vente, événements et actions marketing qui génèrent engagement réel et augmentent ventes.',
+      'Notre approche intègre production de contenu (films 360°, expériences interactives) avec fourniture de technologie (location équipements VR) et mesure de résultats, garantissant ROI pour marques.',
+      'Du Flamengo 360 (distribué en magasins pour augmenter ventes) aux stands expérientiels en centres commerciaux (Cenna Tower), nous créons branded content qui émeut et convertit. Nous offrons du concept à opération terrain et analytics.'
+    ],
+    longDescEs: [
+      'Desarrollamos activaciones de marca que van más allá de lo tradicional. Usando VR, AR y contenido inmersivo, creamos experiencias memorables en puntos de venta, eventos y acciones de marketing que generan engagement real y aumentan ventas.',
+      'Nuestro enfoque integra producción de contenido (películas 360°, experiencias interactivas) con suministro de tecnología (alquiler de equipos VR) y medición de resultados, garantizando ROI para marcas.',
+      'Del Flamengo 360 (distribuido en tiendas para aumentar ventas) a estands experienciales en shoppings (Cenna Tower), creamos branded content que emociona y convierte. Ofrecemos desde concepto hasta operación en campo y analytics.'
+    ],
+    deliverablesPt: [
+      'Filmes 360°/VR branded',
+      'Estandes experienciais com VR/AR',
+      'Ativações de marca em pontos de venda',
+      'Aluguel de equipamentos VR + conteúdo customizado',
+      'Operação e suporte em campo',
+      'Treinamento de promotores',
+      'Dashboards de analytics e mensuração',
+      'Relatórios de performance (leads, vendas, engajamento)'
+    ],
+    deliverablesEn: [
+      'Branded 360°/VR films',
+      'Experiential stands with VR/AR',
+      'Brand activations at points of sale',
+      'VR equipment rental + custom content',
+      'Operation and field support',
+      'Promoter training',
+      'Analytics and measurement dashboards',
+      'Performance reports (leads, sales, engagement)'
+    ],
+    deliverablesFr: [
+      'Films 360°/VR de marque',
+      'Stands expérientiels avec VR/AR',
+      'Activations de marque en points de vente',
+      'Location équipements VR + contenu personnalisé',
+      'Opération et support terrain',
+      'Formation promoteurs',
+      'Tableaux de bord analytics et mesure',
+      'Rapports performance (leads, ventes, engagement)'
+    ],
+    deliverablesEs: [
+      'Películas 360°/VR branded',
+      'Estands experienciales con VR/AR',
+      'Activaciones de marca en puntos de venta',
+      'Alquiler de equipos VR + contenido customizado',
+      'Operación y soporte en campo',
+      'Capacitación de promotores',
+      'Dashboards de analytics y medición',
+      'Informes de performance (leads, ventas, engagement)'
+    ],
+    processPt: [
+      'Briefing e objetivos de negócio',
+      'Conceito criativo + narrativa',
+      'Produção de conteúdo imersivo',
+      'Planejamento de ativação',
+      'Deploy em pontos de venda',
+      'Operação e suporte',
+      'Mensuração e otimização'
+    ],
+    processEn: [
+      'Briefing and business objectives',
+      'Creative concept + narrative',
+      'Immersive content production',
+      'Activation planning',
+      'Point of sale deploy',
+      'Operation and support',
+      'Measurement and optimization'
+    ],
+    processFr: [
+      'Briefing et objectifs business',
+      'Concept créatif + récit',
+      'Production contenu immersif',
+      'Planification activation',
+      'Déploiement points de vente',
+      'Opération et support',
+      'Mesure et optimisation'
+    ],
+    processEs: [
+      'Briefing y objetivos de negocio',
+      'Concepto creativo + narrativa',
+      'Producción contenido inmersivo',
+      'Planificación de activación',
+      'Deploy en puntos de venta',
+      'Operación y soporte',
+      'Medición y optimización'
+    ],
+    technologies: ['Meta Quest 2/3', 'Câmeras 360° (Insta360)', 'Google Analytics', 'WebXR', 'Unity', 'Mixpanel'],
+    projectCategories: ['branded', 'activation', 'vr-360', 'retail', 'marketing', 'experiential']
+  },
+  {
+    id: '12',
+    slug: 'museus-exposicoes',
+    icon: '🏛️',
+    titlePt: 'Museus & Exposições',
+    titleEn: 'Museums & Exhibitions',
+    titleFr: 'Musées & Expositions',
+    titleEs: 'Museos & Exposiciones',
+    shortDescPt: 'Projetamos experiências museológicas completas integrando cenografia, tecnologia e audiovisual. Do Rio Museu Olímpico ao First Nation Museum (Canadá), nossa expertise transforma espaços em narrativas vivas.',
+    shortDescEn: 'We design complete museological experiences integrating scenography, technology and audiovisual. From Rio Olympic Museum to First Nation Museum (Canada), our expertise transforms spaces into living narratives.',
+    shortDescFr: 'Nous concevons des expériences muséologiques complètes intégrant scénographie, technologie et audiovisuel. Du Musée Olympique de Rio au Musée First Nation (Canada), notre expertise transforme espaces en récits vivants.',
+    shortDescEs: 'Proyectamos experiencias museológicas completas integrando escenografía, tecnología y audiovisual. Del Museo Olímpico de Río al First Nation Museum (Canadá), nuestra expertise transforma espacios en narrativas vivas.',
+    longDescPt: [
+      'Com 22 meses de direção geral e tecnológica no Rio Museu Olímpico, desenvolvemos expertise única em projetos museológicos complexos: desde direção de arte até integração de sistemas interativos, audiovisual e cenografia.',
+      'Nossa abordagem end-to-end integra pesquisa curatorial, design de experiência, produção audiovisual, desenvolvimento de interativos e coordenação de múltiplas empresas de tecnologia.',
+      'Especializados em museus que combinam patrimônio cultural com tecnologia de ponta, criamos experiências educacionais que emocionam e permanecem na memória.'
+    ],
+    longDescEn: [
+      'With 22 months of general and technology direction at Rio Olympic Museum, we developed unique expertise in complex museological projects: from art direction to integration of interactive systems, audiovisual and scenography.',
+      'Our end-to-end approach integrates curatorial research, experience design, audiovisual production, interactive development and coordination of multiple technology companies.',
+      'Specialized in museums that combine cultural heritage with cutting-edge technology, we create educational experiences that move and remain in memory.'
+    ],
+    longDescFr: [
+      'Avec 22 mois de direction générale et technologique au Musée Olympique de Rio, nous avons développé une expertise unique en projets muséologiques complexes: de direction artistique à intégration de systèmes interactifs, audiovisuel et scénographie.',
+      'Notre approche end-to-end intègre recherche curatoriale, design d\'expérience, production audiovisuelle, développement d\'interactifs et coordination de multiples entreprises technologiques.',
+      'Spécialisés en musées qui combinent patrimoine culturel avec technologie de pointe, nous créons des expériences éducatives qui émeuvent et restent en mémoire.'
+    ],
+    longDescEs: [
+      'Con 22 meses de dirección general y tecnológica en el Museo Olímpico de Río, desarrollamos expertise única en proyectos museológicos complejos: desde dirección de arte hasta integración de sistemas interactivos, audiovisual y escenografía.',
+      'Nuestro enfoque end-to-end integra investigación curatorial, diseño de experiencia, producción audiovisual, desarrollo de interactivos y coordinación de múltiples empresas de tecnología.',
+      'Especializados en museos que combinan patrimonio cultural con tecnología de punta, creamos experiencias educacionales que emocionan y permanecen en la memoria.'
+    ],
+    deliverablesPt: [
+      'Conceito museológico e curadoria',
+      'Direção de arte e cenografia',
+      'Produção audiovisual (entrevistas, documentários)',
+      'Instalações interativas',
+      'Capturas 360° de patrimônio',
+      'Sinalética e wayfinding',
+      'Integração de tecnologias',
+      'Gestão de implantação'
+    ],
+    deliverablesEn: [
+      'Museological concept and curation',
+      'Art direction and scenography',
+      'Audiovisual production (interviews, documentaries)',
+      'Interactive installations',
+      '360° heritage captures',
+      'Signage and wayfinding',
+      'Technology integration',
+      'Implementation management'
+    ],
+    deliverablesFr: [
+      'Concept muséologique et curation',
+      'Direction artistique et scénographie',
+      'Production audiovisuelle (interviews, documentaires)',
+      'Installations interactives',
+      'Captures 360° de patrimoine',
+      'Signalétique et orientation',
+      'Intégration de technologies',
+      'Gestion de mise en œuvre'
+    ],
+    deliverablesEs: [
+      'Concepto museológico y curaduría',
+      'Dirección de arte y escenografía',
+      'Producción audiovisual (entrevistas, documentales)',
+      'Instalaciones interactivas',
+      'Capturas 360° de patrimonio',
+      'Señalética y orientación',
+      'Integración de tecnologías',
+      'Gestión de implementación'
+    ],
+    processPt: [
+      'Pesquisa e curadoria',
+      'Conceito e master plan',
+      'Direção de arte e cenografia',
+      'Produção de conteúdos',
+      'Desenvolvimento de interativos',
+      'Implantação e abertura'
+    ],
+    processEn: [
+      'Research and curation',
+      'Concept and master plan',
+      'Art direction and scenography',
+      'Content production',
+      'Interactive development',
+      'Implementation and opening'
+    ],
+    processFr: [
+      'Recherche et curation',
+      'Concept et master plan',
+      'Direction artistique et scénographie',
+      'Production de contenus',
+      'Développement d\'interactifs',
+      'Mise en œuvre et ouverture'
+    ],
+    processEs: [
+      'Investigación y curaduría',
+      'Concepto y master plan',
+      'Dirección de arte y escenografía',
+      'Producción de contenidos',
+      'Desarrollo de interactivos',
+      'Implementación y apertura'
+    ],
+    technologies: ['Câmeras 360°', 'Unity', 'TouchDesigner', 'Projeção mapeada', 'Sistemas interativos', 'LED walls'],
+    projectCategories: ['museum', 'exhibition', 'cultural', 'heritage']
+  },
+  {
+    id: '13',
+    slug: 'festivais-curadoria-eventos',
+    icon: '🎪',
+    titlePt: 'Festivais, Curadoria & Eventos',
+    titleEn: 'Festivals, Curation & Events',
+    titleFr: 'Festivals, Curation & Événements',
+    titleEs: 'Festivales, Curaduría & Eventos',
+    shortDescPt: 'Organizamos e curamos festivais de cinema imersivo (Immerso XR, Gramado VR, Petrópolis). Nossa experiência em curadoria e logística de eventos permite criar experiências culturais de alto impacto.',
+    shortDescEn: 'We organize and curate immersive cinema festivals (Immerso XR, Gramado VR, Petrópolis). Our experience in curation and event logistics allows creating high-impact cultural experiences.',
+    shortDescFr: 'Nous organisons et curons des festivals de cinéma immersif (Immerso XR, Gramado VR, Petrópolis). Notre expérience en curation et logistique d\'événements permet de créer des expériences culturelles à fort impact.',
+    shortDescEs: 'Organizamos y curamos festivales de cine inmersivo (Immerso XR, Gramado VR, Petrópolis). Nuestra experiencia en curaduría y logística de eventos permite crear experiencias culturales de alto impacto.',
+    longDescPt: [
+      'Como curadores do Immerso XR e realizadores de mostras VR em festivais como Gramado e Petrópolis, desenvolvemos profundo conhecimento em curadoria de conteúdos imersivos e organização de eventos culturais.',
+      'Oferecemos desde a curadoria de conteúdo até a execução completa: aluguel de equipamentos VR, montagem de espaços, operação técnica, formação de equipes e documentação.',
+      'Nossa rede internacional de parceiros permite acesso a conteúdos exclusivos e expertise em transformar festivais em experiências memoráveis.'
+    ],
+    longDescEn: [
+      'As curators of Immerso XR and organizers of VR showcases at festivals like Gramado and Petrópolis, we developed deep knowledge in immersive content curation and cultural event organization.',
+      'We offer from content curation to complete execution: VR equipment rental, space setup, technical operation, team training and documentation.',
+      'Our international partner network allows access to exclusive content and expertise in transforming festivals into memorable experiences.'
+    ],
+    longDescFr: [
+      'En tant que curateurs d\'Immerso XR et organisateurs de vitrines VR dans des festivals comme Gramado et Petrópolis, nous avons développé une connaissance approfondie en curation de contenus immersifs et organisation d\'événements culturels.',
+      'Nous offrons de la curation de contenu à l\'exécution complète: location équipements VR, montage d\'espaces, opération technique, formation d\'équipes et documentation.',
+      'Notre réseau international de partenaires permet accès à contenus exclusifs et expertise en transformation de festivals en expériences mémorables.'
+    ],
+    longDescEs: [
+      'Como curadores de Immerso XR y organizadores de muestras VR en festivales como Gramado y Petrópolis, desarrollamos profundo conocimiento en curaduría de contenidos inmersivos y organización de eventos culturales.',
+      'Ofrecemos desde la curaduría de contenido hasta la ejecución completa: alquiler de equipos VR, montaje de espacios, operación técnica, formación de equipos y documentación.',
+      'Nuestra red internacional de partners permite acceso a contenidos exclusivos y expertise en transformar festivales en experiencias memorables.'
+    ],
+    deliverablesPt: [
+      'Curadoria de conteúdo',
+      'Aluguel de equipamentos VR (Meta Quest, PSVR2)',
+      'Montagem e cenografia de espaços',
+      'Operação técnica durante evento',
+      'Formação de equipe',
+      'Gestão de logística',
+      'Documentação e cobertura',
+      'Relatórios pós-evento'
+    ],
+    deliverablesEn: [
+      'Content curation',
+      'VR equipment rental (Meta Quest, PSVR2)',
+      'Space setup and scenography',
+      'Technical operation during event',
+      'Team training',
+      'Logistics management',
+      'Documentation and coverage',
+      'Post-event reports'
+    ],
+    deliverablesFr: [
+      'Curation de contenu',
+      'Location équipements VR (Meta Quest, PSVR2)',
+      'Montage et scénographie d\'espaces',
+      'Opération technique pendant événement',
+      'Formation d\'équipe',
+      'Gestion logistique',
+      'Documentation et couverture',
+      'Rapports post-événement'
+    ],
+    deliverablesEs: [
+      'Curaduría de contenido',
+      'Alquiler de equipos VR (Meta Quest, PSVR2)',
+      'Montaje y escenografía de espacios',
+      'Operación técnica durante evento',
+      'Formación de equipo',
+      'Gestión de logística',
+      'Documentación y cobertura',
+      'Informes post-evento'
+    ],
+    processPt: [
+      'Definição de conceito e curadoria',
+      'Planejamento logístico',
+      'Preparação de equipamentos e espaço',
+      'Execução e operação',
+      'Documentação',
+      'Relatório final'
+    ],
+    processEn: [
+      'Concept definition and curation',
+      'Logistics planning',
+      'Equipment and space preparation',
+      'Execution and operation',
+      'Documentation',
+      'Final report'
+    ],
+    processFr: [
+      'Définition concept et curation',
+      'Planification logistique',
+      'Préparation équipements et espace',
+      'Exécution et opération',
+      'Documentation',
+      'Rapport final'
+    ],
+    processEs: [
+      'Definición concepto y curaduría',
+      'Planificación logística',
+      'Preparación equipos y espacio',
+      'Ejecución y operación',
+      'Documentación',
+      'Informe final'
+    ],
+    technologies: ['Meta Quest', 'PSVR2', 'HTC Vive', 'Projeção', 'Som espacial'],
+    projectCategories: ['festival', 'curation', 'event', 'vr', 'culture']
+  },
+  {
+    id: '14',
+    slug: 'educacao-treinamento',
+    icon: '🎓',
+    titlePt: 'Educação & Treinamento',
+    titleEn: 'Education & Training',
+    titleFr: 'Éducation & Formation',
+    titleEs: 'Educación & Capacitación',
+    shortDescPt: 'Desenvolvemos programas educacionais e treinamentos corporativos usando XR, gamificação e narrativas interativas. Nossa expertise transforma aprendizado em experiências memoráveis.',
+    shortDescEn: 'We develop educational programs and corporate training using XR, gamification and interactive narratives. Our expertise transforms learning into memorable experiences.',
+    shortDescFr: 'Nous développons des programmes éducatifs et formations corporate utilisant XR, gamification et récits interactifs. Notre expertise transforme l\'apprentissage en expériences mémorables.',
+    shortDescEs: 'Desarrollamos programas educacionales y capacitaciones corporativas usando XR, gamificación y narrativas interactivas. Nuestra expertise transforma aprendizaje en experiencias memorables.',
+    longDescPt: [
+      'Especializados em criar experiências educacionais imersivas para instituições de ensino e empresas. Usamos VR/AR, gamificação e narrativas interativas para aumentar engajamento e retenção de conhecimento.',
+      'Oferecemos desde workshops práticos até desenvolvimento de plataformas educacionais completas, sempre com foco em resultados mensuráveis.',
+      'Nossa experiência inclui treinamentos corporativos, cursos de extensão e programas educacionais para museus e centros culturais.'
+    ],
+    longDescEn: [
+      'Specialized in creating immersive educational experiences for educational institutions and companies. We use VR/AR, gamification and interactive narratives to increase engagement and knowledge retention.',
+      'We offer from practical workshops to development of complete educational platforms, always focused on measurable results.',
+      'Our experience includes corporate training, extension courses and educational programs for museums and cultural centers.'
+    ],
+    longDescFr: [
+      'Spécialisés en création d\'expériences éducatives immersives pour institutions d\'enseignement et entreprises. Nous utilisons VR/AR, gamification et récits interactifs pour augmenter engagement et rétention de connaissances.',
+      'Nous offrons des ateliers pratiques au développement de plateformes éducatives complètes, toujours focalisés sur résultats mesurables.',
+      'Notre expérience inclut formations corporate, cours d\'extension et programmes éducatifs pour musées et centres culturels.'
+    ],
+    longDescEs: [
+      'Especializados en crear experiencias educacionales inmersivas para instituciones de enseñanza y empresas. Usamos VR/AR, gamificación y narrativas interactivas para aumentar engagement y retención de conocimiento.',
+      'Ofrecemos desde workshops prácticos hasta desarrollo de plataformas educacionales completas, siempre con foco en resultados medibles.',
+      'Nuestra experiencia incluye capacitaciones corporativas, cursos de extensión y programas educacionales para museos y centros culturales.'
+    ],
+    deliverablesPt: [
+      'Desenvolvimento de currículo',
+      'Experiências VR/AR educacionais',
+      'Jogos educacionais',
+      'Workshops práticos',
+      'Treinamentos corporativos',
+      'Plataformas de e-learning',
+      'Material didático',
+      'Certificação e avaliação'
+    ],
+    deliverablesEn: [
+      'Curriculum development',
+      'Educational VR/AR experiences',
+      'Educational games',
+      'Practical workshops',
+      'Corporate training',
+      'E-learning platforms',
+      'Didactic material',
+      'Certification and evaluation'
+    ],
+    deliverablesFr: [
+      'Développement de curriculum',
+      'Expériences VR/AR éducatives',
+      'Jeux éducatifs',
+      'Ateliers pratiques',
+      'Formations corporate',
+      'Plateformes e-learning',
+      'Matériel didactique',
+      'Certification et évaluation'
+    ],
+    deliverablesEs: [
+      'Desarrollo de curriculum',
+      'Experiencias VR/AR educacionales',
+      'Juegos educacionales',
+      'Workshops prácticos',
+      'Capacitaciones corporativas',
+      'Plataformas de e-learning',
+      'Material didáctico',
+      'Certificación y evaluación'
+    ],
+    processPt: [
+      'Análise de necessidades',
+      'Desenvolvimento pedagógico',
+      'Criação de conteúdos',
+      'Testes piloto',
+      'Implementação',
+      'Avaliação e melhoria'
+    ],
+    processEn: [
+      'Needs analysis',
+      'Pedagogical development',
+      'Content creation',
+      'Pilot tests',
+      'Implementation',
+      'Evaluation and improvement'
+    ],
+    processFr: [
+      'Analyse des besoins',
+      'Développement pédagogique',
+      'Création de contenus',
+      'Tests pilotes',
+      'Mise en œuvre',
+      'Évaluation et amélioration'
+    ],
+    processEs: [
+      'Análisis de necesidades',
+      'Desarrollo pedagógico',
+      'Creación de contenidos',
+      'Pruebas piloto',
+      'Implementación',
+      'Evaluación y mejora'
+    ],
+    technologies: ['Meta Quest', 'Unity', 'Moodle', 'Articulate', 'Kahoot', 'Google Classroom'],
+    projectCategories: ['education', 'training', 'corporate', 'elearning']
+  },
+  {
+    id: '15',
+    slug: 'realidade-virtual-vr',
+    icon: '🥽',
+    titlePt: 'Realidade Virtual (VR)',
+    titleEn: 'Virtual Reality (VR)',
+    titleFr: 'Réalité Virtuelle (VR)',
+    titleEs: 'Realidad Virtual (VR)',
+    shortDescPt: 'Criamos experiências VR de alta qualidade: filmes 360°, experiências interativas 6DoF e instalações imersivas. Oferecemos também aluguel de equipamentos VR com conteúdo customizado para eventos e ativações.',
+    shortDescEn: 'We create high-quality VR experiences: 360° films, interactive 6DoF experiences and immersive installations. We also offer VR equipment rental with custom content for events and activations.',
+    shortDescFr: 'Nous créons des expériences VR de haute qualité: films 360°, expériences interactives 6DoF et installations immersives. Nous offrons aussi location équipements VR avec contenu personnalisé pour événements et activations.',
+    shortDescEs: 'Creamos experiencias VR de alta calidad: películas 360°, experiencias interactivas 6DoF e instalaciones inmersivas. Ofrecemos también alquiler de equipos VR con contenido customizado para eventos y activaciones.',
+    longDescPt: [
+      'Pioneiros em VR no Brasil, desenvolvemos experiências que vão de filmes 360° cinematográficos a experiências interativas 6DoF (room-scale). Nossa curadoria no festival Immerso XR nos dá visão única sobre o que funciona em VR.',
+      'Oferecemos também serviço completo de aluguel de equipamentos VR (Meta Quest, PSVR2) com conteúdo customizado, ideal para eventos, ativações de marca e experiências pontuais.',
+      'Do Flamengo 360 distribuído em lojas ao Museu do Círio em VR, criamos experiências que emocionam e geram resultados.'
+    ],
+    longDescEn: [
+      'Pioneers in VR in Brazil, we develop experiences ranging from cinematic 360° films to interactive 6DoF (room-scale) experiences. Our curation at Immerso XR festival gives us unique insight into what works in VR.',
+      'We also offer complete VR equipment rental service (Meta Quest, PSVR2) with custom content, ideal for events, brand activations and one-time experiences.',
+      'From Flamengo 360 distributed in stores to Museu do Círio in VR, we create experiences that move and generate results.'
+    ],
+    longDescFr: [
+      'Pionniers en VR au Brésil, nous développons des expériences allant de films 360° cinématographiques à expériences interactives 6DoF (room-scale). Notre curation au festival Immerso XR nous donne une vision unique de ce qui fonctionne en VR.',
+      'Nous offrons aussi service complet de location équipements VR (Meta Quest, PSVR2) avec contenu personnalisé, idéal pour événements, activations de marque et expériences ponctuelles.',
+      'Du Flamengo 360 distribué en magasins au Museu do Círio en VR, nous créons des expériences qui émeuvent et génèrent résultats.'
+    ],
+    longDescEs: [
+      'Pioneros en VR en Brasil, desarrollamos experiencias que van de películas 360° cinematográficas a experiencias interactivas 6DoF (room-scale). Nuestra curaduría en el festival Immerso XR nos da visión única sobre lo que funciona en VR.',
+      'Ofrecemos también servicio completo de alquiler de equipos VR (Meta Quest, PSVR2) con contenido customizado, ideal para eventos, activaciones de marca y experiencias puntuales.',
+      'Del Flamengo 360 distribuido en tiendas al Museu do Círio en VR, creamos experiencias que emocionan y generan resultados.'
+    ],
+    deliverablesPt: [
+      'Filmes VR 360° / 180° / 3DoF',
+      'Experiências VR 6DoF (room-scale)',
+      'Instalações VR multiplayer',
+      'Aluguel de equipamentos + conteúdo',
+      'Captação 360° (Insta360, Kandao)',
+      'Deploy para Meta Quest, PSVR2, Vive',
+      'Operação técnica em eventos',
+      'Suporte e treinamento'
+    ],
+    deliverablesEn: [
+      'VR 360° / 180° / 3DoF films',
+      '6DoF VR experiences (room-scale)',
+      'Multiplayer VR installations',
+      'Equipment rental + content',
+      '360° capture (Insta360, Kandao)',
+      'Deploy to Meta Quest, PSVR2, Vive',
+      'Technical operation at events',
+      'Support and training'
+    ],
+    deliverablesFr: [
+      'Films VR 360° / 180° / 3DoF',
+      'Expériences VR 6DoF (room-scale)',
+      'Installations VR multijoueurs',
+      'Location équipements + contenu',
+      'Capture 360° (Insta360, Kandao)',
+      'Déploiement Meta Quest, PSVR2, Vive',
+      'Opération technique événements',
+      'Support et formation'
+    ],
+    deliverablesEs: [
+      'Películas VR 360° / 180° / 3DoF',
+      'Experiencias VR 6DoF (room-scale)',
+      'Instalaciones VR multiplayer',
+      'Alquiler de equipos + contenido',
+      'Captura 360° (Insta360, Kandao)',
+      'Deploy para Meta Quest, PSVR2, Vive',
+      'Operación técnica en eventos',
+      'Soporte y capacitación'
+    ],
+    processPt: [
+      'Conceito e narrativa',
+      'Produção / Captação 360°',
+      'Desenvolvimento (Unity/Unreal)',
+      'Testes com usuários',
+      'Otimização e deploy',
+      'Operação e suporte'
+    ],
+    processEn: [
+      'Concept and narrative',
+      'Production / 360° capture',
+      'Development (Unity/Unreal)',
+      'User testing',
+      'Optimization and deploy',
+      'Operation and support'
+    ],
+    processFr: [
+      'Concept et récit',
+      'Production / Capture 360°',
+      'Développement (Unity/Unreal)',
+      'Tests utilisateurs',
+      'Optimisation et déploiement',
+      'Opération et support'
+    ],
+    processEs: [
+      'Concepto y narrativa',
+      'Producción / Captura 360°',
+      'Desarrollo (Unity/Unreal)',
+      'Pruebas con usuarios',
+      'Optimización y deploy',
+      'Operación y soporte'
+    ],
+    technologies: ['Meta Quest 2/3/Pro', 'PSVR2', 'HTC Vive', 'Insta360', 'Kandao Obsidian', 'Unity', 'Unreal Engine'],
+    projectCategories: ['vr', 'vr-360', 'immersive', 'experiential']
+  },
+  {
+    id: '16',
+    slug: 'arquitetura-virtual-bim',
+    icon: '🏗️',
+    titlePt: 'Arquitetura Virtual & BIM',
+    titleEn: 'Virtual Architecture & BIM',
+    titleFr: 'Architecture Virtuelle & BIM',
+    titleEs: 'Arquitectura Virtual & BIM',
+    shortDescPt: 'Criamos maquetes virtuais, renders 3D e experiências BIM para arquitetura e construção. De estandes de venda (Cenna Tower) a visualizações 360° de empreendimentos, transformamos projetos em experiências imersivas.',
+    shortDescEn: 'We create virtual models, 3D renders and BIM experiences for architecture and construction. From sales stands (Cenna Tower) to 360° visualizations of developments, we transform projects into immersive experiences.',
+    shortDescFr: 'Nous créons des maquettes virtuelles, rendus 3D et expériences BIM pour architecture et construction. Des stands de vente (Cenna Tower) aux visualisations 360° de développements, nous transformons projets en expériences immersives.',
+    shortDescEs: 'Creamos maquetas virtuales, renders 3D y experiencias BIM para arquitectura y construcción. De estands de venta (Cenna Tower) a visualizaciones 360° de emprendimientos, transformamos proyectos en experiencias inmersivas.',
+    longDescPt: [
+      'Especializados em visualização arquitetônica de alto impacto, criamos desde renders fotorrealistas até experiências VR/AR para venda de imóveis e apresentação de projetos.',
+      'Trabalhamos com CAD, Revit, BIM e pipelines de render (V-Ray, Corona) para entregar visualizações que vendem. Nossa expertise inclui estandes comerciais interativos e experiências 360° de empreendimentos.',
+      'Do conceito ao walkthrough virtual, ajudamos construtoras e incorporadoras a vender mais através de experiências visuais impactantes.'
+    ],
+    longDescEn: [
+      'Specialized in high-impact architectural visualization, we create from photorealistic renders to VR/AR experiences for real estate sales and project presentation.',
+      'We work with CAD, Revit, BIM and render pipelines (V-Ray, Corona) to deliver visualizations that sell. Our expertise includes interactive commercial stands and 360° experiences of developments.',
+      'From concept to virtual walkthrough, we help builders and developers sell more through impactful visual experiences.'
+    ],
+    longDescFr: [
+      'Spécialisés en visualisation architecturale à fort impact, nous créons des rendus photoréalistes aux expériences VR/AR pour vente immobilière et présentation de projets.',
+      'Nous travaillons avec CAD, Revit, BIM et pipelines de rendu (V-Ray, Corona) pour livrer des visualisations qui vendent. Notre expertise inclut stands commerciaux interactifs et expériences 360° de développements.',
+      'Du concept au walkthrough virtuel, nous aidons constructeurs et promoteurs à vendre plus à travers des expériences visuelles impactantes.'
+    ],
+    longDescEs: [
+      'Especializados en visualización arquitectónica de alto impacto, creamos desde renders fotorrealistas hasta experiencias VR/AR para venta de inmuebles y presentación de proyectos.',
+      'Trabajamos con CAD, Revit, BIM y pipelines de render (V-Ray, Corona) para entregar visualizaciones que venden. Nuestra expertise incluye estands comerciales interactivos y experiencias 360° de emprendimientos.',
+      'Del concepto al walkthrough virtual, ayudamos constructoras y desarrolladores a vender más a través de experiencias visuales impactantes.'
+    ],
+    deliverablesPt: [
+      'Renders 3D fotorrealistas',
+      'Maquetes virtuais interativas',
+      'Experiências VR de walkthrough',
+      'Animações de arquitetura (flythroughs)',
+      'Integração BIM',
+      'Estandes comerciais interativos',
+      'Visualizações 360°',
+      'Material de marketing (plantas, cortes, vistas)'
+    ],
+    deliverablesEn: [
+      'Photorealistic 3D renders',
+      'Interactive virtual models',
+      'VR walkthrough experiences',
+      'Architecture animations (flythroughs)',
+      'BIM integration',
+      'Interactive commercial stands',
+      '360° visualizations',
+      'Marketing material (plans, sections, views)'
+    ],
+    deliverablesFr: [
+      'Rendus 3D photoréalistes',
+      'Maquettes virtuelles interactives',
+      'Expériences VR de walkthrough',
+      'Animations d\'architecture (flythroughs)',
+      'Intégration BIM',
+      'Stands commerciaux interactifs',
+      'Visualisations 360°',
+      'Matériel marketing (plans, coupes, vues)'
+    ],
+    deliverablesEs: [
+      'Renders 3D fotorrealistas',
+      'Maquetas virtuales interactivas',
+      'Experiencias VR de walkthrough',
+      'Animaciones de arquitectura (flythroughs)',
+      'Integración BIM',
+      'Estands comerciales interactivos',
+      'Visualizaciones 360°',
+      'Material de marketing (plantas, cortes, vistas)'
+    ],
+    processPt: [
+      'Recebimento de projeto (CAD/Revit)',
+      'Modelagem 3D',
+      'Texturização e lighting',
+      'Rendering',
+      'Pós-produção',
+      'Entrega (imagens, vídeos, VR)'
+    ],
+    processEn: [
+      'Project receipt (CAD/Revit)',
+      '3D modeling',
+      'Texturing and lighting',
+      'Rendering',
+      'Post-production',
+      'Delivery (images, videos, VR)'
+    ],
+    processFr: [
+      'Réception projet (CAD/Revit)',
+      'Modélisation 3D',
+      'Texturation et éclairage',
+      'Rendu',
+      'Post-production',
+      'Livraison (images, vidéos, VR)'
+    ],
+    processEs: [
+      'Recepción proyecto (CAD/Revit)',
+      'Modelado 3D',
+      'Texturizado e iluminación',
+      'Renderizado',
+      'Posproducción',
+      'Entrega (imágenes, videos, VR)'
+    ],
+    technologies: ['AutoCAD', 'Revit', 'SketchUp', '3ds Max', 'V-Ray', 'Corona', 'Unreal Engine', 'Twinmotion'],
+    projectCategories: ['architecture', 'bim', 'real-estate', 'visualization']
   }
 ]
 
