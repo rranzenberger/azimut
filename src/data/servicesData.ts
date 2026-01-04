@@ -134,7 +134,7 @@ export const servicesData: Service[] = [
       'Edición y posproducción',
       'Finalización y entrega'
     ],
-    technologies: ['RED', 'Blackmagic', 'Sony Cinema Line', 'DaVinci Resolve', 'Adobe Premiere', 'After Effects', 'Cinema 4D'],
+    technologies: ['RED', 'Blackmagic', 'Sony Cinema Line', 'DaVinci Resolve', 'Adobe Premiere', 'After Effects', 'Flame'],
     projectCategories: ['cinema', 'audiovisual', 'documentary', 'branded-content']
   },
   {
@@ -348,7 +348,7 @@ export const servicesData: Service[] = [
       'Compositing y finalización',
       'Entrega'
     ],
-    technologies: ['Blender', 'Cinema 4D', 'Maya', 'After Effects', 'Toon Boom', 'Unreal Engine'],
+    technologies: ['Blender', '3ds Max', 'Maya', 'After Effects', 'Toon Boom', 'Unreal Engine'],
     projectCategories: ['animation', '3d', 'motion-design', 'educational']
   },
   {
