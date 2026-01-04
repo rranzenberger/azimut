@@ -66,6 +66,10 @@ export const translations: Dict = {
     footer: '© {year} Azimut Projetos Audiovisuais Ltda. · Brésil ↔ Canada.',
   },
   pt: {
+    // Hero Home
+    heroTitle: 'EXPERIÊNCIAS QUE CONECTAM MUNDOS',
+    heroSubtitle: 'Criamos experiências imersivas entre Brasil e Canadá.',
+    
     navHome: 'Início',
     navWhat: 'Soluções',
     navWork: 'Projetos',
