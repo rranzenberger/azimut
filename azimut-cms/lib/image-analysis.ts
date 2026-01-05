@@ -11,7 +11,7 @@
  * Integrado com sistema de curadoria e recomendação
  */
 
-import { getAIProvider } from '../src/lib/ai-provider';
+import { getAIProvider } from './ai-provider';
 
 export interface ImageAnalysisResult {
   category: 'jornal' | 'instalacoes' | 'ginastica' | 'eventos' | 'making-of' | 'tecnologia' | 'outros';

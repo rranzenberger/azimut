@@ -15,7 +15,7 @@
  */
 
 import { PrismaClient } from '@prisma/client'
-import { analyzeImageWithAI } from '../src/lib/image-analysis'
+import { analyzeImageWithAI } from '../lib/image-analysis'
 import * as path from 'path'
 
 const prisma = new PrismaClient()
