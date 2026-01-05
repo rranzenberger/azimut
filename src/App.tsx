@@ -28,6 +28,8 @@ const SITE_PROTECTED = true // ← SITE TRAVADO! (Login ativo)
 // Lazy loading estava causando erro "Failed to fetch dynamically imported module"
 import Studio from './pages/Studio'
 import Academy from './pages/Academy'
+import Privacy from './pages/Privacy'
+import Terms from './pages/Terms'
 import Contact from './pages/Contact'
 import WhatWeDo from './pages/WhatWeDo'
 import ServiceDetail from './pages/ServiceDetail'
@@ -273,6 +275,16 @@ const App: React.FC = () => {
                     {(routeLang) => <Press lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
+                <Route path="/:lang/privacy" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Privacy lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/terms" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Terms lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
                 <Route path="/:lang/project/:slug" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <ProjectDetail lang={routeLang} />}
@@ -288,6 +300,8 @@ const App: React.FC = () => {
                 <Route path="/academy/courses" element={<Navigate to={`/${lang}/academy/courses`} replace />} />
                 <Route path="/academy/corporate" element={<Navigate to={`/${lang}/academy/corporate`} replace />} />
                 <Route path="/contact" element={<Navigate to={`/${lang}/contact`} replace />} />
+                <Route path="/privacy" element={<Navigate to={`/${lang}/privacy`} replace />} />
+                <Route path="/terms" element={<Navigate to={`/${lang}/terms`} replace />} />
                 <Route path="/press" element={<Navigate to={`/${lang}/press`} replace />} />
                 <Route path="/project/:slug" element={<Navigate to={`/${lang}/project/:slug`} replace />} />
                 
@@ -375,6 +389,16 @@ const App: React.FC = () => {
                     {(routeLang) => <Press lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
+                <Route path="/:lang/privacy" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Privacy lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/terms" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Terms lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
                 <Route path="/:lang/project/:slug" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <ProjectDetail lang={routeLang} />}
@@ -390,6 +414,8 @@ const App: React.FC = () => {
                 <Route path="/academy/courses" element={<Navigate to={`/${lang}/academy/courses`} replace />} />
                 <Route path="/academy/corporate" element={<Navigate to={`/${lang}/academy/corporate`} replace />} />
                 <Route path="/contact" element={<Navigate to={`/${lang}/contact`} replace />} />
+                <Route path="/privacy" element={<Navigate to={`/${lang}/privacy`} replace />} />
+                <Route path="/terms" element={<Navigate to={`/${lang}/terms`} replace />} />
                 <Route path="/press" element={<Navigate to={`/${lang}/press`} replace />} />
                 <Route path="/project/:slug" element={<Navigate to={`/${lang}/project/:slug`} replace />} />
                 

@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { sendEmail } from '@/lib/email';
+import { detectInstitution, isPremiumClient, shouldSendAlert } from '@/lib/institutional-detection';
 
 // Helper local para buscar settings com fallback
 async function getSettings() {
@@ -46,6 +47,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // 🏛️ DETECÇÃO INSTITUCIONAL (NOVO!)
+    const institution = detectInstitution(email)
+    const isInstitutional = !!institution
+    const isPremium = isPremiumClient(email)
+    const shouldAlert = shouldSendAlert(email)
+    
+    // Log para debug
+    if (institution) {
+      console.log('🏛️ LEAD INSTITUCIONAL DETECTADO:', {
+        name: institution.name,
+        type: institution.type,
+        tier: institution.tier,
+        priority: institution.priority,
+        autoAlert: institution.autoAlert
+      })
+    }
+
     // Buscar contexto da sessão (se existe)
     let interestScore = null;
     let session = null;
@@ -70,9 +88,15 @@ export async function POST(request: NextRequest) {
     let leadType = 'CONTACT_FORM';
     if (budget) leadType = 'BUDGET_INQUIRY';
 
-    // Inferir prioridade baseada no score de conversão
+    // Inferir prioridade baseada no score de conversão E instituição
     let priority = 'MEDIUM';
-    if (interestScore) {
+    
+    // 🏛️ Cliente institucional tem prioridade automática!
+    if (institution) {
+      priority = institution.priority as any
+    }
+    // Se não é institucional, usar score de conversão
+    else if (interestScore) {
       if (interestScore.conversionScore > 70) priority = 'HIGH';
       if (interestScore.conversionScore > 85) priority = 'URGENT';
     }

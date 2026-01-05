@@ -7,6 +7,7 @@ import ThemeToggle from './ThemeToggle'
 import BudgetWizardModal from './BudgetWizardModal'
 import SkipLink from './SkipLink'
 import NavDropdown from './NavDropdown'
+import CookieBanner from './CookieBanner'
 import { type UserProfile } from './BudgetWizard'
 import { trackCTA, trackLanguageChange } from '../utils/analytics'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -1365,13 +1366,13 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               
               {/* Links legais */}
               <div className="flex items-center gap-3 sm:gap-4 text-[0.68rem] sm:text-[0.72rem] text-slate-500 shrink-0">
-                <a href="#" className="hover:text-azimut-red transition-colors whitespace-nowrap">
+                <LangLink to="/privacy" className="hover:text-azimut-red transition-colors whitespace-nowrap">
                   {lang === 'en' ? 'Privacy' : lang === 'fr' ? 'Confidentialité' : lang === 'es' ? 'Privacidad' : 'Privacidade'}
-                </a>
+                </LangLink>
                 <span className="opacity-50">•</span>
-                <a href="#" className="hover:text-azimut-red transition-colors whitespace-nowrap">
+                <LangLink to="/terms" className="hover:text-azimut-red transition-colors whitespace-nowrap">
                   {lang === 'en' ? 'Terms' : lang === 'fr' ? 'Conditions' : lang === 'es' ? 'Términos' : 'Termos'}
-                </a>
+                </LangLink>
               </div>
             </div>
           </div>
@@ -1429,6 +1430,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           setIsWizardOpen(false)
         }}
       />
+
+      {/* 🍪 Cookie Banner - LGPD/GDPR Compliance */}
+      <CookieBanner lang={lang} />
     </div>
   )
 }

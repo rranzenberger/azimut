@@ -7,6 +7,7 @@ import { trackPageView, trackProjectInteraction } from '../utils/analytics'
 import InternalNavigation from '../components/InternalNavigation'
 // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
 import { useAzimutContent } from '../hooks/useAzimutContent'
+import { usePersonalizedContent } from '../hooks/usePersonalizedContent'
 import OportunidadesAtivas from '../components/OportunidadesAtivas'
 import CredibilidadeEditais from '../components/CredibilidadeEditais'
 import CuradoriaFestivais from '../components/CuradoriaFestivais'
@@ -67,6 +68,34 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     page: 'work',
     lang // Passar idioma para backoffice
   })
+  
+  // 🎯 PERSONALIZAÇÃO IA: Filtro automático baseado em visitor type
+  const { profile } = usePersonalizedContent()
+  
+  // Auto-aplicar filtro baseado em visitor type (apenas na primeira visita)
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const hasFilters = params.get('tag') || params.get('type')
+    
+    // Se não tem filtros aplicados E temos um perfil, sugerir filtro
+    if (!hasFilters && profile?.visitorType) {
+      const typeFilterMap: Record<string, string> = {
+        'CURATOR': 'museum',
+        'GOVERNMENT': 'city',
+        'BRAND': 'brand',
+        'FESTIVAL': 'festival',
+        'EDUCATION': 'education'
+      }
+      
+      const suggestedType = typeFilterMap[profile.visitorType]
+      
+      // Aplicar filtro sugerido SUTILMENTE (não forçado, mas sugerido)
+      if (suggestedType && !selectedType) {
+        // Não navega, apenas sugere visualmente (InternalNavigation vai destacar)
+        console.log(`💡 IA sugere filtro: ${suggestedType} para ${profile.visitorType}`)
+      }
+    }
+  }, [profile, location.search, selectedType])
   
   // Fallback: Projetos de exemplo quando backoffice está vazio ou falha
   const defaultCases = useMemo(() => [
