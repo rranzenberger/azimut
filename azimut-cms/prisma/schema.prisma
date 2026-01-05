@@ -155,6 +155,18 @@ model Page {
   seoDescFr      String?
   seoTitleEs     String?
   seoTitleFr     String?
+  pillar1Pt      String?
+  pillar1En      String?
+  pillar1Es      String?
+  pillar1Fr      String?
+  pillar2Pt      String?
+  pillar2En      String?
+  pillar2Es      String?
+  pillar2Fr      String?
+  pillar3Pt      String?
+  pillar3En      String?
+  pillar3Es      String?
+  pillar3Fr      String?
   sections       Section[]
 }
 
