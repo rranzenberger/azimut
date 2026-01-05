@@ -195,8 +195,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" />
         </div>
 
-        <section className="py-8 sm:py-12 md:py-16 lg:py-20">
-          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 px-3 sm:gap-8 sm:px-4 md:gap-10 md:px-6 md:grid-cols-[1.3fr,1fr] lg:gap-14 xl:gap-16">
+        <section className="py-6 sm:py-8 md:py-10 lg:py-12">
+          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-3 sm:gap-8 sm:px-4 md:gap-10 md:px-6 lg:px-8 md:grid-cols-[1.3fr,1fr] lg:gap-14 xl:gap-16">
             {/* Texto principal */}
             <div className="pr-0 sm:pr-4">
             <div className="mb-3 inline-flex items-center gap-2 font-sora text-[0.7rem] uppercase tracking-[0.28em] animate-fade-in-up opacity-0 text-adaptive" style={{ animationDelay: '0.1s' }}>
@@ -270,7 +270,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
 
         {/* Nossas Soluções - Grid de Serviços - SEMPRE MOSTRA */}
         <section className="py-12 sm:py-16 md:py-20">
-          <div className="mx-auto max-w-6xl px-3 sm:px-4 md:px-6">
+          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="mb-8 flex items-center justify-between">
               <h2 className="font-handel text-2xl uppercase tracking-[0.12em] md:text-3xl" style={{ color: 'var(--theme-text)' }}>
                 {lang === 'pt' ? 'Nossas Soluções' : lang === 'es' ? 'Nuestras Soluciones' : lang === 'fr' ? 'Nos Solutions' : 'Our Solutions'}
@@ -373,7 +373,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
 
         {/* Featured Project - Hero Visual - SEMPRE MOSTRA, mesmo sem dados */}
         <section className="py-12 sm:py-16 md:py-20">
-          <div className="mx-auto max-w-6xl px-3 sm:px-4 md:px-6">
+          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             {(() => {
               // GARANTIR que sempre há pelo menos um projeto
               const featured = recommended[0] || defaultProjects[0]
@@ -515,7 +515,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
 
         {/* Recomendações - SEMPRE MOSTRA, mesmo sem projetos */}
         <section className="pb-12 sm:pb-16 md:pb-20">
-          <div className="mx-auto max-w-5xl px-3 sm:px-4 md:px-6">
+          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="mb-6 flex items-center justify-between">
               <h2 className="font-handel text-2xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
                 {lang === 'pt' ? 'Sugestões para você' : lang === 'es' ? 'Sugerencias para ti' : lang === 'fr' ? 'Suggestions pour vous' : 'Suggested for you'}

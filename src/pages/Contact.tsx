@@ -257,7 +257,7 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
         onComplete={handleWizardComplete}
       />
 
-      <main className="relative py-16 md:py-20">
+      <main className="relative pt-6 md:pt-8 pb-24">
         {/* Star background on the side */}
         <div 
           className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-32 md:-right-40 md:h-[680px] md:w-[680px]" 
@@ -268,8 +268,8 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
         >
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" />
         </div>
-
-        <div className="mx-auto max-w-5xl px-6">
+        
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
           <h1 className="mb-8 font-handel text-4xl uppercase tracking-[0.16em] md:text-5xl">
             {t(lang, 'contactTitle')}
           </h1>

@@ -223,7 +223,7 @@ const Academy: React.FC<AcademyProps> = ({ lang, section }) => {
         description={seo.description}
         path="/academy"
       />
-      <main className="relative py-16 md:py-20">
+      <main className="relative pt-6 md:pt-8 pb-24">
         {/* Star background on the side */}
         <div 
           className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-32 md:-right-40 md:h-[680px] md:w-[680px]" 
@@ -235,49 +235,58 @@ const Academy: React.FC<AcademyProps> = ({ lang, section }) => {
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" />
         </div>
 
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
           {/* ═══════════════════════════════════════════════════════════════
               HERO SECTION
               ═══════════════════════════════════════════════════════════ */}
-          <div className="mb-12 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
-            <h1 className="mb-4 font-handel text-4xl uppercase tracking-[0.16em] md:text-5xl lg:text-6xl" style={{ color: 'var(--theme-text)' }}>
-              {labels.hero.title[lang]}
-            </h1>
-            <p className="mb-8 max-w-3xl text-xl md:text-2xl leading-relaxed font-sora" style={{ color: 'var(--theme-text-secondary)' }}>
-              {labels.hero.subtitle[lang]}
-            </p>
+          {/* Prefixo Narrativo - APENAS ESTE ANIMA */}
+          <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+            <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
+              {lang === 'pt' ? 'COMPARTILHAMOS' : lang === 'es' ? 'COMPARTIMOS' : lang === 'fr' ? 'NOUS PARTAGEONS' : 'WE SHARE'}
+            </span>
+          </div>
+          
+          {/* Título - SEM animação */}
+          <h1 className="mb-4 font-handel text-4xl uppercase tracking-[0.16em] md:text-5xl lg:text-6xl" style={{ color: 'var(--theme-text)' }}>
+            {labels.hero.title[lang]}
+          </h1>
+          
+          {/* Parágrafo - SEM animação */}
+          <p className="mb-8 max-w-3xl text-lg md:text-xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+            {labels.hero.subtitle[lang]}
+          </p>
 
-            {/* Navegação Interna - Padrão Universal Azimut */}
-            <InternalNavigation
+          {/* Navegação Interna - Padrão Universal Azimut */}
+          <InternalNavigation
               items={[
                 {
                   id: 'research',
                   label: lang === 'pt' ? 'Pesquisa & Inovação' : lang === 'es' ? 'Investigación & Innovación' : lang === 'fr' ? 'Recherche & Innovation' : 'Research & Innovation',
-                  href: '/academy#research',
+                  href: `/academy/research`,
                   icon: '🔬'
                 },
                 {
                   id: 'courses',
                   label: lang === 'pt' ? 'Cursos & Workshops' : lang === 'es' ? 'Cursos & Workshops' : lang === 'fr' ? 'Cours & Workshops' : 'Courses & Workshops',
-                  href: '/academy#courses',
+                  href: `/academy/courses`,
                   icon: '📚'
                 },
                 {
                   id: 'corporate',
                   label: lang === 'pt' ? 'Treinamento Corporativo' : lang === 'es' ? 'Entrenamiento Corporativo' : lang === 'fr' ? 'Formation d\'Entreprise' : 'Corporate Training',
-                  href: '/academy#corporate',
+                  href: `/academy/corporate`,
                   icon: '🏢'
                 }
               ]}
               defaultActive={activeSection}
+              lang={lang}
             />
-          </div>
 
           {/* ═══════════════════════════════════════════════════════════════
               SEÇÃO: PESQUISA & INOVAÇÃO
               ═══════════════════════════════════════════════════════════ */}
           {activeSection === 'research' && (
-            <div id="research" className="space-y-12 animate-fade-in-up opacity-0" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
+            <div id="research" className="space-y-12">
               <div>
                 <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
                   {labels.research.title[lang]}
@@ -355,7 +364,7 @@ const Academy: React.FC<AcademyProps> = ({ lang, section }) => {
               SEÇÃO: CURSOS & WORKSHOPS
               ═══════════════════════════════════════════════════════════ */}
           {activeSection === 'courses' && (
-            <div id="courses" className="space-y-12 animate-fade-in-up opacity-0" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
+            <div id="courses" className="space-y-12">
               <div>
                 <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
                   {labels.courses.title[lang]}
@@ -438,7 +447,7 @@ const Academy: React.FC<AcademyProps> = ({ lang, section }) => {
               SEÇÃO: TREINAMENTO CORPORATIVO
               ═══════════════════════════════════════════════════════════ */}
           {activeSection === 'corporate' && (
-            <div id="corporate" className="space-y-12 animate-fade-in-up opacity-0" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
+            <div id="corporate" className="space-y-12">
               <div>
                 <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
                   {labels.corporate.title[lang]}

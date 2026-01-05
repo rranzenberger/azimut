@@ -7,7 +7,7 @@ const PlausibleScript: React.FC = () => {
     return null
   }
 
-  // TODO: Substituir 'azimut.com' pelo domínio real
+  // Domínio principal (azimut.art redireciona para azimut.com)
   const domain = 'azimut.com'
 
   return (
@@ -31,6 +31,8 @@ const PlausibleScript: React.FC = () => {
 }
 
 export default PlausibleScript
+
+
 
 
 

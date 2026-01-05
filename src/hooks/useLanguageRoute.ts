@@ -48,6 +48,7 @@ export function useLanguageRoute() {
     let cleanPath = path.startsWith('/') ? path : `/${path}`
     cleanPath = cleanPath.replace(/^\/(pt|en|fr|es)/, '')
     if (!cleanPath.startsWith('/')) cleanPath = `/${cleanPath}`
+    
     return `/${targetLang}${cleanPath}`
   }
   

@@ -75,6 +75,7 @@ const App: React.FC = () => {
 
   // Detectar país via IP (funciona com VPN) - PRIORIDADE MÁXIMA
   // ⚠️ NUNCA TRAVA O SITE: 3 APIs de fallback + timezone backup
+  // 🆕 RESPEITA O IDIOMA DA URL: Se usuário clicou em /pt/work, NÃO muda para EN
   useEffect(() => {
     let mounted = true
     
@@ -82,7 +83,27 @@ const App: React.FC = () => {
       try {
         console.log('🔍 Iniciando detecção de idioma...')
         
-        // SEMPRE tentar detectar via IP primeiro (funciona com VPN)
+        // 🆕 VERIFICAR SE HÁ IDIOMA NA URL ATUAL
+        const currentPath = window.location.pathname
+        const urlLangMatch = currentPath.match(/^\/(pt|en|fr|es)(\/|$)/)
+        const urlLang = urlLangMatch ? urlLangMatch[1] as Lang : null
+        
+        // 🆕 SE TEM IDIOMA NA URL, USAR ELE E SALVAR NO LOCALSTORAGE
+        if (urlLang) {
+          console.log(`✅ AZIMUT: Idioma da URL detectado → ${urlLang}`)
+          const currentLang = localStorage.getItem('azimut-lang') as Lang | null
+          
+          if (currentLang !== urlLang) {
+            console.log(`🌐 AZIMUT: Atualizando preferência de ${currentLang || 'nenhum'} para ${urlLang}`)
+            setLang(urlLang)
+            localStorage.setItem('azimut-lang', urlLang)
+          }
+          
+          // NÃO fazer GEO detection se usuário já escolheu o idioma via URL
+          return
+        }
+        
+        // APENAS se NÃO tem idioma na URL: fazer GEO detection
         const { detectCountryFromIP, getLanguageFromCountry } = await import('./utils/geoDetection')
         const ipGeo = await detectCountryFromIP()
         
@@ -327,6 +348,21 @@ const App: React.FC = () => {
                 <Route path="/:lang/academy" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <Academy lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/academy/research" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Academy lang={routeLang} section="research" />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/academy/courses" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Academy lang={routeLang} section="courses" />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/academy/corporate" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Academy lang={routeLang} section="corporate" />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/contact" element={

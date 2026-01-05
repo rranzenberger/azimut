@@ -202,6 +202,7 @@ html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"] *
   /* Tema Escuro (Default) - Cinematográfico */
   --theme-bg: #050814;
   --theme-bg-secondary: #0a0f1a;
+  --theme-bg-sticky: rgba(10, 14, 23, 0.95); /* Background sticky com blur */
   --theme-text: #ffffff;
   --theme-text-secondary: #d3cec3;
   --theme-text-muted: #8a8a8a;
@@ -270,6 +271,7 @@ html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"] *
   /* Tema Claro - Alto Contraste */
   --theme-bg: #c5c0b5;
   --theme-bg-secondary: #b0ab9f;
+  --theme-bg-sticky: rgba(197, 192, 181, 0.95); /* Background sticky claro com blur */
   --theme-text: #0d0d0d;           /* Preto puro para máximo contraste */
   --theme-text-secondary: #1a1a1a; /* Quase preto */
   --theme-text-muted: #1a1a1a;     /* Preto em vez de cinza */

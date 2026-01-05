@@ -174,7 +174,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
       
       {/* HEADER - Glassmorphism 2026 - FIXED (não some ao rolar!) */}
       <header 
-        className="fixed top-0 left-0 right-0 z-30 w-full transition-all duration-300 ease-out" 
+        className="fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-out" 
         style={{ 
           backgroundColor: isScrolled 
             ? (theme === 'dark' 
@@ -227,11 +227,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               🔒 LOGO - height: 52px, alinhada à esquerda (AUMENTADA AO MÁXIMO!)
               ═══════════════════════════════════════════════════════════ */}
           {/* Logo topo - GRANDE - ALINHADA À ESQUERDA */}
-          <LangLink 
-            ref={logoRef}
-            to="/" 
+          <div
             className="shrink-0 transition-opacity hover:opacity-90 touch-manipulation"
-            onClick={() => setIsMobileMenuOpen(false)}
             style={{ 
               display: 'flex', 
               alignItems: 'center', 
@@ -242,18 +239,24 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               padding: '0'
             }}
           >
-            <img
-              src="/logo-topo-site.svg"
-              alt="Azimut – Immersive • Interactive • Cinematic Experiences"
-              className="transition-all duration-300"
-              style={{ 
+            <LangLink 
+              to="/" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              style={{ display: 'block' }}
+            >
+              <img
+                src="/logo-topo-site.svg"
+                alt="Azimut – Immersive • Interactive • Cinematic Experiences"
+                className="transition-all duration-300"
+                style={{ 
                 height: isScrolled ? '46px' : '52px', // Logo NO MÁXIMO! 52px → 46px
                 width: 'auto',
                 maxWidth: 'none',
                 display: 'block'
               }}
             />
-          </LangLink>
+            </LangLink>
+          </div>
 
           {/* Nav desktop - aparece em tablets (768px+) - SEMPRE VISÍVEL EM DESKTOP */}
           <nav 
@@ -367,6 +370,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             {/* Studio com submenu */}
             <NavDropdown
               label={t(lang, 'navStudio')}
+              mainHref="/studio"
               items={[
                 {
                   label: lang === 'pt' ? 'Studio & Team' : lang === 'es' ? 'Estudio & Equipo' : lang === 'fr' ? 'Studio & Équipe' : 'Studio & Team',
@@ -399,6 +403,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             {/* Academy com submenu */}
             <NavDropdown
               label={t(lang, 'navAcademy')}
+              mainHref="/academy"
               items={[
                 {
                   label: lang === 'pt' ? 'Azimut Academy' : lang === 'es' ? 'Academia Azimut' : lang === 'fr' ? 'Académie Azimut' : 'Azimut Academy',

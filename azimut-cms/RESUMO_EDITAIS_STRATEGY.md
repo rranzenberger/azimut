@@ -197,3 +197,5 @@ aumentada, e inteligência artificial aplicada à cultura.
 
 
 
+
+

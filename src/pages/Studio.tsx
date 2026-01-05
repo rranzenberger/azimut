@@ -361,7 +361,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         description={seo.description}
         path="/studio"
       />
-      <main className="relative py-12 md:py-16">
+      <main className="relative pt-6 md:pt-8 pb-24">
         {/* Star background on the side */}
         <div 
           className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-32 md:-right-40 md:h-[680px] md:w-[680px]" 
@@ -373,20 +373,24 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" />
         </div>
 
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
           {/* ═══════════════════════════════════════════════════════════════
               HERO SECTION - IMPACTANTE
               ═══════════════════════════════════════════════════════════ */}
-          <div className="mb-16 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
-            <span className="mb-2 block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
-              {content.pageLabel}
+          {/* Prefixo Narrativo - APENAS ESTE ANIMA */}
+          <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+            <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
+              {lang === 'pt' ? 'QUEM SOMOS' : lang === 'es' ? 'QUIÉNES SOMOS' : lang === 'fr' ? 'QUI NOUS SOMMES' : 'WHO WE ARE'}
             </span>
-            <h1 className="mb-6 font-handel text-4xl uppercase tracking-[0.12em] md:text-5xl lg:text-6xl" style={{ color: 'var(--theme-text)' }}>
-              {content.pageTitle}
-            </h1>
-            
-            {/* Hero Message - Destaque Único */}
-            <div className="card-dark-fixed rounded-2xl p-6 md:p-8 mb-8 border-l-4" style={{ borderLeftColor: 'var(--theme-accent-red)' }}>
+          </div>
+          
+          {/* Título - SEM animação */}
+          <h1 className="mb-4 font-handel text-4xl uppercase tracking-[0.16em] md:text-5xl lg:text-6xl" style={{ color: 'var(--theme-text)' }}>
+            {content.pageTitle}
+          </h1>
+          
+          {/* Hero Message - SEM animação */}
+          <div className="card-dark-fixed rounded-2xl p-6 md:p-8 mb-8 border-l-4" style={{ borderLeftColor: 'var(--theme-accent-red)' }}>
               <p className="mb-4 font-handel text-xl md:text-2xl uppercase tracking-[0.08em] text-azimut-red">
                 {lang === 'pt' 
                   ? `Após ${yearsOfExperience} anos, descobrimos que nossa combinação é única:`
@@ -430,7 +434,6 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   )
                 })}
               </div>
-            </div>
           </div>
 
           {/* ═══════════════════════════════════════════════════════════════
@@ -441,25 +444,30 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               { 
                 id: 'unique', 
                 label: lang === 'pt' ? 'O Que Nos Torna Únicos' : lang === 'es' ? 'Lo Que Nos Hace Únicos' : lang === 'fr' ? 'Ce Qui Nous Rend Uniques' : 'What Makes Us Unique', 
+                href: '/studio#unique',
                 icon: '✨' 
               },
               { 
                 id: 'team', 
                 label: lang === 'pt' ? 'Conheça a Equipe' : lang === 'es' ? 'Conoce el Equipo' : lang === 'fr' ? 'Rencontrez l\'Équipe' : 'Meet the Team', 
+                href: '/studio#team',
                 icon: '👥' 
               },
               { 
                 id: 'credentials', 
                 label: lang === 'pt' ? 'Credenciais & Timeline' : lang === 'es' ? 'Credenciales & Timeline' : lang === 'fr' ? 'Références & Timeline' : 'Credentials & Timeline', 
+                href: '/studio#credentials',
                 icon: '🏆' 
               }
             ]}
+            defaultActive={activeSection}
+            lang={lang}
           />
 
           {/* ═══════════════════════════════════════════════════════════════
               SEÇÃO 1: O QUE NOS TORNA ÚNICOS
               ═══════════════════════════════════════════════════════════ */}
-          <section id="unique" className="mb-16 animate-fade-in-up opacity-0 scroll-mt-24" style={{ animationDelay: '0.15s', animationFillMode: 'forwards' }}>
+          <section id="unique" className="mb-16 scroll-mt-24">
             <div className="card-dark-fixed rounded-2xl p-6 md:p-8">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1 h-12 bg-azimut-red"></div>
@@ -527,14 +535,14 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           {/* ═══════════════════════════════════════════════════════════════
               SEÇÃO 3: CREDENCIAIS & TIMELINE (NO FINAL)
               ═══════════════════════════════════════════════════════════ */}
-          <section id="credentials" className="mb-16 animate-fade-in-up opacity-0 scroll-mt-24" style={{ animationDelay: '0.18s', animationFillMode: 'forwards' }}>
+          <section id="credentials" className="mb-16 scroll-mt-24">
             <CredibilidadeEditais lang={lang} />
           </section>
 
           {/* ═══════════════════════════════════════════════════════════════
               SEÇÃO: O QUE NOS TORNA ÚNICOS
               ═══════════════════════════════════════════════════════════ */}
-          <section className="mb-16 animate-fade-in-up opacity-0" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
+          <section className="mb-16">
             <h2 className="mb-6 font-handel text-2xl uppercase tracking-[0.12em] md:text-3xl" style={{ color: 'var(--theme-text)' }}>
               {studio.unique.title}
             </h2>
@@ -812,7 +820,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           {/* ═══════════════════════════════════════════════════════════════
               SEÇÃO 2: EQUIPE (APÓS O DIFERENCIAL)
               ═══════════════════════════════════════════════════════════ */}
-          <section id="team" className="mb-16 animate-fade-in-up opacity-0 scroll-mt-24" style={{ animationDelay: '0.55s', animationFillMode: 'forwards' }}>
+          <section id="team" className="mb-16 scroll-mt-24">
             <h2 className="mb-8 font-handel text-2xl uppercase tracking-[0.12em] md:text-3xl" style={{ color: 'var(--theme-text)' }}>
               {lang === 'pt' ? 'Equipe' : lang === 'es' ? 'Equipo' : lang === 'fr' ? 'Équipe' : 'Team'}
             </h2>
@@ -820,11 +828,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               {((content?.team && Array.isArray(content.team)) ? content.team : []).map((member, idx) => (
                 <div 
                   key={idx}
-                  className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500 animate-fade-in-up opacity-0"
-                  style={{ 
-                    animationDelay: `${0.3 + idx * 0.15}s`,
-                    animationFillMode: 'forwards'
-                  }}
+                  className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500"
                 >
                   <div className="flex flex-col md:flex-row">
                     {/* Foto - Proporção 3:4 (~412x549) */}
@@ -907,10 +911,8 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
 
               {/* CTA para contato */}
               <div 
-                className="mt-8 rounded-2xl p-8 text-center animate-fade-in-up opacity-0" 
+                className="mt-8 rounded-2xl p-8 text-center" 
                 style={{ 
-                  animationDelay: '0.8s',
-                  animationFillMode: 'forwards',
                   background: 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)',
                   border: '1px solid rgba(255, 255, 255, 0.1)'
                 }}

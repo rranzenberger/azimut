@@ -77,7 +77,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
         path={`/what/${slug}`}
       />
 
-      <div className="relative min-h-screen pt-36 pb-24 px-6 overflow-hidden">
+      <div className="relative min-h-screen pt-16 md:pt-20 pb-24 overflow-hidden">
         {/* Estrela de fundo */}
         <div
           className="absolute -right-28 -bottom-40 min-[768px]:-right-40 min-[768px]:-bottom-60 h-[520px] w-[520px] min-[768px]:h-[680px] min-[768px]:w-[680px] opacity-30 pointer-events-none"
@@ -92,22 +92,30 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
           />
         </div>
 
-        <div className="max-w-7xl mx-auto">
+        <div className="mx-auto max-w-5xl px-3 sm:px-4 md:px-6">
           {/* Breadcrumbs */}
-          <nav className="mb-8 flex items-center gap-2 text-sm">
-            <LangLink to="/" className="transition-colors duration-200" style={{ color: 'var(--theme-text-secondary)' }}>
+          <nav className="mb-4 flex items-center gap-2 text-sm font-sora">
+            <LangLink 
+              to="/" 
+              className="hover:text-azimut-red transition-colors duration-200" 
+              style={{ color: 'var(--theme-text-secondary)' }}
+            >
               Home
             </LangLink>
-            <span style={{ color: 'var(--theme-text-secondary)' }}>›</span>
-            <LangLink to="/what" className="transition-colors duration-200" style={{ color: 'var(--theme-text-secondary)' }}>
+            <span className="opacity-50" style={{ color: 'var(--theme-text-secondary)' }}>›</span>
+            <LangLink 
+              to="/what" 
+              className="hover:text-azimut-red transition-colors duration-200" 
+              style={{ color: 'var(--theme-text-secondary)' }}
+            >
               {lang === 'pt' ? 'Soluções' : lang === 'fr' ? 'Solutions' : lang === 'es' ? 'Soluciones' : 'Solutions'}
             </LangLink>
-            <span style={{ color: 'var(--theme-text-secondary)' }}>›</span>
-            <span style={{ color: 'var(--theme-accent-red)' }}>{title}</span>
+            <span className="opacity-50" style={{ color: 'var(--theme-text-secondary)' }}>›</span>
+            <span className="font-medium" style={{ color: 'var(--theme-accent-red)' }}>{title}</span>
           </nav>
 
           {/* Hero */}
-          <div className="mb-16">
+          <div className="mb-10">
             <div className="flex items-center gap-4 mb-6">
               <span className="text-6xl">{service.icon}</span>
               <h1

@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
+import InternalNavigation from '../components/InternalNavigation'
 import { servicesData, getServiceTitle, getServiceShortDesc } from '../data/servicesData'
 
 interface WhatWeDoProps {
@@ -97,11 +98,10 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
       <SEO 
         title={seo.title}
         description={seo.description}
-        keywords={seo.keywords}
         lang={lang}
         path="/what"
       />
-      <main className="relative min-h-screen overflow-hidden pt-24 md:pt-32">
+      <main className="relative min-h-screen overflow-hidden pt-6 md:pt-8 pb-24">
         {/* Background: Estrela da Azimut */}
         <div
           ref={starRef}
@@ -116,12 +116,19 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
         />
 
         {/* Hero Section */}
-        <section className="relative pb-12 pt-6">
-          <div className="container mx-auto px-4 md:px-6">
-            <h1 className="font-handel text-5xl md:text-7xl uppercase tracking-wide mb-6 glow-text-sm">
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
+            {/* Prefixo Narrativo - APENAS ESTE ANIMA */}
+            <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+              <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
+                {lang === 'pt' ? 'O QUE CRIAMOS' : lang === 'es' ? 'LO QUE CREAMOS' : lang === 'fr' ? 'CE QUE NOUS CRÉONS' : 'WHAT WE CREATE'}
+              </span>
+            </div>
+            {/* Título - SEM animação */}
+            <h1 className="font-handel text-4xl md:text-5xl lg:text-6xl uppercase tracking-[0.16em] mb-4" style={{ color: 'var(--theme-text)' }}>
               {t(lang, 'navWhat')}
             </h1>
-            <p className="text-lg md:text-xl max-w-3xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+            {/* Parágrafo - SEM animação */}
+            <p className="text-lg md:text-xl max-w-3xl leading-relaxed mb-8" style={{ color: 'var(--theme-text-secondary)' }}>
               {lang === 'pt' 
                 ? 'Criamos experiências imersivas, interativas e cinematográficas de ponta a ponta. Da concepção à execução, integramos arte, tecnologia e narrativa para conectar pessoas, histórias e espaços.'
                 : lang === 'es' 
@@ -130,58 +137,49 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                 ? 'Nous créons des expériences immersives, interactives et cinématographiques de bout en bout. De la conception à l\'exécution, nous intégrons art, technologie et récit pour connecter personnes, histoires et espaces.'
                 : 'We create end-to-end immersive, interactive and cinematic experiences. From conception to execution, we integrate art, technology and narrative to connect people, stories and spaces.'}
             </p>
-          </div>
-        </section>
 
-        {/* Filtros */}
-        <section className="relative pb-8 pt-4">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-              {filters.map((filter) => (
-                <button
-                  key={filter.id}
-                  onClick={() => {
-                    setActiveFilter(filter.id)
-                    trackInteraction('filter_services', filter.id)
-                  }}
-                  className="transition-all duration-200 touch-manipulation font-sora font-medium uppercase text-sm"
-                  style={{
-                    background: activeFilter === filter.id 
-                      ? 'rgba(201, 35, 55, 0.12)' 
-                      : 'transparent',
-                    border: activeFilter === filter.id 
-                      ? '1px solid rgba(201, 35, 55, 0.3)' 
-                      : '1px solid rgba(211, 206, 195, 0.2)',
-                    borderRadius: '12px',
-                    padding: '10px 20px',
-                    color: activeFilter === filter.id 
-                      ? '#c92337' 
-                      : 'var(--theme-text-secondary)',
-                    opacity: activeFilter === filter.id ? 1 : 0.7
-                  }}
-                  onMouseEnter={(e) => {
-                    if (activeFilter !== filter.id) {
-                      e.currentTarget.style.background = 'rgba(201, 35, 55, 0.06)'
-                      e.currentTarget.style.borderColor = 'rgba(201, 35, 55, 0.2)'
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (activeFilter !== filter.id) {
-                      e.currentTarget.style.background = 'transparent'
-                      e.currentTarget.style.borderColor = 'rgba(211, 206, 195, 0.2)'
-                    }
-                  }}
-                >
-                  {getFilterLabel(filter)}
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
+          {/* Navegação Interna - Padrão Universal Azimut */}
+          <InternalNavigation
+          items={[
+            {
+              id: 'all',
+              label: lang === 'pt' ? 'Todas' : lang === 'es' ? 'Todas' : lang === 'fr' ? 'Tous' : 'All',
+              href: '/what',
+              icon: '✦'
+            },
+            {
+              id: 'culture',
+              label: lang === 'pt' ? 'Cultura' : lang === 'es' ? 'Cultura' : lang === 'fr' ? 'Culture' : 'Culture',
+              href: '/what?filter=culture',
+              icon: '🎭'
+            },
+            {
+              id: 'brands',
+              label: lang === 'pt' ? 'Marcas' : lang === 'es' ? 'Marcas' : lang === 'fr' ? 'Marques' : 'Brands',
+              href: '/what?filter=brands',
+              icon: '🎯'
+            },
+            {
+              id: 'production',
+              label: lang === 'pt' ? 'Produção' : lang === 'es' ? 'Producción' : lang === 'fr' ? 'Production' : 'Production',
+              href: '/what?filter=production',
+              icon: '🎬'
+            },
+            {
+              id: 'technology',
+              label: lang === 'pt' ? 'Tecnologia' : lang === 'es' ? 'Tecnología' : lang === 'fr' ? 'Technologie' : 'Technology',
+              href: '/what?filter=technology',
+              icon: '🚀'
+            }
+          ]}
+          defaultActive={activeFilter}
+          lang={lang}
+        />
+        </div>
 
         {/* Grid de Serviços 4x4 */}
         <section className="relative py-12">
-          <div className="container mx-auto px-4 md:px-6">
+          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredServices.map((service, index) => (
                 <LangLink 
@@ -217,7 +215,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
 
         {/* CTA */}
         <section className="relative py-16 text-center">
-          <div className="container mx-auto px-4 md:px-6">
+          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-wide mb-6">
               {lang === 'pt' ? 'Vamos criar algo incrível juntos?' : lang === 'es' ? '¿Vamos a crear algo increíble juntos?' : lang === 'fr' ? 'Créons quelque chose d\'incroyable ensemble?' : 'Let\'s create something incredible together?'}
             </h2>

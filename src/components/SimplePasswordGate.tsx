@@ -10,7 +10,7 @@ const SimplePasswordGate: React.FC<SimplePasswordGateProps> = ({ children }) => 
   const [error, setError] = useState('')
 
   // Senha fixa (você pode mudar)
-  const CORRECT_PASSWORD = 'azimut2025'
+  const CORRECT_PASSWORD = 'a'
 
   // Verificar se já está autenticado (sessionStorage)
   useEffect(() => {
@@ -61,7 +61,7 @@ const SimplePasswordGate: React.FC<SimplePasswordGateProps> = ({ children }) => 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-2">
-              Senha de acesso
+              Senha
             </label>
             <input
               id="password"

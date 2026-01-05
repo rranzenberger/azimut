@@ -1,0 +1,84 @@
+# FORÇA HTTPS E REDIRECT AZIMUT.ART → AZIMUT.COM
+RewriteEngine On
+
+# Força HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Redireciona azimut.art para azimut.com
+RewriteCond %{HTTP_HOST} ^azimut\.art$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.azimut\.art$
+RewriteRule ^(.*)$ https://azimut.com/$1 [R=301,L]
+
+# Remove www de azimut.com (opcional - manter apenas azimut.com)
+RewriteCond %{HTTP_HOST} ^www\.azimut\.com$
+RewriteRule ^(.*)$ https://azimut.com/$1 [R=301,L]
+
+# SPA ROUTING - REACT ROUTER
+# Redireciona todas as rotas que não são arquivos para index.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
+
+# COMPRESSÃO GZIP
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>
+
+# CACHE HEADERS
+<IfModule mod_expires.c>
+  ExpiresActive On
+  
+  # Imagens (1 ano)
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  
+  # CSS e JavaScript (1 mês)
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType text/javascript "access plus 1 month"
+  
+  # Fontes (1 ano)
+  ExpiresByType font/ttf "access plus 1 year"
+  ExpiresByType font/otf "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  
+  # HTML (sem cache)
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# SECURITY HEADERS
+<IfModule mod_headers.c>
+  # Previne clickjacking
+  Header always set X-Frame-Options "SAMEORIGIN"
+  
+  # Previne MIME sniffing
+  Header always set X-Content-Type-Options "nosniff"
+  
+  # XSS Protection
+  Header always set X-XSS-Protection "1; mode=block"
+  
+  # Referrer Policy
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  
+  # Permissions Policy
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# MIME TYPES
+<IfModule mod_mime.c>
+  AddType application/javascript js
+  AddType text/css css
+  AddType image/svg+xml svg svgz
+  AddType font/ttf ttf
+  AddType font/otf otf
+  AddType font/woff woff
+  AddType font/woff2 woff2
+</IfModule>
+

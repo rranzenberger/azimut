@@ -105,9 +105,9 @@ const Press: React.FC<PressProps> = ({ lang }) => {
         path="/press"
       />
       
-      <div className="min-h-screen pt-20 pb-16">
+      <div className="min-h-screen pt-12 md:pt-16 pb-24">
         {/* Hero Section */}
-        <div className="mx-auto max-w-7xl px-6 py-12">
+        <div className="mx-auto max-w-5xl px-3 sm:px-4 md:px-6 py-12">
           <div className="mb-12 text-center">
             <h1 className="mb-4 font-handel text-4xl uppercase tracking-[0.16em] md:text-5xl lg:text-6xl" style={{ color: 'var(--theme-text)' }}>
               {content.title}

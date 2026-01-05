@@ -43,8 +43,23 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     setSelectedTag(tag)
     setSelectedType(type)
     
-    // Scroll para o topo ao mudar filtros via dropdown
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    // Scroll para área de filtros quando um filtro é aplicado
+    if (tag || type) {
+      setTimeout(() => {
+        const filtersElement = document.getElementById('filters-section')
+        if (filtersElement) {
+          const headerHeight = 80
+          const navHeight = 60
+          const elementTop = filtersElement.getBoundingClientRect().top + window.scrollY
+          const targetScroll = elementTop - headerHeight - navHeight - 20
+          
+          window.scrollTo({ 
+            top: targetScroll > 0 ? targetScroll : 0, 
+            behavior: 'smooth' 
+          })
+        }
+      }, 100)
+    }
   }, [location.search])
   
   // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
@@ -230,7 +245,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         description={seo.description}
         path="/work"
       />
-      <main className="relative py-16 md:py-20">
+      <main className="relative pt-6 md:pt-8 pb-24">
         {/* Star background on the side - Parallax sutil */}
         <div 
           ref={starRef}
@@ -244,10 +259,18 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" />
         </div>
 
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
+          {/* Prefixo Narrativo - APENAS ESTE ANIMA */}
+          <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+            <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
+              {lang === 'pt' ? 'NOSSO TRABALHO' : lang === 'es' ? 'NUESTRO TRABAJO' : lang === 'fr' ? 'NOTRE TRAVAIL' : 'OUR WORK'}
+            </span>
+          </div>
+          {/* Título - SEM animação */}
           <h1 className="mb-4 font-handel text-4xl uppercase tracking-[0.16em] md:text-5xl lg:text-6xl" style={{ color: 'var(--theme-text)' }}>
             {t(lang, 'navWork')}
           </h1>
+          {/* Parágrafo - SEM animação */}
           <p className="mb-8 max-w-3xl text-lg md:text-xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
             {lang === 'pt' 
               ? 'Projetos que transformam espaços, marcas e experiências. De museus olímpicos a curadoria de festivais internacionais, cada trabalho é uma oportunidade de criar narrativas imersivas que conectam pessoas e histórias de forma única.'
@@ -270,32 +293,33 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               {
                 id: 'museum',
                 label: lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture',
-                href: '/work#museum',
+                href: '/work?type=museum',
                 icon: '🏛️'
               },
               {
                 id: 'festival',
                 label: lang === 'pt' ? 'Festivais' : lang === 'es' ? 'Festivales' : lang === 'fr' ? 'Festivals' : 'Festivals',
-                href: '/work#festival',
+                href: '/work?type=festival',
                 icon: '🎪'
               },
               {
                 id: 'brand',
                 label: lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events',
-                href: '/work#brand',
+                href: '/work?type=brand',
                 icon: '🎯'
               },
               {
                 id: 'vr-xr',
                 label: lang === 'pt' ? 'VR & XR' : lang === 'es' ? 'VR & XR' : lang === 'fr' ? 'VR & XR' : 'VR & XR',
-                href: '/work#vr-xr',
+                href: '/work?type=vr-xr',
                 icon: '🥽'
               }
             ]}
+            lang={lang}
           />
 
           {/* Filtros */}
-          <div className="mb-8 flex flex-wrap gap-4 items-center">
+          <div id="filters-section" className="mb-8 flex flex-wrap gap-4 items-center">
             {/* Busca */}
             <div className="flex-1 min-w-[200px]">
               <input

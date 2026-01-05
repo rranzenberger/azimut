@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link, LinkProps, useLocation } from 'react-router-dom'
-import { useLanguageRoute } from '../hooks/useLanguageRoute'
+import { type Lang } from '../i18n'
 
 /**
  * Link que automaticamente adiciona prefixo de idioma
@@ -13,11 +13,32 @@ interface LangLinkProps extends Omit<LinkProps, 'to'> {
 }
 
 const LangLink: React.FC<LangLinkProps> = ({ to, lang, children, onClick, ...props }) => {
-  const { getLangPath } = useLanguageRoute()
+  const location = useLocation()
   
-  // Não adicionar prefixo se já tem (segurança)
+  // EXTRAIR idioma diretamente da URL atual (método mais confiável)
+  const urlLangMatch = location.pathname.match(/^\/(pt|en|fr|es)(\/|$)/)
+  const currentUrlLang = urlLangMatch ? urlLangMatch[1] as Lang : null
+  
+  // Fallback: tentar localStorage se não tiver na URL
+  const storedLang = typeof window !== 'undefined' 
+    ? localStorage.getItem('azimut-lang') as Lang | null 
+    : null
+  
+  // Usar: 1) lang prop, 2) currentUrlLang (da URL atual), 3) storedLang (localStorage), 4) fallback 'en'
+  const targetLang = lang || currentUrlLang || storedLang || 'en'
+  
+  // Se o link já tem prefixo de idioma, usar ele
   const hasLangPrefix = /^\/(pt|en|fr|es)(\/|$)/.test(to)
-  const href = hasLangPrefix ? to : getLangPath(to, lang)
+  
+  let href: string
+  if (hasLangPrefix) {
+    // Já tem prefixo, usar direto
+    href = to
+  } else {
+    // Adicionar prefixo de idioma
+    const cleanPath = to.startsWith('/') ? to : `/${to}`
+    href = `/${targetLang}${cleanPath}`
+  }
   
   // Handler para scroll em âncoras
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {

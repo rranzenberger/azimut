@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useLanguageRoute } from '../hooks/useLanguageRoute'
+import type { Lang } from '../i18n'
 
 interface NavItem {
   id: string
@@ -11,6 +14,7 @@ interface InternalNavigationProps {
   items: NavItem[]
   defaultActive?: string
   className?: string
+  lang?: Lang
 }
 
 /**
@@ -30,10 +34,28 @@ interface InternalNavigationProps {
 const InternalNavigation: React.FC<InternalNavigationProps> = ({ 
   items, 
   defaultActive,
-  className = '' 
+  className = '',
+  lang
 }) => {
   const [activeId, setActiveId] = useState<string>(defaultActive || items[0]?.id || '')
   const [hoveredId, setHoveredId] = useState<string | null>(null)
+  const [isSticky, setIsSticky] = useState(false)
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { getLangPath } = useLanguageRoute()
+  const navRef = useRef<HTMLElement>(null)
+
+  // 🆕 Detectar scroll para tornar o menu sticky
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY
+      // Menu fica sticky após 100px de scroll
+      setIsSticky(scrollY > 100)
+    }
+    
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   // 🆕 Sincronizar activeId com defaultActive quando prop mudar (navegação via dropdown externo)
   useEffect(() => {
@@ -42,49 +64,121 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
     }
   }, [defaultActive])
 
-  // Detectar hash na URL e ativar tab correspondente
+  // Detectar rota atual e ativar tab correspondente (incluindo query strings e anchors)
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '')
-      if (hash && items.find(item => item.id === hash)) {
+    const pathname = location.pathname
+    const search = location.search
+    const hash = location.hash.replace('#', '')
+    const cleanPath = pathname.replace(/^\/(pt|en|fr|es)/, '')
+    
+    // Se tem hash, tentar ativar o item correspondente
+    if (hash) {
+      const hashItem = items.find(item => item.id === hash)
+      if (hashItem) {
         setActiveId(hash)
+        return
       }
     }
-
-    handleHashChange() // Executar no mount
-    window.addEventListener('hashchange', handleHashChange)
     
-    return () => window.removeEventListener('hashchange', handleHashChange)
-  }, [items])
+    // Verificar qual item corresponde à rota (com query strings)
+    let foundMatch = false
+    items.forEach(item => {
+      if (item.href) {
+        // Separar path e query string/anchor do href
+        const [hrefPath, hrefQueryOrAnchor] = item.href.split(/[?#]/)
+        const cleanHref = hrefPath.replace(/^\/(pt|en|fr|es)/, '')
+        
+        // Match exato de path + query
+        if (item.href.includes('?')) {
+          const currentQuery = search.startsWith('?') ? search.substring(1) : search
+          if (cleanPath === cleanHref && currentQuery === hrefQueryOrAnchor) {
+            setActiveId(item.id)
+            foundMatch = true
+          }
+        } 
+        // Match de path simples
+        else if (cleanPath === cleanHref || cleanPath.endsWith(`/${item.id}`)) {
+          setActiveId(item.id)
+          foundMatch = true
+        }
+      }
+    })
+    
+    // Se não encontrou match e está na página principal (sem query/hash), ativar primeiro item ou 'all'
+    if (!foundMatch && !search && !hash) {
+      const allItem = items.find(i => i.id === 'all')
+      if (allItem) {
+        setActiveId('all')
+      } else if (items[0]) {
+        setActiveId(items[0].id)
+      }
+    }
+  }, [location.pathname, location.search, location.hash, items])
 
   const handleClick = (item: NavItem) => {
     setActiveId(item.id)
     
-    // Se tem href, navegar
+    // Se tem href, processar navegação
     if (item.href) {
-      const hashIndex = item.href.indexOf('#')
-      if (hashIndex !== -1) {
-        const hash = item.href.substring(hashIndex + 1)
-        const element = document.getElementById(hash)
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-          window.history.pushState(null, '', `#${hash}`)
+      // Verificar se é um anchor (#section)
+      if (item.href.includes('#')) {
+        const [path, anchor] = item.href.split('#')
+        const cleanPath = path || location.pathname.replace(/^\/(pt|en|fr|es)/, '')
+        const currentPath = location.pathname.replace(/^\/(pt|en|fr|es)/, '')
+        
+        // Se está na mesma página, apenas fazer scroll para o anchor
+        if (!cleanPath || cleanPath === currentPath) {
+          const element = document.getElementById(anchor)
+          if (element) {
+            // Calcular posição para deixar o submenu sticky no topo
+            const elementTop = element.getBoundingClientRect().top + window.scrollY
+            const headerHeight = 80 // Altura do header
+            const navHeight = navRef.current ? navRef.current.offsetHeight : 60
+            const targetScroll = elementTop - headerHeight - navHeight - 20 // 20px de margem extra
+            
+            window.scrollTo({ 
+              top: targetScroll > 0 ? targetScroll : 0, 
+              behavior: 'smooth' 
+            })
+          }
+          return // Não navegar, apenas fazer scroll
         }
       }
-    } else {
-      // Scroll direto para ID
-      const element = document.getElementById(item.id)
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        window.history.pushState(null, '', `#${item.id}`)
-      }
+      
+      // Navegação normal (com ou sem query string)
+      const fullPath = lang ? `/${lang}${item.href}` : getLangPath(item.href)
+      navigate(fullPath)
+      
+      // Scroll para posição do submenu (para ficar sticky no topo)
+      setTimeout(() => {
+        if (navRef.current) {
+          const navTop = navRef.current.getBoundingClientRect().top + window.scrollY
+          const headerHeight = 80 // Altura aproximada do header
+          const targetScroll = navTop - headerHeight
+          
+          window.scrollTo({ 
+            top: targetScroll > 0 ? targetScroll : 0, 
+            behavior: 'smooth' 
+          })
+        }
+      }, 100)
     }
   }
 
   return (
     <nav 
-      className={`mb-12 border-b ${className}`}
-      style={{ borderColor: 'var(--theme-border, rgba(0, 0, 0, 0.08))' }}
+      ref={navRef}
+      className={`mb-12 border-b transition-all duration-300 ${className} ${
+        isSticky ? 'sticky top-0 z-40 backdrop-blur-xl shadow-lg' : ''
+      }`}
+      style={{
+        borderColor: 'var(--theme-border, rgba(0, 0, 0, 0.08))',
+        backgroundColor: isSticky 
+          ? 'var(--theme-bg-sticky, rgba(10, 14, 23, 0.95))' 
+          : 'transparent',
+        paddingTop: isSticky ? '1rem' : '0',
+        paddingBottom: isSticky ? '0.5rem' : '0'
+      }}
       aria-label="Internal navigation"
     >
       <div className="flex flex-wrap gap-2 -mb-px">

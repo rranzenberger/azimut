@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import type { Lang } from '../i18n'
 import LangLink from './LangLink'
+import { useLanguageRoute } from '../hooks/useLanguageRoute'
 
 interface NavDropdownProps {
   label: string
@@ -32,8 +33,9 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
-  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const closeTimeoutRef = useRef<number | null>(null)
   const location = useLocation()
+  const { getLangPath } = useLanguageRoute()
 
   // Fechar dropdown se clicar fora
   useEffect(() => {
@@ -65,6 +67,11 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
       }
     }
   }, [])
+
+  // 🆕 Handler para fechar dropdown ao clicar nos itens
+  const handleDropdownItemClick = () => {
+    setIsOpen(false)
+  }
 
   // Verificar se algum item está ativo
   const hasActiveItem = items.some(item => {
@@ -102,6 +109,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
       {mainHref ? (
         <LangLink
           to={mainHref}
+          lang={lang}
           className="nav-link-glow relative whitespace-nowrap pb-1 shrink-0 transition-colors duration-200 font-sora font-semibold flex items-center"
           style={{
             padding: '0 6px',
@@ -186,7 +194,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
       {/* Dropdown menu */}
       {isOpen && (
         <div
-          className="absolute top-full left-0 mt-2 w-64 rounded-lg shadow-[0_16px_40px_rgba(0,0,0,0.6)] backdrop-blur-lg border border-white/10 z-50 animate-fade-in-up"
+          className="absolute top-full left-0 mt-2 w-64 rounded-lg shadow-[0_16px_40px_rgba(0,0,0,0.6)] backdrop-blur-lg border border-white/10 z-[60] animate-fade-in-up"
           style={{
             background: theme === 'dark'
               ? 'linear-gradient(135deg, rgba(10, 15, 26, 0.98) 0%, rgba(26, 31, 46, 0.98) 100%)'
@@ -203,6 +211,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
                 <LangLink
                   key={idx}
                   to={item.href}
+                  lang={lang}
                   className="block px-4 py-3 rounded-md transition-all duration-200 group"
                   style={{
                     backgroundColor: isItemActive
@@ -212,6 +221,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
                       ? '#c92337'
                       : 'var(--theme-text)'
                   }}
+                  onClick={handleDropdownItemClick}
                   onMouseEnter={(e) => {
                     if (!isItemActive) {
                       e.currentTarget.style.backgroundColor = 'rgba(201, 35, 55, 0.1)'
