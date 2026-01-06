@@ -381,8 +381,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </p>
             </div>
             
-            {/* Grid de Soluções - Baseado nos dados reais do site */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mb-6">
+            {/* Grid de Soluções COMPLETO - Baseado nos dados reais do site */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto mb-6">
               {/* Integração Audiovisual */}
               <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
                 <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">📽️</div>
@@ -426,12 +426,62 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   </div>
                 </div>
               </div>
+              
+              {/* Curadoria - GRAMADO VR desde 2017 */}
+              <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
+                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">🎭</div>
+                <div className="relative z-10">
+                  <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🎯</div>
+                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest font-semibold" style={{ color: 'var(--theme-text)' }}>
+                    {lang === 'pt' ? 'Curadoria' : lang === 'es' ? 'Curaduría' : lang === 'fr' ? 'Curation' : 'Curation'}
+                  </div>
+                </div>
+              </div>
+              
+              {/* Festivais - Gramado, FAM, Rio2C */}
+              <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
+                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">🎪</div>
+                <div className="relative z-10">
+                  <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🎫</div>
+                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest font-semibold" style={{ color: 'var(--theme-text)' }}>
+                    {lang === 'pt' ? 'Festivais' : lang === 'es' ? 'Festivales' : lang === 'fr' ? 'Festivals' : 'Festivals'}
+                  </div>
+                </div>
+              </div>
+              
+              {/* Academia & Pesquisa */}
+              <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
+                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">📚</div>
+                <div className="relative z-10">
+                  <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🔬</div>
+                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest font-semibold" style={{ color: 'var(--theme-text)' }}>
+                    {lang === 'pt' ? 'Pesquisa' : lang === 'es' ? 'Investigación' : lang === 'fr' ? 'Recherche' : 'Research'}
+                  </div>
+                </div>
+              </div>
+              
+              {/* Treinamentos - Centenas formados */}
+              <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
+                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">🎓</div>
+                <div className="relative z-10">
+                  <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">👨‍🏫</div>
+                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest font-semibold" style={{ color: 'var(--theme-text)' }}>
+                    {lang === 'pt' ? 'Treinamentos' : lang === 'es' ? 'Formación' : lang === 'fr' ? 'Formation' : 'Training'}
+                  </div>
+                </div>
+              </div>
             </div>
             
-            {/* Pills Expertise - Dados reais do Studio */}
+            {/* Pills Expertise - Dados reais do Studio + CURADORIA/FESTIVAIS/TREINAMENTOS */}
             <div className="flex flex-wrap justify-center gap-3">
               <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
+                <span className="mr-2 opacity-60">🎬</span> {lang === 'pt' ? 'Gramado VR (2017+)' : lang === 'es' ? 'Gramado VR (2017+)' : lang === 'fr' ? 'Gramado VR (2017+)' : 'Gramado VR (2017+)'}
+              </span>
+              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
                 <span className="mr-2 opacity-60">🏛️</span> {lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture'}
+              </span>
+              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
+                <span className="mr-2 opacity-60">🎓</span> {lang === 'pt' ? 'Centenas Formados' : lang === 'es' ? 'Cientos Formados' : lang === 'fr' ? 'Des Centaines Formés' : 'Hundreds Trained'}
               </span>
               <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
                 <span className="mr-2 opacity-60">🎪</span> {lang === 'pt' ? 'Cenografia Digital' : lang === 'es' ? 'Escenografía Digital' : lang === 'fr' ? 'Scénographie Numérique' : 'Digital Scenography'}
@@ -440,7 +490,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 <span className="mr-2 opacity-60">⚡</span> {lang === 'pt' ? 'Integração Tecnológica' : lang === 'es' ? 'Integración Tecnológica' : lang === 'fr' ? 'Intégration Technologique' : 'Tech Integration'}
               </span>
               <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🎬</span> {lang === 'pt' ? 'Direção Técnica' : lang === 'es' ? 'Dirección Técnica' : lang === 'fr' ? 'Direction Technique' : 'Technical Direction'}
+                <span className="mr-2 opacity-60">🔬</span> {lang === 'pt' ? 'Academia & Pesquisa' : lang === 'es' ? 'Academia & Investigación' : lang === 'fr' ? 'Académie & Recherche' : 'Academia & Research'}
               </span>
             </div>
           </div>
