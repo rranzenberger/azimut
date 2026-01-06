@@ -372,12 +372,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </h3>
               <p className="text-sm md:text-base max-w-3xl mx-auto leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
                 {lang === 'pt' 
-                  ? 'Transformamos conceitos em experiências memoráveis através de integração audiovisual, tecnologia, cenografia digital, cinema, motion design, IA e VR. Entregamos projetos completos, do conceito à instalação.' 
+                  ? 'Criamos exposições imersivas, conteúdo para estandes, marketing em VR/AR e soluções audiovisuais completas. Atuamos em parceria com empresas que precisam de expertise técnica — do conceito à instalação, integrando tecnologia, cenografia digital e narrativas cinematográficas.' 
                   : lang === 'es' 
-                  ? 'Transformamos conceptos en experiencias memorables a través de integración audiovisual, tecnología, escenografía digital, cine, motion design, IA y VR. Entregamos proyectos completos, del concepto a la instalación.'
+                  ? 'Creamos exposiciones inmersivas, contenido para stands, marketing en VR/AR y soluciones audiovisuales completas. Actuamos en alianza con empresas que necesitan experiencia técnica — del concepto a la instalación, integrando tecnología, escenografía digital y narrativas cinematográficas.'
                   : lang === 'fr'
-                  ? 'Nous transformons des concepts en expériences mémorables grâce à l\'intégration audiovisuelle, la technologie, la scénographie numérique, le cinéma, le motion design, l\'IA et la VR. Nous livrons des projets complets, du concept à l\'installation.'
-                  : 'We transform concepts into memorable experiences through audiovisual integration, technology, digital scenography, cinema, motion design, AI and VR. We deliver complete projects, from concept to installation.'}
+                  ? 'Nous créons des expositions immersives, du contenu pour stands, du marketing en VR/AR et des solutions audiovisuelles complètes. Nous travaillons en partenariat avec des entreprises qui ont besoin d\'expertise technique — du concept à l\'installation, en intégrant technologie, scénographie numérique et récits cinématographiques.'
+                  : 'We create immersive exhibitions, booth content, VR/AR marketing and complete audiovisual solutions. We partner with companies that need technical expertise — from concept to installation, integrating technology, digital scenography and cinematic narratives.'}
               </p>
             </div>
             
@@ -472,25 +472,39 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </div>
             </div>
             
-            {/* Pills Expertise - Dados reais do Studio + CURADORIA/FESTIVAIS/TREINAMENTOS */}
-            <div className="flex flex-wrap justify-center gap-3">
+            {/* Pills Expertise - MODELO DE PARCERIA + Cases Reais */}
+            <div className="flex flex-wrap justify-center gap-3 mb-4">
+              {/* Linha 1: Exposições + Estandes + Marketing VR/AR */}
               <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🎬</span> {lang === 'pt' ? 'Gramado VR (2017+)' : lang === 'es' ? 'Gramado VR (2017+)' : lang === 'fr' ? 'Gramado VR (2017+)' : 'Gramado VR (2017+)'}
+                <span className="mr-2 opacity-60">🏛️</span> {lang === 'pt' ? 'Exposições Imersivas' : lang === 'es' ? 'Exposiciones Inmersivas' : lang === 'fr' ? 'Expositions Immersives' : 'Immersive Exhibitions'}
               </span>
               <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🏛️</span> {lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture'}
+                <span className="mr-2 opacity-60">📱</span> {lang === 'pt' ? 'Marketing VR/AR' : lang === 'es' ? 'Marketing VR/AR' : lang === 'fr' ? 'Marketing VR/AR' : 'VR/AR Marketing'}
+              </span>
+              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
+                <span className="mr-2 opacity-60">🎪</span> {lang === 'pt' ? 'Estandes & Feiras' : lang === 'es' ? 'Stands & Ferias' : lang === 'fr' ? 'Stands & Salons' : 'Booths & Trade Shows'}
+              </span>
+              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
+                <span className="mr-2 opacity-60">🎬</span> {lang === 'pt' ? 'LED + Live Action' : lang === 'es' ? 'LED + Live Action' : lang === 'fr' ? 'LED + Live Action' : 'LED + Live Action'}
+              </span>
+            </div>
+            
+            {/* Linha 2: Credenciais + Parcerias */}
+            <div className="flex flex-wrap justify-center gap-3">
+              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
+                <span className="mr-2 opacity-60">🎯</span> {lang === 'pt' ? 'Gramado VR (2017+)' : lang === 'es' ? 'Gramado VR (2017+)' : lang === 'fr' ? 'Gramado VR (2017+)' : 'Gramado VR (2017+)'}
+              </span>
+              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
+                <span className="mr-2 opacity-60">🏛️</span> {lang === 'pt' ? 'Rio Museu Olímpico' : lang === 'es' ? 'Museo Olímpico Río' : lang === 'fr' ? 'Musée Olympique Rio' : 'Rio Olympic Museum'}
+              </span>
+              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
+                <span className="mr-2 opacity-60">🤝</span> {lang === 'pt' ? 'Parceria YDreams' : lang === 'es' ? 'Alianza YDreams' : lang === 'fr' ? 'Partenaire YDreams' : 'Partner YDreams'}
+              </span>
+              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
+                <span className="mr-2 opacity-60">🤝</span> {lang === 'pt' ? 'Parceria DeepLab' : lang === 'es' ? 'Alianza DeepLab' : lang === 'fr' ? 'Partenaire DeepLab' : 'Partner DeepLab'}
               </span>
               <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
                 <span className="mr-2 opacity-60">🎓</span> {lang === 'pt' ? 'Centenas Formados' : lang === 'es' ? 'Cientos Formados' : lang === 'fr' ? 'Des Centaines Formés' : 'Hundreds Trained'}
-              </span>
-              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🎪</span> {lang === 'pt' ? 'Cenografia Digital' : lang === 'es' ? 'Escenografía Digital' : lang === 'fr' ? 'Scénographie Numérique' : 'Digital Scenography'}
-              </span>
-              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">⚡</span> {lang === 'pt' ? 'Integração Tecnológica' : lang === 'es' ? 'Integración Tecnológica' : lang === 'fr' ? 'Intégration Technologique' : 'Tech Integration'}
-              </span>
-              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🔬</span> {lang === 'pt' ? 'Academia & Pesquisa' : lang === 'es' ? 'Academia & Investigación' : lang === 'fr' ? 'Académie & Recherche' : 'Academia & Research'}
               </span>
             </div>
           </div>
@@ -935,3 +949,4 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
 }
 
 export default Home
+
