@@ -13,49 +13,73 @@ export const AnimatedLogo: React.FC = () => {
       
       <style>{`
         .animated-logo-container {
-          perspective: 1000px;
+          perspective: 1500px;
+          pointer-events: none;
         }
         
         .animated-logo {
-          width: 200px;
-          height: 200px;
-          animation: float 6s ease-in-out infinite, rotate3d 12s linear infinite;
-          filter: drop-shadow(0 0 30px rgba(201, 35, 55, 0.6)) 
-                  drop-shadow(0 0 60px rgba(201, 35, 55, 0.4));
-          transition: all 0.3s ease;
+          width: 280px;
+          height: 280px;
+          animation: 
+            floatSmooth 8s ease-in-out infinite,
+            rotateGentle 20s linear infinite,
+            pulse 4s ease-in-out infinite;
+          filter: 
+            drop-shadow(0 0 40px rgba(201, 35, 55, 0.5)) 
+            drop-shadow(0 0 80px rgba(201, 35, 55, 0.25))
+            drop-shadow(0 0 120px rgba(201, 35, 55, 0.15));
+          transition: all 0.5s ease;
+          opacity: 0.85;
         }
         
-        .animated-logo:hover {
-          filter: drop-shadow(0 0 40px rgba(201, 35, 55, 0.9)) 
-                  drop-shadow(0 0 80px rgba(201, 35, 55, 0.6));
-          animation: float 3s ease-in-out infinite, rotate3d 6s linear infinite;
-        }
-        
-        @keyframes float {
+        @keyframes floatSmooth {
           0%, 100% {
-            transform: translateY(0px) translateZ(0);
+            transform: translateY(0px) translateX(0px);
           }
-          50% {
-            transform: translateY(-20px) translateZ(20px);
+          33% {
+            transform: translateY(-15px) translateX(10px);
+          }
+          66% {
+            transform: translateY(-25px) translateX(-8px);
           }
         }
         
-        @keyframes rotate3d {
+        @keyframes rotateGentle {
           0% {
-            transform: rotateY(0deg) rotateZ(0deg);
-          }
-          50% {
-            transform: rotateY(180deg) rotateZ(180deg);
+            transform: rotate(0deg);
           }
           100% {
-            transform: rotateY(360deg) rotateZ(360deg);
+            transform: rotate(360deg);
+          }
+        }
+        
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 0.75;
+            filter: 
+              drop-shadow(0 0 35px rgba(201, 35, 55, 0.4)) 
+              drop-shadow(0 0 70px rgba(201, 35, 55, 0.2));
+          }
+          50% {
+            opacity: 0.95;
+            filter: 
+              drop-shadow(0 0 50px rgba(201, 35, 55, 0.6)) 
+              drop-shadow(0 0 100px rgba(201, 35, 55, 0.35))
+              drop-shadow(0 0 150px rgba(201, 35, 55, 0.2));
+          }
+        }
+        
+        @media (max-width: 1024px) {
+          .animated-logo {
+            width: 200px;
+            height: 200px;
           }
         }
         
         @media (max-width: 768px) {
           .animated-logo {
-            width: 120px;
-            height: 120px;
+            width: 140px;
+            height: 140px;
           }
         }
       `}</style>

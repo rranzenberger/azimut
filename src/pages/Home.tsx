@@ -225,7 +225,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/70 backdrop-blur-[2px]" />
                 
                 {/* Logo 3D Animada - Canto Superior Direito */}
-                <div className="absolute top-20 right-8 lg:right-20 z-5 hidden md:block">
+                <div className="absolute top-24 right-12 lg:top-32 lg:right-20 z-20 hidden md:block">
                   <AnimatedLogo />
                 </div>
                 
