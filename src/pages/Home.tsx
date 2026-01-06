@@ -275,7 +275,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         </span>
                       </div>
                       <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 sm:p-6 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
-                        <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">15+</span>
+                        <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">40+</span>
                         <span className="block text-[0.65rem] sm:text-xs text-white/60 uppercase tracking-widest mt-1">
                           {lang === 'pt' ? 'Países' : lang === 'es' ? 'Países' : lang === 'fr' ? 'Pays' : 'Countries'}
                         </span>
@@ -511,8 +511,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         <section className="py-10 md:py-12">
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              {/* Texto Esquerdo */}
-              <div className="glass-panel backdrop-blur-sm bg-white/50 dark:bg-slate-900/50 rounded-2xl p-6 md:p-8 border border-white/20 dark:border-slate-700/50">
+              {/* Texto Esquerdo - CORRIGIDO FUNDO AZUL */}
+              <div className="glass-panel card-adaptive rounded-2xl p-6 md:p-8 border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
                 <h2 className="mb-4 font-handel text-3xl md:text-4xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
                   {t(lang, 'cardTitle')}
                 </h2>

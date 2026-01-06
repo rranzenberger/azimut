@@ -64,3 +64,4 @@ Vou garantir que `projects` SEMPRE seja um array válido, mesmo que `personalize
 
 
 
+
