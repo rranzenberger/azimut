@@ -221,9 +221,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 {/* Overlay Gradiente */}
                 <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80" />
                 
-                {/* Conteúdo Hero */}
-                <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
-                  {/* Badge Azimut */}
+                {/* Conteúdo Hero - ALINHADO À ESQUERDA */}
+                <div className="relative z-10 flex flex-col justify-center h-full px-4 mx-auto max-w-7xl">
+                  {/* Badge Azimut - ESQUERDA */}
                   <div className="mb-6 inline-flex items-center gap-2 font-sora text-[0.75rem] uppercase tracking-[0.28em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
                     <img 
                       src="/estela6-clara.svg" 
@@ -233,7 +233,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     <span className="text-azimut-red font-semibold">AZIMUT</span>
                   </div>
                   
-                  {/* Título Hero - GRANDE e Impactante */}
+                  {/* Título Hero - GRANDE e Impactante - ESQUERDA */}
                   <h1 className="mb-6 font-handel text-[2.5rem] leading-[1.1] tracking-[0.12em] uppercase sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem] animate-fade-in-up opacity-0 text-white max-w-5xl" style={{ animationDelay: '0.2s' }}>
                     {heroSlogan.split(' ').map((word, i) => (
                       <span key={i}>
@@ -246,22 +246,22 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     ))}
                   </h1>
                   
-                  {/* Subtítulo - Curto */}
+                  {/* Subtítulo - Curto - ESQUERDA */}
                   <p className="mb-8 max-w-2xl text-[1rem] sm:text-[1.1rem] md:text-[1.2rem] leading-relaxed animate-fade-in-up opacity-0 text-white/90" style={{ animationDelay: '0.3s' }}>
                     {heroSubtitle.split('.')[0]}.
                   </p>
                   
-                  {/* CTA Scroll Down */}
+                  {/* CTA Scroll Down - ESQUERDA */}
                   <button 
                     onClick={() => window.scrollTo({ top: window.innerHeight * 0.85, behavior: 'smooth' })}
-                    className="animate-fade-in-up opacity-0 flex flex-col items-center gap-2 text-white/80 hover:text-white transition-colors group" 
+                    className="animate-fade-in-up opacity-0 flex items-center gap-3 text-white/80 hover:text-white transition-colors group" 
                     style={{ animationDelay: '0.4s' }}
                     aria-label="Scroll down"
                   >
                     <span className="font-sora text-[0.75rem] uppercase tracking-[0.24em]">
                       {lang === 'pt' ? 'Explorar' : lang === 'es' ? 'Explorar' : lang === 'fr' ? 'Explorer' : 'Explore'}
                     </span>
-                    <svg className="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                     </svg>
                   </button>
