@@ -196,9 +196,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         </div>
 
         {/* ════════════════════════════════════════════════════════════════ */}
-        {/* HERO PREMIUM 2026 - Compacto 60vh + Título Centralizado */}
+        {/* HERO CONECTADO - Badge integrado + Stats inline */}
         {/* ════════════════════════════════════════════════════════════════ */}
-        <section className="relative h-[60vh] min-h-[500px] overflow-hidden">
+        <section className="relative h-[50vh] min-h-[450px] overflow-hidden">
           {(() => {
             const featured = recommended[0] || defaultProjects[0]
             const hasMedia = featured?.heroImage && (featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.thumbnail || featured.heroImage?.original)
@@ -222,20 +222,22 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 {/* Overlay Gradiente */}
                 <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80" />
                 
-                {/* Conteúdo Hero - CENTRALIZADO (TÍTULO) + Resto ESQUERDA */}
-                <div className="relative z-10 flex flex-col justify-center h-full px-4 mx-auto max-w-7xl">
-                  {/* Badge Azimut - ESQUERDA */}
-                  <div className="mb-6 inline-flex items-center gap-2 font-sora text-[0.75rem] uppercase tracking-[0.28em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
+                {/* Conteúdo Hero - INTEGRADO */}
+                <div className="relative z-10 flex flex-col justify-center items-center h-full px-4 mx-auto max-w-7xl text-center">
+                  {/* Badge AZIMUT integrado ao título */}
+                  <div className="mb-4 inline-flex items-center gap-2 font-sora text-[0.7rem] uppercase tracking-[0.3em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
                     <img 
                       src="/estela6-clara.svg" 
                       alt="" 
-                      className="w-4 h-4"
+                      className="w-3 h-3"
                     />
                     <span className="text-azimut-red font-semibold">AZIMUT</span>
+                    <span className="text-white/40">•</span>
+                    <span className="text-white/60 text-[0.65rem]">SINCE 1996</span>
                   </div>
                   
-                  {/* Título Hero - CENTRALIZADO (chama atenção) */}
-                  <h1 className="mb-6 font-handel text-[2.5rem] leading-[1.1] tracking-[0.12em] uppercase sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] animate-fade-in-up opacity-0 text-white text-center" style={{ animationDelay: '0.2s' }}>
+                  {/* Título Hero - CENTRALIZADO */}
+                  <h1 className="mb-4 font-handel text-[2.5rem] leading-[1.1] tracking-[0.12em] uppercase sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] animate-fade-in-up opacity-0 text-white" style={{ animationDelay: '0.2s' }}>
                     {heroSlogan.split(' ').map((word, i) => (
                       <span key={i}>
                         {i === heroSlogan.split(' ').length - 1 ? (
@@ -247,26 +249,28 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     ))}
                   </h1>
                   
-                  {/* Subtítulo - Centralizado também */}
-                  <p className="mb-8 max-w-2xl mx-auto text-[1rem] sm:text-[1.1rem] md:text-[1.2rem] leading-relaxed animate-fade-in-up opacity-0 text-white/90 text-center" style={{ animationDelay: '0.3s' }}>
+                  {/* Subtítulo */}
+                  <p className="mb-6 max-w-2xl text-[0.95rem] sm:text-[1.05rem] leading-relaxed animate-fade-in-up opacity-0 text-white/80" style={{ animationDelay: '0.3s' }}>
                     {heroSubtitle.split('.')[0]}.
                   </p>
                   
-                  {/* CTA Scroll Down - CENTRALIZADO */}
-                  <div className="flex justify-center">
-                    <button 
-                      onClick={() => window.scrollTo({ top: window.innerHeight * 0.6, behavior: 'smooth' })}
-                      className="animate-fade-in-up opacity-0 flex items-center gap-3 text-white/80 hover:text-white transition-colors group" 
-                      style={{ animationDelay: '0.4s' }}
-                      aria-label="Scroll down"
-                    >
-                      <span className="font-sora text-[0.75rem] uppercase tracking-[0.24em]">
-                        {lang === 'pt' ? 'Explorar' : lang === 'es' ? 'Explorar' : lang === 'fr' ? 'Explorer' : 'Explore'}
-                      </span>
-                      <svg className="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                      </svg>
-                    </button>
+                  {/* Stats inline - CONECTADOS ao hero */}
+                  <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 animate-fade-in-up opacity-0 text-sm" style={{ animationDelay: '0.4s' }}>
+                    <div className="flex items-center gap-2">
+                      <span className="text-azimut-red font-bold">100+</span>
+                      <span className="text-white/60">{lang === 'pt' ? 'Projetos' : 'Projects'}</span>
+                    </div>
+                    <span className="text-white/30">•</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-white/60">🇧🇷 Brasil</span>
+                      <span className="text-white/40">↔</span>
+                      <span className="text-white/60">🇨🇦 Canada</span>
+                    </div>
+                    <span className="text-white/30">•</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-white/60">{lang === 'pt' ? 'Curadoria VR Gramado desde' : 'Gramado VR Curation since'}</span>
+                      <span className="text-azimut-red font-bold">2017</span>
+                    </div>
                   </div>
                 </div>
               </>
@@ -275,155 +279,209 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         </section>
 
         {/* ════════════════════════════════════════════════════════════════ */}
-        {/* VÍDEO FEATURED - Card Flutuante LOGO APÓS HERO (Destaque Premium) */}
+        {/* VÍDEO FEATURED - Integrado ao Flow (sem overlap) */}
         {/* ════════════════════════════════════════════════════════════════ */}
-        <section className="-mt-24 relative z-20 pb-12 md:pb-16">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <section className="py-8 md:py-10 bg-gradient-to-b from-black/40 to-transparent">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             {(() => {
               const featured = recommended[0] || defaultProjects[0]
               const hasVideo = featured?.heroImage?.type === 'VIDEO' && featured?.heroImage?.original
               
               return (
-                <div className="relative overflow-hidden rounded-3xl shadow-[0_40px_100px_rgba(0,0,0,0.8)] bg-gradient-to-br from-slate-900 to-slate-950 border border-white/10">
-                  {/* Vídeo Player */}
-                  <div className="relative aspect-video w-full overflow-hidden">
-                    {hasVideo ? (
-                      <VideoPlayer
-                        videoUrl={featured.heroImage.original}
-                        thumbnailUrl={featured.heroImage.thumbnail || featured.heroImage.large}
-                        alt={featured.heroImage?.alt || featured.title}
-                        className="w-full h-full"
-                      />
-                    ) : featured?.heroImage?.large || featured?.heroImage?.medium ? (
-                      <img
-                        src={featured.heroImage?.large || featured.heroImage?.medium}
-                        alt={featured.title}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-azimut-red/10 via-slate-900 to-slate-950 flex items-center justify-center">
-                        <div className="text-center p-6">
-                          <h3 className="font-handel text-3xl uppercase tracking-[0.12em] text-white">
-                            {featured.title}
-                          </h3>
-                          <p className="mt-2 text-slate-400 text-sm">
-                            {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
-                          </p>
-                        </div>
-                      </div>
-                    )}
+                <>
+                  {/* Título de transição */}
+                  <div className="mb-6 text-center">
+                    <h2 className="font-sora text-[0.75rem] uppercase tracking-[0.24em] text-white/50 mb-3">
+                      {lang === 'pt' ? 'Assista Nosso Trabalho' : lang === 'es' ? 'Ve Nuestro Trabajo' : lang === 'fr' ? 'Regardez Notre Travail' : 'Watch Our Work'}
+                    </h2>
                   </div>
                   
-                  {/* Info do Projeto */}
-                  <div className="p-6 md:p-8">
-                    <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-                      {/* Tags */}
-                      {featured.tags && featured.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
-                          {featured.tags.slice(0, 3).map((tag: string, idx: number) => (
-                            <span 
-                              key={idx} 
-                              className="px-3 py-1 rounded-full bg-azimut-red/10 border border-azimut-red/30 font-sora text-[0.7rem] uppercase tracking-wider text-azimut-red"
-                            >
-                              {tag}
-                            </span>
-                          ))}
+                  <div className="relative overflow-hidden rounded-2xl shadow-[0_32px_80px_rgba(0,0,0,0.7)] bg-gradient-to-br from-slate-900 to-slate-950 border border-white/10">
+                    {/* Vídeo Player */}
+                    <div className="relative aspect-video w-full overflow-hidden">
+                      {hasVideo ? (
+                        <VideoPlayer
+                          videoUrl={featured.heroImage.original}
+                          thumbnailUrl={featured.heroImage.thumbnail || featured.heroImage.large}
+                          alt={featured.heroImage?.alt || featured.title}
+                          className="w-full h-full"
+                        />
+                      ) : featured?.heroImage?.large || featured?.heroImage?.medium ? (
+                        <img
+                          src={featured.heroImage?.large || featured.heroImage?.medium}
+                          alt={featured.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-azimut-red/10 via-slate-900 to-slate-950 flex items-center justify-center">
+                          <div className="text-center p-6">
+                            <h3 className="font-handel text-3xl uppercase tracking-[0.12em] text-white">
+                              {featured.title}
+                            </h3>
+                            <p className="mt-2 text-slate-400 text-sm">
+                              {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
+                            </p>
+                          </div>
                         </div>
                       )}
-                      
-                      {/* Localização */}
-                      {(featured.city || featured.country) && (
-                        <p className="text-sm text-slate-400 flex items-center gap-1">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                          </svg>
-                          {[featured.city, featured.country].filter(Boolean).join(', ')}
-                        </p>
-                      )}
                     </div>
                     
-                    <h3 className="font-handel text-2xl md:text-3xl uppercase tracking-[0.08em] text-white mb-3">
-                      {featured.title}
-                    </h3>
-                    <p className="text-slate-300 leading-relaxed mb-6">
-                      {featured.summary || featured.shortTitle}
-                    </p>
-                    
-                    {/* CTAs */}
-                    <div className="flex flex-wrap gap-3">
-                      <Link
-                        to={`/work/${featured.slug}`}
-                        className="inline-flex items-center justify-center rounded-lg bg-azimut-red px-6 py-3 font-sora text-sm uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/90 hover:scale-105"
-                      >
-                        {lang === 'pt' ? 'Ver Projeto Completo' : lang === 'es' ? 'Ver Proyecto Completo' : 'View Full Project'}
-                      </Link>
-                      <Link
-                        to="/contact?interest=similar"
-                        className="inline-flex items-center justify-center rounded-lg border border-azimut-red px-6 py-3 font-sora text-sm uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/10"
-                      >
-                        {lang === 'pt' ? 'Projeto Similar' : lang === 'es' ? 'Proyecto Similar' : 'Similar Project'}
-                      </Link>
+                    {/* Info do Projeto - compacta */}
+                    <div className="p-4 md:p-6">
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        {/* Tags */}
+                        {featured.tags && featured.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-2">
+                            {featured.tags.slice(0, 3).map((tag: string, idx: number) => (
+                              <span 
+                                key={idx} 
+                                className="px-2 py-1 rounded-full bg-azimut-red/10 border border-azimut-red/30 font-sora text-[0.65rem] uppercase tracking-wider text-azimut-red"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        
+                        {/* Localização */}
+                        {(featured.city || featured.country) && (
+                          <p className="text-xs text-slate-400 flex items-center gap-1">
+                            📍 {[featured.city, featured.country].filter(Boolean).join(', ')}
+                          </p>
+                        )}
+                      </div>
+                      
+                      <h3 className="font-handel text-xl md:text-2xl uppercase tracking-[0.08em] text-white mt-3 mb-2">
+                        {featured.title}
+                      </h3>
+                      <p className="text-slate-300 text-sm leading-relaxed mb-4">
+                        {featured.summary || featured.shortTitle}
+                      </p>
+                      
+                      {/* CTAs compactos */}
+                      <div className="flex flex-wrap gap-2">
+                        <Link
+                          to={`/work/${featured.slug}`}
+                          className="inline-flex items-center justify-center rounded-lg bg-azimut-red px-4 py-2 font-sora text-xs uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/90"
+                        >
+                          {lang === 'pt' ? 'Ver Projeto' : lang === 'es' ? 'Ver Proyecto' : 'View Project'}
+                        </Link>
+                        <Link
+                          to="/contact?interest=similar"
+                          className="inline-flex items-center justify-center rounded-lg border border-azimut-red px-4 py-2 font-sora text-xs uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/10"
+                        >
+                          {lang === 'pt' ? 'Projeto Similar' : lang === 'es' ? 'Proyecto Similar' : 'Similar Project'}
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </>
               )
             })()}
           </div>
         </section>
 
         {/* ════════════════════════════════════════════════════════════════ */}
-        {/* STATS - Card Glassmorphism Flutuante (Credibilidade) */}
+        {/* PROJETOS EM DESTAQUE - Grid Visual (6 projetos) */}
         {/* ════════════════════════════════════════════════════════════════ */}
-        <section className="py-12 md:py-16">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            <div 
-              className="relative overflow-hidden rounded-3xl p-8 md:p-12 shadow-[0_32px_80px_rgba(0,0,0,0.6)]"
-              style={{
-                background: 'rgba(10, 15, 26, 0.6)',
-                backdropFilter: 'blur(20px)',
-                border: '1px solid rgba(255, 255, 255, 0.1)'
-              }}
-            >
-              {/* Glow effect sutil */}
-              <div className="absolute inset-0 bg-gradient-to-br from-azimut-red/5 via-transparent to-transparent pointer-events-none" />
-              
-              <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-center">
-                <div className="stat-item group">
-                  <div className="text-5xl md:text-6xl font-bold text-azimut-red mb-2 transition-transform duration-300 group-hover:scale-110">
-                    100+
+        <section className="py-10 md:py-12">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="font-handel text-2xl md:text-3xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
+                {lang === 'pt' ? 'Projetos Selecionados' : lang === 'es' ? 'Proyectos Seleccionados' : lang === 'fr' ? 'Projets Sélectionnés' : 'Selected Projects'}
+              </h2>
+              <Link
+                to="/work"
+                className="text-xs font-sora uppercase tracking-[0.1em] text-azimut-red hover:text-azimut-red/80 transition-colors flex items-center gap-2 group"
+              >
+                <span>{lang === 'pt' ? 'Ver Todos' : lang === 'es' ? 'Ver Todos' : 'View All'}</span>
+                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </Link>
+            </div>
+            
+            {/* Grid de Projetos - 6 PROJETOS (3x2) */}
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {(Array.isArray(recommended) && recommended.length > 0 
+                ? recommended.slice(0, 6) // MOSTRA 6 projetos
+                : Array.isArray(defaultProjects) ? defaultProjects.slice(0, 6) : []
+              ).map((item: any, index: number) => (
+                <Link
+                  key={item.slug}
+                  to={`/work/${item.slug}`}
+                  className="group relative rounded-xl overflow-hidden shadow-[0_12px_30px_rgba(0,0,0,0.4)] transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_20px_50px_rgba(201,35,55,0.3)]"
+                  style={{
+                    animation: `fadeInUp 0.5s ease-out ${index * 0.1}s both`
+                  }}
+                >
+                  {/* Imagem */}
+                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900">
+                    {item.heroImage?.thumbnail || item.heroImage?.medium || item.heroImage?.large ? (
+                      <img
+                        src={item.heroImage?.large || item.heroImage?.medium || item.heroImage?.thumbnail}
+                        alt={item.heroImage?.alt || item.title}
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        loading="lazy"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          target.style.display = 'none';
+                        }}
+                      />
+                    ) : (
+                      <div className="flex items-center justify-center h-full bg-gradient-to-br from-azimut-red/10 via-slate-800 to-slate-900">
+                        <svg className="w-16 h-16 text-azimut-red/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                    )}
+                    
+                    {/* Overlay Gradiente */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+                    
+                    {/* Tags sobre a imagem */}
+                    {item.tags && item.tags.length > 0 && (
+                      <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                        {item.tags.slice(0, 2).map((tag: string, idx: number) => (
+                          <span 
+                            key={idx} 
+                            className="px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-sm border border-white/20 font-sora text-[0.6rem] uppercase tracking-wider text-white"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    
+                    {/* Título e Info sobre a imagem */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <h3 className="font-handel text-lg md:text-xl uppercase tracking-[0.08em] text-white mb-1 line-clamp-2 group-hover:text-azimut-red transition-colors duration-300">
+                        {item.title}
+                      </h3>
+                      {(item.city || item.country) && (
+                        <p className="text-xs text-white/80 flex items-center gap-1">
+                          📍 {[item.city, item.country].filter(Boolean).join(', ')}
+                        </p>
+                      )}
+                    </div>
+                    
+                    {/* Ícone "Ver Projeto" no hover */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 scale-75 group-hover:scale-100">
+                      <div className="w-12 h-12 rounded-full bg-azimut-red flex items-center justify-center shadow-lg">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-sm md:text-base uppercase tracking-wider text-white/70">
-                    {lang === 'pt' ? 'Projetos Realizados' : lang === 'es' ? 'Proyectos Realizados' : lang === 'fr' ? 'Projets Réalisés' : 'Projects Delivered'}
-                  </div>
-                </div>
-                
-                <div className="stat-item group">
-                  <div className="text-5xl md:text-6xl font-bold text-azimut-red mb-2 transition-transform duration-300 group-hover:scale-110">
-                    15+
-                  </div>
-                  <div className="text-sm md:text-base uppercase tracking-wider text-white/70">
-                    {lang === 'pt' ? 'Países' : lang === 'es' ? 'Países' : lang === 'fr' ? 'Pays' : 'Countries'}
-                  </div>
-                </div>
-                
-                <div className="stat-item group">
-                  <div className="text-5xl md:text-6xl font-bold text-azimut-red mb-2 transition-transform duration-300 group-hover:scale-110">
-                    20+
-                  </div>
-                  <div className="text-sm md:text-base uppercase tracking-wider text-white/70">
-                    {lang === 'pt' ? 'Anos de Experiência' : lang === 'es' ? 'Años de Experiencia' : lang === 'fr' ? 'Années d\'Expérience' : 'Years of Experience'}
-                  </div>
-                </div>
-              </div>
+                </Link>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════════════ */}
         {/* SOBRE - Card Lateral (Conteúdo Preservado) */}
-        {/* ════════════════════════════════════════════════════════════════ */}
-        <section className="py-12 sm:py-16 md:py-20">
+        <section className="py-10 md:py-12">
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               {/* Texto Esquerdo */}
@@ -486,8 +544,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* Nossas Soluções - Grid Visual MELHORADO */}
-        <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-transparent via-black/5 to-transparent dark:via-white/5">
+        {/* Nossas Soluções - Grid Visual COMPACTO */}
+        <section className="py-10 md:py-12 bg-gradient-to-b from-transparent via-black/5 to-transparent dark:via-white/5">
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="mb-10 text-center">
               <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-[0.12em] mb-4" style={{ color: 'var(--theme-text)' }}>
@@ -626,107 +684,6 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Recomendações - Grid Visual-First MELHORADO */}
-        <section className="pb-12 sm:pb-16 md:pb-20">
-          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
-            <div className="mb-8 flex items-center justify-between">
-              <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
-                {lang === 'pt' ? 'Projetos em Destaque' : lang === 'es' ? 'Proyectos Destacados' : lang === 'fr' ? 'Projets en Vedette' : 'Featured Projects'}
-              </h2>
-              <Link
-                to="/work"
-                className="text-sm font-sora uppercase tracking-[0.1em] text-azimut-red hover:text-azimut-red/80 transition-colors flex items-center gap-2 group"
-              >
-                <span>{lang === 'pt' ? 'Ver Todos' : lang === 'es' ? 'Ver Todos' : lang === 'fr' ? 'Voir Tout' : 'View All'}</span>
-                <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </Link>
-            </div>
-            
-            {/* Grid de Projetos - VISUAL FIRST */}
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {(Array.isArray(recommended) && recommended.length > 1 
-                ? recommended.slice(1, 4) 
-                : Array.isArray(defaultProjects) ? defaultProjects.slice(1, Math.min(4, defaultProjects.length)) : []
-              ).map((item: any, index: number) => (
-                <Link
-                  key={item.slug}
-                  to={`/work/${item.slug}`}
-                  className="group relative rounded-2xl overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)] transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_24px_60px_rgba(201,35,55,0.4)]"
-                  style={{
-                    animation: `fadeInUp 0.6s ease-out ${index * 0.15}s both`
-                  }}
-                >
-                  {/* Imagem/Vídeo - TAMANHO GRANDE */}
-                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900">
-                    {item.heroImage?.thumbnail || item.heroImage?.medium || item.heroImage?.large ? (
-                      <img
-                        src={item.heroImage?.large || item.heroImage?.medium || item.heroImage?.thumbnail}
-                        alt={item.heroImage?.alt || item.title}
-                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        loading="lazy"
-                        onError={(e) => {
-                          const target = e.currentTarget;
-                          target.style.display = 'none';
-                        }}
-                      />
-                    ) : (
-                      <div className="flex items-center justify-center h-full bg-gradient-to-br from-azimut-red/10 via-slate-800 to-slate-900">
-                        <svg className="w-20 h-20 text-azimut-red/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                      </div>
-                    )}
-                    
-                    {/* Overlay Gradiente */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
-                    
-                    {/* Tags sobre a imagem */}
-                    {item.tags && item.tags.length > 0 && (
-                      <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                        {item.tags.slice(0, 2).map((tag: string, idx: number) => (
-                          <span 
-                            key={idx} 
-                            className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-sm border border-white/20 font-sora text-[0.65rem] uppercase tracking-wider text-white"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                    
-                    {/* Título e Info sobre a imagem */}
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <h3 className="font-handel text-xl md:text-2xl uppercase tracking-[0.08em] text-white mb-2 line-clamp-2 group-hover:text-azimut-red transition-colors duration-300">
-                        {item.title}
-                      </h3>
-                      {(item.city || item.country) && (
-                        <p className="text-sm text-white/80 flex items-center gap-1">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                          </svg>
-                          {[item.city, item.country].filter(Boolean).join(', ')}
-                        </p>
-                      )}
-                    </div>
-                    
-                    {/* Ícone "Ver Projeto" no hover */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 scale-75 group-hover:scale-100">
-                      <div className="w-16 h-16 rounded-full bg-azimut-red flex items-center justify-center shadow-lg">
-                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
             </div>
           </div>
         </section>
