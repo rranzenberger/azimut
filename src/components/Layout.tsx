@@ -78,11 +78,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
   
-  // NOVA ABORDAGEM SIMPLES: hamburger só aparece em mobile (< 768px)
-  // Em desktop, menu sempre visível, hamburger NUNCA aparece
+  // NOVA ABORDAGEM SIMPLES: hamburger só aparece em mobile (< 640px)
+  // Em desktop/tablet, menu sempre visível, hamburger NUNCA aparece
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window !== 'undefined') {
-      return window.innerWidth < 768
+      return window.innerWidth < 640
     }
     return false
   })
@@ -90,7 +90,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   // Detectar mobile/desktop no resize
   React.useEffect(() => {
     const handleResize = () => {
-      const mobile = window.innerWidth < 768
+      const mobile = window.innerWidth < 640
       setIsMobile(mobile)
       // Se mudou para desktop, fechar menu mobile
       if (!mobile) {
@@ -120,17 +120,15 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
       let paddingValue: string
       
       if (windowWidth < 360) {
-        paddingValue = '2px'
-      } else if (windowWidth < 375) {
-        paddingValue = '3px'
-      } else if (windowWidth < 412) {
-        paddingValue = '4px'
+        paddingValue = '8px'   // Mínimo seguro para telas muito pequenas
       } else if (windowWidth < 640) {
-        paddingValue = '6px'
+        paddingValue = '12px'  // Mobile confortável
       } else if (windowWidth < 768) {
-        paddingValue = '16px'
+        paddingValue = '16px'  // Tablet pequeno
+      } else if (windowWidth < 1024) {
+        paddingValue = '20px'  // Tablet grande
       } else {
-        paddingValue = '24px'
+        paddingValue = '24px'  // Desktop
       }
       setContainerPadding({ left: paddingValue, right: paddingValue })
     }
@@ -559,12 +557,13 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             </div>
 
             {/* Botão CTA - ULTRA COMPACTO: Otimizado para ganhar espaço */}
+                {/* Botão CTA - Desktop/Tablet (≥640px): Texto completo */}
                 <LangLink to="/contact"
                   onClick={() => {
                     trackCTA('header', 'Start Project')
                     trackInteraction('cta_click', 'header_start_project')
                   }}
-                  className="hidden rounded-lg text-center font-sora font-bold uppercase min-[768px]:inline-flex min-[768px]:flex-col min-[768px]:items-center min-[768px]:justify-center transition-all duration-300 shrink-0 cursor-pointer hover:scale-105 hover:shadow-[0_4px_12px_rgba(201,35,55,0.3)]"
+                  className="hidden rounded-lg text-center font-sora font-bold uppercase min-[640px]:inline-flex min-[640px]:flex-col min-[640px]:items-center min-[640px]:justify-center transition-all duration-300 shrink-0 cursor-pointer hover:scale-105 hover:shadow-[0_4px_12px_rgba(201,35,55,0.3)]"
                   style={{ 
                     color: theme === 'light' ? '#d3cec3' : 'var(--theme-text-secondary)', // Texto CLARO no tema claro!
                     background: theme === 'dark' 
@@ -593,7 +592,40 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <span className="block whitespace-nowrap" style={{ fontSize: 'inherit', fontWeight: '700' }}>{getCtaLines(lang)[1]}</span>
                 </LangLink>
 
-            {/* Botão Hambúrguer - Aparece APENAS em mobile (< 768px) */}
+                {/* Botão CTA - Mobile (<640px): Ícone "+" compacto */}
+                {isMobile && (
+                <LangLink to="/contact"
+                  onClick={() => {
+                    trackCTA('header', 'Start Project Mobile')
+                    trackInteraction('cta_click', 'header_start_project_mobile')
+                  }}
+                  className="inline-flex items-center justify-center rounded-lg text-center font-sora font-bold transition-all duration-300 shrink-0 cursor-pointer hover:scale-105 hover:shadow-[0_4px_12px_rgba(201,35,55,0.3)] touch-manipulation"
+                  style={{ 
+                    color: theme === 'light' ? '#d3cec3' : 'var(--theme-text-secondary)',
+                    background: theme === 'dark' 
+                      ? 'rgba(201, 35, 55, 0.12)' 
+                      : 'rgba(201, 35, 55, 0.08)',
+                    border: '1px solid rgba(201, 35, 55, 0.7)',
+                    boxShadow: theme === 'dark' 
+                      ? '0 2px 8px rgba(201, 35, 55, 0.2)' 
+                      : '0 2px 8px rgba(201, 35, 55, 0.15)',
+                    minWidth: '36px',
+                    width: '36px',
+                    height: '36px',
+                    padding: '0',
+                    alignSelf: 'center',
+                    flexShrink: 0,
+                    fontSize: '1.4rem',
+                    lineHeight: '1',
+                    marginLeft: '6px'
+                  }}
+                  aria-label="Start a Project"
+                >
+                  <span style={{ fontWeight: '400' }}>+</span>
+                </LangLink>
+                )}
+
+            {/* Botão Hambúrguer - Aparece APENAS em mobile (< 640px) */}
             {isMobile && (
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -647,7 +679,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         {/* Linha fina de separação */}
         <div className="h-px w-full bg-white/10"></div>
 
-        {/* Menu Mobile - Aparece APENAS em mobile (< 768px) */}
+        {/* Menu Mobile - Aparece APENAS em mobile (< 640px) */}
         {isMobile && (
         <div className={`block overflow-hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
           <nav className="border-t backdrop-blur-md" style={{ borderColor: 'var(--theme-border)', backgroundColor: 'var(--theme-overlay)' }}>
