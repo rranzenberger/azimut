@@ -223,14 +223,15 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 {/* Glass Overlay - Gemini Style */}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/70 backdrop-blur-[2px]" />
                 
-                {/* Logo 3D Animada - Canto Superior Direito */}
-                <div className="absolute top-24 right-12 lg:top-32 lg:right-20 z-20 hidden md:block">
-                  <AnimatedLogo />
-                </div>
+                {/* ═══════════════════════════════════════════════════════════════
+                    SPLIT SCREEN PREMIUM: Texto 55% | Logo 3D 45%
+                    Baseado em: Cartier, Omega, Apple (Pesquisas Gemini/ChatGPT/Claude)
+                    ══════════════════════════════════════════════════════════════ */}
                 
-                {/* Conteúdo Hero - World-Class 2026 */}
-                <div className="relative z-10 flex flex-col justify-center h-full px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
-                  <div className="max-w-4xl space-y-8">
+                {/* DESKTOP: Split Screen */}
+                <div className="relative z-10 hidden lg:grid lg:grid-cols-[55%_45%] h-full items-center px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
+                  {/* Coluna Esquerda: Conteúdo Texto */}
+                  <div className="space-y-8 pr-8">
                     {/* Badge AZIMUT compacto */}
                     <div className="inline-flex items-center gap-2 font-sora text-[0.7rem] uppercase tracking-[0.3em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
                       <img 
@@ -243,9 +244,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       <span className="text-white/60 text-[0.65rem]">SINCE 1996</span>
                     </div>
                     
-                    {/* Título Monumental (usa tipografia do index.css) */}
+                    {/* Título Monumental */}
                     <h1 className="font-handel uppercase text-white animate-fade-in-up opacity-0" style={{ 
-                      fontSize: 'clamp(2.5rem, 8vw, 8rem)',
+                      fontSize: 'clamp(2.5rem, 6vw, 6rem)',
                       lineHeight: '1.1',
                       letterSpacing: '0.12em',
                       animationDelay: '0.2s'
@@ -262,11 +263,88 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     </h1>
                     
                     {/* Subtítulo */}
-                    <p className="max-w-2xl text-[1rem] sm:text-[1.1rem] leading-relaxed animate-fade-in-up opacity-0 text-white/90" style={{ animationDelay: '0.3s' }}>
+                    <p className="max-w-xl text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0 text-white/90" style={{ animationDelay: '0.3s' }}>
                       {heroSubtitle.split('.')[0]}.
                     </p>
                     
-                    {/* Stats Cards - AZIMUT IDENTITY (Red) */}
+                    {/* Stats Cards */}
+                    <div className="grid grid-cols-3 gap-3 max-w-lg animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+                      <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
+                        <span className="block text-3xl lg:text-4xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">100+</span>
+                        <span className="block text-[0.6rem] text-white/60 uppercase tracking-widest mt-1">
+                          {lang === 'pt' ? 'Projetos' : lang === 'es' ? 'Proyectos' : 'Projects'}
+                        </span>
+                      </div>
+                      <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
+                        <span className="block text-3xl lg:text-4xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">40+</span>
+                        <span className="block text-[0.6rem] text-white/60 uppercase tracking-widest mt-1">
+                          {lang === 'pt' ? 'Países' : lang === 'es' ? 'Países' : lang === 'fr' ? 'Pays' : 'Countries'}
+                        </span>
+                      </div>
+                      <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
+                        <span className="block text-3xl lg:text-4xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">1996</span>
+                        <span className="block text-[0.6rem] text-white/60 uppercase tracking-widest mt-1">
+                          {lang === 'pt' ? 'Desde' : lang === 'es' ? 'Desde' : lang === 'fr' ? 'Depuis' : 'Since'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Coluna Direita: Logo 3D Animada GRANDE (Estilo Cartier/Omega) */}
+                  <div className="flex items-center justify-center">
+                    <div className="w-full max-w-[500px] aspect-square">
+                      <AnimatedLogo />
+                    </div>
+                  </div>
+                </div>
+                
+                {/* MOBILE/TABLET: Watermark Central + Texto Sobre */}
+                <div className="relative z-10 lg:hidden flex flex-col justify-center h-full px-4 sm:px-6 mx-auto max-w-7xl">
+                  {/* Logo como Watermark (fundo) */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
+                    <div className="w-[200px] h-[200px] sm:w-[250px] sm:h-[250px]">
+                      <AnimatedLogo />
+                    </div>
+                  </div>
+                  
+                  {/* Conteúdo Texto (frente) */}
+                  <div className="relative z-10 max-w-4xl text-center mx-auto space-y-8">
+                    {/* Badge AZIMUT */}
+                    <div className="inline-flex items-center gap-2 font-sora text-[0.7rem] uppercase tracking-[0.3em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
+                      <img 
+                        src="/estela6-clara.svg" 
+                        alt="" 
+                        className="w-3 h-3"
+                      />
+                      <span className="text-azimut-red font-semibold">AZIMUT</span>
+                      <span className="text-white/40">•</span>
+                      <span className="text-white/60 text-[0.65rem]">SINCE 1996</span>
+                    </div>
+                    
+                    {/* Título */}
+                    <h1 className="font-handel uppercase text-white animate-fade-in-up opacity-0" style={{ 
+                      fontSize: 'clamp(2.5rem, 8vw, 5rem)',
+                      lineHeight: '1.1',
+                      letterSpacing: '0.12em',
+                      animationDelay: '0.2s'
+                    }}>
+                      {heroSlogan.split(' ').map((word, i) => (
+                        <span key={i}>
+                          {i === heroSlogan.split(' ').length - 1 ? (
+                            <span className="text-azimut-red">{word}</span>
+                          ) : (
+                            `${word} `
+                          )}
+                        </span>
+                      ))}
+                    </h1>
+                    
+                    {/* Subtítulo */}
+                    <p className="max-w-2xl mx-auto text-[1rem] leading-relaxed animate-fade-in-up opacity-0 text-white/90" style={{ animationDelay: '0.3s' }}>
+                      {heroSubtitle.split('.')[0]}.
+                    </p>
+                    
+                    {/* Stats Cards */}
                     <div className="grid grid-cols-3 gap-3 sm:gap-4 max-w-2xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
                       <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 sm:p-6 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
                         <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">100+</span>
