@@ -20,14 +20,14 @@ export const AnimatedLogo: React.FC = () => {
           width: 200px;
           height: 200px;
           animation: float 6s ease-in-out infinite, rotate3d 12s linear infinite;
-          filter: drop-shadow(0 0 30px rgba(217, 119, 6, 0.5)) 
-                  drop-shadow(0 0 60px rgba(217, 119, 6, 0.3));
+          filter: drop-shadow(0 0 30px rgba(201, 35, 55, 0.6)) 
+                  drop-shadow(0 0 60px rgba(201, 35, 55, 0.4));
           transition: all 0.3s ease;
         }
         
         .animated-logo:hover {
-          filter: drop-shadow(0 0 40px rgba(217, 119, 6, 0.8)) 
-                  drop-shadow(0 0 80px rgba(217, 119, 6, 0.5));
+          filter: drop-shadow(0 0 40px rgba(201, 35, 55, 0.9)) 
+                  drop-shadow(0 0 80px rgba(201, 35, 55, 0.6));
           animation: float 3s ease-in-out infinite, rotate3d 6s linear infinite;
         }
         

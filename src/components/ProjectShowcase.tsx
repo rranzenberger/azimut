@@ -45,17 +45,17 @@ interface ProjectShowcaseProps {
   lang: Lang
 }
 
-// Cores dos badges por projeto (estilo Gemini)
+// Cores dos badges por projeto (AZIMUT IDENTITY - Red Dominant)
 const projectColors = [
-  '#D97706', // amber-600 (01)
-  '#8B5CF6', // violet-500 (02)
-  '#3B82F6', // blue-500 (03)
-  '#EC4899', // pink-500 (04)
-  '#10B981', // emerald-500 (05)
-  '#F59E0B', // amber-500 (06)
-  '#6366F1', // indigo-500 (07)
-  '#EF4444', // red-500 (08)
-  '#14B8A6', // teal-500 (09)
+  '#c92337', // azimut-red (01) - IDENTIDADE
+  '#DC2626', // red-600 (02)
+  '#B91C1C', // red-700 (03)
+  '#991B1B', // red-800 (04)
+  '#EF4444', // red-500 (05)
+  '#F87171', // red-400 (06)
+  '#DC2626', // red-600 (07)
+  '#c92337', // azimut-red (08) - IDENTIDADE
+  '#B91C1C', // red-700 (09)
 ]
 
 export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({ projects, lang }) => {
@@ -147,8 +147,8 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({ projects, lang
                 onClick={() => setSelectedProjectId(idx)}
                 className={`site-card group glass-panel backdrop-blur-sm p-4 md:p-5 rounded-xl border cursor-pointer shadow-sm relative overflow-hidden transition-all duration-300 hover:-translate-y-1 ${
                   selectedProjectId === idx 
-                    ? 'border-amber-500 bg-amber-50/80 dark:bg-amber-950/30' 
-                    : 'bg-white/70 dark:bg-slate-800/70 border-stone-200 dark:border-stone-700 hover:border-amber-500'
+                    ? 'border-azimut-red bg-red-50/80 dark:bg-red-950/30' 
+                    : 'bg-white/70 dark:bg-slate-800/70 border-stone-200 dark:border-stone-700 hover:border-azimut-red'
                 }`}
               >
                 {/* Barra lateral (Gemini style) */}

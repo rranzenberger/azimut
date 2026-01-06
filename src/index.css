@@ -14,6 +14,40 @@ html {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   GRÃO CINEMATOGRÁFICO - AZIMUT IDENTITY
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Film grain overlay para dar atmosfera cinematográfica */
+.film-grain::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px);
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 10;
+  animation: grain 8s steps(10) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* ═══════════════════════════════════════════════════════════════
    CORREÇÕES DE CONTRASTE - PRIORIDADE MÁXIMA (ANTES DE @theme)
    DEVE VIR LOGO APÓS @import PARA TER MÁXIMA PRECEDÊNCIA
    ═══════════════════════════════════════════════════════════════ */

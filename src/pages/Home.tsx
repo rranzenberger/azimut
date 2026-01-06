@@ -200,7 +200,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* ════════════════════════════════════════════════════════════════ */}
         {/* HERO WORLD-CLASS 2026 - 85vh + Stats Cards Flutuantes */}
         {/* ════════════════════════════════════════════════════════════════ */}
-        <section className="relative h-[85vh] min-h-[600px] overflow-hidden">
+        <section className="relative h-[85vh] min-h-[600px] overflow-hidden film-grain">
           {(() => {
             const featured = recommended[0] || defaultProjects[0]
             const hasMedia = featured?.heroImage && (featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.thumbnail || featured.heroImage?.original)
@@ -267,22 +267,22 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       {heroSubtitle.split('.')[0]}.
                     </p>
                     
-                    {/* Stats Cards - Gemini Style (85% / 4.2s) */}
+                    {/* Stats Cards - AZIMUT IDENTITY (Red) */}
                     <div className="grid grid-cols-3 gap-3 sm:gap-4 max-w-2xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
-                      <div className="glass-panel backdrop-blur-xl bg-stone-900/70 border border-white/10 p-4 sm:p-6 rounded-xl hover:border-amber-500/50 transition-all duration-300 group">
-                        <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-amber-500 group-hover:text-amber-400 transition-colors">100+</span>
+                      <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 sm:p-6 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
+                        <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">100+</span>
                         <span className="block text-[0.65rem] sm:text-xs text-white/60 uppercase tracking-widest mt-1">
                           {lang === 'pt' ? 'Projetos' : lang === 'es' ? 'Proyectos' : 'Projects'}
                         </span>
                       </div>
-                      <div className="glass-panel backdrop-blur-xl bg-stone-900/70 border border-white/10 p-4 sm:p-6 rounded-xl hover:border-amber-500/50 transition-all duration-300 group">
-                        <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-amber-500 group-hover:text-amber-400 transition-colors">15+</span>
+                      <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 sm:p-6 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
+                        <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">15+</span>
                         <span className="block text-[0.65rem] sm:text-xs text-white/60 uppercase tracking-widest mt-1">
                           {lang === 'pt' ? 'Países' : lang === 'es' ? 'Países' : lang === 'fr' ? 'Pays' : 'Countries'}
                         </span>
                       </div>
-                      <div className="glass-panel backdrop-blur-xl bg-stone-900/70 border border-white/10 p-4 sm:p-6 rounded-xl hover:border-amber-500/50 transition-all duration-300 group">
-                        <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-amber-500 group-hover:text-amber-400 transition-colors">1996</span>
+                      <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 sm:p-6 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
+                        <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">1996</span>
                         <span className="block text-[0.65rem] sm:text-xs text-white/60 uppercase tracking-widest mt-1">
                           {lang === 'pt' ? 'Desde' : lang === 'es' ? 'Desde' : lang === 'fr' ? 'Depuis' : 'Since'}
                         </span>
@@ -452,13 +452,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   {lang === 'pt' ? 'Especialidades' : lang === 'es' ? 'Especialidades' : lang === 'fr' ? 'Spécialités' : 'Expertise'}
                 </h3>
                 <div className="flex flex-wrap gap-3">
-                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white hover:border-amber-500 hover:bg-amber-500/10 transition-all duration-300">
+                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white hover:border-azimut-red hover:bg-azimut-red/10 transition-all duration-300">
                     {t(lang, 'tag1')}
                   </span>
-                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white hover:border-amber-500 hover:bg-amber-500/10 transition-all duration-300">
+                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white hover:border-azimut-red hover:bg-azimut-red/10 transition-all duration-300">
                     {t(lang, 'tag2')}
                   </span>
-                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white hover:border-amber-500 hover:bg-amber-500/10 transition-all duration-300">
+                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white hover:border-azimut-red hover:bg-azimut-red/10 transition-all duration-300">
                     {t(lang, 'tag3')}
                   </span>
                 </div>
