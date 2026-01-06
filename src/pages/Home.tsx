@@ -196,9 +196,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         </div>
 
         {/* ════════════════════════════════════════════════════════════════ */}
-        {/* HERO VISUAL FIRST - Vídeo/Imagem no Topo + Texto Mínimo */}
+        {/* HERO PREMIUM 2026 - Compacto 60vh + Título Centralizado */}
         {/* ════════════════════════════════════════════════════════════════ */}
-        <section className="relative h-[85vh] min-h-[600px] overflow-hidden">
+        <section className="relative h-[60vh] min-h-[500px] overflow-hidden">
           {(() => {
             const featured = recommended[0] || defaultProjects[0]
             const hasMedia = featured?.heroImage && (featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.thumbnail || featured.heroImage?.original)
@@ -221,7 +221,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 {/* Overlay Gradiente */}
                 <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80" />
                 
-                {/* Conteúdo Hero - ALINHADO À ESQUERDA */}
+                {/* Conteúdo Hero - CENTRALIZADO (TÍTULO) + Resto ESQUERDA */}
                 <div className="relative z-10 flex flex-col justify-center h-full px-4 mx-auto max-w-7xl">
                   {/* Badge Azimut - ESQUERDA */}
                   <div className="mb-6 inline-flex items-center gap-2 font-sora text-[0.75rem] uppercase tracking-[0.28em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
@@ -233,8 +233,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     <span className="text-azimut-red font-semibold">AZIMUT</span>
                   </div>
                   
-                  {/* Título Hero - GRANDE e Impactante - ESQUERDA */}
-                  <h1 className="mb-6 font-handel text-[2.5rem] leading-[1.1] tracking-[0.12em] uppercase sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem] animate-fade-in-up opacity-0 text-white max-w-5xl" style={{ animationDelay: '0.2s' }}>
+                  {/* Título Hero - CENTRALIZADO (chama atenção) */}
+                  <h1 className="mb-6 font-handel text-[2.5rem] leading-[1.1] tracking-[0.12em] uppercase sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] animate-fade-in-up opacity-0 text-white text-center" style={{ animationDelay: '0.2s' }}>
                     {heroSlogan.split(' ').map((word, i) => (
                       <span key={i}>
                         {i === heroSlogan.split(' ').length - 1 ? (
@@ -246,25 +246,27 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     ))}
                   </h1>
                   
-                  {/* Subtítulo - Curto - ESQUERDA */}
-                  <p className="mb-8 max-w-2xl text-[1rem] sm:text-[1.1rem] md:text-[1.2rem] leading-relaxed animate-fade-in-up opacity-0 text-white/90" style={{ animationDelay: '0.3s' }}>
+                  {/* Subtítulo - Centralizado também */}
+                  <p className="mb-8 max-w-2xl mx-auto text-[1rem] sm:text-[1.1rem] md:text-[1.2rem] leading-relaxed animate-fade-in-up opacity-0 text-white/90 text-center" style={{ animationDelay: '0.3s' }}>
                     {heroSubtitle.split('.')[0]}.
                   </p>
                   
-                  {/* CTA Scroll Down - ESQUERDA */}
-                  <button 
-                    onClick={() => window.scrollTo({ top: window.innerHeight * 0.85, behavior: 'smooth' })}
-                    className="animate-fade-in-up opacity-0 flex items-center gap-3 text-white/80 hover:text-white transition-colors group" 
-                    style={{ animationDelay: '0.4s' }}
-                    aria-label="Scroll down"
-                  >
-                    <span className="font-sora text-[0.75rem] uppercase tracking-[0.24em]">
-                      {lang === 'pt' ? 'Explorar' : lang === 'es' ? 'Explorar' : lang === 'fr' ? 'Explorer' : 'Explore'}
-                    </span>
-                    <svg className="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                    </svg>
-                  </button>
+                  {/* CTA Scroll Down - CENTRALIZADO */}
+                  <div className="flex justify-center">
+                    <button 
+                      onClick={() => window.scrollTo({ top: window.innerHeight * 0.6, behavior: 'smooth' })}
+                      className="animate-fade-in-up opacity-0 flex items-center gap-3 text-white/80 hover:text-white transition-colors group" 
+                      style={{ animationDelay: '0.4s' }}
+                      aria-label="Scroll down"
+                    >
+                      <span className="font-sora text-[0.75rem] uppercase tracking-[0.24em]">
+                        {lang === 'pt' ? 'Explorar' : lang === 'es' ? 'Explorar' : lang === 'fr' ? 'Explorer' : 'Explore'}
+                      </span>
+                      <svg className="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               </>
             )
@@ -272,35 +274,145 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         </section>
 
         {/* ════════════════════════════════════════════════════════════════ */}
-        {/* STATS - Credibilidade Rápida */}
+        {/* VÍDEO FEATURED - Card Flutuante LOGO APÓS HERO (Destaque Premium) */}
         {/* ════════════════════════════════════════════════════════════════ */}
-        <section className="py-16 md:py-20 bg-black/30 backdrop-blur-sm">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-center">
-              <div className="stat-item">
-                <div className="text-5xl md:text-6xl font-bold text-azimut-red mb-2">
-                  100+
-                </div>
-                <div className="text-sm md:text-base uppercase tracking-wider text-white/70">
-                  {lang === 'pt' ? 'Projetos Realizados' : lang === 'es' ? 'Proyectos Realizados' : lang === 'fr' ? 'Projets Réalisés' : 'Projects Delivered'}
-                </div>
-              </div>
+        <section className="-mt-24 relative z-20 pb-12 md:pb-16">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            {(() => {
+              const featured = recommended[0] || defaultProjects[0]
+              const hasVideo = featured?.heroImage?.type === 'VIDEO' && featured?.heroImage?.original
               
-              <div className="stat-item">
-                <div className="text-5xl md:text-6xl font-bold text-azimut-red mb-2">
-                  15+
+              return (
+                <div className="relative overflow-hidden rounded-3xl shadow-[0_40px_100px_rgba(0,0,0,0.8)] bg-gradient-to-br from-slate-900 to-slate-950 border border-white/10">
+                  {/* Vídeo Player */}
+                  <div className="relative aspect-video w-full overflow-hidden">
+                    {hasVideo ? (
+                      <VideoPlayer
+                        videoUrl={featured.heroImage.original}
+                        thumbnailUrl={featured.heroImage.thumbnail || featured.heroImage.large}
+                        alt={featured.heroImage?.alt || featured.title}
+                        className="w-full h-full"
+                      />
+                    ) : featured?.heroImage?.large || featured?.heroImage?.medium ? (
+                      <img
+                        src={featured.heroImage?.large || featured.heroImage?.medium}
+                        alt={featured.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-azimut-red/10 via-slate-900 to-slate-950 flex items-center justify-center">
+                        <div className="text-center p-6">
+                          <h3 className="font-handel text-3xl uppercase tracking-[0.12em] text-white">
+                            {featured.title}
+                          </h3>
+                          <p className="mt-2 text-slate-400 text-sm">
+                            {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Info do Projeto */}
+                  <div className="p-6 md:p-8">
+                    <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+                      {/* Tags */}
+                      {featured.tags && featured.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-2">
+                          {featured.tags.slice(0, 3).map((tag: string, idx: number) => (
+                            <span 
+                              key={idx} 
+                              className="px-3 py-1 rounded-full bg-azimut-red/10 border border-azimut-red/30 font-sora text-[0.7rem] uppercase tracking-wider text-azimut-red"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      
+                      {/* Localização */}
+                      {(featured.city || featured.country) && (
+                        <p className="text-sm text-slate-400 flex items-center gap-1">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                          {[featured.city, featured.country].filter(Boolean).join(', ')}
+                        </p>
+                      )}
+                    </div>
+                    
+                    <h3 className="font-handel text-2xl md:text-3xl uppercase tracking-[0.08em] text-white mb-3">
+                      {featured.title}
+                    </h3>
+                    <p className="text-slate-300 leading-relaxed mb-6">
+                      {featured.summary || featured.shortTitle}
+                    </p>
+                    
+                    {/* CTAs */}
+                    <div className="flex flex-wrap gap-3">
+                      <Link
+                        to={`/work/${featured.slug}`}
+                        className="inline-flex items-center justify-center rounded-lg bg-azimut-red px-6 py-3 font-sora text-sm uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/90 hover:scale-105"
+                      >
+                        {lang === 'pt' ? 'Ver Projeto Completo' : lang === 'es' ? 'Ver Proyecto Completo' : 'View Full Project'}
+                      </Link>
+                      <Link
+                        to="/contact?interest=similar"
+                        className="inline-flex items-center justify-center rounded-lg border border-azimut-red px-6 py-3 font-sora text-sm uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/10"
+                      >
+                        {lang === 'pt' ? 'Projeto Similar' : lang === 'es' ? 'Proyecto Similar' : 'Similar Project'}
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-                <div className="text-sm md:text-base uppercase tracking-wider text-white/70">
-                  {lang === 'pt' ? 'Países' : lang === 'es' ? 'Países' : lang === 'fr' ? 'Pays' : 'Countries'}
-                </div>
-              </div>
+              )
+            })()}
+          </div>
+        </section>
+
+        {/* ════════════════════════════════════════════════════════════════ */}
+        {/* STATS - Card Glassmorphism Flutuante (Credibilidade) */}
+        {/* ════════════════════════════════════════════════════════════════ */}
+        <section className="py-12 md:py-16">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <div 
+              className="relative overflow-hidden rounded-3xl p-8 md:p-12 shadow-[0_32px_80px_rgba(0,0,0,0.6)]"
+              style={{
+                background: 'rgba(10, 15, 26, 0.6)',
+                backdropFilter: 'blur(20px)',
+                border: '1px solid rgba(255, 255, 255, 0.1)'
+              }}
+            >
+              {/* Glow effect sutil */}
+              <div className="absolute inset-0 bg-gradient-to-br from-azimut-red/5 via-transparent to-transparent pointer-events-none" />
               
-              <div className="stat-item">
-                <div className="text-5xl md:text-6xl font-bold text-azimut-red mb-2">
-                  20+
+              <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-center">
+                <div className="stat-item group">
+                  <div className="text-5xl md:text-6xl font-bold text-azimut-red mb-2 transition-transform duration-300 group-hover:scale-110">
+                    100+
+                  </div>
+                  <div className="text-sm md:text-base uppercase tracking-wider text-white/70">
+                    {lang === 'pt' ? 'Projetos Realizados' : lang === 'es' ? 'Proyectos Realizados' : lang === 'fr' ? 'Projets Réalisés' : 'Projects Delivered'}
+                  </div>
                 </div>
-                <div className="text-sm md:text-base uppercase tracking-wider text-white/70">
-                  {lang === 'pt' ? 'Anos de Experiência' : lang === 'es' ? 'Años de Experiencia' : lang === 'fr' ? 'Années d\'Expérience' : 'Years of Experience'}
+                
+                <div className="stat-item group">
+                  <div className="text-5xl md:text-6xl font-bold text-azimut-red mb-2 transition-transform duration-300 group-hover:scale-110">
+                    15+
+                  </div>
+                  <div className="text-sm md:text-base uppercase tracking-wider text-white/70">
+                    {lang === 'pt' ? 'Países' : lang === 'es' ? 'Países' : lang === 'fr' ? 'Pays' : 'Countries'}
+                  </div>
+                </div>
+                
+                <div className="stat-item group">
+                  <div className="text-5xl md:text-6xl font-bold text-azimut-red mb-2 transition-transform duration-300 group-hover:scale-110">
+                    20+
+                  </div>
+                  <div className="text-sm md:text-base uppercase tracking-wider text-white/70">
+                    {lang === 'pt' ? 'Anos de Experiência' : lang === 'es' ? 'Años de Experiencia' : lang === 'fr' ? 'Années d\'Expérience' : 'Years of Experience'}
+                  </div>
                 </div>
               </div>
             </div>
@@ -514,148 +626,6 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 </svg>
               </Link>
             </div>
-          </div>
-        </section>
-
-        {/* Featured Project - Hero Visual - SEMPRE MOSTRA, mesmo sem dados */}
-        <section className="py-12 sm:py-16 md:py-20">
-          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
-            {(() => {
-              // GARANTIR que sempre há pelo menos um projeto
-              const featured = recommended[0] || defaultProjects[0]
-              const hasMedia = featured?.heroImage && (featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.thumbnail || featured.heroImage?.original)
-              return (
-                <div className="relative overflow-hidden rounded-3xl card-adaptive shadow-[0_32px_80px_rgba(0,0,0,0.6)]">
-                  {/* Featured Image/Video Area - BACKOFFICE: mediaPoster ou mediaLoop */}
-                  <div className="relative aspect-video w-full overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900">
-                    {/* Renderizar mídia se disponível, senão mostrar placeholder */}
-                    {hasMedia && (featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.original) ? (
-                      <>
-                        {/* Verificar se é vídeo */}
-                        {featured.heroImage?.type === 'VIDEO' && featured.heroImage?.original ? (
-                          <VideoPlayer
-                            videoUrl={featured.heroImage.original}
-                            thumbnailUrl={featured.heroImage.thumbnail || featured.heroImage.large}
-                            alt={featured.heroImage?.alt || featured.title}
-                            className="absolute inset-0 h-full w-full"
-                          />
-                        ) : (
-                          <img
-                            src={featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.original}
-                            alt={featured.heroImage?.alt || featured.title}
-                            loading="lazy"
-                            className="absolute inset-0 h-full w-full object-cover"
-                            onError={(e) => {
-                              // Se imagem falhar, mostrar placeholder
-                              const target = e.currentTarget;
-                              target.style.display = 'none';
-                              const parent = target.parentElement;
-                              if (parent) {
-                                parent.innerHTML = `
-                                  <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-azimut-red/10 via-slate-900 to-slate-950">
-                                    <div class="text-center p-6 z-10">
-                                      <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 backdrop-blur">
-                                        <span class="h-2 w-2 animate-pulse rounded-full bg-azimut-red"></span>
-                                        <span class="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-900 dark:text-slate-200">
-                                          ${lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
-                                        </span>
-                                      </div>
-                                      <h3 class="font-handel text-3xl uppercase tracking-[0.12em] text-slate-100 md:text-4xl">
-                                        ${featured.title}
-                                      </h3>
-                                      <p class="mt-2 text-slate-800 dark:text-slate-400 text-sm">
-                                        ${lang === 'pt' ? 'Aguardando imagem do backoffice' : lang === 'es' ? 'Esperando imagen del backoffice' : lang === 'fr' ? 'En attente d\'image du backoffice' : 'Awaiting backoffice image'}
-                                      </p>
-                                    </div>
-                                  </div>
-                                `;
-                              }
-                            }}
-                          />
-                        )}
-                        {/* Overlay gradient para legibilidade do texto (apenas se não for vídeo) */}
-                        {featured.heroImage?.type !== 'VIDEO' && (
-                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/40 to-transparent pointer-events-none"></div>
-                        )}
-                        {/* Badge e título sobre a mídia (apenas se não for vídeo) */}
-                        {featured.heroImage?.type !== 'VIDEO' && (
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="text-center p-6 z-10">
-                              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 backdrop-blur">
-                                <span className="h-2 w-2 animate-pulse rounded-full bg-azimut-red"></span>
-                                <span className="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-900 dark:text-slate-200">
-                                  {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
-                                </span>
-                              </div>
-                              <h3 className="font-handel text-3xl uppercase tracking-[0.12em] text-slate-100 md:text-4xl drop-shadow-lg">
-                                {featured.title}
-                              </h3>
-                              <p className="mt-2 text-slate-900 dark:text-slate-300 drop-shadow-md">
-                                {featured.summary || featured.shortTitle}
-                              </p>
-                            </div>
-                          </div>
-                        )}
-                      </>
-                    ) : (
-                      /* Placeholder quando não há mídia */
-                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-azimut-red/10 via-slate-900 to-slate-950">
-                        <div className="text-center p-6">
-                          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 backdrop-blur">
-                            <span className="h-2 w-2 animate-pulse rounded-full bg-azimut-red"></span>
-                            <span className="font-sora text-[0.7rem] uppercase tracking-[0.2em] text-slate-900 dark:text-slate-200">
-                              {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
-                            </span>
-                          </div>
-                          <h3 className="font-handel text-3xl uppercase tracking-[0.12em] text-slate-100 md:text-4xl">
-                            {featured.title}
-                          </h3>
-                          <p className="mt-2 text-slate-800 dark:text-slate-400">
-                            {featured.summary || featured.shortTitle}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Project Info */}
-                  <div className="p-6 md:p-8">
-                    {featured.tags && featured.tags.length > 0 && (
-                      <div className="flex flex-wrap items-center gap-3 mb-4">
-                        {((featured?.tags && Array.isArray(featured.tags)) ? featured.tags : []).slice(0, 3).map((tag: string, idx: number) => (
-                          <span key={idx} className="pill-adaptive rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.18em]">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                    <p className="text-slate-900 dark:text-slate-300 leading-relaxed mb-4">
-                      {featured.summary || featured.shortTitle}
-                    </p>
-                    {(featured.city || featured.country) && (
-                      <p className="mb-4 text-sm text-slate-800 dark:text-slate-400">
-                        📍 {[featured.city, featured.country].filter(Boolean).join(', ')}
-                      </p>
-                    )}
-                    {/* CTAs melhorados */}
-                    <div className="flex flex-wrap gap-3 mt-6">
-                      <Link
-                        to={`/work/${featured.slug}`}
-                        className="inline-flex items-center justify-center rounded-lg bg-azimut-red px-6 py-2.5 font-sora text-sm uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/90 hover:scale-105"
-                      >
-                        {lang === 'pt' ? 'Ver Projeto' : lang === 'es' ? 'Ver Proyecto' : lang === 'fr' ? 'Voir Projet' : 'View Project'}
-                      </Link>
-                      <Link
-                        to="/contact?interest=similar"
-                        className="inline-flex items-center justify-center rounded-lg border border-azimut-red px-6 py-2.5 font-sora text-sm uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/10 hover:scale-105"
-                      >
-                        {lang === 'pt' ? 'Falar sobre Projeto Similar' : lang === 'es' ? 'Hablar sobre Proyecto Similar' : lang === 'fr' ? 'Parler d\'un Projet Similaire' : 'Discuss Similar Project'}
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              )
-            })()}
           </div>
         </section>
 

@@ -87,3 +87,4 @@ Quando testei na página **/studio**, o dropdown **ABRIU PERFEITAMENTE** e mostr
 **STATUS:** ✅ CONCLUÍDO - Nenhuma mudança necessária
 
 
+
