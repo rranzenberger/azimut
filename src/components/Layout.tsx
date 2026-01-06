@@ -105,18 +105,18 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
       }
       
       // REGRA 3: Zona crítica (640-1024px) → Calcular dinamicamente
-      // Larguras do menu por idioma (em pixels)
+      // Larguras do menu por idioma (em pixels) - AJUSTADAS PARA VALORES REAIS
       const menuWidths: Record<Lang, number> = {
-        pt: 460,
-        en: 420,
-        fr: 480,
-        es: 450
+        pt: 360,  // Reduzido de 460
+        en: 320,  // Reduzido de 420
+        fr: 380,  // Reduzido de 480
+        es: 350   // Reduzido de 450
       }
       
-      const logoWidth = 180
+      const logoWidth = 140  // Reduzido de 180 (logo real é menor)
       const menuWidth = menuWidths[lang]
-      const rightSideWidth = 220  // Idiomas + Theme + CTA
-      const gaps = 80  // Espaços entre elementos
+      const rightSideWidth = 180  // Reduzido de 220 (idiomas + theme + CTA)
+      const gaps = 60  // Reduzido de 80 (espaços entre elementos)
       
       const totalNeeded = logoWidth + menuWidth + rightSideWidth + gaps
       
