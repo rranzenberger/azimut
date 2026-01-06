@@ -369,6 +369,7 @@ export const INSTITUTIONAL_DOMAINS: Record<string, InstitutionalProfile> = {
   
   'canadacouncil.ca': {
     name: 'Canada Council for the Arts',
+    type: 'GOVERNMENT_CA',
     tier: 1,
     budgetRange: 'CAD $100k - $500k',
     priority: 'HIGH',
