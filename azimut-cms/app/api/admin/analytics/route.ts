@@ -1,14 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 import { prisma } from '@/lib/prisma';
-import { verifyAuth } from '@/lib/auth';
+import { verifyAuthToken } from '@/lib/auth';
 
 export const runtime = 'nodejs';
 
 export async function GET(request: NextRequest) {
   try {
     // Verificar autenticação
-    const authResult = await verifyAuth(request);
-    if (!authResult.authenticated || !authResult.user) {
+    const cookieStore = cookies();
+    const token = cookieStore.get('azimut_admin_token')?.value;
+    const session = token ? verifyAuthToken(token) : null;
+    
+    if (!session) {
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
     }
 
