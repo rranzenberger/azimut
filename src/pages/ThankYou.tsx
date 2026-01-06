@@ -1,11 +1,13 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { useLang } from '../hooks/useLang';
-import { t } from '../i18n';
+import { type Lang } from '../i18n';
 
-const ThankYouPage: React.FC = () => {
-  const { lang } = useLang();
+interface ThankYouProps {
+  lang: Lang;
+}
+
+const ThankYouPage: React.FC<ThankYouProps> = ({ lang }) => {
 
   const content = {
     pt: {
