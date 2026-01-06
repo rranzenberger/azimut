@@ -289,10 +289,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             </LangLink>
           </div>
 
-          {/* Nav desktop - aparece em tablets (768px+) - SEMPRE VISÍVEL EM DESKTOP */}
+          {/* Nav desktop - CONTROLADO POR isMobile (detecção dinâmica) */}
+          {!isMobile && (
           <nav 
             ref={navRef}
-            className="hidden items-center justify-center font-sora text-[0.48rem] font-medium uppercase tracking-[0.06em] min-[768px]:gap-2.5 min-[768px]:text-[0.48rem] md:gap-3 md:text-[0.52rem] lg:text-[0.58rem] lg:gap-3.5 xl:gap-4 xl:text-[0.62rem] min-[768px]:flex" 
+            className="flex items-center justify-center font-sora text-[0.48rem] font-medium uppercase tracking-[0.06em] min-[768px]:gap-2.5 min-[768px]:text-[0.48rem] md:gap-3 md:text-[0.52rem] lg:text-[0.58rem] lg:gap-3.5 xl:gap-4 xl:text-[0.62rem]" 
             style={{ color: 'var(--theme-text-secondary)', overflow: 'visible', alignItems: 'center', flexWrap: 'nowrap' }}
           >
             <LangLink to="/" 
@@ -465,6 +466,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               hovered={hoveredRoute === 'academy'}
             />
           </nav>
+          )}
 
           {/* ═══════════════════════════════════════════════════════════════
               🔒 SELETOR DE IDIOMAS - NÃO MODIFICAR
