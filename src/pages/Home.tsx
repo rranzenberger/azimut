@@ -195,76 +195,181 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" />
         </div>
 
-        <section className="py-6 sm:py-8 md:py-10 lg:py-12">
-          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-3 sm:gap-8 sm:px-4 md:gap-10 md:px-6 lg:px-8 md:grid-cols-[1.3fr,1fr] lg:gap-14 xl:gap-16">
-            {/* Texto principal */}
-            <div className="pr-0 sm:pr-4">
-            <div className="mb-3 inline-flex items-center gap-2 font-sora text-[0.7rem] uppercase tracking-[0.28em] animate-fade-in-up opacity-0 text-adaptive" style={{ animationDelay: '0.1s' }}>
-              <img 
-                src={theme === 'light' ? '/estrela6-escuara.svg' : '/estela6-clara.svg'} 
-                alt="" 
-                className="w-3 h-3 md:w-3.5 md:h-3.5"
-              />
-              <span className="text-azimut-red font-semibold">AZIMUT</span>
-            </div>
+        {/* ════════════════════════════════════════════════════════════════ */}
+        {/* HERO VISUAL FIRST - Vídeo/Imagem no Topo + Texto Mínimo */}
+        {/* ════════════════════════════════════════════════════════════════ */}
+        <section className="relative h-[85vh] min-h-[600px] overflow-hidden">
+          {(() => {
+            const featured = recommended[0] || defaultProjects[0]
+            const hasMedia = featured?.heroImage && (featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.thumbnail || featured.heroImage?.original)
+            
+            return (
+              <>
+                {/* Background Vídeo/Imagem */}
+                <div className="absolute inset-0 w-full h-full">
+                  {hasMedia && (featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.original) ? (
+                    <img 
+                      src={featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.original || ''} 
+                      alt={featured.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
+                  )}
+                </div>
+                
+                {/* Overlay Gradiente */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80" />
+                
+                {/* Conteúdo Hero */}
+                <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
+                  {/* Badge Azimut */}
+                  <div className="mb-6 inline-flex items-center gap-2 font-sora text-[0.75rem] uppercase tracking-[0.28em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
+                    <img 
+                      src="/estela6-clara.svg" 
+                      alt="" 
+                      className="w-4 h-4"
+                    />
+                    <span className="text-azimut-red font-semibold">AZIMUT</span>
+                  </div>
+                  
+                  {/* Título Hero - GRANDE e Impactante */}
+                  <h1 className="mb-6 font-handel text-[2.5rem] leading-[1.1] tracking-[0.12em] uppercase sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem] animate-fade-in-up opacity-0 text-white max-w-5xl" style={{ animationDelay: '0.2s' }}>
+                    {heroSlogan.split(' ').map((word, i) => (
+                      <span key={i}>
+                        {i === heroSlogan.split(' ').length - 1 ? (
+                          <span className="text-azimut-red">{word}</span>
+                        ) : (
+                          `${word} `
+                        )}
+                      </span>
+                    ))}
+                  </h1>
+                  
+                  {/* Subtítulo - Curto */}
+                  <p className="mb-8 max-w-2xl text-[1rem] sm:text-[1.1rem] md:text-[1.2rem] leading-relaxed animate-fade-in-up opacity-0 text-white/90" style={{ animationDelay: '0.3s' }}>
+                    {heroSubtitle.split('.')[0]}.
+                  </p>
+                  
+                  {/* CTA Scroll Down */}
+                  <button 
+                    onClick={() => window.scrollTo({ top: window.innerHeight * 0.85, behavior: 'smooth' })}
+                    className="animate-fade-in-up opacity-0 flex flex-col items-center gap-2 text-white/80 hover:text-white transition-colors group" 
+                    style={{ animationDelay: '0.4s' }}
+                    aria-label="Scroll down"
+                  >
+                    <span className="font-sora text-[0.75rem] uppercase tracking-[0.24em]">
+                      {lang === 'pt' ? 'Explorar' : lang === 'es' ? 'Explorar' : lang === 'fr' ? 'Explorer' : 'Explore'}
+                    </span>
+                    <svg className="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                  </button>
+                </div>
+              </>
+            )
+          })()}
+        </section>
 
-            {/* Título - slogan complementar ao header (sem redundância) - vem do CMS */}
-            <h1 className="mb-3 sm:mb-4 font-handel text-[1.9rem] leading-[1.15] tracking-[0.12em] uppercase sm:text-[2.2rem] sm:tracking-[0.14em] md:text-[2.7rem] md:tracking-[0.16em] lg:text-[3rem] xl:text-[3.2rem] animate-fade-in-up opacity-0" style={{ animationDelay: '0.2s', color: 'var(--theme-text)' }}>
-              {heroSlogan.toUpperCase()}
-            </h1>
-
-            <p className="mb-4 sm:mb-6 max-w-xl text-[0.85rem] sm:text-[0.9rem] md:text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0" style={{ animationDelay: '0.3s', color: 'var(--theme-text-muted)' }}>
-              {heroSubtitle}
-            </p>
-
-            {/* Pillars - MIGRAÇÃO GRADUAL: Backoffice → Estático */}
-            <div className="mt-6 sm:mt-8 flex flex-wrap gap-3 sm:gap-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
-              {(Array.isArray(cmsContent?.page?.pillars) && cmsContent.page.pillars.length > 0
-                ? cmsContent.page.pillars 
-                : [
-                    lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture',
-                    lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events',
-                    lang === 'pt' ? 'Educação & Pesquisa' : lang === 'es' ? 'Educación & Investigación' : lang === 'fr' ? 'Éducation & Recherche' : 'Education & Research'
-                  ]
-              ).filter(Boolean).map((pillar: string, index: number) => (
-                <span 
-                  key={index}
-                  className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10"
-                >
-                  {pillar}
-                </span>
-              ))}
-            </div>
-            </div>
-
-          {/* Card lateral - sempre escuro com texto claro */}
-          <aside 
-            className="card-dark-fixed relative rounded-2xl sm:rounded-3xl p-4 sm:p-5 md:p-6 shadow-[0_24px_60px_rgba(0,0,0,0.6)] animate-fade-in-up opacity-0" 
-            style={{ 
-              animationDelay: '0.5s',
-              background: 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)',
-              border: '1px solid rgba(255, 255, 255, 0.1)'
-            }}
-          >
-              <h2 className="mb-3 font-sora text-[0.72rem] uppercase tracking-[0.24em]" style={{ color: 'var(--theme-card-text, #e2e8f0)' }}>
-                {t(lang, 'cardTitle')}
-              </h2>
-              <p className="mb-4 text-[0.9rem] leading-relaxed" style={{ color: '#ffffff' }}>
-                {t(lang, 'cardBody')}
-              </p>
-              <div className="mb-4 flex flex-wrap gap-2">
-                <span className="pill-adaptive rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.18em]">
-                  {t(lang, 'tag1')}
-                </span>
-                <span className="pill-adaptive rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.18em]">
-                  {t(lang, 'tag2')}
-                </span>
-                <span className="pill-adaptive rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.18em]">
-                  {t(lang, 'tag3')}
-                </span>
+        {/* ════════════════════════════════════════════════════════════════ */}
+        {/* STATS - Credibilidade Rápida */}
+        {/* ════════════════════════════════════════════════════════════════ */}
+        <section className="py-16 md:py-20 bg-black/30 backdrop-blur-sm">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-center">
+              <div className="stat-item">
+                <div className="text-5xl md:text-6xl font-bold text-azimut-red mb-2">
+                  100+
+                </div>
+                <div className="text-sm md:text-base uppercase tracking-wider text-white/70">
+                  {lang === 'pt' ? 'Projetos Realizados' : lang === 'es' ? 'Proyectos Realizados' : lang === 'fr' ? 'Projets Réalisés' : 'Projects Delivered'}
+                </div>
               </div>
-              <p className="text-[0.8rem]" style={{ color: 'var(--theme-card-text, #cbd5e1)' }}>{t(lang, 'cities')}</p>
-            </aside>
+              
+              <div className="stat-item">
+                <div className="text-5xl md:text-6xl font-bold text-azimut-red mb-2">
+                  15+
+                </div>
+                <div className="text-sm md:text-base uppercase tracking-wider text-white/70">
+                  {lang === 'pt' ? 'Países' : lang === 'es' ? 'Países' : lang === 'fr' ? 'Pays' : 'Countries'}
+                </div>
+              </div>
+              
+              <div className="stat-item">
+                <div className="text-5xl md:text-6xl font-bold text-azimut-red mb-2">
+                  20+
+                </div>
+                <div className="text-sm md:text-base uppercase tracking-wider text-white/70">
+                  {lang === 'pt' ? 'Anos de Experiência' : lang === 'es' ? 'Años de Experiencia' : lang === 'fr' ? 'Années d\'Expérience' : 'Years of Experience'}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ════════════════════════════════════════════════════════════════ */}
+        {/* SOBRE - Card Lateral (Conteúdo Preservado) */}
+        {/* ════════════════════════════════════════════════════════════════ */}
+        <section className="py-12 sm:py-16 md:py-20">
+          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+              {/* Texto Esquerdo */}
+              <div>
+                <h2 className="mb-4 font-handel text-3xl md:text-4xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
+                  {t(lang, 'cardTitle')}
+                </h2>
+                <p className="mb-6 text-base md:text-lg leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                  {t(lang, 'cardBody')}
+                </p>
+                
+                {/* Pillars */}
+                <div className="flex flex-wrap gap-3 mb-6">
+                  {(Array.isArray(cmsContent?.page?.pillars) && cmsContent.page.pillars.length > 0
+                    ? cmsContent.page.pillars 
+                    : [
+                        lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture',
+                        lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events',
+                        lang === 'pt' ? 'Educação & Pesquisa' : lang === 'es' ? 'Educación & Investigación' : lang === 'fr' ? 'Éducation & Recherche' : 'Education & Research'
+                      ]
+                  ).filter(Boolean).map((pillar: string, index: number) => (
+                    <span 
+                      key={index}
+                      className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10"
+                    >
+                      {pillar}
+                    </span>
+                  ))}
+                </div>
+                
+                <p className="text-sm" style={{ color: 'var(--theme-text-muted)' }}>
+                  📍 {t(lang, 'cities')}
+                </p>
+              </div>
+              
+              {/* Card Direito - Tags */}
+              <div 
+                className="card-dark-fixed relative rounded-2xl sm:rounded-3xl p-6 md:p-8 shadow-[0_24px_60px_rgba(0,0,0,0.6)]" 
+                style={{ 
+                  background: 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)'
+                }}
+              >
+                <h3 className="mb-4 font-sora text-sm uppercase tracking-[0.24em] text-white/70">
+                  {lang === 'pt' ? 'Especialidades' : lang === 'es' ? 'Especialidades' : lang === 'fr' ? 'Spécialités' : 'Expertise'}
+                </h3>
+                <div className="flex flex-wrap gap-3">
+                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white">
+                    {t(lang, 'tag1')}
+                  </span>
+                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white">
+                    {t(lang, 'tag2')}
+                  </span>
+                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white">
+                    {t(lang, 'tag3')}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
