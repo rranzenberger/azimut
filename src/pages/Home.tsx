@@ -8,7 +8,6 @@ import { trackPageView } from '../utils/analytics'
 import { useAzimutContent } from '../hooks/useAzimutContent'
 import { usePersonalizedContent } from '../hooks/usePersonalizedContent'
 import { VideoPlayer } from '../components/VideoPlayer'
-import { ProjectShowcase } from '../components/ProjectShowcase'
 import { AnimatedLogo } from '../components/AnimatedLogo'
 
 interface HomeProps {
@@ -399,9 +398,104 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         </section>
 
         {/* ════════════════════════════════════════════════════════════════ */}
-        {/* PROJETOS EM DESTAQUE - Interactive Showcase (Estilo Gemini) */}
+        {/* PROJETOS - GRID VISUAL 3x3 (Super impactante!) */}
         {/* ════════════════════════════════════════════════════════════════ */}
-        <ProjectShowcase projects={projects} lang={lang} />
+        <section className="py-12 md:py-16 bg-gradient-to-b from-transparent to-black/20 dark:to-black/40">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            {/* Título */}
+            <div className="mb-10 text-center">
+              <h2 className="font-handel text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.12em] mb-3" style={{ color: 'var(--theme-text)' }}>
+                {lang === 'pt' ? 'Projetos em Destaque' : lang === 'es' ? 'Proyectos Destacados' : lang === 'fr' ? 'Projets en Vedette' : 'Featured Projects'}
+              </h2>
+              <p className="text-sm md:text-base" style={{ color: 'var(--theme-text-secondary)' }}>
+                {lang === 'pt' ? 'Uma seleção dos nossos trabalhos mais emblemáticos' : lang === 'es' ? 'Una selección de nuestros trabajos más emblemáticos' : 'A selection of our most iconic work'}
+              </p>
+            </div>
+
+            {/* Grid 3x3 - Super Visual */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {projects.slice(0, 9).map((project, index) => (
+                <Link
+                  key={project.slug}
+                  to={`/${lang}/work/${project.slug}`}
+                  className="group relative aspect-[4/3] overflow-hidden rounded-2xl shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_30px_80px_rgba(201,35,55,0.4)]"
+                >
+                  {/* Imagem de fundo */}
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    loading={index < 6 ? 'eager' : 'lazy'}
+                  />
+                  
+                  {/* Overlay gradiente */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
+                  
+                  {/* Badge número */}
+                  <div className="absolute top-4 right-4 z-10">
+                    <div className="bg-azimut-red/90 backdrop-blur-sm text-white rounded-lg px-3 py-1.5 text-xs font-bold uppercase tracking-wider">
+                      #{String(index + 1).padStart(2, '0')}
+                    </div>
+                  </div>
+                  
+                  {/* Tags (primeira tag) */}
+                  {project.tags && project.tags.length > 0 && (
+                    <div className="absolute top-4 left-4 z-10">
+                      <span className="bg-black/60 backdrop-blur-sm text-white/90 border border-white/20 rounded-full px-3 py-1 text-[0.7rem] uppercase tracking-wider font-semibold">
+                        {project.tags[0]}
+                      </span>
+                    </div>
+                  )}
+                  
+                  {/* Conteúdo */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 z-10 transform transition-transform duration-500 group-hover:translate-y-[-8px]">
+                    <h3 className="font-handel text-xl md:text-2xl uppercase tracking-wide text-white mb-2 line-clamp-2 group-hover:text-azimut-red transition-colors duration-300">
+                      {project.title}
+                    </h3>
+                    <div className="flex items-center gap-2 text-white/70 text-sm mb-3">
+                      {project.city && project.country && (
+                        <span className="flex items-center gap-1.5">
+                          <span>📍</span>
+                          <span>{project.city}, {project.country}</span>
+                        </span>
+                      )}
+                      {project.year && (
+                        <span className="flex items-center gap-1.5 ml-auto">
+                          <span>📅</span>
+                          <span>{project.year}</span>
+                        </span>
+                      )}
+                    </div>
+                    
+                    {/* CTA - aparece no hover */}
+                    <div className="flex items-center gap-2 text-azimut-red font-semibold text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+                      <span>{lang === 'pt' ? 'Ver Projeto' : lang === 'es' ? 'Ver Proyecto' : lang === 'fr' ? 'Voir le Projet' : 'View Project'}</span>
+                      <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </div>
+                  
+                  {/* Borda animada no hover */}
+                  <div className="absolute inset-0 border-2 border-azimut-red rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </Link>
+              ))}
+            </div>
+
+            {/* CTA - Ver Todos os Projetos */}
+            <div className="mt-12 text-center">
+              <Link
+                to={`/${lang}/work`}
+                className="inline-flex items-center gap-3 bg-azimut-red hover:bg-azimut-red/90 text-white font-handel uppercase tracking-wider px-8 py-4 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_20px_50px_rgba(201,35,55,0.4)] text-sm md:text-base"
+              >
+                <span>{lang === 'pt' ? 'Ver Todos os Projetos' : lang === 'es' ? 'Ver Todos los Proyectos' : lang === 'fr' ? 'Voir Tous les Projets' : 'View All Projects'}</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+        </section>
 
         {/* SOBRE - Card Lateral (Conteúdo Preservado) */}
         <section className="py-10 md:py-12">
