@@ -3,56 +3,51 @@ import React from 'react'
 export const AnimatedLogo: React.FC = () => {
   return (
     <div className="animated-logo-container">
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="animated-logo-video"
-      >
-        {/* Ordem de preferência: WebM (menor) → MP4 (universal) → MOV (fallback) */}
-        <source src="/logo_animada_glow.webm" type="video/webm" />
-        <source src="/logo_animada_glow.mp4" type="video/mp4" />
-        <source src="/logo_animada_glow.mov" type="video/quicktime" />
-        {/* Fallback final: SVG estático */}
-        <img src="/logo-azimut-star.svg" alt="Azimut Star" className="animated-logo-video" />
-      </video>
+      {/* TEMPORÁRIO: Usando SVG até termos os vídeos convertidos */}
+      <img 
+        src="/logo-azimut-star.svg" 
+        alt="Azimut Star" 
+        className="animated-logo-static"
+      />
       
       <style>{`
         .animated-logo-container {
           pointer-events: none;
-          width: 280px;
-          height: 280px;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         
-        .animated-logo-video {
+        .animated-logo-static {
           width: 100%;
           height: 100%;
           object-fit: contain;
-          
-          /* LUMA KEY via CSS: preto vira transparente ✨ */
-          mix-blend-mode: screen;
           
           /* Glow vermelho Azimut */
           filter: 
             drop-shadow(0 0 30px rgba(201, 35, 55, 0.6)) 
             drop-shadow(0 0 60px rgba(201, 35, 55, 0.3));
           
-          opacity: 0.9;
+          opacity: 0.95;
+          
+          /* Animação sutil de pulse */
+          animation: pulse-glow 4s ease-in-out infinite;
         }
         
-        /* Responsivo */
-        @media (max-width: 1024px) {
-          .animated-logo-container {
-            width: 200px;
-            height: 200px;
+        @keyframes pulse-glow {
+          0%, 100% {
+            filter: 
+              drop-shadow(0 0 30px rgba(201, 35, 55, 0.6)) 
+              drop-shadow(0 0 60px rgba(201, 35, 55, 0.3));
+            transform: scale(1);
           }
-        }
-        
-        @media (max-width: 768px) {
-          .animated-logo-container {
-            width: 140px;
-            height: 140px;
+          50% {
+            filter: 
+              drop-shadow(0 0 40px rgba(201, 35, 55, 0.8)) 
+              drop-shadow(0 0 80px rgba(201, 35, 55, 0.4));
+            transform: scale(1.02);
           }
         }
       `}</style>

@@ -372,12 +372,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </h3>
               <p className="text-sm md:text-base max-w-3xl mx-auto leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
                 {lang === 'pt' 
-                  ? 'Criamos experiências imersivas, interativas e cinematográficas para cultura, marcas e cidades. Da curadoria de festivais à direção técnica de museus, navegamos entre cinema, design, engenharia, educação e pesquisa — buscando formatos que sejam ao mesmo tempo precisos e poéticos.' 
+                  ? 'Criamos experiências imersivas, interativas e cinematográficas para cultura, marcas e cidades. Da curadoria e consultoria em festivais à direção técnica de museus, navegamos entre cinema, design, engenharia, educação e pesquisa — buscando formatos que sejam ao mesmo tempo precisos e poéticos.' 
                   : lang === 'es' 
-                  ? 'Creamos experiencias inmersivas, interactivas y cinematográficas para cultura, marcas y ciudades. De la curaduría de festivales a la dirección técnica de museos, navegamos entre cine, diseño, ingeniería, educación e investigación — buscando formatos que sean al mismo tiempo precisos y poéticos.'
+                  ? 'Creamos experiencias inmersivas, interactivas y cinematográficas para cultura, marcas y ciudades. De la curaduría y consultoría en festivales a la dirección técnica de museos, navegamos entre cine, diseño, ingeniería, educación e investigación — buscando formatos que sean al mismo tiempo precisos y poéticos.'
                   : lang === 'fr'
-                  ? 'Nous créons des expériences immersives, interactives et cinématographiques pour la culture, les marques et les villes. De la curation de festivals à la direction technique de musées, nous naviguons entre cinéma, design, ingénierie, éducation et recherche — cherchant des formats à la fois précis et poétiques.'
-                  : 'We create immersive, interactive and cinematic experiences for culture, brands and cities. From festival curation to museum technical direction, we navigate between cinema, design, engineering, education and research — seeking formats that are both precise and poetic.'}
+                  ? 'Nous créons des expériences immersives, interactives et cinématographiques pour la culture, les marques et les villes. De la curation et du conseil en festivals à la direction technique de musées, nous naviguons entre cinéma, design, ingénierie, éducation et recherche — cherchant des formats à la fois précis et poétiques.'
+                  : 'We create immersive, interactive and cinematic experiences for culture, brands and cities. From curation and consulting in festivals to museum technical direction, we navigate between cinema, design, engineering, education and research — seeking formats that are both precise and poetic.'}
               </p>
             </div>
             
@@ -427,13 +427,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 </div>
               </div>
               
-              {/* Curadoria - GRAMADO VR desde 2017 */}
+              {/* Curadoria & Consultoria - GRAMADO VR desde 2017 */}
               <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
                 <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">🎭</div>
                 <div className="relative z-10">
                   <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🎯</div>
                   <div className="text-[0.65rem] md:text-xs uppercase tracking-widest font-semibold" style={{ color: 'var(--theme-text)' }}>
-                    {lang === 'pt' ? 'Curadoria' : lang === 'es' ? 'Curaduría' : lang === 'fr' ? 'Curation' : 'Curation'}
+                    {lang === 'pt' ? 'Curadoria & Consultoria' : lang === 'es' ? 'Curaduría & Consultoría' : lang === 'fr' ? 'Curation & Conseil' : 'Curation & Consulting'}
                   </div>
                 </div>
               </div>
