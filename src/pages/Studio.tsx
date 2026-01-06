@@ -361,7 +361,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         description={seo.description}
         path="/studio"
       />
-      <main className="relative pt-6 md:pt-8 pb-24">
+      <main className="relative pt-6 md:pt-8 pb-24 film-grain">
         {/* Star background on the side */}
         <div 
           className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-32 md:-right-40 md:h-[680px] md:w-[680px]" 
