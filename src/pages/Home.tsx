@@ -412,12 +412,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </p>
             </div>
 
-            {/* Grid 3x3 - Alinhado com Work.tsx */}
+            {/* Grid 3x3 - Híbrido: Fundo preto HOME + Elementos Work */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {projects.slice(0, 9).map((project, index) => (
                 <article
                   key={project.slug}
-                  className="group rounded-2xl border border-white/10 card-adaptive overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(201,35,55,0.3)]"
+                  className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur transition-all duration-500 hover:scale-[1.02] hover:border-azimut-red/60 hover:shadow-[0_30px_80px_rgba(201,35,55,0.5)]"
                   onClick={() => {
                     window.location.href = `/${lang}/work/${project.slug}`
                   }}
@@ -426,48 +426,52 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     cursor: 'pointer'
                   }}
                 >
-                  {/* Image com overlay */}
-                  <div className="relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">
-                    {project.image ? (
-                      <>
-                        <img
-                          src={project.image}
-                          alt={project.title}
-                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                          loading={index < 6 ? 'eager' : 'lazy'}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none opacity-100 group-hover:from-azimut-red/20 group-hover:via-slate-950/40 transition-all duration-300"></div>
-                      </>
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-800/50 to-slate-900 transition-all duration-300 group-hover:from-azimut-red/20 group-hover:to-slate-900/80">
-                        <div className="text-center p-4">
-                          <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur transition-transform duration-300 group-hover:scale-110 group-hover:border-azimut-red/50">
-                            <svg className="h-6 w-6 text-slate-800 dark:text-slate-400 group-hover:text-azimut-red transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                          </div>
+                  {/* Imagem de fundo */}
+                  {project.image ? (
+                    <>
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        loading={index < 6 ? 'eager' : 'lazy'}
+                      />
+                      {/* Overlay gradiente PRETO (HOME style) */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30 transition-opacity duration-500 group-hover:from-black/90 group-hover:via-azimut-red/20"></div>
+                    </>
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-black via-slate-900 to-black">
+                      <div className="text-center p-4">
+                        <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-full border border-azimut-red/30 bg-azimut-red/10 backdrop-blur transition-transform duration-300 group-hover:scale-110 group-hover:border-azimut-red/60">
+                          <svg className="h-6 w-6 text-azimut-red transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
                         </div>
                       </div>
-                    )}
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-4 relative z-10">
-                    <h3 className="mb-2 font-sora text-[1.05rem] text-white group-hover:text-azimut-red transition-colors duration-300">
+                    </div>
+                  )}
+                  
+                  {/* Conteúdo - posição absoluta sobre a imagem */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
+                    {/* Título */}
+                    <h3 className="mb-2 font-handel text-xl md:text-2xl uppercase tracking-wide text-white group-hover:text-azimut-red transition-colors duration-300 line-clamp-2">
                       {project.title}
                     </h3>
-                    <p className="text-sm leading-relaxed text-slate-900 dark:text-slate-200 mb-3 group-hover:text-slate-100 transition-colors duration-300 line-clamp-2">
-                      {project.summary || project.shortTitle || ''}
-                    </p>
+                    
+                    {/* Localização (se existir) */}
+                    {(project.city || project.country) && (
+                      <p className="text-xs text-white/70 mb-3">
+                        📍 {[project.city, project.country].filter(Boolean).join(', ')}
+                      </p>
+                    )}
                     
                     {/* Tags + Year */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 mt-3">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
                       {project.tags && project.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2 text-[0.68rem] text-slate-800 dark:text-slate-400">
+                        <div className="flex flex-wrap gap-2 text-[0.68rem]">
                           {project.tags.slice(0, 3).map((tag: string, idx: number) => (
                             <span 
                               key={idx} 
-                              className="rounded-full border border-white/10 px-2 py-0.5 transition-all duration-300 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:text-slate-900 dark:text-slate-300"
+                              className="rounded-full border border-white/20 bg-black/40 backdrop-blur px-2.5 py-1 text-white/80 transition-all duration-300 group-hover:border-azimut-red/60 group-hover:bg-azimut-red/20 group-hover:text-white"
                             >
                               {tag}
                             </span>
@@ -475,12 +479,15 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         </div>
                       )}
                       {project.year && (
-                        <span className="text-xs text-slate-800 dark:text-slate-500 font-medium">
+                        <span className="text-xs text-white/60 font-medium bg-black/40 backdrop-blur px-2.5 py-1 rounded-full border border-white/10">
                           {project.year}
                         </span>
                       )}
                     </div>
                   </div>
+                  
+                  {/* Glow border no hover */}
+                  <div className="absolute inset-0 border-2 border-azimut-red rounded-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none"></div>
                 </article>
               ))}
             </div>
