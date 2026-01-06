@@ -196,9 +196,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         </div>
 
         {/* ════════════════════════════════════════════════════════════════ */}
-        {/* HERO CONECTADO - Badge integrado + Stats inline */}
+        {/* HERO WORLD-CLASS 2026 - 85vh + Stats Cards Flutuantes */}
         {/* ════════════════════════════════════════════════════════════════ */}
-        <section className="relative h-[50vh] min-h-[450px] overflow-hidden">
+        <section className="relative h-[85vh] min-h-[600px] overflow-hidden">
           {(() => {
             const featured = recommended[0] || defaultProjects[0]
             const hasMedia = featured?.heroImage && (featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.thumbnail || featured.heroImage?.original)
@@ -219,57 +219,67 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   )}
                 </div>
                 
-                {/* Overlay Gradiente */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80" />
+                {/* Glass Overlay - Gemini Style */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/70 backdrop-blur-[2px]" />
                 
-                {/* Conteúdo Hero - INTEGRADO */}
-                <div className="relative z-10 flex flex-col justify-center items-center h-full px-4 mx-auto max-w-7xl text-center">
-                  {/* Badge AZIMUT integrado ao título */}
-                  <div className="mb-4 inline-flex items-center gap-2 font-sora text-[0.7rem] uppercase tracking-[0.3em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
-                    <img 
-                      src="/estela6-clara.svg" 
-                      alt="" 
-                      className="w-3 h-3"
-                    />
-                    <span className="text-azimut-red font-semibold">AZIMUT</span>
-                    <span className="text-white/40">•</span>
-                    <span className="text-white/60 text-[0.65rem]">SINCE 1996</span>
-                  </div>
-                  
-                  {/* Título Hero - CENTRALIZADO */}
-                  <h1 className="mb-4 font-handel text-[2.5rem] leading-[1.1] tracking-[0.12em] uppercase sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] animate-fade-in-up opacity-0 text-white" style={{ animationDelay: '0.2s' }}>
-                    {heroSlogan.split(' ').map((word, i) => (
-                      <span key={i}>
-                        {i === heroSlogan.split(' ').length - 1 ? (
-                          <span className="text-azimut-red">{word}</span>
-                        ) : (
-                          `${word} `
-                        )}
-                      </span>
-                    ))}
-                  </h1>
-                  
-                  {/* Subtítulo */}
-                  <p className="mb-6 max-w-2xl text-[0.95rem] sm:text-[1.05rem] leading-relaxed animate-fade-in-up opacity-0 text-white/80" style={{ animationDelay: '0.3s' }}>
-                    {heroSubtitle.split('.')[0]}.
-                  </p>
-                  
-                  {/* Stats inline - CONECTADOS ao hero */}
-                  <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 animate-fade-in-up opacity-0 text-sm" style={{ animationDelay: '0.4s' }}>
-                    <div className="flex items-center gap-2">
-                      <span className="text-azimut-red font-bold">100+</span>
-                      <span className="text-white/60">{lang === 'pt' ? 'Projetos' : 'Projects'}</span>
+                {/* Conteúdo Hero - World-Class 2026 */}
+                <div className="relative z-10 flex flex-col justify-center h-full px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
+                  <div className="max-w-4xl space-y-8">
+                    {/* Badge AZIMUT compacto */}
+                    <div className="inline-flex items-center gap-2 font-sora text-[0.7rem] uppercase tracking-[0.3em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
+                      <img 
+                        src="/estela6-clara.svg" 
+                        alt="" 
+                        className="w-3 h-3"
+                      />
+                      <span className="text-azimut-red font-semibold">AZIMUT</span>
+                      <span className="text-white/40">•</span>
+                      <span className="text-white/60 text-[0.65rem]">SINCE 1996</span>
                     </div>
-                    <span className="text-white/30">•</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-white/60">🇧🇷 Brasil</span>
-                      <span className="text-white/40">↔</span>
-                      <span className="text-white/60">🇨🇦 Canada</span>
-                    </div>
-                    <span className="text-white/30">•</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-white/60">{lang === 'pt' ? 'Curadoria VR Gramado desde' : 'Gramado VR Curation since'}</span>
-                      <span className="text-azimut-red font-bold">2017</span>
+                    
+                    {/* Título Monumental (usa tipografia do index.css) */}
+                    <h1 className="font-handel uppercase text-white animate-fade-in-up opacity-0" style={{ 
+                      fontSize: 'clamp(2.5rem, 8vw, 8rem)',
+                      lineHeight: '1.1',
+                      letterSpacing: '0.12em',
+                      animationDelay: '0.2s'
+                    }}>
+                      {heroSlogan.split(' ').map((word, i) => (
+                        <span key={i}>
+                          {i === heroSlogan.split(' ').length - 1 ? (
+                            <span className="text-azimut-red">{word}</span>
+                          ) : (
+                            `${word} `
+                          )}
+                        </span>
+                      ))}
+                    </h1>
+                    
+                    {/* Subtítulo */}
+                    <p className="max-w-2xl text-[1rem] sm:text-[1.1rem] leading-relaxed animate-fade-in-up opacity-0 text-white/90" style={{ animationDelay: '0.3s' }}>
+                      {heroSubtitle.split('.')[0]}.
+                    </p>
+                    
+                    {/* Stats Cards - Gemini Style (85% / 4.2s) */}
+                    <div className="grid grid-cols-3 gap-3 sm:gap-4 max-w-2xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+                      <div className="glass-panel backdrop-blur-xl bg-stone-900/70 border border-white/10 p-4 sm:p-6 rounded-xl hover:border-amber-500/50 transition-all duration-300 group">
+                        <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-amber-500 group-hover:text-amber-400 transition-colors">100+</span>
+                        <span className="block text-[0.65rem] sm:text-xs text-white/60 uppercase tracking-widest mt-1">
+                          {lang === 'pt' ? 'Projetos' : lang === 'es' ? 'Proyectos' : 'Projects'}
+                        </span>
+                      </div>
+                      <div className="glass-panel backdrop-blur-xl bg-stone-900/70 border border-white/10 p-4 sm:p-6 rounded-xl hover:border-amber-500/50 transition-all duration-300 group">
+                        <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-amber-500 group-hover:text-amber-400 transition-colors">15+</span>
+                        <span className="block text-[0.65rem] sm:text-xs text-white/60 uppercase tracking-widest mt-1">
+                          {lang === 'pt' ? 'Países' : lang === 'es' ? 'Países' : lang === 'fr' ? 'Pays' : 'Countries'}
+                        </span>
+                      </div>
+                      <div className="glass-panel backdrop-blur-xl bg-stone-900/70 border border-white/10 p-4 sm:p-6 rounded-xl hover:border-amber-500/50 transition-all duration-300 group">
+                        <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-amber-500 group-hover:text-amber-400 transition-colors">1996</span>
+                        <span className="block text-[0.65rem] sm:text-xs text-white/60 uppercase tracking-widest mt-1">
+                          {lang === 'pt' ? 'Desde' : lang === 'es' ? 'Desde' : lang === 'fr' ? 'Depuis' : 'Since'}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>

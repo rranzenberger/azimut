@@ -1,6 +1,19 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════
+   SMOOTH SCROLL + WORLD-CLASS 2026 GLOBALS
+   ═══════════════════════════════════════════════════════════════ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+.glass-panel {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
    CORREÇÕES DE CONTRASTE - PRIORIDADE MÁXIMA (ANTES DE @theme)
    DEVE VIR LOGO APÓS @import PARA TER MÁXIMA PRECEDÊNCIA
    ═══════════════════════════════════════════════════════════════ */
