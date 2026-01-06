@@ -21,7 +21,7 @@ import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDet
 // ═══════════════════════════════════════════════════════════════
 // Mude para "false" para DESABILITAR o login temporariamente
 // Mude para "true" para ATIVAR o login novamente
-const SITE_PROTECTED = false // ← SITE ABERTO! (Login desativado para teste)
+const SITE_PROTECTED = true // ← SITE TRAVADO! (Login ativo)
 // ═══════════════════════════════════════════════════════════════
 
 // CORREÇÃO: Import direto das páginas problemáticas
