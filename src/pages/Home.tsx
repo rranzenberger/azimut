@@ -267,18 +267,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       {heroSubtitle.split('.')[0]}.
                     </p>
                     
-                    {/* Stats Cards */}
-                    <div className="grid grid-cols-3 gap-3 max-w-lg animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+                    {/* Stats Cards - SEM PAÍSES! */}
+                    <div className="grid grid-cols-2 gap-3 max-w-lg animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
                       <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
                         <span className="block text-3xl lg:text-4xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">100+</span>
                         <span className="block text-[0.6rem] text-white/60 uppercase tracking-widest mt-1">
                           {lang === 'pt' ? 'Projetos' : lang === 'es' ? 'Proyectos' : 'Projects'}
-                        </span>
-                      </div>
-                      <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
-                        <span className="block text-3xl lg:text-4xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">40+</span>
-                        <span className="block text-[0.6rem] text-white/60 uppercase tracking-widest mt-1">
-                          {lang === 'pt' ? 'Países' : lang === 'es' ? 'Países' : lang === 'fr' ? 'Pays' : 'Countries'}
                         </span>
                       </div>
                       <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
@@ -344,18 +338,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       {heroSubtitle.split('.')[0]}.
                     </p>
                     
-                    {/* Stats Cards */}
-                    <div className="grid grid-cols-3 gap-3 sm:gap-4 max-w-2xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+                    {/* Stats Cards - SEM PAÍSES! */}
+                    <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-2xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
                       <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 sm:p-6 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
                         <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">100+</span>
                         <span className="block text-[0.65rem] sm:text-xs text-white/60 uppercase tracking-widest mt-1">
                           {lang === 'pt' ? 'Projetos' : lang === 'es' ? 'Proyectos' : 'Projects'}
-                        </span>
-                      </div>
-                      <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 sm:p-6 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
-                        <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">40+</span>
-                        <span className="block text-[0.65rem] sm:text-xs text-white/60 uppercase tracking-widest mt-1">
-                          {lang === 'pt' ? 'Países' : lang === 'es' ? 'Países' : lang === 'fr' ? 'Pays' : 'Countries'}
                         </span>
                       </div>
                       <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 sm:p-6 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
@@ -380,70 +368,79 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-6">
               <h3 className="font-sora text-xs uppercase tracking-[0.24em] mb-3" style={{ color: 'var(--theme-text-muted)' }}>
-                {lang === 'pt' ? 'Nossa Combinação Única' : lang === 'es' ? 'Nuestra Combinación Única' : lang === 'fr' ? 'Notre Combinaison Unique' : 'Our Unique Combination'}
+                {lang === 'pt' ? 'EMPRESA DE SOLUÇÕES COMPLETAS' : lang === 'es' ? 'EMPRESA DE SOLUCIONES COMPLETAS' : lang === 'fr' ? 'ENTREPRISE DE SOLUTIONS COMPLÈTES' : 'COMPLETE SOLUTIONS COMPANY'}
               </h3>
               <p className="text-sm md:text-base max-w-3xl mx-auto leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
                 {lang === 'pt' 
-                  ? 'Unimos arte, tecnologia e educação em projetos pioneiros. Do primeiro centro de treinamento Autodesk da América do Sul à direção técnica do Rio Museu Olímpico, criamos experiências imersivas.' 
+                  ? 'Transformamos conceitos em experiências memoráveis através de integração audiovisual, tecnologia, cenografia digital, cinema, motion design, IA e VR. Entregamos projetos completos, do conceito à instalação.' 
                   : lang === 'es' 
-                  ? 'Unimos arte, tecnología y educación en proyectos pioneros. Del primer centro de entrenamiento Autodesk de América del Sur a la dirección técnica del Museo Olímpico de Río, creamos experiencias inmersivas.'
+                  ? 'Transformamos conceptos en experiencias memorables a través de integración audiovisual, tecnología, escenografía digital, cine, motion design, IA y VR. Entregamos proyectos completos, del concepto a la instalación.'
                   : lang === 'fr'
-                  ? 'Nous unissons art, technologie et éducation dans des projets pionniers. Du premier centre de formation Autodesk d\'Amérique du Sud à la direction technique du Musée Olympique de Rio, nous créons des expériences immersives.'
-                  : 'We unite art, technology and education in pioneering projects. From the first Autodesk training center in South America to the technical direction of the Rio Olympic Museum, we create immersive experiences.'}
+                  ? 'Nous transformons des concepts en expériences mémorables grâce à l\'intégration audiovisuelle, la technologie, la scénographie numérique, le cinéma, le motion design, l\'IA et la VR. Nous livrons des projets complets, du concept à l\'installation.'
+                  : 'We transform concepts into memorable experiences through audiovisual integration, technology, digital scenography, cinema, motion design, AI and VR. We deliver complete projects, from concept to installation.'}
               </p>
             </div>
             
-            {/* Timeline COM PLACEHOLDERS VISUAIS - SEM PAÍSES */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-6">
-              {/* Card 1: 1996 */}
+            {/* Grid de Soluções - Baseado nos dados reais do site */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mb-6">
+              {/* Integração Audiovisual */}
               <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
-                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">⏰</div>
+                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">📽️</div>
                 <div className="relative z-10">
-                  <div className="text-2xl md:text-3xl font-handel text-azimut-red mb-2 group-hover:scale-110 transition-transform">1996</div>
-                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest" style={{ color: 'var(--theme-text)' }}>
-                    {lang === 'pt' ? 'Desde' : lang === 'es' ? 'Desde' : lang === 'fr' ? 'Depuis' : 'Since'}
+                  <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🎬</div>
+                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest font-semibold" style={{ color: 'var(--theme-text)' }}>
+                    {lang === 'pt' ? 'Cinema & AV' : lang === 'es' ? 'Cine & AV' : lang === 'fr' ? 'Cinéma & AV' : 'Cinema & AV'}
                   </div>
                 </div>
               </div>
               
-              {/* Card 2: Autodesk COM PLACEHOLDER LOGO */}
+              {/* VR/XR */}
               <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center opacity-5 group-hover:opacity-10 transition-opacity">
-                  <div className="text-6xl font-bold" style={{ color: 'var(--theme-text)' }}>A</div>
-                </div>
+                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">🥽</div>
                 <div className="relative z-10">
-                  <div className="text-lg md:text-xl font-handel text-azimut-red mb-1 group-hover:scale-110 transition-transform">1996-2018</div>
-                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest" style={{ color: 'var(--theme-text)' }}>Autodesk</div>
-                  <div className="text-[0.55rem] opacity-60 mt-1" style={{ color: 'var(--theme-text-muted)' }}>Training Center</div>
+                  <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🌐</div>
+                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest font-semibold" style={{ color: 'var(--theme-text)' }}>
+                    {lang === 'pt' ? 'VR/XR' : 'VR/XR'}
+                  </div>
                 </div>
               </div>
               
-              {/* Card 3: Rio Museum COM PLACEHOLDER */}
+              {/* IA */}
               <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
-                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">🏛️</div>
+                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">🤖</div>
                 <div className="relative z-10">
-                  <div className="text-lg md:text-xl font-handel text-azimut-red mb-1 group-hover:scale-110 transition-transform">2025</div>
-                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest" style={{ color: 'var(--theme-text)' }}>Rio Museum</div>
-                  <div className="text-[0.55rem] opacity-60 mt-1" style={{ color: 'var(--theme-text-muted)' }}>
-                    {lang === 'pt' ? 'Atual' : 'Current'}
+                  <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🧠</div>
+                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest font-semibold" style={{ color: 'var(--theme-text)' }}>
+                    {lang === 'pt' ? 'IA Criativa' : lang === 'es' ? 'IA Creativa' : lang === 'fr' ? 'IA Créative' : 'Creative AI'}
+                  </div>
+                </div>
+              </div>
+              
+              {/* Motion Design */}
+              <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
+                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">🎨</div>
+                <div className="relative z-10">
+                  <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">✨</div>
+                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest font-semibold" style={{ color: 'var(--theme-text)' }}>
+                    {lang === 'pt' ? 'Motion Design' : 'Motion Design'}
                   </div>
                 </div>
               </div>
             </div>
             
-            {/* Pills Credenciais - SEM PAÍSES */}
+            {/* Pills Expertise - Dados reais do Studio */}
             <div className="flex flex-wrap justify-center gap-3">
               <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🏛️</span> Rio Museum
+                <span className="mr-2 opacity-60">🏛️</span> {lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture'}
               </span>
               <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🎬</span> Gramado VR
+                <span className="mr-2 opacity-60">🎪</span> {lang === 'pt' ? 'Cenografia Digital' : lang === 'es' ? 'Escenografía Digital' : lang === 'fr' ? 'Scénographie Numérique' : 'Digital Scenography'}
               </span>
               <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">⚡</span> Autodesk
+                <span className="mr-2 opacity-60">⚡</span> {lang === 'pt' ? 'Integração Tecnológica' : lang === 'es' ? 'Integración Tecnológica' : lang === 'fr' ? 'Intégration Technologique' : 'Tech Integration'}
               </span>
               <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🥽</span> XRBR
+                <span className="mr-2 opacity-60">🎬</span> {lang === 'pt' ? 'Direção Técnica' : lang === 'es' ? 'Dirección Técnica' : lang === 'fr' ? 'Direction Technique' : 'Technical Direction'}
               </span>
             </div>
           </div>
