@@ -147,19 +147,122 @@ Equipe Azimut
 
 ---
 
-## 🚀 PRÓXIMOS PASSOS RECOMENDADOS
+## ⚠️ AÇÕES NECESSÁRIAS DO USUÁRIO (15 MINUTOS)
 
-### Configuração Imediata (5-10 min):
+### 🔴 IMPORTANTE: O que VOCÊ precisa fazer para ativar tudo:
 
-1. **Configurar Slack Webhook:**
-   - https://api.slack.com/messaging/webhooks
-   - Adicionar `SLACK_WEBHOOK_URL` no Vercel
-   - Redeploy do backoffice
+---
 
-2. **(Opcional) Configurar Email:**
-   - SendGrid: https://sendgrid.com/ (grátis 100 emails/dia)
-   - Resend: https://resend.com/ (mais simples)
-   - Adicionar API keys no Vercel
+### 1. CONFIGURAR SLACK WEBHOOK (5 minutos) - RECOMENDADO! 🔥
+
+**Por que:** Para receber alertas automáticos quando um lead quente chegar
+
+**Passo a passo:**
+
+1. **Criar canal no Slack:**
+   - Abra seu Slack
+   - Crie um canal chamado `#leads-quentes` (ou o nome que preferir)
+
+2. **Criar Incoming Webhook:**
+   - Acesse: https://api.slack.com/messaging/webhooks
+   - Click em **"Create New App"** → **"From Scratch"**
+   - Nome do app: `Azimut Lead Notifications`
+   - Escolha seu workspace
+   - Em **"Incoming Webhooks"**, ative o toggle
+   - Click em **"Add New Webhook to Workspace"**
+   - Escolha o canal `#leads-quentes`
+   - Copie a **Webhook URL** (começa com `https://hooks.slack.com/services/...`)
+
+3. **Configurar no Vercel:**
+   - Acesse: https://vercel.com/dashboard
+   - Selecione o projeto **`azimut-cms`** (backoffice)
+   - Vá em **Settings** → **Environment Variables**
+   - Click em **"Add New"**
+   - Name: `SLACK_WEBHOOK_URL`
+   - Value: Cole a URL do webhook que você copiou
+   - Click em **"Save"**
+
+4. **Fazer Redeploy:**
+   - Vá em **Deployments**
+   - Click nos 3 pontinhos do último deploy
+   - Click em **"Redeploy"**
+   - Aguarde ~2 minutos
+
+✅ **PRONTO!** Agora quando um lead quente chegar, você recebe mensagem no Slack!
+
+---
+
+### 2. CONFIGURAR EMAIL (10 minutos) - OPCIONAL
+
+**Por que:** Para:
+- Cliente receber email de confirmação automático
+- Você receber notificações por email (além do Slack)
+
+**Escolha UMA das opções:**
+
+#### **Opção A: SendGrid (Recomendado para quem já usa)**
+
+1. **Criar conta:**
+   - Acesse: https://sendgrid.com/
+   - Click em **"Start for free"**
+   - Preencha o cadastro
+   - **Plano grátis:** 100 emails/dia (suficiente!)
+
+2. **Criar API Key:**
+   - Vá em **Settings** → **API Keys**
+   - Click em **"Create API Key"**
+   - Name: `Azimut Notifications`
+   - Permissions: **"Full Access"**
+   - Click em **"Create & View"**
+   - **COPIE A KEY AGORA** (não consegue ver depois!)
+
+3. **Configurar no Vercel (backoffice `azimut-cms`):**
+   ```
+   SENDGRID_API_KEY = SG.xxxxxxxxxxxxxxxxxxxxxxxxxxx
+   EMAIL_PROVIDER = sendgrid
+   NOTIFICATION_EMAIL = seuemail@azimut.com
+   ```
+
+4. **Fazer Redeploy** (igual ao Slack acima)
+
+#### **Opção B: Resend (Mais Simples e Moderno)**
+
+1. **Criar conta:**
+   - Acesse: https://resend.com/
+   - Click em **"Start Building"**
+   - **Plano grátis:** 100 emails/dia
+
+2. **Criar API Key:**
+   - Vá em **API Keys**
+   - Click em **"Create API Key"**
+   - COPIE a key (começa com `re_`)
+
+3. **Configurar no Vercel (backoffice `azimut-cms`):**
+   ```
+   RESEND_API_KEY = re_xxxxxxxxxxxxxxxxxx
+   EMAIL_PROVIDER = resend
+   NOTIFICATION_EMAIL = seuemail@azimut.com
+   ```
+
+4. **Fazer Redeploy**
+
+✅ **PRONTO!** Agora o sistema envia emails automaticamente!
+
+---
+
+### 📋 CHECKLIST RÁPIDO:
+
+- [ ] Criar canal `#leads-quentes` no Slack
+- [ ] Criar Incoming Webhook no Slack
+- [ ] Adicionar `SLACK_WEBHOOK_URL` no Vercel (azimut-cms)
+- [ ] (Opcional) Criar conta SendGrid ou Resend
+- [ ] (Opcional) Adicionar variáveis de email no Vercel
+- [ ] Fazer Redeploy do backoffice
+- [ ] Testar: enviar formulário de contato e verificar se recebeu alerta
+
+---
+
+## 🚀 PRÓXIMOS PASSOS OPCIONAIS (FUTURO)
 
 ### Melhorias Futuras (Opcional):
 
