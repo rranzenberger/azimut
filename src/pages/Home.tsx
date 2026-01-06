@@ -373,106 +373,147 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* Nossas Soluções - Grid de Serviços - SEMPRE MOSTRA */}
-        <section className="py-12 sm:py-16 md:py-20">
+        {/* Nossas Soluções - Grid Visual MELHORADO */}
+        <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-transparent via-black/5 to-transparent dark:via-white/5">
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
-            <div className="mb-8 flex items-center justify-between">
-              <h2 className="font-handel text-2xl uppercase tracking-[0.12em] md:text-3xl" style={{ color: 'var(--theme-text)' }}>
-                {lang === 'pt' ? 'Nossas Soluções' : lang === 'es' ? 'Nuestras Soluciones' : lang === 'fr' ? 'Nos Solutions' : 'Our Solutions'}
+            <div className="mb-10 text-center">
+              <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-[0.12em] mb-4" style={{ color: 'var(--theme-text)' }}>
+                {lang === 'pt' ? 'O que criamos' : lang === 'es' ? 'Qué creamos' : lang === 'fr' ? 'Ce que nous créons' : 'What we create'}
               </h2>
-              <Link
-                to="/what"
-                className="text-sm font-sora uppercase tracking-[0.1em] text-azimut-red hover:text-azimut-red/80 transition-colors"
-              >
-                {lang === 'pt' ? 'Ver Todos →' : lang === 'es' ? 'Ver Todos →' : lang === 'fr' ? 'Voir Tout →' : 'View All →'}
-              </Link>
+              <p className="text-slate-700 dark:text-slate-300 max-w-2xl mx-auto text-lg">
+                {lang === 'pt' ? 'Soluções completas para transformar ideias em experiências memoráveis' : lang === 'es' ? 'Soluciones completas para transformar ideas en experiencias memorables' : lang === 'fr' ? 'Solutions complètes pour transformer les idées en expériences mémorables' : 'Complete solutions to transform ideas into memorable experiences'}
+              </p>
             </div>
+            
             {/* MIGRAÇÃO GRADUAL: Backoffice → Estático */}
             {(Array.isArray(cmsContent?.services) && cmsContent.services.length > 0) ? (
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 {cmsContent.services.slice(0, 6).map((service: any, index: number) => (
                   <article
                     key={service.slug}
-                    className="group rounded-2xl border border-white/10 card-adaptive p-5 shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(var(--theme-accent-red-rgb),0.3)] cursor-pointer"
+                    className="group relative rounded-2xl border border-white/10 card-adaptive p-8 shadow-[0_16px_40px_rgba(0,0,0,0.4)] transition-all duration-500 hover:scale-[1.05] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(201,35,55,0.3)] cursor-pointer overflow-hidden"
                     style={{
                       animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
                     }}
                     onClick={() => window.location.href = `/what#${service.slug}`}
                   >
+                    {/* Glow Effect no Hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-azimut-red/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    {/* Ícone GRANDE */}
                     {service.icon && (
-                      <div className="mb-3 text-3xl">{service.icon}</div>
+                      <div className="mb-6 text-6xl transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+                        {service.icon}
+                      </div>
                     )}
-                    <h3 className="mb-2 font-sora text-[1.05rem] font-semibold text-white group-hover:text-azimut-red transition-colors duration-300">
+                    
+                    <h3 className="mb-3 font-handel text-xl md:text-2xl uppercase tracking-wide text-white group-hover:text-azimut-red transition-colors duration-300">
                       {service.title}
                     </h3>
-                    <p className="text-sm leading-relaxed text-slate-900 dark:text-slate-200 group-hover:text-slate-100 transition-colors duration-300">
+                    <p className="text-sm md:text-base leading-relaxed text-slate-900 dark:text-slate-200 group-hover:text-slate-800 dark:group-hover:text-slate-100 transition-colors duration-300">
                       {service.description}
                     </p>
+                    
+                    {/* Indicador "Ver Mais" */}
+                    <div className="mt-6 flex items-center gap-2 text-xs uppercase tracking-wider text-azimut-red opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <span>{lang === 'pt' ? 'Saiba Mais' : lang === 'es' ? 'Saber Más' : lang === 'fr' ? 'En Savoir Plus' : 'Learn More'}</span>
+                      <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </div>
                   </article>
                 ))}
               </div>
             ) : (
               /* Fallback estático - mostra quando backoffice não tem conteúdo */
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 {[
                   { 
                     slug: 'cinema-audiovisual',
                     title: lang === 'pt' ? 'Cinema & Audiovisual' : lang === 'es' ? 'Cine & Audiovisual' : lang === 'fr' ? 'Cinéma & Audiovisuel' : 'Cinema & Audiovisual',
-                    description: lang === 'pt' ? 'Narrativas cinematográficas de alta qualidade' : lang === 'es' ? 'Narrativas cinematográficas de alta calidad' : lang === 'fr' ? 'Récits cinématographiques de haute qualité' : 'High-quality cinematic narratives',
+                    description: lang === 'pt' ? 'Narrativas cinematográficas de alta qualidade que emocionam e engajam' : lang === 'es' ? 'Narrativas cinematográficas de alta calidad que emocionan y engajan' : lang === 'fr' ? 'Récits cinématographiques de haute qualité qui émeuvent et engagent' : 'High-quality cinematic narratives that move and engage',
                     icon: '🎬'
                   },
                   { 
                     slug: 'animacao-2d-3d',
                     title: lang === 'pt' ? 'Animação 2D/3D' : lang === 'es' ? 'Animación 2D/3D' : lang === 'fr' ? 'Animation 2D/3D' : '2D/3D Animation',
-                    description: lang === 'pt' ? 'Personagens e mundos animados' : lang === 'es' ? 'Personajes y mundos animados' : lang === 'fr' ? 'Personnages et mondes animés' : 'Animated characters and worlds',
+                    description: lang === 'pt' ? 'Personagens e mundos animados que dão vida às suas histórias' : lang === 'es' ? 'Personajes y mundos animados que dan vida a tus historias' : lang === 'fr' ? 'Personnages et mondes animés qui donnent vie à vos histoires' : 'Animated characters and worlds that bring your stories to life',
                     icon: '🎨'
                   },
                   { 
                     slug: 'xr-interatividade',
                     title: lang === 'pt' ? 'XR / Interatividade' : lang === 'es' ? 'XR / Interactivo' : lang === 'fr' ? 'XR / Interactif' : 'XR / Interactive',
-                    description: lang === 'pt' ? 'Experiências imersivas VR/AR' : lang === 'es' ? 'Experiencias inmersivas VR/AR' : lang === 'fr' ? 'Expériences immersives VR/AR' : 'Immersive VR/AR experiences',
+                    description: lang === 'pt' ? 'Experiências imersivas VR/AR que transportam o público para novos mundos' : lang === 'es' ? 'Experiencias inmersivas VR/AR que transportan al público a nuevos mundos' : lang === 'fr' ? 'Expériences immersives VR/AR qui transportent le public vers de nouveaux mondes' : 'Immersive VR/AR experiences that transport audiences to new worlds',
                     icon: '🥽'
                   },
                   { 
                     slug: 'ia-criativa',
                     title: lang === 'pt' ? 'IA Criativa' : lang === 'es' ? 'IA Creativa' : lang === 'fr' ? 'IA Créative' : 'Creative AI',
-                    description: lang === 'pt' ? 'Pipelines com inteligência artificial' : lang === 'es' ? 'Pipelines con inteligencia artificial' : lang === 'fr' ? 'Pipelines avec intelligence artificielle' : 'AI-powered pipelines',
+                    description: lang === 'pt' ? 'Pipelines com inteligência artificial para acelerar e potencializar a criação' : lang === 'es' ? 'Pipelines con inteligencia artificial para acelerar y potenciar la creación' : lang === 'fr' ? 'Pipelines avec intelligence artificielle pour accélérer et renforcer la création' : 'AI-powered pipelines to accelerate and enhance creation',
                     icon: '🤖'
                   },
                   { 
                     slug: 'educacao-formacao',
                     title: lang === 'pt' ? 'Educação & Formação' : lang === 'es' ? 'Educación & Formación' : lang === 'fr' ? 'Éducation & Formation' : 'Education & Training',
-                    description: lang === 'pt' ? 'Workshops e mentorias especializadas' : lang === 'es' ? 'Workshops y mentorías especializadas' : lang === 'fr' ? 'Ateliers et mentorats spécialisés' : 'Specialized workshops and mentoring',
+                    description: lang === 'pt' ? 'Workshops e mentorias especializadas para desenvolver talentos criativos' : lang === 'es' ? 'Workshops y mentorías especializadas para desarrollar talentos creativos' : lang === 'fr' ? 'Ateliers et mentorats spécialisés pour développer les talents créatifs' : 'Specialized workshops and mentoring to develop creative talents',
                     icon: '📚'
                   },
                   { 
                     slug: 'consultoria-estrategia',
                     title: lang === 'pt' ? 'Consultoria & Estratégia' : lang === 'es' ? 'Consultoría & Estrategia' : lang === 'fr' ? 'Conseil & Stratégie' : 'Consulting & Strategy',
-                    description: lang === 'pt' ? 'Acompanhamento de projetos end-to-end' : lang === 'es' ? 'Acompañamiento de proyectos end-to-end' : lang === 'fr' ? 'Accompagnement de projets end-to-end' : 'End-to-end project support',
+                    description: lang === 'pt' ? 'Acompanhamento estratégico de projetos end-to-end com foco em resultados' : lang === 'es' ? 'Acompañamiento estratégico de proyectos end-to-end con foco en resultados' : lang === 'fr' ? 'Accompagnement stratégique de projets end-to-end axé sur les résultats' : 'Strategic end-to-end project support focused on results',
                     icon: '💡'
                   }
                 ].map((service: any, index: number) => (
                   <article
                     key={service.slug}
-                    className="group rounded-2xl border border-white/10 card-adaptive p-5 shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(var(--theme-accent-red-rgb),0.3)] cursor-pointer"
+                    className="group relative rounded-2xl border border-white/10 card-adaptive p-8 shadow-[0_16px_40px_rgba(0,0,0,0.4)] transition-all duration-500 hover:scale-[1.05] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(201,35,55,0.3)] cursor-pointer overflow-hidden"
                     style={{
                       animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
                     }}
                     onClick={() => window.location.href = `/what#${service.slug}`}
                   >
+                    {/* Glow Effect no Hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-azimut-red/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    {/* Ícone GRANDE */}
                     {service.icon && (
-                      <div className="mb-3 text-3xl">{service.icon}</div>
+                      <div className="mb-6 text-6xl transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 relative z-10">
+                        {service.icon}
+                      </div>
                     )}
-                    <h3 className="mb-2 font-sora text-[1.05rem] font-semibold text-white group-hover:text-azimut-red transition-colors duration-300">
+                    
+                    <h3 className="mb-3 font-handel text-xl md:text-2xl uppercase tracking-wide text-white group-hover:text-azimut-red transition-colors duration-300 relative z-10">
                       {service.title}
                     </h3>
-                    <p className="text-sm leading-relaxed text-slate-900 dark:text-slate-200 group-hover:text-slate-100 transition-colors duration-300">
+                    <p className="text-sm md:text-base leading-relaxed text-slate-900 dark:text-slate-200 group-hover:text-slate-800 dark:group-hover:text-slate-100 transition-colors duration-300 relative z-10">
                       {service.description}
                     </p>
+                    
+                    {/* Indicador "Ver Mais" */}
+                    <div className="mt-6 flex items-center gap-2 text-xs uppercase tracking-wider text-azimut-red opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 relative z-10">
+                      <span>{lang === 'pt' ? 'Saiba Mais' : lang === 'es' ? 'Saber Más' : lang === 'fr' ? 'En Savoir Plus' : 'Learn More'}</span>
+                      <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </div>
                   </article>
                 ))}
               </div>
             )}
+            
+            {/* CTA Final */}
+            <div className="mt-12 text-center">
+              <Link
+                to="/what"
+                className="inline-flex items-center justify-center gap-3 rounded-lg bg-azimut-red px-8 py-4 font-sora text-sm uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/90 hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                <span>{lang === 'pt' ? 'Explorar Todas as Soluções' : lang === 'es' ? 'Explorar Todas las Soluciones' : lang === 'fr' ? 'Explorer Toutes les Solutions' : 'Explore All Solutions'}</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </Link>
+            </div>
           </div>
         </section>
 
@@ -618,22 +659,26 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* Recomendações - SEMPRE MOSTRA, mesmo sem projetos */}
+        {/* Recomendações - Grid Visual-First MELHORADO */}
         <section className="pb-12 sm:pb-16 md:pb-20">
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="font-handel text-2xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
-                {lang === 'pt' ? 'Sugestões para você' : lang === 'es' ? 'Sugerencias para ti' : lang === 'fr' ? 'Suggestions pour vous' : 'Suggested for you'}
+            <div className="mb-8 flex items-center justify-between">
+              <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
+                {lang === 'pt' ? 'Projetos em Destaque' : lang === 'es' ? 'Proyectos Destacados' : lang === 'fr' ? 'Projets en Vedette' : 'Featured Projects'}
               </h2>
               <Link
                 to="/work"
-                className="text-sm font-sora uppercase tracking-[0.1em] text-azimut-red hover:text-azimut-red/80 transition-colors"
+                className="text-sm font-sora uppercase tracking-[0.1em] text-azimut-red hover:text-azimut-red/80 transition-colors flex items-center gap-2 group"
               >
-                {lang === 'pt' ? 'Ver Todos →' : lang === 'es' ? 'Ver Todos →' : lang === 'fr' ? 'Voir Tout →' : 'View All →'}
+                <span>{lang === 'pt' ? 'Ver Todos' : lang === 'es' ? 'Ver Todos' : lang === 'fr' ? 'Voir Tout' : 'View All'}</span>
+                <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
               </Link>
             </div>
-            {/* Sempre mostra projetos - recommended sempre tem pelo menos 3 itens */}
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            
+            {/* Grid de Projetos - VISUAL FIRST */}
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {(Array.isArray(recommended) && recommended.length > 1 
                 ? recommended.slice(1, 4) 
                 : Array.isArray(defaultProjects) ? defaultProjects.slice(1, Math.min(4, defaultProjects.length)) : []
@@ -641,68 +686,73 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 <Link
                   key={item.slug}
                   to={`/work/${item.slug}`}
-                  className="group rounded-2xl border border-white/10 card-adaptive p-4 shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(var(--theme-accent-red-rgb),0.3)] block"
+                  className="group relative rounded-2xl overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)] transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_24px_60px_rgba(201,35,55,0.4)]"
                   style={{
-                    animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+                    animation: `fadeInUp 0.6s ease-out ${index * 0.15}s both`
                   }}
                 >
-                  {item.heroImage?.thumbnail || item.heroImage?.medium || item.heroImage?.large ? (
-                    <div className="mb-4 aspect-video w-full overflow-hidden rounded-lg bg-gradient-to-br from-slate-800 to-slate-900">
+                  {/* Imagem/Vídeo - TAMANHO GRANDE */}
+                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900">
+                    {item.heroImage?.thumbnail || item.heroImage?.medium || item.heroImage?.large ? (
                       <img
                         src={item.heroImage?.large || item.heroImage?.medium || item.heroImage?.thumbnail}
                         alt={item.heroImage?.alt || item.title}
-                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                         loading="lazy"
                         onError={(e) => {
-                          // Se imagem falhar, mostrar placeholder visual
                           const target = e.currentTarget;
                           target.style.display = 'none';
-                          const parent = target.parentElement;
-                          if (parent) {
-                            parent.innerHTML = `
-                              <div class="flex items-center justify-center h-full bg-gradient-to-br from-azimut-red/10 via-slate-800 to-slate-900">
-                                <div class="text-center p-4">
-                                  <svg class="w-16 h-16 mx-auto mb-2 text-azimut-red/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                  </svg>
-                                  <p class="text-xs text-slate-800 dark:text-slate-400 uppercase tracking-wider">${lang === 'pt' ? 'Aguardando Imagem' : lang === 'es' ? 'Esperando Imagen' : lang === 'fr' ? 'En Attente d\'Image' : 'Awaiting Image'}</p>
-                                </div>
-                              </div>
-                            `;
-                          }
                         }}
                       />
-                    </div>
-                  ) : (
-                    <div className="mb-4 aspect-video w-full overflow-hidden rounded-lg bg-gradient-to-br from-azimut-red/10 via-slate-800 to-slate-900 flex items-center justify-center">
-                      <div className="text-center p-4">
-                        <svg className="w-16 h-16 mx-auto mb-2 text-azimut-red/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    ) : (
+                      <div className="flex items-center justify-center h-full bg-gradient-to-br from-azimut-red/10 via-slate-800 to-slate-900">
+                        <svg className="w-20 h-20 text-azimut-red/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        <p className="text-xs text-slate-800 dark:text-slate-400 uppercase tracking-wider">{lang === 'pt' ? 'Aguardando Imagem' : lang === 'es' ? 'Esperando Imagen' : lang === 'fr' ? 'En Attente d\'Image' : 'Awaiting Image'}</p>
+                      </div>
+                    )}
+                    
+                    {/* Overlay Gradiente */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+                    
+                    {/* Tags sobre a imagem */}
+                    {item.tags && item.tags.length > 0 && (
+                      <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                        {item.tags.slice(0, 2).map((tag: string, idx: number) => (
+                          <span 
+                            key={idx} 
+                            className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-sm border border-white/20 font-sora text-[0.65rem] uppercase tracking-wider text-white"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    
+                    {/* Título e Info sobre a imagem */}
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <h3 className="font-handel text-xl md:text-2xl uppercase tracking-[0.08em] text-white mb-2 line-clamp-2 group-hover:text-azimut-red transition-colors duration-300">
+                        {item.title}
+                      </h3>
+                      {(item.city || item.country) && (
+                        <p className="text-sm text-white/80 flex items-center gap-1">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                          {[item.city, item.country].filter(Boolean).join(', ')}
+                        </p>
+                      )}
+                    </div>
+                    
+                    {/* Ícone "Ver Projeto" no hover */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 scale-75 group-hover:scale-100">
+                      <div className="w-16 h-16 rounded-full bg-azimut-red flex items-center justify-center shadow-lg">
+                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
                       </div>
                     </div>
-                  )}
-                  <h3 className="mb-2 font-sora text-[1.05rem] font-semibold text-white group-hover:text-azimut-red transition-colors duration-300">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-slate-900 dark:text-slate-200 group-hover:text-slate-100 transition-colors duration-300 mb-3">
-                    {item.summary || item.shortTitle}
-                  </p>
-                  {item.tags && item.tags.length > 0 && (
-                    <div className="mt-3 flex flex-wrap gap-2 text-[0.7rem] text-slate-800 dark:text-slate-400">
-                      {((item?.tags && Array.isArray(item.tags)) ? item.tags : []).slice(0, 3).map((tag: string, idx: number) => (
-                        <span 
-                          key={idx} 
-                          className="rounded-full border border-white/10 px-2 py-0.5 transition-all duration-300 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:text-slate-900 dark:text-slate-300"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                  <div className="mt-4 text-xs font-sora uppercase tracking-[0.1em] text-azimut-red opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    {lang === 'pt' ? 'Ver Projeto →' : lang === 'es' ? 'Ver Proyecto →' : lang === 'fr' ? 'Voir Projet →' : 'View Project →'}
                   </div>
                 </Link>
               ))}
