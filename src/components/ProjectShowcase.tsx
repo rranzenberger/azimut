@@ -107,18 +107,20 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({ projects, lang
       y: { 
         grid: { display: false },
         ticks: { 
-          font: { size: 11 },
-          color: '#78716c'
+          font: { size: 12, weight: '600' },
+          color: 'var(--theme-text)'
         }
       }
     },
     plugins: { 
       legend: { display: false },
       tooltip: {
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        padding: 12,
-        titleFont: { size: 14 },
-        bodyFont: { size: 13 }
+        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+        padding: 14,
+        titleFont: { size: 14, weight: 'bold' },
+        bodyFont: { size: 13 },
+        borderColor: projectColors[selectedProjectId],
+        borderWidth: 2
       }
     }
   }
@@ -235,39 +237,45 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({ projects, lang
               
               {/* Destaques + DNA Chart (estilo Gemini) */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="bg-stone-50 dark:bg-stone-900/50 p-4 rounded-xl">
-                  <h4 className="font-bold mb-2 border-b pb-2" style={{ 
+                <div className="glass-panel backdrop-blur-sm bg-white/90 dark:bg-stone-900/80 p-5 rounded-xl border border-azimut-red/20 dark:border-azimut-red/30">
+                  <h4 className="font-bold text-base mb-3 pb-2 border-b" style={{ 
                     color: 'var(--theme-text)',
-                    borderColor: 'var(--theme-border)'
+                    borderColor: projectColors[selectedProjectId],
+                    borderWidth: '2px'
                   }}>
                     {lang === 'pt' ? 'Destaques' : lang === 'es' ? 'Destacados' : lang === 'fr' ? 'Points Forts' : 'Highlights'}
                   </h4>
-                  <ul className="space-y-2 text-sm" style={{ color: 'var(--theme-text-secondary)' }}>
+                  <ul className="space-y-3 text-sm">
                     {(selectedProject.tags || []).slice(0, 3).map((tag, idx) => (
-                      <li key={idx} className="flex items-center gap-2">
+                      <li key={idx} className="flex items-center gap-3">
                         <span 
-                          className="w-1.5 h-1.5 rounded-full"
+                          className="w-2 h-2 rounded-full flex-shrink-0"
                           style={{ backgroundColor: projectColors[selectedProjectId] }}
                         ></span>
-                        {tag}
+                        <span className="font-medium" style={{ color: 'var(--theme-text)' }}>
+                          {tag}
+                        </span>
                       </li>
                     ))}
                     {(!selectedProject.tags || selectedProject.tags.length === 0) && (
-                      <li className="flex items-center gap-2">
+                      <li className="flex items-center gap-3">
                         <span 
-                          className="w-1.5 h-1.5 rounded-full"
+                          className="w-2 h-2 rounded-full flex-shrink-0"
                           style={{ backgroundColor: projectColors[selectedProjectId] }}
                         ></span>
-                        {lang === 'pt' ? 'Projeto Premium' : 'Premium Project'}
+                        <span className="font-medium" style={{ color: 'var(--theme-text)' }}>
+                          {lang === 'pt' ? 'Projeto Premium' : 'Premium Project'}
+                        </span>
                       </li>
                     )}
                   </ul>
                 </div>
                 
-                <div className="bg-stone-50 dark:bg-stone-900/50 p-4 rounded-xl">
-                  <h4 className="font-bold mb-2 border-b pb-2" style={{ 
+                <div className="glass-panel backdrop-blur-sm bg-white/90 dark:bg-stone-900/80 p-5 rounded-xl border border-azimut-red/20 dark:border-azimut-red/30">
+                  <h4 className="font-bold text-base mb-3 pb-2 border-b" style={{ 
                     color: 'var(--theme-text)',
-                    borderColor: 'var(--theme-border)'
+                    borderColor: projectColors[selectedProjectId],
+                    borderWidth: '2px'
                   }}>
                     {lang === 'pt' ? 'Composição Visual' : 'Visual Composition'}
                   </h4>
