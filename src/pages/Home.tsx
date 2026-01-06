@@ -9,6 +9,7 @@ import { useAzimutContent } from '../hooks/useAzimutContent'
 import { usePersonalizedContent } from '../hooks/usePersonalizedContent'
 import { VideoPlayer } from '../components/VideoPlayer'
 import { ProjectShowcase } from '../components/ProjectShowcase'
+import { AnimatedLogo } from '../components/AnimatedLogo'
 
 interface HomeProps {
   lang: Lang
@@ -223,6 +224,11 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 {/* Glass Overlay - Gemini Style */}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/70 backdrop-blur-[2px]" />
                 
+                {/* Logo 3D Animada - Canto Superior Direito */}
+                <div className="absolute top-20 right-8 lg:right-20 z-5 hidden md:block">
+                  <AnimatedLogo />
+                </div>
+                
                 {/* Conteúdo Hero - World-Class 2026 */}
                 <div className="relative z-10 flex flex-col justify-center h-full px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
                   <div className="max-w-4xl space-y-8">
@@ -402,7 +408,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               {/* Texto Esquerdo */}
-              <div>
+              <div className="glass-panel backdrop-blur-sm bg-white/50 dark:bg-slate-900/50 rounded-2xl p-6 md:p-8 border border-white/20 dark:border-slate-700/50">
                 <h2 className="mb-4 font-handel text-3xl md:text-4xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
                   {t(lang, 'cardTitle')}
                 </h2>
@@ -422,7 +428,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   ).filter(Boolean).map((pillar: string, index: number) => (
                     <span 
                       key={index}
-                      className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10"
+                      className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10 hover:scale-105"
                     >
                       {pillar}
                     </span>
@@ -436,7 +442,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               
               {/* Card Direito - Tags */}
               <div 
-                className="card-dark-fixed relative rounded-2xl sm:rounded-3xl p-6 md:p-8 shadow-[0_24px_60px_rgba(0,0,0,0.6)]" 
+                className="glass-panel backdrop-blur-xl card-dark-fixed relative rounded-2xl sm:rounded-3xl p-6 md:p-8 shadow-[0_24px_60px_rgba(0,0,0,0.6)] hover:shadow-[0_32px_80px_rgba(201,35,55,0.3)] transition-all duration-500 hover:scale-[1.02]" 
                 style={{ 
                   background: 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)',
                   border: '1px solid rgba(255, 255, 255, 0.1)'
@@ -446,13 +452,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   {lang === 'pt' ? 'Especialidades' : lang === 'es' ? 'Especialidades' : lang === 'fr' ? 'Spécialités' : 'Expertise'}
                 </h3>
                 <div className="flex flex-wrap gap-3">
-                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white">
+                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white hover:border-amber-500 hover:bg-amber-500/10 transition-all duration-300">
                     {t(lang, 'tag1')}
                   </span>
-                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white">
+                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white hover:border-amber-500 hover:bg-amber-500/10 transition-all duration-300">
                     {t(lang, 'tag2')}
                   </span>
-                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white">
+                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white hover:border-amber-500 hover:bg-amber-500/10 transition-all duration-300">
                     {t(lang, 'tag3')}
                   </span>
                 </div>
