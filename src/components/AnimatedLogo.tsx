@@ -4,11 +4,17 @@ export const AnimatedLogo: React.FC = () => {
   return (
     <div className="animated-logo-container">
       <div className="animated-logo">
-        <img 
-          src="/logo-azimut-star.svg" 
-          alt="Azimut Star" 
-          className="w-full h-full object-contain"
-        />
+        {/* SVG Inline - Estrela vermelha pura (sem anel branco) */}
+        <svg 
+          viewBox="0 0 1112.004 1266.879" 
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-full"
+        >
+          <polygon 
+            fill="#c92337"
+            points="1.428 315.483 426.279 401.271 558.584 1.638 685.903 412.191 1110.534 315.483 818.449 630.037 1110.534 950.717 685.683 860.845 558.364 1265.271 423.021 866.692 1.428 950.717 296.546 635.311 1.428 315.483"
+          />
+        </svg>
       </div>
       
       <style>{`
