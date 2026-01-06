@@ -368,16 +368,16 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-6">
               <h3 className="font-sora text-xs uppercase tracking-[0.24em] mb-3" style={{ color: 'var(--theme-text-muted)' }}>
-                {lang === 'pt' ? 'EMPRESA DE SOLUÇÕES COMPLETAS' : lang === 'es' ? 'EMPRESA DE SOLUCIONES COMPLETAS' : lang === 'fr' ? 'ENTREPRISE DE SOLUTIONS COMPLÈTES' : 'COMPLETE SOLUTIONS COMPANY'}
+                {lang === 'pt' ? 'TECNOLOGIA CRIATIVA' : lang === 'es' ? 'TECNOLOGÍA CREATIVA' : lang === 'fr' ? 'TECHNOLOGIE CRÉATIVE' : 'CREATIVE TECHNOLOGY'}
               </h3>
               <p className="text-sm md:text-base max-w-3xl mx-auto leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
                 {lang === 'pt' 
-                  ? 'Criamos exposições imersivas, conteúdo para estandes, marketing em VR/AR e soluções audiovisuais completas. Atuamos em parceria com empresas que precisam de expertise técnica — do conceito à instalação, integrando tecnologia, cenografia digital e narrativas cinematográficas.' 
+                  ? 'Criamos experiências imersivas, interativas e cinematográficas para cultura, marcas e cidades. Da curadoria de festivais à direção técnica de museus, navegamos entre cinema, design, engenharia, educação e pesquisa — buscando formatos que sejam ao mesmo tempo precisos e poéticos.' 
                   : lang === 'es' 
-                  ? 'Creamos exposiciones inmersivas, contenido para stands, marketing en VR/AR y soluciones audiovisuales completas. Actuamos en alianza con empresas que necesitan experiencia técnica — del concepto a la instalación, integrando tecnología, escenografía digital y narrativas cinematográficas.'
+                  ? 'Creamos experiencias inmersivas, interactivas y cinematográficas para cultura, marcas y ciudades. De la curaduría de festivales a la dirección técnica de museos, navegamos entre cine, diseño, ingeniería, educación e investigación — buscando formatos que sean al mismo tiempo precisos y poéticos.'
                   : lang === 'fr'
-                  ? 'Nous créons des expositions immersives, du contenu pour stands, du marketing en VR/AR et des solutions audiovisuelles complètes. Nous travaillons en partenariat avec des entreprises qui ont besoin d\'expertise technique — du concept à l\'installation, en intégrant technologie, scénographie numérique et récits cinématographiques.'
-                  : 'We create immersive exhibitions, booth content, VR/AR marketing and complete audiovisual solutions. We partner with companies that need technical expertise — from concept to installation, integrating technology, digital scenography and cinematic narratives.'}
+                  ? 'Nous créons des expériences immersives, interactives et cinématographiques pour la culture, les marques et les villes. De la curation de festivals à la direction technique de musées, nous naviguons entre cinéma, design, ingénierie, éducation et recherche — cherchant des formats à la fois précis et poétiques.'
+                  : 'We create immersive, interactive and cinematic experiences for culture, brands and cities. From festival curation to museum technical direction, we navigate between cinema, design, engineering, education and research — seeking formats that are both precise and poetic.'}
               </p>
             </div>
             
@@ -472,24 +472,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </div>
             </div>
             
-            {/* Pills Expertise - MODELO DE PARCERIA + Cases Reais */}
-            <div className="flex flex-wrap justify-center gap-3 mb-4">
-              {/* Linha 1: Exposições + Estandes + Marketing VR/AR */}
-              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🏛️</span> {lang === 'pt' ? 'Exposições Imersivas' : lang === 'es' ? 'Exposiciones Inmersivas' : lang === 'fr' ? 'Expositions Immersives' : 'Immersive Exhibitions'}
-              </span>
-              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">📱</span> {lang === 'pt' ? 'Marketing VR/AR' : lang === 'es' ? 'Marketing VR/AR' : lang === 'fr' ? 'Marketing VR/AR' : 'VR/AR Marketing'}
-              </span>
-              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🎪</span> {lang === 'pt' ? 'Estandes & Feiras' : lang === 'es' ? 'Stands & Ferias' : lang === 'fr' ? 'Stands & Salons' : 'Booths & Trade Shows'}
-              </span>
-              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🎬</span> {lang === 'pt' ? 'LED + Live Action' : lang === 'es' ? 'LED + Live Action' : lang === 'fr' ? 'LED + Live Action' : 'LED + Live Action'}
-              </span>
-            </div>
-            
-            {/* Linha 2: Credenciais + Parcerias */}
+            {/* Pills Expertise - Foco no REAL: Cultura + Tecnologia + Educação */}
             <div className="flex flex-wrap justify-center gap-3">
               <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
                 <span className="mr-2 opacity-60">🎯</span> {lang === 'pt' ? 'Gramado VR (2017+)' : lang === 'es' ? 'Gramado VR (2017+)' : lang === 'fr' ? 'Gramado VR (2017+)' : 'Gramado VR (2017+)'}
@@ -498,13 +481,16 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 <span className="mr-2 opacity-60">🏛️</span> {lang === 'pt' ? 'Rio Museu Olímpico' : lang === 'es' ? 'Museo Olímpico Río' : lang === 'fr' ? 'Musée Olympique Rio' : 'Rio Olympic Museum'}
               </span>
               <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🤝</span> {lang === 'pt' ? 'Parceria YDreams' : lang === 'es' ? 'Alianza YDreams' : lang === 'fr' ? 'Partenaire YDreams' : 'Partner YDreams'}
-              </span>
-              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🤝</span> {lang === 'pt' ? 'Parceria DeepLab' : lang === 'es' ? 'Alianza DeepLab' : lang === 'fr' ? 'Partenaire DeepLab' : 'Partner DeepLab'}
+                <span className="mr-2 opacity-60">⚡</span> {lang === 'pt' ? 'Autodesk (1996-2018)' : lang === 'es' ? 'Autodesk (1996-2018)' : lang === 'fr' ? 'Autodesk (1996-2018)' : 'Autodesk (1996-2018)'}
               </span>
               <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
                 <span className="mr-2 opacity-60">🎓</span> {lang === 'pt' ? 'Centenas Formados' : lang === 'es' ? 'Cientos Formados' : lang === 'fr' ? 'Des Centaines Formés' : 'Hundreds Trained'}
+              </span>
+              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
+                <span className="mr-2 opacity-60">🌐</span> {lang === 'pt' ? 'Brasil ↔ Canadá' : lang === 'es' ? 'Brasil ↔ Canadá' : lang === 'fr' ? 'Brésil ↔ Canada' : 'Brazil ↔ Canada'}
+              </span>
+              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
+                <span className="mr-2 opacity-60">🔬</span> {lang === 'pt' ? 'Pesquisa IA (1997+)' : lang === 'es' ? 'Investigación IA (1997+)' : lang === 'fr' ? 'Recherche IA (1997+)' : 'AI Research (1997+)'}
               </span>
             </div>
           </div>
