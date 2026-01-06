@@ -2,6 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
+
+// Import gráficos dinamicamente para evitar SSR issues
+const ScoreDistributionChart = dynamic(() => import('./components/ScoreDistributionChart'), { ssr: false });
+const VisitorTypesChart = dynamic(() => import('./components/VisitorTypesChart'), { ssr: false });
+const CountryChart = dynamic(() => import('./components/CountryChart'), { ssr: false });
 
 interface AnalyticsData {
   overview: {
@@ -187,6 +193,17 @@ export default function AnalyticsPage() {
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
             Distribuição de Conversion Scores
           </h2>
+          
+          {/* Gráfico de Pizza */}
+          <div className="mb-6">
+            <ScoreDistributionChart
+              hot={data.scoreDistribution.hot}
+              warm={data.scoreDistribution.warm}
+              cold={data.scoreDistribution.cold}
+            />
+          </div>
+          
+          {/* Barras de progresso (mantidas para referência rápida) */}
           <div className="flex gap-4">
             <div className="flex-1">
               <div className="flex justify-between mb-2">
@@ -248,30 +265,7 @@ export default function AnalyticsPage() {
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
               Tipos de Visitantes
             </h2>
-            <div className="space-y-3">
-              {Object.entries(data.visitorTypes)
-                .sort(([, a], [, b]) => b - a)
-                .map(([type, count]) => (
-                  <div key={type} className="flex items-center justify-between">
-                    <span className="text-sm text-gray-700 dark:text-gray-300">
-                      {visitorTypeLabels[type] || type}
-                    </span>
-                    <div className="flex items-center gap-3">
-                      <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div
-                          className="bg-blue-600 h-2 rounded-full transition-all"
-                          style={{
-                            width: `${(count / data.overview.sessionsWithAI) * 100}%`,
-                          }}
-                        ></div>
-                      </div>
-                      <span className="text-sm font-medium text-gray-900 dark:text-white w-8 text-right">
-                        {count}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-            </div>
+            <VisitorTypesChart data={data.visitorTypes} />
           </div>
 
           {/* Visitors by Country */}
@@ -279,31 +273,7 @@ export default function AnalyticsPage() {
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
               Visitantes por País
             </h2>
-            <div className="space-y-3">
-              {Object.entries(data.visitorsByCountry)
-                .sort(([, a], [, b]) => b - a)
-                .slice(0, 10)
-                .map(([country, count]) => (
-                  <div key={country} className="flex items-center justify-between">
-                    <span className="text-sm text-gray-700 dark:text-gray-300">
-                      {countryFlags[country] || '🌍'} {country}
-                    </span>
-                    <div className="flex items-center gap-3">
-                      <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div
-                          className="bg-green-600 h-2 rounded-full transition-all"
-                          style={{
-                            width: `${(count / data.overview.totalSessions) * 100}%`,
-                          }}
-                        ></div>
-                      </div>
-                      <span className="text-sm font-medium text-gray-900 dark:text-white w-8 text-right">
-                        {count}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-            </div>
+            <CountryChart data={data.visitorsByCountry} />
           </div>
         </div>
 

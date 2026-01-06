@@ -31,6 +31,7 @@ import Academy from './pages/Academy'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
 import Contact from './pages/Contact'
+import ThankYou from './pages/ThankYou'
 import WhatWeDo from './pages/WhatWeDo'
 import ServiceDetail from './pages/ServiceDetail'
 import Press from './pages/Press'
@@ -285,6 +286,11 @@ const App: React.FC = () => {
                     {(routeLang) => <Terms lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
+                <Route path="/:lang/thank-you" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <ThankYou />}
+                  </LangRouteWrapper>
+                } />
                 <Route path="/:lang/project/:slug" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <ProjectDetail lang={routeLang} />}
@@ -302,6 +308,7 @@ const App: React.FC = () => {
                 <Route path="/contact" element={<Navigate to={`/${lang}/contact`} replace />} />
                 <Route path="/privacy" element={<Navigate to={`/${lang}/privacy`} replace />} />
                 <Route path="/terms" element={<Navigate to={`/${lang}/terms`} replace />} />
+                <Route path="/thank-you" element={<Navigate to={`/${lang}/thank-you`} replace />} />
                 <Route path="/press" element={<Navigate to={`/${lang}/press`} replace />} />
                 <Route path="/project/:slug" element={<Navigate to={`/${lang}/project/:slug`} replace />} />
                 
@@ -399,6 +406,11 @@ const App: React.FC = () => {
                     {(routeLang) => <Terms lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
+                <Route path="/:lang/thank-you" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <ThankYou />}
+                  </LangRouteWrapper>
+                } />
                 <Route path="/:lang/project/:slug" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <ProjectDetail lang={routeLang} />}
@@ -416,6 +428,7 @@ const App: React.FC = () => {
                 <Route path="/contact" element={<Navigate to={`/${lang}/contact`} replace />} />
                 <Route path="/privacy" element={<Navigate to={`/${lang}/privacy`} replace />} />
                 <Route path="/terms" element={<Navigate to={`/${lang}/terms`} replace />} />
+                <Route path="/thank-you" element={<Navigate to={`/${lang}/thank-you`} replace />} />
                 <Route path="/press" element={<Navigate to={`/${lang}/press`} replace />} />
                 <Route path="/project/:slug" element={<Navigate to={`/${lang}/project/:slug`} replace />} />
                 

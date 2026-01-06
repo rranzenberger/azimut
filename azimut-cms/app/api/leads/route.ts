@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { sendEmail } from '@/lib/email';
 import { detectInstitution, isPremiumClient, shouldSendAlert } from '@/lib/institutional-detection';
+import { notifyHotLead, sendConfirmationEmail } from '@/lib/notifications';
 
 // Helper local para buscar settings com fallback
 async function getSettings() {
@@ -158,6 +159,56 @@ export async function POST(request: NextRequest) {
       inferredType,
       notificationEmail: settings?.notificationEmail || process.env.NOTIFICATION_EMAIL || null,
     });
+
+    // 🔥 NOVO: Enviar alerta se for lead QUENTE (HOT/URGENT)
+    const conversionScore = interestScore?.conversionScore || 0
+    const isHotLead = conversionScore > 75 || priority === 'HIGH' || priority === 'URGENT' || shouldAlert
+    
+    if (isHotLead) {
+      // Determinar urgência
+      let urgency: 'HOT' | 'WARM' | 'QUALIFIED' = 'QUALIFIED'
+      if (priority === 'URGENT' || conversionScore > 85) {
+        urgency = 'HOT'
+      } else if (priority === 'HIGH' || conversionScore > 75) {
+        urgency = 'WARM'
+      }
+      
+      // Enviar notificação Slack/Email
+      await notifyHotLead({
+        leadId: lead.id,
+        leadName: name,
+        leadEmail: email,
+        company: company || undefined,
+        conversionScore: conversionScore,
+        visitorType: inferredType || undefined,
+        urgency,
+        message: description || 'Sem descrição adicional',
+        timestamp: new Date(),
+      }).catch(err => {
+        // Não bloquear o fluxo se a notificação falhar
+        console.error('Erro ao enviar notificação de lead quente:', err)
+      })
+    }
+
+    // 📧 NOVO: Enviar email de confirmação para o CLIENTE
+    // Detectar idioma do sessionId ou usar 'pt' como padrão
+    let clientLang = 'pt'
+    if (session?.language) {
+      // session.language pode ser 'pt-BR', 'en-US', etc.
+      clientLang = session.language.split('-')[0] as 'pt' | 'en' | 'es' | 'fr'
+      if (!['pt', 'en', 'es', 'fr'].includes(clientLang)) {
+        clientLang = 'pt'
+      }
+    }
+    
+    await sendConfirmationEmail({
+      name,
+      email,
+      lang: clientLang,
+    }).catch(err => {
+      // Não bloquear o fluxo se o email de confirmação falhar
+      console.error('Erro ao enviar email de confirmação:', err)
+    })
 
     return NextResponse.json({
       success: true,

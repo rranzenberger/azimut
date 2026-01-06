@@ -34,6 +34,12 @@ export const translations: Dict = {
       'For now, contact is via e-mail or WhatsApp. Soon this will open a full brief form connected to our backoffice.',
     ctaLabel: 'Start a project',
     footer: '© {year} Azimut Projetos Audiovisuais Ltda. · Brazil ↔ Canada.',
+    
+    // Cookie Banner
+    'cookieBanner.message': 'We use cookies to improve your experience and analyze site usage. Read our',
+    'cookieBanner.privacyLink': 'Privacy Policy',
+    'cookieBanner.accept': 'Accept',
+    'cookieBanner.reject': 'Reject',
   },
   fr: {
     // Hero Home
@@ -64,6 +70,12 @@ export const translations: Dict = {
       'Pour l’instant, le contact se fait par e-mail ou WhatsApp. Bientôt, ceci ouvrira un formulaire complet relié à notre backoffice.',
     ctaLabel: 'Commencer un projet',
     footer: '© {year} Azimut Projetos Audiovisuais Ltda. · Brésil ↔ Canada.',
+    
+    // Cookie Banner
+    'cookieBanner.message': 'Nous utilisons des cookies pour améliorer votre expérience et analyser l\'utilisation du site. Lisez notre',
+    'cookieBanner.privacyLink': 'Politique de Confidentialité',
+    'cookieBanner.accept': 'Accepter',
+    'cookieBanner.reject': 'Refuser',
   },
   pt: {
     // Hero Home
@@ -93,6 +105,12 @@ export const translations: Dict = {
       'Por enquanto, o contato é por e-mail ou WhatsApp. Em breve aqui será um formulário completo conectado ao nosso backoffice.',
     ctaLabel: 'Iniciar um projeto',
     footer: '© {year} Azimut Projetos Audiovisuais Ltda. · Brasil ↔ Canadá.',
+    
+    // Cookie Banner
+    'cookieBanner.message': 'Usamos cookies para melhorar sua experiência e analisar o uso do site. Leia nossa',
+    'cookieBanner.privacyLink': 'Política de Privacidade',
+    'cookieBanner.accept': 'Aceitar',
+    'cookieBanner.reject': 'Rejeitar',
   },
   es: {
     // Hero Home
@@ -123,6 +141,12 @@ export const translations: Dict = {
       'Por ahora, el contacto es por correo electrónico o WhatsApp. Pronto aquí habrá un formulario completo conectado a nuestro backoffice.',
     ctaLabel: 'Iniciar un proyecto',
     footer: '© {year} Azimut Projetos Audiovisuais Ltda. · Brasil ↔ Canadá.',
+    
+    // Cookie Banner
+    'cookieBanner.message': 'Usamos cookies para mejorar su experiencia y analizar el uso del sitio. Lea nuestra',
+    'cookieBanner.privacyLink': 'Política de Privacidad',
+    'cookieBanner.accept': 'Aceptar',
+    'cookieBanner.reject': 'Rechazar',
   },
 }
 

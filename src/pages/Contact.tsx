@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import BudgetWizardModal from '../components/BudgetWizardModal'
@@ -32,6 +33,7 @@ type FormState = {
 }
 
 const Contact: React.FC<ContactProps> = ({ lang }) => {
+  const navigate = useNavigate()
   const seo = seoData.contact[lang]
   const { trackInteraction } = useUserTracking()
   
@@ -186,24 +188,9 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
         description: `${form.objective}\n\nLocal: ${form.place}\nPúblico: ${form.audience}\nTemas: ${form.themes}\nReferências: ${form.references}\n\nMensagem: ${form.message}`
       })
       
-      alert(lang === 'pt' ? '✅ Brief enviado! Retornaremos em breve.' : lang === 'es' ? '✅ Brief enviado. Responderemos pronto.' : '✅ Brief sent! We will reply soon.')
+      // Redirecionar para a página de agradecimento
+      navigate(`/${lang}/thank-you`)
       
-      setForm({
-        name: '',
-        email: '',
-        phone: '',
-        org: '',
-        countryCity: '',
-        projectType: '',
-        objective: '',
-        place: '',
-        timeframe: '',
-        budget: '',
-        audience: '',
-        references: '',
-        themes: '',
-        message: ''
-      })
     } catch (error) {
       console.error('Erro ao enviar lead:', error)
       alert(lang === 'pt' ? 'Erro ao enviar. Tente novamente.' : lang === 'es' ? 'Error al enviar. Intente de nuevo.' : 'Error sending. Please try again.')
