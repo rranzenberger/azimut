@@ -78,32 +78,64 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
   
-  // NOVA ABORDAGEM SIMPLES: hamburger só aparece em mobile (< 640px)
-  // Em desktop/tablet, menu sempre visível, hamburger NUNCA aparece
+  // 🆕 DETECÇÃO DINÂMICA DE MOBILE/DESKTOP
+  // Não usa apenas breakpoint fixo - calcula se o menu cabe na tela
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window !== 'undefined') {
-      return window.innerWidth < 640
+      return window.innerWidth < 640  // Fallback inicial: mobile se < 640px
     }
     return false
   })
   
-  // Detectar mobile/desktop no resize
+  // Detectar mobile/desktop com cálculo dinâmico
   React.useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth < 640
-      setIsMobile(mobile)
-      // Se mudou para desktop, fechar menu mobile
-      if (!mobile) {
-        setIsMobileMenuOpen(false)
+    const checkMenuFits = () => {
+      const windowWidth = window.innerWidth
+      
+      // REGRA 1: Mobile garantido (< 640px) → SEMPRE hamburger
+      if (windowWidth < 640) {
+        setIsMobile(true)
+        return
       }
+      
+      // REGRA 2: Desktop garantido (≥ 1024px) → SEMPRE menu horizontal
+      if (windowWidth >= 1024) {
+        setIsMobile(false)
+        return
+      }
+      
+      // REGRA 3: Zona crítica (640-1024px) → Calcular dinamicamente
+      // Larguras do menu por idioma (em pixels)
+      const menuWidths: Record<Lang, number> = {
+        pt: 460,
+        en: 420,
+        fr: 480,
+        es: 450
+      }
+      
+      const logoWidth = 180
+      const menuWidth = menuWidths[lang]
+      const rightSideWidth = 220  // Idiomas + Theme + CTA
+      const gaps = 80  // Espaços entre elementos
+      
+      const totalNeeded = logoWidth + menuWidth + rightSideWidth + gaps
+      
+      // Se não cabe, mostrar hamburger
+      setIsMobile(windowWidth < totalNeeded)
     }
     
-    window.addEventListener('resize', handleResize)
-    // Verificar inicialmente
-    handleResize()
+    checkMenuFits()
+    window.addEventListener('resize', checkMenuFits)
     
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+    return () => window.removeEventListener('resize', checkMenuFits)
+  }, [lang])  // Recalcular quando idioma mudar
+  
+  // Fechar menu mobile ao mudar para desktop
+  React.useEffect(() => {
+    if (!isMobile) {
+      setIsMobileMenuOpen(false)
+    }
+  }, [isMobile])
   
   // Padding dinâmico baseado em grupos de viewport
   const [containerPadding, setContainerPadding] = useState({ left: '4px', right: '4px' })
