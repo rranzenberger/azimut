@@ -294,6 +294,95 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           })()}
         </section>
 
+        {/* ══════════════════════════════════════════════════════════════════
+            CREDIBILIDADE VISUAL - Timeline + Logos Placeholder
+            Inspiração: Sites Premium 2026 (Inversa/Cartier/Omega)
+            ══════════════════════════════════════════════════════════════ */}
+        <section className="py-8 md:py-10 border-y border-white/5">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-6">
+              <h3 className="font-sora text-xs uppercase tracking-[0.24em] mb-3" style={{ color: 'var(--theme-text-muted)' }}>
+                {lang === 'pt' ? 'Nossa Combinação Única' : lang === 'es' ? 'Nuestra Combinación Única' : lang === 'fr' ? 'Notre Combinaison Unique' : 'Our Unique Combination'}
+              </h3>
+              <p className="text-sm md:text-base max-w-3xl mx-auto leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                {lang === 'pt' 
+                  ? 'Unimos arte, tecnologia e educação em projetos pioneiros. Do primeiro centro de treinamento Autodesk da América do Sul à direção técnica do Rio Museu Olímpico, criamos experiências imersivas entre Brasil e Canadá.' 
+                  : lang === 'es' 
+                  ? 'Unimos arte, tecnología y educación en proyectos pioneros. Del primer centro de entrenamiento Autodesk de América del Sur a la dirección técnica del Museo Olímpico de Río, creamos experiencias inmersivas entre Brasil y Canadá.'
+                  : lang === 'fr'
+                  ? 'Nous unissons art, technologie et éducation dans des projets pionniers. Du premier centre de formation Autodesk d\'Amérique du Sud à la direction technique du Musée Olympique de Rio, nous créons des expériences immersives entre le Brésil et le Canada.'
+                  : 'We unite art, technology and education in pioneering projects. From the first Autodesk training center in South America to the technical direction of the Rio Olympic Museum, we create immersive experiences between Brazil and Canada.'}
+              </p>
+            </div>
+            
+            {/* Timeline COM PLACEHOLDERS VISUAIS */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mb-6">
+              {/* Card 1: 1996 */}
+              <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
+                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">⏰</div>
+                <div className="relative z-10">
+                  <div className="text-2xl md:text-3xl font-handel text-azimut-red mb-2 group-hover:scale-110 transition-transform">1996</div>
+                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest" style={{ color: 'var(--theme-text)' }}>
+                    {lang === 'pt' ? 'Desde' : lang === 'es' ? 'Desde' : lang === 'fr' ? 'Depuis' : 'Since'}
+                  </div>
+                </div>
+              </div>
+              
+              {/* Card 2: Autodesk COM PLACEHOLDER LOGO */}
+              <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center opacity-5 group-hover:opacity-10 transition-opacity">
+                  <div className="text-6xl font-bold" style={{ color: 'var(--theme-text)' }}>A</div>
+                </div>
+                <div className="relative z-10">
+                  <div className="text-lg md:text-xl font-handel text-azimut-red mb-1 group-hover:scale-110 transition-transform">1996-2018</div>
+                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest" style={{ color: 'var(--theme-text)' }}>Autodesk</div>
+                  <div className="text-[0.55rem] opacity-60 mt-1" style={{ color: 'var(--theme-text-muted)' }}>Training Center</div>
+                </div>
+              </div>
+              
+              {/* Card 3: Rio Museum COM PLACEHOLDER */}
+              <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
+                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">🏛️</div>
+                <div className="relative z-10">
+                  <div className="text-lg md:text-xl font-handel text-azimut-red mb-1 group-hover:scale-110 transition-transform">2025</div>
+                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest" style={{ color: 'var(--theme-text)' }}>Rio Museum</div>
+                  <div className="text-[0.55rem] opacity-60 mt-1" style={{ color: 'var(--theme-text-muted)' }}>
+                    {lang === 'pt' ? 'Atual' : 'Current'}
+                  </div>
+                </div>
+              </div>
+              
+              {/* Card 4: BR-CA COM BANDEIRAS PLACEHOLDER */}
+              <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
+                <div className="absolute top-2 right-2 text-lg opacity-15 group-hover:opacity-25 transition-opacity">🇧🇷🇨🇦</div>
+                <div className="relative z-10">
+                  <div className="text-lg md:text-xl font-handel text-azimut-red mb-1 group-hover:scale-110 transition-transform">BR-CA</div>
+                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest" style={{ color: 'var(--theme-text)' }}>
+                    {lang === 'pt' ? 'Binacional' : lang === 'es' ? 'Binacional' : 'Binational'}
+                  </div>
+                  <div className="text-[0.55rem] opacity-60 mt-1" style={{ color: 'var(--theme-text-muted)' }}>2 {lang === 'pt' ? 'Países' : 'Countries'}</div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Pills Credenciais - COM ÍCONES */}
+            <div className="flex flex-wrap justify-center gap-3">
+              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
+                <span className="mr-2 opacity-60">🏛️</span> Rio Museum
+              </span>
+              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
+                <span className="mr-2 opacity-60">🎬</span> Gramado VR
+              </span>
+              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
+                <span className="mr-2 opacity-60">⚡</span> Autodesk
+              </span>
+              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
+                <span className="mr-2 opacity-60">🥽</span> XRBR
+              </span>
+            </div>
+          </div>
+        </section>
+
         {/* ════════════════════════════════════════════════════════════════ */}
         {/* VÍDEO FEATURED - Integrado ao Flow (sem overlap) */}
         {/* ════════════════════════════════════════════════════════════════ */}
@@ -511,37 +600,49 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         <section className="py-10 md:py-12">
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              {/* Texto Esquerdo - CORRIGIDO FUNDO AZUL */}
-              <div className="glass-panel card-adaptive rounded-2xl p-6 md:p-8 border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
-                <h2 className="mb-4 font-handel text-3xl md:text-4xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
-                  {t(lang, 'cardTitle')}
-                </h2>
-                <p className="mb-6 text-base md:text-lg leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
-                  {t(lang, 'cardBody')}
-                </p>
-                
-                {/* Pillars */}
-                <div className="flex flex-wrap gap-3 mb-6">
-                  {(Array.isArray(cmsContent?.page?.pillars) && cmsContent.page.pillars.length > 0
-                    ? cmsContent.page.pillars 
-                    : [
-                        lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture',
-                        lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events',
-                        lang === 'pt' ? 'Educação & Pesquisa' : lang === 'es' ? 'Educación & Investigación' : lang === 'fr' ? 'Éducation & Recherche' : 'Education & Research'
-                      ]
-                  ).filter(Boolean).map((pillar: string, index: number) => (
-                    <span 
-                      key={index}
-                      className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10 hover:scale-105"
-                    >
-                      {pillar}
-                    </span>
-                  ))}
+              {/* Texto Esquerdo - COM IMAGEM DE FUNDO (Placeholder) */}
+              <div className="glass-panel card-adaptive rounded-2xl overflow-hidden border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.35)] group relative">
+                {/* PLACEHOLDER: Imagem de fundo sutil (substituir no backoffice) */}
+                <div className="absolute inset-0 opacity-10 group-hover:opacity-15 transition-opacity duration-500">
+                  <div className="absolute inset-0 bg-gradient-to-br from-azimut-red/20 via-transparent to-transparent" />
+                  {/* Ícone placeholder (será substituído por foto da equipe/estúdio no backoffice) */}
+                  <div className="absolute bottom-4 right-4 text-8xl opacity-20">
+                    🎬
+                  </div>
                 </div>
                 
-                <p className="text-sm" style={{ color: 'var(--theme-text-muted)' }}>
-                  📍 {t(lang, 'cities')}
-                </p>
+                {/* Conteúdo (sempre legível) */}
+                <div className="relative z-10 p-6 md:p-8">
+                  <h2 className="mb-4 font-handel text-3xl md:text-4xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
+                    {t(lang, 'cardTitle')}
+                  </h2>
+                  <p className="mb-6 text-base md:text-lg leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                    {t(lang, 'cardBody')}
+                  </p>
+                  
+                  {/* Pillars */}
+                  <div className="flex flex-wrap gap-3 mb-6">
+                    {(Array.isArray(cmsContent?.page?.pillars) && cmsContent.page.pillars.length > 0
+                      ? cmsContent.page.pillars 
+                      : [
+                          lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture',
+                          lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events',
+                          lang === 'pt' ? 'Educação & Pesquisa' : lang === 'es' ? 'Educación & Investigación' : lang === 'fr' ? 'Éducation & Recherche' : 'Education & Research'
+                        ]
+                    ).filter(Boolean).map((pillar: string, index: number) => (
+                      <span 
+                        key={index}
+                        className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10 hover:scale-105"
+                      >
+                        {pillar}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  <p className="text-sm" style={{ color: 'var(--theme-text-muted)' }}>
+                    📍 {t(lang, 'cities')}
+                  </p>
+                </div>
               </div>
               
               {/* Card Direito - Tags */}
