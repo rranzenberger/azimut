@@ -210,8 +210,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   {hasMedia && (featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.original) ? (
                     <img 
                       src={featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.original || ''} 
-                      alt={featured.title}
+                      alt=""
                       className="w-full h-full object-cover"
+                      loading="eager"
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
