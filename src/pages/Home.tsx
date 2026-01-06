@@ -412,73 +412,76 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </p>
             </div>
 
-            {/* Grid 3x3 - Super Visual */}
+            {/* Grid 3x3 - Alinhado com Work.tsx */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {projects.slice(0, 9).map((project, index) => (
-                <Link
+                <article
                   key={project.slug}
-                  to={`/${lang}/work/${project.slug}`}
-                  className="group relative aspect-[4/3] overflow-hidden rounded-2xl shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_30px_80px_rgba(201,35,55,0.4)]"
+                  className="group rounded-2xl border border-white/10 card-adaptive overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(201,35,55,0.3)]"
+                  onClick={() => {
+                    window.location.href = `/${lang}/work/${project.slug}`
+                  }}
+                  style={{
+                    animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`,
+                    cursor: 'pointer'
+                  }}
                 >
-                  {/* Imagem de fundo */}
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    loading={index < 6 ? 'eager' : 'lazy'}
-                  />
-                  
-                  {/* Overlay gradiente */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
-                  
-                  {/* Badge número */}
-                  <div className="absolute top-4 right-4 z-10">
-                    <div className="bg-azimut-red/90 backdrop-blur-sm text-white rounded-lg px-3 py-1.5 text-xs font-bold uppercase tracking-wider">
-                      #{String(index + 1).padStart(2, '0')}
-                    </div>
+                  {/* Image com overlay */}
+                  <div className="relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">
+                    {project.image ? (
+                      <>
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          loading={index < 6 ? 'eager' : 'lazy'}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none opacity-100 group-hover:from-azimut-red/20 group-hover:via-slate-950/40 transition-all duration-300"></div>
+                      </>
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-800/50 to-slate-900 transition-all duration-300 group-hover:from-azimut-red/20 group-hover:to-slate-900/80">
+                        <div className="text-center p-4">
+                          <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur transition-transform duration-300 group-hover:scale-110 group-hover:border-azimut-red/50">
+                            <svg className="h-6 w-6 text-slate-800 dark:text-slate-400 group-hover:text-azimut-red transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  
-                  {/* Tags (primeira tag) */}
-                  {project.tags && project.tags.length > 0 && (
-                    <div className="absolute top-4 left-4 z-10">
-                      <span className="bg-black/60 backdrop-blur-sm text-white/90 border border-white/20 rounded-full px-3 py-1 text-[0.7rem] uppercase tracking-wider font-semibold">
-                        {project.tags[0]}
-                      </span>
-                    </div>
-                  )}
-                  
-                  {/* Conteúdo */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 z-10 transform transition-transform duration-500 group-hover:translate-y-[-8px]">
-                    <h3 className="font-handel text-xl md:text-2xl uppercase tracking-wide text-white mb-2 line-clamp-2 group-hover:text-azimut-red transition-colors duration-300">
+
+                  {/* Content */}
+                  <div className="p-4 relative z-10">
+                    <h3 className="mb-2 font-sora text-[1.05rem] text-white group-hover:text-azimut-red transition-colors duration-300">
                       {project.title}
                     </h3>
-                    <div className="flex items-center gap-2 text-white/70 text-sm mb-3">
-                      {project.city && project.country && (
-                        <span className="flex items-center gap-1.5">
-                          <span>📍</span>
-                          <span>{project.city}, {project.country}</span>
-                        </span>
+                    <p className="text-sm leading-relaxed text-slate-900 dark:text-slate-200 mb-3 group-hover:text-slate-100 transition-colors duration-300 line-clamp-2">
+                      {project.summary || project.shortTitle || ''}
+                    </p>
+                    
+                    {/* Tags + Year */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 mt-3">
+                      {project.tags && project.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-2 text-[0.68rem] text-slate-800 dark:text-slate-400">
+                          {project.tags.slice(0, 3).map((tag: string, idx: number) => (
+                            <span 
+                              key={idx} 
+                              className="rounded-full border border-white/10 px-2 py-0.5 transition-all duration-300 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:text-slate-900 dark:text-slate-300"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
                       )}
                       {project.year && (
-                        <span className="flex items-center gap-1.5 ml-auto">
-                          <span>📅</span>
-                          <span>{project.year}</span>
+                        <span className="text-xs text-slate-800 dark:text-slate-500 font-medium">
+                          {project.year}
                         </span>
                       )}
                     </div>
-                    
-                    {/* CTA - aparece no hover */}
-                    <div className="flex items-center gap-2 text-azimut-red font-semibold text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                      <span>{lang === 'pt' ? 'Ver Projeto' : lang === 'es' ? 'Ver Proyecto' : lang === 'fr' ? 'Voir le Projet' : 'View Project'}</span>
-                      <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
                   </div>
-                  
-                  {/* Borda animada no hover */}
-                  <div className="absolute inset-0 border-2 border-azimut-red rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                </Link>
+                </article>
               ))}
             </div>
 
