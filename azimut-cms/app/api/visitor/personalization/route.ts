@@ -53,11 +53,16 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    // Parse de recommendedProjects (JSON string)
+    // Parse de recommendedProjects (JSON)
     let recommendedProjects = []
     if (interestScore.recommendedProjects) {
       try {
-        recommendedProjects = JSON.parse(interestScore.recommendedProjects)
+        // Se já é um array, usar diretamente; se é string, fazer parse
+        if (Array.isArray(interestScore.recommendedProjects)) {
+          recommendedProjects = interestScore.recommendedProjects
+        } else if (typeof interestScore.recommendedProjects === 'string') {
+          recommendedProjects = JSON.parse(interestScore.recommendedProjects)
+        }
       } catch (e) {
         console.error('Erro ao parsear recommendedProjects:', e)
       }
