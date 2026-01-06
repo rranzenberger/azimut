@@ -10,9 +10,12 @@ export const AnimatedLogo: React.FC = () => {
         playsInline
         className="animated-logo-video"
       >
+        {/* Ordem de preferência: WebM (menor) → MP4 (universal) → MOV (fallback) */}
+        <source src="/logo_animada_glow.webm" type="video/webm" />
+        <source src="/logo_animada_glow.mp4" type="video/mp4" />
         <source src="/logo_animada_glow.mov" type="video/quicktime" />
-        {/* Fallback para navegadores que não suportam .mov */}
-        Seu navegador não suporta vídeos.
+        {/* Fallback final: SVG estático */}
+        <img src="/logo-azimut-star.svg" alt="Azimut Star" className="animated-logo-video" />
       </video>
       
       <style>{`
@@ -27,15 +30,14 @@ export const AnimatedLogo: React.FC = () => {
           height: 100%;
           object-fit: contain;
           
-          /* LUMA KEY via CSS: preto vira transparente */
+          /* LUMA KEY via CSS: preto vira transparente ✨ */
           mix-blend-mode: screen;
           
-          /* Glow vermelho suave */
+          /* Glow vermelho Azimut */
           filter: 
             drop-shadow(0 0 30px rgba(201, 35, 55, 0.6)) 
             drop-shadow(0 0 60px rgba(201, 35, 55, 0.3));
           
-          /* Leve opacidade para suavizar */
           opacity: 0.9;
         }
         
