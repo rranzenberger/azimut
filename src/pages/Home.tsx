@@ -306,17 +306,17 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </h3>
               <p className="text-sm md:text-base max-w-3xl mx-auto leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
                 {lang === 'pt' 
-                  ? 'Unimos arte, tecnologia e educação em projetos pioneiros. Do primeiro centro de treinamento Autodesk da América do Sul à direção técnica do Rio Museu Olímpico, criamos experiências imersivas entre Brasil e Canadá.' 
+                  ? 'Unimos arte, tecnologia e educação em projetos pioneiros. Do primeiro centro de treinamento Autodesk da América do Sul à direção técnica do Rio Museu Olímpico, criamos experiências imersivas.' 
                   : lang === 'es' 
-                  ? 'Unimos arte, tecnología y educación en proyectos pioneros. Del primer centro de entrenamiento Autodesk de América del Sur a la dirección técnica del Museo Olímpico de Río, creamos experiencias inmersivas entre Brasil y Canadá.'
+                  ? 'Unimos arte, tecnología y educación en proyectos pioneros. Del primer centro de entrenamiento Autodesk de América del Sur a la dirección técnica del Museo Olímpico de Río, creamos experiencias inmersivas.'
                   : lang === 'fr'
-                  ? 'Nous unissons art, technologie et éducation dans des projets pionniers. Du premier centre de formation Autodesk d\'Amérique du Sud à la direction technique du Musée Olympique de Rio, nous créons des expériences immersives entre le Brésil et le Canada.'
-                  : 'We unite art, technology and education in pioneering projects. From the first Autodesk training center in South America to the technical direction of the Rio Olympic Museum, we create immersive experiences between Brazil and Canada.'}
+                  ? 'Nous unissons art, technologie et éducation dans des projets pionniers. Du premier centre de formation Autodesk d\'Amérique du Sud à la direction technique du Musée Olympique de Rio, nous créons des expériences immersives.'
+                  : 'We unite art, technology and education in pioneering projects. From the first Autodesk training center in South America to the technical direction of the Rio Olympic Museum, we create immersive experiences.'}
               </p>
             </div>
             
-            {/* Timeline COM PLACEHOLDERS VISUAIS */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mb-6">
+            {/* Timeline COM PLACEHOLDERS VISUAIS - SEM PAÍSES */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-6">
               {/* Card 1: 1996 */}
               <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
                 <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">⏰</div>
@@ -351,21 +351,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   </div>
                 </div>
               </div>
-              
-              {/* Card 4: BR-CA COM BANDEIRAS PLACEHOLDER */}
-              <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
-                <div className="absolute top-2 right-2 text-lg opacity-15 group-hover:opacity-25 transition-opacity">🇧🇷🇨🇦</div>
-                <div className="relative z-10">
-                  <div className="text-lg md:text-xl font-handel text-azimut-red mb-1 group-hover:scale-110 transition-transform">BR-CA</div>
-                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest" style={{ color: 'var(--theme-text)' }}>
-                    {lang === 'pt' ? 'Binacional' : lang === 'es' ? 'Binacional' : 'Binational'}
-                  </div>
-                  <div className="text-[0.55rem] opacity-60 mt-1" style={{ color: 'var(--theme-text-muted)' }}>2 {lang === 'pt' ? 'Países' : 'Countries'}</div>
-                </div>
-              </div>
             </div>
             
-            {/* Pills Credenciais - COM ÍCONES */}
+            {/* Pills Credenciais - SEM PAÍSES */}
             <div className="flex flex-wrap justify-center gap-3">
               <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
                 <span className="mr-2 opacity-60">🏛️</span> Rio Museum
