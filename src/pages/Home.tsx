@@ -8,6 +8,7 @@ import { trackPageView } from '../utils/analytics'
 import { useAzimutContent } from '../hooks/useAzimutContent'
 import { usePersonalizedContent } from '../hooks/usePersonalizedContent'
 import { VideoPlayer } from '../components/VideoPlayer'
+import { ProjectShowcase } from '../components/ProjectShowcase'
 
 interface HomeProps {
   lang: Lang
@@ -392,103 +393,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         </section>
 
         {/* ════════════════════════════════════════════════════════════════ */}
-        {/* PROJETOS EM DESTAQUE - Grid Visual (6 projetos) */}
+        {/* PROJETOS EM DESTAQUE - Interactive Showcase (Estilo Gemini) */}
         {/* ════════════════════════════════════════════════════════════════ */}
-        <section className="py-10 md:py-12">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="font-handel text-2xl md:text-3xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
-                {lang === 'pt' ? 'Projetos Selecionados' : lang === 'es' ? 'Proyectos Seleccionados' : lang === 'fr' ? 'Projets Sélectionnés' : 'Selected Projects'}
-              </h2>
-              <Link
-                to="/work"
-                className="text-xs font-sora uppercase tracking-[0.1em] text-azimut-red hover:text-azimut-red/80 transition-colors flex items-center gap-2 group"
-              >
-                <span>{lang === 'pt' ? 'Ver Todos' : lang === 'es' ? 'Ver Todos' : 'View All'}</span>
-                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </Link>
-            </div>
-            
-            {/* Grid de Projetos - 6 PROJETOS (3x2) */}
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {(Array.isArray(recommended) && recommended.length > 0 
-                ? recommended.slice(0, 6) // MOSTRA 6 projetos
-                : Array.isArray(defaultProjects) ? defaultProjects.slice(0, 6) : []
-              ).map((item: any, index: number) => (
-                <Link
-                  key={item.slug}
-                  to={`/work/${item.slug}`}
-                  className="group relative rounded-xl overflow-hidden shadow-[0_12px_30px_rgba(0,0,0,0.4)] transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_20px_50px_rgba(201,35,55,0.3)]"
-                  style={{
-                    animation: `fadeInUp 0.5s ease-out ${index * 0.1}s both`
-                  }}
-                >
-                  {/* Imagem */}
-                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900">
-                    {item.heroImage?.thumbnail || item.heroImage?.medium || item.heroImage?.large ? (
-                      <img
-                        src={item.heroImage?.large || item.heroImage?.medium || item.heroImage?.thumbnail}
-                        alt={item.heroImage?.alt || item.title}
-                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        loading="lazy"
-                        onError={(e) => {
-                          const target = e.currentTarget;
-                          target.style.display = 'none';
-                        }}
-                      />
-                    ) : (
-                      <div className="flex items-center justify-center h-full bg-gradient-to-br from-azimut-red/10 via-slate-800 to-slate-900">
-                        <svg className="w-16 h-16 text-azimut-red/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                      </div>
-                    )}
-                    
-                    {/* Overlay Gradiente */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
-                    
-                    {/* Tags sobre a imagem */}
-                    {item.tags && item.tags.length > 0 && (
-                      <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
-                        {item.tags.slice(0, 2).map((tag: string, idx: number) => (
-                          <span 
-                            key={idx} 
-                            className="px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-sm border border-white/20 font-sora text-[0.6rem] uppercase tracking-wider text-white"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                    
-                    {/* Título e Info sobre a imagem */}
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <h3 className="font-handel text-lg md:text-xl uppercase tracking-[0.08em] text-white mb-1 line-clamp-2 group-hover:text-azimut-red transition-colors duration-300">
-                        {item.title}
-                      </h3>
-                      {(item.city || item.country) && (
-                        <p className="text-xs text-white/80 flex items-center gap-1">
-                          📍 {[item.city, item.country].filter(Boolean).join(', ')}
-                        </p>
-                      )}
-                    </div>
-                    
-                    {/* Ícone "Ver Projeto" no hover */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 scale-75 group-hover:scale-100">
-                      <div className="w-12 h-12 rounded-full bg-azimut-red flex items-center justify-center shadow-lg">
-                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
+        <ProjectShowcase projects={projects} lang={lang} />
 
         {/* SOBRE - Card Lateral (Conteúdo Preservado) */}
         <section className="py-10 md:py-12">
