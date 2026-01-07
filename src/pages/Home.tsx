@@ -316,9 +316,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </div>
             </div>
             
-            {/* Coluna Direita: Logo 3D Animada GIGANTE (65% layout - 1400px máximo) */}
-            <div className="flex items-center justify-center pl-4">
-              <div className="w-full max-w-[1400px] aspect-square">
+            {/* Coluna Direita: Logo 3D Animada GRANDE (65% layout - 1200px para não cortar) */}
+            <div className="flex items-start justify-center pl-4">
+              <div className="w-full max-w-[1200px] aspect-square">
                 <AnimatedLogo />
               </div>
             </div>
