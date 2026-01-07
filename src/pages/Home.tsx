@@ -200,8 +200,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               ══════════════════════════════════════════════════════════════ */}
           
           {/* DESKTOP: Split Screen 50/50 */}
-          <div className="relative z-10 hidden lg:grid lg:grid-cols-[40%_60%] gap-8 h-full items-center px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
-            {/* Coluna Esquerda: Conteúdo Texto (40%) */}
+          <div className="relative z-10 hidden lg:grid lg:grid-cols-[35%_65%] gap-8 h-full items-center px-4 sm:px-6 lg:px-8 mx-auto max-w-[1800px]">
+            {/* Coluna Esquerda: Conteúdo Texto (35% - MENOR para dar espaço aos cards) */}
             <div className="space-y-5 pr-4">
               {/* Badge AZIMUT */}
               <div className="inline-flex items-center gap-2 font-sora text-[0.75rem] uppercase tracking-[0.3em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
@@ -215,22 +215,16 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 <span className="!text-white/60 text-[0.7rem]">SINCE 1996</span>
               </div>
               
-              {/* Título MUITO MAIOR (equilibra com logo 1250px) */}
+              {/* Título em 3 LINHAS */}
               <h1 className="font-handel uppercase !text-white animate-fade-in-up opacity-0" style={{ 
                 fontSize: 'clamp(3rem, 5.5vw, 5.8rem)',
                 lineHeight: '1.1',
                 letterSpacing: '0.08em',
                 animationDelay: '0.2s'
               }}>
-                {heroSlogan.split(' ').map((word, i) => (
-                  <span key={i}>
-                    {i === heroSlogan.split(' ').length - 1 ? (
-                      <span className="text-azimut-red">{word}</span>
-                    ) : (
-                      `${word} `
-                    )}
-                  </span>
-                ))}
+                EXPERIÊNCIAS<br />
+                QUE CONECTAM<br />
+                <span className="text-azimut-red">MUNDOS</span>
               </h1>
               
               {/* Subtítulo MAIOR */}
@@ -238,12 +232,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 {heroSubtitle.split('.')[0]}.
               </p>
               
-              {/* Impact Cards - Cores Azimut (navy/slate escuro) */}
-              <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 max-w-5xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+              {/* Impact Cards - MAIS LARGOS (max-w-6xl) */}
+              <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 max-w-6xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
                 {/* Cinema & AV */}
-                <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 p-5 rounded-xl hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
+                <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 p-6 rounded-xl hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
                   <span className="block text-3xl mb-2">🎬</span>
-                  <span className="block text-xl lg:text-2xl font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight">
+                  <span className="block text-xl lg:text-2xl font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight break-words">
                     {lang === 'pt' ? 'Cinema & AV' : lang === 'es' ? 'Cine & AV' : lang === 'fr' ? 'Cinéma & AV' : 'Cinema & AV'}
                   </span>
                   <span className="block text-[0.65rem] text-slate-400 uppercase tracking-widest mt-1.5">
@@ -252,18 +246,18 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 </div>
 
                 {/* XR/VR/AR */}
-                <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 p-5 rounded-xl hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
+                <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 p-6 rounded-xl hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
                   <span className="block text-3xl mb-2">🥽</span>
-                  <span className="block text-xl lg:text-2xl font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight">XR/VR/AR</span>
+                  <span className="block text-xl lg:text-2xl font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight break-words">XR/VR/AR</span>
                   <span className="block text-[0.65rem] text-slate-400 uppercase tracking-widest mt-1.5">
                     {lang === 'pt' ? 'Imersivo' : lang === 'es' ? 'Inmersivo' : lang === 'fr' ? 'Immersif' : 'Immersive'}
                   </span>
                 </div>
 
                 {/* Exposições & Museus */}
-                <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 p-5 rounded-xl hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
+                <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 p-6 rounded-xl hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
                   <span className="block text-3xl mb-2">🏛️</span>
-                  <span className="block text-lg lg:text-xl font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight">
+                  <span className="block text-lg lg:text-xl font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight break-words">
                     {lang === 'pt' ? 'Exposições' : lang === 'es' ? 'Exposiciones' : lang === 'fr' ? 'Expositions' : 'Exhibitions'}
                   </span>
                   <span className="block text-[0.6rem] text-slate-400 uppercase tracking-widest mt-0.5 leading-tight">
@@ -272,18 +266,18 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 </div>
 
                 {/* IA & Tech */}
-                <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 p-5 rounded-xl hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
+                <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 p-6 rounded-xl hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
                   <span className="block text-3xl mb-2">🧠</span>
-                  <span className="block text-xl lg:text-2xl font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight">IA & Tech</span>
+                  <span className="block text-xl lg:text-2xl font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight break-words">IA & Tech</span>
                   <span className="block text-[0.65rem] text-slate-400 uppercase tracking-widest mt-1.5">
                     {lang === 'pt' ? 'Interativo' : lang === 'es' ? 'Interactivo' : lang === 'fr' ? 'Interactif' : 'Interactive'}
                   </span>
                 </div>
 
                 {/* Educação - NOVO! */}
-                <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 p-5 rounded-xl hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
+                <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 p-6 rounded-xl hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
                   <span className="block text-3xl mb-2">🎓</span>
-                  <span className="block text-xl lg:text-2xl font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight">
+                  <span className="block text-xl lg:text-2xl font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight break-words">
                     {lang === 'pt' ? 'Educação' : lang === 'es' ? 'Educación' : lang === 'fr' ? 'Éducation' : 'Education'}
                   </span>
                   <span className="block text-[0.65rem] text-slate-400 uppercase tracking-widest mt-1.5">
@@ -292,19 +286,19 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 </div>
               </div>
 
-              {/* Secondary Impact Cards - Credibilidade (cores Azimut) */}
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 max-w-3xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.5s' }}>
+              {/* Secondary Impact Cards - Credibilidade MAIS LARGOS */}
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 max-w-4xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.5s' }}>
                 {/* Rio Museu Olímpico */}
-                <div className="glass-panel backdrop-blur-xl border border-white/10 p-4 rounded-lg hover:border-azimut-red/50 transition-all duration-300 group" style={{ background: 'rgba(15, 23, 42, 0.7)' }}>
-                  <span className="block text-base font-semibold text-azimut-red group-hover:text-red-400 transition-colors">Rio Museum</span>
+                <div className="glass-panel backdrop-blur-xl border border-white/10 p-5 rounded-lg hover:border-azimut-red/50 transition-all duration-300 group" style={{ background: 'rgba(15, 23, 42, 0.7)' }}>
+                  <span className="block text-base font-semibold text-azimut-red group-hover:text-red-400 transition-colors break-words">Rio Museum</span>
                   <span className="block text-[0.6rem] text-slate-400 uppercase tracking-wider mt-1 leading-tight">
                     {lang === 'pt' ? 'Direção Geral · Tecnologia · Arte Audiovisual' : lang === 'es' ? 'Dirección General · Tecnología · Arte Audiovisual' : lang === 'fr' ? 'Direction Générale · Technologie · Art Audiovisuel' : 'General Direction · Technology · Audiovisual Art'}
                   </span>
                 </div>
 
                 {/* Gramado VR */}
-                <div className="glass-panel backdrop-blur-xl border border-white/10 p-4 rounded-lg hover:border-azimut-red/50 transition-all duration-300 group" style={{ background: 'rgba(15, 23, 42, 0.7)' }}>
-                  <span className="block text-base font-semibold text-azimut-red group-hover:text-red-400 transition-colors">
+                <div className="glass-panel backdrop-blur-xl border border-white/10 p-5 rounded-lg hover:border-azimut-red/50 transition-all duration-300 group" style={{ background: 'rgba(15, 23, 42, 0.7)' }}>
+                  <span className="block text-base font-semibold text-azimut-red group-hover:text-red-400 transition-colors break-words">
                     {lang === 'pt' ? 'Festival de Gramado' : lang === 'es' ? 'Festival de Gramado' : lang === 'fr' ? 'Festival de Gramado' : 'Gramado Festival'}
                   </span>
                   <span className="block text-[0.6rem] text-slate-400 uppercase tracking-wider mt-1">
@@ -313,8 +307,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 </div>
 
                 {/* BR ↔ CA */}
-                <div className="glass-panel backdrop-blur-xl border border-white/10 p-4 rounded-lg hover:border-azimut-red/50 transition-all duration-300 group col-span-2 lg:col-span-1" style={{ background: 'rgba(15, 23, 42, 0.7)' }}>
-                  <span className="block text-base font-semibold text-azimut-red group-hover:text-red-400 transition-colors">Brasil ↔ Canadá</span>
+                <div className="glass-panel backdrop-blur-xl border border-white/10 p-5 rounded-lg hover:border-azimut-red/50 transition-all duration-300 group col-span-2 lg:col-span-1" style={{ background: 'rgba(15, 23, 42, 0.7)' }}>
+                  <span className="block text-base font-semibold text-azimut-red group-hover:text-red-400 transition-colors break-words">Brasil ↔ Canadá</span>
                   <span className="block text-[0.6rem] text-slate-400 uppercase tracking-wider mt-1">
                     {lang === 'pt' ? 'Binacional' : lang === 'es' ? 'Binacional' : lang === 'fr' ? 'Binational' : 'Binational'}
                   </span>
@@ -322,9 +316,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </div>
             </div>
             
-            {/* Coluna Direita: Logo 3D Animada GIGANTE (60% layout - 1250px máximo) */}
+            {/* Coluna Direita: Logo 3D Animada GIGANTE (65% layout - 1400px máximo) */}
             <div className="flex items-center justify-center pl-4">
-              <div className="w-full max-w-[1250px] aspect-square">
+              <div className="w-full max-w-[1400px] aspect-square">
                 <AnimatedLogo />
               </div>
             </div>
