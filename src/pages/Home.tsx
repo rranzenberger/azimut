@@ -215,16 +215,15 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 <span className="!text-white/60 text-[0.7rem]">SINCE 1996</span>
               </div>
               
-              {/* Título em 3 LINHAS */}
+              {/* Título em 2 LINHAS */}
               <h1 className="font-handel uppercase !text-white animate-fade-in-up opacity-0" style={{ 
                 fontSize: 'clamp(3rem, 5.5vw, 5.8rem)',
                 lineHeight: '1.1',
                 letterSpacing: '0.08em',
                 animationDelay: '0.2s'
               }}>
-                EXPERIÊNCIAS<br />
-                QUE CONECTAM<br />
-                <span className="text-azimut-red">MUNDOS</span>
+                EXPERIÊNCIAS QUE<br />
+                CONECTAM <span className="text-azimut-red">MUNDOS</span>
               </h1>
               
               {/* Subtítulo COMPACTO */}
