@@ -169,7 +169,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* ════════════════════════════════════════════════════════════════ */}
         {/* HERO WORLD-CLASS 2026 - 85vh + Stats Cards Flutuantes */}
         {/* ════════════════════════════════════════════════════════════════ */}
-        <section className="relative h-[85vh] min-h-[600px] overflow-hidden film-grain">
+        <section className="relative min-h-screen overflow-hidden film-grain py-12">
           {/* Background: Imagem do Projeto Featured (se disponível) */}
           {(() => {
             const featured = recommended[0] || defaultProjects[0]
@@ -199,8 +199,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               Baseado em: Cartier, Omega, Apple (Pesquisas Gemini/ChatGPT/Claude)
               ══════════════════════════════════════════════════════════════ */}
           
-          {/* DESKTOP: Split Screen 50/50 */}
-          <div className="relative z-10 hidden lg:grid lg:grid-cols-[35%_65%] gap-8 h-full items-center px-4 sm:px-6 lg:px-8 mx-auto max-w-[1800px]">
+          {/* DESKTOP: Split Screen 35/65 - SEM CORTAR */}
+          <div className="relative z-10 hidden lg:grid lg:grid-cols-[35%_65%] gap-8 items-start px-4 sm:px-6 lg:px-8 mx-auto max-w-[1800px] py-8">
             {/* Coluna Esquerda: Conteúdo Texto (35% - MENOR para dar espaço aos cards) */}
             <div className="space-y-5 pr-4">
               {/* Badge AZIMUT */}
