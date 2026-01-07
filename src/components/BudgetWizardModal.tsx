@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { type Lang } from '../i18n'
 import BudgetWizard, { type UserProfile } from './BudgetWizard'
 import { trackBudgetWizard } from '../utils/analytics'
@@ -15,22 +15,14 @@ const BudgetWizardModal: React.FC<BudgetWizardModalProps> = ({ lang, isOpen, onC
 
   const handleComplete = async (profile: UserProfile) => {
     // Track wizard completion
-    trackBudgetWizard('completed', {
+    await trackBudgetWizard({
+      completed: true,
       budget: profile.budget || 'unknown',
-      projectType: profile.projectType || 'unknown'
+      category: profile.needs?.join(', ') || 'unknown'
     })
     
-    // Importar função de API que calcula score
-    const { submitLead } = await import('../api/leads')
-    const lead = await submitLead(profile)
-    
-    // Passar lead completo (já com score e priority)
-    onComplete({
-      ...profile,
-      leadScore: lead.leadScore,
-      priority: lead.priority,
-      timestamp: lead.timestamp
-    })
+    // Passar lead para o componente pai (Contact.tsx) que já sabe enviar
+    onComplete(profile)
     onClose()
   }
 
@@ -40,7 +32,7 @@ const BudgetWizardModal: React.FC<BudgetWizardModalProps> = ({ lang, isOpen, onC
         {/* Close button */}
         <button
           onClick={() => {
-            trackBudgetWizard('closed')
+            trackBudgetWizard({ completed: false })
             onClose()
           }}
           className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition-colors"

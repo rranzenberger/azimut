@@ -1,57 +1,62 @@
-import React from 'react'
+import React, { useRef, useEffect, useState } from 'react';
 
 export const AnimatedLogo: React.FC = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [opacity, setOpacity] = useState(1);
+  const [key, setKey] = useState(0);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    let pauseTimeout: NodeJS.Timeout | undefined;
+    let fadeOutTimeout: NodeJS.Timeout | undefined;
+    let fadeInTimeout: NodeJS.Timeout | undefined;
+
+    const handleEnded = () => {
+      video.pause(); // Pause the video on the last frame
+      setOpacity(1); // Ensure it's fully visible when paused
+
+      pauseTimeout = setTimeout(() => {
+        setOpacity(0); // Start fade out
+        fadeOutTimeout = setTimeout(() => {
+          video.currentTime = 0; // Reset video to start
+          setOpacity(1); // Fade back in
+          video.play(); // Restart video
+        }, 2000); // Fade out duration (2 seconds)
+      }, 10000); // Pause duration (10 seconds)
+    };
+
+    video.addEventListener('ended', handleEnded);
+
+    // Cleanup function
+    return () => {
+      video.removeEventListener('ended', handleEnded);
+      if (pauseTimeout) clearTimeout(pauseTimeout);
+      if (fadeOutTimeout) clearTimeout(fadeOutTimeout);
+      if (fadeInTimeout) clearTimeout(fadeInTimeout);
+    };
+  }, [key]);
+
   return (
-    <div className="animated-logo-container">
-      {/* TEMPORÁRIO: Usando SVG até termos os vídeos convertidos */}
-      <img 
-        src="/logo-azimut-star.svg" 
-        alt="Azimut Star" 
-        className="animated-logo-static"
-      />
-      
-      <style>{`
-        .animated-logo-container {
-          pointer-events: none;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        
-        .animated-logo-static {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-          
-          /* Glow vermelho Azimut */
-          filter: 
-            drop-shadow(0 0 30px rgba(201, 35, 55, 0.6)) 
-            drop-shadow(0 0 60px rgba(201, 35, 55, 0.3));
-          
-          opacity: 0.95;
-          
-          /* Animação sutil de pulse */
-          animation: pulse-glow 4s ease-in-out infinite;
-        }
-        
-        @keyframes pulse-glow {
-          0%, 100% {
-            filter: 
-              drop-shadow(0 0 30px rgba(201, 35, 55, 0.6)) 
-              drop-shadow(0 0 60px rgba(201, 35, 55, 0.3));
-            transform: scale(1);
-          }
-          50% {
-            filter: 
-              drop-shadow(0 0 40px rgba(201, 35, 55, 0.8)) 
-              drop-shadow(0 0 80px rgba(201, 35, 55, 0.4));
-            transform: scale(1.02);
-          }
-        }
-      `}</style>
-    </div>
-  )
-}
+    <video
+      key={key}
+      ref={videoRef}
+      autoPlay
+      muted
+      playsInline
+      preload="auto"
+      className="w-full h-full object-contain pointer-events-none"
+      style={{ opacity: opacity, transition: 'opacity 2s ease-in-out' }}
+    >
+      {/* WebM Alpha (prioridade - melhor qualidade com transparência) */}
+      <source src="/azimut-alpha-full.webm" type="video/webm; codecs=vp9" />
+      {/* MP4 fallback (se WebM não funcionar) */}
+      <source src="/azimut-3d-para-2d.mp4" type="video/mp4" />
+      <source src="/azimut 3d para 2d.mp4" type="video/mp4" />
+      {/* GIF ultimate fallback */}
+      <img src="/logo_azimut_azimut_animago.gif" alt="Azimut Logo Animada" loading="eager" />
+    </video>
+  );
+};
 

@@ -890,6 +890,16 @@ html {
   }
 }
 
+/* Rotação suave e lenta para logo SVG */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes fadeInScale {
   from {
     opacity: 0;

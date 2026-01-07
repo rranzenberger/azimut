@@ -198,29 +198,30 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
   }
 
   // Handler para quando o wizard completar
-  const handleWizardComplete = async (profile: UserProfile & { leadScore?: number; priority?: string }) => {
+  const handleWizardComplete = async (profile: UserProfile) => {
     try {
-      // Enviar lead para o CMS
+      // Enviar lead para o CMS usando o mesmo submitLead() do form
       await submitLead({
         name: profile.name || '',
         email: profile.email || '',
         phone: profile.phone || '',
         company: profile.organization || '',
-        projectType: profile.needs?.join(', ') || '',
+        projectType: profile.needs?.join(', ') || profile.projectType || '',
         budget: profile.budget || '',
-        timeline: profile.timeline || '',
-        description: `Objetivo: ${profile.objective || ''}\nLocalização: ${profile.location || ''}\nPúblico: ${profile.audience || ''}\n\nScore: ${profile.leadScore || 0}/10\nPrioridade: ${profile.priority || 'MEDIUM'}`
+        timeline: profile.timeline || profile.deadline || '',
+        description: `
+Perfil: ${profile.role || 'Não informado'}
+Objetivo: ${profile.objective || 'Não informado'}
+Localização: ${profile.location || 'Não informado'}
+Público: ${profile.audience || 'Não informado'}
+Necessidades: ${profile.needs?.join(', ') || 'Não informado'}
+Precisa Financiamento: ${profile.needsFunding ? 'Sim' : 'Não'}
+        `.trim()
       })
       
-      const successMessage = {
-        pt: '✅ Brief enviado com sucesso! Analisaremos seu projeto e retornaremos em breve.',
-        en: '✅ Brief sent successfully! We will review your project and get back to you soon.',
-        es: '✅ Brief enviado con éxito! Revisaremos su proyecto y responderemos pronto.',
-        fr: '✅ Brief sent successfully! We will review your project and get back to you soon.'
-      }
+      // Redirecionar para thank-you (igual ao formulário completo)
+      navigate(`/${lang}/thank-you`)
       
-      alert(successMessage[lang])
-      setWizardOpen(false)
     } catch (error) {
       console.error('Erro ao enviar lead:', error)
       alert(lang === 'pt' ? 'Erro ao enviar. Tente novamente.' : lang === 'es' ? 'Error al enviar. Intente de nuevo.' : 'Error sending. Please try again.')
