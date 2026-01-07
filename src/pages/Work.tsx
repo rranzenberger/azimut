@@ -356,7 +356,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 placeholder={lang === 'pt' ? 'Buscar projetos...' : lang === 'es' ? 'Buscar proyectos...' : lang === 'fr' ? 'Rechercher...' : 'Search projects...'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-slate-800 dark:text-slate-400 focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
+                className="w-full rounded-lg border border-white/10 bg-subtle px-4 py-2 text-sm text-white placeholder:text-slate-800 dark:text-slate-400 focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
               />
             </div>
             
@@ -365,7 +365,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               <select
                 value={selectedTag || ''}
                 onChange={(e) => setSelectedTag(e.target.value || null)}
-                className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-white focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
+                className="rounded-lg border border-white/10 bg-subtle px-4 py-2 text-sm text-white focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
                 style={{ appearance: 'none', backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', paddingRight: '32px' }}
               >
                 <option value="">{lang === 'pt' ? 'Todas as tags' : lang === 'es' ? 'Todas las etiquetas' : lang === 'fr' ? 'Tous les tags' : 'All tags'}</option>
@@ -380,7 +380,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               <select
                 value={selectedType || ''}
                 onChange={(e) => setSelectedType(e.target.value || null)}
-                className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-white focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
+                className="rounded-lg border border-white/10 bg-subtle px-4 py-2 text-sm text-white focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
                 style={{ appearance: 'none', backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', paddingRight: '32px' }}
               >
                 <option value="">{lang === 'pt' ? 'Todos os tipos' : lang === 'es' ? 'Todos los tipos' : lang === 'fr' ? 'Tous les types' : 'All types'}</option>
@@ -395,7 +395,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               <select
                 value={selectedYear || ''}
                 onChange={(e) => setSelectedYear(e.target.value ? parseInt(e.target.value) : null)}
-                className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-white focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
+                className="rounded-lg border border-white/10 bg-subtle px-4 py-2 text-sm text-white focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
                 style={{ appearance: 'none', backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', paddingRight: '32px' }}
               >
                 <option value="">{lang === 'pt' ? 'Todos os anos' : lang === 'es' ? 'Todos los años' : lang === 'fr' ? 'Toutes les années' : 'All years'}</option>
@@ -573,7 +573,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                     /* Placeholder quando não há imagem */
                     <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-800/50 to-slate-900 transition-all duration-300 group-hover:from-azimut-red/20 group-hover:to-slate-900/80">
                       <div className="text-center p-4">
-                        <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur transition-transform duration-300 group-hover:scale-110 group-hover:border-azimut-red/50">
+                        <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-subtle backdrop-blur transition-transform duration-300 group-hover:scale-110 group-hover:border-azimut-red/50">
                           <svg className="h-6 w-6 text-slate-800 dark:text-slate-400 group-hover:text-azimut-red transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>

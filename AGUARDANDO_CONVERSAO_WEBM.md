@@ -98,3 +98,4 @@ Me avisa que eu:
 **Status:** ⏳ Aguardando conversão do usuário...  
 **Guia completo:** `GUIA_CONVERSAO_WEBM_PASSO_A_PASSO.md`
 
+

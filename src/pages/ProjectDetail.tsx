@@ -306,7 +306,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
 
               {/* Seção: Na Mídia */}
               {project.gallery.some((m: any) => (m.original || '').toLowerCase().includes('jornal')) && (
-                <div className="rounded-2xl border border-white/10 card-adaptive p-6 bg-white/5 backdrop-blur">
+                <div className="rounded-2xl border border-white/10 card-adaptive p-6 bg-subtle backdrop-blur">
                   <h3 className="mb-4 font-handel text-xl uppercase tracking-[0.12em] text-white">
                     📰 {lang === 'pt' ? 'Na Mídia' : lang === 'es' ? 'En los Medios' : lang === 'fr' ? 'Dans les Médias' : 'In the Media'}
                   </h3>
@@ -342,7 +342,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
 
               {/* Seção: Instalações Interativas */}
               {project.gallery.some((m: any) => (m.original || '').toLowerCase().includes('semi-esfera') || (m.original || '').toLowerCase().includes('bicicleta') || (m.original || '').toLowerCase().includes('tela-interativa')) && (
-                <div className="rounded-2xl border border-white/10 card-adaptive p-6 bg-white/5 backdrop-blur">
+                <div className="rounded-2xl border border-white/10 card-adaptive p-6 bg-subtle backdrop-blur">
                   <h3 className="mb-4 font-handel text-xl uppercase tracking-[0.12em] text-white">
                     🎮 {lang === 'pt' ? 'Instalações Interativas' : lang === 'es' ? 'Instalaciones Interactivas' : lang === 'fr' ? 'Installations Interactives' : 'Interactive Installations'}
                   </h3>
@@ -381,7 +381,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
 
               {/* Seção: Ginástica Artística */}
               {project.gallery.some((m: any) => (m.original || '').toLowerCase().includes('ginastica')) && (
-                <div className="rounded-2xl border border-white/10 card-adaptive p-6 bg-white/5 backdrop-blur">
+                <div className="rounded-2xl border border-white/10 card-adaptive p-6 bg-subtle backdrop-blur">
                   <h3 className="mb-4 font-handel text-xl uppercase tracking-[0.12em] text-white">
                     🤸 {lang === 'pt' ? 'Ginástica Artística' : lang === 'es' ? 'Gimnasia Artística' : lang === 'fr' ? 'Gymnastique Artistique' : 'Artistic Gymnastics'}
                   </h3>
@@ -471,7 +471,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                       className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                         showTier1Only
                           ? 'bg-azimut-red text-white'
-                          : 'bg-white/10 hover:bg-white/20'
+                          : 'bg-subtle-md hover:bg-subtle-strong'
                       }`}
                       style={!showTier1Only ? { color: 'var(--theme-text-secondary)' } : undefined}
                     >
@@ -496,7 +496,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                           className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                             selectedCategory === cat
                               ? 'bg-azimut-red text-white'
-                              : 'bg-white/10 hover:bg-white/20'
+                              : 'bg-subtle-md hover:bg-subtle-strong'
                           }`}
                           style={selectedCategory !== cat ? { color: 'var(--theme-text-secondary)' } : undefined}
                         >
@@ -619,7 +619,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                 {project.services.map((service: any) => (
                   <span 
                     key={service.slug}
-                    className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm"
+                    className="rounded-lg border border-white/10 bg-subtle px-4 py-2 text-sm"
                     style={{ color: 'var(--theme-text-secondary)' }}
                   >
                     {service.title}

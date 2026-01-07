@@ -75,3 +75,4 @@ O componente `AnimatedLogo.tsx` já está preparado para usar os 3 formatos:
 
 **É SÓ ISSO!** Não precisa instalar nada, não precisa linha de comando! 🚀
 
+

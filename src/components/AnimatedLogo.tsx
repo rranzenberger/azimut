@@ -47,15 +47,21 @@ export const AnimatedLogo: React.FC = () => {
       playsInline
       preload="auto"
       className="w-full h-full object-contain pointer-events-none"
-      style={{ opacity: opacity, transition: 'opacity 2s ease-in-out' }}
+      style={{ 
+        opacity: opacity, 
+        transition: 'opacity 2s ease-in-out',
+        mixBlendMode: 'screen', // Luma key: preto vira transparente
+        filter: 'drop-shadow(0 0 30px rgba(201, 35, 55, 0.5)) drop-shadow(0 0 60px rgba(201, 35, 55, 0.25))'
+      }}
     >
-      {/* WebM Alpha (prioridade - melhor qualidade com transparência) */}
-      <source src="/azimut-alpha-full.webm" type="video/webm; codecs=vp9" />
-      {/* MP4 fallback (se WebM não funcionar) */}
-      <source src="/azimut-3d-para-2d.mp4" type="video/mp4" />
-      <source src="/azimut 3d para 2d.mp4" type="video/mp4" />
-      {/* GIF ultimate fallback */}
-      <img src="/logo_azimut_azimut_animago.gif" alt="Azimut Logo Animada" loading="eager" />
+      {/* WebM VP9 720p com chroma key (otimizado para 720px uso real) */}
+      <source src="/logo_animada_glow_720p.webm" type="video/webm; codecs=vp9" />
+      {/* MP4 H.264 com chroma key (Safari/iOS compatível) */}
+      <source src="/logo_animada_glow.mp4" type="video/mp4" />
+      {/* MOV original (fallback final) */}
+      <source src="/logo_animada_glow.mov" type="video/quicktime" />
+      {/* SVG ultimate fallback */}
+      <img src="/logo-azimut-star.svg" alt="Azimut Logo Animada" loading="eager" />
     </video>
   );
 };

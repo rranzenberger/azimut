@@ -277,3 +277,4 @@ cp src/pages/Home.backup-tipografia.tsx src/pages/Home.tsx
 **Status:** ✅ COMPARAÇÃO COMPLETA  
 **Decisão:** Aguardando escolha do usuário
 
+

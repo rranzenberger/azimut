@@ -57,3 +57,4 @@ git stash pop
 **Se não gostar:** Reverter em 10 segundos!  
 **Se gostar:** Commit e deploy!
 
+

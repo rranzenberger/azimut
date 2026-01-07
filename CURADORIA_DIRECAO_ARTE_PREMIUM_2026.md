@@ -382,3 +382,4 @@ Ajustar de **0.20 atual** para **0.15** (sweet spot perfeito!)
 **Baseado em:** Pesquisa web + Awwwards + Top 7 sites 2026  
 **Recomendação:** Watermark 0.15 (padrão Stripe)
 
+

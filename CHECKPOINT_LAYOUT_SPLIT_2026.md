@@ -99,3 +99,4 @@ git checkout -- src/pages/Home.tsx
 **Backup:** `Home.CHECKPOINT-antes-layout-split.tsx`  
 **Status:** ✅ Pronto para implementar!
 
+

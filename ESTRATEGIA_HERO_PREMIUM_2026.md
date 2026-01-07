@@ -375,3 +375,4 @@ Azimut precisa mostrar **O QUE FAZ**, não **QUEM É**.
 **Baseado em:** DNA Azimut + Padrões culturais mundiais  
 **Pronto para:** Implementação imediata
 
+

@@ -16,7 +16,6 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({ lang }) => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
-  const starRef = useRef<HTMLDivElement>(null)
   useUserTracking()
   
   // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
@@ -144,34 +143,6 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     return () => observer.disconnect()
   }, [])
 
-  // Parallax sutil na estrela de fundo
-  useEffect(() => {
-    const star = starRef.current
-    if (!star) return
-
-    let ticking = false
-
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrolled = window.pageYOffset || document.documentElement.scrollTop
-          // Parallax muito sutil (0.3x) - movimento suave
-          const parallax = scrolled * 0.3
-          
-          if (star) {
-            star.style.transform = `translateY(${parallax}px)`
-          }
-          
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
   const seo = seoData.home[lang]
 
   return (
@@ -183,181 +154,245 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         path="/"
       />
       <main className="relative">
-        {/* Star background on the side - Parallax sutil */}
-        <div 
-          ref={starRef}
-          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-32 md:-right-40 md:h-[680px] md:w-[680px] transition-transform duration-75 ease-out" 
-          style={{ 
-            opacity: 0.3,
+        {/* Estrela de fundo - HOME: Equilíbrio entre visibilidade e não competir com logo animada */}
+        <div
+          className="pointer-events-none fixed -right-28 -bottom-[10rem] h-[520px] w-[520px] md:-right-40 md:-bottom-[12rem] md:h-[680px] md:w-[680px] opacity-30"
+          style={{
             zIndex: -5,
-            willChange: 'transform'
+            backgroundImage: 'url(/logo-azimut-star.svg)',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center'
           }}
-        >
-          <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" />
-        </div>
+        />
 
         {/* ════════════════════════════════════════════════════════════════ */}
         {/* HERO WORLD-CLASS 2026 - 85vh + Stats Cards Flutuantes */}
         {/* ════════════════════════════════════════════════════════════════ */}
         <section className="relative h-[85vh] min-h-[600px] overflow-hidden film-grain">
+          {/* Background: Imagem do Projeto Featured (se disponível) */}
           {(() => {
             const featured = recommended[0] || defaultProjects[0]
-            const hasMedia = featured?.heroImage && (featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.thumbnail || featured.heroImage?.original)
+            const hasImage = featured?.heroImage && (featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.original)
             
-            return (
-              <>
-                {/* Background Vídeo/Imagem */}
-                <div className="absolute inset-0 w-full h-full">
-                  {hasMedia && (featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.original) ? (
-                    <img 
-                      src={featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.original || ''} 
-                      alt=""
-                      className="w-full h-full object-cover"
-                      loading="eager"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
-                  )}
-                </div>
-                
-                {/* Glass Overlay - Gemini Style */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/70 backdrop-blur-[2px]" />
-                
-                {/* ═══════════════════════════════════════════════════════════════
-                    SPLIT SCREEN PREMIUM: Texto 55% | Logo 3D 45%
-                    Baseado em: Cartier, Omega, Apple (Pesquisas Gemini/ChatGPT/Claude)
-                    ══════════════════════════════════════════════════════════════ */}
-                
-                {/* DESKTOP: Split Screen */}
-                <div className="relative z-10 hidden lg:grid lg:grid-cols-[55%_45%] h-full items-center px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
-                  {/* Coluna Esquerda: Conteúdo Texto */}
-                  <div className="space-y-8 pr-8">
-                    {/* Badge AZIMUT compacto */}
-                    <div className="inline-flex items-center gap-2 font-sora text-[0.7rem] uppercase tracking-[0.3em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
-                      <img 
-                        src="/estela6-clara.svg" 
-                        alt="" 
-                        className="w-3 h-3"
-                      />
-                      <span className="text-azimut-red font-semibold">AZIMUT</span>
-                      <span className="text-white/40">•</span>
-                      <span className="text-white/60 text-[0.65rem]">SINCE 1996</span>
-                    </div>
-                    
-                    {/* Título Monumental */}
-                    <h1 className="font-handel uppercase text-white animate-fade-in-up opacity-0" style={{ 
-                      fontSize: 'clamp(2.5rem, 6vw, 6rem)',
-                      lineHeight: '1.1',
-                      letterSpacing: '0.12em',
-                      animationDelay: '0.2s'
-                    }}>
-                      {heroSlogan.split(' ').map((word, i) => (
-                        <span key={i}>
-                          {i === heroSlogan.split(' ').length - 1 ? (
-                            <span className="text-azimut-red">{word}</span>
-                          ) : (
-                            `${word} `
-                          )}
-                        </span>
-                      ))}
-                    </h1>
-                    
-                    {/* Subtítulo */}
-                    <p className="max-w-xl text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0 text-white/90" style={{ animationDelay: '0.3s' }}>
-                      {heroSubtitle.split('.')[0]}.
-                    </p>
-                    
-                    {/* Stats Cards - SEM PAÍSES! */}
-                    <div className="grid grid-cols-2 gap-3 max-w-lg animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
-                      <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
-                        <span className="block text-3xl lg:text-4xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">100+</span>
-                        <span className="block text-[0.6rem] text-white/60 uppercase tracking-widest mt-1">
-                          {lang === 'pt' ? 'Projetos' : lang === 'es' ? 'Proyectos' : 'Projects'}
-                        </span>
-                      </div>
-                      <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
-                        <span className="block text-3xl lg:text-4xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">1996</span>
-                        <span className="block text-[0.6rem] text-white/60 uppercase tracking-widest mt-1">
-                          {lang === 'pt' ? 'Desde' : lang === 'es' ? 'Desde' : lang === 'fr' ? 'Depuis' : 'Since'}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Coluna Direita: Logo 3D Animada GRANDE (Estilo Cartier/Omega) */}
-                  <div className="flex items-center justify-center">
-                    <div className="w-full max-w-[500px] aspect-square">
-                      <AnimatedLogo />
-                    </div>
-                  </div>
-                </div>
-                
-                {/* MOBILE/TABLET: Watermark Central + Texto Sobre */}
-                <div className="relative z-10 lg:hidden flex flex-col justify-center h-full px-4 sm:px-6 mx-auto max-w-7xl">
-                  {/* Logo como Watermark (fundo) */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
-                    <div className="w-[200px] h-[200px] sm:w-[250px] sm:h-[250px]">
-                      <AnimatedLogo />
-                    </div>
-                  </div>
-                  
-                  {/* Conteúdo Texto (frente) */}
-                  <div className="relative z-10 max-w-4xl text-center mx-auto space-y-8">
-                    {/* Badge AZIMUT */}
-                    <div className="inline-flex items-center gap-2 font-sora text-[0.7rem] uppercase tracking-[0.3em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
-                      <img 
-                        src="/estela6-clara.svg" 
-                        alt="" 
-                        className="w-3 h-3"
-                      />
-                      <span className="text-azimut-red font-semibold">AZIMUT</span>
-                      <span className="text-white/40">•</span>
-                      <span className="text-white/60 text-[0.65rem]">SINCE 1996</span>
-                    </div>
-                    
-                    {/* Título */}
-                    <h1 className="font-handel uppercase text-white animate-fade-in-up opacity-0" style={{ 
-                      fontSize: 'clamp(2.5rem, 8vw, 5rem)',
-                      lineHeight: '1.1',
-                      letterSpacing: '0.12em',
-                      animationDelay: '0.2s'
-                    }}>
-                      {heroSlogan.split(' ').map((word, i) => (
-                        <span key={i}>
-                          {i === heroSlogan.split(' ').length - 1 ? (
-                            <span className="text-azimut-red">{word}</span>
-                          ) : (
-                            `${word} `
-                          )}
-                        </span>
-                      ))}
-                    </h1>
-                    
-                    {/* Subtítulo */}
-                    <p className="max-w-2xl mx-auto text-[1rem] leading-relaxed animate-fade-in-up opacity-0 text-white/90" style={{ animationDelay: '0.3s' }}>
-                      {heroSubtitle.split('.')[0]}.
-                    </p>
-                    
-                    {/* Stats Cards - SEM PAÍSES! */}
-                    <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-2xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
-                      <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 sm:p-6 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
-                        <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">100+</span>
-                        <span className="block text-[0.65rem] sm:text-xs text-white/60 uppercase tracking-widest mt-1">
-                          {lang === 'pt' ? 'Projetos' : lang === 'es' ? 'Proyectos' : 'Projects'}
-                        </span>
-                      </div>
-                      <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 sm:p-6 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
-                        <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">1996</span>
-                        <span className="block text-[0.65rem] sm:text-xs text-white/60 uppercase tracking-widest mt-1">
-                          {lang === 'pt' ? 'Desde' : lang === 'es' ? 'Desde' : lang === 'fr' ? 'Depuis' : 'Since'}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )
+            return hasImage ? (
+              <div className="absolute inset-0 w-full h-full">
+                <img 
+                  src={featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.original || ''} 
+                  alt=""
+                  className="w-full h-full object-cover opacity-20"
+                  loading="eager"
+                />
+              </div>
+            ) : null
           })()}
+          
+          {/* Gradiente Direcional: Azul Opaco (esquerda) → Preto Transparente (direita) */}
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900 via-60% to-transparent" />
+          
+          {/* Gradiente Vertical: Escurece embaixo */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/70" />
+          
+          {/* ═══════════════════════════════════════════════════════════════
+              SPLIT SCREEN PREMIUM: Texto 50% | Logo 3D 50% (MAIS CENTRALIZADO)
+              Título em 2 LINHAS (fonte menor, mais compacto)
+              Baseado em: Cartier, Omega, Apple (Pesquisas Gemini/ChatGPT/Claude)
+              ══════════════════════════════════════════════════════════════ */}
+          
+          {/* DESKTOP: Split Screen 50/50 */}
+          <div className="relative z-10 hidden lg:grid lg:grid-cols-[40%_60%] gap-8 h-full items-center px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
+            {/* Coluna Esquerda: Conteúdo Texto (40%) */}
+            <div className="space-y-5 pr-4">
+              {/* Badge AZIMUT */}
+              <div className="inline-flex items-center gap-2 font-sora text-[0.75rem] uppercase tracking-[0.3em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
+                <img 
+                  src="/estela6-clara.svg" 
+                  alt="" 
+                  className="w-4 h-4"
+                />
+                <span className="text-azimut-red font-semibold">AZIMUT</span>
+                <span className="!text-white/40">•</span>
+                <span className="!text-white/60 text-[0.7rem]">SINCE 1996</span>
+              </div>
+              
+              {/* Título MUITO MAIOR (equilibra com logo 1250px) */}
+              <h1 className="font-handel uppercase !text-white animate-fade-in-up opacity-0" style={{ 
+                fontSize: 'clamp(3rem, 5.5vw, 5.8rem)',
+                lineHeight: '1.1',
+                letterSpacing: '0.08em',
+                animationDelay: '0.2s'
+              }}>
+                {heroSlogan.split(' ').map((word, i) => (
+                  <span key={i}>
+                    {i === heroSlogan.split(' ').length - 1 ? (
+                      <span className="text-azimut-red">{word}</span>
+                    ) : (
+                      `${word} `
+                    )}
+                  </span>
+                ))}
+              </h1>
+              
+              {/* Subtítulo MAIOR */}
+              <p className="max-w-xl text-[1.05rem] leading-relaxed animate-fade-in-up opacity-0 !text-white/90" style={{ animationDelay: '0.3s' }}>
+                {heroSubtitle.split('.')[0]}.
+              </p>
+              
+              {/* Impact Cards - Cores Azimut (navy/slate escuro) */}
+              <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 max-w-5xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+                {/* Cinema & AV */}
+                <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 p-5 rounded-xl hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
+                  <span className="block text-3xl mb-2">🎬</span>
+                  <span className="block text-xl lg:text-2xl font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight">
+                    {lang === 'pt' ? 'Cinema & AV' : lang === 'es' ? 'Cine & AV' : lang === 'fr' ? 'Cinéma & AV' : 'Cinema & AV'}
+                  </span>
+                  <span className="block text-[0.65rem] text-slate-400 uppercase tracking-widest mt-1.5">
+                    {lang === 'pt' ? 'Audiovisual' : lang === 'es' ? 'Audiovisual' : lang === 'fr' ? 'Audiovisuel' : 'Audiovisual'}
+                  </span>
+                </div>
+
+                {/* XR/VR/AR */}
+                <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 p-5 rounded-xl hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
+                  <span className="block text-3xl mb-2">🥽</span>
+                  <span className="block text-xl lg:text-2xl font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight">XR/VR/AR</span>
+                  <span className="block text-[0.65rem] text-slate-400 uppercase tracking-widest mt-1.5">
+                    {lang === 'pt' ? 'Imersivo' : lang === 'es' ? 'Inmersivo' : lang === 'fr' ? 'Immersif' : 'Immersive'}
+                  </span>
+                </div>
+
+                {/* Exposições & Museus */}
+                <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 p-5 rounded-xl hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
+                  <span className="block text-3xl mb-2">🏛️</span>
+                  <span className="block text-lg lg:text-xl font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight">
+                    {lang === 'pt' ? 'Exposições' : lang === 'es' ? 'Exposiciones' : lang === 'fr' ? 'Expositions' : 'Exhibitions'}
+                  </span>
+                  <span className="block text-[0.6rem] text-slate-400 uppercase tracking-widest mt-0.5 leading-tight">
+                    {lang === 'pt' ? '& Museus' : lang === 'es' ? '& Museos' : lang === 'fr' ? '& Musées' : '& Museums'}
+                  </span>
+                </div>
+
+                {/* IA & Tech */}
+                <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 p-5 rounded-xl hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
+                  <span className="block text-3xl mb-2">🧠</span>
+                  <span className="block text-xl lg:text-2xl font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight">IA & Tech</span>
+                  <span className="block text-[0.65rem] text-slate-400 uppercase tracking-widest mt-1.5">
+                    {lang === 'pt' ? 'Interativo' : lang === 'es' ? 'Interactivo' : lang === 'fr' ? 'Interactif' : 'Interactive'}
+                  </span>
+                </div>
+
+                {/* Educação - NOVO! */}
+                <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 p-5 rounded-xl hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
+                  <span className="block text-3xl mb-2">🎓</span>
+                  <span className="block text-xl lg:text-2xl font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight">
+                    {lang === 'pt' ? 'Educação' : lang === 'es' ? 'Educación' : lang === 'fr' ? 'Éducation' : 'Education'}
+                  </span>
+                  <span className="block text-[0.65rem] text-slate-400 uppercase tracking-widest mt-1.5">
+                    {lang === 'pt' ? 'Academia' : lang === 'es' ? 'Academia' : lang === 'fr' ? 'Académie' : 'Academy'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Secondary Impact Cards - Credibilidade (cores Azimut) */}
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 max-w-3xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.5s' }}>
+                {/* Rio Museu Olímpico */}
+                <div className="glass-panel backdrop-blur-xl border border-white/10 p-4 rounded-lg hover:border-azimut-red/50 transition-all duration-300 group" style={{ background: 'rgba(15, 23, 42, 0.7)' }}>
+                  <span className="block text-base font-semibold text-azimut-red group-hover:text-red-400 transition-colors">Rio Museum</span>
+                  <span className="block text-[0.6rem] text-slate-400 uppercase tracking-wider mt-1 leading-tight">
+                    {lang === 'pt' ? 'Direção Geral · Tecnologia · Arte Audiovisual' : lang === 'es' ? 'Dirección General · Tecnología · Arte Audiovisual' : lang === 'fr' ? 'Direction Générale · Technologie · Art Audiovisuel' : 'General Direction · Technology · Audiovisual Art'}
+                  </span>
+                </div>
+
+                {/* Gramado VR */}
+                <div className="glass-panel backdrop-blur-xl border border-white/10 p-4 rounded-lg hover:border-azimut-red/50 transition-all duration-300 group" style={{ background: 'rgba(15, 23, 42, 0.7)' }}>
+                  <span className="block text-base font-semibold text-azimut-red group-hover:text-red-400 transition-colors">
+                    {lang === 'pt' ? 'Festival de Gramado' : lang === 'es' ? 'Festival de Gramado' : lang === 'fr' ? 'Festival de Gramado' : 'Gramado Festival'}
+                  </span>
+                  <span className="block text-[0.6rem] text-slate-400 uppercase tracking-wider mt-1">
+                    {lang === 'pt' ? 'VR desde 2017' : lang === 'es' ? 'VR desde 2017' : lang === 'fr' ? 'VR depuis 2017' : 'VR since 2017'}
+                  </span>
+                </div>
+
+                {/* BR ↔ CA */}
+                <div className="glass-panel backdrop-blur-xl border border-white/10 p-4 rounded-lg hover:border-azimut-red/50 transition-all duration-300 group col-span-2 lg:col-span-1" style={{ background: 'rgba(15, 23, 42, 0.7)' }}>
+                  <span className="block text-base font-semibold text-azimut-red group-hover:text-red-400 transition-colors">Brasil ↔ Canadá</span>
+                  <span className="block text-[0.6rem] text-slate-400 uppercase tracking-wider mt-1">
+                    {lang === 'pt' ? 'Binacional' : lang === 'es' ? 'Binacional' : lang === 'fr' ? 'Binational' : 'Binational'}
+                  </span>
+                </div>
+              </div>
+            </div>
+            
+            {/* Coluna Direita: Logo 3D Animada GIGANTE (60% layout - 1250px máximo) */}
+            <div className="flex items-center justify-center pl-4">
+              <div className="w-full max-w-[1250px] aspect-square">
+                <AnimatedLogo />
+              </div>
+            </div>
+          </div>
+          
+          {/* MOBILE/TABLET: Watermark Central + Texto Sobre */}
+          <div className="relative z-10 lg:hidden flex flex-col justify-center h-full px-4 sm:px-6 mx-auto max-w-7xl">
+            {/* Logo como Watermark (fundo) */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
+              <div className="w-[200px] h-[200px] sm:w-[250px] sm:h-[250px]">
+                <AnimatedLogo />
+              </div>
+            </div>
+            
+            {/* Conteúdo Texto (frente) */}
+            <div className="relative z-10 max-w-4xl text-center mx-auto space-y-8">
+              {/* Badge AZIMUT */}
+              <div className="inline-flex items-center gap-2 font-sora text-[0.7rem] uppercase tracking-[0.3em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
+                <img 
+                  src="/estela6-clara.svg" 
+                  alt="" 
+                  className="w-3 h-3"
+                />
+                <span className="text-azimut-red font-semibold">AZIMUT</span>
+                <span className="!text-white/40">•</span>
+                <span className="!text-white/60 text-[0.65rem]">SINCE 1996</span>
+              </div>
+              
+              {/* Título */}
+              <h1 className="font-handel uppercase !text-white animate-fade-in-up opacity-0" style={{ 
+                fontSize: 'clamp(2.5rem, 8vw, 5rem)',
+                lineHeight: '1.1',
+                letterSpacing: '0.12em',
+                animationDelay: '0.2s'
+              }}>
+                {heroSlogan.split(' ').map((word, i) => (
+                  <span key={i}>
+                    {i === heroSlogan.split(' ').length - 1 ? (
+                      <span className="text-azimut-red">{word}</span>
+                    ) : (
+                      `${word} `
+                    )}
+                  </span>
+                ))}
+              </h1>
+              
+              {/* Subtítulo */}
+              <p className="max-w-2xl mx-auto text-[1rem] leading-relaxed animate-fade-in-up opacity-0 !text-white/90" style={{ animationDelay: '0.3s' }}>
+                {heroSubtitle.split('.')[0]}.
+              </p>
+              
+              {/* Stats Cards - SEM PAÍSES! */}
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-2xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+                <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 sm:p-6 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
+                  <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">100+</span>
+                  <span className="block text-[0.65rem] sm:text-xs text-white/60 uppercase tracking-widest mt-1">
+                    {lang === 'pt' ? 'Projetos' : lang === 'es' ? 'Proyectos' : 'Projects'}
+                  </span>
+                </div>
+                <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 sm:p-6 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
+                  <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">1996</span>
+                  <span className="block text-[0.65rem] sm:text-xs text-white/60 uppercase tracking-widest mt-1">
+                    {lang === 'pt' ? 'Desde' : lang === 'es' ? 'Desde' : lang === 'fr' ? 'Depuis' : 'Since'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* ════════════════════════════════════════════════════════════════ */}
@@ -470,10 +505,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         <section className="py-8 md:py-10 border-y border-white/5">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-6">
-              <h3 className="font-sora text-xs uppercase tracking-[0.24em] mb-3" style={{ color: 'var(--theme-text-muted)' }}>
+              <h3 className="font-sora text-xs uppercase tracking-[0.24em] mb-3 text-slate-400">
                 {lang === 'pt' ? 'TECNOLOGIA CRIATIVA' : lang === 'es' ? 'TECNOLOGÍA CREATIVA' : lang === 'fr' ? 'TECHNOLOGIE CRÉATIVE' : 'CREATIVE TECHNOLOGY'}
               </h3>
-              <p className="text-sm md:text-base max-w-3xl mx-auto leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+              <p className="text-sm md:text-base max-w-3xl mx-auto leading-relaxed text-slate-300">
                 {lang === 'pt' 
                   ? 'Criamos experiências imersivas, interativas e cinematográficas para cultura, marcas e cidades. Da curadoria e consultoria em festivais à direção técnica de museus, navegamos entre cinema, design, engenharia, educação e pesquisa — buscando formatos que sejam ao mesmo tempo precisos e poéticos.' 
                   : lang === 'es' 
@@ -488,10 +523,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto mb-6">
               {/* Integração Audiovisual */}
               <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
-                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">📽️</div>
+                <div className="absolute top-2 right-2 text-2xl opacity-30 group-hover:opacity-50 transition-opacity">📽️</div>
                 <div className="relative z-10">
                   <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🎬</div>
-                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest font-semibold" style={{ color: 'var(--theme-text)' }}>
+                  <div className="text-[0.6rem] md:text-[0.7rem] uppercase tracking-wide font-semibold leading-tight">
                     {lang === 'pt' ? 'Cinema & AV' : lang === 'es' ? 'Cine & AV' : lang === 'fr' ? 'Cinéma & AV' : 'Cinema & AV'}
                   </div>
                 </div>
@@ -499,10 +534,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               
               {/* VR/XR */}
               <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
-                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">🥽</div>
+                <div className="absolute top-2 right-2 text-2xl opacity-30 group-hover:opacity-50 transition-opacity">🥽</div>
                 <div className="relative z-10">
                   <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🌐</div>
-                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest font-semibold" style={{ color: 'var(--theme-text)' }}>
+                  <div className="text-[0.6rem] md:text-[0.7rem] uppercase tracking-wide font-semibold leading-tight">
                     {lang === 'pt' ? 'VR/XR' : 'VR/XR'}
                   </div>
                 </div>
@@ -510,10 +545,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               
               {/* IA */}
               <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
-                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">🤖</div>
+                <div className="absolute top-2 right-2 text-2xl opacity-30 group-hover:opacity-50 transition-opacity">🤖</div>
                 <div className="relative z-10">
                   <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🧠</div>
-                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest font-semibold" style={{ color: 'var(--theme-text)' }}>
+                  <div className="text-[0.6rem] md:text-[0.7rem] uppercase tracking-wide font-semibold leading-tight">
                     {lang === 'pt' ? 'IA Criativa' : lang === 'es' ? 'IA Creativa' : lang === 'fr' ? 'IA Créative' : 'Creative AI'}
                   </div>
                 </div>
@@ -521,10 +556,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               
               {/* Motion Design */}
               <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
-                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">🎨</div>
+                <div className="absolute top-2 right-2 text-2xl opacity-30 group-hover:opacity-50 transition-opacity">🎨</div>
                 <div className="relative z-10">
                   <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">✨</div>
-                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest font-semibold" style={{ color: 'var(--theme-text)' }}>
+                  <div className="text-[0.6rem] md:text-[0.7rem] uppercase tracking-wide font-semibold leading-tight">
                     {lang === 'pt' ? 'Motion Design' : 'Motion Design'}
                   </div>
                 </div>
@@ -532,10 +567,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               
               {/* Curadoria & Consultoria - GRAMADO VR desde 2017 */}
               <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
-                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">🎭</div>
+                <div className="absolute top-2 right-2 text-2xl opacity-30 group-hover:opacity-50 transition-opacity">🎭</div>
                 <div className="relative z-10">
                   <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🎯</div>
-                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest font-semibold" style={{ color: 'var(--theme-text)' }}>
+                  <div className="text-[0.6rem] md:text-[0.7rem] uppercase tracking-wide font-semibold leading-tight">
                     {lang === 'pt' ? 'Curadoria & Consultoria' : lang === 'es' ? 'Curaduría & Consultoría' : lang === 'fr' ? 'Curation & Conseil' : 'Curation & Consulting'}
                   </div>
                 </div>
@@ -543,10 +578,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               
               {/* Festivais - Gramado, FAM, Rio2C */}
               <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
-                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">🎪</div>
+                <div className="absolute top-2 right-2 text-2xl opacity-30 group-hover:opacity-50 transition-opacity">🎪</div>
                 <div className="relative z-10">
                   <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🎫</div>
-                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest font-semibold" style={{ color: 'var(--theme-text)' }}>
+                  <div className="text-[0.6rem] md:text-[0.7rem] uppercase tracking-wide font-semibold leading-tight">
                     {lang === 'pt' ? 'Festivais' : lang === 'es' ? 'Festivales' : lang === 'fr' ? 'Festivals' : 'Festivals'}
                   </div>
                 </div>
@@ -554,10 +589,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               
               {/* Academia & Pesquisa */}
               <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
-                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">📚</div>
+                <div className="absolute top-2 right-2 text-2xl opacity-30 group-hover:opacity-50 transition-opacity">📚</div>
                 <div className="relative z-10">
                   <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🔬</div>
-                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest font-semibold" style={{ color: 'var(--theme-text)' }}>
+                  <div className="text-[0.6rem] md:text-[0.7rem] uppercase tracking-wide font-semibold leading-tight">
                     {lang === 'pt' ? 'Pesquisa' : lang === 'es' ? 'Investigación' : lang === 'fr' ? 'Recherche' : 'Research'}
                   </div>
                 </div>
@@ -565,10 +600,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               
               {/* Treinamentos - Centenas formados */}
               <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
-                <div className="absolute top-2 right-2 text-2xl opacity-10 group-hover:opacity-20 transition-opacity">🎓</div>
+                <div className="absolute top-2 right-2 text-2xl opacity-30 group-hover:opacity-50 transition-opacity">🎓</div>
                 <div className="relative z-10">
                   <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">👨‍🏫</div>
-                  <div className="text-[0.65rem] md:text-xs uppercase tracking-widest font-semibold" style={{ color: 'var(--theme-text)' }}>
+                  <div className="text-[0.6rem] md:text-[0.7rem] uppercase tracking-wide font-semibold leading-tight">
                     {lang === 'pt' ? 'Treinamentos' : lang === 'es' ? 'Formación' : lang === 'fr' ? 'Formation' : 'Training'}
                   </div>
                 </div>
@@ -606,10 +641,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             {/* Título */}
             <div className="mb-10 text-center">
-              <h2 className="font-handel text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.12em] mb-3" style={{ color: 'var(--theme-text)' }}>
+              <h2 className="font-handel text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.12em] mb-3">
                 {lang === 'pt' ? 'Projetos em Destaque' : lang === 'es' ? 'Proyectos Destacados' : lang === 'fr' ? 'Projets en Vedette' : 'Featured Projects'}
               </h2>
-              <p className="text-sm md:text-base" style={{ color: 'var(--theme-text-secondary)' }}>
+              <p className="text-sm md:text-base text-slate-300">
                 {lang === 'pt' ? 'Uma seleção dos nossos trabalhos mais emblemáticos' : lang === 'es' ? 'Una selección de nuestros trabajos más emblemáticos' : 'A selection of our most iconic work'}
               </p>
             </div>
@@ -655,13 +690,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   {/* Conteúdo - posição absoluta sobre a imagem */}
                   <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
                     {/* Título */}
-                    <h3 className="mb-2 font-handel text-xl md:text-2xl uppercase tracking-wide text-white group-hover:text-azimut-red transition-colors duration-300 line-clamp-2">
+                    <h3 className="mb-2 font-handel text-xl md:text-2xl uppercase tracking-wide !text-white group-hover:!text-azimut-red transition-colors duration-300 line-clamp-2">
                       {project.title}
                     </h3>
                     
                     {/* Localização (se existir) */}
                     {(project.city || project.country) && (
-                      <p className="text-xs text-white/70 mb-3">
+                      <p className="text-xs !text-white/70 mb-3">
                         📍 {[project.city, project.country].filter(Boolean).join(', ')}
                       </p>
                     )}
@@ -673,7 +708,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                           {project.tags.slice(0, 3).map((tag: string, idx: number) => (
                             <span 
                               key={idx} 
-                              className="rounded-full border border-white/20 bg-black/40 backdrop-blur px-2.5 py-1 text-white/80 transition-all duration-300 group-hover:border-azimut-red/60 group-hover:bg-azimut-red/20 group-hover:text-white"
+                              className="rounded-full border border-white/20 bg-black/40 backdrop-blur px-2.5 py-1 !text-white/80 transition-all duration-300 group-hover:border-azimut-red/60 group-hover:bg-azimut-red/20 group-hover:!text-white"
                             >
                               {tag}
                             </span>
@@ -681,7 +716,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         </div>
                       )}
                       {project.year && (
-                        <span className="text-xs text-white/60 font-medium bg-black/40 backdrop-blur px-2.5 py-1 rounded-full border border-white/10">
+                        <span className="text-xs !text-white/60 font-medium bg-black/40 backdrop-blur px-2.5 py-1 rounded-full border border-white/10">
                           {project.year}
                         </span>
                       )}
@@ -726,10 +761,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 
                 {/* Conteúdo (sempre legível) */}
                 <div className="relative z-10 p-6 md:p-8">
-                  <h2 className="mb-4 font-handel text-3xl md:text-4xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
+                  <h2 className="mb-4 font-handel text-3xl md:text-4xl uppercase tracking-[0.12em]">
                     {t(lang, 'cardTitle')}
                   </h2>
-                  <p className="mb-6 text-base md:text-lg leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                  <p className="mb-6 text-base md:text-lg leading-relaxed text-slate-300">
                     {t(lang, 'cardBody')}
                   </p>
                   
@@ -752,7 +787,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     ))}
                   </div>
                   
-                  <p className="text-sm" style={{ color: 'var(--theme-text-muted)' }}>
+                  <p className="text-sm text-slate-400">
                     📍 {t(lang, 'cities')}
                   </p>
                 </div>
@@ -789,7 +824,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         <section className="py-10 md:py-12 bg-gradient-to-b from-transparent via-black/5 to-transparent dark:via-white/5">
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="mb-10 text-center">
-              <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-[0.12em] mb-4" style={{ color: 'var(--theme-text)' }}>
+              <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-[0.12em] mb-4">
                 {lang === 'pt' ? 'O que criamos' : lang === 'es' ? 'Qué creamos' : lang === 'fr' ? 'Ce que nous créons' : 'What we create'}
               </h2>
               <p className="text-slate-700 dark:text-slate-300 max-w-2xl mx-auto text-lg">
@@ -819,7 +854,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       </div>
                     )}
                     
-                    <h3 className="mb-3 font-handel text-xl md:text-2xl uppercase tracking-wide text-white group-hover:text-azimut-red transition-colors duration-300">
+                    <h3 className="mb-3 font-handel text-lg md:text-xl uppercase tracking-wide text-white group-hover:text-azimut-red transition-colors duration-300 line-clamp-2 leading-tight">
                       {service.title}
                     </h3>
                     <p className="text-sm md:text-base leading-relaxed text-slate-900 dark:text-slate-200 group-hover:text-slate-800 dark:group-hover:text-slate-100 transition-colors duration-300">
@@ -895,7 +930,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       </div>
                     )}
                     
-                    <h3 className="mb-3 font-handel text-xl md:text-2xl uppercase tracking-wide text-white group-hover:text-azimut-red transition-colors duration-300 relative z-10">
+                    <h3 className="mb-3 font-handel text-lg md:text-xl uppercase tracking-wide text-white group-hover:text-azimut-red transition-colors duration-300 relative z-10 line-clamp-2 leading-tight">
                       {service.title}
                     </h3>
                     <p className="text-sm md:text-base leading-relaxed text-slate-900 dark:text-slate-200 group-hover:text-slate-800 dark:group-hover:text-slate-100 transition-colors duration-300 relative z-10">

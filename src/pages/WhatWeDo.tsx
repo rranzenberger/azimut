@@ -102,10 +102,10 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
         path="/what"
       />
       <main className="relative min-h-screen overflow-hidden pt-6 md:pt-8 pb-24">
-        {/* Background: Estrela da Azimut */}
+        {/* Background: Estrela da Azimut - PADRONIZADO COM OUTRAS PÁGINAS */}
         <div
           ref={starRef}
-          className="fixed -right-28 -bottom-40 min-[768px]:-right-40 min-[768px]:-bottom-60 h-[520px] w-[520px] min-[768px]:h-[680px] min-[768px]:w-[680px] opacity-30 transition-opacity duration-700 pointer-events-none"
+          className="fixed top-20 -right-28 h-[520px] w-[520px] min-[768px]:top-32 min-[768px]:-right-40 min-[768px]:h-[680px] min-[768px]:w-[680px] opacity-30 transition-opacity duration-700 pointer-events-none"
           style={{
             zIndex: -5,
             backgroundImage: 'url(/logo-azimut-star.svg)',

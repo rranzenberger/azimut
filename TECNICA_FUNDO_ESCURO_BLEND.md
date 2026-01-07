@@ -265,3 +265,4 @@ Resultado: Brilhante! ✨
 
 Se ainda tiver preto, a única solução 100% é criar alpha channel (GIF/WebM).
 
+

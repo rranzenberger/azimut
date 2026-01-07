@@ -226,7 +226,7 @@ const Press: React.FC<PressProps> = ({ lang }) => {
                     href="https://museuolimpico.rio/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/5 px-6 py-3 font-sora text-sm font-medium uppercase tracking-[0.1em] text-white transition-all hover:bg-white/10 hover:border-white/30"
+                    className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-subtle px-6 py-3 font-sora text-sm font-medium uppercase tracking-[0.1em] text-white transition-all hover:bg-subtle-md hover:border-white/30"
                   >
                     <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />

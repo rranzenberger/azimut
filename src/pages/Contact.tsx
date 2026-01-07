@@ -286,7 +286,7 @@ Precisa Financiamento: ${profile.needsFunding ? 'Sim' : 'Não'}
               className={`flex-1 rounded-lg px-6 py-3 font-sora text-sm font-medium uppercase tracking-[0.1em] transition-all ${
                 mode === 'wizard'
                   ? 'bg-azimut-red'
-                  : 'bg-white/5 hover:bg-white/10'
+                  : 'bg-subtle hover:bg-subtle-md'
               }`}
               style={{ color: mode === 'wizard' ? '#ffffff' : 'var(--theme-text-secondary)' }}
             >
@@ -300,7 +300,7 @@ Precisa Financiamento: ${profile.needsFunding ? 'Sim' : 'Não'}
               className={`flex-1 rounded-lg px-6 py-3 font-sora text-sm font-medium uppercase tracking-[0.1em] transition-all ${
                 mode === 'form'
                   ? 'bg-azimut-red'
-                  : 'bg-white/5 hover:bg-white/10'
+                  : 'bg-subtle hover:bg-subtle-md'
               }`}
               style={{ color: mode === 'form' ? '#ffffff' : 'var(--theme-text-secondary)' }}
             >
@@ -508,7 +508,7 @@ Precisa Financiamento: ${profile.needsFunding ? 'Sim' : 'Não'}
                 <li>3. Se fizer sentido, encaixamos em edital (Rouanet/PROAC/Creative BC/CMF/Telefilm).</li>
                 <li>4. Entregamos timeline resumida e próximos passos.</li>
               </ul>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-3 text-sm text-slate-900 dark:text-slate-200">
+              <div className="rounded-lg border border-white/10 bg-subtle p-3 text-sm text-slate-900 dark:text-slate-200">
                 <p className="font-semibold text-slate-50">Dica</p>
                 <p>Se tiver referências, links ou mood (YouTube/Vimeo/Instagram), cole no campo de referências.</p>
               </div>

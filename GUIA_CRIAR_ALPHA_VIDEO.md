@@ -304,3 +304,4 @@ Posso aplicar blend modes ainda mais agressivos:
 
 **Estou aqui para ajudar!** 🚀
 
+
