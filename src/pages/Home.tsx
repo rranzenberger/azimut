@@ -169,7 +169,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* ════════════════════════════════════════════════════════════════ */}
         {/* HERO WORLD-CLASS 2026 - 85vh + Stats Cards Flutuantes */}
         {/* ════════════════════════════════════════════════════════════════ */}
-        <section className="relative min-h-screen overflow-hidden film-grain py-12">
+        <section className="relative min-h-screen flex items-center overflow-hidden film-grain py-12">
           {/* Background: Imagem do Projeto Featured (se disponível) */}
           {(() => {
             const featured = recommended[0] || defaultProjects[0]
@@ -199,8 +199,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               Baseado em: Cartier, Omega, Apple (Pesquisas Gemini/ChatGPT/Claude)
               ══════════════════════════════════════════════════════════════ */}
           
-          {/* DESKTOP: Split Screen 35/65 - SEM CORTAR */}
-          <div className="relative z-10 hidden lg:grid lg:grid-cols-[35%_65%] gap-8 items-start px-4 sm:px-6 lg:px-8 mx-auto max-w-[1800px] py-8">
+          {/* DESKTOP: Split Screen 35/65 - CENTRALIZADO */}
+          <div className="relative z-10 hidden lg:grid lg:grid-cols-[35%_65%] gap-8 items-center px-4 sm:px-6 lg:px-8 mx-auto max-w-[1800px] w-full">
             {/* Coluna Esquerda: Conteúdo Texto (35% - MENOR para dar espaço aos cards) */}
             <div className="space-y-5 pr-4">
               {/* Badge AZIMUT */}
@@ -316,8 +316,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </div>
             </div>
             
-            {/* Coluna Direita: Logo 3D Animada GRANDE (65% layout - 1200px para não cortar) */}
-            <div className="flex items-start justify-center pl-4">
+            {/* Coluna Direita: Logo 3D Animada GRANDE (65% layout - 1200px centralizada) */}
+            <div className="flex items-center justify-center pl-4">
               <div className="w-full max-w-[1200px] aspect-square">
                 <AnimatedLogo />
               </div>
