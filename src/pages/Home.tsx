@@ -169,7 +169,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* ════════════════════════════════════════════════════════════════ */}
         {/* HERO WORLD-CLASS 2026 - 85vh + Stats Cards Flutuantes */}
         {/* ════════════════════════════════════════════════════════════════ */}
-        <section className="relative min-h-screen flex items-center overflow-hidden film-grain py-12">
+        <section className="relative min-h-[90vh] flex items-center overflow-hidden film-grain py-8">
           {/* Background: Imagem do Projeto Featured (se disponível) */}
           {(() => {
             const featured = recommended[0] || defaultProjects[0]
@@ -201,8 +201,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           
           {/* DESKTOP: Split Screen 35/65 - CENTRALIZADO */}
           <div className="relative z-10 hidden lg:grid lg:grid-cols-[35%_65%] gap-8 items-center px-4 sm:px-6 lg:px-8 mx-auto max-w-[1800px] w-full">
-            {/* Coluna Esquerda: Conteúdo Texto (35% - MENOR para dar espaço aos cards) */}
-            <div className="space-y-5 pr-4">
+            {/* Coluna Esquerda: Conteúdo Texto (35% - COMPACTO VERTICAL) */}
+            <div className="space-y-4 pr-4">
               {/* Badge AZIMUT */}
               <div className="inline-flex items-center gap-2 font-sora text-[0.75rem] uppercase tracking-[0.3em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
                 <img 
@@ -227,13 +227,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 <span className="text-azimut-red">MUNDOS</span>
               </h1>
               
-              {/* Subtítulo MAIOR */}
-              <p className="max-w-xl text-[1.05rem] leading-relaxed animate-fade-in-up opacity-0 !text-white/90" style={{ animationDelay: '0.3s' }}>
+              {/* Subtítulo COMPACTO */}
+              <p className="max-w-xl text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0 !text-white/90" style={{ animationDelay: '0.3s' }}>
                 {heroSubtitle.split('.')[0]}.
               </p>
               
-              {/* Impact Cards - MAIS LARGOS (max-w-6xl) */}
-              <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 max-w-6xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+              {/* Impact Cards - EXTRA LARGOS (max-w-7xl) */}
+              <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 max-w-7xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
                 {/* Cinema & AV */}
                 <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 p-6 rounded-xl hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
                   <span className="block text-3xl mb-2">🎬</span>
@@ -286,8 +286,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 </div>
               </div>
 
-              {/* Secondary Impact Cards - Credibilidade MAIS LARGOS */}
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 max-w-4xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.5s' }}>
+              {/* Secondary Impact Cards - Credibilidade EXTRA LARGOS */}
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.5s' }}>
                 {/* Rio Museu Olímpico */}
                 <div className="glass-panel backdrop-blur-xl border border-white/10 p-5 rounded-lg hover:border-azimut-red/50 transition-all duration-300 group" style={{ background: 'rgba(15, 23, 42, 0.7)' }}>
                   <span className="block text-base font-semibold text-azimut-red group-hover:text-red-400 transition-colors break-words">Rio Museum</span>
@@ -316,9 +316,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </div>
             </div>
             
-            {/* Coluna Direita: Logo 3D Animada GRANDE (65% layout - 1200px centralizada) */}
+            {/* Coluna Direita: Logo 3D Animada (65% layout - 1000px menor para dar espaço aos cards) */}
             <div className="flex items-center justify-center pl-4">
-              <div className="w-full max-w-[1200px] aspect-square">
+              <div className="w-full max-w-[1000px] aspect-square">
                 <AnimatedLogo />
               </div>
             </div>
