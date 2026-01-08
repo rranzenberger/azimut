@@ -1,322 +1,179 @@
-/**
- * API de Captura de Leads
- * Captura leads com contexto comportamental e notifica equipe
- */
+import { NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
 
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { sendEmail } from '@/lib/email';
-import { detectInstitution, isPremiumClient, shouldSendAlert } from '@/lib/institutional-detection';
-import { notifyHotLead, sendConfirmationEmail } from '@/lib/notifications';
+// Função para calcular Lead Score (0-100)
+function calculateLeadScore(data: any): number {
+  let score = 0
 
-// Helper local para buscar settings com fallback
-async function getSettings() {
-  try {
-    const settings = await prisma.settings.findUnique({
-      where: { id: 'singleton' },
-    });
-    return settings;
-  } catch (error: any) {
-    // Se falhar, retornar null (usar env var como fallback)
-    console.warn('⚠️ Erro ao buscar Settings. Usando env var.', error.message);
-    return null;
-  }
+  // ORGANIZAÇÃO (30 pontos)
+  if (data.organizationType === 'governo') score += 15
+  if (data.organizationType === 'museu') score += 15
+  if (data.organizationType === 'fundacao') score += 12
+  if (data.organizationType === 'universidade') score += 10
+  if (data.organizationType === 'corporativo') score += 8
+
+  if (data.company && data.company.length > 5) score += 10
+  if (data.position && data.position.length > 3) score += 5
+
+  // BUDGET (30 pontos)
+  if (data.budget === '3m+') score += 30
+  if (data.budget === '1m-3m') score += 25
+  if (data.budget === '500k-1m') score += 20
+  if (data.budget === '300k-500k') score += 15
+  if (data.budget === '100k-300k') score += 10
+  if (data.budget === 'grant') score += 20 // Alto potencial
+
+  // TIMELINE (10 pontos)
+  if (data.timeline === 'urgente') score += 10
+  if (data.timeline === '6m') score += 8
+  if (data.timeline === '12m') score += 6
+
+  // PROJETO (15 pontos)
+  if (data.projectType === 'museu') score += 15
+  if (data.projectType === 'instalacao') score += 12
+  if (data.projectType === 'vr') score += 10
+  if (data.projectType === 'app') score += 8
+
+  // DESCRIÇÃO (5 pontos)
+  if (data.description && data.description.length > 50) score += 5
+
+  // INTERESSE EM GRANTS (10 pontos - diferencial!)
+  if (data.interestInGrants) score += 10
+
+  // DADOS COMPLETOS (10 pontos)
+  let fieldsComplete = 0
+  if (data.phone) fieldsComplete++
+  if (data.position) fieldsComplete++
+  if (data.country) fieldsComplete++
+  if (data.city) fieldsComplete++
+  if (data.description) fieldsComplete++
+  score += fieldsComplete * 2
+
+  return Math.min(score, 100) // Cap at 100
 }
 
-export async function POST(request: NextRequest) {
+// Função para estimar valor do projeto
+function estimateValue(budget: string): number | null {
+  const estimates: Record<string, number> = {
+    '<100k': 50000,
+    '100k-300k': 200000,
+    '300k-500k': 400000,
+    '500k-1m': 750000,
+    '1m-3m': 2000000,
+    '3m+': 5000000,
+    'grant': 500000
+  }
+  return estimates[budget] || null
+}
+
+// Função para determinar prioridade
+function determinePriority(score: number): string {
+  if (score >= 80) return 'URGENT'
+  if (score >= 60) return 'HIGH'
+  if (score >= 40) return 'MEDIUM'
+  return 'LOW'
+}
+
+export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const {
-      sessionId,
-      name,
-      email,
-      phone,
-      company,
-      position,
-      projectType,
-      budget,
-      timeline,
-      description,
-      source,
-    } = body;
+    const data = await request.json()
 
-    // Validação básica
-    if (!email || !name) {
-      return NextResponse.json(
-        { error: 'Nome e email são obrigatórios' },
-        { status: 400 }
-      );
-    }
+    // Calcular score e prioridade
+    const leadScore = calculateLeadScore(data)
+    const priority = determinePriority(leadScore)
+    const estimatedValue = estimateValue(data.budget)
 
-    // 🏛️ DETECÇÃO INSTITUCIONAL (NOVO!)
-    const institution = detectInstitution(email)
-    const isInstitutional = !!institution
-    const isPremium = isPremiumClient(email)
-    const shouldAlert = shouldSendAlert(email)
-    
-    // Log para debug
-    if (institution) {
-      console.log('🏛️ LEAD INSTITUCIONAL DETECTADO:', {
-        name: institution.name,
-        type: institution.type,
-        tier: institution.tier,
-        priority: institution.priority,
-        autoAlert: institution.autoAlert
-      })
-    }
-
-    // Buscar contexto da sessão (se existe)
-    let interestScore = null;
-    let session = null;
-
-    if (sessionId) {
-      session = await prisma.visitorSession.findUnique({
-        where: { sessionId },
-        include: {
-          interestScore: true,
-          pageViews: {
-            include: {
-              project: true,
-            },
-          },
-        },
-      });
-
-      interestScore = session?.interestScore;
-    }
-
-    // Inferir tipo de lead baseado no interesse
-    let leadType = 'CONTACT_FORM';
-    if (budget) leadType = 'BUDGET_INQUIRY';
-
-    // Inferir prioridade baseada no score de conversão E instituição
-    let priority = 'MEDIUM';
-    
-    // 🏛️ Cliente institucional tem prioridade automática!
-    if (institution) {
-      priority = institution.priority as any
-    }
-    // Se não é institucional, usar score de conversão
-    else if (interestScore) {
-      if (interestScore.conversionScore > 70) priority = 'HIGH';
-      if (interestScore.conversionScore > 85) priority = 'URGENT';
-    }
-
-    // Inferir tipo de visitante se não temos score
-    let inferredType: string | null = interestScore?.visitorType || null;
-    if (!inferredType && projectType) {
-      if (projectType.toLowerCase().includes('museu')) {
-        inferredType = 'MUSEUM_CURATOR';
-      } else if (projectType.toLowerCase().includes('cidade') || 
-                 projectType.toLowerCase().includes('prefeitura')) {
-        inferredType = 'CITY_OFFICIAL';
-      } else if (projectType.toLowerCase().includes('marca')) {
-        inferredType = 'BRAND_MANAGER';
-      } else if (projectType.toLowerCase().includes('festival')) {
-        inferredType = 'FESTIVAL_ORGANIZER';
-      }
-    }
-
-    // Criar lead
+    // Criar lead no banco
     const lead = await prisma.lead.create({
       data: {
-        name,
-        email,
-        phone,
-        company,
-        position,
-        leadType: leadType as any,
-        projectType,
-        budget,
-        timeline,
-        description,
-        sourceUrl: source?.url,
-        referrer: source?.referrer,
-        utmSource: source?.utm_source,
-        utmMedium: source?.utm_medium,
-        utmCampaign: source?.utm_campaign,
+        name: data.name,
+        email: data.email,
+        phone: data.phone || null,
+        company: data.company || null,
+        position: data.position || null,
+        leadType: 'CONTACT_FORM',
+        projectType: data.projectType || null,
+        budget: data.budget || null,
+        timeline: data.timeline || null,
+        description: data.description || null,
         status: 'NEW',
-        priority: priority as any,
-      },
-    });
-
-    // Vincular lead à sessão
-    if (sessionId) {
-      await prisma.visitorSession.update({
-        where: { sessionId },
-        data: {
-          leadId: lead.id,
-        },
-      });
-    }
-
-    // Enviar notificação por email
-    const settings = await getSettings();
-    await sendLeadNotification({
-      lead,
-      interestScore,
-      session,
-      inferredType,
-      notificationEmail: settings?.notificationEmail || process.env.NOTIFICATION_EMAIL || null,
-    });
-
-    // 🔥 NOVO: Enviar alerta se for lead QUENTE (HOT/URGENT)
-    const conversionScore = interestScore?.conversionScore || 0
-    const isHotLead = conversionScore > 75 || priority === 'HIGH' || priority === 'URGENT' || shouldAlert
-    
-    if (isHotLead) {
-      // Determinar urgência
-      let urgency: 'HOT' | 'WARM' | 'QUALIFIED' = 'QUALIFIED'
-      if (priority === 'URGENT' || conversionScore > 85) {
-        urgency = 'HOT'
-      } else if (priority === 'HIGH' || conversionScore > 75) {
-        urgency = 'WARM'
+        priority,
+        leadScore,
+        organizationType: data.organizationType || null,
+        estimatedValue,
+        interestInGrants: data.interestInGrants || false,
+        country: data.country || null,
+        city: data.city || null,
+        sourceUrl: request.headers.get('referer') || null,
+        utmSource: null, // TODO: Extract from URL
+        utmMedium: null,
+        utmCampaign: null
       }
-      
-      // Enviar notificação Slack/Email
-      await notifyHotLead({
-        leadId: lead.id,
-        leadName: name,
-        leadEmail: email,
-        company: company || undefined,
-        conversionScore: conversionScore,
-        visitorType: inferredType || undefined,
-        urgency,
-        message: description || 'Sem descrição adicional',
-        timestamp: new Date(),
-      }).catch(err => {
-        // Não bloquear o fluxo se a notificação falhar
-        console.error('Erro ao enviar notificação de lead quente:', err)
-      })
-    }
-
-    // 📧 NOVO: Enviar email de confirmação para o CLIENTE
-    // Detectar idioma do sessionId ou usar 'pt' como padrão
-    let clientLang = 'pt'
-    if (session?.language) {
-      // session.language pode ser 'pt-BR', 'en-US', etc.
-      clientLang = session.language.split('-')[0] as 'pt' | 'en' | 'es' | 'fr'
-      if (!['pt', 'en', 'es', 'fr'].includes(clientLang)) {
-        clientLang = 'pt'
-      }
-    }
-    
-    await sendConfirmationEmail({
-      name,
-      email,
-      lang: clientLang,
-    }).catch(err => {
-      // Não bloquear o fluxo se o email de confirmação falhar
-      console.error('Erro ao enviar email de confirmação:', err)
     })
+
+    // TODO: Enviar email notification para equipe
+    // TODO: Enviar email confirmation para lead
+    // TODO: Integrar com CRM/Webhook
+
+    // Se score alto, pode notificar equipe imediatamente
+    if (leadScore >= 70) {
+      console.log(`🔥 HOT LEAD! Score: ${leadScore}`, {
+        name: data.name,
+        email: data.email,
+        company: data.company,
+        budget: data.budget
+      })
+      // TODO: Enviar SMS/WhatsApp/Slack para equipe
+    }
 
     return NextResponse.json({
       success: true,
       leadId: lead.id,
-      message: 'Obrigado! Entraremos em contato em breve.',
-    });
+      score: leadScore,
+      priority,
+      message: 'Lead received successfully'
+    }, { status: 201 })
 
   } catch (error) {
-    console.error('Lead creation error:', error);
+    console.error('Error creating lead:', error)
     return NextResponse.json(
-      { error: 'Erro ao processar sua solicitação' },
+      { error: 'Failed to create lead' },
       { status: 500 }
-    );
+    )
   }
 }
 
-/**
- * Envia notificação de novo lead por email
- */
-async function sendLeadNotification(data: {
-  lead: any;
-  interestScore: any;
-  session: any;
-  inferredType: string | null;
-  notificationEmail?: string | null;
-}) {
-  const { lead, interestScore, session, inferredType, notificationEmail } = data;
-
-  // Preparar contexto comportamental
-  const context = {
-    visitedPages: session?.pageViews?.map((pv: any) => pv.pageSlug).join(', ') || 'N/A',
-    projectsViewed: session?.pageViews
-      ?.filter((pv: any) => pv.project)
-      ?.map((pv: any) => pv.project.title)
-      .join(', ') || 'N/A',
-    timeOnSite: session?.duration ? `${Math.round(session.duration / 60)} min` : 'N/A',
-    conversionScore: interestScore?.conversionScore || 0,
-    visitorType: inferredType || 'Não identificado',
-    country: session?.country || 'N/A',
-  };
-
-  // Template do email
-  const emailHtml = `
-    <h2>🎯 Novo Lead Capturado - Azimut</h2>
-    
-    <h3>Informações do Contato:</h3>
-    <ul>
-      <li><strong>Nome:</strong> ${lead.name}</li>
-      <li><strong>Email:</strong> ${lead.email}</li>
-      <li><strong>Telefone:</strong> ${lead.phone || 'N/A'}</li>
-      <li><strong>Empresa:</strong> ${lead.company || 'N/A'}</li>
-      <li><strong>Cargo:</strong> ${lead.position || 'N/A'}</li>
-    </ul>
-
-    <h3>Interesse:</h3>
-    <ul>
-      <li><strong>Tipo de Projeto:</strong> ${lead.projectType || 'N/A'}</li>
-      <li><strong>Budget:</strong> ${lead.budget || 'Não informado'}</li>
-      <li><strong>Timeline:</strong> ${lead.timeline || 'Não informado'}</li>
-      <li><strong>Descrição:</strong> ${lead.description || 'N/A'}</li>
-    </ul>
-
-    <h3>📊 Análise Comportamental (IA):</h3>
-    <ul>
-      <li><strong>Tipo de Visitante:</strong> ${context.visitorType}</li>
-      <li><strong>Score de Conversão:</strong> ${context.conversionScore}/100</li>
-      <li><strong>Tempo no Site:</strong> ${context.timeOnSite}</li>
-      <li><strong>País:</strong> ${context.country}</li>
-      <li><strong>Páginas Visitadas:</strong> ${context.visitedPages}</li>
-      <li><strong>Projetos Visualizados:</strong> ${context.projectsViewed}</li>
-    </ul>
-
-    <h3>🎯 Prioridade: ${lead.priority}</h3>
-
-    <hr>
-    <p><small>Lead ID: ${lead.id}</small></p>
-  `;
-
-  // Se não tiver email configurado, apenas logar
-  if (!notificationEmail) {
-    console.log('📧 Notificação de lead (email não configurado):', {
-      subject: `[${lead.priority}] Novo Lead: ${lead.name} - ${context.visitorType}`,
-      html: emailHtml,
-    });
-    return;
-  }
-
-  // Enviar email usando SMTP do Settings
+// GET - List leads (opcional, para debug)
+export async function GET(request: Request) {
   try {
-    await sendEmail({
-      to: notificationEmail,
-      subject: `[${lead.priority.toUpperCase()}] Novo Lead: ${lead.name} - ${context.visitorType}`,
-      html: emailHtml,
-    });
+    const { searchParams } = new URL(request.url)
+    const limit = parseInt(searchParams.get('limit') || '10')
+
+    const leads = await prisma.lead.findMany({
+      take: limit,
+      orderBy: [
+        { leadScore: 'desc' },
+        { createdAt: 'desc' }
+      ],
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        company: true,
+        leadScore: true,
+        budget: true,
+        status: true,
+        priority: true,
+        createdAt: true
+      }
+    })
+
+    return NextResponse.json({ leads })
   } catch (error) {
-    // Erro já é logado dentro de sendEmail, não precisa fazer nada aqui
-    // O lead já foi salvo, então não queremos que falhe por causa do email
+    console.error('Error fetching leads:', error)
+    return NextResponse.json(
+      { error: 'Failed to fetch leads' },
+      { status: 500 }
+    )
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
