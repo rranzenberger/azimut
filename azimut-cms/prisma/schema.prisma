@@ -133,41 +133,44 @@ model Project {
 }
 
 model Page {
-  id             String     @id @default(uuid())
-  name           String
-  slug           String     @unique
-  seoTitlePt     String?
-  seoTitleEn     String?
-  seoDescPt      String?
-  seoDescEn      String?
-  status         PageStatus @default(PUBLISHED)
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
-  heroSloganPt   String?
-  heroSloganEn   String?
-  heroSloganEs   String?
-  heroSloganFr   String?
-  heroSubtitleEn String?
-  heroSubtitleEs String?
-  heroSubtitleFr String?
-  heroSubtitlePt String?
-  seoDescEs      String?
-  seoDescFr      String?
-  seoTitleEs     String?
-  seoTitleFr     String?
-  pillar1Pt      String?
-  pillar1En      String?
-  pillar1Es      String?
-  pillar1Fr      String?
-  pillar2Pt      String?
-  pillar2En      String?
-  pillar2Es      String?
-  pillar2Fr      String?
-  pillar3Pt      String?
-  pillar3En      String?
-  pillar3Es      String?
-  pillar3Fr      String?
-  sections       Section[]
+  id                   String     @id @default(uuid())
+  name                 String
+  slug                 String     @unique
+  seoTitlePt           String?
+  seoTitleEn           String?
+  seoDescPt            String?
+  seoDescEn            String?
+  status               PageStatus @default(PUBLISHED)
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+  heroSloganPt         String?
+  heroSloganEn         String?
+  heroSloganEs         String?
+  heroSloganFr         String?
+  heroSubtitleEn       String?
+  heroSubtitleEs       String?
+  heroSubtitleFr       String?
+  heroSubtitlePt       String?
+  seoDescEs            String?
+  seoDescFr            String?
+  seoTitleEs           String?
+  seoTitleFr           String?
+  pillar1Pt            String?
+  pillar1En            String?
+  pillar1Es            String?
+  pillar1Fr            String?
+  pillar2Pt            String?
+  pillar2En            String?
+  pillar2Es            String?
+  pillar2Fr            String?
+  pillar3Pt            String?
+  pillar3En            String?
+  pillar3Es            String?
+  pillar3Fr            String?
+  demoreelVideo        String?
+  demoreelThumbnail    String?
+  heroBackgroundImage  String?
+  sections             Section[]
 }
 
 model Section {
