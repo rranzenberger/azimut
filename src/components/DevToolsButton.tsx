@@ -4,13 +4,16 @@ export default function DevToolsButton() {
   const [isOpen, setIsOpen] = useState(false)
   const [debugMode, setDebugMode] = useState(false)
   const [showStats, setShowStats] = useState(false)
+  const [bypassLogin, setBypassLogin] = useState(false)
 
   useEffect(() => {
     // Carregar estado do localStorage
     const savedDebugMode = localStorage.getItem('azimut-debug-mode') === 'true'
     const savedShowStats = localStorage.getItem('azimut-show-stats') === 'true'
+    const savedBypassLogin = localStorage.getItem('azimut-bypass-login') === 'true'
     setDebugMode(savedDebugMode)
     setShowStats(savedShowStats)
+    setBypassLogin(savedBypassLogin)
   }, [])
 
   const toggleDebugMode = () => {
@@ -25,6 +28,23 @@ export default function DevToolsButton() {
     setShowStats(newValue)
     localStorage.setItem('azimut-show-stats', String(newValue))
     console.log('📊 Show Stats:', newValue)
+  }
+
+  const toggleBypassLogin = () => {
+    const newValue = !bypassLogin
+    setBypassLogin(newValue)
+    localStorage.setItem('azimut-bypass-login', String(newValue))
+    
+    // Salvar também um token especial para bypass
+    if (newValue) {
+      localStorage.setItem('azimut-dev-bypass-token', 'dev-mode-active')
+      console.log('🔓 Login desligado - Acesso direto ativo')
+      alert('✅ Login desligado! Recarregue a página para entrar direto.')
+    } else {
+      localStorage.removeItem('azimut-dev-bypass-token')
+      console.log('🔒 Login ligado - Tela de autenticação ativa')
+      alert('🔒 Login ligado! Recarregue a página para ver tela de login.')
+    }
   }
 
   const clearCache = () => {
@@ -64,6 +84,19 @@ export default function DevToolsButton() {
 
           {/* Opções */}
           <div className="space-y-3">
+            {/* Login Screen Toggle */}
+            <label className="flex items-center justify-between p-3 rounded-lg bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 cursor-pointer transition-colors">
+              <span className="text-sm text-slate-300">
+                {bypassLogin ? '🔓 Login Desligado' : '🔒 Login Ligado'}
+              </span>
+              <input
+                type="checkbox"
+                checked={!bypassLogin}
+                onChange={toggleBypassLogin}
+                className="w-5 h-5 rounded border-slate-600 text-azimut-red focus:ring-2 focus:ring-azimut-red"
+              />
+            </label>
+
             {/* Debug Mode */}
             <label className="flex items-center justify-between p-3 rounded-lg bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 cursor-pointer transition-colors">
               <span className="text-sm text-slate-300">
