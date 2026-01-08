@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Line, Pie, Bar, Funnel } from 'react-chartjs-2'
+import { Line, Pie, Bar } from 'react-chartjs-2'
 import {
   Chart as ChartJS,
   CategoryScale,
