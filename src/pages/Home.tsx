@@ -998,6 +998,109 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
         </section>
 
+        {/* ═══════════════════════════════════════════════════════════
+            CTA PREMIUM FULLSCREEN - START A PROJECT
+            Inspiração: Apple, Tesla, Sites Premium 2026
+            Glow animado + Destaque vermelho Azimut
+        ═══════════════════════════════════════════════════════════ */}
+        <section className="relative py-20 md:py-32 overflow-hidden bg-gradient-to-b from-transparent via-black/30 to-black/60 dark:via-black/60 dark:to-black/90">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute inset-0" style={{
+              backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(201, 35, 55, 0.3) 1px, transparent 0)',
+              backgroundSize: '40px 40px'
+            }} />
+          </div>
+
+          <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
+            {/* Título com animação */}
+            <h2 
+              className="font-handel text-4xl md:text-5xl lg:text-6xl uppercase tracking-[0.08em] mb-6 text-white"
+              style={{
+                animation: 'fadeInUp 0.8s ease-out both',
+                textShadow: '0 0 40px rgba(201, 35, 55, 0.3)'
+              }}
+            >
+              {lang === 'pt' ? "Vamos criar algo incrível juntos?" : 
+               lang === 'es' ? "¿Vamos a crear algo increíble juntos?" : 
+               lang === 'fr' ? "Créons quelque chose d'incroyable ensemble?" : 
+               "Let's create something incredible together?"}
+            </h2>
+
+            {/* Subtítulo */}
+            <p 
+              className="text-lg md:text-xl text-slate-300 dark:text-slate-400 max-w-3xl mx-auto mb-12"
+              style={{
+                animation: 'fadeInUp 0.8s ease-out 0.2s both'
+              }}
+            >
+              {lang === 'pt' ? "Entre em contato para discutir seu projeto e descobrir como podemos transformar sua visão em realidade." :
+               lang === 'es' ? "Contáctanos para discutir tu proyecto y descubrir cómo podemos transformar tu visión en realidad." :
+               lang === 'fr' ? "Contactez-nous pour discuter de votre projet et découvrir comment nous pouvons transformer votre vision en réalité." :
+               "Get in touch to discuss your project and discover how we can transform your vision into reality."}
+            </p>
+
+            {/* CTA Button com GLOW ANIMADO */}
+            <div 
+              className="inline-block"
+              style={{
+                animation: 'fadeInUp 0.8s ease-out 0.4s both'
+              }}
+            >
+              <Link
+                to="/contact"
+                className="group relative inline-flex items-center justify-center gap-3 rounded-full bg-azimut-red px-10 py-5 font-handel text-base md:text-lg uppercase tracking-[0.15em] text-white overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_60px_rgba(201,35,55,0.8)]"
+                style={{
+                  boxShadow: '0 0 40px rgba(201, 35, 55, 0.4), 0 0 80px rgba(201, 35, 55, 0.2)',
+                  animation: 'glow-pulse 3s ease-in-out infinite'
+                }}
+              >
+                {/* Glow interno animado */}
+                <div 
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                  style={{
+                    animation: 'shine 3s ease-in-out infinite'
+                  }}
+                />
+                
+                {/* Texto */}
+                <span className="relative z-10">
+                  {lang === 'pt' ? 'Iniciar um Projeto' :
+                   lang === 'es' ? 'Iniciar un Proyecto' :
+                   lang === 'fr' ? 'Démarrer un Projet' :
+                   'Start a Project'}
+                </span>
+                
+                {/* Ícone com animação */}
+                <svg 
+                  className="relative z-10 w-6 h-6 transition-transform group-hover:translate-x-2" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+
+                {/* Ripple effect no hover */}
+                <span className="absolute inset-0 rounded-full border-2 border-white/30 opacity-0 group-hover:opacity-100 group-hover:scale-125 transition-all duration-700" />
+              </Link>
+
+              {/* Texto pequeno abaixo */}
+              <p 
+                className="mt-6 text-sm text-slate-400 dark:text-slate-500"
+                style={{
+                  animation: 'fadeInUp 0.8s ease-out 0.6s both'
+                }}
+              >
+                {lang === 'pt' ? '✨ Resposta em até 24 horas' :
+                 lang === 'es' ? '✨ Respuesta en hasta 24 horas' :
+                 lang === 'fr' ? '✨ Réponse sous 24 heures' :
+                 '✨ Response within 24 hours'}
+              </p>
+            </div>
+          </div>
+        </section>
+
       </main>
     </>
   )
