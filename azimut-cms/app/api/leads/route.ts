@@ -67,7 +67,7 @@ function estimateValue(budget: string): number | null {
 }
 
 // Função para determinar prioridade
-function determinePriority(score: number): string {
+function determinePriority(score: number): 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT' {
   if (score >= 80) return 'URGENT'
   if (score >= 60) return 'HIGH'
   if (score >= 40) return 'MEDIUM'
