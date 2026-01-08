@@ -170,21 +170,28 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* HERO WORLD-CLASS 2026 - 85vh + Stats Cards Flutuantes */}
         {/* ════════════════════════════════════════════════════════════════ */}
         <section className="relative min-h-[90vh] flex items-center overflow-hidden film-grain py-8">
-          {/* Background: Imagem do Projeto Featured (se disponível) */}
+          {/* Background: Imagem do Backoffice (heroBackgroundImage) ou Featured Project */}
           {(() => {
-            const featured = recommended[0] || defaultProjects[0]
-            const hasImage = featured?.heroImage && (featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.original)
+            // PRIORIDADE 1: Imagem do backoffice (page.heroBackgroundImage)
+            const heroBackgroundImage = cmsContent?.page?.heroBackgroundImage
             
-            return hasImage ? (
+            // PRIORIDADE 2: Projeto Featured
+            const featured = recommended[0] || defaultProjects[0]
+            const featuredImage = featured?.heroImage?.large || featured?.heroImage?.medium || featured?.heroImage?.original
+            
+            // FALLBACK 3: Placeholder
+            const backgroundImage = heroBackgroundImage || featuredImage || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072'
+            
+            return (
               <div className="absolute inset-0 w-full h-full">
                 <img 
-                  src={featured.heroImage?.large || featured.heroImage?.medium || featured.heroImage?.original || ''} 
+                  src={backgroundImage}
                   alt=""
                   className="w-full h-full object-cover opacity-20"
                   loading="eager"
                 />
               </div>
-            ) : null
+            )
           })()}
           
           {/* Gradiente Direcional: Azul Opaco (esquerda) → Preto Transparente (direita) */}
