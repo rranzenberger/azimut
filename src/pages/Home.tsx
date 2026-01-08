@@ -448,12 +448,17 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             ══════════════════════════════════════════════════════════════ */}
         <section className="relative h-screen w-full overflow-hidden">
           {(() => {
-            // Buscar do backoffice (demoreelVideo) ou fallback para featured project
-            const demoreelVideo = cmsContent?.page?.demoreelVideo
+            // ✅ VÍDEO DEMOREEL AZIMUT 2026 (Upscale Topaz) - PRIORIDADE 1
+            const demoreelVideoFixed = 'https://www.youtube.com/watch?v=F_kfcfK_v44'
+            
+            // Buscar do backoffice (se configurado) ou usar o fixo acima
+            const demoreelVideoBackoffice = cmsContent?.page?.demoreelVideo
             const featured = recommended[0] || defaultProjects[0]
             const fallbackVideo = featured?.heroImage?.type === 'VIDEO' ? featured.heroImage.original : null
-            const videoUrl = demoreelVideo || fallbackVideo || 'https://www.youtube.com/watch?v=1Pcoi_E9SXI'
-            const thumbnailUrl = featured?.heroImage?.thumbnail || 'https://img.youtube.com/vi/1Pcoi_E9SXI/maxresdefault.jpg'
+            
+            // ORDEM DE PRIORIDADE: 1. Fixo no código, 2. Backoffice, 3. Featured Project, 4. Default
+            const videoUrl = demoreelVideoFixed || demoreelVideoBackoffice || fallbackVideo || 'https://www.youtube.com/watch?v=1Pcoi_E9SXI'
+            const thumbnailUrl = 'https://img.youtube.com/vi/F_kfcfK_v44/maxresdefault.jpg' || featured?.heroImage?.thumbnail || 'https://img.youtube.com/vi/1Pcoi_E9SXI/maxresdefault.jpg'
             
             return (
               <>
