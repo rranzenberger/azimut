@@ -12,6 +12,9 @@ interface VideoPlayerProps {
   alt?: string
   className?: string
   autoplay?: boolean
+  muted?: boolean
+  loop?: boolean
+  playsinline?: boolean
   platform?: 'youtube' | 'vimeo'
 }
 
@@ -33,6 +36,9 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   alt,
   className = '',
   autoplay = false,
+  muted = false,
+  loop = false,
+  playsinline = false,
   platform
 }) => {
   const [isPlaying, setIsPlaying] = useState(false)
@@ -75,10 +81,23 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   // Se autoplay ou já está playing, mostrar iframe diretamente
   if (autoplay || isPlaying) {
     if (detectedPlatform === 'youtube' && youtubeId) {
+      // Parâmetros YouTube para autoplay automático
+      const params = new URLSearchParams({
+        autoplay: '1',
+        mute: muted ? '1' : '0',
+        loop: loop ? '1' : '0',
+        playlist: loop ? youtubeId : '', // Necessário para loop funcionar
+        playsinline: playsinline ? '1' : '0',
+        rel: '0',
+        modestbranding: '1',
+        controls: '1',
+        enablejsapi: '1'
+      })
+      
       return (
         <div className={`relative aspect-video ${className}`}>
           <iframe
-            src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+            src={`https://www.youtube.com/embed/${youtubeId}?${params.toString()}`}
             title={alt || 'Vídeo do YouTube'}
             className="absolute inset-0 w-full h-full"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -89,10 +108,21 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     }
 
     if (detectedPlatform === 'vimeo' && vimeoId) {
+      // Parâmetros Vimeo para autoplay automático
+      const params = new URLSearchParams({
+        autoplay: '1',
+        muted: muted ? '1' : '0',
+        loop: loop ? '1' : '0',
+        autopause: '0',
+        title: '0',
+        byline: '0',
+        portrait: '0'
+      })
+      
       return (
         <div className={`relative aspect-video ${className}`}>
           <iframe
-            src={`https://player.vimeo.com/video/${vimeoId}?autoplay=1&title=0&byline=0&portrait=0`}
+            src={`https://player.vimeo.com/video/${vimeoId}?${params.toString()}`}
             title={alt || 'Vídeo do Vimeo'}
             className="absolute inset-0 w-full h-full"
             allow="autoplay; fullscreen; picture-in-picture"

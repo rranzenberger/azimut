@@ -462,13 +462,17 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             
             return (
               <>
-                {/* Vídeo Fullscreen */}
+                {/* Vídeo Fullscreen - AUTOPLAY no scroll */}
                 <div className="absolute inset-0 w-full h-full">
                   <VideoPlayer
                     videoUrl={videoUrl}
                     thumbnailUrl={thumbnailUrl}
                     alt={lang === 'pt' ? 'Demoreel Azimut' : lang === 'es' ? 'Demoreel Azimut' : lang === 'fr' ? 'Démoreel Azimut' : 'Azimut Demoreel'}
                     className="w-full h-full object-cover"
+                    autoplay={true}
+                    muted={true}
+                    loop={true}
+                    playsinline={true}
                   />
                 </div>
                 
