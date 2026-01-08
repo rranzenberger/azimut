@@ -36,18 +36,18 @@ export default function DevToolsButton() {
 
   return (
     <>
-      {/* Botão Flutuante */}
+      {/* Botão Flutuante - LADO ESQUERDO */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-[9999] w-14 h-14 rounded-full bg-slate-800 dark:bg-slate-700 text-white shadow-2xl hover:scale-110 transition-all duration-300 flex items-center justify-center border-2 border-slate-600"
+        className="fixed bottom-6 left-6 z-[9999] w-14 h-14 rounded-full bg-slate-800 dark:bg-slate-700 text-white shadow-2xl hover:scale-110 transition-all duration-300 flex items-center justify-center border-2 border-slate-600"
         title="Dev Tools"
       >
         <span className="text-2xl">🔧</span>
       </button>
 
-      {/* Painel de Ferramentas */}
+      {/* Painel de Ferramentas - LADO ESQUERDO */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-[9999] w-80 bg-slate-900 dark:bg-slate-800 rounded-xl shadow-2xl border-2 border-slate-700 p-4 animate-fade-in-up">
+        <div className="fixed bottom-24 left-6 z-[9999] w-80 bg-slate-900 dark:bg-slate-800 rounded-xl shadow-2xl border-2 border-slate-700 p-4 animate-fade-in-up">
           {/* Header */}
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-700">
             <h3 className="text-white font-semibold flex items-center gap-2">
