@@ -140,14 +140,19 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     return defaultProjects;
   }, [personalizedProjects, cmsContent?.highlightProjects, defaultProjects]);
   
-  // Projetos recomendados (primeiros 3) - SEMPRE tem pelo menos os padrões
-  // Garantir que sempre seja um array válido com pelo menos 3 itens
+  // Projetos recomendados - SEMPRE tem pelo menos 4 itens (1 featured + 3 grid)
+  // Garantir que sempre seja um array válido com pelo menos 4 itens
   const recommended = useMemo(() => {
     const projs = projects && Array.isArray(projects) && projects.length > 0 
       ? projects 
       : defaultProjects;
-    // Garantir que sempre retorna pelo menos 3 itens
-    return projs.slice(0, Math.max(3, projs.length));
+    // Garantir que sempre retorna pelo menos 4 itens para featured + grid
+    const minRequired = 4;
+    if (projs.length < minRequired) {
+      // Se não tem 4, preenche com projetos default
+      return [...projs, ...defaultProjects.slice(0, minRequired - projs.length)];
+    }
+    return projs.slice(0, minRequired);
   }, [projects, defaultProjects]);
   
   useEffect(() => {
