@@ -302,6 +302,13 @@ model Lead {
   assignedAt    DateTime?
   notes         String?
   lastContactAt DateTime?
+  // NOVOS CAMPOS PARA ANALYTICS
+  leadScore     Int              @default(0) // 0-100
+  organizationType String?        // governo, museu, corporativo, etc
+  estimatedValue Float?           // R$
+  interestInGrants Boolean        @default(false)
+  country       String?
+  city          String?
   assignedTo    User?            @relation("LeadAssignedTo", fields: [assignedToId], references: [id])
   editalLeads   LeadEdital[]
   sessions      VisitorSession[]
@@ -310,6 +317,8 @@ model Lead {
   @@index([priority])
   @@index([assignedToId])
   @@index([createdAt])
+  @@index([leadScore])
+  @@index([email])
 }
 
 model Edital {
