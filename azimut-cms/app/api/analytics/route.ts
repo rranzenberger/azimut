@@ -94,12 +94,13 @@ export async function GET(request: Request) {
       }
     })
 
-    // 7. TRAFFIC SOURCES
-    const trafficSources = await prisma.visitorSession.groupBy({
+    // 7. TRAFFIC SOURCES (buscar do Lead, não VisitorSession)
+    const trafficSources = await prisma.lead.groupBy({
       by: ['referrer'],
       _count: true,
       where: {
-        createdAt: { gte: startDate }
+        createdAt: { gte: startDate },
+        referrer: { not: null }
       },
       orderBy: {
         _count: {
