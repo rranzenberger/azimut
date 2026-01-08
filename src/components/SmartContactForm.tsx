@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { Lang } from '../i18n'
 
 interface SmartContactFormProps {
@@ -9,6 +9,14 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
+  const [aiSuggestions, setAiSuggestions] = useState<{
+    message: string
+    projectSuggestions: string[]
+    budgetSuggestion: string | null
+    nextSteps: string[]
+    aiEnabled?: boolean
+  } | null>(null)
+  const [loadingSuggestions, setLoadingSuggestions] = useState(false)
 
   const [formData, setFormData] = useState({
     name: '',
@@ -353,6 +361,47 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
     }
   }
 
+  // Buscar sugestões IA quando dados relevantes mudarem
+  useEffect(() => {
+    // Só buscar se tiver dados suficientes
+    if (!formData.organizationType || !formData.projectType) {
+      setAiSuggestions(null)
+      return
+    }
+
+    const timer = setTimeout(() => {
+      fetchAISuggestions()
+    }, 1000) // Debounce 1s
+
+    return () => clearTimeout(timer)
+  }, [formData.organizationType, formData.projectType, formData.budget, formData.description])
+
+  const fetchAISuggestions = async () => {
+    setLoadingSuggestions(true)
+    try {
+      const res = await fetch('/api/ai/form-suggestions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          organizationType: formData.organizationType,
+          projectType: formData.projectType,
+          budget: formData.budget,
+          description: formData.description,
+        }),
+      })
+
+      if (res.ok) {
+        const suggestions = await res.json()
+        setAiSuggestions(suggestions)
+      }
+    } catch (err) {
+      // Silencioso - não quebrar formulário
+      console.warn('Sugestões IA não disponíveis')
+    } finally {
+      setLoadingSuggestions(false)
+    }
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target
     const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined
@@ -406,6 +455,45 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         </div>
       )}
 
+      {/* Sugestões IA em tempo real */}
+      {aiSuggestions && (formData.organizationType && formData.projectType) && (
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6 animate-fade-in-up">
+          <div className="flex items-start gap-3">
+            <span className="text-2xl">🤖</span>
+            <div className="flex-1">
+              <div className="font-semibold text-blue-900 dark:text-blue-100 mb-2 flex items-center gap-2">
+                Sugestões Personalizadas
+                {aiSuggestions.aiEnabled && (
+                  <span className="text-xs px-2 py-0.5 bg-blue-200 dark:bg-blue-800 rounded-full">
+                    IA
+                  </span>
+                )}
+              </div>
+              {aiSuggestions.message && (
+                <p className="text-sm text-blue-800 dark:text-blue-200 mb-3">
+                  {aiSuggestions.message}
+                </p>
+              )}
+              {aiSuggestions.projectSuggestions.length > 0 && (
+                <div className="text-sm text-blue-700 dark:text-blue-300 mb-2">
+                  <strong>Projetos que podem interessar:</strong>
+                  <ul className="list-disc list-inside mt-1 space-y-1">
+                    {aiSuggestions.projectSuggestions.map((s, i) => (
+                      <li key={i}>{s}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {aiSuggestions.budgetSuggestion && (
+                <div className="text-sm text-blue-700 dark:text-blue-300 mt-2">
+                  💡 {aiSuggestions.budgetSuggestion}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Personal Info */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
@@ -418,7 +506,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-azimut-red focus:border-transparent transition-all"
+            className="input-adaptive w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-azimut-red transition-all"
             placeholder="João Silva"
           />
         </div>
@@ -433,7 +521,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-azimut-red focus:border-transparent transition-all"
+            className="input-adaptive w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-azimut-red transition-all"
             placeholder="joao@example.com"
           />
         </div>
@@ -449,7 +537,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-azimut-red focus:border-transparent transition-all"
+            className="input-adaptive w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-azimut-red transition-all"
             placeholder="+55 11 98765-4321"
           />
         </div>
@@ -463,7 +551,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             name="position"
             value={formData.position}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-azimut-red focus:border-transparent transition-all"
+            className="input-adaptive w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-azimut-red transition-all"
             placeholder="Diretor de Tecnologia"
           />
         </div>
@@ -530,7 +618,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             value={formData.budget}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-azimut-red focus:border-transparent transition-all"
+            className="input-adaptive w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-azimut-red transition-all"
           >
             {Object.entries(t.budgetRanges).map(([value, label]) => (
               <option key={value} value={value}>{label}</option>
@@ -547,7 +635,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             value={formData.timeline}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-azimut-red focus:border-transparent transition-all"
+            className="input-adaptive w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-azimut-red transition-all"
           >
             {Object.entries(t.timelines).map(([value, label]) => (
               <option key={value} value={value}>{label}</option>
@@ -567,7 +655,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             name="country"
             value={formData.country}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-azimut-red focus:border-transparent transition-all"
+            className="input-adaptive w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-azimut-red transition-all"
             placeholder="Brasil"
           />
         </div>
@@ -581,7 +669,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             name="city"
             value={formData.city}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-azimut-red focus:border-transparent transition-all"
+            className="input-adaptive w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-azimut-red transition-all"
             placeholder="São Paulo"
           />
         </div>
@@ -597,7 +685,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
           value={formData.description}
           onChange={handleChange}
           rows={4}
-          className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-azimut-red focus:border-transparent transition-all resize-none"
+          className="input-adaptive w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-azimut-red transition-all resize-none"
           placeholder="Queremos criar uma instalação imersiva para nosso museu..."
         />
       </div>
