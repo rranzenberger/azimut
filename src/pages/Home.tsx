@@ -16,6 +16,8 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({ lang }) => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
+  const demoreelRef = useRef<HTMLDivElement>(null)
+  const [isDemoreelVisible, setIsDemoreelVisible] = useState(false)
   useUserTracking()
   
   // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
@@ -92,6 +94,30 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
       // Se tracking falhar, não quebrar renderização
       console.warn('Tracking error:', error)
       return () => {} // Cleanup vazio
+    }
+  }, [])
+  
+  // ✅ NOVO: IntersectionObserver para autoplay do demoreel
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsDemoreelVisible(entry.isIntersecting)
+      },
+      {
+        root: null, // viewport
+        rootMargin: '0px',
+        threshold: 0.5, // 50% do vídeo visível
+      }
+    )
+
+    if (demoreelRef.current) {
+      observer.observe(demoreelRef.current)
+    }
+
+    return () => {
+      if (demoreelRef.current) {
+        observer.unobserve(demoreelRef.current)
+      }
     }
   }, [])
   
@@ -446,7 +472,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             DEMOREEL FULLSCREEN - Vídeo Institucional HERO
             Inspiração: Apple, Tesla, Sites Premium 2026
             ══════════════════════════════════════════════════════════════ */}
-        <section className="relative h-screen w-full overflow-hidden">
+        <section ref={demoreelRef} className="relative h-screen w-full overflow-hidden">
           {(() => {
             // ✅ VÍDEO DEMOREEL AZIMUT 2026 (Upscale Topaz) - PRIORIDADE 1
             const demoreelVideoFixed = 'https://www.youtube.com/watch?v=F_kfcfK_v44'
@@ -469,7 +495,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     thumbnailUrl={thumbnailUrl}
                     alt={lang === 'pt' ? 'Demoreel Azimut' : lang === 'es' ? 'Demoreel Azimut' : lang === 'fr' ? 'Démoreel Azimut' : 'Azimut Demoreel'}
                     className="w-full h-full object-cover"
-                    autoplay={true}
+                    autoplay={isDemoreelVisible}
                     muted={true}
                     loop={true}
                     playsinline={true}
