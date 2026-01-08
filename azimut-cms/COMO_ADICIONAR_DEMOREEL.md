@@ -1,140 +1,145 @@
 # 🎬 Como Adicionar Vídeo Demoreel no Backoffice
 
-## ✅ Campos Adicionados
+## ✅ Sistema Implementado: Upload via Mídias + Seletor
 
-Foram adicionados 3 novos campos na tabela `Page`:
-
-| Campo | Tipo | Descrição |
-|-------|------|-----------|
-| `demoreelVideo` | TEXT | URL do vídeo demoreel (YouTube/Vimeo) |
-| `demoreelThumbnail` | TEXT | URL da thumbnail (opcional) |
-| `heroBackgroundImage` | TEXT | URL da imagem de fundo do hero |
+Agora o sistema usa **upload real de arquivos** na seção "Mídias" e depois você seleciona no dropdown da página!
 
 ---
 
-## 📋 Passo a Passo
+## 📋 Passo a Passo Completo
 
-### 1. Aplicar a Migration
+### 1. Aplicar Migrations no Banco
 
 ```bash
 cd azimut-cms
 npx prisma migrate deploy
-```
-
-ou
-
-```bash
-cd azimut-cms
-npx prisma db push
-```
-
-### 2. Gerar o Prisma Client
-
-```bash
 npx prisma generate
 ```
 
-### 3. Adicionar no Backoffice (Interface)
+### 2. Fazer Upload das Mídias
 
-No arquivo de edição de páginas, adicionar os campos:
+#### A) Enviar Imagem de Fundo do Hero
 
-```tsx
-// azimut-cms/src/app/admin/pages/[id]/edit/page.tsx (ou similar)
+1. Ir em: **Backoffice** → **Mídias**
+2. Selecionar **"Tipo: Imagem"**
+3. Fazer upload da imagem (ex: 1920x1080, até 8MB)
+4. Preencher **Alt (PT)**: "Fundo Hero - Tecnologia Criativa"
+5. Clicar em **"Enviar mídia"**
+6. ✅ Anotar o **ID** ou **título** da imagem
 
-<div className="form-group">
-  <label>Vídeo Demoreel (YouTube/Vimeo)</label>
-  <input
-    type="url"
-    name="demoreelVideo"
-    placeholder="https://www.youtube.com/watch?v=..."
-    defaultValue={page.demoreelVideo || ''}
-  />
-  <small>Vídeo institucional fullscreen que aparece após o hero</small>
-</div>
+#### B) Enviar Vídeo Demoreel
 
-<div className="form-group">
-  <label>Thumbnail Demoreel (opcional)</label>
-  <input
-    type="url"
-    name="demoreelThumbnail"
-    placeholder="https://..."
-    defaultValue={page.demoreelThumbnail || ''}
-  />
-</div>
+1. Ir em: **Backoffice** → **Mídias**
+2. Selecionar **"Tipo: Vídeo"**
+3. Fazer upload do vídeo (MP4, até 25MB, ideal 10-20s)
+4. Preencher **Alt (PT)**: "Demoreel Azimut 2026"
+5. Clicar em **"Enviar mídia"**
+6. ✅ Vídeo enviado e disponível no sistema!
 
-<div className="form-group">
-  <label>Imagem de Fundo do Hero</label>
-  <input
-    type="url"
-    name="heroBackgroundImage"
-    placeholder="https://..."
-    defaultValue={page.heroBackgroundImage || ''}
-  />
-</div>
+---
+
+### 3. Configurar na Página Home
+
+1. Ir em: **Backoffice** → **Páginas do Site** → **Home**
+2. Rolar até a seção **"🎬 Hero Media (Imagem & Demoreel)"**
+3. No dropdown **"Imagem de Fundo do Hero"**:
+   - Selecionar a imagem enviada (ex: "Fundo Hero - Tecnologia Criativa")
+   - Ver preview automático abaixo
+4. No dropdown **"Vídeo Demoreel Institucional"**:
+   - Selecionar o vídeo enviado (ex: "🎥 Demoreel Azimut 2026")
+   - Ver preview/link abaixo
+5. Clicar em **"Salvar Alterações"**
+
+---
+
+## 🎯 Como Funciona no Site
+
 ```
-
-### 4. Atualizar a API
-
-```typescript
-// No handler de UPDATE da página
-await prisma.page.update({
-  where: { id: pageId },
-  data: {
-    ...existingData,
-    demoreelVideo: body.demoreelVideo,
-    demoreelThumbnail: body.demoreelThumbnail,
-    heroBackgroundImage: body.heroBackgroundImage,
-  },
-});
+┌─────────────────────────────────────────┐
+│ HERO (85vh)                             │
+│ ✅ Background: da seção Mídias          │
+│ Texto + Logo + Cards                    │
+└─────────────────────────────────────────┘
+              ↓
+┌─────────────────────────────────────────┐
+│ DEMOREEL FULLSCREEN (100vh)             │
+│ ✅ Vídeo: enviado na seção Mídias       │
+│ (Vídeo institucional do portfólio)      │
+└─────────────────────────────────────────┘
+              ↓
+┌─────────────────────────────────────────┐
+│ PROJETO FEATURED                         │
+│ (Museu Olímpico - outro vídeo)          │
+└─────────────────────────────────────────┘
 ```
 
 ---
 
-## 🎯 Como Usar
+## 🔧 Estrutura no Banco de Dados
 
-### No Backoffice:
+### Tabela `Page`:
 
-1. Vá em **Páginas** > **Home**
-2. Role até os novos campos
-3. Cole a URL do vídeo do YouTube/Vimeo:
-   - Exemplo: `https://www.youtube.com/watch?v=dQw4w9WgXcQ`
-4. (Opcional) Cole a URL da thumbnail
-5. Salve
+| Campo | Tipo | Relação |
+|-------|------|---------|
+| `heroBackgroundImageId` | TEXT | → `Media.id` |
+| `demoreelVideoId` | TEXT | → `Media.id` |
 
-### Resultado no Site:
+### Tabela `Media`:
 
-```
-┌─────────────────────────────────┐
-│ HERO (com background image)     │
-│ heroBackgroundImage ✅          │
-└─────────────────────────────────┘
-         ↓
-┌─────────────────────────────────┐
-│ DEMOREEL FULLSCREEN             │
-│ demoreelVideo ✅                │
-│ (vídeo institucional separado)  │
-└─────────────────────────────────┘
-         ↓
-┌─────────────────────────────────┐
-│ PROJETO FEATURED                │
-│ (Museu Olímpico - outro vídeo)  │
-└─────────────────────────────────┘
-```
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| `id` | UUID | ID único da mídia |
+| `type` | ENUM | IMAGE ou VIDEO |
+| `originalUrl` | TEXT | URL do arquivo original |
+| `thumbnailUrl` | TEXT | URL da thumbnail (opcional) |
+| `altPt` | TEXT | Texto alternativo em PT |
 
 ---
 
-## 📝 Notas
+## 📝 Exemplo de Uso Real
 
-- **Não precisa fazer upload** de vídeo! Só colar a URL do YouTube/Vimeo
-- O site já está pronto para usar esses campos
-- Se não preencher, usa fallback automático (projeto featured)
-- Formato aceito:
-  - ✅ `https://www.youtube.com/watch?v=XXXXX`
-  - ✅ `https://youtu.be/XXXXX`
-  - ✅ `https://vimeo.com/XXXXX`
+### Cenário: Adicionar novo demoreel 2026
+
+1. **Enviar novo vídeo:**
+   ```
+   Backoffice → Mídias
+   Tipo: Vídeo
+   Arquivo: demoreel-azimut-2026.mp4
+   Alt (PT): "Demoreel Azimut 2026 - Museus e Cultura"
+   ```
+
+2. **Selecionar na Home:**
+   ```
+   Backoffice → Páginas → Home → Hero Media
+   Vídeo Demoreel: [Demoreel Azimut 2026 - Museus e Cultura]
+   Salvar
+   ```
+
+3. **Resultado:**
+   - Site atualizado automaticamente
+   - Vídeo fullscreen logo após o hero
+   - Preview disponível no backoffice
 
 ---
 
-## 🚀 Pronto!
+## 💡 Vantagens deste Sistema
 
-Após aplicar a migration, é só preencher os campos no backoffice!
+| Recurso | Benefício |
+|---------|-----------|
+| ✅ **Upload real** | Não precisa hospedar externamente |
+| ✅ **Preview visual** | Vê a mídia antes de publicar |
+| ✅ **Reutilizável** | Mesma mídia em vários lugares |
+| ✅ **Organizado** | Todas as mídias em um só lugar |
+| ✅ **Fallback automático** | Se não selecionar, usa padrão |
+
+---
+
+## 🚀 Pronto para Produção!
+
+Após aplicar as migrations, o sistema está **100% funcional**!
+
+**Próximos passos:**
+1. Aplicar migrations (comando acima)
+2. Fazer upload das mídias
+3. Selecionar na página Home
+4. Publicar! 🎉
