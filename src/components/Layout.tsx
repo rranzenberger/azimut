@@ -8,6 +8,7 @@ import BudgetWizardModal from './BudgetWizardModal'
 import SkipLink from './SkipLink'
 import NavDropdown from './NavDropdown'
 import CookieBanner from './CookieBanner'
+import DevToolsButton from './DevToolsButton'
 import { type UserProfile } from './BudgetWizard'
 import { trackCTA, trackLanguageChange } from '../utils/analytics'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -1499,6 +1500,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
 
       {/* 🍪 Cookie Banner - LGPD/GDPR Compliance */}
       <CookieBanner lang={lang} />
+
+      {/* 🔧 Dev Tools Button - Remover antes do deploy final */}
+      <DevToolsButton />
     </div>
   )
 }

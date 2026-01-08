@@ -1,10 +1,11 @@
-'use client'
-
 import { useState } from 'react'
-import { useLanguage } from '@/contexts/LanguageContext'
+import type { Lang } from '../i18n'
 
-export default function SmartContactForm() {
-  const { lang } = useLanguage()
+interface SmartContactFormProps {
+  lang?: Lang
+}
+
+export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps) {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
