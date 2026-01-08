@@ -53,7 +53,9 @@ interface Page {
   pillar3Fr?: string;
   // Hero Media (relações)
   heroBackgroundImageId?: string;
+  heroBackgroundImageUrl?: string;
   demoreelVideoId?: string;
+  demoreelVideoUrl?: string;
   heroBackgroundImage?: {
     id: string;
     originalUrl: string;
@@ -320,9 +322,11 @@ export default function EditPagePage() {
     pillar3En: '',
     pillar3Es: '',
     pillar3Fr: '',
-    // Hero Media (IDs)
+    // Hero Media (IDs + URLs manuais)
     heroBackgroundImageId: '',
+    heroBackgroundImageUrl: '',
     demoreelVideoId: '',
+    demoreelVideoUrl: '',
     status: 'PUBLISHED',
   });
 
@@ -372,9 +376,11 @@ export default function EditPagePage() {
           pillar3En: data.pillar3En || '',
           pillar3Es: data.pillar3Es || '',
           pillar3Fr: data.pillar3Fr || '',
-          // Hero Media (IDs)
+          // Hero Media (IDs + URLs)
           heroBackgroundImageId: data.heroBackgroundImageId || '',
+          heroBackgroundImageUrl: data.heroBackgroundImageUrl || '',
           demoreelVideoId: data.demoreelVideoId || '',
+          demoreelVideoUrl: data.demoreelVideoUrl || '',
           status: data.status || 'PUBLISHED',
         });
 
@@ -850,7 +856,7 @@ export default function EditPagePage() {
           />
         </section>
 
-        {/* Hero Media - NOVA SEÇÃO COM SELETOR */}
+        {/* Hero Media - SISTEMA HÍBRIDO: Media OU URL */}
         {slug === 'home' && (
           <section
             style={{
@@ -860,125 +866,205 @@ export default function EditPagePage() {
               background: 'rgba(201,35,55,0.05)',
             }}
           >
-            <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
+            <h2 style={{ margin: '0 0 16px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
               🎬 Hero Media (Imagem & Demoreel)
             </h2>
             <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
-              Selecione a imagem de fundo do hero e o vídeo demoreel institucional. <strong>Envie primeiro as mídias em "Mídias"</strong> e depois selecione aqui.
+              <strong>Sistema Híbrido:</strong> Use upload local (Mídias) <strong>OU</strong> URL manual (YouTube/Vimeo/Unsplash).
+              <br />
+              📌 <strong>Prioridade:</strong> Se selecionar Media, usa ela. Senão, usa URL manual.
             </p>
 
-            {/* Background Image Selector */}
-            <div style={{ marginBottom: 32 }}>
-              <div
-                style={{
-                  fontSize: 11,
-                  color: '#8f8ba2',
-                  marginBottom: 6,
-                  fontWeight: 500,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.5px',
-                }}
-              >
-                📍 Páginas > Hero > Background Image
-              </div>
-              <label style={{ display: 'block', marginBottom: 8, fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>
-                Imagem de Fundo do Hero
-              </label>
-              <select
-                value={formData.heroBackgroundImageId}
-                onChange={(e) => setFormData({ ...formData, heroBackgroundImageId: e.target.value })}
-                style={inputStyle}
-              >
-                <option value="">Nenhuma (usa fallback automático)</option>
-                {allMedia
-                  .filter(m => m.type === 'IMAGE')
-                  .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-                  .map(media => (
-                    <option key={media.id} value={media.id}>
-                      {media.altPt || media.altEn || 'Sem título'} - {new Date(media.createdAt).toLocaleDateString('pt-BR')}
-                    </option>
-                  ))}
-              </select>
-              <div style={{ marginTop: 6, fontSize: 12, color: '#8f8ba2' }}>
-                ℹ️ Selecione uma imagem enviada na seção "Mídias"
-              </div>
-              {/* Preview */}
-              {formData.heroBackgroundImageId && allMedia.find(m => m.id === formData.heroBackgroundImageId) && (
-                <div style={{ marginTop: 12, padding: 10, borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(0,0,0,0.3)' }}>
-                  <img
-                    src={allMedia.find(m => m.id === formData.heroBackgroundImageId)?.thumbnailUrl || allMedia.find(m => m.id === formData.heroBackgroundImageId)?.originalUrl}
-                    alt="Preview"
-                    style={{ width: '100%', maxHeight: 200, objectFit: 'cover', borderRadius: 6 }}
-                  />
-                  <p style={{ margin: '8px 0 0', fontSize: 12, color: '#8f8ba2' }}>
-                    ✅ {allMedia.find(m => m.id === formData.heroBackgroundImageId)?.altPt || 'Imagem selecionada'}
-                  </p>
-                </div>
-              )}
-            </div>
+            {/* ═══════════════════════════════════════════════════════════
+                IMAGEM DE FUNDO DO HERO
+            ═══════════════════════════════════════════════════════════ */}
+            <div style={{ marginBottom: 32, padding: 20, borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 600, color: '#e8e6f2' }}>
+                🖼️ Imagem de Fundo do Hero
+              </h3>
 
-            {/* Demoreel Video Selector */}
-            <div>
-              <div
-                style={{
-                  fontSize: 11,
-                  color: '#8f8ba2',
-                  marginBottom: 6,
-                  fontWeight: 500,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.5px',
-                }}
-              >
-                📍 Páginas > Hero > Demoreel Video
-              </div>
-              <label style={{ display: 'block', marginBottom: 8, fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>
-                Vídeo Demoreel Institucional
-              </label>
-              <select
-                value={formData.demoreelVideoId}
-                onChange={(e) => setFormData({ ...formData, demoreelVideoId: e.target.value })}
-                style={inputStyle}
-              >
-                <option value="">Nenhum (não exibe demoreel fullscreen)</option>
-                {allMedia
-                  .filter(m => m.type === 'VIDEO')
-                  .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-                  .map(media => (
-                    <option key={media.id} value={media.id}>
-                      🎥 {media.altPt || media.altEn || 'Sem título'} - {new Date(media.createdAt).toLocaleDateString('pt-BR')}
-                    </option>
-                  ))}
-              </select>
-              <div style={{ marginTop: 6, fontSize: 12, color: '#8f8ba2' }}>
-                🎥 Vídeo institucional do portfólio (fullscreen, logo abaixo do hero). <strong>Envie primeiro em "Mídias"</strong>.
-              </div>
-              {/* Preview */}
-              {formData.demoreelVideoId && allMedia.find(m => m.id === formData.demoreelVideoId) && (
-                <div style={{ marginTop: 12, padding: 10, borderRadius: 8, border: '1px solid rgba(201,35,55,0.3)', background: 'rgba(201,35,55,0.1)' }}>
-                  {allMedia.find(m => m.id === formData.demoreelVideoId)?.thumbnailUrl ? (
+              {/* OPÇÃO 1: Seletor de Media */}
+              <div style={{ marginBottom: 20 }}>
+                <div
+                  style={{
+                    fontSize: 11,
+                    color: '#8f8ba2',
+                    marginBottom: 6,
+                    fontWeight: 500,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                  }}
+                >
+                  📍 Opção 1: Selecionar da Biblioteca de Mídias
+                </div>
+                <label style={{ display: 'block', marginBottom: 8, fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>
+                  Mídia (Upload Local) - PRIORIDADE 1
+                </label>
+                <select
+                  value={formData.heroBackgroundImageId}
+                  onChange={(e) => setFormData({ ...formData, heroBackgroundImageId: e.target.value })}
+                  style={inputStyle}
+                >
+                  <option value="">Nenhuma (usa URL manual abaixo)</option>
+                  {allMedia
+                    .filter(m => m.type === 'IMAGE')
+                    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                    .map(media => (
+                      <option key={media.id} value={media.id}>
+                        {media.altPt || media.altEn || 'Sem título'} - {new Date(media.createdAt).toLocaleDateString('pt-BR')}
+                      </option>
+                    ))}
+                </select>
+                {/* Preview */}
+                {formData.heroBackgroundImageId && allMedia.find(m => m.id === formData.heroBackgroundImageId) && (
+                  <div style={{ marginTop: 12, padding: 10, borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(0,0,0,0.3)' }}>
                     <img
-                      src={allMedia.find(m => m.id === formData.demoreelVideoId)?.thumbnailUrl}
+                      src={allMedia.find(m => m.id === formData.heroBackgroundImageId)?.thumbnailUrl || allMedia.find(m => m.id === formData.heroBackgroundImageId)?.originalUrl}
                       alt="Preview"
                       style={{ width: '100%', maxHeight: 200, objectFit: 'cover', borderRadius: 6 }}
                     />
-                  ) : (
-                    <div style={{ width: '100%', height: 150, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.5)', borderRadius: 6 }}>
-                      <span style={{ fontSize: 48 }}>🎬</span>
-                    </div>
-                  )}
-                  <p style={{ margin: '8px 0 0', fontSize: 12, color: '#e8e6f2' }}>
-                    ✅ {allMedia.find(m => m.id === formData.demoreelVideoId)?.altPt || 'Vídeo selecionado'}
-                  </p>
-                  <a
-                    href={allMedia.find(m => m.id === formData.demoreelVideoId)?.originalUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ display: 'inline-block', marginTop: 6, fontSize: 11, color: '#7dd3fc', textDecoration: 'underline' }}
-                  >
-                    Ver vídeo original →
-                  </a>
+                    <p style={{ margin: '8px 0 0', fontSize: 12, color: '#86efac' }}>
+                      ✅ Mídia selecionada (esta será usada!)
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* OPÇÃO 2: URL Manual */}
+              <div>
+                <div
+                  style={{
+                    fontSize: 11,
+                    color: '#8f8ba2',
+                    marginBottom: 6,
+                    fontWeight: 500,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                  }}
+                >
+                  📍 Opção 2: URL Manual (Unsplash, Cloudinary, etc)
                 </div>
-              )}
+                <label style={{ display: 'block', marginBottom: 8, fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>
+                  URL Manual - PRIORIDADE 2 (fallback)
+                </label>
+                <input
+                  type="url"
+                  value={formData.heroBackgroundImageUrl}
+                  onChange={(e) => setFormData({ ...formData, heroBackgroundImageUrl: e.target.value })}
+                  placeholder="https://images.unsplash.com/photo-..."
+                  style={inputStyle}
+                  disabled={!!formData.heroBackgroundImageId}
+                />
+                <div style={{ marginTop: 6, fontSize: 12, color: formData.heroBackgroundImageId ? '#8f8ba2' : '#7dd3fc' }}>
+                  {formData.heroBackgroundImageId 
+                    ? '🔒 Desabilitado (mídia selecionada acima tem prioridade)'
+                    : '🌐 Cole a URL da imagem externa (ex: Unsplash)'
+                  }
+                </div>
+              </div>
+            </div>
+
+            {/* ═══════════════════════════════════════════════════════════
+                VÍDEO DEMOREEL
+            ═══════════════════════════════════════════════════════════ */}
+            <div style={{ padding: 20, borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 600, color: '#e8e6f2' }}>
+                🎥 Vídeo Demoreel Institucional
+              </h3>
+
+              {/* OPÇÃO 1: Seletor de Media */}
+              <div style={{ marginBottom: 20 }}>
+                <div
+                  style={{
+                    fontSize: 11,
+                    color: '#8f8ba2',
+                    marginBottom: 6,
+                    fontWeight: 500,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                  }}
+                >
+                  📍 Opção 1: Selecionar da Biblioteca de Mídias
+                </div>
+                <label style={{ display: 'block', marginBottom: 8, fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>
+                  Mídia (Upload Local) - PRIORIDADE 1
+                </label>
+                <select
+                  value={formData.demoreelVideoId}
+                  onChange={(e) => setFormData({ ...formData, demoreelVideoId: e.target.value })}
+                  style={inputStyle}
+                >
+                  <option value="">Nenhum (usa URL manual abaixo)</option>
+                  {allMedia
+                    .filter(m => m.type === 'VIDEO')
+                    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                    .map(media => (
+                      <option key={media.id} value={media.id}>
+                        🎥 {media.altPt || media.altEn || 'Sem título'} - {new Date(media.createdAt).toLocaleDateString('pt-BR')}
+                      </option>
+                    ))}
+                </select>
+                {/* Preview */}
+                {formData.demoreelVideoId && allMedia.find(m => m.id === formData.demoreelVideoId) && (
+                  <div style={{ marginTop: 12, padding: 10, borderRadius: 8, border: '1px solid rgba(201,35,55,0.3)', background: 'rgba(201,35,55,0.1)' }}>
+                    {allMedia.find(m => m.id === formData.demoreelVideoId)?.thumbnailUrl ? (
+                      <img
+                        src={allMedia.find(m => m.id === formData.demoreelVideoId)?.thumbnailUrl}
+                        alt="Preview"
+                        style={{ width: '100%', maxHeight: 200, objectFit: 'cover', borderRadius: 6 }}
+                      />
+                    ) : (
+                      <div style={{ width: '100%', height: 150, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.5)', borderRadius: 6 }}>
+                        <span style={{ fontSize: 48 }}>🎬</span>
+                      </div>
+                    )}
+                    <p style={{ margin: '8px 0 0', fontSize: 12, color: '#86efac' }}>
+                      ✅ Vídeo selecionado (este será usado!)
+                    </p>
+                    <a
+                      href={allMedia.find(m => m.id === formData.demoreelVideoId)?.originalUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ display: 'inline-block', marginTop: 6, fontSize: 11, color: '#7dd3fc', textDecoration: 'underline' }}
+                    >
+                      Ver vídeo original →
+                    </a>
+                  </div>
+                )}
+              </div>
+
+              {/* OPÇÃO 2: URL Manual */}
+              <div>
+                <div
+                  style={{
+                    fontSize: 11,
+                    color: '#8f8ba2',
+                    marginBottom: 6,
+                    fontWeight: 500,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                  }}
+                >
+                  📍 Opção 2: URL Manual (YouTube/Vimeo)
+                </div>
+                <label style={{ display: 'block', marginBottom: 8, fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>
+                  URL Manual - PRIORIDADE 2 (fallback)
+                </label>
+                <input
+                  type="url"
+                  value={formData.demoreelVideoUrl}
+                  onChange={(e) => setFormData({ ...formData, demoreelVideoUrl: e.target.value })}
+                  placeholder="https://www.youtube.com/watch?v=... ou https://vimeo.com/..."
+                  style={inputStyle}
+                  disabled={!!formData.demoreelVideoId}
+                />
+                <div style={{ marginTop: 6, fontSize: 12, color: formData.demoreelVideoId ? '#8f8ba2' : '#7dd3fc' }}>
+                  {formData.demoreelVideoId 
+                    ? '🔒 Desabilitado (vídeo selecionado acima tem prioridade)'
+                    : '🌐 Cole a URL do YouTube ou Vimeo'
+                  }
+                </div>
+              </div>
             </div>
 
             {/* Link rápido para Mídias */}

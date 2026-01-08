@@ -169,8 +169,11 @@ model Page {
   pillar3En              String?
   pillar3Es              String?
   pillar3Fr              String?
+  // Hero Media - Sistema Híbrido (Media OU URL manual)
   heroBackgroundImageId  String?
+  heroBackgroundImageUrl String?
   demoreelVideoId        String?
+  demoreelVideoUrl       String?
   heroBackgroundImage    Media?     @relation("PageHeroBackground", fields: [heroBackgroundImageId], references: [id])
   demoreelVideo          Media?     @relation("PageDemoreelVideo", fields: [demoreelVideoId], references: [id])
   sections               Section[]
