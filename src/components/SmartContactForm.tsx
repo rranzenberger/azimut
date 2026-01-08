@@ -568,7 +568,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
           value={formData.company}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-azimut-red focus:border-transparent transition-all"
+          className="input-adaptive w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-azimut-red transition-all"
           placeholder="Museu de Arte de São Paulo"
         />
       </div>
@@ -582,7 +582,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
           value={formData.organizationType}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-azimut-red focus:border-transparent transition-all"
+          className="input-adaptive w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-azimut-red transition-all"
         >
           {Object.entries(t.orgTypes).map(([value, label]) => (
             <option key={value} value={value}>{label}</option>
@@ -600,7 +600,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
           value={formData.projectType}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-azimut-red focus:border-transparent transition-all"
+          className="input-adaptive w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-azimut-red transition-all"
         >
           {Object.entries(t.projectTypes).map(([value, label]) => (
             <option key={value} value={value}>{label}</option>
