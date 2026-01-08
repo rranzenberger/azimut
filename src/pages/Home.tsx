@@ -632,102 +632,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════════════
-            PROJETO FEATURED - Card Grande (Museu Olímpico ou do Backoffice)
-            ══════════════════════════════════════════════════════════════ */}
-        <section className="py-8 md:py-12 bg-gradient-to-b from-black/40 to-transparent">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            {(() => {
-              const featured = recommended[0] || defaultProjects[0]
-              const hasVideo = featured?.heroImage?.type === 'VIDEO' && featured?.heroImage?.original
-              
-              return (
-                <div className="relative overflow-hidden rounded-2xl shadow-[0_32px_80px_rgba(0,0,0,0.7)] bg-gradient-to-br from-slate-900 to-slate-950 border border-white/10">
-                  {/* Vídeo/Imagem Player */}
-                  <div className="relative aspect-video w-full overflow-hidden">
-                    {hasVideo ? (
-                      <VideoPlayer
-                        videoUrl={featured.heroImage.original}
-                        thumbnailUrl={featured.heroImage.thumbnail || featured.heroImage.large}
-                        alt={featured.heroImage?.alt || featured.title}
-                        className="w-full h-full"
-                      />
-                    ) : featured?.heroImage?.large || featured?.heroImage?.medium ? (
-                      <img
-                        src={featured.heroImage?.large || featured.heroImage?.medium}
-                        alt={featured.title}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-azimut-red/10 via-slate-900 to-slate-950 flex items-center justify-center">
-                        <div className="text-center p-6">
-                          <h3 className="font-handel text-3xl uppercase tracking-[0.12em] text-white">
-                            {featured.title}
-                          </h3>
-                          <p className="mt-2 text-slate-400 text-sm">
-                            {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Info do Projeto */}
-                  <div className="p-4 md:p-6">
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                      {/* Tags */}
-                      {featured.tags && featured.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
-                          {featured.tags.slice(0, 3).map((tag: string, idx: number) => (
-                            <span 
-                              key={idx} 
-                              className="px-2 py-1 rounded-full bg-azimut-red/10 border border-azimut-red/30 font-sora text-[0.65rem] uppercase tracking-wider text-azimut-red"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                      
-                      {/* Localização */}
-                      {(featured.city || featured.country) && (
-                        <p className="text-xs text-slate-400 flex items-center gap-1">
-                          📍 {[featured.city, featured.country].filter(Boolean).join(', ')}
-                        </p>
-                      )}
-                    </div>
-                    
-                    <h3 className="font-handel text-xl md:text-2xl uppercase tracking-[0.08em] text-white mt-3 mb-2">
-                      {featured.title}
-                    </h3>
-                    <p className="text-slate-300 text-sm leading-relaxed mb-4">
-                      {featured.summary || featured.shortTitle}
-                    </p>
-                    
-                    {/* CTAs */}
-                    <div className="flex flex-wrap gap-2">
-                      <Link
-                        to={`/work/${featured.slug}`}
-                        className="inline-flex items-center justify-center rounded-lg bg-azimut-red px-4 py-2 font-sora text-xs uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/90"
-                      >
-                        {lang === 'pt' ? 'Ver Projeto' : lang === 'es' ? 'Ver Proyecto' : 'View Project'}
-                      </Link>
-                      <Link
-                        to="/contact?interest=similar"
-                        className="inline-flex items-center justify-center rounded-lg border border-azimut-red px-4 py-2 font-sora text-xs uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/10"
-                      >
-                        {lang === 'pt' ? 'Projeto Similar' : lang === 'es' ? 'Proyecto Similar' : 'Similar Project'}
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              )
-            })()}
-          </div>
-        </section>
-
         {/* ════════════════════════════════════════════════════════════════ */}
-        {/* PROJETOS - GRID VISUAL 3x3 (Super impactante!) */}
+        {/* PROJETOS EM DESTAQUE - 1 Card Grande + 3 Cards Pequenos */}
         {/* ════════════════════════════════════════════════════════════════ */}
         <section className="py-12 md:py-16 bg-gradient-to-b from-transparent to-black/20 dark:to-black/40">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -741,84 +647,120 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </p>
             </div>
 
-            {/* Grid 3x3 - Híbrido: Fundo preto HOME + Elementos Work */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-              {projects.slice(0, 9).map((project, index) => (
-                <article
-                  key={project.slug}
-                  className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur transition-all duration-500 hover:scale-[1.02] hover:border-azimut-red/60 hover:shadow-[0_30px_80px_rgba(201,35,55,0.5)]"
-                  onClick={() => {
-                    window.location.href = `/${lang}/work/${project.slug}`
-                  }}
-                  style={{
-                    animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`,
-                    cursor: 'pointer'
-                  }}
-                >
-                  {/* Imagem de fundo */}
-                  {project.image ? (
-                    <>
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        loading={index < 6 ? 'eager' : 'lazy'}
+            {/* PROJETO PRINCIPAL - Card Grande (Rio Museu Olímpico) */}
+            {(() => {
+              // TODO Backoffice: cmsContent?.featuredProject || recommended[0]
+              const mainFeatured = recommended[0] || defaultProjects[0]
+              const hasVideo = mainFeatured?.heroImage?.type === 'VIDEO' && mainFeatured?.heroImage?.original
+              
+              return (
+                <div className="mb-8 relative overflow-hidden rounded-2xl shadow-[0_32px_80px_rgba(0,0,0,0.7)] bg-gradient-to-br from-slate-900 to-slate-950 border border-white/10">
+                  <div className="relative aspect-video w-full overflow-hidden">
+                    {hasVideo ? (
+                      <VideoPlayer
+                        videoUrl={mainFeatured.heroImage.original}
+                        thumbnailUrl={mainFeatured.heroImage.thumbnail || mainFeatured.heroImage.large}
+                        alt={mainFeatured.heroImage?.alt || mainFeatured.title}
+                        className="w-full h-full"
                       />
-                      {/* Overlay gradiente PRETO (HOME style) */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30 transition-opacity duration-500 group-hover:from-black/90 group-hover:via-azimut-red/20"></div>
-                    </>
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-black via-slate-900 to-black">
-                      <div className="text-center p-4">
-                        <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-full border border-azimut-red/30 bg-azimut-red/10 backdrop-blur transition-transform duration-300 group-hover:scale-110 group-hover:border-azimut-red/60">
-                          <svg className="h-6 w-6 text-azimut-red transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    ) : mainFeatured?.heroImage?.large || mainFeatured?.heroImage?.medium ? (
+                      <img
+                        src={mainFeatured.heroImage?.large || mainFeatured.heroImage?.medium}
+                        alt={mainFeatured.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-azimut-red/10 via-slate-900 to-slate-950 flex items-center justify-center">
+                        <div className="text-center p-6">
+                          <h3 className="font-handel text-3xl uppercase tracking-[0.12em] text-white">{mainFeatured.title}</h3>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="p-4 md:p-6">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      {mainFeatured.tags && mainFeatured.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-2">
+                          {mainFeatured.tags.slice(0, 3).map((tag: string, idx: number) => (
+                            <span key={idx} className="px-2 py-1 rounded-full bg-azimut-red/10 border border-azimut-red/30 font-sora text-[0.65rem] uppercase tracking-wider text-azimut-red">{tag}</span>
+                          ))}
+                        </div>
+                      )}
+                      {(mainFeatured.city || mainFeatured.country) && (
+                        <p className="text-xs text-slate-400 flex items-center gap-1">📍 {[mainFeatured.city, mainFeatured.country].filter(Boolean).join(', ')}</p>
+                      )}
+                    </div>
+                    <h3 className="font-handel text-xl md:text-2xl uppercase tracking-[0.08em] text-white mt-3 mb-2">{mainFeatured.title}</h3>
+                    <p className="text-slate-300 text-sm leading-relaxed mb-4">{mainFeatured.summary || mainFeatured.shortTitle}</p>
+                    <div className="flex flex-wrap gap-2">
+                      <Link to={`/work/${mainFeatured.slug}`} className="inline-flex items-center justify-center rounded-lg bg-azimut-red px-4 py-2 font-sora text-xs uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/90">
+                        {lang === 'pt' ? 'Ver Projeto' : lang === 'es' ? 'Ver Proyecto' : 'View Project'}
+                      </Link>
+                      <Link to="/contact?interest=similar" className="inline-flex items-center justify-center rounded-lg border border-azimut-red px-4 py-2 font-sora text-xs uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/10">
+                        {lang === 'pt' ? 'Projeto Similar' : lang === 'es' ? 'Proyecto Similar' : 'Similar Project'}
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )
+            })()}
+
+            {/* 3 PROJETOS SECUNDÁRIOS - Grid 1x3 */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              {recommended.slice(1, 4).map((project: any, index: number) => {
+                const hasVideo = project?.heroImage?.type === 'VIDEO' && project?.heroImage?.original
+                const imageUrl = project?.heroImage?.large || project?.heroImage?.medium || project?.heroImage?.original || project?.image || ''
+                
+                return (
+                  <article
+                    key={project.slug || index}
+                    className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur transition-all duration-500 hover:scale-[1.02] hover:border-azimut-red/60 hover:shadow-[0_30px_80px_rgba(201,35,55,0.5)]"
+                    onClick={() => { window.location.href = `/${lang}/work/${project.slug}` }}
+                    style={{ animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`, cursor: 'pointer' }}
+                  >
+                    {hasVideo ? (
+                      <>
+                        <div className="absolute inset-0">
+                          <VideoPlayer videoUrl={project.heroImage.original} thumbnailUrl={project.heroImage.thumbnail || imageUrl} alt={project.title} className="w-full h-full object-cover" />
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30"></div>
+                      </>
+                    ) : imageUrl ? (
+                      <>
+                        <img src={imageUrl} alt={project.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="eager" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30"></div>
+                      </>
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-black via-slate-900 to-black">
+                        <div className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-azimut-red/30 bg-azimut-red/10 backdrop-blur">
+                          <svg className="h-6 w-6 text-azimut-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
                         </div>
                       </div>
-                    </div>
-                  )}
-                  
-                  {/* Conteúdo - posição absoluta sobre a imagem */}
-                  <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
-                    {/* Título */}
-                    <h3 className="mb-2 font-handel text-xl md:text-2xl uppercase tracking-wide !text-white group-hover:!text-azimut-red transition-colors duration-300 line-clamp-2">
-                      {project.title}
-                    </h3>
-                    
-                    {/* Localização (se existir) */}
-                    {(project.city || project.country) && (
-                      <p className="text-xs !text-white/70 mb-3">
-                        📍 {[project.city, project.country].filter(Boolean).join(', ')}
-                      </p>
                     )}
                     
-                    {/* Tags + Year */}
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      {project.tags && project.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2 text-[0.68rem]">
-                          {project.tags.slice(0, 3).map((tag: string, idx: number) => (
-                            <span 
-                              key={idx} 
-                              className="rounded-full border border-white/20 bg-black/40 backdrop-blur px-2.5 py-1 !text-white/80 transition-all duration-300 group-hover:border-azimut-red/60 group-hover:bg-azimut-red/20 group-hover:!text-white"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
+                    <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
+                      <h3 className="mb-2 font-handel text-xl md:text-2xl uppercase tracking-wide !text-white group-hover:!text-azimut-red transition-colors duration-300 line-clamp-2">{project.title}</h3>
+                      {(project.city || project.country) && (
+                        <p className="text-xs !text-white/70 mb-3">📍 {[project.city, project.country].filter(Boolean).join(', ')}</p>
                       )}
-                      {project.year && (
-                        <span className="text-xs !text-white/60 font-medium bg-black/40 backdrop-blur px-2.5 py-1 rounded-full border border-white/10">
-                          {project.year}
-                        </span>
-                      )}
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        {project.tags && project.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-2 text-[0.68rem]">
+                            {project.tags.slice(0, 2).map((tag: string, idx: number) => (
+                              <span key={idx} className="rounded-full border border-white/20 bg-black/40 backdrop-blur px-2.5 py-1 !text-white/80">{tag}</span>
+                            ))}
+                          </div>
+                        )}
+                        {project.year && <span className="text-xs !text-white/60 font-medium bg-black/40 backdrop-blur px-2.5 py-1 rounded-full">{project.year}</span>}
+                      </div>
                     </div>
-                  </div>
-                  
-                  {/* Glow border no hover */}
-                  <div className="absolute inset-0 border-2 border-azimut-red rounded-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none"></div>
-                </article>
-              ))}
+                    <div className="absolute inset-0 border-2 border-azimut-red rounded-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none"></div>
+                  </article>
+                )
+              })}
             </div>
 
             {/* CTA - Ver Todos os Projetos */}
