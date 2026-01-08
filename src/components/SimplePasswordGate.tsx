@@ -12,8 +12,20 @@ const SimplePasswordGate: React.FC<SimplePasswordGateProps> = ({ children }) => 
   // Senha fixa (você pode mudar)
   const CORRECT_PASSWORD = 'a'
 
-  // Verificar se já está autenticado (sessionStorage)
+  // Verificar se já está autenticado (sessionStorage) OU se bypass está ativo
   useEffect(() => {
+    // Verificar bypass do DevTools (login desligado)
+    const bypassActive = localStorage.getItem('azimut-bypass-login') === 'true'
+    const devBypassToken = localStorage.getItem('azimut-dev-bypass-token') === 'dev-mode-active'
+    
+    // Se bypass ativo, autenticar automaticamente
+    if (bypassActive || devBypassToken) {
+      console.log('🔓 Bypass ativo - Login automático')
+      setIsAuthenticated(true)
+      return
+    }
+    
+    // Verificar autenticação normal
     const authenticated = sessionStorage.getItem('azimut_preview_auth')
     if (authenticated === 'true') {
       setIsAuthenticated(true)
