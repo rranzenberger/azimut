@@ -472,6 +472,18 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             DEMOREEL FULLSCREEN - Vídeo Institucional HERO
             Inspiração: Apple, Tesla, Sites Premium 2026
             ══════════════════════════════════════════════════════════════ */}
+        
+        {/* Título da Seção - ACIMA do vídeo */}
+        <div className="relative bg-gradient-to-b from-slate-950 to-black py-12 md:py-16">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="font-sora text-[0.75rem] uppercase tracking-[0.24em] text-white/50 mb-3 animate-fade-in-up">
+              {lang === 'pt' ? 'Assista Nosso Trabalho' : lang === 'es' ? 'Ve Nuestro Trabajo' : lang === 'fr' ? 'Regardez Notre Travail' : 'Watch Our Work'}
+            </h2>
+            <div className="h-[2px] w-16 bg-azimut-red mx-auto opacity-50" />
+          </div>
+        </div>
+
+        {/* Vídeo Fullscreen */}
         <section ref={demoreelRef} className="relative h-screen w-full overflow-hidden">
           {(() => {
             // ✅ VÍDEO DEMOREEL AZIMUT 2026 (Upscale Topaz) - PRIORIDADE 1
@@ -504,16 +516,6 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 
                 {/* Overlay escuro sutil */}
                 <div className="absolute inset-0 bg-black/30" />
-                
-                {/* Texto minimal centralizado */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="text-center animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-                    <h2 className="font-sora text-xs md:text-sm uppercase tracking-[0.3em] text-white/90 mb-2 drop-shadow-2xl">
-                      {lang === 'pt' ? 'Assista Nosso Trabalho' : lang === 'es' ? 'Ve Nuestro Trabajo' : lang === 'fr' ? 'Regardez Notre Travail' : 'Watch Our Work'}
-                    </h2>
-                    <div className="h-[1px] w-12 bg-white/50 mx-auto" />
-                  </div>
-                </div>
                 
                 {/* Scroll indicator */}
                 <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
