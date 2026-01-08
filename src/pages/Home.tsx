@@ -442,8 +442,62 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
         </section>
 
+        {/* ════════════════════════════════════════════════════════════════
+            DEMOREEL FULLSCREEN - Vídeo Institucional HERO
+            Inspiração: Apple, Tesla, Sites Premium 2026
+            ══════════════════════════════════════════════════════════════ */}
+        <section className="relative h-screen w-full overflow-hidden">
+          {(() => {
+            // Buscar do backoffice (demoreelVideo) ou fallback para featured project
+            const demoreelVideo = cmsContent?.page?.demoreelVideo
+            const featured = recommended[0] || defaultProjects[0]
+            const fallbackVideo = featured?.heroImage?.type === 'VIDEO' ? featured.heroImage.original : null
+            const videoUrl = demoreelVideo || fallbackVideo || 'https://www.youtube.com/watch?v=1Pcoi_E9SXI'
+            const thumbnailUrl = featured?.heroImage?.thumbnail || 'https://img.youtube.com/vi/1Pcoi_E9SXI/maxresdefault.jpg'
+            
+            return (
+              <>
+                {/* Vídeo Fullscreen */}
+                <div className="absolute inset-0 w-full h-full">
+                  <VideoPlayer
+                    videoUrl={videoUrl}
+                    thumbnailUrl={thumbnailUrl}
+                    alt={lang === 'pt' ? 'Demoreel Azimut' : lang === 'es' ? 'Demoreel Azimut' : lang === 'fr' ? 'Démoreel Azimut' : 'Azimut Demoreel'}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                
+                {/* Overlay escuro sutil */}
+                <div className="absolute inset-0 bg-black/30" />
+                
+                {/* Texto minimal centralizado */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="text-center animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+                    <h2 className="font-sora text-xs md:text-sm uppercase tracking-[0.3em] text-white/90 mb-2 drop-shadow-2xl">
+                      {lang === 'pt' ? 'Assista Nosso Trabalho' : lang === 'es' ? 'Ve Nuestro Trabajo' : lang === 'fr' ? 'Regardez Notre Travail' : 'Watch Our Work'}
+                    </h2>
+                    <div className="h-[1px] w-12 bg-white/50 mx-auto" />
+                  </div>
+                </div>
+                
+                {/* Scroll indicator */}
+                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+                  <div className="flex flex-col items-center gap-2 text-white/60">
+                    <span className="font-sora text-[0.65rem] uppercase tracking-[0.2em]">
+                      {lang === 'pt' ? 'Rolar' : lang === 'es' ? 'Desplazar' : lang === 'fr' ? 'Défiler' : 'Scroll'}
+                    </span>
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                  </div>
+                </div>
+              </>
+            )
+          })()}
+        </section>
+
         {/* ════════════════════════════════════════════════════════════════ */}
-        {/* 🎬 VÍDEO FEATURED - IMPACTO IMEDIATO NO TOPO! */}
+        {/* 🎬 PROJETO FEATURED - Card Grande com Detalhes */}
         {/* ════════════════════════════════════════════════════════════════ */}
         <section className="py-8 md:py-12 bg-gradient-to-b from-black/40 to-transparent">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -678,6 +732,100 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 <span className="mr-2 opacity-60">🔬</span> {lang === 'pt' ? 'Pesquisa IA (1997+)' : lang === 'es' ? 'Investigación IA (1997+)' : lang === 'fr' ? 'Recherche IA (1997+)' : 'AI Research (1997+)'}
               </span>
             </div>
+          </div>
+        </section>
+
+        {/* ════════════════════════════════════════════════════════════════
+            PROJETO FEATURED - Card Grande (Museu Olímpico ou do Backoffice)
+            ══════════════════════════════════════════════════════════════ */}
+        <section className="py-8 md:py-12 bg-gradient-to-b from-black/40 to-transparent">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            {(() => {
+              const featured = recommended[0] || defaultProjects[0]
+              const hasVideo = featured?.heroImage?.type === 'VIDEO' && featured?.heroImage?.original
+              
+              return (
+                <div className="relative overflow-hidden rounded-2xl shadow-[0_32px_80px_rgba(0,0,0,0.7)] bg-gradient-to-br from-slate-900 to-slate-950 border border-white/10">
+                  {/* Vídeo/Imagem Player */}
+                  <div className="relative aspect-video w-full overflow-hidden">
+                    {hasVideo ? (
+                      <VideoPlayer
+                        videoUrl={featured.heroImage.original}
+                        thumbnailUrl={featured.heroImage.thumbnail || featured.heroImage.large}
+                        alt={featured.heroImage?.alt || featured.title}
+                        className="w-full h-full"
+                      />
+                    ) : featured?.heroImage?.large || featured?.heroImage?.medium ? (
+                      <img
+                        src={featured.heroImage?.large || featured.heroImage?.medium}
+                        alt={featured.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-azimut-red/10 via-slate-900 to-slate-950 flex items-center justify-center">
+                        <div className="text-center p-6">
+                          <h3 className="font-handel text-3xl uppercase tracking-[0.12em] text-white">
+                            {featured.title}
+                          </h3>
+                          <p className="mt-2 text-slate-400 text-sm">
+                            {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Info do Projeto */}
+                  <div className="p-4 md:p-6">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      {/* Tags */}
+                      {featured.tags && featured.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-2">
+                          {featured.tags.slice(0, 3).map((tag: string, idx: number) => (
+                            <span 
+                              key={idx} 
+                              className="px-2 py-1 rounded-full bg-azimut-red/10 border border-azimut-red/30 font-sora text-[0.65rem] uppercase tracking-wider text-azimut-red"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      
+                      {/* Localização */}
+                      {(featured.city || featured.country) && (
+                        <p className="text-xs text-slate-400 flex items-center gap-1">
+                          📍 {[featured.city, featured.country].filter(Boolean).join(', ')}
+                        </p>
+                      )}
+                    </div>
+                    
+                    <h3 className="font-handel text-xl md:text-2xl uppercase tracking-[0.08em] text-white mt-3 mb-2">
+                      {featured.title}
+                    </h3>
+                    <p className="text-slate-300 text-sm leading-relaxed mb-4">
+                      {featured.summary || featured.shortTitle}
+                    </p>
+                    
+                    {/* CTAs */}
+                    <div className="flex flex-wrap gap-2">
+                      <Link
+                        to={`/work/${featured.slug}`}
+                        className="inline-flex items-center justify-center rounded-lg bg-azimut-red px-4 py-2 font-sora text-xs uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/90"
+                      >
+                        {lang === 'pt' ? 'Ver Projeto' : lang === 'es' ? 'Ver Proyecto' : 'View Project'}
+                      </Link>
+                      <Link
+                        to="/contact?interest=similar"
+                        className="inline-flex items-center justify-center rounded-lg border border-azimut-red px-4 py-2 font-sora text-xs uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/10"
+                      >
+                        {lang === 'pt' ? 'Projeto Similar' : lang === 'es' ? 'Proyecto Similar' : 'Similar Project'}
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )
+            })()}
           </div>
         </section>
 
