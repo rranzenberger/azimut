@@ -89,9 +89,6 @@ const SimplePasswordGate: React.FC<SimplePasswordGateProps> = ({ children }) => 
 
             {/* Título */}
             <div className="text-center mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              <h1 className="text-sm font-handel text-white mb-3 uppercase tracking-tighter whitespace-nowrap">
-                Preview
-              </h1>
               <div className="flex items-center justify-center gap-2 text-slate-400 text-sm mb-2">
                 <span className="w-8 h-[2px] bg-gradient-to-r from-transparent to-azimut-red/50" />
                 <span>Site em construção</span>
