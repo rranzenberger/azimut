@@ -51,6 +51,10 @@ interface Page {
   pillar3En?: string;
   pillar3Es?: string;
   pillar3Fr?: string;
+  // Hero Media
+  heroBackgroundImage?: string;
+  demoreelVideo?: string;
+  demoreelThumbnail?: string;
   status: string;
   sections?: Section[];
 }
@@ -294,6 +298,10 @@ export default function EditPagePage() {
     pillar3En: '',
     pillar3Es: '',
     pillar3Fr: '',
+    // Hero Media
+    heroBackgroundImage: '',
+    demoreelVideo: '',
+    demoreelThumbnail: '',
     status: 'PUBLISHED',
   });
 
@@ -343,6 +351,10 @@ export default function EditPagePage() {
           pillar3En: data.pillar3En || '',
           pillar3Es: data.pillar3Es || '',
           pillar3Fr: data.pillar3Fr || '',
+          // Hero Media
+          heroBackgroundImage: data.heroBackgroundImage || '',
+          demoreelVideo: data.demoreelVideo || '',
+          demoreelThumbnail: data.demoreelThumbnail || '',
           status: data.status || 'PUBLISHED',
         });
 
@@ -810,6 +822,109 @@ export default function EditPagePage() {
             translating={translating?.startsWith('heroSubtitle-') || false}
           />
         </section>
+
+        {/* Hero Media - NOVA SEÇÃO */}
+        {slug === 'home' && (
+          <section
+            style={{
+              padding: 28,
+              borderRadius: 12,
+              border: '1px solid rgba(201,35,55,0.2)',
+              background: 'rgba(201,35,55,0.05)',
+            }}
+          >
+            <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
+              🎬 Hero Media (Imagem & Demoreel)
+            </h2>
+            <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
+              Configure a imagem de fundo do hero e o vídeo demoreel institucional que aparece logo abaixo.
+            </p>
+
+            <div style={{ marginBottom: 24 }}>
+              <div
+                style={{
+                  fontSize: 11,
+                  color: '#8f8ba2',
+                  marginBottom: 6,
+                  fontWeight: 500,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                }}
+              >
+                📍 Páginas > Hero > Background Image
+              </div>
+              <label style={{ display: 'block', marginBottom: 8, fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>
+                Imagem de Fundo do Hero
+              </label>
+              <input
+                type="url"
+                value={formData.heroBackgroundImage}
+                onChange={(e) => setFormData({ ...formData, heroBackgroundImage: e.target.value })}
+                placeholder="https://images.unsplash.com/photo-..."
+                style={inputStyle}
+              />
+              <div style={{ marginTop: 6, fontSize: 12, color: '#8f8ba2' }}>
+                ℹ️ URL da imagem de fundo que aparece atrás do texto do hero (ex: Unsplash, Cloudinary, etc.)
+              </div>
+            </div>
+
+            <div style={{ marginBottom: 24 }}>
+              <div
+                style={{
+                  fontSize: 11,
+                  color: '#8f8ba2',
+                  marginBottom: 6,
+                  fontWeight: 500,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                }}
+              >
+                📍 Páginas > Hero > Demoreel Video
+              </div>
+              <label style={{ display: 'block', marginBottom: 8, fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>
+                Vídeo Demoreel (YouTube/Vimeo)
+              </label>
+              <input
+                type="url"
+                value={formData.demoreelVideo}
+                onChange={(e) => setFormData({ ...formData, demoreelVideo: e.target.value })}
+                placeholder="https://www.youtube.com/watch?v=... ou https://vimeo.com/..."
+                style={inputStyle}
+              />
+              <div style={{ marginTop: 6, fontSize: 12, color: '#8f8ba2' }}>
+                🎥 Vídeo institucional do portfólio (fullscreen, logo abaixo do hero)
+              </div>
+            </div>
+
+            <div>
+              <div
+                style={{
+                  fontSize: 11,
+                  color: '#8f8ba2',
+                  marginBottom: 6,
+                  fontWeight: 500,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                }}
+              >
+                📍 Páginas > Hero > Demoreel Thumbnail
+              </div>
+              <label style={{ display: 'block', marginBottom: 8, fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>
+                Thumbnail do Demoreel (opcional)
+              </label>
+              <input
+                type="url"
+                value={formData.demoreelThumbnail}
+                onChange={(e) => setFormData({ ...formData, demoreelThumbnail: e.target.value })}
+                placeholder="https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg"
+                style={inputStyle}
+              />
+              <div style={{ marginTop: 6, fontSize: 12, color: '#8f8ba2' }}>
+                🖼️ Imagem de capa do vídeo (se deixar vazio, usa thumbnail automática do YouTube/Vimeo)
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Pillars - Apenas para home */}
         {slug === 'home' && (
