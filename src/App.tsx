@@ -19,9 +19,38 @@ import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDet
 // ═══════════════════════════════════════════════════════════════
 // 🔒 CONTROLE DE LOGIN DO SITE
 // ═══════════════════════════════════════════════════════════════
-// Mude para "false" para DESABILITAR o login temporariamente
-// Mude para "true" para ATIVAR o login novamente
-const SITE_PROTECTED = false // ← SITE ABERTO! (Para testes do menu mobile)
+// PROTEÇÃO DO SITE - Controlado via DevTools (botão 🔧)
+// 
+// Por padrão: PROTEGIDO (true)
+// DevTools pode desligar: Login Desligado = bypass ativo
+// 
+// Para FORÇAR aberto durante dev, mude DEFAULT_PROTECTED para false
+// ═══════════════════════════════════════════════════════════════
+
+// Padrão: site protegido (true = pede senha)
+const DEFAULT_PROTECTED = true
+
+// Função para verificar se deve mostrar login
+const shouldShowLogin = (): boolean => {
+  // Se forçado como aberto, não mostra login
+  if (!DEFAULT_PROTECTED) return false
+  
+  // Verificar bypass do DevTools
+  const bypassActive = localStorage.getItem('azimut-bypass-login') === 'true'
+  const devBypassToken = localStorage.getItem('azimut-dev-bypass-token') === 'dev-mode-active'
+  
+  // Se bypass ativo, não mostra login
+  if (bypassActive || devBypassToken) {
+    console.log('🔓 DevTools: Login desligado - Acesso direto')
+    return false
+  }
+  
+  // Caso contrário, mostra login
+  console.log('🔒 Site protegido - Login necessário')
+  return true
+}
+
+const SITE_PROTECTED = shouldShowLogin()
 // ═══════════════════════════════════════════════════════════════
 
 // CORREÇÃO: Import direto das páginas problemáticas
