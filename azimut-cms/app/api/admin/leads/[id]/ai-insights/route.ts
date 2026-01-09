@@ -278,8 +278,8 @@ Seja específico, acionável e baseado em dados.
       {
         error: 'Erro ao gerar insights',
         fallback: {
-          summary: `Lead com score ${lead?.leadScore || 0}`,
-          conversionProbability: lead?.leadScore || 0,
+          summary: 'Lead aguardando análise',
+          conversionProbability: 0,
           urgency: 'MÉDIA',
           nextBestAction: 'Analisar lead manualmente',
         },
