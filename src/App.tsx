@@ -56,7 +56,10 @@ const SITE_PROTECTED = shouldShowLogin()
 // CORREÇÃO: Import direto das páginas problemáticas
 // Lazy loading estava causando erro "Failed to fetch dynamically imported module"
 import Studio from './pages/Studio'
-import Academy from './pages/Academy'
+import Academy from './pages/AcademyNew' // NOVO: Academia redesenhada
+import AcademyCourses from './pages/AcademyCourses'
+import AcademyWorkshops from './pages/AcademyWorkshops'
+import AcademyCorporate from './pages/AcademyCorporate'
 import Vancouver from './pages/Vancouver'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
@@ -281,19 +284,19 @@ const App: React.FC = () => {
                     {(routeLang) => <Academy lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
-                <Route path="/:lang/academy/research" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Academy lang={routeLang} section="research" />}
-                  </LangRouteWrapper>
-                } />
                 <Route path="/:lang/academy/courses" element={
                   <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Academy lang={routeLang} section="courses" />}
+                    {(routeLang) => <AcademyCourses lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/academy/workshops" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <AcademyWorkshops lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/academy/corporate" element={
                   <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Academy lang={routeLang} section="corporate" />}
+                    {(routeLang) => <AcademyCorporate lang={routeLang} />}
                   </LangRouteWrapper}
                 } />
                 <Route path="/:lang/academy/vancouver" element={
@@ -337,8 +340,8 @@ const App: React.FC = () => {
                 <Route path="/work" element={<Navigate to={`/${lang}/work`} replace />} />
                 <Route path="/studio" element={<Navigate to={`/${lang}/studio`} replace />} />
                 <Route path="/academy" element={<Navigate to={`/${lang}/academy`} replace />} />
-                <Route path="/academy/research" element={<Navigate to={`/${lang}/academy/research`} replace />} />
                 <Route path="/academy/courses" element={<Navigate to={`/${lang}/academy/courses`} replace />} />
+                <Route path="/academy/workshops" element={<Navigate to={`/${lang}/academy/workshops`} replace />} />
                 <Route path="/academy/corporate" element={<Navigate to={`/${lang}/academy/corporate`} replace />} />
                 <Route path="/contact" element={<Navigate to={`/${lang}/contact`} replace />} />
                 <Route path="/privacy" element={<Navigate to={`/${lang}/privacy`} replace />} />
@@ -406,19 +409,19 @@ const App: React.FC = () => {
                     {(routeLang) => <Academy lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
-                <Route path="/:lang/academy/research" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Academy lang={routeLang} section="research" />}
-                  </LangRouteWrapper>
-                } />
                 <Route path="/:lang/academy/courses" element={
                   <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Academy lang={routeLang} section="courses" />}
+                    {(routeLang) => <AcademyCourses lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/academy/workshops" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <AcademyWorkshops lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/academy/corporate" element={
                   <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Academy lang={routeLang} section="corporate" />}
+                    {(routeLang) => <AcademyCorporate lang={routeLang} />}
                   </LangRouteWrapper}
                 } />
                 <Route path="/:lang/academy/vancouver" element={
@@ -462,8 +465,8 @@ const App: React.FC = () => {
                 <Route path="/work" element={<Navigate to={`/${lang}/work`} replace />} />
                 <Route path="/studio" element={<Navigate to={`/${lang}/studio`} replace />} />
                 <Route path="/academy" element={<Navigate to={`/${lang}/academy`} replace />} />
-                <Route path="/academy/research" element={<Navigate to={`/${lang}/academy/research`} replace />} />
                 <Route path="/academy/courses" element={<Navigate to={`/${lang}/academy/courses`} replace />} />
+                <Route path="/academy/workshops" element={<Navigate to={`/${lang}/academy/workshops`} replace />} />
                 <Route path="/academy/corporate" element={<Navigate to={`/${lang}/academy/corporate`} replace />} />
                 <Route path="/contact" element={<Navigate to={`/${lang}/contact`} replace />} />
                 <Route path="/privacy" element={<Navigate to={`/${lang}/privacy`} replace />} />
