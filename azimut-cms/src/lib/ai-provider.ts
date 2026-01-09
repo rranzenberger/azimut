@@ -399,6 +399,40 @@ export function getAIProvider(config?: Partial<AIConfig>): AIProviderService {
   return aiProviderInstance;
 }
 
+/**
+ * Helper function para análise rápida com IA
+ * Simplifica o uso para casos comuns
+ */
+export async function analyzeWithAI(
+  prompt: string,
+  options?: {
+    temperature?: number;
+    maxTokens?: number;
+    provider?: AIProvider;
+  }
+): Promise<string> {
+  const aiProvider = getAIProvider(options?.provider ? { provider: options.provider } : undefined);
+  
+  const response = await aiProvider.chat(
+    [
+      {
+        role: 'system',
+        content: 'Você é um assistente especializado em análise de dados e recomendações para projetos audiovisuais.',
+      },
+      {
+        role: 'user',
+        content: prompt,
+      },
+    ],
+    {
+      temperature: options?.temperature || 0.3,
+      maxTokens: options?.maxTokens || 2000,
+    }
+  );
+
+  return response.content;
+}
+
 export { AIProviderService };
 
 
