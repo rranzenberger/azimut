@@ -129,7 +129,7 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
     }
   }
 
-  const t = content[lang] || content.pt
+  const t = content.pt // Sempre usar PT por enquanto (TODO: adicionar EN, ES, FR)
 
   return (
     <>
