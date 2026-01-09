@@ -314,7 +314,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         indefinido: 'Ainda não sei (preciso ajuda)'
       },
       budget: 'Budget Disponível *',
-      budgetRanges: {} // Será preenchido dinamicamente pela função getBudgetRanges
+      budgetRanges: {}, // Será preenchido dinamicamente pela função getBudgetRanges
       timeline: 'Quando precisa estar pronto *',
       timelines: {
         '': 'Selecione...',
@@ -374,7 +374,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         indefinido: 'Not sure yet (need help)'
       },
       budget: 'Available Budget *',
-      budgetRanges: {} // Será preenchido dinamicamente pela função getBudgetRanges
+      budgetRanges: {}, // Será preenchido dinamicamente pela função getBudgetRanges
       timeline: 'When do you need it ready *',
       timelines: {
         '': 'Select...',
@@ -434,7 +434,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         indefinido: 'Aún no lo sé (necesito ayuda)'
       },
       budget: 'Presupuesto Disponible *',
-      budgetRanges: {} // Será preenchido dinamicamente pela função getBudgetRanges
+      budgetRanges: {}, // Será preenchido dinamicamente pela função getBudgetRanges
       timeline: '¿Cuándo lo necesita listo *',
       timelines: {
         '': 'Seleccione...',
@@ -494,7 +494,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         indefinido: 'Pas encore sûr (besoin d\'aide)'
       },
       budget: 'Budget Disponible *',
-      budgetRanges: {} // Será preenchido dinamicamente pela função getBudgetRanges
+      budgetRanges: {}, // Será preenchido dinamicamente pela função getBudgetRanges
       timeline: 'Quand en avez-vous besoin *',
       timelines: {
         '': 'Sélectionnez...',
