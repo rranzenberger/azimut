@@ -438,7 +438,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 letterSpacing: '0.12em',
                 animationDelay: '0.2s'
               }}>
-                {heroSlogan.split(' ').map((word, i) => (
+                {heroSlogan.split(' ').map((word: string, i: number) => (
                   <span key={i}>
                     {i === heroSlogan.split(' ').length - 1 ? (
                       <span className="text-azimut-red">{word}</span>
@@ -501,7 +501,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             
             // ORDEM DE PRIORIDADE: 1. Fixo no código, 2. Backoffice, 3. Featured Project, 4. Default
             const videoUrl = demoreelVideoFixed || demoreelVideoBackoffice || fallbackVideo || 'https://www.youtube.com/watch?v=1Pcoi_E9SXI'
-            const thumbnailUrl = 'https://img.youtube.com/vi/F_kfcfK_v44/maxresdefault.jpg' || featured?.heroImage?.thumbnail || 'https://img.youtube.com/vi/1Pcoi_E9SXI/maxresdefault.jpg'
+            const thumbnailUrl = featured?.heroImage?.thumbnail || 'https://img.youtube.com/vi/F_kfcfK_v44/maxresdefault.jpg' || 'https://img.youtube.com/vi/1Pcoi_E9SXI/maxresdefault.jpg'
             
             return (
               <>
