@@ -1645,35 +1645,48 @@ select.input-adaptive:disabled {
 
 /* Custom select (Contact form) */
 .select-trigger {
-  @apply w-full min-h-[44px] rounded-xl border border-white/10 px-3 py-2.5 text-left text-slate-100 flex items-center justify-between gap-2;
-  background: rgba(255, 255, 255, 0.05);
-  transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  @apply w-full min-h-[44px] rounded-lg border border-white/10 px-4 py-3 text-left text-slate-100 flex items-center justify-between gap-2;
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(201, 35, 55, 0.3) !important;
+  transition: all 0.25s ease;
 }
 .select-trigger:hover {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(201, 35, 55, 0.5) !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 0 0 1px rgba(201, 35, 55, 0.2) !important;
 }
 .select-trigger:focus {
-  outline: none;
-  border-color: #c92337;
-  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.15);
+  outline: none !important;
+  border-color: #c92337 !important;
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.25), 0 0 8px rgba(201, 35, 55, 0.15) !important;
+  background: rgba(0, 0, 0, 0.55) !important;
 }
 .select-arrow {
   @apply text-slate-400 transition-transform duration-200;
 }
 .select-panel {
-  @apply absolute z-30 mt-2 w-full rounded-xl border border-white/10 bg-slate-900/95 text-slate-100 shadow-2xl backdrop-blur;
+  @apply absolute z-30 mt-2 w-full rounded-xl border border-white/10 bg-slate-900/98 text-slate-100 shadow-2xl backdrop-blur-xl;
   max-height: 260px;
   overflow-y: auto;
   padding: 0.5rem;
+  background: linear-gradient(135deg, rgba(10, 15, 26, 0.98) 0%, rgba(15, 23, 42, 0.98) 100%) !important;
 }
 .select-option {
-  @apply px-4 py-2.5 text-sm text-slate-100 hover:bg-azimut-red/20 cursor-pointer rounded-lg transition-all duration-200;
+  @apply px-4 py-2.5 text-sm text-slate-100 cursor-pointer rounded-lg transition-all duration-200;
   margin-bottom: 0.25rem;
+  background: transparent;
+}
+.select-option:hover {
+  background: rgba(201, 35, 55, 0.15) !important;
+  color: #ffffff !important;
 }
 .select-option[aria-selected="true"] {
-  @apply bg-azimut-red/25 text-white font-medium;
-  border-left: 3px solid #c92337;
-  padding-left: calc(1rem - 3px);
+  background: rgba(201, 35, 55, 0.3) !important;
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0.35) 0%, rgba(201, 35, 55, 0.25) 100%) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  border-left: 3px solid #c92337 !important;
+  padding-left: calc(1rem - 3px) !important;
 }
 .select-option:last-child {
   margin-bottom: 0;
