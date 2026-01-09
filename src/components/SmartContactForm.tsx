@@ -946,7 +946,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
               </PremiumField>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8" style={{ rowGap: '2rem' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8" style={{ rowGap: '2rem', marginTop: '2rem' }}>
               <PremiumField label={t.phone}>
                 <input
                   type="tel"
