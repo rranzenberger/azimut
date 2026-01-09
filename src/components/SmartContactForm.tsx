@@ -214,32 +214,33 @@ const PremiumField = ({
 }) => (
   <div className={`group w-full ${className}`}>
     <label 
-      className={`block text-xs font-semibold transition-all duration-200 flex items-center gap-1 uppercase tracking-wider ${
+      className={`block text-xs font-medium transition-all duration-200 flex items-center gap-1.5 uppercase tracking-wide ${
         error 
           ? 'text-red-400' 
-          : 'opacity-75 group-focus-within:opacity-100 group-focus-within:text-azimut-red/90 text-white/70 group-hover:opacity-90 [data-theme="light"]:text-slate-600'
+          : 'opacity-80 group-focus-within:opacity-100 group-focus-within:text-azimut-red/90 text-white/75 group-hover:opacity-90 [data-theme="light"]:text-slate-700'
       }`} 
       style={{ 
         paddingLeft: '16px', 
-        letterSpacing: '0.04em', 
-        fontSize: '10.5px', 
-        marginBottom: '2px !important', 
-        lineHeight: '1.1',
-        paddingBottom: '0 !important',
-        marginTop: '0 !important',
-        display: 'block'
+        letterSpacing: '0.03em', 
+        fontSize: '11px', 
+        marginBottom: '8px', 
+        lineHeight: '1.3',
+        paddingBottom: '0',
+        marginTop: '0',
+        display: 'block',
+        fontWeight: '500'
       }}
     >
       <span className="whitespace-nowrap">{label.replace(/:?\s*\*$/, '')}</span>
       {required && (
-        <span className="text-azimut-red text-[9px] font-bold flex-shrink-0 ml-0.5" aria-label="obrigatório">*</span>
+        <span className="text-azimut-red text-[10px] font-bold flex-shrink-0 ml-0.5" aria-label="obrigatório">*</span>
       )}
     </label>
-    <div className="relative w-full" style={{ marginTop: '0', paddingTop: '0' }}>
+    <div className="relative w-full">
       {children}
       {/* Mensagem de erro abaixo do campo */}
       {error && (
-        <p className="mt-2 text-xs text-red-400/90 flex items-center gap-1.5 animate-fade-in-up" style={{ paddingLeft: '16px' }}>
+        <p className="mt-2.5 text-xs text-red-400/90 flex items-center gap-1.5 animate-fade-in-up" style={{ paddingLeft: '16px' }}>
           <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -778,7 +779,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
   return (
     <div className="relative">
       {/* Container usando card-adaptive (estilo original do site) */}
-      <form onSubmit={handleSubmit} className="relative space-y-6 rounded-2xl border border-white/10 card-adaptive p-6 md:p-8 lg:p-10 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur animate-fade-in-up overflow-hidden">
+      <form onSubmit={handleSubmit} className="relative space-y-8 rounded-2xl border border-white/10 card-adaptive p-8 md:p-10 lg:p-12 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur animate-fade-in-up overflow-hidden">
         {/* Glow effect sutil ao redor */}
         <div className="absolute -inset-0.5 bg-gradient-to-r from-azimut-red/10 via-azimut-red/5 to-azimut-red/10 rounded-2xl blur-xl opacity-50 pointer-events-none" />
         
@@ -911,7 +912,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             <div className="my-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
             {/* Personal Info - Grid 2 colunas */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in-up" style={{ animationDelay: '0.2s', rowGap: '1.5rem' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-fade-in-up" style={{ animationDelay: '0.2s', rowGap: '2rem' }}>
               <PremiumField label={t.name} error={fieldErrors.name} required>
                 <input
                   type="text"
@@ -945,7 +946,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
               </PremiumField>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8" style={{ rowGap: '2rem' }}>
               <PremiumField label={t.phone}>
                 <input
                   type="tel"
@@ -970,23 +971,25 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             </div>
 
             {/* Organization */}
-            <PremiumField label={t.company} error={fieldErrors.company} required>
-              <input
-                type="text"
-                name="company"
-                value={formData.company}
-                onChange={handleChange}
-                required
-                className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal ${
-                  fieldErrors.company 
-                    ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
-                    : 'focus:ring-azimut-red/50 focus:border-azimut-red/50'
-                }`}
-                placeholder="Museu de Arte de São Paulo"
-              />
-            </PremiumField>
+            <div style={{ marginTop: '1.5rem' }}>
+              <PremiumField label={t.company} error={fieldErrors.company} required>
+                <input
+                  type="text"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleChange}
+                  required
+                  className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal ${
+                    fieldErrors.company 
+                      ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
+                      : 'focus:ring-azimut-red/50 focus:border-azimut-red/50'
+                  }`}
+                  placeholder="Museu de Arte de São Paulo"
+                />
+              </PremiumField>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8" style={{ rowGap: '2rem', marginTop: '1.5rem' }}>
               <PremiumField label={t.organizationType} error={fieldErrors.organizationType} required>
                 <SelectField
                   value={formData.organizationType}
@@ -1028,7 +1031,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
               </PremiumField>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8" style={{ rowGap: '2rem', marginTop: '1.5rem' }}>
               <PremiumField label={t.budget} error={fieldErrors.budget} required>
                 <SelectField
                   value={formData.budget}
@@ -1071,7 +1074,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             </div>
 
             {/* Location */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8" style={{ rowGap: '2rem', marginTop: '1.5rem' }}>
               <PremiumField label={t.country}>
                 <input
                   type="text"
@@ -1096,19 +1099,21 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             </div>
 
             {/* Description */}
-            <PremiumField label={t.description}>
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                rows={4}
-                className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20 resize-none text-[15px] leading-normal"
-                placeholder="Queremos criar uma instalação imersiva para nosso museu..."
-              />
-            </PremiumField>
+            <div style={{ marginTop: '1.5rem' }}>
+              <PremiumField label={t.description}>
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  rows={4}
+                  className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20 resize-none text-[15px] leading-normal"
+                  placeholder="Queremos criar uma instalação imersiva para nosso museu..."
+                />
+              </PremiumField>
+            </div>
 
             {/* Checkboxes */}
-            <div className="space-y-3">
+            <div className="space-y-4" style={{ marginTop: '2rem' }}>
               <label className="flex items-start gap-3 cursor-pointer group">
                 <input
                   type="checkbox"
