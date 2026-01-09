@@ -53,6 +53,11 @@ interface AnalyticsData {
     createdAt: string
     lastContactAt: string | null
   }>
+  leadsByType: {
+    vancouver: { total: number; inPipeline: number }
+    courses: { total: number; inPipeline: number }
+    projects: { total: number; inPipeline: number }
+  }
 }
 
 export default function DashboardPage() {
@@ -92,7 +97,7 @@ export default function DashboardPage() {
     )
   }
 
-  const { kpis, charts, hotLeadsList } = analytics
+  const { kpis, charts, hotLeadsList, leadsByType } = analytics
 
   // Chart data
   const visitorsChartData = {
@@ -197,6 +202,71 @@ export default function DashboardPage() {
           change={kpis.conversionRate.change}
           icon="💰"
         />
+      </div>
+
+      {/* Leads by Type - Segmented CRM */}
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg border border-blue-200">
+        <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+          🎯 Leads por Tipo (CRM Segmentado)
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Vancouver */}
+          <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-3xl">🍁</span>
+              <a 
+                href="/admin/leads?type=VANCOUVER"
+                className="text-xs text-blue-600 hover:text-blue-800 font-semibold"
+              >
+                Ver todos →
+              </a>
+            </div>
+            <h3 className="text-sm font-semibold text-gray-700 mb-1">Vancouver (Estudar Fora)</h3>
+            <p className="text-3xl font-bold text-gray-900 mb-2">{leadsByType.vancouver.total}</p>
+            <div className="flex items-center gap-2 text-sm">
+              <span className="text-gray-600">Em pipeline:</span>
+              <span className="font-semibold text-indigo-600">{leadsByType.vancouver.inPipeline}</span>
+            </div>
+          </div>
+
+          {/* Courses */}
+          <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-3xl">📚</span>
+              <a 
+                href="/admin/leads?type=CONTACT_FORM"
+                className="text-xs text-blue-600 hover:text-blue-800 font-semibold"
+              >
+                Ver todos →
+              </a>
+            </div>
+            <h3 className="text-sm font-semibold text-gray-700 mb-1">Cursos & Workshops</h3>
+            <p className="text-3xl font-bold text-gray-900 mb-2">{leadsByType.courses.total}</p>
+            <div className="flex items-center gap-2 text-sm">
+              <span className="text-gray-600">Em pipeline:</span>
+              <span className="font-semibold text-indigo-600">{leadsByType.courses.inPipeline}</span>
+            </div>
+          </div>
+
+          {/* Projects */}
+          <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-3xl">🎬</span>
+              <a 
+                href="/admin/leads?type=BUDGET_INQUIRY"
+                className="text-xs text-blue-600 hover:text-blue-800 font-semibold"
+              >
+                Ver todos →
+              </a>
+            </div>
+            <h3 className="text-sm font-semibold text-gray-700 mb-1">Projetos Audiovisuais</h3>
+            <p className="text-3xl font-bold text-gray-900 mb-2">{leadsByType.projects.total}</p>
+            <div className="flex items-center gap-2 text-sm">
+              <span className="text-gray-600">Em pipeline:</span>
+              <span className="font-semibold text-indigo-600">{leadsByType.projects.inPipeline}</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Charts Row 1 */}

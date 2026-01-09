@@ -168,6 +168,37 @@ export async function GET(request: Request) {
       }
     })
 
+    // 11. LEADS BY TYPE (for segmented dashboard)
+    const leadsByType = await prisma.lead.groupBy({
+      by: ['leadType'],
+      _count: true,
+      where: {
+        createdAt: { gte: startDate }
+      }
+    })
+
+    // Contar leads em pipeline por tipo
+    const vancouverInPipeline = await prisma.lead.count({
+      where: {
+        leadType: 'VANCOUVER',
+        status: { in: ['NEW', 'CONTACTED', 'IN_PROGRESS'] }
+      }
+    })
+
+    const coursesInPipeline = await prisma.lead.count({
+      where: {
+        leadType: 'CONTACT_FORM', // Assumir que Contact Form são cursos por enquanto
+        status: { in: ['NEW', 'CONTACTED', 'IN_PROGRESS'] }
+      }
+    })
+
+    const projectsInPipeline = await prisma.lead.count({
+      where: {
+        leadType: 'BUDGET_INQUIRY',
+        status: { in: ['NEW', 'CONTACTED', 'IN_PROGRESS'] }
+      }
+    })
+
     return NextResponse.json({
       kpis: {
         visitors: {
@@ -210,7 +241,21 @@ export async function GET(request: Request) {
           views: p._count
         }))
       },
-      hotLeadsList
+      hotLeadsList,
+      leadsByType: {
+        vancouver: {
+          total: leadsByType.find(l => l.leadType === 'VANCOUVER')?._count || 0,
+          inPipeline: vancouverInPipeline
+        },
+        courses: {
+          total: leadsByType.find(l => l.leadType === 'CONTACT_FORM')?._count || 0,
+          inPipeline: coursesInPipeline
+        },
+        projects: {
+          total: leadsByType.find(l => l.leadType === 'BUDGET_INQUIRY')?._count || 0,
+          inPipeline: projectsInPipeline
+        }
+      }
     })
   } catch (error) {
     console.error('Analytics API error:', error)
