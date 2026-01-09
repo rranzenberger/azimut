@@ -141,8 +141,9 @@ export function LeadsFilters({
           }}
         >
           <option value="">Todos os tipos</option>
-          <option value="CONTACT_FORM">Formulário de Contato</option>
-          <option value="BUDGET_INQUIRY">Solicitação de Orçamento</option>
+          <option value="VANCOUVER">🍁 Vancouver (Estudar Fora)</option>
+          <option value="CONTACT_FORM">📚 Cursos & Workshops</option>
+          <option value="BUDGET_INQUIRY">🎬 Projetos Audiovisuais</option>
         </select>
 
         <select

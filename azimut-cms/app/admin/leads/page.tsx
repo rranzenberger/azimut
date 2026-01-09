@@ -52,7 +52,7 @@ export default async function LeadsPage({
       where.priority = priority;
     }
     
-    if (leadType && ['CONTACT_FORM', 'BUDGET_INQUIRY'].includes(leadType)) {
+    if (leadType && ['CONTACT_FORM', 'BUDGET_INQUIRY', 'VANCOUVER'].includes(leadType)) {
       where.leadType = leadType;
     }
     
