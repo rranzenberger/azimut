@@ -213,19 +213,21 @@ const PremiumField = ({
   required?: boolean
 }) => (
   <div className={`group w-full ${className}`}>
-    <label className={`block text-sm font-medium mb-3 transition-colors flex items-center gap-1.5 ${
-      error ? 'text-red-400' : 'opacity-90 group-focus-within:opacity-100 group-focus-within:text-azimut-red/80 text-white/85 [data-theme="light"]:text-slate-700'
-    }`} style={{ paddingLeft: '16px' }}>
+    <label className={`block text-xs font-semibold mb-1.5 transition-all duration-200 flex items-center gap-1.5 uppercase tracking-wider ${
+      error 
+        ? 'text-red-400' 
+        : 'opacity-75 group-focus-within:opacity-100 group-focus-within:text-azimut-red/90 text-white/70 group-hover:opacity-90 [data-theme="light"]:text-slate-600'
+    }`} style={{ paddingLeft: '16px', letterSpacing: '0.05em', fontSize: '11px' }}>
       <span className="whitespace-nowrap">{label.replace(/:?\s*\*$/, '')}</span>
       {required && (
-        <span className="text-azimut-red text-xs font-bold flex-shrink-0 ml-0.5" aria-label="obrigatório">*</span>
+        <span className="text-azimut-red text-[10px] font-bold flex-shrink-0 ml-0.5" aria-label="obrigatório">*</span>
       )}
     </label>
     <div className="relative w-full">
       {children}
       {/* Mensagem de erro abaixo do campo */}
       {error && (
-        <p className="mt-2.5 text-xs text-red-400/90 flex items-center gap-1.5 animate-fade-in-up" style={{ paddingLeft: '16px' }}>
+        <p className="mt-2 text-xs text-red-400/90 flex items-center gap-1.5 animate-fade-in-up" style={{ paddingLeft: '16px' }}>
           <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
