@@ -454,6 +454,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   description: lang === 'pt' ? 'Aprendizado prático' : lang === 'es' ? 'Aprendizaje práctico' : lang === 'fr' ? 'Apprentissage pratique' : 'Hands-on learning'
                 },
                 {
+                  label: lang === 'pt' ? '🇨🇦 Vancouver (VFS/VanArts)' : lang === 'es' ? '🇨🇦 Vancouver (VFS/VanArts)' : lang === 'fr' ? '🇨🇦 Vancouver (VFS/VanArts)' : '🇨🇦 Vancouver (VFS/VanArts)',
+                  href: '/academy/vancouver',
+                  description: lang === 'pt' ? 'Estudar cinema/VFX no Canadá' : lang === 'es' ? 'Estudiar cine/VFX en Canadá' : lang === 'fr' ? 'Étudier cinéma/VFX au Canada' : 'Study film/VFX in Canada'
+                },
+                {
                   label: lang === 'pt' ? 'Treinamento Corporativo' : lang === 'es' ? 'Entrenamiento Corporativo' : lang === 'fr' ? 'Formation d\'Entreprise' : 'Corporate Training',
                   href: '/academy/corporate',
                   description: lang === 'pt' ? 'Programas personalizados' : lang === 'es' ? 'Programas personalizados' : lang === 'fr' ? 'Programmes personnalisés' : 'Tailored programs'
