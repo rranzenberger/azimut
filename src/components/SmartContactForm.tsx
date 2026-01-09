@@ -96,12 +96,12 @@ const PremiumField = ({
   required?: boolean
 }) => (
   <div className={`group ${className}`}>
-    <label className={`block text-sm font-medium mb-2.5 transition-colors flex items-center gap-2 ${
+    <label className={`block text-sm font-medium mb-2.5 transition-colors flex items-center gap-1.5 flex-wrap ${
       error ? 'text-red-400' : 'opacity-90 group-focus-within:opacity-100 group-focus-within:text-azimut-red/80'
     }`}>
-      <span>{label}</span>
+      <span className="whitespace-nowrap">{label.replace(/:?\s*\*$/, '')}</span>
       {required && (
-        <span className="text-azimut-red text-xs font-bold" aria-label="obrigatório">*</span>
+        <span className="text-azimut-red text-xs font-bold flex-shrink-0" aria-label="obrigatório">*</span>
       )}
     </label>
     <div className="relative">
@@ -160,7 +160,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       phone: 'Telefone / WhatsApp',
       company: 'Nome da Organização *',
       position: 'Seu Cargo',
-      organizationType: 'Você representa: *',
+      organizationType: 'Você representa *',
       orgTypes: {
         '': 'Selecione...',
         governo: '🏛️ Governo (federal/estadual/municipal)',
@@ -171,7 +171,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         produtor: '🎬 Produtor/Diretor/Artista',
         outro: '🤷 Outro'
       },
-      projectType: 'Tipo de Projeto: *',
+      projectType: 'Tipo de Projeto *',
       projectTypes: {
         '': 'Selecione...',
         museu: 'Museu/Exposição',
@@ -182,7 +182,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         treinamento: 'Treinamento Corporativo',
         indefinido: 'Ainda não sei (preciso ajuda)'
       },
-      budget: 'Budget Disponível: *',
+      budget: 'Budget Disponível *',
       budgetRanges: {
         '': 'Selecione...',
         '<100k': '< R$ 100k / CAD $30k',
@@ -194,7 +194,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         grant: '💰 Preciso aplicar para grant/edital',
         indefinido: 'Ainda não defini'
       },
-      timeline: 'Quando precisa estar pronto? *',
+      timeline: 'Quando precisa estar pronto *',
       timelines: {
         '': 'Selecione...',
         urgente: '⚡ Urgente (< 3 meses)',
@@ -230,7 +230,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       phone: 'Phone / WhatsApp',
       company: 'Organization Name *',
       position: 'Your Position',
-      organizationType: 'You represent: *',
+      organizationType: 'You represent *',
       orgTypes: {
         '': 'Select...',
         governo: '🏛️ Government (federal/state/municipal)',
@@ -241,7 +241,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         produtor: '🎬 Producer/Director/Artist',
         outro: '🤷 Other'
       },
-      projectType: 'Project Type: *',
+      projectType: 'Project Type *',
       projectTypes: {
         '': 'Select...',
         museu: 'Museum/Exhibition',
@@ -252,7 +252,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         treinamento: 'Corporate Training',
         indefinido: 'Not sure yet (need help)'
       },
-      budget: 'Available Budget: *',
+      budget: 'Available Budget *',
       budgetRanges: {
         '': 'Select...',
         '<100k': '< R$ 100k / CAD $30k',
@@ -264,7 +264,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         grant: '💰 Need to apply for grant/funding',
         indefinido: 'Not defined yet'
       },
-      timeline: 'When do you need it ready? *',
+      timeline: 'When do you need it ready *',
       timelines: {
         '': 'Select...',
         urgente: '⚡ Urgent (< 3 months)',
@@ -300,7 +300,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       phone: 'Teléfono / WhatsApp',
       company: 'Nombre de la Organización *',
       position: 'Su Cargo',
-      organizationType: 'Usted representa: *',
+      organizationType: 'Usted representa *',
       orgTypes: {
         '': 'Seleccione...',
         governo: '🏛️ Gobierno (federal/estatal/municipal)',
@@ -311,7 +311,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         produtor: '🎬 Productor/Director/Artista',
         outro: '🤷 Otro'
       },
-      projectType: 'Tipo de Proyecto: *',
+      projectType: 'Tipo de Proyecto *',
       projectTypes: {
         '': 'Seleccione...',
         museu: 'Museo/Exposición',
@@ -322,7 +322,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         treinamento: 'Capacitación Corporativa',
         indefinido: 'Aún no lo sé (necesito ayuda)'
       },
-      budget: 'Presupuesto Disponible: *',
+      budget: 'Presupuesto Disponible *',
       budgetRanges: {
         '': 'Seleccione...',
         '<100k': '< R$ 100k / CAD $30k',
@@ -334,7 +334,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         grant: '💰 Necesito solicitar subvención/edital',
         indefinido: 'Aún no definido'
       },
-      timeline: '¿Cuándo lo necesita listo? *',
+      timeline: '¿Cuándo lo necesita listo *',
       timelines: {
         '': 'Seleccione...',
         urgente: '⚡ Urgente (< 3 meses)',
@@ -370,7 +370,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       phone: 'Téléphone / WhatsApp',
       company: 'Nom de l\'Organisation *',
       position: 'Votre Poste',
-      organizationType: 'Vous représentez: *',
+      organizationType: 'Vous représentez *',
       orgTypes: {
         '': 'Sélectionnez...',
         governo: '🏛️ Gouvernement (fédéral/étatique/municipal)',
@@ -381,7 +381,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         produtor: '🎬 Producteur/Réalisateur/Artiste',
         outro: '🤷 Autre'
       },
-      projectType: 'Type de Projet: *',
+      projectType: 'Type de Projet *',
       projectTypes: {
         '': 'Sélectionnez...',
         museu: 'Musée/Exposition',
@@ -392,7 +392,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         treinamento: 'Formation d\'Entreprise',
         indefinido: 'Pas encore sûr (besoin d\'aide)'
       },
-      budget: 'Budget Disponible: *',
+      budget: 'Budget Disponible *',
       budgetRanges: {
         '': 'Sélectionnez...',
         '<100k': '< R$ 100k / CAD $30k',
@@ -404,7 +404,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         grant: '💰 Besoin de demander une subvention/appel',
         indefinido: 'Pas encore défini'
       },
-      timeline: 'Quand en avez-vous besoin? *',
+      timeline: 'Quand en avez-vous besoin *',
       timelines: {
         '': 'Sélectionnez...',
         urgente: '⚡ Urgent (< 3 mois)',
@@ -1035,13 +1035,13 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       fieldErrors.acceptContact ? 'border-red-500/50' : ''
                     }`}
                   />
-                  <span className={`text-sm transition-colors ${
-                    fieldErrors.acceptContact 
-                      ? 'text-red-400' 
-                      : 'text-white/85 [data-theme="light"]:text-slate-700 group-hover:text-white'
-                  }`}>
-                    {t.acceptContact} <span className="text-red-400">*</span>
-                  </span>
+                <span className={`text-sm transition-colors leading-relaxed ${
+                  fieldErrors.acceptContact 
+                    ? 'text-red-400' 
+                    : 'text-white/85 [data-theme="light"]:text-slate-700 group-hover:text-white'
+                }`}>
+                  <span>{t.acceptContact.replace(/\s*\*$/, '')}</span> <span className="text-red-400 flex-shrink-0">*</span>
+                </span>
                 </label>
                 {fieldErrors.acceptContact && (
                   <p className="mt-1.5 ml-8 text-xs text-red-400/90 flex items-center gap-1.5 animate-fade-in-up">
