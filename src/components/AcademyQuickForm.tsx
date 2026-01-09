@@ -20,6 +20,7 @@ interface FormData {
   contact: string // Email OU WhatsApp (usuário escolhe)
   school?: 'vanarts' | 'vfs' | 'both' | 'undecided' // Apenas para Vancouver
   preferredLanguage?: Lang // Idioma preferido para atendimento
+  contactPreference?: 'email' | 'whatsapp' | 'call' | 'any' // Como prefere ser contatado
   interest: string // Pré-preenchido se veio do Quiz/Recomendador
 }
 
@@ -29,6 +30,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
     contact: '',
     school: type === 'vancouver' ? 'undecided' : undefined,
     preferredLanguage: lang, // Default: idioma atual do site
+    contactPreference: 'email', // Default: email (menos invasivo)
     interest: ''
   })
   const [loading, setLoading] = useState(false)
@@ -87,6 +89,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         contact: 'Email ou WhatsApp',
         school: 'Escola de interesse',
         preferredLanguage: 'Idioma preferido para atendimento',
+        contactPreference: 'Como prefere receber informações?',
         interest: 'O que a IA detectou sobre você'
       },
       schoolOptions: {
@@ -100,6 +103,12 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         en: '🇨🇦 English',
         es: '🇪🇸 Español',
         fr: '🇫🇷 Français'
+      },
+      contactPreferenceOptions: {
+        email: '📧 Só quero receber por email (sem ligação)',
+        whatsapp: '💬 WhatsApp (mensagens, pode chamar!)',
+        call: '📞 Pode me ligar! (não tenho timidez)',
+        any: '🤝 Como for melhor pra vocês (tô aberto!)'
       },
       placeholders: {
         name: 'Ex: João Silva',
@@ -126,6 +135,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         contact: 'Email or WhatsApp',
         school: 'School of interest',
         preferredLanguage: 'Preferred language for service',
+        contactPreference: 'How do you prefer to be contacted?',
         interest: 'What AI detected about you'
       },
       schoolOptions: {
@@ -139,6 +149,12 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         en: '🇨🇦 English',
         es: '🇪🇸 Español',
         fr: '🇫🇷 Français'
+      },
+      contactPreferenceOptions: {
+        email: '📧 Email only (no calls please)',
+        whatsapp: '💬 WhatsApp (messages, you can text!)',
+        call: '📞 Call me! (I don\'t mind talking)',
+        any: '🤝 Whatever works best (I\'m flexible!)'
       },
       placeholders: {
         name: 'Ex: John Smith',
@@ -165,6 +181,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         contact: 'Email o WhatsApp',
         school: 'Escuela de interés',
         preferredLanguage: 'Idioma preferido para atención',
+        contactPreference: '¿Cómo prefieres ser contactado?',
         interest: 'Lo que la IA detectó sobre ti'
       },
       schoolOptions: {
@@ -178,6 +195,12 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         en: '🇨🇦 English',
         es: '🇪🇸 Español',
         fr: '🇫🇷 Français'
+      },
+      contactPreferenceOptions: {
+        email: '📧 Solo email (sin llamadas)',
+        whatsapp: '💬 WhatsApp (mensajes, ¡puedes escribir!)',
+        call: '📞 ¡Puedes llamarme! (no tengo vergüenza)',
+        any: '🤝 Como sea mejor (¡soy flexible!)'
       },
       placeholders: {
         name: 'Ej: Juan García',
@@ -204,6 +227,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         contact: 'Email ou WhatsApp',
         school: 'École d\'intérêt',
         preferredLanguage: 'Langue préférée pour le service',
+        contactPreference: 'Comment préférez-vous être contacté?',
         interest: 'Ce que l\'IA a détecté sur vous'
       },
       schoolOptions: {
@@ -217,6 +241,12 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         en: '🇨🇦 English',
         es: '🇪🇸 Español',
         fr: '🇫🇷 Français'
+      },
+      contactPreferenceOptions: {
+        email: '📧 Email uniquement (pas d\'appels)',
+        whatsapp: '💬 WhatsApp (messages, vous pouvez écrire!)',
+        call: '📞 Appelez-moi! (je n\'ai pas peur)',
+        any: '🤝 Comme vous voulez (je suis flexible!)'
       },
       placeholders: {
         name: 'Ex: Marie Dupont',
@@ -251,6 +281,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
       const isEmail = formData.contact.includes('@')
       const schoolLabel = formData.school ? t.schoolOptions[formData.school] : ''
       const langLabel = formData.preferredLanguage ? t.languageOptions[formData.preferredLanguage] : ''
+      const contactPrefLabel = formData.contactPreference ? t.contactPreferenceOptions[formData.contactPreference] : ''
       
       // Preparar dados do lead
       const leadData = {
@@ -263,7 +294,8 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         description: [
           formData.interest,
           schoolLabel ? `Escola: ${schoolLabel}` : '',
-          langLabel ? `Idioma preferido: ${langLabel}` : ''
+          langLabel ? `Idioma preferido: ${langLabel}` : '',
+          contactPrefLabel ? `⚠️ Preferência de contato: ${contactPrefLabel}` : ''
         ].filter(Boolean).join('\n'),
         sourceUrl: window.location.href,
         utmSource: new URLSearchParams(window.location.search).get('utm_source') || undefined,
@@ -290,6 +322,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         contact: '',
         school: type === 'vancouver' ? 'undecided' : undefined,
         preferredLanguage: lang,
+        contactPreference: 'email',
         interest: ''
       })
 
@@ -417,6 +450,41 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
               <option value="es">{t.languageOptions.es}</option>
               <option value="fr">{t.languageOptions.fr}</option>
             </select>
+          </div>
+
+          {/* Contact Preference - NOVO CAMPO */}
+          <div>
+            <label className="block text-sm font-semibold text-white/90 mb-2 uppercase tracking-wider">
+              {t.fields.contactPreference} *
+            </label>
+            <select
+              value={formData.contactPreference || 'email'}
+              onChange={(e) => setFormData({ ...formData, contactPreference: e.target.value as any })}
+              className="input-adaptive w-full"
+              required
+            >
+              <option value="email">{t.contactPreferenceOptions.email}</option>
+              <option value="whatsapp">{t.contactPreferenceOptions.whatsapp}</option>
+              <option value="call">{t.contactPreferenceOptions.call}</option>
+              <option value="any">{t.contactPreferenceOptions.any}</option>
+            </select>
+            
+            {/* Helper text para pessoas tímidas */}
+            {formData.contactPreference === 'email' && (
+              <p className="mt-2 text-xs text-green-400">
+                ✅ Relaxa! Vamos mandar tudo por email. Sem ligação, sem pressão.
+              </p>
+            )}
+            {formData.contactPreference === 'whatsapp' && (
+              <p className="mt-2 text-xs text-blue-400">
+                💬 Beleza! Vamos te chamar no WhatsApp quando tiver novidade.
+              </p>
+            )}
+            {formData.contactPreference === 'call' && (
+              <p className="mt-2 text-xs text-yellow-400">
+                📞 Top! Vamos te ligar para conversar melhor sobre tudo.
+              </p>
+            )}
           </div>
 
           {/* Interest (auto-filled - read-only display) */}
