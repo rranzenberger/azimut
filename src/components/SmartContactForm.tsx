@@ -213,17 +213,17 @@ const PremiumField = ({
   required?: boolean
 }) => (
   <div className={`group w-full ${className}`}>
-    <label className={`block text-xs font-semibold mb-1.5 transition-all duration-200 flex items-center gap-1.5 uppercase tracking-wider ${
+    <label className={`block text-xs font-semibold mb-1 transition-all duration-200 flex items-center gap-1 uppercase tracking-wider ${
       error 
         ? 'text-red-400' 
         : 'opacity-75 group-focus-within:opacity-100 group-focus-within:text-azimut-red/90 text-white/70 group-hover:opacity-90 [data-theme="light"]:text-slate-600'
-    }`} style={{ paddingLeft: '16px', letterSpacing: '0.05em', fontSize: '11px' }}>
+    }`} style={{ paddingLeft: '16px', letterSpacing: '0.04em', fontSize: '10.5px', marginBottom: '4px', lineHeight: '1.2' }}>
       <span className="whitespace-nowrap">{label.replace(/:?\s*\*$/, '')}</span>
       {required && (
-        <span className="text-azimut-red text-[10px] font-bold flex-shrink-0 ml-0.5" aria-label="obrigatório">*</span>
+        <span className="text-azimut-red text-[9px] font-bold flex-shrink-0 ml-0.5" aria-label="obrigatório">*</span>
       )}
     </label>
-    <div className="relative w-full">
+    <div className="relative w-full" style={{ marginTop: '0' }}>
       {children}
       {/* Mensagem de erro abaixo do campo */}
       {error && (
