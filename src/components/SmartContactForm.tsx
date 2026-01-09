@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import type { Lang } from '../i18n'
+import ApiService from '../services/api'
 
 interface SmartContactFormProps {
   lang?: Lang
@@ -326,15 +327,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
     setError('')
 
     try {
-      const response = await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to submit')
-      }
+      await ApiService.submitLead(formData)
 
       setSuccess(true)
       // Reset form
@@ -379,19 +372,14 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
   const fetchAISuggestions = async () => {
     setLoadingSuggestions(true)
     try {
-      const res = await fetch('/api/ai/form-suggestions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          organizationType: formData.organizationType,
-          projectType: formData.projectType,
-          budget: formData.budget,
-          description: formData.description,
-        }),
+      const suggestions = await ApiService.getAiSuggestions({
+        organizationType: formData.organizationType,
+        projectType: formData.projectType,
+        budget: formData.budget,
+        description: formData.description,
       })
 
-      if (res.ok) {
-        const suggestions = await res.json()
+      if (suggestions) {
         setAiSuggestions(suggestions)
       }
     } catch (err) {
