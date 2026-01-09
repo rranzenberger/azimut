@@ -212,26 +212,29 @@ const PremiumField = ({
   error?: string,
   required?: boolean
 }) => (
-  <div className={`group w-full ${className}`} style={{ marginBottom: '0', paddingBottom: '0' }}>
-    <label className={`block text-xs font-semibold transition-all duration-200 flex items-center gap-1 uppercase tracking-wider ${
-      error 
-        ? 'text-red-400' 
-        : 'opacity-75 group-focus-within:opacity-100 group-focus-within:text-azimut-red/90 text-white/70 group-hover:opacity-90 [data-theme="light"]:text-slate-600'
-    }`} style={{ 
-      paddingLeft: '16px', 
-      letterSpacing: '0.04em', 
-      fontSize: '10.5px', 
-      marginBottom: '2px', 
-      lineHeight: '1.1',
-      paddingBottom: '0',
-      marginTop: '0'
-    }}>
+  <div className={`group w-full ${className}`}>
+    <label 
+      className={`block text-xs font-semibold transition-all duration-200 flex items-center gap-1 uppercase tracking-wider ${
+        error 
+          ? 'text-red-400' 
+          : 'opacity-75 group-focus-within:opacity-100 group-focus-within:text-azimut-red/90 text-white/70 group-hover:opacity-90 [data-theme="light"]:text-slate-600'
+      }`} 
+      style={{ 
+        paddingLeft: '16px', 
+        letterSpacing: '0.04em', 
+        fontSize: '10.5px', 
+        marginBottom: '6px', 
+        lineHeight: '1.1',
+        paddingBottom: '0',
+        marginTop: '0'
+      }}
+    >
       <span className="whitespace-nowrap">{label.replace(/:?\s*\*$/, '')}</span>
       {required && (
         <span className="text-azimut-red text-[9px] font-bold flex-shrink-0 ml-0.5" aria-label="obrigatório">*</span>
       )}
     </label>
-    <div className="relative w-full" style={{ marginTop: '0', paddingTop: '0' }}>
+    <div className="relative w-full">
       {children}
       {/* Mensagem de erro abaixo do campo */}
       {error && (
@@ -907,7 +910,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             <div className="my-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
             {/* Personal Info - Grid 2 colunas */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in-up" style={{ animationDelay: '0.2s', rowGap: '1.5rem' }}>
               <PremiumField label={t.name} error={fieldErrors.name} required>
                 <input
                   type="text"
