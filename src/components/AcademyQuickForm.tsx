@@ -153,8 +153,8 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
       contactPreferenceOptions: {
         email: '📧 Email only (no calls please)',
         whatsapp: '💬 WhatsApp (messages, you can text!)',
-        call: '📞 Call me! (I don\'t mind talking)',
-        any: '🤝 Whatever works best (I\'m flexible!)'
+        call: '📞 Call me! (I do not mind talking)',
+        any: '🤝 Whatever works best (I am flexible!)'
       },
       placeholders: {
         name: 'Ex: John Smith',
@@ -219,16 +219,16 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         vancouver: 'Je veux étudier à Vancouver 🇨🇦',
         course: 'Je veux suivre un cours 📚',
         workshop: 'Je veux participer à un atelier 🎬',
-        corporate: 'Je veux une formation d\'entreprise 🏢'
+        corporate: 'Je veux une formation entreprise 🏢'
       },
       subtitle: 'Super rapide: seulement 3 champs!',
       fields: {
         name: 'Votre nom',
         contact: 'Email ou WhatsApp',
-        school: 'École d\'intérêt',
+        school: 'École de intérêt',
         preferredLanguage: 'Langue préférée pour le service',
         contactPreference: 'Comment préférez-vous être contacté?',
-        interest: 'Ce que l\'IA a détecté sur vous'
+        interest: 'Ce que IA a détecté sur vous'
       },
       schoolOptions: {
         vanarts: 'VanArts (Animation, VFX, Game Design)',
@@ -243,9 +243,9 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         fr: '🇫🇷 Français'
       },
       contactPreferenceOptions: {
-        email: '📧 Email uniquement (pas d\'appels)',
+        email: '📧 Email uniquement (pas de appels)',
         whatsapp: '💬 WhatsApp (messages, vous pouvez écrire!)',
-        call: '📞 Appelez-moi! (je n\'ai pas peur)',
+        call: '📞 Appelez-moi! (je aime parler)',
         any: '🤝 Comme vous voulez (je suis flexible!)'
       },
       placeholders: {
