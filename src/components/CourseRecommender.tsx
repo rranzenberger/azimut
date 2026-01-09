@@ -7,6 +7,7 @@
 
 import React, { useState } from 'react'
 import { type Lang } from '../i18n'
+import ApiService from '../services/api'
 
 interface CourseRecommenderProps {
   lang: Lang
@@ -361,12 +362,36 @@ const CourseRecommender: React.FC<CourseRecommenderProps> = ({ lang, onComplete 
     if (step < t.questions.length - 1) {
       setTimeout(() => setStep(step + 1), 300)
     } else {
-      setTimeout(() => {
+      setTimeout(async () => {
         const recommendations = calculateRecommendations()
         setResult(recommendations)
         setShowResult(true)
+        
+        // Chamar callback se fornecido
         if (onComplete) {
           onComplete(recommendations)
+        }
+
+        // Salvar no CRM (não bloqueia a exibição do resultado)
+        try {
+          const sessionId = localStorage.getItem('sessionId') || `session_${Date.now()}`
+          
+          await ApiService.submitCourseRecommendation({
+            sessionId,
+            ...answers,
+            course1Id: recommendations.topCourses[0]?.id || 'unknown',
+            course1Match: recommendations.topCourses[0]?.match || 0,
+            course2Id: recommendations.topCourses[1]?.id || 'unknown',
+            course2Match: recommendations.topCourses[1]?.match || 0,
+            course3Id: recommendations.topCourses[2]?.id || 'unknown',
+            course3Match: recommendations.topCourses[2]?.match || 0,
+            lang
+          })
+          
+          console.log('✅ Recomendação salva no CRM')
+        } catch (error) {
+          console.warn('⚠️ Erro ao salvar Recomendação (não-crítico):', error)
+          // Não exibir erro para o usuário - é não-crítico
         }
       }, 300)
     }

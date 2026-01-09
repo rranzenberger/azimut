@@ -526,3 +526,224 @@ enum ProjectInteractionType {
   SHARE
   CTA
 }
+
+// ════════════════════════════════════════════════════════════
+// QUIZ VANCOUVER & COURSE RECOMMENDER - IA RESPONSES
+// ════════════════════════════════════════════════════════════
+
+model QuizVancouverResponse {
+  id                String   @id @default(uuid())
+  sessionId         String?  // Se anônimo (antes do lead)
+  leadId            String?  // Se já preencheu formulário
+  
+  // Respostas do Quiz (10 perguntas)
+  experience        String   // zero, beginner, intermediate, advanced
+  english           String   // basic, intermediate, advanced, native
+  goal              String   // career-change, skill-up, portfolio, immigration
+  area              String   // animation, vfx, game, film
+  budget            String   // low, medium, high, very-high
+  timeline          String   // asap, soon, planning, researching
+  portfolio         String   // none, basic, good, professional
+  software          String   // none, basic, intermediate, advanced
+  commitment        String   // exploring, serious, decided, ready
+  support           String   // self, partial, full, sponsored
+  
+  // Resultado calculado
+  score             Int      // 0-100
+  readiness         String   // low, medium, high
+  bestSchool        String   // VFS, VanArts
+  estimatedBudget   String   // CAD 25k-30k, etc
+  
+  // Metadata
+  lang              String   @default("pt")
+  completedAt       DateTime @default(now())
+  createdAt         DateTime @default(now())
+  
+  @@index([sessionId])
+  @@index([leadId])
+  @@index([score])
+  @@index([readiness])
+  @@index([completedAt])
+}
+
+model CourseRecommendationResponse {
+  id                String   @id @default(uuid())
+  sessionId         String?  // Se anônimo (antes do lead)
+  leadId            String?  // Se já preencheu formulário
+  
+  // Respostas do Recomendador (5 perguntas)
+  experience        String   // zero, beginner, intermediate, advanced
+  goal              String   // job, freelance, career-change, level-up
+  time              String   // part-time, weekends, full-time
+  budget            String   // low, medium, high
+  interest          String   // ai, creative, technical, immersive
+  
+  // Cursos recomendados (Top 3)
+  course1Id         String
+  course1Match      Int      // % match
+  course2Id         String
+  course2Match      Int
+  course3Id         String
+  course3Match      Int
+  
+  // Metadata
+  lang              String   @default("pt")
+  completedAt       DateTime @default(now())
+  createdAt         DateTime @default(now())
+  
+  @@index([sessionId])
+  @@index([leadId])
+  @@index([completedAt])
+}
+
+// ════════════════════════════════════════════════════════════
+// VIDEOS VFS/VANARTS
+// ════════════════════════════════════════════════════════════
+
+model AcademyVideo {
+  id              String          @id @default(uuid())
+  
+  // Video Info
+  videoUrl        String          // YouTube/Vimeo URL
+  thumbnailUrl    String?
+  type            VideoType       @default(YOUTUBE)
+  
+  // Content
+  titlePt         String
+  titleEn         String
+  titleEs         String?
+  titleFr         String?
+  descriptionPt   String?
+  descriptionEn   String?
+  descriptionEs   String?
+  descriptionFr   String?
+  
+  // Category
+  category        VideoCategory   @default(INSTITUTIONAL)
+  section         VideoSection    @default(VANCOUVER) // Vancouver, Courses, Workshops, Corporate
+  school          String?         // VFS, VanArts, Azimut
+  
+  // Metadata
+  duration        Int?            // seconds
+  views           Int             @default(0)
+  featured        Boolean         @default(false)
+  priority        Int             @default(0)
+  status          VideoStatus     @default(PUBLISHED)
+  
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  
+  @@index([category])
+  @@index([section])
+  @@index([school])
+  @@index([featured])
+  @@index([priority])
+  @@index([status])
+}
+
+enum VideoType {
+  YOUTUBE
+  VIMEO
+  MP4
+}
+
+enum VideoCategory {
+  INSTITUTIONAL
+  TESTIMONIAL
+  STUDENT_WORK
+  PROMO
+  TUTORIAL
+  EVENT
+}
+
+enum VideoSection {
+  VANCOUVER
+  COURSES
+  WORKSHOPS
+  CORPORATE
+  HOME
+}
+
+enum VideoStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+// ════════════════════════════════════════════════════════════
+// WEBINARS
+// ════════════════════════════════════════════════════════════
+
+model Webinar {
+  id                String        @id @default(uuid())
+  
+  // Content
+  titlePt           String
+  titleEn           String
+  titleEs           String?
+  titleFr           String?
+  descriptionPt     String?
+  descriptionEn     String?
+  descriptionEs     String?
+  descriptionFr     String?
+  
+  // Schedule
+  scheduledAt       DateTime
+  duration          Int           // minutes
+  timezone          String        @default("America/Sao_Paulo")
+  
+  // Platform
+  platform          String        // Zoom, Google Meet, YouTube Live
+  meetingUrl        String?       // URL da reunião
+  recordingUrl      String?       // URL da gravação (depois do evento)
+  
+  // Target
+  targetAudience    String[]      // students, corporate, schools, general
+  language          String        @default("pt")
+  
+  // Registration
+  registrations     WebinarRegistration[]
+  maxParticipants   Int?
+  requiresApproval  Boolean       @default(false)
+  
+  // Metadata
+  status            WebinarStatus @default(SCHEDULED)
+  featured          Boolean       @default(false)
+  thumbnailUrl      String?
+  
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  
+  @@index([scheduledAt])
+  @@index([status])
+  @@index([featured])
+}
+
+model WebinarRegistration {
+  id          String   @id @default(uuid())
+  webinarId   String
+  
+  // User Info
+  name        String
+  email       String
+  phone       String?
+  company     String?
+  
+  // Metadata
+  status      String   @default("CONFIRMED") // CONFIRMED, CANCELLED, ATTENDED, NO_SHOW
+  registeredAt DateTime @default(now())
+  attendedAt  DateTime?
+  
+  webinar     Webinar  @relation(fields: [webinarId], references: [id], onDelete: Cascade)
+  
+  @@index([webinarId])
+  @@index([email])
+  @@index([status])
+}
+
+enum WebinarStatus {
+  SCHEDULED
+  LIVE
+  COMPLETED
+  CANCELLED
+}

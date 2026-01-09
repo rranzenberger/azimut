@@ -7,6 +7,7 @@
 
 import React, { useState } from 'react'
 import { type Lang } from '../i18n'
+import ApiService from '../services/api'
 
 interface QuizVancouverProps {
   lang: Lang
@@ -394,12 +395,34 @@ const QuizVancouver: React.FC<QuizVancouverProps> = ({ lang, onComplete }) => {
     }
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const quizResult = calculateResult()
     setResult(quizResult)
     setShowResult(true)
+    
+    // Chamar callback se fornecido
     if (onComplete) {
       onComplete(quizResult)
+    }
+
+    // Salvar no CRM (não bloqueia a exibição do resultado)
+    try {
+      const sessionId = localStorage.getItem('sessionId') || `session_${Date.now()}`
+      
+      await ApiService.submitQuizVancouver({
+        sessionId,
+        ...answers,
+        score: quizResult.score,
+        readiness: quizResult.readiness,
+        bestSchool: quizResult.bestSchool,
+        estimatedBudget: quizResult.estimatedBudget,
+        lang
+      })
+      
+      console.log('✅ Quiz salvo no CRM')
+    } catch (error) {
+      console.warn('⚠️ Erro ao salvar Quiz (não-crítico):', error)
+      // Não exibir erro para o usuário - é não-crítico
     }
   }
 
