@@ -367,6 +367,13 @@ const CourseRecommender: React.FC<CourseRecommenderProps> = ({ lang, onComplete 
         setResult(recommendations)
         setShowResult(true)
         
+        // Salvar resultado no localStorage para pré-preencher formulário
+        localStorage.setItem('courseRecommendation', JSON.stringify({
+          ...recommendations,
+          answers,
+          completedAt: new Date().toISOString()
+        }))
+        
         // Chamar callback se fornecido
         if (onComplete) {
           onComplete(recommendations)

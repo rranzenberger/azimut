@@ -400,6 +400,13 @@ const QuizVancouver: React.FC<QuizVancouverProps> = ({ lang, onComplete }) => {
     setResult(quizResult)
     setShowResult(true)
     
+    // Salvar resultado no localStorage para pré-preencher formulário
+    localStorage.setItem('quizVancouverResult', JSON.stringify({
+      ...quizResult,
+      answers,
+      completedAt: new Date().toISOString()
+    }))
+    
     // Chamar callback se fornecido
     if (onComplete) {
       onComplete(quizResult)

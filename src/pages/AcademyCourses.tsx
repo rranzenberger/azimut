@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
 import { useUserTracking } from '../hooks/useUserTracking'
 import CourseRecommender from '../components/CourseRecommender'
+import AcademyQuickForm from '../components/AcademyQuickForm'
 
 interface AcademyCoursesProps {
   lang: Lang
@@ -593,25 +594,13 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-24">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-6">
-              {t.cta.title}
-            </h2>
-            <p className="text-xl text-white/70 mb-10">
-              {t.cta.subtitle}
-            </p>
-
-            <Link
-              to={`/${lang}/contact`}
-              className="inline-flex items-center gap-3 px-10 py-5 bg-azimut-red hover:bg-azimut-red/90 text-white text-lg font-bold uppercase tracking-wider rounded-full transition-all hover:scale-105 hover:shadow-2xl hover:shadow-azimut-red/50"
-            >
-              {t.cta.button}
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
+        {/* Quick Form */}
+        <section className="py-24 bg-gradient-to-b from-black to-[#0a0e18]">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <AcademyQuickForm 
+              lang={lang} 
+              type="course"
+            />
           </div>
         </section>
       </div>

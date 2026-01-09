@@ -6,6 +6,7 @@ import { VideoPlayerEnhanced } from '../components/VideoPlayerEnhanced'
 import { VideoCard } from '../components/VideoCard'
 import QuizVancouver from '../components/QuizVancouver'
 import VancouverCostCalculator from '../components/VancouverCostCalculator'
+import AcademyQuickForm from '../components/AcademyQuickForm'
 
 interface VancouverProps {
   lang: Lang
@@ -682,16 +683,10 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         {/* Form Section */}
         <section id="form" className="py-20 bg-gradient-to-b from-[#0a0e18] to-black">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
-                {t.formTitle}
-              </h2>
-              <p className="text-lg text-white/70">
-                {t.formDescription}
-              </p>
-            </div>
-
-            <VancouverInterestForm lang={lang} />
+            <AcademyQuickForm 
+              lang={lang} 
+              type="vancouver"
+            />
           </div>
         </section>
       </div>
