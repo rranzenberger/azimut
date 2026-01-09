@@ -471,8 +471,16 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       })
     } catch (err: any) {
       console.error('Error submitting form:', err)
+      // Limpar erros de campo (erro de servidor é diferente)
+      setFieldErrors({})
       // Mensagem de erro mais específica
-      const errorMsg = err?.message || t.errorMessage
+      const errorMsg = err?.message || t.errorMessage || (lang === 'pt' 
+        ? 'Erro ao enviar. Por favor, tente novamente ou entre em contato diretamente.'
+        : lang === 'es'
+        ? 'Error al enviar. Por favor, intente nuevamente o contáctenos directamente.'
+        : lang === 'fr'
+        ? 'Erreur lors de l\'envoi. Veuillez réessayer ou nous contacter directement.'
+        : 'Error submitting. Please try again or contact us directly.')
       setError(errorMsg)
     } finally {
       setLoading(false)
