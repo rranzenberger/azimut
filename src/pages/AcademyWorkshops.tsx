@@ -176,7 +176,7 @@ const AcademyWorkshops: React.FC<AcademyWorkshopsProps> = ({ lang }) => {
     }
   }
 
-  const t = content[lang] || content.pt
+  const t = content.pt // Sempre usar PT por enquanto
 
   return (
     <>

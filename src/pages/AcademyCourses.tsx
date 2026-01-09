@@ -191,7 +191,7 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
     // ... (outras línguas)
   }
 
-  const t = content[lang] || content.pt
+  const t = content.pt // Sempre usar PT por enquanto
 
   // Filter courses by category
   const filteredCourses = selectedCategory === 'all'
