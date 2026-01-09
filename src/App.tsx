@@ -56,11 +56,10 @@ const SITE_PROTECTED = shouldShowLogin()
 // CORREÇÃO: Import direto das páginas problemáticas
 // Lazy loading estava causando erro "Failed to fetch dynamically imported module"
 import Studio from './pages/Studio'
-import Academy from './pages/Academy' // VOLTANDO TEMPORÁRIO
-// import AcademyNew from './pages/AcademyNew' // TODO: Investigar erro
-// import AcademyCourses from './pages/AcademyCourses'
-// import AcademyWorkshops from './pages/AcademyWorkshops'
-// import AcademyCorporate from './pages/AcademyCorporate'
+import Academy from './pages/AcademyNew' // NOVO: Academia redesenhada (corrigida)
+import AcademyCourses from './pages/AcademyCourses'
+import AcademyWorkshops from './pages/AcademyWorkshops'
+import AcademyCorporate from './pages/AcademyCorporate'
 import Vancouver from './pages/Vancouver'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
@@ -285,19 +284,19 @@ const App: React.FC = () => {
                     {(routeLang) => <Academy lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
-                <Route path="/:lang/academy/research" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Academy lang={routeLang} section="research" />}
-                  </LangRouteWrapper>
-                } />
                 <Route path="/:lang/academy/courses" element={
                   <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Academy lang={routeLang} section="courses" />}
+                    {(routeLang) => <AcademyCourses lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/academy/workshops" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <AcademyWorkshops lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/academy/corporate" element={
                   <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Academy lang={routeLang} section="corporate" />}
+                    {(routeLang) => <AcademyCorporate lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/academy/vancouver" element={
@@ -410,19 +409,19 @@ const App: React.FC = () => {
                     {(routeLang) => <Academy lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
-                <Route path="/:lang/academy/research" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Academy lang={routeLang} section="research" />}
-                  </LangRouteWrapper>
-                } />
                 <Route path="/:lang/academy/courses" element={
                   <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Academy lang={routeLang} section="courses" />}
+                    {(routeLang) => <AcademyCourses lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/academy/workshops" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <AcademyWorkshops lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/academy/corporate" element={
                   <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Academy lang={routeLang} section="corporate" />}
+                    {(routeLang) => <AcademyCorporate lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/academy/vancouver" element={

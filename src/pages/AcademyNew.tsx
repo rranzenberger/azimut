@@ -9,8 +9,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
-import { VideoPlayerEnhanced } from '../components/VideoPlayerEnhanced'
-import { VideoCard } from '../components/VideoCard'
+// import { VideoPlayerEnhanced } from '../components/VideoPlayerEnhanced' // TODO: Fix import
+// import { VideoCard } from '../components/VideoCard' // TODO: Fix import
 import { useUserTracking } from '../hooks/useUserTracking'
 
 interface AcademyProps {
@@ -279,14 +279,13 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
             </div>
 
             {/* Video Card (PLACEHOLDER) */}
-            <VideoCard
-              videoUrl="https://www.youtube.com/watch?v=PLACEHOLDER" // TODO: URL real do backoffice
-              title="14 Anos Formando Profissionais"
-              description="De 2004 a 2018, a Azimut School foi referência em animação e VFX. Conheça nossa história."
-              category="Institucional"
-              thumbnail="/videos/history-thumb.jpg" // TODO: Thumbnail do backoffice
-              featured
-            />
+            <div className="card-adaptive rounded-xl p-6 border border-white/10 text-center">
+              <div className="aspect-video bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg mb-4 flex items-center justify-center">
+                <span className="text-6xl opacity-30">▶️</span>
+              </div>
+              <h4 className="text-white font-semibold mb-2">14 Anos Formando Profissionais</h4>
+              <p className="text-white/60 text-sm">De 2004 a 2018, a Azimut School foi referência em animação e VFX.</p>
+            </div>
 
             {/* Info Box */}
             <div className="mt-8 p-6 card-adaptive rounded-xl border border-white/10 text-center">
