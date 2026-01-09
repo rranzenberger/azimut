@@ -1,14 +1,11 @@
 // ════════════════════════════════════════════════════════════
 // ACADEMY CORPORATE - REDESIGN PREMIUM 2026
-// ═══════════════════════════════════════════════════════════
-// Página de Treinamento Corporativo e Consultoria
-// Placeholders para logos, cases e depoimentos do backoffice
 // ════════════════════════════════════════════════════════════
 
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
-// import { VideoCard } from '../components/VideoCard' // TODO: Fix import
 import { useUserTracking } from '../hooks/useUserTracking'
 
 interface AcademyCorporateProps {
@@ -18,228 +15,633 @@ interface AcademyCorporateProps {
 const AcademyCorporate: React.FC<AcademyCorporateProps> = ({ lang }) => {
   useUserTracking()
 
-  const content = {
+  const content: Record<Lang, any> = {
     pt: {
-      hero: {
-        badge: '🏢 Soluções B2B',
-        title: 'Treinamento Corporativo',
-        subtitle: 'Programas sob medida para empresas',
-        description: 'Capacitação de equipes, consultoria especializada e desenvolvimento de projetos customizados. Atendemos grandes corporações, órgãos públicos, ONGs e instituições.'
+      meta: {
+        title: 'Azimut Academy Corporate - Treinamento Empresarial',
+        description: 'Treinamentos corporativos customizados em VR, IA e produção audiovisual. Para empresas, governo, ONGs, SESC, SENAC e universidades.'
       },
-
+      hero: {
+        badge: '🏢 Treinamento Corporativo',
+        title: 'Soluções B2B',
+        subtitle: 'Treinamento customizado para sua equipe',
+        description: 'Capacitamos empresas, governos, ONGs e instituições de ensino com treinamentos sob medida em tecnologias imersivas e produção audiovisual.'
+      },
+      clients: {
+        title: 'Nossos Clientes',
+        subtitle: 'Empresas e instituições que confiam na Azimut',
+        categories: [
+          {
+            id: 'corporate',
+            title: 'Empresas',
+            logos: ['Google', 'Globo', 'Tech Startups', 'Agências Criativas']
+          },
+          {
+            id: 'government',
+            title: 'Governo & Cultura',
+            logos: ['Secretarias de Cultura', 'ONGs', 'OSCIPs', 'Governos Estaduais']
+          },
+          {
+            id: 'education',
+            title: 'Educação',
+            logos: ['SESC', 'SENAC', 'Universidades', 'Escolas Premium']
+          }
+        ]
+      },
       formats: [
         {
-          id: 'incompany',
-          title: 'In-Company',
-          description: 'Treinamentos na sua empresa. Programas adaptados às necessidades específicas da sua equipe.',
+          id: 'onsite',
           icon: '🏢',
-          features: [
-            'Programa customizado',
-            'Turmas fechadas',
-            'Horário flexível',
-            'Material específico'
-          ]
+          title: 'In-Company',
+          description: 'Treinamento na sua empresa, com equipamentos e professores no local.',
+          duration: '1-5 dias',
+          ideal: 'Equipes de 8-20 pessoas'
+        },
+        {
+          id: 'online',
+          icon: '💻',
+          title: 'Online ao Vivo',
+          description: 'Workshops online interativos via Zoom/Teams, com projetos práticos.',
+          duration: '2-8 horas por dia',
+          ideal: 'Times remotos ou distribuídos'
+        },
+        {
+          id: 'hybrid',
+          icon: '🔄',
+          title: 'Híbrido',
+          description: 'Combinação de aulas online + imersão presencial para projetos finais.',
+          duration: 'Customizado',
+          ideal: 'Projetos complexos'
         },
         {
           id: 'consulting',
-          title: 'Consultoria Especializada',
-          description: 'Acompanhamento em projetos específicos. Mentoria técnica e estratégica para equipes de inovação.',
-          icon: '💼',
-          features: [
-            'Análise de demanda',
-            'Suporte técnico',
-            'Desenvolvimento de pipeline',
-            'Mentoria contínua'
-          ]
-        },
-        {
-          id: 'development',
-          title: 'Capacitação de Equipes',
-          description: 'Programas de formação contínua. Desenvolvimento de competências em tecnologias imersivas e IA.',
-          icon: '👥',
-          features: [
-            'Roadmap de aprendizado',
-            'Avaliação de progressão',
-            'Certificação',
-            'Suporte pós-curso'
-          ]
+          icon: '🎯',
+          title: 'Consultoria',
+          description: 'Consultoria técnica para projetos específicos, com suporte contínuo.',
+          duration: 'Por demanda',
+          ideal: 'Projetos de longo prazo'
         }
       ],
-
-      clients: {
-        title: 'Clientes & Parcerias',
-        subtitle: 'Empresas e instituições que confiam no nosso trabalho',
-        logos: [
-          { name: 'Globo', logo: '/clients/globo-logo.png' }, // PLACEHOLDER
-          { name: 'Petrobras', logo: '/clients/petrobras-logo.png' },
-          { name: 'Governo Federal', logo: '/clients/gov-logo.png' },
-          { name: 'SESC', logo: '/clients/sesc-logo.png' },
-          { name: 'SENAC', logo: '/clients/senac-logo.png' },
-          { name: 'UFRJ', logo: '/clients/ufrj-logo.png' },
-          { name: 'Museu do Amanhã', logo: '/clients/museu-logo.png' },
-          { name: 'Vale', logo: '/clients/vale-logo.png' }
+      topics: {
+        title: 'Temas Disponíveis',
+        list: [
+          {
+            category: 'VR & Imersivo',
+            items: ['Produção de Filmes 360°', 'Game Design em VR', 'Tour Virtual Interativo', 'Treinamento Imersivo']
+          },
+          {
+            category: 'IA Generativa',
+            items: ['IA para Marketing', 'Automação com ChatGPT', 'Criação de Imagens IA', 'Vídeo Generativo']
+          },
+          {
+            category: 'Audiovisual',
+            items: ['Produção de Vídeo', 'Motion Design', 'Transmissão ao Vivo', 'Pós-Produção']
+          },
+          {
+            category: 'Tech & Dev',
+            items: ['Unreal Engine', 'Unity para XR', 'WebGL Interativo', 'Virtual Production']
+          }
         ]
       },
-
       cases: {
         title: 'Cases de Sucesso',
-        subtitle: 'Resultados reais em projetos corporativos',
-        items: [
+        subtitle: 'Veja alguns dos projetos e parcerias que realizamos',
+        examples: [
           {
-            id: 'globo-vr',
-            client: 'Globo',
-            title: 'Treinamento VR para Equipe de Produção',
-            description: 'Capacitação de 20 profissionais em produção de conteúdo VR 360° para jornalismo imersivo.',
-            results: [
-              '20 profissionais capacitados',
-              '5 reportagens VR produzidas',
-              '2 prêmios internacionais'
-            ],
-            cover: '/cases/globo-vr-cover.jpg', // PLACEHOLDER
-            videoUrl: '' // TODO
+            id: 'sesc',
+            client: 'SESC',
+            project: 'Workshop de VR para Educadores',
+            result: '60+ professores capacitados',
+            testimonial: 'Conteúdo de altíssima qualidade, professores experientes e didáticos.'
           },
           {
-            id: 'petrobras-safety',
-            client: 'Petrobras',
-            title: 'Treinamento de Segurança em VR',
-            description: 'Desenvolvimento de simulações VR para treinamento de segurança em plataformas offshore.',
-            results: [
-              '500+ colaboradores treinados',
-              '40% redução de acidentes',
-              'ROI de 300% em 12 meses'
-            ],
-            cover: '/cases/petrobras-safety-cover.jpg',
-            videoUrl: ''
+            id: 'startup',
+            client: 'Tech Startup',
+            project: 'Treinamento Unreal Engine',
+            result: 'Equipe produzindo em tempo real',
+            testimonial: 'A Azimut nos ajudou a dar o salto tecnológico que precisávamos.'
           },
           {
-            id: 'museu-interactive',
-            client: 'Museu do Amanhã',
-            title: 'Instalações Interativas',
-            description: 'Consultoria e desenvolvimento de experiências interativas para exposição permanente.',
-            results: [
-              '3 instalações desenvolvidas',
-              '500k+ visitantes impactados',
-              'Prêmio APCA 2019'
-            ],
-            cover: '/cases/museu-interactive-cover.jpg',
-            videoUrl: ''
+            id: 'gov',
+            client: 'Secretaria de Cultura',
+            project: 'Curso de Produção Audiovisual',
+            result: '40 produtores certificados',
+            testimonial: 'Parceria essencial para democratizar o acesso à tecnologia audiovisual.'
           }
         ]
       },
-
-      testimonials: {
-        title: 'Depoimentos',
+      partnerships: {
+        title: 'Parcerias Institucionais',
         items: [
-          {
-            name: 'Maria Santos',
-            role: 'Diretora de Inovação, Globo',
-            text: 'A Azimut foi fundamental para capacitar nossa equipe em VR. Profissionalismo e expertise de ponta.',
-            photo: '/testimonials/maria.jpg' // PLACEHOLDER
-          },
-          {
-            name: 'João Silva',
-            role: 'Gerente de Treinamento, Petrobras',
-            text: 'ROI excepcional. O investimento em VR para treinamento de segurança se pagou em menos de 1 ano.',
-            photo: '/testimonials/joao.jpg'
-          }
+          { name: 'SESC', description: 'Workshops e cursos regulares' },
+          { name: 'SENAC', description: 'Formação profissional customizada' },
+          { name: 'Universidades', description: 'Palestras e workshops para alunos' },
+          { name: 'UFRJ/ECO', description: 'Pesquisadores associados' }
         ]
       },
-
-      stats: {
-        title: 'Números',
-        items: [
-          { value: '50+', label: 'Empresas Atendidas' },
-          { value: '2000+', label: 'Profissionais Capacitados' },
-          { value: '95%', label: 'Satisfação' },
-          { value: '200%', label: 'ROI Médio' }
-        ]
-      },
-
-      sectors: {
-        title: 'Setores Atendidos',
-        items: [
-          { icon: '📺', name: 'Mídia & Entretenimento' },
-          { icon: '🏭', name: 'Indústria & Energia' },
-          { icon: '🏛️', name: 'Cultura & Museus' },
-          { icon: '🏛️', name: 'Governo & Órgãos Públicos' },
-          { icon: '🎓', name: 'Educação' },
-          { icon: '🏥', name: 'Saúde' },
-          { icon: '🏗️', name: 'Construção & Engenharia' },
-          { icon: '💼', name: 'Consultorias & Agências' }
-        ]
-      },
-
       cta: {
-        title: 'Vamos Conversar sobre Seu Projeto?',
-        subtitle: 'Agende uma conversa para entender como podemos ajudar sua empresa',
-        button: 'Solicitar Proposta',
-        contact: 'Ou envie um email: corporate@azmt.com.br'
+        title: 'Vamos Treinar Sua Equipe?',
+        subtitle: 'Solicite uma proposta customizada para sua empresa ou instituição',
+        button: 'Solicitar Proposta'
+      }
+    },
+    en: {
+      meta: {
+        title: 'Azimut Academy Corporate - Corporate Training',
+        description: 'Customized corporate training in VR, AI and audiovisual production. For companies, government, NGOs, SESC, SENAC and universities.'
+      },
+      hero: {
+        badge: '🏢 Corporate Training',
+        title: 'B2B Solutions',
+        subtitle: 'Customized training for your team',
+        description: 'We train companies, governments, NGOs and educational institutions with tailor-made training in immersive technologies and audiovisual production.'
+      },
+      clients: {
+        title: 'Our Clients',
+        subtitle: 'Companies and institutions that trust Azimut',
+        categories: [
+          {
+            id: 'corporate',
+            title: 'Companies',
+            logos: ['Google', 'Globo', 'Tech Startups', 'Creative Agencies']
+          },
+          {
+            id: 'government',
+            title: 'Government & Culture',
+            logos: ['Departments of Culture', 'NGOs', 'OSCIPs', 'State Governments']
+          },
+          {
+            id: 'education',
+            title: 'Education',
+            logos: ['SESC', 'SENAC', 'Universities', 'Premium Schools']
+          }
+        ]
+      },
+      formats: [
+        {
+          id: 'onsite',
+          icon: '🏢',
+          title: 'In-Company',
+          description: 'Training at your company, with equipment and instructors on-site.',
+          duration: '1-5 days',
+          ideal: 'Teams of 8-20 people'
+        },
+        {
+          id: 'online',
+          icon: '💻',
+          title: 'Live Online',
+          description: 'Interactive online workshops via Zoom/Teams, with practical projects.',
+          duration: '2-8 hours per day',
+          ideal: 'Remote or distributed teams'
+        },
+        {
+          id: 'hybrid',
+          icon: '🔄',
+          title: 'Hybrid',
+          description: 'Combination of online classes + in-person immersion for final projects.',
+          duration: 'Customized',
+          ideal: 'Complex projects'
+        },
+        {
+          id: 'consulting',
+          icon: '🎯',
+          title: 'Consulting',
+          description: 'Technical consulting for specific projects, with ongoing support.',
+          duration: 'On demand',
+          ideal: 'Long-term projects'
+        }
+      ],
+      topics: {
+        title: 'Available Topics',
+        list: [
+          {
+            category: 'VR & Immersive',
+            items: ['360° Film Production', 'VR Game Design', 'Interactive Virtual Tour', 'Immersive Training']
+          },
+          {
+            category: 'Generative AI',
+            items: ['AI for Marketing', 'ChatGPT Automation', 'AI Image Creation', 'Generative Video']
+          },
+          {
+            category: 'Audiovisual',
+            items: ['Video Production', 'Motion Design', 'Live Streaming', 'Post-Production']
+          },
+          {
+            category: 'Tech & Dev',
+            items: ['Unreal Engine', 'Unity for XR', 'Interactive WebGL', 'Virtual Production']
+          }
+        ]
+      },
+      cases: {
+        title: 'Success Cases',
+        subtitle: 'See some of the projects and partnerships we\'ve accomplished',
+        examples: [
+          {
+            id: 'sesc',
+            client: 'SESC',
+            project: 'VR Workshop for Educators',
+            result: '60+ teachers trained',
+            testimonial: 'Highest quality content, experienced and didactic instructors.'
+          },
+          {
+            id: 'startup',
+            client: 'Tech Startup',
+            project: 'Unreal Engine Training',
+            result: 'Team producing in real-time',
+            testimonial: 'Azimut helped us take the technological leap we needed.'
+          },
+          {
+            id: 'gov',
+            client: 'Department of Culture',
+            project: 'Audiovisual Production Course',
+            result: '40 certified producers',
+            testimonial: 'Essential partnership to democratize access to audiovisual technology.'
+          }
+        ]
+      },
+      partnerships: {
+        title: 'Institutional Partnerships',
+        items: [
+          { name: 'SESC', description: 'Workshops and regular courses' },
+          { name: 'SENAC', description: 'Customized professional training' },
+          { name: 'Universities', description: 'Lectures and workshops for students' },
+          { name: 'UFRJ/ECO', description: 'Associate researchers' }
+        ]
+      },
+      cta: {
+        title: 'Let\'s Train Your Team?',
+        subtitle: 'Request a customized proposal for your company or institution',
+        button: 'Request Proposal'
+      }
+    },
+    es: {
+      meta: {
+        title: 'Azimut Academy Corporate - Capacitación Empresarial',
+        description: 'Capacitación corporativa personalizada en VR, IA y producción audiovisual. Para empresas, gobierno, ONGs, SESC, SENAC y universidades.'
+      },
+      hero: {
+        badge: '🏢 Capacitación Corporativa',
+        title: 'Soluciones B2B',
+        subtitle: 'Capacitación personalizada para tu equipo',
+        description: 'Capacitamos empresas, gobiernos, ONGs e instituciones educativas con entrenamiento a medida en tecnologías inmersivas y producción audiovisual.'
+      },
+      clients: {
+        title: 'Nuestros Clientes',
+        subtitle: 'Empresas e instituciones que confían en Azimut',
+        categories: [
+          {
+            id: 'corporate',
+            title: 'Empresas',
+            logos: ['Google', 'Globo', 'Tech Startups', 'Agencias Creativas']
+          },
+          {
+            id: 'government',
+            title: 'Gobierno & Cultura',
+            logos: ['Secretarías de Cultura', 'ONGs', 'OSCIPs', 'Gobiernos Estatales']
+          },
+          {
+            id: 'education',
+            title: 'Educación',
+            logos: ['SESC', 'SENAC', 'Universidades', 'Escuelas Premium']
+          }
+        ]
+      },
+      formats: [
+        {
+          id: 'onsite',
+          icon: '🏢',
+          title: 'In-Company',
+          description: 'Capacitación en tu empresa, con equipos e instructores en el lugar.',
+          duration: '1-5 días',
+          ideal: 'Equipos de 8-20 personas'
+        },
+        {
+          id: 'online',
+          icon: '💻',
+          title: 'Online en Vivo',
+          description: 'Workshops online interactivos vía Zoom/Teams, con proyectos prácticos.',
+          duration: '2-8 horas por día',
+          ideal: 'Equipos remotos o distribuidos'
+        },
+        {
+          id: 'hybrid',
+          icon: '🔄',
+          title: 'Híbrido',
+          description: 'Combinación de clases online + inmersión presencial para proyectos finales.',
+          duration: 'Personalizado',
+          ideal: 'Proyectos complejos'
+        },
+        {
+          id: 'consulting',
+          icon: '🎯',
+          title: 'Consultoría',
+          description: 'Consultoría técnica para proyectos específicos, con soporte continuo.',
+          duration: 'Bajo demanda',
+          ideal: 'Proyectos a largo plazo'
+        }
+      ],
+      topics: {
+        title: 'Temas Disponibles',
+        list: [
+          {
+            category: 'VR & Inmersivo',
+            items: ['Producción de Películas 360°', 'Game Design en VR', 'Tour Virtual Interactivo', 'Capacitación Inmersiva']
+          },
+          {
+            category: 'IA Generativa',
+            items: ['IA para Marketing', 'Automatización con ChatGPT', 'Creación de Imágenes IA', 'Video Generativo']
+          },
+          {
+            category: 'Audiovisual',
+            items: ['Producción de Video', 'Motion Design', 'Transmisión en Vivo', 'Post-Producción']
+          },
+          {
+            category: 'Tech & Dev',
+            items: ['Unreal Engine', 'Unity para XR', 'WebGL Interactivo', 'Virtual Production']
+          }
+        ]
+      },
+      cases: {
+        title: 'Casos de Éxito',
+        subtitle: 'Mira algunos de los proyectos y alianzas que realizamos',
+        examples: [
+          {
+            id: 'sesc',
+            client: 'SESC',
+            project: 'Workshop de VR para Educadores',
+            result: '60+ profesores capacitados',
+            testimonial: 'Contenido de altísima calidad, instructores experimentados y didácticos.'
+          },
+          {
+            id: 'startup',
+            client: 'Tech Startup',
+            project: 'Capacitación Unreal Engine',
+            result: 'Equipo produciendo en tiempo real',
+            testimonial: 'Azimut nos ayudó a dar el salto tecnológico que necesitábamos.'
+          },
+          {
+            id: 'gov',
+            client: 'Secretaría de Cultura',
+            project: 'Curso de Producción Audiovisual',
+            result: '40 productores certificados',
+            testimonial: 'Alianza esencial para democratizar el acceso a la tecnología audiovisual.'
+          }
+        ]
+      },
+      partnerships: {
+        title: 'Alianzas Institucionales',
+        items: [
+          { name: 'SESC', description: 'Workshops y cursos regulares' },
+          { name: 'SENAC', description: 'Formación profesional personalizada' },
+          { name: 'Universidades', description: 'Conferencias y workshops para alumnos' },
+          { name: 'UFRJ/ECO', description: 'Investigadores asociados' }
+        ]
+      },
+      cta: {
+        title: '¿Vamos a Capacitar a Tu Equipo?',
+        subtitle: 'Solicita una propuesta personalizada para tu empresa o institución',
+        button: 'Solicitar Propuesta'
+      }
+    },
+    fr: {
+      meta: {
+        title: 'Azimut Academy Corporate - Formation d\'Entreprise',
+        description: 'Formation corporative personnalisée en VR, IA et production audiovisuelle. Pour entreprises, gouvernement, ONG, SESC, SENAC et universités.'
+      },
+      hero: {
+        badge: '🏢 Formation d\'Entreprise',
+        title: 'Solutions B2B',
+        subtitle: 'Formation personnalisée pour votre équipe',
+        description: 'Nous formons entreprises, gouvernements, ONG et institutions éducatives avec une formation sur mesure en technologies immersives et production audiovisuelle.'
+      },
+      clients: {
+        title: 'Nos Clients',
+        subtitle: 'Entreprises et institutions qui font confiance à Azimut',
+        categories: [
+          {
+            id: 'corporate',
+            title: 'Entreprises',
+            logos: ['Google', 'Globo', 'Tech Startups', 'Agences Créatives']
+          },
+          {
+            id: 'government',
+            title: 'Gouvernement & Culture',
+            logos: ['Départements de Culture', 'ONG', 'OSCIPs', 'Gouvernements d\'État']
+          },
+          {
+            id: 'education',
+            title: 'Éducation',
+            logos: ['SESC', 'SENAC', 'Universités', 'Écoles Premium']
+          }
+        ]
+      },
+      formats: [
+        {
+          id: 'onsite',
+          icon: '🏢',
+          title: 'In-Company',
+          description: 'Formation dans votre entreprise, avec équipements et instructeurs sur place.',
+          duration: '1-5 jours',
+          ideal: 'Équipes de 8-20 personnes'
+        },
+        {
+          id: 'online',
+          icon: '💻',
+          title: 'En Ligne en Direct',
+          description: 'Workshops en ligne interactifs via Zoom/Teams, avec projets pratiques.',
+          duration: '2-8 heures par jour',
+          ideal: 'Équipes à distance ou distribuées'
+        },
+        {
+          id: 'hybrid',
+          icon: '🔄',
+          title: 'Hybride',
+          description: 'Combinaison de cours en ligne + immersion en personne pour projets finaux.',
+          duration: 'Personnalisé',
+          ideal: 'Projets complexes'
+        },
+        {
+          id: 'consulting',
+          icon: '🎯',
+          title: 'Consulting',
+          description: 'Consulting technique pour projets spécifiques, avec support continu.',
+          duration: 'À la demande',
+          ideal: 'Projets à long terme'
+        }
+      ],
+      topics: {
+        title: 'Sujets Disponibles',
+        list: [
+          {
+            category: 'VR & Immersif',
+            items: ['Production de Films 360°', 'Game Design en VR', 'Tour Virtuel Interactif', 'Formation Immersive']
+          },
+          {
+            category: 'IA Générative',
+            items: ['IA pour Marketing', 'Automatisation avec ChatGPT', 'Création d\'Images IA', 'Vidéo Générative']
+          },
+          {
+            category: 'Audiovisuel',
+            items: ['Production Vidéo', 'Motion Design', 'Streaming en Direct', 'Post-Production']
+          },
+          {
+            category: 'Tech & Dev',
+            items: ['Unreal Engine', 'Unity pour XR', 'WebGL Interactif', 'Virtual Production']
+          }
+        ]
+      },
+      cases: {
+        title: 'Cas de Succès',
+        subtitle: 'Voyez quelques projets et partenariats que nous avons réalisés',
+        examples: [
+          {
+            id: 'sesc',
+            client: 'SESC',
+            project: 'Workshop de VR pour Éducateurs',
+            result: '60+ enseignants formés',
+            testimonial: 'Contenu de très haute qualité, instructeurs expérimentés et didactiques.'
+          },
+          {
+            id: 'startup',
+            client: 'Tech Startup',
+            project: 'Formation Unreal Engine',
+            result: 'Équipe produisant en temps réel',
+            testimonial: 'Azimut nous a aidés à faire le bond technologique dont nous avions besoin.'
+          },
+          {
+            id: 'gov',
+            client: 'Département de Culture',
+            project: 'Cours de Production Audiovisuelle',
+            result: '40 producteurs certifiés',
+            testimonial: 'Partenariat essentiel pour démocratiser l\'accès à la technologie audiovisuelle.'
+          }
+        ]
+      },
+      partnerships: {
+        title: 'Partenariats Institutionnels',
+        items: [
+          { name: 'SESC', description: 'Workshops et cours réguliers' },
+          { name: 'SENAC', description: 'Formation professionnelle personnalisée' },
+          { name: 'Universités', description: 'Conférences et workshops pour étudiants' },
+          { name: 'UFRJ/ECO', description: 'Chercheurs associés' }
+        ]
+      },
+      cta: {
+        title: 'Former Votre Équipe?',
+        subtitle: 'Demandez une proposition personnalisée pour votre entreprise ou institution',
+        button: 'Demander une Proposition'
       }
     }
   }
 
-  const t = content.pt // Sempre usar PT por enquanto
+  const t = content[lang] || content.pt
 
   return (
     <>
       <Helmet>
-        <title>{t.hero.title} | Azimut Academy</title>
-        <meta name="description" content={t.hero.description} />
+        <title>{t.meta.title}</title>
+        <meta name="description" content={t.meta.description} />
       </Helmet>
 
-      <div className="min-h-screen bg-black">
+      <div className="min-h-screen bg-gradient-to-b from-black via-[#0a0e18] to-black">
         {/* HERO */}
-        <section className="relative py-20 overflow-hidden">
-          <div className="absolute inset-0 z-0">
-            <div 
-              className="absolute inset-0 bg-gradient-to-br from-slate-900 via-black to-slate-900"
-              style={{
-                backgroundImage: 'url(https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1600)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                opacity: 0.3
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black" />
-          </div>
-
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-4xl mx-auto">
-              <div className="inline-block px-4 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-6">
-                <span className="text-azimut-red text-sm font-semibold uppercase tracking-wider">
-                  {t.hero.badge}
-                </span>
-              </div>
-
-              <h1 className="text-5xl md:text-7xl font-handel uppercase tracking-wider text-white mb-6">
-                {t.hero.title}
-              </h1>
-
-              <p className="text-2xl text-white/90 mb-4">
-                {t.hero.subtitle}
-              </p>
-
-              <p className="text-lg text-white/70 mb-10 leading-relaxed">
-                {t.hero.description}
-              </p>
+        <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-black to-slate-900 opacity-90" />
+          
+          <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+            <div className="inline-block px-6 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-6">
+              <span className="text-azimut-red text-sm font-semibold uppercase tracking-wider">
+                {t.hero.badge}
+              </span>
             </div>
+
+            <h1 className="text-5xl md:text-7xl font-handel uppercase tracking-wider text-white mb-6">
+              {t.hero.title}
+            </h1>
+
+            <p className="text-xl md:text-2xl text-white/90 mb-4">
+              {t.hero.subtitle}
+            </p>
+
+            <p className="text-lg text-white/70 max-w-3xl mx-auto">
+              {t.hero.description}
+            </p>
+          </div>
+        </section>
+
+        {/* CLIENTS (Logos) */}
+        <section className="py-20 border-y border-white/10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl md:text-4xl font-handel uppercase tracking-wider text-white mb-4">
+              {t.clients.title}
+            </h2>
+            <p className="text-lg text-white/70 mb-12">{t.clients.subtitle}</p>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {t.clients.categories.map((cat: any) => (
+                <div key={cat.id} className="card-adaptive rounded-xl p-8 border border-white/10">
+                  <h3 className="text-xl font-bold text-white mb-6">{cat.title}</h3>
+                  <div className="flex flex-wrap justify-center gap-4">
+                    {cat.logos.map((logo: string) => (
+                      <div 
+                        key={logo}
+                        className="px-4 py-2 bg-white/5 text-white/70 text-sm rounded hover:bg-white/10 transition-all"
+                      >
+                        {logo}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="mt-8 text-white/40 text-sm">
+              🏢 PLACEHOLDER: Logos reais → Backoffice /admin/academy/clients
+            </p>
           </div>
         </section>
 
         {/* FORMATS */}
-        <section className="py-20 bg-gradient-to-b from-black to-[#0a0e18]">
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-3 gap-8">
-              {t.formats.map(format => (
-                <div key={format.id} className="card-adaptive p-8 rounded-xl border border-white/10 hover:border-azimut-red/50 transition-all">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {t.formats.map((format: any) => (
+                <div 
+                  key={format.id}
+                  className="card-adaptive rounded-xl p-6 border border-white/10 hover:border-azimut-red/50 transition-all hover:scale-105"
+                >
                   <div className="text-5xl mb-4">{format.icon}</div>
-                  <h3 className="text-2xl font-bold text-white mb-3">{format.title}</h3>
-                  <p className="text-white/70 mb-6">{format.description}</p>
+                  <h3 className="text-xl font-bold text-white mb-2">{format.title}</h3>
+                  <p className="text-azimut-red text-sm font-semibold mb-3">{format.duration}</p>
+                  <p className="text-white/70 text-sm mb-4">{format.description}</p>
+                  <p className="text-white/50 text-xs">Ideal: {format.ideal}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* TOPICS */}
+        <section className="py-20 bg-gradient-to-b from-transparent via-azimut-red/5 to-transparent">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white">
+                {t.topics.title}
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {t.topics.list.map((topic: any) => (
+                <div 
+                  key={topic.category}
+                  className="card-adaptive rounded-xl p-6 border border-white/10"
+                >
+                  <h3 className="text-lg font-bold text-azimut-red mb-4">{topic.category}</h3>
                   <ul className="space-y-2">
-                    {format.features.map((feature, i) => (
-                      <li key={i} className="flex items-center gap-2 text-sm text-white/60">
-                        <span className="text-azimut-red">✓</span>
-                        {feature}
+                    {topic.items.map((item: string) => (
+                      <li key={item} className="text-white/70 text-sm flex items-start gap-2">
+                        <span className="text-azimut-red mt-1">▸</span>
+                        {item}
                       </li>
                     ))}
                   </ul>
@@ -249,110 +651,51 @@ const AcademyCorporate: React.FC<AcademyCorporateProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* CLIENTS LOGOS - PLACEHOLDER */}
-        <section className="py-20 bg-gradient-to-b from-[#0a0e18] to-black">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
-                {t.clients.title}
-              </h2>
-              <p className="text-lg text-white/70">{t.clients.subtitle}</p>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {t.clients.logos.map((client, i) => (
-                <div key={i} className="card-adaptive p-6 rounded-xl border border-white/10 flex items-center justify-center aspect-video hover:border-azimut-red/50 transition-all">
-                  <div className="text-center">
-                    <div className="text-4xl mb-2">🏢</div>
-                    <div className="text-white text-sm">{client.name}</div>
-                  </div>
-                  {/* TODO: Logo real */}
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8 text-center">
-              <p className="text-white/60 text-sm">
-                📌 <strong>BACKOFFICE:</strong> /admin/academy/corporate/clients → Upload logos
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* CASES - PLACEHOLDER */}
-        <section className="py-20 bg-gradient-to-b from-black to-[#0a0e18]">
+        {/* CASES */}
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
                 {t.cases.title}
               </h2>
-              <p className="text-lg text-white/70">{t.cases.subtitle}</p>
+              <p className="text-xl text-white/70">{t.cases.subtitle}</p>
             </div>
 
-            <div className="space-y-12">
-              {t.cases.items.map((caseItem, i) => (
-                <article key={caseItem.id} className={`card-adaptive rounded-2xl overflow-hidden border border-white/10 ${i % 2 === 0 ? 'md:flex' : 'md:flex md:flex-row-reverse'}`}>
-                  {/* Cover Image (PLACEHOLDER) */}
-                  <div className="md:w-1/2 aspect-video bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
-                    <span className="text-8xl opacity-30">📊</span>
-                    {/* TODO: Imagem real */}
-                  </div>
-
-                  {/* Content */}
-                  <div className="md:w-1/2 p-8">
-                    <div className="text-azimut-red text-sm font-semibold uppercase tracking-wider mb-2">
-                      {caseItem.client}
-                    </div>
-                    <h3 className="text-3xl font-bold text-white mb-4">
-                      {caseItem.title}
-                    </h3>
-                    <p className="text-white/70 mb-6">
-                      {caseItem.description}
-                    </p>
-
-                    <div className="space-y-3 mb-6">
-                      <div className="text-white font-semibold">Resultados:</div>
-                      {caseItem.results.map((result, j) => (
-                        <div key={j} className="flex items-center gap-2 text-sm text-white/60">
-                          <span className="text-azimut-red text-xl">✓</span>
-                          {result}
-                        </div>
-                      ))}
-                    </div>
-
-                    <button className="px-6 py-3 bg-azimut-red text-white font-semibold rounded-lg hover:bg-azimut-red/90 transition-all">
-                      Ver Case Completo →
-                    </button>
-                  </div>
-                </article>
+            <div className="grid md:grid-cols-3 gap-8">
+              {t.cases.examples.map((caseItem: any) => (
+                <div 
+                  key={caseItem.id}
+                  className="card-adaptive rounded-2xl p-8 border border-white/10 hover:border-azimut-red/50 transition-all"
+                >
+                  <div className="text-azimut-red font-bold text-lg mb-2">{caseItem.client}</div>
+                  <h3 className="text-xl font-bold text-white mb-3">{caseItem.project}</h3>
+                  <div className="text-green-400 text-sm font-semibold mb-4">✓ {caseItem.result}</div>
+                  <p className="text-white/60 text-sm italic">"{caseItem.testimonial}"</p>
+                </div>
               ))}
-            </div>
-
-            <div className="mt-8 text-center">
-              <p className="text-white/60 text-sm">
-                📌 <strong>BACKOFFICE:</strong> /admin/academy/corporate/cases → Upload covers e vídeos
-              </p>
             </div>
           </div>
         </section>
 
-        {/* STATS */}
-        <section className="py-16 bg-gradient-to-b from-[#0a0e18] to-black">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* PARTNERSHIPS */}
+        <section className="py-20 bg-gradient-to-b from-transparent via-azimut-red/5 to-transparent">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-handel uppercase tracking-wider text-white">
-                {t.stats.title}
+                {t.partnerships.title}
               </h2>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {t.stats.items.map((stat, i) => (
-                <div key={i} className="text-center card-adaptive p-6 rounded-xl border border-white/10">
-                  <div className="text-5xl font-bold text-azimut-red mb-2">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-white/60 uppercase tracking-wider">
-                    {stat.label}
+            <div className="grid md:grid-cols-2 gap-6">
+              {t.partnerships.items.map((partner: any) => (
+                <div 
+                  key={partner.name}
+                  className="card-adaptive rounded-xl p-6 border border-white/10 flex items-center gap-4"
+                >
+                  <div className="text-3xl">🤝</div>
+                  <div>
+                    <h3 className="text-lg font-bold text-white">{partner.name}</h3>
+                    <p className="text-white/70 text-sm">{partner.description}</p>
                   </div>
                 </div>
               ))}
@@ -360,65 +703,25 @@ const AcademyCorporate: React.FC<AcademyCorporateProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* SECTORS */}
-        <section className="py-20 bg-gradient-to-b from-black to-[#0a0e18]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white text-center mb-12">
-              {t.sectors.title}
-            </h2>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {t.sectors.items.map((sector, i) => (
-                <div key={i} className="card-adaptive p-4 rounded-xl border border-white/10 text-center hover:border-azimut-red/50 transition-all">
-                  <div className="text-4xl mb-2">{sector.icon}</div>
-                  <div className="text-white text-sm">{sector.name}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* TESTIMONIALS */}
-        <section className="py-20 bg-gradient-to-b from-[#0a0e18] to-black">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white text-center mb-12">
-              {t.testimonials.title}
-            </h2>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              {t.testimonials.items.map((testimonial, i) => (
-                <div key={i} className="card-adaptive p-8 rounded-xl border border-white/10">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-20 h-20 bg-gradient-to-br from-azimut-red/30 to-slate-800 rounded-full flex items-center justify-center">
-                      <span className="text-3xl">👤</span>
-                    </div>
-                    <div>
-                      <div className="text-white font-bold text-lg">{testimonial.name}</div>
-                      <div className="text-white/60 text-sm">{testimonial.role}</div>
-                    </div>
-                  </div>
-                  <p className="text-white/80 text-lg italic">"{testimonial.text}"</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA FINAL */}
-        <section className="py-20 bg-gradient-to-b from-black to-[#0a0e18]">
+        {/* CTA */}
+        <section className="py-24 bg-gradient-to-b from-transparent to-black">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-6">
               {t.cta.title}
             </h2>
-            <p className="text-xl text-white/70 mb-8">
+            <p className="text-xl text-white/70 mb-10">
               {t.cta.subtitle}
             </p>
-            <button className="px-8 py-4 bg-azimut-red text-white font-semibold rounded-lg hover:bg-azimut-red/90 transition-all shadow-lg hover:shadow-azimut-red/50 hover:scale-105 mb-4">
-              {t.cta.button} →
-            </button>
-            <p className="text-white/60 text-sm">
-              {t.cta.contact}
-            </p>
+
+            <Link
+              to={`/${lang}/contact`}
+              className="inline-flex items-center gap-3 px-10 py-5 bg-azimut-red hover:bg-azimut-red/90 text-white text-lg font-bold uppercase tracking-wider rounded-full transition-all hover:scale-105 hover:shadow-2xl hover:shadow-azimut-red/50"
+            >
+              {t.cta.button}
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
           </div>
         </section>
       </div>

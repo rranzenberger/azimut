@@ -1,31 +1,12 @@
 // ════════════════════════════════════════════════════════════
 // ACADEMY COURSES - REDESIGN PREMIUM 2026
 // ════════════════════════════════════════════════════════════
-// Página de Cursos & Workshops com estrutura visual completa
-// Placeholders para imagens/vídeos que virão do backoffice
-// ════════════════════════════════════════════════════════════
 
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
-// import { VideoCard } from '../components/VideoCard' // TODO: Fix import
-// import { ImageGallery } from '../components/ImageGallery' // TODO: Fix import
 import { useUserTracking } from '../hooks/useUserTracking'
-
-interface Course {
-  id: string
-  title: string
-  description: string
-  duration: string
-  level: string
-  audience: string
-  syllabus?: string
-  thumbnail: string
-  videoPreview?: string
-  icon: string
-  featured?: boolean
-  tags: string[]
-}
 
 interface AcademyCoursesProps {
   lang: Lang
@@ -35,235 +16,455 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
   useUserTracking()
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
 
-  // ═══════════════════════════════════════════════════════════
-  // CONTENT BY LANGUAGE
-  // ═══════════════════════════════════════════════════════════
-  const content = {
+  const content: Record<Lang, any> = {
     pt: {
+      meta: {
+        title: 'Cursos Azimut Academy - Formação Profissional',
+        description: 'Cursos de VR, 360°, IA Generativa, Motion Design e produção audiovisual. 30 anos de experiência. Turmas pequenas, 100% prático.'
+      },
       hero: {
         badge: '📚 Formação Profissional',
-        title: 'Cursos & Workshops',
+        title: 'Cursos & Treinamentos',
         subtitle: '30 anos de experiência em ensinar',
         description: 'Domine tecnologias imersivas, IA e produção audiovisual com quem está no mercado desde 1994. Turmas pequenas, 100% prático.'
       },
-
       categories: [
         { id: 'all', label: 'Todos' },
         { id: 'vr', label: 'VR & 360°' },
         { id: 'ai', label: 'IA Generativa' },
-        { id: 'motion', label: 'Motion & Animação' },
-        { id: 'interactive', label: 'Interativo' }
+        { id: 'motion', label: 'Motion & 3D' },
+        { id: 'game', label: 'Game Design' }
       ],
-
       courses: [
         {
           id: 'vr-cinema',
-          title: 'VR Cinematográfico: Do Conceito à Tela',
-          description: 'Aprenda a criar filmes imersivos em 360°. Domine linguagem cinematográfica para VR, direção de câmera, narrativa espacial e pós-produção profissional. Hands-on com equipamentos profissionais.',
-          duration: '16 horas',
+          category: 'vr',
+          icon: '🥽',
+          title: 'Produção VR & Cinema 360°',
+          description: 'Criação completa de filmes em realidade virtual, desde a captação até a finalização.',
+          duration: '40 horas',
           level: 'Intermediário',
-          audience: 'Cineastas, produtores, criadores de conteúdo',
-          syllabus: '/syllabus/vr-cinema.pdf',
-          thumbnail: '/courses/vr-cinema-thumb.jpg', // PLACEHOLDER
-          videoPreview: '', // TODO: YouTube URL
-          icon: '🎥',
+          price: 'R$ 3.200',
           featured: true,
-          tags: ['vr', '360', 'cinema']
+          tags: ['VR', 'Cinema', '360°', 'Unreal Engine']
         },
         {
-          id: 'ia-generativa',
-          title: 'IA Generativa para Produção Audiovisual',
-          description: 'Pipelines completos de IA aplicados a roteiro, storyboard, animação, VFX e finalização. Ferramentas práticas: ChatGPT, Midjourney, Runway, Stable Diffusion, ComfyUI.',
-          duration: '12 horas',
-          level: 'Avançado',
-          audience: 'Profissionais de audiovisual, VFX, animação',
-          thumbnail: '/courses/ia-generativa-thumb.jpg', // PLACEHOLDER
-          videoPreview: '',
+          id: 'ai-marketing',
+          category: 'ai',
           icon: '🤖',
+          title: 'IA Generativa para Marketing',
+          description: 'Domine Midjourney, Stable Diffusion, ChatGPT e ferramentas IA para criar campanhas.',
+          duration: '24 horas',
+          level: 'Iniciante',
+          price: 'R$ 1.800',
           featured: true,
-          tags: ['ai', 'vfx', 'animation']
-        },
-        {
-          id: 'instalacoes',
-          title: 'Instalações Interativas para Museus e Eventos',
-          description: 'Desenvolva experiências interativas imersivas. Aprenda sensores, projeções mapeadas, interfaces físicas e integração com conteúdo audiovisual. Arduino, TouchDesigner, Unity.',
-          duration: '20 horas',
-          level: 'Intermediário',
-          audience: 'Museólogos, produtores culturais, artistas',
-          thumbnail: '/courses/instalacoes-thumb.jpg', // PLACEHOLDER
-          videoPreview: '',
-          icon: '🎨',
-          tags: ['interactive', 'museums']
+          tags: ['IA', 'Marketing', 'Midjourney', 'ChatGPT']
         },
         {
           id: 'motion-design',
-          title: 'Motion Design & Animação para Projetos Imersivos',
-          description: 'Técnicas profissionais de motion graphics, animação 2D/3D e composição para projetos imersivos. After Effects, Cinema 4D, Blender. Renderização otimizada para VR.',
-          duration: '24 horas',
-          level: 'Básico a Intermediário',
-          audience: 'Designers, animadores, criadores',
-          thumbnail: '/courses/motion-design-thumb.jpg', // PLACEHOLDER
-          videoPreview: '',
-          icon: '✨',
-          tags: ['motion', 'animation', '3d']
-        },
-        {
-          id: 'vfx-compositing',
-          title: 'VFX & Compositing Avançado',
-          description: 'Técnicas de composição, chroma key, tracking 3D, rotoscopia e integração de CG. Nuke, After Effects, Mocha. Workflow profissional para cinema e TV.',
-          duration: '20 horas',
-          level: 'Avançado',
-          audience: 'Profissionais de VFX e pós-produção',
-          thumbnail: '/courses/vfx-compositing-thumb.jpg', // PLACEHOLDER
-          videoPreview: '',
-          icon: '💥',
-          tags: ['vfx', 'compositing']
+          category: 'motion',
+          icon: '🎬',
+          title: 'Motion Design & 3D',
+          description: 'After Effects, Cinema 4D e Blender para criar animações profissionais.',
+          duration: '60 horas',
+          level: 'Intermediário',
+          price: 'R$ 4.500',
+          tags: ['Motion', 'After Effects', '3D', 'Blender']
         },
         {
           id: 'game-vr',
-          title: 'Desenvolvimento de Games em VR',
-          description: 'Crie jogos e experiências em realidade virtual. Unity, Unreal Engine, interação gestual, física VR, otimização de performance. Quest 2, PSVR2, PC VR.',
-          duration: '28 horas',
-          level: 'Intermediário a Avançado',
-          audience: 'Desenvolvedores, game designers',
-          thumbnail: '/courses/game-vr-thumb.jpg', // PLACEHOLDER
-          videoPreview: '',
+          category: 'game',
           icon: '🎮',
+          title: 'Game Design em VR',
+          description: 'Crie jogos em realidade virtual com Unity e Unreal Engine.',
+          duration: '50 horas',
+          level: 'Avançado',
+          price: 'R$ 4.000',
+          tags: ['VR', 'Unity', 'Unreal', 'Game']
+        },
+        {
+          id: 'unreal-engine',
+          category: 'game',
+          icon: '⚡',
+          title: 'Unreal Engine para Audiovisual',
+          description: 'Produção em tempo real, virtual production e ambientes interativos.',
+          duration: '45 horas',
+          level: 'Intermediário',
+          price: 'R$ 3.800',
           featured: true,
-          tags: ['vr', 'game', 'unity']
+          tags: ['Unreal', 'Real-time', 'Virtual Production']
+        },
+        {
+          id: 'ai-video',
+          category: 'ai',
+          icon: '🎥',
+          title: 'IA para Produção de Vídeo',
+          description: 'Runway, Pika Labs, Sora e outras ferramentas de IA para vídeo.',
+          duration: '20 horas',
+          level: 'Iniciante',
+          price: 'R$ 1.500',
+          tags: ['IA', 'Vídeo', 'Runway', 'Automation']
         }
-      ] as Course[],
-
-      features: {
-        title: 'Por que estudar com a Azimut?',
-        items: [
-          {
-            icon: '👥',
-            title: 'Turmas Pequenas',
-            description: 'Até 12 alunos por turma. Acompanhamento individual.'
-          },
-          {
-            icon: '🔬',
-            title: '100% Hands-On',
-            description: 'Aprenda fazendo. Projetos reais desde o primeiro dia.'
-          },
-          {
-            icon: '🏆',
-            title: 'Certificado',
-            description: 'Certificado de conclusão reconhecido pelo mercado.'
-          },
-          {
-            icon: '💼',
-            title: 'Network',
-            description: 'Conecte-se com profissionais e empresas do setor.'
-          },
-          {
-            icon: '📚',
-            title: 'Material Incluso',
-            description: 'Apostilas, assets e recursos para continuar praticando.'
-          },
-          {
-            icon: '🎯',
-            title: 'Mentoria',
-            description: 'Suporte dos instrutores após conclusão do curso.'
-          }
-        ]
-      },
-
-      studentWork: {
+      ],
+      gallery: {
         title: 'Trabalhos dos Alunos',
-        subtitle: 'Veja o que nossos alunos criaram durante os cursos',
-        cta: 'Ver Portfolio Completo'
+        subtitle: 'Veja o que nossos alunos criaram durante os cursos'
       },
-
-      classDemos: {
-        title: 'Veja Como São as Aulas',
-        subtitle: 'Trechos de aulas e explicações dos instrutores'
-      },
-
       cta: {
         title: 'Pronto para Começar?',
-        subtitle: 'Solicite informações sobre a próxima turma',
-        button: 'Solicitar Informações',
-        info: 'Próximas turmas: Consulte disponibilidade'
+        subtitle: 'Fale com nosso time e escolha o curso ideal para você',
+        button: 'Falar com Consultor'
       }
     },
-    // ... (outras línguas)
+    en: {
+      meta: {
+        title: 'Azimut Academy Courses - Professional Training',
+        description: 'VR, 360°, Generative AI, Motion Design and audiovisual production courses. 30 years of experience. Small classes, 100% hands-on.'
+      },
+      hero: {
+        badge: '📚 Professional Training',
+        title: 'Courses & Training',
+        subtitle: '30 years of teaching experience',
+        description: 'Master immersive technologies, AI and audiovisual production with industry experts since 1994. Small classes, 100% practical.'
+      },
+      categories: [
+        { id: 'all', label: 'All' },
+        { id: 'vr', label: 'VR & 360°' },
+        { id: 'ai', label: 'Generative AI' },
+        { id: 'motion', label: 'Motion & 3D' },
+        { id: 'game', label: 'Game Design' }
+      ],
+      courses: [
+        {
+          id: 'vr-cinema',
+          category: 'vr',
+          icon: '🥽',
+          title: 'VR Production & 360° Cinema',
+          description: 'Complete VR filmmaking, from capture to post-production.',
+          duration: '40 hours',
+          level: 'Intermediate',
+          price: 'CAD 800',
+          featured: true,
+          tags: ['VR', 'Cinema', '360°', 'Unreal Engine']
+        },
+        {
+          id: 'ai-marketing',
+          category: 'ai',
+          icon: '🤖',
+          title: 'Generative AI for Marketing',
+          description: 'Master Midjourney, Stable Diffusion, ChatGPT and AI tools for campaigns.',
+          duration: '24 hours',
+          level: 'Beginner',
+          price: 'CAD 450',
+          featured: true,
+          tags: ['AI', 'Marketing', 'Midjourney', 'ChatGPT']
+        },
+        {
+          id: 'motion-design',
+          category: 'motion',
+          icon: '🎬',
+          title: 'Motion Design & 3D',
+          description: 'After Effects, Cinema 4D and Blender for professional animations.',
+          duration: '60 hours',
+          level: 'Intermediate',
+          price: 'CAD 1,125',
+          tags: ['Motion', 'After Effects', '3D', 'Blender']
+        },
+        {
+          id: 'game-vr',
+          category: 'game',
+          icon: '🎮',
+          title: 'VR Game Design',
+          description: 'Create virtual reality games with Unity and Unreal Engine.',
+          duration: '50 hours',
+          level: 'Advanced',
+          price: 'CAD 1,000',
+          tags: ['VR', 'Unity', 'Unreal', 'Game']
+        },
+        {
+          id: 'unreal-engine',
+          category: 'game',
+          icon: '⚡',
+          title: 'Unreal Engine for Audiovisual',
+          description: 'Real-time production, virtual production and interactive environments.',
+          duration: '45 hours',
+          level: 'Intermediate',
+          price: 'CAD 950',
+          featured: true,
+          tags: ['Unreal', 'Real-time', 'Virtual Production']
+        },
+        {
+          id: 'ai-video',
+          category: 'ai',
+          icon: '🎥',
+          title: 'AI for Video Production',
+          description: 'Runway, Pika Labs, Sora and other AI tools for video.',
+          duration: '20 hours',
+          level: 'Beginner',
+          price: 'CAD 375',
+          tags: ['AI', 'Video', 'Runway', 'Automation']
+        }
+      ],
+      gallery: {
+        title: 'Student Work',
+        subtitle: 'See what our students created during the courses'
+      },
+      cta: {
+        title: 'Ready to Start?',
+        subtitle: 'Talk to our team and choose the ideal course for you',
+        button: 'Talk to Consultant'
+      }
+    },
+    es: {
+      meta: {
+        title: 'Cursos Azimut Academy - Formación Profesional',
+        description: 'Cursos de VR, 360°, IA Generativa, Motion Design y producción audiovisual. 30 años de experiencia. Clases pequeñas, 100% práctico.'
+      },
+      hero: {
+        badge: '📚 Formación Profesional',
+        title: 'Cursos y Capacitación',
+        subtitle: '30 años de experiencia enseñando',
+        description: 'Domina tecnologías inmersivas, IA y producción audiovisual con quienes están en el mercado desde 1994. Clases pequeñas, 100% práctico.'
+      },
+      categories: [
+        { id: 'all', label: 'Todos' },
+        { id: 'vr', label: 'VR & 360°' },
+        { id: 'ai', label: 'IA Generativa' },
+        { id: 'motion', label: 'Motion & 3D' },
+        { id: 'game', label: 'Game Design' }
+      ],
+      courses: [
+        {
+          id: 'vr-cinema',
+          category: 'vr',
+          icon: '🥽',
+          title: 'Producción VR & Cine 360°',
+          description: 'Creación completa de películas en realidad virtual, desde captura hasta finalización.',
+          duration: '40 horas',
+          level: 'Intermedio',
+          price: 'USD 600',
+          featured: true,
+          tags: ['VR', 'Cinema', '360°', 'Unreal Engine']
+        },
+        {
+          id: 'ai-marketing',
+          category: 'ai',
+          icon: '🤖',
+          title: 'IA Generativa para Marketing',
+          description: 'Domina Midjourney, Stable Diffusion, ChatGPT y herramientas IA para crear campañas.',
+          duration: '24 horas',
+          level: 'Principiante',
+          price: 'USD 340',
+          featured: true,
+          tags: ['IA', 'Marketing', 'Midjourney', 'ChatGPT']
+        },
+        {
+          id: 'motion-design',
+          category: 'motion',
+          icon: '🎬',
+          title: 'Motion Design & 3D',
+          description: 'After Effects, Cinema 4D y Blender para crear animaciones profesionales.',
+          duration: '60 horas',
+          level: 'Intermedio',
+          price: 'USD 850',
+          tags: ['Motion', 'After Effects', '3D', 'Blender']
+        },
+        {
+          id: 'game-vr',
+          category: 'game',
+          icon: '🎮',
+          title: 'Game Design en VR',
+          description: 'Crea juegos en realidad virtual con Unity y Unreal Engine.',
+          duration: '50 horas',
+          level: 'Avanzado',
+          price: 'USD 750',
+          tags: ['VR', 'Unity', 'Unreal', 'Game']
+        },
+        {
+          id: 'unreal-engine',
+          category: 'game',
+          icon: '⚡',
+          title: 'Unreal Engine para Audiovisual',
+          description: 'Producción en tiempo real, producción virtual y ambientes interactivos.',
+          duration: '45 horas',
+          level: 'Intermedio',
+          price: 'USD 720',
+          featured: true,
+          tags: ['Unreal', 'Real-time', 'Virtual Production']
+        },
+        {
+          id: 'ai-video',
+          category: 'ai',
+          icon: '🎥',
+          title: 'IA para Producción de Video',
+          description: 'Runway, Pika Labs, Sora y otras herramientas de IA para video.',
+          duration: '20 horas',
+          level: 'Principiante',
+          price: 'USD 280',
+          tags: ['IA', 'Video', 'Runway', 'Automation']
+        }
+      ],
+      gallery: {
+        title: 'Trabajos de Alumnos',
+        subtitle: 'Mira lo que nuestros alumnos crearon durante los cursos'
+      },
+      cta: {
+        title: '¿Listo para Comenzar?',
+        subtitle: 'Habla con nuestro equipo y elige el curso ideal para ti',
+        button: 'Hablar con Consultor'
+      }
+    },
+    fr: {
+      meta: {
+        title: 'Cours Azimut Academy - Formation Professionnelle',
+        description: 'Cours de VR, 360°, IA Générative, Motion Design et production audiovisuelle. 30 ans d\'expérience. Petites classes, 100% pratique.'
+      },
+      hero: {
+        badge: '📚 Formation Professionnelle',
+        title: 'Cours et Formation',
+        subtitle: '30 ans d\'expérience d\'enseignement',
+        description: 'Maîtrisez les technologies immersives, l\'IA et la production audiovisuelle avec des experts du secteur depuis 1994. Petites classes, 100% pratique.'
+      },
+      categories: [
+        { id: 'all', label: 'Tous' },
+        { id: 'vr', label: 'VR & 360°' },
+        { id: 'ai', label: 'IA Générative' },
+        { id: 'motion', label: 'Motion & 3D' },
+        { id: 'game', label: 'Game Design' }
+      ],
+      courses: [
+        {
+          id: 'vr-cinema',
+          category: 'vr',
+          icon: '🥽',
+          title: 'Production VR & Cinéma 360°',
+          description: 'Création complète de films en réalité virtuelle, de la captation à la finalisation.',
+          duration: '40 heures',
+          level: 'Intermédiaire',
+          price: 'CAD 800',
+          featured: true,
+          tags: ['VR', 'Cinéma', '360°', 'Unreal Engine']
+        },
+        {
+          id: 'ai-marketing',
+          category: 'ai',
+          icon: '🤖',
+          title: 'IA Générative pour Marketing',
+          description: 'Maîtrisez Midjourney, Stable Diffusion, ChatGPT et outils IA pour campagnes.',
+          duration: '24 heures',
+          level: 'Débutant',
+          price: 'CAD 450',
+          featured: true,
+          tags: ['IA', 'Marketing', 'Midjourney', 'ChatGPT']
+        },
+        {
+          id: 'motion-design',
+          category: 'motion',
+          icon: '🎬',
+          title: 'Motion Design & 3D',
+          description: 'After Effects, Cinema 4D et Blender pour animations professionnelles.',
+          duration: '60 heures',
+          level: 'Intermédiaire',
+          price: 'CAD 1.125',
+          tags: ['Motion', 'After Effects', '3D', 'Blender']
+        },
+        {
+          id: 'game-vr',
+          category: 'game',
+          icon: '🎮',
+          title: 'Game Design en VR',
+          description: 'Créez des jeux en réalité virtuelle avec Unity et Unreal Engine.',
+          duration: '50 heures',
+          level: 'Avancé',
+          price: 'CAD 1.000',
+          tags: ['VR', 'Unity', 'Unreal', 'Game']
+        },
+        {
+          id: 'unreal-engine',
+          category: 'game',
+          icon: '⚡',
+          title: 'Unreal Engine pour Audiovisuel',
+          description: 'Production en temps réel, production virtuelle et environnements interactifs.',
+          duration: '45 heures',
+          level: 'Intermédiaire',
+          price: 'CAD 950',
+          featured: true,
+          tags: ['Unreal', 'Real-time', 'Virtual Production']
+        },
+        {
+          id: 'ai-video',
+          category: 'ai',
+          icon: '🎥',
+          title: 'IA pour Production Vidéo',
+          description: 'Runway, Pika Labs, Sora et autres outils IA pour vidéo.',
+          duration: '20 heures',
+          level: 'Débutant',
+          price: 'CAD 375',
+          tags: ['IA', 'Vidéo', 'Runway', 'Automation']
+        }
+      ],
+      gallery: {
+        title: 'Travaux des Étudiants',
+        subtitle: 'Voyez ce que nos étudiants ont créé pendant les cours'
+      },
+      cta: {
+        title: 'Prêt à Commencer?',
+        subtitle: 'Parlez à notre équipe et choisissez le cours idéal pour vous',
+        button: 'Parler avec un Consultant'
+      }
+    }
   }
 
-  const t = content.pt // Sempre usar PT por enquanto
-
-  // Filter courses by category
-  const filteredCourses = selectedCategory === 'all'
-    ? t.courses
-    : t.courses.filter(c => c.tags.includes(selectedCategory))
+  const t = content[lang] || content.pt
+  const filteredCourses = selectedCategory === 'all' 
+    ? t.courses 
+    : t.courses.filter((c: any) => c.category === selectedCategory)
 
   return (
     <>
       <Helmet>
-        <title>{t.hero.title} | Azimut Academy</title>
-        <meta name="description" content={t.hero.description} />
+        <title>{t.meta.title}</title>
+        <meta name="description" content={t.meta.description} />
       </Helmet>
 
-      <div className="min-h-screen bg-black">
-        {/* ═══════════════════════════════════════════════════════════
-            HERO SECTION
-            ═══════════════════════════════════════════════════════════
-            🖼️ PLACEHOLDER: Hero image ou video
-            Backoffice: /admin/academy/courses → "Hero Image"
-            ═══════════════════════════════════════════════════════ */}
-        <section className="relative py-20 overflow-hidden">
-          {/* Background */}
-          <div className="absolute inset-0 z-0">
-            <div 
-              className="absolute inset-0 bg-gradient-to-br from-slate-900 via-black to-slate-900"
-              style={{
-                backgroundImage: 'url(https://images.unsplash.com/photo-1552664730-d307ca884978?w=1600)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                opacity: 0.3
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black" />
-          </div>
-
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-4xl mx-auto">
-              <div className="inline-block px-4 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-6">
-                <span className="text-azimut-red text-sm font-semibold uppercase tracking-wider">
-                  {t.hero.badge}
-                </span>
-              </div>
-
-              <h1 className="text-5xl md:text-7xl font-handel uppercase tracking-wider text-white mb-6">
-                {t.hero.title}
-              </h1>
-
-              <p className="text-2xl text-white/90 mb-4">
-                {t.hero.subtitle}
-              </p>
-
-              <p className="text-lg text-white/70 mb-10 leading-relaxed">
-                {t.hero.description}
-              </p>
+      <div className="min-h-screen bg-gradient-to-b from-black via-[#0a0e18] to-black">
+        {/* HERO */}
+        <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-black to-slate-900 opacity-90" />
+          
+          <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+            <div className="inline-block px-6 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-6">
+              <span className="text-azimut-red text-sm font-semibold uppercase tracking-wider">
+                {t.hero.badge}
+              </span>
             </div>
+
+            <h1 className="text-5xl md:text-7xl font-handel uppercase tracking-wider text-white mb-6">
+              {t.hero.title}
+            </h1>
+
+            <p className="text-xl md:text-2xl text-white/90 mb-4">
+              {t.hero.subtitle}
+            </p>
+
+            <p className="text-lg text-white/70 max-w-3xl mx-auto">
+              {t.hero.description}
+            </p>
           </div>
         </section>
 
-        {/* ═══════════════════════════════════════════════════════════
-            CATEGORY FILTERS
-            ═══════════════════════════════════════════════════════ */}
-        <section className="py-8 bg-gradient-to-b from-black to-[#0a0e18]">
+        {/* FILTERS */}
+        <section className="py-8 border-y border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-wrap justify-center gap-3">
-              {t.categories.map(cat => (
+              {t.categories.map((cat: any) => (
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-6 py-2 rounded-full font-semibold text-sm uppercase tracking-wider transition-all ${
+                  className={`px-6 py-3 rounded-full font-semibold uppercase tracking-wider text-sm transition-all ${
                     selectedCategory === cat.id
-                      ? 'bg-azimut-red text-white shadow-lg shadow-azimut-red/30'
-                      : 'bg-white/5 text-white/70 border border-white/10 hover:bg-white/10 hover:text-white'
+                      ? 'bg-azimut-red text-white shadow-lg shadow-azimut-red/50'
+                      : 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white'
                   }`}
                 >
                   {cat.label}
@@ -273,211 +474,122 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* ═══════════════════════════════════════════════════════════
-            COURSES GRID
-            ═══════════════════════════════════════════════════════════
-            🖼️ PLACEHOLDER: Thumbnails dos cursos
-            Backoffice: /admin/academy/courses/list → cada curso
-            ═══════════════════════════════════════════════════════ */}
-        <section className="py-20 bg-gradient-to-b from-[#0a0e18] to-black">
+        {/* COURSES GRID */}
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredCourses.map(course => (
-                <article
+              {filteredCourses.map((course: any) => (
+                <div
                   key={course.id}
-                  className={`group card-adaptive rounded-2xl overflow-hidden border transition-all duration-500 hover:shadow-2xl hover:shadow-azimut-red/20 hover:-translate-y-2 ${
-                    course.featured ? 'border-azimut-red/50' : 'border-white/10'
+                  className={`card-adaptive rounded-2xl overflow-hidden border transition-all duration-500 hover:-translate-y-2 ${
+                    course.featured 
+                      ? 'border-azimut-red/50 shadow-lg shadow-azimut-red/20' 
+                      : 'border-white/10 hover:border-azimut-red/30'
                   }`}
                 >
-                  {/* Thumbnail (PLACEHOLDER) */}
-                  <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-8xl opacity-30">{course.icon}</span>
-                    </div>
-                    {/* TODO: Imagem real do backoffice */}
-                    {/* <img src={course.thumbnail} alt={course.title} /> */}
-
-                    {/* Featured badge */}
+                  {/* Thumbnail */}
+                  <div className="relative aspect-video bg-gradient-to-br from-slate-800 to-black flex items-center justify-center">
+                    <span className="text-8xl opacity-30">{course.icon}</span>
                     {course.featured && (
-                      <div className="absolute top-4 right-4 px-3 py-1 bg-azimut-red text-white text-xs font-bold uppercase rounded-full">
-                        Destaque
+                      <div className="absolute top-4 right-4">
+                        <span className="px-3 py-1 bg-azimut-red text-white text-xs font-bold uppercase rounded-full">
+                          {lang === 'pt' ? 'Destaque' : lang === 'en' ? 'Featured' : lang === 'es' ? 'Destacado' : 'En Vedette'}
+                        </span>
                       </div>
                     )}
-
-                    {/* Level badge */}
-                    <div className="absolute bottom-4 left-4 px-3 py-1 bg-black/80 text-white text-xs font-semibold rounded-full">
-                      {course.level}
-                    </div>
                   </div>
 
                   {/* Content */}
                   <div className="p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="text-3xl">{course.icon}</span>
-                      <h3 className="text-xl font-bold text-white group-hover:text-azimut-red transition-colors">
-                        {course.title}
-                      </h3>
-                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-3">
+                      {course.title}
+                    </h3>
 
-                    <p className="text-white/70 text-sm mb-4 leading-relaxed">
+                    <p className="text-white/70 mb-4 leading-relaxed">
                       {course.description}
                     </p>
 
-                    {/* Info */}
-                    <div className="space-y-2 text-xs text-white/60 mb-4">
-                      <div className="flex items-center gap-2">
-                        <span>⏱️</span>
-                        <span>{course.duration}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span>👥</span>
-                        <span>{course.audience}</span>
-                      </div>
+                    <div className="flex items-center gap-4 mb-4 text-sm text-white/60">
+                      <span>⏱️ {course.duration}</span>
+                      <span>📊 {course.level}</span>
                     </div>
 
-                    {/* Tags */}
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {course.tags.slice(0, 3).map(tag => (
-                        <span
+                      {course.tags.map((tag: string) => (
+                        <span 
                           key={tag}
-                          className="px-2 py-1 bg-white/5 text-white/60 text-xs rounded-full"
+                          className="px-2 py-1 bg-white/5 text-white/60 text-xs rounded"
                         >
-                          #{tag}
+                          {tag}
                         </span>
                       ))}
                     </div>
 
-                    {/* CTA */}
-                    <button className="w-full py-3 bg-azimut-red/20 border border-azimut-red/50 text-azimut-red font-semibold rounded-lg hover:bg-azimut-red hover:text-white transition-all">
-                      Saiba Mais →
-                    </button>
+                    <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                      <span className="text-2xl font-handel text-azimut-red">
+                        {course.price}
+                      </span>
+                      <Link
+                        to={`/${lang}/contact`}
+                        className="px-4 py-2 bg-azimut-red hover:bg-azimut-red/90 text-white text-sm font-semibold uppercase rounded-lg transition-all"
+                      >
+                        {lang === 'pt' ? 'Inscrever' : lang === 'en' ? 'Enroll' : lang === 'es' ? 'Inscribirse' : 'S\'inscrire'}
+                      </Link>
+                    </div>
                   </div>
-                </article>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ═══════════════════════════════════════════════════════════
-            FEATURES
-            ═══════════════════════════════════════════════════════ */}
-        <section className="py-20 bg-gradient-to-b from-black to-[#0a0e18]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white text-center mb-12">
-              {t.features.title}
+        {/* GALLERY PLACEHOLDER */}
+        <section className="py-20 bg-gradient-to-b from-transparent via-azimut-red/5 to-transparent">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+              {t.gallery.title}
             </h2>
+            <p className="text-xl text-white/70 mb-12">
+              {t.gallery.subtitle}
+            </p>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {t.features.items.map((feature, i) => (
-                <div key={i} className="card-adaptive p-6 rounded-xl border border-white/10 text-center">
-                  <div className="text-5xl mb-4">{feature.icon}</div>
-                  <h3 className="text-xl font-bold text-white mb-2">
-                    {feature.title}
-                  </h3>
-                  <p className="text-white/60 text-sm">
-                    {feature.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════════════════════════════════════════════════════
-            STUDENT WORK GALLERY
-            ═══════════════════════════════════════════════════════════
-            🖼️ PLACEHOLDER: Trabalhos dos alunos
-            Backoffice: /admin/academy/courses/student-work
-            ═══════════════════════════════════════════════════════ */}
-        <section className="py-20 bg-gradient-to-b from-[#0a0e18] to-black">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
-                {t.studentWork.title}
-              </h2>
-              <p className="text-lg text-white/70">
-                {t.studentWork.subtitle}
-              </p>
-            </div>
-
-            {/* Image Gallery (PLACEHOLDER) */}
-            <div className="mb-8">
-              <p className="text-center text-white/60 text-sm mb-6">
-                📌 <strong>PLACEHOLDER:</strong> Galeria de trabalhos virá do backoffice
-              </p>
-              {/* <ImageGallery images={studentWorkImages} /> */}
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {[1,2,3,4,5,6,7,8].map(i => (
-                  <div key={i} className="aspect-video bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg flex items-center justify-center">
-                    <span className="text-4xl opacity-30">🎨</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="text-center">
-              <button className="px-8 py-3 bg-azimut-red text-white font-semibold rounded-lg hover:bg-azimut-red/90 transition-all shadow-lg hover:shadow-azimut-red/50">
-                {t.studentWork.cta} →
-              </button>
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════════════════════════════════════════════════════
-            CLASS DEMOS VIDEOS
-            ═══════════════════════════════════════════════════════════
-            📹 PLACEHOLDER: Vídeos de trechos de aula
-            Backoffice: /admin/academy/courses/videos → Categoria: Class Demo
-            ═══════════════════════════════════════════════════════ */}
-        <section className="py-20 bg-gradient-to-b from-black to-[#0a0e18]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
-                {t.classDemos.title}
-              </h2>
-              <p className="text-lg text-white/70">
-                {t.classDemos.subtitle}
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* Placeholder Video Cards */}
-              {[1,2,3,4].map(i => (
-                <div key={i} className="card-adaptive rounded-xl p-4 border border-white/10">
-                  <div className="aspect-video bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg mb-3 flex items-center justify-center">
-                    <span className="text-6xl opacity-30">▶️</span>
-                  </div>
-                  <h4 className="text-white font-semibold mb-1">Aula Demo {i}</h4>
-                  <p className="text-white/60 text-sm">Adicionar vídeo no backoffice</p>
+            {/* PLACEHOLDER: Galeria de trabalhos */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                <div 
+                  key={i}
+                  className="aspect-square bg-gradient-to-br from-slate-800 to-black rounded-lg border border-white/10 hover:border-azimut-red/50 transition-all hover:scale-105 cursor-pointer flex items-center justify-center"
+                >
+                  <span className="text-4xl opacity-20">🎬</span>
                 </div>
               ))}
             </div>
 
-            <div className="mt-6 text-center">
-              <p className="text-white/60 text-sm">
-                📌 <strong>BACKOFFICE:</strong> /admin/academy/courses/videos → Categoria "Class Demo"
-              </p>
-            </div>
+            <p className="mt-8 text-white/40 text-sm">
+              📸 PLACEHOLDER: Backoffice → /admin/academy/gallery
+            </p>
           </div>
         </section>
 
-        {/* ═══════════════════════════════════════════════════════════
-            CTA FINAL
-            ═══════════════════════════════════════════════════════ */}
-        <section className="py-20 bg-gradient-to-b from-[#0a0e18] to-black">
+        {/* CTA */}
+        <section className="py-24">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-6">
               {t.cta.title}
             </h2>
-            <p className="text-xl text-white/70 mb-8">
+            <p className="text-xl text-white/70 mb-10">
               {t.cta.subtitle}
             </p>
-            <button className="px-8 py-4 bg-azimut-red text-white font-semibold rounded-lg hover:bg-azimut-red/90 transition-all shadow-lg hover:shadow-azimut-red/50 hover:scale-105">
-              {t.cta.button} →
-            </button>
-            <p className="text-white/50 text-sm mt-4">
-              {t.cta.info}
-            </p>
+
+            <Link
+              to={`/${lang}/contact`}
+              className="inline-flex items-center gap-3 px-10 py-5 bg-azimut-red hover:bg-azimut-red/90 text-white text-lg font-bold uppercase tracking-wider rounded-full transition-all hover:scale-105 hover:shadow-2xl hover:shadow-azimut-red/50"
+            >
+              {t.cta.button}
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
           </div>
         </section>
       </div>
