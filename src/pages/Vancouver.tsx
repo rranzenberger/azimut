@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
 import VancouverInterestForm from '../components/VancouverInterestForm'
 import { VideoPlayerEnhanced } from '../components/VideoPlayerEnhanced'
+import { VideoCard } from '../components/VideoCard'
 
 interface VancouverProps {
   lang: Lang
@@ -508,8 +509,25 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
                 {t.testimonialsTitle}
               </h2>
+              <p className="text-lg text-white/70 max-w-3xl mx-auto mb-8">
+                Conheça a história de brasileiros que transformaram suas carreiras estudando em Vancouver
+              </p>
             </div>
 
+            {/* Video Depoimentos Brasileiros */}
+            <div className="mb-16 max-w-4xl mx-auto">
+              <VideoCard
+                videoUrl="https://www.youtube.com/watch?v=y3uhoRpQPYY"
+                title="Depoimentos de Brasileiros na VanArts"
+                description="Histórias reais de alunos brasileiros que estudaram na VanArts e conquistaram suas carreiras internacionais"
+                category="Depoimentos"
+                featured
+                badge="🇧🇷 Brasileiros"
+                badgeColor="azimut-red"
+              />
+            </div>
+
+            {/* Depoimentos em texto */}
             <div className="grid md:grid-cols-3 gap-8">
               {t.testimonials.map((testimonial, i) => (
                 <div
