@@ -16,23 +16,69 @@ export class ApiService {
    */
   static async submitLead(data: any) {
     try {
+      // Verificar se API_URL está configurada
+      if (!API_URL || API_URL === 'undefined') {
+        console.warn('⚠️ VITE_API_URL não configurada')
+        throw new Error('API não configurada. Por favor, configure VITE_API_URL no arquivo .env')
+      }
+
+      // Log apenas em desenvolvimento
+      if (import.meta.env.DEV) {
+        console.log('📤 Enviando lead para:', `${API_URL}/api/leads`)
+      }
+
+      // Criar AbortController para timeout
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 segundos
+
       const response = await fetch(`${API_URL}/api/leads`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           ...(API_KEY && { 'X-API-Key': API_KEY })
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        signal: controller.signal
       })
 
+      clearTimeout(timeoutId)
+
       if (!response.ok) {
-        const error = await response.text()
-        throw new Error(error || 'Failed to submit lead')
+        let errorMessage = 'Erro ao enviar formulário'
+        
+        try {
+          const errorData = await response.json()
+          errorMessage = errorData.message || errorData.error || errorMessage
+        } catch {
+          const errorText = await response.text()
+          if (errorText) {
+            errorMessage = errorText
+          } else {
+            errorMessage = `Erro ${response.status}: ${response.statusText}`
+          }
+        }
+        
+        throw new Error(errorMessage)
       }
 
       return await response.json()
-    } catch (error) {
+    } catch (error: any) {
       console.error('❌ Error submitting lead:', error)
+      
+      // Mensagens de erro mais específicas
+      if (error.name === 'AbortError' || error.name === 'TimeoutError') {
+        throw new Error('Tempo de conexão esgotado. Verifique sua internet e tente novamente.')
+      }
+      
+      if (error.message?.includes('Failed to fetch') || error.message?.includes('NetworkError')) {
+        throw new Error('Não foi possível conectar ao servidor. Verifique sua conexão ou tente novamente mais tarde.')
+      }
+      
+      if (error.message?.includes('CORS')) {
+        throw new Error('Erro de conexão. Por favor, entre em contato diretamente: contact@azmt.com.br')
+      }
+      
+      // Repassar erro original se tiver mensagem útil
       throw error
     }
   }

@@ -547,14 +547,48 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       console.error('Error submitting form:', err)
       // Limpar erros de campo (erro de servidor é diferente)
       setFieldErrors({})
-      // Mensagem de erro mais específica
-      const errorMsg = err?.message || t.errorMessage || (lang === 'pt' 
-        ? 'Erro ao enviar. Por favor, tente novamente ou entre em contato diretamente.'
-        : lang === 'es'
-        ? 'Error al enviar. Por favor, intente nuevamente o contáctenos directamente.'
-        : lang === 'fr'
-        ? 'Erreur lors de l\'envoi. Veuillez réessayer ou nous contacter directement.'
-        : 'Error submitting. Please try again or contact us directly.')
+      
+      // Mensagem de erro mais específica e útil
+      let errorMsg = err?.message || ''
+      
+      // Traduzir mensagens comuns
+      if (!errorMsg || errorMsg.includes('Failed to fetch') || errorMsg.includes('NetworkError')) {
+        errorMsg = lang === 'pt' 
+          ? 'Não foi possível conectar ao servidor. Por favor, verifique sua conexão ou entre em contato diretamente: contact@azmt.com.br'
+          : lang === 'es'
+          ? 'No se pudo conectar al servidor. Por favor, verifique su conexión o contáctenos directamente: contact@azmt.com.br'
+          : lang === 'fr'
+          ? 'Impossible de se connecter au serveur. Veuillez vérifier votre connexion ou nous contacter directement: contact@azmt.com.br'
+          : 'Could not connect to server. Please check your connection or contact us directly: contact@azmt.com.br'
+      } else if (errorMsg.includes('timeout') || errorMsg.includes('Tempo')) {
+        errorMsg = lang === 'pt'
+          ? 'Tempo de conexão esgotado. Por favor, tente novamente.'
+          : lang === 'es'
+          ? 'Tiempo de conexión agotado. Por favor, intente nuevamente.'
+          : lang === 'fr'
+          ? 'Délai de connexion expiré. Veuillez réessayer.'
+          : 'Connection timeout. Please try again.'
+      } else if (errorMsg.includes('API não configurada')) {
+        errorMsg = lang === 'pt'
+          ? 'Sistema em manutenção. Por favor, entre em contato: contact@azmt.com.br'
+          : lang === 'es'
+          ? 'Sistema en mantenimiento. Por favor, contáctenos: contact@azmt.com.br'
+          : lang === 'fr'
+          ? 'Système en maintenance. Veuillez nous contacter: contact@azmt.com.br'
+          : 'System maintenance. Please contact: contact@azmt.com.br'
+      }
+      
+      // Se ainda não tiver mensagem, usar padrão
+      if (!errorMsg) {
+        errorMsg = t.errorMessage || (lang === 'pt' 
+          ? 'Erro ao enviar. Por favor, tente novamente ou entre em contato: contact@azmt.com.br'
+          : lang === 'es'
+          ? 'Error al enviar. Por favor, intente nuevamente o contáctenos: contact@azmt.com.br'
+          : lang === 'fr'
+          ? 'Erreur lors de l\'envoi. Veuillez réessayer ou nous contacter: contact@azmt.com.br'
+          : 'Error submitting. Please try again or contact: contact@azmt.com.br')
+      }
+      
       setError(errorMsg)
     } finally {
       setLoading(false)
