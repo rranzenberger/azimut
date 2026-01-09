@@ -155,8 +155,7 @@ function getBudgetRanges(currency: 'BRL' | 'USD' | 'CAD', lang: Lang) {
       '100k-300k': 'R$ 100k - R$ 300k',
       '300k-500k': 'R$ 300k - R$ 500k',
       '500k-1m': 'R$ 500k - R$ 1M',
-      '1m-3m': 'R$ 1M - R$ 3M',
-      '3m+': 'R$ 3M+',
+      '1m+': 'R$ 1M+',
       grant: grantLabel,
       indefinido: undefinedLabel
     }
@@ -173,8 +172,7 @@ function getBudgetRanges(currency: 'BRL' | 'USD' | 'CAD', lang: Lang) {
       '100k-300k': 'CAD $100k - $300k',
       '300k-500k': 'CAD $300k - $500k',
       '500k-1m': 'CAD $500k - $1M',
-      '1m-3m': 'CAD $1M - $3M',
-      '3m+': 'CAD $3M+',
+      '1m+': 'CAD $1M+',
       grant: grantLabel,
       indefinido: undefinedLabel
     }
@@ -191,8 +189,7 @@ function getBudgetRanges(currency: 'BRL' | 'USD' | 'CAD', lang: Lang) {
     '100k-300k': 'USD $100k - $300k',
     '300k-500k': 'USD $300k - $500k',
     '500k-1m': 'USD $500k - $1M',
-    '1m-3m': 'USD $1M - $3M',
-    '3m+': 'USD $3M+',
+    '1m+': 'USD $1M+',
     grant: grantLabel,
     indefinido: undefinedLabel
   }
