@@ -81,6 +81,123 @@ interface SmartContactFormProps {
   lang?: Lang
 }
 
+// Função para determinar moeda baseada no idioma/localização
+function getCurrencyForLang(lang: Lang): 'BRL' | 'USD' | 'CAD' {
+  try {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    
+    // PT = Brasil = Reais (sempre)
+    if (lang === 'pt') return 'BRL'
+    
+    // FR = Canadá (Quebec) = CAD, ou França = EUR (mas priorizamos CAD para Quebec)
+    if (lang === 'fr') {
+      // Canadá - Quebec e outras províncias francófonas
+      if (timezone.includes('Montreal') || timezone.includes('Toronto') || 
+          timezone.includes('Vancouver') || timezone.includes('Winnipeg') ||
+          timezone.includes('Edmonton') || timezone.includes('Calgary') ||
+          timezone.includes('Halifax')) {
+        return 'CAD'
+      }
+      // França ou outros países francófonos (fallback para USD para manter consistência Américas)
+      return 'USD'
+    }
+    
+    // EN = EUA ou Canadá = USD ou CAD
+    if (lang === 'en') {
+      // Canadá (timezones canadenses)
+      if (timezone.includes('Toronto') || timezone.includes('Vancouver') || 
+          timezone.includes('Winnipeg') || timezone.includes('Edmonton') ||
+          timezone.includes('Calgary') || timezone.includes('Halifax') ||
+          timezone.includes('Montreal')) {
+        return 'CAD'
+      }
+      // EUA (timezones americanos) ou default
+      if (timezone.includes('New_York') || timezone.includes('Chicago') || 
+          timezone.includes('Denver') || timezone.includes('Los_Angeles') ||
+          timezone.includes('Detroit') || timezone.includes('Phoenix') ||
+          timezone.includes('Seattle') || timezone.includes('Anchorage')) {
+        return 'USD'
+      }
+      // Default para EN é USD (mais comum - EUA)
+      return 'USD'
+    }
+    
+    // ES = Espanhol = USD (prioridade Américas - México, América Central, EUA latino)
+    return 'USD'
+  } catch (error) {
+    // Fallback: se detecção falhar, usar baseado no idioma
+    if (lang === 'pt') return 'BRL'
+    if (lang === 'fr') return 'CAD' // Prioridade Quebec
+    return 'USD' // Default para EN e ES
+  }
+}
+
+// Função para obter ranges de budget baseado na moeda
+function getBudgetRanges(currency: 'BRL' | 'USD' | 'CAD', lang: Lang) {
+  const selectLabel = lang === 'pt' ? 'Selecione...' : lang === 'es' ? 'Seleccione...' : lang === 'fr' ? 'Sélectionnez...' : 'Select...'
+  const grantLabel = lang === 'pt' ? '💰 Preciso aplicar para grant/edital' : 
+                     lang === 'es' ? '💰 Necesito solicitar subvención/edital' : 
+                     lang === 'fr' ? '💰 Besoin de demander une subvention/appel' : 
+                     '💰 Need to apply for grant/funding'
+  const undefinedLabel = lang === 'pt' ? 'Ainda não defini' : 
+                         lang === 'es' ? 'Aún no definido' : 
+                         lang === 'fr' ? 'Pas encore défini' : 
+                         'Not defined yet'
+
+  if (currency === 'BRL') {
+    return {
+      '': selectLabel,
+      '1k-5k': 'R$ 1k - R$ 5k',
+      '5k-10k': 'R$ 5k - R$ 10k',
+      '10k-25k': 'R$ 10k - R$ 25k',
+      '25k-50k': 'R$ 25k - R$ 50k',
+      '50k-100k': 'R$ 50k - R$ 100k',
+      '100k-300k': 'R$ 100k - R$ 300k',
+      '300k-500k': 'R$ 300k - R$ 500k',
+      '500k-1m': 'R$ 500k - R$ 1M',
+      '1m-3m': 'R$ 1M - R$ 3M',
+      '3m+': 'R$ 3M+',
+      grant: grantLabel,
+      indefinido: undefinedLabel
+    }
+  }
+
+  if (currency === 'CAD') {
+    return {
+      '': selectLabel,
+      '1k-5k': 'CAD $1k - $5k',
+      '5k-10k': 'CAD $5k - $10k',
+      '10k-25k': 'CAD $10k - $25k',
+      '25k-50k': 'CAD $25k - $50k',
+      '50k-100k': 'CAD $50k - $100k',
+      '100k-300k': 'CAD $100k - $300k',
+      '300k-500k': 'CAD $300k - $500k',
+      '500k-1m': 'CAD $500k - $1M',
+      '1m-3m': 'CAD $1M - $3M',
+      '3m+': 'CAD $3M+',
+      grant: grantLabel,
+      indefinido: undefinedLabel
+    }
+  }
+
+  // USD (default)
+  return {
+    '': selectLabel,
+    '1k-5k': 'USD $1k - $5k',
+    '5k-10k': 'USD $5k - $10k',
+    '10k-25k': 'USD $10k - $25k',
+    '25k-50k': 'USD $25k - $50k',
+    '50k-100k': 'USD $50k - $100k',
+    '100k-300k': 'USD $100k - $300k',
+    '300k-500k': 'USD $300k - $500k',
+    '500k-1m': 'USD $500k - $1M',
+    '1m-3m': 'USD $1M - $3M',
+    '3m+': 'USD $3M+',
+    grant: grantLabel,
+    indefinido: undefinedLabel
+  }
+}
+
 // Helper para campos padronizados com validação (usando card-adaptive original)
 const PremiumField = ({ 
   label, 
@@ -183,17 +300,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         indefinido: 'Ainda não sei (preciso ajuda)'
       },
       budget: 'Budget Disponível *',
-      budgetRanges: {
-        '': 'Selecione...',
-        '<100k': '< R$ 100k / CAD $30k',
-        '100k-300k': 'R$ 100k-300k / CAD $30k-90k',
-        '300k-500k': 'R$ 300k-500k / CAD $90k-150k',
-        '500k-1m': 'R$ 500k-1M / CAD $150k-300k',
-        '1m-3m': 'R$ 1M-3M / CAD $300k-900k',
-        '3m+': 'R$ 3M+ / CAD $900k+',
-        grant: '💰 Preciso aplicar para grant/edital',
-        indefinido: 'Ainda não defini'
-      },
+      budgetRanges: {} // Será preenchido dinamicamente pela função getBudgetRanges
       timeline: 'Quando precisa estar pronto *',
       timelines: {
         '': 'Selecione...',
@@ -253,17 +360,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         indefinido: 'Not sure yet (need help)'
       },
       budget: 'Available Budget *',
-      budgetRanges: {
-        '': 'Select...',
-        '<100k': '< R$ 100k / CAD $30k',
-        '100k-300k': 'R$ 100k-300k / CAD $30k-90k',
-        '300k-500k': 'R$ 300k-500k / CAD $90k-150k',
-        '500k-1m': 'R$ 500k-1M / CAD $150k-300k',
-        '1m-3m': 'R$ 1M-3M / CAD $300k-900k',
-        '3m+': 'R$ 3M+ / CAD $900k+',
-        grant: '💰 Need to apply for grant/funding',
-        indefinido: 'Not defined yet'
-      },
+      budgetRanges: {} // Será preenchido dinamicamente pela função getBudgetRanges
       timeline: 'When do you need it ready *',
       timelines: {
         '': 'Select...',
@@ -323,17 +420,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         indefinido: 'Aún no lo sé (necesito ayuda)'
       },
       budget: 'Presupuesto Disponible *',
-      budgetRanges: {
-        '': 'Seleccione...',
-        '<100k': '< R$ 100k / CAD $30k',
-        '100k-300k': 'R$ 100k-300k / CAD $30k-90k',
-        '300k-500k': 'R$ 300k-500k / CAD $90k-150k',
-        '500k-1m': 'R$ 500k-1M / CAD $150k-300k',
-        '1m-3m': 'R$ 1M-3M / CAD $300k-900k',
-        '3m+': 'R$ 3M+ / CAD $900k+',
-        grant: '💰 Necesito solicitar subvención/edital',
-        indefinido: 'Aún no definido'
-      },
+      budgetRanges: {} // Será preenchido dinamicamente pela função getBudgetRanges
       timeline: '¿Cuándo lo necesita listo *',
       timelines: {
         '': 'Seleccione...',
@@ -393,17 +480,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         indefinido: 'Pas encore sûr (besoin d\'aide)'
       },
       budget: 'Budget Disponible *',
-      budgetRanges: {
-        '': 'Sélectionnez...',
-        '<100k': '< R$ 100k / CAD $30k',
-        '100k-300k': 'R$ 100k-300k / CAD $30k-90k',
-        '300k-500k': 'R$ 300k-500k / CAD $90k-150k',
-        '500k-1m': 'R$ 500k-1M / CAD $150k-300k',
-        '1m-3m': 'R$ 1M-3M / CAD $300k-900k',
-        '3m+': 'R$ 3M+ / CAD $900k+',
-        grant: '💰 Besoin de demander une subvention/appel',
-        indefinido: 'Pas encore défini'
-      },
+      budgetRanges: {} // Será preenchido dinamicamente pela função getBudgetRanges
       timeline: 'Quand en avez-vous besoin *',
       timelines: {
         '': 'Sélectionnez...',
@@ -435,6 +512,16 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
   }
 
   const t = labels[lang] || labels.en
+  
+  // Determinar moeda baseada no idioma/localização
+  const currency = getCurrencyForLang(lang)
+  const budgetRanges = getBudgetRanges(currency, lang)
+  
+  // Atualizar t.budgetRanges com os ranges corretos para a moeda
+  const tWithCurrency = {
+    ...t,
+    budgetRanges
+  }
 
   // Scroll automático para erro quando aparecer
   useEffect(() => {
@@ -941,7 +1028,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       })
                     }
                   }}
-                  options={Object.entries(t.budgetRanges).map(([value, label]) => ({ value, label }))}
+                  options={Object.entries(tWithCurrency.budgetRanges).map(([value, label]) => ({ value, label }))}
                   placeholder={lang === 'pt' ? 'Selecione...' : lang === 'es' ? 'Seleccione...' : lang === 'fr' ? 'Sélectionnez...' : 'Select...'}
                   ariaLabel={t.budget}
                   className={fieldErrors.budget ? 'border-red-500/50' : ''}
