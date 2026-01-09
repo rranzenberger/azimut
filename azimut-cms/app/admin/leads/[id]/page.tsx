@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { LeadDetails } from '../components/LeadDetails';
 import { LeadEditForm } from '../components/LeadEditForm';
+import { AIInsightsPanel } from '../components/AIInsightsPanel';
 
 export const revalidate = 0;
 
@@ -171,6 +172,11 @@ export default async function LeadDetailPage({
       <div style={{ display: 'grid', gap: 24, gridTemplateColumns: '1fr 400px' }}>
         <div>
           <LeadDetails lead={lead} />
+          <AIInsightsPanel
+            leadId={lead.id}
+            leadScore={lead.leadScore}
+            conversionScore={lead.sessions?.[0]?.interestScore?.conversionScore || null}
+          />
         </div>
         <div>
           <LeadEditForm lead={lead} users={users} />

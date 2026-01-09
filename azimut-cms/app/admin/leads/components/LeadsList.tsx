@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { QuickEditModal } from './QuickEditModal';
 
 const statusColors: Record<string, { bg: string; border: string; text: string }> = {
   NEW: { bg: 'rgba(59,130,246,0.15)', border: 'rgba(59,130,246,0.35)', text: '#93c5fd' },
@@ -35,6 +37,19 @@ const priorityLabels: Record<string, string> = {
 };
 
 export function LeadsList({ leads }: { leads: any[] }) {
+  const [editingLead, setEditingLead] = useState<string | null>(null);
+  const [users, setUsers] = useState<any[]>([]);
+
+  // Buscar usuários uma vez
+  useEffect(() => {
+    fetch('/api/admin/users')
+      .then((res) => res.json())
+      .then((data) => setUsers(data.users || []))
+      .catch(() => {
+        // Silencioso - não quebrar se falhar
+      });
+  }, []);
+
   return (
     <div style={{ display: 'grid', gap: 12, width: '100%' }}>
       {leads.map((lead) => {
@@ -87,7 +102,56 @@ export function LeadsList({ leads }: { leads: any[] }) {
                     </div>
                   )}
                 </div>
-                <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+                <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start', flexWrap: 'wrap' }}>
+                  {/* Score Badge */}
+                  <span
+                    style={{
+                      fontSize: 11,
+                      padding: '6px 12px',
+                      borderRadius: 999,
+                      background: conversionScore >= 90 || lead.leadScore >= 90
+                        ? 'rgba(201,35,55,0.2)'
+                        : conversionScore >= 80 || lead.leadScore >= 80
+                        ? 'rgba(249,115,22,0.2)'
+                        : conversionScore >= 70 || lead.leadScore >= 70
+                        ? 'rgba(251,191,36,0.2)'
+                        : 'rgba(156,163,175,0.2)',
+                      color: conversionScore >= 90 || lead.leadScore >= 90
+                        ? '#fca5a5'
+                        : conversionScore >= 80 || lead.leadScore >= 80
+                        ? '#fdba74'
+                        : conversionScore >= 70 || lead.leadScore >= 70
+                        ? '#fde047'
+                        : '#d1d5db',
+                      border: `1px solid ${
+                        conversionScore >= 90 || lead.leadScore >= 90
+                          ? 'rgba(201,35,55,0.4)'
+                          : conversionScore >= 80 || lead.leadScore >= 80
+                          ? 'rgba(249,115,22,0.4)'
+                          : conversionScore >= 70 || lead.leadScore >= 70
+                          ? 'rgba(251,191,36,0.4)'
+                          : 'rgba(156,163,175,0.4)'
+                      }`,
+                      height: 'fit-content',
+                      fontWeight: 700,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 4,
+                    }}
+                  >
+                    <span style={{ fontSize: 14 }}>
+                      {conversionScore >= 90 || lead.leadScore >= 90
+                        ? '🔥🔥'
+                        : conversionScore >= 80 || lead.leadScore >= 80
+                        ? '🔥'
+                        : conversionScore >= 70 || lead.leadScore >= 70
+                        ? '🌡️'
+                        : '❄️'}
+                    </span>
+                    <span>
+                      {conversionScore !== null ? conversionScore : lead.leadScore || 0}
+                    </span>
+                  </span>
                   <span
                     style={{
                       fontSize: 11,
@@ -146,17 +210,62 @@ export function LeadsList({ leads }: { leads: any[] }) {
                 )}
               </div>
 
-              <div style={{ marginTop: 12, color: '#8f8ba2', fontSize: 12 }}>
-                {new Date(lead.createdAt).toLocaleString('pt-BR', {
-                  day: '2-digit',
-                  month: '2-digit',
-                  year: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginTop: 12,
+                }}
+              >
+                <div style={{ color: '#8f8ba2', fontSize: 12 }}>
+                  {new Date(lead.createdAt).toLocaleString('pt-BR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                </div>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setEditingLead(lead.id);
+                  }}
+                  style={{
+                    padding: '6px 12px',
+                    borderRadius: 6,
+                    border: '1px solid rgba(201,35,55,0.3)',
+                    background: 'rgba(201,35,55,0.1)',
+                    color: '#fca5a5',
+                    fontSize: 12,
+                    cursor: 'pointer',
+                    fontWeight: 600,
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(201,35,55,0.2)';
+                    e.currentTarget.style.borderColor = 'rgba(201,35,55,0.5)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(201,35,55,0.1)';
+                    e.currentTarget.style.borderColor = 'rgba(201,35,55,0.3)';
+                  }}
+                >
+                  ✏️ Editar
+                </button>
               </div>
             </div>
           </Link>
+
+          {editingLead === lead.id && (
+            <QuickEditModal
+              lead={lead}
+              users={users}
+              onClose={() => setEditingLead(null)}
+            />
+          )}
         );
       })}
     </div>

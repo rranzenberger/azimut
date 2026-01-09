@@ -57,6 +57,7 @@ const SITE_PROTECTED = shouldShowLogin()
 // Lazy loading estava causando erro "Failed to fetch dynamically imported module"
 import Studio from './pages/Studio'
 import Academy from './pages/Academy'
+import Vancouver from './pages/Vancouver'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
 import Contact from './pages/Contact'
@@ -293,6 +294,11 @@ const App: React.FC = () => {
                 <Route path="/:lang/academy/corporate" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <Academy lang={routeLang} section="corporate" />}
+                  </LangRouteWrapper}
+                } />
+                <Route path="/:lang/vancouver" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Vancouver lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/contact" element={
@@ -413,6 +419,11 @@ const App: React.FC = () => {
                 <Route path="/:lang/academy/corporate" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <Academy lang={routeLang} section="corporate" />}
+                  </LangRouteWrapper}
+                } />
+                <Route path="/:lang/vancouver" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Vancouver lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/contact" element={

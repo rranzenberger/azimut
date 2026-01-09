@@ -309,6 +309,20 @@ model Lead {
   interestInGrants Boolean        @default(false)
   country       String?
   city          String?
+  
+  // CAMPOS VANCOUVER (Estudar em Vancouver)
+  age                  Int?
+  currentSituation     String?
+  targetSchool         String?         // VFS, VanArts, etc
+  areaInterest         String?         // 3D Animation, Game Design, etc
+  intakeYear           String?         // 2026, 2027, 2028
+  englishLevel         String?         // Iniciante, Intermediário, Avançado, Fluente
+  hasPortfolio         String?         // sim-completo, sim-precisa-melhorar, comecando, nao-tenho
+  budgetRange          String?         // ate-100k, 100k-200k, etc
+  fundingSource        String?         // familia, economia-propria, financiamento, bolsa
+  howHeard             String?         // webinar, palestra-escola, feira, redes-sociais, indicacao, google
+  comments             String?
+  
   assignedTo    User?            @relation("LeadAssignedTo", fields: [assignedToId], references: [id])
   editalLeads   LeadEdital[]
   sessions      VisitorSession[]
@@ -451,6 +465,7 @@ enum PageStatus {
 enum LeadType {
   CONTACT_FORM
   BUDGET_INQUIRY
+  VANCOUVER
 }
 
 enum LeadPriority {

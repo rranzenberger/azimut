@@ -10,6 +10,7 @@ export function LeadsFilters({
   currentDateFrom,
   currentDateTo,
   currentSearch,
+  currentScoreMin,
 }: {
   currentStatus?: string;
   currentPriority?: string;
@@ -17,6 +18,7 @@ export function LeadsFilters({
   currentDateFrom?: string;
   currentDateTo?: string;
   currentSearch?: string;
+  currentScoreMin?: string;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -49,7 +51,7 @@ export function LeadsFilters({
     setSearch('');
   };
 
-  const hasFilters = currentStatus || currentPriority || currentLeadType || currentDateFrom || currentDateTo || currentSearch;
+  const hasFilters = currentStatus || currentPriority || currentLeadType || currentDateFrom || currentDateTo || currentSearch || currentScoreMin;
 
   return (
     <div
@@ -141,6 +143,28 @@ export function LeadsFilters({
           <option value="">Todos os tipos</option>
           <option value="CONTACT_FORM">Formulário de Contato</option>
           <option value="BUDGET_INQUIRY">Solicitação de Orçamento</option>
+        </select>
+
+        <select
+          value={currentScoreMin || ''}
+          onChange={(e) => updateFilters({ scoreMin: e.target.value || null })}
+          style={{
+            padding: '8px 12px',
+            borderRadius: 8,
+            border: '1px solid rgba(255,255,255,0.1)',
+            background: 'rgba(0,0,0,0.2)',
+            color: '#fff',
+            fontSize: 14,
+            outline: 'none',
+            cursor: 'pointer',
+          }}
+        >
+          <option value="">Todos os scores</option>
+          <option value="90">🔥🔥 Muito Quente (90+)</option>
+          <option value="80">🔥 Quente (80+)</option>
+          <option value="70">🌡️ Morno (70+)</option>
+          <option value="60">⚡ Interessado (60+)</option>
+          <option value="40">❄️ Frio (40+)</option>
         </select>
 
         <input

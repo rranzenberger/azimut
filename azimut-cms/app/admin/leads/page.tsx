@@ -29,6 +29,7 @@ export default async function LeadsPage({
   const dateFrom = searchParams.dateFrom as string | undefined;
   const dateTo = searchParams.dateTo as string | undefined;
   const search = searchParams.search as string | undefined;
+  const scoreMin = searchParams.scoreMin as string | undefined;
   const view = (searchParams.view as string) || 'list'; // 'list' ou 'kanban'
   const page = parseInt((searchParams.page as string) || '1');
   const limit = 50;
@@ -65,12 +66,40 @@ export default async function LeadsPage({
       }
     }
     
+    // Construir OR para busca
+    const orConditions: any[] = [];
+    
     if (search) {
-      where.OR = [
+      orConditions.push(
         { name: { contains: search, mode: 'insensitive' } },
         { email: { contains: search, mode: 'insensitive' } },
-        { company: { contains: search, mode: 'insensitive' } },
-      ];
+        { company: { contains: search, mode: 'insensitive' } }
+      );
+    }
+
+    // Filtro por score mínimo
+    if (scoreMin) {
+      const minScore = parseInt(scoreMin);
+      if (!isNaN(minScore)) {
+        // Buscar por leadScore OU conversionScore das sessões
+        orConditions.push(
+          { leadScore: { gte: minScore } },
+          {
+            sessions: {
+              some: {
+                interestScore: {
+                  conversionScore: { gte: minScore }
+                }
+              }
+            }
+          }
+        );
+      }
+    }
+
+    // Se tiver OR conditions, adicionar ao where
+    if (orConditions.length > 0) {
+      where.OR = orConditions;
     }
 
     // Para Kanban: buscar todos os leads (sem paginação)
@@ -246,6 +275,7 @@ export default async function LeadsPage({
         currentDateFrom={dateFrom}
         currentDateTo={dateTo}
         currentSearch={search}
+        currentScoreMin={scoreMin}
       />
 
       <div style={{ marginTop: 24 }}>
