@@ -18,6 +18,8 @@ interface AcademyQuickFormProps {
 interface FormData {
   name: string
   contact: string // Email OU WhatsApp (usuário escolhe)
+  school?: 'vanarts' | 'vfs' | 'both' | 'undecided' // Apenas para Vancouver
+  preferredLanguage?: Lang // Idioma preferido para atendimento
   interest: string // Pré-preenchido se veio do Quiz/Recomendador
 }
 
@@ -25,6 +27,8 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
   const [formData, setFormData] = useState<FormData>({
     name: '',
     contact: '',
+    school: type === 'vancouver' ? 'undecided' : undefined,
+    preferredLanguage: lang, // Default: idioma atual do site
     interest: ''
   })
   const [loading, setLoading] = useState(false)
@@ -77,22 +81,37 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         workshop: 'Quero participar de um workshop 🎬',
         corporate: 'Quero um treinamento corporativo 🏢'
       },
-      subtitle: 'Super rápido: só 2 campos!',
+      subtitle: 'Super rápido: só 3 campos!',
       fields: {
         name: 'Seu nome',
         contact: 'Email ou WhatsApp',
+        school: 'Escola de interesse',
+        preferredLanguage: 'Idioma preferido para atendimento',
         interest: 'O que a IA detectou sobre você'
+      },
+      schoolOptions: {
+        vanarts: 'VanArts (Animação, VFX, Game Design)',
+        vfs: 'VFS - Vancouver Film School (Cinema, Som, Atuação)',
+        both: 'Ambas - Quero conhecer as duas',
+        undecided: '🤔 Ainda não sei - Quero orientação FREE'
+      },
+      languageOptions: {
+        pt: '🇧🇷 Português',
+        en: '🇨🇦 English',
+        es: '🇪🇸 Español',
+        fr: '🇫🇷 Français'
       },
       placeholders: {
         name: 'Ex: João Silva',
         contact: 'joao@email.com ou +55 21 99999-9999'
       },
+      freeConsultation: '💡 Não sabe qual escola escolher? Oferecemos orientação gratuita para te ajudar a decidir!',
       submit: 'Quero Receber Info!',
       submitting: 'Enviando...',
-      success: '🎉 Show! Vamos te mandar tudo no',
+      success: '🎉 Show! Vamos te mandar tudo em',
       successContact: 'Aguenta 24h!',
       error: 'Deu ruim! Manda no WhatsApp: +55 21 99999-9999',
-      required: 'Preenche seu nome e email/WhatsApp aí!'
+      required: 'Preenche seu nome e contato!'
     },
     en: {
       title: {
@@ -101,64 +120,115 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         workshop: 'I wanna join a workshop 🎬',
         corporate: 'I want corporate training 🏢'
       },
-      subtitle: 'Super quick: just 2 fields!',
+      subtitle: 'Super quick: just 3 fields!',
       fields: {
         name: 'Your name',
         contact: 'Email or WhatsApp',
+        school: 'School of interest',
+        preferredLanguage: 'Preferred language for service',
         interest: 'What AI detected about you'
+      },
+      schoolOptions: {
+        vanarts: 'VanArts (Animation, VFX, Game Design)',
+        vfs: 'VFS - Vancouver Film School (Film, Sound, Acting)',
+        both: 'Both - I want to know both schools',
+        undecided: '🤔 Not sure yet - I want FREE guidance'
+      },
+      languageOptions: {
+        pt: '🇧🇷 Português',
+        en: '🇨🇦 English',
+        es: '🇪🇸 Español',
+        fr: '🇫🇷 Français'
       },
       placeholders: {
         name: 'Ex: John Smith',
         contact: 'john@email.com or +1 555 1234'
       },
+      freeConsultation: '💡 Not sure which school? We offer free guidance to help you decide!',
       submit: 'Send Me Info!',
       submitting: 'Sending...',
-      success: '🎉 Done! We will send you everything',
+      success: '🎉 Done! We will send you everything in',
       successContact: 'Wait 24h!',
       error: 'Error! WhatsApp us: +1 555 1234',
-      required: 'Fill your name and email/WhatsApp!'
+      required: 'Fill your name and contact!'
     },
     es: {
       title: {
-        vancouver: 'Quiero estudiar en Vancouver',
-        course: 'Quiero hacer un curso',
-        workshop: 'Quiero participar en un taller',
-        corporate: 'Quiero capacitación corporativa'
+        vancouver: 'Quiero estudiar en Vancouver 🇨🇦',
+        course: 'Quiero hacer un curso 📚',
+        workshop: 'Quiero participar en un taller 🎬',
+        corporate: 'Quiero capacitación corporativa 🏢'
       },
-      subtitle: 'Complete solo 3 campos. Hacemos el resto por usted.',
+      subtitle: '¡Super rápido: solo 3 campos!',
       fields: {
-        name: 'Nombre completo',
-        email: 'Email',
-        phone: 'WhatsApp (opcional)',
-        interest: 'Interés (autocompletado)',
-        message: 'Mensaje adicional (opcional)'
+        name: 'Tu nombre',
+        contact: 'Email o WhatsApp',
+        school: 'Escuela de interés',
+        preferredLanguage: 'Idioma preferido para atención',
+        interest: 'Lo que la IA detectó sobre ti'
       },
-      submit: 'Enviar Interés',
+      schoolOptions: {
+        vanarts: 'VanArts (Animación, VFX, Game Design)',
+        vfs: 'VFS - Vancouver Film School (Cine, Sonido, Actuación)',
+        both: 'Ambas - Quiero conocer las dos',
+        undecided: '🤔 No estoy seguro - Quiero orientación GRATIS'
+      },
+      languageOptions: {
+        pt: '🇧🇷 Português',
+        en: '🇨🇦 English',
+        es: '🇪🇸 Español',
+        fr: '🇫🇷 Français'
+      },
+      placeholders: {
+        name: 'Ej: Juan García',
+        contact: 'juan@email.com o +34 600 123 456'
+      },
+      freeConsultation: '💡 ¿No sabes qué escuela elegir? ¡Ofrecemos orientación gratuita para ayudarte!',
+      submit: '¡Quiero Recibir Info!',
       submitting: 'Enviando...',
-      success: '✅ ¡Listo! Nos pondremos en contacto pronto.',
-      error: 'Error al enviar. Intente nuevamente o contacte: contact@azmt.com.br',
-      required: 'Campos obligatorios: Nombre y Email'
+      success: '🎉 ¡Listo! Te mandaremos todo en',
+      successContact: '¡Espera 24h!',
+      error: '¡Error! WhatsApp: +34 600 123 456',
+      required: '¡Completa tu nombre y contacto!'
     },
     fr: {
       title: {
-        vancouver: 'Je veux étudier à Vancouver',
-        course: 'Je veux suivre un cours',
-        workshop: 'Je veux participer à un atelier',
-        corporate: 'Je veux une formation d\'entreprise'
+        vancouver: 'Je veux étudier à Vancouver 🇨🇦',
+        course: 'Je veux suivre un cours 📚',
+        workshop: 'Je veux participer à un atelier 🎬',
+        corporate: 'Je veux une formation d\'entreprise 🏢'
       },
-      subtitle: 'Remplissez seulement 3 champs. On fait le reste pour vous.',
+      subtitle: 'Super rapide: seulement 3 champs!',
       fields: {
-        name: 'Nom complet',
-        email: 'Email',
-        phone: 'WhatsApp (optionnel)',
-        interest: 'Intérêt (rempli automatiquement)',
-        message: 'Message supplémentaire (optionnel)'
+        name: 'Votre nom',
+        contact: 'Email ou WhatsApp',
+        school: 'École d\'intérêt',
+        preferredLanguage: 'Langue préférée pour le service',
+        interest: 'Ce que l\'IA a détecté sur vous'
       },
-      submit: 'Envoyer Intérêt',
+      schoolOptions: {
+        vanarts: 'VanArts (Animation, VFX, Game Design)',
+        vfs: 'VFS - Vancouver Film School (Cinéma, Son, Acting)',
+        both: 'Les deux - Je veux connaître les deux',
+        undecided: '🤔 Pas encore sûr - Je veux des conseils GRATUITS'
+      },
+      languageOptions: {
+        pt: '🇧🇷 Português',
+        en: '🇨🇦 English',
+        es: '🇪🇸 Español',
+        fr: '🇫🇷 Français'
+      },
+      placeholders: {
+        name: 'Ex: Marie Dupont',
+        contact: 'marie@email.com ou +33 6 12 34 56 78'
+      },
+      freeConsultation: '💡 Vous ne savez pas quelle école choisir? Nous offrons des conseils gratuits!',
+      submit: 'Envoyer Info!',
       submitting: 'Envoi...',
-      success: '✅ Terminé! Nous vous contactons bientôt.',
-      error: 'Erreur d\'envoi. Réessayez ou contactez: contact@azmt.com.br',
-      required: 'Champs obligatoires: Nom et Email'
+      success: '🎉 Terminé! Nous vous enverrons tout en',
+      successContact: 'Attendez 24h!',
+      error: 'Erreur! WhatsApp: +33 6 12 34 56 78',
+      required: 'Remplissez votre nom et contact!'
     }
   }
 
@@ -168,7 +238,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
     e.preventDefault()
     
     // Validação mínima
-    if (!formData.name || !formData.email) {
+    if (!formData.name || !formData.contact) {
       setError(t.required)
       return
     }
@@ -177,15 +247,24 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
     setError(null)
 
     try {
+      // Detectar se o contato é email ou telefone
+      const isEmail = formData.contact.includes('@')
+      const schoolLabel = formData.school ? t.schoolOptions[formData.school] : ''
+      const langLabel = formData.preferredLanguage ? t.languageOptions[formData.preferredLanguage] : ''
+      
       // Preparar dados do lead
       const leadData = {
         name: formData.name,
-        email: formData.email,
-        phone: formData.phone || undefined,
+        email: isEmail ? formData.contact : undefined,
+        phone: !isEmail ? formData.contact : undefined,
         leadType: type === 'vancouver' ? 'VANCOUVER' : 
                   type === 'course' ? 'CONTACT_FORM' : 
                   'CONTACT_FORM',
-        description: formData.interest + (formData.message ? `\n\n${formData.message}` : ''),
+        description: [
+          formData.interest,
+          schoolLabel ? `Escola: ${schoolLabel}` : '',
+          langLabel ? `Idioma preferido: ${langLabel}` : ''
+        ].filter(Boolean).join('\n'),
         sourceUrl: window.location.href,
         utmSource: new URLSearchParams(window.location.search).get('utm_source') || undefined,
         utmMedium: new URLSearchParams(window.location.search).get('utm_medium') || undefined,
@@ -208,10 +287,10 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
       // Limpar formulário
       setFormData({
         name: '',
-        email: '',
-        phone: '',
-        interest: '',
-        message: ''
+        contact: '',
+        school: type === 'vancouver' ? 'undecided' : undefined,
+        preferredLanguage: lang,
+        interest: ''
       })
 
       // Scroll to success message
@@ -275,40 +354,72 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="input-adaptive w-full"
               required
-              placeholder="João Silva"
+              placeholder={t.placeholders.name}
             />
           </div>
 
-          {/* Email */}
+          {/* Contact (Email OR WhatsApp) */}
           <div>
             <label className="block text-sm font-semibold text-white/90 mb-2 uppercase tracking-wider">
-              {t.fields.email} *
+              {t.fields.contact} *
             </label>
             <input
-              type="email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              type="text"
+              value={formData.contact}
+              onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
               className="input-adaptive w-full"
               required
-              placeholder="joao@email.com"
+              placeholder={t.placeholders.contact}
             />
           </div>
 
-          {/* Phone (opcional) */}
+          {/* School Dropdown (Vancouver only) */}
+          {type === 'vancouver' && (
+            <div>
+              <label className="block text-sm font-semibold text-white/90 mb-2 uppercase tracking-wider">
+                {t.fields.school} *
+              </label>
+              <select
+                value={formData.school || 'undecided'}
+                onChange={(e) => setFormData({ ...formData, school: e.target.value as any })}
+                className="input-adaptive w-full"
+                required
+              >
+                <option value="vanarts">{t.schoolOptions.vanarts}</option>
+                <option value="vfs">{t.schoolOptions.vfs}</option>
+                <option value="both">{t.schoolOptions.both}</option>
+                <option value="undecided">{t.schoolOptions.undecided}</option>
+              </select>
+              
+              {/* Free Consultation Alert */}
+              {formData.school === 'undecided' && (
+                <div className="mt-3 p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+                  <p className="text-sm text-yellow-400">
+                    {t.freeConsultation}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Preferred Language */}
           <div>
             <label className="block text-sm font-semibold text-white/90 mb-2 uppercase tracking-wider">
-              {t.fields.phone}
+              {t.fields.preferredLanguage}
             </label>
-            <input
-              type="tel"
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            <select
+              value={formData.preferredLanguage || lang}
+              onChange={(e) => setFormData({ ...formData, preferredLanguage: e.target.value as Lang })}
               className="input-adaptive w-full"
-              placeholder="+55 21 99999-9999"
-            />
+            >
+              <option value="pt">{t.languageOptions.pt}</option>
+              <option value="en">{t.languageOptions.en}</option>
+              <option value="es">{t.languageOptions.es}</option>
+              <option value="fr">{t.languageOptions.fr}</option>
+            </select>
           </div>
 
-          {/* Interest (auto-filled) */}
+          {/* Interest (auto-filled - read-only display) */}
           {formData.interest && (
             <div>
               <label className="block text-sm font-semibold text-white/90 mb-2 uppercase tracking-wider">
@@ -319,7 +430,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
                   <span className="text-2xl flex-shrink-0">🤖</span>
                   <div>
                     <p className="text-sm text-blue-400 font-semibold mb-1 uppercase">
-                      IA detectou seu interesse:
+                      IA detectou:
                     </p>
                     <p className="text-white/80 text-sm">
                       {formData.interest}
@@ -329,20 +440,6 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
               </div>
             </div>
           )}
-
-          {/* Message (opcional) */}
-          <div>
-            <label className="block text-sm font-semibold text-white/90 mb-2 uppercase tracking-wider">
-              {t.fields.message}
-            </label>
-            <textarea
-              value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              className="input-adaptive w-full"
-              rows={3}
-              placeholder="Alguma dúvida ou informação adicional..."
-            />
-          </div>
 
           {/* Error */}
           {error && (
@@ -362,7 +459,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
 
           {/* Privacy */}
           <p className="text-xs text-white/40 text-center">
-            Seus dados são protegidos e nunca compartilhados.
+            🔒 Seus dados são 100% protegidos e nunca compartilhados.
           </p>
         </form>
       )}
