@@ -235,7 +235,7 @@ const PremiumField = ({
         <span className="text-azimut-red text-[9px] font-bold flex-shrink-0 ml-0.5" aria-label="obrigatório">*</span>
       )}
     </label>
-    <div className="relative w-full">
+    <div className="relative w-full" style={{ marginTop: '0', paddingTop: '0' }}>
       {children}
       {/* Mensagem de erro abaixo do campo */}
       {error && (
