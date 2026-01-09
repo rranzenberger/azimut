@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
 import VancouverInterestForm from '../components/VancouverInterestForm'
+import { VideoPlayerEnhanced } from '../components/VideoPlayerEnhanced'
 
 interface VancouverProps {
   lang: Lang
@@ -478,6 +479,24 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               >
                 Ver site oficial da VanArts →
               </a>
+
+              {/* VanArts Video */}
+              <div className="mt-8">
+                <div className="mb-4">
+                  <h4 className="text-xl font-semibold text-white mb-2 flex items-center gap-2">
+                    <span className="text-2xl">🎬</span>
+                    Conheça a VanArts por dentro
+                  </h4>
+                  <p className="text-white/70 text-sm">
+                    Vídeo oficial da Vancouver Institute of Media Arts
+                  </p>
+                </div>
+                <VideoPlayerEnhanced
+                  sources="https://www.youtube.com/watch?v=Vm1s2cwHI-M"
+                  mode="default"
+                  className="w-full rounded-xl overflow-hidden shadow-2xl"
+                />
+              </div>
             </div>
           </div>
         </section>
