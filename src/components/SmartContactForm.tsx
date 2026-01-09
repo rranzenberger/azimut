@@ -6,16 +6,41 @@ interface SmartContactFormProps {
   lang?: Lang
 }
 
-// Helper para campos padronizados com direção de arte premium
-const PremiumField = ({ label, children, className = '' }: { label: string, children: React.ReactNode, className?: string }) => (
+// Helper para campos padronizados com direção de arte premium + validação
+const PremiumField = ({ 
+  label, 
+  children, 
+  className = '', 
+  error, 
+  required = false 
+}: { 
+  label: string, 
+  children: React.ReactNode, 
+  className?: string,
+  error?: string,
+  required?: boolean
+}) => (
   <div className={`group ${className}`}>
-    <label className="block text-sm font-semibold text-white/90 mb-2.5 [data-theme='light']:text-slate-700 transition-colors group-focus-within:text-azimut-red">
-      {label}
+    <label className={`block text-sm font-semibold mb-2.5 transition-colors group-focus-within:text-azimut-red ${
+      error ? 'text-red-400' : 'text-white/90 [data-theme="light"]:text-slate-700'
+    }`}>
+      {label} {required && <span className="text-red-400">*</span>}
     </label>
     <div className="relative">
       {children}
-      {/* Glow effect sutil no hover */}
-      <div className="absolute inset-0 rounded-lg bg-azimut-red/0 group-hover:bg-azimut-red/5 transition-all duration-300 pointer-events-none opacity-0 group-hover:opacity-100 blur-sm -z-10" />
+      {/* Glow effect sutil no hover (apenas se não tiver erro) */}
+      {!error && (
+        <div className="absolute inset-0 rounded-lg bg-azimut-red/0 group-hover:bg-azimut-red/5 transition-all duration-300 pointer-events-none opacity-0 group-hover:opacity-100 blur-sm -z-10" />
+      )}
+      {/* Mensagem de erro abaixo do campo */}
+      {error && (
+        <p className="mt-1.5 text-xs text-red-400/90 flex items-center gap-1.5 animate-fade-in-up">
+          <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          {error}
+        </p>
+      )}
     </div>
   </div>
 )
@@ -24,6 +49,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [aiSuggestions, setAiSuggestions] = useState<{
     message: string
     projectSuggestions: string[]
@@ -336,15 +362,96 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
   const t = labels[lang] || labels.en
 
+  // Scroll automático para erro quando aparecer
+  useEffect(() => {
+    if (error) {
+      const errorElement = document.getElementById('form-error-message')
+      if (errorElement) {
+        // Scroll suave para o erro
+        setTimeout(() => {
+          errorElement.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+          })
+          // Shake effect sutil
+          errorElement.style.animation = 'shake 0.5s ease-in-out'
+          setTimeout(() => {
+            errorElement.style.animation = ''
+          }, 500)
+        }, 100)
+      }
+    }
+  }, [error])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError('')
 
+    // Validação com feedback específico por campo
+    const errors: Record<string, string> = {}
+    
+    if (!formData.name.trim()) {
+      errors.name = lang === 'pt' ? 'Nome é obrigatório' : lang === 'es' ? 'Nombre es obligatorio' : lang === 'fr' ? 'Le nom est requis' : 'Name is required'
+    }
+    
+    if (!formData.email.trim()) {
+      errors.email = lang === 'pt' ? 'Email é obrigatório' : lang === 'es' ? 'Email es obligatorio' : lang === 'fr' ? 'L\'email est requis' : 'Email is required'
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(formData.email)) {
+        errors.email = lang === 'pt' ? 'Email inválido' : lang === 'es' ? 'Email inválido' : lang === 'fr' ? 'Email invalide' : 'Invalid email'
+      }
+    }
+    
+    if (!formData.company.trim()) {
+      errors.company = lang === 'pt' ? 'Nome da organização é obrigatório' : lang === 'es' ? 'Nombre de la organización es obligatorio' : lang === 'fr' ? 'Le nom de l\'organisation est requis' : 'Organization name is required'
+    }
+    
+    if (!formData.organizationType) {
+      errors.organizationType = lang === 'pt' ? 'Selecione o tipo de organização' : lang === 'es' ? 'Seleccione el tipo de organización' : lang === 'fr' ? 'Sélectionnez le type d\'organisation' : 'Select organization type'
+    }
+    
+    if (!formData.projectType) {
+      errors.projectType = lang === 'pt' ? 'Selecione o tipo de projeto' : lang === 'es' ? 'Seleccione el tipo de proyecto' : lang === 'fr' ? 'Sélectionnez le type de projet' : 'Select project type'
+    }
+    
+    if (!formData.budget) {
+      errors.budget = lang === 'pt' ? 'Selecione o budget disponível' : lang === 'es' ? 'Seleccione el presupuesto disponible' : lang === 'fr' ? 'Sélectionnez le budget disponible' : 'Select available budget'
+    }
+    
+    if (!formData.timeline) {
+      errors.timeline = lang === 'pt' ? 'Selecione o prazo necessário' : lang === 'es' ? 'Seleccione el plazo necesario' : lang === 'fr' ? 'Sélectionnez le délai nécessaire' : 'Select timeline'
+    }
+    
+    if (!formData.acceptContact) {
+      errors.acceptContact = lang === 'pt' ? 'É necessário aceitar receber contato' : lang === 'es' ? 'Es necesario aceptar recibir contacto' : lang === 'fr' ? 'Vous devez accepter de recevoir des contacts' : 'You must accept to be contacted'
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors)
+      setLoading(false)
+      setError(
+        lang === 'pt' 
+          ? 'Por favor, corrija os campos destacados abaixo.'
+          : lang === 'es'
+          ? 'Por favor, corrija los campos destacados a continuación.'
+          : lang === 'fr'
+          ? 'Veuillez corriger les champs mis en évidence ci-dessous.'
+          : 'Please fix the highlighted fields below.'
+      )
+      return
+    }
+
+    // Limpar erros de campo se validação passou
+    setFieldErrors({})
+
     try {
       await ApiService.submitLead(formData)
 
       setSuccess(true)
+      setError('')
+      setFieldErrors({})
       // Reset form
       setFormData({
         name: '',
@@ -362,9 +469,11 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         city: '',
         acceptContact: false
       })
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error submitting form:', err)
-      setError(t.errorMessage)
+      // Mensagem de erro mais específica
+      const errorMsg = err?.message || t.errorMessage
+      setError(errorMsg)
     } finally {
       setLoading(false)
     }
@@ -404,6 +513,20 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target
     const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined
+    
+    // Limpar erro do campo quando usuário começar a digitar
+    if (fieldErrors[name]) {
+      setFieldErrors(prev => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
+    }
+    
+    // Limpar erro geral quando usuário começar a corrigir
+    if (error) {
+      setError('')
+    }
     
     setFormData(prev => ({
       ...prev,
@@ -503,14 +626,6 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
               </div>
             </div>
 
-            {/* Error */}
-            {error && (
-              <div className="glass-panel backdrop-blur-xl bg-red-900/30 border border-red-500/40 rounded-lg p-4 text-red-200 animate-fade-in-up [data-theme='light']:bg-red-50 [data-theme='light']:border-red-200 [data-theme='light']:text-red-800">
-                <p className="font-semibold">{t.errorTitle}</p>
-                <p className="text-sm">{error}</p>
-              </div>
-            )}
-
             {/* Sugestões IA */}
             {aiSuggestions && (formData.organizationType && formData.projectType) && (
               <div className="glass-panel backdrop-blur-xl bg-blue-900/20 border border-blue-500/30 rounded-lg p-4 mb-6 animate-fade-in-up [data-theme='light']:bg-blue-50/50 [data-theme='light']:border-blue-200">
@@ -552,26 +667,34 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
             {/* Personal Info - Grid 2 colunas */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              <PremiumField label={t.name}>
+              <PremiumField label={t.name} error={fieldErrors.name} required>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20"
+                  className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 ${
+                    fieldErrors.name 
+                      ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
+                      : 'focus:ring-azimut-red/50 focus:border-azimut-red/50'
+                  }`}
                   placeholder="João Silva"
                 />
               </PremiumField>
 
-              <PremiumField label={t.email}>
+              <PremiumField label={t.email} error={fieldErrors.email} required>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20"
+                  className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 ${
+                    fieldErrors.email 
+                      ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
+                      : 'focus:ring-azimut-red/50 focus:border-azimut-red/50'
+                  }`}
                   placeholder="joao@example.com"
                 />
               </PremiumField>
@@ -602,26 +725,34 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             </div>
 
             {/* Organization */}
-            <PremiumField label={t.company}>
+            <PremiumField label={t.company} error={fieldErrors.company} required>
               <input
                 type="text"
                 name="company"
                 value={formData.company}
                 onChange={handleChange}
                 required
-                className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20"
+                className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 ${
+                  fieldErrors.company 
+                    ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
+                    : 'focus:ring-azimut-red/50 focus:border-azimut-red/50'
+                }`}
                 placeholder="Museu de Arte de São Paulo"
               />
             </PremiumField>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <PremiumField label={t.organizationType}>
+              <PremiumField label={t.organizationType} error={fieldErrors.organizationType} required>
                 <select
                   name="organizationType"
                   value={formData.organizationType}
                   onChange={handleChange}
                   required
-                  className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20"
+                  className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 ${
+                    fieldErrors.organizationType 
+                      ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
+                      : 'focus:ring-azimut-red/50 focus:border-azimut-red/50'
+                  }`}
                 >
                   {Object.entries(t.orgTypes).map(([value, label]) => (
                     <option key={value} value={value}>{label}</option>
@@ -629,13 +760,17 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                 </select>
               </PremiumField>
 
-              <PremiumField label={t.projectType}>
+              <PremiumField label={t.projectType} error={fieldErrors.projectType} required>
                 <select
                   name="projectType"
                   value={formData.projectType}
                   onChange={handleChange}
                   required
-                  className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20"
+                  className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 ${
+                    fieldErrors.projectType 
+                      ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
+                      : 'focus:ring-azimut-red/50 focus:border-azimut-red/50'
+                  }`}
                 >
                   {Object.entries(t.projectTypes).map(([value, label]) => (
                     <option key={value} value={value}>{label}</option>
@@ -645,13 +780,17 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <PremiumField label={t.budget}>
+              <PremiumField label={t.budget} error={fieldErrors.budget} required>
                 <select
                   name="budget"
                   value={formData.budget}
                   onChange={handleChange}
                   required
-                  className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20"
+                  className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 ${
+                    fieldErrors.budget 
+                      ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
+                      : 'focus:ring-azimut-red/50 focus:border-azimut-red/50'
+                  }`}
                 >
                   {Object.entries(t.budgetRanges).map(([value, label]) => (
                     <option key={value} value={value}>{label}</option>
@@ -659,13 +798,17 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                 </select>
               </PremiumField>
 
-              <PremiumField label={t.timeline}>
+              <PremiumField label={t.timeline} error={fieldErrors.timeline} required>
                 <select
                   name="timeline"
                   value={formData.timeline}
                   onChange={handleChange}
                   required
-                  className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20"
+                  className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 ${
+                    fieldErrors.timeline 
+                      ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
+                      : 'focus:ring-azimut-red/50 focus:border-azimut-red/50'
+                  }`}
                 >
                   {Object.entries(t.timelines).map(([value, label]) => (
                     <option key={value} value={value}>{label}</option>
@@ -726,26 +869,101 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                 </span>
               </label>
 
-              <label className="flex items-start gap-3 cursor-pointer group">
-                <input
-                  type="checkbox"
-                  name="acceptContact"
-                  checked={formData.acceptContact}
-                  onChange={handleChange}
-                  required
-                  className="mt-1 w-5 h-5 rounded border-white/30 text-azimut-red focus:ring-2 focus:ring-azimut-red bg-white/10 transition-all group-hover:border-azimut-red/50 [data-theme='light']:border-slate-300 [data-theme='light']:bg-white"
-                />
-                <span className="text-sm text-white/85 [data-theme='light']:text-slate-700 group-hover:text-white transition-colors">
-                  {t.acceptContact}
-                </span>
-              </label>
+              <div>
+                <label className={`flex items-start gap-3 cursor-pointer group ${
+                  fieldErrors.acceptContact ? 'pb-5' : ''
+                }`}>
+                  <input
+                    type="checkbox"
+                    name="acceptContact"
+                    checked={formData.acceptContact}
+                    onChange={handleChange}
+                    required
+                    className={`mt-1 w-5 h-5 rounded border-white/30 text-azimut-red focus:ring-2 focus:ring-azimut-red bg-white/10 transition-all group-hover:border-azimut-red/50 [data-theme='light']:border-slate-300 [data-theme='light']:bg-white ${
+                      fieldErrors.acceptContact ? 'border-red-500/50' : ''
+                    }`}
+                  />
+                  <span className={`text-sm transition-colors ${
+                    fieldErrors.acceptContact 
+                      ? 'text-red-400' 
+                      : 'text-white/85 [data-theme="light"]:text-slate-700 group-hover:text-white'
+                  }`}>
+                    {t.acceptContact} <span className="text-red-400">*</span>
+                  </span>
+                </label>
+                {fieldErrors.acceptContact && (
+                  <p className="mt-1.5 ml-8 text-xs text-red-400/90 flex items-center gap-1.5 animate-fade-in-up">
+                    <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {fieldErrors.acceptContact}
+                  </p>
+                )}
+              </div>
             </div>
 
-            {/* Submit Button - Premium com glow */}
+            {/* Error Message - Próximo ao botão (scroll automático) */}
+            {error && (
+              <div 
+                id="form-error-message"
+                className="glass-panel backdrop-blur-xl border border-red-500/50 rounded-lg p-4 animate-fade-in-up [data-theme='light']:bg-red-50/90 [data-theme='light']:border-red-300 shadow-lg"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(201, 35, 55, 0.15) 0%, rgba(139, 35, 50, 0.12) 100%)'
+                }}
+              >
+                <div className="flex items-start gap-3">
+                  {/* Ícone de erro */}
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="w-5 h-5 rounded-full bg-red-500/20 flex items-center justify-center">
+                      <svg className="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-red-300 [data-theme='light']:text-red-700 mb-1">
+                      {t.errorTitle}
+                    </p>
+                    <p className="text-sm text-red-200/90 [data-theme='light']:text-red-600 leading-relaxed">
+                      {error}
+                    </p>
+                    {/* Ação sugerida */}
+                    <p className="text-xs text-red-300/70 [data-theme='light']:text-red-500 mt-2 italic">
+                      {lang === 'pt' 
+                        ? 'Por favor, verifique os campos obrigatórios e tente novamente.'
+                        : lang === 'es'
+                        ? 'Por favor, verifique los campos obligatorios e intente nuevamente.'
+                        : lang === 'fr'
+                        ? 'Veuillez vérifier les champs obligatoires et réessayer.'
+                        : 'Please check required fields and try again.'}
+                    </p>
+                  </div>
+                  
+                  {/* Botão fechar erro */}
+                  <button
+                    type="button"
+                    onClick={() => setError('')}
+                    className="flex-shrink-0 text-red-400/70 hover:text-red-300 transition-colors p-1 rounded hover:bg-red-500/10"
+                    aria-label="Fechar erro"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Submit Button - Premium com glow, muda quando tem erro */}
             <button
               type="submit"
               disabled={loading}
-              className="relative w-full px-8 py-4 bg-azimut-red text-white rounded-lg font-handel text-lg uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+              className={`relative w-full px-8 py-4 rounded-lg font-handel text-lg uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed shadow-lg transition-all duration-300 overflow-hidden group ${
+                error 
+                  ? 'bg-red-600/80 hover:bg-red-600 border border-red-500/50' 
+                  : 'bg-azimut-red hover:bg-azimut-red/90 text-white hover:shadow-xl'
+              } ${!error ? 'text-white' : 'text-white'}`}
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
                 {loading ? (
@@ -756,6 +974,16 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                     </svg>
                     {t.submitting}
                   </>
+                ) : error ? (
+                  <>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {lang === 'pt' ? 'Tentar Novamente' : lang === 'es' ? 'Intentar Nuevamente' : lang === 'fr' ? 'Réessayer' : 'Try Again'}
+                    <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </>
                 ) : (
                   <>
                     {t.submit}
@@ -765,10 +993,16 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   </>
                 )}
               </span>
-              {/* Shine effect no hover */}
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700 transform -translate-x-full group-hover:translate-x-full" />
+              
+              {/* Shine effect no hover (apenas quando não tem erro) */}
+              {!error && (
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700 transform -translate-x-full group-hover:translate-x-full" />
+              )}
+              
               {/* Glow effect */}
-              <span className="absolute -inset-0.5 bg-azimut-red/50 rounded-lg blur opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <span className={`absolute -inset-0.5 rounded-lg blur opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                error ? 'bg-red-500/50' : 'bg-azimut-red/50'
+              }`} />
             </button>
 
             {/* Guarantees */}
