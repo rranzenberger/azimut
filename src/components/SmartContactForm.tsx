@@ -223,8 +223,8 @@ const PremiumField = ({
         paddingLeft: '16px', 
         letterSpacing: '0.03em', 
         fontSize: '11px', 
-        marginBottom: '8px', 
-        lineHeight: '1.3',
+        marginBottom: '12px', 
+        lineHeight: '1.5',
         paddingBottom: '0',
         marginTop: '0',
         display: 'block',
@@ -912,7 +912,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             <div className="my-10 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
             {/* Personal Info - Grid 2 colunas */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-fade-in-up" style={{ animationDelay: '0.2s', rowGap: '2rem' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               <PremiumField label={t.name} error={fieldErrors.name} required>
                 <input
                   type="text"
@@ -946,7 +946,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
               </PremiumField>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8" style={{ rowGap: '2rem', marginTop: '2rem' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6" style={{ marginTop: '2.5rem' }}>
               <PremiumField label={t.phone}>
                 <input
                   type="tel"
@@ -971,7 +971,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             </div>
 
             {/* Organization */}
-            <div style={{ marginTop: '2rem' }}>
+            <div style={{ marginTop: '2.5rem' }}>
               <PremiumField label={t.company} error={fieldErrors.company} required>
                 <input
                   type="text"
@@ -989,7 +989,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
               </PremiumField>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8" style={{ rowGap: '2rem', marginTop: '2rem' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6" style={{ marginTop: '2.5rem' }}>
               <PremiumField label={t.organizationType} error={fieldErrors.organizationType} required>
                 <SelectField
                   value={formData.organizationType}
@@ -1031,7 +1031,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
               </PremiumField>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8" style={{ rowGap: '2rem', marginTop: '2rem' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6" style={{ marginTop: '2.5rem' }}>
               <PremiumField label={t.budget} error={fieldErrors.budget} required>
                 <SelectField
                   value={formData.budget}
@@ -1074,7 +1074,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             </div>
 
             {/* Location */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8" style={{ rowGap: '2rem', marginTop: '2rem' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6" style={{ marginTop: '2.5rem' }}>
               <PremiumField label={t.country}>
                 <input
                   type="text"
