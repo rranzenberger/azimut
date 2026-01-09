@@ -23,13 +23,9 @@ const getApiUrl = () => {
     return envUrl
   }
   
-  // Se está em produção (Vercel ou domínio custom), usar backoffice de produção
-  if (isProduction || isVercelProduction) {
-    return 'https://backoffice.azmt.com.br'
-  }
-  
-  // Fallback para desenvolvimento local
-  return 'http://localhost:3001'
+  // SEMPRE usar backoffice de produção (mesmo em localhost)
+  // Isso permite testar o formulário localmente sem rodar o backoffice
+  return 'https://backoffice.azmt.com.br'
 }
 
 const API_URL = getApiUrl()
@@ -54,14 +50,10 @@ export class ApiService {
         throw new Error('API não configurada')
       }
       
-      // Em desenvolvimento, avisar se está tentando localhost mas pode não estar disponível
-      if (isDevelopment && API_URL.includes('localhost')) {
-        console.log('ℹ️ Tentando conectar ao backoffice local. Se falhar, certifique-se de que está rodando em http://localhost:3001')
-      }
-
       // Log apenas em desenvolvimento
       if (import.meta.env.DEV) {
         console.log('📤 Enviando lead para:', `${API_URL}/api/leads`)
+        console.log('✅ Usando backoffice de produção')
       }
 
       // Criar AbortController para timeout
