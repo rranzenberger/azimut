@@ -1203,7 +1203,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                     <p className="font-semibold text-red-300 [data-theme='light']:text-red-700 mb-1">
                       {t.errorTitle}
                     </p>
-                    <p className="text-sm text-red-200/90 [data-theme='light']:text-red-600 leading-relaxed">
+                    <p className="text-sm text-red-200/90 [data-theme='light']:text-red-600 leading-relaxed whitespace-pre-line">
                       {error}
                     </p>
                     {/* Ação sugerida com contato direto */}
