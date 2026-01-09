@@ -296,7 +296,7 @@ const App: React.FC = () => {
                     {(routeLang) => <Academy lang={routeLang} section="corporate" />}
                   </LangRouteWrapper}
                 } />
-                <Route path="/:lang/vancouver" element={
+                <Route path="/:lang/academy/vancouver" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <Vancouver lang={routeLang} />}
                   </LangRouteWrapper>
@@ -421,7 +421,7 @@ const App: React.FC = () => {
                     {(routeLang) => <Academy lang={routeLang} section="corporate" />}
                   </LangRouteWrapper}
                 } />
-                <Route path="/:lang/vancouver" element={
+                <Route path="/:lang/academy/vancouver" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <Vancouver lang={routeLang} />}
                   </LangRouteWrapper>
