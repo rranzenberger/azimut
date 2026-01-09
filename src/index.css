@@ -1664,12 +1664,19 @@ select.input-adaptive:disabled {
   @apply absolute z-30 mt-2 w-full rounded-xl border border-white/10 bg-slate-900/95 text-slate-100 shadow-2xl backdrop-blur;
   max-height: 260px;
   overflow-y: auto;
+  padding: 0.5rem;
 }
 .select-option {
-  @apply px-3 py-2 text-sm text-slate-100 hover:bg-azimut-red/10 cursor-pointer;
+  @apply px-4 py-2.5 text-sm text-slate-100 hover:bg-azimut-red/20 cursor-pointer rounded-lg transition-all duration-200;
+  margin-bottom: 0.25rem;
 }
 .select-option[aria-selected="true"] {
-  @apply bg-azimut-red/15 text-white;
+  @apply bg-azimut-red/25 text-white font-medium;
+  border-left: 3px solid #c92337;
+  padding-left: calc(1rem - 3px);
+}
+.select-option:last-child {
+  margin-bottom: 0;
 }
 [data-theme="light"] .select-trigger {
   background: rgba(42, 40, 37, 0.06);

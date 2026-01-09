@@ -1,6 +1,81 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import type { Lang } from '../i18n'
 import ApiService from '../services/api'
+
+// SelectField Component - Customizado (original do formulário)
+interface SelectFieldProps {
+  value: string
+  onChange: (value: string) => void
+  options: Array<{ value: string; label: string }>
+  placeholder: string
+  ariaLabel: string
+  className?: string
+}
+
+const SelectField: React.FC<SelectFieldProps> = ({ 
+  value, 
+  onChange, 
+  options, 
+  placeholder, 
+  ariaLabel,
+  className = '' 
+}) => {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const currentLabel = options.find(o => o.value === value)?.label || placeholder
+
+  return (
+    <div className={`relative ${className}`} ref={ref}>
+      <button
+        type="button"
+        aria-label={ariaLabel}
+        className="select-trigger"
+        onClick={() => setOpen(o => !o)}
+      >
+        <span className={value ? 'text-slate-100' : 'text-slate-400'}>
+          {currentLabel}
+        </span>
+        <svg
+          className={`select-arrow w-4 h-4 ${open ? 'rotate-180' : ''}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      {open && (
+        <div className="select-panel">
+          {options.map(opt => (
+            <div
+              key={opt.value}
+              className="select-option"
+              role="option"
+              aria-selected={opt.value === value}
+              onClick={() => {
+                onChange(opt.value)
+                setOpen(false)
+              }}
+            >
+              {opt.label}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 interface SmartContactFormProps {
   lang?: Lang
@@ -778,77 +853,85 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <PremiumField label={t.organizationType} error={fieldErrors.organizationType} required>
-                <select
-                  name="organizationType"
+                <SelectField
                   value={formData.organizationType}
-                  onChange={handleChange}
-                  required
-                  className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 ${
-                    fieldErrors.organizationType 
-                      ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
-                      : 'focus:ring-azimut-red/50 focus:border-azimut-red/50'
-                  }`}
-                >
-                  {Object.entries(t.orgTypes).map(([value, label]) => (
-                    <option key={value} value={value}>{label}</option>
-                  ))}
-                </select>
+                  onChange={(v) => {
+                    setFormData(prev => ({ ...prev, organizationType: v }))
+                    if (fieldErrors.organizationType) {
+                      setFieldErrors(prev => {
+                        const newErrors = { ...prev }
+                        delete newErrors.organizationType
+                        return newErrors
+                      })
+                    }
+                  }}
+                  options={Object.entries(t.orgTypes).map(([value, label]) => ({ value, label }))}
+                  placeholder={lang === 'pt' ? 'Selecione...' : lang === 'es' ? 'Seleccione...' : lang === 'fr' ? 'Sélectionnez...' : 'Select...'}
+                  ariaLabel={t.organizationType}
+                  className={fieldErrors.organizationType ? 'border-red-500/50' : ''}
+                />
               </PremiumField>
 
               <PremiumField label={t.projectType} error={fieldErrors.projectType} required>
-                <select
-                  name="projectType"
+                <SelectField
                   value={formData.projectType}
-                  onChange={handleChange}
-                  required
-                  className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 ${
-                    fieldErrors.projectType 
-                      ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
-                      : 'focus:ring-azimut-red/50 focus:border-azimut-red/50'
-                  }`}
-                >
-                  {Object.entries(t.projectTypes).map(([value, label]) => (
-                    <option key={value} value={value}>{label}</option>
-                  ))}
-                </select>
+                  onChange={(v) => {
+                    setFormData(prev => ({ ...prev, projectType: v }))
+                    if (fieldErrors.projectType) {
+                      setFieldErrors(prev => {
+                        const newErrors = { ...prev }
+                        delete newErrors.projectType
+                        return newErrors
+                      })
+                    }
+                  }}
+                  options={Object.entries(t.projectTypes).map(([value, label]) => ({ value, label }))}
+                  placeholder={lang === 'pt' ? 'Selecione...' : lang === 'es' ? 'Seleccione...' : lang === 'fr' ? 'Sélectionnez...' : 'Select...'}
+                  ariaLabel={t.projectType}
+                  className={fieldErrors.projectType ? 'border-red-500/50' : ''}
+                />
               </PremiumField>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <PremiumField label={t.budget} error={fieldErrors.budget} required>
-                <select
-                  name="budget"
+                <SelectField
                   value={formData.budget}
-                  onChange={handleChange}
-                  required
-                  className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 ${
-                    fieldErrors.budget 
-                      ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
-                      : 'focus:ring-azimut-red/50 focus:border-azimut-red/50'
-                  }`}
-                >
-                  {Object.entries(t.budgetRanges).map(([value, label]) => (
-                    <option key={value} value={value}>{label}</option>
-                  ))}
-                </select>
+                  onChange={(v) => {
+                    setFormData(prev => ({ ...prev, budget: v }))
+                    if (fieldErrors.budget) {
+                      setFieldErrors(prev => {
+                        const newErrors = { ...prev }
+                        delete newErrors.budget
+                        return newErrors
+                      })
+                    }
+                  }}
+                  options={Object.entries(t.budgetRanges).map(([value, label]) => ({ value, label }))}
+                  placeholder={lang === 'pt' ? 'Selecione...' : lang === 'es' ? 'Seleccione...' : lang === 'fr' ? 'Sélectionnez...' : 'Select...'}
+                  ariaLabel={t.budget}
+                  className={fieldErrors.budget ? 'border-red-500/50' : ''}
+                />
               </PremiumField>
 
               <PremiumField label={t.timeline} error={fieldErrors.timeline} required>
-                <select
-                  name="timeline"
+                <SelectField
                   value={formData.timeline}
-                  onChange={handleChange}
-                  required
-                  className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 ${
-                    fieldErrors.timeline 
-                      ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
-                      : 'focus:ring-azimut-red/50 focus:border-azimut-red/50'
-                  }`}
-                >
-                  {Object.entries(t.timelines).map(([value, label]) => (
-                    <option key={value} value={value}>{label}</option>
-                  ))}
-                </select>
+                  onChange={(v) => {
+                    setFormData(prev => ({ ...prev, timeline: v }))
+                    if (fieldErrors.timeline) {
+                      setFieldErrors(prev => {
+                        const newErrors = { ...prev }
+                        delete newErrors.timeline
+                        return newErrors
+                      })
+                    }
+                  }}
+                  options={Object.entries(t.timelines).map(([value, label]) => ({ value, label }))}
+                  placeholder={lang === 'pt' ? 'Selecione...' : lang === 'es' ? 'Seleccione...' : lang === 'fr' ? 'Sélectionnez...' : 'Select...'}
+                  ariaLabel={t.timeline}
+                  className={fieldErrors.timeline ? 'border-red-500/50' : ''}
+                />
               </PremiumField>
             </div>
 
