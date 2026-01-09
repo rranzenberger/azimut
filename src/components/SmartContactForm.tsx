@@ -21,16 +21,19 @@ const PremiumField = ({
   required?: boolean
 }) => (
   <div className={`group ${className}`}>
-    <label className={`block text-sm font-medium mb-2 transition-colors ${
-      error ? 'text-red-400' : 'opacity-90'
+    <label className={`block text-sm font-medium mb-2.5 transition-colors flex items-center gap-2 ${
+      error ? 'text-red-400' : 'opacity-90 group-focus-within:opacity-100 group-focus-within:text-azimut-red/80'
     }`}>
-      {label} {required && <span className="text-red-400">*</span>}
+      <span>{label}</span>
+      {required && (
+        <span className="text-azimut-red text-xs font-bold" aria-label="obrigatório">*</span>
+      )}
     </label>
     <div className="relative">
       {children}
       {/* Mensagem de erro abaixo do campo */}
       {error && (
-        <p className="mt-1.5 text-xs text-red-400/90 flex items-center gap-1.5 animate-fade-in-up">
+        <p className="mt-2 text-xs text-red-400/90 flex items-center gap-1.5 animate-fade-in-up">
           <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -565,49 +568,128 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
   return (
     <div className="relative">
       {/* Container usando card-adaptive (estilo original do site) */}
-      <form onSubmit={handleSubmit} className="relative space-y-6 rounded-2xl border border-white/10 card-adaptive p-6 md:p-8 lg:p-10 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur animate-fade-in-up">
-            {/* Header */}
-            <div className="text-center mb-8">
-              <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-wider mb-3">
-                {t.title}
+      <form onSubmit={handleSubmit} className="relative space-y-6 rounded-2xl border border-white/10 card-adaptive p-6 md:p-8 lg:p-10 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur animate-fade-in-up overflow-hidden">
+        {/* Glow effect sutil ao redor */}
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-azimut-red/10 via-azimut-red/5 to-azimut-red/10 rounded-2xl blur-xl opacity-50 pointer-events-none" />
+        
+        {/* Pattern sutil de fundo */}
+        <div 
+          className="absolute inset-0 opacity-[0.02] pointer-events-none"
+          style={{ 
+            backgroundImage: 'radial-gradient(#c92337 1px, transparent 1px)', 
+            backgroundSize: '30px 30px' 
+          }} 
+        />
+
+        {/* Conteúdo relativo */}
+        <div className="relative z-10">
+            {/* Header Premium com Logo */}
+            <div className="text-center mb-10 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+              {/* Logo Azimut */}
+              <div className="flex justify-center mb-6">
+                <div className="relative">
+                  <img 
+                    src="/logo-azimut-star.svg" 
+                    alt="Azimut" 
+                    className="h-16 w-16 md:h-20 md:w-20 animate-fade-in-up opacity-90"
+                    style={{ animationDelay: '0.15s' }}
+                  />
+                  {/* Glow sutil na logo */}
+                  <div className="absolute inset-0 animate-pulse pointer-events-none">
+                    <div className="h-full w-full rounded-full bg-azimut-red/10 blur-xl" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Linha decorativa acima */}
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-azimut-red/50" />
+                <div className="w-1.5 h-1.5 rounded-full bg-azimut-red/60" />
+                <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-azimut-red/50" />
+              </div>
+
+              {/* Título */}
+              <h2 className="font-handel text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.12em] mb-4 relative">
+                <span className="relative inline-block">
+                  {t.title}
+                  {/* Glow sutil no título */}
+                  <span className="absolute inset-0 opacity-20 blur-md pointer-events-none" style={{ color: '#c92337' }}>
+                    {t.title}
+                  </span>
+                </span>
               </h2>
-              <p className="text-sm md:text-base opacity-80">
+              
+              {/* Subtítulo */}
+              <p className="text-sm md:text-base opacity-75 max-w-xl mx-auto leading-relaxed">
                 {t.subtitle}
               </p>
+
+              {/* Linha decorativa abaixo */}
+              <div className="flex items-center justify-center gap-3 mt-4">
+                <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-azimut-red/30" />
+                <div className="w-1 h-1 rounded-full bg-azimut-red/50" />
+                <div className="h-[1px] w-8 bg-gradient-to-l from-transparent to-azimut-red/30" />
+              </div>
             </div>
 
-            {/* Sugestões IA */}
+            {/* Sugestões IA - Premium */}
             {aiSuggestions && (formData.organizationType && formData.projectType) && (
-              <div className="glass-panel backdrop-blur-xl bg-blue-900/20 border border-blue-500/30 rounded-lg p-4 mb-6 animate-fade-in-up [data-theme='light']:bg-blue-50/50 [data-theme='light']:border-blue-200">
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl">🤖</span>
-                  <div className="flex-1">
-                    <div className="font-semibold text-blue-200 [data-theme='light']:text-blue-900 mb-2 flex items-center gap-2">
-                      Sugestões Personalizadas
-                      {aiSuggestions.aiEnabled && (
-                        <span className="text-xs px-2 py-0.5 bg-blue-500/30 [data-theme='light']:bg-blue-200 rounded-full">
-                          IA
-                        </span>
-                      )}
+              <div className="relative rounded-xl p-5 mb-8 animate-fade-in-up border border-azimut-red/20 bg-gradient-to-br from-azimut-red/10 via-azimut-red/5 to-transparent backdrop-blur-sm overflow-hidden">
+                {/* Glow sutil */}
+                <div className="absolute inset-0 bg-gradient-to-r from-azimut-red/5 to-transparent opacity-50 pointer-events-none" />
+                
+                <div className="relative flex items-start gap-4">
+                  {/* Ícone IA Premium */}
+                  <div className="flex-shrink-0">
+                    <div className="w-12 h-12 rounded-full bg-azimut-red/20 flex items-center justify-center border border-azimut-red/30">
+                      <svg className="w-6 h-6 text-azimut-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
                     </div>
+                  </div>
+                  
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-3">
+                      <h3 className="font-semibold text-base flex items-center gap-2">
+                        Sugestões Personalizadas
+                        {aiSuggestions.aiEnabled && (
+                          <span className="text-xs px-2 py-0.5 bg-azimut-red/30 border border-azimut-red/40 rounded-full text-azimut-red font-bold">
+                            IA
+                          </span>
+                        )}
+                      </h3>
+                    </div>
+                    
                     {aiSuggestions.message && (
-                      <p className="text-sm text-blue-200 [data-theme='light']:text-blue-800 mb-3">
+                      <p className="text-sm opacity-90 leading-relaxed mb-4">
                         {aiSuggestions.message}
                       </p>
                     )}
+                    
                     {aiSuggestions.projectSuggestions.length > 0 && (
-                      <div className="text-sm text-blue-200/90 [data-theme='light']:text-blue-700 mb-2">
-                        <strong>Projetos que podem interessar:</strong>
-                        <ul className="list-disc list-inside mt-1 space-y-1">
+                      <div className="mb-4">
+                        <p className="text-xs font-semibold uppercase tracking-wider opacity-70 mb-2">
+                          Projetos que podem interessar:
+                        </p>
+                        <ul className="space-y-2">
                           {aiSuggestions.projectSuggestions.map((s, i) => (
-                            <li key={i}>{s}</li>
+                            <li key={i} className="flex items-start gap-2 text-sm opacity-90">
+                              <span className="text-azimut-red mt-1.5 flex-shrink-0">•</span>
+                              <span>{s}</span>
+                            </li>
                           ))}
                         </ul>
                       </div>
                     )}
+                    
                     {aiSuggestions.budgetSuggestion && (
-                      <div className="text-sm text-blue-200/90 [data-theme='light']:text-blue-700 mt-2">
-                        💡 {aiSuggestions.budgetSuggestion}
+                      <div className="flex items-start gap-2 p-3 rounded-lg bg-azimut-red/10 border border-azimut-red/20">
+                        <svg className="w-4 h-4 text-azimut-red mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                        <p className="text-sm opacity-90 leading-relaxed">
+                          {aiSuggestions.budgetSuggestion}
+                        </p>
                       </div>
                     )}
                   </div>
@@ -615,8 +697,11 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
               </div>
             )}
 
+            {/* Divisor visual */}
+            <div className="my-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
             {/* Personal Info - Grid 2 colunas */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               <PremiumField label={t.name} error={fieldErrors.name} required>
                 <input
                   type="text"
@@ -650,7 +735,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
               </PremiumField>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <PremiumField label={t.phone}>
                 <input
                   type="tel"
@@ -691,7 +776,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
               />
             </PremiumField>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <PremiumField label={t.organizationType} error={fieldErrors.organizationType} required>
                 <select
                   name="organizationType"
@@ -729,7 +814,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
               </PremiumField>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <PremiumField label={t.budget} error={fieldErrors.budget} required>
                 <select
                   name="budget"
@@ -768,7 +853,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             </div>
 
             {/* Location */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <PremiumField label={t.country}>
                 <input
                   type="text"
@@ -909,13 +994,13 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             <button
               type="submit"
               disabled={loading}
-              className={`relative w-full px-8 py-4 rounded-lg font-handel text-lg uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed shadow-lg transition-all duration-300 overflow-hidden group ${
+              className={`relative w-full px-8 py-4 rounded-lg font-handel text-lg uppercase tracking-[0.15em] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg transition-all duration-300 overflow-hidden group mt-8 ${
                 error 
                   ? 'bg-red-600/80 hover:bg-red-600 border border-red-500/50' 
-                  : 'bg-azimut-red hover:bg-azimut-red/90 text-white hover:shadow-xl'
+                  : 'bg-azimut-red hover:bg-azimut-red/90 text-white hover:shadow-xl hover:shadow-azimut-red/30'
               } ${!error ? 'text-white' : 'text-white'}`}
             >
-              <span className="relative z-10 flex items-center justify-center gap-2">
+              <span className="relative z-10 flex items-center justify-center gap-2.5">
                 {loading ? (
                   <>
                     <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -946,24 +1031,40 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
               
               {/* Shine effect no hover (apenas quando não tem erro) */}
               {!error && (
-                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700 transform -translate-x-full group-hover:translate-x-full" />
+                <>
+                  <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/25 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700 transform -translate-x-full group-hover:translate-x-full" />
+                  {/* Glow effect premium */}
+                  <span className="absolute -inset-1 rounded-lg blur-md bg-azimut-red/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </>
               )}
               
-              {/* Glow effect */}
+              {/* Glow effect base */}
               <span className={`absolute -inset-0.5 rounded-lg blur opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                error ? 'bg-red-500/50' : 'bg-azimut-red/50'
+                error ? 'bg-red-500/50' : 'bg-azimut-red/40'
               }`} />
             </button>
 
-            {/* Guarantees */}
-            <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/10">
+            {/* Guarantees - Premium */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-8 border-t border-white/10 mt-8">
               {Object.values(t.guarantees).map((guarantee, idx) => (
-                <div key={idx} className="text-xs opacity-70 flex items-center gap-2">
-                  <span className="text-azimut-red/80">✓</span>
-                  {guarantee}
+                <div 
+                  key={idx} 
+                  className="flex items-start gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5 hover:border-azimut-red/20 transition-all duration-300 group"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    <div className="w-5 h-5 rounded-full bg-azimut-red/20 flex items-center justify-center group-hover:bg-azimut-red/30 transition-colors">
+                      <svg className="w-3 h-3 text-azimut-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  </div>
+                  <span className="text-xs leading-relaxed opacity-90 group-hover:opacity-100 transition-opacity">
+                    {guarantee}
+                  </span>
                 </div>
               ))}
             </div>
+          </div>
       </form>
     </div>
   )
