@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
 import { useUserTracking } from '../hooks/useUserTracking'
+import CourseRecommender from '../components/CourseRecommender'
 
 interface AcademyCoursesProps {
   lang: Lang
@@ -568,6 +569,27 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
             <p className="mt-8 text-white/40 text-sm">
               📸 PLACEHOLDER: Backoffice → /admin/academy/gallery
             </p>
+          </div>
+        </section>
+
+        {/* AI Course Recommender */}
+        <section className="py-20 bg-gradient-to-b from-[#0a0e18] to-black">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <div className="inline-block px-6 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-6">
+                <span className="text-azimut-red text-sm font-semibold uppercase">
+                  🤖 Recomendação IA
+                </span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+                {lang === 'pt' ? 'Qual curso é ideal para você?' : 'Which course is ideal for you?'}
+              </h2>
+              <p className="text-xl text-white/70">
+                {lang === 'pt' ? 'Responda 5 perguntas e descubra os 3 melhores cursos para seu perfil' : 'Answer 5 questions and discover the 3 best courses for your profile'}
+              </p>
+            </div>
+
+            <CourseRecommender lang={lang} />
           </div>
         </section>
 

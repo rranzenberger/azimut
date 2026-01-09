@@ -4,6 +4,8 @@ import { type Lang } from '../i18n'
 import VancouverInterestForm from '../components/VancouverInterestForm'
 import { VideoPlayerEnhanced } from '../components/VideoPlayerEnhanced'
 import { VideoCard } from '../components/VideoCard'
+import QuizVancouver from '../components/QuizVancouver'
+import VancouverCostCalculator from '../components/VancouverCostCalculator'
 
 interface VancouverProps {
   lang: Lang
@@ -591,6 +593,53 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               <p className="text-white/70">
                 {t.azimutCostNote}
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* AI Tools */}
+        <section className="py-20 bg-gradient-to-b from-[#0a0e18] to-black">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <div className="inline-block px-6 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-6">
+                <span className="text-azimut-red text-sm font-semibold uppercase">
+                  🤖 IA Interativa
+                </span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+                {lang === 'pt' ? 'Ferramentas Inteligentes' : 'Smart Tools'}
+              </h2>
+              <p className="text-xl text-white/70 max-w-3xl mx-auto">
+                {lang === 'pt' ? 'Use nossa IA para descobrir seu perfil e calcular custos' : 'Use our AI to discover your profile and calculate costs'}
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-12 mb-12">
+              {/* Quiz */}
+              <div>
+                <div className="mb-6 text-center">
+                  <h3 className="text-2xl font-bold text-white mb-2">
+                    {lang === 'pt' ? 'Você está pronto?' : 'Are you ready?'}
+                  </h3>
+                  <p className="text-white/60">
+                    {lang === 'pt' ? 'Faça o quiz e descubra em 2 minutos' : 'Take the quiz and find out in 2 minutes'}
+                  </p>
+                </div>
+                <QuizVancouver lang={lang} />
+              </div>
+
+              {/* Calculator */}
+              <div>
+                <div className="mb-6 text-center">
+                  <h3 className="text-2xl font-bold text-white mb-2">
+                    {lang === 'pt' ? 'Calcule seu investimento' : 'Calculate your investment'}
+                  </h3>
+                  <p className="text-white/60">
+                    {lang === 'pt' ? 'Veja quanto custa estudar em Vancouver' : 'See how much it costs to study in Vancouver'}
+                  </p>
+                </div>
+                <VancouverCostCalculator lang={lang} />
+              </div>
             </div>
           </div>
         </section>
