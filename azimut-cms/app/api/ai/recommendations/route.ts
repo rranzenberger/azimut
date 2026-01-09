@@ -20,10 +20,11 @@ export async function POST(request: Request) {
 
     // Buscar projetos do banco
     const allProjects = await prisma.project.findMany({
-      where: { published: true },
+      where: { status: 'PUBLISHED' },
       include: {
-        translations: true,
-        heroImage: true
+        heroImage: true,
+        tags: true,
+        services: true
       }
     })
 
