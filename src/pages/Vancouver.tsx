@@ -7,6 +7,9 @@ import { VideoCard } from '../components/VideoCard'
 import QuizVancouver from '../components/QuizVancouver'
 import VancouverCostCalculator from '../components/VancouverCostCalculator'
 import AcademyQuickForm from '../components/AcademyQuickForm'
+import WhyVancouverConvincing from '../components/WhyVancouverConvincing'
+import VancouverMagazine from '../components/VancouverMagazine'
+import VisualSchoolQuiz from '../components/VisualSchoolQuiz'
 
 interface VancouverProps {
   lang: Lang
@@ -289,6 +292,16 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
           </div>
+        </section>
+
+        {/* Why Vancouver - Ultra Convincente */}
+        <section className="bg-gradient-to-b from-black to-[#0a0e18]">
+          <WhyVancouverConvincing lang={lang} />
+        </section>
+
+        {/* Vancouver Magazine - Lifestyle + Escolas + Futuro */}
+        <section className="bg-gradient-to-b from-[#0a0e18] to-black">
+          <VancouverMagazine lang={lang} />
         </section>
 
         {/* Comparative Table */}
@@ -677,6 +690,21 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 </details>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Visual School Quiz - Ultra Interativo */}
+        <section className="py-20 bg-gradient-to-b from-black to-[#0a0e18]">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+                {lang === 'pt' ? 'Qual escola é sua vibe?' : 'Which school is your vibe?'}
+              </h2>
+              <p className="text-xl text-white/70">
+                {lang === 'pt' ? 'Descubra em 30 segundos! 🎮' : 'Find out in 30 seconds! 🎮'}
+              </p>
+            </div>
+            <VisualSchoolQuiz lang={lang} />
           </div>
         </section>
 
