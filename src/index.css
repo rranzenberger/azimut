@@ -54,9 +54,10 @@ html {
 
 /* ═══════════════════════════════════════════════════════════════
    FORMULÁRIO: FORÇAR ESTILOS INPUT-ADAPTIVE (MÁXIMA PRIORIDADE!)
+   DESIGN: FUNDO ESCURO SEMI-TRANSPARENTE SEMPRE (TEMA ORIGINAL)
    ═══════════════════════════════════════════════════════════════ */
 
-/* Tema escuro - Campos escuros */
+/* FUNDO ESCURO SEMPRE - Design original bonito */
 .input-adaptive,
 input.input-adaptive,
 select.input-adaptive,
@@ -78,9 +79,10 @@ select.input-adaptive:focus,
 textarea.input-adaptive:focus {
   background: rgba(0, 0, 0, 0.55) !important;
   border-color: #c92337 !important;
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.15) !important;
 }
 
-/* Tema claro - Campos levemente cinza */
+/* Tema claro - TAMBÉM mantém escuro (design premium) */
 [data-theme="light"] .input-adaptive,
 [data-theme="light"] input.input-adaptive,
 [data-theme="light"] select.input-adaptive,
@@ -89,9 +91,9 @@ html[data-theme="light"] .input-adaptive,
 html[data-theme="light"] input.input-adaptive,
 html[data-theme="light"] select.input-adaptive,
 html[data-theme="light"] textarea.input-adaptive {
-  background: rgba(0, 0, 0, 0.06) !important;
-  border: 1px solid rgba(0, 0, 0, 0.2) !important;
-  color: #1a1a1a !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(201, 35, 55, 0.3) !important;
+  color: #ffffff !important;
 }
 
 [data-theme="light"] .input-adaptive::placeholder,
@@ -100,7 +102,7 @@ html[data-theme="light"] textarea.input-adaptive {
 html[data-theme="light"] .input-adaptive::placeholder,
 html[data-theme="light"] input.input-adaptive::placeholder,
 html[data-theme="light"] textarea.input-adaptive::placeholder {
-  color: rgba(0, 0, 0, 0.35) !important;
+  color: rgba(255, 255, 255, 0.35) !important;
 }
 
 [data-theme="light"] .input-adaptive:focus,
@@ -111,11 +113,12 @@ html[data-theme="light"] .input-adaptive:focus,
 html[data-theme="light"] input.input-adaptive:focus,
 html[data-theme="light"] select.input-adaptive:focus,
 html[data-theme="light"] textarea.input-adaptive:focus {
-  background: rgba(0, 0, 0, 0.1) !important;
+  background: rgba(0, 0, 0, 0.55) !important;
   border-color: #c92337 !important;
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.15) !important;
 }
 
-/* Autocomplete do Chrome - Forçar fundo correto */
+/* Autocomplete do Chrome - Forçar fundo escuro */
 .input-adaptive:-webkit-autofill,
 input.input-adaptive:-webkit-autofill,
 .input-adaptive:-webkit-autofill:hover,
@@ -136,8 +139,8 @@ html[data-theme="light"] input.input-adaptive:-webkit-autofill,
 html[data-theme="light"] .input-adaptive:-webkit-autofill:hover,
 html[data-theme="light"] .input-adaptive:-webkit-autofill:focus,
 html[data-theme="light"] .input-adaptive:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px rgba(0, 0, 0, 0.06) inset !important;
-  -webkit-text-fill-color: #1a1a1a !important;
+  -webkit-box-shadow: 0 0 0 30px rgba(0, 0, 0, 0.4) inset !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════
