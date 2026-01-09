@@ -834,7 +834,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 ${
+                  className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal ${
                     fieldErrors.email 
                       ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
                       : 'focus:ring-azimut-red/50 focus:border-azimut-red/50'
@@ -851,7 +851,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20"
+                  className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal"
                   placeholder="+55 11 98765-4321"
                 />
               </PremiumField>
@@ -862,7 +862,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   name="position"
                   value={formData.position}
                   onChange={handleChange}
-                  className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20"
+                  className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal"
                   placeholder="Diretor de Tecnologia"
                 />
               </PremiumField>
@@ -876,7 +876,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                 value={formData.company}
                 onChange={handleChange}
                 required
-                className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 ${
+                className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal ${
                   fieldErrors.company 
                     ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
                     : 'focus:ring-azimut-red/50 focus:border-azimut-red/50'
@@ -977,7 +977,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   name="country"
                   value={formData.country}
                   onChange={handleChange}
-                  className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20"
+                  className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal"
                   placeholder="Brasil"
                 />
               </PremiumField>
@@ -988,7 +988,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20"
+                  className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal"
                   placeholder="São Paulo"
                 />
               </PremiumField>
@@ -1001,7 +1001,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                 value={formData.description}
                 onChange={handleChange}
                 rows={4}
-                className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20 resize-none"
+                className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20 resize-none text-[15px] leading-normal"
                 placeholder="Queremos criar uma instalação imersiva para nosso museu..."
               />
             </PremiumField>
