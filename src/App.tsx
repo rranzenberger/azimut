@@ -68,10 +68,10 @@ import ThankYou from './pages/ThankYou'
 import WhatWeDo from './pages/WhatWeDo'
 import ServiceDetail from './pages/ServiceDetail'
 import Press from './pages/Press'
+import Work from './pages/Work' // 🔧 CORRIGIDO: Import direto para evitar erro de lazy loading
 
 // Lazy loading apenas para páginas que funcionam bem
 const Home = lazy(() => import('./pages/Home'))
-const Work = lazy(() => import('./pages/Work'))
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 

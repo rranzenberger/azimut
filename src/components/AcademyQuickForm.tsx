@@ -17,19 +17,15 @@ interface AcademyQuickFormProps {
 
 interface FormData {
   name: string
-  email: string
-  phone: string
+  contact: string // Email OU WhatsApp (usuário escolhe)
   interest: string // Pré-preenchido se veio do Quiz/Recomendador
-  message: string
 }
 
 const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefilledData }) => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
-    email: '',
-    phone: '',
-    interest: '',
-    message: ''
+    contact: '',
+    interest: ''
   })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -76,45 +72,51 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
   const content: Record<Lang, any> = {
     pt: {
       title: {
-        vancouver: 'Quero estudar em Vancouver',
-        course: 'Quero fazer um curso',
-        workshop: 'Quero participar de um workshop',
-        corporate: 'Quero um treinamento corporativo'
+        vancouver: 'Quero estudar em Vancouver 🇨🇦',
+        course: 'Quero fazer um curso 📚',
+        workshop: 'Quero participar de um workshop 🎬',
+        corporate: 'Quero um treinamento corporativo 🏢'
       },
-      subtitle: 'Preencha apenas 3 campos. O resto fazemos para você.',
+      subtitle: 'Super rápido: só 2 campos!',
       fields: {
-        name: 'Nome completo',
-        email: 'E-mail',
-        phone: 'WhatsApp (opcional)',
-        interest: 'Interesse (preenchido automaticamente)',
-        message: 'Mensagem adicional (opcional)'
+        name: 'Seu nome',
+        contact: 'Email ou WhatsApp',
+        interest: 'O que a IA detectou sobre você'
       },
-      submit: 'Enviar Interesse',
+      placeholders: {
+        name: 'Ex: João Silva',
+        contact: 'joao@email.com ou +55 21 99999-9999'
+      },
+      submit: 'Quero Receber Info!',
       submitting: 'Enviando...',
-      success: '✅ Pronto! Entraremos em contato em breve.',
-      error: 'Erro ao enviar. Tente novamente ou entre em contato: contact@azmt.com.br',
-      required: 'Campos obrigatórios: Nome e E-mail'
+      success: '🎉 Show! Vamos te mandar tudo no',
+      successContact: 'Aguenta 24h!',
+      error: 'Deu ruim! Manda no WhatsApp: +55 21 99999-9999',
+      required: 'Preenche seu nome e email/WhatsApp aí!'
     },
     en: {
       title: {
-        vancouver: 'I want to study in Vancouver',
-        course: 'I want to take a course',
-        workshop: 'I want to join a workshop',
-        corporate: 'I want corporate training'
+        vancouver: 'I wanna study in Vancouver 🇨🇦',
+        course: 'I wanna take a course 📚',
+        workshop: 'I wanna join a workshop 🎬',
+        corporate: 'I want corporate training 🏢'
       },
-      subtitle: 'Fill in just 3 fields. We do the rest for you.',
+      subtitle: 'Super quick: just 2 fields!',
       fields: {
-        name: 'Full name',
-        email: 'Email',
-        phone: 'WhatsApp (optional)',
-        interest: 'Interest (auto-filled)',
-        message: 'Additional message (optional)'
+        name: 'Your name',
+        contact: 'Email or WhatsApp',
+        interest: 'What AI detected about you'
       },
-      submit: 'Send Interest',
+      placeholders: {
+        name: 'Ex: John Smith',
+        contact: 'john@email.com or +1 555 1234'
+      },
+      submit: 'Send Me Info!',
       submitting: 'Sending...',
-      success: '✅ Done! We will contact you soon.',
-      error: 'Error sending. Try again or contact: contact@azmt.com.br',
-      required: 'Required fields: Name and Email'
+      success: '🎉 Done! We will send you everything',
+      successContact: 'Wait 24h!',
+      error: 'Error! WhatsApp us: +1 555 1234',
+      required: 'Fill your name and email/WhatsApp!'
     },
     es: {
       title: {
