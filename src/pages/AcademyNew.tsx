@@ -9,8 +9,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
-// import { VideoPlayerEnhanced } from '../components/VideoPlayerEnhanced' // TODO: Fix import
-// import { VideoCard } from '../components/VideoCard' // TODO: Fix import
 import { useUserTracking } from '../hooks/useUserTracking'
 
 interface AcademyProps {
@@ -23,8 +21,12 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
   // ═══════════════════════════════════════════════════════════
   // CONTEÚDO POR IDIOMA
   // ═══════════════════════════════════════════════════════════
-  const content = {
+  const content: Record<Lang, any> = {
     pt: {
+      meta: {
+        title: 'Azimut Academy - Educação de Excelência',
+        description: 'Cursos, workshops, treinamentos corporativos e agente educacional para Vancouver. 30 anos de experiência em tecnologias imersivas e produção audiovisual.'
+      },
       hero: {
         badge: '🎓 Educação & Formação',
         title: 'Azimut Academy',
@@ -40,150 +42,339 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
           description: 'Agente oficial VFS/VanArts. Forme-se em 1 ano nas melhores escolas de mídia do Canadá com 90%+ empregabilidade.',
           link: '/academy/vancouver',
           badge: 'Internacional',
-          stats: [
-            { label: 'Empregabilidade', value: '90%+' },
-            { label: 'Duração', value: '1 ano' }
-          ]
+          highlight: 'Comissão: CAD 1.500-3.000 por aluno'
         },
         {
           id: 'courses',
           icon: '📚',
-          title: 'Cursos & Workshops',
-          description: 'Formação profissional em VR, IA, Motion Design, VFX e tecnologias imersivas. Turmas pequenas, 100% prático.',
+          title: 'Cursos',
+          description: 'Formação profissional em audiovisual, VR, IA para marketing, game design e tecnologias imersivas.',
           link: '/academy/courses',
-          badge: 'Prático',
-          stats: [
-            { label: 'Turmas', value: 'Até 12 alunos' },
-            { label: 'Formato', value: 'Intensivo' }
-          ]
+          badge: 'Profissionalizante'
         },
         {
           id: 'workshops',
           icon: '🎬',
           title: 'Workshops & Eventos',
-          description: 'Workshops curtos, palestras e mini-cursos em eventos, festivais, empresas e instituições.',
+          description: 'Mini cursos, palestras em festivais (Rio2C), workshops presenciais e online para produtores e agências.',
           link: '/academy/workshops',
-          badge: 'Eventos',
-          stats: [
-            { label: 'Duração', value: '4h a 3 dias' },
-            { label: 'Local', value: 'In-company' }
-          ]
+          badge: 'Eventos'
         },
         {
           id: 'corporate',
           icon: '🏢',
-          title: 'Treinamento Corporativo',
-          description: 'Programas customizados para empresas, órgãos públicos, ONGs e instituições. Consultoria e capacitação de equipes.',
+          title: 'Corporativo',
+          description: 'Treinamentos customizados para empresas, governo, ONGs e instituições. Parcerias com SESC, SENAC e universidades.',
           link: '/academy/corporate',
-          badge: 'B2B',
-          stats: [
-            { label: 'Sob medida', value: '100%' },
-            { label: 'Clientes', value: 'Globo, Gov, etc' }
-          ]
+          badge: 'B2B'
         }
       ],
 
-      videoSection: {
-        title: 'Conheça Nossa História Educacional',
-        subtitle: 'De 2004 a 2018 fomos a Azimut School. Hoje compartilhamos conhecimento através da Academy.'
-      },
-
       statsSection: {
-        title: 'Números que Importam',
+        title: 'Nossa História Educacional',
         stats: [
           { value: '30+', label: 'Anos de Experiência' },
-          { value: '14', label: 'Anos como Escola' },
+          { value: '14', label: 'Anos como Escola (2004-2018)' },
           { value: '500+', label: 'Alunos Formados' },
-          { value: '4', label: 'Programas Educacionais' }
+          { value: '4', label: 'Programas Ativos' }
         ]
       },
 
-      instructors: {
-        title: 'Professores & Parceiros',
-        subtitle: 'Coordenadores de pós-graduação, doutores e profissionais com décadas de mercado',
-        list: [
-          {
-            name: 'Alberto Luchetti',
-            role: 'Coordenador & PhD',
-            bio: 'Coordenador de pós-graduação, professor e pesquisador UFRJ/ECO',
-            photo: '/instructors/alberto.jpg' // PLACEHOLDER
-          },
-          // Adicionar mais conforme necessário
+      credibility: {
+        title: 'Credibilidade',
+        items: [
+          '🎓 Azimut School (2004-2018): Escola de animação e computação gráfica',
+          '🔬 Pesquisadores associados UFRJ/ECO',
+          '🇨🇦 Agente educacional oficial VFS e VanArts',
+          '👨‍🏫 Professores doutores e coordenadores de pós-graduação'
         ]
       },
 
       cta: {
         title: 'Pronto para Começar?',
-        subtitle: 'Entre em contato para saber mais sobre nossos programas',
+        subtitle: 'Escolha o programa ideal para você ou sua empresa',
         button: 'Falar com Consultor'
       }
     },
     en: {
-      // ... (adicionar traduções depois)
+      meta: {
+        title: 'Azimut Academy - Excellence in Education',
+        description: 'Courses, workshops, corporate training and educational agent for Vancouver. 30 years of experience in immersive technologies and audiovisual production.'
+      },
+      hero: {
+        badge: '🎓 Education & Training',
+        title: 'Azimut Academy',
+        subtitle: 'Learn from 30 years of industry experience',
+        description: 'Courses, workshops, corporate training and educational agent for Vancouver. Excellence in immersive technologies, AI and audiovisual production.'
+      },
+      
+      sections: [
+        {
+          id: 'vancouver',
+          icon: '🍁',
+          title: 'Study in Vancouver',
+          description: 'Official VFS/VanArts agent. Graduate in 1 year from Canada\'s top media schools with 90%+ employability.',
+          link: '/academy/vancouver',
+          badge: 'International',
+          highlight: 'Commission: CAD 1,500-3,000 per student'
+        },
+        {
+          id: 'courses',
+          icon: '📚',
+          title: 'Courses',
+          description: 'Professional training in audiovisual, VR, AI for marketing, game design and immersive technologies.',
+          link: '/academy/courses',
+          badge: 'Professional'
+        },
+        {
+          id: 'workshops',
+          icon: '🎬',
+          title: 'Workshops & Events',
+          description: 'Mini courses, festival talks (Rio2C), in-person and online workshops for producers and agencies.',
+          link: '/academy/workshops',
+          badge: 'Events'
+        },
+        {
+          id: 'corporate',
+          icon: '🏢',
+          title: 'Corporate',
+          description: 'Custom training for companies, government, NGOs and institutions. Partnerships with SESC, SENAC and universities.',
+          link: '/academy/corporate',
+          badge: 'B2B'
+        }
+      ],
+
+      statsSection: {
+        title: 'Our Educational History',
+        stats: [
+          { value: '30+', label: 'Years of Experience' },
+          { value: '14', label: 'Years as School (2004-2018)' },
+          { value: '500+', label: 'Alumni' },
+          { value: '4', label: 'Active Programs' }
+        ]
+      },
+
+      credibility: {
+        title: 'Credibility',
+        items: [
+          '🎓 Azimut School (2004-2018): Animation and computer graphics school',
+          '🔬 Associate researchers UFRJ/ECO',
+          '🇨🇦 Official educational agent VFS and VanArts',
+          '👨‍🏫 PhD professors and postgraduate coordinators'
+        ]
+      },
+
+      cta: {
+        title: 'Ready to Start?',
+        subtitle: 'Choose the ideal program for you or your company',
+        button: 'Talk to Consultant'
+      }
     },
     es: {
-      // ...
+      meta: {
+        title: 'Azimut Academy - Educación de Excelencia',
+        description: 'Cursos, workshops, capacitación corporativa y agente educacional para Vancouver. 30 años de experiencia en tecnologías inmersivas y producción audiovisual.'
+      },
+      hero: {
+        badge: '🎓 Educación y Formación',
+        title: 'Azimut Academy',
+        subtitle: 'Fórmate con quien tiene 30 años de mercado',
+        description: 'Cursos, workshops, capacitación corporativa y agente educacional para Vancouver. Educación de excelencia en tecnologías inmersivas, IA y producción audiovisual.'
+      },
+      
+      sections: [
+        {
+          id: 'vancouver',
+          icon: '🍁',
+          title: 'Estudiar en Vancouver',
+          description: 'Agente oficial VFS/VanArts. Fórmate en 1 año en las mejores escuelas de medios de Canadá con 90%+ empleabilidad.',
+          link: '/academy/vancouver',
+          badge: 'Internacional',
+          highlight: 'Comisión: CAD 1.500-3.000 por alumno'
+        },
+        {
+          id: 'courses',
+          icon: '📚',
+          title: 'Cursos',
+          description: 'Formación profesional en audiovisual, VR, IA para marketing, game design y tecnologías inmersivas.',
+          link: '/academy/courses',
+          badge: 'Profesional'
+        },
+        {
+          id: 'workshops',
+          icon: '🎬',
+          title: 'Workshops y Eventos',
+          description: 'Mini cursos, charlas en festivales (Rio2C), workshops presenciales y online para productores y agencias.',
+          link: '/academy/workshops',
+          badge: 'Eventos'
+        },
+        {
+          id: 'corporate',
+          icon: '🏢',
+          title: 'Corporativo',
+          description: 'Capacitaciones personalizadas para empresas, gobierno, ONGs e instituciones. Asociaciones con SESC, SENAC y universidades.',
+          link: '/academy/corporate',
+          badge: 'B2B'
+        }
+      ],
+
+      statsSection: {
+        title: 'Nuestra Historia Educacional',
+        stats: [
+          { value: '30+', label: 'Años de Experiencia' },
+          { value: '14', label: 'Años como Escuela (2004-2018)' },
+          { value: '500+', label: 'Alumnos Formados' },
+          { value: '4', label: 'Programas Activos' }
+        ]
+      },
+
+      credibility: {
+        title: 'Credibilidad',
+        items: [
+          '🎓 Azimut School (2004-2018): Escuela de animación y computación gráfica',
+          '🔬 Investigadores asociados UFRJ/ECO',
+          '🇨🇦 Agente educacional oficial VFS y VanArts',
+          '👨‍🏫 Profesores doctores y coordinadores de posgrado'
+        ]
+      },
+
+      cta: {
+        title: '¿Listo para Comenzar?',
+        subtitle: 'Elige el programa ideal para ti o tu empresa',
+        button: 'Hablar con Consultor'
+      }
     },
     fr: {
-      // ...
+      meta: {
+        title: 'Azimut Academy - Excellence en Éducation',
+        description: 'Cours, ateliers, formation corporative et agent éducatif pour Vancouver. 30 ans d\'expérience en technologies immersives et production audiovisuelle.'
+      },
+      hero: {
+        badge: '🎓 Éducation & Formation',
+        title: 'Azimut Academy',
+        subtitle: 'Formez-vous avec 30 ans d\'expérience',
+        description: 'Cours, ateliers, formation corporative et agent éducatif pour Vancouver. Excellence en technologies immersives, IA et production audiovisuelle.'
+      },
+      
+      sections: [
+        {
+          id: 'vancouver',
+          icon: '🍁',
+          title: 'Étudier à Vancouver',
+          description: 'Agent officiel VFS/VanArts. Diplômez en 1 an des meilleures écoles de médias au Canada avec 90%+ d\'employabilité.',
+          link: '/academy/vancouver',
+          badge: 'International',
+          highlight: 'Commission: CAD 1.500-3.000 par étudiant'
+        },
+        {
+          id: 'courses',
+          icon: '📚',
+          title: 'Cours',
+          description: 'Formation professionnelle en audiovisuel, VR, IA pour marketing, game design et technologies immersives.',
+          link: '/academy/courses',
+          badge: 'Professionnel'
+        },
+        {
+          id: 'workshops',
+          icon: '🎬',
+          title: 'Ateliers & Événements',
+          description: 'Mini cours, conférences dans festivals (Rio2C), ateliers en personne et en ligne pour producteurs et agences.',
+          link: '/academy/workshops',
+          badge: 'Événements'
+        },
+        {
+          id: 'corporate',
+          icon: '🏢',
+          title: 'Corporatif',
+          description: 'Formations personnalisées pour entreprises, gouvernement, ONG et institutions. Partenariats avec SESC, SENAC et universités.',
+          link: '/academy/corporate',
+          badge: 'B2B'
+        }
+      ],
+
+      statsSection: {
+        title: 'Notre Histoire Éducative',
+        stats: [
+          { value: '30+', label: 'Ans d\'Expérience' },
+          { value: '14', label: 'Ans comme École (2004-2018)' },
+          { value: '500+', label: 'Diplômés' },
+          { value: '4', label: 'Programmes Actifs' }
+        ]
+      },
+
+      credibility: {
+        title: 'Crédibilité',
+        items: [
+          '🎓 Azimut School (2004-2018): École d\'animation et infographie',
+          '🔬 Chercheurs associés UFRJ/ECO',
+          '🇨🇦 Agent éducatif officiel VFS et VanArts',
+          '👨‍🏫 Professeurs docteurs et coordinateurs de troisième cycle'
+        ]
+      },
+
+      cta: {
+        title: 'Prêt à Commencer?',
+        subtitle: 'Choisissez le programme idéal pour vous ou votre entreprise',
+        button: 'Parler avec un Consultant'
+      }
     }
   }
 
-  const t = content.pt // Sempre usar PT por enquanto (TODO: adicionar EN, ES, FR)
+  const t = content[lang] || content.pt
 
   return (
     <>
       <Helmet>
-        <title>{t.hero.title} | Azimut</title>
-        <meta name="description" content={t.hero.description} />
+        <title>{t.meta.title}</title>
+        <meta name="description" content={t.meta.description} />
       </Helmet>
 
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-gradient-to-b from-black via-[#0a0e18] to-black">
         {/* ═══════════════════════════════════════════════════════════
             HERO SECTION - Video Background
             ═══════════════════════════════════════════════════════════
             📹 PLACEHOLDER: Vídeo institucional Academy
             Backoffice: /admin/academy/settings → "Hero Video URL"
             ═══════════════════════════════════════════════════════ */}
-        <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
-          {/* Background Video (PLACEHOLDER) */}
+        <section className="relative min-h-[75vh] flex items-center justify-center overflow-hidden">
+          {/* Background Image/Video (PLACEHOLDER) */}
           <div className="absolute inset-0 z-0">
-            {/* TODO: Adicionar vídeo do backoffice */}
             <div 
-              className="absolute inset-0 bg-gradient-to-br from-black via-slate-900 to-black"
+              className="absolute inset-0 bg-gradient-to-br from-slate-900 via-black to-slate-900"
               style={{
-                backgroundImage: 'url(https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1600)',
+                backgroundImage: 'url(https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1600&q=80)',
                 backgroundSize: 'cover',
-                backgroundPosition: 'center'
+                backgroundPosition: 'center',
+                backgroundBlendMode: 'overlay'
               }}
             >
-              <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/90" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black" />
             </div>
           </div>
 
           {/* Content */}
-          <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="inline-block px-4 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-6">
+          <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+            <div className="inline-block px-6 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-8 animate-fade-in">
               <span className="text-azimut-red text-sm font-semibold uppercase tracking-wider">
                 {t.hero.badge}
               </span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-handel uppercase tracking-wider text-white mb-6 leading-tight">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-handel uppercase tracking-wider text-white mb-8 leading-none animate-fade-in-up">
               {t.hero.title}
             </h1>
 
-            <p className="text-2xl md:text-3xl text-white/90 mb-4 font-light">
+            <p className="text-2xl md:text-4xl text-white/90 mb-6 font-light animate-fade-in-up animation-delay-100">
               {t.hero.subtitle}
             </p>
 
-            <p className="text-lg md:text-xl text-white/70 mb-10 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-white/70 mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200">
               {t.hero.description}
             </p>
 
             {/* Scroll Indicator */}
-            <div className="animate-bounce">
-              <svg className="w-6 h-6 mx-auto text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="animate-bounce mt-16">
+              <svg className="w-8 h-8 mx-auto text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
               </svg>
             </div>
@@ -191,65 +382,70 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
         </section>
 
         {/* ═══════════════════════════════════════════════════════════
-            SECTIONS GRID - 4 Programas
+            PROGRAMS GRID - 4 Programas Premium
             ═══════════════════════════════════════════════════════════
             🖼️ PLACEHOLDER: Imagens dos programas
             Backoffice: /admin/academy/programs → cada programa tem imagem
             ═══════════════════════════════════════════════════════ */}
-        <section className="py-20 bg-gradient-to-b from-black to-[#0a0e18]">
+        <section className="py-24 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-2 gap-8">
-              {t.sections.map((section, idx) => (
+            <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
+              {t.sections.map((section: any, idx: number) => (
                 <Link
                   key={section.id}
                   to={`/${lang}${section.link}`}
-                  className="group card-adaptive rounded-2xl overflow-hidden border border-white/10 hover:border-azimut-red/50 transition-all duration-500 hover:shadow-2xl hover:shadow-azimut-red/20 hover:-translate-y-2"
+                  className="group relative card-adaptive rounded-2xl overflow-hidden border border-white/10 hover:border-azimut-red/50 transition-all duration-700 hover:shadow-2xl hover:shadow-azimut-red/20 hover:-translate-y-3"
+                  style={{
+                    animationDelay: `${idx * 100}ms`
+                  }}
                 >
                   {/* Image/Video Thumbnail (PLACEHOLDER) */}
-                  <div className="relative aspect-video overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
-                      <span className="text-8xl opacity-30">{section.icon}</span>
-                    </div>
+                  <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-slate-800 to-black">
                     {/* TODO: Imagem real do backoffice */}
-                    {/* <img src={section.imageUrl} alt={section.title} /> */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-9xl opacity-20 group-hover:scale-110 transition-transform duration-700">
+                        {section.icon}
+                      </span>
+                    </div>
                     
                     {/* Overlay gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
                     
                     {/* Badge */}
-                    <div className="absolute top-4 right-4">
-                      <span className="px-3 py-1 rounded-full bg-azimut-red text-white text-xs font-semibold uppercase tracking-wider">
+                    <div className="absolute top-4 left-4">
+                      <span className="px-3 py-1 bg-azimut-red/90 text-white text-xs font-bold uppercase tracking-wider rounded-full">
                         {section.badge}
                       </span>
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div className="p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="text-4xl">{section.icon}</span>
-                      <h3 className="text-2xl font-bold text-white group-hover:text-azimut-red transition-colors">
+                  <div className="p-8">
+                    <div className="flex items-center gap-4 mb-4">
+                      <span className="text-5xl">{section.icon}</span>
+                      <h3 className="text-3xl font-handel uppercase tracking-wider text-white group-hover:text-azimut-red transition-colors">
                         {section.title}
                       </h3>
                     </div>
 
-                    <p className="text-white/70 mb-4 leading-relaxed">
+                    <p className="text-lg text-white/70 leading-relaxed mb-6">
                       {section.description}
                     </p>
 
-                    {/* Stats */}
-                    <div className="flex gap-4 mb-4">
-                      {section.stats.map((stat, i) => (
-                        <div key={i} className="flex-1">
-                          <div className="text-azimut-red font-bold">{stat.value}</div>
-                          <div className="text-xs text-white/60">{stat.label}</div>
-                        </div>
-                      ))}
-                    </div>
+                    {/* Highlight (se existir) */}
+                    {section.highlight && (
+                      <div className="inline-block px-4 py-2 bg-green-500/10 border border-green-500/30 rounded-lg mb-6">
+                        <p className="text-green-400 text-sm font-semibold">
+                          💰 {section.highlight}
+                        </p>
+                      </div>
+                    )}
 
-                    {/* Link Arrow */}
-                    <div className="flex items-center gap-2 text-azimut-red font-semibold group-hover:gap-3 transition-all">
-                      Saiba mais
+                    {/* CTA Arrow */}
+                    <div className="flex items-center gap-2 text-azimut-red font-semibold group-hover:gap-4 transition-all">
+                      <span className="uppercase tracking-wider text-sm">
+                        {lang === 'pt' ? 'Saiba Mais' : lang === 'en' ? 'Learn More' : lang === 'es' ? 'Saber Más' : 'En Savoir Plus'}
+                      </span>
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
@@ -262,61 +458,26 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
         </section>
 
         {/* ═══════════════════════════════════════════════════════════
-            VIDEO SECTION - História Educacional
-            ═══════════════════════════════════════════════════════════
-            📹 PLACEHOLDER: Vídeo sobre história da Azimut School
-            Backoffice: /admin/academy/videos → "História Educacional"
+            STATS SECTION - Nossa História
             ═══════════════════════════════════════════════════════ */}
-        <section className="py-20 bg-gradient-to-b from-[#0a0e18] to-black">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
-                {t.videoSection.title}
-              </h2>
-              <p className="text-lg text-white/70">
-                {t.videoSection.subtitle}
-              </p>
-            </div>
-
-            {/* Video Card (PLACEHOLDER) */}
-            <div className="card-adaptive rounded-xl p-6 border border-white/10 text-center">
-              <div className="aspect-video bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg mb-4 flex items-center justify-center">
-                <span className="text-6xl opacity-30">▶️</span>
-              </div>
-              <h4 className="text-white font-semibold mb-2">14 Anos Formando Profissionais</h4>
-              <p className="text-white/60 text-sm">De 2004 a 2018, a Azimut School foi referência em animação e VFX.</p>
-            </div>
-
-            {/* Info Box */}
-            <div className="mt-8 p-6 card-adaptive rounded-xl border border-white/10 text-center">
-              <p className="text-white/80 leading-relaxed">
-                <strong className="text-azimut-red">2004-2018:</strong> Azimut School. 
-                Único Autodesk Training Center da América do Sul. 
-                Certificado Flame Trainer (único no Brasil). 
-                Centenas de profissionais formados para o mercado.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════════════════════════════════════════════════════
-            STATS SECTION - Números
-            ═══════════════════════════════════════════════════════ */}
-        <section className="py-16 bg-gradient-to-b from-black to-[#0a0e18]">
+        <section className="py-20 bg-gradient-to-b from-transparent via-azimut-red/5 to-transparent">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-handel uppercase tracking-wider text-white mb-4">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-6xl font-handel uppercase tracking-wider text-white mb-4">
                 {t.statsSection.title}
               </h2>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {t.statsSection.stats.map((stat, i) => (
-                <div key={i} className="text-center card-adaptive p-6 rounded-xl border border-white/10">
-                  <div className="text-4xl md:text-5xl font-bold text-azimut-red mb-2">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {t.statsSection.stats.map((stat: any, idx: number) => (
+                <div 
+                  key={idx}
+                  className="text-center p-8 card-adaptive rounded-xl border border-white/10 hover:border-azimut-red/50 transition-all hover:scale-105"
+                >
+                  <div className="text-5xl md:text-6xl font-handel text-azimut-red mb-3">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-white/60 uppercase tracking-wider">
+                  <div className="text-sm md:text-base text-white/70 uppercase tracking-wider">
                     {stat.label}
                   </div>
                 </div>
@@ -326,68 +487,54 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
         </section>
 
         {/* ═══════════════════════════════════════════════════════════
-            INSTRUCTORS SECTION
-            ═══════════════════════════════════════════════════════════
-            🖼️ PLACEHOLDER: Fotos dos professores
-            Backoffice: /admin/academy/instructors
+            CREDIBILITY SECTION
             ═══════════════════════════════════════════════════════ */}
-        <section className="py-20 bg-gradient-to-b from-[#0a0e18] to-black">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-20">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
-                {t.instructors.title}
+              <h2 className="text-3xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+                {t.credibility.title}
               </h2>
-              <p className="text-lg text-white/70">
-                {t.instructors.subtitle}
-              </p>
             </div>
 
-            {/* Instructors Grid (PLACEHOLDER) */}
-            <div className="grid md:grid-cols-3 gap-6">
-              {/* Placeholder Cards */}
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="card-adaptive rounded-xl p-6 border border-white/10 text-center">
-                  {/* Photo Placeholder */}
-                  <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-azimut-red/30 to-slate-800 mb-4 flex items-center justify-center">
-                    <span className="text-4xl">👤</span>
+            <div className="grid md:grid-cols-2 gap-6">
+              {t.credibility.items.map((item: string, idx: number) => (
+                <div 
+                  key={idx}
+                  className="flex items-start gap-4 p-6 card-adaptive rounded-xl border border-white/10 hover:border-azimut-red/30 transition-all"
+                >
+                  <div className="text-2xl flex-shrink-0">
+                    {item.split(' ')[0]}
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-1">
-                    Professor {i}
-                  </h3>
-                  <p className="text-sm text-azimut-red mb-2">
-                    Especialização
-                  </p>
-                  <p className="text-xs text-white/60">
-                    Bio placeholder - adicionar no backoffice
+                  <p className="text-white/80 leading-relaxed">
+                    {item.substring(item.indexOf(' ') + 1)}
                   </p>
                 </div>
               ))}
-            </div>
-
-            <div className="mt-8 text-center">
-              <p className="text-white/60 text-sm">
-                📌 <strong>BACKOFFICE:</strong> /admin/academy/instructors → Adicionar fotos e bios
-              </p>
             </div>
           </div>
         </section>
 
         {/* ═══════════════════════════════════════════════════════════
-            CTA FINAL
+            CTA SECTION
             ═══════════════════════════════════════════════════════ */}
-        <section className="py-20 bg-gradient-to-b from-black to-[#0a0e18]">
+        <section className="py-24 bg-gradient-to-b from-transparent to-black">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-6">
+            <h2 className="text-4xl md:text-6xl font-handel uppercase tracking-wider text-white mb-6">
               {t.cta.title}
             </h2>
-            <p className="text-xl text-white/70 mb-8">
+            <p className="text-xl md:text-2xl text-white/70 mb-10">
               {t.cta.subtitle}
             </p>
+
             <Link
               to={`/${lang}/contact`}
-              className="inline-block px-8 py-4 bg-azimut-red hover:bg-azimut-red/90 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-azimut-red/50 hover:scale-105"
+              className="inline-flex items-center gap-3 px-10 py-5 bg-azimut-red hover:bg-azimut-red/90 text-white text-lg font-bold uppercase tracking-wider rounded-full transition-all hover:scale-105 hover:shadow-2xl hover:shadow-azimut-red/50"
             >
-              {t.cta.button} →
+              {t.cta.button}
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
             </Link>
           </div>
         </section>
