@@ -552,15 +552,15 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       let errorMsg = err?.message || ''
       
       // Traduzir mensagens comuns
-      if (!errorMsg || errorMsg.includes('Failed to fetch') || errorMsg.includes('NetworkError')) {
+      if (!errorMsg || errorMsg.includes('Failed to fetch') || errorMsg.includes('NetworkError') || errorMsg.includes('fetch')) {
         errorMsg = lang === 'pt' 
-          ? 'Não foi possível conectar ao servidor. Por favor, verifique sua conexão ou entre em contato diretamente: contact@azmt.com.br'
+          ? 'Não foi possível conectar ao servidor no momento. Por favor, entre em contato diretamente por email: contact@azmt.com.br ou WhatsApp: +55 (48) 99970-1301'
           : lang === 'es'
-          ? 'No se pudo conectar al servidor. Por favor, verifique su conexión o contáctenos directamente: contact@azmt.com.br'
+          ? 'No se pudo conectar al servidor en este momento. Por favor, contáctenos directamente por email: contact@azmt.com.br o WhatsApp: +55 (48) 99970-1301'
           : lang === 'fr'
-          ? 'Impossible de se connecter au serveur. Veuillez vérifier votre connexion ou nous contacter directement: contact@azmt.com.br'
-          : 'Could not connect to server. Please check your connection or contact us directly: contact@azmt.com.br'
-      } else if (errorMsg.includes('timeout') || errorMsg.includes('Tempo')) {
+          ? 'Impossible de se connecter au serveur pour le moment. Veuillez nous contacter directement par email: contact@azmt.com.br ou WhatsApp: +55 (48) 99970-1301'
+          : 'Could not connect to server at this time. Please contact us directly via email: contact@azmt.com.br or WhatsApp: +55 (48) 99970-1301'
+      } else if (errorMsg.includes('timeout') || errorMsg.includes('Tempo') || errorMsg.includes('connection timeout')) {
         errorMsg = lang === 'pt'
           ? 'Tempo de conexão esgotado. Por favor, tente novamente.'
           : lang === 'es'

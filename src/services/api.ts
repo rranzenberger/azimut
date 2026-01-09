@@ -3,7 +3,12 @@
  * Handles all communication between site and CMS/backoffice
  */
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+// Detectar ambiente
+const isDevelopment = import.meta.env.DEV
+const isProduction = import.meta.env.PROD
+
+// URL da API - usar produção se estiver em produção ou se localhost não estiver disponível
+const API_URL = import.meta.env.VITE_API_URL || (isProduction ? 'https://backoffice.azmt.com.br' : 'http://localhost:3001')
 const API_KEY = import.meta.env.VITE_API_KEY || ''
 
 // Check if features are enabled
@@ -17,9 +22,17 @@ export class ApiService {
   static async submitLead(data: any) {
     try {
       // Verificar se API_URL está configurada
-      if (!API_URL || API_URL === 'undefined') {
+      if (!API_URL || API_URL === 'undefined' || API_URL.includes('undefined')) {
         console.warn('⚠️ VITE_API_URL não configurada')
-        throw new Error('API não configurada. Por favor, configure VITE_API_URL no arquivo .env')
+        if (isDevelopment) {
+          console.warn('💡 Dica: Configure VITE_API_URL no arquivo .env ou use o email direto: contact@azmt.com.br')
+        }
+        throw new Error('API não configurada')
+      }
+      
+      // Em desenvolvimento, avisar se está tentando localhost mas pode não estar disponível
+      if (isDevelopment && API_URL.includes('localhost')) {
+        console.log('ℹ️ Tentando conectar ao backoffice local. Se falhar, certifique-se de que está rodando em http://localhost:3001')
       }
 
       // Log apenas em desenvolvimento
