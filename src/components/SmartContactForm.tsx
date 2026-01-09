@@ -6,7 +6,7 @@ interface SmartContactFormProps {
   lang?: Lang
 }
 
-// Helper para campos padronizados com direção de arte premium + validação
+// Helper para campos padronizados com validação (usando card-adaptive original)
 const PremiumField = ({ 
   label, 
   children, 
@@ -21,17 +21,13 @@ const PremiumField = ({
   required?: boolean
 }) => (
   <div className={`group ${className}`}>
-    <label className={`block text-sm font-semibold mb-2.5 transition-colors group-focus-within:text-azimut-red ${
-      error ? 'text-red-400' : 'text-white/90 [data-theme="light"]:text-slate-700'
+    <label className={`block text-sm font-medium mb-2 transition-colors ${
+      error ? 'text-red-400' : 'opacity-90'
     }`}>
       {label} {required && <span className="text-red-400">*</span>}
     </label>
     <div className="relative">
       {children}
-      {/* Glow effect sutil no hover (apenas se não tiver erro) */}
-      {!error && (
-        <div className="absolute inset-0 rounded-lg bg-azimut-red/0 group-hover:bg-azimut-red/5 transition-all duration-300 pointer-events-none opacity-0 group-hover:opacity-100 blur-sm -z-10" />
-      )}
       {/* Mensagem de erro abaixo do campo */}
       {error && (
         <p className="mt-1.5 text-xs text-red-400/90 flex items-center gap-1.5 animate-fade-in-up">
@@ -568,70 +564,16 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
   return (
     <div className="relative">
-      {/* Container premium com gradientes cinematográficos e glow effects */}
-      <div className="relative glass-panel backdrop-blur-xl rounded-2xl p-6 md:p-8 lg:p-10 shadow-[0_24px_60px_rgba(0,0,0,0.6)] animate-fade-in-up [data-theme='light']:bg-white/95 [data-theme='light']:border-slate-200/50 overflow-hidden">
-        {/* Background com gradientes cinematográficos múltiplos */}
-        <div 
-          className="absolute inset-0 opacity-100 pointer-events-none"
-          style={{
-            background: `
-              radial-gradient(ellipse 80% 50% at 50% 0%, rgba(201, 35, 55, 0.12) 0%, transparent 60%),
-              radial-gradient(ellipse 60% 40% at 100% 100%, rgba(68, 27, 68, 0.08) 0%, transparent 50%),
-              radial-gradient(ellipse 40% 30% at 0% 50%, rgba(201, 35, 55, 0.06) 0%, transparent 50%),
-              linear-gradient(135deg, rgba(10, 15, 26, 0.92) 0%, rgba(5, 8, 20, 0.96) 50%, rgba(10, 15, 26, 0.92) 100%)
-            `
-          }}
-        />
-        
-        {/* Glow effect ao redor (animado) */}
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-azimut-red/20 via-azimut-red/10 to-azimut-red/20 rounded-2xl blur-xl opacity-30 animate-pulse" />
-        
-        {/* Borda com gradiente sutil */}
-        <div className="absolute inset-0 rounded-2xl border border-white/10 [data-theme='light']:border-slate-200/50 pointer-events-none">
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-azimut-red/5 to-transparent opacity-50" />
-        </div>
-        
-        {/* Pattern sutil de pontos */}
-        <div 
-          className="absolute inset-0 opacity-[0.03] pointer-events-none"
-          style={{ 
-            backgroundImage: 'radial-gradient(#c92337 1px, transparent 1px)', 
-            backgroundSize: '40px 40px' 
-          }} 
-        />
-        
-        {/* Conteúdo relativo */}
-        <div className="relative z-10">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Header com hierarquia visual premium */}
-            <div className="text-center mb-10 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-              {/* Linha decorativa acima */}
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-azimut-red/50" />
-                <div className="w-2 h-2 rounded-full bg-azimut-red/40 animate-pulse" />
-                <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-azimut-red/50" />
-              </div>
-              
-              <h2 className="font-handel text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.15em] text-white mb-4 [data-theme='light']:text-slate-900">
-                <span className="relative inline-block">
-                  {t.title}
-                  {/* Glow sutil no título */}
-                  <span className="absolute inset-0 text-azimut-red/20 blur-lg opacity-50 pointer-events-none">
-                    {t.title}
-                  </span>
-                </span>
+      {/* Container usando card-adaptive (estilo original do site) */}
+      <form onSubmit={handleSubmit} className="relative space-y-6 rounded-2xl border border-white/10 card-adaptive p-6 md:p-8 lg:p-10 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur animate-fade-in-up">
+            {/* Header */}
+            <div className="text-center mb-8">
+              <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-wider mb-3">
+                {t.title}
               </h2>
-              
-              <p className="text-white/85 text-base md:text-lg max-w-2xl mx-auto leading-relaxed [data-theme='light']:text-slate-600">
+              <p className="text-sm md:text-base opacity-80">
                 {t.subtitle}
               </p>
-              
-              {/* Linha decorativa abaixo */}
-              <div className="flex items-center justify-center gap-3 mt-4">
-                <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-azimut-red/30" />
-                <div className="w-1 h-1 rounded-full bg-azimut-red/50" />
-                <div className="h-[1px] w-8 bg-gradient-to-l from-transparent to-azimut-red/30" />
-              </div>
             </div>
 
             {/* Sugestões IA */}
@@ -1014,17 +956,15 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             </button>
 
             {/* Guarantees */}
-            <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/10 [data-theme='light']:border-slate-200/50">
+            <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/10">
               {Object.values(t.guarantees).map((guarantee, idx) => (
-                <div key={idx} className="text-xs text-white/70 [data-theme='light']:text-slate-600 flex items-center gap-2">
+                <div key={idx} className="text-xs opacity-70 flex items-center gap-2">
                   <span className="text-azimut-red/80">✓</span>
                   {guarantee}
                 </div>
               ))}
             </div>
-          </form>
-        </div>
-      </div>
+      </form>
     </div>
   )
 }
