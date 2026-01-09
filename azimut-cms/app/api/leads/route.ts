@@ -144,13 +144,30 @@ export async function POST(request: Request) {
       score: leadScore,
       priority,
       message: 'Lead received successfully'
-    }, { status: 201 })
+    }, { 
+      status: 201,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, X-API-Key',
+      }
+    })
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error creating lead:', error)
     return NextResponse.json(
-      { error: 'Failed to create lead' },
-      { status: 500 }
+      { 
+        error: 'Failed to create lead',
+        message: error?.message || 'Internal server error'
+      },
+      { 
+        status: 500,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, X-API-Key',
+        }
+      }
     )
   }
 }

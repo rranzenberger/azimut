@@ -1080,16 +1080,46 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                     <p className="text-sm text-red-200/90 [data-theme='light']:text-red-600 leading-relaxed">
                       {error}
                     </p>
-                    {/* Ação sugerida */}
-                    <p className="text-xs text-red-300/70 [data-theme='light']:text-red-500 mt-2 italic">
-                      {lang === 'pt' 
-                        ? 'Por favor, verifique os campos obrigatórios e tente novamente.'
-                        : lang === 'es'
-                        ? 'Por favor, verifique los campos obligatorios e intente nuevamente.'
-                        : lang === 'fr'
-                        ? 'Veuillez vérifier les champs obligatoires et réessayer.'
-                        : 'Please check required fields and try again.'}
-                    </p>
+                    {/* Ação sugerida com contato direto */}
+                    {error.includes('contato') || error.includes('contact') || error.includes('contacto') ? (
+                      <div className="mt-3 pt-3 border-t border-red-500/30">
+                        <p className="text-xs text-red-300/80 [data-theme='light']:text-red-500 mb-2">
+                          {lang === 'pt' 
+                            ? 'Ou entre em contato diretamente:'
+                            : lang === 'es'
+                            ? 'O contáctenos directamente:'
+                            : lang === 'fr'
+                            ? 'Ou contactez-nous directement:'
+                            : 'Or contact us directly:'}
+                        </p>
+                        <div className="flex flex-col gap-1.5 text-xs">
+                          <a 
+                            href="mailto:contact@azmt.com.br" 
+                            className="text-red-300 hover:text-red-200 underline [data-theme='light']:text-red-600 [data-theme='light']:hover:text-red-700"
+                          >
+                            📧 contact@azmt.com.br
+                          </a>
+                          <a 
+                            href="https://wa.me/5548999701301" 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-red-300 hover:text-red-200 underline [data-theme='light']:text-red-600 [data-theme='light']:hover:text-red-700"
+                          >
+                            📱 WhatsApp: +55 (48) 99970-1301
+                          </a>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-xs text-red-300/70 [data-theme='light']:text-red-500 mt-2 italic">
+                        {lang === 'pt' 
+                          ? 'Por favor, verifique os campos obrigatórios e tente novamente.'
+                          : lang === 'es'
+                          ? 'Por favor, verifique los campos obligatorios e intente nuevamente.'
+                          : lang === 'fr'
+                          ? 'Veuillez vérifier les champs obligatoires et réessayer.'
+                          : 'Please check required fields and try again.'}
+                      </p>
+                    )}
                   </div>
                   
                   {/* Botão fechar erro */}
