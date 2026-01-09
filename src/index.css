@@ -53,6 +53,94 @@ html {
    ═══════════════════════════════════════════════════════════════ */
 
 /* ═══════════════════════════════════════════════════════════════
+   FORMULÁRIO: FORÇAR ESTILOS INPUT-ADAPTIVE (MÁXIMA PRIORIDADE!)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Tema escuro - Campos escuros */
+.input-adaptive,
+input.input-adaptive,
+select.input-adaptive,
+textarea.input-adaptive {
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(201, 35, 55, 0.3) !important;
+  color: #ffffff !important;
+}
+
+.input-adaptive::placeholder,
+input.input-adaptive::placeholder,
+textarea.input-adaptive::placeholder {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+
+.input-adaptive:focus,
+input.input-adaptive:focus,
+select.input-adaptive:focus,
+textarea.input-adaptive:focus {
+  background: rgba(0, 0, 0, 0.55) !important;
+  border-color: #c92337 !important;
+}
+
+/* Tema claro - Campos levemente cinza */
+[data-theme="light"] .input-adaptive,
+[data-theme="light"] input.input-adaptive,
+[data-theme="light"] select.input-adaptive,
+[data-theme="light"] textarea.input-adaptive,
+html[data-theme="light"] .input-adaptive,
+html[data-theme="light"] input.input-adaptive,
+html[data-theme="light"] select.input-adaptive,
+html[data-theme="light"] textarea.input-adaptive {
+  background: rgba(0, 0, 0, 0.06) !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  color: #1a1a1a !important;
+}
+
+[data-theme="light"] .input-adaptive::placeholder,
+[data-theme="light"] input.input-adaptive::placeholder,
+[data-theme="light"] textarea.input-adaptive::placeholder,
+html[data-theme="light"] .input-adaptive::placeholder,
+html[data-theme="light"] input.input-adaptive::placeholder,
+html[data-theme="light"] textarea.input-adaptive::placeholder {
+  color: rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="light"] .input-adaptive:focus,
+[data-theme="light"] input.input-adaptive:focus,
+[data-theme="light"] select.input-adaptive:focus,
+[data-theme="light"] textarea.input-adaptive:focus,
+html[data-theme="light"] .input-adaptive:focus,
+html[data-theme="light"] input.input-adaptive:focus,
+html[data-theme="light"] select.input-adaptive:focus,
+html[data-theme="light"] textarea.input-adaptive:focus {
+  background: rgba(0, 0, 0, 0.1) !important;
+  border-color: #c92337 !important;
+}
+
+/* Autocomplete do Chrome - Forçar fundo correto */
+.input-adaptive:-webkit-autofill,
+input.input-adaptive:-webkit-autofill,
+.input-adaptive:-webkit-autofill:hover,
+.input-adaptive:-webkit-autofill:focus,
+.input-adaptive:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgba(0, 0, 0, 0.4) inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+[data-theme="light"] .input-adaptive:-webkit-autofill,
+[data-theme="light"] input.input-adaptive:-webkit-autofill,
+[data-theme="light"] .input-adaptive:-webkit-autofill:hover,
+[data-theme="light"] .input-adaptive:-webkit-autofill:focus,
+[data-theme="light"] .input-adaptive:-webkit-autofill:active,
+html[data-theme="light"] .input-adaptive:-webkit-autofill,
+html[data-theme="light"] input.input-adaptive:-webkit-autofill,
+html[data-theme="light"] .input-adaptive:-webkit-autofill:hover,
+html[data-theme="light"] .input-adaptive:-webkit-autofill:focus,
+html[data-theme="light"] .input-adaptive:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgba(0, 0, 0, 0.06) inset !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    TEMA ESCURO: CARDS COM TEXTO CLARO SEMPRE
    ═══════════════════════════════════════════════════════════════ */
 html[data-theme="dark"] .card-adaptive,
@@ -1491,61 +1579,6 @@ select.input-adaptive option {
 select.input-adaptive:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   OVERRIDE DEFINITIVO - FORÇAR ESTILOS EM TODOS OS CAMPOS
-   ═══════════════════════════════════════════════════════════════ */
-
-/* Remover autocomplete azul do Chrome */
-.input-adaptive:-webkit-autofill,
-.input-adaptive:-webkit-autofill:hover,
-.input-adaptive:-webkit-autofill:focus,
-.input-adaptive:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px rgba(0, 0, 0, 0.4) inset !important;
-  -webkit-text-fill-color: #ffffff !important;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-[data-theme="light"] .input-adaptive:-webkit-autofill,
-[data-theme="light"] .input-adaptive:-webkit-autofill:hover,
-[data-theme="light"] .input-adaptive:-webkit-autofill:focus,
-[data-theme="light"] .input-adaptive:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px rgba(0, 0, 0, 0.06) inset !important;
-  -webkit-text-fill-color: #1a1a1a !important;
-}
-
-/* Forçar estilos com !important para sobrescrever Tailwind */
-.input-adaptive.w-full {
-  background: rgba(0, 0, 0, 0.4) !important;
-  border: 1px solid rgba(201, 35, 55, 0.3) !important;
-  color: #ffffff !important;
-}
-
-[data-theme="light"] .input-adaptive.w-full {
-  background: rgba(0, 0, 0, 0.06) !important;
-  border: 1px solid rgba(0, 0, 0, 0.2) !important;
-  color: #1a1a1a !important;
-}
-
-/* Garantir que placeholders também funcionem */
-.input-adaptive.w-full::placeholder {
-  color: rgba(255, 255, 255, 0.35) !important;
-}
-
-[data-theme="light"] .input-adaptive.w-full::placeholder {
-  color: rgba(0, 0, 0, 0.35) !important;
-}
-
-/* Forçar em focus também */
-.input-adaptive.w-full:focus {
-  background: rgba(0, 0, 0, 0.55) !important;
-  border-color: #c92337 !important;
-}
-
-[data-theme="light"] .input-adaptive.w-full:focus {
-  background: rgba(0, 0, 0, 0.1) !important;
-  border-color: #c92337 !important;
 }
 
 /* Custom select (Contact form) */
