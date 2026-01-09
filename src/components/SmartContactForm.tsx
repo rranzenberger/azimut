@@ -223,10 +223,11 @@ const PremiumField = ({
         paddingLeft: '16px', 
         letterSpacing: '0.04em', 
         fontSize: '10.5px', 
-        marginBottom: '6px', 
+        marginBottom: '3px', 
         lineHeight: '1.1',
         paddingBottom: '0',
-        marginTop: '0'
+        marginTop: '0',
+        display: 'block'
       }}
     >
       <span className="whitespace-nowrap">{label.replace(/:?\s*\*$/, '')}</span>
