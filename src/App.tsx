@@ -298,7 +298,7 @@ const App: React.FC = () => {
                 <Route path="/:lang/academy/corporate" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <Academy lang={routeLang} section="corporate" />}
-                  </LangRouteWrapper}
+                  </LangRouteWrapper>
                 } />
                 <Route path="/:lang/academy/vancouver" element={
                   <LangRouteWrapper setLang={setLang}>
@@ -423,7 +423,7 @@ const App: React.FC = () => {
                 <Route path="/:lang/academy/corporate" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <Academy lang={routeLang} section="corporate" />}
-                  </LangRouteWrapper}
+                  </LangRouteWrapper>
                 } />
                 <Route path="/:lang/academy/vancouver" element={
                   <LangRouteWrapper setLang={setLang}>
