@@ -909,7 +909,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             )}
 
             {/* Divisor visual */}
-            <div className="my-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="my-10 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
             {/* Personal Info - Grid 2 colunas */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-fade-in-up" style={{ animationDelay: '0.2s', rowGap: '2rem' }}>
@@ -1099,21 +1099,24 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             </div>
 
             {/* Description */}
-            <div style={{ marginTop: '1.5rem' }}>
+            <div style={{ marginTop: '2rem' }}>
               <PremiumField label={t.description}>
                 <textarea
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
-                  rows={4}
-                  className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20 resize-none text-[15px] leading-normal"
+                  rows={5}
+                  className="relative z-10 input-adaptive w-full px-4 py-4 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20 resize-none text-[15px] leading-relaxed"
                   placeholder="Queremos criar uma instalação imersiva para nosso museu..."
                 />
               </PremiumField>
             </div>
 
+            {/* Divisor visual antes dos checkboxes */}
+            <div className="my-8 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
             {/* Checkboxes */}
-            <div className="space-y-4" style={{ marginTop: '2rem' }}>
+            <div className="space-y-5" style={{ marginTop: '1rem' }}>
               <label className="flex items-start gap-3 cursor-pointer group">
                 <input
                   type="checkbox"
