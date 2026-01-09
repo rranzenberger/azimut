@@ -7,8 +7,32 @@
 const isDevelopment = import.meta.env.DEV
 const isProduction = import.meta.env.PROD
 
-// URL da API - usar produção se estiver em produção ou se localhost não estiver disponível
-const API_URL = import.meta.env.VITE_API_URL || (isProduction ? 'https://backoffice.azmt.com.br' : 'http://localhost:3001')
+// Detectar se está rodando em produção (Vercel)
+const isVercelProduction = typeof window !== 'undefined' && (
+  window.location.hostname.includes('vercel.app') || 
+  window.location.hostname.includes('azmt.com.br') ||
+  window.location.hostname === 'azimut.com.br'
+)
+
+// URL da API - usar produção automaticamente se detectado ambiente de produção
+const getApiUrl = () => {
+  const envUrl = import.meta.env.VITE_API_URL
+  
+  // Se tem URL configurada, usar ela
+  if (envUrl && envUrl !== 'undefined' && !envUrl.includes('undefined')) {
+    return envUrl
+  }
+  
+  // Se está em produção (Vercel ou domínio custom), usar backoffice de produção
+  if (isProduction || isVercelProduction) {
+    return 'https://backoffice.azmt.com.br'
+  }
+  
+  // Fallback para desenvolvimento local
+  return 'http://localhost:3001'
+}
+
+const API_URL = getApiUrl()
 const API_KEY = import.meta.env.VITE_API_KEY || ''
 
 // Check if features are enabled
