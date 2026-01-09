@@ -145,25 +145,6 @@ html[data-theme="light"] .input-adaptive:-webkit-autofill:active {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   CONTAINER DO FORMULÁRIO - FUNDO ESCURO PREMIUM
-   ═══════════════════════════════════════════════════════════════ */
-
-/* Container escuro por padrão (tema dark) */
-form + div,
-div > form {
-  /* Aplicado via className no componente */
-}
-
-/* Tema claro - container claro */
-[data-theme="light"] .bg-slate-900\/85 {
-  background: rgba(255, 255, 255, 0.95) !important;
-}
-
-[data-theme="light"] .border-slate-700\/50 {
-  border-color: rgba(0, 0, 0, 0.1) !important;
-}
-
-/* ═══════════════════════════════════════════════════════════════
    TEMA ESCURO: CARDS COM TEXTO CLARO SEMPRE
    ═══════════════════════════════════════════════════════════════ */
 html[data-theme="dark"] .card-adaptive,

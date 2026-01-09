@@ -426,21 +426,21 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
   return (
     <div className="relative">
-      {/* Container com fundo escuro por padrão, claro no tema light */}
-      <div className="bg-slate-900/85 backdrop-blur-xl rounded-2xl p-6 md:p-8 lg:p-10 border border-slate-700/50 shadow-2xl [data-theme='light']:bg-white/95 [data-theme='light']:border-slate-200/50">
+      {/* Container seguindo padrão glass-panel do site */}
+      <div className="glass-panel backdrop-blur-xl bg-black/60 border border-white/10 rounded-2xl p-6 md:p-8 lg:p-10 shadow-[0_16px_40px_rgba(0,0,0,0.4)] [data-theme='light']:bg-white/95 [data-theme='light']:border-slate-200/50">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Header */}
           <div className="text-center mb-8">
-            <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-wider text-white dark:text-white [data-theme='light']:text-slate-900 mb-3">
+            <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-wider text-white [data-theme='light']:text-slate-900 mb-3">
               {t.title}
             </h2>
-            <p className="text-slate-300 dark:text-slate-400 [data-theme='light']:text-slate-600">
+            <p className="text-white/70 [data-theme='light']:text-slate-600">
               {t.subtitle}
             </p>
           </div>
 
           {error && (
-            <div className="bg-red-900/30 dark:bg-red-900/20 border border-red-700/50 dark:border-red-800 rounded-lg p-4 text-red-200 dark:text-red-200 [data-theme='light']:bg-red-50 [data-theme='light']:border-red-200 [data-theme='light']:text-red-800">
+            <div className="glass-panel backdrop-blur-xl bg-red-900/30 border border-red-500/40 rounded-lg p-4 text-red-200 [data-theme='light']:bg-red-50 [data-theme='light']:border-red-200 [data-theme='light']:text-red-800">
               <p className="font-semibold">{t.errorTitle}</p>
               <p className="text-sm">{error}</p>
             </div>
@@ -448,25 +448,25 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
           {/* Sugestões IA em tempo real */}
           {aiSuggestions && (formData.organizationType && formData.projectType) && (
-            <div className="bg-gradient-to-r from-blue-900/30 to-indigo-900/30 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-700/50 dark:border-blue-800 rounded-lg p-4 mb-6 animate-fade-in-up [data-theme='light']:from-blue-50 [data-theme='light']:to-indigo-50 [data-theme='light']:border-blue-200">
+            <div className="glass-panel backdrop-blur-xl bg-blue-900/20 border border-blue-500/30 rounded-lg p-4 mb-6 animate-fade-in-up [data-theme='light']:bg-blue-50/50 [data-theme='light']:border-blue-200">
           <div className="flex items-start gap-3">
             <span className="text-2xl">🤖</span>
             <div className="flex-1">
-              <div className="font-semibold text-blue-200 dark:text-blue-100 [data-theme='light']:text-blue-900 mb-2 flex items-center gap-2">
+              <div className="font-semibold text-blue-200 [data-theme='light']:text-blue-900 mb-2 flex items-center gap-2">
                 Sugestões Personalizadas
                 {aiSuggestions.aiEnabled && (
-                  <span className="text-xs px-2 py-0.5 bg-blue-700/50 dark:bg-blue-800 [data-theme='light']:bg-blue-200 rounded-full">
+                  <span className="text-xs px-2 py-0.5 bg-blue-500/30 [data-theme='light']:bg-blue-200 rounded-full">
                     IA
                   </span>
                 )}
               </div>
               {aiSuggestions.message && (
-                <p className="text-sm text-blue-200 dark:text-blue-200 [data-theme='light']:text-blue-800 mb-3">
+                <p className="text-sm text-blue-200 [data-theme='light']:text-blue-800 mb-3">
                   {aiSuggestions.message}
                 </p>
               )}
               {aiSuggestions.projectSuggestions.length > 0 && (
-                <div className="text-sm text-blue-300 dark:text-blue-300 [data-theme='light']:text-blue-700 mb-2">
+                <div className="text-sm text-blue-200/90 [data-theme='light']:text-blue-700 mb-2">
                   <strong>Projetos que podem interessar:</strong>
                   <ul className="list-disc list-inside mt-1 space-y-1">
                     {aiSuggestions.projectSuggestions.map((s, i) => (
@@ -476,7 +476,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                 </div>
               )}
               {aiSuggestions.budgetSuggestion && (
-                <div className="text-sm text-blue-300 dark:text-blue-300 [data-theme='light']:text-blue-700 mt-2">
+                <div className="text-sm text-blue-200/90 [data-theme='light']:text-blue-700 mt-2">
                   💡 {aiSuggestions.budgetSuggestion}
                 </div>
               )}
@@ -488,7 +488,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
           {/* Personal Info */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-slate-200 dark:text-slate-300 [data-theme='light']:text-slate-700 mb-2">
+          <label className="block text-sm font-medium text-white/80 [data-theme='light']:text-slate-700 mb-2">
             {t.name}
           </label>
           <input
@@ -503,7 +503,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 dark:text-slate-300 [data-theme='light']:text-slate-700 mb-2">
+          <label className="block text-sm font-medium text-white/80 [data-theme='light']:text-slate-700 mb-2">
             {t.email}
           </label>
           <input
@@ -520,7 +520,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-slate-200 dark:text-slate-300 [data-theme='light']:text-slate-700 mb-2">
+          <label className="block text-sm font-medium text-white/80 [data-theme='light']:text-slate-700 mb-2">
             {t.phone}
           </label>
           <input
@@ -534,7 +534,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 dark:text-slate-300 [data-theme='light']:text-slate-700 mb-2">
+          <label className="block text-sm font-medium text-white/80 [data-theme='light']:text-slate-700 mb-2">
             {t.position}
           </label>
           <input
@@ -550,7 +550,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
       {/* Organization */}
       <div>
-        <label className="block text-sm font-medium text-slate-200 dark:text-slate-300 [data-theme='light']:text-slate-700 mb-2">
+        <label className="block text-sm font-medium text-white/80 [data-theme='light']:text-slate-700 mb-2">
           {t.company}
         </label>
         <input
@@ -565,7 +565,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-200 dark:text-slate-300 [data-theme='light']:text-slate-700 mb-2">
+        <label className="block text-sm font-medium text-white/80 [data-theme='light']:text-slate-700 mb-2">
           {t.organizationType}
         </label>
         <select
@@ -583,7 +583,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
       {/* Project Info */}
       <div>
-        <label className="block text-sm font-medium text-slate-200 dark:text-slate-300 [data-theme='light']:text-slate-700 mb-2">
+        <label className="block text-sm font-medium text-white/80 [data-theme='light']:text-slate-700 mb-2">
           {t.projectType}
         </label>
         <select
@@ -601,7 +601,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-slate-200 dark:text-slate-300 [data-theme='light']:text-slate-700 mb-2">
+          <label className="block text-sm font-medium text-white/80 [data-theme='light']:text-slate-700 mb-2">
             {t.budget}
           </label>
           <select
@@ -618,7 +618,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 dark:text-slate-300 [data-theme='light']:text-slate-700 mb-2">
+          <label className="block text-sm font-medium text-white/80 [data-theme='light']:text-slate-700 mb-2">
             {t.timeline}
           </label>
           <select
@@ -638,7 +638,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       {/* Location */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-slate-200 dark:text-slate-300 [data-theme='light']:text-slate-700 mb-2">
+          <label className="block text-sm font-medium text-white/80 [data-theme='light']:text-slate-700 mb-2">
             {t.country}
           </label>
           <input
@@ -652,7 +652,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 dark:text-slate-300 [data-theme='light']:text-slate-700 mb-2">
+          <label className="block text-sm font-medium text-white/80 [data-theme='light']:text-slate-700 mb-2">
             {t.city}
           </label>
           <input
@@ -668,7 +668,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
       {/* Description */}
       <div>
-        <label className="block text-sm font-medium text-slate-200 dark:text-slate-300 [data-theme='light']:text-slate-700 mb-2">
+        <label className="block text-sm font-medium text-white/80 [data-theme='light']:text-slate-700 mb-2">
           {t.description}
         </label>
         <textarea
@@ -689,9 +689,9 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                 name="interestInGrants"
                 checked={formData.interestInGrants}
                 onChange={handleChange}
-                className="mt-1 w-5 h-5 rounded border-slate-500 dark:border-slate-600 text-azimut-red focus:ring-2 focus:ring-azimut-red bg-slate-800/50"
+                className="mt-1 w-5 h-5 rounded border-white/30 text-azimut-red focus:ring-2 focus:ring-azimut-red bg-white/10 [data-theme='light']:border-slate-300 [data-theme='light']:bg-white"
               />
-              <span className="text-sm text-slate-200 dark:text-slate-300 [data-theme='light']:text-slate-700">
+              <span className="text-sm text-white/80 [data-theme='light']:text-slate-700">
                 {t.interestInGrants}
               </span>
             </label>
@@ -703,9 +703,9 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                 checked={formData.acceptContact}
                 onChange={handleChange}
                 required
-                className="mt-1 w-5 h-5 rounded border-slate-500 dark:border-slate-600 text-azimut-red focus:ring-2 focus:ring-azimut-red bg-slate-800/50"
+                className="mt-1 w-5 h-5 rounded border-white/30 text-azimut-red focus:ring-2 focus:ring-azimut-red bg-white/10 [data-theme='light']:border-slate-300 [data-theme='light']:bg-white"
               />
-              <span className="text-sm text-slate-200 dark:text-slate-300 [data-theme='light']:text-slate-700">
+              <span className="text-sm text-white/80 [data-theme='light']:text-slate-700">
                 {t.acceptContact}
               </span>
             </label>
@@ -721,8 +721,8 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       </button>
 
           {/* Guarantees */}
-          <div className="grid grid-cols-2 gap-3 pt-4 border-t border-slate-700/50 dark:border-slate-800/50">
-            <div className="text-xs text-slate-300 dark:text-slate-400">
+          <div className="grid grid-cols-2 gap-3 pt-4 border-t border-white/10 [data-theme='light']:border-slate-200/50">
+            <div className="text-xs text-white/60 [data-theme='light']:text-slate-600">
               {t.guarantees.response}
             </div>
             <div className="text-xs text-slate-300 dark:text-slate-400">

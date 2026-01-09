@@ -28,11 +28,10 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
       <SEO
         title={seo.title}
         description={seo.description}
-        canonical="/contact"
         lang={lang}
       />
       
-      <main className="relative min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+      <main className="relative min-h-screen">
         {/* Estrela de fundo */}
         <div className="absolute -right-28 -bottom-40 min-[768px]:-right-40 min-[768px]:-bottom-60 h-[520px] w-[520px] min-[768px]:h-[680px] min-[768px]:w-[680px] opacity-[0.3] dark:opacity-[0.15] pointer-events-none -z-5">
           <img
