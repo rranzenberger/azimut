@@ -8,7 +8,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
-import { VideoCard } from '../components/VideoCard'
+// import { VideoCard } from '../components/VideoCard' // TODO: Fix import
 import { useUserTracking } from '../hooks/useUserTracking'
 
 interface AcademyCorporateProps {
