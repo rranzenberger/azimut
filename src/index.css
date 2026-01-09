@@ -1493,6 +1493,61 @@ select.input-adaptive:disabled {
   cursor: not-allowed;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   OVERRIDE DEFINITIVO - FORÇAR ESTILOS EM TODOS OS CAMPOS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Remover autocomplete azul do Chrome */
+.input-adaptive:-webkit-autofill,
+.input-adaptive:-webkit-autofill:hover,
+.input-adaptive:-webkit-autofill:focus,
+.input-adaptive:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgba(0, 0, 0, 0.4) inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+[data-theme="light"] .input-adaptive:-webkit-autofill,
+[data-theme="light"] .input-adaptive:-webkit-autofill:hover,
+[data-theme="light"] .input-adaptive:-webkit-autofill:focus,
+[data-theme="light"] .input-adaptive:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgba(0, 0, 0, 0.06) inset !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+}
+
+/* Forçar estilos com !important para sobrescrever Tailwind */
+.input-adaptive.w-full {
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(201, 35, 55, 0.3) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .input-adaptive.w-full {
+  background: rgba(0, 0, 0, 0.06) !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  color: #1a1a1a !important;
+}
+
+/* Garantir que placeholders também funcionem */
+.input-adaptive.w-full::placeholder {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+
+[data-theme="light"] .input-adaptive.w-full::placeholder {
+  color: rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Forçar em focus também */
+.input-adaptive.w-full:focus {
+  background: rgba(0, 0, 0, 0.55) !important;
+  border-color: #c92337 !important;
+}
+
+[data-theme="light"] .input-adaptive.w-full:focus {
+  background: rgba(0, 0, 0, 0.1) !important;
+  border-color: #c92337 !important;
+}
+
 /* Custom select (Contact form) */
 .select-trigger {
   @apply w-full min-h-[44px] rounded-xl border border-white/10 px-3 py-2.5 text-left text-slate-100 flex items-center justify-between gap-2;
