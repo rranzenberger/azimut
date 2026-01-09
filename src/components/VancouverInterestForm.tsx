@@ -53,7 +53,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
       email: 'Email',
       whatsapp: 'WhatsApp',
       age: 'Idade',
-      city: 'Cidade/Estado',
+      city: 'Cidade/País',
       currentSituation: 'Situação atual',
       situations: [
         { value: '', label: 'Selecione...' },
@@ -306,7 +306,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                 type="text"
                 name="city"
                 required
-                placeholder="São Paulo - SP"
+                placeholder="São Paulo, Brazil / New York, USA / Paris, France"
                 value={formData.city}
                 onChange={handleChange}
                 className="w-full px-4 py-3 input-adaptive rounded-lg"

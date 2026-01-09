@@ -13,8 +13,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
   const content = {
     pt: {
       title: 'Estudar em Vancouver',
-      subtitle: 'Uma alternativa inteligente ao vestibular tradicional',
-      heroDescription: 'Forme-se em 1 ano nas melhores escolas de mídia do Canadá, com 90%+ de empregabilidade e possibilidade de residência permanente.',
+      subtitle: 'Sua carreira internacional começa aqui',
+      heroDescription: 'Forme-se em 1 ano nas melhores escolas de mídia do Canadá, com 90%+ de empregabilidade e possibilidade de residência permanente. Agente oficial VFS/VanArts para alunos de todo o mundo.',
       ctaHero: 'Calcule seu investimento',
       
       whyTitle: 'Por que Vancouver?',
@@ -26,8 +26,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         },
         {
           icon: '🏆',
-          title: 'Qualidade de Vida #3 Mundial',
-          description: 'Cidade segura, multicultural e com excelente infraestrutura. Natureza + tecnologia em harmonia.'
+          title: 'Qualidade de Vida Top 3 Mundial',
+          description: 'Vancouver é constantemente ranqueada entre as 3 melhores cidades do mundo para se viver. Segura, multicultural e com natureza deslumbrante.'
         },
         {
           icon: '🍁',
@@ -41,8 +41,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         }
       ],
 
-      compareTitle: 'Brasil vs Vancouver: Compare',
-      compareDescription: 'Veja o comparativo real entre estudar numa universidade privada no Brasil e nas escolas de Vancouver.',
+      compareTitle: 'Universidade Tradicional vs Vancouver',
+      compareDescription: 'Compare estudar em uma universidade tradicional (4 anos) versus as escolas especializadas de Vancouver (1 ano intensivo).',
       
       schoolsTitle: 'VFS e VanArts: As Melhores Escolas',
       
@@ -134,8 +134,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
           description: 'Indicação de moradia, grupo de brasileiros, networking local e suporte nos primeiros meses.'
         }
       ],
-      azimutCost: 'Nosso custo: ZERO*',
-      azimutCostNote: '*Ganhamos comissão diretamente da VFS/VanArts. Você não paga nada a mais!',
+      azimutCost: 'Nosso serviço: GRATUITO*',
+      azimutCostNote: '*Somos agentes oficiais da VFS/VanArts. Ganhamos comissão das escolas, você não paga nada extra!',
 
       calculatorTitle: 'Calculadora de Investimento',
       calculatorDescription: 'Simule quanto custará estudar em Vancouver (incluindo tuition, moradia, alimentação e vida).',
@@ -303,17 +303,17 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 <thead>
                   <tr className="border-b-2 border-azimut-red">
                     <th className="text-left p-4 text-white/70 font-semibold uppercase text-sm"></th>
-                    <th className="p-4 text-white font-semibold text-lg">PUC Brasil</th>
+                    <th className="p-4 text-white font-semibold text-lg">Univ. Tradicional</th>
                     <th className="p-4 text-azimut-red font-semibold text-lg">VanArts 🍁</th>
                     <th className="p-4 text-white font-semibold text-lg">VFS 🍁</th>
                   </tr>
                 </thead>
                 <tbody className="text-center">
                   <tr className="border-b border-white/10">
-                    <td className="text-left p-4 text-white/70 font-medium">Custo Total</td>
-                    <td className="p-4 text-white">R$ 190.000</td>
-                    <td className="p-4 text-azimut-red font-bold text-xl">R$ 137.000 ✅</td>
-                    <td className="p-4 text-white">R$ 223.000</td>
+                    <td className="text-left p-4 text-white/70 font-medium">Custo Total (aprox.)</td>
+                    <td className="p-4 text-white">US$ 40-80k</td>
+                    <td className="p-4 text-azimut-red font-bold text-xl">US$ 35k ✅</td>
+                    <td className="p-4 text-white">US$ 55k</td>
                   </tr>
                   <tr className="border-b border-white/10">
                     <td className="text-left p-4 text-white/70 font-medium">Duração</td>
@@ -329,21 +329,21 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   </tr>
                   <tr className="border-b border-white/10">
                     <td className="text-left p-4 text-white/70 font-medium">Salário Inicial</td>
-                    <td className="p-4 text-white">R$ 2.5-4k/mês</td>
-                    <td className="p-4 text-azimut-red font-bold">R$ 12-17k/mês ✅</td>
-                    <td className="p-4 text-white">R$ 14-19k/mês ✅</td>
+                    <td className="p-4 text-white">US$ 2-4k/mês</td>
+                    <td className="p-4 text-azimut-red font-bold">CAD $3.5-5k/mês ✅</td>
+                    <td className="p-4 text-white">CAD $4-6k/mês ✅</td>
                   </tr>
                   <tr className="border-b border-white/10">
                     <td className="text-left p-4 text-white/70 font-medium">Mercado</td>
-                    <td className="p-4 text-white">Brasil</td>
+                    <td className="p-4 text-white">Regional</td>
                     <td className="p-4 text-azimut-red font-bold">Global ✅</td>
                     <td className="p-4 text-white">Global ✅</td>
                   </tr>
                   <tr className="border-b border-white/10">
                     <td className="text-left p-4 text-white/70 font-medium">Idioma</td>
-                    <td className="p-4 text-white">Português</td>
-                    <td className="p-4 text-azimut-red font-bold">Inglês ✅</td>
-                    <td className="p-4 text-white">Inglês ✅</td>
+                    <td className="p-4 text-white">Local</td>
+                    <td className="p-4 text-azimut-red font-bold">English ✅</td>
+                    <td className="p-4 text-white">English ✅</td>
                   </tr>
                   <tr>
                     <td className="text-left p-4 text-white/70 font-medium">Residência PR</td>
@@ -357,7 +357,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
 
             <div className="mt-8 p-6 bg-azimut-red/10 border border-azimut-red/30 rounded-lg">
               <p className="text-white/90 text-center text-lg">
-                <strong className="text-azimut-red">VEREDITO:</strong> VanArts é <strong>MAIS BARATO</strong>, <strong>4x MAIS RÁPIDO</strong>, <strong>2x MAIOR EMPREGABILIDADE</strong> e com <strong>SALÁRIO 4-5x MAIOR</strong>! 🚀
+                <strong className="text-azimut-red">VEREDITO:</strong> VanArts/VFS são <strong>MAIS FOCADAS</strong>, <strong>4x MAIS RÁPIDAS</strong>, <strong>2x MAIOR EMPREGABILIDADE</strong> e com <strong>MERCADO GLOBAL</strong> + <strong>PATHWAY PR 🍁</strong>! 🚀
               </p>
             </div>
           </div>

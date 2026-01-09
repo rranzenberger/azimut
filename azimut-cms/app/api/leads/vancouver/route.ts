@@ -107,7 +107,7 @@ export async function POST(request: NextRequest) {
         // Metadata
         sourceUrl: request.headers.get('referer') || 'https://azmt.com.br/vancouver',
         referrer: request.headers.get('referer') || null,
-        country: 'BR', // Assumir Brasil por padrão
+        country: body.city?.includes(',') ? body.city.split(',').pop()?.trim() : null, // Extrair país da cidade
       },
     })
 
