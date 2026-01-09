@@ -95,20 +95,20 @@ const PremiumField = ({
   error?: string,
   required?: boolean
 }) => (
-  <div className={`group ${className}`}>
-    <label className={`block text-sm font-medium mb-2.5 transition-colors flex items-center gap-1.5 flex-wrap ${
-      error ? 'text-red-400' : 'opacity-90 group-focus-within:opacity-100 group-focus-within:text-azimut-red/80'
-    }`}>
+  <div className={`group w-full ${className}`}>
+    <label className={`block text-sm font-medium mb-3 transition-colors flex items-center gap-1.5 ${
+      error ? 'text-red-400' : 'opacity-90 group-focus-within:opacity-100 group-focus-within:text-azimut-red/80 text-white/85 [data-theme="light"]:text-slate-700'
+    }`} style={{ paddingLeft: '16px' }}>
       <span className="whitespace-nowrap">{label.replace(/:?\s*\*$/, '')}</span>
       {required && (
-        <span className="text-azimut-red text-xs font-bold flex-shrink-0" aria-label="obrigatório">*</span>
+        <span className="text-azimut-red text-xs font-bold flex-shrink-0 ml-0.5" aria-label="obrigatório">*</span>
       )}
     </label>
-    <div className="relative">
+    <div className="relative w-full">
       {children}
       {/* Mensagem de erro abaixo do campo */}
       {error && (
-        <p className="mt-2 text-xs text-red-400/90 flex items-center gap-1.5 animate-fade-in-up">
+        <p className="mt-2.5 text-xs text-red-400/90 flex items-center gap-1.5 animate-fade-in-up" style={{ paddingLeft: '16px' }}>
           <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -818,7 +818,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 ${
+                  className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal ${
                     fieldErrors.name 
                       ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
                       : 'focus:ring-azimut-red/50 focus:border-azimut-red/50'
