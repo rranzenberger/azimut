@@ -223,10 +223,10 @@ const PremiumField = ({
         paddingLeft: '16px', 
         letterSpacing: '0.04em', 
         fontSize: '10.5px', 
-        marginBottom: '3px', 
+        marginBottom: '2px !important', 
         lineHeight: '1.1',
-        paddingBottom: '0',
-        marginTop: '0',
+        paddingBottom: '0 !important',
+        marginTop: '0 !important',
         display: 'block'
       }}
     >
