@@ -604,15 +604,35 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors)
       setLoading(false)
-      setError(
-        lang === 'pt' 
-          ? 'Por favor, corrija os campos destacados abaixo.'
-          : lang === 'es'
-          ? 'Por favor, corrija los campos destacados a continuación.'
-          : lang === 'fr'
-          ? 'Veuillez corriger les champs mis en évidence ci-dessous.'
-          : 'Please fix the highlighted fields below.'
+      
+      // Mapear nomes dos campos para exibição
+      const fieldNames: Record<string, Record<string, string>> = {
+        name: { pt: 'Nome completo', es: 'Nombre completo', fr: 'Nom complet', en: 'Full name' },
+        email: { pt: 'Email', es: 'Email', fr: 'Email', en: 'Email' },
+        company: { pt: 'Nome da Organização', es: 'Nombre de la Organización', fr: 'Nom de l\'Organisation', en: 'Organization Name' },
+        organizationType: { pt: 'Você representa', es: 'Usted representa', fr: 'Vous représentez', en: 'You represent' },
+        projectType: { pt: 'Tipo de Projeto', es: 'Tipo de Proyecto', fr: 'Type de Projet', en: 'Project Type' },
+        budget: { pt: 'Budget Disponível', es: 'Presupuesto Disponible', fr: 'Budget Disponible', en: 'Available Budget' },
+        timeline: { pt: 'Quando precisa estar pronto', es: 'Cuándo lo necesita listo', fr: 'Quand avez-vous besoin', en: 'When do you need it ready' },
+        acceptContact: { pt: 'Aceitar receber contato', es: 'Aceptar recibir contacto', fr: 'Accepter de recevoir des contacts', en: 'Accept to be contacted' }
+      }
+      
+      // Criar lista de campos faltantes
+      const missingFields = Object.keys(errors).map(key => 
+        fieldNames[key]?.[lang] || fieldNames[key]?.['en'] || key
       )
+      
+      const fieldList = missingFields.map(field => `• ${field}`).join('\n')
+      
+      const errorMessage = lang === 'pt' 
+        ? `Por favor, preencha os seguintes campos obrigatórios:\n\n${fieldList}`
+        : lang === 'es'
+        ? `Por favor, complete los siguientes campos obligatorios:\n\n${fieldList}`
+        : lang === 'fr'
+        ? `Veuillez remplir les champs obligatoires suivants:\n\n${fieldList}`
+        : `Please fill in the following required fields:\n\n${fieldList}`
+      
+      setError(errorMessage)
       return
     }
 
