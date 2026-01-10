@@ -71,10 +71,11 @@ export async function POST(request: NextRequest) {
       // Processar vídeo (salvar original + gerar thumbnail)
       return await processVideo(buffer, folderPath, uniqueName, file, folder)
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Upload error:', error)
+    const err = error as { message?: string }
     return NextResponse.json(
-      { error: error.message || 'Upload failed' },
+      { error: err.message || 'Upload failed' },
       { status: 500 }
     )
   }
@@ -153,15 +154,12 @@ async function processImage(
       mediumUrl: urls.medium,
       largeUrl: urls.large,
       webpUrl: urls.webp,
-      width: metadata.width || 0,
-      height: metadata.height || 0,
+      width: metadata.width || null,
+      height: metadata.height || null,
       sizeBytes: file.size,
-      mimeType: file.type,
-      filename: uniqueName,
-      originalFilename: file.name,
-      folder: folder,
-      createdAt: new Date(),
-      updatedAt: new Date()
+      format: metadata.format || null,
+      contentType: file.type,
+      altPt: file.name || null
     }
   })
 
@@ -206,12 +204,8 @@ async function processVideo(
       type: 'VIDEO',
       originalUrl: urls.original,
       sizeBytes: file.size,
-      mimeType: file.type,
-      filename: uniqueName,
-      originalFilename: file.name,
-      folder: folder,
-      createdAt: new Date(),
-      updatedAt: new Date()
+      contentType: file.type,
+      altPt: file.name || null
     }
   })
 
