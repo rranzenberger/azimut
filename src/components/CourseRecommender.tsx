@@ -271,6 +271,7 @@ const CourseRecommender: React.FC<CourseRecommenderProps> = ({ lang, onComplete 
         cta: 'View Course Details',
         ctaAll: 'Talk to Consultant'
       }
+    }
   }
 
   // CORREÇÃO: Remover referência circular content.pt
