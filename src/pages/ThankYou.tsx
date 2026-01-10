@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { type Lang } from '../i18n';
+import { trackConversion } from '../components/GoogleAnalytics';
 
 interface ThankYouProps {
   lang: Lang;
 }
 
 const ThankYouPage: React.FC<ThankYouProps> = ({ lang }) => {
+  // Track conversion quando página carrega
+  useEffect(() => {
+    trackConversion('lead', {
+      page: 'thank-you',
+      lang,
+      source: document.referrer || 'direct',
+      timestamp: new Date().toISOString()
+    })
+  }, [lang])
 
   const content = {
     pt: {
