@@ -169,6 +169,14 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang, userProfile = '
       }
       setMessages(prev => [...prev, assistantMessage])
 
+      // Log AI usage for debugging (remove in production)
+      if (data.metadata?.aiUsed) {
+        console.log(`💬 AI Used: ${data.metadata.aiUsed}`, {
+          costSaved: data.metadata.costSaved,
+          shouldFollowUp: data.shouldFollowUp
+        })
+      }
+
       // If lead data was captured, save it
       if (data.leadData) {
         await fetch('/api/leads/capture', {

@@ -1,8 +1,8 @@
 // ════════════════════════════════════════════════════════════
-// CLAUDE CHAT API ROUTE - Backend Endpoint
+// CHAT API ROUTE - Smart Routing (Claude + DeepSeek)
 // ════════════════════════════════════════════════════════════
 
-import { callClaude } from '../../services/claude-api'
+import { routeToAI, logAIUsage } from '../../services/ai-router'
 
 export async function POST(request: Request) {
   try {
@@ -18,16 +18,39 @@ export async function POST(request: Request) {
       )
     }
 
-    // Chamar Claude
-    const claudeResponse = await callClaude({
+    // Detectar email domain se houver email na mensagem
+    const emailMatch = message.match(/\b[A-Za-z0-9._%+-]+@([A-Za-z0-9.-]+\.[A-Z|a-z]{2,})\b/)
+    const emailDomain = emailMatch ? emailMatch[1] : undefined
+
+    // Enriquecer contexto
+    const enrichedContext = {
+      ...context,
+      messageCount: (context?.previousMessages?.length || 0) + 1,
+      isExitIntent: context?.isExitIntent || false,
+      emailDomain
+    }
+
+    // 🔀 SMART ROUTING: Decide qual IA usar
+    const aiResponse = await routeToAI({
       message,
       lang: lang || 'pt',
       userProfile: userProfile || 'unknown',
-      context: context || { page: '/', previousMessages: [] }
+      context: enrichedContext
     })
 
+    // Log para analytics
+    logAIUsage(aiResponse)
+
+    // Retornar resposta com metadata
     return new Response(
-      JSON.stringify(claudeResponse),
+      JSON.stringify({
+        ...aiResponse,
+        metadata: {
+          aiUsed: aiResponse.aiUsed,
+          costSaved: aiResponse.costSaved,
+          timestamp: new Date().toISOString()
+        }
+      }),
       { 
         status: 200, 
         headers: { 'Content-Type': 'application/json' }
