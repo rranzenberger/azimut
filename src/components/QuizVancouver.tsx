@@ -35,7 +35,7 @@ const QuizVancouver: React.FC<QuizVancouverProps> = ({ lang, onComplete }) => {
   const [result, setResult] = useState<QuizResult | null>(null)
   const [showResult, setShowResult] = useState(false)
 
-  const content: Record<Lang, any> = {
+  const content: any = {
     pt: {
       title: 'Você está pronto para Vancouver?',
       subtitle: 'Descubra em 2 minutos seu nível de prontidão e a escola ideal',
@@ -317,12 +317,11 @@ const QuizVancouver: React.FC<QuizVancouverProps> = ({ lang, onComplete }) => {
           }
         }
       }
-    },
-    es: {} as any,
-    fr: {} as any
+    }
   }
 
-  const t = content[lang] || content.pt
+  // TEMPORÁRIO: Forçar PT até traduções completas
+  const t = content.pt
   const totalQuestions = t.questions.length
 
   const calculateResult = (): QuizResult => {

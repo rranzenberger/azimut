@@ -246,7 +246,8 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
     }
   }
 
-  const t = content[lang] || content.pt
+  // TEMPORÁRIO: Forçar PT até traduções completas
+  const t = content.pt
 
   return (
     <div className="py-16 md:py-24">

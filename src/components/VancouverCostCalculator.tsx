@@ -195,12 +195,11 @@ const VancouverCostCalculator: React.FC<CostCalculatorProps> = ({ lang }) => {
         button: 'Talk to Consultant',
         subtitle: 'Learn about financing and scholarships'
       }
-    },
-    es: {} as any,
-    fr: {} as any
+    }
   }
 
-  const t = content[lang] || content.pt
+  // TEMPORÁRIO: Forçar PT até traduções completas
+  const t = content.pt
 
   useEffect(() => {
     calculateCosts()

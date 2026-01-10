@@ -312,7 +312,8 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
     }
   }
 
-  const t = content[lang] || content.pt
+  // TEMPORÁRIO: Forçar PT até traduções completas
+  const t = content.pt
   const currentSection = activeTab === 'lifestyle' ? t.lifestyle : activeTab === 'schools' ? t.schools : t.future
 
   return (
