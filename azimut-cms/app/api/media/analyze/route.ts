@@ -155,11 +155,12 @@ export async function POST(request: NextRequest) {
     })
 
     if (existingAnalysis) {
+      const cachedAnalysis = existingAnalysis.analysis as any
       return NextResponse.json({
         success: true,
         cached: true,
-        analysis: existingAnalysis.analysis,
-        model: existingAnalysis.analysis?._model || 'cached'
+        analysis: cachedAnalysis,
+        model: cachedAnalysis?._model || 'cached'
       })
     }
 
@@ -221,21 +222,22 @@ export async function POST(request: NextRequest) {
         console.log(`✅ Analysis successful with ${modelToUse}`)
         break // Sucesso, sair do loop
         
-      } catch (error: any) {
+      } catch (error: unknown) {
         attempts++
-        lastError = error
+        const err = error as { status?: number; message?: string }
+        lastError = err as Error
         
         // Se erro de modelo não disponível, tentar fallback
-        if (error.status === 404 || error.message?.includes('model')) {
+        if (err.status === 404 || err.message?.includes('model')) {
           console.warn(`⚠️ Model ${selectedModel} not available, trying fallback...`)
           if (attempts >= maxAttempts) {
-            throw new Error(`Model ${selectedModel} not available and fallback failed: ${error.message}`)
+            throw new Error(`Model ${selectedModel} not available and fallback failed: ${err.message || 'Unknown error'}`)
           }
           continue
         }
         
         // Outros erros, lançar imediatamente
-        throw error
+        throw err
       }
     }
 
@@ -299,10 +301,8 @@ export async function POST(request: NextRequest) {
       await prisma.media.update({
         where: { id: mediaId },
         data: {
-          tags: analysisData.tags,
-          alt: analysisData.caption,
-          caption: analysisData.caption,
-          folder: analysisData.category // Auto-organizar por categoria
+          altPt: analysisData.caption || undefined,
+          altEn: analysisData.caption || undefined
         }
       })
     }
@@ -318,28 +318,29 @@ export async function POST(request: NextRequest) {
       },
       rawResponse: content.text.substring(0, 500) // Primeiros 500 chars para debug
     })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ AI Analysis error:', error)
+    const err = error as { status?: number; message?: string }
     
     // Retornar análise básica em caso de erro
     return NextResponse.json({
       success: false,
-      error: error.message || 'Unknown error',
-      errorType: error.status === 404 ? 'model_not_found' : error.status === 401 ? 'unauthorized' : 'processing_error',
+      error: err.message || 'Unknown error',
+      errorType: err.status === 404 ? 'model_not_found' : err.status === 401 ? 'unauthorized' : 'processing_error',
       fallback: {
         category: 'portfolio',
         tags: ['sem-categoria'],
         caption: 'Imagem sem análise automática',
         confidence: 0,
         recommendation: 'Erro ao analisar. Por favor, categorize manualmente.',
-        _error: error.message
+        _error: err.message || 'Unknown error'
       },
       suggestions: [
         'Verifique se CLAUDE_API_KEY está configurada corretamente',
         'Verifique se o modelo selecionado está disponível',
         'Tente novamente ou use análise manual'
       ]
-    }, { status: error.status || 500 })
+    }, { status: err.status || 500 })
   }
 }
 
