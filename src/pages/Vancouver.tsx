@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
 import VancouverInterestForm from '../components/VancouverInterestForm'
@@ -16,7 +16,13 @@ interface VancouverProps {
 }
 
 const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
-  const [showCalculator, setShowCalculator] = useState(false)
+  // Função para scroll suave até a calculadora
+  const scrollToCalculator = () => {
+    const calculatorSection = document.getElementById('calculator')
+    if (calculatorSection) {
+      calculatorSection.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }
 
   const content = {
     pt: {
@@ -408,7 +414,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
-                onClick={() => setShowCalculator(true)}
+                onClick={scrollToCalculator}
                 className="px-8 py-4 bg-azimut-red hover:bg-azimut-red/90 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-azimut-red/50"
               >
                 {t.ctaHero} →
@@ -799,7 +805,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               </div>
 
               {/* Calculator */}
-              <div>
+              <div id="calculator">
                 <div className="mb-6 text-center">
                   <h3 className="text-2xl font-bold text-white mb-2">
                     {lang === 'pt' ? 'Calcule seu investimento' : 'Calculate your investment'}
