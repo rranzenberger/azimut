@@ -747,3 +747,19 @@ enum WebinarStatus {
   COMPLETED
   CANCELLED
 }
+
+// ════════════════════════════════════════════════════════════
+// AI MEDIA ANALYSIS
+// ════════════════════════════════════════════════════════════
+
+model MediaAnalysis {
+  id        String   @id @default(uuid())
+  mediaId   String   @unique
+  analysis  Json     // Armazena o JSON completo da análise
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  media     Media    @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  
+  @@index([mediaId])
+}
