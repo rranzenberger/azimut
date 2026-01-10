@@ -1502,7 +1502,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
       <CookieBanner lang={lang} />
 
       {/* 🤖 Claude AI Assistant - Chatbot Inteligente */}
-      <ClaudeAssistant lang={lang} userProfile={userProfile?.experienceLevel === 'beginner' ? 'student' : 'business'} />
+      <ClaudeAssistant lang={lang} />
 
       {/* 🔧 Dev Tools Button - Remover antes do deploy final */}
       <DevToolsButton />
