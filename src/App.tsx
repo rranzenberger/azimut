@@ -28,7 +28,7 @@ import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDet
 // ═══════════════════════════════════════════════════════════════
 
 // Padrão: site protegido (true = pede senha)
-const DEFAULT_PROTECTED = true
+const DEFAULT_PROTECTED = false // TEMPORÁRIO: Desabilitado para debug
 
 // Função para verificar se deve mostrar login
 const shouldShowLogin = (): boolean => {

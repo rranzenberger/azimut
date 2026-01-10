@@ -271,11 +271,9 @@ const CourseRecommender: React.FC<CourseRecommenderProps> = ({ lang, onComplete 
         cta: 'View Course Details',
         ctaAll: 'Talk to Consultant'
       }
-    },
-    es: content.pt, // TODO: Traduzir
-    fr: content.pt  // TODO: Traduzir
   }
 
+  // CORREÇÃO: Remover referência circular content.pt
   const t = content[lang] || content.pt
 
   const calculateRecommendations = (): RecommendationResult => {
