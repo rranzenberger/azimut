@@ -15,7 +15,7 @@ interface AcademyProps {
   lang: Lang
 }
 
-const Academy: React.FC<AcademyProps> = ({ lang }) => {
+const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
   useUserTracking()
 
   // ═══════════════════════════════════════════════════════════
@@ -543,4 +543,4 @@ const Academy: React.FC<AcademyProps> = ({ lang }) => {
   )
 }
 
-export default Academy
+export default AcademyNew

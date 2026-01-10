@@ -56,7 +56,7 @@ const SITE_PROTECTED = shouldShowLogin()
 // CORREÇÃO: Import direto das páginas problemáticas
 // Lazy loading estava causando erro "Failed to fetch dynamically imported module"
 import Studio from './pages/Studio'
-import Academy from './pages/AcademyNew' // COMPLETO: Redesign premium com todos os idiomas
+import AcademyNew from './pages/AcademyNew' // COMPLETO: Redesign premium com todos os idiomas
 import AcademyCourses from './pages/AcademyCourses'
 import AcademyWorkshops from './pages/AcademyWorkshops'
 import AcademyCorporate from './pages/AcademyCorporate'
