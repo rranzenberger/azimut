@@ -243,9 +243,7 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         subtitle: 'Thousands of Brazilians are already there!',
         button: 'I Want to Study in Vancouver! 🎬'
       }
-    },
-    es: content.pt,
-    fr: content.pt
+    }
   }
 
   const t = content[lang] || content.pt

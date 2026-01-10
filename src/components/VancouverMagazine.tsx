@@ -309,9 +309,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
           }
         ]
       }
-    },
-    es: content.pt, // Mesma estrutura
-    fr: content.pt  // Mesma estrutura
+    }
   }
 
   const t = content[lang] || content.pt
