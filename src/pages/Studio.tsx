@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { type Lang } from '../i18n'
-import SEO, { seoData } from '../components/SEO'
+import SEO from '../components/SEO'
 import { studioContent } from '../data/studioContent'
 import { useUserTracking } from '../hooks/useUserTracking'
 import CredibilidadeEditais from '../components/CredibilidadeEditais'
