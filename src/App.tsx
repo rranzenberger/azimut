@@ -14,6 +14,7 @@ import Chatbot from './components/Chatbot'
 import SimplePasswordGate from './components/SimplePasswordGate'
 import LangRouteWrapper from './components/LangRouteWrapper'
 import LangRedirect from './components/LangRedirect'
+import GoogleAnalytics from './components/GoogleAnalytics'
 import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDetection'
 
 // ═══════════════════════════════════════════════════════════════
@@ -222,6 +223,7 @@ const App: React.FC = () => {
         <SimplePasswordGate>
           <BrowserRouter>
             <ScrollToTop />
+            <GoogleAnalytics />
             {/* Structured Data para SEO */}
             <StructuredData type="organization" />
             <StructuredData type="website" />
@@ -368,6 +370,7 @@ const App: React.FC = () => {
       ) : (
         <BrowserRouter>
           <ScrollToTop />
+          <GoogleAnalytics />
           {/* Structured Data para SEO */}
           <StructuredData type="organization" />
           <StructuredData type="website" />
