@@ -26,8 +26,41 @@
     <!-- Twitter Cards base -->
     <meta name="twitter:card" content="summary_large_image" />
     
-    <!-- Preconnect para performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- ═══════════════════════════════════════════════════════════
+        PERFORMANCE OPTIMIZATIONS - Resource Hints
+        ═══════════════════════════════════════════════════════════ -->
+    
+    <!-- DNS Prefetch para domínios externos -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="https://img.youtube.com" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://plausible.io" />
+    
+    <!-- Preconnect para recursos críticos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Preload de recursos críticos -->
+    <link rel="preload" href="/logo-azimut-star.svg" as="image" type="image/svg+xml" />
+    <link rel="preload" href="/azimut-star-32.png" as="image" />
+    
+    <!-- Preload de fontes críticas (melhor LCP) -->
+    <link rel="preload" href="/fonts/HandelGothic-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/fonts/Inter-VariableFont.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/fonts/Sora-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin />
+    
+    <!-- Prefetch de rotas prováveis (melhor navegação) -->
+    <link rel="prefetch" href="/work" />
+    <link rel="prefetch" href="/what" />
+    <link rel="prefetch" href="/contact" />
+    <link rel="prefetch" href="/academy" />
+    
+    <!-- Manifest PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#c92337" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     
     <!-- Schema.org JSON-LD para Google -->
     <script type="application/ld+json">

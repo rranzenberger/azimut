@@ -1,97 +1,140 @@
 // Service Worker para PWA - Azimut
 // Versão 1.0.0
 
-const CACHE_NAME = 'azimut-v1'
+const CACHE_VERSION = 'azimut-v2'
+const STATIC_CACHE = 'azimut-static-v2'
+const IMAGE_CACHE = 'azimut-images-v2'
 const OFFLINE_URL = '/offline.html'
 
-// Assets essenciais para cache
+// Assets essenciais para cache imediato (critical)
 const ESSENTIAL_ASSETS = [
   '/',
-  '/offline.html',
   '/manifest.json',
   '/logo-azimut-star.svg',
+  '/azimut-star-32.png',
   '/logo-topo-site.svg',
   '/logo-topo-preto-site.svg'
 ]
 
 // Install - cachear assets essenciais
 self.addEventListener('install', (event) => {
-  console.log('[SW] Installing service worker...')
+  console.log('[SW] Installing service worker v2...')
   
   event.waitUntil(
-    caches.open(CACHE_NAME)
+    caches.open(STATIC_CACHE)
       .then((cache) => {
         console.log('[SW] Caching essential assets')
-        return cache.addAll(ESSENTIAL_ASSETS)
+        return cache.addAll(ESSENTIAL_ASSETS.map(url => new Request(url, { cache: 'reload' })))
+          .catch(err => {
+            console.warn('[SW] Some assets failed to cache:', err)
+            // Continuar mesmo se alguns assets falharem
+            return Promise.resolve()
+          })
       })
-      .then(() => self.skipWaiting())
+      .then(() => self.skipWaiting()) // Ativar imediatamente
   )
 })
 
 // Activate - limpar caches antigos
 self.addEventListener('activate', (event) => {
-  console.log('[SW] Activating service worker...')
+  console.log('[SW] Activating service worker v2...')
   
   event.waitUntil(
     caches.keys()
       .then((cacheNames) => {
         return Promise.all(
           cacheNames
-            .filter((name) => name !== CACHE_NAME)
+            .filter((name) => name !== STATIC_CACHE && name !== IMAGE_CACHE && name !== CACHE_VERSION)
             .map((name) => {
               console.log('[SW] Deleting old cache:', name)
               return caches.delete(name)
             })
         )
       })
-      .then(() => self.clients.claim())
+      .then(() => self.clients.claim()) // Controlar todas as páginas imediatamente
   )
 })
 
-// Fetch - estratégia Network First com fallback para cache
+// Fetch - estratégia otimizada por tipo de recurso
 self.addEventListener('fetch', (event) => {
+  const { request } = event
+  const url = new URL(request.url)
+
   // Ignorar requisições não-GET e chrome-extension
-  if (event.request.method !== 'GET' || event.request.url.includes('chrome-extension')) {
+  if (request.method !== 'GET' || request.url.includes('chrome-extension')) {
     return
   }
 
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        // Se a resposta é válida, cachear e retornar
-        if (response && response.status === 200) {
-          const responseToCache = response.clone()
-          
-          caches.open(CACHE_NAME).then((cache) => {
-            // Cachear apenas assets do mesmo origin
-            if (event.request.url.startsWith(self.location.origin)) {
-              cache.put(event.request, responseToCache)
-            }
-          })
+  // Estratégia 1: Imagens - Cache First (mais rápido)
+  if (request.destination === 'image') {
+    event.respondWith(
+      caches.match(request).then((cachedResponse) => {
+        if (cachedResponse) {
+          return cachedResponse // Cache hit - retornar imediatamente
         }
         
-        return response
-      })
-      .catch(() => {
-        // Network falhou, tentar cache
-        return caches.match(event.request)
-          .then((response) => {
-            if (response) {
-              return response
-            }
-            
-            // Se é navegação e não tem cache, mostrar página offline
-            if (event.request.mode === 'navigate') {
-              return caches.match(OFFLINE_URL)
-            }
-            
-            // Para outros recursos, retornar erro
-            return new Response('Offline', {
-              status: 503,
-              statusText: 'Service Unavailable'
+        // Cache miss - buscar da rede e cachear
+        return fetch(request).then((response) => {
+          if (response.ok && request.url.startsWith(self.location.origin)) {
+            const responseToCache = response.clone()
+            caches.open(IMAGE_CACHE).then((cache) => {
+              cache.put(request, responseToCache)
             })
-          })
+          }
+          return response
+        }).catch(() => {
+          // Se falhar, retornar placeholder ou nada
+          return new Response('', { status: 404 })
+        })
       })
+    )
+    return
+  }
+
+  // Estratégia 2: HTML/JS/CSS - Network First (sempre atualizado)
+  if (
+    request.destination === 'document' ||
+    request.destination === 'script' ||
+    request.destination === 'style' ||
+    request.mode === 'navigate'
+  ) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          // Cachear apenas se válido e do mesmo origin
+          if (response.ok && request.url.startsWith(self.location.origin)) {
+            const responseToCache = response.clone()
+            caches.open(STATIC_CACHE).then((cache) => {
+              cache.put(request, responseToCache)
+            })
+          }
+          return response
+        })
+        .catch(() => {
+          // Network falhou, usar cache
+          return caches.match(request).then((cachedResponse) => {
+            if (cachedResponse) {
+              return cachedResponse
+            }
+            
+            // Se é navegação, mostrar página offline
+            if (request.mode === 'navigate') {
+              return caches.match(OFFLINE_URL) || new Response(
+                '<html><body><h1>Offline</h1><p>Você está offline. Verifique sua conexão.</p></body></html>',
+                { headers: { 'Content-Type': 'text/html' } }
+              )
+            }
+            
+            return new Response('Offline', { status: 503 })
+          })
+        })
+    )
+    return
+  }
+
+  // Estratégia 3: Outros recursos - Network First genérico
+  event.respondWith(
+    fetch(request).catch(() => caches.match(request))
   )
 })
 

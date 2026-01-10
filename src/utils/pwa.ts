@@ -2,13 +2,31 @@
 
 // Registrar Service Worker
 export async function registerServiceWorker() {
+  // Apenas em produção
+  if (typeof window === 'undefined' || import.meta.env.DEV) {
+    return
+  }
+  
   if ('serviceWorker' in navigator) {
     try {
       const registration = await navigator.serviceWorker.register('/sw.js', {
         scope: '/'
       })
       
-      console.log('[PWA] Service Worker registered:', registration.scope)
+      console.log('[PWA] ✅ Service Worker registered:', registration.scope)
+      
+      // Verificar atualizações periodicamente
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing
+        if (newWorker) {
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              console.log('[PWA] Nova versão disponível! Recarregue a página.')
+              // Opcional: mostrar notificação para usuário atualizar
+            }
+          })
+        }
+      })
       
       // Verificar atualizações a cada hora
       setInterval(() => {
@@ -17,7 +35,7 @@ export async function registerServiceWorker() {
       
       return registration
     } catch (error) {
-      console.error('[PWA] Service Worker registration failed:', error)
+      console.error('[PWA] ❌ Service Worker registration failed:', error)
     }
   } else {
     console.log('[PWA] Service Workers not supported')

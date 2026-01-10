@@ -54,26 +54,34 @@ const shouldShowLogin = (): boolean => {
 const SITE_PROTECTED = shouldShowLogin()
 // ═══════════════════════════════════════════════════════════════
 
-// CORREÇÃO: Import direto das páginas problemáticas
-// Lazy loading estava causando erro "Failed to fetch dynamically imported module"
-import Studio from './pages/Studio'
-import AcademyNew from './pages/AcademyNew' // COMPLETO: Redesign premium com todos os idiomas
-import AcademyCourses from './pages/AcademyCourses'
-import AcademyWorkshops from './pages/AcademyWorkshops'
-import AcademyCorporate from './pages/AcademyCorporate'
-import Vancouver from './pages/Vancouver'
-import Privacy from './pages/Privacy'
-import Terms from './pages/Terms'
-import Contact from './pages/Contact'
-import ThankYou from './pages/ThankYou'
-import WhatWeDo from './pages/WhatWeDo'
-import ServiceDetail from './pages/ServiceDetail'
-import Press from './pages/Press'
-import Work from './pages/Work' // 🔧 CORRIGIDO: Import direto para evitar erro de lazy loading
+// ════════════════════════════════════════════════════════════
+// CODE SPLITTING OTIMIZADO - Performance Premium
+// ════════════════════════════════════════════════════════════
+// Páginas principais: Import direto (crítico, sempre carregadas)
+// Páginas secundárias: Lazy loading com preload estratégico
+// ════════════════════════════════════════════════════════════
 
-// Lazy loading apenas para páginas que funcionam bem
+// Home: Lazy (pode ser primeira rota, mas não bloqueia)
 const Home = lazy(() => import('./pages/Home'))
+
+// Páginas críticas: Import direto (menos erros, mais rápido)
+import Studio from './pages/Studio'
+import AcademyNew from './pages/AcademyNew'
+import Contact from './pages/Contact'
+import WhatWeDo from './pages/WhatWeDo'
+import Work from './pages/Work'
+
+// Páginas secundárias: Lazy loading otimizado
+const AcademyCourses = lazy(() => import('./pages/AcademyCourses'))
+const AcademyWorkshops = lazy(() => import('./pages/AcademyWorkshops'))
+const AcademyCorporate = lazy(() => import('./pages/AcademyCorporate'))
+const Vancouver = lazy(() => import('./pages/Vancouver'))
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
+const ServiceDetail = lazy(() => import('./pages/ServiceDetail'))
+const Press = lazy(() => import('./pages/Press'))
+const Privacy = lazy(() => import('./pages/Privacy'))
+const Terms = lazy(() => import('./pages/Terms'))
+const ThankYou = lazy(() => import('./pages/ThankYou'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 const App: React.FC = () => {

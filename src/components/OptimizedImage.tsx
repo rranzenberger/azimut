@@ -1,10 +1,11 @@
 // ════════════════════════════════════════════════════════════
-// OPTIMIZED IMAGE - Componente de Imagem Otimizada
+// OPTIMIZED IMAGE - Componente de Imagem Otimizada Premium
 // ════════════════════════════════════════════════════════════
-// Lazy loading, placeholder blur, WebP support
+// Lazy loading com Intersection Observer, WebP/AVIF support,
+// Blur placeholder, Responsive images, Performance optimized
 // ════════════════════════════════════════════════════════════
 
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 interface OptimizedImageProps {
   src: string
@@ -15,6 +16,8 @@ interface OptimizedImageProps {
   objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'
   priority?: boolean // Se true, carrega imediatamente (hero images)
   placeholder?: string // Imagem blur base64 ou URL baixa resolução
+  sizes?: string // Para responsive images (ex: "(max-width: 768px) 100vw, 50vw")
+  srcSet?: string // Para responsive images
 }
 
 const OptimizedImage: React.FC<OptimizedImageProps> = ({
@@ -25,15 +28,54 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   className = '',
   objectFit = 'cover',
   priority = false,
-  placeholder
+  placeholder,
+  sizes,
+  srcSet
 }) => {
   const [isLoaded, setIsLoaded] = useState(false)
+  const [isInView, setIsInView] = useState(priority) // Se priority, já está "in view"
   const [error, setError] = useState(false)
+  const imgRef = useRef<HTMLDivElement>(null)
 
-  // Converter para WebP se possível
-  const webpSrc = src.endsWith('.jpg') || src.endsWith('.jpeg') || src.endsWith('.png')
-    ? src.replace(/\.(jpg|jpeg|png)$/, '.webp')
-    : src
+  // Intersection Observer para lazy loading inteligente
+  useEffect(() => {
+    if (priority || !imgRef.current) return // Se priority, já carrega
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsInView(true)
+            observer.disconnect() // Desconectar após primeira visualização
+          }
+        })
+      },
+      {
+        rootMargin: '50px', // Começar a carregar 50px antes de entrar na viewport
+        threshold: 0.01
+      }
+    )
+
+    observer.observe(imgRef.current)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [priority])
+
+  // Converter para WebP/AVIF se possível
+  const getOptimizedSrc = (originalSrc: string, format: 'webp' | 'avif' | 'original' = 'webp') => {
+    if (format === 'original') return originalSrc
+    
+    const ext = originalSrc.split('.').pop()?.toLowerCase()
+    if (ext === 'jpg' || ext === 'jpeg' || ext === 'png') {
+      return originalSrc.replace(/\.(jpg|jpeg|png)$/i, `.${format}`)
+    }
+    return originalSrc
+  }
+
+  const webpSrc = getOptimizedSrc(src, 'webp')
+  const avifSrc = getOptimizedSrc(src, 'avif')
 
   const handleLoad = () => {
     setIsLoaded(true)
@@ -46,8 +88,9 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
 
   return (
     <div 
+      ref={imgRef}
       className={`relative overflow-hidden ${className}`}
-      style={{ width, height }}
+      style={{ width, height, minHeight: height || 'auto' }}
     >
       {/* Placeholder blur enquanto carrega */}
       {!isLoaded && placeholder && (
@@ -57,35 +100,47 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
           className="absolute inset-0 w-full h-full blur-xl scale-110"
           style={{ objectFit }}
           aria-hidden="true"
-        />
-      )}
-
-      {/* Skeleton loader */}
-      {!isLoaded && !placeholder && (
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 animate-pulse" />
-      )}
-
-      {/* Imagem principal */}
-      <picture>
-        {/* WebP para browsers que suportam */}
-        <source srcSet={webpSrc} type="image/webp" />
-        
-        {/* Fallback para imagem original */}
-        <img
-          src={src}
-          alt={alt}
-          width={width}
-          height={height}
-          loading={priority ? 'eager' : 'lazy'}
+          loading="eager"
           decoding="async"
-          onLoad={handleLoad}
-          onError={handleError}
-          className={`w-full h-full transition-opacity duration-500 ${
-            isLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
-          style={{ objectFit }}
         />
-      </picture>
+      )}
+
+      {/* Skeleton loader otimizado */}
+      {!isLoaded && !placeholder && (
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 animate-pulse" 
+          style={{ aspectRatio: width && height ? `${width}/${height}` : 'auto' }}
+        />
+      )}
+
+      {/* Imagem principal com formatos otimizados */}
+      {isInView && (
+        <picture>
+          {/* AVIF (melhor compressão, se disponível) */}
+          <source srcSet={avifSrc} type="image/avif" />
+          
+          {/* WebP (bom compromisso) */}
+          <source srcSet={webpSrc} type="image/webp" />
+          
+          {/* Fallback para imagem original */}
+          <img
+            src={src}
+            alt={alt}
+            width={width}
+            height={height}
+            sizes={sizes}
+            srcSet={srcSet}
+            loading={priority ? 'eager' : 'lazy'}
+            decoding="async"
+            fetchPriority={priority ? 'high' : 'auto'}
+            onLoad={handleLoad}
+            onError={handleError}
+            className={`w-full h-full transition-opacity duration-500 ${
+              isLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+            style={{ objectFit }}
+          />
+        </picture>
+      )}
 
       {/* Mensagem de erro */}
       {error && (

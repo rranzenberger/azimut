@@ -18,21 +18,51 @@ export default defineConfig({
     terserOptions: {
       compress: {
         drop_console: true, // Remover console em produção (melhor performance)
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug'],
+        passes: 2, // Múltiplas passadas para melhor compressão
+      },
+      format: {
+        comments: false, // Remover comentários
       },
     },
+    cssCodeSplit: true, // Code splitting para CSS também
+    sourcemap: false, // Desabilitar sourcemaps em produção (melhor performance)
     // Rollup options para melhorar chunking
     rollupOptions: {
       output: {
         // Manter nomes de arquivos mais estáveis (menos mudanças de hash)
-        chunkFileNames: 'assets/[name]-[hash].js',
-        entryFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]',
-        // Separar vendor chunks
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+        chunkFileNames: 'assets/[name]-[hash:8].js', // Hash menor (8 chars)
+        entryFileNames: 'assets/[name]-[hash:8].js',
+        assetFileNames: 'assets/[name]-[hash:8].[ext]',
+        // Separar vendor chunks para melhor cache
+        manualChunks: (id) => {
+          // React core
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+            return 'react-vendor'
+          }
+          // Router
+          if (id.includes('node_modules/react-router')) {
+            return 'router-vendor'
+          }
+          // UI libraries
+          if (id.includes('node_modules/framer-motion') || id.includes('node_modules/lucide-react')) {
+            return 'ui-vendor'
+          }
+          // Analytics/tracking
+          if (id.includes('analytics') || id.includes('tracking') || id.includes('plausible')) {
+            return 'analytics-vendor'
+          }
+          // Large dependencies
+          if (id.includes('node_modules')) {
+            return 'vendor'
+          }
         },
       },
     },
+    // Otimizações de performance
+    chunkSizeWarningLimit: 500, // Avisar se chunk > 500KB
+    reportCompressedSize: false, // Desabilitar report (acelera build)
   },
   // Polyfills automáticos via Vite
   optimizeDeps: {

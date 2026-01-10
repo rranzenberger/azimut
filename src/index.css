@@ -543,12 +543,16 @@ html {
 /* ═══════════════════════════════════════════════════════════════
    FONT FACES
    ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════
+   FONT OPTIMIZATION - Variable Fonts + font-display: optional
+   ═══════════════════════════════════════════════════════════ */
 @font-face {
   font-family: 'HandelGothic';
   src: url('/fonts/HandelGothic-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: optional; /* Mudado de swap para optional (melhor CLS) */
+  unicode-range: U+0020-007F, U+00A0-00FF; /* Latim + acentos */
 }
 
 @font-face {
@@ -556,7 +560,8 @@ html {
   src: url('/fonts/Inter-VariableFont.ttf') format('truetype');
   font-weight: 100 900;
   font-style: normal;
-  font-display: swap;
+  font-display: optional; /* Variable font - optional para melhor performance */
+  unicode-range: U+0020-007F, U+00A0-00FF, U+0100-017F;
 }
 
 @font-face {
@@ -564,7 +569,8 @@ html {
   src: url('/fonts/Sora-VariableFont_wght.ttf') format('truetype');
   font-weight: 300 700;
   font-style: normal;
-  font-display: swap;
+  font-display: optional; /* Variable font - optional para melhor performance */
+  unicode-range: U+0020-007F, U+00A0-00FF;
 }
 
 /* ═══════════════════════════════════════════════════════════════
