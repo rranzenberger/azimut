@@ -34,13 +34,21 @@ const InstallPrompt: React.FC = () => {
     if (accepted) {
       setShowPrompt(false)
       setIsInstalled(true)
+      
+      // Track successful install (já é feito no pwa.ts, mas confirma aqui)
+      const { trackPWAEvent } = await import('../utils/analytics')
+      trackPWAEvent('installed', { source: 'prompt_button' })
     }
   }
 
-  const handleDismiss = () => {
+  const handleDismiss = async () => {
     setShowPrompt(false)
     // Não mostrar novamente nesta sessão
     sessionStorage.setItem('pwa-prompt-dismissed', 'true')
+    
+    // Track dismiss
+    const { trackPWAEvent } = await import('../utils/analytics')
+    trackPWAEvent('prompt_dismissed')
   }
 
   // Não mostrar se já instalado ou foi dismissado

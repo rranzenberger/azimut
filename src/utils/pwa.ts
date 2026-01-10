@@ -1,5 +1,8 @@
 // PWA utilities - Service Worker registration and Install Prompt
 
+// Importar função de tracking
+import { trackPWAEvent } from './analytics'
+
 // Registrar Service Worker
 export async function registerServiceWorker() {
   // Apenas em produção
@@ -64,8 +67,8 @@ export function setupInstallPrompt() {
     console.log('[PWA] App installed successfully')
     deferredPrompt = null
     
-    // Analytics (implementar depois)
-    // trackEvent('pwa_installed')
+    // Analytics - Enviar para backoffice
+    trackPWAInstall('installed')
   })
 }
 
@@ -84,8 +87,8 @@ export async function showInstallPrompt(): Promise<boolean> {
   
   console.log('[PWA] User choice:', outcome)
   
-  // Analytics
-  // trackEvent('pwa_install_prompt', { outcome })
+  // Analytics - Enviar para backoffice
+  trackPWAInstall('prompt_shown', { outcome })
   
   deferredPrompt = null
   
@@ -110,6 +113,16 @@ export function isPWAInstalled(): boolean {
 // Verificar se pode mostrar install prompt
 export function canShowInstallPrompt(): boolean {
   return deferredPrompt !== null
+}
+
+// Track PWA events
+async function trackPWAInstall(type: 'installed' | 'prompt_shown', data?: any) {
+  try {
+    await trackPWAEvent(type, data)
+  } catch (error) {
+    console.warn('[PWA] Failed to track install event:', error)
+    // Não bloquear se tracking falhar
+  }
 }
 
 

@@ -143,6 +143,37 @@ export async function trackLanguageChange(from: string, to: string) {
   });
 }
 
+// Track PWA events (install, prompt shown, etc)
+export async function trackPWAEvent(
+  type: 'installed' | 'prompt_shown' | 'prompt_dismissed',
+  data?: any
+) {
+  const sessionId = getSessionId();
+
+  // Detectar se está em modo PWA
+  const isPWA = window.matchMedia('(display-mode: standalone)').matches ||
+                // @ts-ignore - iOS Safari
+                (window.navigator.standalone === true);
+
+  fetch(`${API_URL}/track`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sessionId,
+      event: 'pwa_event',
+      data: {
+        type, // 'installed' | 'prompt_shown' | 'prompt_dismissed'
+        isPWA,
+        platform: navigator.platform,
+        userAgent: navigator.userAgent,
+        ...data,
+      },
+    }),
+  }).catch(() => {
+    // Silencioso - não bloquear se tracking falhar
+  });
+}
+
 // Submit lead
 export async function submitLead(data: {
   name: string;

@@ -80,6 +80,17 @@ export async function POST(request: NextRequest) {
       case 'scroll':
         await handleScroll(sessionId, data);
         break;
+      
+      case 'pwa_event':
+        await handlePWAEvent(sessionId, data);
+        break;
+      
+      case 'budget_wizard':
+      case 'cta_click':
+      case 'language_change':
+        // Eventos simples - apenas logar por enquanto
+        console.log(`[Track] ${event}:`, data);
+        break;
     }
 
     // Calcular scores de interesse com IA (assíncrono)
@@ -151,6 +162,47 @@ async function handleScroll(sessionId: string, data: any) {
         scrollDepth: Math.max(lastPageView.scrollDepth, data.scrollDepth || 0),
       },
     });
+  }
+}
+
+async function handlePWAEvent(sessionId: string, data: any) {
+  try {
+    // Salvar evento PWA no banco
+    // Verificar se já existe modelo PWAInstall no Prisma
+    // Se não existir, criar tabela ou usar VisitorSession
+    
+    const session = await prisma.visitorSession.findUnique({
+      where: { sessionId },
+    });
+
+    if (session) {
+      // Atualizar sessão com flag de PWA
+      await prisma.visitorSession.update({
+        where: { sessionId },
+        data: {
+          metadata: {
+            ...(session.metadata as any || {}),
+            pwaInstalled: data.type === 'installed',
+            pwaEvents: [
+              ...((session.metadata as any)?.pwaEvents || []),
+              {
+                type: data.type,
+                timestamp: new Date().toISOString(),
+                platform: data.platform,
+                isPWA: data.isPWA,
+                outcome: data.outcome,
+              },
+            ],
+          },
+        },
+      });
+    }
+
+    // Log para debug
+    console.log(`[PWA] Event: ${data.type} - Session: ${sessionId}`);
+  } catch (error) {
+    console.error('[PWA] Error handling PWA event:', error);
+    // Não falhar se houver erro
   }
 }
 
