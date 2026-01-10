@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     // Buscar Lead por email (se fornecido)
     let leadId: string | null = null
     if (leadEmail) {
-      const lead = await prisma.lead.findUnique({
+      const lead = await prisma.lead.findFirst({
         where: { email: leadEmail }
       })
       if (lead) {
