@@ -113,8 +113,16 @@ async function handleBatchAnalysis(body: BatchAnalysisRequest) {
     )
   }
 
-  const results = []
-  const errors = []
+  interface AnalysisResult {
+    mediaId: string
+    success: boolean
+    analysis?: any
+    cached?: boolean
+    error?: string
+  }
+
+  const results: AnalysisResult[] = []
+  const errors: AnalysisResult[] = []
 
   // Processar em paralelo (mas limitado a 5 simultâneas)
   const BATCH_SIZE = 5
