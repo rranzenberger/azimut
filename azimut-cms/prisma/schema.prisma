@@ -227,10 +227,37 @@ model VisitorSession {
   leadId              String?
   createdAt           DateTime             @default(now())
   updatedAt           DateTime             @updatedAt
+  
+  // NOVOS CAMPOS PARA ANALYTICS AVANÇADO
+  visitorFingerprint  String?              @unique // Hash único do visitante (identifica anônimo)
+  deviceType          String?              // mobile, desktop, tablet
+  browser             String?              // Chrome, Safari, Firefox, etc
+  os                  String?              // Windows, macOS, iOS, Android
+  screenResolution    String?              // 1920x1080
+  referrer            String?              // De onde veio
+  utmSource           String?              // utm_source da URL
+  utmMedium           String?              // utm_medium
+  utmCampaign         String?              // utm_campaign
+  visitCount          Int                  @default(1) // Quantas vezes voltou
+  isReturning         Boolean              @default(false) // Visitante frequente
+  isPWAInstalled      Boolean              @default(false) // Instalou PWA
+  bounceRate          Boolean              @default(false) // Só entrou e saiu (sem interação)
+  engagementScore     Int                  @default(0) // 0-100 (baseado em interações)
+  conversionProbability Float?             // Probabilidade de converter (0-1, calculado por IA)
+  
   interestScore       InterestScore?
   pageViews           PageView[]
   projectInteractions ProjectInteraction[]
-  lead                Lead?                @relation(fields: [leadId], references: [id])
+  pwaInstalls         PWAInstall[]
+  visitorBehaviors    VisitorBehavior[]
+  lead                Lead?                @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  
+  @@index([visitorFingerprint])
+  @@index([country])
+  @@index([isReturning])
+  @@index([isPWAInstalled])
+  @@index([createdAt])
+  @@index([lastActivityAt])
 }
 
 model PageView {
@@ -763,4 +790,48 @@ model MediaAnalysis {
   media     Media    @relation(fields: [mediaId], references: [id], onDelete: Cascade)
   
   @@index([mediaId])
+}
+
+// ════════════════════════════════════════════════════════════
+// ANALYTICS & VISITOR TRACKING
+// ════════════════════════════════════════════════════════════
+
+model PWAInstall {
+  id          String   @id @default(uuid())
+  sessionId   String
+  type        String   // 'installed' | 'prompt_shown' | 'prompt_dismissed' | 'prompt_accepted'
+  platform    String?  // Win32, Linux x86_64, iPhone, etc
+  userAgent   String?
+  browser     String?  // Chrome, Safari, Firefox, etc
+  deviceType  String?  // mobile, desktop, tablet
+  outcome     String?  // 'accepted' | 'dismissed'
+  country     String?
+  city        String?
+  createdAt   DateTime @default(now())
+  
+  session     VisitorSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+  
+  @@index([sessionId])
+  @@index([type])
+  @@index([country])
+  @@index([createdAt])
+}
+
+model VisitorBehavior {
+  id              String   @id @default(uuid())
+  sessionId       String
+  behaviorType    String   // 'page_view' | 'click' | 'scroll' | 'hover' | 'form_start' | 'form_abandon' | 'video_play' | 'download' | 'share' | 'search' | 'filter' | 'pwa_install' | 'cta_click' | 'external_link'
+  element         String?  // ID ou classe do elemento interagido
+  elementType     String?  // 'button' | 'link' | 'image' | 'video' | 'form' | etc
+  pageSlug        String?  // Página onde aconteceu
+  value           String?  // Valor (ex: termo de busca, filtro selecionado)
+  metadata        Json?    // Dados extras (coordenadas, tempo, etc)
+  timestamp       DateTime @default(now())
+  
+  session         VisitorSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+  
+  @@index([sessionId])
+  @@index([behaviorType])
+  @@index([pageSlug])
+  @@index([timestamp])
 }

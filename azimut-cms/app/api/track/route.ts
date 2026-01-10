@@ -88,8 +88,8 @@ export async function POST(request: NextRequest) {
       case 'budget_wizard':
       case 'cta_click':
       case 'language_change':
-        // Eventos simples - apenas logar por enquanto
-        console.log(`[Track] ${event}:`, data);
+      case 'behavior':
+        await handleBehaviorEvent(sessionId, event, data);
         break;
     }
 
@@ -115,6 +115,39 @@ export async function POST(request: NextRequest) {
 }
 
 async function handlePageView(sessionId: string, data: any) {
+  // Atualizar VisitorSession com fingerprinting e device info
+  if (data.visitorFingerprint || data.deviceType || data.browser) {
+    const updateData: any = {};
+    
+    if (data.visitorFingerprint) {
+      updateData.visitorFingerprint = data.visitorFingerprint;
+      
+      // Verificar se é visitante retornante (mesmo fingerprint)
+      const existingVisitor = await prisma.visitorSession.findUnique({
+        where: { visitorFingerprint: data.visitorFingerprint },
+      });
+      
+      if (existingVisitor && existingVisitor.sessionId !== sessionId) {
+        // Mesmo visitante, nova sessão - incrementar visitCount
+        updateData.visitCount = { increment: 1 };
+        updateData.isReturning = true;
+      }
+    }
+    
+    if (data.deviceType) updateData.deviceType = data.deviceType;
+    if (data.browser) updateData.browser = data.browser;
+    if (data.os) updateData.os = data.os;
+    if (data.screenResolution) updateData.screenResolution = data.screenResolution;
+    
+    if (Object.keys(updateData).length > 0) {
+      await prisma.visitorSession.update({
+        where: { sessionId },
+        data: updateData,
+      });
+    }
+  }
+
+  // Salvar page view
   await prisma.pageView.create({
     data: {
       sessionId,
@@ -176,33 +209,108 @@ async function handlePWAEvent(sessionId: string, data: any) {
       return;
     }
 
-    // Salvar evento PWA em uma tabela dedicada (criar depois) ou usar log por enquanto
-    // Por enquanto: log detalhado que pode ser consultado depois
-    const pwaEventData = {
-      sessionId,
-      type: data.type, // 'installed' | 'prompt_shown' | 'prompt_dismissed'
-      platform: data.platform || 'unknown',
-      userAgent: data.userAgent || session.userAgent || 'unknown',
-      isPWA: data.isPWA || false,
-      outcome: data.outcome || null, // 'accepted' | 'dismissed'
-      country: session.country || null,
-      language: session.language || null,
-      ipAddress: session.ipAddress || null,
-      timestamp: new Date().toISOString(),
-    };
+    // Salvar evento PWA na tabela PWAInstall
+    await prisma.pWAInstall.create({
+      data: {
+        sessionId,
+        type: data.type, // 'installed' | 'prompt_shown' | 'prompt_dismissed'
+        platform: data.platform || null,
+        userAgent: data.userAgent || session.userAgent || null,
+        browser: extractBrowser(data.userAgent || session.userAgent || ''),
+        deviceType: extractDeviceType(data.userAgent || session.userAgent || ''),
+        outcome: data.outcome || null, // 'accepted' | 'dismissed'
+        country: session.country || null,
+        city: session.city || null,
+      },
+    });
 
-    // Log estruturado para consulta depois
-    console.log(`[PWA_EVENT]`, JSON.stringify(pwaEventData));
+    // Atualizar flag isPWAInstalled na sessão
+    if (data.type === 'installed') {
+      await prisma.visitorSession.update({
+        where: { sessionId },
+        data: { isPWAInstalled: true },
+      });
+    }
 
-    // TODO: Criar modelo PWAInstall no Prisma schema para salvar corretamente
-    // Por enquanto, eventos estão em logs estruturados que podem ser parseados
-    
-    // Alternativa temporária: salvar em uma tabela custom via SQL direto
-    // ou criar migration depois
-
+    console.log(`[PWA] Event saved: ${data.type} - Session: ${sessionId}`);
   } catch (error) {
     console.error('[PWA] Error handling PWA event:', error);
     // Não falhar se houver erro - tracking não deve quebrar o site
+  }
+}
+
+// Helper para extrair browser do userAgent
+function extractBrowser(userAgent: string): string | null {
+  if (!userAgent) return null;
+  if (userAgent.includes('Chrome')) return 'Chrome';
+  if (userAgent.includes('Safari') && !userAgent.includes('Chrome')) return 'Safari';
+  if (userAgent.includes('Firefox')) return 'Firefox';
+  if (userAgent.includes('Edge')) return 'Edge';
+  if (userAgent.includes('Opera')) return 'Opera';
+  return 'Unknown';
+}
+
+// Helper para extrair device type
+function extractDeviceType(userAgent: string): string | null {
+  if (!userAgent) return null;
+  const ua = userAgent.toLowerCase();
+  if (ua.includes('mobile') || ua.includes('android') || ua.includes('iphone')) return 'mobile';
+  if (ua.includes('tablet') || ua.includes('ipad')) return 'tablet';
+  return 'desktop';
+}
+
+async function handleBehaviorEvent(sessionId: string, eventType: string, data: any) {
+  try {
+    // Salvar comportamento do visitante
+    await prisma.visitorBehavior.create({
+      data: {
+        sessionId,
+        behaviorType: data.behaviorType || eventType,
+        element: data.element || null,
+        elementType: data.elementType || null,
+        pageSlug: data.pageSlug || null,
+        value: data.value || null,
+        metadata: data.metadata || {},
+      },
+    });
+
+    // Atualizar engagement score e bounce rate da sessão
+    const session = await prisma.visitorSession.findUnique({
+      where: { sessionId },
+      include: {
+        visitorBehaviors: true,
+        pageViews: true,
+      },
+    });
+
+    if (session) {
+      // Calcular engagement score baseado em interações
+      const interactionCount = session.visitorBehaviors.length;
+      const pageViewCount = session.pageViews.length;
+      const totalTime = session.pageViews.reduce((sum, pv) => sum + (pv.timeSpent || 0), 0);
+      const avgScrollDepth = session.pageViews.reduce((sum, pv) => sum + (pv.scrollDepth || 0), 0) / (pageViewCount || 1);
+
+      // Score: interações (40%) + páginas visitadas (30%) + tempo (20%) + scroll (10%)
+      const engagementScore = Math.min(100, Math.round(
+        (interactionCount * 5) + // Cada interação = 5 pontos
+        (pageViewCount * 10) +   // Cada página = 10 pontos
+        (totalTime / 60) +        // Cada minuto = 1 ponto
+        (avgScrollDepth / 10)     // Scroll depth = até 10 pontos
+      ));
+
+      // Bounce rate: só 1 página, sem interações, tempo < 30s
+      const isBounce = pageViewCount <= 1 && interactionCount === 0 && totalTime < 30;
+
+      await prisma.visitorSession.update({
+        where: { sessionId },
+        data: {
+          engagementScore,
+          bounceRate: isBounce,
+        },
+      });
+    }
+  } catch (error) {
+    console.error('[Behavior] Error handling behavior event:', error);
   }
 }
 
