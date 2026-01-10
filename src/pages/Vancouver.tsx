@@ -6,7 +6,7 @@ import VancouverInterestForm from '../components/VancouverInterestForm'
 import { VideoPlayerEnhanced } from '../components/VideoPlayerEnhanced'
 import { VideoCard } from '../components/VideoCard'
 import QuizVancouver from '../components/QuizVancouver'
-import VancouverCostCalculator from '../components/VancouverCostCalculator'
+import AdvancedVancouverCalculator from '../components/AdvancedVancouverCalculator'
 import AcademyQuickForm from '../components/AcademyQuickForm'
 import WhyVancouverConvincing from '../components/WhyVancouverConvincing'
 import VancouverMagazine from '../components/VancouverMagazine'
@@ -859,7 +859,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                     {lang === 'pt' ? 'Veja quanto custa estudar em Vancouver' : 'See how much it costs to study in Vancouver'}
                   </p>
                 </div>
-                <VancouverCostCalculator lang={lang} />
+                <AdvancedVancouverCalculator lang={lang} />
               </div>
             </div>
           </div>
