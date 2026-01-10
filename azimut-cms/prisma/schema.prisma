@@ -36,8 +36,8 @@ model Market {
 }
 
 model Media {
-  id               String         @id @default(uuid())
-  type             MediaType      @default(IMAGE)
+  id               String          @id @default(uuid())
+  type             MediaType       @default(IMAGE)
   originalUrl      String
   thumbnailUrl     String?
   mediumUrl        String?
@@ -54,12 +54,13 @@ model Media {
   altEn            String?
   altEs            String?
   altFr            String?
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
   projectHero      Project?
   projectGalleries ProjectMedia[]
-  pageHeroBackgrounds Page[]      @relation("PageHeroBackground")
-  pageDemoreelVideos  Page[]      @relation("PageDemoreelVideo")
+  pageHeroBackgrounds Page[]       @relation("PageHeroBackground")
+  pageDemoreelVideos  Page[]       @relation("PageDemoreelVideo")
+  analysis         MediaAnalysis?
 }
 
 model Tag {
