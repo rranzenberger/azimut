@@ -167,42 +167,42 @@ async function handleScroll(sessionId: string, data: any) {
 
 async function handlePWAEvent(sessionId: string, data: any) {
   try {
-    // Salvar evento PWA no banco
-    // Verificar se já existe modelo PWAInstall no Prisma
-    // Se não existir, criar tabela ou usar VisitorSession
-    
     const session = await prisma.visitorSession.findUnique({
       where: { sessionId },
     });
 
-    if (session) {
-      // Atualizar sessão com flag de PWA
-      await prisma.visitorSession.update({
-        where: { sessionId },
-        data: {
-          metadata: {
-            ...(session.metadata as any || {}),
-            pwaInstalled: data.type === 'installed',
-            pwaEvents: [
-              ...((session.metadata as any)?.pwaEvents || []),
-              {
-                type: data.type,
-                timestamp: new Date().toISOString(),
-                platform: data.platform,
-                isPWA: data.isPWA,
-                outcome: data.outcome,
-              },
-            ],
-          },
-        },
-      });
+    if (!session) {
+      console.log(`[PWA] Session not found: ${sessionId}`);
+      return;
     }
 
-    // Log para debug
-    console.log(`[PWA] Event: ${data.type} - Session: ${sessionId}`);
+    // Salvar evento PWA em uma tabela dedicada (criar depois) ou usar log por enquanto
+    // Por enquanto: log detalhado que pode ser consultado depois
+    const pwaEventData = {
+      sessionId,
+      type: data.type, // 'installed' | 'prompt_shown' | 'prompt_dismissed'
+      platform: data.platform || 'unknown',
+      userAgent: data.userAgent || session.userAgent || 'unknown',
+      isPWA: data.isPWA || false,
+      outcome: data.outcome || null, // 'accepted' | 'dismissed'
+      country: session.country || null,
+      language: session.language || null,
+      ipAddress: session.ipAddress || null,
+      timestamp: new Date().toISOString(),
+    };
+
+    // Log estruturado para consulta depois
+    console.log(`[PWA_EVENT]`, JSON.stringify(pwaEventData));
+
+    // TODO: Criar modelo PWAInstall no Prisma schema para salvar corretamente
+    // Por enquanto, eventos estão em logs estruturados que podem ser parseados
+    
+    // Alternativa temporária: salvar em uma tabela custom via SQL direto
+    // ou criar migration depois
+
   } catch (error) {
     console.error('[PWA] Error handling PWA event:', error);
-    // Não falhar se houver erro
+    // Não falhar se houver erro - tracking não deve quebrar o site
   }
 }
 
