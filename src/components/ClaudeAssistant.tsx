@@ -10,19 +10,22 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import { type Lang } from '../i18n'
+import { useUserProfileDetection, getUserInsights, trackInteraction } from '../hooks/useUserProfileDetection'
 
 interface Message {
   role: 'user' | 'assistant'
   content: string
   timestamp: Date
+  aiModel?: 'claude' | 'deepseek'
 }
 
 interface ClaudeAssistantProps {
   lang: Lang
-  userProfile?: 'student' | 'business' | 'unknown'
 }
 
-const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang, userProfile = 'unknown' }) => {
+const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
+  // FASE 2: Detecção automática de perfil! 🎯
+  const userProfile = useUserProfileDetection(lang)
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
@@ -96,17 +99,24 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang, userProfile = '
     scrollToBottom()
   }, [messages])
 
-  // Greeting message on first open
+  // FASE 2: Greeting PERSONALIZADA baseada no perfil! 🎯
   useEffect(() => {
     if (isOpen && !hasGreeted && messages.length === 0) {
+      // Pegar insights personalizados
+      const insights = getUserInsights(userProfile, lang)
+      const personalizedGreeting = `${t.greeting}\n\n${insights[0]}`
+      
       setMessages([{
         role: 'assistant',
-        content: t.greeting,
+        content: personalizedGreeting,
         timestamp: new Date()
       }])
       setHasGreeted(true)
+      
+      // Log para analytics
+      console.log(`🎯 Chatbot opened - Profile: ${userProfile.profile} (${userProfile.confidence}% confidence)`)
     }
-  }, [isOpen, hasGreeted, messages.length, t.greeting])
+  }, [isOpen, hasGreeted, messages.length, t.greeting, userProfile, lang])
 
   // Exit intent detection (show assistant when user tries to leave)
   useEffect(() => {
@@ -133,6 +143,9 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang, userProfile = '
   const sendMessage = async (messageText: string) => {
     if (!messageText.trim()) return
 
+    // Track interaction (FASE 2)
+    trackInteraction('click', 'chatbot_send_message')
+
     // Add user message
     const userMessage: Message = {
       role: 'user',
@@ -144,17 +157,24 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang, userProfile = '
     setIsLoading(true)
 
     try {
-      // Send to Claude API
+      // FASE 2: Enviar contexto de perfil completo! 🎯
       const response = await fetch('/api/chat/claude', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: messageText,
           lang,
-          userProfile,
           context: {
             page: window.location.pathname,
-            previousMessages: messages.slice(-5) // Last 5 messages for context
+            previousMessages: messages.slice(-5), // Last 5 messages for context
+            // FASE 2: Dados de perfil!
+            userProfile: {
+              type: userProfile.profile,
+              confidence: userProfile.confidence,
+              interests: userProfile.interests,
+              budget: userProfile.likelyBudget,
+              conversionProb: userProfile.conversionProbability
+            }
           }
         })
       })
@@ -165,15 +185,17 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang, userProfile = '
       const assistantMessage: Message = {
         role: 'assistant',
         content: data.response,
-        timestamp: new Date()
+        timestamp: new Date(),
+        aiModel: data.aiModel || 'deepseek' // FASE 2: Badge de IA
       }
       setMessages(prev => [...prev, assistantMessage])
 
-      // Log AI usage for debugging (remove in production)
-      if (data.metadata?.aiUsed) {
-        console.log(`💬 AI Used: ${data.metadata.aiUsed}`, {
-          costSaved: data.metadata.costSaved,
-          shouldFollowUp: data.shouldFollowUp
+      // Log AI usage for debugging
+      if (data.aiModel) {
+        console.log(`💬 AI Used: ${data.aiModel}`, {
+          costSaved: data.costSaved,
+          userProfile: userProfile.profile,
+          confidence: userProfile.confidence
         })
       }
 
@@ -185,6 +207,7 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang, userProfile = '
           body: JSON.stringify({
             ...data.leadData,
             source: 'claude_assistant',
+            userProfile: userProfile.profile,
             chatTranscript: [...messages, userMessage, assistantMessage]
           })
         })
@@ -270,9 +293,21 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang, userProfile = '
                   }`}
                 >
                   <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
-                  <span className="text-xs opacity-60 mt-1 block">
-                    {msg.timestamp.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })}
-                  </span>
+                  <div className="flex items-center justify-between mt-2 gap-2">
+                    <span className="text-xs opacity-60">
+                      {msg.timestamp.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                    {/* FASE 2: Badge de IA 🎯 */}
+                    {msg.role === 'assistant' && msg.aiModel && (
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full ${
+                        msg.aiModel === 'claude' 
+                          ? 'bg-purple-500/20 text-purple-300 border border-purple-400/30' 
+                          : 'bg-blue-500/20 text-blue-300 border border-blue-400/30'
+                      }`}>
+                        {msg.aiModel === 'claude' ? '🧠 Claude' : '⚡ DeepSeek'}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
