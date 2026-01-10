@@ -54,9 +54,9 @@ COMPORTAMENTO DO USUÁRIO:
 PROJETOS DISPONÍVEIS:
 ${allProjects.map((p, i) => `
 ${i + 1}. ID: ${p.id}
-   Título: ${p.translations[0]?.title || p.slug}
+   Título: ${p.title || p.slug}
    Categoria: ${p.category || 'geral'}
-   Tags: ${p.tags?.join(', ') || 'N/A'}
+   Tags: ${p.tags?.map(t => t.name).join(', ') || 'N/A'}
    Destaque: ${p.featured ? 'Sim' : 'Não'}
 `).join('\n')}
 
