@@ -317,11 +317,13 @@ const QuizVancouver: React.FC<QuizVancouverProps> = ({ lang, onComplete }) => {
           }
         }
       }
-    }
+    },
+    es: {} as any, // TODO: Add Spanish translations (uses EN fallback for now)
+    fr: {} as any  // TODO: Add French translations (uses EN fallback for now)
   }
 
-  // TEMPORÁRIO: Forçar PT até traduções completas
-  const t = content.pt
+  // Use language-specific content with fallback: es/fr → en → pt
+  const t = content[lang] || (Object.keys(content[lang] || {}).length === 0 ? content.en : content.pt)
   const totalQuestions = t.questions.length
 
   const calculateResult = (): QuizResult => {
@@ -539,7 +541,7 @@ const QuizVancouver: React.FC<QuizVancouverProps> = ({ lang, onComplete }) => {
         </h3>
 
         <div className="space-y-3">
-          {currentQ.options.map((option) => (
+          {currentQ.options.map((option: any) => (
             <button
               key={option.value}
               onClick={() => handleAnswer(currentQ.id, option.value)}

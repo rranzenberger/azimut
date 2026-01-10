@@ -309,11 +309,304 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
           }
         ]
       }
+    },
+    es: {
+      tabs: {
+        lifestyle: '🏔️ Lifestyle',
+        schools: '🎬 Escuelas',
+        future: '✨ Tu Futuro'
+      },
+      lifestyle: {
+        title: 'Vancouver',
+        subtitle: 'La ciudad más linda del mundo 🌊',
+        cards: [
+          {
+            emoji: '🏔️',
+            title: 'Naturaleza Épica',
+            text: 'Playa por la mañana, nieve por la tarde',
+            video: 'https://www.youtube.com/watch?v=bJMYoj4hHqU',
+            gradient: 'from-green-600 to-blue-600',
+            image: '🌲🏔️⛷️🏖️'
+          },
+          {
+            emoji: '🎭',
+            title: 'Cultura Vibrante',
+            text: 'Festivales, arte, música',
+            video: 'https://www.youtube.com/watch?v=m6W5YSp6Q-0',
+            gradient: 'from-purple-600 to-pink-600',
+            image: '🎨🎭🎪🎸'
+          },
+          {
+            emoji: '🍜',
+            title: 'Escena Gastronómica',
+            text: 'Comida de todo el mundo',
+            video: 'https://www.youtube.com/watch?v=ljLWjkWaLHY',
+            gradient: 'from-orange-600 to-red-600',
+            image: '🍣🍜🌮🍕'
+          },
+          {
+            emoji: '🌈',
+            title: 'Súper Diversa',
+            text: '+100 culturas en una ciudad',
+            video: 'https://www.youtube.com/watch?v=m6W5YSp6Q-0',
+            gradient: 'from-yellow-600 to-pink-600',
+            image: '🇨🇦🇧🇷🇮🇳🇨🇳'
+          },
+          {
+            emoji: '🚴',
+            title: 'Vida Activa',
+            text: 'Bici, ski, surf, ¡todo!',
+            video: 'https://www.youtube.com/watch?v=bJMYoj4hHqU',
+            gradient: 'from-cyan-600 to-blue-600',
+            image: '🚴🏂🏄🧗'
+          },
+          {
+            emoji: '🌙',
+            title: 'Vida Nocturna',
+            text: 'Bares, clubs, rooftops',
+            video: 'https://www.youtube.com/watch?v=3vZ3bZDrCkI',
+            gradient: 'from-indigo-600 to-purple-600',
+            image: '🍻🎵💃🌃'
+          }
+        ]
+      },
+      schools: {
+        title: 'Mejores Escuelas',
+        subtitle: 'Hollywood está aquí 🎬',
+        cards: [
+          {
+            emoji: '🎨',
+            title: 'VanArts',
+            text: '95% empleo | Pixar, Marvel',
+            stats: ['$42k CAD', '1 año', 'Co-op remunerado'],
+            gradient: 'from-purple-600 to-pink-600',
+            video: 'https://www.youtube.com/watch?v=Vm1s2cwHI-M'
+          },
+          {
+            emoji: '🎬',
+            title: 'VFS',
+            text: 'Cámaras RED | Estudios reales',
+            stats: ['$50k CAD', '1 año', 'Network Hollywood'],
+            gradient: 'from-red-600 to-orange-600',
+            video: 'https://www.youtube.com/watch?v=y3uhoRpQPYY'
+          },
+          {
+            emoji: '🎮',
+            title: 'Diseño de Juegos',
+            text: 'Fortnite, Last of Us',
+            stats: ['Unreal Engine', 'Maya', 'Houdini'],
+            gradient: 'from-blue-600 to-cyan-600',
+            video: 'https://www.youtube.com/watch?v=Vm1s2cwHI-M'
+          },
+          {
+            emoji: '📹',
+            title: 'Cinematografía',
+            text: 'Netflix, HBO, A24',
+            stats: ['RED 8K', 'Arri Alexa', 'DaVinci'],
+            gradient: 'from-yellow-600 to-red-600',
+            video: 'https://www.youtube.com/watch?v=y3uhoRpQPYY'
+          }
+        ]
+      },
+      future: {
+        title: 'Tu Futuro',
+        subtitle: 'Dónde puedes trabajar ✨',
+        cards: [
+          {
+            emoji: '🦸',
+            title: 'Marvel Studios',
+            text: 'Avengers, Spider-Man',
+            salary: '$80k-120k/año',
+            gradient: 'from-red-600 to-purple-600'
+          },
+          {
+            emoji: '🎮',
+            title: 'EA Games',
+            text: 'FIFA, Battlefield',
+            salary: '$75k-110k/año',
+            gradient: 'from-blue-600 to-cyan-600'
+          },
+          {
+            emoji: '📺',
+            title: 'Netflix',
+            text: 'Series originales',
+            salary: '$90k-150k/año',
+            gradient: 'from-red-600 to-orange-600'
+          },
+          {
+            emoji: '🎬',
+            title: 'Pixar',
+            text: 'Toy Story, Soul',
+            salary: '$95k-140k/año',
+            gradient: 'from-green-600 to-blue-600'
+          },
+          {
+            emoji: '🎭',
+            title: 'Cine Indie',
+            text: 'Sundance, A24',
+            salary: '$60k-100k/año',
+            gradient: 'from-purple-600 to-pink-600'
+          },
+          {
+            emoji: '🎨',
+            title: 'Freelancer',
+            text: 'Remoto, mundial',
+            salary: '$50k-200k/año',
+            gradient: 'from-orange-600 to-yellow-600'
+          }
+        ]
+      }
+    },
+    fr: {
+      tabs: {
+        lifestyle: '🏔️ Mode de vie',
+        schools: '🎬 Écoles',
+        future: '✨ Votre Avenir'
+      },
+      lifestyle: {
+        title: 'Vancouver',
+        subtitle: 'La plus belle ville du monde 🌊',
+        cards: [
+          {
+            emoji: '🏔️',
+            title: 'Nature Épique',
+            text: 'Plage le matin, neige l\'après-midi',
+            video: 'https://www.youtube.com/watch?v=bJMYoj4hHqU',
+            gradient: 'from-green-600 to-blue-600',
+            image: '🌲🏔️⛷️🏖️'
+          },
+          {
+            emoji: '🎭',
+            title: 'Culture Vibrante',
+            text: 'Festivals, art, musique',
+            video: 'https://www.youtube.com/watch?v=m6W5YSp6Q-0',
+            gradient: 'from-purple-600 to-pink-600',
+            image: '🎨🎭🎪🎸'
+          },
+          {
+            emoji: '🍜',
+            title: 'Scène Culinaire',
+            text: 'Cuisine du monde entier',
+            video: 'https://www.youtube.com/watch?v=ljLWjkWaLHY',
+            gradient: 'from-orange-600 to-red-600',
+            image: '🍣🍜🌮🍕'
+          },
+          {
+            emoji: '🌈',
+            title: 'Super Diverse',
+            text: '+100 cultures dans une ville',
+            video: 'https://www.youtube.com/watch?v=m6W5YSp6Q-0',
+            gradient: 'from-yellow-600 to-pink-600',
+            image: '🇨🇦🇧🇷🇮🇳🇨🇳'
+          },
+          {
+            emoji: '🚴',
+            title: 'Vie Active',
+            text: 'Vélo, ski, surf, tout!',
+            video: 'https://www.youtube.com/watch?v=bJMYoj4hHqU',
+            gradient: 'from-cyan-600 to-blue-600',
+            image: '🚴🏂🏄🧗'
+          },
+          {
+            emoji: '🌙',
+            title: 'Vie Nocturne',
+            text: 'Bars, clubs, rooftops',
+            video: 'https://www.youtube.com/watch?v=3vZ3bZDrCkI',
+            gradient: 'from-indigo-600 to-purple-600',
+            image: '🍻🎵💃🌃'
+          }
+        ]
+      },
+      schools: {
+        title: 'Meilleures Écoles',
+        subtitle: 'Hollywood est ici 🎬',
+        cards: [
+          {
+            emoji: '🎨',
+            title: 'VanArts',
+            text: '95% emploi | Pixar, Marvel',
+            stats: ['$42k CAD', '1 an', 'Co-op rémunéré'],
+            gradient: 'from-purple-600 to-pink-600',
+            video: 'https://www.youtube.com/watch?v=Vm1s2cwHI-M'
+          },
+          {
+            emoji: '🎬',
+            title: 'VFS',
+            text: 'Caméras RED | Studios réels',
+            stats: ['$50k CAD', '1 an', 'Network Hollywood'],
+            gradient: 'from-red-600 to-orange-600',
+            video: 'https://www.youtube.com/watch?v=y3uhoRpQPYY'
+          },
+          {
+            emoji: '🎮',
+            title: 'Game Design',
+            text: 'Fortnite, Last of Us',
+            stats: ['Unreal Engine', 'Maya', 'Houdini'],
+            gradient: 'from-blue-600 to-cyan-600',
+            video: 'https://www.youtube.com/watch?v=Vm1s2cwHI-M'
+          },
+          {
+            emoji: '📹',
+            title: 'Cinématographie',
+            text: 'Netflix, HBO, A24',
+            stats: ['RED 8K', 'Arri Alexa', 'DaVinci'],
+            gradient: 'from-yellow-600 to-red-600',
+            video: 'https://www.youtube.com/watch?v=y3uhoRpQPYY'
+          }
+        ]
+      },
+      future: {
+        title: 'Votre Avenir',
+        subtitle: 'Où vous pouvez travailler ✨',
+        cards: [
+          {
+            emoji: '🦸',
+            title: 'Marvel Studios',
+            text: 'Avengers, Spider-Man',
+            salary: '$80k-120k/an',
+            gradient: 'from-red-600 to-purple-600'
+          },
+          {
+            emoji: '🎮',
+            title: 'EA Games',
+            text: 'FIFA, Battlefield',
+            salary: '$75k-110k/an',
+            gradient: 'from-blue-600 to-cyan-600'
+          },
+          {
+            emoji: '📺',
+            title: 'Netflix',
+            text: 'Séries originales',
+            salary: '$90k-150k/an',
+            gradient: 'from-red-600 to-orange-600'
+          },
+          {
+            emoji: '🎬',
+            title: 'Pixar',
+            text: 'Toy Story, Soul',
+            salary: '$95k-140k/an',
+            gradient: 'from-green-600 to-blue-600'
+          },
+          {
+            emoji: '🎭',
+            title: 'Films Indé',
+            text: 'Sundance, A24',
+            salary: '$60k-100k/an',
+            gradient: 'from-purple-600 to-pink-600'
+          },
+          {
+            emoji: '🎨',
+            title: 'Freelancer',
+            text: 'À distance, mondial',
+            salary: '$50k-200k/an',
+            gradient: 'from-orange-600 to-yellow-600'
+          }
+        ]
+      }
     }
   }
 
-  // TEMPORÁRIO: Forçar PT até traduções completas
-  const t = content.pt
+  const t = content[lang] || content.pt
   const currentSection = activeTab === 'lifestyle' ? t.lifestyle : activeTab === 'schools' ? t.schools : t.future
 
   return (

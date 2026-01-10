@@ -191,23 +191,178 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
     },
     en: {
       title: 'Study in Vancouver',
-      subtitle: 'A smart alternative to traditional university',
-      // ... (adicionar traduções EN, ES, FR depois)
+      subtitle: 'Your international career starts here',
+      heroDescription: 'Graduate in 1 year at Canada\'s best media schools, with 90%+ employability and possibility of permanent residence. Official VFS/VanArts agent for students worldwide.',
+      ctaHero: 'Calculate your investment',
+      whyTitle: 'Why Vancouver?',
+      whyItems: [
+        { icon: '🎬', title: 'Global Media Hub', description: 'Vancouver is known as "Hollywood North". Studios like Disney, Sony, ILM, EA and Ubisoft have bases here.' },
+        { icon: '🏆', title: 'Top 3 World Quality of Life', description: 'Vancouver is constantly ranked among the 3 best cities in the world to live. Safe, multicultural and with stunning nature.' },
+        { icon: '🍁', title: 'Permanent Residence Pathway', description: 'After studying, you can work legally in Canada and apply for permanent residence.' },
+        { icon: '💼', title: '40,000+ Digital Media Vacancies', description: 'Hot market with high demand for qualified professionals in VFX, Animation, Games and Design.' }
+      ],
+      compareTitle: 'Traditional University vs Vancouver',
+      compareDescription: 'Compare studying at a traditional university (4 years) versus Vancouver\'s specialized schools (1 intensive year).',
+      schoolsTitle: 'VFS and VanArts: The Best Schools',
+      vfsTab: 'Vancouver Film School',
+      vfsDescription: 'Rank #1 in Canada in media arts. 1-year intensive programs focused on employability.',
+      vfsPrograms: ['3D Animation & Visual Effects', 'Game Design', 'Film Production', 'Acting for Film & TV', 'Sound Design for Visual Media', 'Programming for Games, Web & Mobile', 'Digital Design', 'Writing for Film, TV & Games'],
+      vfsStats: [{ label: 'Employability', value: '92%' }, { label: 'Graduates', value: '40,000+' }, { label: 'Industry Partners', value: '500+' }],
+      vanartsTab: 'VanArts',
+      vanartsDescription: 'School focused on Animation, VFX and Game Art. More financially accessible, maintaining high quality.',
+      vanartsPrograms: ['2D/3D Character Animation', 'Game Art & Design', 'Visual Effects for Film & TV', 'Acting for Film & Television', 'Professional Photography', 'Web Development & Digital Design'],
+      vanartsStats: [{ label: 'Employability', value: '90%+' }, { label: 'Years of Operation', value: '29+' }, { label: 'Student Networking', value: 'Global' }],
+      testimonialsTitle: 'Brazilians in Vancouver',
+      testimonials: [
+        { name: 'Carina Lotecki', role: 'CFX Artist', company: 'Walt Disney Animation Studios', photo: '/testimonials/carina.jpg', quote: 'Just 1 month after graduating from VFS, I got my first job at Cinesite, then Digital Domain. Today I work at Disney Vancouver on Moana 2!' },
+        { name: 'Samuel Rico', role: 'Crowds Supervising Animator', company: 'Sony Pictures Imageworks', photo: '/testimonials/samuel.jpg', quote: 'The year at VanArts was a dream come true. A lot of work, but totally worth it. Today I work at Sony Pictures in Vancouver!' },
+        { name: 'Raja Ghosh', role: 'Sr. Environment Artist', company: 'Remedy Entertainment', photo: '/testimonials/raja.jpg', quote: 'I chose VanArts for the detailed curriculum and professional pipeline. Today I work at Remedy in Finland, delivered Control and Alan Wake 2!' }
+      ],
+      azimutHelpTitle: 'How Azimut Helps',
+      azimutHelpDescription: 'Complete guidance from start to finish. You don\'t do anything alone.',
+      azimutSteps: [
+        { number: '1', title: 'Free Guidance', description: '1 hour consultation to understand your profile, goals and recommend the best path.' },
+        { number: '2', title: 'Pre-VFS/VanArts Preparation', description: 'Preparatory course in Brazil (optional) to build portfolio and improve English. Approval rate: 85%.' },
+        { number: '3', title: 'Complete Application', description: 'Portfolio review, cover letter, application and interview preparation.' },
+        { number: '4', title: 'Visa & Logistics', description: 'Partnership with visa company. Complete documentation, checklist and support throughout the process.' },
+        { number: '5', title: 'Support in Vancouver', description: 'Housing referral, Brazilian group, local networking and support in the first months.' }
+      ],
+      azimutCost: 'Our service: FREE*',
+      azimutCostNote: '*We are official VFS/VanArts agents. We earn commission from schools, you pay nothing extra!',
+      calculatorTitle: 'Investment Calculator',
+      calculatorDescription: 'Simulate how much it will cost to study in Vancouver (including tuition, housing, food and life).',
+      faqTitle: 'Frequently Asked Questions',
+      faqs: [
+        { question: 'Do I need to know fluent English?', answer: 'Intermediate to advanced is enough. VFS and VanArts require TOEFL or IELTS. Azimut can help you prepare.' },
+        { question: 'Do I need to have a portfolio?', answer: 'Yes, but it doesn\'t need to be complete. Azimut offers preparatory course to build a strong portfolio.' },
+        { question: 'How long does the process take?', answer: 'From 6 to 12 months from decision to starting classes. Preparation (2-4 months) + Application (2-3 months) + Visa (3-4 months).' },
+        { question: 'Can I work while studying?', answer: 'Yes! Study permit allows working 20h/week during classes and 40h/week on vacation. Minimum wage: CAD $17/h.' },
+        { question: 'And after graduation?', answer: 'You receive PGWP (Post-Graduation Work Permit) to work legally in Canada. After 1 year of experience, you can apply for permanent residence.' },
+        { question: 'Which school is better: VFS or VanArts?', answer: 'It depends on your profile! VFS is more intensive and expensive, VanArts is more accessible. In the free consultation, we analyze which is better for you.' },
+        { question: 'Does Azimut charge anything?', answer: 'NO! We earn commission directly from VFS/VanArts. You pay nothing extra. Our interest is that you are accepted and succeed.' },
+        { question: 'Is there an age limit?', answer: 'No! We have students from 18 to 40+ years. The important thing is to have the desire to learn and dedicate yourself.' }
+      ],
+      formTitle: 'I Want to Know More',
+      formDescription: 'Fill out the form and schedule a free 1-hour consultation. We will analyze your profile and create a personalized plan.',
+      ctaFinal: 'Start My Journey'
     },
     es: {
       title: 'Estudiar en Vancouver',
       subtitle: 'Una alternativa inteligente a la universidad tradicional',
-      // ...
+      heroDescription: 'Graduarse en 1 año en las mejores escuelas de medios de Canadá, con más del 90% de empleabilidad y posibilidad de residencia permanente. Agente oficial VFS/VanArts para estudiantes de todo el mundo.',
+      ctaHero: 'Calcular mi inversión',
+      whyTitle: '¿Por qué Vancouver?',
+      whyItems: [
+        { icon: '🎬', title: 'Hub Global de Medios', description: 'Vancouver es conocida como "Hollywood del Norte". Estudios como Disney, Sony, ILM, EA y Ubisoft tienen bases aquí.' },
+        { icon: '🏆', title: 'Calidad de Vida Top 3 Mundial', description: 'Vancouver está constantemente clasificada entre las 3 mejores ciudades del mundo para vivir. Segura, multicultural y con naturaleza impresionante.' },
+        { icon: '🍁', title: 'Camino a Residencia Permanente', description: 'Después de estudiar, puedes trabajar legalmente en Canadá y solicitar residencia permanente.' },
+        { icon: '💼', title: '40.000+ Vacantes en Medios Digitales', description: 'Mercado activo con alta demanda de profesionales calificados en VFX, Animación, Juegos y Diseño.' }
+      ],
+      compareTitle: 'Universidad Tradicional vs Vancouver',
+      compareDescription: 'Compara estudiar en una universidad tradicional (4 años) versus las escuelas especializadas de Vancouver (1 año intensivo).',
+      schoolsTitle: 'VFS y VanArts: Las Mejores Escuelas',
+      vfsTab: 'Vancouver Film School',
+      vfsDescription: 'Rank #1 en Canadá en artes mediáticas. Programas intensivos de 1 año con enfoque en empleabilidad.',
+      vfsPrograms: ['Animación 3D y Efectos Visuales', 'Diseño de Juegos', 'Producción Cinematográfica', 'Actuación para Cine y TV', 'Diseño de Sonido para Medios Visuales', 'Programación para Juegos, Web y Móvil', 'Diseño Digital', 'Escritura para Cine, TV y Juegos'],
+      vfsStats: [{ label: 'Empleabilidad', value: '92%' }, { label: 'Graduados', value: '40.000+' }, { label: 'Socios de Industria', value: '500+' }],
+      vanartsTab: 'VanArts',
+      vanartsDescription: 'Escuela enfocada en Animación, VFX y Arte de Juegos. Más accesible financieramente, manteniendo alta calidad.',
+      vanartsPrograms: ['Animación de Personajes 2D/3D', 'Arte y Diseño de Juegos', 'Efectos Visuales para Cine y TV', 'Actuación para Cine y Televisión', 'Fotografía Profesional', 'Desarrollo Web y Diseño Digital'],
+      vanartsStats: [{ label: 'Empleabilidad', value: '90%+' }, { label: 'Años de Operación', value: '29+' }, { label: 'Networking Estudiantes', value: 'Global' }],
+      testimonialsTitle: 'Brasileños en Vancouver',
+      testimonials: [
+        { name: 'Carina Lotecki', role: 'CFX Artist', company: 'Walt Disney Animation Studios', photo: '/testimonials/carina.jpg', quote: 'Solo 1 mes después de graduarme de VFS, conseguí mi primer trabajo en Cinesite, luego Digital Domain. ¡Hoy trabajo en Disney Vancouver en Moana 2!' },
+        { name: 'Samuel Rico', role: 'Crowds Supervising Animator', company: 'Sony Pictures Imageworks', photo: '/testimonials/samuel.jpg', quote: 'El año en VanArts fue un sueño hecho realidad. Mucho trabajo, pero totalmente valió la pena. ¡Hoy trabajo en Sony Pictures en Vancouver!' },
+        { name: 'Raja Ghosh', role: 'Sr. Environment Artist', company: 'Remedy Entertainment', photo: '/testimonials/raja.jpg', quote: 'Elegí VanArts por el currículo detallado y pipeline profesional. Hoy trabajo en Remedy en Finlandia, ¡entregué Control y Alan Wake 2!' }
+      ],
+      azimutHelpTitle: 'Cómo Ayuda Azimut',
+      azimutHelpDescription: 'Orientación completa de principio a fin. No haces nada solo.',
+      azimutSteps: [
+        { number: '1', title: 'Orientación Gratuita', description: '1 hora de consulta para entender tu perfil, objetivos y recomendar el mejor camino.' },
+        { number: '2', title: 'Preparación Pre-VFS/VanArts', description: 'Curso preparatorio en Brasil (opcional) para construir portafolio y mejorar inglés. Tasa de aprobación: 85%.' },
+        { number: '3', title: 'Application Completo', description: 'Revisión de portafolio, carta de presentación, solicitud y preparación para entrevista.' },
+        { number: '4', title: 'Visa y Logística', description: 'Asociación con empresa de visas. Documentación completa, checklist y soporte durante todo el proceso.' },
+        { number: '5', title: 'Apoyo en Vancouver', description: 'Indicación de vivienda, grupo de brasileños, networking local y soporte en los primeros meses.' }
+      ],
+      azimutCost: 'Nuestro servicio: GRATUITO*',
+      azimutCostNote: '*Somos agentes oficiales de VFS/VanArts. Ganamos comisión de las escuelas, ¡tú no pagas nada extra!',
+      calculatorTitle: 'Calculadora de Inversión',
+      calculatorDescription: 'Simula cuánto costará estudiar en Vancouver (incluyendo matrícula, vivienda, alimentación y vida).',
+      faqTitle: 'Preguntas Frecuentes',
+      faqs: [
+        { question: '¿Necesito saber inglés fluido?', answer: 'Intermedio a avanzado es suficiente. VFS y VanArts requieren TOEFL o IELTS. Azimut puede ayudarte a prepararte.' },
+        { question: '¿Necesito tener portafolio?', answer: 'Sí, pero no necesita estar completo. Azimut ofrece curso preparatorio para construir un portafolio sólido.' },
+        { question: '¿Cuánto tiempo tarda el proceso?', answer: 'De 6 a 12 meses desde la decisión hasta comenzar las clases. Preparación (2-4 meses) + Solicitud (2-3 meses) + Visa (3-4 meses).' },
+        { question: '¿Puedo trabajar mientras estudio?', answer: 'Sí! El permiso de estudio permite trabajar 20h/semana durante clases y 40h/semana en vacaciones. Salario mínimo: CAD $17/h.' },
+        { question: '¿Y después de graduarme?', answer: 'Recibes PGWP (Post-Graduation Work Permit) para trabajar legalmente en Canadá. Después de 1 año de experiencia, puedes solicitar residencia permanente.' },
+        { question: '¿Qué escuela es mejor: VFS o VanArts?', answer: '¡Depende de tu perfil! VFS es más intensivo y caro, VanArts es más accesible. En la consulta gratuita, analizamos cuál es mejor para ti.' },
+        { question: '¿Azimut cobra algo?', answer: '¡NO! Ganamos comisión directamente de VFS/VanArts. No pagas nada extra. Nuestro interés es que seas aceptado y tengas éxito.' },
+        { question: '¿Hay límite de edad?', answer: '¡No! Tenemos estudiantes de 18 a 40+ años. Lo importante es tener ganas de aprender y dedicarse.' }
+      ],
+      formTitle: 'Quiero Saber Más',
+      formDescription: 'Completa el formulario y agenda una consulta gratuita de 1 hora. Analizaremos tu perfil y crearemos un plan personalizado.',
+      ctaFinal: 'Comenzar Mi Viaje'
     },
     fr: {
       title: 'Étudier à Vancouver',
       subtitle: 'Une alternative intelligente à l\'université traditionnelle',
-      // ...
+      heroDescription: 'Diplômez-vous en 1 an dans les meilleures écoles de médias du Canada, avec plus de 90% d\'employabilité et possibilité de résidence permanente. Agent officiel VFS/VanArts pour étudiants du monde entier.',
+      ctaHero: 'Calculer mon investissement',
+      whyTitle: 'Pourquoi Vancouver?',
+      whyItems: [
+        { icon: '🎬', title: 'Hub Mondial des Médias', description: 'Vancouver est connue comme "Hollywood du Nord". Des studios comme Disney, Sony, ILM, EA et Ubisoft ont des bases ici.' },
+        { icon: '🏆', title: 'Qualité de Vie Top 3 Mondial', description: 'Vancouver est constamment classée parmi les 3 meilleures villes du monde pour vivre. Sûre, multiculturelle et avec une nature époustouflante.' },
+        { icon: '🍁', title: 'Chemin vers Résidence Permanente', description: 'Après vos études, vous pouvez travailler légalement au Canada et demander la résidence permanente.' },
+        { icon: '💼', title: '40.000+ Postes en Médias Numériques', description: 'Marché actif avec forte demande de professionnels qualifiés en VFX, Animation, Jeux et Design.' }
+      ],
+      compareTitle: 'Université Traditionnelle vs Vancouver',
+      compareDescription: 'Comparez étudier dans une université traditionnelle (4 ans) versus les écoles spécialisées de Vancouver (1 an intensif).',
+      schoolsTitle: 'VFS et VanArts: Les Meilleures Écoles',
+      vfsTab: 'Vancouver Film School',
+      vfsDescription: 'Rang #1 au Canada en arts médiatiques. Programmes intensifs d\'1 an axés sur l\'employabilité.',
+      vfsPrograms: ['Animation 3D et Effets Visuels', 'Conception de Jeux', 'Production Cinématographique', 'Acting pour Film et TV', 'Conception Sonore pour Médias Visuels', 'Programmation pour Jeux, Web et Mobile', 'Design Numérique', 'Écriture pour Film, TV et Jeux'],
+      vfsStats: [{ label: 'Employabilité', value: '92%' }, { label: 'Diplômés', value: '40.000+' }, { label: 'Partenaires Industrie', value: '500+' }],
+      vanartsTab: 'VanArts',
+      vanartsDescription: 'École axée sur Animation, VFX et Art de Jeux. Plus accessible financièrement, maintenant haute qualité.',
+      vanartsPrograms: ['Animation de Personnages 2D/3D', 'Art et Conception de Jeux', 'Effets Visuels pour Film et TV', 'Acting pour Film et Télévision', 'Photographie Professionnelle', 'Développement Web et Design Numérique'],
+      vanartsStats: [{ label: 'Employabilité', value: '90%+' }, { label: 'Années d\'Opération', value: '29+' }, { label: 'Networking Étudiants', value: 'Global' }],
+      testimonialsTitle: 'Brésiliens à Vancouver',
+      testimonials: [
+        { name: 'Carina Lotecki', role: 'CFX Artist', company: 'Walt Disney Animation Studios', photo: '/testimonials/carina.jpg', quote: 'Seulement 1 mois après avoir obtenu mon diplôme de VFS, j\'ai décroché mon premier emploi chez Cinesite, puis Digital Domain. Aujourd\'hui je travaille chez Disney Vancouver sur Moana 2!' },
+        { name: 'Samuel Rico', role: 'Crowds Supervising Animator', company: 'Sony Pictures Imageworks', photo: '/testimonials/samuel.jpg', quote: 'L\'année à VanArts était un rêve devenu réalité. Beaucoup de travail, mais totalement valable. Aujourd\'hui je travaille chez Sony Pictures à Vancouver!' },
+        { name: 'Raja Ghosh', role: 'Sr. Environment Artist', company: 'Remedy Entertainment', photo: '/testimonials/raja.jpg', quote: 'J\'ai choisi VanArts pour le programme détaillé et pipeline professionnel. Aujourd\'hui je travaille chez Remedy en Finlande, j\'ai livré Control et Alan Wake 2!' }
+      ],
+      azimutHelpTitle: 'Comment Azimut Aide',
+      azimutHelpDescription: 'Orientation complète du début à la fin. Vous ne faites rien seul.',
+      azimutSteps: [
+        { number: '1', title: 'Orientation Gratuite', description: '1 heure de consultation pour comprendre votre profil, objectifs et recommander le meilleur chemin.' },
+        { number: '2', title: 'Préparation Pré-VFS/VanArts', description: 'Cours préparatoire au Brésil (optionnel) pour construire portfolio et améliorer anglais. Taux d\'approbation: 85%.' },
+        { number: '3', title: 'Application Complet', description: 'Révision de portfolio, lettre de présentation, application et préparation pour entretien.' },
+        { number: '4', title: 'Visa et Logistique', description: 'Partenariat avec entreprise de visas. Documentation complète, checklist et support pendant tout le processus.' },
+        { number: '5', title: 'Support à Vancouver', description: 'Indication de logement, groupe de brésiliens, networking local et support pendant les premiers mois.' }
+      ],
+      azimutCost: 'Notre service: GRATUIT*',
+      azimutCostNote: '*Nous sommes agents officiels de VFS/VanArts. Nous gagnons une commission des écoles, vous ne payez rien de plus!',
+      calculatorTitle: 'Calculateur d\'Investissement',
+      calculatorDescription: 'Simulez combien coûtera étudier à Vancouver (incluant frais de scolarité, logement, alimentation et vie).',
+      faqTitle: 'Questions Fréquentes',
+      faqs: [
+        { question: 'Ai-je besoin de parler anglais couramment?', answer: 'Intermédiaire à avancé est suffisant. VFS et VanArts exigent TOEFL ou IELTS. Azimut peut vous aider à vous préparer.' },
+        { question: 'Ai-je besoin d\'avoir un portfolio?', answer: 'Oui, mais il n\'a pas besoin d\'être complet. Azimut offre un cours préparatoire pour construire un portfolio solide.' },
+        { question: 'Combien de temps prend le processus?', answer: 'De 6 à 12 mois depuis la décision jusqu\'au début des cours. Préparation (2-4 mois) + Application (2-3 mois) + Visa (3-4 mois).' },
+        { question: 'Puis-je travailler pendant mes études?', answer: 'Oui! Le permis d\'étude permet de travailler 20h/semaine pendant les cours et 40h/semaine pendant les vacances. Salaire minimum: CAD $17/h.' },
+        { question: 'Et après la graduation?', answer: 'Vous recevez PGWP (Post-Graduation Work Permit) pour travailler légalement au Canada. Après 1 an d\'expérience, vous pouvez demander la résidence permanente.' },
+        { question: 'Quelle école est meilleure: VFS ou VanArts?', answer: 'Ça dépend de votre profil! VFS est plus intensif et cher, VanArts est plus accessible. Dans la consultation gratuite, nous analysons laquelle est meilleure pour vous.' },
+        { question: 'Azimut facture quelque chose?', answer: 'NON! Nous gagnons une commission directement de VFS/VanArts. Vous ne payez rien de plus. Notre intérêt est que vous soyez accepté et ayez du succès.' },
+        { question: 'Y a-t-il une limite d\'âge?', answer: 'Non! Nous avons des étudiants de 18 à 40+ ans. L\'important est d\'avoir envie d\'apprendre et de se consacrer.' }
+      ],
+      formTitle: 'Je Veux En Savoir Plus',
+      formDescription: 'Remplissez le formulaire et programmez une consultation gratuite d\'1 heure. Nous analyserons votre profil et créerons un plan personnalisé.',
+      ctaFinal: 'Commencer Mon Voyage'
     }
   }
 
-  // TEMPORÁRIO: Forçar PT até ter traduções completas
-  const t = content.pt
+  const t = content[lang] || content.pt
 
   return (
     <>

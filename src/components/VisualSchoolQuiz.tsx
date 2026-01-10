@@ -48,103 +48,288 @@ const VisualSchoolQuiz: React.FC<VisualSchoolQuizProps> = ({ lang, onComplete })
     }
   }
 
-  const questions = [
-    {
-      emoji: '🎨',
-      options: [
-        { 
-          visual: '🎮',
-          text: 'Games',
-          subtitle: 'Fortnite, Last of Us',
-          score: 'vanarts',
-          gradient: 'from-purple-600 to-pink-600'
+  const content: Record<Lang, any> = {
+    pt: {
+      yourVibeIs: 'Sua vibe é',
+      viewDetails: '🎬 Ver Detalhes',
+      redo: '🔄 Refazer',
+      of: 'de',
+      questions: [
+        {
+          emoji: '🎨',
+          options: [
+            { visual: '🎮', text: 'Games', subtitle: 'Fortnite, Last of Us', score: 'vanarts', gradient: 'from-purple-600 to-pink-600' },
+            { visual: '🎬', text: 'Filmes', subtitle: 'Marvel, Netflix', score: 'vfs', gradient: 'from-red-600 to-orange-600' }
+          ]
         },
-        { 
-          visual: '🎬',
-          text: 'Filmes',
-          subtitle: 'Marvel, Netflix',
-          score: 'vfs',
-          gradient: 'from-red-600 to-orange-600'
+        {
+          emoji: '💻',
+          options: [
+            { visual: '🖥️', text: '3D Digital', subtitle: 'Maya, Houdini', score: 'vanarts', gradient: 'from-blue-600 to-cyan-600' },
+            { visual: '📹', text: 'Câmera Real', subtitle: 'RED, Arri', score: 'vfs', gradient: 'from-yellow-600 to-red-600' }
+          ]
+        },
+        {
+          emoji: '🎯',
+          options: [
+            { visual: '🦸', text: 'Pixar/Marvel', subtitle: '95% emprego', score: 'vanarts', gradient: 'from-indigo-600 to-purple-600' },
+            { visual: '🏆', text: 'Sundance/A24', subtitle: 'Festivais', score: 'vfs', gradient: 'from-amber-600 to-orange-600' }
+          ]
+        },
+        {
+          emoji: '💰',
+          options: [
+            { visual: '💵', text: '$42k', subtitle: 'Melhor custo', score: 'vanarts', gradient: 'from-green-600 to-emerald-600' },
+            { visual: '💎', text: '$50k', subtitle: 'Premium', score: 'vfs', gradient: 'from-purple-600 to-pink-600' }
+          ]
+        },
+        {
+          emoji: '🤝',
+          options: [
+            { visual: '🤓', text: 'Nerds', subtitle: 'Gamers, cosplay', score: 'vanarts', gradient: 'from-blue-600 to-purple-600' },
+            { visual: '🎭', text: 'Artistas', subtitle: 'Indie, cult', score: 'vfs', gradient: 'from-red-600 to-pink-600' }
+          ]
         }
-      ]
+      ],
+      results: {
+        vanarts: {
+          emoji: '🎮',
+          title: 'VanArts',
+          subtitle: 'Digital Creator',
+          color: 'from-purple-600 to-pink-600',
+          benefits: [
+            { emoji: '🎨', text: 'Animação 3D Top' },
+            { emoji: '💰', text: 'Melhor Custo' },
+            { emoji: '🏆', text: '95% Emprego' },
+            { emoji: '🤓', text: 'Vibe Geek' }
+          ]
+        },
+        vfs: {
+          emoji: '🎬',
+          title: 'VFS',
+          subtitle: 'Filmmaker',
+          color: 'from-red-600 to-orange-600',
+          benefits: [
+            { emoji: '📹', text: 'Câmeras RED 8K' },
+            { emoji: '🎭', text: 'Estúdios Reais' },
+            { emoji: '🏆', text: 'Festivais' },
+            { emoji: '🎨', text: 'Vibe Artsy' }
+          ]
+        }
+      }
     },
-    {
-      emoji: '💻',
-      options: [
-        { 
-          visual: '🖥️',
-          text: '3D Digital',
-          subtitle: 'Maya, Houdini',
-          score: 'vanarts',
-          gradient: 'from-blue-600 to-cyan-600'
+    en: {
+      yourVibeIs: 'Your vibe is',
+      viewDetails: '🎬 View Details',
+      redo: '🔄 Redo',
+      of: 'of',
+      questions: [
+        {
+          emoji: '🎨',
+          options: [
+            { visual: '🎮', text: 'Games', subtitle: 'Fortnite, Last of Us', score: 'vanarts', gradient: 'from-purple-600 to-pink-600' },
+            { visual: '🎬', text: 'Films', subtitle: 'Marvel, Netflix', score: 'vfs', gradient: 'from-red-600 to-orange-600' }
+          ]
         },
-        { 
-          visual: '📹',
-          text: 'Câmera Real',
-          subtitle: 'RED, Arri',
-          score: 'vfs',
-          gradient: 'from-yellow-600 to-red-600'
+        {
+          emoji: '💻',
+          options: [
+            { visual: '🖥️', text: '3D Digital', subtitle: 'Maya, Houdini', score: 'vanarts', gradient: 'from-blue-600 to-cyan-600' },
+            { visual: '📹', text: 'Real Camera', subtitle: 'RED, Arri', score: 'vfs', gradient: 'from-yellow-600 to-red-600' }
+          ]
+        },
+        {
+          emoji: '🎯',
+          options: [
+            { visual: '🦸', text: 'Pixar/Marvel', subtitle: '95% employment', score: 'vanarts', gradient: 'from-indigo-600 to-purple-600' },
+            { visual: '🏆', text: 'Sundance/A24', subtitle: 'Festivals', score: 'vfs', gradient: 'from-amber-600 to-orange-600' }
+          ]
+        },
+        {
+          emoji: '💰',
+          options: [
+            { visual: '💵', text: '$42k', subtitle: 'Best cost', score: 'vanarts', gradient: 'from-green-600 to-emerald-600' },
+            { visual: '💎', text: '$50k', subtitle: 'Premium', score: 'vfs', gradient: 'from-purple-600 to-pink-600' }
+          ]
+        },
+        {
+          emoji: '🤝',
+          options: [
+            { visual: '🤓', text: 'Nerds', subtitle: 'Gamers, cosplay', score: 'vanarts', gradient: 'from-blue-600 to-purple-600' },
+            { visual: '🎭', text: 'Artists', subtitle: 'Indie, cult', score: 'vfs', gradient: 'from-red-600 to-pink-600' }
+          ]
         }
-      ]
+      ],
+      results: {
+        vanarts: {
+          emoji: '🎮',
+          title: 'VanArts',
+          subtitle: 'Digital Creator',
+          color: 'from-purple-600 to-pink-600',
+          benefits: [
+            { emoji: '🎨', text: 'Top 3D Animation' },
+            { emoji: '💰', text: 'Best Cost' },
+            { emoji: '🏆', text: '95% Employment' },
+            { emoji: '🤓', text: 'Geek Vibe' }
+          ]
+        },
+        vfs: {
+          emoji: '🎬',
+          title: 'VFS',
+          subtitle: 'Filmmaker',
+          color: 'from-red-600 to-orange-600',
+          benefits: [
+            { emoji: '📹', text: 'RED 8K Cameras' },
+            { emoji: '🎭', text: 'Real Studios' },
+            { emoji: '🏆', text: 'Festivals' },
+            { emoji: '🎨', text: 'Artsy Vibe' }
+          ]
+        }
+      }
     },
-    {
-      emoji: '🎯',
-      options: [
-        { 
-          visual: '🦸',
-          text: 'Pixar/Marvel',
-          subtitle: '95% emprego',
-          score: 'vanarts',
-          gradient: 'from-indigo-600 to-purple-600'
+    es: {
+      yourVibeIs: 'Tu vibra es',
+      viewDetails: '🎬 Ver Detalles',
+      redo: '🔄 Rehacer',
+      of: 'de',
+      questions: [
+        {
+          emoji: '🎨',
+          options: [
+            { visual: '🎮', text: 'Juegos', subtitle: 'Fortnite, Last of Us', score: 'vanarts', gradient: 'from-purple-600 to-pink-600' },
+            { visual: '🎬', text: 'Películas', subtitle: 'Marvel, Netflix', score: 'vfs', gradient: 'from-red-600 to-orange-600' }
+          ]
         },
-        { 
-          visual: '🏆',
-          text: 'Sundance/A24',
-          subtitle: 'Festivais',
-          score: 'vfs',
-          gradient: 'from-amber-600 to-orange-600'
+        {
+          emoji: '💻',
+          options: [
+            { visual: '🖥️', text: '3D Digital', subtitle: 'Maya, Houdini', score: 'vanarts', gradient: 'from-blue-600 to-cyan-600' },
+            { visual: '📹', text: 'Cámara Real', subtitle: 'RED, Arri', score: 'vfs', gradient: 'from-yellow-600 to-red-600' }
+          ]
+        },
+        {
+          emoji: '🎯',
+          options: [
+            { visual: '🦸', text: 'Pixar/Marvel', subtitle: '95% empleo', score: 'vanarts', gradient: 'from-indigo-600 to-purple-600' },
+            { visual: '🏆', text: 'Sundance/A24', subtitle: 'Festivales', score: 'vfs', gradient: 'from-amber-600 to-orange-600' }
+          ]
+        },
+        {
+          emoji: '💰',
+          options: [
+            { visual: '💵', text: '$42k', subtitle: 'Mejor costo', score: 'vanarts', gradient: 'from-green-600 to-emerald-600' },
+            { visual: '💎', text: '$50k', subtitle: 'Premium', score: 'vfs', gradient: 'from-purple-600 to-pink-600' }
+          ]
+        },
+        {
+          emoji: '🤝',
+          options: [
+            { visual: '🤓', text: 'Nerds', subtitle: 'Gamers, cosplay', score: 'vanarts', gradient: 'from-blue-600 to-purple-600' },
+            { visual: '🎭', text: 'Artistas', subtitle: 'Indie, cult', score: 'vfs', gradient: 'from-red-600 to-pink-600' }
+          ]
         }
-      ]
+      ],
+      results: {
+        vanarts: {
+          emoji: '🎮',
+          title: 'VanArts',
+          subtitle: 'Digital Creator',
+          color: 'from-purple-600 to-pink-600',
+          benefits: [
+            { emoji: '🎨', text: 'Animación 3D Top' },
+            { emoji: '💰', text: 'Mejor Costo' },
+            { emoji: '🏆', text: '95% Empleo' },
+            { emoji: '🤓', text: 'Vibra Geek' }
+          ]
+        },
+        vfs: {
+          emoji: '🎬',
+          title: 'VFS',
+          subtitle: 'Filmmaker',
+          color: 'from-red-600 to-orange-600',
+          benefits: [
+            { emoji: '📹', text: 'Cámaras RED 8K' },
+            { emoji: '🎭', text: 'Estudios Reales' },
+            { emoji: '🏆', text: 'Festivales' },
+            { emoji: '🎨', text: 'Vibra Artística' }
+          ]
+        }
+      }
     },
-    {
-      emoji: '💰',
-      options: [
-        { 
-          visual: '💵',
-          text: '$42k',
-          subtitle: 'Melhor custo',
-          score: 'vanarts',
-          gradient: 'from-green-600 to-emerald-600'
+    fr: {
+      yourVibeIs: 'Votre vibe est',
+      viewDetails: '🎬 Voir Détails',
+      redo: '🔄 Refaire',
+      of: 'sur',
+      questions: [
+        {
+          emoji: '🎨',
+          options: [
+            { visual: '🎮', text: 'Jeux', subtitle: 'Fortnite, Last of Us', score: 'vanarts', gradient: 'from-purple-600 to-pink-600' },
+            { visual: '🎬', text: 'Films', subtitle: 'Marvel, Netflix', score: 'vfs', gradient: 'from-red-600 to-orange-600' }
+          ]
         },
-        { 
-          visual: '💎',
-          text: '$50k',
-          subtitle: 'Premium',
-          score: 'vfs',
-          gradient: 'from-purple-600 to-pink-600'
-        }
-      ]
-    },
-    {
-      emoji: '🤝',
-      options: [
-        { 
-          visual: '🤓',
-          text: 'Nerds',
-          subtitle: 'Gamers, cosplay',
-          score: 'vanarts',
-          gradient: 'from-blue-600 to-purple-600'
+        {
+          emoji: '💻',
+          options: [
+            { visual: '🖥️', text: '3D Digital', subtitle: 'Maya, Houdini', score: 'vanarts', gradient: 'from-blue-600 to-cyan-600' },
+            { visual: '📹', text: 'Caméra Réelle', subtitle: 'RED, Arri', score: 'vfs', gradient: 'from-yellow-600 to-red-600' }
+          ]
         },
-        { 
-          visual: '🎭',
-          text: 'Artistas',
-          subtitle: 'Indie, cult',
-          score: 'vfs',
-          gradient: 'from-red-600 to-pink-600'
+        {
+          emoji: '🎯',
+          options: [
+            { visual: '🦸', text: 'Pixar/Marvel', subtitle: '95% emploi', score: 'vanarts', gradient: 'from-indigo-600 to-purple-600' },
+            { visual: '🏆', text: 'Sundance/A24', subtitle: 'Festivals', score: 'vfs', gradient: 'from-amber-600 to-orange-600' }
+          ]
+        },
+        {
+          emoji: '💰',
+          options: [
+            { visual: '💵', text: '$42k', subtitle: 'Meilleur coût', score: 'vanarts', gradient: 'from-green-600 to-emerald-600' },
+            { visual: '💎', text: '$50k', subtitle: 'Premium', score: 'vfs', gradient: 'from-purple-600 to-pink-600' }
+          ]
+        },
+        {
+          emoji: '🤝',
+          options: [
+            { visual: '🤓', text: 'Nerds', subtitle: 'Gamers, cosplay', score: 'vanarts', gradient: 'from-blue-600 to-purple-600' },
+            { visual: '🎭', text: 'Artistes', subtitle: 'Indie, cult', score: 'vfs', gradient: 'from-red-600 to-pink-600' }
+          ]
         }
-      ]
+      ],
+      results: {
+        vanarts: {
+          emoji: '🎮',
+          title: 'VanArts',
+          subtitle: 'Digital Creator',
+          color: 'from-purple-600 to-pink-600',
+          benefits: [
+            { emoji: '🎨', text: 'Animation 3D Top' },
+            { emoji: '💰', text: 'Meilleur Coût' },
+            { emoji: '🏆', text: '95% Emploi' },
+            { emoji: '🤓', text: 'Vibe Geek' }
+          ]
+        },
+        vfs: {
+          emoji: '🎬',
+          title: 'VFS',
+          subtitle: 'Filmmaker',
+          color: 'from-red-600 to-orange-600',
+          benefits: [
+            { emoji: '📹', text: 'Caméras RED 8K' },
+            { emoji: '🎭', text: 'Studios Réels' },
+            { emoji: '🏆', text: 'Festivals' },
+            { emoji: '🎨', text: 'Vibe Artsy' }
+          ]
+        }
+      }
     }
-  ]
+  }
+
+  const t = content[lang] || content.pt
+  const questions = t.questions
+  const results = t.results
 
   const handleChoice = (scoreType: 'vanarts' | 'vfs') => {
     playSound('click')
@@ -167,33 +352,6 @@ const VisualSchoolQuiz: React.FC<VisualSchoolQuizProps> = ({ lang, onComplete })
 
   const winner = scores.vanarts > scores.vfs ? 'vanarts' : 'vfs'
 
-  const results = {
-    vanarts: {
-      emoji: '🎮',
-      title: 'VanArts',
-      subtitle: 'Digital Creator',
-      color: 'from-purple-600 to-pink-600',
-      benefits: [
-        { emoji: '🎨', text: 'Animação 3D Top' },
-        { emoji: '💰', text: 'Melhor Custo' },
-        { emoji: '🏆', text: '95% Emprego' },
-        { emoji: '🤓', text: 'Vibe Geek' }
-      ]
-    },
-    vfs: {
-      emoji: '🎬',
-      title: 'VFS',
-      subtitle: 'Filmmaker',
-      color: 'from-red-600 to-orange-600',
-      benefits: [
-        { emoji: '📹', text: 'Câmeras RED 8K' },
-        { emoji: '🎭', text: 'Estúdios Reais' },
-        { emoji: '🏆', text: 'Festivais' },
-        { emoji: '🎨', text: 'Vibe Artsy' }
-      ]
-    }
-  }
-
   if (showResult) {
     const result = results[winner]
     return (
@@ -212,7 +370,7 @@ const VisualSchoolQuiz: React.FC<VisualSchoolQuizProps> = ({ lang, onComplete })
           </h2>
           
           <p className="text-2xl text-white/80 mb-12">
-            Sua vibe é {result.subtitle}!
+            {t.yourVibeIs} {result.subtitle}!
           </p>
 
           {/* Benefits Grid */}
@@ -233,7 +391,7 @@ const VisualSchoolQuiz: React.FC<VisualSchoolQuizProps> = ({ lang, onComplete })
             <button
               className={`px-8 py-4 bg-gradient-to-r ${result.color} hover:opacity-90 text-white text-xl font-bold rounded-full transition-all transform hover:scale-105 shadow-2xl`}
             >
-              🎬 Ver Detalhes
+              {t.viewDetails}
             </button>
             <button
               onClick={() => {
@@ -243,7 +401,7 @@ const VisualSchoolQuiz: React.FC<VisualSchoolQuizProps> = ({ lang, onComplete })
               }}
               className="px-8 py-4 bg-white/20 hover:bg-white/30 backdrop-blur-xl text-white text-xl font-bold rounded-full transition-all border border-white/30"
             >
-              🔄 Refazer
+              {t.redo}
             </button>
           </div>
         </div>
@@ -278,7 +436,7 @@ const VisualSchoolQuiz: React.FC<VisualSchoolQuizProps> = ({ lang, onComplete })
           {currentQ.emoji}
         </div>
         <p className="text-2xl text-white/60 mb-2">
-          {step + 1} de {questions.length}
+          {step + 1} {t.of} {questions.length}
         </p>
       </div>
 
