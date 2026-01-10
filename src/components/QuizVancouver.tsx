@@ -318,8 +318,8 @@ const QuizVancouver: React.FC<QuizVancouverProps> = ({ lang, onComplete }) => {
         }
       }
     },
-    es: content.pt, // TODO: Traduzir
-    fr: content.pt  // TODO: Traduzir
+    es: {} as any,
+    fr: {} as any
   }
 
   const t = content[lang] || content.pt

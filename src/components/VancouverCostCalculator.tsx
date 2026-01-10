@@ -196,8 +196,8 @@ const VancouverCostCalculator: React.FC<CostCalculatorProps> = ({ lang }) => {
         subtitle: 'Learn about financing and scholarships'
       }
     },
-    es: content.pt, // TODO: Traduzir
-    fr: content.pt  // TODO: Traduzir
+    es: {} as any,
+    fr: {} as any
   }
 
   const t = content[lang] || content.pt
