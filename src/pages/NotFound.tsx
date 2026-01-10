@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
+import { trackEvent } from '../components/GoogleAnalytics'
 
 interface NotFoundProps {
   lang: Lang
 }
 
 const NotFound: React.FC<NotFoundProps> = ({ lang }) => {
+  // Track 404 errors
+  useEffect(() => {
+    trackEvent('404_error', {
+      page: window.location.pathname,
+      referrer: document.referrer,
+      lang
+    })
+  }, [lang])
+  
   const messages = {
     en: {
       code: '404',
@@ -82,6 +92,34 @@ const NotFound: React.FC<NotFoundProps> = ({ lang }) => {
         <p className="mb-8 max-w-md mx-auto text-base md:text-lg text-slate-400 leading-relaxed">
           {msg.description}
         </p>
+
+        {/* Sugestões de páginas */}
+        <div className="mb-8 flex flex-wrap justify-center gap-3">
+          <Link
+            to={`/${lang}/work`}
+            className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-azimut-red/50 rounded-lg transition-all text-white/80 hover:text-white text-sm"
+          >
+            {lang === 'pt' ? 'Projetos' : lang === 'es' ? 'Proyectos' : lang === 'fr' ? 'Projets' : 'Projects'}
+          </Link>
+          <Link
+            to={`/${lang}/academy`}
+            className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-azimut-red/50 rounded-lg transition-all text-white/80 hover:text-white text-sm"
+          >
+            Academy
+          </Link>
+          <Link
+            to={`/${lang}/studio`}
+            className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-azimut-red/50 rounded-lg transition-all text-white/80 hover:text-white text-sm"
+          >
+            Studio
+          </Link>
+          <Link
+            to={`/${lang}/contact`}
+            className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-azimut-red/50 rounded-lg transition-all text-white/80 hover:text-white text-sm"
+          >
+            {lang === 'pt' ? 'Contato' : lang === 'es' ? 'Contacto' : lang === 'fr' ? 'Contact' : 'Contact'}
+          </Link>
+        </div>
 
         {/* Botão de voltar */}
         <Link
