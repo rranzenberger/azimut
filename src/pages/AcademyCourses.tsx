@@ -319,13 +319,13 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
     fr: {
       meta: {
         title: 'Cours Azimut Academy - Formation Professionnelle',
-        description: 'Cours de VR, 360°, IA Générative, Motion Design et production audiovisuelle. 30 ans d\'expérience. Petites classes, 100% pratique.'
+        description: 'Cours de VR, 360°, IA Générative, Motion Design et production audiovisuelle. 30 ans expérience. Petites classes, 100% pratique.'
       },
       hero: {
         badge: '📚 Formation Professionnelle',
         title: 'Cours et Formation',
-        subtitle: '30 ans d\'expérience d\'enseignement',
-        description: 'Maîtrisez les technologies immersives, l\'IA et la production audiovisuelle avec des experts du secteur depuis 1994. Petites classes, 100% pratique.'
+        subtitle: '30 ans expérience enseignement',
+        description: 'Maîtrisez les technologies immersives, IA et la production audiovisuelle avec des experts du secteur depuis 1994. Petites classes, 100% pratique.'
       },
       categories: [
         { id: 'all', label: 'Tous' },
@@ -535,7 +535,7 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
                         to={`/${lang}/contact`}
                         className="px-4 py-2 bg-azimut-red hover:bg-azimut-red/90 text-white text-sm font-semibold uppercase rounded-lg transition-all"
                       >
-                        {lang === 'pt' ? 'Inscrever' : lang === 'en' ? 'Enroll' : lang === 'es' ? 'Inscribirse' : 'S\'inscrire'}
+                        {lang === 'pt' ? 'Inscrever' : lang === 'en' ? 'Enroll' : lang === 'es' ? 'Inscribirse' : 'Inscrire'}
                       </Link>
                     </div>
                   </div>
