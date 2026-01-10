@@ -32,18 +32,27 @@ import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDet
 const DEFAULT_PROTECTED = true // Site protegido por padrão (DevTools pode desativar)
 
 // Função para verificar se deve mostrar login
+// IMPORTANTE: Esta função lê localStorage toda vez que é chamada (não cacheado)
 const shouldShowLogin = (): boolean => {
   // Se forçado como aberto, não mostra login
-  if (!DEFAULT_PROTECTED) return false
-  
-  // Verificar bypass do DevTools
-  const bypassActive = localStorage.getItem('azimut-bypass-login') === 'true'
-  const devBypassToken = localStorage.getItem('azimut-dev-bypass-token') === 'dev-mode-active'
-  
-  // Se bypass ativo, não mostra login
-  if (bypassActive || devBypassToken) {
-    console.log('🔓 DevTools: Login desligado - Acesso direto')
+  if (!DEFAULT_PROTECTED) {
+    console.log('🔓 DEFAULT_PROTECTED = false - Acesso direto forçado')
     return false
+  }
+  
+  // Verificar bypass do DevTools (ler localStorage sempre - não cachear)
+  try {
+    const bypassActive = typeof window !== 'undefined' && localStorage.getItem('azimut-bypass-login') === 'true'
+    const devBypassToken = typeof window !== 'undefined' && localStorage.getItem('azimut-dev-bypass-token') === 'dev-mode-active'
+    
+    // Se bypass ativo, não mostra login
+    if (bypassActive || devBypassToken) {
+      console.log('🔓 DevTools: Login desligado - Acesso direto (bypass ativo)')
+      return false
+    }
+  } catch (error) {
+    // localStorage pode não estar disponível (SSR)
+    console.warn('⚠️ Erro ao ler localStorage:', error)
   }
   
   // Caso contrário, mostra login
@@ -51,7 +60,9 @@ const shouldShowLogin = (): boolean => {
   return true
 }
 
-const SITE_PROTECTED = shouldShowLogin()
+// Calcular no momento da inicialização
+// IMPORTANTE: SITE_PROTECTED agora é calculado dentro do componente
+// para ser reativo às mudanças do DevTools (localStorage)
 // ═══════════════════════════════════════════════════════════════
 
 // ════════════════════════════════════════════════════════════
@@ -85,6 +96,49 @@ const ThankYou = lazy(() => import('./pages/ThankYou'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 const App: React.FC = () => {
+  // Estado para proteção do site (reativo ao DevTools)
+  const [siteProtected, setSiteProtected] = useState<boolean>(() => {
+    // Calcular inicialmente
+    return shouldShowLogin()
+  })
+
+  // Verificar mudanças no localStorage (quando DevTools muda)
+  useEffect(() => {
+    const checkProtection = () => {
+      const newProtected = shouldShowLogin()
+      if (newProtected !== siteProtected) {
+        console.log(`🔄 Proteção mudou: ${siteProtected ? 'desativada' : 'ativada'}`)
+        setSiteProtected(newProtected)
+      }
+    }
+
+    // Verificar a cada 500ms (polling para detectar mudanças do DevTools)
+    const interval = setInterval(checkProtection, 500)
+
+    // Event listener customizado (disparado pelo DevTools)
+    const handleProtectionChange = ((e: CustomEvent) => {
+      const newProtected = e.detail?.protected ?? shouldShowLogin()
+      console.log(`🔔 Evento: Proteção mudou para ${newProtected}`)
+      setSiteProtected(newProtected)
+    }) as EventListener
+
+    window.addEventListener('azimut-protection-change', handleProtectionChange as EventListener)
+
+    // Também verificar quando localStorage muda (outra aba)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'azimut-bypass-login' || e.key === 'azimut-dev-bypass-token') {
+        checkProtection()
+      }
+    }
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      clearInterval(interval)
+      window.removeEventListener('azimut-protection-change', handleProtectionChange as EventListener)
+      window.removeEventListener('storage', handleStorageChange)
+    }
+  }, [siteProtected])
+
   // Carregar idioma do localStorage ou detectar automaticamente
   const [lang, setLang] = useState<Lang>(() => {
     try {
@@ -227,7 +281,7 @@ const App: React.FC = () => {
 
   return (
     <BrowserCompatibility>
-      {SITE_PROTECTED ? (
+      {siteProtected ? (
         <SimplePasswordGate>
           <BrowserRouter>
             <ScrollToTop />

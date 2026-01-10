@@ -39,11 +39,17 @@ export default function DevToolsButton() {
     if (newValue) {
       localStorage.setItem('azimut-dev-bypass-token', 'dev-mode-active')
       console.log('🔓 Login desligado - Acesso direto ativo')
-      alert('✅ Login desligado! Recarregue a página para entrar direto.')
+      // Disparar evento customizado para atualizar proteção sem reload
+      window.dispatchEvent(new CustomEvent('azimut-protection-change', { detail: { protected: false } }))
+      alert('✅ Login desligado! A página será recarregada.')
+      setTimeout(() => window.location.reload(), 500)
     } else {
       localStorage.removeItem('azimut-dev-bypass-token')
       console.log('🔒 Login ligado - Tela de autenticação ativa')
-      alert('🔒 Login ligado! Recarregue a página para ver tela de login.')
+      // Disparar evento customizado para atualizar proteção sem reload
+      window.dispatchEvent(new CustomEvent('azimut-protection-change', { detail: { protected: true } }))
+      alert('🔒 Login ligado! A página será recarregada.')
+      setTimeout(() => window.location.reload(), 500)
     }
   }
 
