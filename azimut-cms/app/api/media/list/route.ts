@@ -19,9 +19,10 @@ export async function GET(request: NextRequest) {
     // Construir where clause
     const where: any = {}
     
-    if (folder) {
-      where.folder = folder
-    }
+    // Removido: folder não existe no schema
+    // if (folder) {
+    //   where.folder = folder
+    // }
     
     if (type) {
       where.type = type
@@ -29,9 +30,8 @@ export async function GET(request: NextRequest) {
     
     if (search) {
       where.OR = [
-        { originalFilename: { contains: search, mode: 'insensitive' } },
-        { filename: { contains: search, mode: 'insensitive' } },
-        { alt: { contains: search, mode: 'insensitive' } }
+        { altPt: { contains: search, mode: 'insensitive' } },
+        { altEn: { contains: search, mode: 'insensitive' } }
       ]
     }
 
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
     const [media, total] = await Promise.all([
       prisma.media.findMany({
         where,
-        orderBy: { [orderBy]: order },
+        orderBy: { [orderBy as string]: order },
         skip: (page - 1) * limit,
         take: limit,
         select: {
@@ -50,16 +50,17 @@ export async function GET(request: NextRequest) {
           mediumUrl: true,
           largeUrl: true,
           webpUrl: true,
+          avifUrl: true,
           width: true,
           height: true,
           sizeBytes: true,
           durationSeconds: true,
-          mimeType: true,
-          filename: true,
-          originalFilename: true,
-          folder: true,
-          alt: true,
-          caption: true,
+          format: true,
+          contentType: true,
+          altPt: true,
+          altEn: true,
+          altEs: true,
+          altFr: true,
           createdAt: true,
           updatedAt: true
         }
@@ -77,10 +78,11 @@ export async function GET(request: NextRequest) {
         totalPages: Math.ceil(total / limit)
       }
     })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Media list error:', error)
+    const err = error as { message?: string }
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch media' },
+      { error: err.message || 'Failed to fetch media' },
       { status: 500 }
     )
   }
