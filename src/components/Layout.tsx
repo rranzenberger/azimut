@@ -10,6 +10,9 @@ import NavDropdown from './NavDropdown'
 import CookieBanner from './CookieBanner'
 import DevToolsButton from './DevToolsButton'
 import ClaudeAssistant from './ClaudeAssistant'
+import WhatsAppWidget from './WhatsAppWidget'
+import Breadcrumbs from './Breadcrumbs'
+import ScrollToTopButton from './ScrollToTopButton'
 import { type UserProfile } from './BudgetWizard'
 import { trackCTA, trackLanguageChange } from '../utils/analytics'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -914,6 +917,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           position: 'relative'
         }}
       >
+        {/* Breadcrumbs - Navegação hierárquica */}
+        <Breadcrumbs lang={lang} />
+        
         {children}
       </main>
 
@@ -1503,6 +1509,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
 
       {/* 🤖 Claude AI Assistant - Chatbot Inteligente */}
       <ClaudeAssistant lang={lang} />
+
+      {/* 💬 WhatsApp Widget - Contato Rápido */}
+      <WhatsAppWidget lang={lang} />
+
+      {/* ⬆️ Scroll to Top Button */}
+      <ScrollToTopButton />
 
       {/* 🔧 Dev Tools Button - Remover antes do deploy final */}
       <DevToolsButton />

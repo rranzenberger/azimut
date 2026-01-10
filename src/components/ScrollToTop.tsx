@@ -1,82 +1,57 @@
-import { useEffect, useRef } from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
 
-const ScrollToTop: React.FC = () => {
-  const { pathname, search } = useLocation()
-  const prevPathnameRef = useRef<string>(pathname)
+const ScrollToTopButton: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    const prevPathname = prevPathnameRef.current
-    
-    // Remover prefixos de idioma para comparação
-    const cleanPrev = prevPathname.replace(/^\/(pt|en|fr|es)/, '')
-    const cleanCurrent = pathname.replace(/^\/(pt|en|fr|es)/, '')
-    
-    // Se mudou APENAS o idioma (mesma rota), NÃO scroll
-    const onlyLangChanged = cleanPrev === cleanCurrent && prevPathname !== pathname
-    
-    // Fazer scroll em TODOS os outros casos (navegação real entre páginas)
-    if (!onlyLangChanged) {
-      // Scroll IMEDIATO para garantir que sempre funciona
-      window.scrollTo(0, 0)
-      
-      // Pequeno delay e scroll novamente para garantir (alguns navegadores precisam)
-      requestAnimationFrame(() => {
-        window.scrollTo(0, 0)
-      })
+    const toggleVisibility = () => {
+      // Show button when page is scrolled down 300px
+      if (window.scrollY > 300) {
+        setIsVisible(true)
+      } else {
+        setIsVisible(false)
+      }
     }
-    
-    // Atualizar referência
-    prevPathnameRef.current = pathname
-  }, [pathname, search])
 
-  return null
+    window.addEventListener('scroll', toggleVisibility)
+
+    return () => {
+      window.removeEventListener('scroll', toggleVisibility)
+    }
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }
+
+  return (
+    <>
+      {isVisible && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-24 right-6 z-40 bg-azimut-red hover:bg-azimut-red/90 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 group"
+          aria-label="Voltar ao topo"
+        >
+          <svg
+            className="w-6 h-6 transform group-hover:-translate-y-1 transition-transform duration-200"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 10l7-7m0 0l7 7m-7-7v18"
+            />
+          </svg>
+        </button>
+      )}
+    </>
+  )
 }
 
-export default ScrollToTop
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default ScrollToTopButton
