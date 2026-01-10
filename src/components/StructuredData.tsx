@@ -1,130 +1,96 @@
+// ════════════════════════════════════════════════════════════
+// STRUCTURED DATA - Schema.org JSON-LD
+// ════════════════════════════════════════════════════════════
+// Ajuda Google a entender melhor o conteúdo
+// ════════════════════════════════════════════════════════════
+
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
 
 interface StructuredDataProps {
-  type?: 'organization' | 'website' | 'article' | 'breadcrumb'
-  data?: Record<string, any>
+  type: 'Organization' | 'EducationalOrganization' | 'Course' | 'Event' | 'FAQPage' | 'Article'
+  data: any
 }
 
-const StructuredData: React.FC<StructuredDataProps> = ({ type = 'organization', data = {} }) => {
-  const getStructuredData = () => {
-    const baseUrl = 'https://azmt.com.br' // Domínio real do site
-    
-    switch (type) {
-      case 'organization':
-        return {
-          '@context': 'https://schema.org',
-          '@type': 'Organization',
-          name: 'Azimut',
-          alternateName: 'Azimut Immersive',
-          url: baseUrl,
-          logo: `${baseUrl}/logo-azimut-star.svg`,
-          description: 'Experiências imersivas, interativas e cinematográficas para cultura, marcas e espaços híbridos',
-          foundingDate: '2015',
-          contactPoint: {
-            '@type': 'ContactPoint',
-            contactType: 'Customer Service',
-            email: 'contact@azimut.com',
-            availableLanguage: ['Portuguese', 'English', 'French', 'Spanish']
-          },
-          sameAs: [
-            'https://www.linkedin.com/company/azimut',
-            'https://www.instagram.com/azimut',
-            // Adicionar outras redes sociais
-          ],
-          address: {
-            '@type': 'PostalAddress',
-            addressCountry: 'CA'
-          },
-          ...data
-        }
-      
-      case 'website':
-        return {
-          '@context': 'https://schema.org',
-          '@type': 'WebSite',
-          name: 'Azimut',
-          url: baseUrl,
-          description: 'Experiências imersivas, interativas e cinematográficas',
-          inLanguage: ['pt-BR', 'en-CA', 'fr-CA', 'es'],
-          potentialAction: {
-            '@type': 'SearchAction',
-            target: `${baseUrl}/search?q={search_term_string}`,
-            'query-input': 'required name=search_term_string'
-          },
-          ...data
-        }
-      
-      case 'article':
-        return {
-          '@context': 'https://schema.org',
-          '@type': 'Article',
-          publisher: {
-            '@type': 'Organization',
-            name: 'Azimut',
-            logo: {
-              '@type': 'ImageObject',
-              url: `${baseUrl}/logo-azimut-star.svg`
-            }
-          },
-          ...data
-        }
-      
-      case 'breadcrumb':
-        return {
-          '@context': 'https://schema.org',
-          '@type': 'BreadcrumbList',
-          itemListElement: data.items || []
-        }
-      
-      default:
-        return data
-    }
+const StructuredData: React.FC<StructuredDataProps> = ({ type, data }) => {
+  let schema: any = {
+    '@context': 'https://schema.org',
+    '@type': type,
+    ...data
   }
-
-  const structuredData = getStructuredData()
 
   return (
     <Helmet>
       <script type="application/ld+json">
-        {JSON.stringify(structuredData)}
+        {JSON.stringify(schema)}
+      </script>
+    </Helmet>
+  )
+}
+
+// Helper: Schema para página Vancouver
+export const VancouverPageSchema = ({ lang }: { lang: string }) => {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'EducationalOrganization',
+    name: 'Azimut Academy - Vancouver Study Programs',
+    description: 'Official education agent for VFS and VanArts in Vancouver. 1-year programs in 3D Animation, VFX, Game Design with 90%+ employability.',
+    url: 'https://azmt.com.br/academy/vancouver',
+    logo: 'https://azmt.com.br/logo.png',
+    image: 'https://azmt.com.br/images/vancouver-hero.jpg',
+    telephone: '+55-21-99999-9999',
+    email: 'academy@azmt.com.br',
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'BR',
+      addressLocality: 'Rio de Janeiro'
+    },
+    sameAs: [
+      'https://www.instagram.com/azimut',
+      'https://www.linkedin.com/company/azimut',
+      'https://www.facebook.com/azimut'
+    ],
+    offers: {
+      '@type': 'Offer',
+      category: 'Education',
+      availability: 'https://schema.org/InStock',
+      priceCurrency: 'CAD',
+      price: '35000',
+      description: 'Complete study package for Vancouver including VFS/VanArts application support'
+    }
+  }
+
+  return (
+    <Helmet>
+      <script type="application/ld+json">
+        {JSON.stringify(schema)}
+      </script>
+    </Helmet>
+  )
+}
+
+// Helper: FAQ Schema para Vancouver
+export const VancouverFAQSchema = ({ lang, faqs }: { lang: string, faqs: Array<{ question: string, answer: string }> }) => {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer
+      }
+    }))
+  }
+
+  return (
+    <Helmet>
+      <script type="application/ld+json">
+        {JSON.stringify(schema)}
       </script>
     </Helmet>
   )
 }
 
 export default StructuredData
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

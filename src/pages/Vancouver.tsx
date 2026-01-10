@@ -1,6 +1,7 @@
 import React from 'react'
-import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
+import SEO from '../components/SEO'
+import { VancouverPageSchema, VancouverFAQSchema } from '../components/StructuredData'
 import VancouverInterestForm from '../components/VancouverInterestForm'
 import { VideoPlayerEnhanced } from '../components/VideoPlayerEnhanced'
 import { VideoCard } from '../components/VideoCard'
@@ -381,12 +382,45 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
 
   const t = content[lang] || content.pt
 
+  // SEO metadata by language
+  const seoData = {
+    pt: {
+      title: 'Estudar em Vancouver - VFS e VanArts | Azimut Academy',
+      description: 'Graduação em 1 ano nas melhores escolas de mídia do Canadá (VFS/VanArts) com 90%+ empregabilidade e pathway para residência permanente. Agente oficial.',
+      keywords: 'estudar vancouver, VFS, VanArts, vancouver film school, animação 3D, VFX, game design, estudar no canadá, residência permanente canadá, agente educacional'
+    },
+    en: {
+      title: 'Study in Vancouver - VFS and VanArts | Azimut Academy',
+      description: 'Graduate in 1 year at Canada\'s best media schools (VFS/VanArts) with 90%+ employability and PR pathway. Official education agent.',
+      keywords: 'study vancouver, VFS, VanArts, vancouver film school, 3D animation, VFX, game design, study in canada, canada PR, education agent'
+    },
+    es: {
+      title: 'Estudiar en Vancouver - VFS y VanArts | Azimut Academy',
+      description: 'Graduación en 1 año en las mejores escuelas de medios de Canadá (VFS/VanArts) con 90%+ empleabilidad y camino a residencia permanente. Agente oficial.',
+      keywords: 'estudiar vancouver, VFS, VanArts, vancouver film school, animación 3D, VFX, diseño de juegos, estudiar en canadá, residencia permanente canadá'
+    },
+    fr: {
+      title: 'Étudier à Vancouver - VFS et VanArts | Azimut Academy',
+      description: 'Diplôme en 1 an dans les meilleures écoles de médias du Canada (VFS/VanArts) avec 90%+ d\'employabilité et chemin vers la RP. Agent officiel.',
+      keywords: 'étudier vancouver, VFS, VanArts, vancouver film school, animation 3D, VFX, conception de jeux, étudier au canada, résidence permanente canada'
+    }
+  }
+
+  const seo = seoData[lang] || seoData.pt
+
   return (
     <>
-      <Helmet>
-        <title>{t.title} | Azimut Academy</title>
-        <meta name="description" content={t.subtitle} />
-      </Helmet>
+      <SEO 
+        title={seo.title}
+        description={seo.description}
+        keywords={seo.keywords}
+        url="/academy/vancouver"
+        image="https://azmt.com.br/images/vancouver-og.jpg"
+        type="website"
+        locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
+      />
+      <VancouverPageSchema lang={lang} />
+      <VancouverFAQSchema lang={lang} faqs={t.faqs} />
 
       <div className="min-h-screen">
         {/* Hero Section */}

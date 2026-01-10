@@ -1,58 +1,21 @@
-# https://www.robotstxt.org/robotstxt.html
+# robots.txt para Azimut
+
+# Allow all bots
 User-agent: *
 Allow: /
 
+# Disallow admin/backoffice URLs
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+
+# Allow Google Image Bot
+User-agent: Googlebot-Image
+Allow: /
+
 # Sitemap
-Sitemap: https://azimut.com/sitemap.xml
+Sitemap: https://azmt.com.br/sitemap.xml
 
-# Disallow admin/private areas (when implemented)
-# Disallow: /admin
-# Disallow: /api
-
-# Crawl delay for polite bots
-# Crawl-delay: 1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Crawl-delay (optional, para bots mais lentos)
+Crawl-delay: 1
