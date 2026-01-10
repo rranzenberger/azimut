@@ -63,25 +63,6 @@ export default function AIWritingAssistant({
     setShowSuggestions(false)
   }
 
-  const prompts: Record<string, string> = {
-    pt: {
-      title: 'Gerar Título',
-      improve: 'Melhorar Texto',
-      translate: 'Traduzir',
-      expand: 'Expandir',
-      shorten: 'Encurtar'
-    },
-    en: {
-      title: 'Generate Title',
-      improve: 'Improve Text',
-      translate: 'Translate',
-      expand: 'Expand',
-      shorten: 'Shorten'
-    }
-  }
-
-  const t = prompts[lang] || prompts.pt
-
   return (
     <div className="relative">
       {/* AI Button */}
