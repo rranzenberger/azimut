@@ -16,11 +16,22 @@ interface VancouverProps {
 }
 
 const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
-  // Função para scroll suave até a calculadora
+  // Função para scroll suave até a calculadora com efeito de destaque
   const scrollToCalculator = () => {
     const calculatorSection = document.getElementById('calculator')
     if (calculatorSection) {
+      // Scroll suave
       calculatorSection.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      
+      // Adicionar efeito de destaque
+      setTimeout(() => {
+        calculatorSection.classList.add('highlight-pulse')
+        
+        // Remover efeito após 3 segundos
+        setTimeout(() => {
+          calculatorSection.classList.remove('highlight-pulse')
+        }, 3000)
+      }, 800) // Aguarda o scroll terminar
     }
   }
 
