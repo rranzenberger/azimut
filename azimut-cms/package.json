@@ -20,6 +20,7 @@
     "populate:all": "tsx scripts/populate-all-content.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.71.2",
     "@prisma/client": "^5.8.0",
     "@tanstack/react-query": "^5.17.0",
     "@types/nodemailer": "^7.0.4",
@@ -28,6 +29,7 @@
     "chart.js": "^4.5.1",
     "clsx": "^2.1.0",
     "date-fns": "^3.0.6",
+    "lru-cache": "^11.2.4",
     "next": "14.2.18",
     "nodemailer": "^7.0.12",
     "openai": "^4.24.1",
