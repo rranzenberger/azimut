@@ -444,11 +444,6 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   description: lang === 'pt' ? 'Visão geral completa' : lang === 'es' ? 'Vista general completa' : lang === 'fr' ? 'Vue d\'ensemble complète' : 'Complete overview'
                 },
                 {
-                  label: lang === 'pt' ? 'Pesquisa & Inovação' : lang === 'es' ? 'Investigación & Innovación' : lang === 'fr' ? 'Recherche & Innovation' : 'Research & Innovation',
-                  href: '/academy/research',
-                  description: lang === 'pt' ? 'Explorando novas fronteiras' : lang === 'es' ? 'Explorando nuevas fronteras' : lang === 'fr' ? 'Explorer de nouvelles frontières' : 'Exploring new frontiers'
-                },
-                {
                   label: lang === 'pt' ? 'Cursos & Workshops' : lang === 'es' ? 'Cursos & Workshops' : lang === 'fr' ? 'Cours & Workshops' : 'Courses & Workshops',
                   href: '/academy/courses',
                   description: lang === 'pt' ? 'Aprendizado prático' : lang === 'es' ? 'Aprendizaje práctico' : lang === 'fr' ? 'Apprentissage pratique' : 'Hands-on learning'
@@ -1027,7 +1022,6 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   </h4>
                   <LangLink to="/academy" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors hover:text-[#8B2332] font-medium" style={{ color: '#cbd5e1' }}>{t(lang, 'navAcademy')}</LangLink>
                   <div className="mt-1 flex flex-col gap-0.5">
-                    <LangLink to="/academy/research" className="text-[0.65rem] sm:text-[0.68rem] transition-colors hover:text-[#8B2332] ml-3" style={{ color: '#94a3b8' }}>└─ {lang === 'pt' ? 'Pesquisa' : lang === 'es' ? 'Investigación' : lang === 'fr' ? 'Recherche' : 'Research'}</LangLink>
                     <LangLink to="/academy/courses" className="text-[0.65rem] sm:text-[0.68rem] transition-colors hover:text-[#8B2332] ml-3" style={{ color: '#94a3b8' }}>└─ {lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses'}</LangLink>
                     <LangLink to="/academy/corporate" className="text-[0.65rem] sm:text-[0.68rem] transition-colors hover:text-[#8B2332] ml-3" style={{ color: '#94a3b8' }}>└─ {lang === 'pt' ? 'Corporate' : lang === 'es' ? 'Corporativo' : lang === 'fr' ? 'Entreprise' : 'Corporate'}</LangLink>
                   </div>
