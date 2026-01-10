@@ -55,7 +55,6 @@ PROJETOS DISPONÍVEIS:
 ${allProjects.map((p, i) => `
 ${i + 1}. ID: ${p.id}
    Título: ${p.title || p.slug}
-   Categoria: ${p.category || 'geral'}
    Tags: ${p.tags?.map(t => t.name).join(', ') || 'N/A'}
    Destaque: ${p.featured ? 'Sim' : 'Não'}
 `).join('\n')}
