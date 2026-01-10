@@ -203,10 +203,10 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
       title: 'Étudier à Vancouver',
       subtitle: 'Une alternative intelligente à l\'université traditionnelle',
       // ...
-    }
   }
 
-  const t = content[lang] || content.pt
+  // TEMPORÁRIO: Forçar PT até ter traduções completas
+  const t = content.pt
 
   return (
     <>
