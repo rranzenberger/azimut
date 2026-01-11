@@ -3,20 +3,24 @@
 // ════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '../../auth/[...nextauth]/route'
+import { cookies } from 'next/headers'
+import { prisma } from '@/lib/prisma'
+import { verifyAuthToken } from '@/lib/auth'
 
-const prisma = new PrismaClient()
+export const runtime = 'nodejs'
+
 const TEST_PREFIX = 'TESTE_'
 
 export async function POST(request: NextRequest) {
   try {
     // Verificar autenticação
-    const session = await getServerSession(authOptions)
-    if (!session || session.user.role !== 'SUPER_ADMIN') {
+    const cookieStore = cookies()
+    const token = cookieStore.get('azimut_admin_token')?.value
+    const session = token ? verifyAuthToken(token) : null
+
+    if (!session) {
       return NextResponse.json(
-        { error: 'Unauthorized' },
+        { error: 'Não autenticado' },
         { status: 401 }
       )
     }
@@ -99,7 +103,5 @@ export async function POST(request: NextRequest) {
       { error: 'Erro ao apagar dados de teste', details: error.message },
       { status: 500 }
     )
-  } finally {
-    await prisma.$disconnect()
   }
 }
