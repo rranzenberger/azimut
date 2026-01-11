@@ -228,19 +228,57 @@ export default function AnalyticsPage() {
     );
   }
 
+  const handleCleanupTestData = async () => {
+    if (!confirm('⚠️ ATENÇÃO: Isso apagará TODOS os dados de teste (prefixo TESTE_). Tem certeza?')) {
+      return
+    }
+
+    setCleaningUp(true)
+    try {
+      const response = await fetch('/api/admin/cleanup-test-data', {
+        method: 'POST',
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        alert(`✅ ${result.message}\n\nApagados:\n- ${result.deleted.sessions} sessões\n- ${result.deleted.pageViews} page views\n- ${result.deleted.behaviors} comportamentos\n- ${result.deleted.pwaInstalls} PWA installs\n- ${result.deleted.interestScores} interest scores\n- ${result.deleted.leads} leads`)
+        // Recarregar dados
+        fetchAnalytics()
+      } else {
+        alert(`❌ Erro: ${result.error || 'Erro desconhecido'}`)
+      }
+    } catch (error: any) {
+      console.error('Erro ao apagar dados de teste:', error)
+      alert(`❌ Erro ao apagar dados de teste: ${error.message}`)
+    } finally {
+      setCleaningUp(false)
+    }
+  }
+
   if (!data) return null;
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            📊 Analytics & IA
-          </h1>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            Análise de comportamento e perfis de visitantes
-          </p>
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              📊 Analytics & IA
+            </h1>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+              Análise de comportamento e perfis de visitantes
+            </p>
+          </div>
+          <button
+            onClick={handleCleanupTestData}
+            disabled={cleaningUp}
+            className="px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg shadow transition-colors"
+            title="Apagar todos os dados de teste (prefixo TESTE_)"
+          >
+            {cleaningUp ? '⏳ Apagando...' : '🗑️ Apagar Dados de Teste'}
+          </button>
         </div>
 
         {/* Overview Cards - Grid Inteligente */}
