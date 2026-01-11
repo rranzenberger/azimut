@@ -141,8 +141,116 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
       ],
       ctaText: 'Interested in working with us?'
     },
-    fr: { title: 'Équipe', subtitle: '', team: [], ctaText: '' },
-    es: { title: 'Equipo', subtitle: '', team: [], ctaText: '' }
+    fr: {
+      title: 'Équipe',
+      subtitle: 'Les directeurs et spécialistes derrière les expériences immersives d\'Azimut',
+      team: [
+        {
+          name: 'Ranz Enberger',
+          role: 'DIRECTEUR CRÉATIF & TECHNOLOGIQUE',
+          subtitle: 'Cinéaste · Chercheur · Curateur',
+          bio: 'Dirige la direction créative, la technologie, la narration immersive, VR/XR, la curation et les pipelines IA. Directeur Général au Musée Olympique de Rio. Maîtrise en Médias Créatifs (UFRJ-VF), post-grad en Analyse de Systèmes. A commencé la recherche en IA pour l\'animation en 1997. Citoyen canadien avec portée mondiale. Certifié en VFX (USA/Canada).',
+          credentials: [
+            'Directeur de Technologie, Musée Olympique de Rio',
+            'Curateur VR, Festival de Gramado (depuis 2017)',
+            'Ex-Application Engineer & Training Specialist Autodesk',
+            'Demo Artist Autodesk Discreet (1996-2008)',
+            'Seul contrat Canada Autodesk en Amérique du Sud',
+            'Seul Flame Trainer certifié au Brésil',
+            'Professeur post-graduation en Médias Créatifs',
+            '30+ ans en CG, VR/XR et IA pour audiovisuel'
+          ],
+          linkedin: 'https://ca.linkedin.com/in/ranzenberger',
+          photo: '/Ranz.jpeg'
+        },
+        {
+          name: 'Anick Couto',
+          role: 'DIRECTRICE ARTISTIQUE',
+          subtitle: 'Designer Visuel & d\'Expérience',
+          bio: 'Responsable de la direction visuelle, du design de personnages et d\'environnements, de la scénographie, du concept art et de l\'esthétique d\'animation. A dirigé toute l\'équipe artistique du Musée Olympique de Rio – UI, graphisme, textes muraux, signalisation et design. Co-crée le langage visuel des installations immersives, y compris l\'univers Casa dos Duendes.',
+          credentials: [
+            'Directrice Artistique, Musée Olympique de Rio',
+            'Designer Visuel + Scénographie Numérique',
+            'Concept Art + Character Design',
+            'A dirigé l\'équipe complète d\'art (UI, graphisme, signalisation)',
+            'Univers Casa dos Duendes (co-création)'
+          ],
+          linkedin: 'https://br.linkedin.com/in/anickcouto',
+          photo: '/anick.jpg'
+        },
+        {
+          name: 'Alberto Moura',
+          role: 'DIRECTEUR AUDIOVISUEL & OPÉRATIONS',
+          subtitle: 'Éducateur · Stratège Culturel',
+          bio: 'Dirige la production créative, la coordination de projets, les partenariats académiques et la stratégie culturelle. Directeur Audiovisuel au Musée Olympique de Rio. Fait le pont entre les institutions, l\'éducation et l\'expérience du public, avec une trajectoire dans l\'enseignement audiovisuel et les programmes multimédias.',
+          credentials: [
+            'Directeur Audiovisuel, Musée Olympique de Rio',
+            'Professeur Universitaire (graduation + post)',
+            'Ex-Coordinateur de Cours d\'Audiovisuel',
+            'Fondateur entreprise de Digital Signage',
+            'Stratégie Culturelle + Partenariats Académiques'
+          ],
+          linkedin: 'https://br.linkedin.com/in/albertomoura3d',
+          photo: '/alberto.jpg'
+        }
+      ],
+      ctaText: 'Intéressé à travailler avec nous?'
+    },
+    es: {
+      title: 'Equipo',
+      subtitle: 'Los directores y especialistas detrás de las experiencias inmersivas de Azimut',
+      team: [
+        {
+          name: 'Ranz Enberger',
+          role: 'DIRECTOR CREATIVO & DE TECNOLOGÍA',
+          subtitle: 'Cineasta · Investigador · Curador',
+          bio: 'Lidera dirección creativa, tecnología, storytelling inmersivo, VR/XR, curaduría y pipelines con IA. Director General en el Museo Olímpico de Río. Maestría en Medios Creativos (UFRJ-VF), post-grado en Análisis de Sistemas. Comenzó investigación en IA para animación en 1997. Ciudadano canadiense con alcance global. Certificado en VFX (EE.UU./Canadá).',
+          credentials: [
+            'Director de Tecnología, Museo Olímpico de Río',
+            'Curador VR, Festival de Gramado (desde 2017)',
+            'Ex-Application Engineer & Training Specialist Autodesk',
+            'Demo Artist Autodesk Discreet (1996-2008)',
+            'Único contrato Canadá Autodesk en América del Sur',
+            'Único Flame Trainer certificado en Brasil',
+            'Profesor post-grado en Medios Creativos',
+            '30+ años en CG, VR/XR e IA para audiovisual'
+          ],
+          linkedin: 'https://ca.linkedin.com/in/ranzenberger',
+          photo: '/Ranz.jpeg'
+        },
+        {
+          name: 'Anick Couto',
+          role: 'DIRECTORA DE ARTE',
+          subtitle: 'Diseñadora Visual & de Experiencia',
+          bio: 'Responsable de la dirección visual, diseño de personajes y ambientes, escenografía, concept art y estética de animación. Lideró todo el equipo de arte del Museo Olímpico de Río – UI, grafismo, textos de pared, señalización y diseño. Co-crea el lenguaje visual de instalaciones inmersivas, incluyendo el universo Casa dos Duendes.',
+          credentials: [
+            'Directora de Arte, Museo Olímpico de Río',
+            'Diseñadora Visual + Escenografía Digital',
+            'Concept Art + Character Design',
+            'Lideró equipo completo de arte (UI, grafismo, señalización)',
+            'Universo Casa dos Duendes (co-creación)'
+          ],
+          linkedin: 'https://br.linkedin.com/in/anickcouto',
+          photo: '/anick.jpg'
+        },
+        {
+          name: 'Alberto Moura',
+          role: 'DIRECTOR AUDIOVISUAL & OPERACIONES',
+          subtitle: 'Educador · Estratega Cultural',
+          bio: 'Lidera producción creativa, coordinación de proyectos, alianzas académicas y estrategia cultural. Director Audiovisual en el Museo Olímpico de Río. Hace el puente entre instituciones, educación y experiencia pública, con trayectoria en enseñanza audiovisual y programas multimedia.',
+          credentials: [
+            'Director Audiovisual, Museo Olímpico de Río',
+            'Profesor Universitario (graduación + post)',
+            'Ex-Coordinador de Curso de Audiovisual',
+            'Fundador empresa de Digital Signage',
+            'Estrategia Cultural + Alianzas Académicas'
+          ],
+          linkedin: 'https://br.linkedin.com/in/albertomoura3d',
+          photo: '/alberto.jpg'
+        }
+      ],
+      ctaText: '¿Interesado en trabajar con nosotros?'
+    }
   }
 
   const text = content[lang] || content.pt
