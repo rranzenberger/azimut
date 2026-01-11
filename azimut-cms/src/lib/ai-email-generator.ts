@@ -29,31 +29,46 @@ interface LeadData {
  * Gerar email personalizado para o LEAD (usando IA)
  */
 export async function generatePersonalizedEmail(data: LeadData): Promise<string> {
-  const prompt = `Você é Ranz Enberger, Creative & Technology Director da Azimut (empresa de VR/Cinema/Instalações Imersivas).
+  // Determinar idioma e saudação
+  const langConfig = {
+    pt: { greeting: 'Olá', closing: 'Abraço', signature: 'Ranz Enberger' },
+    en: { greeting: 'Hello', closing: 'Best regards', signature: 'Ranz Enberger' },
+    fr: { greeting: 'Bonjour', closing: 'Cordialement', signature: 'Ranz Enberger' },
+    es: { greeting: 'Hola', closing: 'Saludos', signature: 'Ranz Enberger' }
+  }
+  const config = langConfig[data.lang as keyof typeof langConfig] || langConfig.en
 
-CONTEXTO DO LEAD:
-- Nome: ${data.name}
-- Interesse: ${data.interest || data.project || 'Projetos imersivos'}
-- Orçamento: ${data.budget || 'Não informado'}
-- Localização: ${data.location?.city || 'Desconhecida'}, ${data.location?.country || ''}
-- Páginas visitadas: ${data.pagesVisited?.join(', ') || 'Homepage'}
-- Tempo no site: ${data.timeOnSite ? Math.round(data.timeOnSite / 60) : '?'} minutos
+  const prompt = `You are Ranz Enberger, Creative & Technology Director at Azimut (VR/Cinema/Immersive Experiences company).
 
-TAREFA:
-Escreva um email de resposta PERSONALIZADO para este lead.
+LEAD CONTEXT:
+- Name: ${data.name}
+- Interest: ${data.interest || data.project || 'Immersive projects'}
+- Budget: ${data.budget || 'Not specified'}
+- Location: ${data.location?.city || 'Unknown'}, ${data.location?.country || ''}
+- Pages visited: ${data.pagesVisited?.join(', ') || 'Homepage'}
+- Time on site: ${data.timeOnSite ? Math.round(data.timeOnSite / 60) : '?'} minutes
+- LANGUAGE: ${data.lang.toUpperCase()} ← IMPORTANT!
 
-REGRAS:
-1. Use TOM AMIGÁVEL mas PROFISSIONAL
-2. Mencione algo ESPECÍFICO do interesse dele (VR, Cinema, etc.)
-3. Se tiver cidade, faça SMALL TALK sobre clima/cultura local (1 frase)
-4. Mencione 1 CASE SIMILAR que fizemos (ex: Museu Olímpico se for museu)
-5. Proponha PRÓXIMO PASSO claro (reunião, demo, orçamento)
-6. Seja BREVE (máximo 150 palavras)
-7. Assine como "Ranz" ou "Equipe Azimut" (depende do tom)
+TASK:
+Write a PERSONALIZED reply email to this lead.
 
-FORMATO:
-Apenas o corpo do email, sem subject.
-Use emojis com moderação (1-2 no máximo).
+CRITICAL RULES:
+1. **WRITE IN ${data.lang.toUpperCase()}** (${data.lang === 'pt' ? 'Portuguese' : data.lang === 'en' ? 'English' : data.lang === 'fr' ? 'French' : 'Spanish'})
+2. Use FRIENDLY but PROFESSIONAL tone
+3. Mention something SPECIFIC about their interest
+4. If location known, add 1 sentence of SMALL TALK (weather, culture, local context)
+5. Mention 1 SIMILAR CASE we did (ex: Olympic Museum if museum project)
+6. Propose clear NEXT STEP (meeting, demo, quote)
+7. Keep BRIEF (max 150 words)
+8. Sign as "${config.signature}"
+9. Use emojis sparingly (1-2 max)
+
+START with: "${config.greeting} [FirstName]!"
+END with: "${config.closing},\n${config.signature}\nCreative & Technology Director\nAzimut"
+
+FORMAT:
+Just the email body (no subject line).
+Write NATURALLY like a real person, not a bot.
 `
 
   try {
@@ -98,22 +113,59 @@ Use emojis com moderação (1-2 no máximo).
 function generateFallbackEmail(data: LeadData): string {
   const firstName = data.name.split(' ')[0]
   
-  return `Olá ${firstName}! 👋
+  const templates = {
+    pt: {
+      greeting: `Olá ${firstName}! 👋`,
+      thanks: `Obrigado pelo interesse em nossos projetos de ${data.interest || 'experiências imersivas'}!`,
+      body: `Vi que você navegou pelo nosso site e se interessou especialmente por ${data.interest || 'nossos serviços'}. Trabalhamos em projetos similares como o Museu Olímpico do Rio, com tour virtual 360° completo e instalações interativas.`,
+      budget: data.budget === 'Alto' ? 'Com o orçamento que você mencionou, podemos criar algo realmente especial.' : 'Podemos adaptar a solução ao seu orçamento e cronograma.',
+      cta: 'Que tal marcarmos uma conversa para entender melhor sua visão? Posso te mostrar alguns casos práticos e discutir viabilidade.',
+      closing: 'Abraço'
+    },
+    en: {
+      greeting: `Hello ${firstName}! 👋`,
+      thanks: `Thank you for your interest in our ${data.interest || 'immersive experiences'} projects!`,
+      body: `I saw you browsed our site and were especially interested in ${data.interest || 'our services'}. We work on similar projects like Rio Olympic Museum, with complete 360° virtual tours and interactive installations.`,
+      budget: data.budget === 'High' ? 'With the budget you mentioned, we can create something truly special.' : 'We can adapt the solution to your budget and timeline.',
+      cta: 'How about we schedule a conversation to better understand your vision? I can show you some practical cases and discuss feasibility.',
+      closing: 'Best regards'
+    },
+    fr: {
+      greeting: `Bonjour ${firstName}! 👋`,
+      thanks: `Merci pour votre intérêt dans nos projets de ${data.interest || 'expériences immersives'}!`,
+      body: `J'ai vu que vous avez navigué sur notre site et vous êtes particulièrement intéressé par ${data.interest || 'nos services'}. Nous travaillons sur des projets similaires comme le Musée Olympique de Rio, avec des tours virtuels 360° complets et des installations interactives.`,
+      budget: data.budget === 'High' || data.budget === 'Élevé' ? 'Avec le budget que vous avez mentionné, nous pouvons créer quelque chose de vraiment spécial.' : 'Nous pouvons adapter la solution à votre budget et calendrier.',
+      cta: 'Que diriez-vous de planifier une conversation pour mieux comprendre votre vision? Je peux vous montrer des cas pratiques et discuter de la faisabilité.',
+      closing: 'Cordialement'
+    },
+    es: {
+      greeting: `Hola ${firstName}! 👋`,
+      thanks: `¡Gracias por tu interés en nuestros proyectos de ${data.interest || 'experiencias inmersivas'}!`,
+      body: `Vi que navegaste por nuestro sitio y te interesaste especialmente en ${data.interest || 'nuestros servicios'}. Trabajamos en proyectos similares como el Museo Olímpico de Río, con tours virtuales 360° completos e instalaciones interactivas.`,
+      budget: data.budget === 'Alto' || data.budget === 'High' ? 'Con el presupuesto que mencionaste, podemos crear algo realmente especial.' : 'Podemos adaptar la solución a tu presupuesto y cronograma.',
+      cta: '¿Qué tal si agendamos una conversación para entender mejor tu visión? Puedo mostrarte algunos casos prácticos y discutir viabilidad.',
+      closing: 'Saludos'
+    }
+  }
 
-Obrigado pelo interesse em nossos projetos de ${data.interest || 'experiências imersivas'}!
+  const t = templates[data.lang as keyof typeof templates] || templates.en
 
-Vi que você navegou pelo nosso site e se interessou especialmente por ${data.interest || 'nossos serviços'}. Trabalhamos em projetos similares como o Museu Olímpico do Rio, com tour virtual 360° completo e instalações interativas.
+  return `${t.greeting}
 
-${data.budget === 'Alto' || data.budget === 'High' ? 'Com o orçamento que você mencionou, podemos criar algo realmente especial.' : 'Podemos adaptar a solução ao seu orçamento e cronograma.'}
+${t.thanks}
 
-Que tal marcarmos uma conversa para entender melhor sua visão? Posso te mostrar alguns casos práticos e discutir viabilidade.
+${t.body}
 
-Abraço,
+${t.budget}
+
+${t.cta}
+
+${t.closing},
 Ranz Enberger
 Creative & Technology Director
 Azimut
 
-📱 WhatsApp: [número]
+📱 WhatsApp: +55 21 99999-9999
 🌐 azimutimmersive.com`
 }
 
