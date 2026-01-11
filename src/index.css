@@ -129,7 +129,7 @@ input.input-adaptive:-webkit-autofill,
   transition: background-color 5000s ease-in-out 0s;
 }
 
-/* TEMA CLARO - Campos claros levemente acinzentados */
+/* TEMA CLARO - CAMPOS MANTÊM IDENTIDADE AZIMUT (ESCUROS COM TEXTO BRANCO) */
 [data-theme="light"] .input-adaptive,
 [data-theme="light"] input.input-adaptive,
 [data-theme="light"] select.input-adaptive,
@@ -138,9 +138,10 @@ html[data-theme="light"] .input-adaptive,
 html[data-theme="light"] input.input-adaptive,
 html[data-theme="light"] select.input-adaptive,
 html[data-theme="light"] textarea.input-adaptive {
-  background: rgba(42, 40, 37, 0.06) !important;
-  border: 1px solid rgba(0, 0, 0, 0.15) !important;
-  color: #1a1a1a !important;
+  background: rgba(10, 15, 30, 0.95) !important;
+  border: 1px solid rgba(201, 35, 55, 0.4) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(4px);
 }
 
 [data-theme="light"] .input-adaptive::placeholder,
@@ -149,7 +150,7 @@ html[data-theme="light"] textarea.input-adaptive {
 html[data-theme="light"] .input-adaptive::placeholder,
 html[data-theme="light"] input.input-adaptive::placeholder,
 html[data-theme="light"] textarea.input-adaptive::placeholder {
-  color: rgba(0, 0, 0, 0.4) !important;
+  color: rgba(255, 255, 255, 0.4) !important;
 }
 
 [data-theme="light"] .input-adaptive:focus,
@@ -160,12 +161,12 @@ html[data-theme="light"] .input-adaptive:focus,
 html[data-theme="light"] input.input-adaptive:focus,
 html[data-theme="light"] select.input-adaptive:focus,
 html[data-theme="light"] textarea.input-adaptive:focus {
-  background: rgba(42, 40, 37, 0.1) !important;
+  background: rgba(10, 15, 30, 0.98) !important;
   border-color: #c92337 !important;
-  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.15) !important;
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.25) !important;
 }
 
-/* Autocomplete do Chrome - Tema claro */
+/* Autocomplete do Chrome - Tema claro (MANTER ESCURO) */
 [data-theme="light"] .input-adaptive:-webkit-autofill,
 [data-theme="light"] input.input-adaptive:-webkit-autofill,
 [data-theme="light"] .input-adaptive:-webkit-autofill:hover,
@@ -176,8 +177,9 @@ html[data-theme="light"] input.input-adaptive:-webkit-autofill,
 html[data-theme="light"] .input-adaptive:-webkit-autofill:hover,
 html[data-theme="light"] .input-adaptive:-webkit-autofill:focus,
 html[data-theme="light"] .input-adaptive:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px rgba(42, 40, 37, 0.06) inset !important;
-  -webkit-text-fill-color: #1a1a1a !important;
+  -webkit-box-shadow: 0 0 0 30px rgba(10, 15, 30, 0.95) inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1664,18 +1666,17 @@ select.input-adaptive:focus {
 }
 
 [data-theme="light"] select.input-adaptive option {
-  background-color: #f8f8f8 !important;
-  color: #1a1a1a !important;
+  background-color: rgba(10, 15, 30, 0.98) !important;
+  color: #ffffff !important;
   padding: 0.75rem !important;
-  border-radius: 0.5rem !important;
 }
 
-/* Opção selecionada/hover no tema claro - azul Azimut premium */
+/* Opção selecionada/hover no tema claro - MANTER IDENTIDADE AZIMUT */
 [data-theme="light"] select.input-adaptive:focus option:checked,
 [data-theme="light"] select.input-adaptive option:checked,
 [data-theme="light"] select.input-adaptive option:hover {
-  background: linear-gradient(135deg, rgba(201, 35, 55, 0.2) 0%, rgba(201, 35, 55, 0.1) 100%) !important;
-  color: #c92337 !important;
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0.35) 0%, rgba(201, 35, 55, 0.25) 100%) !important;
+  color: #ffffff !important;
   font-weight: 600 !important;
 }
 
@@ -1754,17 +1755,21 @@ html[data-theme="light"] .label-adaptive {
   margin-bottom: 0;
 }
 [data-theme="light"] .select-trigger {
-  background: rgba(42, 40, 37, 0.06);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  color: #1a1a1a;
+  background: rgba(10, 15, 30, 0.95) !important;
+  border: 1px solid rgba(201, 35, 55, 0.4) !important;
+  color: #ffffff !important;
 }
 [data-theme="light"] .select-panel {
-  background: rgba(242, 240, 235, 0.97);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  color: #1a1a1a;
+  background: rgba(10, 15, 30, 0.98) !important;
+  border: 1px solid rgba(201, 35, 55, 0.3) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(8px);
 }
 [data-theme="light"] .select-option {
-  color: #1a1a1a;
+  color: #ffffff !important;
+}
+[data-theme="light"] .select-option:hover {
+  background: rgba(201, 35, 55, 0.2) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════
