@@ -11,7 +11,7 @@ import CookieBanner from './CookieBanner'
 import DevToolsButton from './DevToolsButton'
 import ClaudeAssistant from './ClaudeAssistant'
 import WhatsAppWidget from './WhatsAppWidget'
-import Breadcrumbs from './Breadcrumbs'
+// Breadcrumbs removido - cada página tem seu próprio breadcrumb
 import ScrollToTopButton from './ScrollToTopButton'
 import { type UserProfile } from './BudgetWizard'
 import { trackCTA, trackLanguageChange } from '../utils/analytics'
@@ -917,9 +917,6 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           position: 'relative'
         }}
       >
-        {/* Breadcrumbs - Navegação hierárquica */}
-        <Breadcrumbs lang={lang} />
-        
         {children}
       </main>
 
