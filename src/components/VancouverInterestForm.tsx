@@ -51,21 +51,39 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // Detectar geolocalização
+  // Detectar geolocalização AUTOMATICAMENTE
   useEffect(() => {
     const detectCountry = async () => {
       try {
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
-        let detectedCode = '+55'
+        let detectedCode = '+55' // Default: Brasil (maioria dos alunos)
         
-        if (timezone.includes('America/Sao_Paulo') || timezone.includes('Brazil')) {
-          detectedCode = '+55'
-        } else if (timezone.includes('America/Toronto') || timezone.includes('America/Vancouver')) {
-          detectedCode = '+1'
-        } else if (timezone.includes('Europe/Madrid')) {
-          detectedCode = '+34'
+        // Detecção por timezone
+        if (timezone.includes('America/Sao_Paulo') || 
+            timezone.includes('America/Fortaleza') ||
+            timezone.includes('America/Recife') ||
+            timezone.includes('America/Manaus') ||
+            timezone.includes('Brazil')) {
+          detectedCode = '+55' // Brasil
+        } else if (timezone.includes('America/Toronto') || 
+                   timezone.includes('America/Vancouver') ||
+                   timezone.includes('America/Montreal')) {
+          detectedCode = '+1' // Canadá
+        } else if (timezone.includes('America/New_York') || 
+                   timezone.includes('America/Los_Angeles') ||
+                   timezone.includes('America/Chicago')) {
+          detectedCode = '+1' // EUA
+        } else if (timezone.includes('Europe/Madrid') || 
+                   timezone.includes('Europe/Barcelona')) {
+          detectedCode = '+34' // Espanha
         } else if (timezone.includes('Europe/Paris')) {
-          detectedCode = '+33'
+          detectedCode = '+33' // França
+        } else if (timezone.includes('Europe/Lisbon')) {
+          detectedCode = '+351' // Portugal
+        } else if (timezone.includes('America/Mexico')) {
+          detectedCode = '+52' // México
+        } else if (timezone.includes('America/Argentina')) {
+          detectedCode = '+54' // Argentina
         }
         
         setFormData(prev => ({ ...prev, countryCode: detectedCode }))
