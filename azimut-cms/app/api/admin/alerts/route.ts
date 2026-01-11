@@ -234,8 +234,8 @@ export async function GET(request: NextRequest) {
     // 4. DETECTAR PWA INSTALLS
     // ════════════════════════════════════════════════════════════
     const recentPWAInstalls = await prisma.pWAInstall.findMany({
-      where: { installedAt: { gte: oneDayAgo } },
-      orderBy: { installedAt: 'desc' },
+      where: { createdAt: { gte: oneDayAgo } },
+      orderBy: { createdAt: 'desc' },
       take: 5,
     })
 
@@ -246,7 +246,7 @@ export async function GET(request: NextRequest) {
         severity: 'medium',
         title: '📱 PWA Instalado!',
         message: `Novo app instalado (${install.platform || 'plataforma desconhecida'})`,
-        timestamp: install.installedAt.toISOString(),
+        timestamp: install.createdAt.toISOString(),
         data: {
           platform: install.platform,
           browser: install.browser,
