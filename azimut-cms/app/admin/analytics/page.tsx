@@ -17,7 +17,6 @@ interface AnalyticsData {
     hotLeads: number;
     warmLeads: number;
     avgConversionScore: number;
-    // Novos campos da API nova
     uniqueVisitors?: number;
     returningVisitors?: number;
     pwaInstalls?: number;
@@ -49,7 +48,6 @@ interface AnalyticsData {
     warm: number;
     cold: number;
   };
-  // Novos dados da API nova
   timeline?: Array<{
     date: string;
     count: number;
@@ -85,19 +83,47 @@ const visitorTypeLabels: Record<string, string> = {
 };
 
 const countryFlags: Record<string, string> = {
-  BR: '🇧🇷',
-  CA: '🇨🇦',
-  US: '🇺🇸',
-  FR: '🇫🇷',
-  ES: '🇪🇸',
-  PT: '🇵🇹',
-  IT: '🇮🇹',
-  DE: '🇩🇪',
-  GB: '🇬🇧',
-  AR: '🇦🇷',
-  MX: '🇲🇽',
-  CL: '🇨🇱',
-  CO: '🇨🇴',
+  BR: '🇧🇷', CA: '🇨🇦', US: '🇺🇸', FR: '🇫🇷', ES: '🇪🇸', PT: '🇵🇹',
+  IT: '🇮🇹', DE: '🇩🇪', GB: '🇬🇧', AR: '🇦🇷', MX: '🇲🇽', CL: '🇨🇱', CO: '🇨🇴',
+};
+
+// Estilos inline reutilizáveis
+const cardStyle = {
+  background: 'rgba(255,255,255,0.03)',
+  border: '1px solid rgba(255,255,255,0.08)',
+  borderRadius: 12,
+  padding: 24,
+};
+
+const cardLargeStyle = {
+  ...cardStyle,
+  padding: 32,
+};
+
+const sectionStyle = {
+  ...cardStyle,
+  marginBottom: 24,
+};
+
+const gridStyle3 = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(3, 1fr)',
+  gap: 20,
+  marginBottom: 20,
+};
+
+const gridStyle4 = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(4, 1fr)',
+  gap: 16,
+  marginBottom: 20,
+};
+
+const gridStyle2 = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gap: 24,
+  marginBottom: 24,
 };
 
 export default function AnalyticsPage() {
@@ -105,6 +131,7 @@ export default function AnalyticsPage() {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [cleaningUp, setCleaningUp] = useState(false);
 
   useEffect(() => {
     fetchAnalytics();
@@ -114,7 +141,6 @@ export default function AnalyticsPage() {
     try {
       setLoading(true);
       
-      // Buscar dados da nova API e API antiga (compatibilidade)
       const [overviewRes, oldRes, visitorsRes, leadsRes] = await Promise.all([
         fetch('/api/admin/analytics/overview').catch(() => null),
         fetch('/api/admin/analytics').catch(() => null),
@@ -122,17 +148,13 @@ export default function AnalyticsPage() {
         fetch('/api/admin/analytics/leads?limit=20').catch(() => null),
       ]);
 
-      // Se nova API funcionar, usar ela
       if (overviewRes && overviewRes.ok) {
         const overviewData = await overviewRes.json();
-        
-        // Buscar dados antigos para compatibilidade
         let oldData = null;
         if (oldRes && oldRes.ok) {
           oldData = await oldRes.json();
         }
 
-        // Combinar dados: nova API + dados antigos para compatibilidade
         const combinedData: AnalyticsData = {
           overview: {
             totalSessions: overviewData.metrics?.totalSessions || oldData?.overview?.totalSessions || 0,
@@ -140,7 +162,6 @@ export default function AnalyticsPage() {
             hotLeads: oldData?.overview?.hotLeads || 0,
             warmLeads: oldData?.overview?.warmLeads || 0,
             avgConversionScore: oldData?.overview?.avgConversionScore || 0,
-            // Novos campos
             uniqueVisitors: overviewData.metrics?.uniqueVisitors || 0,
             returningVisitors: overviewData.metrics?.returningVisitors || 0,
             pwaInstalls: overviewData.metrics?.pwaInstalls || 0,
@@ -183,7 +204,6 @@ export default function AnalyticsPage() {
 
         setData(combinedData);
       } else if (oldRes && oldRes.ok) {
-        // Fallback: usar API antiga se nova não funcionar
         const oldData = await oldRes.json();
         setData({
           ...oldData,
@@ -201,12 +221,35 @@ export default function AnalyticsPage() {
     }
   };
 
+  const handleCleanupTestData = async () => {
+    if (!confirm('⚠️ ATENÇÃO: Isso apagará TODOS os dados de teste (prefixo TESTE_). Tem certeza?')) {
+      return;
+    }
+
+    setCleaningUp(true);
+    try {
+      const response = await fetch('/api/admin/cleanup-test-data', { method: 'POST' });
+      const result = await response.json();
+
+      if (result.success) {
+        alert(`✅ ${result.message}\n\nApagados:\n- ${result.deleted.sessions} sessões\n- ${result.deleted.pageViews} page views\n- ${result.deleted.behaviors} comportamentos\n- ${result.deleted.pwaInstalls} PWA installs\n- ${result.deleted.interestScores} interest scores\n- ${result.deleted.leads} leads`);
+        fetchAnalytics();
+      } else {
+        alert(`❌ Erro: ${result.error || 'Erro desconhecido'}`);
+      }
+    } catch (error: any) {
+      alert(`❌ Erro ao apagar dados de teste: ${error.message}`);
+    } finally {
+      setCleaningUp(false);
+    }
+  };
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">Carregando analytics...</p>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '50vh' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: 48, marginBottom: 16 }}>⏳</div>
+          <p style={{ color: '#9f9bb0' }}>Carregando analytics...</p>
         </div>
       </div>
     );
@@ -214,12 +257,19 @@ export default function AnalyticsPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-600 dark:text-red-400">{error}</p>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '50vh' }}>
+        <div style={{ textAlign: 'center' }}>
+          <p style={{ color: '#ef4444', marginBottom: 16 }}>{error}</p>
           <button
             onClick={fetchAnalytics}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            style={{
+              padding: '12px 24px',
+              background: '#3b82f6',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 8,
+              cursor: 'pointer',
+            }}
           >
             Tentar novamente
           </button>
@@ -228,549 +278,358 @@ export default function AnalyticsPage() {
     );
   }
 
-  const handleCleanupTestData = async () => {
-    if (!confirm('⚠️ ATENÇÃO: Isso apagará TODOS os dados de teste (prefixo TESTE_). Tem certeza?')) {
-      return
-    }
-
-    setCleaningUp(true)
-    try {
-      const response = await fetch('/api/admin/cleanup-test-data', {
-        method: 'POST',
-      })
-
-      const result = await response.json()
-
-      if (result.success) {
-        alert(`✅ ${result.message}\n\nApagados:\n- ${result.deleted.sessions} sessões\n- ${result.deleted.pageViews} page views\n- ${result.deleted.behaviors} comportamentos\n- ${result.deleted.pwaInstalls} PWA installs\n- ${result.deleted.interestScores} interest scores\n- ${result.deleted.leads} leads`)
-        // Recarregar dados
-        fetchAnalytics()
-      } else {
-        alert(`❌ Erro: ${result.error || 'Erro desconhecido'}`)
-      }
-    } catch (error: any) {
-      console.error('Erro ao apagar dados de teste:', error)
-      alert(`❌ Erro ao apagar dados de teste: ${error.message}`)
-    } finally {
-      setCleaningUp(false)
-    }
-  }
-
   if (!data) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              📊 Analytics & IA
-            </h1>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-              Análise de comportamento e perfis de visitantes
-            </p>
+    <div style={{ width: '100%' }}>
+      {/* Header */}
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 32 }}>
+        <div>
+          <h1 style={{ fontSize: 32, fontWeight: 700, margin: 0, marginBottom: 8 }}>📊 Analytics & IA</h1>
+          <p style={{ color: '#9f9bb0', margin: 0 }}>Análise de comportamento e perfis de visitantes</p>
+        </div>
+        <button
+          onClick={handleCleanupTestData}
+          disabled={cleaningUp}
+          style={{
+            padding: '10px 20px',
+            background: cleaningUp ? '#6b7280' : '#dc2626',
+            color: '#fff',
+            border: 'none',
+            borderRadius: 8,
+            cursor: cleaningUp ? 'not-allowed' : 'pointer',
+            fontWeight: 600,
+            fontSize: 14,
+          }}
+        >
+          {cleaningUp ? '⏳ Apagando...' : '🗑️ Apagar Dados de Teste'}
+        </button>
+      </header>
+
+      {/* Linha 1: 3 Cards Grandes */}
+      <div style={gridStyle3}>
+        <div style={{ ...cardLargeStyle, borderColor: 'rgba(99, 102, 241, 0.3)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+            <span style={{ color: '#9f9bb0', fontWeight: 600 }}>Total de Sessões</span>
+            <span style={{ fontSize: 32 }}>📊</span>
           </div>
-          <button
-            onClick={handleCleanupTestData}
-            disabled={cleaningUp}
-            className="px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg shadow transition-colors"
-            title="Apagar todos os dados de teste (prefixo TESTE_)"
-          >
-            {cleaningUp ? '⏳ Apagando...' : '🗑️ Apagar Dados de Teste'}
-          </button>
+          <div style={{ fontSize: 48, fontWeight: 700, color: '#f3f4f6' }}>{data.overview.totalSessions}</div>
         </div>
 
-        {/* Overview Cards - Grid Inteligente */}
-        {/* Linha 1: Métricas Principais (3 cards grandes) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-          <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-8 hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="text-base font-semibold text-gray-600 dark:text-gray-400">Total de Sessões</div>
-              <div className="text-3xl">📊</div>
-            </div>
-            <div className="text-4xl font-bold text-gray-900 dark:text-white">
-              {data.overview.totalSessions}
-            </div>
+        <div style={{ ...cardLargeStyle, borderColor: 'rgba(168, 85, 247, 0.3)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+            <span style={{ color: '#9f9bb0', fontWeight: 600 }}>👥 Visitantes Únicos</span>
+            <span style={{ fontSize: 32 }}>👥</span>
           </div>
-
-          <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-lg border border-purple-200 dark:border-purple-800 p-8 hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="text-base font-semibold text-gray-600 dark:text-gray-400">👥 Visitantes Únicos</div>
-              <div className="text-3xl">👥</div>
-            </div>
-            <div className="text-4xl font-bold text-purple-600 dark:text-purple-400">
-              {data.overview.uniqueVisitors || 0}
-            </div>
-            <div className="text-xs text-gray-500 mt-2">Com fingerprint</div>
-          </div>
-
-          <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-lg border border-green-200 dark:border-green-800 p-8 hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="text-base font-semibold text-gray-600 dark:text-gray-400">📈 Score Médio</div>
-              <div className="text-3xl">📈</div>
-            </div>
-            <div className="text-4xl font-bold text-green-600 dark:text-green-400">
-              {data.overview.avgConversionScore}%
-            </div>
-          </div>
+          <div style={{ fontSize: 48, fontWeight: 700, color: '#a855f7' }}>{data.overview.uniqueVisitors || 0}</div>
+          <div style={{ color: '#6b7280', fontSize: 12, marginTop: 8 }}>Com fingerprint</div>
         </div>
 
-        {/* Linha 2: Métricas Secundárias (4 cards médios) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">🔄 Retornantes</div>
-            <div className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
-              {data.overview.returningVisitors || 0}
-            </div>
-            <div className="text-xs text-gray-500 mt-1">Visitantes frequentes</div>
+        <div style={{ ...cardLargeStyle, borderColor: 'rgba(34, 197, 94, 0.3)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+            <span style={{ color: '#9f9bb0', fontWeight: 600 }}>📈 Score Médio</span>
+            <span style={{ fontSize: 32 }}>📈</span>
           </div>
+          <div style={{ fontSize: 48, fontWeight: 700, color: '#22c55e' }}>{data.overview.avgConversionScore}%</div>
+        </div>
+      </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">📱 PWA Installs</div>
-            <div className="text-3xl font-bold text-cyan-600 dark:text-cyan-400">
-              {data.overview.pwaInstalls || 0}
-            </div>
-            <div className="text-xs text-gray-500 mt-1">App instalado</div>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">📄 Page Views</div>
-            <div className="text-3xl font-bold text-teal-600 dark:text-teal-400">
-              {data.overview.totalPageViews || 0}
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">📉 Bounce Rate</div>
-            <div className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">
-              {data.overview.bounceRate?.toFixed(1) || '0.0'}%
-            </div>
-          </div>
+      {/* Linha 2: 4 Cards Médios */}
+      <div style={gridStyle4}>
+        <div style={{ ...cardStyle, borderColor: 'rgba(99, 102, 241, 0.3)' }}>
+          <div style={{ color: '#9f9bb0', fontSize: 14, fontWeight: 500, marginBottom: 8 }}>🔄 Retornantes</div>
+          <div style={{ fontSize: 32, fontWeight: 700, color: '#818cf8' }}>{data.overview.returningVisitors || 0}</div>
+          <div style={{ color: '#6b7280', fontSize: 12, marginTop: 4 }}>Visitantes frequentes</div>
         </div>
 
-        {/* Linha 3: Métricas IA/Leads (4 cards médios) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-blue-200 dark:border-blue-800 p-6 hover:shadow-md transition-shadow">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">🤖 Com Perfil IA</div>
-            <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
-              {data.overview.sessionsWithAI}
-            </div>
-            <div className="text-xs text-gray-500 mt-1">
-              {data.overview.totalSessions > 0 ? Math.round((data.overview.sessionsWithAI / data.overview.totalSessions) * 100) : 0}%
-            </div>
-          </div>
+        <div style={{ ...cardStyle, borderColor: 'rgba(6, 182, 212, 0.3)' }}>
+          <div style={{ color: '#9f9bb0', fontSize: 14, fontWeight: 500, marginBottom: 8 }}>📱 PWA Installs</div>
+          <div style={{ fontSize: 32, fontWeight: 700, color: '#06b6d4' }}>{data.overview.pwaInstalls || 0}</div>
+          <div style={{ color: '#6b7280', fontSize: 12, marginTop: 4 }}>App instalado</div>
+        </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-red-200 dark:border-red-800 p-6 hover:shadow-md transition-shadow">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">🔥 Leads Quentes</div>
-            <div className="text-3xl font-bold text-red-600 dark:text-red-400">
-              {data.overview.hotLeads}
-            </div>
-            <div className="text-xs text-gray-500 mt-1">&gt; 75% score</div>
-          </div>
+        <div style={{ ...cardStyle, borderColor: 'rgba(20, 184, 166, 0.3)' }}>
+          <div style={{ color: '#9f9bb0', fontSize: 14, fontWeight: 500, marginBottom: 8 }}>📄 Page Views</div>
+          <div style={{ fontSize: 32, fontWeight: 700, color: '#14b8a6' }}>{data.overview.totalPageViews || 0}</div>
+        </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-orange-200 dark:border-orange-800 p-6 hover:shadow-md transition-shadow">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">🌡️ Leads Mornos</div>
-            <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">
-              {data.overview.warmLeads}
-            </div>
-            <div className="text-xs text-gray-500 mt-1">50-75% score</div>
-          </div>
+        <div style={{ ...cardStyle, borderColor: 'rgba(234, 179, 8, 0.3)' }}>
+          <div style={{ color: '#9f9bb0', fontSize: 14, fontWeight: 500, marginBottom: 8 }}>📉 Bounce Rate</div>
+          <div style={{ fontSize: 32, fontWeight: 700, color: '#eab308' }}>{data.overview.bounceRate?.toFixed(1) || '0.0'}%</div>
+        </div>
+      </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">📊 Total</div>
-            <div className="text-3xl font-bold text-gray-600 dark:text-gray-400">
-              {data.overview.hotLeads + data.overview.warmLeads}
-            </div>
-            <div className="text-xs text-gray-500 mt-1">Leads totais</div>
+      {/* Linha 3: 4 Cards IA/Leads */}
+      <div style={gridStyle4}>
+        <div style={{ ...cardStyle, borderColor: 'rgba(59, 130, 246, 0.3)' }}>
+          <div style={{ color: '#9f9bb0', fontSize: 14, fontWeight: 500, marginBottom: 8 }}>🤖 Com Perfil IA</div>
+          <div style={{ fontSize: 32, fontWeight: 700, color: '#3b82f6' }}>{data.overview.sessionsWithAI}</div>
+          <div style={{ color: '#6b7280', fontSize: 12, marginTop: 4 }}>
+            {data.overview.totalSessions > 0 ? Math.round((data.overview.sessionsWithAI / data.overview.totalSessions) * 100) : 0}%
           </div>
         </div>
 
-        {/* Distribuição de Scores */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-            Distribuição de Conversion Scores
-          </h2>
-          
-          {/* Gráfico de Pizza */}
-          <div className="mb-6">
-            <ScoreDistributionChart
-              hot={data.scoreDistribution.hot}
-              warm={data.scoreDistribution.warm}
-              cold={data.scoreDistribution.cold}
-            />
+        <div style={{ ...cardStyle, borderColor: 'rgba(239, 68, 68, 0.3)' }}>
+          <div style={{ color: '#9f9bb0', fontSize: 14, fontWeight: 500, marginBottom: 8 }}>🔥 Leads Quentes</div>
+          <div style={{ fontSize: 32, fontWeight: 700, color: '#ef4444' }}>{data.overview.hotLeads}</div>
+          <div style={{ color: '#6b7280', fontSize: 12, marginTop: 4 }}>&gt; 75% score</div>
+        </div>
+
+        <div style={{ ...cardStyle, borderColor: 'rgba(249, 115, 22, 0.3)' }}>
+          <div style={{ color: '#9f9bb0', fontSize: 14, fontWeight: 500, marginBottom: 8 }}>🌡️ Leads Mornos</div>
+          <div style={{ fontSize: 32, fontWeight: 700, color: '#f97316' }}>{data.overview.warmLeads}</div>
+          <div style={{ color: '#6b7280', fontSize: 12, marginTop: 4 }}>50-75% score</div>
+        </div>
+
+        <div style={{ ...cardStyle, borderColor: 'rgba(156, 163, 175, 0.3)' }}>
+          <div style={{ color: '#9f9bb0', fontSize: 14, fontWeight: 500, marginBottom: 8 }}>📊 Total Leads</div>
+          <div style={{ fontSize: 32, fontWeight: 700, color: '#9ca3af' }}>{data.overview.hotLeads + data.overview.warmLeads}</div>
+          <div style={{ color: '#6b7280', fontSize: 12, marginTop: 4 }}>Leads totais</div>
+        </div>
+      </div>
+
+      {/* Timeline */}
+      {data.timeline && data.timeline.length > 0 && (
+        <div style={sectionStyle}>
+          <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16 }}>📈 Timeline de Visitantes (Últimos 30 dias)</h2>
+          <TimelineChart data={data.timeline} />
+        </div>
+      )}
+
+      {/* Gráficos - 2 colunas */}
+      <div style={gridStyle2}>
+        <div style={cardStyle}>
+          <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16 }}>Tipos de Visitantes</h2>
+          <VisitorTypesChart data={data.visitorTypes} />
+        </div>
+
+        <div style={cardStyle}>
+          <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16 }}>Visitantes por País</h2>
+          <CountryChart data={data.visitorsByCountry} />
+        </div>
+      </div>
+
+      {/* Score Distribution */}
+      <div style={sectionStyle}>
+        <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16 }}>Distribuição de Scores</h2>
+        <ScoreDistributionChart
+          hot={data.scoreDistribution.hot}
+          warm={data.scoreDistribution.warm}
+          cold={data.scoreDistribution.cold}
+        />
+        <div style={{ display: 'flex', gap: 24, marginTop: 16 }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+              <span style={{ color: '#9f9bb0', fontSize: 14 }}>🔥 Quentes (&gt;75%)</span>
+              <span style={{ fontWeight: 600 }}>{data.scoreDistribution.hot}</span>
+            </div>
+            <div style={{ height: 8, background: 'rgba(255,255,255,0.1)', borderRadius: 4 }}>
+              <div style={{ height: '100%', background: '#ef4444', borderRadius: 4, width: `${(data.scoreDistribution.hot / Math.max(data.overview.sessionsWithAI, 1)) * 100}%` }}></div>
+            </div>
           </div>
-          
-          {/* Barras de progresso (mantidas para referência rápida) */}
-          <div className="flex gap-4">
-            <div className="flex-1">
-              <div className="flex justify-between mb-2">
-                <span className="text-sm text-gray-600 dark:text-gray-400">🔥 Quentes (&gt;75%)</span>
-                <span className="text-sm font-medium text-gray-900 dark:text-white">
-                  {data.scoreDistribution.hot}
-                </span>
-              </div>
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
-                <div
-                  className="bg-red-600 h-3 rounded-full transition-all"
-                  style={{
-                    width: `${(data.scoreDistribution.hot / data.overview.sessionsWithAI) * 100}%`,
-                  }}
-                ></div>
-              </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+              <span style={{ color: '#9f9bb0', fontSize: 14 }}>🌡️ Mornos (50-75%)</span>
+              <span style={{ fontWeight: 600 }}>{data.scoreDistribution.warm}</span>
             </div>
-
-            <div className="flex-1">
-              <div className="flex justify-between mb-2">
-                <span className="text-sm text-gray-600 dark:text-gray-400">🌡️ Mornos (50-75%)</span>
-                <span className="text-sm font-medium text-gray-900 dark:text-white">
-                  {data.scoreDistribution.warm}
-                </span>
-              </div>
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
-                <div
-                  className="bg-orange-500 h-3 rounded-full transition-all"
-                  style={{
-                    width: `${(data.scoreDistribution.warm / data.overview.sessionsWithAI) * 100}%`,
-                  }}
-                ></div>
-              </div>
+            <div style={{ height: 8, background: 'rgba(255,255,255,0.1)', borderRadius: 4 }}>
+              <div style={{ height: '100%', background: '#f97316', borderRadius: 4, width: `${(data.scoreDistribution.warm / Math.max(data.overview.sessionsWithAI, 1)) * 100}%` }}></div>
             </div>
-
-            <div className="flex-1">
-              <div className="flex justify-between mb-2">
-                <span className="text-sm text-gray-600 dark:text-gray-400">❄️ Frios (&lt;50%)</span>
-                <span className="text-sm font-medium text-gray-900 dark:text-white">
-                  {data.scoreDistribution.cold}
-                </span>
-              </div>
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
-                <div
-                  className="bg-blue-500 h-3 rounded-full transition-all"
-                  style={{
-                    width: `${(data.scoreDistribution.cold / data.overview.sessionsWithAI) * 100}%`,
-                  }}
-                ></div>
-              </div>
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+              <span style={{ color: '#9f9bb0', fontSize: 14 }}>❄️ Frios (&lt;50%)</span>
+              <span style={{ fontWeight: 600 }}>{data.scoreDistribution.cold}</span>
+            </div>
+            <div style={{ height: 8, background: 'rgba(255,255,255,0.1)', borderRadius: 4 }}>
+              <div style={{ height: '100%', background: '#3b82f6', borderRadius: 4, width: `${(data.scoreDistribution.cold / Math.max(data.overview.sessionsWithAI, 1)) * 100}%` }}></div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Gráfico de Linha - Timeline */}
-        {data.timeline && data.timeline.length > 0 && (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-8">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              📈 Timeline de Visitantes (Últimos 30 dias)
-            </h2>
-            <TimelineChart data={data.timeline} />
-          </div>
-        )}
+      {/* Top Projects */}
+      <div style={sectionStyle}>
+        <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16 }}>🏆 Páginas Mais Visualizadas</h2>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+              <th style={{ textAlign: 'left', padding: '12px 0', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>#</th>
+              <th style={{ textAlign: 'left', padding: '12px 0', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>Página</th>
+              <th style={{ textAlign: 'left', padding: '12px 0', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>Views</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.topProjects.slice(0, 10).map((project, index) => (
+              <tr key={project.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                <td style={{ padding: '12px 0', color: '#9f9bb0' }}>{index + 1}</td>
+                <td style={{ padding: '12px 0' }}>{project.title}</td>
+                <td style={{ padding: '12px 0', color: '#3b82f6', fontWeight: 600 }}>{project.count}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-        {/* Two Columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {/* Visitor Types */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              Tipos de Visitantes
-            </h2>
-            <VisitorTypesChart data={data.visitorTypes} />
-          </div>
-
-          {/* Visitors by Country */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              Visitantes por País
-            </h2>
-            <CountryChart data={data.visitorsByCountry} />
-          </div>
-        </div>
-
-        {/* Top Projects */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-            🏆 Projetos Mais Visualizados
-          </h2>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+      {/* Visitantes com Fingerprint */}
+      {data.visitors && data.visitors.length > 0 && (
+        <div style={sectionStyle}>
+          <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16 }}>👥 Visitantes com Fingerprint</h2>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 800 }}>
               <thead>
-                <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    #
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Projeto
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Visualizações
-                  </th>
+                <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                  <th style={{ textAlign: 'left', padding: '12px 8px', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>Fingerprint</th>
+                  <th style={{ textAlign: 'left', padding: '12px 8px', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>Device</th>
+                  <th style={{ textAlign: 'left', padding: '12px 8px', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>Browser</th>
+                  <th style={{ textAlign: 'left', padding: '12px 8px', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>País</th>
+                  <th style={{ textAlign: 'left', padding: '12px 8px', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>Visitas</th>
+                  <th style={{ textAlign: 'left', padding: '12px 8px', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>Engajamento</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                {data.topProjects.map((project, index) => (
-                  <tr key={project.id}>
-                    <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                      {index + 1}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                      {project.title}
-                    </td>
-                    <td className="px-4 py-3 text-sm font-medium text-blue-600 dark:text-blue-400">
-                      {project.count}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Visitantes com Fingerprint */}
-        {data.visitors && data.visitors.length > 0 && (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-8">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              👥 Visitantes com Fingerprint
-            </h2>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead>
-                  <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Fingerprint
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Device
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Browser
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      País
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Visitas
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Engajamento
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Última Visita
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                  {data.visitors.map((visitor, index) => (
-                    <tr key={visitor.fingerprint || index}>
-                      <td className="px-4 py-3 text-sm text-gray-900 dark:text-white font-mono text-xs">
-                        {visitor.fingerprint?.substring(0, 12)}...
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                        {visitor.deviceType || 'Unknown'}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                        {visitor.browser || 'Unknown'}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                        {countryFlags[visitor.country || ''] || '🌍'} {visitor.country || 'Unknown'}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                        {visitor.visitCount || 1}
-                      </td>
-                      <td className="px-4 py-3 text-sm">
-                        <span
-                          className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${
-                            (visitor.engagementScore || 0) >= 70
-                              ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                              : (visitor.engagementScore || 0) >= 40
-                              ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
-                              : 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
-                          }`}
-                        >
-                          {visitor.engagementScore || 0}%
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                        {new Date(visitor.lastActivityAt).toLocaleDateString('pt-BR', {
-                          day: '2-digit',
-                          month: '2-digit',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-
-        {/* Lead Candidates */}
-        {data.leadCandidates && data.leadCandidates.length > 0 && (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-8">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              🎯 Lead Candidates (Alta Probabilidade de Conversão)
-            </h2>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead>
-                  <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Fingerprint
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Probabilidade
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Engajamento
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Device
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      País
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Última Visita
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                  {data.leadCandidates.map((lead, index) => (
-                    <tr key={lead.fingerprint || index}>
-                      <td className="px-4 py-3 text-sm text-gray-900 dark:text-white font-mono text-xs">
-                        {lead.fingerprint?.substring(0, 12)}...
-                      </td>
-                      <td className="px-4 py-3 text-sm">
-                        <span
-                          className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${
-                            (lead.conversionProbability || 0) >= 0.8
-                              ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-                              : (lead.conversionProbability || 0) >= 0.6
-                              ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200'
-                              : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
-                          }`}
-                        >
-                          {((lead.conversionProbability || 0) * 100).toFixed(0)}%
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-sm">
-                        <span
-                          className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${
-                            (lead.engagementScore || 0) >= 70
-                              ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                              : (lead.engagementScore || 0) >= 40
-                              ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
-                              : 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
-                          }`}
-                        >
-                          {lead.engagementScore || 0}%
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                        {lead.deviceType || 'Unknown'}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                        {countryFlags[lead.country || ''] || '🌍'} {lead.country || 'Unknown'}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                        {new Date(lead.lastActivityAt).toLocaleDateString('pt-BR', {
-                          day: '2-digit',
-                          month: '2-digit',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-
-        {/* Recent Sessions */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-            🕐 Sessões Recentes
-          </h2>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead>
-                <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    País
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Tipo
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Score
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Páginas
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Duração
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Data
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                {data.recentSessions.map((session) => (
-                  <tr key={session.sessionId}>
-                    <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                      {countryFlags[session.country || ''] || '🌍'} {session.country || 'Unknown'}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                      {visitorTypeLabels[session.visitorType]?.split(' ')[0] || '❓'}
-                    </td>
-                    <td className="px-4 py-3 text-sm">
-                      <span
-                        className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${
-                          session.conversionScore > 75
-                            ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-                            : session.conversionScore >= 50
-                            ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200'
-                            : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
-                        }`}
-                      >
-                        {session.conversionScore}%
+              <tbody>
+                {data.visitors.slice(0, 15).map((visitor, index) => (
+                  <tr key={visitor.fingerprint || index} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                    <td style={{ padding: '12px 8px', fontFamily: 'monospace', fontSize: 12 }}>{visitor.fingerprint?.substring(0, 12)}...</td>
+                    <td style={{ padding: '12px 8px', color: '#9f9bb0' }}>{visitor.deviceType || 'Unknown'}</td>
+                    <td style={{ padding: '12px 8px', color: '#9f9bb0' }}>{visitor.browser || 'Unknown'}</td>
+                    <td style={{ padding: '12px 8px' }}>{countryFlags[visitor.country || ''] || '🌍'} {visitor.country || 'N/A'}</td>
+                    <td style={{ padding: '12px 8px', color: '#9f9bb0' }}>{visitor.visitCount || 1}</td>
+                    <td style={{ padding: '12px 8px' }}>
+                      <span style={{
+                        padding: '4px 8px',
+                        borderRadius: 12,
+                        fontSize: 12,
+                        fontWeight: 600,
+                        background: (visitor.engagementScore || 0) >= 70 ? 'rgba(34, 197, 94, 0.2)' : (visitor.engagementScore || 0) >= 40 ? 'rgba(234, 179, 8, 0.2)' : 'rgba(156, 163, 175, 0.2)',
+                        color: (visitor.engagementScore || 0) >= 70 ? '#22c55e' : (visitor.engagementScore || 0) >= 40 ? '#eab308' : '#9ca3af',
+                      }}>
+                        {visitor.engagementScore || 0}%
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                      {session.pagesViewed}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                      {Math.round(session.duration / 60)}min
-                    </td>
-                    <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                      {new Date(session.createdAt).toLocaleDateString('pt-BR', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}
-                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
         </div>
+      )}
 
-        {/* Refresh Button */}
-        <div className="mt-8 flex justify-center">
-          <button
-            onClick={fetchAnalytics}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            🔄 Atualizar Dados
-          </button>
+      {/* Lead Candidates */}
+      {data.leadCandidates && data.leadCandidates.length > 0 && (
+        <div style={sectionStyle}>
+          <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16 }}>🎯 Lead Candidates (Alta Probabilidade)</h2>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 700 }}>
+              <thead>
+                <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                  <th style={{ textAlign: 'left', padding: '12px 8px', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>Fingerprint</th>
+                  <th style={{ textAlign: 'left', padding: '12px 8px', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>Probabilidade</th>
+                  <th style={{ textAlign: 'left', padding: '12px 8px', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>Engajamento</th>
+                  <th style={{ textAlign: 'left', padding: '12px 8px', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>Device</th>
+                  <th style={{ textAlign: 'left', padding: '12px 8px', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>País</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.leadCandidates.slice(0, 10).map((lead, index) => (
+                  <tr key={lead.fingerprint || index} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                    <td style={{ padding: '12px 8px', fontFamily: 'monospace', fontSize: 12 }}>{lead.fingerprint?.substring(0, 12)}...</td>
+                    <td style={{ padding: '12px 8px' }}>
+                      <span style={{
+                        padding: '4px 8px',
+                        borderRadius: 12,
+                        fontSize: 12,
+                        fontWeight: 600,
+                        background: (lead.conversionProbability || 0) >= 0.8 ? 'rgba(239, 68, 68, 0.2)' : (lead.conversionProbability || 0) >= 0.6 ? 'rgba(249, 115, 22, 0.2)' : 'rgba(234, 179, 8, 0.2)',
+                        color: (lead.conversionProbability || 0) >= 0.8 ? '#ef4444' : (lead.conversionProbability || 0) >= 0.6 ? '#f97316' : '#eab308',
+                      }}>
+                        {((lead.conversionProbability || 0) * 100).toFixed(0)}%
+                      </span>
+                    </td>
+                    <td style={{ padding: '12px 8px' }}>
+                      <span style={{
+                        padding: '4px 8px',
+                        borderRadius: 12,
+                        fontSize: 12,
+                        fontWeight: 600,
+                        background: (lead.engagementScore || 0) >= 70 ? 'rgba(34, 197, 94, 0.2)' : 'rgba(156, 163, 175, 0.2)',
+                        color: (lead.engagementScore || 0) >= 70 ? '#22c55e' : '#9ca3af',
+                      }}>
+                        {lead.engagementScore || 0}%
+                      </span>
+                    </td>
+                    <td style={{ padding: '12px 8px', color: '#9f9bb0' }}>{lead.deviceType || 'Unknown'}</td>
+                    <td style={{ padding: '12px 8px' }}>{countryFlags[lead.country || ''] || '🌍'} {lead.country || 'N/A'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
+      )}
+
+      {/* Recent Sessions */}
+      <div style={sectionStyle}>
+        <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16 }}>🕐 Sessões Recentes</h2>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 700 }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                <th style={{ textAlign: 'left', padding: '12px 8px', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>País</th>
+                <th style={{ textAlign: 'left', padding: '12px 8px', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>Tipo</th>
+                <th style={{ textAlign: 'left', padding: '12px 8px', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>Score</th>
+                <th style={{ textAlign: 'left', padding: '12px 8px', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>Páginas</th>
+                <th style={{ textAlign: 'left', padding: '12px 8px', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>Duração</th>
+                <th style={{ textAlign: 'left', padding: '12px 8px', color: '#6b7280', fontSize: 12, textTransform: 'uppercase' }}>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.recentSessions.slice(0, 15).map((session) => (
+                <tr key={session.sessionId} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                  <td style={{ padding: '12px 8px' }}>{countryFlags[session.country || ''] || '🌍'} {session.country || 'N/A'}</td>
+                  <td style={{ padding: '12px 8px', color: '#9f9bb0' }}>{visitorTypeLabels[session.visitorType]?.split(' ')[0] || '❓'}</td>
+                  <td style={{ padding: '12px 8px' }}>
+                    <span style={{
+                      padding: '4px 8px',
+                      borderRadius: 12,
+                      fontSize: 12,
+                      fontWeight: 600,
+                      background: session.conversionScore > 75 ? 'rgba(239, 68, 68, 0.2)' : session.conversionScore >= 50 ? 'rgba(249, 115, 22, 0.2)' : 'rgba(59, 130, 246, 0.2)',
+                      color: session.conversionScore > 75 ? '#ef4444' : session.conversionScore >= 50 ? '#f97316' : '#3b82f6',
+                    }}>
+                      {session.conversionScore}%
+                    </span>
+                  </td>
+                  <td style={{ padding: '12px 8px', color: '#9f9bb0' }}>{session.pagesViewed}</td>
+                  <td style={{ padding: '12px 8px', color: '#9f9bb0' }}>{Math.round(session.duration / 60)}min</td>
+                  <td style={{ padding: '12px 8px', color: '#9f9bb0' }}>
+                    {new Date(session.createdAt).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Refresh Button */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: 32 }}>
+        <button
+          onClick={fetchAnalytics}
+          style={{
+            padding: '12px 32px',
+            background: '#3b82f6',
+            color: '#fff',
+            border: 'none',
+            borderRadius: 8,
+            cursor: 'pointer',
+            fontWeight: 600,
+            fontSize: 16,
+          }}
+        >
+          🔄 Atualizar Dados
+        </button>
       </div>
     </div>
   );
 }
-
