@@ -236,94 +236,115 @@ export default function AnalyticsPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            📊 Analytics & DeepSeek IA
+            📊 Analytics & IA
           </h1>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
             Análise de comportamento e perfis de visitantes
           </p>
         </div>
 
-        {/* Overview Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Total de Sessões</div>
-            <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+        {/* Overview Cards - Grid Inteligente */}
+        {/* Linha 1: Métricas Principais (3 cards grandes) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+          <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-8 hover:shadow-xl transition-shadow">
+            <div className="flex items-center justify-between mb-4">
+              <div className="text-base font-semibold text-gray-600 dark:text-gray-400">Total de Sessões</div>
+              <div className="text-3xl">📊</div>
+            </div>
+            <div className="text-4xl font-bold text-gray-900 dark:text-white">
               {data.overview.totalSessions}
             </div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">👥 Visitantes Únicos</div>
-            <div className="mt-2 text-3xl font-bold text-purple-600 dark:text-purple-400">
+          <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-lg border border-purple-200 dark:border-purple-800 p-8 hover:shadow-xl transition-shadow">
+            <div className="flex items-center justify-between mb-4">
+              <div className="text-base font-semibold text-gray-600 dark:text-gray-400">👥 Visitantes Únicos</div>
+              <div className="text-3xl">👥</div>
+            </div>
+            <div className="text-4xl font-bold text-purple-600 dark:text-purple-400">
               {data.overview.uniqueVisitors || 0}
             </div>
-            <div className="text-xs text-gray-500 mt-1">Com fingerprint</div>
+            <div className="text-xs text-gray-500 mt-2">Com fingerprint</div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">🔄 Retornantes</div>
-            <div className="mt-2 text-3xl font-bold text-indigo-600 dark:text-indigo-400">
+          <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-lg border border-green-200 dark:border-green-800 p-8 hover:shadow-xl transition-shadow">
+            <div className="flex items-center justify-between mb-4">
+              <div className="text-base font-semibold text-gray-600 dark:text-gray-400">📈 Score Médio</div>
+              <div className="text-3xl">📈</div>
+            </div>
+            <div className="text-4xl font-bold text-green-600 dark:text-green-400">
+              {data.overview.avgConversionScore}%
+            </div>
+          </div>
+        </div>
+
+        {/* Linha 2: Métricas Secundárias (4 cards médios) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow">
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">🔄 Retornantes</div>
+            <div className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
               {data.overview.returningVisitors || 0}
             </div>
             <div className="text-xs text-gray-500 mt-1">Visitantes frequentes</div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">📱 PWA Installs</div>
-            <div className="mt-2 text-3xl font-bold text-cyan-600 dark:text-cyan-400">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow">
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">📱 PWA Installs</div>
+            <div className="text-3xl font-bold text-cyan-600 dark:text-cyan-400">
               {data.overview.pwaInstalls || 0}
             </div>
             <div className="text-xs text-gray-500 mt-1">App instalado</div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Com Perfil IA</div>
-            <div className="mt-2 text-3xl font-bold text-blue-600 dark:text-blue-400">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow">
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">📄 Page Views</div>
+            <div className="text-3xl font-bold text-teal-600 dark:text-teal-400">
+              {data.overview.totalPageViews || 0}
+            </div>
+          </div>
+
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow">
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">📉 Bounce Rate</div>
+            <div className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">
+              {data.overview.bounceRate?.toFixed(1) || '0.0'}%
+            </div>
+          </div>
+        </div>
+
+        {/* Linha 3: Métricas IA/Leads (4 cards médios) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-blue-200 dark:border-blue-800 p-6 hover:shadow-md transition-shadow">
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">🤖 Com Perfil IA</div>
+            <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
               {data.overview.sessionsWithAI}
             </div>
             <div className="text-xs text-gray-500 mt-1">
               {data.overview.totalSessions > 0 ? Math.round((data.overview.sessionsWithAI / data.overview.totalSessions) * 100) : 0}%
             </div>
           </div>
-        </div>
 
-        {/* Cards Adicionais - Segunda Linha */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">🔥 Leads Quentes</div>
-            <div className="mt-2 text-3xl font-bold text-red-600 dark:text-red-400">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-red-200 dark:border-red-800 p-6 hover:shadow-md transition-shadow">
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">🔥 Leads Quentes</div>
+            <div className="text-3xl font-bold text-red-600 dark:text-red-400">
               {data.overview.hotLeads}
             </div>
             <div className="text-xs text-gray-500 mt-1">&gt; 75% score</div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">🌡️ Leads Mornos</div>
-            <div className="mt-2 text-3xl font-bold text-orange-600 dark:text-orange-400">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-orange-200 dark:border-orange-800 p-6 hover:shadow-md transition-shadow">
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">🌡️ Leads Mornos</div>
+            <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">
               {data.overview.warmLeads}
             </div>
             <div className="text-xs text-gray-500 mt-1">50-75% score</div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">📈 Score Médio</div>
-            <div className="mt-2 text-3xl font-bold text-green-600 dark:text-green-400">
-              {data.overview.avgConversionScore}%
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow">
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">📊 Total</div>
+            <div className="text-3xl font-bold text-gray-600 dark:text-gray-400">
+              {data.overview.hotLeads + data.overview.warmLeads}
             </div>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">📄 Page Views</div>
-            <div className="mt-2 text-3xl font-bold text-teal-600 dark:text-teal-400">
-              {data.overview.totalPageViews || 0}
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">📉 Bounce Rate</div>
-            <div className="mt-2 text-3xl font-bold text-yellow-600 dark:text-yellow-400">
-              {data.overview.bounceRate?.toFixed(1) || '0.0'}%
-            </div>
+            <div className="text-xs text-gray-500 mt-1">Leads totais</div>
           </div>
         </div>
 
