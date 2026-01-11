@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import ApiService from '../services/api'
@@ -10,6 +10,7 @@ interface VancouverInterestFormProps {
 interface FormData {
   name: string
   email: string
+  countryCode: string
   whatsapp: string
   age: string
   city: string
@@ -30,6 +31,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
+    countryCode: '+55',
     whatsapp: '',
     age: '',
     city: '',
@@ -48,6 +50,32 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  // Detectar geolocalização
+  useEffect(() => {
+    const detectCountry = async () => {
+      try {
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+        let detectedCode = '+55'
+        
+        if (timezone.includes('America/Sao_Paulo') || timezone.includes('Brazil')) {
+          detectedCode = '+55'
+        } else if (timezone.includes('America/Toronto') || timezone.includes('America/Vancouver')) {
+          detectedCode = '+1'
+        } else if (timezone.includes('Europe/Madrid')) {
+          detectedCode = '+34'
+        } else if (timezone.includes('Europe/Paris')) {
+          detectedCode = '+33'
+        }
+        
+        setFormData(prev => ({ ...prev, countryCode: detectedCode }))
+      } catch (error) {
+        console.warn('Could not detect country:', error)
+      }
+    }
+
+    detectCountry()
+  }, [])
 
   const labels = {
     pt: {
@@ -165,8 +193,15 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
     setSuccess(false)
 
     try {
+      // Combinar countryCode + whatsapp
+      const fullWhatsapp = formData.whatsapp ? `${formData.countryCode}${formData.whatsapp}` : ''
+      const submitData = {
+        ...formData,
+        whatsapp: fullWhatsapp
+      }
+      
       // 1. Submeter para o backoffice (API existente)
-      await ApiService.submitVancouverLead(formData)
+      await ApiService.submitVancouverLead(submitData)
       
       // 2. Enviar notificação por email (API nova)
       try {
@@ -174,7 +209,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            ...formData,
+            ...submitData,
             formType: 'vancouver_interest_full',
             lang,
             score: 60 // Formulário completo = warm lead
@@ -279,15 +314,32 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               <label className="block text-sm font-medium text-white/80 mb-2">
                 {t.whatsapp} *
               </label>
-              <input
-                type="tel"
-                name="whatsapp"
-                required
-                placeholder="(11) 99999-9999"
-                value={formData.whatsapp}
-                onChange={handleChange}
-                className="w-full px-4 py-3 input-adaptive rounded-lg"
-              />
+              <div className="flex gap-2">
+                <select
+                  value={formData.countryCode}
+                  onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value }))}
+                  className="w-32 px-3 py-3 input-adaptive rounded-lg"
+                >
+                  <option value="+1">🇨🇦 +1</option>
+                  <option value="+55">🇧🇷 +55</option>
+                  <option value="+34">🇪🇸 +34</option>
+                  <option value="+33">🇫🇷 +33</option>
+                  <option value="+351">🇵🇹 +351</option>
+                  <option value="+52">🇲🇽 +52</option>
+                </select>
+                <input
+                  type="tel"
+                  name="whatsapp"
+                  required
+                  placeholder="21 99999-9999"
+                  value={formData.whatsapp}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, '')
+                    setFormData(prev => ({ ...prev, whatsapp: value }))
+                  }}
+                  className="flex-1 px-4 py-3 input-adaptive rounded-lg"
+                />
+              </div>
             </div>
           </div>
 
