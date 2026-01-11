@@ -3,12 +3,16 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { type Lang } from '../i18n';
 import { trackConversion } from '../components/GoogleAnalytics';
+import { useUserTracking } from '../hooks/useUserTracking';
 
 interface ThankYouProps {
   lang: Lang;
 }
 
 const ThankYouPage: React.FC<ThankYouProps> = ({ lang }) => {
+  // Tracking interno do site
+  useUserTracking();
+  
   // Track conversion quando página carrega
   useEffect(() => {
     trackConversion('lead', {

@@ -4,12 +4,16 @@ import { Lang } from '../i18n'
 import { getServiceBySlug, getServiceTitle, getServiceLongDesc, getServiceDeliverables, getServiceProcess, Service } from '../data/servicesData'
 import LangLink from '../components/LangLink'
 import SEO from '../components/SEO'
+import { useUserTracking } from '../hooks/useUserTracking'
 
 interface ServiceDetailProps {
   lang: Lang
 }
 
 const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
+  // Tracking interno do site (analytics para backoffice)
+  useUserTracking();
+  
   const { slug } = useParams<{ slug: string }>()
   
   if (!slug) {

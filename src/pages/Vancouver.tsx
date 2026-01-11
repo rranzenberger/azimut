@@ -2,6 +2,7 @@ import React from 'react'
 import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import { VancouverPageSchema, VancouverFAQSchema } from '../components/StructuredData'
+import { useUserTracking } from '../hooks/useUserTracking'
 import VancouverInterestForm from '../components/VancouverInterestForm'
 import { VideoPlayerEnhanced } from '../components/VideoPlayerEnhanced'
 import { VideoCard } from '../components/VideoCard'
@@ -17,6 +18,9 @@ interface VancouverProps {
 }
 
 const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
+  // Tracking interno do site (analytics para backoffice)
+  useUserTracking();
+  
   // Função para scroll suave até a calculadora com efeito de destaque
   const scrollToCalculator = () => {
     const calculatorSection = document.getElementById('calculator')
