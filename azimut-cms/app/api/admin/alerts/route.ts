@@ -109,7 +109,7 @@ export async function GET(request: NextRequest) {
       },
       include: {
         pageViews: true,
-        interestScores: true,
+        interestScore: true,
       },
       orderBy: { createdAt: 'desc' },
       take: 10,
@@ -118,7 +118,7 @@ export async function GET(request: NextRequest) {
     // Processar hot leads e enviar emails
     let emailsSent = 0
     for (const session of hotLeadSessions) {
-      const topInterest = session.interestScores?.[0]
+      const topInterest = session.interestScore
       const interestCategory = topInterest?.category || null
       
       // Tentar enviar email (só envia se score >= 70 e não foi enviado recentemente)
