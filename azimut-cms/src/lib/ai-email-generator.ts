@@ -176,38 +176,88 @@ export async function generateInternalSummary(data: LeadData): Promise<string> {
   const score = data.score || 50
   const temp = score >= 70 ? 'HOT 🔥' : score >= 40 ? 'WARM 🟡' : 'COLD ❄️'
   
+  // Detectar idioma
+  const langNames = {
+    pt: '🇧🇷 Português',
+    en: '🇺🇸 Inglês',
+    fr: '🇫🇷 Francês',
+    es: '🇪🇸 Espanhol'
+  }
+  const langDetected = langNames[data.lang as keyof typeof langNames] || data.lang.toUpperCase()
+  
   return `
-<div style="font-family: monospace; background: #f5f5f5; padding: 20px; border-radius: 8px;">
-  <h2 style="color: #c92337;">🤖 ANÁLISE AUTOMÁTICA DO LEAD</h2>
+<div style="font-family: 'Segoe UI', Arial, sans-serif; background: #f5f5f5; padding: 20px; border-radius: 8px; max-width: 800px;">
+  <div style="background: linear-gradient(135deg, #c92337 0%, #8B2332 100%); color: white; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+    <h2 style="margin: 0;">🤖 ANÁLISE AUTOMÁTICA DO LEAD</h2>
+  </div>
   
-  <h3>📊 SCORE: ${score}/100 (${temp})</h3>
+  <div style="background: white; padding: 20px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #c92337;">
+    <h3 style="color: #c92337; margin-top: 0;">📊 SCORE: ${score}/100 (${temp})</h3>
+  </div>
   
-  <h4>👤 PERFIL:</h4>
-  <ul>
-    <li>Nome: ${data.name}</li>
-    <li>Email: ${data.email}</li>
-    <li>Empresa: ${data.company || 'N/A'}</li>
-    <li>Localização: ${data.location?.city || '?'}, ${data.location?.country || '?'}</li>
-  </ul>
+  <div style="background: white; padding: 20px; border-radius: 6px; margin-bottom: 15px;">
+    <h4 style="color: #333; border-bottom: 2px solid #c92337; padding-bottom: 8px;">👤 DADOS DO LEAD</h4>
+    <table style="width: 100%; border-collapse: collapse;">
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Nome:</strong></td>
+        <td style="padding: 8px; border-bottom: 1px solid #eee;">${data.name}</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Email:</strong></td>
+        <td style="padding: 8px; border-bottom: 1px solid #eee;"><a href="mailto:${data.email}" style="color: #c92337;">${data.email}</a></td>
+      </tr>
+      ${data.phone ? `<tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Telefone:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${data.phone}</td></tr>` : ''}
+      ${data.company ? `<tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Empresa:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${data.company}</td></tr>` : ''}
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Idioma:</strong></td>
+        <td style="padding: 8px; border-bottom: 1px solid #eee;">${langDetected}</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Localização:</strong></td>
+        <td style="padding: 8px; border-bottom: 1px solid #eee;">${data.location?.city || '?'}, ${data.location?.country || '?'}</td>
+      </tr>
+    </table>
+  </div>
   
-  <h4>🧠 COMPORTAMENTO:</h4>
-  <ul>
-    <li>Tempo no site: ${data.timeOnSite ? Math.round(data.timeOnSite / 60) : '?'} minutos</li>
-    <li>Páginas: ${data.pagesVisited?.length || '?'}</li>
-    <li>Interesse: ${data.interest || data.project || 'Geral'}</li>
-  </ul>
+  <div style="background: white; padding: 20px; border-radius: 6px; margin-bottom: 15px;">
+    <h4 style="color: #333; border-bottom: 2px solid #c92337; padding-bottom: 8px;">📝 MENSAGEM ORIGINAL</h4>
+    <div style="background: #f9f9f9; padding: 15px; border-radius: 4px; font-style: italic; border-left: 3px solid #c92337;">
+      "${data.message || data.interest || data.project || 'Sem mensagem'}"
+    </div>
+    ${data.lang !== 'pt' ? `<p style="font-size: 12px; color: #666; margin-top: 10px;">💬 Escrito em: ${langDetected}</p>` : ''}
+  </div>
   
-  <h4>💡 RECOMENDAÇÃO:</h4>
-  <p>
-    ${score >= 70 
-      ? '⚡ RESPONDER URGENTE (alta probabilidade de conversão)'
-      : score >= 40
-      ? '📞 Responder em 24h (potencial médio)'
-      : '📧 Responder em 48h (baixa urgência)'}
+  <div style="background: white; padding: 20px; border-radius: 6px; margin-bottom: 15px;">
+    <h4 style="color: #333; border-bottom: 2px solid #c92337; padding-bottom: 8px;">🧠 COMPORTAMENTO NO SITE</h4>
+    <ul style="list-style: none; padding: 0;">
+      <li style="padding: 5px 0;">⏱️ <strong>Tempo no site:</strong> ${data.timeOnSite ? Math.round(data.timeOnSite / 60) : '?'} minutos</li>
+      <li style="padding: 5px 0;">📄 <strong>Páginas visitadas:</strong> ${data.pagesVisited?.length || '?'}</li>
+      <li style="padding: 5px 0;">🎯 <strong>Interesse principal:</strong> ${data.interest || data.project || 'Geral'}</li>
+      ${data.budget ? `<li style="padding: 5px 0;">💰 <strong>Orçamento:</strong> ${data.budget}</li>` : ''}
+      ${data.timeline ? `<li style="padding: 5px 0;">📅 <strong>Prazo:</strong> ${data.timeline}</li>` : ''}
+    </ul>
+  </div>
+  
+  <div style="background: #fff3cd; padding: 20px; border-radius: 6px; border-left: 4px solid #ffc107;">
+    <h4 style="color: #856404; margin-top: 0;">💡 RECOMENDAÇÃO</h4>
+    <p style="color: #856404; font-weight: bold; font-size: 16px;">
+      ${score >= 70 
+        ? '⚡ RESPONDER URGENTE! Alta probabilidade de conversão. Ligar/WhatsApp se possível.'
+        : score >= 40
+        ? '📞 Responder em até 24 horas. Potencial médio, vale seguir.'
+        : '📧 Responder em 48h. Baixa urgência, mas manter contato.'}
+    </p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 25px;">
+    <a href="https://backoffice.azmt.com.br/admin/leads" style="background: #c92337; color: white; padding: 15px 40px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: bold; font-size: 16px;">
+      Ver Lead Completo no Backoffice →
+    </a>
+  </div>
+  
+  <p style="text-align: center; color: #999; font-size: 12px; margin-top: 20px;">
+    <strong>Formulário:</strong> ${data.formType} | <strong>Data:</strong> ${new Date().toLocaleString('pt-BR')}
   </p>
-  
-  <p><strong>Formulário:</strong> ${data.formType}</p>
-  <p><strong>Data:</strong> ${new Date().toLocaleString('pt-BR')}</p>
 </div>
 `
 }
