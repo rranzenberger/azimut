@@ -416,17 +416,17 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 },
                 {
                   label: lang === 'pt' ? 'O Que Nos Torna Únicos' : lang === 'es' ? 'Lo Que Nos Hace Únicos' : lang === 'fr' ? 'Ce Qui Nous Rend Uniques' : 'What Makes Us Unique',
-                  href: '/studio#unique',
+                  href: '/studio/diferenciais',
                   description: lang === 'pt' ? 'Nossa combinação especial' : lang === 'es' ? 'Nuestra combinación especial' : lang === 'fr' ? 'Notre combinaison spéciale' : 'Our special combination'
                 },
                 {
                   label: lang === 'pt' ? 'Conheça a Equipe' : lang === 'es' ? 'Conoce el Equipo' : lang === 'fr' ? 'Rencontrez l\'Équipe' : 'Meet the Team',
-                  href: '/studio#team',
+                  href: '/studio/equipe',
                   description: lang === 'pt' ? 'Quem somos' : lang === 'es' ? 'Quiénes somos' : lang === 'fr' ? 'Qui nous sommes' : 'Who we are'
                 },
                 {
                   label: lang === 'pt' ? 'Credenciais & Timeline' : lang === 'es' ? 'Credenciales & Timeline' : lang === 'fr' ? 'Références & Timeline' : 'Credentials & Timeline',
-                  href: '/studio#credentials',
+                  href: '/studio/credibilidade',
                   description: lang === 'pt' ? 'Nossa trajetória' : lang === 'es' ? 'Nuestro recorrido' : lang === 'fr' ? 'Notre parcours' : 'Our journey'
                 }
               ]}
