@@ -73,9 +73,8 @@ import AcademyNew from './pages/AcademyNew'
 import Contact from './pages/Contact'
 import WhatWeDo from './pages/WhatWeDo'
 import Work from './pages/Work'
-import ServiceDetail from './pages/ServiceDetail' // Added direct import
-import ServiceDetailTest from './pages/ServiceDetailTest' // DEBUG COMPONENT
-import ProjectDetail from './pages/ProjectDetail' // Added direct import
+import ServiceDetail from './pages/ServiceDetail'
+import ProjectDetail from './pages/ProjectDetail'
 
 // Páginas secundárias: Lazy loading otimizado
 const AcademyCourses = lazy(() => import('./pages/AcademyCourses'))
@@ -319,7 +318,7 @@ const App: React.FC = () => {
                 } />
                 <Route path="/:lang/what/:slug" element={
                   <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <ServiceDetailTest lang={routeLang} />}
+                    {(routeLang) => <ServiceDetail lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/work" element={
