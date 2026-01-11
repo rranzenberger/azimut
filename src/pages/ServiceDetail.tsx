@@ -81,7 +81,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
         path={`/what/${slug}`}
       />
 
-      <div className="relative min-h-screen pt-16 md:pt-20 pb-24 overflow-hidden">
+      <div className="relative min-h-screen pb-24">
         {/* Estrela de fundo */}
         <div
           className="absolute -right-28 -bottom-40 min-[768px]:-right-40 min-[768px]:-bottom-60 h-[520px] w-[520px] min-[768px]:h-[680px] min-[768px]:w-[680px] opacity-30 pointer-events-none"
@@ -96,7 +96,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
           />
         </div>
 
-        <div className="mx-auto max-w-5xl px-3 sm:px-4 md:px-6">
+        <div className="mx-auto max-w-5xl px-3 sm:px-4 md:px-6 pt-8">
           {/* Breadcrumbs */}
           <nav className="mb-4 flex items-center gap-2 text-sm font-sora">
             <LangLink 
