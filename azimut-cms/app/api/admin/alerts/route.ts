@@ -1,14 +1,73 @@
 // ════════════════════════════════════════════════════════════
 // API: ALERTAS INTELIGENTES
 // Detecta hot leads, anomalias e eventos importantes
+// + ENVIA EMAIL AUTOMÁTICO PARA HOT LEADS! 📧
 // ════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { prisma } from '@/lib/prisma'
 import { verifyAuthToken } from '@/lib/auth'
+import { hotLeadNotification, type HotLeadData } from '@/src/lib/email-templates'
+import { sendEmail } from '@/src/lib/email-service'
 
 export const runtime = 'nodejs'
+
+// Email do admin para notificações
+const ADMIN_EMAIL = process.env.ADMIN_NOTIFICATION_EMAIL || 'contato@azmt.com.br'
+
+// Cache para evitar envio duplicado de emails (mesma sessão em 60 minutos)
+const emailSentCache = new Map<string, number>()
+const EMAIL_CACHE_DURATION = 60 * 60 * 1000 // 60 minutos
+
+// Função para enviar email de hot lead
+async function sendHotLeadEmail(session: any, topInterest: string | null): Promise<boolean> {
+  const cacheKey = session.sessionId
+  const lastSent = emailSentCache.get(cacheKey)
+  
+  // Verificar cache
+  if (lastSent && Date.now() - lastSent < EMAIL_CACHE_DURATION) {
+    console.log(`⏭️ Email já enviado para sessão ${cacheKey.substring(0, 8)}`)
+    return false
+  }
+  
+  // Só enviar para leads com score >= 70
+  const score = session.conversionProbability ? session.conversionProbability * 100 : session.engagementScore || 0
+  if (score < 70) {
+    return false
+  }
+  
+  try {
+    const hotLeadData: HotLeadData = {
+      fingerprint: session.visitorFingerprint || session.sessionId,
+      country: session.country || undefined,
+      city: session.city || undefined,
+      deviceType: session.deviceType || undefined,
+      browser: session.browser || undefined,
+      pageViews: session.pageViews?.length || 0,
+      visitCount: session.visitCount || 1,
+      engagementScore: session.engagementScore || 0,
+      conversionProbability: Math.round(score),
+      topPages: session.pageViews?.map((pv: any) => pv.pageSlug || pv.pageUrl)?.slice(0, 5) || [],
+      interests: topInterest ? [topInterest] : [],
+      referrer: session.referrer || undefined,
+      timestamp: new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })
+    }
+    
+    const template = hotLeadNotification(hotLeadData)
+    const sent = await sendEmail(ADMIN_EMAIL, template)
+    
+    if (sent) {
+      emailSentCache.set(cacheKey, Date.now())
+      console.log(`📧 Email de Hot Lead enviado para ${ADMIN_EMAIL} (score: ${score}%)`)
+      return true
+    }
+  } catch (error) {
+    console.error('❌ Erro ao enviar email de hot lead:', error)
+  }
+  
+  return false
+}
 
 interface Alert {
   id: string
@@ -56,14 +115,22 @@ export async function GET(request: NextRequest) {
       take: 10,
     })
 
-    hotLeadSessions.forEach(session => {
+    // Processar hot leads e enviar emails
+    let emailsSent = 0
+    for (const session of hotLeadSessions) {
       const topInterest = session.interestScores?.[0]
+      const interestCategory = topInterest?.category || null
+      
+      // Tentar enviar email (só envia se score >= 70 e não foi enviado recentemente)
+      const emailSent = await sendHotLeadEmail(session, interestCategory)
+      if (emailSent) emailsSent++
+      
       alerts.push({
         id: `hot_lead_${session.sessionId}`,
         type: 'hot_lead',
         severity: 'high',
         title: '🔥 Hot Lead Detectado!',
-        message: `Visitante de ${session.country || 'país desconhecido'} com score ${session.engagementScore || 0}%. ${session.pageViews.length} páginas visitadas.${topInterest ? ` Interesse principal: ${topInterest.category}` : ''}`,
+        message: `Visitante de ${session.country || 'país desconhecido'} com score ${session.engagementScore || 0}%. ${session.pageViews.length} páginas visitadas.${interestCategory ? ` Interesse principal: ${interestCategory}` : ''}`,
         timestamp: session.createdAt.toISOString(),
         data: {
           sessionId: session.sessionId.substring(0, 8),
@@ -72,10 +139,15 @@ export async function GET(request: NextRequest) {
           pages: session.pageViews.length,
           score: session.engagementScore,
           fingerprint: session.visitorFingerprint?.substring(0, 8),
+          emailSent: emailSent,
         },
         read: false,
       })
-    })
+    }
+    
+    if (emailsSent > 0) {
+      console.log(`📧 Total de emails de Hot Lead enviados: ${emailsSent}`)
+    }
 
     // ════════════════════════════════════════════════════════════
     // 2. DETECTAR PICO DE TRÁFEGO (mais que média)

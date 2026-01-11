@@ -342,6 +342,180 @@ PS: Se já agendou ou não tem mais interesse, pode ignorar.
 })
 
 // ════════════════════════════════════════════════════════════
+// HOT LEAD NOTIFICATION - Para o ADMIN
+// ════════════════════════════════════════════════════════════
+
+export interface HotLeadData {
+  fingerprint: string
+  country?: string
+  city?: string
+  deviceType?: string
+  browser?: string
+  pageViews: number
+  visitCount: number
+  engagementScore: number
+  conversionProbability: number
+  topPages: string[]
+  interests: string[]
+  email?: string
+  name?: string
+  referrer?: string
+  timestamp: string
+}
+
+export const hotLeadNotification = (data: HotLeadData): EmailTemplate => {
+  const scoreEmoji = data.conversionProbability >= 80 ? '🔥🔥🔥' : data.conversionProbability >= 60 ? '🔥🔥' : '🔥'
+  const urgencyLevel = data.conversionProbability >= 80 ? 'URGENTE' : data.conversionProbability >= 60 ? 'ALTO' : 'MÉDIO'
+  const urgencyColor = data.conversionProbability >= 80 ? '#dc2626' : data.conversionProbability >= 60 ? '#ea580c' : '#ca8a04'
+  
+  return {
+    subject: `${scoreEmoji} HOT LEAD DETECTADO! Score: ${data.conversionProbability}% - ${data.country || 'Desconhecido'}`,
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #1f2937; background: #f3f4f6; margin: 0; padding: 20px; }
+          .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+          .header { background: linear-gradient(135deg, #dc2626, #991b1b); color: white; padding: 30px; text-align: center; }
+          .header h1 { margin: 0; font-size: 28px; }
+          .header p { margin: 10px 0 0; opacity: 0.9; }
+          .urgency-badge { display: inline-block; background: ${urgencyColor}; color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 14px; margin-top: 15px; }
+          .content { padding: 30px; }
+          .score-box { background: linear-gradient(135deg, #fef2f2, #fee2e2); border: 2px solid #fca5a5; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 25px; }
+          .score-number { font-size: 48px; font-weight: bold; color: #dc2626; }
+          .score-label { color: #991b1b; font-size: 14px; }
+          .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+          .info-item { background: #f9fafb; padding: 15px; border-radius: 8px; }
+          .info-label { color: #6b7280; font-size: 12px; text-transform: uppercase; margin-bottom: 5px; }
+          .info-value { color: #1f2937; font-weight: 600; font-size: 16px; }
+          .section { margin-bottom: 25px; }
+          .section-title { color: #374151; font-size: 16px; font-weight: 600; margin-bottom: 10px; border-bottom: 2px solid #e5e7eb; padding-bottom: 5px; }
+          .tag { display: inline-block; background: #e0e7ff; color: #3730a3; padding: 4px 12px; border-radius: 15px; font-size: 13px; margin: 3px; }
+          .page-item { background: #f0fdf4; color: #166534; padding: 8px 12px; border-radius: 6px; margin: 5px 0; font-size: 14px; }
+          .cta { display: block; background: #c92337; color: white; text-decoration: none; padding: 15px 30px; border-radius: 8px; text-align: center; font-weight: bold; font-size: 16px; margin-top: 20px; }
+          .cta:hover { background: #a91d2e; }
+          .footer { background: #f9fafb; padding: 20px; text-align: center; color: #6b7280; font-size: 12px; }
+          .timestamp { color: #9ca3af; font-size: 12px; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>${scoreEmoji} HOT LEAD DETECTADO!</h1>
+            <p>Um visitante com alta probabilidade de conversão está no site</p>
+            <div class="urgency-badge">⚡ PRIORIDADE: ${urgencyLevel}</div>
+          </div>
+          
+          <div class="content">
+            <div class="score-box">
+              <div class="score-number">${data.conversionProbability}%</div>
+              <div class="score-label">Probabilidade de Conversão</div>
+            </div>
+            
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-label">📍 Localização</div>
+                <div class="info-value">${data.city ? `${data.city}, ` : ''}${data.country || 'Não identificado'}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">📱 Dispositivo</div>
+                <div class="info-value">${data.deviceType || 'Desktop'} / ${data.browser || 'Chrome'}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">👁️ Páginas Vistas</div>
+                <div class="info-value">${data.pageViews} páginas</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">🔄 Visitas</div>
+                <div class="info-value">${data.visitCount}x no site</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">⭐ Engajamento</div>
+                <div class="info-value">${data.engagementScore}/100</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">🔗 Origem</div>
+                <div class="info-value">${data.referrer || 'Direto'}</div>
+              </div>
+            </div>
+            
+            ${data.interests && data.interests.length > 0 ? `
+            <div class="section">
+              <div class="section-title">🎯 Interesses Detectados</div>
+              ${data.interests.map(i => `<span class="tag">${i}</span>`).join('')}
+            </div>
+            ` : ''}
+            
+            ${data.topPages && data.topPages.length > 0 ? `
+            <div class="section">
+              <div class="section-title">📄 Páginas Mais Visitadas</div>
+              ${data.topPages.slice(0, 5).map(p => `<div class="page-item">→ ${p}</div>`).join('')}
+            </div>
+            ` : ''}
+            
+            ${data.email || data.name ? `
+            <div class="section">
+              <div class="section-title">👤 Dados do Lead</div>
+              ${data.name ? `<p><strong>Nome:</strong> ${data.name}</p>` : ''}
+              ${data.email ? `<p><strong>Email:</strong> ${data.email}</p>` : ''}
+            </div>
+            ` : ''}
+            
+            <a href="https://azimut-cms.vercel.app/admin/analytics" class="cta">
+              📊 Ver no Dashboard
+            </a>
+            
+            <p class="timestamp" style="margin-top: 20px; text-align: center;">
+              Detectado em: ${data.timestamp}
+            </p>
+          </div>
+          
+          <div class="footer">
+            <p>Azimut Analytics - Sistema de Inteligência de Leads</p>
+            <p>Este é um email automático. Para configurar notificações, acesse o backoffice.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `,
+    text: `
+🔥 HOT LEAD DETECTADO!
+
+Score: ${data.conversionProbability}% de probabilidade de conversão
+Prioridade: ${urgencyLevel}
+
+LOCALIZAÇÃO
+- País: ${data.country || 'Não identificado'}
+- Cidade: ${data.city || 'Não identificada'}
+
+COMPORTAMENTO
+- Páginas vistas: ${data.pageViews}
+- Visitas ao site: ${data.visitCount}x
+- Score de engajamento: ${data.engagementScore}/100
+- Dispositivo: ${data.deviceType || 'Desktop'}
+- Browser: ${data.browser || 'Chrome'}
+- Origem: ${data.referrer || 'Direto'}
+
+${data.interests && data.interests.length > 0 ? `INTERESSES: ${data.interests.join(', ')}` : ''}
+
+${data.topPages && data.topPages.length > 0 ? `PÁGINAS MAIS VISITADAS:\n${data.topPages.slice(0, 5).map(p => `- ${p}`).join('\n')}` : ''}
+
+${data.name ? `Nome: ${data.name}` : ''}
+${data.email ? `Email: ${data.email}` : ''}
+
+Ver no Dashboard: https://azimut-cms.vercel.app/admin/analytics
+
+Detectado em: ${data.timestamp}
+
+---
+Azimut Analytics - Sistema de Inteligência de Leads
+    `
+  }
+}
+
+// ════════════════════════════════════════════════════════════
 // HELPERS
 // ════════════════════════════════════════════════════════════
 
