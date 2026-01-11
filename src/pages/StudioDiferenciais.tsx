@@ -118,7 +118,93 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
         }
       ]
     },
-    en: { title: 'What Makes Us Unique', subtitle: '', heritage: { title: '', body: '', stats: [] }, unique: { title: '', items: [] }, vision: { title: '', body: '' }, mission: { title: '', body: '' }, values: { title: '', items: [] }, pillars: [] }
+    en: {
+      title: 'What Makes Us Unique',
+      subtitle: 'Our special combination',
+      heritage: {
+        title: 'Since 1996 | Brazil-Canada',
+        body: 'We blend art, technology and education in pioneering projects. From South America\'s first Autodesk training center to Rio Olympic Museum\'s technical direction, we create immersive experiences between Brazil and Canada.',
+        stats: [
+          { label: 'Since', value: '1996' },
+          { label: 'Autodesk', value: '1996-2018' },
+          { label: 'Rio Museum', value: 'Current' },
+          { label: 'Gramado', value: '2017' },
+          { label: 'Binational', value: 'BR-CA' }
+        ]
+      },
+      unique: {
+        title: 'What makes us unique',
+        items: [
+          'Academic research + Commercial production (rarely found together)',
+          'Education (we trained hundreds) + Festival curation (Gramado VR since 2017)',
+          'Architecture/BIM + Cinema/VFX + VR/XR/AI (broad technical expertise)',
+          'Team with 30 years of international experience (since 1996)',
+          'Binational operation Brazil-Canada (connecting creative ecosystems)',
+          'We\'re not just a studio. We\'re an ecosystem that integrates knowledge, creation and transformation.'
+        ]
+      },
+      vision: {
+        title: 'Vision',
+        body: 'To be a global reference in immersive, interactive and cinematic experiences that unite art, technology and narrative, transforming cultural spaces, brands and cities into environments of connection and discovery.'
+      },
+      mission: {
+        title: 'Mission',
+        body: 'Create cutting-edge immersive experiences end-to-end that connect people, stories and spaces through creative technology, cinematic design and engaging narratives, always in collaboration with institutions, brands and communities.\n\nWe transform concepts into memorable journeys that resonate emotionally and culturally — operating at the intersection of art, technology and human connection, bridging creative ecosystems between Brazil and Canada.'
+      },
+      values: {
+        title: 'Values',
+        items: [
+          {
+            title: 'Continuous Innovation',
+            description: 'We explore technological and artistic frontiers, always seeking new ways to tell stories and create connections.'
+          },
+          {
+            title: 'Technical Excellence',
+            description: '30 years of expertise in CG, VFX, VR/XR and AI applied to audiovisual, with international certifications and professional training.'
+          },
+          {
+            title: 'Collaboration',
+            description: 'We believe in co-creation with artists, institutions, brands and communities, building projects in network.'
+          },
+          {
+            title: 'Cultural Impact',
+            description: 'We generate real transformation through culture, education and inclusion, connecting creative ecosystems between Brazil and Canada.'
+          }
+        ]
+      },
+      pillars: [
+        {
+          icon: '🎨',
+          title: 'Immersive Art & Aesthetics',
+          body: 'We create visual and sound experiences that capture and transport audiences, blending contemporary art, interactive design and sensory environments.'
+        },
+        {
+          icon: '🧠',
+          title: 'Creative Technology',
+          body: 'We explore technology frontiers to tell stories interactively — using XR, AI, projections, sensors, reactive installations and more.'
+        },
+        {
+          icon: '🎥',
+          title: 'Cinematic Narrative',
+          body: 'Our differentiator is sophisticated storytelling with cinematic language, original scripts, rhythm, emotion and engaging art direction.'
+        },
+        {
+          icon: '🌍',
+          title: 'Cultural & Social Impact',
+          body: 'We generate real transformation through culture, collaborating with communities, museums, creative territories and education and inclusion initiatives.'
+        },
+        {
+          icon: '🌐',
+          title: 'Binational Operation (Brazil–Canada)',
+          body: 'We connect creative ecosystems between South and North America — in projects, grants, festivals and institutional partnerships.'
+        },
+        {
+          icon: '🤝',
+          title: 'Co-creation Model',
+          body: 'We develop projects in network, with artists, brands, studios and public/private institutions, using agile and collaborative methodologies.'
+        }
+      ]
+    }
   }
 
   const text = content[lang] || content.pt

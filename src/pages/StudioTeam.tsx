@@ -121,7 +121,99 @@ Como educador, formou centenas de profissionais em audiovisual, trazendo esta ex
         }
       ]
     },
-    en: { title: 'Meet the Team', subtitle: '', team: [] }
+    en: {
+      title: 'Meet the Team',
+      subtitle: 'The directors and specialists behind Azimut\'s immersive experiences',
+      team: [
+        {
+          name: 'Ranz Enberger',
+          role: 'CREATIVE & TECHNOLOGY DIRECTOR',
+          subtitle: 'Filmmaker · Researcher · Curator',
+          bio: 'Leads creative direction, technology, immersive storytelling, VR/XR, curatorship and AI-driven pipelines. General Director at Rio Olympic Museum. Master\'s in Creative Media (UFRJ), Systems Analysis post-grad. Started AI research for animation in 1997. Canadian citizen with global reach.',
+          expandedBio: `With 30+ years of experience in audiovisual production, CG and immersive technologies, Ranz is a pioneer in integrating cinematic narrative with emerging technologies.
+
+His unique trajectory combines:
+• High-level Cinematographic Production
+• Technology Direction in institutional projects
+• Specialized VR/XR curatorship
+• Academic research in AI for narrative
+• Post-graduate education
+
+At Rio Olympic Museum, he was responsible for all technology direction, including integration of 50+ interactive screens, games, VR rooms, mapped projections and complex interactive systems.
+
+As VR curator at Gramado Festival (since 2017), he selects and presents the best virtual reality films from around the world, helping to build Brazilian audiences for this new language.`,
+          credentials: [
+            { icon: '🏛️', text: 'Technology Director, Rio Olympic Museum (2015-2017)' },
+            { icon: '🎬', text: 'VR Curator, Gramado Festival (2017-present)' },
+            { icon: '🔧', text: 'Ex-Application Engineer & Training Specialist Autodesk' },
+            { icon: '🎨', text: 'Autodesk Discreet Demo Artist (1996-2008)' },
+            { icon: '🍁', text: 'Only Autodesk Canada contract in South America' },
+            { icon: '🔥', text: 'Only certified Flame Trainer in Brazil' },
+            { icon: '🎓', text: 'Post-graduate professor in Creative Media' },
+            { icon: '🤖', text: '30+ years in CG, VR/XR and AI for audiovisual' }
+          ],
+          linkedin: 'https://ca.linkedin.com/in/ranzenberger',
+          photo: '/team/ranz.jpg',
+          specialties: ['VR/XR', 'Generative AI', 'Technical Direction', 'Curatorship', 'Cinema', 'VFX', 'Flame', 'Education']
+        },
+        {
+          name: 'Anick Couto',
+          role: 'ART DIRECTOR',
+          subtitle: 'Visual & Experience Designer',
+          bio: 'Responsible for visual direction, character and environment design, scenography, concept art and animation aesthetics. Led the entire art team at Rio Olympic Museum – UI, graphics, wall texts, signage, and complete design.',
+          expandedBio: `Anick brings artistic sensitivity and technical rigor to every Azimut project.
+
+Her expertise includes:
+• Complete Art Direction (from concept to execution)
+• 2D/3D Character and Environment Design
+• Digital Scenography for installations
+• Concept Art for immersive narratives
+• UI/UX for interactive experiences
+
+At the Olympic Museum, she coordinated a multidisciplinary team of designers, illustrators and animators, creating a cohesive visual language for 50+ interaction points.
+
+She is also co-creator of the Casa dos Duendes visual universe, a series of immersive installations for children.`,
+          credentials: [
+            { icon: '🎨', text: 'Art Director, Rio Olympic Museum' },
+            { icon: '✏️', text: 'Visual Designer + Digital Scenography' },
+            { icon: '👥', text: 'Concept Art + Character Design' },
+            { icon: '🖼️', text: 'Led complete team (UI, graphics, signage)' },
+            { icon: '🏰', text: 'Casa dos Duendes universe (co-creation)' }
+          ],
+          linkedin: 'https://br.linkedin.com/in/anickcouto',
+          photo: '/team/anick.jpg',
+          specialties: ['Art Direction', 'Character Design', 'Concept Art', 'UI/UX', 'Digital Scenography', '2D/3D', 'Illustration']
+        },
+        {
+          name: 'Alberto Moura',
+          role: 'AUDIOVISUAL & OPERATIONS DIRECTOR',
+          subtitle: 'Educator · Cultural Strategist',
+          bio: 'Leads audiovisual production, operations, project coordination, academic partnerships and cultural strategy. Audiovisual Director at Rio Olympic Museum. Bridges institutions, education and public experience.',
+          expandedBio: `Alberto combines audiovisual production experience with deep knowledge in education and cultural strategy.
+
+His areas of practice:
+• Complete Audiovisual Production
+• Complex Project Coordination
+• Academic and Institutional Partnerships
+• Cultural Strategy for brands and museums
+• Audiovisual Education (undergraduate and graduate)
+
+At the Olympic Museum, he was responsible for all audiovisual production, including capture, editing, motion graphics and integration with physical scenography.
+
+As an educator, he trained hundreds of professionals in audiovisual, bringing this pedagogical experience to Azimut Academy projects.`,
+          credentials: [
+            { icon: '🎬', text: 'Audiovisual Director, Rio Olympic Museum' },
+            { icon: '🎓', text: 'University Professor (undergraduate + graduate)' },
+            { icon: '📚', text: 'Ex-Audiovisual Course Coordinator' },
+            { icon: '🏢', text: 'Digital Signage company founder' },
+            { icon: '🤝', text: 'Cultural Strategy + Academic Partnerships' }
+          ],
+          linkedin: 'https://br.linkedin.com/in/albertomoura3d',
+          photo: '/team/alberto.jpg',
+          specialties: ['AV Production', 'Coordination', 'Cultural Strategy', 'Education', 'Digital Signage', 'Partnerships']
+        }
+      ]
+    }
   }
 
   const text = content[lang] || content.pt

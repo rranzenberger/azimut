@@ -85,7 +85,60 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
         { icon: '🤖', title: 'IA Pioneer', desc: 'Pesquisa em IA para animação', year: '1997' }
       ]
     },
-    en: { title: 'Credentials & Timeline', subtitle: '', timeline: [], credentials: [] }
+    en: {
+      title: 'Credentials & Timeline',
+      subtitle: 'Our 30-year journey',
+      timeline: [
+        {
+          period: '1996-2004',
+          title: 'Architecad + Foundations',
+          icon: '🏗️',
+          items: [
+            'Pioneers in Virtual Mockup in Brazil',
+            'Autodesk Training Center',
+            'Only Application Engineer in South America',
+            'Autodesk Discreet Demo Artist (1996-2008)',
+            'Azimut Computing and Cinematographic Productions (1998-2004)'
+          ]
+        },
+        {
+          period: '2004-2018',
+          title: 'Azimut School',
+          icon: '🎓',
+          items: [
+            'Professional courses: Animation, VFX, Virtual Mockup',
+            'Only certified Flame Trainer in Brazil',
+            'We trained hundreds of professionals',
+            'Autodesk Training Center (only one in South America)',
+            '1-2 year courses + short-term courses',
+            'CAD, 3ds Max, Photoshop, After Effects, Flame'
+          ]
+        },
+        {
+          period: '2018-2025',
+          title: 'Azimut Audiovisual Projects',
+          icon: '🎬',
+          items: [
+            'Technical Direction Rio Olympic Museum',
+            'VR Curation Gramado Festival (since 2017)',
+            'Immersive installations + AI',
+            'Projects with YDreams and institutions',
+            'Binational operation Brazil-Canada',
+            'Focus on culture, museums, festivals and brands'
+          ]
+        }
+      ],
+      credentials: [
+        { icon: '🏆', title: 'XRBR', desc: 'Founding members of Extended Reality Brazil Association', year: '2018' },
+        { icon: '🎓', title: 'Master UFRJ', desc: 'Creative Media & Technology in Education', year: '2010' },
+        { icon: '🎬', title: 'Gramado Festival', desc: 'Official VR Curation (8 consecutive years)', year: '2017' },
+        { icon: '🏛️', title: 'Olympic Museum', desc: 'General Technology Direction', year: '2015-2017' },
+        { icon: '🔥', title: 'Autodesk Flame', desc: 'Only certified Flame Trainer in Brazil', year: '2000-2015' },
+        { icon: '🍁', title: 'Autodesk Canada', desc: 'Only contract in South America', year: '1996-2008' },
+        { icon: '🌍', title: 'International', desc: 'Rio, SP, Belém, Florianópolis, Vancouver', year: '2020' },
+        { icon: '🤖', title: 'AI Pioneer', desc: 'AI research for animation', year: '1997' }
+      ]
+    }
   }
 
   const text = content[lang] || content.pt
