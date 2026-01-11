@@ -10,6 +10,11 @@ const VisitorTypesChart = dynamic(() => import('./components/VisitorTypesChart')
 const CountryChart = dynamic(() => import('./components/CountryChart'), { ssr: false });
 const TimelineChart = dynamic(() => import('./components/TimelineChart'), { ssr: false });
 
+// Novos componentes Premium
+const RealTimeCounter = dynamic(() => import('./components/RealTimeCounter'), { ssr: false });
+const ConversionFunnel = dynamic(() => import('./components/ConversionFunnel'), { ssr: false });
+const WorldMap = dynamic(() => import('./components/WorldMap'), { ssr: false });
+
 interface AnalyticsData {
   overview: {
     totalSessions: number;
@@ -305,6 +310,15 @@ export default function AnalyticsPage() {
           {cleaningUp ? '⏳ Apagando...' : '🗑️ Apagar Dados de Teste'}
         </button>
       </header>
+
+      {/* ⚡ TEMPO REAL - Visitantes Online Agora */}
+      <RealTimeCounter />
+
+      {/* 🎯 Funil de Conversão */}
+      <ConversionFunnel />
+
+      {/* 🌍 Mapa de Visitantes */}
+      <WorldMap data={data.visitorsByCountry} />
 
       {/* Linha 1: 3 Cards Grandes */}
       <div style={gridStyle3}>
