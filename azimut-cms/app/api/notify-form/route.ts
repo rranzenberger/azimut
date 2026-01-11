@@ -129,23 +129,20 @@ export async function POST(request: NextRequest) {
     
     // 1. EMAIL PARA NÓS (resumo)
     const internalBody = await generateInternalSummary(body)
-    await sendEmail({
-      to: toEmail,
+    await sendEmail(toEmail, {
       subject: subject,
       html: internalBody,
-      from: 'system@azmt.com.br'
+      text: internalBody.replace(/<[^>]*>/g, '')
     })
 
     // 2. EMAIL PARA O LEAD (personalizado IA)
     if (body.email && body.email.includes('@')) {
       try {
         const personalizedEmail = await generatePersonalizedEmail(body)
-        await sendEmail({
-          to: body.email,
+        await sendEmail(body.email, {
           subject: `Re: Seu interesse em ${body.interest || 'projetos imersivos'} - Azimut`,
           html: personalizedEmail.replace(/\n/g, '<br/>'),
-          from: 'ranz@azimutimmersive.com',
-          replyTo: toEmail
+          text: personalizedEmail
         })
       } catch (leadEmailError) {
         console.warn('Lead email failed (non-critical):', leadEmailError)
