@@ -71,6 +71,7 @@ const Home = lazy(() => import('./pages/Home'))
 import Studio from './pages/Studio'
 import StudioTeam from './pages/StudioTeam'
 import StudioCredentials from './pages/StudioCredentials'
+import StudioDiferenciais from './pages/StudioDiferenciais'
 import AcademyNew from './pages/AcademyNew'
 import Contact from './pages/Contact'
 import WhatWeDo from './pages/WhatWeDo'
@@ -348,6 +349,11 @@ const App: React.FC = () => {
                     {(routeLang) => <StudioCredentials lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
+                <Route path="/:lang/studio/diferenciais" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <StudioDiferenciais lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
                 <Route path="/:lang/academy" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <AcademyNew lang={routeLang} />}
@@ -495,6 +501,11 @@ const App: React.FC = () => {
                 <Route path="/:lang/studio/credibilidade" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <StudioCredentials lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/studio/diferenciais" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <StudioDiferenciais lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/academy" element={
