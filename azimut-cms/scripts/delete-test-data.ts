@@ -74,7 +74,7 @@ async function deleteTestData() {
 
     // 5. Apagar VisitorSession
     const deletedSessions = await prisma.visitorSession.deleteMany({
-      where: { id: { in: sessionIds } },
+      where: { sessionId: { in: sessionIds } },
     })
     console.log(`   ✅ ${deletedSessions.count} VisitorSession(s) apagado(s)`)
 
