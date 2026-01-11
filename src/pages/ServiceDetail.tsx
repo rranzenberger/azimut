@@ -1,11 +1,9 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { useParams, Navigate } from 'react-router-dom'
 import { type Lang } from '../i18n'
-import SEO from '../components/SEO'
-import { useUserTracking } from '../hooks/useUserTracking'
-import { trackPageView } from '../utils/analytics'
 import { getServiceBySlug, getServiceTitle, getServiceLongDesc, getServiceDeliverables, getServiceProcess } from '../data/servicesData'
 import LangLink from '../components/LangLink'
+import SEO from '../components/SEO'
 
 interface ServiceDetailProps {
   lang: Lang
@@ -13,78 +11,22 @@ interface ServiceDetailProps {
 
 const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
   const { slug } = useParams<{ slug: string }>()
-  const { trackInteraction } = useUserTracking()
-  const starRef = useRef<HTMLDivElement>(null)
 
-  // Tracking
-  useEffect(() => {
-    if (slug) {
-      try {
-        const cleanup = trackPageView(`what/${slug}`)
-        return cleanup
-      } catch (error) {
-        console.warn('Tracking error:', error)
-        return () => {}
-      }
-    }
-  }, [slug])
-
-  // Parallax na estrela
-  useEffect(() => {
-    const star = starRef.current
-    if (!star) return
-
-    let ticking = false
-
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrolled = window.pageYOffset || document.documentElement.scrollTop
-          const parallax = scrolled * 0.3
-          
-          if (star) {
-            star.style.transform = `translateY(${parallax}px)`
-          }
-          
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  // Validar slug
   if (!slug) {
     return <Navigate to={`/${lang}/what`} replace />
   }
 
   const service = getServiceBySlug(slug)
 
-  // Service não encontrado
   if (!service) {
     return (
-      <main className="relative py-16 md:py-20">
-        <div className="mx-auto max-w-6xl px-6 text-center">
-          <h1 className="mb-4 font-handel text-4xl uppercase tracking-[0.16em] text-theme-text">
-            {lang === 'pt' ? 'Serviço não encontrado' : lang === 'es' ? 'Servicio no encontrado' : lang === 'fr' ? 'Service non trouvé' : 'Service not found'}
+      <main className="min-h-screen py-20 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl font-bold mb-4 text-white">
+            {lang === 'pt' ? 'Serviço não encontrado' : 'Service not found'}
           </h1>
-          <p className="mb-8 text-theme-text-secondary">
-            {lang === 'pt' 
-              ? 'O serviço que você está procurando não existe ou foi removido.'
-              : lang === 'es'
-              ? 'El servicio que buscas no existe o ha sido eliminado.'
-              : lang === 'fr'
-              ? 'Le service que vous recherchez n\'existe pas ou a été supprimé.'
-              : 'The service you are looking for does not exist or has been removed.'}
-          </p>
-          <LangLink
-            to="/what"
-            className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-sm font-semibold uppercase tracking-[0.1em] text-theme-text hover:bg-azimut-red/20 transition-all"
-          >
-            {lang === 'pt' ? 'Voltar para Soluções' : lang === 'es' ? 'Volver a Soluciones' : lang === 'fr' ? 'Retour aux solutions' : 'Back to Solutions'}
+          <LangLink to="/what" className="text-azimut-red hover:underline">
+            {lang === 'pt' ? '← Voltar para Soluções' : '← Back to Solutions'}
           </LangLink>
         </div>
       </main>
@@ -138,160 +80,174 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
   const t = translations[lang]
 
   return (
-    <>
+    <main className="min-h-screen py-20 px-6">
       <SEO
         title={`${title} - Azimut`}
         description={longDesc[0]}
         lang={lang}
         path={`/what/${slug}`}
       />
-      
-      <main className="relative py-16 md:py-20">
-        {/* Star background - Parallax */}
+
+      {/* Container principal */}
+      <div className="max-w-5xl mx-auto space-y-16">
+        
+        {/* ========== BREADCRUMBS ========== */}
+        <nav className="flex items-center gap-2 text-sm text-gray-400">
+          <LangLink to="/" className="hover:text-azimut-red transition-colors">
+            Home
+          </LangLink>
+          <span>›</span>
+          <LangLink to="/what" className="hover:text-azimut-red transition-colors">
+            {lang === 'pt' ? 'Soluções' : lang === 'fr' ? 'Solutions' : lang === 'es' ? 'Soluciones' : 'Solutions'}
+          </LangLink>
+          <span>›</span>
+          <span className="text-azimut-red font-medium">{title}</span>
+        </nav>
+
+        {/* ========== HERO - SUPER VISÍVEL ========== */}
         <div 
-          ref={starRef}
-          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-32 md:-right-40 md:h-[680px] md:w-[680px] transition-transform duration-75 ease-out" 
-          style={{ 
-            opacity: 0.3,
-            zIndex: -5,
-            willChange: 'transform'
-          }}
+          className="bg-gradient-to-r from-azimut-red/20 to-transparent p-8 rounded-lg border-l-4 border-azimut-red"
+          style={{ minHeight: '200px' }}
         >
-          <img
-            src="/logo-azimut-star.svg"
-            alt=""
-            className="h-full w-full object-contain"
-            loading="lazy"
-            decoding="async"
-          />
+          <div className="flex items-center gap-6">
+            <span className="text-7xl">{service.icon}</span>
+            <div>
+              <h1 className="text-5xl font-bold text-white mb-2 uppercase">
+                {title}
+              </h1>
+              <p className="text-azimut-red text-sm uppercase tracking-wider">
+                Detalhes do Serviço
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="mx-auto max-w-6xl px-6">
-          {/* Breadcrumbs */}
-          <nav className="mb-8 flex items-center gap-2 text-sm font-sora text-theme-text-secondary">
-            <LangLink to="/" className="hover:text-azimut-red transition-colors">
-              Home
-            </LangLink>
-            <span className="opacity-50">›</span>
-            <LangLink to="/what" className="hover:text-azimut-red transition-colors">
-              {lang === 'pt' ? 'Soluções' : lang === 'fr' ? 'Solutions' : lang === 'es' ? 'Soluciones' : 'Solutions'}
-            </LangLink>
-            <span className="opacity-50">›</span>
-            <span className="font-medium text-azimut-red">{title}</span>
-          </nav>
+        {/* ========== DESCRIÇÃO - SUPER VISÍVEL ========== */}
+        <div 
+          className="bg-slate-800/50 p-8 rounded-lg space-y-6"
+          style={{ minHeight: '300px' }}
+        >
+          <h2 className="text-2xl font-bold text-white mb-6 border-b-2 border-azimut-red pb-2 inline-block">
+            📄 Sobre este serviço
+          </h2>
+          {longDesc.map((paragraph, index) => (
+            <p key={index} className="text-lg text-gray-300 leading-relaxed">
+              {paragraph}
+            </p>
+          ))}
+        </div>
 
-          {/* Hero */}
-          <div className="mb-12 flex items-center gap-6">
-            <span className="text-6xl md:text-7xl">{service.icon}</span>
-            <h1 className="font-handel text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight text-theme-text">
-              {title}
-            </h1>
-          </div>
-
-          {/* Descrição expandida */}
-          <div className="mb-20 space-y-6">
-            {longDesc.map((paragraph, index) => (
-              <p key={index} className="text-lg leading-relaxed text-theme-text-secondary">
-                {paragraph}
-              </p>
+        {/* ========== O QUE ENTREGAMOS - SUPER VISÍVEL ========== */}
+        <div 
+          className="bg-slate-800/50 p-8 rounded-lg"
+          style={{ minHeight: '400px' }}
+        >
+          <h2 className="text-3xl font-bold text-white mb-8 border-b-2 border-azimut-red pb-2 inline-block">
+            ✓ {t.whatWeDeliver}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {deliverables.map((item, index) => (
+              <div 
+                key={index} 
+                className="flex items-start gap-3 bg-slate-900/50 p-4 rounded-lg hover:bg-slate-900/80 transition-colors"
+              >
+                <span className="text-azimut-red text-2xl font-bold">✓</span>
+                <span className="text-gray-300 text-lg">{item}</span>
+              </div>
             ))}
           </div>
+        </div>
 
-          {/* O que entregamos */}
-          <section className="mb-20">
-            <h2 className="mb-8 font-handel text-3xl font-bold uppercase text-theme-text">
-              {t.whatWeDeliver}
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {deliverables.map((item, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <span className="text-azimut-red mt-1 font-bold text-xl">✓</span>
-                  <span className="text-theme-text-secondary">{item}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Nosso processo */}
-          <section className="mb-20">
-            <h2 className="mb-8 font-handel text-3xl font-bold uppercase text-theme-text">
-              {t.ourProcess}
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {process.map((step, index) => (
-                <div 
-                  key={index} 
-                  className="card-dark-adaptive p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow"
-                >
-                  <div className="text-azimut-red text-3xl font-bold mb-4 font-handel">
-                    {String(index + 1).padStart(2, '0')}
-                  </div>
-                  <div className="text-theme-card-text leading-relaxed">
-                    {step}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Tecnologias */}
-          {service.technologies && service.technologies.length > 0 && (
-            <section className="mb-20">
-              <h2 className="mb-8 font-handel text-3xl font-bold uppercase text-theme-text">
-                {t.technologies}
-              </h2>
-              <div className="flex flex-wrap gap-3">
-                {service.technologies.map((tech, index) => (
-                  <span
-                    key={index}
-                    className="px-5 py-2.5 rounded-full text-sm font-semibold bg-azimut-red/10 text-theme-text border border-azimut-red/30 hover:bg-azimut-red/20 transition-colors"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Projetos relacionados */}
-          <section className="mb-20">
-            <h2 className="mb-8 font-handel text-3xl font-bold uppercase text-theme-text">
-              {t.relatedProjects}
-            </h2>
-            <div className="card-dark-adaptive p-12 rounded-lg text-center shadow-lg">
-              <p className="mb-6 text-lg text-theme-card-text">
-                {lang === 'pt' && 'Projetos filtrados por categoria serão exibidos aqui em breve.'}
-                {lang === 'en' && 'Filtered projects by category will be displayed here soon.'}
-                {lang === 'fr' && 'Les projets filtrés par catégorie seront affichés ici prochainement.'}
-                {lang === 'es' && 'Los proyectos filtrados por categoría se mostrarán aquí pronto.'}
-              </p>
-              <LangLink
-                to="/work"
-                className="inline-flex items-center gap-2 rounded-lg bg-azimut-red px-8 py-3 font-sora text-sm font-semibold uppercase tracking-[0.1em] text-white hover:bg-azimut-red/90 transition-all"
+        {/* ========== NOSSO PROCESSO - SUPER VISÍVEL ========== */}
+        <div 
+          className="bg-slate-800/50 p-8 rounded-lg"
+          style={{ minHeight: '500px' }}
+        >
+          <h2 className="text-3xl font-bold text-white mb-8 border-b-2 border-azimut-red pb-2 inline-block">
+            🔄 {t.ourProcess}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {process.map((step, index) => (
+              <div 
+                key={index}
+                className="bg-gradient-to-br from-azimut-red/20 to-slate-900 p-6 rounded-lg border border-azimut-red/30 hover:border-azimut-red transition-colors"
               >
-                {t.viewAllProjects}
-              </LangLink>
-            </div>
-          </section>
-
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-            <LangLink
-              to="/contact"
-              className="inline-flex items-center gap-2 rounded-lg bg-azimut-red px-8 py-4 font-sora text-base font-semibold uppercase tracking-[0.1em] text-white hover:bg-azimut-red/90 transition-all shadow-lg hover:shadow-xl"
-            >
-              {t.startProject}
-            </LangLink>
-            <LangLink
-              to="/what"
-              className="inline-flex items-center gap-2 rounded-lg border-2 border-theme-text-secondary px-8 py-4 font-sora text-base font-semibold uppercase tracking-[0.1em] text-theme-text hover:border-azimut-red hover:text-azimut-red transition-all"
-            >
-              {t.backToServices}
-            </LangLink>
+                <div className="text-azimut-red text-4xl font-bold mb-4">
+                  {String(index + 1).padStart(2, '0')}
+                </div>
+                <div className="text-gray-300 leading-relaxed text-base">
+                  {step}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </main>
-    </>
+
+        {/* ========== TECNOLOGIAS - SUPER VISÍVEL ========== */}
+        {service.technologies && service.technologies.length > 0 && (
+          <div 
+            className="bg-slate-800/50 p-8 rounded-lg"
+            style={{ minHeight: '200px' }}
+          >
+            <h2 className="text-3xl font-bold text-white mb-8 border-b-2 border-azimut-red pb-2 inline-block">
+              🛠️ {t.technologies}
+            </h2>
+            <div className="flex flex-wrap gap-4">
+              {service.technologies.map((tech, index) => (
+                <span
+                  key={index}
+                  className="px-6 py-3 bg-azimut-red/20 text-white border-2 border-azimut-red rounded-full text-base font-semibold hover:bg-azimut-red hover:text-black transition-all"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ========== PROJETOS RELACIONADOS - SUPER VISÍVEL ========== */}
+        <div 
+          className="bg-slate-800/50 p-12 rounded-lg text-center"
+          style={{ minHeight: '300px' }}
+        >
+          <h2 className="text-3xl font-bold text-white mb-6">
+            🎬 {t.relatedProjects}
+          </h2>
+          <p className="text-xl text-gray-400 mb-8">
+            {lang === 'pt' && 'Projetos filtrados por categoria serão exibidos aqui em breve.'}
+            {lang === 'en' && 'Filtered projects by category will be displayed here soon.'}
+            {lang === 'fr' && 'Les projets filtrés par catégorie seront affichés ici prochainement.'}
+            {lang === 'es' && 'Los proyectos filtrados por categoría se mostrarán aquí pronto.'}
+          </p>
+          <LangLink
+            to="/work"
+            className="inline-block px-8 py-4 bg-azimut-red text-white text-lg font-bold rounded-lg hover:bg-azimut-red/90 transition-all shadow-lg"
+          >
+            {t.viewAllProjects}
+          </LangLink>
+        </div>
+
+        {/* ========== CTAs FINAIS - SUPER VISÍVEL ========== */}
+        <div 
+          className="flex flex-col sm:flex-row gap-6 items-center justify-center py-8"
+          style={{ minHeight: '150px' }}
+        >
+          <LangLink
+            to="/contact"
+            className="px-10 py-5 bg-azimut-red text-white text-xl font-bold rounded-lg hover:bg-azimut-red/90 transition-all shadow-xl hover:shadow-2xl transform hover:scale-105"
+          >
+            {t.startProject}
+          </LangLink>
+          <LangLink
+            to="/what"
+            className="px-10 py-5 border-2 border-white text-white text-xl font-bold rounded-lg hover:bg-white hover:text-black transition-all"
+          >
+            {t.backToServices}
+          </LangLink>
+        </div>
+
+      </div>
+    </main>
   )
 }
 
