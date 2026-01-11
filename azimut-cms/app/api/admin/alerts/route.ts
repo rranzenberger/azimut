@@ -118,8 +118,26 @@ export async function GET(request: NextRequest) {
     // Processar hot leads e enviar emails
     let emailsSent = 0
     for (const session of hotLeadSessions) {
-      const topInterest = session.interestScore
-      const interestCategory = topInterest?.category || null
+      const interestScore = session.interestScore
+      // Encontrar o maior score de interesse
+      let interestCategory: string | null = null
+      if (interestScore) {
+        const scores = {
+          museum: interestScore.museumScore,
+          brand: interestScore.brandScore,
+          festival: interestScore.festivalScore,
+          city: interestScore.cityScore,
+          education: interestScore.educationScore,
+          research: interestScore.researchScore,
+          vr: interestScore.vrScore,
+          ai: interestScore.aiScore,
+          installation: interestScore.installationScore,
+        }
+        const maxScore = Math.max(...Object.values(scores))
+        if (maxScore > 0) {
+          interestCategory = Object.entries(scores).find(([_, v]) => v === maxScore)?.[0] || null
+        }
+      }
       
       // Tentar enviar email (só envia se score >= 70 e não foi enviado recentemente)
       const emailSent = await sendHotLeadEmail(session, interestCategory)
