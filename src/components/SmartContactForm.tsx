@@ -267,7 +267,8 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
+    countryCode: '+55', // Código do país
+    phone: '', // Telefone sem código
     company: '',
     position: '',
     organizationType: '',
@@ -280,6 +281,33 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
     city: '',
     acceptContact: false
   })
+
+  // Detectar geolocalização e configurar código de país
+  useEffect(() => {
+    const detectCountry = async () => {
+      try {
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+        
+        let detectedCode = '+55' // Default: Brasil
+        
+        if (timezone.includes('America/Sao_Paulo') || timezone.includes('Brazil')) {
+          detectedCode = '+55'
+        } else if (timezone.includes('America/Toronto') || timezone.includes('America/Vancouver')) {
+          detectedCode = '+1'
+        } else if (timezone.includes('Europe/Madrid')) {
+          detectedCode = '+34'
+        } else if (timezone.includes('Europe/Paris')) {
+          detectedCode = '+33'
+        }
+        
+        setFormData(prev => ({ ...prev, countryCode: detectedCode }))
+      } catch (error) {
+        console.warn('Could not detect country:', error)
+      }
+    }
+
+    detectCountry()
+  }, [])
 
   // Labels multi-idioma (mantendo estrutura original)
   const labels = {
@@ -642,7 +670,14 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
     setFieldErrors({})
 
     try {
-      await ApiService.submitLead(formData)
+      // Combinar countryCode + phone
+      const fullPhone = formData.phone ? `${formData.countryCode}${formData.phone}` : ''
+      const submitData = {
+        ...formData,
+        phone: fullPhone
+      }
+      
+      await ApiService.submitLead(submitData)
 
       // Enviar notificação por email
       try {
@@ -650,7 +685,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            ...formData,
+            ...submitData,
             formType: 'contact_main',
             lang,
             score: 50 // Default médio, pode calcular depois
@@ -970,14 +1005,36 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4" style={{ marginTop: '1.5rem' }}>
               <PremiumField label={t.phone}>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal"
-                  placeholder="+55 11 98765-4321"
-                />
+                <div className="flex gap-2">
+                  <select
+                    value={formData.countryCode}
+                    onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value }))}
+                    className="relative z-10 input-adaptive w-32 px-3 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 text-[15px]"
+                  >
+                    <option value="+1">🇨🇦 +1</option>
+                    <option value="+55">🇧🇷 +55</option>
+                    <option value="+34">🇪🇸 +34</option>
+                    <option value="+33">🇫🇷 +33</option>
+                    <option value="+351">🇵🇹 +351</option>
+                    <option value="+52">🇲🇽 +52</option>
+                    <option value="+54">🇦🇷 +54</option>
+                    <option value="+44">🇬🇧 +44</option>
+                  </select>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, '')
+                      setFormData(prev => ({ ...prev, phone: value }))
+                    }}
+                    className="relative z-10 input-adaptive flex-1 px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal"
+                    placeholder="21 98765-4321"
+                  />
+                </div>
+                <p className="mt-2 text-xs text-white/50">
+                  💡 Código detectado automaticamente. Opcional.
+                </p>
               </PremiumField>
 
               <PremiumField label={t.position}>
