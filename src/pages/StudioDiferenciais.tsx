@@ -118,6 +118,180 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
         }
       ]
     },
+    fr: {
+      title: 'Ce Qui Nous Rend Uniques',
+      subtitle: 'Notre combinaison spéciale',
+      heritage: {
+        title: '30 Ans d\'Innovation',
+        body: 'Depuis 1996, nous avons fusionné art, technologie et éducation dans des projets pionniers. Du premier centre de formation Autodesk d\'Amérique du Sud à la direction technique du Musée Olympique de Rio, notre parcours reflète 30 ans d\'innovation.',
+        stats: [
+          { label: 'Depuis', value: '1996' },
+          { label: 'Autodesk', value: '1996-2018' },
+          { label: 'Musée Rio', value: 'Actuel' },
+          { label: 'Gramado', value: '2017' },
+          { label: 'Binational', value: 'BR-CA' }
+        ]
+      },
+      unique: {
+        title: 'Ce qui nous rend uniques',
+        items: [
+          'Recherche académique + Production commerciale',
+          'Éducation (nous avons formé des centaines) + Curation de festivals',
+          'Architecture/BIM + Cinéma/VFX + VR/XR/IA',
+          'Équipe avec 30 ans d\'expérience internationale',
+          'Opération binationale Brésil-Canada',
+          'Nous ne sommes pas seulement un studio. Nous sommes un écosystème complet.'
+        ]
+      },
+      vision: {
+        title: 'Vision',
+        body: 'Être une référence mondiale en expériences immersives, interactives et cinématographiques qui unissent art, technologie et narration, transformant les espaces culturels, marques et villes en environnements de connexion et découverte.'
+      },
+      mission: {
+        title: 'Mission',
+        body: 'Créer des expériences immersives de pointe qui connectent les gens, les histoires et les espaces grâce à la technologie créative, au design cinématographique et aux narrations engageantes.\n\nNous transformons les concepts en parcours mémorables qui résonnent émotionnellement et culturellement — opérant à l\'intersection de l\'art, de la technologie et de la connexion humaine.'
+      },
+      values: {
+        title: 'Valeurs',
+        items: [
+          {
+            title: 'Innovation Continue',
+            description: 'Nous explorons les frontières technologiques et artistiques, toujours à la recherche de nouvelles façons de raconter des histoires.'
+          },
+          {
+            title: 'Excellence Technique',
+            description: '30 ans d\'expertise en CG, VFX, VR/XR et IA appliquée à l\'audiovisuel, avec certifications internationales.'
+          },
+          {
+            title: 'Collaboration',
+            description: 'Nous croyons en la co-création avec les artistes, institutions, marques et communautés.'
+          },
+          {
+            title: 'Impact Culturel',
+            description: 'Nous générons une transformation réelle grâce à la culture, l\'éducation et l\'inclusion.'
+          }
+        ]
+      },
+      pillars: [
+        {
+          icon: '🎨',
+          title: 'Art & Esthétique Immersive',
+          body: 'Nous créons des expériences visuelles et sonores qui capturent et transportent le public.'
+        },
+        {
+          icon: '🧠',
+          title: 'Technologie Créative',
+          body: 'Nous explorons les frontières de la technologie pour raconter des histoires de manière interactive.'
+        },
+        {
+          icon: '🎥',
+          title: 'Narration Cinématographique',
+          body: 'Notre différenciateur est le storytelling sophistiqué avec langage cinématographique.'
+        },
+        {
+          icon: '🌍',
+          title: 'Impact Culturel & Social',
+          body: 'Nous générons une transformation réelle grâce à la culture et aux communautés.'
+        },
+        {
+          icon: '🌐',
+          title: 'Opération Binationale',
+          body: 'Nous connectons les écosystèmes créatifs entre Amérique du Sud et Amérique du Nord.'
+        },
+        {
+          icon: '🤝',
+          title: 'Modèle de Co-création',
+          body: 'Nous développons des projets en réseau avec méthodologies agiles et collaboratives.'
+        }
+      ]
+    },
+    es: {
+      title: 'Lo Que Nos Hace Únicos',
+      subtitle: 'Nuestra combinación especial',
+      heritage: {
+        title: '30 Años de Innovación',
+        body: 'Desde 1996, hemos fusionado arte, tecnología y educación en proyectos pioneros. Del primer centro de formación Autodesk de América del Sur a la dirección técnica del Museo Olímpico de Río, nuestro recorrido refleja 30 años de innovación.',
+        stats: [
+          { label: 'Desde', value: '1996' },
+          { label: 'Autodesk', value: '1996-2018' },
+          { label: 'Museo Río', value: 'Actual' },
+          { label: 'Gramado', value: '2017' },
+          { label: 'Binacional', value: 'BR-CA' }
+        ]
+      },
+      unique: {
+        title: 'Lo que nos hace únicos',
+        items: [
+          'Investigación académica + Producción comercial',
+          'Educación (formamos cientos) + Curaduría de festivales',
+          'Arquitectura/BIM + Cine/VFX + VR/XR/IA',
+          'Equipo con 30 años de experiencia internacional',
+          'Operación binacional Brasil-Canadá',
+          'No somos solo un estudio. Somos un ecosistema completo.'
+        ]
+      },
+      vision: {
+        title: 'Visión',
+        body: 'Ser referencia mundial en experiencias inmersivas, interactivas y cinematográficas que unen arte, tecnología y narrativa, transformando espacios culturales, marcas y ciudades en ambientes de conexión y descubrimiento.'
+      },
+      mission: {
+        title: 'Misión',
+        body: 'Crear experiencias inmersivas de punta que conecten personas, historias y espacios a través de tecnología creativa, diseño cinematográfico y narrativas envolventes.\n\nTransformamos conceptos en jornadas memorables que resuenan emocional y culturalmente — operando en la intersección entre arte, tecnología y conexión humana.'
+      },
+      values: {
+        title: 'Valores',
+        items: [
+          {
+            title: 'Innovación Continua',
+            description: 'Exploramos fronteras tecnológicas y artísticas, siempre buscando nuevas formas de contar historias.'
+          },
+          {
+            title: 'Excelencia Técnica',
+            description: '30 años de experiencia en CG, VFX, VR/XR e IA aplicada al audiovisual, con certificaciones internacionales.'
+          },
+          {
+            title: 'Colaboración',
+            description: 'Creemos en la co-creación con artistas, instituciones, marcas y comunidades.'
+          },
+          {
+            title: 'Impacto Cultural',
+            description: 'Generamos transformación real a través de la cultura, educación e inclusión.'
+          }
+        ]
+      },
+      pillars: [
+        {
+          icon: '🎨',
+          title: 'Arte & Estética Inmersiva',
+          body: 'Creamos experiencias visuales y sonoras que capturan y transportan al público.'
+        },
+        {
+          icon: '🧠',
+          title: 'Tecnología Creativa',
+          body: 'Exploramos las fronteras de la tecnología para contar historias de forma interactiva.'
+        },
+        {
+          icon: '🎥',
+          title: 'Narrativa Cinematográfica',
+          body: 'Nuestro diferencial es el storytelling sofisticado con lenguaje cinematográfico.'
+        },
+        {
+          icon: '🌍',
+          title: 'Impacto Cultural & Social',
+          body: 'Generamos transformación real a través de la cultura y las comunidades.'
+        },
+        {
+          icon: '🌐',
+          title: 'Operación Binacional',
+          body: 'Conectamos ecosistemas creativos entre América del Sur y América del Norte.'
+        },
+        {
+          icon: '🤝',
+          title: 'Modelo de Co-creación',
+          body: 'Desarrollamos proyectos en red con metodologías ágiles y colaborativas.'
+        }
+      ]
+    },
     en: {
       title: 'What Makes Us Unique',
       subtitle: 'Our special combination',

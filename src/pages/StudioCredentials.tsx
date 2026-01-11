@@ -85,6 +85,114 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
         { icon: '🤖', title: 'IA Pioneer', desc: 'Pesquisa em IA para animação', year: '1997' }
       ]
     },
+    fr: {
+      title: 'Références & Timeline',
+      subtitle: 'Notre parcours de 30 ans',
+      timeline: [
+        {
+          period: '1996-2004',
+          title: 'Architecad + Fondations',
+          icon: '🏗️',
+          items: [
+            'Pionniers en Maquette Virtuelle au Brésil',
+            'Centre de Formation Autodesk',
+            'Seul Application Engineer en Amérique du Sud',
+            'Demo Artist Autodesk Discreet (1996-2008)',
+            'Azimut Informatique et Productions Cinématographiques (1998-2004)'
+          ]
+        },
+        {
+          period: '2004-2018',
+          title: 'Azimut École',
+          icon: '🎓',
+          items: [
+            'Cours professionnels : Animation, VFX, Maquette Virtuelle',
+            'Seul Flame Trainer certifié au Brésil',
+            'Nous avons formé des centaines de professionnels',
+            'Centre de Formation Autodesk (seul en Amérique du Sud)',
+            'Cours de 1-2 ans + cours de courte durée',
+            'CAD, 3ds Max, Photoshop, After Effects, Flame'
+          ]
+        },
+        {
+          period: '2018-2025',
+          title: 'Azimut Projets Audiovisuels',
+          icon: '🎬',
+          items: [
+            'Direction Technique Musée Olympique de Rio',
+            'Curation VR Festival de Gramado (depuis 2017)',
+            'Installations immersives + IA',
+            'Projets avec YDreams et institutions',
+            'Opération binationale Brésil-Canada',
+            'Focus culture, musées, festivals et marques'
+          ]
+        }
+      ],
+      credentials: [
+        { icon: '🏆', title: 'XRBR', desc: 'Membres fondateurs Association XR Brésil', year: '2018' },
+        { icon: '🎓', title: 'Maîtrise UFRJ', desc: 'Médias Créatifs & Technologie Éducative', year: '2010' },
+        { icon: '🎬', title: 'Festival Gramado', desc: 'Curation VR officielle (8 ans consécutifs)', year: '2017' },
+        { icon: '🏛️', title: 'Musée Olympique', desc: 'Direction Générale Technologie', year: '2015-2017' },
+        { icon: '🔥', title: 'Autodesk Flame', desc: 'Seul Flame Trainer certifié au Brésil', year: '2000-2015' },
+        { icon: '🍁', title: 'Autodesk Canada', desc: 'Seul contrat en Amérique du Sud', year: '1996-2008' },
+        { icon: '🌍', title: 'International', desc: 'Rio, SP, Belém, Florianópolis, Vancouver', year: '2020' },
+        { icon: '🤖', title: 'Pionnier IA', desc: 'Recherche IA pour animation', year: '1997' }
+      ]
+    },
+    es: {
+      title: 'Credenciales & Timeline',
+      subtitle: 'Nuestro recorrido de 30 años',
+      timeline: [
+        {
+          period: '1996-2004',
+          title: 'Architecad + Fundaciones',
+          icon: '🏗️',
+          items: [
+            'Pioneros en Maqueta Virtual en Brasil',
+            'Centro de Formación Autodesk',
+            'Único Application Engineer en América del Sur',
+            'Demo Artist Autodesk Discreet (1996-2008)',
+            'Azimut Informática y Producciones Cinematográficas (1998-2004)'
+          ]
+        },
+        {
+          period: '2004-2018',
+          title: 'Azimut Escuela',
+          icon: '🎓',
+          items: [
+            'Cursos profesionales: Animación, VFX, Maqueta Virtual',
+            'Único Flame Trainer certificado en Brasil',
+            'Formamos cientos de profesionales',
+            'Centro de Formación Autodesk (único en América del Sur)',
+            'Cursos de 1-2 años + cursos de corta duración',
+            'CAD, 3ds Max, Photoshop, After Effects, Flame'
+          ]
+        },
+        {
+          period: '2018-2025',
+          title: 'Azimut Proyectos Audiovisuales',
+          icon: '🎬',
+          items: [
+            'Dirección Técnica Museo Olímpico de Río',
+            'Curaduría VR Festival de Gramado (desde 2017)',
+            'Instalaciones inmersivas + IA',
+            'Proyectos con YDreams e instituciones',
+            'Operación binacional Brasil-Canadá',
+            'Enfoque en cultura, museos, festivales y marcas'
+          ]
+        }
+      ],
+      credentials: [
+        { icon: '🏆', title: 'XRBR', desc: 'Miembros fundadores Asociación XR Brasil', year: '2018' },
+        { icon: '🎓', title: 'Maestría UFRJ', desc: 'Medios Creativos & Tecnología Educativa', year: '2010' },
+        { icon: '🎬', title: 'Festival Gramado', desc: 'Curaduría VR oficial (8 años consecutivos)', year: '2017' },
+        { icon: '🏛️', title: 'Museo Olímpico', desc: 'Dirección General Tecnología', year: '2015-2017' },
+        { icon: '🔥', title: 'Autodesk Flame', desc: 'Único Flame Trainer certificado en Brasil', year: '2000-2015' },
+        { icon: '🍁', title: 'Autodesk Canadá', desc: 'Único contrato en América del Sur', year: '1996-2008' },
+        { icon: '🌍', title: 'Internacional', desc: 'Río, SP, Belém, Florianópolis, Vancouver', year: '2020' },
+        { icon: '🤖', title: 'Pionero IA', desc: 'Investigación IA para animación', year: '1997' }
+      ]
+    },
     en: {
       title: 'Credentials & Timeline',
       subtitle: 'Our 30-year journey',
