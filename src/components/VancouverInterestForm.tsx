@@ -391,7 +391,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                 <select
                   value={formData.countryCode}
                   onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, whatsapp: '' }))}
-                  className="px-2 py-3 input-adaptive rounded-lg text-[13px] font-medium"
+                  className="input-adaptive px-2 py-3 rounded-lg text-[13px] font-medium"
                   style={{ width: '100px', minWidth: '100px', maxWidth: '100px', flexShrink: 0 }}
                 >
                   <option value="+55">BR +55</option>
