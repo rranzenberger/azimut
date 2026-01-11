@@ -78,6 +78,7 @@ import Work from './pages/Work'
 const AcademyCourses = lazy(() => import('./pages/AcademyCourses'))
 const AcademyWorkshops = lazy(() => import('./pages/AcademyWorkshops'))
 const AcademyCorporate = lazy(() => import('./pages/AcademyCorporate'))
+const Research = lazy(() => import('./pages/Research'))
 const Vancouver = lazy(() => import('./pages/Vancouver'))
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail'))
@@ -360,6 +361,11 @@ const App: React.FC = () => {
                     {(routeLang) => <Vancouver lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
+                <Route path="/:lang/academy/research" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Research lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
                 <Route path="/:lang/contact" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <Contact lang={routeLang} />}
@@ -484,6 +490,11 @@ const App: React.FC = () => {
                 <Route path="/:lang/academy/vancouver" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <Vancouver lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/academy/research" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Research lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/contact" element={
