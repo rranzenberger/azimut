@@ -257,16 +257,16 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
 
   // Códigos de país
   const countryCodes = [
-    { value: '+1', label: '+1', icon: '🇨🇦' }, // Canadá/EUA
-    { value: '+55', label: '+55', icon: '🇧🇷' }, // Brasil
-    { value: '+34', label: '+34', icon: '🇪🇸' }, // Espanha
-    { value: '+33', label: '+33', icon: '🇫🇷' }, // França
-    { value: '+351', label: '+351', icon: '🇵🇹' }, // Portugal
-    { value: '+52', label: '+52', icon: '🇲🇽' }, // México
-    { value: '+54', label: '+54', icon: '🇦🇷' }, // Argentina
-    { value: '+56', label: '+56', icon: '🇨🇱' }, // Chile
-    { value: '+44', label: '+44', icon: '🇬🇧' }, // UK
-    { value: '+49', label: '+49', icon: '🇩🇪' }, // Alemanha
+    { value: '+1', label: 'CA +1', icon: '' },
+    { value: '+55', label: 'BR +55', icon: '' },
+    { value: '+34', label: 'ES +34', icon: '' },
+    { value: '+33', label: 'FR +33', icon: '' },
+    { value: '+351', label: 'PT +351', icon: '' },
+    { value: '+52', label: 'MX +52', icon: '' },
+    { value: '+54', label: 'AR +54', icon: '' },
+    { value: '+56', label: 'CL +56', icon: '' },
+    { value: '+44', label: 'UK +44', icon: '' },
+    { value: '+49', label: 'DE +49', icon: '' },
   ]
 
   // Cursos VFS e VanArts
@@ -628,13 +628,13 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
               {t.fields.phone}
             </label>
             <div className="flex gap-2">
-              {/* Dropdown de código - ULTRA PEQUENO */}
-              <div style={{ width: '85px', minWidth: '85px', maxWidth: '85px', flexShrink: 0 }}>
+              {/* Dropdown de código */}
+              <div style={{ width: '100px', minWidth: '100px', maxWidth: '100px', flexShrink: 0 }}>
                 <SelectField
                   value={formData.countryCode}
                   onChange={(value) => setFormData({ ...formData, countryCode: value, phone: '' })}
                   options={countryCodes}
-                  placeholder="+1"
+                  placeholder="CA +1"
                   ariaLabel="Código do país"
                   className=""
                 />

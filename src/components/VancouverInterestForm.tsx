@@ -387,20 +387,20 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                 {t.whatsapp} *
               </label>
               <div className="flex gap-2">
-                {/* Dropdown de código de país - ULTRA PEQUENO */}
+                {/* Dropdown de código de país */}
                 <select
                   value={formData.countryCode}
                   onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, whatsapp: '' }))}
                   className="px-2 py-3 input-adaptive rounded-lg text-[13px] font-medium"
-                  style={{ width: '85px', minWidth: '85px', maxWidth: '85px', flexShrink: 0 }}
+                  style={{ width: '100px', minWidth: '100px', maxWidth: '100px', flexShrink: 0 }}
                 >
-                  <option value="+55">🇧🇷 +55</option>
-                  <option value="+1">🇨🇦 +1</option>
-                  <option value="+34">🇪🇸 +34</option>
-                  <option value="+33">🇫🇷 +33</option>
-                  <option value="+351">🇵🇹 +351</option>
-                  <option value="+52">🇲🇽 +52</option>
-                  <option value="+54">🇦🇷 +54</option>
+                  <option value="+55">BR +55</option>
+                  <option value="+1">CA +1</option>
+                  <option value="+34">ES +34</option>
+                  <option value="+33">FR +33</option>
+                  <option value="+351">PT +351</option>
+                  <option value="+52">MX +52</option>
+                  <option value="+54">AR +54</option>
                 </select>
                 {/* Campo WhatsApp - GRANDE com formatação automática */}
                 <input
