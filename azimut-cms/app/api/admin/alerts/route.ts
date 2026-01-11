@@ -1,0 +1,223 @@
+// ════════════════════════════════════════════════════════════
+// API: ALERTAS INTELIGENTES
+// Detecta hot leads, anomalias e eventos importantes
+// ════════════════════════════════════════════════════════════
+
+import { NextRequest, NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
+import { prisma } from '@/lib/prisma'
+import { verifyAuthToken } from '@/lib/auth'
+
+export const runtime = 'nodejs'
+
+interface Alert {
+  id: string
+  type: 'hot_lead' | 'traffic_spike' | 'new_country' | 'pwa_install' | 'returning_visitor' | 'high_engagement'
+  severity: 'high' | 'medium' | 'low'
+  title: string
+  message: string
+  timestamp: string
+  data?: Record<string, any>
+  read: boolean
+}
+
+export async function GET(request: NextRequest) {
+  try {
+    // Verificar autenticação
+    const cookieStore = cookies()
+    const token = cookieStore.get('azimut_admin_token')?.value
+    const session = token ? verifyAuthToken(token) : null
+
+    if (!session) {
+      return NextResponse.json({ error: 'Não autenticado' }, { status: 401 })
+    }
+
+    const alerts: Alert[] = []
+    const now = new Date()
+    const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000)
+    const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000)
+
+    // ════════════════════════════════════════════════════════════
+    // 1. DETECTAR HOT LEADS (score > 70 ou muitas páginas visitadas)
+    // ════════════════════════════════════════════════════════════
+    const hotLeadSessions = await prisma.visitorSession.findMany({
+      where: {
+        createdAt: { gte: oneDayAgo },
+        OR: [
+          { engagementScore: { gte: 70 } },
+          { conversionProbability: { gte: 0.7 } },
+        ],
+      },
+      include: {
+        pageViews: true,
+        interestScores: true,
+      },
+      orderBy: { createdAt: 'desc' },
+      take: 10,
+    })
+
+    hotLeadSessions.forEach(session => {
+      const topInterest = session.interestScores?.[0]
+      alerts.push({
+        id: `hot_lead_${session.sessionId}`,
+        type: 'hot_lead',
+        severity: 'high',
+        title: '🔥 Hot Lead Detectado!',
+        message: `Visitante de ${session.country || 'país desconhecido'} com score ${session.engagementScore || 0}%. ${session.pageViews.length} páginas visitadas.${topInterest ? ` Interesse principal: ${topInterest.category}` : ''}`,
+        timestamp: session.createdAt.toISOString(),
+        data: {
+          sessionId: session.sessionId.substring(0, 8),
+          country: session.country,
+          device: session.deviceType,
+          pages: session.pageViews.length,
+          score: session.engagementScore,
+          fingerprint: session.visitorFingerprint?.substring(0, 8),
+        },
+        read: false,
+      })
+    })
+
+    // ════════════════════════════════════════════════════════════
+    // 2. DETECTAR PICO DE TRÁFEGO (mais que média)
+    // ════════════════════════════════════════════════════════════
+    const recentSessionsCount = await prisma.visitorSession.count({
+      where: { createdAt: { gte: oneHourAgo } },
+    })
+
+    const avgHourlySessions = await prisma.visitorSession.count({
+      where: { createdAt: { gte: oneDayAgo } },
+    }) / 24
+
+    if (recentSessionsCount > avgHourlySessions * 2 && recentSessionsCount > 5) {
+      alerts.push({
+        id: `traffic_spike_${now.getTime()}`,
+        type: 'traffic_spike',
+        severity: 'medium',
+        title: '📈 Pico de Tráfego!',
+        message: `${recentSessionsCount} visitantes na última hora (média: ${Math.round(avgHourlySessions)}/hora)`,
+        timestamp: now.toISOString(),
+        data: {
+          current: recentSessionsCount,
+          average: Math.round(avgHourlySessions),
+          increase: Math.round((recentSessionsCount / avgHourlySessions - 1) * 100),
+        },
+        read: false,
+      })
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // 3. DETECTAR NOVOS PAÍSES
+    // ════════════════════════════════════════════════════════════
+    const recentCountries = await prisma.visitorSession.findMany({
+      where: { createdAt: { gte: oneDayAgo } },
+      select: { country: true },
+      distinct: ['country'],
+    })
+
+    const historicalCountries = await prisma.visitorSession.findMany({
+      where: { createdAt: { lt: oneDayAgo } },
+      select: { country: true },
+      distinct: ['country'],
+    })
+
+    const historicalSet = new Set(historicalCountries.map(c => c.country))
+    const newCountries = recentCountries.filter(c => c.country && !historicalSet.has(c.country))
+
+    newCountries.forEach(country => {
+      if (country.country) {
+        alerts.push({
+          id: `new_country_${country.country}`,
+          type: 'new_country',
+          severity: 'low',
+          title: '🌍 Novo País!',
+          message: `Primeiro visitante de ${country.country}`,
+          timestamp: now.toISOString(),
+          data: { country: country.country },
+          read: false,
+        })
+      }
+    })
+
+    // ════════════════════════════════════════════════════════════
+    // 4. DETECTAR PWA INSTALLS
+    // ════════════════════════════════════════════════════════════
+    const recentPWAInstalls = await prisma.pWAInstall.findMany({
+      where: { installedAt: { gte: oneDayAgo } },
+      orderBy: { installedAt: 'desc' },
+      take: 5,
+    })
+
+    recentPWAInstalls.forEach(install => {
+      alerts.push({
+        id: `pwa_install_${install.id}`,
+        type: 'pwa_install',
+        severity: 'medium',
+        title: '📱 PWA Instalado!',
+        message: `Novo app instalado (${install.platform || 'plataforma desconhecida'})`,
+        timestamp: install.installedAt.toISOString(),
+        data: {
+          platform: install.platform,
+          browser: install.browser,
+        },
+        read: false,
+      })
+    })
+
+    // ════════════════════════════════════════════════════════════
+    // 5. DETECTAR VISITANTES RETORNANTES FREQUENTES
+    // ════════════════════════════════════════════════════════════
+    const frequentVisitors = await prisma.visitorSession.findMany({
+      where: {
+        createdAt: { gte: oneDayAgo },
+        visitCount: { gte: 3 },
+        isReturning: true,
+      },
+      orderBy: { visitCount: 'desc' },
+      take: 5,
+    })
+
+    frequentVisitors.forEach(visitor => {
+      alerts.push({
+        id: `returning_${visitor.sessionId}`,
+        type: 'returning_visitor',
+        severity: 'medium',
+        title: '🔄 Visitante Frequente!',
+        message: `Visitante de ${visitor.country || 'país desconhecido'} retornou ${visitor.visitCount} vezes`,
+        timestamp: visitor.createdAt.toISOString(),
+        data: {
+          visits: visitor.visitCount,
+          country: visitor.country,
+          fingerprint: visitor.visitorFingerprint?.substring(0, 8),
+        },
+        read: false,
+      })
+    })
+
+    // Ordenar por severidade e timestamp
+    const severityOrder = { high: 0, medium: 1, low: 2 }
+    alerts.sort((a, b) => {
+      if (severityOrder[a.severity] !== severityOrder[b.severity]) {
+        return severityOrder[a.severity] - severityOrder[b.severity]
+      }
+      return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    })
+
+    return NextResponse.json({
+      alerts: alerts.slice(0, 20), // Limitar a 20 alertas
+      total: alerts.length,
+      summary: {
+        high: alerts.filter(a => a.severity === 'high').length,
+        medium: alerts.filter(a => a.severity === 'medium').length,
+        low: alerts.filter(a => a.severity === 'low').length,
+      },
+      lastUpdated: now.toISOString(),
+    })
+
+  } catch (error: any) {
+    console.error('Erro ao buscar alertas:', error)
+    return NextResponse.json(
+      { error: 'Erro ao buscar alertas', details: error.message },
+      { status: 500 }
+    )
+  }
+}

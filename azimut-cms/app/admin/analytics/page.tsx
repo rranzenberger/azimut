@@ -14,6 +14,7 @@ const TimelineChart = dynamic(() => import('./components/TimelineChart'), { ssr:
 const RealTimeCounter = dynamic(() => import('./components/RealTimeCounter'), { ssr: false });
 const ConversionFunnel = dynamic(() => import('./components/ConversionFunnel'), { ssr: false });
 const WorldMap = dynamic(() => import('./components/WorldMap'), { ssr: false });
+const AlertsPanel = dynamic(() => import('./components/AlertsPanel'), { ssr: false });
 
 interface AnalyticsData {
   overview: {
@@ -313,6 +314,9 @@ export default function AnalyticsPage() {
 
       {/* ⚡ TEMPO REAL - Visitantes Online Agora */}
       <RealTimeCounter />
+
+      {/* 🔔 ALERTAS INTELIGENTES */}
+      <AlertsPanel />
 
       {/* 🎯 Funil de Conversão */}
       <ConversionFunnel />
