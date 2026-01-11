@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
       select: {
         sessionId: true,
         pageViews: {
-          select: { page: true },
+          select: { pageSlug: true },
         },
       },
     })
@@ -51,8 +51,8 @@ export async function GET(request: NextRequest) {
     const funnelData = funnelSteps.map(step => {
       const count = sessions.filter(s => 
         s.pageViews.some(pv => 
-          step.patterns.some(pattern => 
-            pv.page.includes(pattern) || pv.page === pattern
+          pv.pageSlug && step.patterns.some(pattern => 
+            pv.pageSlug!.includes(pattern) || pv.pageSlug === pattern
           )
         )
       ).length

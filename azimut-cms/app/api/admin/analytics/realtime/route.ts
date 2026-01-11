@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
           orderBy: { viewedAt: 'desc' },
           take: 1,
           select: {
-            page: true,
+            pageSlug: true,
             viewedAt: true,
           },
         },
@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
     // Agrupar por página atual
     const pagesCounts: Record<string, number> = {}
     activeSessions.forEach(s => {
-      const page = s.pageViews[0]?.page || 'unknown'
+      const page = s.pageViews[0]?.pageSlug || 'unknown'
       pagesCounts[page] = (pagesCounts[page] || 0) + 1
     })
 
@@ -80,7 +80,7 @@ export async function GET(request: NextRequest) {
         country: s.country,
         device: s.deviceType,
         browser: s.browser,
-        currentPage: s.pageViews[0]?.page || 'unknown',
+        currentPage: s.pageViews[0]?.pageSlug || 'unknown',
         lastActivity: s.lastActivityAt,
       })),
       topPages,
