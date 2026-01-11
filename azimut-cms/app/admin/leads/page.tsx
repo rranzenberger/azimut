@@ -181,16 +181,18 @@ export default async function LeadsPage({
             Gerencie todos os leads capturados do site.
           </p>
         </div>
-        <div
-          style={{
-            display: 'flex',
-            gap: 8,
-            background: 'rgba(255,255,255,0.03)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            borderRadius: 10,
-            padding: 4,
-          }}
-        >
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <CleanupTestDataButton />
+          <div
+            style={{
+              display: 'flex',
+              gap: 8,
+              background: 'rgba(255,255,255,0.03)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              borderRadius: 10,
+              padding: 4,
+            }}
+          >
           <Link
             href={`/admin/leads?${new URLSearchParams({
               ...(status && { status }),
