@@ -1,27 +1,17 @@
 import { useState, useEffect } from 'react'
 
-// Chave do localStorage para proteção
-const PROTECTION_KEY = 'azimut-site-protected'
-
 export default function DevToolsButton() {
   const [isOpen, setIsOpen] = useState(false)
   const [debugMode, setDebugMode] = useState(false)
   const [showStats, setShowStats] = useState(false)
-  // true = site protegido (pede login), false = acesso livre
-  const [isProtected, setIsProtected] = useState(true)
 
   useEffect(() => {
     // Carregar estado do localStorage
     const savedDebugMode = localStorage.getItem('azimut-debug-mode') === 'true'
     const savedShowStats = localStorage.getItem('azimut-show-stats') === 'true'
     
-    // Carregar proteção (default = true = protegido)
-    const savedProtection = localStorage.getItem(PROTECTION_KEY)
-    const protectionValue = savedProtection === null ? true : savedProtection === 'true'
-    
     setDebugMode(savedDebugMode)
     setShowStats(savedShowStats)
-    setIsProtected(protectionValue)
   }, [])
 
   const toggleDebugMode = () => {
@@ -36,35 +26,6 @@ export default function DevToolsButton() {
     setShowStats(newValue)
     localStorage.setItem('azimut-show-stats', String(newValue))
     console.log('📊 Show Stats:', newValue)
-  }
-
-  const toggleProtection = () => {
-    const newValue = !isProtected
-    setIsProtected(newValue)
-    
-    // Salvar no localStorage
-    localStorage.setItem(PROTECTION_KEY, String(newValue))
-    
-    // Também manter compatibilidade com chaves antigas
-    if (newValue) {
-      // Site protegido - remover bypass
-      localStorage.removeItem('azimut-bypass-login')
-      localStorage.removeItem('azimut-dev-bypass-token')
-      console.log('🔒 Login LIGADO - Site protegido')
-    } else {
-      // Site aberto - adicionar bypass
-      localStorage.setItem('azimut-bypass-login', 'true')
-      localStorage.setItem('azimut-dev-bypass-token', 'dev-mode-active')
-      console.log('🔓 Login DESLIGADO - Acesso livre')
-    }
-    
-    // Mostrar feedback e recarregar
-    alert(newValue ? '🔒 Login LIGADO! Recarregando...' : '🔓 Login DESLIGADO! Recarregando...')
-    
-    // Forçar reload completo para garantir que App.tsx receba a mudança
-    setTimeout(() => {
-      window.location.href = window.location.href
-    }, 300)
   }
 
   const clearCache = () => {
@@ -105,31 +66,18 @@ export default function DevToolsButton() {
 
           {/* Opções */}
           <div className="space-y-3">
-            {/* Login Screen Toggle - MAIS VISÍVEL */}
-            <div 
-              className={`p-3 rounded-lg cursor-pointer transition-colors ${
-                isProtected 
-                  ? 'bg-green-900/30 hover:bg-green-900/50 border border-green-700' 
-                  : 'bg-red-900/30 hover:bg-red-900/50 border border-red-700'
-              }`}
-              onClick={toggleProtection}
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-white">
-                  {isProtected ? '🔒 Login Ligado' : '🔓 Login Desligado'}
-                </span>
-                <div className={`w-12 h-6 rounded-full relative transition-colors ${
-                  isProtected ? 'bg-green-600' : 'bg-red-600'
-                }`}>
-                  <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-                    isProtected ? 'left-1' : 'right-1 translate-x-0'
-                  }`} style={{ left: isProtected ? '4px' : 'auto', right: isProtected ? 'auto' : '4px' }} />
-                </div>
+            
+            {/* Status do Site - INFORMATIVO */}
+            <div className="p-3 rounded-lg bg-green-900/30 border border-green-700">
+              <div className="flex items-center gap-2">
+                <span className="text-green-400">🔓</span>
+                <span className="text-sm font-medium text-white">Site ABERTO</span>
               </div>
               <p className="text-xs text-slate-400 mt-1">
-                {isProtected 
-                  ? 'Visitantes precisam de senha' 
-                  : 'Acesso direto sem senha'}
+                Acesso direto sem senha para todos
+              </p>
+              <p className="text-xs text-yellow-500 mt-2">
+                ⚠️ Para fechar: edite SITE_ABERTO no código
               </p>
             </div>
 

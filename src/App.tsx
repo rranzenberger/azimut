@@ -28,41 +28,28 @@ import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDet
 // Para FORÇAR aberto durante dev, mude DEFAULT_PROTECTED para false
 // ═══════════════════════════════════════════════════════════════
 
-// Chave do localStorage para proteção (sincronizado com DevToolsButton)
-const PROTECTION_KEY = 'azimut-site-protected'
+// ════════════════════════════════════════════════════════════
+// 🔒 CONTROLE DE PROTEÇÃO DO SITE
+// ════════════════════════════════════════════════════════════
+// 
+// Para ABRIR o site para todos: SITE_ABERTO = true
+// Para FECHAR o site (pedir senha): SITE_ABERTO = false
+//
+// ════════════════════════════════════════════════════════════
+const SITE_ABERTO = true // ← MUDE AQUI: true = aberto, false = pede senha
+// ════════════════════════════════════════════════════════════
 
 // Função para verificar se deve mostrar login
-// Lê localStorage diretamente - simples e confiável
 const shouldShowLogin = (): boolean => {
-  try {
-    if (typeof window === 'undefined') return true // SSR: proteger por padrão
-    
-    // Ler a chave principal de proteção
-    const protectionValue = localStorage.getItem(PROTECTION_KEY)
-    
-    // Se não existe a chave, verificar chaves antigas (compatibilidade)
-    if (protectionValue === null) {
-      const bypassActive = localStorage.getItem('azimut-bypass-login') === 'true'
-      const devBypassToken = localStorage.getItem('azimut-dev-bypass-token') === 'dev-mode-active'
-      
-      if (bypassActive || devBypassToken) {
-        console.log('🔓 DevTools (legado): Login desligado')
-        return false
-      }
-      
-      console.log('🔒 Site protegido (padrão)')
-      return true
-    }
-    
-    // Usar a chave principal
-    const isProtected = protectionValue === 'true'
-    console.log(isProtected ? '🔒 Site protegido' : '🔓 Login desligado (DevTools)')
-    return isProtected
-    
-  } catch (error) {
-    console.warn('⚠️ Erro ao ler localStorage:', error)
-    return true // Proteger por padrão em caso de erro
+  // Se SITE_ABERTO = true, nunca mostra login
+  if (SITE_ABERTO) {
+    console.log('🔓 Site ABERTO para todos (SITE_ABERTO = true)')
+    return false
   }
+  
+  // Se SITE_ABERTO = false, mostra login
+  console.log('🔒 Site FECHADO - Login necessário (SITE_ABERTO = false)')
+  return true
 }
 
 // Calcular no momento da inicialização
