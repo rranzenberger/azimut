@@ -97,39 +97,40 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
         </div>
 
         <div className="mx-auto max-w-5xl px-3 sm:px-4 md:px-6 pt-8">
-          {/* Breadcrumbs */}
-          <nav className="mb-4 flex items-center gap-2 text-sm font-sora">
-            <LangLink 
-              to="/" 
-              className="hover:text-azimut-red transition-colors duration-200" 
-              style={{ color: 'var(--theme-text-secondary)' }}
-            >
-              Home
-            </LangLink>
-            <span className="opacity-50" style={{ color: 'var(--theme-text-secondary)' }}>›</span>
-            <LangLink 
-              to="/what" 
-              className="hover:text-azimut-red transition-colors duration-200" 
-              style={{ color: 'var(--theme-text-secondary)' }}
-            >
-              {lang === 'pt' ? 'Soluções' : lang === 'fr' ? 'Solutions' : lang === 'es' ? 'Soluciones' : 'Solutions'}
-            </LangLink>
-            <span className="opacity-50" style={{ color: 'var(--theme-text-secondary)' }}>›</span>
-            <span className="font-medium" style={{ color: 'var(--theme-accent-red)' }}>{title}</span>
-          </nav>
+          {/* Hero - Sempre visível */}
+          <section className="mb-12">
+            {/* Breadcrumbs inline */}
+            <nav className="mb-6 flex items-center gap-2 text-sm font-sora">
+              <LangLink 
+                to="/" 
+                className="hover:text-azimut-red transition-colors duration-200" 
+                style={{ color: 'var(--theme-text-secondary)' }}
+              >
+                Home
+              </LangLink>
+              <span className="opacity-50" style={{ color: 'var(--theme-text-secondary)' }}>›</span>
+              <LangLink 
+                to="/what" 
+                className="hover:text-azimut-red transition-colors duration-200" 
+                style={{ color: 'var(--theme-text-secondary)' }}
+              >
+                {lang === 'pt' ? 'Soluções' : lang === 'fr' ? 'Solutions' : lang === 'es' ? 'Soluciones' : 'Solutions'}
+              </LangLink>
+              <span className="opacity-50" style={{ color: 'var(--theme-text-secondary)' }}>›</span>
+              <span className="font-medium" style={{ color: 'var(--theme-accent-red)' }}>{title}</span>
+            </nav>
 
-          {/* Hero */}
-          <div className="mb-10">
-            <div className="flex items-center gap-4 mb-6">
-              <span className="text-6xl">{service.icon}</span>
+            {/* Título com ícone */}
+            <div className="flex items-center gap-4 mb-8">
+              <span className="text-5xl md:text-6xl">{service.icon}</span>
               <h1
-                className="text-5xl min-[768px]:text-6xl font-bold uppercase tracking-tight font-sora"
+                className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight font-sora"
                 style={{ color: 'var(--theme-text)' }}
               >
                 {title}
               </h1>
             </div>
-          </div>
+          </section>
 
           {/* Descrição expandida */}
           <div className="mb-20">
