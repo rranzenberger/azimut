@@ -48,8 +48,10 @@ async function sendHotLeadEmail(session: any, topInterest: string | null): Promi
       visitCount: session.visitCount || 1,
       engagementScore: session.engagementScore || 0,
       conversionProbability: Math.round(score),
-      topPages: session.pageViews?.map((pv: any) => pv.pageSlug || pv.pageUrl)?.slice(0, 5) || [],
+      topPages: session.pageViews?.map((pv: any) => pv.pageSlug || pv.pageUrl).slice(0, 5) || [],
       interests: topInterest ? [topInterest] : [],
+      email: session.email || undefined,
+      name: session.name || undefined,
       referrer: session.referrer || undefined,
       timestamp: new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })
     }
