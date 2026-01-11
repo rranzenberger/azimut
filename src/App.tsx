@@ -457,9 +457,19 @@ const App: React.FC = () => {
                     {(routeLang) => <WhatWeDo lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
+                <Route path="/:lang/what/:slug" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <ServiceDetail lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
                 <Route path="/:lang/work" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <Work lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/work/:slug" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <ProjectDetail lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/studio" element={
