@@ -628,15 +628,17 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
               {t.fields.phone}
             </label>
             <div className="flex gap-2">
-              {/* Dropdown de código - PEQUENO */}
-              <SelectField
-                value={formData.countryCode}
-                onChange={(value) => setFormData({ ...formData, countryCode: value, phone: '' })}
-                options={countryCodes}
-                placeholder="+1"
-                ariaLabel="Código do país"
-                className="w-24"
-              />
+              {/* Dropdown de código - ULTRA PEQUENO */}
+              <div style={{ width: '85px', minWidth: '85px', maxWidth: '85px', flexShrink: 0 }}>
+                <SelectField
+                  value={formData.countryCode}
+                  onChange={(value) => setFormData({ ...formData, countryCode: value, phone: '' })}
+                  options={countryCodes}
+                  placeholder="+1"
+                  ariaLabel="Código do país"
+                  className=""
+                />
+              </div>
               {/* Campo telefone - GRANDE com formatação */}
               <input
                 type="tel"
@@ -646,6 +648,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
                   setFormData({ ...formData, phone: formatted })
                 }}
                 className="input-adaptive flex-1"
+                style={{ minWidth: '0' }}
                 placeholder={
                   formData.countryCode === '+55' ? '(11) 98765-4321' :
                   formData.countryCode === '+1' ? '(416) 555-1234' :

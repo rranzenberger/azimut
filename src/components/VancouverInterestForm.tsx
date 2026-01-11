@@ -387,11 +387,12 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                 {t.whatsapp} *
               </label>
               <div className="flex gap-2">
-                {/* Dropdown de código de país - PEQUENO */}
+                {/* Dropdown de código de país - ULTRA PEQUENO */}
                 <select
                   value={formData.countryCode}
                   onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, whatsapp: '' }))}
-                  className="w-24 px-2 py-3 input-adaptive rounded-lg text-[14px] font-medium"
+                  className="px-2 py-3 input-adaptive rounded-lg text-[13px] font-medium"
+                  style={{ width: '85px', minWidth: '85px', maxWidth: '85px', flexShrink: 0 }}
                 >
                   <option value="+55">🇧🇷 +55</option>
                   <option value="+1">🇨🇦 +1</option>
@@ -421,6 +422,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                     setFormData(prev => ({ ...prev, whatsapp: formatted }))
                   }}
                   className="flex-1 px-4 py-3 input-adaptive rounded-lg"
+                  style={{ minWidth: '0' }}
                 />
               </div>
               <p className="mt-1.5 text-xs text-white/50">

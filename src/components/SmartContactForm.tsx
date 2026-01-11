@@ -1094,11 +1094,12 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4" style={{ marginTop: '1.5rem' }}>
               <PremiumField label={t.phone}>
                 <div className="flex gap-2">
-                  {/* Dropdown de código de país - PEQUENO */}
+                  {/* Dropdown de código de país - ULTRA PEQUENO */}
                   <select
                     value={formData.countryCode}
                     onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, phone: '' }))}
-                    className="relative z-10 input-adaptive w-24 px-2 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 text-[14px] font-medium"
+                    className="relative z-10 input-adaptive px-2 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 text-[13px] font-medium"
+                    style={{ width: '85px', minWidth: '85px', maxWidth: '85px', flexShrink: 0 }}
                   >
                     <option value="+55">🇧🇷 +55</option>
                     <option value="+1">🇨🇦 +1</option>
@@ -1119,6 +1120,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       setFormData(prev => ({ ...prev, phone: formatted }))
                     }}
                     className="relative z-10 input-adaptive flex-1 px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal"
+                    style={{ minWidth: '0' }}
                     placeholder={
                       formData.countryCode === '+55' ? '(11) 98765-4321' :
                       formData.countryCode === '+1' ? '(416) 555-1234' :
