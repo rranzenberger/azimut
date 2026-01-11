@@ -7,7 +7,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { sendEmail } from '@/lib/email-service'
-import { generatePersonalizedEmail, generateInternalSummary } from '@/src/lib/ai-email-generator'
+import { generatePersonalizedEmail, generateInternalSummary } from '@/lib/ai-email-generator'
 
 export const runtime = 'nodejs'
 
