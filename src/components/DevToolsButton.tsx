@@ -1,19 +1,27 @@
 import { useState, useEffect } from 'react'
 
+// Chave do localStorage para proteção
+const PROTECTION_KEY = 'azimut-site-protected'
+
 export default function DevToolsButton() {
   const [isOpen, setIsOpen] = useState(false)
   const [debugMode, setDebugMode] = useState(false)
   const [showStats, setShowStats] = useState(false)
-  const [bypassLogin, setBypassLogin] = useState(false)
+  // true = site protegido (pede login), false = acesso livre
+  const [isProtected, setIsProtected] = useState(true)
 
   useEffect(() => {
     // Carregar estado do localStorage
     const savedDebugMode = localStorage.getItem('azimut-debug-mode') === 'true'
     const savedShowStats = localStorage.getItem('azimut-show-stats') === 'true'
-    const savedBypassLogin = localStorage.getItem('azimut-bypass-login') === 'true'
+    
+    // Carregar proteção (default = true = protegido)
+    const savedProtection = localStorage.getItem(PROTECTION_KEY)
+    const protectionValue = savedProtection === null ? true : savedProtection === 'true'
+    
     setDebugMode(savedDebugMode)
     setShowStats(savedShowStats)
-    setBypassLogin(savedBypassLogin)
+    setIsProtected(protectionValue)
   }, [])
 
   const toggleDebugMode = () => {
@@ -30,34 +38,41 @@ export default function DevToolsButton() {
     console.log('📊 Show Stats:', newValue)
   }
 
-  const toggleBypassLogin = () => {
-    const newValue = !bypassLogin
-    setBypassLogin(newValue)
-    localStorage.setItem('azimut-bypass-login', String(newValue))
+  const toggleProtection = () => {
+    const newValue = !isProtected
+    setIsProtected(newValue)
     
-    // Salvar também um token especial para bypass
+    // Salvar no localStorage
+    localStorage.setItem(PROTECTION_KEY, String(newValue))
+    
+    // Também manter compatibilidade com chaves antigas
     if (newValue) {
-      localStorage.setItem('azimut-dev-bypass-token', 'dev-mode-active')
-      console.log('🔓 Login desligado - Acesso direto ativo')
-      // Disparar evento customizado para atualizar proteção sem reload
-      window.dispatchEvent(new CustomEvent('azimut-protection-change', { detail: { protected: false } }))
-      alert('✅ Login desligado! A página será recarregada.')
-      setTimeout(() => window.location.reload(), 500)
-    } else {
+      // Site protegido - remover bypass
+      localStorage.removeItem('azimut-bypass-login')
       localStorage.removeItem('azimut-dev-bypass-token')
-      console.log('🔒 Login ligado - Tela de autenticação ativa')
-      // Disparar evento customizado para atualizar proteção sem reload
-      window.dispatchEvent(new CustomEvent('azimut-protection-change', { detail: { protected: true } }))
-      alert('🔒 Login ligado! A página será recarregada.')
-      setTimeout(() => window.location.reload(), 500)
+      console.log('🔒 Login LIGADO - Site protegido')
+    } else {
+      // Site aberto - adicionar bypass
+      localStorage.setItem('azimut-bypass-login', 'true')
+      localStorage.setItem('azimut-dev-bypass-token', 'dev-mode-active')
+      console.log('🔓 Login DESLIGADO - Acesso livre')
     }
+    
+    // Mostrar feedback e recarregar
+    alert(newValue ? '🔒 Login LIGADO! Recarregando...' : '🔓 Login DESLIGADO! Recarregando...')
+    
+    // Forçar reload completo para garantir que App.tsx receba a mudança
+    setTimeout(() => {
+      window.location.href = window.location.href
+    }, 300)
   }
 
   const clearCache = () => {
     localStorage.clear()
     sessionStorage.clear()
     console.log('🗑️ Cache cleared!')
-    alert('Cache limpo! Recarregue a página.')
+    alert('Cache limpo! A página será recarregada.')
+    window.location.reload()
   }
 
   return (
@@ -78,11 +93,11 @@ export default function DevToolsButton() {
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-700">
             <h3 className="text-white font-semibold flex items-center gap-2">
               <span>🔧</span>
-              <span>Dev Tools</span>
+              <span>DEV TOOLS</span>
             </h3>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-slate-400 hover:text-white transition-colors"
+              className="text-slate-400 hover:text-white transition-colors text-xl"
             >
               ✕
             </button>
@@ -90,18 +105,33 @@ export default function DevToolsButton() {
 
           {/* Opções */}
           <div className="space-y-3">
-            {/* Login Screen Toggle */}
-            <label className="flex items-center justify-between p-3 rounded-lg bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 cursor-pointer transition-colors">
-              <span className="text-sm text-slate-300">
-                {bypassLogin ? '🔓 Login Desligado' : '🔒 Login Ligado'}
-              </span>
-              <input
-                type="checkbox"
-                checked={!bypassLogin}
-                onChange={toggleBypassLogin}
-                className="w-5 h-5 rounded border-slate-600 text-azimut-red focus:ring-2 focus:ring-azimut-red"
-              />
-            </label>
+            {/* Login Screen Toggle - MAIS VISÍVEL */}
+            <div 
+              className={`p-3 rounded-lg cursor-pointer transition-colors ${
+                isProtected 
+                  ? 'bg-green-900/30 hover:bg-green-900/50 border border-green-700' 
+                  : 'bg-red-900/30 hover:bg-red-900/50 border border-red-700'
+              }`}
+              onClick={toggleProtection}
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-white">
+                  {isProtected ? '🔒 Login Ligado' : '🔓 Login Desligado'}
+                </span>
+                <div className={`w-12 h-6 rounded-full relative transition-colors ${
+                  isProtected ? 'bg-green-600' : 'bg-red-600'
+                }`}>
+                  <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                    isProtected ? 'left-1' : 'right-1 translate-x-0'
+                  }`} style={{ left: isProtected ? '4px' : 'auto', right: isProtected ? 'auto' : '4px' }} />
+                </div>
+              </div>
+              <p className="text-xs text-slate-400 mt-1">
+                {isProtected 
+                  ? 'Visitantes precisam de senha' 
+                  : 'Acesso direto sem senha'}
+              </p>
+            </div>
 
             {/* Debug Mode */}
             <label className="flex items-center justify-between p-3 rounded-lg bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 cursor-pointer transition-colors">

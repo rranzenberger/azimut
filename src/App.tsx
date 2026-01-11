@@ -28,36 +28,41 @@ import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDet
 // Para FORÇAR aberto durante dev, mude DEFAULT_PROTECTED para false
 // ═══════════════════════════════════════════════════════════════
 
-// Padrão: site protegido (true = pede senha)
-const DEFAULT_PROTECTED = true // Site protegido por padrão (DevTools pode desativar)
+// Chave do localStorage para proteção (sincronizado com DevToolsButton)
+const PROTECTION_KEY = 'azimut-site-protected'
 
 // Função para verificar se deve mostrar login
-// IMPORTANTE: Esta função lê localStorage toda vez que é chamada (não cacheado)
+// Lê localStorage diretamente - simples e confiável
 const shouldShowLogin = (): boolean => {
-  // Se forçado como aberto, não mostra login
-  if (!DEFAULT_PROTECTED) {
-    console.log('🔓 DEFAULT_PROTECTED = false - Acesso direto forçado')
-    return false
-  }
-  
-  // Verificar bypass do DevTools (ler localStorage sempre - não cachear)
   try {
-    const bypassActive = typeof window !== 'undefined' && localStorage.getItem('azimut-bypass-login') === 'true'
-    const devBypassToken = typeof window !== 'undefined' && localStorage.getItem('azimut-dev-bypass-token') === 'dev-mode-active'
+    if (typeof window === 'undefined') return true // SSR: proteger por padrão
     
-    // Se bypass ativo, não mostra login
-    if (bypassActive || devBypassToken) {
-      console.log('🔓 DevTools: Login desligado - Acesso direto (bypass ativo)')
-      return false
+    // Ler a chave principal de proteção
+    const protectionValue = localStorage.getItem(PROTECTION_KEY)
+    
+    // Se não existe a chave, verificar chaves antigas (compatibilidade)
+    if (protectionValue === null) {
+      const bypassActive = localStorage.getItem('azimut-bypass-login') === 'true'
+      const devBypassToken = localStorage.getItem('azimut-dev-bypass-token') === 'dev-mode-active'
+      
+      if (bypassActive || devBypassToken) {
+        console.log('🔓 DevTools (legado): Login desligado')
+        return false
+      }
+      
+      console.log('🔒 Site protegido (padrão)')
+      return true
     }
+    
+    // Usar a chave principal
+    const isProtected = protectionValue === 'true'
+    console.log(isProtected ? '🔒 Site protegido' : '🔓 Login desligado (DevTools)')
+    return isProtected
+    
   } catch (error) {
-    // localStorage pode não estar disponível (SSR)
     console.warn('⚠️ Erro ao ler localStorage:', error)
+    return true // Proteger por padrão em caso de erro
   }
-  
-  // Caso contrário, mostra login
-  console.log('🔒 Site protegido - Login necessário')
-  return true
 }
 
 // Calcular no momento da inicialização
