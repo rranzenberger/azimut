@@ -1,289 +1,252 @@
 import React, { useEffect, useRef } from 'react'
-import { t, type Lang } from '../i18n'
+import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
+import LangLink from '../components/LangLink'
 
 interface TermsProps {
   lang: Lang
 }
 
-/**
- * 📄 TERMOS DE USO
- * 
- * Página legal com termos de uso do site
- */
-
 const Terms: React.FC<TermsProps> = ({ lang }) => {
   const starRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (starRef.current) {
-      starRef.current.style.opacity = '0.15'
+    const star = starRef.current
+    if (!star) return
+
+    let ticking = false
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrolled = window.pageYOffset || document.documentElement.scrollTop
+          const parallax = scrolled * 0.2
+          if (star) {
+            star.style.transform = `translateY(${parallax}px)`
+          }
+          ticking = false
+        })
+        ticking = true
+      }
     }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Textos por idioma
   const content = {
     pt: {
       title: 'Termos de Uso',
+      subtitle: 'Condições de uso do site e serviços',
       lastUpdate: 'Última atualização: Janeiro 2026',
+      highlights: [
+        { icon: '✅', title: 'Transparente', desc: 'Linguagem clara e direta' },
+        { icon: '⚖️', title: 'Justo', desc: 'Proteção mútua' },
+        { icon: '🌍', title: 'Internacional', desc: 'Brasil & Canadá' }
+      ],
       sections: [
         {
+          icon: '📜',
           title: '1. Aceitação dos Termos',
-          content: `Ao acessar e usar o site azimut.com ("Site"), você concorda em cumprir estes Termos de Uso. Se você não concorda com estes termos, por favor não use nosso Site.`
+          content: 'Ao usar azmt.com, você concorda com estes termos. Se não concorda, por favor não use nosso site.',
+          type: 'simple'
         },
         {
+          icon: '🖥️',
           title: '2. Uso do Site',
-          content: `**2.1. Licença de Uso:**
-Concedemos a você uma licença limitada, não exclusiva e não transferível para acessar e usar o Site para fins pessoais e comerciais legítimos.
-
-**2.2. Restrições:**
-Você não pode:
-- Copiar, modificar ou distribuir conteúdo sem autorização
-- Usar o Site para fins ilegais ou não autorizados
-- Tentar hackear ou comprometer a segurança do Site
-- Fazer engenharia reversa de qualquer parte do Site
-- Usar robots, scrapers ou ferramentas automatizadas sem permissão`
+          items: [
+            { title: 'Permitido', icon: '✅', list: ['Navegar pelo site', 'Preencher formulários', 'Baixar press kit', 'Compartilhar nas redes sociais'] },
+            { title: 'Proibido', icon: '⛔', list: ['Copiar conteúdo sem autorização', 'Hackear ou comprometer segurança', 'Usar robots/scrapers sem permissão', 'Engenharia reversa'] }
+          ],
+          type: 'grid'
         },
         {
+          icon: '©️',
           title: '3. Propriedade Intelectual',
-          content: `Todo o conteúdo do Site (textos, imagens, vídeos, logos, código) é propriedade da Azimut ou de seus licenciadores e está protegido por leis de direitos autorais, marcas registradas e outras leis de propriedade intelectual.
-
-**Projetos e Portfolio:**
-As imagens e descrições de projetos são de propriedade da Azimut e de nossos clientes. Uso não autorizado é proibido.`
+          content: 'Todo conteúdo (textos, imagens, vídeos, código) é propriedade da Azimut. Protegido por leis de direitos autorais.',
+          highlight: 'Projetos: Imagens e descrições são propriedade da Azimut e clientes',
+          type: 'simple'
         },
         {
-          title: '4. Formulários e Comunicações',
-          content: `**4.1. Budget Wizard e Formulários de Contato:**
-Ao enviar informações através de nossos formulários, você:
-- Garante que as informações são verdadeiras e precisas
-- Nos autoriza a entrar em contato sobre sua solicitação
-- Concorda com nossa Política de Privacidade
-
-**4.2. Newsletter:**
-Ao se inscrever em nossa newsletter, você concorda em receber comunicações da Azimut. Você pode cancelar a inscrição a qualquer momento.`
+          icon: '📝',
+          title: '4. Formulários',
+          content: 'Ao enviar formulários, você garante que as informações são verdadeiras e nos autoriza a entrar em contato.',
+          type: 'simple'
         },
         {
+          icon: '⚠️',
           title: '5. Isenção de Responsabilidade',
-          content: `**5.1. "Como Está":**
-O Site é fornecido "como está" sem garantias de qualquer tipo, expressas ou implícitas.
-
-**5.2. Disponibilidade:**
-Não garantimos que o Site estará sempre disponível ou livre de erros. Podemos suspender ou descontinuar o Site a qualquer momento.
-
-**5.3. Links Externos:**
-O Site pode conter links para sites de terceiros. Não somos responsáveis pelo conteúdo ou práticas de privacidade desses sites.`
+          cards: [
+            { icon: '🏗️', title: '"Como Está"', desc: 'Site fornecido sem garantias' },
+            { icon: '🔌', title: 'Disponibilidade', desc: 'Pode ter manutenções' },
+            { icon: '🔗', title: 'Links Externos', desc: 'Não somos responsáveis' }
+          ],
+          type: 'cards'
         },
         {
-          title: '6. Limitação de Responsabilidade',
-          content: `Na máxima extensão permitida por lei, a Azimut não será responsável por:
-- Danos diretos, indiretos, incidentais ou consequenciais
-- Perda de lucros, dados ou goodwill
-- Interrupção de negócios
-- Qualquer dano resultante do uso ou incapacidade de usar o Site
-
-Nossa responsabilidade total não excederá R$ 1.000,00 (mil reais).`
-        },
-        {
-          title: '7. Indenização',
-          content: `Você concorda em indenizar e isentar a Azimut, seus diretores, funcionários e parceiros de qualquer reclamação, dano ou despesa (incluindo honorários advocatícios) resultante de:
-- Seu uso do Site
-- Violação destes Termos
-- Violação de direitos de terceiros`
-        },
-        {
-          title: '8. Modificações',
-          content: `Reservamos o direito de modificar estes Termos a qualquer momento. Alterações significativas serão comunicadas através de aviso no Site. Seu uso contínuo após mudanças constitui aceitação dos novos termos.`
-        },
-        {
+          icon: '🌍',
           title: '9. Lei Aplicável',
-          content: `Estes Termos são regidos pelas leis do Brasil. Qualquer disputa será resolvida nos tribunais de São Paulo, Brasil.
-
-Para questões relacionadas a projetos canadenses, aplicam-se as leis do Québec, Canadá.`
+          content: 'Regido pelas leis do Brasil (projetos BR) e Canadá/Québec (projetos CA).',
+          flags: '🇧🇷 Brasil | 🇨🇦 Canadá',
+          type: 'simple'
         },
         {
+          icon: '📧',
           title: '10. Contato',
-          content: `Dúvidas sobre estes Termos? Entre em contato:
-
-**Email:** contact@azimut.com  
-**Endereços:**  
-🇧🇷 [Endereço Brasil]  
-🇨🇦 [Endereço Canadá]`
+          contact: {
+            email: 'contact@azimut.com',
+            locations: ['🇧🇷 São Paulo, Brasil', '🇨🇦 Montreal, Canadá']
+          },
+          type: 'contact'
         }
-      ],
-      footer: '© 2026 Azimut. Todos os direitos reservados.'
+      ]
     },
-    en: {
-      title: 'Terms of Use',
-      lastUpdate: 'Last updated: January 2026',
-      sections: [
-        {
-          title: '1. Acceptance of Terms',
-          content: `By accessing and using the azimut.com website ("Site"), you agree to comply with these Terms of Use. If you do not agree with these terms, please do not use our Site.`
-        },
-        {
-          title: '2. Use of the Site',
-          content: `**2.1. License:**
-We grant you a limited, non-exclusive, non-transferable license to access and use the Site for personal and legitimate commercial purposes.
-
-**2.2. Restrictions:**
-You may not:
-- Copy, modify or distribute content without authorization
-- Use the Site for illegal or unauthorized purposes
-- Attempt to hack or compromise Site security
-- Reverse engineer any part of the Site
-- Use robots, scrapers or automated tools without permission`
-        },
-        {
-          title: '3. Intellectual Property',
-          content: `All Site content (text, images, videos, logos, code) is owned by Azimut or its licensors and is protected by copyright, trademark and other intellectual property laws.
-
-**Projects and Portfolio:**
-Project images and descriptions are owned by Azimut and our clients. Unauthorized use is prohibited.`
-        },
-        {
-          title: '4. Forms and Communications',
-          content: `**4.1. Budget Wizard and Contact Forms:**
-By submitting information through our forms, you:
-- Guarantee that the information is true and accurate
-- Authorize us to contact you about your request
-- Agree to our Privacy Policy
-
-**4.2. Newsletter:**
-By subscribing to our newsletter, you agree to receive communications from Azimut. You can unsubscribe at any time.`
-        },
-        {
-          title: '5. Disclaimer',
-          content: `**5.1. "As Is":**
-The Site is provided "as is" without warranties of any kind, express or implied.
-
-**5.2. Availability:**
-We do not guarantee that the Site will always be available or error-free. We may suspend or discontinue the Site at any time.
-
-**5.3. External Links:**
-The Site may contain links to third-party sites. We are not responsible for the content or privacy practices of these sites.`
-        },
-        {
-          title: '6. Limitation of Liability',
-          content: `To the maximum extent permitted by law, Azimut will not be liable for:
-- Direct, indirect, incidental or consequential damages
-- Loss of profits, data or goodwill
-- Business interruption
-- Any damage resulting from use or inability to use the Site
-
-Our total liability will not exceed $1,000 CAD (one thousand Canadian dollars).`
-        },
-        {
-          title: '7. Indemnification',
-          content: `You agree to indemnify and hold harmless Azimut, its directors, employees and partners from any claim, damage or expense (including legal fees) resulting from:
-- Your use of the Site
-- Violation of these Terms
-- Violation of third-party rights`
-        },
-        {
-          title: '8. Modifications',
-          content: `We reserve the right to modify these Terms at any time. Significant changes will be communicated through Site notice. Your continued use after changes constitutes acceptance of the new terms.`
-        },
-        {
-          title: '9. Governing Law',
-          content: `These Terms are governed by the laws of Canada (Québec). Any dispute will be resolved in the courts of Montreal, Canada.
-
-For matters related to Brazilian projects, the laws of Brazil apply.`
-        },
-        {
-          title: '10. Contact',
-          content: `Questions about these Terms? Contact us:
-
-**Email:** contact@azimut.com  
-**Addresses:**  
-🇧🇷 [Brazil Address]  
-🇨🇦 [Canada Address]`
-        }
-      ],
-      footer: '© 2026 Azimut. All rights reserved.'
-    },
-    fr: {
-      title: 'Conditions d\'Utilisation',
-      lastUpdate: 'Dernière mise à jour : Janvier 2026',
-      sections: [
-        {
-          title: '1. Acceptation des Conditions',
-          content: `En accédant et en utilisant le site azimut.com, vous acceptez de respecter ces Conditions d'Utilisation.`
-        }
-      ],
-      footer: '© 2026 Azimut. Tous droits réservés.'
-    },
-    es: {
-      title: 'Términos de Uso',
-      lastUpdate: 'Última actualización: Enero 2026',
-      sections: [
-        {
-          title: '1. Aceptación de los Términos',
-          content: `Al acceder y usar el sitio azimut.com, usted acepta cumplir con estos Términos de Uso.`
-        }
-      ],
-      footer: '© 2026 Azimut. Todos los derechos reservados.'
-    }
+    en: { title: 'Terms of Use', subtitle: 'Site usage conditions', lastUpdate: 'Last updated: January 2026', sections: [] },
+    fr: { title: 'Conditions d\'Utilisation', subtitle: 'Conditions d\'usage du site', lastUpdate: 'Dernière mise à jour : Janvier 2026', sections: [] },
+    es: { title: 'Términos de Uso', subtitle: 'Condiciones de uso del sitio', lastUpdate: 'Última actualización: Enero 2026', sections: [] }
   }
 
-  const text = content[lang]
+  const text = content[lang] || content.pt
 
   return (
     <>
       <SEO 
-        title={text.title}
-        description="Termos de Uso do site Azimut. Condições legais de uso."
+        title={`${text.title} - Azimut`}
+        description="Termos de Uso do site Azimut"
+        lang={lang}
+        path="/terms"
       />
       
-      <main className="relative min-h-screen pt-8 md:pt-12 pb-24">
-        {/* Estrela de fundo */}
+      <main className="relative py-16 md:py-20">
+        {/* Star Parallax */}
         <div 
           ref={starRef}
-          className="fixed -right-28 -bottom-40 min-[768px]:-right-40 min-[768px]:-bottom-60 z-[-5] pointer-events-none"
-          style={{ opacity: 0 }}
-          aria-hidden="true"
+          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:-right-40 md:h-[680px] md:w-[680px] transition-transform duration-75"
+          style={{ opacity: 0.15, zIndex: -5, willChange: 'transform' }}
         >
-          <img 
-            src="/logo-azimut-star.svg" 
-            alt="" 
-            className="h-[520px] w-[520px] min-[768px]:h-[680px] min-[768px]:w-[680px]"
-          />
+          <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" loading="lazy" />
         </div>
 
-        {/* Conteúdo */}
-        <div className="max-w-4xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-          
-          {/* Header */}
-          <div className="mb-12">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+        <div className="mx-auto max-w-6xl px-6">
+          {/* Hero */}
+          <div className="mb-16 text-center">
+            <h1 className="mb-4 font-handel text-5xl md:text-6xl font-bold uppercase text-theme-text">
               {text.title}
             </h1>
-            <p className="text-sm text-gray-400">
+            <p className="text-xl text-theme-text-secondary max-w-3xl mx-auto">
+              {text.subtitle}
+            </p>
+            <p className="text-sm text-theme-text-secondary/60 mt-4">
               {text.lastUpdate}
             </p>
           </div>
 
-          {/* Seções */}
-          <div className="space-y-8">
-            {text.sections.map((section, index) => (
-              <section key={index} className="prose prose-invert max-w-none">
-                <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">
-                  {section.title}
-                </h2>
-                <div 
-                  className="text-gray-300 leading-relaxed whitespace-pre-line"
-                  dangerouslySetInnerHTML={{ 
-                    __html: section.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
-                  }}
-                />
+          {/* Highlights */}
+          {text.highlights && (
+            <div className="grid md:grid-cols-3 gap-6 mb-16">
+              {text.highlights.map((item, i) => (
+                <div key={i} className="text-center p-6 rounded-lg bg-slate-900/30 border border-azimut-red/20">
+                  <div className="text-4xl mb-3">{item.icon}</div>
+                  <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
+                  <p className="text-sm text-theme-text-secondary">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Sections */}
+          <div className="max-w-4xl mx-auto space-y-12">
+            {text.sections && text.sections.map((section, i) => (
+              <section key={i} className="relative">
+                <div className="flex items-start gap-4 mb-6">
+                  <span className="text-4xl">{section.icon}</span>
+                  <h2 className="font-handel text-3xl font-bold text-theme-text">
+                    {section.title}
+                  </h2>
+                </div>
+
+                {section.type === 'simple' && (
+                  <div className="pl-16 space-y-4">
+                    <p className="text-lg leading-relaxed text-theme-text-secondary">
+                      {section.content}
+                    </p>
+                    {section.highlight && (
+                      <div className="p-4 rounded-lg bg-azimut-red/10 border-l-4 border-azimut-red">
+                        <p className="text-sm font-semibold text-white">{section.highlight}</p>
+                      </div>
+                    )}
+                    {section.flags && (
+                      <div className="text-center p-4 rounded-lg bg-slate-900/30 border border-azimut-red/20">
+                        <p className="text-lg font-semibold text-white">{section.flags}</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {section.type === 'grid' && section.items && (
+                  <div className="pl-16 grid md:grid-cols-2 gap-6">
+                    {section.items.map((item, j) => (
+                      <div key={j} className="p-6 rounded-lg bg-slate-900/30 border border-azimut-red/20">
+                        <div className="flex items-center gap-2 mb-4">
+                          <span className="text-2xl">{item.icon}</span>
+                          <h4 className="text-lg font-bold text-white">{item.title}</h4>
+                        </div>
+                        <ul className="space-y-2">
+                          {item.list.map((li, k) => (
+                            <li key={k} className="flex items-start gap-2 text-sm text-theme-text-secondary">
+                              <span className="text-azimut-red mt-0.5">•</span>
+                              <span>{li}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {section.type === 'cards' && section.cards && (
+                  <div className="pl-16 grid md:grid-cols-3 gap-4">
+                    {section.cards.map((card, j) => (
+                      <div key={j} className="p-4 rounded-lg bg-slate-900/50 border border-azimut-red/20 text-center">
+                        <div className="text-3xl mb-2">{card.icon}</div>
+                        <h4 className="font-semibold text-white mb-2">{card.title}</h4>
+                        <p className="text-sm text-theme-text-secondary">{card.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {section.type === 'contact' && section.contact && (
+                  <div className="pl-16">
+                    <div className="p-6 rounded-lg bg-gradient-to-br from-azimut-red/10 to-slate-900/50 border border-azimut-red/30">
+                      <a 
+                        href={`mailto:${section.contact.email}`}
+                        className="block text-xl font-bold text-white mb-4 hover:text-azimut-red transition-colors"
+                      >
+                        {section.contact.email}
+                      </a>
+                      <div className="flex flex-wrap gap-4">
+                        {section.contact.locations.map((loc, j) => (
+                          <span key={j} className="text-sm text-theme-text-secondary">
+                            {loc}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </section>
             ))}
           </div>
 
-          {/* Footer */}
-          <footer className="mt-16 pt-8 border-t border-white/10 text-center text-sm text-gray-500">
-            {text.footer}
-          </footer>
-
+          {/* CTA */}
+          <div className="mt-16 text-center">
+            <LangLink
+              to="/contact"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-azimut-red text-white font-sora font-semibold uppercase tracking-wider hover:bg-azimut-red/90 transition-all shadow-lg"
+            >
+              {lang === 'pt' ? 'Tem Dúvidas?' : 'Questions?'} → {lang === 'pt' ? 'Fale Conosco' : 'Contact Us'}
+            </LangLink>
+          </div>
         </div>
       </main>
     </>
@@ -291,4 +254,3 @@ For matters related to Brazilian projects, the laws of Brazil apply.`
 }
 
 export default Terms
-
