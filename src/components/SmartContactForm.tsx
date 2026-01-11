@@ -794,27 +794,8 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
   }
 
   if (success) {
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-        <div className="bg-white dark:bg-slate-900 rounded-xl p-8 max-w-md w-full shadow-2xl animate-fade-in-up">
-          <div className="text-center">
-            <div className="text-6xl mb-4">✅</div>
-            <h2 className="text-2xl font-handel uppercase tracking-wider text-slate-900 dark:text-white mb-4">
-              {t.successTitle}
-            </h2>
-            <p className="text-slate-600 dark:text-slate-300 mb-6">
-              {t.successMessage}
-            </p>
-            <button
-              onClick={() => setSuccess(false)}
-              className="px-6 py-3 bg-azimut-red text-white rounded-lg hover:bg-azimut-red/90 transition-colors font-semibold"
-            >
-              {t.successCTA}
-            </button>
-          </div>
-        </div>
-      </div>
-    )
+    // Redireciona automaticamente, não mostra modal
+    return null
   }
 
   return (

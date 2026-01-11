@@ -221,25 +221,8 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
   }
 
   if (success) {
-    return (
-      <div className="p-8 card-adaptive rounded-2xl border border-azimut-red/50 bg-azimut-red/10 animate-fade-in">
-        <div className="text-center">
-          <div className="text-6xl mb-4">✅</div>
-          <h3 className="text-2xl font-semibold text-white mb-4">
-            {t.successMessage}
-          </h3>
-          <p className="text-white/70 mb-6">
-            Verifique seu email (inclusive spam) para mais informações.
-          </p>
-          <button
-            onClick={() => setSuccess(false)}
-            className="px-6 py-3 bg-azimut-red hover:bg-azimut-red/90 text-white font-semibold rounded-lg transition-all"
-          >
-            Enviar Outro Interesse
-          </button>
-        </div>
-      </div>
-    )
+    // Redireciona automaticamente, não mostra mensagem
+    return null
   }
 
   return (

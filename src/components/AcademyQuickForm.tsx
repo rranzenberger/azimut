@@ -367,18 +367,8 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         </p>
       </div>
 
-      {/* Success Message */}
-      {success && (
-        <div id="form-success" className="mb-8 p-6 bg-green-500/20 border border-green-500/40 rounded-xl text-center">
-          <div className="text-5xl mb-3">🎉</div>
-          <p className="text-xl font-bold text-green-400 mb-2">
-            {t.success}
-          </p>
-          <p className="text-white/70">
-            Nossa equipe entrará em contato em até 24 horas.
-          </p>
-        </div>
-      )}
+      {/* Success Message - NÃO MOSTRA, redireciona direto */}
+      {success && null}
 
       {/* Form */}
       {!success && (
