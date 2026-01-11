@@ -7,6 +7,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { sendEmail } from '@/lib/email-service'
+import { generatePersonalizedEmail, generateInternalSummary } from '@/src/lib/ai-email-generator'
 
 export const runtime = 'nodejs'
 
@@ -126,20 +127,34 @@ export async function POST(request: NextRequest) {
     // Gerar subject inteligente
     const subject = generateSubject(body)
     
-    // Gerar corpo do email
-    const htmlBody = generateEmailBody(body)
-    
-    // Enviar email
+    // 1. EMAIL PARA NÓS (resumo)
+    const internalBody = await generateInternalSummary(body)
     await sendEmail({
       to: toEmail,
       subject: subject,
-      html: htmlBody,
-      from: 'noreply@azmt.com.br'
+      html: internalBody,
+      from: 'system@azmt.com.br'
     })
+
+    // 2. EMAIL PARA O LEAD (personalizado IA)
+    if (body.email && body.email.includes('@')) {
+      try {
+        const personalizedEmail = await generatePersonalizedEmail(body)
+        await sendEmail({
+          to: body.email,
+          subject: `Re: Seu interesse em ${body.interest || 'projetos imersivos'} - Azimut`,
+          html: personalizedEmail.replace(/\n/g, '<br/>'),
+          from: 'ranz@azimutimmersive.com',
+          replyTo: toEmail
+        })
+      } catch (leadEmailError) {
+        console.warn('Lead email failed (non-critical):', leadEmailError)
+      }
+    }
 
     return NextResponse.json({ 
       success: true,
-      message: 'Email sent',
+      message: 'Emails sent',
       to: toEmail,
       subject: subject
     })
