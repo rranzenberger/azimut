@@ -6,6 +6,7 @@
 // ════════════════════════════════════════════════════════════
 
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import ApiService from '../services/api'
 
@@ -25,6 +26,7 @@ interface FormData {
 }
 
 const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefilledData }) => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState<FormData>({
     name: '',
     contact: '',
@@ -311,6 +313,11 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
       }
 
       setSuccess(true)
+      
+      // Redirecionar para thank-you após 2 segundos
+      setTimeout(() => {
+        navigate(`/${lang}/thank-you`)
+      }, 2000)
       
       // Limpar localStorage após sucesso
       localStorage.removeItem('quizVancouverResult')

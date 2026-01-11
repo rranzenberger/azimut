@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import ApiService from '../services/api'
 
@@ -25,6 +26,7 @@ interface FormData {
 }
 
 const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -163,8 +165,33 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
     setSuccess(false)
 
     try {
+      // 1. Submeter para o backoffice (API existente)
       await ApiService.submitVancouverLead(formData)
+      
+      // 2. Enviar notificação por email (API nova)
+      try {
+        await fetch('/api/notify-form', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...formData,
+            formType: 'vancouver_interest_full',
+            lang,
+            score: 60 // Formulário completo = warm lead
+          })
+        })
+      } catch (emailErr) {
+        console.warn('Email notification failed:', emailErr)
+        // Não bloqueia o sucesso do formulário
+      }
+      
       setSuccess(true)
+      
+      // Redirecionar para thank-you após 2 segundos
+      setTimeout(() => {
+        navigate(`/${lang}/thank-you`)
+      }, 2000)
+      
       setFormData({
         name: '',
         email: '',
