@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { LeadsList } from './components/LeadsList';
 import { LeadsFilters } from './components/LeadsFilters';
 import { KanbanBoard } from './components/KanbanBoard';
+import { CleanupTestDataButton } from './components/CleanupTestDataButton';
 
 export const revalidate = 0;
 
