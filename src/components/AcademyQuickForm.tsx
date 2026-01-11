@@ -1,8 +1,7 @@
 // ════════════════════════════════════════════════════════════
 // ACADEMY QUICK FORM - FORMULÁRIO SIMPLIFICADO
 // ════════════════════════════════════════════════════════════
-// Apenas 3 campos essenciais + opcionais
-// Validação suave + Dropdown bonito
+// Email + Telefone separados + Geolocalização automática
 // ════════════════════════════════════════════════════════════
 
 import React, { useState, useEffect, useRef } from 'react'
@@ -96,19 +95,23 @@ interface AcademyQuickFormProps {
 
 interface FormData {
   name: string
-  contact: string // Email OU WhatsApp (usuário escolhe)
-  school?: string // Para Vancouver
-  courseArea?: string // Área de interesse (opcional)
+  email: string // Email separado
+  countryCode: string // Código do país (+55, +1, etc)
+  phone: string // Telefone sem código
+  school?: string
+  courseArea?: string
   preferredLanguage?: Lang
   contactPreference?: 'email' | 'whatsapp' | 'call' | 'any'
-  interest: string // Auto-preenchido
+  interest: string
 }
 
 const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefilledData }) => {
   const navigate = useNavigate()
   const [formData, setFormData] = useState<FormData>({
     name: '',
-    contact: '',
+    email: '',
+    countryCode: '+1', // Default
+    phone: '',
     school: type === 'vancouver' ? 'undecided' : undefined,
     courseArea: '',
     preferredLanguage: lang,
@@ -118,10 +121,41 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [contactWarning, setContactWarning] = useState<string | null>(null)
 
+  // Detectar geolocalização e configurar código de país
   useEffect(() => {
-    // Buscar dados do Quiz/Recomendador no localStorage
+    const detectCountry = async () => {
+      try {
+        // Tentar detectar por timezone
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+        
+        let detectedCode = '+1' // Default: América do Norte
+        
+        if (timezone.includes('America/Sao_Paulo') || timezone.includes('Brazil')) {
+          detectedCode = '+55' // Brasil
+        } else if (timezone.includes('America/Toronto') || timezone.includes('America/Vancouver')) {
+          detectedCode = '+1' // Canadá
+        } else if (timezone.includes('America/New_York') || timezone.includes('America/Los_Angeles')) {
+          detectedCode = '+1' // EUA
+        } else if (timezone.includes('Europe/Madrid') || timezone.includes('Europe/Barcelona')) {
+          detectedCode = '+34' // Espanha
+        } else if (timezone.includes('Europe/Paris')) {
+          detectedCode = '+33' // França
+        } else if (timezone.includes('Europe/Lisbon')) {
+          detectedCode = '+351' // Portugal
+        }
+        
+        setFormData(prev => ({ ...prev, countryCode: detectedCode }))
+      } catch (error) {
+        console.warn('Could not detect country:', error)
+      }
+    }
+
+    detectCountry()
+  }, [])
+
+  // Auto-preencher dados do Quiz
+  useEffect(() => {
     const quizData = localStorage.getItem('quizVancouverResult')
     const recommendationData = localStorage.getItem('courseRecommendation')
     
@@ -130,7 +164,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
     if (quizData && type === 'vancouver') {
       try {
         const quiz = JSON.parse(quizData)
-        autoFilled.interest = `Interessado em ${quiz.bestSchool} - ${quiz.area || 'Animação/VFX'}. Score: ${quiz.score}/100. Budget estimado: ${quiz.estimatedBudget}.`
+        autoFilled.interest = `Interessado em ${quiz.bestSchool} - ${quiz.area || 'Animação/VFX'}. Score: ${quiz.score}/100.`
       } catch (e) {
         console.warn('Erro ao parsear Quiz data')
       }
@@ -148,24 +182,36 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
       }
     }
 
-    setFormData({
-      ...formData,
+    setFormData(prev => ({
+      ...prev,
       ...autoFilled,
       ...prefilledData
-    })
+    }))
   }, [type, prefilledData])
 
-  // Cursos VFS e VanArts completos
+  // Códigos de país
+  const countryCodes = [
+    { value: '+1', label: '+1', icon: '🇨🇦' }, // Canadá/EUA
+    { value: '+55', label: '+55', icon: '🇧🇷' }, // Brasil
+    { value: '+34', label: '+34', icon: '🇪🇸' }, // Espanha
+    { value: '+33', label: '+33', icon: '🇫🇷' }, // França
+    { value: '+351', label: '+351', icon: '🇵🇹' }, // Portugal
+    { value: '+52', label: '+52', icon: '🇲🇽' }, // México
+    { value: '+54', label: '+54', icon: '🇦🇷' }, // Argentina
+    { value: '+56', label: '+56', icon: '🇨🇱' }, // Chile
+    { value: '+44', label: '+44', icon: '🇬🇧' }, // UK
+    { value: '+49', label: '+49', icon: '🇩🇪' }, // Alemanha
+  ]
+
+  // Cursos VFS e VanArts
   const courseOptions = {
     pt: [
       { value: '', label: 'Não quero especificar agora', icon: '✨' },
-      // VanArts
       { value: 'vanarts-3d-animation', label: 'VanArts - Animação 3D', icon: '🎬' },
       { value: 'vanarts-visual-effects', label: 'VanArts - Efeitos Visuais (VFX)', icon: '💫' },
       { value: 'vanarts-game-art-design', label: 'VanArts - Game Art & Design', icon: '🎮' },
       { value: 'vanarts-character-animation', label: 'VanArts - Animação de Personagens', icon: '🦸' },
       { value: 'vanarts-digital-painting', label: 'VanArts - Pintura Digital', icon: '🎨' },
-      // VFS
       { value: 'vfs-film-production', label: 'VFS - Produção Cinematográfica', icon: '🎥' },
       { value: 'vfs-3d-animation-vfx', label: 'VFS - Animação 3D & VFX', icon: '🌟' },
       { value: 'vfs-game-design', label: 'VFS - Game Design', icon: '🕹️' },
@@ -180,48 +226,19 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
       { value: 'vanarts-3d-animation', label: 'VanArts - 3D Animation', icon: '🎬' },
       { value: 'vanarts-visual-effects', label: 'VanArts - Visual Effects (VFX)', icon: '💫' },
       { value: 'vanarts-game-art-design', label: 'VanArts - Game Art & Design', icon: '🎮' },
-      { value: 'vanarts-character-animation', label: 'VanArts - Character Animation', icon: '🦸' },
-      { value: 'vanarts-digital-painting', label: 'VanArts - Digital Painting', icon: '🎨' },
       { value: 'vfs-film-production', label: 'VFS - Film Production', icon: '🎥' },
-      { value: 'vfs-3d-animation-vfx', label: 'VFS - 3D Animation & VFX', icon: '🌟' },
       { value: 'vfs-game-design', label: 'VFS - Game Design', icon: '🕹️' },
       { value: 'vfs-sound-design', label: 'VFS - Sound Design', icon: '🎵' },
-      { value: 'vfs-acting', label: 'VFS - Acting for Film/TV', icon: '🎭' },
-      { value: 'vfs-writing', label: 'VFS - Writing for TV/Film', icon: '✍️' },
-      { value: 'vfs-makeup-design', label: 'VFS - Makeup Design for Film', icon: '💄' },
-      { value: 'vfs-programming', label: 'VFS - Programming for Games', icon: '💻' }
+      { value: 'vfs-acting', label: 'VFS - Acting for Film/TV', icon: '🎭' }
     ],
     es: [
       { value: '', label: 'No quiero especificar ahora', icon: '✨' },
       { value: 'vanarts-3d-animation', label: 'VanArts - Animación 3D', icon: '🎬' },
-      { value: 'vanarts-visual-effects', label: 'VanArts - Efectos Visuales (VFX)', icon: '💫' },
-      { value: 'vanarts-game-art-design', label: 'VanArts - Game Art & Design', icon: '🎮' },
-      { value: 'vanarts-character-animation', label: 'VanArts - Animación de Personajes', icon: '🦸' },
-      { value: 'vanarts-digital-painting', label: 'VanArts - Pintura Digital', icon: '🎨' },
       { value: 'vfs-film-production', label: 'VFS - Producción Cinematográfica', icon: '🎥' },
-      { value: 'vfs-3d-animation-vfx', label: 'VFS - Animación 3D & VFX', icon: '🌟' },
-      { value: 'vfs-game-design', label: 'VFS - Game Design', icon: '🕹️' },
-      { value: 'vfs-sound-design', label: 'VFS - Sound Design', icon: '🎵' },
-      { value: 'vfs-acting', label: 'VFS - Actuación para Cine/TV', icon: '🎭' },
-      { value: 'vfs-writing', label: 'VFS - Escritura para TV/Cine', icon: '✍️' },
-      { value: 'vfs-makeup-design', label: 'VFS - Makeup Design para Cine', icon: '💄' },
-      { value: 'vfs-programming', label: 'VFS - Programación para Juegos', icon: '💻' }
     ],
     fr: [
       { value: '', label: 'Je ne veux pas spécifier maintenant', icon: '✨' },
       { value: 'vanarts-3d-animation', label: 'VanArts - Animation 3D', icon: '🎬' },
-      { value: 'vanarts-visual-effects', label: 'VanArts - Effets Visuels (VFX)', icon: '💫' },
-      { value: 'vanarts-game-art-design', label: 'VanArts - Game Art & Design', icon: '🎮' },
-      { value: 'vanarts-character-animation', label: 'VanArts - Animation de Personnages', icon: '🦸' },
-      { value: 'vanarts-digital-painting', label: 'VanArts - Peinture Numérique', icon: '🎨' },
-      { value: 'vfs-film-production', label: 'VFS - Production Cinématographique', icon: '🎥' },
-      { value: 'vfs-3d-animation-vfx', label: 'VFS - Animation 3D & VFX', icon: '🌟' },
-      { value: 'vfs-game-design', label: 'VFS - Game Design', icon: '🕹️' },
-      { value: 'vfs-sound-design', label: 'VFS - Sound Design', icon: '🎵' },
-      { value: 'vfs-acting', label: 'VFS - Acting pour Film/TV', icon: '🎭' },
-      { value: 'vfs-writing', label: 'VFS - Écriture pour TV/Film', icon: '✍️' },
-      { value: 'vfs-makeup-design', label: 'VFS - Makeup Design pour Film', icon: '💄' },
-      { value: 'vfs-programming', label: 'VFS - Programmation pour Jeux', icon: '💻' }
     ]
   }
 
@@ -233,14 +250,15 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         workshop: 'Quero participar de um workshop 🎬',
         corporate: 'Quero um treinamento corporativo 🏢'
       },
-      subtitle: 'Super rápido: só 3 campos obrigatórios!',
+      subtitle: 'Preencha seus dados e te enviamos tudo!',
       fields: {
         name: 'Seu nome',
-        contact: 'Email ou WhatsApp',
+        email: 'Email',
+        phone: 'WhatsApp/Telefone (opcional)',
         school: 'Escola de interesse',
         courseArea: 'Área de interesse (opcional)',
-        preferredLanguage: 'Idioma preferido para atendimento',
-        contactPreference: 'Como prefere receber informações?'
+        preferredLanguage: 'Idioma preferido',
+        contactPreference: 'Como prefere ser contatado?'
       },
       schoolOptions: [
         { value: 'undecided', label: '🤔 Ainda não sei - Quero orientação FREE', icon: '💡' },
@@ -255,23 +273,22 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         { value: 'fr', label: '🇫🇷 Français' }
       ],
       contactPreferenceOptions: [
-        { value: 'email', label: '📧 Email (sem ligação)', icon: '📧' },
+        { value: 'email', label: '📧 Email', icon: '📧' },
         { value: 'whatsapp', label: '💬 WhatsApp', icon: '💬' },
-        { value: 'call', label: '📞 Pode me ligar', icon: '📞' },
-        { value: 'any', label: '🤝 Como for melhor', icon: '🤝' }
+        { value: 'call', label: '📞 Ligação', icon: '📞' },
+        { value: 'any', label: '🤝 Qualquer um', icon: '🤝' }
       ],
       placeholders: {
         name: 'Ex: João Silva',
-        contact: 'joao@email.com ou +55 21 99999-9999'
+        email: 'joao@email.com',
+        phone: '21 99999-9999'
       },
-      freeConsultation: '💡 Não sabe qual escola escolher? Oferecemos orientação gratuita!',
       submit: 'Quero Receber Info!',
       submitting: 'Enviando...',
-      required: 'Preenche seu nome e contato!',
-      contactHint: '💡 Pode ser email ou WhatsApp, como preferir!',
-      contactWarningEmail: '⚠️ Email parece incompleto (falta @). Mas se for WhatsApp, tudo certo!',
-      contactWarningPhone: '💬 WhatsApp detectado! Se preferir, pode adicionar código do país (+55, +1, etc)'
+      required: 'Preencha pelo menos nome e email OU telefone!',
+      emailOrPhone: '💡 Pelo menos email OU telefone é necessário'
     },
+    // Outros idiomas simplificados...
     en: {
       title: {
         vancouver: 'I wanna study in Vancouver 🇨🇦',
@@ -279,20 +296,21 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         workshop: 'I wanna join a workshop 🎬',
         corporate: 'I want corporate training 🏢'
       },
-      subtitle: 'Super quick: just 3 required fields!',
+      subtitle: 'Fill your data and we\'ll send you everything!',
       fields: {
         name: 'Your name',
-        contact: 'Email or WhatsApp',
+        email: 'Email',
+        phone: 'WhatsApp/Phone (optional)',
         school: 'School of interest',
         courseArea: 'Area of interest (optional)',
-        preferredLanguage: 'Preferred language for service',
+        preferredLanguage: 'Preferred language',
         contactPreference: 'How do you prefer to be contacted?'
       },
       schoolOptions: [
         { value: 'undecided', label: '🤔 Not sure yet - I want FREE guidance', icon: '💡' },
         { value: 'vanarts', label: 'VanArts (Animation, VFX, Game Design)', icon: '🎬' },
         { value: 'vfs', label: 'VFS (Film, Sound, Acting)', icon: '🎥' },
-        { value: 'both', label: 'Both - I want to know both', icon: '🌟' }
+        { value: 'both', label: 'Both', icon: '🌟' }
       ],
       languageOptions: [
         { value: 'pt', label: '🇧🇷 Português' },
@@ -301,22 +319,20 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         { value: 'fr', label: '🇫🇷 Français' }
       ],
       contactPreferenceOptions: [
-        { value: 'email', label: '📧 Email (no calls)', icon: '📧' },
+        { value: 'email', label: '📧 Email', icon: '📧' },
         { value: 'whatsapp', label: '💬 WhatsApp', icon: '💬' },
-        { value: 'call', label: '📞 Call me', icon: '📞' },
-        { value: 'any', label: '🤝 Whatever works', icon: '🤝' }
+        { value: 'call', label: '📞 Call', icon: '📞' },
+        { value: 'any', label: '🤝 Any', icon: '🤝' }
       ],
       placeholders: {
         name: 'Ex: John Smith',
-        contact: 'john@email.com or +1 555 1234'
+        email: 'john@email.com',
+        phone: '555 1234'
       },
-      freeConsultation: '💡 Not sure which school? We offer free guidance!',
       submit: 'Send Me Info!',
       submitting: 'Sending...',
-      required: 'Fill your name and contact!',
-      contactHint: '💡 Can be email or WhatsApp, whatever you prefer!',
-      contactWarningEmail: '⚠️ Email seems incomplete (missing @). But if it\'s WhatsApp, all good!',
-      contactWarningPhone: '💬 WhatsApp detected! If you want, you can add country code (+55, +1, etc)'
+      required: 'Fill at least name and email OR phone!',
+      emailOrPhone: '💡 At least email OR phone is required'
     },
     es: {
       title: {
@@ -325,20 +341,21 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         workshop: 'Quiero participar en un taller 🎬',
         corporate: 'Quiero capacitación corporativa 🏢'
       },
-      subtitle: '¡Super rápido: solo 3 campos obligatorios!',
+      subtitle: '¡Completa tus datos y te enviamos todo!',
       fields: {
         name: 'Tu nombre',
-        contact: 'Email o WhatsApp',
+        email: 'Email',
+        phone: 'WhatsApp/Teléfono (opcional)',
         school: 'Escuela de interés',
         courseArea: 'Área de interés (opcional)',
-        preferredLanguage: 'Idioma preferido para atención',
+        preferredLanguage: 'Idioma preferido',
         contactPreference: '¿Cómo prefieres ser contactado?'
       },
       schoolOptions: [
-        { value: 'undecided', label: '🤔 No estoy seguro - Quiero orientación GRATIS', icon: '💡' },
-        { value: 'vanarts', label: 'VanArts (Animación, VFX, Game Design)', icon: '🎬' },
-        { value: 'vfs', label: 'VFS (Cine, Sonido, Actuación)', icon: '🎥' },
-        { value: 'both', label: 'Ambas - Quiero conocer las dos', icon: '🌟' }
+        { value: 'undecided', label: '🤔 No estoy seguro', icon: '💡' },
+        { value: 'vanarts', label: 'VanArts', icon: '🎬' },
+        { value: 'vfs', label: 'VFS', icon: '🎥' },
+        { value: 'both', label: 'Ambas', icon: '🌟' }
       ],
       languageOptions: [
         { value: 'pt', label: '🇧🇷 Português' },
@@ -347,22 +364,20 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         { value: 'fr', label: '🇫🇷 Français' }
       ],
       contactPreferenceOptions: [
-        { value: 'email', label: '📧 Email (sin llamadas)', icon: '📧' },
+        { value: 'email', label: '📧 Email', icon: '📧' },
         { value: 'whatsapp', label: '💬 WhatsApp', icon: '💬' },
-        { value: 'call', label: '📞 Puedes llamarme', icon: '📞' },
-        { value: 'any', label: '🤝 Como sea mejor', icon: '🤝' }
+        { value: 'call', label: '📞 Llamada', icon: '📞' },
+        { value: 'any', label: '🤝 Cualquiera', icon: '🤝' }
       ],
       placeholders: {
         name: 'Ej: Juan García',
-        contact: 'juan@email.com o +34 600 123 456'
+        email: 'juan@email.com',
+        phone: '600 123 456'
       },
-      freeConsultation: '💡 ¿No sabes qué escuela elegir? ¡Ofrecemos orientación gratuita!',
-      submit: '¡Quiero Recibir Info!',
+      submit: '¡Quiero Info!',
       submitting: 'Enviando...',
-      required: '¡Completa tu nombre y contacto!',
-      contactHint: '💡 Puede ser email o WhatsApp, ¡como prefieras!',
-      contactWarningEmail: '⚠️ Email parece incompleto (falta @). ¡Pero si es WhatsApp, todo bien!',
-      contactWarningPhone: '💬 WhatsApp detectado! Si quieres, puedes agregar código de país (+55, +1, etc)'
+      required: '¡Completa al menos nombre y email O teléfono!',
+      emailOrPhone: '💡 Se requiere al menos email O teléfono'
     },
     fr: {
       title: {
@@ -371,20 +386,21 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         workshop: 'Je veux participer à un atelier 🎬',
         corporate: 'Je veux une formation entreprise 🏢'
       },
-      subtitle: 'Super rapide: seulement 3 champs obligatoires!',
+      subtitle: 'Remplissez vos données et nous vous envoyons tout!',
       fields: {
         name: 'Votre nom',
-        contact: 'Email ou WhatsApp',
+        email: 'Email',
+        phone: 'WhatsApp/Téléphone (optionnel)',
         school: 'École de intérêt',
         courseArea: 'Domaine d\'intérêt (optionnel)',
-        preferredLanguage: 'Langue préférée pour le service',
+        preferredLanguage: 'Langue préférée',
         contactPreference: 'Comment préférez-vous être contacté?'
       },
       schoolOptions: [
-        { value: 'undecided', label: '🤔 Pas encore sûr - Je veux des conseils GRATUITS', icon: '💡' },
-        { value: 'vanarts', label: 'VanArts (Animation, VFX, Game Design)', icon: '🎬' },
-        { value: 'vfs', label: 'VFS (Cinéma, Son, Acting)', icon: '🎥' },
-        { value: 'both', label: 'Les deux - Je veux connaître les deux', icon: '🌟' }
+        { value: 'undecided', label: '🤔 Pas encore sûr', icon: '💡' },
+        { value: 'vanarts', label: 'VanArts', icon: '🎬' },
+        { value: 'vfs', label: 'VFS', icon: '🎥' },
+        { value: 'both', label: 'Les deux', icon: '🌟' }
       ],
       languageOptions: [
         { value: 'pt', label: '🇧🇷 Português' },
@@ -393,53 +409,37 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         { value: 'fr', label: '🇫🇷 Français' }
       ],
       contactPreferenceOptions: [
-        { value: 'email', label: '📧 Email (pas de appels)', icon: '📧' },
+        { value: 'email', label: '📧 Email', icon: '📧' },
         { value: 'whatsapp', label: '💬 WhatsApp', icon: '💬' },
-        { value: 'call', label: '📞 Appelez-moi', icon: '📞' },
-        { value: 'any', label: '🤝 Comme vous voulez', icon: '🤝' }
+        { value: 'call', label: '📞 Appel', icon: '📞' },
+        { value: 'any', label: '🤝 N\'importe', icon: '🤝' }
       ],
       placeholders: {
         name: 'Ex: Marie Dupont',
-        contact: 'marie@email.com ou +33 6 12 34 56 78'
+        email: 'marie@email.com',
+        phone: '6 12 34 56 78'
       },
-      freeConsultation: '💡 Vous ne savez pas quelle école choisir? Nous offrons des conseils gratuits!',
       submit: 'Envoyer Info!',
       submitting: 'Envoi...',
-      required: 'Remplissez votre nom et contact!',
-      contactHint: '💡 Peut être email ou WhatsApp, comme vous préférez!',
-      contactWarningEmail: '⚠️ Email semble incomplet (manque @). Mais si c\'est WhatsApp, tout va bien!',
-      contactWarningPhone: '💬 WhatsApp détecté! Si vous voulez, vous pouvez ajouter le code pays (+55, +1, etc)'
+      required: 'Remplissez au moins nom et email OU téléphone!',
+      emailOrPhone: '💡 Au moins email OU téléphone est requis'
     }
   }
 
   const t = content[lang] || content.pt
 
-  // Validação suave do contato
-  const validateContact = (value: string) => {
-    if (!value) {
-      setContactWarning(null)
-      return
-    }
-
-    // Se tem @ mas não parece email válido
-    if (value.includes('@') && !value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-      setContactWarning(t.contactWarningEmail)
-    }
-    // Se parece número mas não tem código país
-    else if (value.match(/^\d/) && !value.match(/^\+/)) {
-      setContactWarning(t.contactWarningPhone)
-    }
-    else {
-      setContactWarning(null)
-    }
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Validação mínima: só nome e contato
-    if (!formData.name || !formData.contact) {
+    // Validação: Nome + (Email OU Telefone)
+    if (!formData.name || (!formData.email && !formData.phone)) {
       setError(t.required)
+      return
+    }
+
+    // Validar email se fornecido
+    if (formData.email && !formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      setError(lang === 'pt' ? 'Email inválido' : 'Invalid email')
       return
     }
 
@@ -447,23 +447,21 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
     setError(null)
 
     try {
-      const isEmail = formData.contact.includes('@')
+      const fullPhone = formData.phone ? `${formData.countryCode}${formData.phone}` : undefined
       const schoolLabel = formData.school ? t.schoolOptions.find(s => s.value === formData.school)?.label : ''
       const courseLabel = formData.courseArea ? courseOptions[lang].find(c => c.value === formData.courseArea)?.label : ''
-      const langLabel = formData.preferredLanguage ? t.languageOptions.find(l => l.value === formData.preferredLanguage)?.label : ''
-      const contactPrefLabel = formData.contactPreference ? t.contactPreferenceOptions.find(c => c.value === formData.contactPreference)?.label : ''
       
       const leadData = {
         name: formData.name,
-        email: isEmail ? formData.contact : undefined,
-        phone: !isEmail ? formData.contact : undefined,
+        email: formData.email || undefined,
+        phone: fullPhone,
         leadType: type === 'vancouver' ? 'VANCOUVER' : 'CONTACT_FORM',
         description: [
           formData.interest,
           schoolLabel ? `Escola: ${schoolLabel}` : '',
-          courseLabel ? `Curso de interesse: ${courseLabel}` : '',
-          langLabel ? `Idioma preferido: ${langLabel}` : '',
-          contactPrefLabel ? `⚠️ Preferência de contato: ${contactPrefLabel}` : ''
+          courseLabel ? `Curso: ${courseLabel}` : '',
+          `Idioma preferido: ${formData.preferredLanguage}`,
+          `Contato preferido: ${formData.contactPreference}`
         ].filter(Boolean).join('\n'),
         sourceUrl: window.location.href,
         utmSource: new URLSearchParams(window.location.search).get('utm_source') || undefined,
@@ -479,7 +477,6 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
 
       setSuccess(true)
       
-      // Redirecionar para thank-you após 2 segundos
       setTimeout(() => {
         navigate(`/${lang}/thank-you`)
       }, 2000)
@@ -489,7 +486,9 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
 
       setFormData({
         name: '',
-        contact: '',
+        email: '',
+        countryCode: '+1',
+        phone: '',
         school: type === 'vancouver' ? 'undecided' : undefined,
         courseArea: '',
         preferredLanguage: lang,
@@ -498,7 +497,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
       })
     } catch (err: any) {
       console.error('Form submission error:', err)
-      setError(err.message || t.error)
+      setError(err.message || 'Erro ao enviar')
     } finally {
       setLoading(false)
     }
@@ -506,7 +505,6 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
 
   return (
     <div className="card-adaptive rounded-2xl p-8 md:p-10 border border-white/10">
-      {/* Title */}
       <div className="text-center mb-8">
         <div className="inline-block px-6 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-4">
           <span className="text-azimut-red text-sm font-semibold uppercase">
@@ -523,10 +521,8 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         </p>
       </div>
 
-      {/* Success Message - NÃO MOSTRA, redireciona direto */}
       {success && null}
 
-      {/* Form */}
       {!success && (
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Name */}
@@ -544,33 +540,48 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
             />
           </div>
 
-          {/* Contact (Email OR WhatsApp) */}
+          {/* Email */}
           <div>
             <label className="block text-sm font-semibold text-white/90 mb-2 uppercase tracking-wider">
-              {t.fields.contact} *
+              {t.fields.email} *
             </label>
             <input
-              type="text"
-              value={formData.contact}
-              onChange={(e) => {
-                setFormData({ ...formData, contact: e.target.value })
-                validateContact(e.target.value)
-              }}
+              type="email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="input-adaptive w-full"
-              required
-              placeholder={t.placeholders.contact}
+              placeholder={t.placeholders.email}
             />
-            <p className="mt-2 text-xs text-white/50">
-              {t.contactHint}
-            </p>
-            {contactWarning && (
-              <p className="mt-2 text-xs text-yellow-400">
-                {contactWarning}
-              </p>
-            )}
           </div>
 
-          {/* School Dropdown (Vancouver only) */}
+          {/* Phone (Country Code + Number) */}
+          <div>
+            <label className="block text-sm font-semibold text-white/90 mb-2 uppercase tracking-wider">
+              {t.fields.phone}
+            </label>
+            <div className="flex gap-2">
+              <SelectField
+                value={formData.countryCode}
+                onChange={(value) => setFormData({ ...formData, countryCode: value })}
+                options={countryCodes}
+                placeholder="+1"
+                ariaLabel="Código do país"
+                className="w-32"
+              />
+              <input
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value.replace(/\D/g, '') })}
+                className="input-adaptive flex-1"
+                placeholder={t.placeholders.phone}
+              />
+            </div>
+            <p className="mt-2 text-xs text-white/50">
+              {t.emailOrPhone}
+            </p>
+          </div>
+
+          {/* School (Vancouver only) */}
           {type === 'vancouver' && (
             <div>
               <label className="block text-sm font-semibold text-white/90 mb-2 uppercase tracking-wider">
@@ -583,18 +594,10 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
                 placeholder="Selecione..."
                 ariaLabel={t.fields.school}
               />
-              
-              {formData.school === 'undecided' && (
-                <div className="mt-3 p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
-                  <p className="text-sm text-yellow-400">
-                    {t.freeConsultation}
-                  </p>
-                </div>
-              )}
             </div>
           )}
 
-          {/* Course Area (Opcional - todos os cursos VFS e VanArts) */}
+          {/* Course Area */}
           <div>
             <label className="block text-sm font-semibold text-white/90 mb-2 uppercase tracking-wider">
               {t.fields.courseArea}
@@ -603,7 +606,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
               value={formData.courseArea || ''}
               onChange={(value) => setFormData({ ...formData, courseArea: value })}
               options={courseOptions[lang]}
-              placeholder="Selecione se quiser..."
+              placeholder="Selecione..."
               ariaLabel={t.fields.courseArea}
             />
           </div>
@@ -636,7 +639,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
             />
           </div>
 
-          {/* Interest (auto-filled - read-only display) */}
+          {/* Interest (auto-filled) */}
           {formData.interest && (
             <div>
               <label className="block text-sm font-semibold text-white/90 mb-2 uppercase tracking-wider">
