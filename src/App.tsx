@@ -69,6 +69,8 @@ const Home = lazy(() => import('./pages/Home'))
 
 // Páginas críticas: Import direto (menos erros, mais rápido)
 import Studio from './pages/Studio'
+import StudioTeam from './pages/StudioTeam'
+import StudioCredentials from './pages/StudioCredentials'
 import AcademyNew from './pages/AcademyNew'
 import Contact from './pages/Contact'
 import WhatWeDo from './pages/WhatWeDo'
@@ -336,6 +338,16 @@ const App: React.FC = () => {
                     {(routeLang) => <Studio lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
+                <Route path="/:lang/studio/equipe" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <StudioTeam lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/studio/credibilidade" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <StudioCredentials lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
                 <Route path="/:lang/academy" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <AcademyNew lang={routeLang} />}
@@ -473,6 +485,16 @@ const App: React.FC = () => {
                 <Route path="/:lang/studio" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <Studio lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/studio/equipe" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <StudioTeam lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
+                <Route path="/:lang/studio/credibilidade" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <StudioCredentials lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/academy" element={
