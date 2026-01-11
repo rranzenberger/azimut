@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { t, type Lang } from '../i18n'
 import { useLanguageRoute } from '../hooks/useLanguageRoute'
 import LangLink from './LangLink'
@@ -61,6 +61,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleTheme }) => {
   const location = useLocation()
+  const navigate = useNavigate()
   const { trackInteraction } = useUserTracking()
   const { changeLang } = useLanguageRoute()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -1455,38 +1456,41 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         isOpen={isWizardOpen}
         onClose={() => setIsWizardOpen(false)}
         onComplete={async (profile) => {
-          // Enviar lead para API/Kabbam
+          // 1. Enviar lead para backoffice (API existente)
           try {
             const { submitLead } = await import('../api/leads')
-            const lead = await submitLead(profile)
+            await submitLead(profile)
             
-            console.log('📊 LEAD CAPTURADO:', lead)
-            
-            // TODO: Integrar com Kabbam/CRM
-            // await fetch('/api/leads', {
-            //   method: 'POST',
-            //   headers: { 'Content-Type': 'application/json' },
-            //   body: JSON.stringify({ ...lead, integration: 'kabbam' })
-            // })
-            
-            // Feedback ao usuário
-            if (lead.priority === 'high') {
-              alert(
-                lang === 'pt' 
-                  ? '✅ Lead de alta prioridade capturado! Entraremos em contato em breve.'
-                  : lang === 'es'
-                  ? '✅ Lead de alta prioridad capturado! Nos pondremos en contacto pronto.'
-                  : '✅ High priority lead captured! We\'ll contact you soon.'
-              )
-            } else {
-              alert(
-                lang === 'pt'
-                  ? '✅ Obrigado! Recebemos seu brief e entraremos em contato em breve.'
-                  : lang === 'es'
-                  ? '✅ ¡Gracias! Hemos recibido tu brief y nos pondremos en contacto pronto.'
-                  : '✅ Thank you! We received your brief and will contact you soon.'
-              )
+            // 2. Enviar notificação por email (API nova)
+            try {
+              await fetch('/api/notify-form', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  name: profile.organization || 'Sem nome',
+                  email: 'não fornecido', // BudgetWizard não coleta email
+                  phone: 'não fornecido',
+                  formType: 'budget_wizard',
+                  lang,
+                  score: profile.budget === '200k-1M' || profile.budget === '1M+' ? 80 : 50,
+                  project: profile.needs.join(', '),
+                  budget: profile.budget,
+                  timeline: profile.deadline,
+                  message: `Localização: ${profile.location}\nPúblico: ${profile.audience}\nObjetivo: ${profile.objective}\nPrecisa financiamento: ${profile.needsFunding ? 'Sim' : 'Não'}`
+                })
+              })
+            } catch (emailErr) {
+              console.warn('Email notification failed (non-critical):', emailErr)
             }
+            
+            // 3. Fechar modal
+            setIsWizardOpen(false)
+            
+            // 4. Redirecionar para thank-you após 500ms
+            setTimeout(() => {
+              navigate(`/${lang}/thank-you`)
+            }, 500)
+            
           } catch (error) {
             console.error('Erro ao enviar lead:', error)
             alert(
@@ -1496,8 +1500,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 ? 'Error al enviar. Por favor, inténtalo de nuevo o contáctanos directamente.'
                 : 'Error sending. Please try again or contact us directly.'
             )
+            setIsWizardOpen(false)
           }
-          setIsWizardOpen(false)
         }}
       />
 
