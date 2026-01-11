@@ -339,7 +339,7 @@ const BudgetWizard: React.FC<BudgetWizardProps> = ({ lang, onComplete, onCancel 
             <select
               value={answers.deadline}
               onChange={(e) => setAnswers({ ...answers, deadline: e.target.value })}
-              className="input-adaptive"
+              className="dropdown-azimut"
             >
               <option value="">{lang === 'pt' ? 'Selecione...' : lang === 'es' ? 'Selecciona...' : 'Select...'}</option>
               {t.deadlineOptions.map((opt, idx) => (
