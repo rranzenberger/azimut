@@ -1704,6 +1704,117 @@ html[data-theme="light"] .label-adaptive {
   font-weight: 600;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   DROPDOWN AZIMUT - CLASSE UNIVERSAL PARA TODOS OS DROPDOWNS
+   ═══════════════════════════════════════════════════════════════ */
+.dropdown-azimut,
+select.dropdown-azimut,
+[data-theme="light"] .dropdown-azimut,
+[data-theme="light"] select.dropdown-azimut,
+html[data-theme="light"] .dropdown-azimut,
+html[data-theme="light"] select.dropdown-azimut {
+  /* Aparência */
+  background: rgba(10, 15, 30, 0.95) !important;
+  border: 1px solid rgba(201, 35, 55, 0.4) !important;
+  color: #ffffff !important;
+  
+  /* Tamanho e espaçamento */
+  width: 100%;
+  min-height: 48px;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  
+  /* Tipografia */
+  font-size: 0.95rem;
+  font-weight: 500;
+  
+  /* Efeitos */
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  outline: none;
+  
+  /* Seta customizada */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23c92337'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.2em;
+  padding-right: 2.75rem;
+}
+
+/* Hover */
+.dropdown-azimut:hover,
+select.dropdown-azimut:hover,
+[data-theme="light"] .dropdown-azimut:hover,
+[data-theme="light"] select.dropdown-azimut:hover {
+  border-color: rgba(201, 35, 55, 0.6) !important;
+  background: rgba(10, 15, 30, 0.98) !important;
+  box-shadow: 0 0 0 1px rgba(201, 35, 55, 0.2) !important;
+}
+
+/* Focus */
+.dropdown-azimut:focus,
+select.dropdown-azimut:focus,
+[data-theme="light"] .dropdown-azimut:focus,
+[data-theme="light"] select.dropdown-azimut:focus {
+  border-color: #c92337 !important;
+  background: rgba(10, 15, 30, 0.98) !important;
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.25), 0 0 8px rgba(201, 35, 55, 0.15) !important;
+}
+
+/* Options - SEMPRE ESCURAS */
+.dropdown-azimut option,
+select.dropdown-azimut option,
+[data-theme="light"] .dropdown-azimut option,
+[data-theme="light"] select.dropdown-azimut option {
+  background-color: rgba(10, 15, 30, 0.98) !important;
+  color: #ffffff !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 0 !important;
+  margin: 0.125rem 0 !important;
+}
+
+/* Option checked/selected */
+.dropdown-azimut option:checked,
+select.dropdown-azimut option:checked,
+select.dropdown-azimut:focus option:checked,
+[data-theme="light"] .dropdown-azimut option:checked,
+[data-theme="light"] select.dropdown-azimut option:checked,
+[data-theme="light"] select.dropdown-azimut:focus option:checked {
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0.4) 0%, rgba(201, 35, 55, 0.3) 100%) !important;
+  background-color: rgba(201, 35, 55, 0.35) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  border-left: 3px solid #c92337 !important;
+  padding-left: calc(1rem - 3px) !important;
+}
+
+/* Option hover (Firefox) */
+.dropdown-azimut option:hover,
+select.dropdown-azimut option:hover,
+[data-theme="light"] .dropdown-azimut option:hover,
+[data-theme="light"] select.dropdown-azimut option:hover {
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0.25) 0%, rgba(201, 35, 55, 0.15) 100%) !important;
+  background-color: rgba(201, 35, 55, 0.2) !important;
+  color: #ffffff !important;
+}
+
+/* Disabled state */
+.dropdown-azimut:disabled,
+select.dropdown-azimut:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Remover setas nativas */
+.dropdown-azimut::-ms-expand,
+select.dropdown-azimut::-ms-expand {
+  display: none;
+}
+
 /* Custom select (Contact form) */
 .select-trigger {
   @apply w-full min-h-[44px] rounded-lg border border-white/10 px-4 py-3.5 text-left text-slate-100 flex items-center justify-between gap-2;
