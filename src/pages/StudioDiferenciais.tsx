@@ -32,61 +32,93 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
 
   const content = {
     pt: {
-      title: 'Nossa Combinação Única',
-      subtitle: 'Após 30 anos, descobrimos que nossa combinação é única',
-      hero: 'Não somos apenas um estúdio de produção. Não somos apenas uma consultoria de tecnologia. Não somos apenas educadores. Somos a INTERSECÇÃO destes três mundos.',
-      body: [
-        'A Azimut nasceu da produção audiovisual profissional, expandiu para tecnologias imersivas (VR/XR/AR) e amadureceu na educação e curadoria. Esta trajetória nos deu uma visão 360° do ecossistema criativo-tecnológico.',
-        'Enquanto produtoras focam em executar, e consultorias em recomendar, nós FAZEMOS e ENSINAMOS. Esta combinação única nos permite não apenas entregar projetos, mas também capacitar equipes, formar mercado e elevar o nível técnico-criativo do Brasil.',
-        'Nossa expertise em curadoria (Festival de Gramado) nos mantém conectados com o que há de mais avançado globalmente. Nossa atuação em educação (Academy) nos força a traduzir complexidade em clareza. Nossa experiência em grandes projetos (Museu Olímpico) nos ensinou a integrar múltiplas disciplinas.'
-      ],
-      stats: [
-        { value: '30+', label: 'Anos de Experiência' },
-        { value: '50+', label: 'Projetos Entregues' },
-        { value: '2', label: 'Países (BR & CA)' },
-        { value: '3', label: 'Diretores Sênior' },
-        { value: '8', label: 'Anos Curadoria VR' }
-      ],
-      diferenciais: [
+      title: 'O Que Nos Torna Únicos',
+      subtitle: 'Nossa combinação especial',
+      heritage: {
+        title: 'Desde 1996 | Brasil-Canadá',
+        body: 'Unimos arte, tecnologia e educação em projetos pioneiros. Do primeiro centro de treinamento Autodesk da América do Sul à direção técnica do Rio Museu Olímpico, criamos experiências imersivas entre Brasil e Canadá.',
+        stats: [
+          { label: 'Desde', value: '1996' },
+          { label: 'Autodesk', value: '1996-2018' },
+          { label: 'Rio Museum', value: 'Atual' },
+          { label: 'Gramado', value: '2017' },
+          { label: 'Binacional', value: 'BR-CA' }
+        ]
+      },
+      unique: {
+        title: 'O que nos torna únicos',
+        items: [
+          'Pesquisa acadêmica + Produção comercial (raramente encontradas juntas)',
+          'Educação (formamos centenas) + Curadoria de festivais (Gramado VR desde 2017)',
+          'Arquitetura/BIM + Cinema/VFX + VR/XR/IA (expertise técnica ampla)',
+          'Time com 30 anos de bagagem internacional (desde 1996)',
+          'Operação binacional Brasil-Canadá (conectando ecossistemas criativos)',
+          'Não somos apenas um estúdio. Somos um ecossistema que integra conhecimento, criação e transformação.'
+        ]
+      },
+      vision: {
+        title: 'Visão',
+        body: 'Ser referência global em experiências imersivas, interativas e cinematográficas que unem arte, tecnologia e narrativa, transformando espaços culturais, marcas e cidades em ambientes de conexão e descoberta.'
+      },
+      mission: {
+        title: 'Missão',
+        body: 'Criar experiências imersivas de ponta a ponta que conectam pessoas, histórias e espaços através de tecnologia criativa, design cinematográfico e narrativas envolventes, sempre em colaboração com instituições, marcas e comunidades.\n\nTransformamos conceitos em jornadas memoráveis que ressoam emocional e culturalmente — operando na interseção entre arte, tecnologia e conexão humana, construindo pontes entre os ecossistemas criativos do Brasil e do Canadá.'
+      },
+      values: {
+        title: 'Valores',
+        items: [
+          {
+            title: 'Inovação Contínua',
+            description: 'Exploramos fronteiras tecnológicas e artísticas, sempre em busca de novas formas de contar histórias e criar conexões.'
+          },
+          {
+            title: 'Excelência Técnica',
+            description: '30 anos de expertise em CG, VFX, VR/XR e IA aplicada ao audiovisual, com certificações internacionais e formação de profissionais.'
+          },
+          {
+            title: 'Colaboração',
+            description: 'Acreditamos em cocriação com artistas, instituições, marcas e comunidades, construindo projetos em rede.'
+          },
+          {
+            title: 'Impacto Cultural',
+            description: 'Geramos transformação real através da cultura, educação e inclusão, conectando ecossistemas criativos entre Brasil e Canadá.'
+          }
+        ]
+      },
+      pillars: [
         {
-          icon: '🎬',
-          title: 'Cinema + Tecnologia',
-          desc: 'Unimos narrativa cinematográfica com engenharia de sistemas complexos. Não sacrificamos a arte pela técnica, nem a técnica pela arte.'
+          icon: '🎨',
+          title: 'Arte e Estética Imersiva',
+          body: 'Criamos experiências visuais e sonoras que capturam e transportam o público, misturando arte contemporânea, design interativo e ambientações sensoriais.'
         },
         {
-          icon: '🏛️',
-          title: 'Institucional + Comercial',
-          desc: 'Experiência tanto em projetos culturais/governamentais quanto em ativações de marca. Entendemos ambos os mundos.'
+          icon: '🧠',
+          title: 'Tecnologia Criativa',
+          body: 'Exploramos as fronteiras da tecnologia para contar histórias de forma interativa — usando XR, IA, projeções, sensores, instalações reativas e mais.'
         },
         {
-          icon: '🎓',
-          title: 'Execução + Educação',
-          desc: 'Não apenas fazemos - ensinamos. Formamos profissionais e elevamos o mercado. Nossos clientes aprendem conosco.'
+          icon: '🎥',
+          title: 'Narrativa Cinematográfica',
+          body: 'Nosso diferencial é o storytelling sofisticado com linguagem de cinema, roteiros autorais, ritmo, emoção e direção de arte envolvente.'
         },
         {
           icon: '🌍',
-          title: 'Local + Global',
-          desc: 'Raízes no Brasil, cidadania no Canadá. Conhecemos profundamente a cultura local mas com padrão internacional.'
+          title: 'Impacto Cultural e Social',
+          body: 'Geramos transformação real por meio da cultura, colaborando com comunidades, museus, territórios criativos e iniciativas de educação e inclusão.'
         },
         {
-          icon: '🤖',
-          title: 'Tradição + IA',
-          desc: 'Pesquisamos IA desde 1997. Integramos ferramentas generativas sem perder a autoria humana. Pipelines híbridos.'
+          icon: '🌐',
+          title: 'Atuação Binacional (Brasil–Canadá)',
+          body: 'Conectamos ecossistemas criativos entre América do Sul e América do Norte — em projetos, editais, festivais e parcerias institucionais.'
         },
         {
-          icon: '👁️',
-          title: 'Curadoria + Produção',
-          desc: 'Como curadores, vemos o melhor do mundo. Como produtores, aplicamos este conhecimento. Ciclo virtuoso de excelência.'
+          icon: '🤝',
+          title: 'Modelo de Cocriação',
+          body: 'Desenvolvemos projetos em rede, com artistas, marcas, estúdios e instituições públicas/privadas, usando metodologias ágeis e colaborativas.'
         }
-      ],
-      credentials: [
-        '🏆 Membros fundadores XRBR',
-        '🎬 Curadoria VR Gramado (8 anos)',
-        '🏛️ Museu Olímpico (Direção Técnica)',
-        '🍁 Único contrato Autodesk Canadá na América do Sul'
       ]
     },
-    en: { title: 'Our Unique Combination', subtitle: '', hero: '', body: [], stats: [], diferenciais: [], credentials: [] }
+    en: { title: 'What Makes Us Unique', subtitle: '', heritage: { title: '', body: '', stats: [] }, unique: { title: '', items: [] }, vision: { title: '', body: '' }, mission: { title: '', body: '' }, values: { title: '', items: [] }, pillars: [] }
   }
 
   const text = content[lang] || content.pt
@@ -96,7 +128,7 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
       <SEO 
         lang={lang}
         title={`${text.title} - Studio - Azimut`}
-        description={text.hero}
+        description={text.subtitle}
         path="/studio/diferenciais"
       />
       
@@ -121,70 +153,115 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
 
           {/* Hero */}
           <div className="mb-16">
-            <h1 className="mb-6 font-handel text-5xl md:text-6xl font-bold uppercase text-theme-text">
+            <h1 className="mb-6 font-handel text-5xl md:text-6xl lg:text-7xl font-bold uppercase text-theme-text">
               ⚡ {text.title}
             </h1>
-            <div className="p-8 rounded-lg bg-gradient-to-r from-azimut-red/20 to-transparent border-l-4 border-azimut-red">
-              <p className="text-2xl font-handel uppercase tracking-wide text-azimut-red">
-                {text.subtitle}
-              </p>
-            </div>
-          </div>
-
-          {/* Hero Message */}
-          <div className="mb-16 p-8 rounded-lg bg-slate-900/50 border border-azimut-red/30">
-            <p className="text-xl leading-relaxed text-white font-semibold text-center">
-              {text.hero}
+            <p className="text-xl md:text-2xl text-theme-text-secondary max-w-4xl">
+              {text.subtitle}
             </p>
           </div>
 
-          {/* Body Paragraphs */}
-          <div className="mb-16 space-y-6">
-            {text.body.map((paragraph, i) => (
-              <p key={i} className="text-lg leading-relaxed text-theme-text-secondary">
-                {paragraph}
+          {/* Heritage */}
+          <section className="mb-20">
+            <div className="p-8 rounded-lg bg-gradient-to-r from-azimut-red/20 to-transparent border-l-4 border-azimut-red mb-8">
+              <h2 className="text-2xl md:text-3xl font-handel uppercase tracking-wide text-azimut-red mb-4">
+                {text.heritage.title}
+              </h2>
+              <p className="text-lg leading-relaxed text-white">
+                {text.heritage.body}
               </p>
-            ))}
-          </div>
+            </div>
 
-          {/* Stats */}
-          <div className="mb-16 grid grid-cols-2 md:grid-cols-5 gap-6 p-8 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20">
-            {text.stats.map((stat, i) => (
-              <div key={i} className="text-center group">
-                <div className="font-handel text-5xl text-azimut-red mb-2 group-hover:scale-110 transition-transform">
-                  {stat.value}
-                </div>
-                <div className="text-xs uppercase tracking-wider text-theme-text-secondary">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Diferenciais Grid */}
-          <section className="mb-16">
-            <h2 className="mb-10 font-handel text-3xl font-bold uppercase text-theme-text text-center">
-              {lang === 'pt' ? 'Nossos Diferenciais' : 'Our Differentials'}
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {text.diferenciais.map((item, i) => (
-                <div key={i} className="p-6 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/50 transition-all group">
-                  <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">{item.icon}</div>
-                  <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
-                  <p className="text-sm text-theme-text-secondary leading-relaxed">{item.desc}</p>
+            {/* Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+              {text.heritage.stats.map((stat, i) => (
+                <div key={i} className="text-center p-6 rounded-lg bg-slate-900/50 border border-azimut-red/20 hover:border-azimut-red/40 transition-all group">
+                  <div className="font-handel text-4xl md:text-5xl text-azimut-red mb-2 group-hover:scale-110 transition-transform">
+                    {stat.value}
+                  </div>
+                  <div className="text-xs uppercase tracking-wider text-theme-text-secondary">
+                    {stat.label}
+                  </div>
                 </div>
               ))}
             </div>
           </section>
 
-          {/* Credentials Badges */}
-          <div className="mb-16 flex flex-wrap gap-3 justify-center">
-            {text.credentials.map((cred, i) => (
-              <span key={i} className="px-5 py-3 rounded-full bg-azimut-red/10 border border-azimut-red/30 text-white font-semibold">
-                {cred}
-              </span>
-            ))}
+          {/* Unique Items */}
+          <section className="mb-20">
+            <h2 className="mb-10 font-handel text-3xl font-bold uppercase text-theme-text">
+              {text.unique.title}
+            </h2>
+            <div className="grid md:grid-cols-2 gap-4">
+              {text.unique.items.map((item, i) => (
+                <div key={i} className="flex items-start gap-3 p-6 rounded-lg bg-slate-900/30 hover:bg-slate-900/50 border border-transparent hover:border-azimut-red/30 transition-all group">
+                  <svg className="w-6 h-6 text-azimut-red shrink-0 mt-0.5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="text-theme-text-secondary group-hover:text-theme-text transition-colors">{item}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Visão - DESTAQUE */}
+          <section className="mb-20">
+            <div className="p-10 rounded-lg bg-gradient-to-br from-azimut-red/20 to-slate-900/50 border-2 border-azimut-red shadow-2xl">
+              <h2 className="text-3xl font-handel uppercase text-azimut-red mb-6 flex items-center gap-3">
+                <span className="text-4xl">👁️</span>
+                {text.vision.title}
+              </h2>
+              <p className="text-xl md:text-2xl leading-relaxed text-white">
+                {text.vision.body}
+              </p>
+            </div>
+          </section>
+
+          {/* Missão + Valores Grid */}
+          <div className="grid md:grid-cols-2 gap-8 mb-20">
+            {/* Missão */}
+            <div className="p-8 rounded-lg bg-slate-900/50 border border-azimut-red/20">
+              <h2 className="text-2xl font-handel uppercase text-azimut-red mb-6 flex items-center gap-3">
+                <span className="text-3xl">🎯</span>
+                {text.mission.title}
+              </h2>
+              <p className="text-theme-text-secondary leading-relaxed whitespace-pre-line">
+                {text.mission.body}
+              </p>
+            </div>
+
+            {/* Valores */}
+            <div className="p-8 rounded-lg bg-slate-900/50 border border-azimut-red/20">
+              <h2 className="text-2xl font-handel uppercase text-azimut-red mb-6 flex items-center gap-3">
+                <span className="text-3xl">💎</span>
+                {text.values.title}
+              </h2>
+              <div className="space-y-4">
+                {text.values.items.map((value, i) => (
+                  <div key={i}>
+                    <h4 className="font-bold text-white mb-1">{value.title}</h4>
+                    <p className="text-sm text-theme-text-secondary">{value.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
+
+          {/* Pillars - 6 Cards */}
+          <section className="mb-20">
+            <h2 className="mb-10 font-handel text-3xl font-bold uppercase text-theme-text text-center">
+              {lang === 'pt' ? 'Nossos Pilares' : 'Our Pillars'}
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {text.pillars.map((pillar, i) => (
+                <div key={i} className="p-6 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/50 transition-all group">
+                  <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">{pillar.icon}</div>
+                  <h3 className="text-xl font-bold text-white mb-3">{pillar.title}</h3>
+                  <p className="text-sm text-theme-text-secondary leading-relaxed">{pillar.body}</p>
+                </div>
+              ))}
+            </div>
+          </section>
 
           {/* CTA */}
           <div className="text-center">
