@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import type { Lang } from '../i18n'
 import ApiService from '../services/api'
 
@@ -249,6 +250,7 @@ const PremiumField = ({
 )
 
 export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps) {
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
@@ -661,6 +663,12 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       setSuccess(true)
       setError('')
       setFieldErrors({})
+      
+      // Redirecionar para thank-you após 2 segundos
+      setTimeout(() => {
+        navigate(`/${lang}/thank-you`)
+      }, 2000)
+      
       // Reset form
       setFormData({
         name: '',
