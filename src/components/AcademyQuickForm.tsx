@@ -202,6 +202,59 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
     }))
   }, [type, prefilledData])
 
+  // Função para formatar telefone com código de área
+  const formatPhoneWithAreaCode = (value: string, countryCode: string): string => {
+    const numbers = value.replace(/\D/g, '')
+    
+    if (countryCode === '+55') {
+      if (numbers.length <= 2) return numbers
+      if (numbers.length <= 6) return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`
+      if (numbers.length <= 10) return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 6)}-${numbers.slice(6)}`
+      return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`
+    }
+    
+    if (countryCode === '+1') {
+      if (numbers.length <= 3) return numbers
+      if (numbers.length <= 6) return `(${numbers.slice(0, 3)}) ${numbers.slice(3)}`
+      return `(${numbers.slice(0, 3)}) ${numbers.slice(3, 6)}-${numbers.slice(6, 10)}`
+    }
+    
+    if (countryCode === '+34') {
+      if (numbers.length <= 3) return numbers
+      if (numbers.length <= 5) return `${numbers.slice(0, 3)} ${numbers.slice(3)}`
+      if (numbers.length <= 7) return `${numbers.slice(0, 3)} ${numbers.slice(3, 5)} ${numbers.slice(5)}`
+      return `${numbers.slice(0, 3)} ${numbers.slice(3, 5)} ${numbers.slice(5, 7)} ${numbers.slice(7, 9)}`
+    }
+    
+    if (countryCode === '+33') {
+      if (numbers.length <= 2) return numbers
+      if (numbers.length <= 4) return `${numbers.slice(0, 2)} ${numbers.slice(2)}`
+      if (numbers.length <= 6) return `${numbers.slice(0, 2)} ${numbers.slice(2, 4)} ${numbers.slice(4)}`
+      if (numbers.length <= 8) return `${numbers.slice(0, 2)} ${numbers.slice(2, 4)} ${numbers.slice(4, 6)} ${numbers.slice(6)}`
+      return `${numbers.slice(0, 2)} ${numbers.slice(2, 4)} ${numbers.slice(4, 6)} ${numbers.slice(6, 8)} ${numbers.slice(8, 10)}`
+    }
+    
+    if (countryCode === '+351') {
+      if (numbers.length <= 3) return numbers
+      if (numbers.length <= 6) return `${numbers.slice(0, 3)} ${numbers.slice(3)}`
+      return `${numbers.slice(0, 3)} ${numbers.slice(3, 6)} ${numbers.slice(6, 9)}`
+    }
+    
+    if (countryCode === '+52') {
+      if (numbers.length <= 3) return numbers
+      if (numbers.length <= 6) return `(${numbers.slice(0, 3)}) ${numbers.slice(3)}`
+      return `(${numbers.slice(0, 3)}) ${numbers.slice(3, 6)} ${numbers.slice(6, 10)}`
+    }
+    
+    if (countryCode === '+54') {
+      if (numbers.length <= 3) return numbers
+      if (numbers.length <= 7) return `(${numbers.slice(0, 3)}) ${numbers.slice(3)}`
+      return `(${numbers.slice(0, 3)}) ${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`
+    }
+    
+    return numbers
+  }
+
   // Códigos de país
   const countryCodes = [
     { value: '+1', label: '+1', icon: '🇨🇦' }, // Canadá/EUA
@@ -460,7 +513,9 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
     setError(null)
 
     try {
-      const fullPhone = formData.phone ? `${formData.countryCode}${formData.phone}` : undefined
+      // Combinar countryCode + phone (remover formatação, só números)
+      const phoneNumbers = formData.phone.replace(/\D/g, '')
+      const fullPhone = phoneNumbers ? `${formData.countryCode}${phoneNumbers}` : undefined
       const schoolLabel = formData.school ? t.schoolOptions.find(s => s.value === formData.school)?.label : ''
       const courseLabel = formData.courseArea ? courseOptions[lang].find(c => c.value === formData.courseArea)?.label : ''
       
@@ -573,20 +628,33 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
               {t.fields.phone}
             </label>
             <div className="flex gap-2">
+              {/* Dropdown de código - PEQUENO */}
               <SelectField
                 value={formData.countryCode}
-                onChange={(value) => setFormData({ ...formData, countryCode: value })}
+                onChange={(value) => setFormData({ ...formData, countryCode: value, phone: '' })}
                 options={countryCodes}
                 placeholder="+1"
                 ariaLabel="Código do país"
-                className="w-32"
+                className="w-24"
               />
+              {/* Campo telefone - GRANDE com formatação */}
               <input
                 type="tel"
                 value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value.replace(/\D/g, '') })}
+                onChange={(e) => {
+                  const formatted = formatPhoneWithAreaCode(e.target.value, formData.countryCode)
+                  setFormData({ ...formData, phone: formatted })
+                }}
                 className="input-adaptive flex-1"
-                placeholder={t.placeholders.phone}
+                placeholder={
+                  formData.countryCode === '+55' ? '(11) 98765-4321' :
+                  formData.countryCode === '+1' ? '(416) 555-1234' :
+                  formData.countryCode === '+34' ? '912 34 56 78' :
+                  formData.countryCode === '+33' ? '01 23 45 67 89' :
+                  formData.countryCode === '+351' ? '912 345 678' :
+                  formData.countryCode === '+52' ? '(55) 1234 5678' :
+                  t.placeholders.phone
+                }
               />
             </div>
             <p className="mt-2 text-xs text-white/50">

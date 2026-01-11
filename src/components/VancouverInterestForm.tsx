@@ -95,6 +95,59 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
     detectCountry()
   }, [])
 
+  // Função para formatar telefone com código de área
+  const formatPhoneWithAreaCode = (value: string, countryCode: string): string => {
+    const numbers = value.replace(/\D/g, '')
+    
+    if (countryCode === '+55') {
+      if (numbers.length <= 2) return numbers
+      if (numbers.length <= 6) return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`
+      if (numbers.length <= 10) return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 6)}-${numbers.slice(6)}`
+      return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`
+    }
+    
+    if (countryCode === '+1') {
+      if (numbers.length <= 3) return numbers
+      if (numbers.length <= 6) return `(${numbers.slice(0, 3)}) ${numbers.slice(3)}`
+      return `(${numbers.slice(0, 3)}) ${numbers.slice(3, 6)}-${numbers.slice(6, 10)}`
+    }
+    
+    if (countryCode === '+34') {
+      if (numbers.length <= 3) return numbers
+      if (numbers.length <= 5) return `${numbers.slice(0, 3)} ${numbers.slice(3)}`
+      if (numbers.length <= 7) return `${numbers.slice(0, 3)} ${numbers.slice(3, 5)} ${numbers.slice(5)}`
+      return `${numbers.slice(0, 3)} ${numbers.slice(3, 5)} ${numbers.slice(5, 7)} ${numbers.slice(7, 9)}`
+    }
+    
+    if (countryCode === '+33') {
+      if (numbers.length <= 2) return numbers
+      if (numbers.length <= 4) return `${numbers.slice(0, 2)} ${numbers.slice(2)}`
+      if (numbers.length <= 6) return `${numbers.slice(0, 2)} ${numbers.slice(2, 4)} ${numbers.slice(4)}`
+      if (numbers.length <= 8) return `${numbers.slice(0, 2)} ${numbers.slice(2, 4)} ${numbers.slice(4, 6)} ${numbers.slice(6)}`
+      return `${numbers.slice(0, 2)} ${numbers.slice(2, 4)} ${numbers.slice(4, 6)} ${numbers.slice(6, 8)} ${numbers.slice(8, 10)}`
+    }
+    
+    if (countryCode === '+351') {
+      if (numbers.length <= 3) return numbers
+      if (numbers.length <= 6) return `${numbers.slice(0, 3)} ${numbers.slice(3)}`
+      return `${numbers.slice(0, 3)} ${numbers.slice(3, 6)} ${numbers.slice(6, 9)}`
+    }
+    
+    if (countryCode === '+52') {
+      if (numbers.length <= 3) return numbers
+      if (numbers.length <= 6) return `(${numbers.slice(0, 3)}) ${numbers.slice(3)}`
+      return `(${numbers.slice(0, 3)}) ${numbers.slice(3, 6)} ${numbers.slice(6, 10)}`
+    }
+    
+    if (countryCode === '+54') {
+      if (numbers.length <= 3) return numbers
+      if (numbers.length <= 7) return `(${numbers.slice(0, 3)}) ${numbers.slice(3)}`
+      return `(${numbers.slice(0, 3)}) ${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`
+    }
+    
+    return numbers
+  }
+
   const labels = {
     pt: {
       name: 'Nome completo',
@@ -211,8 +264,9 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
     setSuccess(false)
 
     try {
-      // Combinar countryCode + whatsapp
-      const fullWhatsapp = formData.whatsapp ? `${formData.countryCode}${formData.whatsapp}` : ''
+      // Combinar countryCode + whatsapp (remover formatação, só números)
+      const whatsappNumbers = formData.whatsapp.replace(/\D/g, '')
+      const fullWhatsapp = whatsappNumbers ? `${formData.countryCode}${whatsappNumbers}` : ''
       const submitData = {
         ...formData,
         whatsapp: fullWhatsapp
@@ -333,31 +387,45 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                 {t.whatsapp} *
               </label>
               <div className="flex gap-2">
+                {/* Dropdown de código de país - PEQUENO */}
                 <select
                   value={formData.countryCode}
-                  onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value }))}
-                  className="w-32 px-3 py-3 input-adaptive rounded-lg"
+                  onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, whatsapp: '' }))}
+                  className="w-24 px-2 py-3 input-adaptive rounded-lg text-[14px] font-medium"
                 >
-                  <option value="+1">🇨🇦 +1</option>
                   <option value="+55">🇧🇷 +55</option>
+                  <option value="+1">🇨🇦 +1</option>
                   <option value="+34">🇪🇸 +34</option>
                   <option value="+33">🇫🇷 +33</option>
                   <option value="+351">🇵🇹 +351</option>
                   <option value="+52">🇲🇽 +52</option>
+                  <option value="+54">🇦🇷 +54</option>
                 </select>
+                {/* Campo WhatsApp - GRANDE com formatação automática */}
                 <input
                   type="tel"
                   name="whatsapp"
                   required
-                  placeholder="21 99999-9999"
+                  placeholder={
+                    formData.countryCode === '+55' ? '(11) 98765-4321' :
+                    formData.countryCode === '+1' ? '(416) 555-1234' :
+                    formData.countryCode === '+34' ? '912 34 56 78' :
+                    formData.countryCode === '+33' ? '01 23 45 67 89' :
+                    formData.countryCode === '+351' ? '912 345 678' :
+                    formData.countryCode === '+52' ? '(55) 1234 5678' :
+                    '(11) 1234-5678'
+                  }
                   value={formData.whatsapp}
                   onChange={(e) => {
-                    const value = e.target.value.replace(/\D/g, '')
-                    setFormData(prev => ({ ...prev, whatsapp: value }))
+                    const formatted = formatPhoneWithAreaCode(e.target.value, formData.countryCode)
+                    setFormData(prev => ({ ...prev, whatsapp: formatted }))
                   }}
                   className="flex-1 px-4 py-3 input-adaptive rounded-lg"
                 />
               </div>
+              <p className="mt-1.5 text-xs text-white/50">
+                💡 Código detectado automaticamente
+              </p>
             </div>
           </div>
 

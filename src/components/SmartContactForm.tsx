@@ -689,8 +689,9 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
     setFieldErrors({})
 
     try {
-      // Combinar countryCode + phone
-      const fullPhone = formData.phone ? `${formData.countryCode}${formData.phone}` : ''
+      // Combinar countryCode + phone (remover formatação, só números)
+      const phoneNumbers = formData.phone.replace(/\D/g, '')
+      const fullPhone = phoneNumbers ? `${formData.countryCode}${phoneNumbers}` : ''
       const submitData = {
         ...formData,
         phone: fullPhone
@@ -821,6 +822,74 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
     } finally {
       setLoadingSuggestions(false)
     }
+  }
+
+  // Função para formatar telefone com código de área
+  const formatPhoneWithAreaCode = (value: string, countryCode: string): string => {
+    // Remove tudo que não é número
+    const numbers = value.replace(/\D/g, '')
+    
+    // Brasil +55: (XX) XXXXX-XXXX ou (XX) XXXX-XXXX
+    if (countryCode === '+55') {
+      if (numbers.length <= 2) return numbers
+      if (numbers.length <= 6) return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`
+      if (numbers.length <= 10) return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 6)}-${numbers.slice(6)}`
+      return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`
+    }
+    
+    // EUA/Canadá +1: (XXX) XXX-XXXX
+    if (countryCode === '+1') {
+      if (numbers.length <= 3) return numbers
+      if (numbers.length <= 6) return `(${numbers.slice(0, 3)}) ${numbers.slice(3)}`
+      return `(${numbers.slice(0, 3)}) ${numbers.slice(3, 6)}-${numbers.slice(6, 10)}`
+    }
+    
+    // Espanha +34: XXX XX XX XX
+    if (countryCode === '+34') {
+      if (numbers.length <= 3) return numbers
+      if (numbers.length <= 5) return `${numbers.slice(0, 3)} ${numbers.slice(3)}`
+      if (numbers.length <= 7) return `${numbers.slice(0, 3)} ${numbers.slice(3, 5)} ${numbers.slice(5)}`
+      return `${numbers.slice(0, 3)} ${numbers.slice(3, 5)} ${numbers.slice(5, 7)} ${numbers.slice(7, 9)}`
+    }
+    
+    // França +33: XX XX XX XX XX
+    if (countryCode === '+33') {
+      if (numbers.length <= 2) return numbers
+      if (numbers.length <= 4) return `${numbers.slice(0, 2)} ${numbers.slice(2)}`
+      if (numbers.length <= 6) return `${numbers.slice(0, 2)} ${numbers.slice(2, 4)} ${numbers.slice(4)}`
+      if (numbers.length <= 8) return `${numbers.slice(0, 2)} ${numbers.slice(2, 4)} ${numbers.slice(4, 6)} ${numbers.slice(6)}`
+      return `${numbers.slice(0, 2)} ${numbers.slice(2, 4)} ${numbers.slice(4, 6)} ${numbers.slice(6, 8)} ${numbers.slice(8, 10)}`
+    }
+    
+    // Portugal +351: XXX XXX XXX
+    if (countryCode === '+351') {
+      if (numbers.length <= 3) return numbers
+      if (numbers.length <= 6) return `${numbers.slice(0, 3)} ${numbers.slice(3)}`
+      return `${numbers.slice(0, 3)} ${numbers.slice(3, 6)} ${numbers.slice(6, 9)}`
+    }
+    
+    // México +52: (XXX) XXX XXXX
+    if (countryCode === '+52') {
+      if (numbers.length <= 3) return numbers
+      if (numbers.length <= 6) return `(${numbers.slice(0, 3)}) ${numbers.slice(3)}`
+      return `(${numbers.slice(0, 3)}) ${numbers.slice(3, 6)} ${numbers.slice(6, 10)}`
+    }
+    
+    // Argentina +54: (XXX) XXXX-XXXX
+    if (countryCode === '+54') {
+      if (numbers.length <= 3) return numbers
+      if (numbers.length <= 7) return `(${numbers.slice(0, 3)}) ${numbers.slice(3)}`
+      return `(${numbers.slice(0, 3)}) ${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`
+    }
+    
+    // UK +44: XXXXX XXXXXX
+    if (countryCode === '+44') {
+      if (numbers.length <= 5) return numbers
+      return `${numbers.slice(0, 5)} ${numbers.slice(5, 11)}`
+    }
+    
+    // Default: apenas números
+    return numbers
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -1025,13 +1094,14 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4" style={{ marginTop: '1.5rem' }}>
               <PremiumField label={t.phone}>
                 <div className="flex gap-2">
+                  {/* Dropdown de código de país - PEQUENO */}
                   <select
                     value={formData.countryCode}
-                    onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value }))}
-                    className="relative z-10 input-adaptive w-32 px-3 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 text-[15px]"
+                    onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, phone: '' }))}
+                    className="relative z-10 input-adaptive w-24 px-2 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 text-[14px] font-medium"
                   >
-                    <option value="+1">🇨🇦 +1</option>
                     <option value="+55">🇧🇷 +55</option>
+                    <option value="+1">🇨🇦 +1</option>
                     <option value="+34">🇪🇸 +34</option>
                     <option value="+33">🇫🇷 +33</option>
                     <option value="+351">🇵🇹 +351</option>
@@ -1039,16 +1109,26 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                     <option value="+54">🇦🇷 +54</option>
                     <option value="+44">🇬🇧 +44</option>
                   </select>
+                  {/* Campo de telefone - GRANDE com formatação automática */}
                   <input
                     type="tel"
                     name="phone"
                     value={formData.phone}
                     onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, '')
-                      setFormData(prev => ({ ...prev, phone: value }))
+                      const formatted = formatPhoneWithAreaCode(e.target.value, formData.countryCode)
+                      setFormData(prev => ({ ...prev, phone: formatted }))
                     }}
                     className="relative z-10 input-adaptive flex-1 px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal"
-                    placeholder="21 98765-4321"
+                    placeholder={
+                      formData.countryCode === '+55' ? '(11) 98765-4321' :
+                      formData.countryCode === '+1' ? '(416) 555-1234' :
+                      formData.countryCode === '+34' ? '912 34 56 78' :
+                      formData.countryCode === '+33' ? '01 23 45 67 89' :
+                      formData.countryCode === '+351' ? '912 345 678' :
+                      formData.countryCode === '+52' ? '(55) 1234 5678' :
+                      formData.countryCode === '+54' ? '(11) 1234-5678' :
+                      '12345 678901'
+                    }
                   />
                 </div>
                 <p className="mt-2 text-xs text-white/50">
