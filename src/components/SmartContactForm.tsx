@@ -642,6 +642,22 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
     try {
       await ApiService.submitLead(formData)
 
+      // Enviar notificação por email
+      try {
+        await fetch(`${import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azmt.com.br'}/api/notify-form`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...formData,
+            formType: 'contact_main',
+            lang,
+            score: 50 // Default médio, pode calcular depois
+          })
+        })
+      } catch (emailError) {
+        console.warn('Email notification failed (non-critical):', emailError)
+      }
+
       setSuccess(true)
       setError('')
       setFieldErrors({})
