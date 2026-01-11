@@ -1098,8 +1098,8 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   <select
                     value={formData.countryCode}
                     onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, phone: '' }))}
-                    className="dropdown-azimut px-2 rounded-lg text-[13px] font-medium"
-                    style={{ width: '100px', minWidth: '100px', maxWidth: '100px', flexShrink: 0, paddingTop: '0.875rem', paddingBottom: '0.875rem', minHeight: '48px' }}
+                    className="dropdown-azimut"
+                    style={{ width: '115px', minWidth: '115px', maxWidth: '115px', flexShrink: 0 }}
                   >
                     <option value="+55">BR +55</option>
                     <option value="+1">CA +1</option>
@@ -1119,7 +1119,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       const formatted = formatPhoneWithAreaCode(e.target.value, formData.countryCode)
                       setFormData(prev => ({ ...prev, phone: formatted }))
                     }}
-                    className="relative z-10 input-adaptive flex-1 px-4 py-3.5 rounded-lg focus:ring-2 focus:ring-azimut-red/50 focus:border-azimut-red/50 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal"
+                    className="input-adaptive flex-1"
                     style={{ minWidth: '0' }}
                     placeholder={
                       formData.countryCode === '+55' ? '(11) 98765-4321' :

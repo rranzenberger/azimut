@@ -1718,15 +1718,15 @@ html[data-theme="light"] select.dropdown-azimut {
   border: 1px solid rgba(201, 35, 55, 0.4) !important;
   color: #ffffff !important;
   
-  /* Tamanho e espaçamento */
+  /* Tamanho e espaçamento PADRÃO */
   width: 100%;
-  min-height: 48px;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
+  min-height: 48px !important;
+  padding: 0.75rem 2.75rem 0.75rem 1rem !important;
+  border-radius: 0.5rem !important;
   
   /* Tipografia */
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
   
   /* Efeitos */
   backdrop-filter: blur(8px);
@@ -1738,11 +1738,10 @@ html[data-theme="light"] select.dropdown-azimut {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23c92337'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  background-size: 1.2em;
-  padding-right: 2.75rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23c92337'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.75rem center !important;
+  background-size: 1.2em !important;
 }
 
 /* Hover */
