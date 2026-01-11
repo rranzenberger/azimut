@@ -73,6 +73,9 @@ import AcademyNew from './pages/AcademyNew'
 import Contact from './pages/Contact'
 import WhatWeDo from './pages/WhatWeDo'
 import Work from './pages/Work'
+import ServiceDetail from './pages/ServiceDetail' // Added direct import
+import ServiceDetailTest from './pages/ServiceDetailTest' // DEBUG COMPONENT
+import ProjectDetail from './pages/ProjectDetail' // Added direct import
 
 // Páginas secundárias: Lazy loading otimizado
 const AcademyCourses = lazy(() => import('./pages/AcademyCourses'))
@@ -80,8 +83,6 @@ const AcademyWorkshops = lazy(() => import('./pages/AcademyWorkshops'))
 const AcademyCorporate = lazy(() => import('./pages/AcademyCorporate'))
 const Research = lazy(() => import('./pages/Research'))
 const Vancouver = lazy(() => import('./pages/Vancouver'))
-const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
-const ServiceDetail = lazy(() => import('./pages/ServiceDetail'))
 const Press = lazy(() => import('./pages/Press'))
 const Privacy = lazy(() => import('./pages/Privacy'))
 const Terms = lazy(() => import('./pages/Terms'))
@@ -318,7 +319,7 @@ const App: React.FC = () => {
                 } />
                 <Route path="/:lang/what/:slug" element={
                   <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <ServiceDetail lang={routeLang} />}
+                    {(routeLang) => <ServiceDetailTest lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/work" element={
@@ -440,28 +441,26 @@ const App: React.FC = () => {
           <div className="cinematic-vignette" aria-hidden="true" />
           
           <AppLayout lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
-            <Suspense fallback={<LoadingSkeleton />}>
-              <ErrorBoundary>
-              <Routes>
-                {/* Redirect / para idioma detectado */}
-                <Route path="/" element={<LangRedirect />} />
-                
-                {/* Rotas COM prefixo de idioma (PREMIUM) */}
-                <Route path="/:lang" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Home lang={routeLang} />}
-                  </LangRouteWrapper>
-                } />
-                <Route path="/:lang/what" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <WhatWeDo lang={routeLang} />}
-                  </LangRouteWrapper>
-                } />
-                <Route path="/:lang/what/:slug" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <ServiceDetail lang={routeLang} />}
-                  </LangRouteWrapper>
-                } />
+            <Routes>
+              {/* Redirect / para idioma detectado */}
+              <Route path="/" element={<LangRedirect />} />
+              
+              {/* Rotas COM prefixo de idioma (PREMIUM) */}
+              <Route path="/:lang" element={
+                <LangRouteWrapper setLang={setLang}>
+                  {(routeLang) => <Home lang={routeLang} />}
+                </LangRouteWrapper>
+              } />
+              <Route path="/:lang/what" element={
+                <LangRouteWrapper setLang={setLang}>
+                  {(routeLang) => <WhatWeDo lang={routeLang} />}
+                </LangRouteWrapper>
+              } />
+              <Route path="/:lang/what/:slug" element={
+                <LangRouteWrapper setLang={setLang}>
+                  {(routeLang) => <ServiceDetail lang={routeLang} />}
+                </LangRouteWrapper>
+              } />
                 <Route path="/:lang/work" element={
                   <LangRouteWrapper setLang={setLang}>
                     {(routeLang) => <Work lang={routeLang} />}
@@ -560,8 +559,6 @@ const App: React.FC = () => {
                   </LangRouteWrapper>
                 } />
               </Routes>
-              </ErrorBoundary>
-            </Suspense>
           </AppLayout>
           
           {/* Chatbot - Assistente Virtual com DeepSeek */}

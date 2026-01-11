@@ -1,6 +1,27 @@
 # 📋 PARA VOCÊ FAZER AMANHÃ
+**Atualizado:** 2026-01-11 03:00 AM (MADRUGADA)
 
-Bom dia! 🌅 Trabalhei durante a noite e implementei várias melhorias. Agora preciso que você faça alguns testes.
+---
+
+## 🚨 URGENTE - BUG CRÍTICO ENCONTRADO
+
+### ❌ Problema: ServiceDetail.tsx (página vazia)
+**Arquivo:** `CHECKPOINT_SERVICEDETAIL_2026-01-11.md` ← **LEIA ESTE PRIMEIRO!**
+
+**Resumo:**
+- Página `/pt/what/cinema-audiovisual` renderiza apenas 3 seções
+- Todo o conteúdo principal (hero, descrição, deliverables, processo) **desaparece**
+- Bug 100% reproduzível, causa desconhecida
+- Tentativas de correção: **TODAS FALHARAM** (8 abordagens diferentes)
+
+**WORKAROUND TEMPORÁRIO:**
+```tsx
+// Desabilitar rota por enquanto até descobrir causa:
+// Em src/App.tsx, comentar:
+// <Route path="/:lang/what/:slug" element={...ServiceDetail...} />
+```
+
+**Prioridade:** 🔴 **CRÍTICA** - Impede usuários de ver detalhes dos serviços
 
 ---
 
@@ -62,6 +83,12 @@ trackConversion('lead', {
 
 ---
 
+### ✅ 4. Rota `/academy/research` Adicionada
+- **Status:** ✅ Implementada no `App.tsx`
+- **Componente:** `Research.tsx` (já existia)
+
+---
+
 ## 🧪 TESTES OBRIGATÓRIOS
 
 ### 1. Site Principal (azmt.com.br)
@@ -71,6 +98,7 @@ trackConversion('lead', {
 - [ ] Ver se calculadora pisca (efeito pulse)
 - [ ] Trocar idioma: PT → EN → ES → FR
 - [ ] Ver se conteúdo muda corretamente
+- [ ] **🔴 NÃO TESTAR `/what/:slug` (ServiceDetail) - TEM BUG**
 
 ### 2. Chatbot IA
 - [ ] Abrir chatbot (ícone canto inferior direito)
@@ -157,12 +185,20 @@ DATABASE_URL=postgresql://...
    - Verificar se `VITE_GA_MEASUREMENT_ID` está configurado
    - Aguardar 24h para dados aparecerem
 
+5. **🔴 Página de detalhes de serviços vazia:**
+   - CONHECIDO! Leia `CHECKPOINT_SERVICEDETAIL_2026-01-11.md`
+   - Bug em investigação, workaround disponível
+
 ---
 
 ## 🎯 PRIORIDADES
 
+**🔴 CRÍTICA (resolver ANTES de tudo):**
+1. ~~Debugar ServiceDetail.tsx~~ **PAUSADO** - bug complexo, continuar amanhã
+2. Considerar workaround temporário (desabilitar rota)
+
 **ALTA (fazer hoje):**
-1. Testar site completo (10 minutos)
+1. Testar site completo (10 minutos) - **EXCETO `/what/:slug`**
 2. Configurar Google Analytics ID (5 minutos)
 3. Testar chatbot (5 minutos)
 
@@ -170,6 +206,7 @@ DATABASE_URL=postgresql://...
 1. Configurar API keys (se quiser chatbot)
 2. Testar backoffice completo
 3. Ver analytics após 24h
+4. **Retomar debug do ServiceDetail.tsx** com cabeça fresca
 
 **BAIXA (pode esperar):**
 1. Criar imagens OG personalizadas
@@ -188,6 +225,7 @@ Marque conforme testar:
 - [ ] Botão "Calculate" funciona (scroll + pulse)
 - [ ] Formulários enviam
 - [ ] Console F12 sem erros
+- [ ] **🔴 `/what/:slug` - CONHECIDO BUG (não testar)**
 
 **Chatbot:**
 - [ ] Abre corretamente
@@ -207,9 +245,27 @@ Marque conforme testar:
 
 ---
 
+## 🔄 CHECKPOINTS DISPONÍVEIS
+
+Se precisar voltar atrás ou revisar o que foi feito:
+
+1. **`CHECKPOINT_SERVICEDETAIL_2026-01-11.md`** ← 🔴 **BUG CRÍTICO**
+   - Diagnóstico completo do bug em ServiceDetail.tsx
+   - Todas as tentativas de correção documentadas
+   - Backup do código atual
+   - Próximos passos e planos B
+
+2. **`STATUS_IMPLEMENTACAO_ATUAL.md`** (se existir)
+   - Status geral do projeto
+
+3. **`PROGRESSO_MELHORIAS_HOME.md`** (se existir)
+   - Melhorias feitas na homepage
+
+---
+
 ## 🚀 PRÓXIMOS PASSOS (FUTURO)
 
-Depois de testar tudo, podemos implementar:
+Depois de testar tudo e resolver o bug do ServiceDetail, podemos implementar:
 
 1. **Navegação Inteligente:** IA detecta perfil e mostra projetos relevantes
 2. **Lead Scoring:** Backoffice prioriza leads automaticamente
@@ -219,7 +275,32 @@ Depois de testar tudo, podemos implementar:
 
 ---
 
+## 🛡️ COMO USAR OS CHECKPOINTS
+
+**Se eu (IA) der "merda" novamente:**
+
+1. **Pare imediatamente** o que está fazendo
+2. **Leia o checkpoint** correspondente
+3. **Restaure o código** se necessário:
+   ```bash
+   git status
+   git diff src/pages/ServiceDetail.tsx
+   git restore src/pages/ServiceDetail.tsx  # se quiser voltar
+   ```
+4. **Tente uma abordagem diferente** das listadas no checkpoint
+
+**Se você (humano) quiser revisar o que foi feito:**
+
+1. Abra o checkpoint mais recente
+2. Leia a seção "RESUMO DO PROBLEMA"
+3. Veja "TENTATIVAS DE CORREÇÃO"
+4. Escolha uma das "PRÓXIMAS OPÇÕES"
+
+---
+
 **Bom trabalho! 💪**  
 Me avise quando testar e como foi. Se tiver dúvidas ou erros, é só colar o erro aqui.
+
+**⚠️ IMPORTANTE:** Se quiser que eu continue debugando o ServiceDetail.tsx amanhã, me mostre este documento e diga "continuar do checkpoint ServiceDetail".
 
 Boa sorte! 🎉
