@@ -253,6 +253,7 @@ export default async function LeadsPage({
           >
             🔲 Kanban
           </Link>
+          </div>
         </div>
       </header>
 
