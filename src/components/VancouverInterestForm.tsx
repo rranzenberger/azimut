@@ -354,7 +354,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
           <h3 className="text-xl font-semibold text-white mb-4">Informações Pessoais</h3>
 
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-2">
+            <label className="label-adaptive">
               {t.name} *
             </label>
             <input
@@ -369,9 +369,9 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
 
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
-                {t.email} *
-              </label>
+            <label className="label-adaptive">
+              {t.email} *
+            </label>
               <input
                 type="email"
                 name="email"
@@ -383,16 +383,16 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
-                {t.whatsapp} *
-              </label>
+            <label className="label-adaptive">
+              {t.whatsapp} *
+            </label>
               <div className="flex gap-2">
                 {/* Dropdown de código de país */}
                 <select
                   value={formData.countryCode}
                   onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, whatsapp: '' }))}
-                  className="input-adaptive px-2 py-3 rounded-lg text-[13px] font-medium"
-                  style={{ width: '100px', minWidth: '100px', maxWidth: '100px', flexShrink: 0 }}
+                  className="input-adaptive px-2 rounded-lg text-[13px] font-medium"
+                  style={{ width: '100px', minWidth: '100px', maxWidth: '100px', flexShrink: 0, paddingTop: '0.75rem', paddingBottom: '0.75rem', minHeight: '48px' }}
                 >
                   <option value="+55">BR +55</option>
                   <option value="+1">CA +1</option>
@@ -433,7 +433,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
 
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
+              <label className="label-adaptive">
                 {t.age} *
               </label>
               <input
@@ -449,7 +449,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
+              <label className="label-adaptive">
                 {t.city} *
               </label>
               <input
@@ -465,7 +465,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-2">
+            <label className="label-adaptive">
               {t.currentSituation} *
             </label>
             <select
@@ -489,7 +489,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
           <h3 className="text-xl font-semibold text-white mb-4">Interesse em Vancouver</h3>
 
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-2">
+            <label className="label-adaptive">
               {t.targetSchool} *
             </label>
             <select
@@ -508,7 +508,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-2">
+            <label className="label-adaptive">
               {t.areaInterest} *
             </label>
             <select
@@ -528,7 +528,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
 
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
+              <label className="label-adaptive">
                 {t.intakeYear} *
               </label>
               <select
@@ -547,7 +547,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
+              <label className="label-adaptive">
                 {t.englishLevel} *
               </label>
               <select
@@ -567,7 +567,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-2">
+            <label className="label-adaptive">
               {t.hasPortfolio} *
             </label>
             <select
@@ -591,7 +591,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
           <h3 className="text-xl font-semibold text-white mb-4">Financeiro</h3>
 
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-2">
+            <label className="label-adaptive">
               {t.budgetRange} *
             </label>
             <select
@@ -610,7 +610,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-2">
+            <label className="label-adaptive">
               {t.fundingSource} *
             </label>
             <select
@@ -632,7 +632,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
         {/* How Heard */}
         <div className="space-y-4 mb-6">
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-2">
+            <label className="label-adaptive">
               {t.howHeard} *
             </label>
             <select
@@ -651,7 +651,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-2">
+            <label className="label-adaptive">
               {t.comments}
             </label>
             <textarea

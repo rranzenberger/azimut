@@ -1685,6 +1685,24 @@ select.input-adaptive:disabled {
   cursor: not-allowed;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   LABELS ADAPTATIVOS - AZIMUT PREMIUM
+   ═══════════════════════════════════════════════════════════════ */
+.label-adaptive {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.2s ease;
+}
+
+[data-theme="light"] .label-adaptive,
+html[data-theme="light"] .label-adaptive {
+  color: rgba(0, 0, 0, 0.85) !important;
+  font-weight: 600;
+}
+
 /* Custom select (Contact form) */
 .select-trigger {
   @apply w-full min-h-[44px] rounded-lg border border-white/10 px-4 py-3.5 text-left text-slate-100 flex items-center justify-between gap-2;
