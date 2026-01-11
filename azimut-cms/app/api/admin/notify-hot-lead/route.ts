@@ -6,7 +6,6 @@
 import { NextResponse } from 'next/server'
 import { hotLeadNotification, type HotLeadData } from '@/lib/email-templates'
 import { sendEmail } from '@/lib/email-service'
-import { prisma } from '@/lib/prisma'
 
 // Email do admin para receber notificações
 const ADMIN_EMAIL = process.env.ADMIN_NOTIFICATION_EMAIL || 'contato@azmt.com.br'
@@ -54,26 +53,6 @@ export async function POST(request: Request) {
     if (sent) {
       // Atualizar cache
       notificationCache.set(cacheKey, Date.now())
-      
-      // Registrar no banco (opcional - para histórico)
-      try {
-        await prisma.visitorBehavior.create({
-          data: {
-            sessionId: `notify_${data.fingerprint}_${Date.now()}`,
-            eventType: 'hot_lead_notification_sent',
-            eventData: JSON.stringify({
-              fingerprint: data.fingerprint,
-              score: data.conversionProbability,
-              email: data.email || null,
-              sentTo: ADMIN_EMAIL,
-              timestamp: new Date().toISOString()
-            })
-          }
-        })
-      } catch (e) {
-        // Ignorar erro de registro, email já foi enviado
-        console.warn('⚠️ Não foi possível registrar notificação no banco:', e)
-      }
       
       console.log(`✅ Notificação de Hot Lead enviada para ${ADMIN_EMAIL}`)
       
