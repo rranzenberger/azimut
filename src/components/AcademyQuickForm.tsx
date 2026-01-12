@@ -114,7 +114,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
     phone: '',
     school: type === 'vancouver' ? 'undecided' : undefined,
     courseArea: '',
-    preferredLanguage: lang,
+    preferredLanguage: 'pt', // 🇧🇷 Padrão Português (maioria dos alunos são brasileiros)
     contactPreference: 'email',
     interest: ''
   })
