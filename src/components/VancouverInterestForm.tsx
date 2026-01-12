@@ -503,17 +503,17 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                   onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, whatsapp: '' }))}
                   className="dropdown-azimut"
                   style={{ 
-                    width: '110px', 
-                    minWidth: '110px',
-                    maxWidth: '110px', 
-                    flexShrink: 0,
-                    flexGrow: 0,
-                    height: '48px',
+                    width: '110px !important', 
+                    minWidth: '110px !important',
+                    maxWidth: '110px !important', 
+                    flexShrink: '0',
+                    flexGrow: '0',
+                    height: '48px !important',
                     flex: '0 0 110px',
                     whiteSpace: 'nowrap',
                     fontSize: '0.85rem',
                     fontWeight: '600',
-                    padding: '0.75rem 1.75rem 0.75rem 0.6rem'
+                    padding: '0.75rem 1.75rem 0.75rem 0.6rem !important'
                   }}
                 >
                   <option value="+55">BR +55</option>
