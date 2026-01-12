@@ -521,7 +521,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                       height: '48px'
                     }}
                   >
-                    <option value="custom">➕ Outro</option>
+                    <option value="custom">🌍➕ Outro</option>
                     <option value="+55">🇧🇷 BR +55</option>
                     <option value="+1">🇨🇦 CA +1</option>
                     <option value="+34">🇪🇸 ES +34</option>

@@ -688,7 +688,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
                       }
                     }}
                     options={[
-                      { value: 'custom', label: 'Outro', icon: '➕' },
+                      { value: 'custom', label: 'Outro', icon: '🌍➕' },
                       { value: '+55', label: 'BR +55', icon: '🇧🇷' },
                       { value: '+1', label: 'CA +1', icon: '🇨🇦' },
                       { value: '+34', label: 'ES +34', icon: '🇪🇸' },
