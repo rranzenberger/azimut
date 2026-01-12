@@ -670,24 +670,75 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
             <label className="block text-sm font-semibold text-white/90 mb-2 uppercase tracking-wider">
               {t.fields.phone}
             </label>
-            <div className="flex gap-2">
-              {/* Dropdown de código */}
-              <div style={{ width: '100px', minWidth: '100px', maxWidth: '100px', flexShrink: 0 }}>
-                <SelectField
+            <div className="flex gap-2" style={{ alignItems: 'stretch', flexWrap: 'nowrap' }}>
+              {!customCodeMode ? (
+                <select
                   value={formData.countryCode}
-                  onChange={(value) => setFormData({ ...formData, countryCode: value, phone: '' })}
-                  options={countryCodes}
-                  placeholder="CA +1"
-                  ariaLabel="Código do país"
-                  className=""
-                />
-              </div>
+                  onChange={(e) => {
+                    if (e.target.value === 'custom') {
+                      setCustomCodeMode(true)
+                      setCustomCode('+')
+                      setFormData({ ...formData, countryCode: '+', phone: '' })
+                    } else {
+                      setFormData({ ...formData, countryCode: e.target.value, phone: '' })
+                    }
+                  }}
+                  className="dropdown-azimut"
+                  style={{
+                    width: '130px',
+                    minWidth: '130px',
+                    maxWidth: '130px',
+                    height: '48px',
+                    flexShrink: 0,
+                    flexGrow: 0
+                  }}
+                >
+                  <option value="custom">+ SEU CÓDIGO</option>
+                  <option value="+1">🇨🇦 CA +1</option>
+                  <option value="+55">🇧🇷 BR +55</option>
+                  <option value="+34">🇪🇸 ES +34</option>
+                  <option value="+33">🇫🇷 FR +33</option>
+                  <option value="+351">🇵🇹 PT +351</option>
+                  <option value="+52">🇲🇽 MX +52</option>
+                  <option value="+54">🇦🇷 AR +54</option>
+                  <option value="+56">🇨🇱 CL +56</option>
+                  <option value="+44">🇬🇧 UK +44</option>
+                  <option value="+49">🇩🇪 DE +49</option>
+                </select>
+              ) : (
+                <div className="flex gap-1" style={{ width: '130px', minWidth: '130px', flexShrink: 0 }}>
+                  <input
+                    type="text"
+                    value={customCode}
+                    onChange={(e) => {
+                      const val = e.target.value
+                      setCustomCode(val)
+                      setFormData({ ...formData, countryCode: val })
+                    }}
+                    className="input-adaptive w-full px-2 py-3.5 rounded-lg text-[15px] leading-normal"
+                    placeholder="+"
+                    style={{ width: 'calc(100% - 36px)' }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCustomCodeMode(false)
+                      setCustomCode('')
+                      setFormData({ ...formData, countryCode: '+1' })
+                    }}
+                    className="flex items-center justify-center w-[32px] h-[48px] bg-azimut-red/10 text-azimut-red rounded-lg hover:bg-azimut-red/20 transition-colors"
+                    title="Voltar"
+                  >
+                    ↩
+                  </button>
+                </div>
+              )}
               {/* Campo telefone - GRANDE com formatação */}
               <input
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => {
-                  const formatted = formatPhoneWithAreaCode(e.target.value, formData.countryCode)
+                  const formatted = customCodeMode ? e.target.value : formatPhoneWithAreaCode(e.target.value, formData.countryCode)
                   setFormData({ ...formData, phone: formatted })
                 }}
                 className="input-adaptive flex-1"
