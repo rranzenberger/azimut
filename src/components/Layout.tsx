@@ -492,7 +492,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             <div className="hidden min-[768px]:flex shrink-0" style={{ alignItems: 'center', height: '100%', display: 'flex', gap: '0', marginLeft: '2px' }}>
               {/* Grupo Canadá - EN e FR - ULTRA COMPACTO */}
               <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '1px' }}>
-                <img src="/flag-ca.svg" alt="Canada" className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block' }} />
+                <img src="/flag-ca.svg" alt="Canada" className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
                 <button
                   onClick={() => {
                     trackLanguageChange(lang, 'en')
@@ -545,7 +545,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               <span className="hidden md:inline opacity-40 shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', marginLeft: '5px', marginRight: '9px', lineHeight: '1', fontSize: '0.55rem' }}>|</span>
               {/* Grupo Brasil - PT e ES - ULTRA COMPACTO */}
               <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '1px' }}>
-                <img src="/flag-br.svg" alt="Brasil" className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block' }} />
+                <img src="/flag-br.svg" alt="Brasil" className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
                 <button
                   onClick={() => {
                     trackLanguageChange(lang, 'pt')
@@ -808,7 +808,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 <div className="flex items-center justify-center font-sora text-[0.65rem] sm:text-[0.7rem] font-medium uppercase tracking-[0.14em]" style={{ color: 'var(--theme-text-secondary)' }}>
                   {/* Grupo Canadá - EN e FR muito juntos */}
                   <span className="inline-flex items-center gap-0" style={{ alignItems: 'center' }}>
-                    <img src="/flag-ca.svg" alt="Canada" className="h-3.5 w-auto rounded-[2px] opacity-90 mr-0.5" style={{ display: 'block' }} />
+                    <img src="/flag-ca.svg" alt="Canada" className="h-3.5 w-auto rounded-[2px] opacity-90 mr-0.5" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
                     <button
                       onClick={() => changeLang('en')}
                       className="transition-all duration-200 touch-manipulation"
@@ -845,7 +845,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <span className="opacity-50 mx-3.5 text-[0.8rem] font-normal flex items-center" style={{ lineHeight: '1' }}>|</span>
                   {/* Grupo Brasil - PT e ES muito juntos */}
                   <span className="inline-flex items-center gap-0" style={{ alignItems: 'center' }}>
-                    <img src="/flag-br.svg" alt="Brasil" className="h-3.5 w-auto rounded-[2px] opacity-90 mr-1" style={{ display: 'block' }} />
+                    <img src="/flag-br.svg" alt="Brasil" className="h-3.5 w-auto rounded-[2px] opacity-90 mr-1" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
                     <button
                       onClick={() => changeLang('pt')}
                       className="transition-all duration-200 touch-manipulation"
@@ -992,13 +992,13 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               <div className="flex items-center gap-1 mt-2 mb-1 flex-wrap" style={{ color: '#64748b' }}>
                 {/* Canadá - Vancouver */}
                 <div className="flex items-center gap-1">
-                  <img src="/flag-ca.svg" alt="Canada" className="h-2.5 w-auto rounded-[2px] opacity-90" style={{ display: 'block' }} />
+                  <img src="/flag-ca.svg" alt="Canada" className="h-2.5 w-auto rounded-[2px] opacity-90" style={{ display: 'block', height: '10px', width: 'auto', maxHeight: '10px', maxWidth: '16px' }} />
                   <span className="text-[0.6rem] sm:text-[0.64rem]">Vancouver</span>
                 </div>
                 <span className="opacity-50 text-[0.55rem]">•</span>
                 {/* Brasil - Rio e Florianópolis */}
                 <div className="flex items-center gap-1">
-                  <img src="/flag-br.svg" alt="Brasil" className="h-2.5 w-auto rounded-[2px] opacity-90" style={{ display: 'block' }} />
+                  <img src="/flag-br.svg" alt="Brasil" className="h-2.5 w-auto rounded-[2px] opacity-90" style={{ display: 'block', height: '10px', width: 'auto', maxHeight: '10px', maxWidth: '16px' }} />
                   <span className="text-[0.6rem] sm:text-[0.64rem]">Rio</span>
                   <span className="opacity-50 text-[0.55rem]">•</span>
                   <span className="text-[0.6rem] sm:text-[0.64rem]">Florianópolis</span>
