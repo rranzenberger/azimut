@@ -421,7 +421,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                     const formatted = formatPhoneWithAreaCode(e.target.value, formData.countryCode)
                     setFormData(prev => ({ ...prev, whatsapp: formatted }))
                   }}
-                  className="flex-1 px-4 py-3 input-adaptive rounded-lg"
+                  className="input-adaptive flex-1"
                   style={{ minWidth: '0' }}
                 />
               </div>
