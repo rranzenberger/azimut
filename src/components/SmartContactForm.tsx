@@ -1112,12 +1112,29 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4" style={{ marginTop: '1.5rem' }}>
               <PremiumField label={t.phone}>
-                <div className="flex gap-2">
-                  {/* Dropdown de código de país */}
+                <div className="flex gap-2" style={{ alignItems: 'center', flexWrap: 'nowrap' }}>
+                  {/* Dropdown de código de país - INLINE STYLE FORÇADO */}
                   <select
                     value={formData.countryCode}
                     onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, phone: '' }))}
-                    className="dropdown-country-code"
+                    style={{
+                      width: '95px',
+                      minWidth: '95px',
+                      maxWidth: '95px',
+                      height: '48px',
+                      flexShrink: 0,
+                      flexGrow: 0,
+                      background: 'rgba(10, 15, 30, 0.95)',
+                      border: '1px solid rgba(201, 35, 55, 0.4)',
+                      color: '#ffffff',
+                      borderRadius: '0.5rem',
+                      padding: '0.5rem 0.4rem',
+                      fontSize: '0.8rem',
+                      fontWeight: 700,
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      cursor: 'pointer'
+                    }}
                   >
                     <option value="+55">BR +55</option>
                     <option value="+1">CA +1</option>
@@ -1167,17 +1184,6 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                 />
               </PremiumField>
             </div>
-
-            {/* Aviso: Email OU Telefone */}
-            <p className="text-xs text-amber-400/80 mt-2 flex items-start gap-1.5">
-              <span>💡</span>
-              <span>
-                {lang === 'pt' && 'Pelo menos email OU telefone é necessário'}
-                {lang === 'en' && 'At least email OR phone is required'}
-                {lang === 'fr' && 'Au moins email OU téléphone est requis'}
-                {lang === 'es' && 'Al menos correo O teléfono es requerido'}
-              </span>
-            </p>
 
             {/* Organization */}
             <div style={{ marginTop: '1.5rem' }}>

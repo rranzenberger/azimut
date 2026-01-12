@@ -660,9 +660,6 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
                 }
               />
             </div>
-            <p className="mt-2 text-xs text-white/50">
-              {t.emailOrPhone}
-            </p>
           </div>
 
           {/* School (Vancouver only) */}

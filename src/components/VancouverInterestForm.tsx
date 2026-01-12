@@ -491,12 +491,29 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
             <label className="label-adaptive">
               {t.whatsapp} *
             </label>
-              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'stretch', flexWrap: 'nowrap' }}>
-                {/* Dropdown de código de país - LARGURA AUMENTADA para caber "BR +55" */}
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'nowrap' }}>
+                {/* Dropdown de código de país - INLINE STYLE FORÇADO */}
                 <select
                   value={formData.countryCode}
                   onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, whatsapp: '' }))}
-                  className="dropdown-country-code"
+                  style={{
+                    width: '95px',
+                    minWidth: '95px',
+                    maxWidth: '95px',
+                    height: '48px',
+                    flexShrink: 0,
+                    flexGrow: 0,
+                    background: 'rgba(10, 15, 30, 0.95)',
+                    border: '1px solid rgba(201, 35, 55, 0.4)',
+                    color: '#ffffff',
+                    borderRadius: '0.5rem',
+                    padding: '0.5rem 0.4rem',
+                    fontSize: '0.8rem',
+                    fontWeight: 700,
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    cursor: 'pointer'
+                  }}
                 >
                   <option value="+55">BR +55</option>
                   <option value="+1">CA +1</option>
