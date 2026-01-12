@@ -269,7 +269,7 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" loading="lazy" />
         </div>
 
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
           {/* Breadcrumbs */}
           <nav className="mb-8 flex items-center gap-2 text-sm text-theme-text-secondary">
             <LangLink to="/" className="hover:text-azimut-red transition-colors">Home</LangLink>
@@ -281,6 +281,12 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
 
           {/* Hero */}
           <div className="mb-16">
+            {/* Prefixo Narrativo - APENAS ESTE ANIMA */}
+            <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+              <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
+                {lang === 'pt' ? 'NOSSA TRAJETÓRIA' : lang === 'es' ? 'NUESTRO RECORRIDO' : lang === 'fr' ? 'NOTRE PARCOURS' : 'OUR JOURNEY'}
+              </span>
+            </div>
             <h1 className="mb-6 font-handel uppercase text-theme-text" style={{ fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1', letterSpacing: '0.08em' }}>
               🏆 {text.title}
             </h1>

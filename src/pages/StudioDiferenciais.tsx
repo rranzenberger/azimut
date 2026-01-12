@@ -401,7 +401,7 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" loading="lazy" />
         </div>
 
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
           {/* Breadcrumbs */}
           <nav className="mb-8 flex items-center gap-2 text-sm text-theme-text-secondary">
             <LangLink to="/" className="hover:text-azimut-red transition-colors">Home</LangLink>
@@ -413,10 +413,16 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
 
           {/* Hero */}
           <div className="mb-16">
-            <h1 className="mb-6 font-handel text-5xl md:text-6xl lg:text-7xl font-bold uppercase text-theme-text">
+            {/* Prefixo Narrativo - APENAS ESTE ANIMA */}
+            <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+              <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
+                {lang === 'pt' ? 'O QUE NOS TORNA ÚNICOS' : lang === 'es' ? 'LO QUE NOS HACE ÚNICOS' : lang === 'fr' ? 'CE QUI NOUS REND UNIQUES' : 'WHAT MAKES US UNIQUE'}
+              </span>
+            </div>
+            <h1 className="mb-6 font-handel uppercase text-theme-text" style={{ fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1', letterSpacing: '0.08em' }}>
               ⚡ {text.title}
             </h1>
-            <p className="text-xl md:text-2xl text-theme-text-secondary max-w-4xl">
+            <p className="text-theme-text-secondary max-w-4xl" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
               {text.subtitle}
             </p>
           </div>
