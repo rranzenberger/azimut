@@ -513,15 +513,15 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                     }}
                     className="dropdown-azimut"
                     style={{ 
-                      width: '130px', 
-                      minWidth: '130px', 
-                      maxWidth: '130px', 
+                      width: '140px', 
+                      minWidth: '140px', 
+                      maxWidth: '140px', 
                       flexShrink: 0,
                       flexGrow: 0,
                       height: '48px'
                     }}
                   >
-                    <option value="custom">🌐 + Outro</option>
+                    <option value="custom">➕ Outro</option>
                     <option value="+55">🇧🇷 BR +55</option>
                     <option value="+1">🇨🇦 CA +1</option>
                     <option value="+34">🇪🇸 ES +34</option>
@@ -532,7 +532,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                     <option value="+44">🇬🇧 UK +44</option>
                   </select>
                 ) : (
-                  <div className="flex gap-1" style={{ width: '130px', minWidth: '130px', flexShrink: 0 }}>
+                  <div className="flex gap-1" style={{ width: '140px', minWidth: '140px', flexShrink: 0 }}>
                     <input
                       type="text"
                       value={formData.countryCode}

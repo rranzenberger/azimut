@@ -675,7 +675,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
             </label>
             <div className="flex gap-2" style={{ alignItems: 'stretch', flexWrap: 'nowrap' }}>
               {!customCodeMode ? (
-                <div style={{ width: '130px', minWidth: '130px', maxWidth: '130px', flexShrink: 0 }}>
+                <div style={{ width: '140px', minWidth: '140px', maxWidth: '140px', flexShrink: 0 }}>
                   <SelectField
                     value={formData.countryCode}
                     onChange={(value) => {
@@ -688,7 +688,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
                       }
                     }}
                     options={[
-                      { value: 'custom', label: '+ Outro', icon: '🌐' },
+                      { value: 'custom', label: 'Outro', icon: '➕' },
                       { value: '+55', label: 'BR +55', icon: '🇧🇷' },
                       { value: '+1', label: 'CA +1', icon: '🇨🇦' },
                       { value: '+34', label: 'ES +34', icon: '🇪🇸' },
@@ -706,7 +706,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
                   />
                 </div>
               ) : (
-                <div className="flex gap-1" style={{ width: '130px', minWidth: '130px', flexShrink: 0 }}>
+                <div className="flex gap-1" style={{ width: '140px', minWidth: '140px', flexShrink: 0 }}>
                   <input
                     type="text"
                     value={customCode}

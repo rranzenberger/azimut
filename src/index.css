@@ -2029,9 +2029,9 @@ select.dropdown-azimut::-ms-expand {
 
 /* DDI Select - Compacto em UMA linha */
 .ddi-select .select-trigger {
-  width: 130px !important;
-  min-width: 130px !important;
-  max-width: 130px !important;
+  width: 140px !important;
+  min-width: 140px !important;
+  max-width: 140px !important;
   min-height: 48px !important;
   height: 48px !important;
   padding: 0.5rem 0.75rem !important;
@@ -2040,8 +2040,8 @@ select.dropdown-azimut::-ms-expand {
   overflow: hidden !important;
 }
 .ddi-select .select-panel {
-  width: 160px !important;
-  min-width: 160px !important;
+  width: 170px !important;
+  min-width: 170px !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════
