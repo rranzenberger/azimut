@@ -705,9 +705,16 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       // Combinar countryCode + phone (remover formatação, só números)
       const phoneNumbers = formData.phone.replace(/\D/g, '')
       const fullPhone = phoneNumbers ? `${formData.countryCode}${phoneNumbers}` : ''
+      
+      // 🆕 DETECTAR PREFERÊNCIA DE CONTATO AUTOMATICAMENTE
+      const preferredContact = hasEmail && hasPhone ? 'both' :
+                              hasEmail ? 'email' :
+                              hasPhone ? 'phone' : 'email'
+      
       const submitData = {
         ...formData,
-        phone: fullPhone
+        phone: fullPhone,
+        preferredContact // 🆕 Detectado automaticamente
       }
       
       await ApiService.submitLead(submitData)
