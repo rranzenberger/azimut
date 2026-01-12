@@ -431,13 +431,19 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
             <label className="label-adaptive">
               {t.whatsapp} *
             </label>
-              <div className="flex gap-2">
-                {/* Dropdown de código de país */}
+              <div className="flex gap-2" style={{ alignItems: 'stretch' }}>
+                {/* Dropdown de código de país - COMPACTO */}
                 <select
                   value={formData.countryCode}
                   onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, whatsapp: '' }))}
                   className="dropdown-azimut"
-                  style={{ width: '115px', minWidth: '115px', maxWidth: '115px', flexShrink: 0 }}
+                  style={{ 
+                    width: '115px', 
+                    minWidth: '115px', 
+                    maxWidth: '115px', 
+                    flexShrink: 0,
+                    flexGrow: 0
+                  }}
                 >
                   <option value="+55">BR +55</option>
                   <option value="+1">CA +1</option>
@@ -447,7 +453,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                   <option value="+52">MX +52</option>
                   <option value="+54">AR +54</option>
                 </select>
-                {/* Campo WhatsApp - GRANDE com formatação automática */}
+                {/* Campo WhatsApp - flex-1 para preencher espaço restante */}
                 <input
                   type="tel"
                   name="whatsapp"
@@ -465,8 +471,12 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                     const formatted = formatPhoneWithAreaCode(e.target.value, formData.countryCode)
                     setFormData(prev => ({ ...prev, whatsapp: formatted }))
                   }}
-                  className="input-adaptive flex-1"
-                  style={{ minWidth: '0' }}
+                  className="input-adaptive"
+                  style={{ 
+                    flex: '1 1 auto',
+                    minWidth: '0',
+                    width: 'auto'
+                  }}
                 />
               </div>
               <p className="mt-1.5 text-xs text-white/50">
