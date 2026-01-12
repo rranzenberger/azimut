@@ -147,6 +147,12 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
       return `(${numbers.slice(0, 3)}) ${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`
     }
     
+    if (countryCode === '+44') {
+      if (numbers.length <= 3) return numbers
+      if (numbers.length <= 7) return `${numbers.slice(0, 3)} ${numbers.slice(3)}`
+      return `${numbers.slice(0, 3)} ${numbers.slice(3, 7)} ${numbers.slice(7, 11)}`
+    }
+    
     return numbers
   }
 
@@ -491,28 +497,19 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
             <label className="label-adaptive">
               {t.whatsapp} *
             </label>
-              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'nowrap' }}>
-                {/* Dropdown de código de país - INLINE STYLE FORÇADO */}
+              <div className="flex gap-2" style={{ alignItems: 'center' }}>
+                {/* Dropdown de código de país - LARGURA 130px */}
                 <select
                   value={formData.countryCode}
                   onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, whatsapp: '' }))}
-                  style={{
-                    width: '110px',
-                    minWidth: '110px',
-                    maxWidth: '110px',
-                    height: '48px',
+                  className="dropdown-azimut"
+                  style={{ 
+                    width: '130px', 
+                    minWidth: '130px', 
+                    maxWidth: '130px', 
                     flexShrink: 0,
                     flexGrow: 0,
-                    background: 'rgba(10, 15, 30, 0.95)',
-                    border: '1px solid rgba(201, 35, 55, 0.4)',
-                    color: '#ffffff',
-                    borderRadius: '0.5rem',
-                    padding: '0.5rem 0.5rem',
-                    fontSize: '0.82rem',
-                    fontWeight: 700,
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    cursor: 'pointer'
+                    height: '48px'
                   }}
                 >
                   <option value="+55">BR +55</option>
@@ -522,6 +519,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                   <option value="+351">PT +351</option>
                   <option value="+52">MX +52</option>
                   <option value="+54">AR +54</option>
+                  <option value="+44">UK +44</option>
                 </select>
                 {/* Campo WhatsApp - flex-1 para preencher espaço restante */}
                 <input
@@ -534,6 +532,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                     formData.countryCode === '+33' ? '01 23 45 67 89' :
                     formData.countryCode === '+351' ? '912 345 678' :
                     formData.countryCode === '+52' ? '(55) 1234 5678' :
+                    formData.countryCode === '+44' ? '020 1234 5678' :
                     '(11) 1234-5678'
                   }
                   value={formData.whatsapp}
@@ -543,11 +542,10 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                   }}
                   className="input-adaptive"
                   style={{ 
-                    flex: '1 1 0%',
+                    flex: '1 1 auto',
                     minWidth: '0',
-                    maxWidth: '100%',
-                    height: '48px !important',
-                    width: 'auto'
+                    width: 'auto',
+                    height: '48px'
                   }}
                 />
               </div>

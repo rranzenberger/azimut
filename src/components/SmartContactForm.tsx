@@ -1112,29 +1112,20 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4" style={{ marginTop: '1.5rem' }}>
               <PremiumField label={t.phone}>
-                <div className="flex gap-2" style={{ alignItems: 'center', flexWrap: 'nowrap' }}>
-                  {/* Dropdown de código de país - INLINE STYLE FORÇADO */}
+                <div className="flex gap-2" style={{ alignItems: 'center' }}>
+                  {/* Dropdown de código de país - LARGURA 130px */}
                   <select
                     value={formData.countryCode}
                     onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, phone: '' }))}
-                  style={{
-                    width: '110px',
-                    minWidth: '110px',
-                    maxWidth: '110px',
-                    height: '48px',
-                    flexShrink: 0,
-                    flexGrow: 0,
-                    background: 'rgba(10, 15, 30, 0.95)',
-                    border: '1px solid rgba(201, 35, 55, 0.4)',
-                    color: '#ffffff',
-                    borderRadius: '0.5rem',
-                    padding: '0.5rem 0.5rem',
-                    fontSize: '0.82rem',
-                    fontWeight: 700,
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    cursor: 'pointer'
-                  }}
+                    className="dropdown-azimut"
+                    style={{ 
+                      width: '130px', 
+                      minWidth: '130px', 
+                      maxWidth: '130px', 
+                      flexShrink: 0,
+                      flexGrow: 0,
+                      height: '48px'
+                    }}
                   >
                     <option value="+55">BR +55</option>
                     <option value="+1">CA +1</option>
@@ -1145,7 +1136,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                     <option value="+54">AR +54</option>
                     <option value="+44">UK +44</option>
                   </select>
-                  {/* Campo de telefone - GRANDE com formatação automática */}
+                  {/* Campo de telefone - flex-1 para preencher espaço restante */}
                   <input
                     type="tel"
                     name="phone"
@@ -1154,8 +1145,13 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       const formatted = formatPhoneWithAreaCode(e.target.value, formData.countryCode)
                       setFormData(prev => ({ ...prev, phone: formatted }))
                     }}
-                    className="input-adaptive flex-1"
-                    style={{ minWidth: '0' }}
+                    className="input-adaptive"
+                    style={{ 
+                      flex: '1 1 auto',
+                      minWidth: '0',
+                      width: 'auto',
+                      height: '48px'
+                    }}
                     placeholder={
                       formData.countryCode === '+55' ? '(11) 98765-4321' :
                       formData.countryCode === '+1' ? '(416) 555-1234' :
@@ -1164,6 +1160,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       formData.countryCode === '+351' ? '912 345 678' :
                       formData.countryCode === '+52' ? '(55) 1234 5678' :
                       formData.countryCode === '+54' ? '(11) 1234-5678' :
+                      formData.countryCode === '+44' ? '020 1234 5678' :
                       '12345 678901'
                     }
                   />
