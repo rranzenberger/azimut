@@ -1128,9 +1128,9 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       }}
                       className="dropdown-azimut"
                       style={{ 
-                        width: '130px', 
-                        minWidth: '130px', 
-                        maxWidth: '130px', 
+                        width: '120px', 
+                        minWidth: '120px', 
+                        maxWidth: '120px', 
                         flexShrink: 0,
                         flexGrow: 0,
                         height: '48px'
@@ -1147,7 +1147,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       <option value="custom">➕ Outro</option>
                     </select>
                   ) : (
-                    <div className="flex gap-1" style={{ width: '130px', minWidth: '130px', flexShrink: 0 }}>
+                    <div className="flex gap-1" style={{ width: '120px', minWidth: '120px', flexShrink: 0 }}>
                       <input
                         type="text"
                         value={formData.countryCode}
