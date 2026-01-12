@@ -228,13 +228,13 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
               {text.team.members.map((member, i) => (
-                <div key={i} className="p-6 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/40 transition-all">
-                  <div className="mb-4 h-32 rounded-lg bg-azimut-red/10 flex items-center justify-center">
+                <div key={i} className="p-6 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/40 transition-all overflow-hidden">
+                  <div className="mb-4 h-32 rounded-lg bg-azimut-red/10 flex items-center justify-center flex-shrink-0">
                     <span className="text-6xl">👤</span>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-1">{member.name}</h3>
-                  <p className="text-sm text-azimut-red mb-3 uppercase tracking-wider">{member.role}</p>
-                  <p className="text-sm text-theme-text-secondary leading-relaxed">{member.bio}</p>
+                  <h3 className="text-xl font-bold text-white mb-1 line-clamp-1">{member.name}</h3>
+                  <p className="text-sm text-azimut-red mb-3 uppercase tracking-wider line-clamp-1">{member.role}</p>
+                  <p className="text-sm text-theme-text-secondary leading-relaxed line-clamp-4">{member.bio}</p>
                 </div>
               ))}
             </div>

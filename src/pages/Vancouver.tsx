@@ -605,13 +605,13 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               {t.whyItems.map((item, i) => (
                 <div
                   key={i}
-                  className="p-6 card-adaptive rounded-xl border border-white/10 hover:border-azimut-red/50 transition-all duration-300"
+                  className="p-6 card-adaptive rounded-xl border border-white/10 hover:border-azimut-red/50 transition-all duration-300 overflow-hidden"
                 >
-                  <div className="text-5xl mb-4">{item.icon}</div>
-                  <h3 className="text-xl font-semibold text-white mb-3">
+                  <div className="text-5xl mb-4 flex-shrink-0">{item.icon}</div>
+                  <h3 className="text-xl font-semibold text-white mb-3 line-clamp-2">
                     {item.title}
                   </h3>
-                  <p className="text-white/70 leading-relaxed">
+                  <p className="text-white/70 leading-relaxed line-clamp-4">
                     {item.description}
                   </p>
                 </div>

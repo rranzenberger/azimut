@@ -191,17 +191,17 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                   }}
                   onClick={() => trackInteraction('service_view', service.slug)}
                 >
-                  <article className="flex flex-col h-full">
+                  <article className="flex flex-col h-full overflow-hidden">
                     {service.icon && (
-                      <div className="mb-4 text-4xl">{service.icon}</div>
+                      <div className="mb-4 text-4xl flex-shrink-0">{service.icon}</div>
                     )}
-                    <h3 className="mb-3 font-sora text-lg font-semibold text-white group-hover:text-azimut-red transition-colors duration-300">
+                    <h3 className="mb-3 font-sora text-lg font-semibold text-white group-hover:text-azimut-red transition-colors duration-300 line-clamp-2">
                       {getServiceTitle(service, lang)}
                     </h3>
-                    <p className="text-sm leading-relaxed text-slate-200 group-hover:text-slate-100 transition-colors duration-300 flex-grow">
+                    <p className="text-sm leading-relaxed text-slate-200 group-hover:text-slate-100 transition-colors duration-300 flex-grow line-clamp-4">
                       {getServiceShortDesc(service, lang)}
                     </p>
-                    <div className="mt-4 pt-4 border-t border-white/10">
+                    <div className="mt-4 pt-4 border-t border-white/10 flex-shrink-0">
                       <span className="text-xs font-medium text-azimut-red group-hover:text-white transition-colors duration-300">
                         {lang === 'pt' ? 'Ver detalhes →' : lang === 'es' ? 'Ver detalles →' : lang === 'fr' ? 'Voir détails →' : 'View details →'}
                       </span>

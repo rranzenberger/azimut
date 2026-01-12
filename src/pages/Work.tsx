@@ -476,11 +476,11 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 </div>
 
                 {/* Content */}
-                <div className="p-6 md:p-8">
-                  <h2 className="mb-3 font-handel text-3xl uppercase tracking-[0.12em] text-white">
+                <div className="p-6 md:p-8 overflow-hidden">
+                  <h2 className="mb-3 font-handel text-3xl uppercase tracking-[0.12em] text-white line-clamp-2">
                     {cases[0].title}
                   </h2>
-                  <p className="mb-4 text-base leading-relaxed text-slate-900 dark:text-slate-200">
+                  <p className="mb-4 text-base leading-relaxed text-slate-900 dark:text-slate-200 line-clamp-4">
                     {cases[0].summary || cases[0].shortTitle}
                   </p>
                   {(cases[0].city || cases[0].country) && (
@@ -583,11 +583,11 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   )}
                 </div>
 
-                <div className="p-4 relative z-10">
-                  <h3 className="mb-2 font-sora text-[1.05rem] text-white group-hover:text-azimut-red transition-colors duration-300">
+                <div className="p-4 relative z-10 overflow-hidden">
+                  <h3 className="mb-2 font-sora text-[1.05rem] text-white group-hover:text-azimut-red transition-colors duration-300 line-clamp-2">
                     {item.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-slate-900 dark:text-slate-200 mb-3 group-hover:text-slate-100 transition-colors duration-300">
+                  <p className="text-sm leading-relaxed text-slate-900 dark:text-slate-200 mb-3 group-hover:text-slate-100 transition-colors duration-300 line-clamp-3">
                     {item.summary || item.shortTitle}
                   </p>
                   <div className="flex flex-wrap items-center justify-between gap-2 mt-3">
