@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
+import { addPoints, loadProgress, saveProgress } from '../utils/gamification'
 
 type InteractionType = 'cta_click' | 'project_view' | 'service_view' | 'language_change'
 
@@ -146,6 +147,29 @@ function trackPageView(path: string) {
   })
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(session))
+  
+  // 🎮 GAMIFICATION: Award pontos por visualização de página
+  try {
+    const progress = loadProgress()
+    const isFirstVisit = progress.stats.pagesVisited === 0
+    
+    if (isFirstVisit) {
+      addPoints('firstTimeVisitor')
+    } else {
+      addPoints('pageView')
+    }
+    
+    // Atualizar stats
+    progress.stats.pagesVisited++
+    saveProgress(progress)
+    
+    // Disparar evento para atualizar widget
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('gamification-update'))
+    }
+  } catch (e) {
+    // Silencioso - gamificação é extra, não deve quebrar
+  }
 }
 
 function updatePageVisit(path: string, timeSpent: number, scrollDepth: number) {
@@ -158,6 +182,33 @@ function updatePageVisit(path: string, timeSpent: number, scrollDepth: number) {
   }
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(session))
+  
+  // 🎮 GAMIFICATION: Award pontos por scroll profundo e tempo gasto
+  try {
+    const progress = loadProgress()
+    
+    // Deep scroll (>80%)
+    if (scrollDepth > 80) {
+      addPoints('deepScroll', { scrollDepth })
+    }
+    
+    // Long visit (>2 minutos = 120 segundos)
+    if (timeSpent > 120) {
+      addPoints('longVisit', { timeSpent })
+    }
+    
+    // Atualizar stats
+    progress.stats.timeSpent += timeSpent
+    progress.stats.scrollDepth = Math.max(progress.stats.scrollDepth, scrollDepth)
+    saveProgress(progress)
+    
+    // Disparar evento
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('gamification-update'))
+    }
+  } catch (e) {
+    // Silencioso
+  }
 }
 
 function addInteraction(type: InteractionType, target: string) {

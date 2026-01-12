@@ -1,6 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import Layout from './Layout'
+import GamificationWidget from './GamificationWidget'
 import { type Lang } from '../i18n'
 
 interface AppLayoutProps {
@@ -18,9 +19,18 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, lang, setLang, theme, t
   
   // Sempre usar Layout para todas as rotas
   return (
-    <Layout lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
-      {children}
-    </Layout>
+    <>
+      <Layout lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
+        {children}
+      </Layout>
+      
+      {/* 🎮 GAMIFICATION WIDGET - Aparece em todas as páginas */}
+      <GamificationWidget 
+        lang={lang}
+        position="bottom-right"
+        showOnMount={true}
+      />
+    </>
   )
 }
 
