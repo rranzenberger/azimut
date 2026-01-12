@@ -52,9 +52,9 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
       message: 'Sua mensagem foi enviada! Nossa equipe analisará sua solicitação e retornará em até 24 horas úteis.',
       nextSteps: 'O que acontece agora?',
       steps: [
-        { icon: '📧', title: 'Análise da Solicitação', desc: 'Equipe avalia projeto e necessidades', time: '1h' },
-        { icon: '💬', title: 'Retorno em 24h', desc: 'Agendamos conversa detalhada', time: '24h' },
-        { icon: '🎯', title: 'Proposta Custom', desc: 'Soluções sob medida', time: '48h' }
+        { icon: '📧', title: 'Análise', desc: 'Avaliação do projeto', time: '1h' },
+        { icon: '💬', title: 'Retorno 24h', desc: 'Conversa detalhada', time: '24h' },
+        { icon: '🎯', title: 'Proposta', desc: 'Soluções sob medida', time: '48h' }
       ],
       explore: 'Enquanto isso, explore:',
       links: [
@@ -70,8 +70,8 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
       message: 'Your message has been sent! Our team will review your request and get back to you within 24 business hours.',
       nextSteps: 'What happens now?',
       steps: [
-        { icon: '📧', title: 'Request Analysis', desc: 'Team evaluates project and needs', time: '1h' },
-        { icon: '💬', title: '24h Response', desc: 'We schedule detailed conversation', time: '24h' },
+        { icon: '📧', title: 'Request Analysis', desc: 'Project evaluation', time: '1h' },
+        { icon: '💬', title: '24h Response', desc: 'Detailed conversation', time: '24h' },
         { icon: '🎯', title: 'Custom Proposal', desc: 'Tailored solutions', time: '48h' }
       ],
       explore: 'In the meantime, explore:',
@@ -88,9 +88,9 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
       message: '¡Tu mensaje ha sido enviado! Nuestro equipo analizará tu solicitud y responderá en un plazo de 24 horas hábiles.',
       nextSteps: '¿Qué sucede ahora?',
       steps: [
-        { icon: '📧', title: 'Análisis de Solicitud', desc: 'Equipo evalúa proyecto y necesidades', time: '1h' },
-        { icon: '💬', title: 'Respuesta en 24h', desc: 'Programamos conversación detallada', time: '24h' },
-        { icon: '🎯', title: 'Propuesta Custom', desc: 'Soluciones a medida', time: '48h' }
+        { icon: '📧', title: 'Análisis', desc: 'Evaluación proyecto', time: '1h' },
+        { icon: '💬', title: 'Respuesta 24h', desc: 'Conversación detallada', time: '24h' },
+        { icon: '🎯', title: 'Propuesta', desc: 'Soluciones a medida', time: '48h' }
       ],
       explore: 'Mientras tanto, explora:',
       links: [
@@ -106,9 +106,9 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
       message: 'Votre message a été envoyé! Notre équipe analysera votre demande et vous répondra dans les 24 heures ouvrables.',
       nextSteps: 'Que se passe-t-il maintenant?',
       steps: [
-        { icon: '📧', title: 'Analyse de la Demande', desc: "L'équipe évalue le projet et les besoins", time: '1h' },
-        { icon: '💬', title: 'Réponse en 24h', desc: 'Nous planifions une conversation détaillée', time: '24h' },
-        { icon: '🎯', title: 'Proposition Custom', desc: 'Solutions sur mesure', time: '48h' }
+        { icon: '📧', title: 'Analyse', desc: 'Évaluation projet', time: '1h' },
+        { icon: '💬', title: 'Réponse 24h', desc: 'Conversation détaillée', time: '24h' },
+        { icon: '🎯', title: 'Proposition', desc: 'Solutions sur mesure', time: '48h' }
       ],
       explore: 'En attendant, explorez:',
       links: [

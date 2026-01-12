@@ -372,15 +372,10 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
       const whatsappNumbers = formData.whatsapp.replace(/\D/g, '')
       const fullWhatsapp = whatsappNumbers ? `${formData.countryCode}${whatsappNumbers}` : ''
       
-      // 🆕 DETECTAR PREFERÊNCIA DE CONTATO AUTOMATICAMENTE
-      const preferredContact = hasEmail && hasPhone ? 'both' :
-                              hasEmail ? 'email' :
-                              hasPhone ? 'whatsapp' : 'email'
-      
       const submitData = {
         ...formData,
-        whatsapp: fullWhatsapp,
-        preferredContact // 🆕 Detectado automaticamente baseado no que preencheu
+        whatsapp: fullWhatsapp
+        // preferredContact já está em formData, não precisa sobrescrever!
       }
       
       // 1. Submeter para o backoffice (API existente)
