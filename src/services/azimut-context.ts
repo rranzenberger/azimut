@@ -26,8 +26,74 @@ export const AZIMUT_CONTEXT = {
       'Curadoria VR no Festival de Gramado desde 2017',
       'Direção Técnica no Museu Olímpico do Rio',
       '30+ anos de experiência em produção audiovisual',
-      'Expertise em VR/XR desde os primórdios da tecnologia'
+      'Expertise em VR/XR desde os primórdios da tecnologia',
+      'Pesquisadores e professores qualificados',
+      'PIONEIROS em animação 3D no Brasil (Saci-Pererê 3D nos anos 90!)'
     ]
+  },
+  
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 📜 TRAJETÓRIA DA AZIMUT - HISTÓRIA COMPLETA DESDE OS ANOS 90
+  // ═══════════════════════════════════════════════════════════════════════════
+  trajetoria: {
+    resumo: 'A Azimut nasceu nos anos 90, época PIONEIRA da computação gráfica no Brasil. Somos uma empresa de SOLUÇÕES criativas, não apenas produtora. Nossa equipe é formada por pesquisadores, professores e profissionais qualificados com DÉCADAS de experiência.',
+    
+    marcos: [
+      { ano: '1996', evento: 'Fundação da Azimut', descricao: 'Início das atividades, focando em computação gráfica e animação quando isso ainda era ficção científica!' },
+      { ano: '1996-1998', evento: '🎬 ANIMAÇÃO 3D DO SACI-PERERÊ', descricao: 'Uma das PRIMEIRAS animações 3D do BRASIL! Pioneirismo absoluto! Quando a Pixar ainda engatinhava, a Azimut já fazia 3D no Brasil. O Saci em 3D foi REVOLUCIONÁRIO para a época.' },
+      { ano: '2000s', evento: 'Expansão Audiovisual', descricao: 'Documentários premiados, filmes institucionais, comerciais para grandes marcas.' },
+      { ano: '2010s', evento: 'Era VR/AR', descricao: 'Pioneiros em realidade virtual e aumentada no Brasil. Projetos para museus, eventos, marcas premium.' },
+      { ano: '2015+', evento: 'Expansão Canadá', descricao: 'Abertura de operações em Vancouver. Parceria oficial com VanArts e VFS.' },
+      { ano: '2017+', evento: 'Curadoria Gramado', descricao: 'Curadoria da mostra VR no Festival de Gramado - maior festival de cinema do Brasil.' },
+      { ano: '2020s', evento: 'Academy & IA', descricao: 'Agentes oficiais das melhores escolas de Vancouver. Integração de IA nos processos criativos.' }
+    ],
+    
+    pioneirismo3D: {
+      titulo: '🏆 PIONEIROS EM ANIMAÇÃO 3D NO BRASIL',
+      historia: 'Nos anos 90, quando computação gráfica era coisa de filme de Hollywood e ninguém no Brasil sabia fazer, a Azimut JÁ ESTAVA FAZENDO! O projeto do Saci-Pererê em 3D foi um MARCO HISTÓRICO - uma das primeiras animações digitais do Brasil. Isso foi ANTES da Pixar virar mainstream com Toy Story! A gente já fazia 3D quando isso era praticamente mágica.',
+      impacto: 'Essa experiência de 30+ anos nos dá uma MATURIDADE ÚNICA. Não somos startup que aprendeu ontem. Somos VETERANOS que viram a indústria NASCER e CRESCER. Já erramos, já acertamos, já aprendemos. Isso é INSUBSTITUÍVEL.'
+    }
+  },
+  
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 👥 EQUIPE PRINCIPAL - RANZ, ALBERTO, ANICK
+  // ═══════════════════════════════════════════════════════════════════════════
+  equipe: {
+    filosofia: 'Nossa equipe não é de "funcionários". Somos PESQUISADORES, PROFESSORES, ARTISTAS e TÉCNICOS apaixonados. Cada um traz DÉCADAS de experiência. Somos humildes mas não modestos - temos nosso valor.',
+    
+    ranz: {
+      nome: 'Ranz (Ricardo Ranzenberger)',
+      cargo: 'CEO & Diretor Criativo',
+      experiencia: '30+ anos',
+      especialidades: ['Direção criativa', 'VR/AR', 'Cinema', 'Animação 3D', 'Estratégia', 'Educação'],
+      background: 'Fundador da Azimut. Começou na era PIONEIRA da computação gráfica nos anos 90. FEZ o Saci 3D! Dirigiu projetos para Google, Microsoft, Samsung. Professor universitário e pesquisador. Visionário que une arte e tecnologia. Faz a ponte Brasil-Canadá.',
+      fraseTipica: {
+        pt: 'A tecnologia é só ferramenta. O que importa é a história que você quer contar.',
+        en: 'Technology is just a tool. What matters is the story you want to tell.'
+      }
+    },
+    alberto: {
+      nome: 'Alberto',
+      cargo: 'Diretor Técnico / CTO',
+      experiencia: '25+ anos',
+      especialidades: ['Engenharia de software', 'VR/AR técnico', 'Arquitetura de sistemas', 'Inovação'],
+      background: 'A MENTE TÉCNICA por trás dos projetos mais complexos. Engenheiro que entende de arte. Resolve problemas que outros dizem ser impossíveis. Responsável por fazer a mágica acontecer.',
+      fraseTipica: {
+        pt: 'Se dá pra imaginar, dá pra fazer. É só encontrar o caminho certo.',
+        en: 'If you can imagine it, you can build it. Just need to find the right path.'
+      }
+    },
+    anick: {
+      nome: 'Anick',
+      cargo: 'Diretora de Operações & Academy',
+      experiencia: '20+ anos',
+      especialidades: ['Gestão de projetos', 'Academy/Educação', 'Relacionamento', 'Vancouver/Canadá'],
+      background: 'Responsável pela operação em Vancouver. ESPECIALISTA em educação internacional. Conhece Vancouver como a palma da mão. Já ajudou CENTENAS de alunos a realizar o sonho de estudar fora. A "mãezona" dos estudantes.',
+      fraseTipica: {
+        pt: 'Estudar fora muda sua vida. Eu vejo isso acontecer todo dia.',
+        en: 'Studying abroad changes your life. I see it happen every day.'
+      }
+    }
   },
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -1047,12 +1113,38 @@ CONHECIMENTO COMPLETO DA AZIMUT
 
 SOBRE A AZIMUT:
 - Nome: ${AZIMUT_CONTEXT.about.name}
-- Fundada: ${AZIMUT_CONTEXT.about.founded} (${AZIMUT_CONTEXT.about.yearsExperience} anos de experiência)
+- Fundada: ${AZIMUT_CONTEXT.about.founded} (${AZIMUT_CONTEXT.about.yearsExperience} anos de experiência!)
 - Locais: ${AZIMUT_CONTEXT.about.locations.join(', ')}
 - Tagline: ${AZIMUT_CONTEXT.about.tagline}
 
 DIFERENCIAIS:
 ${AZIMUT_CONTEXT.about.differentials.map(d => `• ${d}`).join('\n')}
+
+═══════════════════════════════════════════════════════════════════════════
+📜 NOSSA TRAJETÓRIA - FALE DISSO COM ORGULHO!
+═══════════════════════════════════════════════════════════════════════════
+
+${AZIMUT_CONTEXT.trajetoria.resumo}
+
+🏆 PIONEIRISMO 3D: ${AZIMUT_CONTEXT.trajetoria.pioneirismo3D.historia}
+
+MARCOS HISTÓRICOS:
+${AZIMUT_CONTEXT.trajetoria.marcos.map(m => `• ${m.ano}: ${m.evento} - ${m.descricao}`).join('\n')}
+
+═══════════════════════════════════════════════════════════════════════════
+👥 NOSSA EQUIPE - PESQUISADORES E PROFESSORES QUALIFICADOS
+═══════════════════════════════════════════════════════════════════════════
+
+${AZIMUT_CONTEXT.equipe.filosofia}
+
+🎬 RANZ (CEO): ${AZIMUT_CONTEXT.equipe.ranz.background}
+   Frase típica: "${AZIMUT_CONTEXT.equipe.ranz.fraseTipica[lang] || AZIMUT_CONTEXT.equipe.ranz.fraseTipica.pt}"
+
+🔧 ALBERTO (CTO): ${AZIMUT_CONTEXT.equipe.alberto.background}
+   Frase típica: "${AZIMUT_CONTEXT.equipe.alberto.fraseTipica[lang] || AZIMUT_CONTEXT.equipe.alberto.fraseTipica.pt}"
+
+🇨🇦 ANICK (Academy): ${AZIMUT_CONTEXT.equipe.anick.background}
+   Frase típica: "${AZIMUT_CONTEXT.equipe.anick.fraseTipica[lang] || AZIMUT_CONTEXT.equipe.anick.fraseTipica.pt}"
 
 SERVIÇOS QUE OFERECEMOS:
 ${AZIMUT_CONTEXT.services.map(s => `• ${s.icon} ${s.name}: ${s.description}`).join('\n')}
