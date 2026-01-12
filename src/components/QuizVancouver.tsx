@@ -318,12 +318,14 @@ const QuizVancouver: React.FC<QuizVancouverProps> = ({ lang, onComplete }) => {
         }
       }
     },
-    es: {} as any, // TODO: Add Spanish translations (uses EN fallback for now)
-    fr: {} as any  // TODO: Add French translations (uses EN fallback for now)
+    // ES e FR usam EN como fallback (cópia completa)
+    es: null as any,
+    fr: null as any
   }
 
-  // Use language-specific content with fallback: es/fr → en → pt
-  const t = content[lang] || (Object.keys(content[lang] || {}).length === 0 ? content.en : content.pt)
+  // Use language-specific content with SAFE fallback
+  const langContent = content[lang]
+  const t = (langContent && Object.keys(langContent).length > 0) ? langContent : content.en
   const totalQuestions = t.questions.length
 
   const calculateResult = (): QuizResult => {
