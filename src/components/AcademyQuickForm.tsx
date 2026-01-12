@@ -687,17 +687,16 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
                   }}
                   className="dropdown-azimut"
                   style={{
-                    width: '130px',
-                    minWidth: '130px',
-                    maxWidth: '130px',
+                    width: '120px',
+                    minWidth: '120px',
+                    maxWidth: '120px',
                     height: '48px',
                     flexShrink: 0,
                     flexGrow: 0
                   }}
                 >
-                  <option value="custom">+ SEU CÓDIGO</option>
-                  <option value="+1">🇨🇦 CA +1</option>
                   <option value="+55">🇧🇷 BR +55</option>
+                  <option value="+1">🇨🇦 CA +1</option>
                   <option value="+34">🇪🇸 ES +34</option>
                   <option value="+33">🇫🇷 FR +33</option>
                   <option value="+351">🇵🇹 PT +351</option>
@@ -706,9 +705,10 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
                   <option value="+56">🇨🇱 CL +56</option>
                   <option value="+44">🇬🇧 UK +44</option>
                   <option value="+49">🇩🇪 DE +49</option>
+                  <option value="custom">🌐 + Outro</option>
                 </select>
               ) : (
-                <div className="flex gap-1" style={{ width: '130px', minWidth: '130px', flexShrink: 0 }}>
+                <div className="flex gap-1" style={{ width: '120px', minWidth: '120px', flexShrink: 0 }}>
                   <input
                     type="text"
                     value={customCode}
