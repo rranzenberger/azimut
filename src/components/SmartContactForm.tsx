@@ -1117,8 +1117,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   <select
                     value={formData.countryCode}
                     onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, phone: '' }))}
-                    className="dropdown-azimut"
-                    style={{ width: '115px', minWidth: '115px', maxWidth: '115px', flexShrink: 0 }}
+                    className="dropdown-country-code"
                   >
                     <option value="+55">BR +55</option>
                     <option value="+1">CA +1</option>
