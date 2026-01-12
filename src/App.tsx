@@ -406,7 +406,7 @@ const App: React.FC = () => {
                 } />
                 <Route path="/:lang/thank-you" element={
                   <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <ThankYou />}
+                    {(routeLang) => <ThankYou lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/project/:slug" element={
@@ -560,7 +560,7 @@ const App: React.FC = () => {
                 } />
                 <Route path="/:lang/thank-you" element={
                   <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <ThankYou />}
+                    {(routeLang) => <ThankYou lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
                 <Route path="/:lang/project/:slug" element={
