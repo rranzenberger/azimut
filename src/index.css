@@ -1808,6 +1808,16 @@ select.dropdown-azimut:disabled {
   cursor: not-allowed;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   OVERRIDE para dropdowns compactos (código de país)
+   Remove estilos inline conflitantes
+   ═══════════════════════════════════════════════════════════════ */
+.dropdown-azimut[style*="width: 115px"],
+select.dropdown-azimut[style*="width: 115px"] {
+  padding: 0.75rem 2rem 0.75rem 0.75rem !important;
+  font-size: 0.875rem !important;
+}
+
 /* Remover setas nativas */
 .dropdown-azimut::-ms-expand,
 select.dropdown-azimut::-ms-expand {
