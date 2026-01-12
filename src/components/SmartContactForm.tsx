@@ -1150,17 +1150,6 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                 </p>
               </PremiumField>
 
-              {/* Aviso: Email OU Telefone */}
-              <p className="text-xs text-amber-400/80 -mt-2 flex items-start gap-1.5">
-                <span>💡</span>
-                <span>
-                  {lang === 'pt' && 'Pelo menos email OU telefone é necessário'}
-                  {lang === 'en' && 'At least email OR phone is required'}
-                  {lang === 'fr' && 'Au moins email OU téléphone est requis'}
-                  {lang === 'es' && 'Al menos correo O teléfono es requerido'}
-                </span>
-              </p>
-
               <PremiumField label={t.position}>
                 <input
                   type="text"
@@ -1172,6 +1161,17 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                 />
               </PremiumField>
             </div>
+
+            {/* Aviso: Email OU Telefone */}
+            <p className="text-xs text-amber-400/80 mt-2 flex items-start gap-1.5">
+              <span>💡</span>
+              <span>
+                {lang === 'pt' && 'Pelo menos email OU telefone é necessário'}
+                {lang === 'en' && 'At least email OR phone is required'}
+                {lang === 'fr' && 'Au moins email OU téléphone est requis'}
+                {lang === 'es' && 'Al menos correo O teléfono es requerido'}
+              </span>
+            </p>
 
             {/* Organization */}
             <div style={{ marginTop: '1.5rem' }}>
