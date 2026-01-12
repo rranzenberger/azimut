@@ -106,7 +106,7 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
       message: 'Votre message a été envoyé! Notre équipe analysera votre demande et vous répondra dans les 24 heures ouvrables.',
       nextSteps: 'Que se passe-t-il maintenant?',
       steps: [
-        { icon: '📧', title: 'Analyse de la Demande', desc: 'L\'équipe évalue le projet et les besoins', time: '1h' },
+        { icon: '📧', title: 'Analyse de la Demande', desc: "L'équipe évalue le projet et les besoins", time: '1h' },
         { icon: '💬', title: 'Réponse en 24h', desc: 'Nous planifions une conversation détaillée', time: '24h' },
         { icon: '🎯', title: 'Proposition Personnalisée', desc: 'Nous présentons des solutions sur mesure', time: '48h' }
       ],
@@ -116,7 +116,7 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
         { to: '/what', icon: '⚡', text: 'Voir Services' },
         { to: '/academy', icon: '🎓', text: 'Découvrir Academy' }
       ],
-      backHome: 'Retour à l\'Accueil'
+      backHome: "Retour à l'Accueil"
     }
   }
 
