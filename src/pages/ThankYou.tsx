@@ -131,12 +131,11 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
                   key={i}
                   className="relative group"
                 >
-                  <div className="absolute top-6 left-1/2 w-full h-0.5 bg-azimut-red/20 -z-10 last:hidden"></div>
-                  <div className="text-center p-6 rounded-lg bg-slate-900/50 border-2 border-azimut-red/30 hover:border-azimut-red transition-all">
-                    <div className="text-6xl mb-4">{step.icon}</div>
+                  <div className="text-center p-6 rounded-lg bg-slate-900/50 border-2 border-azimut-red/30 hover:border-azimut-red transition-all h-full flex flex-col">
+                    <div className="text-5xl mb-3">{step.icon}</div>
                     <div className="mb-2 text-xs font-bold text-azimut-red uppercase tracking-wider">{step.time}</div>
-                    <h3 className="text-lg font-bold text-white mb-2">{step.title}</h3>
-                    <p className="text-sm text-theme-text-secondary">{step.desc}</p>
+                    <h3 className="text-base font-bold text-white mb-2 line-clamp-2">{step.title}</h3>
+                    <p className="text-sm text-theme-text-secondary line-clamp-3 flex-1">{step.desc}</p>
                   </div>
                 </div>
               ))}
@@ -151,10 +150,10 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
                 <LangLink
                   key={i}
                   to={link.to}
-                  className="group p-8 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/50 transition-all text-center"
+                  className="group p-6 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/50 transition-all text-center flex flex-col items-center h-full"
                 >
-                  <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">{link.icon}</div>
-                  <p className="text-lg font-semibold text-white group-hover:text-azimut-red transition-colors">{link.text}</p>
+                  <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">{link.icon}</div>
+                  <p className="text-base font-semibold text-white group-hover:text-azimut-red transition-colors line-clamp-2">{link.text}</p>
                 </LangLink>
               ))}
             </div>

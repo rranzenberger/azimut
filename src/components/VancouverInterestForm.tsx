@@ -12,6 +12,7 @@ interface FormData {
   email: string
   countryCode: string
   whatsapp: string
+  preferredContact: 'email' | 'whatsapp' | 'call' | 'any' // 🆕 Preferência de contato
   age: string
   city: string
   currentSituation: string
@@ -33,6 +34,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
     email: '',
     countryCode: '+55',
     whatsapp: '',
+    preferredContact: 'email', // 🆕 Padrão: Email
     age: '',
     city: '',
     currentSituation: '',
@@ -238,6 +240,13 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
       ],
       comments: 'Comentários/Dúvidas',
       commentsPlaceholder: 'Conte-nos um pouco mais sobre seus objetivos...',
+      preferredContactLabel: 'Como prefere ser contatado?',
+      contactOptions: [
+        { value: 'email', label: '📧 Email' },
+        { value: 'whatsapp', label: '💬 WhatsApp' },
+        { value: 'call', label: '📞 Ligação' },
+        { value: 'any', label: '🤝 Qualquer um' }
+      ],
       newsletter: 'Quero receber atualizações sobre Vancouver',
       webinars: 'Quero participar dos próximos webinars',
       submit: 'Enviar Interesse',
@@ -245,6 +254,34 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
       successMessage: 'Obrigado! Recebemos seu interesse em Vancouver. Em breve entraremos em contato para agendar sua consulta gratuita.',
       errorMessage: 'Ops! Algo deu errado. Por favor, tente novamente ou entre em contato diretamente:',
       required: 'Campos obrigatórios'
+    },
+    en: {
+      // ... (copiar estrutura com traduções)
+      preferredContactLabel: 'How do you prefer to be contacted?',
+      contactOptions: [
+        { value: 'email', label: '📧 Email' },
+        { value: 'whatsapp', label: '💬 WhatsApp' },
+        { value: 'call', label: '📞 Call' },
+        { value: 'any', label: '🤝 Any' }
+      ]
+    },
+    es: {
+      preferredContactLabel: 'Cómo prefiere ser contactado?',
+      contactOptions: [
+        { value: 'email', label: '📧 Email' },
+        { value: 'whatsapp', label: '💬 WhatsApp' },
+        { value: 'call', label: '📞 Llamada' },
+        { value: 'any', label: '🤝 Cualquiera' }
+      ]
+    },
+    fr: {
+      preferredContactLabel: 'Comment préférez-vous être contacté?',
+      contactOptions: [
+        { value: 'email', label: '📧 Email' },
+        { value: 'whatsapp', label: '💬 WhatsApp' },
+        { value: 'call', label: '📞 Appel' },
+        { value: 'any', label: '🤝 N\'importe' }
+      ]
     }
   }
 
@@ -273,20 +310,41 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
       return
     }
 
-    // Validar se tem PELO MENOS email OU telefone
+    // 🆕 VALIDAÇÃO CRUZADA INTELIGENTE baseada em preferência de contato
     const hasEmail = formData.email && formData.email.trim()
     const hasPhone = formData.whatsapp && formData.whatsapp.replace(/\D/g, '').length >= 8
 
-    if (!hasEmail && !hasPhone) {
-      setError(lang === 'pt' ? 'Por favor, preencha pelo menos seu email OU telefone.' : 
-               lang === 'es' ? 'Por favor, complete al menos su correo electrónico O teléfono.' :
-               lang === 'fr' ? 'Veuillez remplir au moins votre email OU téléphone.' :
-               'Please fill in at least your email OR phone.')
+    // Se pediu contato por EMAIL mas não forneceu email
+    if ((formData.preferredContact === 'email') && !hasEmail) {
+      setError(lang === 'pt' ? 'Você solicitou contato por email, mas não forneceu seu email. Por favor, preencha o email ou mude a preferência de contato.' : 
+               lang === 'en' ? 'You requested email contact, but didn\'t provide your email. Please fill in email or change contact preference.' :
+               lang === 'es' ? 'Solicitaste contacto por correo, pero no proporcionaste tu email. Por favor, completa el email o cambia la preferencia.' :
+               'Vous avez demandé un contact par email, mais n\'avez pas fourni votre email.')
       setLoading(false)
       return
     }
 
-    // Se tem email, validar formato
+    // Se pediu contato por WHATSAPP/CALL mas não forneceu telefone
+    if ((formData.preferredContact === 'whatsapp' || formData.preferredContact === 'call') && !hasPhone) {
+      setError(lang === 'pt' ? 'Você solicitou contato por telefone/WhatsApp, mas não forneceu seu número. Por favor, preencha o telefone ou mude a preferência de contato.' : 
+               lang === 'en' ? 'You requested phone/WhatsApp contact, but didn\'t provide your number. Please fill in phone or change preference.' :
+               lang === 'es' ? 'Solicitaste contacto por teléfono/WhatsApp, pero no proporcionaste tu número. Por favor, completa el teléfono.' :
+               'Vous avez demandé un contact par téléphone, mais n\'avez pas fourni votre numéro.')
+      setLoading(false)
+      return
+    }
+
+    // Se marcou "Any" (qualquer), precisa de pelo menos um
+    if (formData.preferredContact === 'any' && !hasEmail && !hasPhone) {
+      setError(lang === 'pt' ? 'Por favor, forneça pelo menos email OU telefone.' : 
+               lang === 'es' ? 'Por favor, proporcione al menos email O teléfono.' :
+               lang === 'fr' ? 'Veuillez fournir au moins email OU téléphone.' :
+               'Please provide at least email OR phone.')
+      setLoading(false)
+      return
+    }
+
+    // Validar formato de email se fornecido
     if (hasEmail) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       if (!emailRegex.test(formData.email)) {
@@ -299,7 +357,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
       }
     }
 
-    // Se tem telefone, validar se está completo
+    // Validar telefone se fornecido
     if (formData.whatsapp && formData.whatsapp.replace(/\D/g, '').length > 0 && formData.whatsapp.replace(/\D/g, '').length < 8) {
       setError(lang === 'pt' ? 'O número de telefone parece incompleto. Por favor, verifique.' : 
                lang === 'es' ? 'El número de teléfono parece incompleto. Por favor, verifique.' :
@@ -307,16 +365,6 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                'The phone number seems incomplete. Please check.')
       setLoading(false)
       return
-    }
-
-    // 🆕 VALIDAÇÃO CRUZADA: Se só tem telefone mas quer contato por email, ou vice-versa
-    // Avisar de forma amigável mas não bloquear (só warning no console)
-    if (hasPhone && !hasEmail) {
-      console.warn('⚠️ Lead só forneceu telefone. Se preferir contato por email, não poderemos atender.')
-    }
-    
-    if (hasEmail && !hasPhone) {
-      console.warn('⚠️ Lead só forneceu email. Se preferir contato por WhatsApp, não poderemos atender.')
     }
 
     try {
@@ -455,14 +503,16 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                   onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, whatsapp: '' }))}
                   className="dropdown-azimut"
                   style={{ 
-                    width: '150px', 
-                    minWidth: '150px',
-                    maxWidth: '150px', 
+                    width: '95px', 
+                    minWidth: '95px',
+                    maxWidth: '95px', 
                     flexShrink: 0,
                     flexGrow: 0,
                     height: '48px',
-                    flex: '0 0 150px',
-                    whiteSpace: 'nowrap'
+                    flex: '0 0 95px',
+                    whiteSpace: 'nowrap',
+                    paddingLeft: '8px',
+                    paddingRight: '24px'
                   }}
                 >
                   <option value="+55">BR +55</option>
@@ -739,6 +789,30 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               style={{ minHeight: '120px' }}
             />
           </div>
+        </div>
+
+        {/* Preferência de Contato */}
+        <div className="mb-6">
+          <label className="label-adaptive">
+            {t.preferredContactLabel || 'Como prefere ser contatado?'} *
+          </label>
+          <select
+            name="preferredContact"
+            value={formData.preferredContact}
+            onChange={handleChange}
+            className="dropdown-azimut w-full"
+          >
+            {(t.contactOptions || [
+              { value: 'email', label: '📧 Email' },
+              { value: 'whatsapp', label: '💬 WhatsApp' },
+              { value: 'call', label: '📞 Ligação' },
+              { value: 'any', label: '🤝 Qualquer um' }
+            ]).map(option => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Checkboxes */}
