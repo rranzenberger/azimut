@@ -309,6 +309,16 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
       return
     }
 
+    // 🆕 VALIDAÇÃO CRUZADA: Se só tem telefone mas quer contato por email, ou vice-versa
+    // Avisar de forma amigável mas não bloquear (só warning no console)
+    if (hasPhone && !hasEmail) {
+      console.warn('⚠️ Lead só forneceu telefone. Se preferir contato por email, não poderemos atender.')
+    }
+    
+    if (hasEmail && !hasPhone) {
+      console.warn('⚠️ Lead só forneceu email. Se preferir contato por WhatsApp, não poderemos atender.')
+    }
+
     try {
       // Combinar countryCode + whatsapp (remover formatação, só números)
       const whatsappNumbers = formData.whatsapp.replace(/\D/g, '')
