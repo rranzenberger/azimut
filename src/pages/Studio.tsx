@@ -3,6 +3,7 @@ import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
+import InternalNavigation from '../components/InternalNavigation'
 
 interface StudioProps {
   lang: Lang
@@ -175,13 +176,44 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
             <h1 className="mb-4 font-handel uppercase text-theme-text" style={{ fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1', letterSpacing: '0.08em' }}>
               {text.title}
             </h1>
-            <p className="text-theme-text-secondary max-w-4xl leading-relaxed" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
+            <p className="text-theme-text-secondary max-w-4xl leading-relaxed mb-8" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
               {text.subtitle}
             </p>
           </div>
 
+          {/* Navegação Interna - Padrão Universal Azimut */}
+          <InternalNavigation
+            items={[
+              {
+                id: 'overview',
+                label: lang === 'pt' ? 'Visão Geral' : lang === 'es' ? 'Visión General' : lang === 'fr' ? 'Vue d\'Ensemble' : 'Overview',
+                href: '/studio',
+                icon: '✦'
+              },
+              {
+                id: 'diferenciais',
+                label: lang === 'pt' ? 'Diferenciais' : lang === 'es' ? 'Diferenciales' : lang === 'fr' ? 'Différenciation' : 'What Makes Us Unique',
+                href: '/studio/diferenciais',
+                icon: '💡'
+              },
+              {
+                id: 'equipe',
+                label: lang === 'pt' ? 'Equipe' : lang === 'es' ? 'Equipo' : lang === 'fr' ? 'Équipe' : 'Team',
+                href: '/studio/equipe',
+                icon: '👥'
+              },
+              {
+                id: 'credibilidade',
+                label: lang === 'pt' ? 'Credenciais' : lang === 'es' ? 'Credenciales' : lang === 'fr' ? 'Références' : 'Credentials',
+                href: '/studio/credibilidade',
+                icon: '🏆'
+              }
+            ]}
+            lang={lang}
+          />
+
           {/* Sobre */}
-          <section className="mb-20">
+          <section className="mb-20 mt-12">
             <h2 className="mb-8 font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
               <span className="text-azimut-red">📖</span>
               {text.about.title}
@@ -240,67 +272,6 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   <p className="text-sm text-theme-text-secondary leading-relaxed line-clamp-4">{member.bio}</p>
                 </div>
               ))}
-            </div>
-          </section>
-
-          {/* Navegação para Subpáginas */}
-          <section className="mb-20">
-            <h2 className="mb-8 font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
-              <span className="text-azimut-red">🔍</span>
-              {lang === 'pt' ? 'Explore Mais' : lang === 'es' ? 'Explorar Más' : lang === 'fr' ? 'Explorer Plus' : 'Explore More'}
-            </h2>
-            
-            <div className="grid md:grid-cols-3 gap-6">
-              {/* Card 1: Diferenciais */}
-              <LangLink
-                to="/studio/diferenciais"
-                className="group p-8 rounded-xl border-2 border-azimut-red/30 hover:border-azimut-red hover:bg-azimut-red/5 transition-all duration-300 hover:scale-105"
-              >
-                <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">⚡</div>
-                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-azimut-red transition-colors">
-                  {lang === 'pt' ? 'O Que Nos Torna Únicos' : lang === 'es' ? 'Lo Que Nos Hace Únicos' : lang === 'fr' ? 'Ce Qui Nous Rend Uniques' : 'What Makes Us Unique'}
-                </h3>
-                <p className="text-sm text-theme-text-secondary mb-4">
-                  {lang === 'pt' ? 'Nossa combinação especial de Studio + Lab + Academy' : lang === 'es' ? 'Nuestra combinación especial de Estudio + Lab + Academia' : lang === 'fr' ? 'Notre combinaison spéciale de Studio + Lab + Académie' : 'Our special combination of Studio + Lab + Academy'}
-                </p>
-                <span className="text-azimut-red font-semibold text-sm flex items-center gap-2">
-                  {lang === 'pt' ? 'Ver mais' : lang === 'es' ? 'Ver más' : lang === 'fr' ? 'Voir plus' : 'Learn more'} <span className="group-hover:translate-x-1 transition-transform">→</span>
-                </span>
-              </LangLink>
-
-              {/* Card 2: Equipe */}
-              <LangLink
-                to="/studio/equipe"
-                className="group p-8 rounded-xl border-2 border-azimut-red/30 hover:border-azimut-red hover:bg-azimut-red/5 transition-all duration-300 hover:scale-105"
-              >
-                <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">👥</div>
-                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-azimut-red transition-colors">
-                  {lang === 'pt' ? 'Conheça a Equipe' : lang === 'es' ? 'Conoce el Equipo' : lang === 'fr' ? 'Rencontrez l\'Équipe' : 'Meet the Team'}
-                </h3>
-                <p className="text-sm text-theme-text-secondary mb-4">
-                  {lang === 'pt' ? 'Quem somos e o que fazemos de especial' : lang === 'es' ? 'Quiénes somos y qué hacemos de especial' : lang === 'fr' ? 'Qui nous sommes et ce que nous faisons de spécial' : 'Who we are and what we do special'}
-                </p>
-                <span className="text-azimut-red font-semibold text-sm flex items-center gap-2">
-                  {lang === 'pt' ? 'Ver mais' : lang === 'es' ? 'Ver más' : lang === 'fr' ? 'Voir plus' : 'Learn more'} <span className="group-hover:translate-x-1 transition-transform">→</span>
-                </span>
-              </LangLink>
-
-              {/* Card 3: Credenciais */}
-              <LangLink
-                to="/studio/credibilidade"
-                className="group p-8 rounded-xl border-2 border-azimut-red/30 hover:border-azimut-red hover:bg-azimut-red/5 transition-all duration-300 hover:scale-105"
-              >
-                <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">🏆</div>
-                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-azimut-red transition-colors">
-                  {lang === 'pt' ? 'Credenciais & Timeline' : lang === 'es' ? 'Credenciales & Timeline' : lang === 'fr' ? 'Références & Timeline' : 'Credentials & Timeline'}
-                </h3>
-                <p className="text-sm text-theme-text-secondary mb-4">
-                  {lang === 'pt' ? 'Nossa trajetória de 30 anos' : lang === 'es' ? 'Nuestro recorrido de 30 años' : lang === 'fr' ? 'Notre parcours de 30 ans' : 'Our 30-year journey'}
-                </p>
-                <span className="text-azimut-red font-semibold text-sm flex items-center gap-2">
-                  {lang === 'pt' ? 'Ver mais' : lang === 'es' ? 'Ver más' : lang === 'fr' ? 'Voir plus' : 'Learn more'} <span className="group-hover:translate-x-1 transition-transform">→</span>
-                </span>
-              </LangLink>
             </div>
           </section>
 
