@@ -1813,9 +1813,27 @@ select.dropdown-azimut:disabled {
    Remove estilos inline conflitantes
    ═══════════════════════════════════════════════════════════════ */
 .dropdown-azimut[style*="width: 115px"],
-select.dropdown-azimut[style*="width: 115px"] {
+.dropdown-azimut[style*="width: 130px"],
+.dropdown-azimut[style*="width: 140px"],
+select.dropdown-azimut[style*="width: 115px"],
+select.dropdown-azimut[style*="width: 130px"],
+select.dropdown-azimut[style*="width: 140px"] {
   padding: 0.75rem 2rem 0.75rem 0.75rem !important;
   font-size: 0.875rem !important;
+  height: 48px !important;
+  max-height: 48px !important;
+  line-height: normal !important;
+}
+
+/* FORÇAR inputs e selects adjacentes (telefone) a terem mesma altura */
+.input-adaptive[type="tel"],
+input.input-adaptive[type="tel"] {
+  height: 48px !important;
+  max-height: 48px !important;
+  min-height: 48px !important;
+  line-height: normal !important;
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
 }
 
 /* Remover setas nativas */
