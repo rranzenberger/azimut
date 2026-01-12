@@ -1812,22 +1812,25 @@ select.dropdown-azimut:disabled {
    OVERRIDE para dropdowns compactos (código de país)
    Remove estilos inline conflitantes
    ═══════════════════════════════════════════════════════════════ */
+.dropdown-azimut[style*="width: 95px"],
 .dropdown-azimut[style*="width: 115px"],
 .dropdown-azimut[style*="width: 130px"],
 .dropdown-azimut[style*="width: 140px"],
 .dropdown-azimut[style*="width: 150px"],
+select.dropdown-azimut[style*="width: 95px"],
 select.dropdown-azimut[style*="width: 115px"],
 select.dropdown-azimut[style*="width: 130px"],
 select.dropdown-azimut[style*="width: 140px"],
 select.dropdown-azimut[style*="width: 150px"] {
-  padding: 0.75rem 2rem 0.75rem 0.75rem !important;
-  font-size: 0.875rem !important;
+  padding: 0.5rem 1.5rem 0.5rem 0.5rem !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
   height: 48px !important;
   max-height: 48px !important;
   line-height: 1.2 !important;
   white-space: nowrap !important;
   overflow: hidden !important;
-  text-overflow: ellipsis !important;
+  text-overflow: clip !important;
 }
 
 /* FORÇAR inputs e selects adjacentes (telefone) a terem mesma altura */
