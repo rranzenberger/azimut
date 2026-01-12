@@ -17,15 +17,35 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 
-    // Validar campos obrigatórios
-    const requiredFields = ['name', 'email', 'whatsapp', 'age', 'city', 'currentSituation', 'targetSchool', 'areaInterest', 'intakeYear', 'englishLevel', 'hasPortfolio', 'budgetRange', 'fundingSource', 'howHeard']
-    const missingFields = requiredFields.filter(field => !body[field])
-
-    if (missingFields.length > 0) {
+    // Validar apenas CAMPOS ESSENCIAIS
+    // Nome é obrigatório
+    if (!body.name || !body.name.trim()) {
       return NextResponse.json(
-        { error: `Campos obrigatórios faltando: ${missingFields.join(', ')}` },
+        { error: 'Nome é obrigatório' },
         { status: 400, headers: corsHeaders }
       )
+    }
+
+    // Email OU WhatsApp (pelo menos um)
+    const hasEmail = body.email && body.email.trim()
+    const hasPhone = body.whatsapp && body.whatsapp.length > 0
+
+    if (!hasEmail && !hasPhone) {
+      return NextResponse.json(
+        { error: 'Por favor, forneça pelo menos email OU telefone' },
+        { status: 400, headers: corsHeaders }
+      )
+    }
+
+    // Validar formato de email se fornecido
+    if (hasEmail) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(body.email)) {
+        return NextResponse.json(
+          { error: 'Email inválido' },
+          { status: 400, headers: corsHeaders }
+        )
+      }
     }
 
     // Calcular score baseado nos dados
@@ -90,18 +110,18 @@ export async function POST(request: NextRequest) {
         priority,
         leadScore,
         
-        // Campos Vancouver específicos
-        age: parseInt(body.age),
-        city: body.city,
-        currentSituation: body.currentSituation,
-        targetSchool: body.targetSchool,
-        areaInterest: body.areaInterest,
-        intakeYear: body.intakeYear,
-        englishLevel: body.englishLevel,
-        hasPortfolio: body.hasPortfolio,
-        budgetRange: body.budgetRange,
-        fundingSource: body.fundingSource,
-        howHeard: body.howHeard,
+        // Campos Vancouver específicos (TODOS OPCIONAIS agora)
+        age: body.age ? parseInt(body.age) : null,
+        city: body.city || null,
+        currentSituation: body.currentSituation || null,
+        targetSchool: body.targetSchool || null,
+        areaInterest: body.areaInterest || null,
+        intakeYear: body.intakeYear || null,
+        englishLevel: body.englishLevel || null,
+        hasPortfolio: body.hasPortfolio || null,
+        budgetRange: body.budgetRange || null,
+        fundingSource: body.fundingSource || null,
+        howHeard: body.howHeard || null,
         comments: body.comments || null,
         
         // Metadata
