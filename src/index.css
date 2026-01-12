@@ -1809,28 +1809,72 @@ select.dropdown-azimut:disabled {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   OVERRIDE para dropdowns compactos (código de país)
-   Remove estilos inline conflitantes
+   DROPDOWN CÓDIGO DE PAÍS - CLASSE ESPECÍFICA (NÃO USA .dropdown-azimut)
    ═══════════════════════════════════════════════════════════════ */
-.dropdown-azimut[style*="width: 95px"],
-.dropdown-azimut[style*="width: 115px"],
-.dropdown-azimut[style*="width: 130px"],
-.dropdown-azimut[style*="width: 140px"],
-.dropdown-azimut[style*="width: 150px"],
-select.dropdown-azimut[style*="width: 95px"],
-select.dropdown-azimut[style*="width: 115px"],
-select.dropdown-azimut[style*="width: 130px"],
-select.dropdown-azimut[style*="width: 140px"],
-select.dropdown-azimut[style*="width: 150px"] {
-  padding: 0.5rem 1.5rem 0.5rem 0.5rem !important;
-  font-size: 0.8rem !important;
-  font-weight: 600 !important;
+.dropdown-country-code,
+select.dropdown-country-code,
+[data-theme="light"] .dropdown-country-code,
+[data-theme="light"] select.dropdown-country-code {
+  /* Aparência idêntica ao dropdown-azimut */
+  background: rgba(10, 15, 30, 0.95) !important;
+  border: 1px solid rgba(201, 35, 55, 0.4) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  outline: none;
+  
+  /* Tamanho FIXO E FORÇADO */
+  width: 120px !important;
+  min-width: 120px !important;
+  max-width: 120px !important;
   height: 48px !important;
+  min-height: 48px !important;
   max-height: 48px !important;
-  line-height: 1.2 !important;
+  
+  /* Padding e tipografia otimizados para compacto */
+  padding: 0.75rem 1.75rem 0.75rem 0.65rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  
+  /* NUNCA quebra linha */
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: clip !important;
+  
+  /* Seta customizada */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23c92337'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.5rem center !important;
+  background-size: 1em !important;
+  
+  /* Flex */
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  flex-basis: 120px !important;
+  
+  /* Transições */
+  transition: all 0.3s ease;
+  border-radius: 0.5rem !important;
+}
+
+.dropdown-country-code:hover {
+  border-color: rgba(201, 35, 55, 0.6) !important;
+  box-shadow: 0 0 0 1px rgba(201, 35, 55, 0.2) !important;
+}
+
+.dropdown-country-code:focus {
+  border-color: #c92337 !important;
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.25) !important;
+}
+
+.dropdown-country-code option {
+  background-color: rgba(10, 15, 30, 0.98) !important;
+  color: #ffffff !important;
+  padding: 0.75rem !important;
 }
 
 /* FORÇAR inputs e selects adjacentes (telefone) a terem mesma altura */
