@@ -148,14 +148,14 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
         path={`/what/${slug}`}
       />
       
-      <main className="relative py-16 md:py-20">
+      <main className="py-16 md:py-20" style={{ position: 'relative', zIndex: 1 }}>
         {/* Star background - Parallax */}
         <div 
           ref={starRef}
           className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-32 md:-right-40 md:h-[680px] md:w-[680px] transition-transform duration-75 ease-out" 
           style={{ 
             opacity: 0.3,
-            zIndex: -5,
+            zIndex: 0,
             willChange: 'transform'
           }}
         >
@@ -168,7 +168,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
           />
         </div>
 
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-6" style={{ position: 'relative', zIndex: 2 }}>
           {/* Breadcrumbs */}
           <nav className="mb-8 flex items-center gap-2 text-sm font-sora text-theme-text-secondary">
             <LangLink to="/" className="hover:text-azimut-red transition-colors">
@@ -194,7 +194,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
           </div>
 
           {/* Descrição expandida */}
-          <div className="mb-20 space-y-6 relative pl-6 border-l-2 border-azimut-red/20">
+          <div className="mb-20 space-y-6 pl-6 border-l-2 border-azimut-red/20">
             {longDesc.map((paragraph, index) => (
               <p key={index} className="text-lg leading-relaxed text-theme-text-secondary">
                 {paragraph}
