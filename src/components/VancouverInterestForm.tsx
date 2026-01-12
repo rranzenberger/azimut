@@ -263,6 +263,47 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
     setError(null)
     setSuccess(false)
 
+    // Validação suave - só essenciais
+    if (!formData.name || !formData.name.trim()) {
+      setError(lang === 'pt' ? 'Por favor, preencha seu nome.' : 
+               lang === 'es' ? 'Por favor, complete su nombre.' :
+               lang === 'fr' ? 'Veuillez remplir votre nom.' :
+               'Please fill in your name.')
+      setLoading(false)
+      return
+    }
+
+    if (!formData.email || !formData.email.trim()) {
+      setError(lang === 'pt' ? 'Por favor, preencha seu email.' : 
+               lang === 'es' ? 'Por favor, complete su correo electrónico.' :
+               lang === 'fr' ? 'Veuillez remplir votre email.' :
+               'Please fill in your email.')
+      setLoading(false)
+      return
+    }
+
+    // Validar formato de email (apenas básico)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(formData.email)) {
+      setError(lang === 'pt' ? 'Por favor, forneça um email válido (exemplo: seu@email.com).' : 
+               lang === 'es' ? 'Por favor, proporcione un correo electrónico válido (ejemplo: su@correo.com).' :
+               lang === 'fr' ? 'Veuillez fournir un email valide (exemple: votre@email.com).' :
+               'Please provide a valid email (example: your@email.com).')
+      setLoading(false)
+      return
+    }
+
+    // Validar se tem pelo menos WhatsApp OU email (já temos email, então OK)
+    // Apenas avisar se WhatsApp está incompleto
+    if (formData.whatsapp && formData.whatsapp.replace(/\D/g, '').length < 8) {
+      setError(lang === 'pt' ? 'O número de telefone parece incompleto. Por favor, verifique.' : 
+               lang === 'es' ? 'El número de teléfono parece incompleto. Por favor, verifique.' :
+               lang === 'fr' ? 'Le numéro de téléphone semble incomplet. Veuillez vérifier.' :
+               'The phone number seems incomplete. Please check.')
+      setLoading(false)
+      return
+    }
+
     try {
       // Combinar countryCode + whatsapp (remover formatação, só números)
       const whatsappNumbers = formData.whatsapp.replace(/\D/g, '')
@@ -406,7 +447,6 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                 <input
                   type="tel"
                   name="whatsapp"
-                  required
                   placeholder={
                     formData.countryCode === '+55' ? '(11) 98765-4321' :
                     formData.countryCode === '+1' ? '(416) 555-1234' :
@@ -439,7 +479,6 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               <input
                 type="number"
                 name="age"
-                required
                 min="15"
                 max="99"
                 value={formData.age}
@@ -455,7 +494,6 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               <input
                 type="text"
                 name="city"
-                required
                 placeholder="São Paulo, Brazil / New York, USA / Paris, France"
                 value={formData.city}
                 onChange={handleChange}
