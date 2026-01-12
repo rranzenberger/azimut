@@ -121,6 +121,8 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [customCodeMode, setCustomCodeMode] = useState(false) // Modo código personalizado
+  const [customCode, setCustomCode] = useState('') // Código customizado digitado
 
   // Detectar geolocalização e configurar código de país AUTOMATICAMENTE
   useEffect(() => {
