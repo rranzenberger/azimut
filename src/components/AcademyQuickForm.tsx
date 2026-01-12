@@ -674,39 +674,35 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
             </label>
             <div className="flex gap-2" style={{ alignItems: 'stretch', flexWrap: 'nowrap' }}>
               {!customCodeMode ? (
-                <select
-                  value={formData.countryCode}
-                  onChange={(e) => {
-                    if (e.target.value === 'custom') {
-                      setCustomCodeMode(true)
-                      setCustomCode('+')
-                      setFormData({ ...formData, countryCode: '+', phone: '' })
-                    } else {
-                      setFormData({ ...formData, countryCode: e.target.value, phone: '' })
-                    }
-                  }}
-                  className="dropdown-azimut"
-                  style={{
-                    width: '130px',
-                    minWidth: '130px',
-                    maxWidth: '130px',
-                    height: '48px',
-                    flexShrink: 0,
-                    flexGrow: 0
-                  }}
-                >
-                  <option value="+55">🇧🇷 BR +55</option>
-                  <option value="+1">🇨🇦 CA +1</option>
-                  <option value="+34">🇪🇸 ES +34</option>
-                  <option value="+33">🇫🇷 FR +33</option>
-                  <option value="+351">🇵🇹 PT +351</option>
-                  <option value="+52">🇲🇽 MX +52</option>
-                  <option value="+54">🇦🇷 AR +54</option>
-                  <option value="+56">🇨🇱 CL +56</option>
-                  <option value="+44">🇬🇧 UK +44</option>
-                  <option value="+49">🇩🇪 DE +49</option>
-                  <option value="custom">🌐 + Outro</option>
-                </select>
+                <div style={{ width: '130px', minWidth: '130px', maxWidth: '130px', flexShrink: 0 }}>
+                  <SelectField
+                    value={formData.countryCode}
+                    onChange={(value) => {
+                      if (value === 'custom') {
+                        setCustomCodeMode(true)
+                        setCustomCode('+')
+                        setFormData({ ...formData, countryCode: '+', phone: '' })
+                      } else {
+                        setFormData({ ...formData, countryCode: value, phone: '' })
+                      }
+                    }}
+                    options={[
+                      { value: '+55', label: 'BR +55', icon: '🇧🇷' },
+                      { value: '+1', label: 'CA +1', icon: '🇨🇦' },
+                      { value: '+34', label: 'ES +34', icon: '🇪🇸' },
+                      { value: '+33', label: 'FR +33', icon: '🇫🇷' },
+                      { value: '+351', label: 'PT +351', icon: '🇵🇹' },
+                      { value: '+52', label: 'MX +52', icon: '🇲🇽' },
+                      { value: '+54', label: 'AR +54', icon: '🇦🇷' },
+                      { value: '+56', label: 'CL +56', icon: '🇨🇱' },
+                      { value: '+44', label: 'UK +44', icon: '🇬🇧' },
+                      { value: '+49', label: 'DE +49', icon: '🇩🇪' },
+                      { value: 'custom', label: '+ Outro', icon: '🌐' }
+                    ]}
+                    placeholder="DDI"
+                    ariaLabel="Código do país"
+                  />
+                </div>
               ) : (
                 <div className="flex gap-1" style={{ width: '130px', minWidth: '130px', flexShrink: 0 }}>
                   <input
@@ -726,7 +722,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
                     onClick={() => {
                       setCustomCodeMode(false)
                       setCustomCode('')
-                      setFormData({ ...formData, countryCode: '+1' })
+                      setFormData({ ...formData, countryCode: '+55' })
                     }}
                     className="flex items-center justify-center w-[32px] h-[48px] bg-azimut-red/10 text-azimut-red rounded-lg hover:bg-azimut-red/20 transition-colors"
                     title="Voltar"
