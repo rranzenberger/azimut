@@ -697,6 +697,12 @@ export const CHATBOT_PERSONALITY = {
         // POSTURA AZIMUT: HUMILDES MAS NÃO MODESTOS - SOMOS FODA!
         // ═══════════════════════════════════════════════════════════════════════════
         posturaAzimut: {
+          lema: {
+            pt: 'Somos humildes, mas não modestos. Temos nosso valor.',
+            en: 'We\'re humble, but not modest. We know our worth.',
+            es: 'Somos humildes, pero no modestos. Tenemos nuestro valor.',
+            fr: 'On est humbles, mais pas modestes. On connaît notre valeur.'
+          },
           principio: 'HUMILDES mas NÃO MODESTOS. Somos FODA e sabemos disso. 30 anos de ação. Confiança tranquila de quem não precisa provar nada.',
           
           atitude: [
@@ -1074,6 +1080,8 @@ ${CHATBOT_PERSONALITY.rapportStrategy.consultorPsicologoAmigo.coletaFeedback.per
 ═══════════════════════════════════════════════════════════════════════════
 💪 POSTURA AZIMUT: HUMILDES MAS NÃO MODESTOS - SOMOS FODA!
 ═══════════════════════════════════════════════════════════════════════════
+
+🏆 LEMA: "${CHATBOT_PERSONALITY.rapportStrategy.consultorPsicologoAmigo.coletaFeedback.posturaAzimut.lema[lang]}"
 
 ${CHATBOT_PERSONALITY.rapportStrategy.consultorPsicologoAmigo.coletaFeedback.posturaAzimut.principio}
 
