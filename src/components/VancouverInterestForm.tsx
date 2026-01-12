@@ -431,18 +431,19 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
             <label className="label-adaptive">
               {t.whatsapp} *
             </label>
-              <div className="flex gap-2" style={{ alignItems: 'stretch' }}>
-                {/* Dropdown de código de país - COMPACTO */}
+              <div className="flex gap-2" style={{ alignItems: 'center' }}>
+                {/* Dropdown de código de país - LARGURA AUMENTADA */}
                 <select
                   value={formData.countryCode}
                   onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, whatsapp: '' }))}
                   className="dropdown-azimut"
                   style={{ 
-                    width: '115px', 
-                    minWidth: '115px', 
-                    maxWidth: '115px', 
+                    width: '130px', 
+                    minWidth: '130px', 
+                    maxWidth: '130px', 
                     flexShrink: 0,
-                    flexGrow: 0
+                    flexGrow: 0,
+                    height: '48px'
                   }}
                 >
                   <option value="+55">BR +55</option>
@@ -475,7 +476,8 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                   style={{ 
                     flex: '1 1 auto',
                     minWidth: '0',
-                    width: 'auto'
+                    width: 'auto',
+                    height: '48px'
                   }}
                 />
               </div>
@@ -532,7 +534,6 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
             </label>
             <select
               name="currentSituation"
-              required
               value={formData.currentSituation}
               onChange={handleChange}
               className="dropdown-azimut w-full"
@@ -556,7 +557,6 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
             </label>
             <select
               name="targetSchool"
-              required
               value={formData.targetSchool}
               onChange={handleChange}
               className="dropdown-azimut w-full"
@@ -575,7 +575,6 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
             </label>
             <select
               name="areaInterest"
-              required
               value={formData.areaInterest}
               onChange={handleChange}
               className="dropdown-azimut w-full"
@@ -595,7 +594,6 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               </label>
               <select
                 name="intakeYear"
-                required
                 value={formData.intakeYear}
                 onChange={handleChange}
                 className="dropdown-azimut w-full"
@@ -614,7 +612,6 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               </label>
               <select
                 name="englishLevel"
-                required
                 value={formData.englishLevel}
                 onChange={handleChange}
                 className="dropdown-azimut w-full"
@@ -634,7 +631,6 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
             </label>
             <select
               name="hasPortfolio"
-              required
               value={formData.hasPortfolio}
               onChange={handleChange}
               className="dropdown-azimut w-full"
@@ -658,7 +654,6 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
             </label>
             <select
               name="budgetRange"
-              required
               value={formData.budgetRange}
               onChange={handleChange}
               className="dropdown-azimut w-full"
@@ -677,7 +672,6 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
             </label>
             <select
               name="fundingSource"
-              required
               value={formData.fundingSource}
               onChange={handleChange}
               className="dropdown-azimut w-full"
@@ -699,7 +693,6 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
             </label>
             <select
               name="howHeard"
-              required
               value={formData.howHeard}
               onChange={handleChange}
               className="dropdown-azimut w-full"
