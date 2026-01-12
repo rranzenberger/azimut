@@ -339,10 +339,10 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         { value: 'fr', label: '🇫🇷 Français' }
       ],
       contactPreferenceOptions: [
-        { value: 'email', label: '📧 Email', icon: '📧' },
-        { value: 'whatsapp', label: '💬 WhatsApp', icon: '💬' },
-        { value: 'call', label: '📞 Ligação', icon: '📞' },
-        { value: 'any', label: '🤝 Qualquer um', icon: '🤝' }
+        { value: 'email', label: '📧 Email', icon: '' },
+        { value: 'whatsapp', label: '💬 WhatsApp', icon: '' },
+        { value: 'call', label: '📞 Ligação', icon: '' },
+        { value: 'any', label: '🤝 Qualquer um', icon: '' }
       ],
       placeholders: {
         name: 'Ex: João Silva',
@@ -385,10 +385,10 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         { value: 'fr', label: '🇫🇷 Français' }
       ],
       contactPreferenceOptions: [
-        { value: 'email', label: '📧 Email', icon: '📧' },
-        { value: 'whatsapp', label: '💬 WhatsApp', icon: '💬' },
-        { value: 'call', label: '📞 Call', icon: '📞' },
-        { value: 'any', label: '🤝 Any', icon: '🤝' }
+        { value: 'email', label: '📧 Email', icon: '' },
+        { value: 'whatsapp', label: '💬 WhatsApp', icon: '' },
+        { value: 'call', label: '📞 Call', icon: '' },
+        { value: 'any', label: '🤝 Any', icon: '' }
       ],
       placeholders: {
         name: 'Ex: John Smith',
@@ -430,10 +430,10 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         { value: 'fr', label: '🇫🇷 Français' }
       ],
       contactPreferenceOptions: [
-        { value: 'email', label: '📧 Email', icon: '📧' },
-        { value: 'whatsapp', label: '💬 WhatsApp', icon: '💬' },
-        { value: 'call', label: '📞 Llamada', icon: '📞' },
-        { value: 'any', label: '🤝 Cualquiera', icon: '🤝' }
+        { value: 'email', label: '📧 Email', icon: '' },
+        { value: 'whatsapp', label: '💬 WhatsApp', icon: '' },
+        { value: 'call', label: '📞 Llamada', icon: '' },
+        { value: 'any', label: '🤝 Cualquiera', icon: '' }
       ],
       placeholders: {
         name: 'Ej: Juan García',
@@ -475,10 +475,10 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         { value: 'fr', label: '🇫🇷 Français' }
       ],
       contactPreferenceOptions: [
-        { value: 'email', label: '📧 Email', icon: '📧' },
-        { value: 'whatsapp', label: '💬 WhatsApp', icon: '💬' },
-        { value: 'call', label: '📞 Appel', icon: '📞' },
-        { value: 'any', label: '🤝 N\'importe', icon: '🤝' }
+        { value: 'email', label: '📧 Email', icon: '' },
+        { value: 'whatsapp', label: '💬 WhatsApp', icon: '' },
+        { value: 'call', label: '📞 Appel', icon: '' },
+        { value: 'any', label: '🤝 N\'importe', icon: '' }
       ],
       placeholders: {
         name: 'Ex: Marie Dupont',

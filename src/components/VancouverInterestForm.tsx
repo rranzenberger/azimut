@@ -323,9 +323,16 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
       // Combinar countryCode + whatsapp (remover formatação, só números)
       const whatsappNumbers = formData.whatsapp.replace(/\D/g, '')
       const fullWhatsapp = whatsappNumbers ? `${formData.countryCode}${whatsappNumbers}` : ''
+      
+      // 🆕 DETECTAR PREFERÊNCIA DE CONTATO AUTOMATICAMENTE
+      const preferredContact = hasEmail && hasPhone ? 'both' :
+                              hasEmail ? 'email' :
+                              hasPhone ? 'whatsapp' : 'email'
+      
       const submitData = {
         ...formData,
-        whatsapp: fullWhatsapp
+        whatsapp: fullWhatsapp,
+        preferredContact // 🆕 Detectado automaticamente baseado no que preencheu
       }
       
       // 1. Submeter para o backoffice (API existente)
@@ -441,19 +448,20 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
             <label className="label-adaptive">
               {t.whatsapp} *
             </label>
-              <div className="flex gap-2" style={{ alignItems: 'center' }}>
-                {/* Dropdown de código de país - LARGURA AUMENTADA */}
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'stretch', flexWrap: 'nowrap' }}>
+                {/* Dropdown de código de país - LARGURA MAIOR FORÇADA */}
                 <select
                   value={formData.countryCode}
                   onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, whatsapp: '' }))}
                   className="dropdown-azimut"
                   style={{ 
-                    width: '130px', 
-                    minWidth: '130px', 
-                    maxWidth: '130px', 
+                    width: '140px !important', 
+                    minWidth: '140px',
+                    maxWidth: '140px', 
                     flexShrink: 0,
                     flexGrow: 0,
-                    height: '48px'
+                    height: '48px',
+                    flex: '0 0 140px'
                   }}
                 >
                   <option value="+55">BR +55</option>
@@ -484,10 +492,11 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                   }}
                   className="input-adaptive"
                   style={{ 
-                    flex: '1 1 auto',
+                    flex: '1 1 0%',
                     minWidth: '0',
-                    width: 'auto',
-                    height: '48px'
+                    maxWidth: '100%',
+                    height: '48px !important',
+                    width: 'auto'
                   }}
                 />
               </div>
