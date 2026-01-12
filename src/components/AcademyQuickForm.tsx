@@ -49,11 +49,12 @@ const SelectField: React.FC<SelectFieldProps> = ({
         type="button"
         aria-label={ariaLabel}
         className="select-trigger"
+        style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
         onClick={() => setOpen(o => !o)}
       >
-        <span className={value ? 'text-slate-100' : 'text-slate-400'}>
-          {currentIcon && <span className="mr-2">{currentIcon}</span>}
-          {currentLabel}
+        <span className={value ? 'text-slate-100' : 'text-slate-400'} style={{ whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '4px' }}>
+          {currentIcon && <span>{currentIcon}</span>}
+          <span>{currentLabel}</span>
         </span>
         <svg
           className={`select-arrow w-4 h-4 ${open ? 'rotate-180' : ''}`}
@@ -699,6 +700,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
                       { value: '+49', label: 'DE +49', icon: '🇩🇪' },
                       { value: 'custom', label: '+ Outro', icon: '🌐' }
                     ]}
+                    className="ddi-select"
                     placeholder="DDI"
                     ariaLabel="Código do país"
                   />

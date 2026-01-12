@@ -2027,6 +2027,23 @@ select.dropdown-azimut::-ms-expand {
   background: rgba(201, 35, 55, 0.2) !important;
 }
 
+/* DDI Select - Compacto em UMA linha */
+.ddi-select .select-trigger {
+  width: 130px !important;
+  min-width: 130px !important;
+  max-width: 130px !important;
+  min-height: 48px !important;
+  height: 48px !important;
+  padding: 0.5rem 0.75rem !important;
+  font-size: 0.85rem !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+}
+.ddi-select .select-panel {
+  width: 160px !important;
+  min-width: 160px !important;
+}
+
 /* ═══════════════════════════════════════════════════════════════
    CARDS E ELEMENTOS ADAPTATIVOS - NUNCA BRANCOS
    ═══════════════════════════════════════════════════════════════ */
