@@ -1136,6 +1136,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                         height: '48px'
                       }}
                     >
+                      <option value="custom">🌐 + Outro</option>
                       <option value="+55">🇧🇷 BR +55</option>
                       <option value="+1">🇨🇦 CA +1</option>
                       <option value="+34">🇪🇸 ES +34</option>
@@ -1144,7 +1145,6 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       <option value="+52">🇲🇽 MX +52</option>
                       <option value="+54">🇦🇷 AR +54</option>
                       <option value="+44">🇬🇧 UK +44</option>
-                      <option value="custom">🌐 + Outro</option>
                     </select>
                   ) : (
                     <div className="flex gap-1" style={{ width: '130px', minWidth: '130px', flexShrink: 0 }}>
