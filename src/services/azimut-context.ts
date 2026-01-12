@@ -61,39 +61,138 @@ export const AZIMUT_CONTEXT = {
   equipe: {
     filosofia: 'Nossa equipe não é de "funcionários". Somos PESQUISADORES, PROFESSORES, ARTISTAS e TÉCNICOS apaixonados. Cada um traz DÉCADAS de experiência. Somos humildes mas não modestos - temos nosso valor.',
     
+    // Grande equipe por trás
+    estrutura: [
+      'Roteiristas', 'Designers', 'Fotógrafos', 'Cinegrafistas',
+      'Project Managers', 'Direção de Tecnologia Audiovisual',
+      'Diretores de Arte', 'Animadores 3D', 'Editores', 'Coloristas'
+    ],
+    
     ranz: {
       nome: 'Ranz (Ricardo Ranzenberger)',
       cargo: 'CEO & Diretor Criativo',
       experiencia: '30+ anos',
-      especialidades: ['Direção criativa', 'VR/AR', 'Cinema', 'Animação 3D', 'Estratégia', 'Educação'],
-      background: 'Fundador da Azimut. Começou na era PIONEIRA da computação gráfica nos anos 90. FEZ o Saci 3D! Dirigiu projetos para Google, Microsoft, Samsung. Professor universitário e pesquisador. Visionário que une arte e tecnologia. Faz a ponte Brasil-Canadá.',
+      especialidades: ['Direção criativa', 'VR/AR', 'Cinema', 'Animação 3D', 'Estratégia', 'Educação', '3DS Max', 'Autodesk'],
+      background: 'Fundador da Azimut. Começou na era PIONEIRA da computação gráfica nos anos 90. FEZ o Saci 3D!',
+      
+      // CREDENCIAIS IMPRESSIONANTES
+      credenciais: [
+        '🏆 ÚNICO Training Specialist da Autodesk para 3DS Max no Brasil',
+        '🎓 Acompanhou lançamento 3DS Max desde versão 1 até 9',
+        '💼 Application Engineer certificado Autodesk',
+        '🎬 Direção cinematográfica e coprodução internacional',
+        '📚 Professor de Produção Cultural em universidades',
+        '📱 Professor de Marketing para Novas Mídias',
+        '🌎 Atuação binacional Brasil-Canadá',
+        '🎭 Presença em TODOS os grandes eventos de arte e tecnologia',
+        '🏅 Festivais de animação, direção de filmes, produção audiovisual'
+      ],
+      
+      educacao: {
+        titulo: '🎓 PRIMEIRA Escola de Animação CG Autodesk na América Latina!',
+        descricao: 'Ranz fundou a PRIMEIRA escola certificada Autodesk de animação 3D na América Latina. Formou CENTENAS de profissionais em 3DS Max, Revit, BIM, CAD. Pioneirismo absoluto!'
+      },
+      
+      projetosDestaque: [
+        'Cenografia Virtual: Treinamento para 53 cenógrafos da TV Record e outras produtoras',
+        'Games: Taikodom - maior produção nacional de games da época!',
+        'Games: Erinia e outros títulos',
+        'Mankind - projeto pioneiro da década de 90',
+        'Direção de Tecnologia e Arte em múltiplos projetos'
+      ],
+      
       fraseTipica: {
         pt: 'A tecnologia é só ferramenta. O que importa é a história que você quer contar.',
         en: 'Technology is just a tool. What matters is the story you want to tell.'
       }
     },
+    
     alberto: {
       nome: 'Alberto',
       cargo: 'Diretor Técnico / CTO',
       experiencia: '25+ anos',
-      especialidades: ['Engenharia de software', 'VR/AR técnico', 'Arquitetura de sistemas', 'Inovação'],
-      background: 'A MENTE TÉCNICA por trás dos projetos mais complexos. Engenheiro que entende de arte. Resolve problemas que outros dizem ser impossíveis. Responsável por fazer a mágica acontecer.',
+      especialidades: ['Engenharia de software', 'VR/AR técnico', 'Arquitetura de sistemas', 'Inovação', 'Educação', 'Animação 3D'],
+      background: 'A MENTE TÉCNICA por trás dos projetos mais complexos. Engenheiro que entende de arte. Resolve problemas que outros dizem ser impossíveis.',
+      
+      credenciais: [
+        '🎓 Coordenador de Pós-Graduação em Personagens e Animação 3D',
+        '🎓 Coordenador de Graduação em Computação Gráfica',
+        '🎓 Coordenador de Ensino Médio Técnico em Multimídia',
+        '🔧 Especialista técnico em pipelines de produção',
+        '🧠 Resolve o que outros dizem ser impossível'
+      ],
+      
+      curiosidades: ['Gosta de criar cerveja artesanal! 🍺', 'Amigo do Ranz há décadas', 'Mente analítica mas criativa'],
+      
       fraseTipica: {
         pt: 'Se dá pra imaginar, dá pra fazer. É só encontrar o caminho certo.',
         en: 'If you can imagine it, you can build it. Just need to find the right path.'
       }
     },
+    
     anick: {
       nome: 'Anick',
-      cargo: 'Diretora de Operações & Academy',
+      cargo: 'Diretora de Operações, Arte & Academy',
       experiencia: '20+ anos',
-      especialidades: ['Gestão de projetos', 'Academy/Educação', 'Relacionamento', 'Vancouver/Canadá'],
-      background: 'Responsável pela operação em Vancouver. ESPECIALISTA em educação internacional. Conhece Vancouver como a palma da mão. Já ajudou CENTENAS de alunos a realizar o sonho de estudar fora. A "mãezona" dos estudantes.',
+      especialidades: ['Gestão de projetos', 'Direção de Arte', 'Academy/Educação', 'Relacionamento', 'Vancouver/Canadá'],
+      background: 'Responsável pela operação em Vancouver. ESPECIALISTA em educação internacional. A "mãezona" dos estudantes.',
+      
+      credenciais: [
+        '🎨 DIRETORA DE ARTE do Museu Rio Olímpico!',
+        '📋 Project Manager em projetos de grande porte',
+        '🇨🇦 Project Manager da operação Canadá/Vancouver',
+        '🎓 Especialista em educação internacional',
+        '💼 Gestão de relacionamento com escolas VanArts e VFS'
+      ],
+      
+      museuOlimpico: {
+        cargo: 'Diretora de Arte',
+        projeto: 'Museu Olímpico do Rio de Janeiro',
+        descricao: 'Anick foi DIRETORA DE ARTE do Museu Olímpico do Rio! Um dos maiores projetos de museografia digital do Brasil. Coordenou toda a direção visual e artística.'
+      },
+      
       fraseTipica: {
         pt: 'Estudar fora muda sua vida. Eu vejo isso acontecer todo dia.',
         en: 'Studying abroad changes your life. I see it happen every day.'
       }
     }
+  },
+  
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 🏆 PROJETOS DE CREDIBILIDADE - PARA DAR PESO NA CONVERSA
+  // ═══════════════════════════════════════════════════════════════════════════
+  projetosCredibilidade: {
+    instrucao: 'Use esses projetos para dar CREDIBILIDADE na conversa. Mencione naturalmente quando fizer sentido.',
+    
+    educacao: [
+      '🎓 PRIMEIRA escola de animação CG Autodesk na América Latina',
+      '📚 Treinamento 3DS Max, Revit, BIM, CAD',
+      '🎬 53 cenógrafos treinados em cenografia virtual para TV Record e outras produtoras'
+    ],
+    
+    games: [
+      '🎮 Taikodom - MAIOR produção nacional de games da época!',
+      '🎮 Erinia - game de destaque',
+      '🎮 Direção de Tecnologia e Arte em games'
+    ],
+    
+    museus: [
+      '🏛️ Direção Geral de Tecnologia - Museu Olímpico do Rio',
+      '🎨 Direção de Arte - Museu Olímpico do Rio (Anick)',
+      '🏛️ Curadoria VR - Festival de Gramado desde 2017'
+    ],
+    
+    televisao: [
+      '📺 Cenografia Virtual para TV Record',
+      '📺 Projetos para outras grandes produtoras',
+      '📺 Treinamento de equipes de cenografia'
+    ],
+    
+    historicos: [
+      '🎬 Saci-Pererê 3D - uma das primeiras animações 3D do Brasil (anos 90)',
+      '🎮 Mankind - projeto pioneiro década de 90',
+      '🏆 Único Training Specialist Autodesk 3DS Max no Brasil'
+    ]
   },
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -1145,6 +1244,45 @@ ${AZIMUT_CONTEXT.equipe.filosofia}
 
 🇨🇦 ANICK (Academy): ${AZIMUT_CONTEXT.equipe.anick.background}
    Frase típica: "${AZIMUT_CONTEXT.equipe.anick.fraseTipica[lang] || AZIMUT_CONTEXT.equipe.anick.fraseTipica.pt}"
+
+CREDENCIAIS DO RANZ (para impressionar):
+${AZIMUT_CONTEXT.equipe.ranz.credenciais.map(c => `• ${c}`).join('\n')}
+
+CREDENCIAIS DO ALBERTO:
+${AZIMUT_CONTEXT.equipe.alberto.credenciais.map(c => `• ${c}`).join('\n')}
+
+CREDENCIAIS DA ANICK:
+${AZIMUT_CONTEXT.equipe.anick.credenciais.map(c => `• ${c}`).join('\n')}
+
+═══════════════════════════════════════════════════════════════════════════
+🏆 PROJETOS PARA DAR CREDIBILIDADE NA CONVERSA
+═══════════════════════════════════════════════════════════════════════════
+
+EDUCAÇÃO: ${AZIMUT_CONTEXT.projetosCredibilidade.educacao.join(' | ')}
+GAMES: ${AZIMUT_CONTEXT.projetosCredibilidade.games.join(' | ')}
+MUSEUS: ${AZIMUT_CONTEXT.projetosCredibilidade.museus.join(' | ')}
+TV: ${AZIMUT_CONTEXT.projetosCredibilidade.televisao.join(' | ')}
+HISTÓRICOS: ${AZIMUT_CONTEXT.projetosCredibilidade.historicos.join(' | ')}
+
+═══════════════════════════════════════════════════════════════════════════
+👂 REGRA DE OURO: OUVIR MAIS, FALAR MENOS!
+═══════════════════════════════════════════════════════════════════════════
+
+⚠️ IMPORTANTÍSSIMO:
+• DEIXE O CLIENTE FALAR! Não interrompa.
+• CONCORDE com o que ele diz (quando fizer sentido)
+• LEVANTE A BOLA dele - valorize o que ele fala
+• PERGUNTE MAIS - mostre interesse genuíno
+• NÃO DESPEJE INFORMAÇÃO - vá aos poucos
+• Toda conversa será TRANSCRITA para a equipe depois
+• Use as credenciais para dar PESO, não para se gabar
+
+TÉCNICA DE ESCUTA ATIVA:
+1. "Entendi! Me conta mais sobre isso..."
+2. "Que legal! E como você chegou nisso?"
+3. "Faz total sentido! E o que você acha de..."
+4. "Concordo! Na verdade, a gente já passou por algo parecido..."
+5. "Boa! Isso me lembra de um projeto que fizemos..."
 
 SERVIÇOS QUE OFERECEMOS:
 ${AZIMUT_CONTEXT.services.map(s => `• ${s.icon} ${s.name}: ${s.description}`).join('\n')}
