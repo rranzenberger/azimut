@@ -1776,29 +1776,57 @@ select.dropdown-azimut option,
   margin: 0.125rem 0 !important;
 }
 
-/* Option checked/selected */
+/* Option checked/selected - FORÇA VERMELHO (SOBRESCREVE AZUL DO BROWSER) */
 .dropdown-azimut option:checked,
 select.dropdown-azimut option:checked,
 select.dropdown-azimut:focus option:checked,
+select.dropdown-azimut option[selected],
+select.dropdown-azimut option[selected="selected"],
 [data-theme="light"] .dropdown-azimut option:checked,
 [data-theme="light"] select.dropdown-azimut option:checked,
-[data-theme="light"] select.dropdown-azimut:focus option:checked {
-  background: linear-gradient(135deg, rgba(201, 35, 55, 0.4) 0%, rgba(201, 35, 55, 0.3) 100%) !important;
-  background-color: rgba(201, 35, 55, 0.35) !important;
+[data-theme="light"] select.dropdown-azimut:focus option:checked,
+[data-theme="light"] select.dropdown-azimut option[selected] {
+  /* FORÇA VERMELHO - SOBRESCREVE AZUL DO CHROME/EDGE */
+  background: #c92337 !important;
+  background-color: #c92337 !important;
+  background-image: none !important;
   color: #ffffff !important;
-  font-weight: 600 !important;
-  border-left: 3px solid #c92337 !important;
+  font-weight: 700 !important;
+  border: none !important;
+  border-left: 3px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 0.25rem !important;
+  padding: 0.75rem 1rem !important;
   padding-left: calc(1rem - 3px) !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
 }
 
-/* Option hover (Firefox) */
+/* Option hover - FORÇA VERMELHO (SOBRESCREVE AZUL DO BROWSER) */
 .dropdown-azimut option:hover,
 select.dropdown-azimut option:hover,
+select.dropdown-azimut:focus option:hover,
 [data-theme="light"] .dropdown-azimut option:hover,
-[data-theme="light"] select.dropdown-azimut option:hover {
-  background: linear-gradient(135deg, rgba(201, 35, 55, 0.25) 0%, rgba(201, 35, 55, 0.15) 100%) !important;
-  background-color: rgba(201, 35, 55, 0.2) !important;
+[data-theme="light"] select.dropdown-azimut option:hover,
+[data-theme="light"] select.dropdown-azimut:focus option:hover {
+  /* FORÇA VERMELHO NO HOVER */
+  background: rgba(201, 35, 55, 0.5) !important;
+  background-color: rgba(201, 35, 55, 0.5) !important;
+  background-image: none !important;
   color: #ffffff !important;
+  border-left: 3px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 0.25rem !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
+/* Dropdown aberto - FORÇA VERMELHO NO SELECT */
+select.dropdown-azimut:focus,
+select.dropdown-azimut:active,
+select.dropdown-azimut[open] {
+  border-color: #c92337 !important;
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.3), 0 0 12px rgba(201, 35, 55, 0.2) !important;
 }
 
 /* Disabled state */
@@ -1875,6 +1903,43 @@ select.dropdown-country-code,
   background-color: rgba(10, 15, 30, 0.98) !important;
   color: #ffffff !important;
   padding: 0.75rem !important;
+}
+
+/* FORÇA VERMELHO NO DROPDOWN-COUNTRY-CODE - SOBRESCREVE AZUL DO BROWSER */
+.dropdown-country-code option:checked,
+select.dropdown-country-code option:checked,
+select.dropdown-country-code:focus option:checked,
+select.dropdown-country-code option[selected],
+select.dropdown-country-code option[selected="selected"] {
+  /* FORÇA VERMELHO - SOBRESCREVE AZUL DO CHROME/EDGE */
+  background: #c92337 !important;
+  background-color: #c92337 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border: none !important;
+  border-left: 3px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 0.25rem !important;
+  padding: 0.75rem !important;
+  padding-left: calc(0.75rem - 3px) !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
+.dropdown-country-code option:hover,
+select.dropdown-country-code option:hover,
+select.dropdown-country-code:focus option:hover {
+  /* FORÇA VERMELHO NO HOVER */
+  background: rgba(201, 35, 55, 0.5) !important;
+  background-color: rgba(201, 35, 55, 0.5) !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border-left: 3px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 0.25rem !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
 }
 
 /* FORÇAR inputs e selects adjacentes (telefone) a terem mesma altura */
