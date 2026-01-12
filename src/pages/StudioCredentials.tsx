@@ -281,10 +281,10 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
 
           {/* Hero */}
           <div className="mb-16">
-            <h1 className="mb-6 font-handel text-5xl md:text-6xl lg:text-7xl font-bold uppercase text-theme-text">
+            <h1 className="mb-6 font-handel uppercase text-theme-text" style={{ fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1', letterSpacing: '0.08em' }}>
               🏆 {text.title}
             </h1>
-            <p className="text-xl md:text-2xl text-theme-text-secondary max-w-4xl">
+            <p className="text-xl text-theme-text-secondary max-w-4xl" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
               {text.subtitle}
             </p>
           </div>
@@ -327,8 +327,8 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
               {text.credentials.map((cred, i) => (
                 <div key={i} className="p-6 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/40 transition-all text-center group">
                   <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">{cred.icon}</div>
-                  <h3 className="text-lg font-bold text-white mb-2">{cred.title}</h3>
-                  <p className="text-sm text-theme-text-secondary mb-2">{cred.desc}</p>
+                  <h3 className="text-sm font-bold text-white mb-2 uppercase tracking-wide line-clamp-2" style={{ minHeight: '2.5rem' }}>{cred.title}</h3>
+                  <p className="text-xs text-theme-text-secondary mb-2 line-clamp-3" style={{ minHeight: '3rem' }}>{cred.desc}</p>
                   <div className="text-xs text-azimut-red font-semibold">{cred.year}</div>
                 </div>
               ))}
@@ -340,17 +340,17 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
               <LangLink
                 to="/contact"
-                className="inline-flex items-center gap-3 px-10 py-5 rounded-lg bg-azimut-red text-white font-sora font-bold uppercase hover:bg-azimut-red/90 transition-all shadow-xl"
+                className="inline-flex items-center gap-3 px-10 py-5 rounded-lg bg-azimut-red text-white font-sora font-bold uppercase tracking-wider hover:bg-azimut-red/90 transition-all shadow-xl"
               >
-                {lang === 'pt' ? 'Iniciar um Projeto' : 'Start a Project'}
-                <span className="text-2xl">→</span>
+                {lang === 'pt' ? 'Iniciar um Projeto' : lang === 'es' ? 'Iniciar un Proyecto' : lang === 'fr' ? 'Démarrer un Projet' : 'Start a Project'}
+                <span className="text-xl">→</span>
               </LangLink>
               <LangLink
                 to="/studio"
-                className="inline-flex items-center gap-3 px-10 py-5 rounded-lg border-2 border-white/30 text-white hover:bg-white hover:text-black transition-all font-semibold"
+                className="inline-flex items-center gap-3 px-10 py-5 rounded-lg border-2 border-white/30 text-white hover:bg-white hover:text-black transition-all font-sora font-bold uppercase tracking-wider"
               >
-                <span>←</span>
-                {lang === 'pt' ? 'Voltar para Studio' : 'Back to Studio'}
+                <span className="text-xl">←</span>
+                {lang === 'pt' ? 'Voltar para Studio' : lang === 'es' ? 'Volver al Estudio' : lang === 'fr' ? 'Retour au Studio' : 'Back to Studio'}
               </LangLink>
             </div>
           </div>

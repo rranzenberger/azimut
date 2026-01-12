@@ -124,11 +124,11 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
               </span>
             </div>
             {/* Título - SEM animação */}
-            <h1 className="font-handel text-4xl md:text-5xl lg:text-6xl uppercase tracking-[0.16em] mb-4" style={{ color: 'var(--theme-text)' }}>
+            <h1 className="font-handel uppercase tracking-[0.12em] mb-4" style={{ color: 'var(--theme-text)', fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1' }}>
               {t(lang, 'navWhat')}
             </h1>
             {/* Parágrafo - SEM animação */}
-            <p className="text-lg md:text-xl max-w-3xl leading-relaxed mb-8" style={{ color: 'var(--theme-text-secondary)' }}>
+            <p className="max-w-3xl leading-relaxed mb-8" style={{ color: 'var(--theme-text-secondary)', fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
               {lang === 'pt' 
                 ? 'Criamos experiências imersivas, interativas e cinematográficas de ponta a ponta. Da concepção à execução, integramos arte, tecnologia e narrativa para conectar pessoas, histórias e espaços.'
                 : lang === 'es' 
