@@ -273,29 +273,34 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
       return
     }
 
-    if (!formData.email || !formData.email.trim()) {
-      setError(lang === 'pt' ? 'Por favor, preencha seu email.' : 
-               lang === 'es' ? 'Por favor, complete su correo electrónico.' :
-               lang === 'fr' ? 'Veuillez remplir votre email.' :
-               'Please fill in your email.')
+    // Validar se tem PELO MENOS email OU telefone
+    const hasEmail = formData.email && formData.email.trim()
+    const hasPhone = formData.whatsapp && formData.whatsapp.replace(/\D/g, '').length >= 8
+
+    if (!hasEmail && !hasPhone) {
+      setError(lang === 'pt' ? 'Por favor, preencha pelo menos seu email OU telefone.' : 
+               lang === 'es' ? 'Por favor, complete al menos su correo electrónico O teléfono.' :
+               lang === 'fr' ? 'Veuillez remplir au moins votre email OU téléphone.' :
+               'Please fill in at least your email OR phone.')
       setLoading(false)
       return
     }
 
-    // Validar formato de email (apenas básico)
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(formData.email)) {
-      setError(lang === 'pt' ? 'Por favor, forneça um email válido (exemplo: seu@email.com).' : 
-               lang === 'es' ? 'Por favor, proporcione un correo electrónico válido (ejemplo: su@correo.com).' :
-               lang === 'fr' ? 'Veuillez fournir un email valide (exemple: votre@email.com).' :
-               'Please provide a valid email (example: your@email.com).')
-      setLoading(false)
-      return
+    // Se tem email, validar formato
+    if (hasEmail) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(formData.email)) {
+        setError(lang === 'pt' ? 'Por favor, forneça um email válido (exemplo: seu@email.com).' : 
+                 lang === 'es' ? 'Por favor, proporcione un correo electrónico válido (ejemplo: su@correo.com).' :
+                 lang === 'fr' ? 'Veuillez fournir un email valide (exemple: votre@email.com).' :
+                 'Please provide a valid email (example: your@email.com).')
+        setLoading(false)
+        return
+      }
     }
 
-    // Validar se tem pelo menos WhatsApp OU email (já temos email, então OK)
-    // Apenas avisar se WhatsApp está incompleto
-    if (formData.whatsapp && formData.whatsapp.replace(/\D/g, '').length < 8) {
+    // Se tem telefone, validar se está completo
+    if (formData.whatsapp && formData.whatsapp.replace(/\D/g, '').length > 0 && formData.whatsapp.replace(/\D/g, '').length < 8) {
       setError(lang === 'pt' ? 'O número de telefone parece incompleto. Por favor, verifique.' : 
                lang === 'es' ? 'El número de teléfono parece incompleto. Por favor, verifique.' :
                lang === 'fr' ? 'Le numéro de téléphone semble incomplet. Veuillez vérifier.' :
@@ -416,7 +421,6 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               <input
                 type="email"
                 name="email"
-                required
                 value={formData.email}
                 onChange={handleChange}
                 className="dropdown-azimut w-full px-4 py-3 rounded-lg"
@@ -470,6 +474,16 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               </p>
             </div>
           </div>
+
+          <p className="text-xs text-amber-400/80 mt-2 flex items-start gap-1.5">
+            <span>💡</span>
+            <span>
+              {lang === 'pt' && 'Pelo menos email OU telefone é necessário'}
+              {lang === 'en' && 'At least email OR phone is required'}
+              {lang === 'fr' && 'Au moins email OU téléphone est requis'}
+              {lang === 'es' && 'Al menos correo O teléfono es requerido'}
+            </span>
+          </p>
 
           <div className="grid md:grid-cols-2 gap-4">
             <div>
