@@ -503,16 +503,17 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                   onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, whatsapp: '' }))}
                   className="dropdown-azimut"
                   style={{ 
-                    width: '95px', 
-                    minWidth: '95px',
-                    maxWidth: '95px', 
+                    width: '110px', 
+                    minWidth: '110px',
+                    maxWidth: '110px', 
                     flexShrink: 0,
                     flexGrow: 0,
                     height: '48px',
-                    flex: '0 0 95px',
+                    flex: '0 0 110px',
                     whiteSpace: 'nowrap',
-                    paddingLeft: '8px',
-                    paddingRight: '24px'
+                    fontSize: '0.85rem',
+                    fontWeight: '600',
+                    padding: '0.75rem 1.75rem 0.75rem 0.6rem'
                   }}
                 >
                   <option value="+55">BR +55</option>
@@ -556,16 +557,6 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               </p>
             </div>
           </div>
-
-          <p className="text-xs text-amber-400/80 mt-2 flex items-start gap-1.5">
-            <span>💡</span>
-            <span>
-              {lang === 'pt' && 'Pelo menos email OU telefone é necessário'}
-              {lang === 'en' && 'At least email OR phone is required'}
-              {lang === 'fr' && 'Au moins email OU téléphone est requis'}
-              {lang === 'es' && 'Al menos correo O teléfono es requerido'}
-            </span>
-          </p>
 
           <div className="grid md:grid-cols-2 gap-4">
             <div>
