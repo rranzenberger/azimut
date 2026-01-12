@@ -909,6 +909,19 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       return `${numbers.slice(0, 5)} ${numbers.slice(5, 11)}`
     }
     
+    // Chile +56: 9 XXXX XXXX
+    if (countryCode === '+56') {
+      if (numbers.length <= 1) return numbers
+      if (numbers.length <= 5) return `${numbers.slice(0, 1)} ${numbers.slice(1)}`
+      return `${numbers.slice(0, 1)} ${numbers.slice(1, 5)} ${numbers.slice(5, 9)}`
+    }
+    
+    // Alemanha +49: XXX XXXXXXXX
+    if (countryCode === '+49') {
+      if (numbers.length <= 3) return numbers
+      return `${numbers.slice(0, 3)} ${numbers.slice(3, 11)}`
+    }
+    
     // Default: apenas números
     return numbers
   }
@@ -1114,38 +1127,37 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4" style={{ marginTop: '1.5rem' }}>
               <PremiumField label={t.phone}>
                 <div className="flex gap-2" style={{ alignItems: 'center', flexWrap: 'nowrap' }}>
-                  {/* Dropdown ou Input customizado - LARGURA 130px */}
+                  {/* Dropdown SelectField customizado - Estilo Azimut vermelho */}
                   {!customCodeMode ? (
-                    <select
-                      value={formData.countryCode}
-                      onChange={(e) => {
-                        if (e.target.value === 'custom') {
-                          setCustomCodeMode(true)
-                          setFormData(prev => ({ ...prev, countryCode: '+', phone: '' }))
-                        } else {
-                          setFormData(prev => ({ ...prev, countryCode: e.target.value, phone: '' }))
-                        }
-                      }}
-                      className="dropdown-azimut"
-                      style={{ 
-                        width: '140px', 
-                        minWidth: '140px', 
-                        maxWidth: '140px', 
-                        flexShrink: 0,
-                        flexGrow: 0,
-                        height: '48px'
-                      }}
-                    >
-                      <option value="custom">🌍➕ Outro</option>
-                      <option value="+55">🇧🇷 BR +55</option>
-                      <option value="+1">🇨🇦 CA +1</option>
-                      <option value="+34">🇪🇸 ES +34</option>
-                      <option value="+33">🇫🇷 FR +33</option>
-                      <option value="+351">🇵🇹 PT +351</option>
-                      <option value="+52">🇲🇽 MX +52</option>
-                      <option value="+54">🇦🇷 AR +54</option>
-                      <option value="+44">🇬🇧 UK +44</option>
-                    </select>
+                    <div style={{ width: '140px', minWidth: '140px', maxWidth: '140px', flexShrink: 0 }}>
+                      <SelectField
+                        value={formData.countryCode}
+                        onChange={(value) => {
+                          if (value === 'custom') {
+                            setCustomCodeMode(true)
+                            setFormData(prev => ({ ...prev, countryCode: '+', phone: '' }))
+                          } else {
+                            setFormData(prev => ({ ...prev, countryCode: value, phone: '' }))
+                          }
+                        }}
+                        options={[
+                          { value: 'custom', label: '🌍➕ Outro' },
+                          { value: '+55', label: '🇧🇷 BR +55' },
+                          { value: '+1', label: '🇨🇦 CA +1' },
+                          { value: '+34', label: '🇪🇸 ES +34' },
+                          { value: '+33', label: '🇫🇷 FR +33' },
+                          { value: '+351', label: '🇵🇹 PT +351' },
+                          { value: '+52', label: '🇲🇽 MX +52' },
+                          { value: '+54', label: '🇦🇷 AR +54' },
+                          { value: '+56', label: '🇨🇱 CL +56' },
+                          { value: '+44', label: '🇬🇧 UK +44' },
+                          { value: '+49', label: '🇩🇪 DE +49' }
+                        ]}
+                        placeholder="BR +55"
+                        ariaLabel="Código do país"
+                        className="ddi-select"
+                      />
+                    </div>
                   ) : (
                     <div className="flex gap-1" style={{ width: '140px', minWidth: '140px', flexShrink: 0 }}>
                       <input
@@ -1199,7 +1211,9 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       formData.countryCode === '+351' ? '912 345 678' :
                       formData.countryCode === '+52' ? '(55) 1234 5678' :
                       formData.countryCode === '+54' ? '(11) 1234-5678' :
+                      formData.countryCode === '+56' ? '9 1234 5678' :
                       formData.countryCode === '+44' ? '020 1234 5678' :
+                      formData.countryCode === '+49' ? '151 12345678' :
                       '123456789'
                     }
                   />
