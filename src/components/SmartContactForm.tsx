@@ -617,12 +617,24 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       errors.name = lang === 'pt' ? 'Nome é obrigatório' : lang === 'es' ? 'Nombre es obligatorio' : lang === 'fr' ? 'Le nom est requis' : 'Name is required'
     }
     
-    if (!formData.email.trim()) {
-      errors.email = lang === 'pt' ? 'Email é obrigatório' : lang === 'es' ? 'Email es obligatorio' : lang === 'fr' ? 'L\'email est requis' : 'Email is required'
+    // Validar se tem PELO MENOS email OU telefone
+    const hasEmail = formData.email && formData.email.trim()
+    const hasPhone = formData.phone && formData.phone.replace(/\D/g, '').length >= 8
+
+    if (!hasEmail && !hasPhone) {
+      errors.email = lang === 'pt' ? 'Forneça pelo menos email OU telefone' : lang === 'es' ? 'Proporcione al menos email O teléfono' : lang === 'fr' ? 'Fournissez au moins email OU téléphone' : 'Provide at least email OR phone'
     } else {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-      if (!emailRegex.test(formData.email)) {
-        errors.email = lang === 'pt' ? 'Email inválido' : lang === 'es' ? 'Email inválido' : lang === 'fr' ? 'Email invalide' : 'Invalid email'
+      // Se tem email, validar formato
+      if (hasEmail) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(formData.email)) {
+          errors.email = lang === 'pt' ? 'Email inválido' : lang === 'es' ? 'Email inválido' : lang === 'fr' ? 'Email invalide' : 'Invalid email'
+        }
+      }
+      
+      // Se tem telefone, validar se está completo
+      if (formData.phone && formData.phone.replace(/\D/g, '').length > 0 && formData.phone.replace(/\D/g, '').length < 8) {
+        errors.phone = lang === 'pt' ? 'Telefone incompleto (mínimo 8 dígitos)' : lang === 'es' ? 'Teléfono incompleto (mínimo 8 dígitos)' : lang === 'fr' ? 'Téléphone incomplet (minimum 8 chiffres)' : 'Phone incomplete (minimum 8 digits)'
       }
     }
     
@@ -658,6 +670,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       const fieldNames: Record<string, Record<string, string>> = {
         name: { pt: 'Nome completo', es: 'Nombre completo', fr: 'Nom complet', en: 'Full name' },
         email: { pt: 'Email', es: 'Email', fr: 'Email', en: 'Email' },
+        phone: { pt: 'Telefone', es: 'Teléfono', fr: 'Téléphone', en: 'Phone' },
         company: { pt: 'Nome da Organização', es: 'Nombre de la Organización', fr: 'Nom de l\'Organisation', en: 'Organization Name' },
         organizationType: { pt: 'Você representa', es: 'Usted representa', fr: 'Vous représentez', en: 'You represent' },
         projectType: { pt: 'Tipo de Projeto', es: 'Tipo de Proyecto', fr: 'Type de Projet', en: 'Project Type' },
@@ -1074,13 +1087,12 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                 />
               </PremiumField>
 
-              <PremiumField label={t.email} error={fieldErrors.email} required>
+              <PremiumField label={t.email} error={fieldErrors.email}>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  required
                   className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal ${
                     fieldErrors.email 
                       ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
@@ -1137,6 +1149,17 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   💡 Código detectado automaticamente. Opcional.
                 </p>
               </PremiumField>
+
+              {/* Aviso: Email OU Telefone */}
+              <p className="text-xs text-amber-400/80 -mt-2 flex items-start gap-1.5">
+                <span>💡</span>
+                <span>
+                  {lang === 'pt' && 'Pelo menos email OU telefone é necessário'}
+                  {lang === 'en' && 'At least email OR phone is required'}
+                  {lang === 'fr' && 'Au moins email OU téléphone est requis'}
+                  {lang === 'es' && 'Al menos correo O teléfono es requerido'}
+                </span>
+              </p>
 
               <PremiumField label={t.position}>
                 <input
