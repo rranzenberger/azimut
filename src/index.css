@@ -1719,7 +1719,7 @@ html[data-theme="light"] select.dropdown-azimut {
   color: #ffffff !important;
   
   /* Tamanho e espaçamento PADRÃO */
-  width: 100%;
+  width: 100%; /* Apenas se não tiver width inline !important */
   min-height: 48px !important;
   padding: 0.75rem 2.75rem 0.75rem 1rem !important;
   border-radius: 0.5rem !important;
