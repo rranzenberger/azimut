@@ -449,19 +449,20 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               {t.whatsapp} *
             </label>
               <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'stretch', flexWrap: 'nowrap' }}>
-                {/* Dropdown de código de país - LARGURA MAIOR FORÇADA */}
+                {/* Dropdown de código de país - LARGURA AUMENTADA para caber "BR +55" */}
                 <select
                   value={formData.countryCode}
                   onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, whatsapp: '' }))}
                   className="dropdown-azimut"
                   style={{ 
-                    width: '140px !important', 
-                    minWidth: '140px',
-                    maxWidth: '140px', 
+                    width: '150px', 
+                    minWidth: '150px',
+                    maxWidth: '150px', 
                     flexShrink: 0,
                     flexGrow: 0,
                     height: '48px',
-                    flex: '0 0 140px'
+                    flex: '0 0 150px',
+                    whiteSpace: 'nowrap'
                   }}
                 >
                   <option value="+55">BR +55</option>

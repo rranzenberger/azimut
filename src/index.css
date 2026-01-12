@@ -1815,14 +1815,19 @@ select.dropdown-azimut:disabled {
 .dropdown-azimut[style*="width: 115px"],
 .dropdown-azimut[style*="width: 130px"],
 .dropdown-azimut[style*="width: 140px"],
+.dropdown-azimut[style*="width: 150px"],
 select.dropdown-azimut[style*="width: 115px"],
 select.dropdown-azimut[style*="width: 130px"],
-select.dropdown-azimut[style*="width: 140px"] {
+select.dropdown-azimut[style*="width: 140px"],
+select.dropdown-azimut[style*="width: 150px"] {
   padding: 0.75rem 2rem 0.75rem 0.75rem !important;
   font-size: 0.875rem !important;
   height: 48px !important;
   max-height: 48px !important;
-  line-height: normal !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 /* FORÇAR inputs e selects adjacentes (telefone) a terem mesma altura */
