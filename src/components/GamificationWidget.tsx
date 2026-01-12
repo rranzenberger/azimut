@@ -164,16 +164,18 @@ export const GamificationWidget: React.FC<GamificationWidgetProps> = ({
       {/* Widget Expandido */}
       {!isMinimized && (
         <div className={`fixed ${positionClasses[position]} z-50 transition-all duration-300`}>
-          <div className="bg-gradient-to-br from-[#1a1f2e] to-[#0a0e18] border-2 border-azimut-red/40 rounded-2xl shadow-2xl backdrop-blur-md w-80 overflow-hidden">
+          <div className="bg-gradient-to-br from-[#1a1f2e] to-[#0a0e18] border-2 border-azimut-red/40 rounded-2xl shadow-2xl backdrop-blur-md w-[340px] max-w-[90vw] overflow-hidden">
             {/* Header */}
             <div className="bg-gradient-to-r from-azimut-red/20 to-transparent p-4 border-b border-azimut-red/20">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="text-4xl">{currentLevel.emoji}</div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <h3 className="font-bold text-white text-lg">{currentLevel.name}</h3>
-                      <span className="text-xs px-2 py-0.5 bg-azimut-red/20 text-azimut-red rounded-full">
+                      <h3 className="font-bold text-white text-sm font-sora uppercase tracking-wider truncate">
+                        {currentLevel.name}
+                      </h3>
+                      <span className="text-xs px-2 py-0.5 bg-azimut-red/20 text-azimut-red rounded-full flex-shrink-0">
                         {content.level} {progress.level}
                       </span>
                     </div>
@@ -185,8 +187,9 @@ export const GamificationWidget: React.FC<GamificationWidgetProps> = ({
                 
                 <button
                   onClick={() => setIsMinimized(true)}
-                  className="text-slate-400 hover:text-white transition-colors p-2"
+                  className="text-slate-400 hover:text-white hover:bg-white/10 transition-all p-2 rounded-lg text-xl font-bold"
                   aria-label={content.close}
+                  title={content.close}
                 >
                   ✕
                 </button>
