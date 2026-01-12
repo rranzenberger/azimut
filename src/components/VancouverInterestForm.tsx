@@ -409,7 +409,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               required
               value={formData.name}
               onChange={handleChange}
-              className="dropdown-azimut w-full px-4 py-3 rounded-lg"
+              className="input-adaptive w-full"
             />
           </div>
 
@@ -423,7 +423,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="dropdown-azimut w-full px-4 py-3 rounded-lg"
+                className="input-adaptive w-full"
               />
             </div>
 
@@ -497,7 +497,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                 max="99"
                 value={formData.age}
                 onChange={handleChange}
-                className="dropdown-azimut w-full px-4 py-3 rounded-lg"
+                className="input-adaptive w-full"
               />
             </div>
 
@@ -511,7 +511,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                 placeholder="São Paulo, Brazil / New York, USA / Paris, France"
                 value={formData.city}
                 onChange={handleChange}
-                className="dropdown-azimut w-full px-4 py-3 rounded-lg"
+                className="input-adaptive w-full"
               />
             </div>
           </div>
@@ -525,7 +525,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               required
               value={formData.currentSituation}
               onChange={handleChange}
-              className="dropdown-azimut w-full px-4 py-3 rounded-lg"
+              className="dropdown-azimut w-full"
             >
               {t.situations.map(option => (
                 <option key={option.value} value={option.value}>
@@ -549,7 +549,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               required
               value={formData.targetSchool}
               onChange={handleChange}
-              className="dropdown-azimut w-full px-4 py-3 rounded-lg"
+              className="dropdown-azimut w-full"
             >
               {t.schools.map(option => (
                 <option key={option.value} value={option.value}>
@@ -568,7 +568,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               required
               value={formData.areaInterest}
               onChange={handleChange}
-              className="dropdown-azimut w-full px-4 py-3 rounded-lg"
+              className="dropdown-azimut w-full"
             >
               {t.areas.map(option => (
                 <option key={option.value} value={option.value}>
@@ -588,7 +588,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                 required
                 value={formData.intakeYear}
                 onChange={handleChange}
-                className="dropdown-azimut w-full px-4 py-3 rounded-lg"
+                className="dropdown-azimut w-full"
               >
                 {t.intakes.map(option => (
                   <option key={option.value} value={option.value}>
@@ -607,7 +607,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                 required
                 value={formData.englishLevel}
                 onChange={handleChange}
-                className="dropdown-azimut w-full px-4 py-3 rounded-lg"
+                className="dropdown-azimut w-full"
               >
                 {t.englishLevels.map(option => (
                   <option key={option.value} value={option.value}>
@@ -627,7 +627,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               required
               value={formData.hasPortfolio}
               onChange={handleChange}
-              className="dropdown-azimut w-full px-4 py-3 rounded-lg"
+              className="dropdown-azimut w-full"
             >
               {t.portfolioOptions.map(option => (
                 <option key={option.value} value={option.value}>
@@ -651,7 +651,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               required
               value={formData.budgetRange}
               onChange={handleChange}
-              className="dropdown-azimut w-full px-4 py-3 rounded-lg"
+              className="dropdown-azimut w-full"
             >
               {t.budgetRanges.map(option => (
                 <option key={option.value} value={option.value}>
@@ -670,7 +670,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               required
               value={formData.fundingSource}
               onChange={handleChange}
-              className="dropdown-azimut w-full px-4 py-3 rounded-lg"
+              className="dropdown-azimut w-full"
             >
               {t.fundingSources.map(option => (
                 <option key={option.value} value={option.value}>
@@ -692,7 +692,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               required
               value={formData.howHeard}
               onChange={handleChange}
-              className="dropdown-azimut w-full px-4 py-3 rounded-lg"
+              className="dropdown-azimut w-full"
             >
               {t.howHeardOptions.map(option => (
                 <option key={option.value} value={option.value}>
@@ -712,7 +712,8 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               value={formData.comments}
               onChange={handleChange}
               placeholder={t.commentsPlaceholder}
-              className="dropdown-azimut w-full px-4 py-3 rounded-lg"
+              className="input-adaptive w-full"
+              style={{ minHeight: '120px' }}
             />
           </div>
         </div>
