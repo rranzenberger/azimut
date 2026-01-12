@@ -2,6 +2,8 @@
 // CLAUDE API SERVICE - Backend Integration
 // ════════════════════════════════════════════════════════════
 
+import { generateFullContext } from './azimut-context'
+
 interface ClaudeRequest {
   message: string
   lang: string
@@ -335,8 +337,10 @@ export async function callClaude(request: ClaudeRequest): Promise<ClaudeResponse
   
   console.log(`🌍 Claude: Using prompt for lang=${lang}, profile=${profile} → ${promptKey}`)
 
-  // Adicionar contexto da página atual
-  const pageContext = `\n\nCONTEXTO: O usuário está na página: ${request.context.page}`
+  // Adicionar contexto COMPLETO da Azimut + página atual
+  const langKey = (lang === 'pt' || lang === 'en' || lang === 'es' || lang === 'fr') ? lang : 'en'
+  const fullAzimutContext = generateFullContext(langKey as 'pt' | 'en' | 'es' | 'fr')
+  const pageContext = `\n\n${fullAzimutContext}\n\nCONTEXTO ATUAL: O usuário está na página: ${request.context.page}`
 
   // Construir histórico de mensagens
   const messages = [

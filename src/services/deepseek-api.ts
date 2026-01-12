@@ -5,6 +5,8 @@
 // Ideal para: FAQ, navegação, conversas iniciais
 // ════════════════════════════════════════════════════════════
 
+import { generateFullContext } from './azimut-context'
+
 interface DeepSeekRequest {
   message: string
   lang: string
@@ -193,9 +195,14 @@ export async function callDeepSeek(request: DeepSeekRequest): Promise<DeepSeekRe
   
   console.log(`🌍 DeepSeek: Using prompt for lang=${lang}, profile=${profile} → ${promptKey}`)
 
+  // Adicionar contexto COMPLETO da Azimut
+  const langKey = (lang === 'pt' || lang === 'en' || lang === 'es' || lang === 'fr') ? lang : 'en'
+  const fullAzimutContext = generateFullContext(langKey as 'pt' | 'en' | 'es' | 'fr')
+  const enrichedPrompt = `${systemPrompt}\n\n${fullAzimutContext}`
+
   // Construir histórico de mensagens
   const messages = [
-    { role: 'system', content: systemPrompt },
+    { role: 'system', content: enrichedPrompt },
     ...request.context.previousMessages.map(msg => ({
       role: msg.role,
       content: msg.content
