@@ -52,6 +52,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [customCodeMode, setCustomCodeMode] = useState(false) // Modo código personalizado
 
   // Detectar geolocalização AUTOMATICAMENTE
   useEffect(() => {
@@ -498,29 +499,67 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               {t.whatsapp} *
             </label>
               <div className="flex gap-2" style={{ alignItems: 'center' }}>
-                {/* Dropdown de código de país - LARGURA 130px */}
-                <select
-                  value={formData.countryCode}
-                  onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, whatsapp: '' }))}
-                  className="dropdown-azimut"
-                  style={{ 
-                    width: '130px', 
-                    minWidth: '130px', 
-                    maxWidth: '130px', 
-                    flexShrink: 0,
-                    flexGrow: 0,
-                    height: '48px'
-                  }}
-                >
-                  <option value="+55">BR +55</option>
-                  <option value="+1">CA +1</option>
-                  <option value="+34">ES +34</option>
-                  <option value="+33">FR +33</option>
-                  <option value="+351">PT +351</option>
-                  <option value="+52">MX +52</option>
-                  <option value="+54">AR +54</option>
-                  <option value="+44">UK +44</option>
-                </select>
+                {/* Dropdown ou Input customizado - LARGURA 130px */}
+                {!customCodeMode ? (
+                  <select
+                    value={formData.countryCode}
+                    onChange={(e) => {
+                      if (e.target.value === 'custom') {
+                        setCustomCodeMode(true)
+                        setFormData(prev => ({ ...prev, countryCode: '+', whatsapp: '' }))
+                      } else {
+                        setFormData(prev => ({ ...prev, countryCode: e.target.value, whatsapp: '' }))
+                      }
+                    }}
+                    className="dropdown-azimut"
+                    style={{ 
+                      width: '130px', 
+                      minWidth: '130px', 
+                      maxWidth: '130px', 
+                      flexShrink: 0,
+                      flexGrow: 0,
+                      height: '48px'
+                    }}
+                  >
+                    <option value="+55">BR +55</option>
+                    <option value="+1">CA +1</option>
+                    <option value="+34">ES +34</option>
+                    <option value="+33">FR +33</option>
+                    <option value="+351">PT +351</option>
+                    <option value="+52">MX +52</option>
+                    <option value="+54">AR +54</option>
+                    <option value="+44">UK +44</option>
+                    <option value="custom">➕ Outro</option>
+                  </select>
+                ) : (
+                  <div className="flex gap-1" style={{ width: '130px', minWidth: '130px', flexShrink: 0 }}>
+                    <input
+                      type="text"
+                      value={formData.countryCode}
+                      onChange={(e) => {
+                        let val = e.target.value
+                        if (!val.startsWith('+')) val = '+' + val.replace(/[^0-9]/g, '')
+                        else val = '+' + val.slice(1).replace(/[^0-9]/g, '')
+                        if (val.length <= 5) setFormData(prev => ({ ...prev, countryCode: val }))
+                      }}
+                      className="input-adaptive"
+                      placeholder="+XX"
+                      style={{ width: '70px', height: '48px', textAlign: 'center', fontWeight: 700 }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCustomCodeMode(false)
+                        setFormData(prev => ({ ...prev, countryCode: '+55', whatsapp: '' }))
+                      }}
+                      className="px-2 text-white/60 hover:text-white transition-colors"
+                      title="Voltar para lista"
+                      style={{ height: '48px' }}
+                    >
+                      ↩
+                    </button>
+                  </div>
+                )}
                 {/* Campo WhatsApp - flex-1 para preencher espaço restante */}
                 <input
                   type="tel"
@@ -533,7 +572,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                     formData.countryCode === '+351' ? '912 345 678' :
                     formData.countryCode === '+52' ? '(55) 1234 5678' :
                     formData.countryCode === '+44' ? '020 1234 5678' :
-                    '(11) 1234-5678'
+                    '123456789'
                   }
                   value={formData.whatsapp}
                   onChange={(e) => {

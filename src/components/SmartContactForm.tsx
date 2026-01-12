@@ -255,6 +255,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
+  const [customCodeMode, setCustomCodeMode] = useState(false) // Modo código personalizado
   const [aiSuggestions, setAiSuggestions] = useState<{
     message: string
     projectSuggestions: string[]
@@ -1113,29 +1114,67 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4" style={{ marginTop: '1.5rem' }}>
               <PremiumField label={t.phone}>
                 <div className="flex gap-2" style={{ alignItems: 'center' }}>
-                  {/* Dropdown de código de país - LARGURA 130px */}
-                  <select
-                    value={formData.countryCode}
-                    onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value, phone: '' }))}
-                    className="dropdown-azimut"
-                    style={{ 
-                      width: '130px', 
-                      minWidth: '130px', 
-                      maxWidth: '130px', 
-                      flexShrink: 0,
-                      flexGrow: 0,
-                      height: '48px'
-                    }}
-                  >
-                    <option value="+55">BR +55</option>
-                    <option value="+1">CA +1</option>
-                    <option value="+34">ES +34</option>
-                    <option value="+33">FR +33</option>
-                    <option value="+351">PT +351</option>
-                    <option value="+52">MX +52</option>
-                    <option value="+54">AR +54</option>
-                    <option value="+44">UK +44</option>
-                  </select>
+                  {/* Dropdown ou Input customizado - LARGURA 130px */}
+                  {!customCodeMode ? (
+                    <select
+                      value={formData.countryCode}
+                      onChange={(e) => {
+                        if (e.target.value === 'custom') {
+                          setCustomCodeMode(true)
+                          setFormData(prev => ({ ...prev, countryCode: '+', phone: '' }))
+                        } else {
+                          setFormData(prev => ({ ...prev, countryCode: e.target.value, phone: '' }))
+                        }
+                      }}
+                      className="dropdown-azimut"
+                      style={{ 
+                        width: '130px', 
+                        minWidth: '130px', 
+                        maxWidth: '130px', 
+                        flexShrink: 0,
+                        flexGrow: 0,
+                        height: '48px'
+                      }}
+                    >
+                      <option value="+55">BR +55</option>
+                      <option value="+1">CA +1</option>
+                      <option value="+34">ES +34</option>
+                      <option value="+33">FR +33</option>
+                      <option value="+351">PT +351</option>
+                      <option value="+52">MX +52</option>
+                      <option value="+54">AR +54</option>
+                      <option value="+44">UK +44</option>
+                      <option value="custom">➕ Outro</option>
+                    </select>
+                  ) : (
+                    <div className="flex gap-1" style={{ width: '130px', minWidth: '130px', flexShrink: 0 }}>
+                      <input
+                        type="text"
+                        value={formData.countryCode}
+                        onChange={(e) => {
+                          let val = e.target.value
+                          if (!val.startsWith('+')) val = '+' + val.replace(/[^0-9]/g, '')
+                          else val = '+' + val.slice(1).replace(/[^0-9]/g, '')
+                          if (val.length <= 5) setFormData(prev => ({ ...prev, countryCode: val }))
+                        }}
+                        className="input-adaptive"
+                        placeholder="+XX"
+                        style={{ width: '70px', height: '48px', textAlign: 'center', fontWeight: 700 }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCustomCodeMode(false)
+                          setFormData(prev => ({ ...prev, countryCode: '+55', phone: '' }))
+                        }}
+                        className="px-2 text-white/60 hover:text-white transition-colors"
+                        title="Voltar para lista"
+                        style={{ height: '48px' }}
+                      >
+                        ↩
+                      </button>
+                    </div>
+                  )}
                   {/* Campo de telefone - flex-1 para preencher espaço restante */}
                   <input
                     type="tel"
@@ -1161,7 +1200,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       formData.countryCode === '+52' ? '(55) 1234 5678' :
                       formData.countryCode === '+54' ? '(11) 1234-5678' :
                       formData.countryCode === '+44' ? '020 1234 5678' :
-                      '12345 678901'
+                      '123456789'
                     }
                   />
                 </div>
