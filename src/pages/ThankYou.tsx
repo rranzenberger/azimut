@@ -54,7 +54,7 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
       steps: [
         { icon: '📧', title: 'Análise da Solicitação', desc: 'Equipe avalia projeto e necessidades', time: '1h' },
         { icon: '💬', title: 'Retorno em 24h', desc: 'Agendamos conversa detalhada', time: '24h' },
-        { icon: '🎯', title: 'Proposta Personalizada', desc: 'Apresentamos soluções sob medida', time: '48h' }
+        { icon: '🎯', title: 'Proposta Custom', desc: 'Soluções sob medida', time: '48h' }
       ],
       explore: 'Enquanto isso, explore:',
       links: [
@@ -72,7 +72,7 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
       steps: [
         { icon: '📧', title: 'Request Analysis', desc: 'Team evaluates project and needs', time: '1h' },
         { icon: '💬', title: '24h Response', desc: 'We schedule detailed conversation', time: '24h' },
-        { icon: '🎯', title: 'Custom Proposal', desc: 'We present tailored solutions', time: '48h' }
+        { icon: '🎯', title: 'Custom Proposal', desc: 'Tailored solutions', time: '48h' }
       ],
       explore: 'In the meantime, explore:',
       links: [
@@ -90,7 +90,7 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
       steps: [
         { icon: '📧', title: 'Análisis de Solicitud', desc: 'Equipo evalúa proyecto y necesidades', time: '1h' },
         { icon: '💬', title: 'Respuesta en 24h', desc: 'Programamos conversación detallada', time: '24h' },
-        { icon: '🎯', title: 'Propuesta Personalizada', desc: 'Presentamos soluciones a medida', time: '48h' }
+        { icon: '🎯', title: 'Propuesta Custom', desc: 'Soluciones a medida', time: '48h' }
       ],
       explore: 'Mientras tanto, explora:',
       links: [
@@ -108,7 +108,7 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
       steps: [
         { icon: '📧', title: 'Analyse de la Demande', desc: "L'équipe évalue le projet et les besoins", time: '1h' },
         { icon: '💬', title: 'Réponse en 24h', desc: 'Nous planifions une conversation détaillée', time: '24h' },
-        { icon: '🎯', title: 'Proposition Personnalisée', desc: 'Nous présentons des solutions sur mesure', time: '48h' }
+        { icon: '🎯', title: 'Proposition Custom', desc: 'Solutions sur mesure', time: '48h' }
       ],
       explore: 'En attendant, explorez:',
       links: [
