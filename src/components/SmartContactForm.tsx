@@ -1113,7 +1113,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4" style={{ marginTop: '1.5rem' }}>
               <PremiumField label={t.phone}>
-                <div className="flex gap-2" style={{ alignItems: 'center' }}>
+                <div className="flex gap-2" style={{ alignItems: 'center', flexWrap: 'nowrap' }}>
                   {/* Dropdown ou Input customizado - LARGURA 130px */}
                   {!customCodeMode ? (
                     <select

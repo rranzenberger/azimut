@@ -498,7 +498,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
             <label className="label-adaptive">
               {t.whatsapp} *
             </label>
-              <div className="flex gap-2" style={{ alignItems: 'center' }}>
+              <div className="flex gap-2" style={{ alignItems: 'center', flexWrap: 'nowrap' }}>
                 {/* Dropdown ou Input customizado - LARGURA 130px */}
                 {!customCodeMode ? (
                   <select
