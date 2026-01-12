@@ -497,15 +497,58 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Validação: Nome + (Email OU Telefone)
-    if (!formData.name || (!formData.email && !formData.phone)) {
-      setError(t.required)
+    // Validação: Nome obrigatório
+    if (!formData.name) {
+      setError(lang === 'pt' ? 'Por favor, preencha seu nome.' : lang === 'es' ? 'Por favor, complete su nombre.' : lang === 'fr' ? 'Veuillez remplir votre nom.' : 'Please fill in your name.')
       return
     }
 
-    // Validar email se fornecido
-    if (formData.email && !formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-      setError(lang === 'pt' ? 'Email inválido' : 'Invalid email')
+    // 🆕 VALIDAÇÃO CRUZADA INTELIGENTE baseada em preferência de contato
+    const hasEmail = formData.email && formData.email.trim()
+    const hasPhone = formData.phone && formData.phone.replace(/\D/g, '').length >= 8
+
+    // Se pediu contato por EMAIL mas não forneceu email
+    if (formData.contactPreference === 'email' && !hasEmail) {
+      setError(lang === 'pt' ? 'Você solicitou contato por email, mas não forneceu seu email. Por favor, preencha o email ou mude a preferência de contato.' : 
+               lang === 'en' ? 'You requested email contact, but didn\'t provide your email. Please fill in email or change contact preference.' :
+               lang === 'es' ? 'Solicitaste contacto por correo, pero no proporcionaste tu email. Por favor, completa el email o cambia la preferencia.' :
+               'Vous avez demandé un contact par email, mais n\'avez pas fourni votre email.')
+      return
+    }
+
+    // Se pediu contato por CALL mas não forneceu telefone
+    if (formData.contactPreference === 'call' && !hasPhone) {
+      setError(lang === 'pt' ? 'Você solicitou contato por telefone, mas não forneceu seu número. Por favor, preencha o telefone ou mude a preferência de contato.' : 
+               lang === 'en' ? 'You requested phone contact, but didn\'t provide your number. Please fill in phone or change preference.' :
+               lang === 'es' ? 'Solicitaste contacto por teléfono, pero no proporcionaste tu número. Por favor, completa el teléfono.' :
+               'Vous avez demandé un contact par téléphone, mais n\'avez pas fourni votre numéro.')
+      return
+    }
+
+    // Se marcou "Any" (qualquer), precisa de pelo menos um
+    if (formData.contactPreference === 'any' && !hasEmail && !hasPhone) {
+      setError(lang === 'pt' ? 'Por favor, forneça pelo menos email OU telefone.' : 
+               lang === 'es' ? 'Por favor, proporcione al menos email O teléfono.' :
+               lang === 'fr' ? 'Veuillez fournir au moins email OU téléphone.' :
+               'Please provide at least email OR phone.')
+      return
+    }
+
+    // Validar formato de email se fornecido
+    if (hasEmail && !formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      setError(lang === 'pt' ? 'Por favor, forneça um email válido (exemplo: seu@email.com).' : 
+               lang === 'es' ? 'Por favor, proporcione un correo electrónico válido (ejemplo: su@correo.com).' :
+               lang === 'fr' ? 'Veuillez fournir un email valide (exemple: votre@email.com).' :
+               'Please provide a valid email (example: your@email.com).')
+      return
+    }
+
+    // Validar telefone se fornecido
+    if (formData.phone && formData.phone.replace(/\D/g, '').length > 0 && formData.phone.replace(/\D/g, '').length < 8) {
+      setError(lang === 'pt' ? 'O número de telefone parece incompleto. Por favor, verifique.' : 
+               lang === 'es' ? 'El número de teléfono parece incompleto. Por favor, verifique.' :
+               lang === 'fr' ? 'Le numéro de téléphone semble incomplet. Veuillez vérifier.' :
+               'The phone number seems incomplete. Please check.')
       return
     }
 

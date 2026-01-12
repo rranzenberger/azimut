@@ -473,17 +473,17 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 href="#form"
                 className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold rounded-lg transition-all duration-300 border border-white/20"
               >
-                Consulta Gratuita
+                {lang === 'pt' ? 'Consulta Gratuita' : lang === 'es' ? 'Consulta Gratuita' : lang === 'fr' ? 'Consultation Gratuite' : 'Free Consultation'}
               </a>
             </div>
 
             {/* Stats */}
             <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { value: '90%+', label: 'Empregabilidade' },
-                { value: '1 ano', label: 'Duração' },
-                { value: '40k+', label: 'Vagas em Mídia' },
-                { value: '🍁', label: 'Residência PR' }
+                { value: '90%+', label: lang === 'pt' ? 'Empregabilidade' : lang === 'es' ? 'Empleabilidad' : lang === 'fr' ? 'Employabilité' : 'Employability' },
+                { value: lang === 'pt' ? '1 ano' : lang === 'es' ? '1 año' : lang === 'fr' ? '1 an' : '1 year', label: lang === 'pt' ? 'Duração' : lang === 'es' ? 'Duración' : lang === 'fr' ? 'Durée' : 'Duration' },
+                { value: '40k+', label: lang === 'pt' ? 'Vagas em Mídia' : lang === 'es' ? 'Vacantes Medios' : lang === 'fr' ? 'Postes Médias' : 'Media Jobs' },
+                { value: '🍁', label: lang === 'pt' ? 'Residência PR' : lang === 'es' ? 'Residencia PR' : lang === 'fr' ? 'Résidence PR' : 'PR Residence' }
               ].map((stat, i) => (
                 <div key={i} className="text-center">
                   <div className="text-3xl md:text-4xl font-bold text-azimut-red mb-1">
@@ -532,39 +532,39 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 <thead>
                   <tr className="border-b-2 border-azimut-red">
                     <th className="text-left p-4 text-white/70 font-semibold uppercase text-sm"></th>
-                    <th className="p-4 text-white font-semibold text-lg">Univ. Tradicional</th>
+                    <th className="p-4 text-white font-semibold text-lg">{lang === 'pt' ? 'Univ. Tradicional' : lang === 'es' ? 'Univ. Tradicional' : lang === 'fr' ? 'Univ. Traditionnelle' : 'Traditional Univ.'}</th>
                     <th className="p-4 text-azimut-red font-semibold text-lg">VanArts 🍁</th>
                     <th className="p-4 text-white font-semibold text-lg">VFS 🍁</th>
                   </tr>
                 </thead>
                 <tbody className="text-center">
                   <tr className="border-b border-white/10">
-                    <td className="text-left p-4 text-white/70 font-medium">Custo Total (aprox.)</td>
+                    <td className="text-left p-4 text-white/70 font-medium">{lang === 'pt' ? 'Custo Total (aprox.)' : lang === 'es' ? 'Costo Total (aprox.)' : lang === 'fr' ? 'Coût Total (approx.)' : 'Total Cost (approx.)'}</td>
                     <td className="p-4 text-white">US$ 40-80k</td>
                     <td className="p-4 text-azimut-red font-bold text-xl">US$ 35k ✅</td>
                     <td className="p-4 text-white">US$ 55k</td>
                   </tr>
                   <tr className="border-b border-white/10">
-                    <td className="text-left p-4 text-white/70 font-medium">Duração</td>
-                    <td className="p-4 text-white">4 anos</td>
-                    <td className="p-4 text-azimut-red font-bold">1 ano ✅</td>
-                    <td className="p-4 text-white">1 ano ✅</td>
+                    <td className="text-left p-4 text-white/70 font-medium">{lang === 'pt' ? 'Duração' : lang === 'es' ? 'Duración' : lang === 'fr' ? 'Durée' : 'Duration'}</td>
+                    <td className="p-4 text-white">{lang === 'pt' ? '4 anos' : lang === 'es' ? '4 años' : lang === 'fr' ? '4 ans' : '4 years'}</td>
+                    <td className="p-4 text-azimut-red font-bold">{lang === 'pt' ? '1 ano' : lang === 'es' ? '1 año' : lang === 'fr' ? '1 an' : '1 year'} ✅</td>
+                    <td className="p-4 text-white">{lang === 'pt' ? '1 ano' : lang === 'es' ? '1 año' : lang === 'fr' ? '1 an' : '1 year'} ✅</td>
                   </tr>
                   <tr className="border-b border-white/10">
-                    <td className="text-left p-4 text-white/70 font-medium">Empregabilidade</td>
+                    <td className="text-left p-4 text-white/70 font-medium">{lang === 'pt' ? 'Empregabilidade' : lang === 'es' ? 'Empleabilidad' : lang === 'fr' ? 'Employabilité' : 'Employability'}</td>
                     <td className="p-4 text-white">50-60%</td>
                     <td className="p-4 text-azimut-red font-bold">90%+ ✅</td>
                     <td className="p-4 text-white">92% ✅</td>
                   </tr>
                   <tr className="border-b border-white/10">
-                    <td className="text-left p-4 text-white/70 font-medium">Salário Inicial</td>
-                    <td className="p-4 text-white">US$ 2-4k/mês</td>
-                    <td className="p-4 text-azimut-red font-bold">CAD $3.5-5k/mês ✅</td>
-                    <td className="p-4 text-white">CAD $4-6k/mês ✅</td>
+                    <td className="text-left p-4 text-white/70 font-medium">{lang === 'pt' ? 'Salário Inicial' : lang === 'es' ? 'Salario Inicial' : lang === 'fr' ? 'Salaire Initial' : 'Starting Salary'}</td>
+                    <td className="p-4 text-white">{lang === 'pt' ? 'US$ 2-4k/mês' : lang === 'es' ? 'US$ 2-4k/mes' : lang === 'fr' ? 'US$ 2-4k/mois' : 'US$ 2-4k/month'}</td>
+                    <td className="p-4 text-azimut-red font-bold">{lang === 'pt' ? 'CAD $3.5-5k/mês' : lang === 'es' ? 'CAD $3.5-5k/mes' : lang === 'fr' ? 'CAD $3,5-5k/mois' : 'CAD $3.5-5k/month'} ✅</td>
+                    <td className="p-4 text-white">{lang === 'pt' ? 'CAD $4-6k/mês' : lang === 'es' ? 'CAD $4-6k/mes' : lang === 'fr' ? 'CAD $4-6k/mois' : 'CAD $4-6k/month'} ✅</td>
                   </tr>
                   <tr className="border-b border-white/10">
-                    <td className="text-left p-4 text-white/70 font-medium">Mercado</td>
-                    <td className="p-4 text-white">Regional</td>
+                    <td className="text-left p-4 text-white/70 font-medium">{lang === 'pt' ? 'Mercado' : lang === 'es' ? 'Mercado' : lang === 'fr' ? 'Marché' : 'Market'}</td>
+                    <td className="p-4 text-white">{lang === 'pt' ? 'Regional' : lang === 'es' ? 'Regional' : lang === 'fr' ? 'Régional' : 'Regional'}</td>
                     <td className="p-4 text-azimut-red font-bold">Global ✅</td>
                     <td className="p-4 text-white">Global ✅</td>
                   </tr>
