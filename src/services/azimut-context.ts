@@ -1145,6 +1145,125 @@ export const CHATBOT_PERSONALITY = {
             morno: ['Interesse genuíno', 'Fez várias perguntas', 'Deixou contato', 'Ainda pesquisando'],
             frio: ['Só curiosidade', 'Respostas curtas', 'Não deixou contato', 'Estudante sem prazo']
           }
+        },
+        
+        // ═══════════════════════════════════════════════════════════════════════════
+        // 📊 CLASSIFICAÇÃO DE LEADS - HOT / WARM / COLD + PROJEÇÃO
+        // ═══════════════════════════════════════════════════════════════════════════
+        classificacaoLeads: {
+          objetivo: 'Classificar cada contato para a equipe saber a prioridade de follow-up.',
+          
+          categorias: {
+            hot: {
+              emoji: '🔥',
+              nome: 'HOT - Prioridade MÁXIMA',
+              sinais: [
+                'Pediu orçamento/cotação',
+                'Quer agendar reunião/call',
+                'Tem prazo definido (próximos 30 dias)',
+                'Mencionou budget disponível',
+                'Empresa/instituição grande',
+                'Tomador de decisão (diretor, gerente, CEO)',
+                'Projeto aprovado, só falta fornecedor',
+                'Veio por indicação',
+                'Urgência explícita'
+              ],
+              acao: 'LIGAR EM ATÉ 2 HORAS! Esse lead está pronto para fechar.',
+              conversaoPrevista: '70-90%'
+            },
+            warm: {
+              emoji: '🌡️',
+              nome: 'WARM - Acompanhar de perto',
+              sinais: [
+                'Interesse genuíno demonstrado',
+                'Fez várias perguntas detalhadas',
+                'Deixou contato (email/WhatsApp)',
+                'Ainda pesquisando mas sério',
+                'Prazo médio (1-3 meses)',
+                'Precisa aprovar com superior',
+                'Comparando fornecedores',
+                'Estudante com planos concretos'
+              ],
+              acao: 'Contatar em 24-48h. Enviar material, manter relacionamento.',
+              conversaoPrevista: '30-50%'
+            },
+            cold: {
+              emoji: '❄️',
+              nome: 'COLD - Nutrir para futuro',
+              sinais: [
+                'Só curiosidade inicial',
+                'Respostas curtas/vagas',
+                'Não deixou contato',
+                'Sem prazo definido',
+                'Estudante sem recursos imediatos',
+                'Projeto em fase muito inicial',
+                '"Só estou olhando"',
+                'Não sabe bem o que quer'
+              ],
+              acao: 'Adicionar em lista de nurturing. Email marketing, conteúdo educativo.',
+              conversaoPrevista: '5-15%'
+            }
+          },
+          
+          projecaoFutura: {
+            titulo: '🔮 POTENCIAL FUTURO',
+            categorias: {
+              altoPotencial: {
+                emoji: '⭐⭐⭐',
+                descricao: 'Pode virar cliente grande no futuro',
+                sinais: ['Empresa em crescimento', 'Planos de expansão', 'Primeiro projeto de vários', 'Relacionamento de longo prazo possível']
+              },
+              medioPotencial: {
+                emoji: '⭐⭐',
+                descricao: 'Pode ter projetos pontuais',
+                sinais: ['Projeto específico', 'Budget limitado mas real', 'Pode indicar outros']
+              },
+              baixoPotencial: {
+                emoji: '⭐',
+                descricao: 'Improvável fechar negócio',
+                sinais: ['Sem budget', 'Só pesquisa acadêmica', 'Concorrente disfarçado', 'Tire-kicker']
+              }
+            }
+          },
+          
+          // FORMATO DO RELATÓRIO FINAL
+          modeloRelatorio: `
+═══════════════════════════════════════════════════════════════
+📋 RELATÓRIO DE LEAD - [DATA/HORA]
+═══════════════════════════════════════════════════════════════
+
+👤 DADOS DO CONTATO:
+   Nome: [nome]
+   Local: [cidade/país]
+   Contato: [email/whatsapp]
+   Perfil: [estudante/empresa/freelancer]
+
+🎯 INTERESSE IDENTIFICADO:
+   [O que a pessoa procura]
+   Detalhes: [informações específicas]
+
+🌡️ CLASSIFICAÇÃO:
+   Temperatura: [🔥 HOT / 🌡️ WARM / ❄️ COLD]
+   Conversão prevista: [X%]
+   
+🔮 POTENCIAL FUTURO: [⭐⭐⭐ / ⭐⭐ / ⭐]
+   Motivo: [porque esse potencial]
+
+📝 RESUMO DA CONVERSA:
+   [Pontos principais discutidos]
+   [O que o cliente disse que quer]
+   [Objeções ou preocupações]
+
+✅ PRÓXIMOS PASSOS RECOMENDADOS:
+   [ ] [Ação 1 - ex: Ligar em 2h]
+   [ ] [Ação 2 - ex: Enviar proposta]
+   [ ] [Ação 3 - ex: Agendar reunião]
+
+💬 TRANSCRIÇÃO COMPLETA:
+   [Toda a conversa para referência]
+
+═══════════════════════════════════════════════════════════════
+          `
         }
       }
     },
@@ -1525,10 +1644,23 @@ OBJETIVO: ${CHATBOT_PERSONALITY.rapportStrategy.consultorPsicologoAmigo.captacao
 QUANDO ENVIAR RELATÓRIO:
 ${CHATBOT_PERSONALITY.rapportStrategy.consultorPsicologoAmigo.captacaoDetalhes.relatorioParaEquipe.quandoEnviar.map(q => `• ${q}`).join('\n')}
 
-TEMPERATURA DO LEAD:
-🔥 QUENTE: ${CHATBOT_PERSONALITY.rapportStrategy.consultorPsicologoAmigo.captacaoDetalhes.relatorioParaEquipe.temperaturaLead.quente.join(', ')}
-🌡️ MORNO: ${CHATBOT_PERSONALITY.rapportStrategy.consultorPsicologoAmigo.captacaoDetalhes.relatorioParaEquipe.temperaturaLead.morno.join(', ')}
-❄️ FRIO: ${CHATBOT_PERSONALITY.rapportStrategy.consultorPsicologoAmigo.captacaoDetalhes.relatorioParaEquipe.temperaturaLead.frio.join(', ')}
+═══════════════════════════════════════════════════════════════════════════
+📊 CLASSIFICAÇÃO DE LEADS - HOT / WARM / COLD
+═══════════════════════════════════════════════════════════════════════════
+
+🔥 HOT (Ligar em 2h! Conversão: 70-90%):
+${CHATBOT_PERSONALITY.rapportStrategy.consultorPsicologoAmigo.captacaoDetalhes.classificacaoLeads.categorias.hot.sinais.slice(0,5).map(s => `• ${s}`).join('\n')}
+
+🌡️ WARM (Contatar em 24-48h. Conversão: 30-50%):
+${CHATBOT_PERSONALITY.rapportStrategy.consultorPsicologoAmigo.captacaoDetalhes.classificacaoLeads.categorias.warm.sinais.slice(0,5).map(s => `• ${s}`).join('\n')}
+
+❄️ COLD (Nutrir para futuro. Conversão: 5-15%):
+${CHATBOT_PERSONALITY.rapportStrategy.consultorPsicologoAmigo.captacaoDetalhes.classificacaoLeads.categorias.cold.sinais.slice(0,5).map(s => `• ${s}`).join('\n')}
+
+🔮 POTENCIAL FUTURO:
+⭐⭐⭐ Alto: Pode virar cliente grande (empresa em crescimento, vários projetos)
+⭐⭐ Médio: Projetos pontuais (budget limitado mas real, pode indicar)
+⭐ Baixo: Improvável (sem budget, só pesquisa)
 
 ═══════════════════════════════════════════════════════════════════════════
 REGRA CRÍTICA DE IDIOMA
