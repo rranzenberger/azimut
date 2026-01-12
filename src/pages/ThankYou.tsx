@@ -82,8 +82,42 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
       ],
       backHome: 'Back to Home'
     },
-    es: { title: '¡Gracias!', subtitle: 'Mensaje recibido ✓', message: '', nextSteps: '', steps: [], explore: '', links: [], backHome: '' },
-    fr: { title: 'Merci!', subtitle: 'Message reçu ✓', message: '', nextSteps: '', steps: [], explore: '', links: [], backHome: '' }
+    es: {
+      title: '¡Gracias!',
+      subtitle: 'Mensaje recibido con éxito ✓',
+      message: '¡Tu mensaje ha sido enviado! Nuestro equipo analizará tu solicitud y responderá en un plazo de 24 horas hábiles.',
+      nextSteps: '¿Qué sucede ahora?',
+      steps: [
+        { icon: '📧', title: 'Análisis de Solicitud', desc: 'Equipo evalúa proyecto y necesidades', time: '1h' },
+        { icon: '💬', title: 'Respuesta en 24h', desc: 'Programamos conversación detallada', time: '24h' },
+        { icon: '🎯', title: 'Propuesta Personalizada', desc: 'Presentamos soluciones a medida', time: '48h' }
+      ],
+      explore: 'Mientras tanto, explora:',
+      links: [
+        { to: '/work', icon: '🎬', text: 'Ver Portfolio' },
+        { to: '/what', icon: '⚡', text: 'Ver Servicios' },
+        { to: '/academy', icon: '🎓', text: 'Conocer Academy' }
+      ],
+      backHome: 'Volver al Inicio'
+    },
+    fr: {
+      title: 'Merci!',
+      subtitle: 'Message reçu avec succès ✓',
+      message: 'Votre message a été envoyé! Notre équipe analysera votre demande et vous répondra dans les 24 heures ouvrables.',
+      nextSteps: 'Que se passe-t-il maintenant?',
+      steps: [
+        { icon: '📧', title: 'Analyse de la Demande', desc: 'L\'équipe évalue le projet et les besoins', time: '1h' },
+        { icon: '💬', title: 'Réponse en 24h', desc: 'Nous planifions une conversation détaillée', time: '24h' },
+        { icon: '🎯', title: 'Proposition Personnalisée', desc: 'Nous présentons des solutions sur mesure', time: '48h' }
+      ],
+      explore: 'En attendant, explorez:',
+      links: [
+        { to: '/work', icon: '🎬', text: 'Voir Portfolio' },
+        { to: '/what', icon: '⚡', text: 'Voir Services' },
+        { to: '/academy', icon: '🎓', text: 'Découvrir Academy' }
+      ],
+      backHome: 'Retour à l\'Accueil'
+    }
   }
 
   const text = content[lang] || content.pt
