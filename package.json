@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --port 1753",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "vercel-build": "vite build"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",

@@ -1,4 +1,27 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
+  
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  },
+  
+  "github": {
+    "autoJobCancelation": true,
+    "silent": true
+  },
+  
+  "ignoreCommand": "bash vercel-build-filter.sh",
+  
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  
+  "buildOptimization": {
+    "cache": {
+      "node_modules": true
+    }
+  }
 }
 
