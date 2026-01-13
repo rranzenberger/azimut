@@ -11,10 +11,25 @@ O Vercel está fazendo deploy automático a cada push no GitHub, gerando custos 
 3. Vá em **Settings** (Configurações)
 
 ### Passo 2: Desativar Auto-Deploy
-1. No menu lateral, clique em **Git**
-2. Encontre a seção **"Production Branch"** ou **"Deploy Hooks"**
-3. **DESATIVE** a opção **"Automatically deploy from Git"** ou **"Auto-deploy"**
-4. Salve as alterações
+
+**OPÇÃO 1: Desconectar Repositório (Mais Simples)**
+1. Na página **Settings > Git** (onde você está agora)
+2. Clique no botão **"Disconnect"** (cinza, no canto superior direito)
+3. Isso desativa completamente o deploy automático
+4. Você ainda pode fazer deploy manual via Dashboard ou CLI
+
+**OPÇÃO 2: Manter Conectado mas Desabilitar Auto-Deploy**
+1. Na página **Settings > Git**
+2. Procure por uma seção chamada **"Production Branch"** ou **"Deploy Settings"**
+3. Se não aparecer, pode estar em **Settings > General**
+4. Procure por **"Automatically deploy from Git"** ou **"Auto-deploy"**
+5. **DESATIVE** essa opção
+6. Salve as alterações
+
+**⚠️ IMPORTANTE:**
+- Se você não encontrar a opção de "Auto-deploy", a forma mais garantida é **desconectar o repositório**
+- Você pode reconectar depois se quiser, mas sem auto-deploy
+- O botão **"Disconnect"** está visível na sua tela atual
 
 ### Passo 3: Verificar Integração GitHub
 1. Ainda em **Settings > Git**
