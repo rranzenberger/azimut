@@ -242,9 +242,9 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
       />
       
       <main className="relative pt-6 md:pt-8 pb-24 film-grain">
-        {/* Star Background - FIXA (mais acima, visível) */}
+        {/* Star Background - FIXA (posição correta como na imagem) */}
         <div 
-          className="pointer-events-none fixed top-10 -right-28 h-[520px] w-[520px] md:top-12 md:-right-40 md:h-[680px] md:w-[680px] opacity-0.3"
+          className="pointer-events-none fixed top-32 -right-28 h-[520px] w-[520px] md:top-40 md:-right-40 md:h-[680px] md:w-[680px] opacity-0.3"
           style={{ zIndex: 0 }}
         >
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" loading="lazy" />
