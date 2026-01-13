@@ -323,12 +323,22 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           />
 
           {/* Sobre (Overview) */}
-          <section id="overview" className="mb-16 scroll-mt-[200px]">
-            <h2 className="mb-6 font-sora text-sm font-bold uppercase tracking-[0.2em] text-azimut-red flex items-center gap-2">
-              <span>📖</span>
-              {text.about.title}
+          <section id="overview" className="mb-24 scroll-mt-[200px]">
+            {/* LABEL PEQUENO (Eyebrow) - Framestore style */}
+            <div className="mb-3">
+              <span className="inline-flex items-center gap-2 font-sora text-[0.65rem] font-bold uppercase tracking-[0.25em] text-azimut-red">
+                <span className="w-6 h-[2px] bg-azimut-red"></span>
+                {text.about.title}
+              </span>
+            </div>
+            
+            {/* TÍTULO GRANDE - Hierarquia clara */}
+            <h2 className="mb-6 font-handel text-4xl md:text-5xl lg:text-6xl uppercase tracking-[0.08em] text-white leading-tight">
+              {lang === 'pt' ? 'Quem Somos' : lang === 'es' ? 'Quiénes Somos' : lang === 'fr' ? 'Qui Nous Sommes' : 'Who We Are'}
             </h2>
-            <p className="text-lg leading-relaxed text-theme-text-secondary max-w-4xl mb-12">
+            
+            {/* PARÁGRAFO - Legível e respirável */}
+            <p className="text-xl md:text-2xl leading-relaxed text-slate-300 max-w-4xl mb-16 font-light">
               {text.about.text}
             </p>
 
@@ -349,15 +359,26 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Diferenciais (What Makes Us Unique) */}
-          <section id="unique" className="mb-16 scroll-mt-[200px]">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
-              <h2 className="font-sora text-sm font-bold uppercase tracking-[0.2em] text-azimut-red flex items-center gap-2">
-                <span>💡</span>
-                {lang === 'pt' ? 'O Que Nos Torna Únicos' : lang === 'es' ? 'Lo Que Nos Hace Únicos' : lang === 'fr' ? 'Ce Qui Nous Rend Uniques' : 'What Makes Us Unique'}
-              </h2>
+          <section id="unique" className="mb-24 scroll-mt-[200px]">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-6">
+              <div>
+                {/* LABEL PEQUENO (Eyebrow) */}
+                <div className="mb-3">
+                  <span className="inline-flex items-center gap-2 font-sora text-[0.65rem] font-bold uppercase tracking-[0.25em] text-azimut-red">
+                    <span className="w-6 h-[2px] bg-azimut-red"></span>
+                    {lang === 'pt' ? 'Diferenciais' : lang === 'es' ? 'Diferenciales' : lang === 'fr' ? 'Différenciation' : 'What Makes Us Unique'}
+                  </span>
+                </div>
+                
+                {/* TÍTULO GRANDE */}
+                <h2 className="font-handel text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.08em] text-white leading-tight">
+                  {lang === 'pt' ? 'O Que Nos Torna Únicos' : lang === 'es' ? 'Lo Que Nos Hace Únicos' : lang === 'fr' ? 'Ce Qui Nous Rend Uniques' : 'What Makes Us Unique'}
+                </h2>
+              </div>
+              
               <LangLink
                 to="/studio/diferenciais"
-                className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-azimut-red/10 to-transparent border-2 border-azimut-red/30 hover:border-azimut-red hover:from-azimut-red hover:to-azimut-red/90 text-azimut-red hover:text-white font-bold text-sm uppercase tracking-[0.12em] transition-all duration-300 hover:shadow-lg hover:shadow-azimut-red/20"
+                className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-azimut-red/10 to-transparent border-2 border-azimut-red/30 hover:border-azimut-red hover:from-azimut-red hover:to-azimut-red/90 text-azimut-red hover:text-white font-bold text-sm uppercase tracking-[0.12em] transition-all duration-300 hover:shadow-lg hover:shadow-azimut-red/20 shrink-0"
               >
                 <span>{lang === 'pt' ? 'Explorar Detalhes' : lang === 'es' ? 'Explorar Detalles' : lang === 'fr' ? 'Explorer Détails' : 'Explore Details'}</span>
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -407,15 +428,26 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Equipe */}
-          <section id="team" className="mb-16 scroll-mt-[200px]">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
-              <h2 className="font-sora text-sm font-bold uppercase tracking-[0.2em] text-azimut-red flex items-center gap-2">
-                <span>👥</span>
-                {text.team.title}
-              </h2>
+          <section id="team" className="mb-24 scroll-mt-[200px]">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-6">
+              <div>
+                {/* LABEL PEQUENO (Eyebrow) */}
+                <div className="mb-3">
+                  <span className="inline-flex items-center gap-2 font-sora text-[0.65rem] font-bold uppercase tracking-[0.25em] text-azimut-red">
+                    <span className="w-6 h-[2px] bg-azimut-red"></span>
+                    {lang === 'pt' ? 'Equipe' : lang === 'es' ? 'Equipo' : lang === 'fr' ? 'Équipe' : 'Team'}
+                  </span>
+                </div>
+                
+                {/* TÍTULO GRANDE */}
+                <h2 className="font-handel text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.08em] text-white leading-tight">
+                  {text.team.title}
+                </h2>
+              </div>
+              
               <LangLink
                 to="/studio/equipe"
-                className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-azimut-red/10 to-transparent border-2 border-azimut-red/30 hover:border-azimut-red hover:from-azimut-red hover:to-azimut-red/90 text-azimut-red hover:text-white font-bold text-sm uppercase tracking-[0.12em] transition-all duration-300 hover:shadow-lg hover:shadow-azimut-red/20"
+                className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-azimut-red/10 to-transparent border-2 border-azimut-red/30 hover:border-azimut-red hover:from-azimut-red hover:to-azimut-red/90 text-azimut-red hover:text-white font-bold text-sm uppercase tracking-[0.12em] transition-all duration-300 hover:shadow-lg hover:shadow-azimut-red/20 shrink-0"
               >
                 <span>{lang === 'pt' ? 'Ver Equipe Completa' : lang === 'es' ? 'Ver Equipo Completo' : lang === 'fr' ? 'Voir Équipe Complète' : 'View Full Team'}</span>
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -482,15 +514,26 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Credenciais */}
-          <section id="credentials" className="mb-16 scroll-mt-[200px]">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
-              <h2 className="font-sora text-sm font-bold uppercase tracking-[0.2em] text-azimut-red flex items-center gap-2">
-                <span>🏆</span>
-                {text.credentials.title}
-              </h2>
+          <section id="credentials" className="mb-24 scroll-mt-[200px]">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-6">
+              <div>
+                {/* LABEL PEQUENO (Eyebrow) */}
+                <div className="mb-3">
+                  <span className="inline-flex items-center gap-2 font-sora text-[0.65rem] font-bold uppercase tracking-[0.25em] text-azimut-red">
+                    <span className="w-6 h-[2px] bg-azimut-red"></span>
+                    {lang === 'pt' ? 'Credenciais' : lang === 'es' ? 'Credenciales' : lang === 'fr' ? 'Références' : 'Credentials'}
+                  </span>
+                </div>
+                
+                {/* TÍTULO GRANDE */}
+                <h2 className="font-handel text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.08em] text-white leading-tight">
+                  {text.credentials.title}
+                </h2>
+              </div>
+              
               <LangLink
                 to="/studio/credibilidade"
-                className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-azimut-red/10 to-transparent border-2 border-azimut-red/30 hover:border-azimut-red hover:from-azimut-red hover:to-azimut-red/90 text-azimut-red hover:text-white font-bold text-sm uppercase tracking-[0.12em] transition-all duration-300 hover:shadow-lg hover:shadow-azimut-red/20"
+                className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-azimut-red/10 to-transparent border-2 border-azimut-red/30 hover:border-azimut-red hover:from-azimut-red hover:to-azimut-red/90 text-azimut-red hover:text-white font-bold text-sm uppercase tracking-[0.12em] transition-all duration-300 hover:shadow-lg hover:shadow-azimut-red/20 shrink-0"
               >
                 <span>{lang === 'pt' ? 'Ver Timeline Completo' : lang === 'es' ? 'Ver Timeline Completo' : lang === 'fr' ? 'Voir Timeline Complet' : 'View Full Timeline'}</span>
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
