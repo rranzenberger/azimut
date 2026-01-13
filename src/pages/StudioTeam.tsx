@@ -247,9 +247,9 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
       />
       
       <main className="relative py-16 md:py-20">
-        {/* Star Background - FIXA (posição mais alta como Studio principal) */}
+        {/* Star Background - FIXA (opacidade reduzida para não conflitar) */}
         <div 
-          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-0.3"
+          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-0.15"
           style={{ zIndex: 0 }}
         >
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" loading="lazy" />
