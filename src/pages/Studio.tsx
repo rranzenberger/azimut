@@ -145,8 +145,112 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
       cta: 'Interested in working with us?',
       contact: 'Start a Project'
     },
-    es: { title: 'Estudio', subtitle: '', about: { title: '', text: '' }, credentials: { title: '', items: [] }, areas: { title: '', items: [] }, team: { title: '', members: [] }, cta: '', contact: '' },
-    fr: { title: 'Studio', subtitle: '', about: { title: '', text: '' }, credentials: { title: '', items: [] }, areas: { title: '', items: [] }, team: { title: '', members: [] }, cta: '', contact: '' }
+    es: {
+      title: 'Estudio',
+      subtitle: 'Creando experiencias inmersivas que conectan tecnología, arte y educación. Más de 30 años de experiencia en proyectos de gran escala.',
+      about: {
+        title: 'Sobre Nosotros',
+        text: 'Somos un estudio híbrido que combina producción cinematográfica, investigación en IA y educación inmersiva. Operamos entre Brasil y Canadá, creando experiencias que transforman cómo las personas aprenden e interactúan con el mundo digital.'
+      },
+      credentials: {
+        title: 'Credenciales',
+        items: [
+          { icon: '🏛️', title: 'Olympic Museum', desc: 'Tecnología y dirección de arte', year: '2018-2023' },
+          { icon: '🎓', title: 'VFS & VanArts', desc: 'Socio educativo en Canadá', year: '2024+' },
+          { icon: '🏆', title: '50+ Proyectos VR/AR', desc: 'Clientes internacionales', year: '2015-2024' },
+          { icon: '🤖', title: 'AI & Machine Learning', desc: 'Investigación aplicada', year: '2020+' }
+        ]
+      },
+      areas: {
+        title: 'Áreas de Actuación',
+        items: [
+          { icon: '🎬', title: 'Producción VR/AR', desc: 'Experiencias inmersivas cinematográficas' },
+          { icon: '🎮', title: 'Serious Games', desc: 'Juegos educativos y de entrenamiento' },
+          { icon: '🤖', title: 'IA & Interactividad', desc: 'Sistemas inteligentes y adaptativos' },
+          { icon: '🏛️', title: 'Museografía Digital', desc: 'Exposiciones interactivas' },
+          { icon: '📱', title: 'Experiencias Móviles', desc: 'Apps y WebXR' },
+          { icon: '🎓', title: 'EdTech', desc: 'Plataformas educativas innovadoras' }
+        ]
+      },
+      team: {
+        title: 'Equipo',
+        members: [
+          {
+            name: 'Ranz Enberger',
+            role: 'Director Creativo',
+            bio: '30+ años en producción audiovisual, VR/XR e IA. Director de Tecnología en el Olympic Museum.',
+            photo: '/Ranz.jpeg'
+          },
+          {
+            name: 'Anick Couto',
+            role: 'Directora de Arte',
+            bio: 'Dirección visual, diseño de personajes y escenografía. Lideró arte en el Olympic Museum.',
+            photo: '/anick.jpg'
+          },
+          {
+            name: 'Alberto Moura',
+            role: 'Director Audiovisual',
+            bio: 'Producción audiovisual y estrategia cultural. Profesor y coordinador universitario.',
+            photo: '/alberto.jpg'
+          }
+        ]
+      },
+      cta: '¿Interesado en trabajar con nosotros?',
+      contact: 'Iniciar un Proyecto'
+    },
+    fr: {
+      title: 'Studio',
+      subtitle: 'Créer des expériences immersives qui connectent technologie, art et éducation. Plus de 30 ans d\'expérience dans des projets à grande échelle.',
+      about: {
+        title: 'À Propos de Nous',
+        text: 'Nous sommes un studio hybride combinant production cinématographique, recherche en IA et éducation immersive. Opérant entre le Brésil et le Canada, nous créons des expériences qui transforment la façon dont les gens apprennent et interagissent avec le monde numérique.'
+      },
+      credentials: {
+        title: 'Références',
+        items: [
+          { icon: '🏛️', title: 'Olympic Museum', desc: 'Technologie et direction artistique', year: '2018-2023' },
+          { icon: '🎓', title: 'VFS & VanArts', desc: 'Partenaire éducatif au Canada', year: '2024+' },
+          { icon: '🏆', title: '50+ Projets VR/AR', desc: 'Clients internationaux', year: '2015-2024' },
+          { icon: '🤖', title: 'IA & Machine Learning', desc: 'Recherche appliquée', year: '2020+' }
+        ]
+      },
+      areas: {
+        title: 'Domaines d\'Expertise',
+        items: [
+          { icon: '🎬', title: 'Production VR/AR', desc: 'Expériences immersives cinématographiques' },
+          { icon: '🎮', title: 'Serious Games', desc: 'Jeux éducatifs et de formation' },
+          { icon: '🤖', title: 'IA & Interactivité', desc: 'Systèmes intelligents et adaptatifs' },
+          { icon: '🏛️', title: 'Muséographie Numérique', desc: 'Expositions interactives' },
+          { icon: '📱', title: 'Expériences Mobiles', desc: 'Apps et WebXR' },
+          { icon: '🎓', title: 'EdTech', desc: 'Plateformes éducatives innovantes' }
+        ]
+      },
+      team: {
+        title: 'Équipe',
+        members: [
+          {
+            name: 'Ranz Enberger',
+            role: 'Directeur Créatif',
+            bio: '30+ ans en production audiovisuelle, VR/XR et IA. Directeur Technologie au Olympic Museum.',
+            photo: '/Ranz.jpeg'
+          },
+          {
+            name: 'Anick Couto',
+            role: 'Directrice Artistique',
+            bio: 'Direction visuelle, design de personnages et scénographie. A dirigé l\'art au Olympic Museum.',
+            photo: '/anick.jpg'
+          },
+          {
+            name: 'Alberto Moura',
+            role: 'Directeur Audiovisuel',
+            bio: 'Production audiovisuelle et stratégie culturelle. Professeur et coordinateur universitaire.',
+            photo: '/alberto.jpg'
+          }
+        ]
+      },
+      cta: 'Intéressé à travailler avec nous?',
+      contact: 'Démarrer un Projet'
+    }
   }
 
   const text = content[lang] || content.pt
