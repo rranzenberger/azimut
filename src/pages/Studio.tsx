@@ -11,30 +11,7 @@ interface StudioProps {
 
 const Studio: React.FC<StudioProps> = ({ lang }) => {
   useUserTracking()
-  const starRef = useRef<HTMLDivElement>(null)
-
-  // Parallax
-  useEffect(() => {
-    const star = starRef.current
-    if (!star) return
-
-    let ticking = false
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrolled = window.pageYOffset
-          if (star) {
-            star.style.transform = `translateY(${scrolled * 0.3}px)`
-          }
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  // Estrela FIXA (sem parallax) - Padronizada com WhatWeDo e Work
 
   const content = {
     pt: {
@@ -265,11 +242,10 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
       />
       
       <main className="relative pt-6 md:pt-8 pb-24">
-        {/* Star Parallax */}
+        {/* Star Background - FIXA (sem parallax) */}
         <div 
-          ref={starRef}
-          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:-right-40 md:h-[680px] md:w-[680px] transition-transform duration-75"
-          style={{ opacity: 0.25, zIndex: -5, willChange: 'transform' }}
+          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:-right-40 md:h-[680px] md:w-[680px] opacity-0.25"
+          style={{ zIndex: -5 }}
         >
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" loading="lazy" />
         </div>

@@ -15,7 +15,6 @@ type FilterCategory = 'all' | 'culture' | 'brands' | 'production' | 'technology'
 
 const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   const { trackInteraction } = useUserTracking()
-  const starRef = useRef<HTMLDivElement>(null)
   const seo = seoData.what[lang]
   const location = useLocation()
   
@@ -69,12 +68,6 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   const filteredServices = activeFilter === 'all' 
     ? servicesData 
     : servicesData.filter(service => serviceCategoryMap[service.slug] === activeFilter)
-  
-  useEffect(() => {
-    if (starRef.current) {
-      starRef.current.style.opacity = '0.3'
-    }
-  }, [])
 
   const filters: Array<{ id: FilterCategory; labelPt: string; labelEn: string; labelFr: string; labelEs: string }> = [
     { id: 'all', labelPt: 'Todas', labelEn: 'All', labelFr: 'Tous', labelEs: 'Todas' },
@@ -102,10 +95,9 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
         path="/what"
       />
       <main className="relative min-h-screen overflow-hidden pt-6 md:pt-8 pb-24">
-        {/* Background: Estrela da Azimut - PADRONIZADO COM OUTRAS PÁGINAS */}
+        {/* Background: Estrela da Azimut - FIXA (padronizada com Studio e Work) */}
         <div
-          ref={starRef}
-          className="fixed top-20 -right-28 h-[520px] w-[520px] min-[768px]:top-32 min-[768px]:-right-40 min-[768px]:h-[680px] min-[768px]:w-[680px] opacity-30 transition-opacity duration-700 pointer-events-none"
+          className="fixed top-20 -right-28 h-[520px] w-[520px] md:-right-40 md:h-[680px] md:w-[680px] opacity-0.25 pointer-events-none"
           style={{
             zIndex: -5,
             backgroundImage: 'url(/logo-azimut-star.svg)',

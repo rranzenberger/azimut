@@ -380,6 +380,19 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
             </div>
           </div>
         </section>
+        
+        {/* Estrela abaixo da seta - alinhada (topo estrela = base seta), atrás dos cards */}
+        {/* Posição: abaixo do hero (100vh) + altura da seta (2rem) = topo da estrela */}
+        <div 
+          className="pointer-events-none fixed top-[calc(100vh-480px)] -right-28 h-[520px] w-[520px] md:-right-40 md:h-[680px] md:w-[680px] opacity-0.25"
+          style={{ 
+            zIndex: -5,
+            backgroundImage: 'url(/logo-azimut-star.svg)',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center'
+          }}
+        />
 
         {/* ═══════════════════════════════════════════════════════════
             PROGRAMS GRID - 4 Programas Premium

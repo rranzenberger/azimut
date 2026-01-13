@@ -17,7 +17,7 @@ html {
    GRÃO CINEMATOGRÁFICO - AZIMUT IDENTITY
    ═══════════════════════════════════════════════════════════════ */
 
-/* Film grain overlay para dar atmosfera cinematográfica */
+/* Film grain overlay para dar atmosfera cinematográfica - MELHORADO */
 .film-grain::before {
   content: '';
   position: absolute;
@@ -26,11 +26,13 @@ html {
   right: 0;
   bottom: 0;
   background-image: 
-    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px),
-    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px);
-  opacity: 0.3;
+    repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,.08) 1px, rgba(0,0,0,.08) 2px),
+    repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(0,0,0,.08) 1px, rgba(0,0,0,.08) 2px),
+    repeating-linear-gradient(45deg, transparent, transparent 1px, rgba(0,0,0,.04) 1px, rgba(0,0,0,.04) 2px);
+  opacity: 0.6;
   pointer-events: none;
   z-index: 10;
+  mix-blend-mode: overlay;
   animation: grain 8s steps(10) infinite;
 }
 
@@ -215,16 +217,17 @@ html {
     justify-content: space-between;
   }
   
-  /* Botão alinhado com a BASE (parte de baixo) do título */
+  /* Botão alinhado com o TOPO do texto do título (não com a base) */
   .section-header {
-    align-items: flex-end; /* Alinha pela base (parte de baixo) */
+    align-items: start; /* Alinha pelo topo do conteúdo */
   }
   
   .section-header > a,
   .section-header > button,
   .section-header > .section-header-button {
-    margin-top: 0.75rem; /* Compensa altura do eyebrow (mb-3 = 0.75rem) */
-    align-self: flex-end; /* Alinha pela base */
+    /* Alinha topo do texto do botão com topo do texto do título */
+    margin-top: calc(0.75rem + 0.5em); /* eyebrow (0.75rem) + ajuste fino para alinhar texto */
+    align-self: flex-start;
   }
   
   .section-header .section-title {

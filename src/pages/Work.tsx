@@ -18,7 +18,6 @@ interface WorkProps {
 
 const Work: React.FC<WorkProps> = ({ lang }) => {
   const { trackInteraction } = useUserTracking()
-  const starRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
   const location = useLocation()
   const seo = seoData.work[lang]
@@ -236,33 +235,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     }
   }, [])
 
-  // Parallax sutil na estrela de fundo
-  useEffect(() => {
-    const star = starRef.current
-    if (!star) return
-
-    let ticking = false
-
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrolled = window.pageYOffset || document.documentElement.scrollTop
-          // Parallax muito sutil (0.3x) - movimento suave
-          const parallax = scrolled * 0.3
-          
-          if (star) {
-            star.style.transform = `translateY(${parallax}px)`
-          }
-          
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  // Estrela FIXA (sem parallax) - Padronizada com Studio e WhatWeDo
 
   // Dados já vêm traduzidos do backoffice
 
@@ -275,15 +248,10 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         path="/work"
       />
       <main className="relative pt-6 md:pt-8 pb-24">
-        {/* Star background on the side - Parallax sutil */}
+        {/* Star background - FIXA (padronizada com Studio e WhatWeDo) */}
         <div 
-          ref={starRef}
-          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-32 md:-right-40 md:h-[680px] md:w-[680px] transition-transform duration-75 ease-out" 
-          style={{ 
-            opacity: 0.3,
-            zIndex: -5,
-            willChange: 'transform'
-          }}
+          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:-right-40 md:h-[680px] md:w-[680px] opacity-0.25"
+          style={{ zIndex: -5 }}
         >
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" />
         </div>
