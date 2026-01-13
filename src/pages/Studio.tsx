@@ -324,8 +324,9 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
 
           {/* Sobre (Overview) */}
           <section id="overview" className="section-container scroll-mt-[200px]">
-            {/* LABEL PEQUENO (Eyebrow) - Framestore style */}
+            {/* LABEL PEQUENO (Eyebrow) - COM EMOJI ANIMADO */}
             <span className="section-eyebrow">
+              <span>📖</span>
               {text.about.title}
             </span>
             
@@ -359,8 +360,9 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           <section id="unique" className="section-container scroll-mt-[200px]">
             <div className="section-header">
               <div>
-                {/* LABEL PEQUENO (Eyebrow) */}
+                {/* LABEL PEQUENO (Eyebrow) - COM EMOJI */}
                 <span className="section-eyebrow">
+                  <span>💡</span>
                   {lang === 'pt' ? 'Diferenciais' : lang === 'es' ? 'Diferenciales' : lang === 'fr' ? 'Différenciation' : 'What Makes Us Unique'}
                 </span>
                 
@@ -425,8 +427,9 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           <section id="team" className="section-container scroll-mt-[200px]">
             <div className="section-header">
               <div>
-                {/* LABEL PEQUENO (Eyebrow) */}
+                {/* LABEL PEQUENO (Eyebrow) - COM EMOJI */}
                 <span className="section-eyebrow">
+                  <span>👥</span>
                   {lang === 'pt' ? 'Equipe' : lang === 'es' ? 'Equipo' : lang === 'fr' ? 'Équipe' : 'Team'}
                 </span>
                 
@@ -508,8 +511,9 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           <section id="credentials" className="section-container scroll-mt-[200px]">
             <div className="section-header">
               <div>
-                {/* LABEL PEQUENO (Eyebrow) */}
+                {/* LABEL PEQUENO (Eyebrow) - COM EMOJI */}
                 <span className="section-eyebrow">
+                  <span>🏆</span>
                   {lang === 'pt' ? 'Credenciais' : lang === 'es' ? 'Credenciales' : lang === 'fr' ? 'Références' : 'Credentials'}
                 </span>
                 

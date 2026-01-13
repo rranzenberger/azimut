@@ -88,7 +88,7 @@ html {
    Framestore/The Mill/AKQA style - Para TODO o site
    ═══════════════════════════════════════════════════════════════ */
 
-/* 1. EYEBROW (Label Pequeno - Categoria) */
+/* 1. EYEBROW (Label Pequeno - Categoria) - COM EMOJI OPCIONAL */
 .section-eyebrow {
   display: inline-flex;
   align-items: center;
@@ -102,12 +102,62 @@ html {
   margin-bottom: 0.75rem;
 }
 
+/* Linha decorativa (sempre presente) */
 .section-eyebrow::before {
   content: '';
   width: 1.5rem; /* 24px */
   height: 2px;
   background-color: #c92337; /* azimut-red */
   display: block;
+}
+
+/* Emoji dentro do eyebrow (opcional, mas animado!) */
+.section-eyebrow > span:first-child,
+.section-eyebrow > emoji:first-child {
+  font-size: 0.9rem; /* 14.4px - emoji um pouco maior */
+  line-height: 1;
+  display: inline-block;
+  animation: emoji-bounce 2s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+/* Animação sutil para emojis (divertida mas não exagerada) */
+@keyframes emoji-bounce {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-2px) rotate(-3deg);
+  }
+  75% {
+    transform: translateY(-2px) rotate(3deg);
+  }
+}
+
+/* Versão "funny" com emoji mais destacado */
+.section-eyebrow-funny {
+  gap: 0.75rem; /* Mais espaço para o emoji */
+}
+
+.section-eyebrow-funny > span:first-child,
+.section-eyebrow-funny > emoji:first-child {
+  font-size: 1.1rem; /* 17.6px - emoji maior */
+  animation: emoji-bounce-funny 2.5s ease-in-out infinite;
+}
+
+@keyframes emoji-bounce-funny {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-3px) rotate(-5deg) scale(1.05);
+  }
+  50% {
+    transform: translateY(-4px) rotate(0deg) scale(1.1);
+  }
+  75% {
+    transform: translateY(-3px) rotate(5deg) scale(1.05);
+  }
 }
 
 /* 2. SECTION TITLE (Título Grande - Impacto) */
