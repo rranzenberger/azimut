@@ -323,7 +323,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           />
 
           {/* Sobre (Overview) */}
-          <section id="overview" className="mb-16 scroll-mt-40">
+          <section id="overview" className="mb-16 scroll-mt-[200px]">
             <h2 className="mb-6 font-sora text-sm font-bold uppercase tracking-[0.2em] text-azimut-red flex items-center gap-2">
               <span>📖</span>
               {text.about.title}
@@ -349,7 +349,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Diferenciais (What Makes Us Unique) */}
-          <section id="unique" className="mb-16 scroll-mt-40">
+          <section id="unique" className="mb-16 scroll-mt-[200px]">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
               <h2 className="font-sora text-sm font-bold uppercase tracking-[0.2em] text-azimut-red flex items-center gap-2">
                 <span>💡</span>
@@ -407,7 +407,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Equipe */}
-          <section id="team" className="mb-16 scroll-mt-40">
+          <section id="team" className="mb-16 scroll-mt-[200px]">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
               <h2 className="font-sora text-sm font-bold uppercase tracking-[0.2em] text-azimut-red flex items-center gap-2">
                 <span>👥</span>
@@ -453,12 +453,12 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                       to="/studio/equipe"
                       className="block mb-1 hover:text-azimut-red transition-colors"
                     >
-                      <h3 className="text-lg font-bold text-white leading-snug group-hover:text-azimut-red transition-colors">
+                      <h3 className="text-lg font-bold text-white leading-tight group-hover:text-azimut-red transition-colors" style={{ maxWidth: '100%', wordBreak: 'break-word', hyphens: 'auto' }}>
                         {member.name}
                       </h3>
                     </LangLink>
                     
-                    <p className="text-xs text-azimut-red mb-3 uppercase tracking-wider font-bold leading-tight">
+                    <p className="text-xs text-azimut-red mb-3 uppercase tracking-wider font-bold leading-tight line-clamp-2">
                       {member.role}
                     </p>
                     <p className="text-sm text-theme-text-secondary leading-relaxed line-clamp-2 mb-4">
@@ -482,7 +482,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Credenciais */}
-          <section id="credentials" className="mb-16 scroll-mt-40">
+          <section id="credentials" className="mb-16 scroll-mt-[200px]">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
               <h2 className="font-sora text-sm font-bold uppercase tracking-[0.2em] text-azimut-red flex items-center gap-2">
                 <span>🏆</span>

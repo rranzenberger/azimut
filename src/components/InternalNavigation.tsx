@@ -49,8 +49,8 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY
-      // Menu fica sticky após 100px de scroll
-      setIsSticky(scrollY > 100)
+      // Menu fica sticky IMEDIATAMENTE após passar do hero (50px)
+      setIsSticky(scrollY > 50)
     }
     
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -134,7 +134,7 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
             const elementTop = element.getBoundingClientRect().top + window.scrollY
             const headerHeight = 80 // Altura do header
             const navHeight = navRef.current ? navRef.current.offsetHeight : 60
-            const targetScroll = elementTop - headerHeight - navHeight - 20 // 20px de margem extra
+            const targetScroll = elementTop - headerHeight - navHeight - 60 // 60px de margem extra
             
             window.scrollTo({ 
               top: targetScroll > 0 ? targetScroll : 0, 
