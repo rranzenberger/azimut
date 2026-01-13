@@ -211,8 +211,16 @@ html {
 @media (min-width: 768px) {
   .section-header {
     flex-direction: row;
-    align-items: flex-end;
+    align-items: flex-start;
     justify-content: space-between;
+  }
+  
+  /* Botão alinhado com o topo do título (compensando altura do eyebrow) */
+  .section-header > a,
+  .section-header > button,
+  .section-header > .section-header-button {
+    margin-top: 0.75rem; /* Compensa altura do eyebrow (mb-3 = 0.75rem) para alinhar com título */
+    align-self: flex-start;
   }
 }
 
