@@ -535,12 +535,27 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               </LangLink>
             </div>
             <div className="grid md:grid-cols-2 gap-4">
-              {text.credentials.items.map((item, i) => (
-                <div key={i} className="flex items-start gap-3 p-6 rounded-xl bg-gradient-to-br from-slate-900/40 to-slate-900/20 border border-azimut-red/10 hover:border-azimut-red/30 hover:bg-slate-900/50 transition-all">
-                  <span className="text-3xl shrink-0">{item.substring(0, 2)}</span>
-                  <span className="text-theme-text-secondary leading-relaxed">{item.substring(3)}</span>
-                </div>
-              ))}
+              {text.credentials.items.map((item, i) => {
+                // Suporta tanto string (PT/EN) quanto objeto (ES/FR)
+                const isString = typeof item === 'string'
+                const icon = isString ? item.substring(0, 2) : item.icon || '🏆'
+                const text = isString ? item.substring(3) : item.desc || item.title || ''
+                
+                return (
+                  <div key={i} className="flex items-start gap-3 p-6 rounded-xl bg-gradient-to-br from-slate-900/40 to-slate-900/20 border border-azimut-red/10 hover:border-azimut-red/30 hover:bg-slate-900/50 transition-all">
+                    <span className="text-3xl shrink-0">{icon}</span>
+                    <div className="flex-1">
+                      {!isString && item.title && (
+                        <h4 className="text-white font-bold mb-1">{item.title}</h4>
+                      )}
+                      <span className="text-theme-text-secondary leading-relaxed">{text}</span>
+                      {!isString && item.year && (
+                        <div className="text-xs text-azimut-red mt-2 font-semibold">{item.year}</div>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </section>
 
@@ -551,14 +566,23 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               {text.areas.title}
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              {text.areas.items.map((area, i) => (
-                <div key={i} className="group relative rounded-xl overflow-hidden border border-azimut-red/20 hover:border-azimut-red/60 transition-all cursor-pointer" style={{ height: '180px' }}>
-                  <div className="absolute inset-0 bg-gradient-to-br from-slate-900/50 to-slate-900/30 hover:bg-slate-900/60 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center transition-colors">
-                    <div className="text-5xl mb-3 group-hover:scale-110 transition-transform">{area.icon}</div>
-                    <p className="text-sm font-semibold text-white uppercase tracking-wide">{area.name}</p>
+              {text.areas.items.map((area, i) => {
+                // Suporta tanto { icon, name } (PT/EN) quanto { icon, title, desc } (ES/FR)
+                const name = area.name || area.title || ''
+                const desc = area.desc || ''
+                
+                return (
+                  <div key={i} className="group relative rounded-xl overflow-hidden border border-azimut-red/20 hover:border-azimut-red/60 transition-all cursor-pointer" style={{ height: '180px' }}>
+                    <div className="absolute inset-0 bg-gradient-to-br from-slate-900/50 to-slate-900/30 hover:bg-slate-900/60 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center transition-colors">
+                      <div className="text-5xl mb-3 group-hover:scale-110 transition-transform">{area.icon}</div>
+                      <p className="text-sm font-semibold text-white uppercase tracking-wide">{name}</p>
+                      {desc && (
+                        <p className="text-xs text-slate-400 mt-1">{desc}</p>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </section>
 
