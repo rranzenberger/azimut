@@ -215,12 +215,22 @@ html {
     justify-content: space-between;
   }
   
-  /* Botão alinhado com o topo do título (compensando altura do eyebrow) */
+  /* Botão alinhado com o TOPO do texto do título (não com a base) */
+  .section-header {
+    align-items: start; /* Alinha pelo topo do conteúdo */
+  }
+  
   .section-header > a,
   .section-header > button,
   .section-header > .section-header-button {
-    margin-top: 0.75rem; /* Compensa altura do eyebrow (mb-3 = 0.75rem) para alinhar com título */
+    /* Alinha topo do texto do botão com topo do texto do título */
+    margin-top: calc(0.75rem + 0.5em); /* eyebrow (0.75rem) + ajuste fino para alinhar texto */
     align-self: flex-start;
+  }
+  
+  .section-header .section-title {
+    padding-top: 0;
+    margin-top: 0;
   }
 }
 
