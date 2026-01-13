@@ -285,16 +285,19 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
 
           {/* Hero */}
           <div className="mb-12">
-            {/* Prefixo Narrativo - APENAS ESTE ANIMA */}
-            <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
-              <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
-                {lang === 'pt' ? 'CONHEÇA A EQUIPE' : lang === 'es' ? 'CONOCE EL EQUIPO' : lang === 'fr' ? 'RENCONTREZ L\'ÉQUIPE' : 'MEET THE TEAM'}
-              </span>
-            </div>
-            <h1 className="mb-4 font-handel uppercase text-theme-text" style={{ fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1', letterSpacing: '0.08em' }}>
+            {/* Eyebrow com emoji */}
+            <span className="section-eyebrow">
+              <span>👥</span>
+              {lang === 'pt' ? 'EQUIPE' : lang === 'es' ? 'EQUIPO' : lang === 'fr' ? 'ÉQUIPE' : 'TEAM'}
+            </span>
+            
+            {/* Título grande */}
+            <h1 className="section-title">
               {text.title}
             </h1>
-            <p className="text-theme-text-secondary max-w-4xl" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
+            
+            {/* Subtítulo */}
+            <p className="body-large">
               {text.subtitle}
             </p>
           </div>
