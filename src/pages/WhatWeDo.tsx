@@ -8,134 +8,66 @@ import InternalNavigation from '../components/InternalNavigation'
 import { servicesData, getServiceTitle, getServiceShortDesc } from '../data/servicesData'
 
 // ═══════════════════════════════════════════════════════════════
-// FUNÇÃO: Destacar palavras-chave em vermelho para melhor leitura
-// Baseado em pesquisa UX: destaque de keywords melhora scanabilidade
+// FUNÇÃO: Destacar palavras-chave com DUAS cores harmônicas
+// PRIMÁRIAS (tech): Coral médio - destaque principal
+// SECUNDÁRIAS (conceitos): Bege sutil + semi-bold - destaque suave
 // ═══════════════════════════════════════════════════════════════
 const highlightKeywords = (text: string, lang: Lang): React.ReactNode => {
-  // Verificação: se não for string, retornar como está
-  if (typeof text !== 'string' || !text) {
-    return text
-  }
+  if (typeof text !== 'string' || !text) return text
 
-  // Palavras-chave importantes por idioma (tecnologias, processos, resultados, marcas)
-  const keywords: Record<Lang, string[]> = {
-    pt: [
-      // Tecnologias (prioridade alta)
-      'VR', 'AR', 'XR', '360°', '6DoF', 'BIM', 'VFX', 'CGI', 'IA', 'AI', 'Web3', 'NFTs', 'metaverso',
-      '4K', '6K', '8K', 'DCP', 'ProRes', 'H.265', 'RED', 'Blackmagic', 'Sony',
-      // Processos/Entregas (prioridade média)
-      'conceito', 'roteiro', 'direção', 'produção', 'pós-produção', 'edição', 'montagem', 'color grading',
-      'motion design', 'animação', 'composição', 'renderização', 'pipeline', 'workflow',
-      // Resultados/Valores (prioridade média)
-      'imersivo', 'interativo', 'cinematográfico', 'experiências', 'narrativas', 'instalações',
-      'museus', 'festivais', 'marcas', 'educação', 'treinamento', 'workshops',
-      // Específicos/Marcas (prioridade alta)
-      'Rio Museu Olímpico', 'Gramado VR', 'VFS', 'VanArts', 'Autodesk', '30 anos', '1996',
-      'Immerso XR', 'Petrópolis', 'Flamengo', 'Cenna Tower', 'First Nation Museum'
-    ],
-    en: [
-      // Tecnologias
-      'VR', 'AR', 'XR', '360°', '6DoF', 'BIM', 'VFX', 'CGI', 'AI', 'Web3', 'NFTs', 'metaverse',
-      '4K', '6K', '8K', 'DCP', 'ProRes', 'H.265', 'RED', 'Blackmagic', 'Sony',
-      // Processos
-      'concept', 'script', 'direction', 'production', 'post-production', 'editing', 'color grading',
-      'motion design', 'animation', 'composition', 'rendering', 'pipeline', 'workflow',
-      // Resultados
-      'immersive', 'interactive', 'cinematic', 'experiences', 'narratives', 'installations',
-      'museums', 'festivals', 'brands', 'education', 'training', 'workshops',
-      // Específicos/Marcas
-      'Rio Olympic Museum', 'Gramado VR', 'VFS', 'VanArts', 'Autodesk', '30 years', '1996',
-      'Immerso XR', 'Petrópolis', 'Flamengo', 'Cenna Tower', 'First Nation Museum',
-      // Palavras adicionais dos cards em inglês
-      'design', 'spaces', 'virtual', 'scenography', 'signage', 'graphic', 'art direction',
-      'games', 'interactive', 'serious games', 'non-linear', 'generative AI', 'research',
-      'creative vision', 'visual identity', 'consulting', 'strategy', 'grants', 'theater',
-      'live shows', 'AI-generated', 'LED', 'branded', 'activations', 'engagement', 'sales',
-      'exhibitions', 'museological', 'scenography', 'technology', 'audiovisual',
-      // Palavras comuns que aparecem nos textos
-      'video', 'composition', 'graphics', 'complete', 'pipeline', 'visual', 'narratives',
-      'characters', 'worlds', 'life', 'technical', 'expertise', 'engaging', 'connecting',
-      'physical', 'digital', 'blockchain', 'metaverse', 'NFTs', 'museum', 'museums',
-      'festival', 'festivals', 'brand', 'brands', 'high-quality', 'content', 'completion'
-    ],
-    es: [
-      'VR', 'AR', 'XR', '360°', '6DoF', 'BIM', 'VFX', 'CGI', 'IA', 'AI', 'Web3', 'NFTs', 'metaverso',
-      '4K', '6K', '8K', 'DCP', 'ProRes', 'H.265', 'RED', 'Blackmagic', 'Sony',
-      'concepto', 'guion', 'dirección', 'producción', 'posproducción', 'edición', 'color grading',
-      'motion design', 'animación', 'composición', 'renderizado', 'pipeline', 'workflow',
-      'inmersivo', 'interactivo', 'cinematográfico', 'experiencias', 'narrativas', 'instalaciones',
-      'museos', 'festivales', 'marcas', 'educación', 'formación', 'talleres',
-      'Museo Olímpico de Río', 'Gramado VR', 'VFS', 'VanArts', 'Autodesk', '30 años', '1996',
-      'Immerso XR', 'Petrópolis', 'Flamengo', 'Cenna Tower', 'First Nation Museum'
-    ],
-    fr: [
-      'VR', 'AR', 'XR', '360°', '6DoF', 'BIM', 'VFX', 'CGI', 'IA', 'AI', 'Web3', 'NFTs', 'métavers',
-      '4K', '6K', '8K', 'DCP', 'ProRes', 'H.265', 'RED', 'Blackmagic', 'Sony',
-      'concept', 'scénario', 'direction', 'production', 'post-production', 'montage', 'étalonnage',
-      'motion design', 'animation', 'composition', 'rendu', 'pipeline', 'workflow',
-      'immersif', 'interactif', 'cinématographique', 'expériences', 'récits', 'installations',
-      'musées', 'festivals', 'marques', 'éducation', 'formation', 'ateliers',
-      'Musée Olympique de Rio', 'Gramado VR', 'VFS', 'VanArts', 'Autodesk', '30 ans', '1996',
-      'Immerso XR', 'Petrópolis', 'Flamengo', 'Cenna Tower', 'First Nation Museum'
-    ]
-  }
+  // PRIMÁRIAS: Tecnologias e focos principais (coral)
+  const primary = [
+    'VR', 'AR', 'XR', 'AI', 'IA', 'BIM', '3D', '2D', '360', 'NFTs', 'Web3', 'VFX',
+    'educação', 'education', 'éducation', 'educación'
+  ]
+  
+  // SECUNDÁRIAS: Conceitos diferenciadores (bege + semi-bold)
+  const secondary = [
+    'immersive', 'imersivo', 'imersiva', 'imersivas', 'imersivos', 'inmersivo',
+    'interactive', 'interativo', 'interativa', 'interativas', 'interativos', 'interactif',
+    'cinematic', 'cinematográfico', 'cinematográfica', 'cinematográficas', 'cinématographique',
+    'experience', 'experiences', 'experiência', 'experiências', 'experiencias', 'expériences',
+    'narrativa', 'narrativas', 'narrative', 'narratives', 'récits',
+    'virtual', 'digital', 'creative', 'criativo', 'criativa',
+    'museums', 'museus', 'musées', 'museos', 'museum',
+    'brands', 'marcas', 'marques'
+  ]
 
-  const keywordsList = keywords[lang] || keywords.pt
+  const allKeywords = [...primary, ...secondary]
+  const escaped = allKeywords.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  const regex = new RegExp(`\\b(${escaped.join('|')})\\b`, 'gi')
+  const parts = text.split(regex)
   
-  // Ordenar por tamanho (mais longas primeiro) para evitar sobreposição
-  const sortedKeywords = keywordsList.sort((a, b) => b.length - a.length)
-  
-  // Criar regex melhorada: usa word boundaries para palavras normais, mas permite caracteres especiais
-  const escapedKeywords = sortedKeywords.map(k => {
-    // Escapar caracteres especiais do regex
-    const escaped = k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-    // Se contém apenas letras/números, usa word boundaries; senão, busca literal
-    if (/^[a-zA-Z0-9]+$/.test(k)) {
-      return `\\b${escaped}\\b`
-    } else {
-      return escaped
-    }
-  })
-  
-  // ABORDAGEM MAIS SIMPLES: usar split e map para garantir funcionamento
-  try {
-    // Criar regex simples sem word boundaries complexos
-    const simpleKeywords = sortedKeywords.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-    const regex = new RegExp(`(${simpleKeywords.join('|')})`, 'gi')
-    
-    // Dividir texto pelas palavras-chave encontradas
-    const parts = text.split(regex)
-    
-    // Se não encontrou nenhuma palavra-chave, retornar texto original
-    if (parts.length === 1) {
-      return text
-    }
-    
-    // Mapear partes: se for palavra-chave, destacar; senão, texto normal
-    return (
-      <>
-        {parts.map((part, index) => {
-          // Verificar se esta parte é uma palavra-chave (case-insensitive)
-          const isKeyword = sortedKeywords.some(kw => 
-            kw.toLowerCase() === part.toLowerCase()
+  if (parts.length <= 1) return text
+
+  return (
+    <>
+      {parts.map((part, i) => {
+        const isPrimary = primary.some(kw => kw.toLowerCase() === part.toLowerCase())
+        const isSecondary = secondary.some(kw => kw.toLowerCase() === part.toLowerCase())
+        
+        if (isPrimary) {
+          // PRIMÁRIA: Coral médio - visível e elegante
+          return (
+            <span key={i} style={{ color: '#e8707e', fontWeight: 550 }}>
+              {part}
+            </span>
           )
-          
-          if (isKeyword) {
-            return (
-              <span key={`kw-${index}`} className="keyword-highlight" style={{ color: '#c92337', fontWeight: 600 }}>
-                {part}
-              </span>
-            )
-          }
-          return <React.Fragment key={`txt-${index}`}>{part}</React.Fragment>
-        })}
-      </>
-    )
-  } catch (error) {
-    // Se houver erro, retornar texto original
-    console.warn('Erro ao destacar palavras-chave:', error)
-    return text
-  }
+        }
+        
+        if (isSecondary) {
+          // SECUNDÁRIA: Bege quente + semi-bold
+          return (
+            <span key={i} style={{ color: '#d4c4a8', fontWeight: 500 }}>
+              {part}
+            </span>
+          )
+        }
+        
+        return <React.Fragment key={i}>{part}</React.Fragment>
+      })}
+    </>
+  )
 }
 
 interface WhatWeDoProps {
