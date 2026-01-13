@@ -479,7 +479,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                       to="/studio/equipe"
                       className="block mb-1 hover:text-azimut-red transition-colors"
                     >
-                      <h3 className="text-lg font-bold text-white leading-tight group-hover:text-azimut-red transition-colors" style={{ maxWidth: '100%', wordBreak: 'break-word', hyphens: 'auto' }}>
+                      <h3 className="team-member-name text-lg font-bold group-hover:text-azimut-red transition-colors">
                         {member.name}
                       </h3>
                     </LangLink>
