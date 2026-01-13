@@ -70,18 +70,21 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         members: [
           {
             name: 'Ranz Enberger',
-            role: 'Diretor Criativo & Tecnológico',
-            bio: '30+ anos em produção audiovisual, VR/XR e IA. Diretor Geral de Tecnologia no Museu Olímpico. Curador VR no Festival de Gramado.'
+            role: 'Creative Director',
+            bio: '30+ anos em produção audiovisual, VR/XR e IA. Diretor de Tecnologia no Museu Olímpico.',
+            photo: '/Ranz.jpeg'
           },
           {
             name: 'Anick Couto',
-            role: 'Diretora de Arte',
-            bio: 'Direção visual, design de personagens e cenografia. Liderou equipe de arte completa no Museu Olímpico.'
+            role: 'Art Director',
+            bio: 'Direção visual, design de personagens e cenografia. Liderou arte no Museu Olímpico.',
+            photo: '/anick.jpg'
           },
           {
             name: 'Alberto Moura',
-            role: 'Diretor Audiovisual',
-            bio: 'Produção audiovisual, operações e estratégia cultural. Professor universitário e coordenador de cursos.'
+            role: 'Audiovisual Director',
+            bio: 'Produção audiovisual e estratégia cultural. Professor universitário e coordenador.',
+            photo: '/alberto.jpg'
           }
         ]
       },
@@ -121,18 +124,21 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         members: [
           {
             name: 'Ranz Enberger',
-            role: 'Creative & Technology Director',
-            bio: '30+ years in audiovisual production, VR/XR and AI. General Technology Director at Olympic Museum. VR Curator at Gramado Festival.'
+            role: 'Creative Director',
+            bio: '30+ years in audiovisual production, VR/XR and AI. Technology Director at Olympic Museum.',
+            photo: '/Ranz.jpeg'
           },
           {
             name: 'Anick Couto',
             role: 'Art Director',
-            bio: 'Visual direction, character and scenography design. Led complete art team at Olympic Museum.'
+            bio: 'Visual direction, character and scenography design. Led art at Olympic Museum.',
+            photo: '/anick.jpg'
           },
           {
             name: 'Alberto Moura',
             role: 'Audiovisual Director',
-            bio: 'Audiovisual production, operations and cultural strategy. University professor and course coordinator.'
+            bio: 'Audiovisual production and cultural strategy. University professor and coordinator.',
+            photo: '/alberto.jpg'
           }
         ]
       },
@@ -309,23 +315,41 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                 <span className="text-lg group-hover:translate-x-1 transition-transform">→</span>
               </LangLink>
             </div>
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-6">
               {text.team.members.map((member, i) => (
                 <LangLink
                   key={i}
                   to="/studio/equipe"
-                  className="group relative rounded-xl overflow-hidden bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red transition-all cursor-pointer"
+                  className="group relative rounded-xl overflow-hidden border border-azimut-red/20 hover:border-azimut-red transition-all cursor-pointer"
                 >
-                  {/* Image placeholder - altura fixa */}
-                  <div className="relative h-64 bg-gradient-to-br from-slate-800/50 to-slate-900/70 flex items-center justify-center border-b border-azimut-red/10 group-hover:bg-azimut-red/10 transition-colors">
-                    <span className="text-8xl group-hover:scale-110 transition-transform opacity-50">👤</span>
+                  {/* FOTO REAL com Duotone Cinematográfico */}
+                  <div className="team-photo relative h-[280px] overflow-hidden">
+                    <img 
+                      src={member.photo}
+                      alt={member.name}
+                      className="w-full h-full object-cover object-top"
+                      onError={(e) => {
+                        const parent = e.currentTarget.parentElement
+                        if (parent) {
+                          parent.style.background = 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)'
+                        }
+                        e.currentTarget.src = '/logo-azimut-star.svg'
+                        e.currentTarget.className = 'absolute bottom-4 right-4 w-12 h-12 object-contain opacity-20'
+                      }}
+                    />
                   </div>
                   
-                  {/* Content */}
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-white mb-1">{member.name}</h3>
-                    <p className="text-sm text-azimut-red mb-3 uppercase tracking-wider font-semibold">{member.role}</p>
-                    <p className="text-sm text-theme-text-secondary leading-relaxed line-clamp-3">{member.bio}</p>
+                  {/* Content - Nomes em 2 linhas */}
+                  <div className="p-5 bg-gradient-to-br from-slate-900/50 to-slate-900/30">
+                    <h3 className="text-lg font-bold text-white mb-1 leading-snug">
+                      {member.name}
+                    </h3>
+                    <p className="text-xs text-azimut-red mb-3 uppercase tracking-wider font-bold leading-tight">
+                      {member.role}
+                    </p>
+                    <p className="text-sm text-theme-text-secondary leading-relaxed line-clamp-2">
+                      {member.bio}
+                    </p>
                   </div>
                 </LangLink>
               ))}
