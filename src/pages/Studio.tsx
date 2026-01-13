@@ -253,10 +253,12 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               </h2>
               <LangLink
                 to="/studio/diferenciais"
-                className="group inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-azimut-red/10 border border-azimut-red/40 text-azimut-red hover:bg-azimut-red hover:text-white font-semibold text-xs uppercase tracking-wider transition-all"
+                className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-azimut-red/10 to-transparent border-2 border-azimut-red/30 hover:border-azimut-red hover:from-azimut-red hover:to-azimut-red/90 text-azimut-red hover:text-white font-bold text-sm uppercase tracking-[0.12em] transition-all duration-300 hover:shadow-lg hover:shadow-azimut-red/20"
               >
-                {lang === 'pt' ? 'Ver Detalhes' : lang === 'es' ? 'Ver Detalles' : lang === 'fr' ? 'Voir Détails' : 'View Details'}
-                <span className="text-lg group-hover:translate-x-1 transition-transform">→</span>
+                <span>{lang === 'pt' ? 'Explorar Detalhes' : lang === 'es' ? 'Explorar Detalles' : lang === 'fr' ? 'Explorer Détails' : 'Explore Details'}</span>
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
               </LangLink>
             </div>
             
@@ -309,21 +311,22 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               </h2>
               <LangLink
                 to="/studio/equipe"
-                className="group inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-azimut-red/10 border border-azimut-red/40 text-azimut-red hover:bg-azimut-red hover:text-white font-semibold text-xs uppercase tracking-wider transition-all"
+                className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-azimut-red/10 to-transparent border-2 border-azimut-red/30 hover:border-azimut-red hover:from-azimut-red hover:to-azimut-red/90 text-azimut-red hover:text-white font-bold text-sm uppercase tracking-[0.12em] transition-all duration-300 hover:shadow-lg hover:shadow-azimut-red/20"
               >
-                {lang === 'pt' ? 'Equipe Completa' : lang === 'es' ? 'Equipo Completo' : lang === 'fr' ? 'Équipe Complète' : 'Full Team'}
-                <span className="text-lg group-hover:translate-x-1 transition-transform">→</span>
+                <span>{lang === 'pt' ? 'Ver Equipe Completa' : lang === 'es' ? 'Ver Equipo Completo' : lang === 'fr' ? 'Voir Équipe Complète' : 'View Full Team'}</span>
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
               </LangLink>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
               {text.team.members.map((member, i) => (
-                <LangLink
+                <div
                   key={i}
-                  to="/studio/equipe"
-                  className="group relative rounded-xl overflow-hidden border border-azimut-red/20 hover:border-azimut-red transition-all cursor-pointer"
+                  className="group relative rounded-2xl overflow-hidden border-2 border-azimut-red/20 hover:border-azimut-red/60 transition-all duration-500 cursor-pointer"
                 >
-                  {/* FOTO REAL com Duotone Cinematográfico */}
-                  <div className="team-photo relative h-[280px] overflow-hidden">
+                  {/* FOTO REAL com Duotone Cinematográfico - IGUAL SUBPÁGINA */}
+                  <div className="team-photo relative h-[320px] overflow-hidden">
                     <img 
                       src={member.photo}
                       alt={member.name}
@@ -339,19 +342,37 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                     />
                   </div>
                   
-                  {/* Content - Nomes em 2 linhas */}
-                  <div className="p-5 bg-gradient-to-br from-slate-900/50 to-slate-900/30">
-                    <h3 className="text-lg font-bold text-white mb-1 leading-snug">
-                      {member.name}
-                    </h3>
+                  {/* Content - 2 CTAs: Nome clicável + Botão premium */}
+                  <div className="p-5 bg-gradient-to-br from-slate-900/95 to-slate-900/90">
+                    {/* Nome clicável (vai direto para /studio/equipe) */}
+                    <LangLink
+                      to="/studio/equipe"
+                      className="block mb-1 hover:text-azimut-red transition-colors"
+                    >
+                      <h3 className="text-lg font-bold text-white leading-snug group-hover:text-azimut-red transition-colors">
+                        {member.name}
+                      </h3>
+                    </LangLink>
+                    
                     <p className="text-xs text-azimut-red mb-3 uppercase tracking-wider font-bold leading-tight">
                       {member.role}
                     </p>
-                    <p className="text-sm text-theme-text-secondary leading-relaxed line-clamp-2">
+                    <p className="text-sm text-theme-text-secondary leading-relaxed line-clamp-2 mb-4">
                       {member.bio}
                     </p>
+                    
+                    {/* Botão premium individual */}
+                    <LangLink
+                      to="/studio/equipe"
+                      className="group/btn inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-azimut-red hover:text-white transition-colors"
+                    >
+                      <span>{lang === 'pt' ? 'Ver Perfil' : lang === 'es' ? 'Ver Perfil' : lang === 'fr' ? 'Voir Profil' : 'View Profile'}</span>
+                      <svg className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </LangLink>
                   </div>
-                </LangLink>
+                </div>
               ))}
             </div>
           </section>
@@ -365,10 +386,12 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               </h2>
               <LangLink
                 to="/studio/credibilidade"
-                className="group inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-azimut-red/10 border border-azimut-red/40 text-azimut-red hover:bg-azimut-red hover:text-white font-semibold text-xs uppercase tracking-wider transition-all"
+                className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-azimut-red/10 to-transparent border-2 border-azimut-red/30 hover:border-azimut-red hover:from-azimut-red hover:to-azimut-red/90 text-azimut-red hover:text-white font-bold text-sm uppercase tracking-[0.12em] transition-all duration-300 hover:shadow-lg hover:shadow-azimut-red/20"
               >
-                {lang === 'pt' ? 'Ver Timeline' : lang === 'es' ? 'Ver Timeline' : lang === 'fr' ? 'Voir Timeline' : 'View Timeline'}
-                <span className="text-lg group-hover:translate-x-1 transition-transform">→</span>
+                <span>{lang === 'pt' ? 'Ver Timeline Completo' : lang === 'es' ? 'Ver Timeline Completo' : lang === 'fr' ? 'Voir Timeline Complet' : 'View Full Timeline'}</span>
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
               </LangLink>
             </div>
             <div className="grid md:grid-cols-2 gap-4">
