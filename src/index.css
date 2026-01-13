@@ -446,61 +446,89 @@ html[data-theme="dark"] .text-slate-900 {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   TEMA CLARO: TEXTO ESCURO NO FUNDO BEGE (EXCETO CARDS ESCUROS)
+   TEMA CLARO: REGRAS SIMPLIFICADAS E CLASSES UTILITÁRIAS
    ═══════════════════════════════════════════════════════════════ */
 
-/* Texto branco → escuro no tema claro (exceto em cards escuros) */
-html[data-theme="light"] .text-white:not([class*="bg-slate-8"] *):not([class*="bg-slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red):not(.bg-azimut-red *) {
-  color: #0f172a !important;
-}
+/* 
+   PADRÃO AZIMUT TEMA CLARO:
+   - Fundo claro (#f5f1e8) = texto escuro (#0f172a)
+   - Fundo escuro (cards) = texto claro (#d3cec3)
+   - Botões vermelhos = texto branco (#ffffff)
+   
+   CLASSES UTILITÁRIAS:
+   - .dark-bg-text: Força texto claro em qualquer elemento
+   - .light-bg-text: Força texto escuro em qualquer elemento
+*/
 
-/* Texto slate claro → escuro no tema claro (EXCETO em cards escuros e login/modal/pills) */
-html[data-theme="light"] .text-slate-50:not([class*="bg-slate-8"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.fixed *):not([class*="z-50"] *):not(.pill-adaptive),
-html[data-theme="light"] .text-slate-100:not([class*="bg-slate-8"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.fixed *):not([class*="z-50"] *):not(.pill-adaptive),
-html[data-theme="light"] .text-slate-200:not([class*="bg-slate-8"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.fixed *):not([class*="z-50"] *):not(.pill-adaptive),
-html[data-theme="light"] .text-slate-300:not([class*="bg-slate-8"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.fixed *):not([class*="z-50"] *):not(.pill-adaptive) {
-  color: #1e293b !important;
-}
+/* ═══════════════════════════════════════════════════════════════
+   1. CLASSES UTILITÁRIAS GLOBAIS (usar quando precisar forçar cor)
+   ═══════════════════════════════════════════════════════════════ */
 
-/* Texto slate-900 → preto no tema claro (fora de cards escuros) */
-html[data-theme="light"] .text-slate-900:not([class*="bg-slate-8"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *) {
-  color: #0f172a !important;
-}
-
-/* Azuis claros → azul marinho no tema claro (EXCETO em cards escuros e login/modal com fundo escuro) */
-html[data-theme="light"] .text-slate-400:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.fixed *):not([class*="z-50"] *),
-html[data-theme="light"] .text-slate-500:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.fixed *):not([class*="z-50"] *),
-html[data-theme="light"] .text-blue-200:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.fixed *):not([class*="z-50"] *),
-html[data-theme="light"] .text-blue-300:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.fixed *):not([class*="z-50"] *) {
-  color: #1e3a5f !important;
-}
-
-/* Cards escuros no tema claro mantêm texto claro (EXCETO pills) */
-/* NOTA: .solution-card-dark REMOVIDO - WhatWeDo usa estilos inline */
-html[data-theme="light"] .card-adaptive:not(.pill-adaptive),
-html[data-theme="light"] .card-adaptive *:not(.pill-adaptive):not(.pill-adaptive *),
-html[data-theme="light"] .card-dark-adaptive:not(.pill-adaptive),
-html[data-theme="light"] .card-dark-adaptive *:not(.pill-adaptive):not(.pill-adaptive *),
-html[data-theme="light"] .card-dark-fixed:not(.pill-adaptive),
-html[data-theme="light"] .card-dark-fixed *:not(.pill-adaptive):not(.pill-adaptive *),
-html[data-theme="light"] .card-dark-alt-adaptive:not(.pill-adaptive),
-html[data-theme="light"] .card-dark-alt-adaptive *:not(.pill-adaptive):not(.pill-adaptive *),
-html[data-theme="light"] [class*="bg-slate-8"]:not(.pill-adaptive),
-html[data-theme="light"] [class*="bg-slate-8"] *:not(.pill-adaptive):not(.pill-adaptive *),
-html[data-theme="light"] [class*="bg-slate-9"]:not(.pill-adaptive),
-html[data-theme="light"] [class*="bg-slate-9"] *:not(.pill-adaptive):not(.pill-adaptive *) {
+/* Força texto claro (para fundos escuros) */
+.dark-bg-text,
+.dark-bg-text * {
   color: #d3cec3 !important;
 }
 
-/* Botões vermelhos sempre com texto branco */
-html[data-theme="light"] .bg-azimut-red,
-html[data-theme="light"] .bg-azimut-red * {
+.dark-bg-text-white,
+.dark-bg-text-white * {
   color: #ffffff !important;
 }
 
-html[data-theme="dark"] .bg-azimut-red,
-html[data-theme="dark"] .bg-azimut-red * {
+/* Força texto escuro (para fundos claros) */
+[data-theme="light"] .light-bg-text,
+[data-theme="light"] .light-bg-text * {
+  color: #0f172a !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   2. REGRAS AUTOMÁTICAS PARA CARDS COM FUNDO ESCURO
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Cards escuros SEMPRE têm texto claro (em qualquer tema) */
+/* NOTA: .solution-card-dark REMOVIDO - usa estilos inline no componente */
+.card-adaptive,
+.card-adaptive *,
+.card-dark-adaptive,
+.card-dark-adaptive *,
+.card-dark-fixed,
+.card-dark-fixed *,
+.card-dark-alt-adaptive,
+.card-dark-alt-adaptive * {
+  color: #d3cec3 !important;
+}
+
+/* Títulos em cards escuros são brancos */
+.card-adaptive h1, .card-adaptive h2, .card-adaptive h3,
+.card-dark-adaptive h1, .card-dark-adaptive h2, .card-dark-adaptive h3,
+.card-dark-fixed h1, .card-dark-fixed h2, .card-dark-fixed h3,
+.card-dark-alt-adaptive h1, .card-dark-alt-adaptive h2, .card-dark-alt-adaptive h3 {
   color: #ffffff !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   3. BOTÕES VERMELHOS - SEMPRE TEXTO BRANCO
+   ═══════════════════════════════════════════════════════════════ */
+
+.bg-azimut-red,
+.bg-azimut-red *,
+[class*="bg-azimut-red"],
+[class*="bg-azimut-red"] * {
+  color: #ffffff !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   4. TEMA CLARO: TEXTO ESCURO NO FUNDO BEGE
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Regra geral: no tema claro, texto principal é escuro */
+[data-theme="light"] body {
+  color: #0f172a;
+}
+
+/* Exceção: Pills no tema claro têm estilo próprio */
+[data-theme="light"] .pill-adaptive {
+  color: #8b1f2f !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -644,9 +672,9 @@ html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"] *
   color: #d3cec3 !important;
 }
 
-/* 5. Cards de Soluções (WhatWeDo) */
-/* REMOVIDO: Todas as regras .solution-card-dark */
-/* WhatWeDo.tsx agora usa estilos INLINE que não podem ser sobrescritos */
+/* 5. Cards de Soluções (WhatWeDo) - REMOVIDO */
+/* Os cards de soluções usam estilos INLINE no componente WhatWeDo.tsx */
+/* Não usar regras CSS aqui pois !important sobrescreve estilos inline */
 
 /* ═══════════════════════════════════════════════════════════════
    TEMA PERSONALIZADO - Azimut 2026
@@ -1605,116 +1633,23 @@ html[data-theme="light"] {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   REGRA PRINCIPAL: FUNDOS ESCUROS = TEXTO CLARO (SEMPRE!)
+   TEMA CLARO: REGRAS SIMPLIFICADAS (REMOVIDAS DUPLICATAS)
+   Todas as regras principais estão na seção superior (linhas 448-530)
    ═══════════════════════════════════════════════════════════════ */
 
-/* IMPORTANTE: Detectar QUALQUER fundo escuro e forçar texto claro */
-html[data-theme="light"] [class*="from-slate-8"],
-html[data-theme="light"] [class*="from-slate-9"],
-html[data-theme="light"] [class*="to-slate-8"],
-html[data-theme="light"] [class*="to-slate-9"],
-html[data-theme="light"] [class*="bg-slate-8"],
-html[data-theme="light"] [class*="bg-slate-9"],
-html[data-theme="light"] .card-adaptive,
-html[data-theme="light"] .card-dark-adaptive,
-html[data-theme="light"] .card-dark-fixed,
-html[data-theme="light"] .card-dark-alt-adaptive,
-html[data-theme="light"] [class*="bg-gradient-to"][class*="slate-8"],
-html[data-theme="light"] [class*="bg-gradient-to"][class*="slate-9"] {
-  color: #d3cec3 !important;
-}
-
-/* Forçar TODOS os textos filhos também */
-/* NOTA: .solution-card-dark REMOVIDO - WhatWeDo usa estilos inline */
-html[data-theme="light"] [class*="from-slate-8"] *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="light"] [class*="from-slate-9"] *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="light"] [class*="to-slate-8"] *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="light"] [class*="to-slate-9"] *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="light"] [class*="bg-slate-8"] *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="light"] [class*="bg-slate-9"] *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="light"] .card-adaptive *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="light"] .card-dark-adaptive *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="light"] .card-dark-fixed *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="light"] .card-dark-alt-adaptive *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="light"] [class*="bg-gradient-to"][class*="slate-8"] *:not(.bg-azimut-red):not(.bg-azimut-red *),
-html[data-theme="light"] [class*="bg-gradient-to"][class*="slate-9"] *:not(.bg-azimut-red):not(.bg-azimut-red *) {
-  color: #d3cec3 !important;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   REGRA SECUNDÁRIA: FUNDO BEGE = TEXTO ESCURO
-   ═══════════════════════════════════════════════════════════════ */
-
-/* 1. Texto branco/claro -> ESCURO no tema claro (EXCETO em fundos escuros e botões vermelhos) */
-html[data-theme="light"] body .text-white:not([class*="from-slate-8"] *):not([class*="from-slate-9"] *):not([class*="to-slate-8"] *):not([class*="to-slate-9"] *):not([class*="bg-slate-8"] *):not([class*="bg-slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red):not(.bg-azimut-red *):not([class*="bg-azimut-red"]),
-html[data-theme="light"] body h1.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
-html[data-theme="light"] body h2.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
-html[data-theme="light"] body h3.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
-html[data-theme="light"] body p.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
-html[data-theme="light"] body span.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
-html[data-theme="light"] body div.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red):not([class*="bg-azimut-red"]) {
-  color: #0d0d0d !important;
-}
-
-/* 2. Slate claro -> ESCURO no tema claro (EXCETO em fundos escuros e botões vermelhos) */
-html[data-theme="light"] .text-slate-50:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red *):not([class*="bg-azimut-red"]),
-html[data-theme="light"] .text-slate-100:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red *):not([class*="bg-azimut-red"]),
-html[data-theme="light"] .text-slate-200:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red *):not([class*="bg-azimut-red"]),
-html[data-theme="light"] .text-slate-300:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red *):not([class*="bg-azimut-red"]) {
-  color: #1a1a1a !important;
-}
-
-/* 3. Azul claro/bebê -> AZUL MARINHO no tema claro */
-html[data-theme="light"] .text-blue-100,
-html[data-theme="light"] .text-blue-200,
-html[data-theme="light"] .text-blue-300,
-html[data-theme="light"] .text-blue-400,
-html[data-theme="light"] .text-sky-100,
-html[data-theme="light"] .text-sky-200,
-html[data-theme="light"] .text-sky-300,
-html[data-theme="light"] .text-sky-400,
-html[data-theme="light"] .text-cyan-100,
-html[data-theme="light"] .text-cyan-200,
-html[data-theme="light"] .text-cyan-300,
-html[data-theme="light"] .text-cyan-400 {
+/* Azul claro/bebê -> AZUL MARINHO no tema claro (para elementos fora de cards) */
+[data-theme="light"] .text-blue-100:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *),
+[data-theme="light"] .text-blue-200:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *),
+[data-theme="light"] .text-blue-300:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *),
+[data-theme="light"] .text-blue-400:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *) {
   color: #1e3a5f !important;
 }
 
-/* 4. Slate-400/500 (azul acinzentado) -> AZUL MARINHO/ESCURO no tema claro (EXCETO em fundos escuros) */
-html[data-theme="light"] .text-slate-400:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *),
-html[data-theme="light"] .text-slate-500:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *) {
-  color: #1e3a5f !important;
-}
-
-/* 5. Garantir que botões vermelhos SEMPRE tenham texto branco */
-html[data-theme="light"] .bg-azimut-red,
-html[data-theme="light"] .bg-azimut-red *,
-html[data-theme="light"] [class*="bg-azimut-red"] {
-  color: #ffffff !important;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   CURADORIA TEMA CLARO 2026: CONTRASTE E HIERARQUIA
-   ═══════════════════════════════════════════════════════════════ */
-
-/* Títulos principais sempre escuros no tema claro (máximo contraste) */
-html[data-theme="light"] h1:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="!text-"]),
-html[data-theme="light"] h2:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="!text-"]),
-html[data-theme="light"] h3:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="!text-"]) {
-  color: #0f172a !important; /* Slate-900: Contraste 16:1 */
-}
-
-/* Subtítulos e labels médios no tema claro */
-html[data-theme="light"] .subtitle:not(.card-adaptive *),
-html[data-theme="light"] .text-subtitle:not(.card-adaptive *) {
-  color: #475569 !important; /* Slate-600: Contraste 7.8:1 */
-}
-
-/* Cards de serviços/especialidades - fundo branco com sombra */
-html[data-theme="light"] .glass-panel:not(.card-adaptive):not(.card-dark-adaptive) {
-  background: #ffffff !important;
-  border-color: #cbd5e1 !important; /* Slate-300 */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+/* Títulos fora de cards escuros - escuros no tema claro */
+[data-theme="light"] h1:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="!text-"]),
+[data-theme="light"] h2:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="!text-"]),
+[data-theme="light"] h3:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="!text-"]) {
+  color: #0f172a;
 }
 
 html[data-theme="light"] .glass-panel:not(.card-adaptive):not(.card-dark-adaptive):hover {
