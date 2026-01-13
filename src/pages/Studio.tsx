@@ -323,22 +323,19 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           />
 
           {/* Sobre (Overview) */}
-          <section id="overview" className="mb-24 scroll-mt-[200px]">
+          <section id="overview" className="section-container scroll-mt-[200px]">
             {/* LABEL PEQUENO (Eyebrow) - Framestore style */}
-            <div className="mb-3">
-              <span className="inline-flex items-center gap-2 font-sora text-[0.65rem] font-bold uppercase tracking-[0.25em] text-azimut-red">
-                <span className="w-6 h-[2px] bg-azimut-red"></span>
-                {text.about.title}
-              </span>
-            </div>
+            <span className="section-eyebrow">
+              {text.about.title}
+            </span>
             
             {/* TÍTULO GRANDE - Hierarquia clara */}
-            <h2 className="mb-6 font-handel text-4xl md:text-5xl lg:text-6xl uppercase tracking-[0.08em] text-white leading-tight">
+            <h2 className="section-title">
               {lang === 'pt' ? 'Quem Somos' : lang === 'es' ? 'Quiénes Somos' : lang === 'fr' ? 'Qui Nous Sommes' : 'Who We Are'}
             </h2>
             
             {/* PARÁGRAFO - Legível e respirável */}
-            <p className="text-xl md:text-2xl leading-relaxed text-slate-300 max-w-4xl mb-16 font-light">
+            <p className="body-large mb-16">
               {text.about.text}
             </p>
 
@@ -359,19 +356,16 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Diferenciais (What Makes Us Unique) */}
-          <section id="unique" className="mb-24 scroll-mt-[200px]">
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-6">
+          <section id="unique" className="section-container scroll-mt-[200px]">
+            <div className="section-header">
               <div>
                 {/* LABEL PEQUENO (Eyebrow) */}
-                <div className="mb-3">
-                  <span className="inline-flex items-center gap-2 font-sora text-[0.65rem] font-bold uppercase tracking-[0.25em] text-azimut-red">
-                    <span className="w-6 h-[2px] bg-azimut-red"></span>
-                    {lang === 'pt' ? 'Diferenciais' : lang === 'es' ? 'Diferenciales' : lang === 'fr' ? 'Différenciation' : 'What Makes Us Unique'}
-                  </span>
-                </div>
+                <span className="section-eyebrow">
+                  {lang === 'pt' ? 'Diferenciais' : lang === 'es' ? 'Diferenciales' : lang === 'fr' ? 'Différenciation' : 'What Makes Us Unique'}
+                </span>
                 
                 {/* TÍTULO GRANDE */}
-                <h2 className="font-handel text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.08em] text-white leading-tight">
+                <h2 className="section-title">
                   {lang === 'pt' ? 'O Que Nos Torna Únicos' : lang === 'es' ? 'Lo Que Nos Hace Únicos' : lang === 'fr' ? 'Ce Qui Nous Rend Uniques' : 'What Makes Us Unique'}
                 </h2>
               </div>
@@ -428,19 +422,16 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Equipe */}
-          <section id="team" className="mb-24 scroll-mt-[200px]">
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-6">
+          <section id="team" className="section-container scroll-mt-[200px]">
+            <div className="section-header">
               <div>
                 {/* LABEL PEQUENO (Eyebrow) */}
-                <div className="mb-3">
-                  <span className="inline-flex items-center gap-2 font-sora text-[0.65rem] font-bold uppercase tracking-[0.25em] text-azimut-red">
-                    <span className="w-6 h-[2px] bg-azimut-red"></span>
-                    {lang === 'pt' ? 'Equipe' : lang === 'es' ? 'Equipo' : lang === 'fr' ? 'Équipe' : 'Team'}
-                  </span>
-                </div>
+                <span className="section-eyebrow">
+                  {lang === 'pt' ? 'Equipe' : lang === 'es' ? 'Equipo' : lang === 'fr' ? 'Équipe' : 'Team'}
+                </span>
                 
                 {/* TÍTULO GRANDE */}
-                <h2 className="font-handel text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.08em] text-white leading-tight">
+                <h2 className="section-title">
                   {text.team.title}
                 </h2>
               </div>
@@ -514,19 +505,16 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Credenciais */}
-          <section id="credentials" className="mb-24 scroll-mt-[200px]">
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-6">
+          <section id="credentials" className="section-container scroll-mt-[200px]">
+            <div className="section-header">
               <div>
                 {/* LABEL PEQUENO (Eyebrow) */}
-                <div className="mb-3">
-                  <span className="inline-flex items-center gap-2 font-sora text-[0.65rem] font-bold uppercase tracking-[0.25em] text-azimut-red">
-                    <span className="w-6 h-[2px] bg-azimut-red"></span>
-                    {lang === 'pt' ? 'Credenciais' : lang === 'es' ? 'Credenciales' : lang === 'fr' ? 'Références' : 'Credentials'}
-                  </span>
-                </div>
+                <span className="section-eyebrow">
+                  {lang === 'pt' ? 'Credenciais' : lang === 'es' ? 'Credenciales' : lang === 'fr' ? 'Références' : 'Credentials'}
+                </span>
                 
                 {/* TÍTULO GRANDE */}
-                <h2 className="font-handel text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.08em] text-white leading-tight">
+                <h2 className="section-title">
                   {text.credentials.title}
                 </h2>
               </div>
