@@ -199,11 +199,11 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
         path="/what"
       />
       <main className="relative min-h-screen overflow-hidden pt-6 md:pt-8 pb-24 film-grain">
-        {/* Background: Estrela da Azimut - FIXA (mais transparente, atrás dos botões) */}
+        {/* Background: Estrela da Azimut - FIXA (FUNDO - atrás de tudo) */}
         <div
           className="fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-0.1 pointer-events-none"
           style={{
-            zIndex: -1,
+            zIndex: -10,
             backgroundImage: 'url(/logo-azimut-star.svg)',
             backgroundSize: 'contain',
             backgroundRepeat: 'no-repeat',

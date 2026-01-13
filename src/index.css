@@ -17,7 +17,8 @@ html {
    GRÃO CINEMATOGRÁFICO - AZIMUT IDENTITY
    ═══════════════════════════════════════════════════════════════ */
 
-/* Film grain overlay para dar atmosfera cinematográfica - MUITO MAIS VISÍVEL */
+/* Film grain overlay para dar atmosfera cinematográfica - MAIS APARENTE */
+/* ORDEM: FUNDO (estrela z-index -10) -> GRÃO (z-index -5) -> ELEMENTOS (z-index 0+) */
 .film-grain {
   position: relative;
 }
@@ -32,12 +33,12 @@ html {
   width: 100%;
   height: 100%;
   background-image: 
-    repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,.15) 1px, rgba(0,0,0,.15) 2px),
-    repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(0,0,0,.15) 1px, rgba(0,0,0,.15) 2px),
-    repeating-linear-gradient(45deg, transparent, transparent 1px, rgba(0,0,0,.08) 1px, rgba(0,0,0,.08) 2px);
+    repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,.2) 1px, rgba(0,0,0,.2) 2px),
+    repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(0,0,0,.2) 1px, rgba(0,0,0,.2) 2px),
+    repeating-linear-gradient(45deg, transparent, transparent 1px, rgba(0,0,0,.1) 1px, rgba(0,0,0,.1) 2px);
   opacity: 1;
   pointer-events: none;
-  z-index: 9999;
+  z-index: -5; /* Acima da estrela (-10), abaixo dos elementos (0+) */
   mix-blend-mode: overlay;
   animation: grain 8s steps(10) infinite;
 }
