@@ -6,6 +6,7 @@ import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
 import InternalNavigation from '../components/InternalNavigation'
 import { servicesData, getServiceTitle, getServiceShortDesc } from '../data/servicesData'
+import StarBackground from '../components/StarBackground'
 
 // ═══════════════════════════════════════════════════════════════
 // FUNÇÃO: Destacar palavras-chave com DUAS cores harmônicas
@@ -159,15 +160,10 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
       />
       <main className="relative min-h-screen pt-6 md:pt-8 pb-24 film-grain" style={{ overflowX: 'hidden', overflowY: 'visible' }}>
         {/* Background: Estrela da Azimut - FIXA (FUNDO - atrás de tudo) */}
-        <div
-          className="fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-50 pointer-events-none"
-          style={{
-            zIndex: -10,
-            backgroundImage: 'url(/logo-azimut-star.svg)',
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center'
-          }}
+        <StarBackground
+          className="fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px]"
+          zIndex={-10}
+          opacity={0.5}
         />
 
         {/* Hero Section */}
@@ -297,13 +293,19 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                       </div>
                     )}
                     
-                    {/* Título */}
-                    <h3 className="mb-3 font-sora text-[0.88rem] font-semibold uppercase tracking-[0.03em] text-white/90 group-hover:text-white transition-colors duration-300 line-clamp-2 leading-snug">
+                    {/* Título - FORÇA BRUTA: cor inline para garantir branco */}
+                    <h3 
+                      className="mb-3 font-sora text-[0.88rem] font-semibold uppercase tracking-[0.03em] transition-colors duration-300 line-clamp-2 leading-snug"
+                      style={{ color: 'rgba(255, 255, 255, 0.9)' }}
+                    >
                       {getServiceTitle(service, lang)}
                     </h3>
                     
-                    {/* Descrição - 3 linhas para visual mais limpo */}
-                    <p className="text-[0.8rem] leading-[1.7] text-slate-400 group-hover:text-slate-300 transition-colors duration-300 flex-grow line-clamp-3">
+                    {/* Descrição - FORÇA BRUTA: cor inline para garantir legibilidade */}
+                    <p 
+                      className="text-[0.8rem] leading-[1.7] transition-colors duration-300 flex-grow line-clamp-3"
+                      style={{ color: '#d3cec3' }}
+                    >
                       {(() => {
                         const desc = getServiceShortDesc(service, lang)
                         const highlighted = highlightKeywords(desc || '', lang)
@@ -322,7 +324,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                         </span>
                         <span 
                           className="inline-flex items-center justify-center w-11 h-9 rounded-lg border border-azimut-red/20 transition-all duration-300 group-hover:w-14 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:shadow-[0_0_14px_rgba(232,80,95,0.6)]"
-                          style={{ fontSize: '1.3rem', transform: 'scaleX(1.7)' }}
+                          style={{ fontSize: '1.3rem', transform: 'scaleX(1.7)', color: '#e8505f' }}
                         >
                           →
                         </span>
@@ -338,7 +340,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
         {/* CTA */}
         <section className="relative py-16 text-center">
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
-            <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-wide mb-6">
+            <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-wide mb-6 text-theme-light-main">
               {lang === 'pt' ? 'Vamos criar algo incrível juntos?' : lang === 'es' ? '¿Vamos a crear algo increíble juntos?' : lang === 'fr' ? 'Créons quelque chose d\'incroyable ensemble?' : 'Let\'s create something incredible together?'}
             </h2>
             <p className="text-lg max-w-2xl mx-auto mb-8" style={{ color: 'var(--theme-text-secondary)' }}>

@@ -77,6 +77,12 @@ html {
   will-change: auto;
 }
 
+/* Granulação reduzida no tema claro */
+[data-theme="light"] .film-grain::before {
+  opacity: 0.12;
+  mix-blend-mode: soft-light;
+}
+
 /* Animação desabilitada - estava causando sobreposição horizontal */
 /* @keyframes grain {
   0%, 100% { transform: translate(0, 0) }
@@ -216,6 +222,11 @@ html {
   margin-bottom: 1.5rem;
 }
 
+/* Section title no tema claro - texto escuro */
+[data-theme="light"] .section-title:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *) {
+  color: #0f172a !important; /* Slate-900 - máximo contraste */
+}
+
 /* Variação menor para subseções */
 .section-title-md {
   font-size: clamp(1.5rem, 3.5vw, 2.5rem); /* 24px - 40px */
@@ -233,6 +244,11 @@ html {
   line-height: 1.625; /* relaxed */
   color: #cbd5e1; /* slate-300 */
   max-width: 56rem; /* max-w-4xl */
+}
+
+/* Body large no tema claro - texto escuro */
+[data-theme="light"] .body-large:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *) {
+  color: #1a1a1a !important; /* Quase preto - bom contraste */
 }
 
 /* 4. SECTION CONTAINER (Espaçamento generoso) */
@@ -434,34 +450,41 @@ html[data-theme="dark"] .text-slate-900 {
    ═══════════════════════════════════════════════════════════════ */
 
 /* Texto branco → escuro no tema claro (exceto em cards escuros) */
-html[data-theme="light"] .text-white:not([class*="bg-slate-8"] *):not([class*="bg-slate-9"] *):not(.card-adaptive *):not(.bg-azimut-red):not(.bg-azimut-red *) {
+html[data-theme="light"] .text-white:not([class*="bg-slate-8"] *):not([class*="bg-slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red):not(.bg-azimut-red *) {
   color: #0f172a !important;
 }
 
-/* Texto slate claro → escuro no tema claro (EXCETO em login/modal/pills) */
-html[data-theme="light"] .text-slate-50:not([class*="bg-slate-8"] *):not(.card-adaptive *):not(.fixed *):not([class*="z-50"] *):not(.pill-adaptive),
-html[data-theme="light"] .text-slate-100:not([class*="bg-slate-8"] *):not(.card-adaptive *):not(.fixed *):not([class*="z-50"] *):not(.pill-adaptive),
-html[data-theme="light"] .text-slate-200:not([class*="bg-slate-8"] *):not(.card-adaptive *):not(.fixed *):not([class*="z-50"] *):not(.pill-adaptive),
-html[data-theme="light"] .text-slate-300:not([class*="bg-slate-8"] *):not(.card-adaptive *):not(.fixed *):not([class*="z-50"] *):not(.pill-adaptive) {
+/* Texto slate claro → escuro no tema claro (EXCETO em cards escuros e login/modal/pills) */
+html[data-theme="light"] .text-slate-50:not([class*="bg-slate-8"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.fixed *):not([class*="z-50"] *):not(.pill-adaptive),
+html[data-theme="light"] .text-slate-100:not([class*="bg-slate-8"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.fixed *):not([class*="z-50"] *):not(.pill-adaptive),
+html[data-theme="light"] .text-slate-200:not([class*="bg-slate-8"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.fixed *):not([class*="z-50"] *):not(.pill-adaptive),
+html[data-theme="light"] .text-slate-300:not([class*="bg-slate-8"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.fixed *):not([class*="z-50"] *):not(.pill-adaptive) {
   color: #1e293b !important;
 }
 
 /* Texto slate-900 → preto no tema claro (fora de cards escuros) */
-html[data-theme="light"] .text-slate-900:not([class*="bg-slate-8"] *):not(.card-adaptive *) {
+html[data-theme="light"] .text-slate-900:not([class*="bg-slate-8"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *) {
   color: #0f172a !important;
 }
 
-/* Azuis claros → azul marinho no tema claro (EXCETO em login/modal com fundo escuro) */
-html[data-theme="light"] .text-slate-400:not(.fixed *):not([class*="z-50"] *),
-html[data-theme="light"] .text-slate-500:not(.fixed *):not([class*="z-50"] *),
-html[data-theme="light"] .text-blue-200:not(.fixed *):not([class*="z-50"] *),
-html[data-theme="light"] .text-blue-300:not(.fixed *):not([class*="z-50"] *) {
+/* Azuis claros → azul marinho no tema claro (EXCETO em cards escuros e login/modal com fundo escuro) */
+html[data-theme="light"] .text-slate-400:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.fixed *):not([class*="z-50"] *),
+html[data-theme="light"] .text-slate-500:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.fixed *):not([class*="z-50"] *),
+html[data-theme="light"] .text-blue-200:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.fixed *):not([class*="z-50"] *),
+html[data-theme="light"] .text-blue-300:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.fixed *):not([class*="z-50"] *) {
   color: #1e3a5f !important;
 }
 
 /* Cards escuros no tema claro mantêm texto claro (EXCETO pills) */
+/* NOTA: .solution-card-dark REMOVIDO - WhatWeDo usa estilos inline */
 html[data-theme="light"] .card-adaptive:not(.pill-adaptive),
 html[data-theme="light"] .card-adaptive *:not(.pill-adaptive):not(.pill-adaptive *),
+html[data-theme="light"] .card-dark-adaptive:not(.pill-adaptive),
+html[data-theme="light"] .card-dark-adaptive *:not(.pill-adaptive):not(.pill-adaptive *),
+html[data-theme="light"] .card-dark-fixed:not(.pill-adaptive),
+html[data-theme="light"] .card-dark-fixed *:not(.pill-adaptive):not(.pill-adaptive *),
+html[data-theme="light"] .card-dark-alt-adaptive:not(.pill-adaptive),
+html[data-theme="light"] .card-dark-alt-adaptive *:not(.pill-adaptive):not(.pill-adaptive *),
 html[data-theme="light"] [class*="bg-slate-8"]:not(.pill-adaptive),
 html[data-theme="light"] [class*="bg-slate-8"] *:not(.pill-adaptive):not(.pill-adaptive *),
 html[data-theme="light"] [class*="bg-slate-9"]:not(.pill-adaptive),
@@ -621,6 +644,10 @@ html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"] *
   color: #d3cec3 !important;
 }
 
+/* 5. Cards de Soluções (WhatWeDo) */
+/* REMOVIDO: Todas as regras .solution-card-dark */
+/* WhatWeDo.tsx agora usa estilos INLINE que não podem ser sobrescritos */
+
 /* ═══════════════════════════════════════════════════════════════
    TEMA PERSONALIZADO - Azimut 2026
    Cinematographic • Immersive • Interactive
@@ -715,18 +742,18 @@ html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"] *
 
 [data-theme="light"] {
   /* Tema Claro - Alto Contraste */
-  --theme-bg: #c5c0b5;
-  --theme-bg-secondary: #b0ab9f;
-  --theme-bg-sticky: rgba(197, 192, 181, 0.95); /* Background sticky claro com blur */
+  --theme-bg: #f5f1e8; /* Bege quase branco - Premium (Opção 3 escolhida) */
+  --theme-bg-secondary: #e8e5df; /* Bege claro - Secundário */
+  --theme-bg-sticky: rgba(245, 241, 232, 0.95); /* Background sticky claro com blur */
   --theme-text: #0d0d0d;           /* Preto puro para máximo contraste */
   --theme-text-secondary: #1a1a1a; /* Quase preto */
   --theme-text-muted: #1a1a1a;     /* Preto em vez de cinza */
   --theme-border: rgba(0, 0, 0, 0.25); /* Bordas mais visíveis */
   --theme-card-bg: rgba(30, 35, 45, 0.95); /* Card ESCURO no tema claro */
-  --theme-overlay: rgba(185, 180, 170, 0.98);
+  --theme-overlay: rgba(245, 241, 232, 0.98); /* Overlay alinhado com novo fundo */
   --pattern-opacity: 0.06;
-  --grain-opacity: 0.45; /* Aumentado de 0.12 para 0.45 - MAIS VISÍVEL! */
-  --gradient-overlay: linear-gradient(135deg, rgba(201, 35, 55, 0.25) 0%, transparent 50%, rgba(201, 35, 55, 0.15) 100%); /* GRADIENTE VERMELHO LATERAL MAIS VISÍVEL! */
+  --grain-opacity: 0.08; /* Granulação bem sutil no tema claro */
+  --gradient-overlay: linear-gradient(135deg, rgba(201, 35, 55, 0.02) 0%, transparent 50%, rgba(201, 35, 55, 0.015) 100%); /* Gradiente vermelho extremamente sutil */
   /* Cores específicas para tema claro */
   --theme-card-text: #d3cec3;      /* Texto creme (mesma cor da logo clara) no card escuro - NÃO usar branco puro */
   --theme-card-text-secondary: #cbd5e1; /* Cinza claro para descrições em cards escuros */
@@ -1052,9 +1079,9 @@ body::after {
 
 [data-theme="light"] #root::before {
   background:
-    radial-gradient(ellipse 90% 50% at 15% -15%, rgba(201, 35, 55, 0.05) 0%, transparent 55%),
-    radial-gradient(ellipse 80% 50% at 90% 115%, rgba(139, 35, 50, 0.04) 0%, transparent 50%);
-  opacity: 0.6;
+    radial-gradient(ellipse 90% 50% at 15% -15%, rgba(201, 35, 55, 0.008) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 50% at 90% 115%, rgba(139, 35, 50, 0.006) 0%, transparent 50%);
+  opacity: 0.15;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1081,7 +1108,7 @@ body::after {
 
 [data-theme="light"] #root::after {
   mix-blend-mode: soft-light;
-  opacity: 0.35; /* VISÍVEL no tema claro também */
+  opacity: 0.08; /* Granulação bem sutil no tema claro */
 }
 
 /* Animação desabilitada - estava causando sobreposição horizontal */
@@ -1105,6 +1132,22 @@ body::after {
 
 [data-theme="light"] .cinematic-vignette {
   background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 50%, rgba(0, 0, 0, 0.08) 100%);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ESTRELA DE FUNDO - Adaptação para Tema Claro
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Estrela com tag <img> - inverter cores: linhas brancas viram escuras no tema claro */
+[data-theme="light"] img[src*="logo-azimut-star.svg"] {
+  filter: invert(1) brightness(0.15);
+  opacity: 0.5 !important;
+}
+
+/* Estrela com background-image - aplicar filtro no container div */
+/* Seleciona divs com backgroundImage contendo logo-azimut-star.svg */
+[data-theme="light"] div[style*="backgroundImage"][style*="logo-azimut-star"] {
+  filter: invert(1) brightness(0.15);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1575,12 +1618,14 @@ html[data-theme="light"] [class*="bg-slate-9"],
 html[data-theme="light"] .card-adaptive,
 html[data-theme="light"] .card-dark-adaptive,
 html[data-theme="light"] .card-dark-fixed,
+html[data-theme="light"] .card-dark-alt-adaptive,
 html[data-theme="light"] [class*="bg-gradient-to"][class*="slate-8"],
 html[data-theme="light"] [class*="bg-gradient-to"][class*="slate-9"] {
   color: #d3cec3 !important;
 }
 
 /* Forçar TODOS os textos filhos também */
+/* NOTA: .solution-card-dark REMOVIDO - WhatWeDo usa estilos inline */
 html[data-theme="light"] [class*="from-slate-8"] *:not(.bg-azimut-red):not(.bg-azimut-red *),
 html[data-theme="light"] [class*="from-slate-9"] *:not(.bg-azimut-red):not(.bg-azimut-red *),
 html[data-theme="light"] [class*="to-slate-8"] *:not(.bg-azimut-red):not(.bg-azimut-red *),
@@ -1590,6 +1635,7 @@ html[data-theme="light"] [class*="bg-slate-9"] *:not(.bg-azimut-red):not(.bg-azi
 html[data-theme="light"] .card-adaptive *:not(.bg-azimut-red):not(.bg-azimut-red *),
 html[data-theme="light"] .card-dark-adaptive *:not(.bg-azimut-red):not(.bg-azimut-red *),
 html[data-theme="light"] .card-dark-fixed *:not(.bg-azimut-red):not(.bg-azimut-red *),
+html[data-theme="light"] .card-dark-alt-adaptive *:not(.bg-azimut-red):not(.bg-azimut-red *),
 html[data-theme="light"] [class*="bg-gradient-to"][class*="slate-8"] *:not(.bg-azimut-red):not(.bg-azimut-red *),
 html[data-theme="light"] [class*="bg-gradient-to"][class*="slate-9"] *:not(.bg-azimut-red):not(.bg-azimut-red *) {
   color: #d3cec3 !important;
@@ -1600,21 +1646,21 @@ html[data-theme="light"] [class*="bg-gradient-to"][class*="slate-9"] *:not(.bg-a
    ═══════════════════════════════════════════════════════════════ */
 
 /* 1. Texto branco/claro -> ESCURO no tema claro (EXCETO em fundos escuros e botões vermelhos) */
-html[data-theme="light"] body .text-white:not([class*="from-slate-8"] *):not([class*="from-slate-9"] *):not([class*="to-slate-8"] *):not([class*="to-slate-9"] *):not([class*="bg-slate-8"] *):not([class*="bg-slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red):not(.bg-azimut-red *):not([class*="bg-azimut-red"]),
-html[data-theme="light"] body h1.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
-html[data-theme="light"] body h2.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
-html[data-theme="light"] body h3.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
-html[data-theme="light"] body p.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
-html[data-theme="light"] body span.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
-html[data-theme="light"] body div.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red):not([class*="bg-azimut-red"]) {
+html[data-theme="light"] body .text-white:not([class*="from-slate-8"] *):not([class*="from-slate-9"] *):not([class*="to-slate-8"] *):not([class*="to-slate-9"] *):not([class*="bg-slate-8"] *):not([class*="bg-slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red):not(.bg-azimut-red *):not([class*="bg-azimut-red"]),
+html[data-theme="light"] body h1.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
+html[data-theme="light"] body h2.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
+html[data-theme="light"] body h3.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
+html[data-theme="light"] body p.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
+html[data-theme="light"] body span.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red):not([class*="bg-azimut-red"]),
+html[data-theme="light"] body div.text-white:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red):not([class*="bg-azimut-red"]) {
   color: #0d0d0d !important;
 }
 
 /* 2. Slate claro -> ESCURO no tema claro (EXCETO em fundos escuros e botões vermelhos) */
-html[data-theme="light"] .text-slate-50:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red *):not([class*="bg-azimut-red"]),
-html[data-theme="light"] .text-slate-100:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red *):not([class*="bg-azimut-red"]),
-html[data-theme="light"] .text-slate-200:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red *):not([class*="bg-azimut-red"]),
-html[data-theme="light"] .text-slate-300:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.bg-azimut-red *):not([class*="bg-azimut-red"]) {
+html[data-theme="light"] .text-slate-50:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red *):not([class*="bg-azimut-red"]),
+html[data-theme="light"] .text-slate-100:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red *):not([class*="bg-azimut-red"]),
+html[data-theme="light"] .text-slate-200:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red *):not([class*="bg-azimut-red"]),
+html[data-theme="light"] .text-slate-300:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *):not(.bg-azimut-red *):not([class*="bg-azimut-red"]) {
   color: #1a1a1a !important;
 }
 
@@ -1635,8 +1681,8 @@ html[data-theme="light"] .text-cyan-400 {
 }
 
 /* 4. Slate-400/500 (azul acinzentado) -> AZUL MARINHO/ESCURO no tema claro (EXCETO em fundos escuros) */
-html[data-theme="light"] .text-slate-400:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *),
-html[data-theme="light"] .text-slate-500:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *) {
+html[data-theme="light"] .text-slate-400:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *),
+html[data-theme="light"] .text-slate-500:not([class*="slate-8"] *):not([class*="slate-9"] *):not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not(.card-dark-alt-adaptive *) {
   color: #1e3a5f !important;
 }
 
@@ -2369,6 +2415,36 @@ select.dropdown-azimut::-ms-expand {
   color: #d3cec3;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   CLASSES UTILITÁRIAS PARA TEMA CLARO - REUTILIZÁVEIS
+   Padronização baseada em REGRAS_DESIGN_TEMA_CLARO.md
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Texto em cards escuros (tema claro) - PRINCIPAL */
+.text-theme-card-text {
+  color: var(--theme-card-text, #d3cec3) !important;
+}
+
+/* Texto em cards escuros (tema claro) - SECUNDÁRIO */
+.text-theme-card-text-secondary {
+  color: var(--theme-card-text-secondary, #cbd5e1) !important;
+}
+
+/* Texto em fundo claro (tema claro) - PRINCIPAL */
+.text-theme-light-main {
+  color: var(--theme-text, #0f172a) !important;
+}
+
+/* Texto em fundo claro (tema claro) - SECUNDÁRIO */
+.text-theme-light-secondary {
+  color: var(--theme-text-secondary, #1a1a1a) !important;
+}
+
+/* Texto em fundo claro (tema claro) - MUTED */
+.text-theme-light-muted {
+  color: var(--theme-text-muted, #1e3a5f) !important;
+}
+
 /* REMOVIDO: estava forçando texto vermelho em botões vermelhos no tema claro */
 /* [data-theme="light"] .card-adaptive .text-azimut-red,
 [data-theme="light"] .card-adaptive .bg-azimut-red {
@@ -2384,6 +2460,36 @@ select.dropdown-azimut::-ms-expand {
 [data-theme="light"] .card-adaptive span,
 [data-theme="light"] .card-adaptive div {
   color: #d3cec3; /* Texto creme para contraste no fundo escuro */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CLASSES UTILITÁRIAS PARA TEMA CLARO - REUTILIZÁVEIS
+   Padronização baseada em REGRAS_DESIGN_TEMA_CLARO.md
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Texto em cards escuros (tema claro) - PRINCIPAL */
+.text-theme-card-text {
+  color: var(--theme-card-text, #d3cec3) !important;
+}
+
+/* Texto em cards escuros (tema claro) - SECUNDÁRIO */
+.text-theme-card-text-secondary {
+  color: var(--theme-card-text-secondary, #cbd5e1) !important;
+}
+
+/* Texto em fundo claro (tema claro) - PRINCIPAL */
+.text-theme-light-main {
+  color: var(--theme-text, #0f172a) !important;
+}
+
+/* Texto em fundo claro (tema claro) - SECUNDÁRIO */
+.text-theme-light-secondary {
+  color: var(--theme-text-secondary, #1a1a1a) !important;
+}
+
+/* Texto em fundo claro (tema claro) - MUTED */
+.text-theme-light-muted {
+  color: var(--theme-text-muted, #1e3a5f) !important;
 }
 
 /* Texto com gradiente - vermelho puro Azimut */

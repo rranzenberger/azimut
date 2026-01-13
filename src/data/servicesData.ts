@@ -84,7 +84,7 @@ export const servicesData: Service[] = [
     ],
     deliverablesFr: [
       'Concept et développement de scénario',
-      'Direction de la photographie et production',
+      'Photographie et production',
       'Capture 4K/6K/8K',
       'Montage et édition',
       'Étalonnage cinématographique',
@@ -177,7 +177,7 @@ export const servicesData: Service[] = [
       'Tracking e rotoscopia',
       'Cleanup e remoção de elementos',
       'Grafismo e lower thirds',
-      'Entrega em múltiplos formatos'
+      'Entrega múltiplos formatos'
     ],
     deliverablesEn: [
       'Advanced editing and assembly',
@@ -207,7 +207,7 @@ export const servicesData: Service[] = [
       'Tracking y rotoscopia',
       'Limpieza y remoción de elementos',
       'Grafismo y lower thirds',
-      'Entrega en múltiples formatos'
+      'Entrega múltiples formatos'
     ],
     processPt: [
       'Análise de material bruto',
@@ -284,7 +284,7 @@ export const servicesData: Service[] = [
       'Lighting e rendering fotorrealista',
       'Motion graphics 2D',
       'Compositing final',
-      'Entrega em qualquer resolução'
+      'Entrega qualquer resolução'
     ],
     deliverablesEn: [
       'Storyboard and animatic',
@@ -294,7 +294,7 @@ export const servicesData: Service[] = [
       'Photorealistic lighting and rendering',
       '2D motion graphics',
       'Final compositing',
-      'Delivery in any resolution'
+      'Delivery any resolution'
     ],
     deliverablesFr: [
       'Storyboard et animatique',
@@ -304,7 +304,7 @@ export const servicesData: Service[] = [
       'Éclairage et rendu photoréaliste',
       'Motion graphics 2D',
       'Compositing final',
-      'Livraison en toute résolution'
+      'Livraison toute résolution'
     ],
     deliverablesEs: [
       'Storyboard y animatic',
@@ -314,7 +314,7 @@ export const servicesData: Service[] = [
       'Iluminación y renderizado fotorrealista',
       'Motion graphics 2D',
       'Compositing final',
-      'Entrega en cualquier resolución'
+      'Entrega cualquier resolución'
     ],
     processPt: [
       'Conceito e storyboard',

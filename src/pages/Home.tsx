@@ -9,6 +9,7 @@ import { useAzimutContent } from '../hooks/useAzimutContent'
 import { usePersonalizedContent } from '../hooks/usePersonalizedContent'
 import { VideoPlayer } from '../components/VideoPlayer'
 import { AnimatedLogo } from '../components/AnimatedLogo'
+import StarBackground from '../components/StarBackground'
 
 interface HomeProps {
   lang: Lang
@@ -186,15 +187,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
       />
       <main className="relative">
         {/* Estrela de fundo - HOME: Posição ajustada para não competir com logo animada */}
-        <div
-          className="pointer-events-none fixed top-[32vh] -right-28 h-[520px] w-[520px] md:top-[35vh] md:-right-40 md:h-[680px] md:w-[680px] opacity-50"
-          style={{
-            zIndex: -5,
-            backgroundImage: 'url(/logo-azimut-star.svg)',
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center'
-          }}
+        <StarBackground
+          className="fixed top-[32vh] -right-28 h-[520px] w-[520px] md:top-[35vh] md:-right-40 md:h-[680px] md:w-[680px]"
+          zIndex={-5}
+          opacity={0.5}
         />
 
         {/* ════════════════════════════════════════════════════════════════ */}
@@ -681,10 +677,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             {/* Título */}
             <div className="mb-10 text-center">
-              <h2 className="font-handel text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.12em] mb-3">
+              <h2 className="font-handel text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.12em] mb-3 text-theme-light-main">
                 {lang === 'pt' ? 'Projetos em Destaque' : lang === 'es' ? 'Proyectos Destacados' : lang === 'fr' ? 'Projets en Vedette' : 'Featured Projects'}
               </h2>
-              <p className="text-sm md:text-base text-slate-300">
+              <p className="text-sm md:text-base text-slate-700 dark:text-slate-300">
                 {lang === 'pt' ? 'Uma seleção dos nossos trabalhos mais emblemáticos' : lang === 'es' ? 'Una selección de nuestros trabajos más emblemáticos' : 'A selection of our most iconic work'}
               </p>
             </div>
@@ -900,7 +896,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         <section className="py-10 md:py-12 bg-gradient-to-b from-transparent via-black/5 to-transparent dark:via-white/5">
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="mb-10 text-center">
-              <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-[0.12em] mb-4">
+              <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-[0.12em] mb-4 text-theme-light-main">
                 {lang === 'pt' ? 'O que criamos' : lang === 'es' ? 'Qué creamos' : lang === 'fr' ? 'Ce que nous créons' : 'What we create'}
               </h2>
               <p className="text-slate-700 dark:text-slate-300 max-w-2xl mx-auto text-lg">
@@ -933,7 +929,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     <h3 className="mb-3 font-handel text-lg md:text-xl uppercase tracking-wide text-white group-hover:text-azimut-red transition-colors duration-300 line-clamp-2 leading-tight">
                       {service.title}
                     </h3>
-                    <p className="text-sm md:text-base leading-relaxed text-slate-900 dark:text-slate-200 group-hover:text-slate-800 dark:group-hover:text-slate-100 transition-colors duration-300">
+                    <p className="text-sm md:text-base leading-relaxed text-theme-card-text-secondary group-hover:text-theme-card-text transition-colors duration-300">
                       {service.description}
                     </p>
                     
@@ -1009,7 +1005,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     <h3 className="mb-3 font-handel text-lg md:text-xl uppercase tracking-wide text-white group-hover:text-azimut-red transition-colors duration-300 relative z-10 line-clamp-2 leading-tight">
                       {service.title}
                     </h3>
-                    <p className="text-sm md:text-base leading-relaxed text-slate-900 dark:text-slate-200 group-hover:text-slate-800 dark:group-hover:text-slate-100 transition-colors duration-300 relative z-10">
+                    <p className="text-sm md:text-base leading-relaxed text-theme-card-text-secondary group-hover:text-theme-card-text transition-colors duration-300 relative z-10">
                       {service.description}
                     </p>
                     

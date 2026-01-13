@@ -68,6 +68,13 @@ export async function POST(req: NextRequest) {
     const type = (form.get('type') as string) || 'IMAGE';
     const altPt = (form.get('altPt') as string) || '';
     const altEn = (form.get('altEn') as string) || '';
+    
+    // Novos campos do sistema de tags (Opção 2)
+    const pageSlug = form.get('pageSlug') as string | null;
+    const sectionSlug = form.get('sectionSlug') as string | null;
+    const imageType = form.get('imageType') as string | null;
+    const servicesTagsStr = form.get('servicesTags') as string | null;
+    const servicesTags = servicesTagsStr ? servicesTagsStr.split(',').map(s => s.trim()).filter(s => s) : [];
 
     if (!file) {
       return NextResponse.json({ error: 'Arquivo é obrigatório' }, { status: 400 });
@@ -99,6 +106,10 @@ export async function POST(req: NextRequest) {
         contentType,
         altPt,
         altEn,
+        pageSlug: pageSlug || undefined,
+        sectionSlug: sectionSlug || undefined,
+        imageType: imageType || undefined,
+        servicesTags,
       });
     } else {
       // Vídeo
@@ -108,6 +119,10 @@ export async function POST(req: NextRequest) {
         contentType,
         altPt,
         altEn,
+        pageSlug: pageSlug || undefined,
+        sectionSlug: sectionSlug || undefined,
+        imageType: imageType || undefined,
+        servicesTags,
       });
     }
 
@@ -127,6 +142,10 @@ async function processLocalImage(params: {
   contentType: string;
   altPt: string;
   altEn: string;
+  pageSlug?: string;
+  sectionSlug?: string;
+  imageType?: string;
+  servicesTags?: string[];
 }) {
   const { buffer, filename, contentType, altPt, altEn } = params;
   const image = sharp(buffer);
@@ -183,6 +202,7 @@ async function processLocalImage(params: {
   }
 
   const { width, height, format, size } = metadata;
+  const { pageSlug, sectionSlug, imageType, servicesTags } = params;
 
   return prisma.media.create({
     data: {
@@ -200,6 +220,11 @@ async function processLocalImage(params: {
       contentType,
       altPt: altPt || null,
       altEn: altEn || null,
+      // Sistema de Tags (Opção 2)
+      pageSlug: pageSlug || null,
+      sectionSlug: sectionSlug || null,
+      imageType: imageType || null,
+      servicesTags: servicesTags || [],
     },
   });
 }
@@ -210,8 +235,12 @@ async function processLocalVideo(params: {
   contentType: string;
   altPt: string;
   altEn: string;
+  pageSlug?: string;
+  sectionSlug?: string;
+  imageType?: string;
+  servicesTags?: string[];
 }) {
-  const { buffer, filename, contentType, altPt, altEn } = params;
+  const { buffer, filename, contentType, altPt, altEn, pageSlug, sectionSlug, imageType, servicesTags } = params;
   const fileExt = filename.split('.').pop() || 'mp4';
   const relPath = `${UPLOAD_BASE}/videos/${Date.now()}-${filename}`;
   const publicUrl = await saveFileLocal(relPath, buffer);
@@ -225,6 +254,11 @@ async function processLocalVideo(params: {
       sizeBytes: buffer.byteLength,
       altPt: altPt || null,
       altEn: altEn || null,
+      // Sistema de Tags (Opção 2)
+      pageSlug: pageSlug || null,
+      sectionSlug: sectionSlug || null,
+      imageType: imageType || null,
+      servicesTags: servicesTags || [],
     },
   });
 }

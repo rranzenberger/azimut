@@ -16,11 +16,34 @@ const MAX_IMAGE_MB = 8;
 const MAX_VIDEO_MB = 25;
 const MAX_ALT = 160;
 
+// Lista de serviços para o dropdown
+const SERVICES = [
+  { slug: 'cinema-audiovisual', label: 'Cinema & Audiovisual' },
+  { slug: 'pos-producao-vfx', label: 'Pós-Produção & VFX' },
+  { slug: 'animacao-2d-3d', label: 'Animação 2D/3D' },
+  { slug: 'xr-interatividade-web3', label: 'XR, Interatividade & Web3' },
+  { slug: 'cenografia-design-espacial', label: 'Cenografia & Design Espacial' },
+  { slug: 'games-interativos', label: 'Games Interativos' },
+  { slug: 'ia-criativa', label: 'IA Criativa' },
+  { slug: 'direcao-arte-criativa', label: 'Direção de Arte Criativa' },
+  { slug: 'consultoria-estrategia', label: 'Consultoria & Estratégia' },
+  { slug: 'teatro-espetaculos-imersivos', label: 'Teatro & Espetáculos Imersivos' },
+  { slug: 'branded-experiences-ativacoes', label: 'Branded Experiences & Ativações' },
+  { slug: 'museus-exposicoes', label: 'Museus & Exposições' },
+  { slug: 'festivais-curadoria-eventos', label: 'Festivais, Curadoria & Eventos' },
+  { slug: 'educacao-treinamento', label: 'Educação & Treinamento' },
+  { slug: 'realidade-virtual-vr', label: 'Realidade Virtual (VR)' },
+  { slug: 'arquitetura-virtual-bim', label: 'Arquitetura Virtual & BIM' },
+]
+
 export default function MediaPage() {
   const [file, setFile] = useState<File | null>(null);
   const [type, setType] = useState<'IMAGE' | 'VIDEO'>('IMAGE');
   const [altPt, setAltPt] = useState('');
   const [altEn, setAltEn] = useState('');
+  const [pageSlug, setPageSlug] = useState('');
+  const [sectionSlug, setSectionSlug] = useState('');
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [msg, setMsg] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -51,6 +74,17 @@ export default function MediaPage() {
     form.append('type', type);
     form.append('altPt', altPt);
     form.append('altEn', altEn);
+    
+    // Sistema de Tags (Opção 2)
+    if (pageSlug) {
+      form.append('pageSlug', pageSlug);
+    }
+    if (sectionSlug) {
+      form.append('sectionSlug', sectionSlug);
+    }
+    if (selectedServices.length > 0) {
+      form.append('servicesTags', selectedServices.join(','));
+    }
 
     setLoading(true);
     try {
@@ -164,6 +198,112 @@ export default function MediaPage() {
               style={{ ...inputStyle, width: '100%', boxSizing: 'border-box' }}
               placeholder="Short alt text in EN"
             />
+          </div>
+
+          {/* ═══════════════════════════════════════════
+              SISTEMA DE TAGS (Opção 2)
+              ═══════════════════════════════════════════ */}
+          <div style={{ 
+            marginTop: 8, 
+            padding: '16px', 
+            borderRadius: 12, 
+            border: '1px solid rgba(201,35,55,0.3)', 
+            background: 'rgba(201,35,55,0.05)' 
+          }}>
+            <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 600, color: '#e8e6f2' }}>
+              📍 Onde esta imagem será usada?
+            </h3>
+            
+            <div style={{ display: 'grid', gap: 16 }}>
+              {/* Para qual página? */}
+              <div style={{ display: 'grid', gap: 10 }}>
+                <label style={{ fontSize: 14, fontWeight: 600, color: '#c0bccf' }}>
+                  Para qual página? <span style={{ color: '#8f8ba2', fontWeight: 400 }}>(opcional)</span>
+                </label>
+                <select
+                  value={pageSlug}
+                  onChange={(e) => setPageSlug(e.target.value)}
+                  style={{ ...inputStyle, width: '100%', boxSizing: 'border-box' }}
+                >
+                  <option value="">Selecione uma página...</option>
+                  {SERVICES.map((service) => (
+                    <option key={service.slug} value={`what/${service.slug}`}>
+                      {service.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Onde na página? */}
+              <div style={{ display: 'grid', gap: 10 }}>
+                <label style={{ fontSize: 14, fontWeight: 600, color: '#c0bccf' }}>
+                  Onde na página? <span style={{ color: '#8f8ba2', fontWeight: 400 }}>(opcional)</span>
+                </label>
+                <select
+                  value={sectionSlug}
+                  onChange={(e) => setSectionSlug(e.target.value)}
+                  style={{ ...inputStyle, width: '100%', boxSizing: 'border-box' }}
+                >
+                  <option value="">Selecione...</option>
+                  <option value="hero">Hero (Banner principal)</option>
+                  <option value="gallery">Galeria de imagens</option>
+                </select>
+              </div>
+
+              {/* Qual(is) serviço(s)? */}
+              <div style={{ display: 'grid', gap: 10 }}>
+                <label style={{ fontSize: 14, fontWeight: 600, color: '#c0bccf' }}>
+                  Qual(is) serviço(s)? <span style={{ color: '#8f8ba2', fontWeight: 400 }}>(opcional, múltipla escolha)</span>
+                </label>
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', 
+                  gap: 8,
+                  maxHeight: '200px',
+                  overflowY: 'auto',
+                  padding: '8px',
+                  borderRadius: 8,
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid rgba(255,255,255,0.08)'
+                }}>
+                  {SERVICES.map((service) => (
+                    <label
+                      key={service.slug}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 8,
+                        fontSize: 13,
+                        cursor: 'pointer',
+                        padding: '6px 8px',
+                        borderRadius: 6,
+                        background: selectedServices.includes(service.slug) 
+                          ? 'rgba(201,35,55,0.2)' 
+                          : 'transparent',
+                        border: selectedServices.includes(service.slug)
+                          ? '1px solid rgba(201,35,55,0.5)'
+                          : '1px solid transparent',
+                        transition: 'all 0.2s'
+                      }}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedServices.includes(service.slug)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedServices([...selectedServices, service.slug])
+                          } else {
+                            setSelectedServices(selectedServices.filter(s => s !== service.slug))
+                          }
+                        }}
+                        style={{ cursor: 'pointer' }}
+                      />
+                      <span style={{ color: '#c0bccf' }}>{service.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
           {error && (

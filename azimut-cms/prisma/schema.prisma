@@ -61,6 +61,17 @@ model Media {
   pageHeroBackgrounds Page[]       @relation("PageHeroBackground")
   pageDemoreelVideos  Page[]       @relation("PageDemoreelVideo")
   analysis         MediaAnalysis?
+  
+  // ═══════════════════════════════════════════
+  // Sistema de Tags (Opção 2) - Contexto da imagem
+  // ═══════════════════════════════════════════
+  pageSlug         String?         // "what/cinema-audiovisual", "home", "work", etc.
+  sectionSlug      String?         // "hero", "gallery", "section-image"
+  imageType        String?         // "hero-background", "gallery-image", "service-icon"
+  servicesTags     String[]        // ["cinema-audiovisual", "pos-producao-vfx"]
+  
+  @@index([pageSlug])
+  @@index([sectionSlug])
 }
 
 model Tag {

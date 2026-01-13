@@ -11,6 +11,7 @@ import { usePersonalizedContent } from '../hooks/usePersonalizedContent'
 import OportunidadesAtivas from '../components/OportunidadesAtivas'
 import CredibilidadeEditais from '../components/CredibilidadeEditais'
 import CuradoriaFestivais from '../components/CuradoriaFestivais'
+import StarBackground from '../components/StarBackground'
 
 interface WorkProps {
   lang: Lang
@@ -249,12 +250,11 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
       />
       <main className="relative pt-6 md:pt-8 pb-24 film-grain">
         {/* Star background - FIXA (FUNDO - atrás de tudo) */}
-        <div 
-          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-50"
-          style={{ zIndex: -10 }}
-        >
-          <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" />
-        </div>
+        <StarBackground
+          className="fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px]"
+          zIndex={-10}
+          opacity={0.5}
+        />
 
         <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
           {/* Prefixo Narrativo - APENAS ESTE ANIMA */}

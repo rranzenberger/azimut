@@ -292,13 +292,13 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                 className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500"
               >
                 <div className="flex flex-col md:flex-row">
-                  {/* Foto - ALBERTO: object-cover com posicionamento ajustado */}
+                  {/* Foto - Larguras iguais para todos, enquadramento otimizado */}
                   <div 
-                    className={`team-photo relative shrink-0 overflow-hidden ${member.name.includes('Alberto') ? 'w-full md:w-[450px] lg:w-[500px] xl:w-[550px] h-[500px] md:h-[600px]' : 'w-full md:w-[400px] lg:w-[450px] xl:w-[500px] aspect-[3/4]'}`}
-                    style={member.name.includes('Alberto') ? {
+                    className="team-photo relative shrink-0 overflow-hidden w-full md:w-[450px] lg:w-[500px] xl:w-[550px] aspect-[3/4]"
+                    style={{
                       background: '#0a0f1a',
                       overflow: 'hidden'
-                    } : {}}
+                    }}
                   >
                     <img 
                       src={member.photo}
@@ -306,15 +306,26 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                       className="w-full h-full"
                       style={member.name.includes('Alberto') ? {
                         objectFit: 'cover',
-                        objectPosition: 'center 25%',
+                        objectPosition: 'center 35%',
                         width: '100%',
                         height: '100%',
                         display: 'block',
-                        transform: 'scale(1.15)',
+                        transform: 'scale(1.25)',
+                        transformOrigin: 'center center'
+                      } : member.name.includes('Ranz') ? {
+                        objectFit: 'cover',
+                        objectPosition: 'center 30%',
+                        width: '100%',
+                        height: '100%',
+                        display: 'block',
+                        transform: 'scale(1.2)',
                         transformOrigin: 'center center'
                       } : {
                         objectFit: 'cover',
-                        objectPosition: 'center center'
+                        objectPosition: 'center center',
+                        width: '100%',
+                        height: '100%',
+                        display: 'block'
                       }}
                       onError={(e) => {
                         const parent = e.currentTarget.parentElement

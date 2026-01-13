@@ -4,6 +4,7 @@ import SEO from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
 import InternalNavigation from '../components/InternalNavigation'
+import StarBackground from '../components/StarBackground'
 
 interface StudioProps {
   lang: Lang
@@ -243,12 +244,11 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
       
       <main className="relative pt-6 md:pt-8 pb-24 film-grain">
         {/* Star Background - FIXA (FUNDO - atrás de tudo) */}
-        <div 
-          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-50"
-          style={{ zIndex: -10 }}
-        >
-          <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" loading="lazy" />
-        </div>
+        <StarBackground
+          className="fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px]"
+          zIndex={-10}
+          opacity={0.5}
+        />
 
         <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
           {/* Hero - MESMA ALTURA QUE WORK */}
@@ -438,7 +438,9 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                       alt={member.name}
                       className="w-full h-full object-cover"
                       style={{ 
-                        objectPosition: member.name.includes('Alberto') ? 'center 25%' : 'center center'
+                        objectPosition: member.name.includes('Alberto') ? 'center 35%' : 'center center',
+                        transform: member.name.includes('Alberto') ? 'scale(1.2)' : 'scale(1)',
+                        transformOrigin: 'center center'
                       }}
                       onError={(e) => {
                         const parent = e.currentTarget.parentElement
