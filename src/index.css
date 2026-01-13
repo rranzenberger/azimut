@@ -17,7 +17,7 @@ html {
    GRÃO CINEMATOGRÁFICO - AZIMUT IDENTITY
    ═══════════════════════════════════════════════════════════════ */
 
-/* Film grain overlay para dar atmosfera cinematográfica - MELHORADO */
+/* Film grain overlay para dar atmosfera cinematográfica - MELHORADO E MAIS VISÍVEL */
 .film-grain::before {
   content: '';
   position: absolute;
@@ -26,12 +26,12 @@ html {
   right: 0;
   bottom: 0;
   background-image: 
-    repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,.08) 1px, rgba(0,0,0,.08) 2px),
-    repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(0,0,0,.08) 1px, rgba(0,0,0,.08) 2px),
-    repeating-linear-gradient(45deg, transparent, transparent 1px, rgba(0,0,0,.04) 1px, rgba(0,0,0,.04) 2px);
-  opacity: 0.6;
+    repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,.12) 1px, rgba(0,0,0,.12) 2px),
+    repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(0,0,0,.12) 1px, rgba(0,0,0,.12) 2px),
+    repeating-linear-gradient(45deg, transparent, transparent 1px, rgba(0,0,0,.06) 1px, rgba(0,0,0,.06) 2px);
+  opacity: 0.8;
   pointer-events: none;
-  z-index: 10;
+  z-index: 1;
   mix-blend-mode: overlay;
   animation: grain 8s steps(10) infinite;
 }

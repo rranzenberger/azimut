@@ -74,7 +74,7 @@ export const GamificationWidget: React.FC<GamificationWidgetProps> = ({
 
   const positionClasses = {
     'bottom-left': 'bottom-6 left-6',
-    'bottom-right': 'bottom-28 right-6', // ← Mudado de bottom-6 para bottom-28 (acima do WhatsApp)
+    'bottom-right': 'bottom-[104px] right-6', // ← Acima do ClaudeAssistant (64px + 40px gap)
     'top-right': 'top-24 right-6'
   }
 
