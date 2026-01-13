@@ -7,6 +7,100 @@ import LangLink from '../components/LangLink'
 import InternalNavigation from '../components/InternalNavigation'
 import { servicesData, getServiceTitle, getServiceShortDesc } from '../data/servicesData'
 
+// ═══════════════════════════════════════════════════════════════
+// FUNÇÃO: Destacar palavras-chave em vermelho para melhor leitura
+// Baseado em pesquisa UX: destaque de keywords melhora scanabilidade
+// ═══════════════════════════════════════════════════════════════
+const highlightKeywords = (text: string, lang: Lang): React.ReactNode => {
+  // Palavras-chave importantes por idioma (tecnologias, processos, resultados, marcas)
+  const keywords: Record<Lang, string[]> = {
+    pt: [
+      // Tecnologias (prioridade alta)
+      'VR', 'AR', 'XR', '360°', '6DoF', 'BIM', 'VFX', 'CGI', 'IA', 'AI', 'Web3', 'NFTs', 'metaverso',
+      '4K', '6K', '8K', 'DCP', 'ProRes', 'H.265', 'RED', 'Blackmagic', 'Sony',
+      // Processos/Entregas (prioridade média)
+      'conceito', 'roteiro', 'direção', 'produção', 'pós-produção', 'edição', 'montagem', 'color grading',
+      'motion design', 'animação', 'composição', 'renderização', 'pipeline', 'workflow',
+      // Resultados/Valores (prioridade média)
+      'imersivo', 'interativo', 'cinematográfico', 'experiências', 'narrativas', 'instalações',
+      'museus', 'festivais', 'marcas', 'educação', 'treinamento', 'workshops',
+      // Específicos/Marcas (prioridade alta)
+      'Rio Museu Olímpico', 'Gramado VR', 'VFS', 'VanArts', 'Autodesk', '30 anos', '1996',
+      'Immerso XR', 'Petrópolis', 'Flamengo', 'Cenna Tower', 'First Nation Museum'
+    ],
+    en: [
+      'VR', 'AR', 'XR', '360°', '6DoF', 'BIM', 'VFX', 'CGI', 'AI', 'Web3', 'NFTs', 'metaverse',
+      '4K', '6K', '8K', 'DCP', 'ProRes', 'H.265', 'RED', 'Blackmagic', 'Sony',
+      'concept', 'script', 'direction', 'production', 'post-production', 'editing', 'color grading',
+      'motion design', 'animation', 'composition', 'rendering', 'pipeline', 'workflow',
+      'immersive', 'interactive', 'cinematic', 'experiences', 'narratives', 'installations',
+      'museums', 'festivals', 'brands', 'education', 'training', 'workshops',
+      'Rio Olympic Museum', 'Gramado VR', 'VFS', 'VanArts', 'Autodesk', '30 years', '1996',
+      'Immerso XR', 'Petrópolis', 'Flamengo', 'Cenna Tower', 'First Nation Museum'
+    ],
+    es: [
+      'VR', 'AR', 'XR', '360°', '6DoF', 'BIM', 'VFX', 'CGI', 'IA', 'AI', 'Web3', 'NFTs', 'metaverso',
+      '4K', '6K', '8K', 'DCP', 'ProRes', 'H.265', 'RED', 'Blackmagic', 'Sony',
+      'concepto', 'guion', 'dirección', 'producción', 'posproducción', 'edición', 'color grading',
+      'motion design', 'animación', 'composición', 'renderizado', 'pipeline', 'workflow',
+      'inmersivo', 'interactivo', 'cinematográfico', 'experiencias', 'narrativas', 'instalaciones',
+      'museos', 'festivales', 'marcas', 'educación', 'formación', 'talleres',
+      'Museo Olímpico de Río', 'Gramado VR', 'VFS', 'VanArts', 'Autodesk', '30 años', '1996',
+      'Immerso XR', 'Petrópolis', 'Flamengo', 'Cenna Tower', 'First Nation Museum'
+    ],
+    fr: [
+      'VR', 'AR', 'XR', '360°', '6DoF', 'BIM', 'VFX', 'CGI', 'IA', 'AI', 'Web3', 'NFTs', 'métavers',
+      '4K', '6K', '8K', 'DCP', 'ProRes', 'H.265', 'RED', 'Blackmagic', 'Sony',
+      'concept', 'scénario', 'direction', 'production', 'post-production', 'montage', 'étalonnage',
+      'motion design', 'animation', 'composition', 'rendu', 'pipeline', 'workflow',
+      'immersif', 'interactif', 'cinématographique', 'expériences', 'récits', 'installations',
+      'musées', 'festivals', 'marques', 'éducation', 'formation', 'ateliers',
+      'Musée Olympique de Rio', 'Gramado VR', 'VFS', 'VanArts', 'Autodesk', '30 ans', '1996',
+      'Immerso XR', 'Petrópolis', 'Flamengo', 'Cenna Tower', 'First Nation Museum'
+    ]
+  }
+
+  const keywordsList = keywords[lang] || keywords.pt
+  
+  // Ordenar por tamanho (mais longas primeiro) para evitar sobreposição
+  const sortedKeywords = keywordsList.sort((a, b) => b.length - a.length)
+  
+  // Criar regex que encontra todas as palavras-chave (case-insensitive, com word boundaries)
+  const escapedKeywords = sortedKeywords.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  const regex = new RegExp(`\\b(${escapedKeywords.join('|')})\\b`, 'gi')
+  
+  const parts: React.ReactNode[] = []
+  let lastIndex = 0
+  let match
+  let keyCounter = 0
+  
+  // Resetar regex
+  regex.lastIndex = 0
+  
+  while ((match = regex.exec(text)) !== null) {
+    // Adicionar texto antes da palavra-chave
+    if (match.index > lastIndex) {
+      parts.push(text.substring(lastIndex, match.index))
+    }
+    
+    // Adicionar palavra-chave destacada em vermelho (semibold para destaque)
+    parts.push(
+      <span key={`kw-${keyCounter++}`} className="text-azimut-red font-semibold">
+        {match[0]}
+      </span>
+    )
+    
+    lastIndex = regex.lastIndex
+  }
+  
+  // Adicionar texto restante
+  if (lastIndex < text.length) {
+    parts.push(text.substring(lastIndex))
+  }
+  
+  return parts.length > 0 ? <>{parts}</> : text
+}
+
 interface WhatWeDoProps {
   lang: Lang
 }
@@ -191,11 +285,12 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                       {getServiceTitle(service, lang)}
                     </h3>
                     <p className="text-sm leading-relaxed text-slate-200 group-hover:text-slate-100 transition-colors duration-300 flex-grow line-clamp-4">
-                      {getServiceShortDesc(service, lang)}
+                      {highlightKeywords(getServiceShortDesc(service, lang), lang)}
                     </p>
                     <div className="mt-4 pt-4 border-t border-white/10 flex-shrink-0">
-                      <span className="text-xs font-medium text-azimut-red group-hover:text-white transition-colors duration-300">
-                        {lang === 'pt' ? 'Ver detalhes →' : lang === 'es' ? 'Ver detalles →' : lang === 'fr' ? 'Voir détails →' : 'View details →'}
+                      <span className="text-xs font-semibold text-azimut-red group-hover:text-azimut-red/80 transition-colors duration-300 inline-flex items-center gap-1">
+                        {lang === 'pt' ? 'Ver detalhes' : lang === 'es' ? 'Ver detalles' : lang === 'fr' ? 'Voir détails' : 'View details'}
+                        <span className="text-azimut-red">→</span>
                       </span>
                     </div>
                   </article>
