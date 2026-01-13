@@ -242,10 +242,10 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
       />
       
       <main className="relative pt-6 md:pt-8 pb-24 film-grain">
-        {/* Star Background - FIXA (opacidade reduzida para não conflitar) */}
+        {/* Star Background - FIXA (mais transparente, atrás dos botões) */}
         <div 
-          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-0.15"
-          style={{ zIndex: 0 }}
+          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-0.1"
+          style={{ zIndex: -1 }}
         >
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" loading="lazy" />
         </div>
