@@ -384,7 +384,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
         {/* Estrela abaixo da seta - FUNDO (atrás de tudo) */}
         {/* Posição ajustada para mostrar mais da estrela */}
         <div 
-          className="pointer-events-none fixed top-[75vh] -right-20 h-[520px] w-[520px] md:top-[70vh] md:-right-16 md:h-[680px] md:w-[680px] opacity-0.1"
+          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-50"
           style={{ 
             zIndex: -10,
             backgroundImage: 'url(/logo-azimut-star.svg)',

@@ -23,8 +23,8 @@ export const AnimatedLogo: React.FC = () => {
           video.currentTime = 0; // Reset video to start
           setOpacity(1); // Fade back in
           video.play(); // Restart video
-        }, 2000); // Fade out duration (2 seconds)
-      }, 10000); // Pause duration (10 seconds)
+        }, 3000); // Fade out duration (3 seconds)
+      }, 27000); // Pause duration (27 seconds)
     };
 
     video.addEventListener('ended', handleEnded);
@@ -49,9 +49,11 @@ export const AnimatedLogo: React.FC = () => {
       className="w-full h-full object-contain pointer-events-none"
       style={{ 
         opacity: opacity, 
-        transition: 'opacity 2s ease-in-out',
+        transition: 'opacity 3s ease-in-out',
         mixBlendMode: 'screen', // Luma key: preto vira transparente
-        filter: 'drop-shadow(0 0 30px rgba(201, 35, 55, 0.5)) drop-shadow(0 0 60px rgba(201, 35, 55, 0.25))'
+        filter: 'drop-shadow(0 0 30px rgba(201, 35, 55, 0.5)) drop-shadow(0 0 60px rgba(201, 35, 55, 0.25))',
+        zIndex: 10, // Acima do grain (que está em -15 e -18)
+        position: 'relative'
       }}
     >
       {/* WebM VP9 720p com chroma key (otimizado para 720px uso real) */}

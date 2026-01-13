@@ -185,9 +185,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         path="/"
       />
       <main className="relative">
-        {/* Estrela de fundo - HOME: Equilíbrio entre visibilidade e não competir com logo animada */}
+        {/* Estrela de fundo - HOME: Posição ajustada para não competir com logo animada */}
         <div
-          className="pointer-events-none fixed -right-28 -bottom-[10rem] h-[520px] w-[520px] md:-right-40 md:-bottom-[12rem] md:h-[680px] md:w-[680px] opacity-30"
+          className="pointer-events-none fixed top-[32vh] -right-28 h-[520px] w-[520px] md:top-[35vh] md:-right-40 md:h-[680px] md:w-[680px] opacity-50"
           style={{
             zIndex: -5,
             backgroundImage: 'url(/logo-azimut-star.svg)',
@@ -306,8 +306,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </div>
               
               {/* Coluna Direita: Logo 3D Animada (alinhamento fino) */}
-              <div className="flex justify-center" style={{ alignItems: 'flex-start' }}>
-                <div className="w-full max-w-[1400px] aspect-square -mt-30">
+              <div className="flex justify-center" style={{ alignItems: 'flex-start', zIndex: 10, position: 'relative' }}>
+                <div className="w-full max-w-[1400px] aspect-square -mt-30" style={{ zIndex: 10, position: 'relative' }}>
                   <AnimatedLogo />
                 </div>
               </div>

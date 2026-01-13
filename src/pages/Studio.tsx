@@ -244,7 +244,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
       <main className="relative pt-6 md:pt-8 pb-24 film-grain">
         {/* Star Background - FIXA (FUNDO - atrás de tudo) */}
         <div 
-          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-0.1"
+          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-50"
           style={{ zIndex: -10 }}
         >
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" loading="lazy" />
@@ -431,14 +431,14 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   key={i}
                   className="group relative rounded-2xl overflow-hidden border-2 border-azimut-red/20 hover:border-azimut-red/60 transition-all duration-500 cursor-pointer"
                 >
-                  {/* FOTO REAL com Duotone Cinematográfico - ALBERTO SEM CORTAR */}
-                  <div className={`team-photo relative overflow-hidden ${member.name.includes('Alberto') ? 'h-[450px]' : 'h-[400px]'}`}>
+                  {/* FOTO REAL com Duotone Cinematográfico - FORMATO HORIZONTAL */}
+                  <div className="team-photo relative overflow-hidden aspect-[4/3] w-full">
                     <img 
                       src={member.photo}
                       alt={member.name}
-                      className={member.name.includes('Alberto') ? 'w-full h-full object-contain' : 'w-full h-full object-cover'}
+                      className="w-full h-full object-cover"
                       style={{ 
-                        objectPosition: member.name.includes('Alberto') ? 'center center' : 'center center'
+                        objectPosition: member.name.includes('Alberto') ? 'center 25%' : 'center center'
                       }}
                       onError={(e) => {
                         const parent = e.currentTarget.parentElement
@@ -451,14 +451,14 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                     />
                   </div>
                   
-                  {/* Content - 2 CTAs: Nome clicável + Botão premium - MENOS ESPAÇO */}
-                  <div className="p-4 bg-gradient-to-br from-slate-900/95 to-slate-900/90">
+                  {/* Content - 2 CTAs: Nome clicável + Botão premium - SEM FAIXAS PRETAS */}
+                  <div className="p-4">
                     {/* Nome clicável (vai direto para /studio/equipe) */}
                     <LangLink
                       to="/studio/equipe"
                       className="block mb-1 hover:text-azimut-red transition-colors"
                     >
-                      <h3 className="team-member-name text-lg font-bold group-hover:text-azimut-red transition-colors" style={{ maxWidth: '100%' }}>
+                      <h3 className="team-member-name section-title group-hover:text-azimut-red transition-colors">
                         {member.name}
                       </h3>
                     </LangLink>

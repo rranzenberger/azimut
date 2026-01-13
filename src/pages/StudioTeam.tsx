@@ -249,7 +249,7 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
       <main className="relative py-16 md:py-20">
         {/* Star Background - FIXA (FUNDO - atrás de tudo) */}
         <div 
-          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-0.1"
+          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-50"
           style={{ zIndex: -10 }}
         >
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" loading="lazy" />
@@ -284,21 +284,36 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
             </p>
           </div>
 
-          {/* Team Members - LAYOUT ORIGINAL (foto ao lado) */}
-          <div className="space-y-6">
+          {/* Team Members - Layout otimizado com melhor espaçamento */}
+          <div className="space-y-8 md:space-y-10">
             {text.team.map((member, idx) => (
               <div 
                 key={idx}
                 className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500"
               >
                 <div className="flex flex-col md:flex-row">
-                  {/* Foto - ALBERTO SEM CORTAR (object-contain) */}
-                  <div className={`team-photo relative shrink-0 ${member.name.includes('Alberto') ? 'w-full md:w-[450px] lg:w-[500px] xl:w-[550px] h-[600px] md:h-[700px]' : 'w-full md:w-[400px] lg:w-[450px] xl:w-[500px] aspect-[3/4]'}`}>
+                  {/* Foto - ALBERTO: object-cover com posicionamento ajustado */}
+                  <div 
+                    className={`team-photo relative shrink-0 overflow-hidden ${member.name.includes('Alberto') ? 'w-full md:w-[450px] lg:w-[500px] xl:w-[550px] h-[500px] md:h-[600px]' : 'w-full md:w-[400px] lg:w-[450px] xl:w-[500px] aspect-[3/4]'}`}
+                    style={member.name.includes('Alberto') ? {
+                      background: '#0a0f1a',
+                      overflow: 'hidden'
+                    } : {}}
+                  >
                     <img 
                       src={member.photo}
                       alt={member.name}
-                      className={member.name.includes('Alberto') ? 'w-full h-full object-contain' : 'w-full h-full object-cover'}
-                      style={{ 
+                      className="w-full h-full"
+                      style={member.name.includes('Alberto') ? {
+                        objectFit: 'cover',
+                        objectPosition: 'center 25%',
+                        width: '100%',
+                        height: '100%',
+                        display: 'block',
+                        transform: 'scale(1.15)',
+                        transformOrigin: 'center center'
+                      } : {
+                        objectFit: 'cover',
                         objectPosition: 'center center'
                       }}
                       onError={(e) => {
@@ -312,21 +327,28 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                     />
                   </div>
 
-                  {/* Conteúdo - MENOS ESPAÇO à direita */}
-                  <div className="flex-1 p-5 md:p-6 max-w-2xl">
+                  {/* Conteúdo - Espaçamento otimizado */}
+                  <div className="flex-1 p-6 md:p-8 max-w-2xl flex flex-col justify-center">
                     {/* Linha decorativa vermelha */}
                     <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-azimut-red via-azimut-red/50 to-transparent"></div>
                     
-                    <h3 className="mb-1 font-handel text-xl tracking-[0.08em] md:text-2xl" style={{ color: 'var(--theme-card-text, #d3cec3)' }}>
+                    {/* Nome - Tamanho reduzido */}
+                    <h3 className="mb-2 font-handel text-base tracking-[0.08em] md:text-lg lg:text-xl" style={{ color: 'var(--theme-card-text, #d3cec3)', lineHeight: '1.2', minHeight: '2.4em' }}>
                       {member.name}
                     </h3>
-                    <p className="mb-1 font-sora text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-azimut-red">
+                    
+                    {/* Role - Vermelho Azimut */}
+                    <p className="mb-2 font-sora text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-azimut-red">
                       {member.role}
                     </p>
-                    <p className="mb-4 font-sora text-[0.6rem] uppercase tracking-[0.12em]" style={{ color: 'var(--theme-card-text, var(--theme-text-muted))' }}>
+                    
+                    {/* Subtitle - Mais sutil */}
+                    <p className="mb-5 font-sora text-[0.6rem] uppercase tracking-[0.12em] opacity-80" style={{ color: 'var(--theme-card-text, var(--theme-text-muted))' }}>
                       {member.subtitle}
                     </p>
-                    <p className="text-[0.85rem] leading-[1.7] mb-4" style={{ color: 'var(--theme-card-text, var(--theme-text-secondary))' }}>
+                    
+                    {/* Bio - Espaçamento melhorado */}
+                    <p className="text-[0.9rem] leading-[1.75] mb-6" style={{ color: 'var(--theme-card-text, var(--theme-text-secondary))' }}>
                       {member.bio}
                     </p>
 

@@ -1,6 +1,36 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════
+   FONTES PERSONALIZADAS - CARREGAR PRIMEIRO (ANTES DE @theme)
+   ═══════════════════════════════════════════════════════════════ */
+@font-face {
+  font-family: 'HandelGothic';
+  src: url('/fonts/HandelGothic-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap; /* Garante que a fonte sempre carregue quando disponível */
+  unicode-range: U+0020-007F, U+00A0-00FF; /* Latim + acentos */
+}
+
+@font-face {
+  font-family: 'InterCustom';
+  src: url('/fonts/Inter-VariableFont.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap; /* Mudado para swap para garantir carregamento */
+  unicode-range: U+0020-007F, U+00A0-00FF, U+0100-017F;
+}
+
+@font-face {
+  font-family: 'SoraCustom';
+  src: url('/fonts/Sora-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap; /* Mudado para swap para garantir carregamento */
+  unicode-range: U+0020-007F, U+00A0-00FF;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    SMOOTH SCROLL + WORLD-CLASS 2026 GLOBALS
    ═══════════════════════════════════════════════════════════════ */
 
@@ -17,7 +47,7 @@ html {
    GRÃO CINEMATOGRÁFICO - AZIMUT IDENTITY
    ═══════════════════════════════════════════════════════════════ */
 
-/* Film grain overlay para dar atmosfera cinematográfica - MAIS APARENTE */
+/* Film grain overlay para dar atmosfera cinematográfica - TEXTURA INTENSA (SEM ANIMAÇÃO) */
 /* ORDEM: FUNDO (estrela z-index -10) -> GRÃO (z-index -5) -> ELEMENTOS (z-index 0+) */
 .film-grain {
   position: relative;
@@ -33,17 +63,22 @@ html {
   width: 100%;
   height: 100%;
   background-image: 
-    repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,.2) 1px, rgba(0,0,0,.2) 2px),
-    repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(0,0,0,.2) 1px, rgba(0,0,0,.2) 2px),
-    repeating-linear-gradient(45deg, transparent, transparent 1px, rgba(0,0,0,.1) 1px, rgba(0,0,0,.1) 2px);
+    repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,.4) 1px, rgba(0,0,0,.4) 2px),
+    repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(0,0,0,.4) 1px, rgba(0,0,0,.4) 2px),
+    repeating-linear-gradient(45deg, transparent, transparent 1px, rgba(0,0,0,.3) 1px, rgba(0,0,0,.3) 2px),
+    repeating-linear-gradient(135deg, transparent, transparent 1px, rgba(0,0,0,.2) 1px, rgba(0,0,0,.2) 2px);
   opacity: 1;
   pointer-events: none;
-  z-index: -5; /* Acima da estrela (-10), abaixo dos elementos (0+) */
+  z-index: -15; /* Muito atrás - abaixo da estrela (-10) e não interfere com logo */
   mix-blend-mode: overlay;
-  animation: grain 8s steps(10) infinite;
+  /* SEM ANIMAÇÃO - apenas textura estática intensa */
+  animation: none !important;
+  transform: none !important;
+  will-change: auto;
 }
 
-@keyframes grain {
+/* Animação desabilitada - estava causando sobreposição horizontal */
+/* @keyframes grain {
   0%, 100% { transform: translate(0, 0) }
   10% { transform: translate(-5%, -10%) }
   20% { transform: translate(-15%, 5%) }
@@ -54,7 +89,7 @@ html {
   70% { transform: translate(0%, 15%) }
   80% { transform: translate(3%, 35%) }
   90% { transform: translate(-10%, 10%) }
-}
+} */
 
 /* ═══════════════════════════════════════════════════════════════
    ANIMAÇÕES GAMIFICADAS - ACADEMY GAME FORM
@@ -171,9 +206,9 @@ html {
 
 /* 2. SECTION TITLE (Título Grande - Impacto) */
 .section-title {
-  font-family: var(--font-handel, 'Handel Gothic', sans-serif);
+  font-family: 'HandelGothic', 'Handel Gothic', var(--font-handel, 'Sora', system-ui, sans-serif) !important;
   font-size: clamp(1.875rem, 4vw, 3rem); /* 30px - 48px */
-  font-weight: 700;
+  font-weight: 400 !important;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #ffffff;
@@ -723,34 +758,8 @@ html {
    FONT FACES
    ═══════════════════════════════════════════════════════════════ */
 /* ═══════════════════════════════════════════════════════════
-   FONT OPTIMIZATION - Variable Fonts + font-display: optional
+   FONT OPTIMIZATION - Fontes movidas para o topo (linha 2-40)
    ═══════════════════════════════════════════════════════════ */
-@font-face {
-  font-family: 'HandelGothic';
-  src: url('/fonts/HandelGothic-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: optional; /* Mudado de swap para optional (melhor CLS) */
-  unicode-range: U+0020-007F, U+00A0-00FF; /* Latim + acentos */
-}
-
-@font-face {
-  font-family: 'InterCustom';
-  src: url('/fonts/Inter-VariableFont.ttf') format('truetype');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: optional; /* Variable font - optional para melhor performance */
-  unicode-range: U+0020-007F, U+00A0-00FF, U+0100-017F;
-}
-
-@font-face {
-  font-family: 'SoraCustom';
-  src: url('/fonts/Sora-VariableFont_wght.ttf') format('truetype');
-  font-weight: 300 700;
-  font-style: normal;
-  font-display: optional; /* Variable font - optional para melhor performance */
-  unicode-range: U+0020-007F, U+00A0-00FF;
-}
 
 /* ═══════════════════════════════════════════════════════════════
    FALLBACKS PARA NAVEGADORES ANTIGOS E EQUIPAMENTOS LIMITADOS
@@ -893,9 +902,10 @@ html {
   text-transform: uppercase;
 }
 
-/* Font Handel - Títulos e Headings */
+/* Font Handel - Títulos e Headings - FORÇA CARREGAMENTO */
 .font-handel {
-  font-family: var(--font-handel, 'HandelGothic', 'Handel Gothic', sans-serif) !important;
+  font-family: 'HandelGothic', 'Handel Gothic', var(--font-handel, 'Sora', system-ui, sans-serif) !important;
+  font-weight: 400 !important;
 }
 
 /* Labels/UI - Sora (tracking generoso como Omega) */
@@ -1048,20 +1058,25 @@ body::after {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   CAMADA 4: Grão Cinematográfico (Film Grain) - APENAS NO CONTEÚDO
+   CAMADA 4: Grão Cinematográfico (Film Grain) - TEXTURA INTENSA (SEM ANIMAÇÃO)
    ═══════════════════════════════════════════════════════════════ */
 #root::after {
   content: '';
   position: fixed;
   inset: 0;
-  z-index: -8;
+  z-index: -18; /* Muito atrás - abaixo do film-grain::before (-15) e não interfere com logo */
   background-image: url('/fundo grao.png');
   background-size: 200px 200px; /* Aumentado para menos repetição */
   background-repeat: repeat;
+  background-position: 0 0; /* Fixo - sem movimento */
   mix-blend-mode: overlay;
-  opacity: 0.65; /* FORTE - Textura bem visível no escuro (ajuste do usuário) */
+  opacity: 0.85; /* INTENSO - Textura bem visível (aumentado de 0.65) */
   pointer-events: none;
-  animation: grainShift 0.4s steps(4) infinite;
+  /* SEM ANIMAÇÃO - apenas textura estática intensa */
+  animation: none !important;
+  transform: none !important;
+  transition: none !important;
+  will-change: auto;
 }
 
 [data-theme="light"] #root::after {
@@ -1069,13 +1084,13 @@ body::after {
   opacity: 0.35; /* VISÍVEL no tema claro também */
 }
 
-/* Animação de grain cinematográfico */
-@keyframes grainShift {
+/* Animação desabilitada - estava causando sobreposição horizontal */
+/* @keyframes grainShift {
   0%, 100% { transform: translate(0, 0); }
   25% { transform: translate(-1px, 1px); }
   50% { transform: translate(1px, -1px); }
   75% { transform: translate(-0.5px, -0.5px); }
-}
+} */
 
 /* ═══════════════════════════════════════════════════════════════
    CAMADA 5: Vinheta Cinematográfica (Bordas Escuras)
@@ -1424,6 +1439,9 @@ html {
   max-width: 100% !important;
   white-space: normal !important;
   min-height: 2.6em !important; /* Garante espaço para 2 linhas */
+  font-family: var(--font-handel, 'HandelGothic', 'Handel Gothic', sans-serif) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
 }
 
 /* Efeito Duotone: Grayscale + toque vermelho */
@@ -2560,4 +2578,30 @@ video, iframe {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DESTAQUE DE PALAVRAS-CHAVE - SOLUTIONS PAGE
+   ═══════════════════════════════════════════════════════════════ */
+.keyword-highlight {
+  color: #c92337 !important;
+  font-weight: 600 !important;
+  display: inline !important;
+}
+
+/* Garantir que funciona mesmo dentro de elementos com text-slate-200 */
+.text-slate-200 .keyword-highlight,
+.text-slate-300 .keyword-highlight,
+.card-adaptive .keyword-highlight,
+p .keyword-highlight,
+[class*="text-slate"] .keyword-highlight {
+  color: #c92337 !important;
+  font-weight: 600 !important;
+  display: inline !important;
+}
+
+/* Sobrescrever qualquer regra que possa estar interferindo */
+* .keyword-highlight {
+  color: #c92337 !important;
+  font-weight: 600 !important;
 }

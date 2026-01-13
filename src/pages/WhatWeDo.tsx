@@ -12,6 +12,11 @@ import { servicesData, getServiceTitle, getServiceShortDesc } from '../data/serv
 // Baseado em pesquisa UX: destaque de keywords melhora scanabilidade
 // ═══════════════════════════════════════════════════════════════
 const highlightKeywords = (text: string, lang: Lang): React.ReactNode => {
+  // Verificação: se não for string, retornar como está
+  if (typeof text !== 'string' || !text) {
+    return text
+  }
+
   // Palavras-chave importantes por idioma (tecnologias, processos, resultados, marcas)
   const keywords: Record<Lang, string[]> = {
     pt: [
@@ -46,7 +51,12 @@ const highlightKeywords = (text: string, lang: Lang): React.ReactNode => {
       'games', 'interactive', 'serious games', 'non-linear', 'generative AI', 'research',
       'creative vision', 'visual identity', 'consulting', 'strategy', 'grants', 'theater',
       'live shows', 'AI-generated', 'LED', 'branded', 'activations', 'engagement', 'sales',
-      'exhibitions', 'museological', 'scenography', 'technology', 'audiovisual'
+      'exhibitions', 'museological', 'scenography', 'technology', 'audiovisual',
+      // Palavras comuns que aparecem nos textos
+      'video', 'composition', 'graphics', 'complete', 'pipeline', 'visual', 'narratives',
+      'characters', 'worlds', 'life', 'technical', 'expertise', 'engaging', 'connecting',
+      'physical', 'digital', 'blockchain', 'metaverse', 'NFTs', 'museum', 'museums',
+      'festival', 'festivals', 'brand', 'brands', 'high-quality', 'content', 'completion'
     ],
     es: [
       'VR', 'AR', 'XR', '360°', '6DoF', 'BIM', 'VFX', 'CGI', 'IA', 'AI', 'Web3', 'NFTs', 'metaverso',
@@ -75,40 +85,57 @@ const highlightKeywords = (text: string, lang: Lang): React.ReactNode => {
   // Ordenar por tamanho (mais longas primeiro) para evitar sobreposição
   const sortedKeywords = keywordsList.sort((a, b) => b.length - a.length)
   
-  // Criar regex que encontra todas as palavras-chave (case-insensitive, com word boundaries)
-  const escapedKeywords = sortedKeywords.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-  const regex = new RegExp(`\\b(${escapedKeywords.join('|')})\\b`, 'gi')
+  // Criar regex melhorada: usa word boundaries para palavras normais, mas permite caracteres especiais
+  const escapedKeywords = sortedKeywords.map(k => {
+    // Escapar caracteres especiais do regex
+    const escaped = k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    // Se contém apenas letras/números, usa word boundaries; senão, busca literal
+    if (/^[a-zA-Z0-9]+$/.test(k)) {
+      return `\\b${escaped}\\b`
+    } else {
+      return escaped
+    }
+  })
   
-  const parts: React.ReactNode[] = []
-  let lastIndex = 0
-  let match
-  let keyCounter = 0
-  
-  // Resetar regex
-  regex.lastIndex = 0
-  
-  while ((match = regex.exec(text)) !== null) {
-    // Adicionar texto antes da palavra-chave
-    if (match.index > lastIndex) {
-      parts.push(text.substring(lastIndex, match.index))
+  // ABORDAGEM MAIS SIMPLES: usar split e map para garantir funcionamento
+  try {
+    // Criar regex simples sem word boundaries complexos
+    const simpleKeywords = sortedKeywords.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    const regex = new RegExp(`(${simpleKeywords.join('|')})`, 'gi')
+    
+    // Dividir texto pelas palavras-chave encontradas
+    const parts = text.split(regex)
+    
+    // Se não encontrou nenhuma palavra-chave, retornar texto original
+    if (parts.length === 1) {
+      return text
     }
     
-    // Adicionar palavra-chave destacada em vermelho (semibold para destaque)
-    parts.push(
-      <span key={`kw-${keyCounter++}`} className="text-azimut-red font-semibold">
-        {match[0]}
-      </span>
+    // Mapear partes: se for palavra-chave, destacar; senão, texto normal
+    return (
+      <>
+        {parts.map((part, index) => {
+          // Verificar se esta parte é uma palavra-chave (case-insensitive)
+          const isKeyword = sortedKeywords.some(kw => 
+            kw.toLowerCase() === part.toLowerCase()
+          )
+          
+          if (isKeyword) {
+            return (
+              <span key={`kw-${index}`} className="keyword-highlight" style={{ color: '#c92337', fontWeight: 600 }}>
+                {part}
+              </span>
+            )
+          }
+          return <React.Fragment key={`txt-${index}`}>{part}</React.Fragment>
+        })}
+      </>
     )
-    
-    lastIndex = regex.lastIndex
+  } catch (error) {
+    // Se houver erro, retornar texto original
+    console.warn('Erro ao destacar palavras-chave:', error)
+    return text
   }
-  
-  // Adicionar texto restante
-  if (lastIndex < text.length) {
-    parts.push(text.substring(lastIndex))
-  }
-  
-  return parts.length > 0 ? <>{parts}</> : text
 }
 
 interface WhatWeDoProps {
@@ -201,7 +228,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
       <main className="relative min-h-screen overflow-hidden pt-6 md:pt-8 pb-24 film-grain">
         {/* Background: Estrela da Azimut - FIXA (FUNDO - atrás de tudo) */}
         <div
-          className="fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-0.1 pointer-events-none"
+          className="fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-50 pointer-events-none"
           style={{
             zIndex: -10,
             backgroundImage: 'url(/logo-azimut-star.svg)',
@@ -295,7 +322,11 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                       {getServiceTitle(service, lang)}
                     </h3>
                     <p className="text-sm leading-relaxed text-slate-200 group-hover:text-slate-100 transition-colors duration-300 flex-grow line-clamp-4">
-                      {highlightKeywords(getServiceShortDesc(service, lang), lang)}
+                      {(() => {
+                        const desc = getServiceShortDesc(service, lang)
+                        const highlighted = highlightKeywords(desc || '', lang)
+                        return highlighted
+                      })()}
                     </p>
                     <div className="mt-4 pt-4 border-t border-white/10 flex-shrink-0">
                       <span className="text-xs font-semibold text-azimut-red group-hover:text-azimut-red/80 transition-colors duration-300 inline-flex items-center gap-1">
