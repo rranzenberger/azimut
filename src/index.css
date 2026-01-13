@@ -1419,6 +1419,7 @@ html {
 }
 
 /* Nome do membro da equipe - SEMPRE BRANCO e 2 LINHAS */
+/* Nome do membro da equipe - SEMPRE 2 LINHAS para nomes longos */
 .team-member-name {
   color: #ffffff !important;
   display: -webkit-box !important;
