@@ -455,12 +455,13 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   key={i}
                   className="group relative rounded-2xl overflow-hidden border-2 border-azimut-red/20 hover:border-azimut-red/60 transition-all duration-500 cursor-pointer"
                 >
-                  {/* FOTO REAL com Duotone Cinematográfico - IGUAL SUBPÁGINA */}
-                  <div className="team-photo relative h-[320px] overflow-hidden">
+                  {/* FOTO REAL com Duotone Cinematográfico - MAIS ESPAÇO */}
+                  <div className="team-photo relative h-[400px] overflow-hidden">
                     <img 
                       src={member.photo}
                       alt={member.name}
-                      className="w-full h-full object-cover object-top"
+                      className="w-full h-full object-cover"
+                      style={{ objectPosition: 'center center' }}
                       onError={(e) => {
                         const parent = e.currentTarget.parentElement
                         if (parent) {
@@ -472,8 +473,8 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                     />
                   </div>
                   
-                  {/* Content - 2 CTAs: Nome clicável + Botão premium */}
-                  <div className="p-5 bg-gradient-to-br from-slate-900/95 to-slate-900/90">
+                  {/* Content - 2 CTAs: Nome clicável + Botão premium - MENOS ESPAÇO */}
+                  <div className="p-4 bg-gradient-to-br from-slate-900/95 to-slate-900/90">
                     {/* Nome clicável (vai direto para /studio/equipe) */}
                     <LangLink
                       to="/studio/equipe"

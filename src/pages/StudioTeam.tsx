@@ -307,13 +307,13 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                 className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500"
               >
                 <div className="flex flex-col md:flex-row">
-                  {/* Foto - Proporção 3:4 - EXATAMENTE como era */}
-                  <div className="team-photo relative w-full md:w-[280px] lg:w-[320px] xl:w-[360px] shrink-0 aspect-[3/4]">
+                  {/* Foto - MAIS LARGA para não cortar */}
+                  <div className="team-photo relative w-full md:w-[400px] lg:w-[450px] xl:w-[500px] shrink-0 aspect-[3/4]">
                     <img 
                       src={member.photo}
                       alt={member.name}
                       className="w-full h-full object-cover"
-                      style={{ objectPosition: 'center 15%' }}
+                      style={{ objectPosition: 'center center' }}
                       onError={(e) => {
                         const parent = e.currentTarget.parentElement
                         if (parent) {
@@ -325,8 +325,8 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                     />
                   </div>
 
-                  {/* Conteúdo - AO LADO */}
-                  <div className="flex-1 p-6 md:p-8">
+                  {/* Conteúdo - MENOS ESPAÇO à direita */}
+                  <div className="flex-1 p-5 md:p-6 max-w-2xl">
                     {/* Linha decorativa vermelha */}
                     <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-azimut-red via-azimut-red/50 to-transparent"></div>
                     
