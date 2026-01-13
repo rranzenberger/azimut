@@ -431,14 +431,14 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   key={i}
                   className="group relative rounded-2xl overflow-hidden border-2 border-azimut-red/20 hover:border-azimut-red/60 transition-all duration-500 cursor-pointer"
                 >
-                  {/* FOTO REAL com Duotone Cinematográfico - POSICIONAMENTO MELHORADO */}
-                  <div className="team-photo relative h-[400px] overflow-hidden">
+                  {/* FOTO REAL com Duotone Cinematográfico - ALBERTO SEM CORTAR */}
+                  <div className={`team-photo relative overflow-hidden ${member.name.includes('Alberto') ? 'h-[450px]' : 'h-[400px]'}`}>
                     <img 
                       src={member.photo}
                       alt={member.name}
-                      className="w-full h-full object-cover"
+                      className={member.name.includes('Alberto') ? 'w-full h-full object-contain' : 'w-full h-full object-cover'}
                       style={{ 
-                        objectPosition: member.name.includes('Alberto') ? 'center top' : 'center center'
+                        objectPosition: member.name.includes('Alberto') ? 'center center' : 'center center'
                       }}
                       onError={(e) => {
                         const parent = e.currentTarget.parentElement

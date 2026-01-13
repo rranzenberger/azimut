@@ -292,14 +292,14 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                 className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500"
               >
                 <div className="flex flex-col md:flex-row">
-                  {/* Foto - POSICIONAMENTO MELHORADO para não cortar */}
-                  <div className="team-photo relative w-full md:w-[400px] lg:w-[450px] xl:w-[500px] shrink-0 aspect-[3/4]">
+                  {/* Foto - ALBERTO SEM CORTAR (object-contain) */}
+                  <div className={`team-photo relative shrink-0 ${member.name.includes('Alberto') ? 'w-full md:w-[450px] lg:w-[500px] xl:w-[550px] h-[600px] md:h-[700px]' : 'w-full md:w-[400px] lg:w-[450px] xl:w-[500px] aspect-[3/4]'}`}>
                     <img 
                       src={member.photo}
                       alt={member.name}
-                      className="w-full h-full object-cover"
+                      className={member.name.includes('Alberto') ? 'w-full h-full object-contain' : 'w-full h-full object-cover'}
                       style={{ 
-                        objectPosition: member.name.includes('Alberto') ? 'center top' : 'center center'
+                        objectPosition: 'center center'
                       }}
                       onError={(e) => {
                         const parent = e.currentTarget.parentElement
