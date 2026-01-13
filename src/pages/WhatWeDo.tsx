@@ -225,7 +225,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
         lang={lang}
         path="/what"
       />
-      <main className="relative min-h-screen overflow-hidden pt-6 md:pt-8 pb-24 film-grain">
+      <main className="relative min-h-screen pt-6 md:pt-8 pb-24 film-grain" style={{ overflowX: 'hidden', overflowY: 'visible' }}>
         {/* Background: Estrela da Azimut - FIXA (FUNDO - atrás de tudo) */}
         <div
           className="fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-50 pointer-events-none"
@@ -300,38 +300,100 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
         />
         </div>
 
-        {/* Grid de Serviços 4x4 */}
-        <section className="relative py-12">
+        {/* Grid de Serviços 4x4 - CONTAINER ABAIXADO 60px para linha vermelha aparecer */}
+        <section className="relative" style={{ paddingTop: '60px', paddingBottom: '48px' }}>
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {/* GAP-Y-14 = 56px entre linhas de cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-14">
               {filteredServices.map((service, index) => (
                 <LangLink 
                   key={service.id}
                   to={`/what/${service.slug}`}
-                  className="group rounded-2xl border border-white/10 card-adaptive p-6 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(201,35,55,0.3)] cursor-pointer"
+                  className="group relative rounded-xl cursor-pointer transition-all duration-400 hover:z-50 z-10"
                   style={{
-                    animation: `fadeInUp 0.6s ease-out ${index * 0.05}s both`
+                    animation: `fadeInUp 0.5s ease-out ${index * 0.04}s both`,
+                    background: 'linear-gradient(165deg, rgba(20, 24, 38, 0.98) 0%, rgba(12, 15, 24, 0.99) 100%)',
+                    border: '1px solid rgba(255,255,255,0.05)',
+                    boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
+                    marginTop: '20px',
+                    transform: 'translateY(0)',
+                    transition: 'transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-12px)'
+                    e.currentTarget.style.boxShadow = '0 20px 60px rgba(201,35,55,0.3), 0 0 40px rgba(201,35,55,0.2)'
+                    e.currentTarget.style.borderColor = 'rgba(201,35,55,0.4)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)'
+                    e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.3)'
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)'
                   }}
                   onClick={() => trackInteraction('service_view', service.slug)}
                 >
-                  <article className="flex flex-col h-full overflow-hidden">
+                  {/* LINHA VERMELHA NO TOPO - SEMPRE VISÍVEL */}
+                  <div 
+                    className="absolute inset-x-0 top-0 h-[3px] rounded-t-xl transition-all duration-300"
+                    style={{ 
+                      background: 'linear-gradient(90deg, #c92337 0%, #e84858 50%, #c92337 100%)',
+                      opacity: 0.7,
+                      boxShadow: '0 0 10px rgba(201,35,55,0.5)'
+                    }}
+                  />
+                  {/* Glow intenso no hover */}
+                  <div 
+                    className="absolute inset-x-0 top-0 h-[4px] rounded-t-xl opacity-0 group-hover:opacity-100 transition-all duration-300"
+                    style={{ 
+                      background: 'linear-gradient(90deg, #c92337 0%, #ff5a6a 50%, #c92337 100%)',
+                      boxShadow: '0 0 20px rgba(232,72,88,0.8), 0 0 40px rgba(201,35,55,0.6)'
+                    }}
+                  />
+                  
+                  <article className="relative flex flex-col h-full p-5 pt-6">
+                    {/* Ícone com container sutil */}
                     {service.icon && (
-                      <div className="mb-4 text-4xl flex-shrink-0">{service.icon}</div>
+                      <div className="mb-4 flex-shrink-0">
+                        <div 
+                          className="inline-flex items-center justify-center w-11 h-11 rounded-lg transition-all duration-300 group-hover:scale-110"
+                          style={{ 
+                            background: 'linear-gradient(135deg, rgba(201,35,55,0.08) 0%, rgba(201,35,55,0.03) 100%)',
+                            border: '1px solid rgba(201,35,55,0.1)'
+                          }}
+                        >
+                          <span className="text-[1.5rem]">{service.icon}</span>
+                        </div>
+                      </div>
                     )}
-                    <h3 className="mb-3 font-sora text-lg font-semibold text-white group-hover:text-azimut-red transition-colors duration-300 line-clamp-2">
+                    
+                    {/* Título */}
+                    <h3 className="mb-3 font-sora text-[0.88rem] font-semibold uppercase tracking-[0.03em] text-white/90 group-hover:text-white transition-colors duration-300 line-clamp-2 leading-snug">
                       {getServiceTitle(service, lang)}
                     </h3>
-                    <p className="text-sm leading-relaxed text-slate-200 group-hover:text-slate-100 transition-colors duration-300 flex-grow line-clamp-4">
+                    
+                    {/* Descrição - 3 linhas para visual mais limpo */}
+                    <p className="text-[0.8rem] leading-[1.7] text-slate-400 group-hover:text-slate-300 transition-colors duration-300 flex-grow line-clamp-3">
                       {(() => {
                         const desc = getServiceShortDesc(service, lang)
                         const highlighted = highlightKeywords(desc || '', lang)
                         return highlighted
                       })()}
                     </p>
-                    <div className="mt-4 pt-4 border-t border-white/10 flex-shrink-0">
-                      <span className="text-xs font-semibold text-azimut-red group-hover:text-azimut-red/80 transition-colors duration-300 inline-flex items-center gap-1">
-                        {lang === 'pt' ? 'Ver detalhes' : lang === 'es' ? 'Ver detalles' : lang === 'fr' ? 'Voir détails' : 'View details'}
-                        <span className="text-azimut-red">→</span>
+                    
+                    {/* CTA Premium - Vermelho bold com seta animada */}
+                    <div className="mt-5 pt-3 border-t border-white/[0.06] flex-shrink-0">
+                      <span 
+                        className="text-[0.78rem] font-bold uppercase tracking-[0.06em] transition-all duration-300 inline-flex items-center gap-10 group-hover:gap-11"
+                        style={{ color: '#e8505f' }}
+                      >
+                        <span className="group-hover:underline group-hover:underline-offset-4 decoration-2">
+                          {lang === 'pt' ? 'Ver detalhes' : lang === 'es' ? 'Ver detalles' : lang === 'fr' ? 'Voir détails' : 'View details'}
+                        </span>
+                        <span 
+                          className="inline-flex items-center justify-center w-11 h-9 rounded-lg border border-azimut-red/20 transition-all duration-300 group-hover:w-14 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:shadow-[0_0_14px_rgba(232,80,95,0.6)]"
+                          style={{ fontSize: '1.3rem', transform: 'scaleX(1.7)' }}
+                        >
+                          →
+                        </span>
                       </span>
                     </div>
                   </article>
