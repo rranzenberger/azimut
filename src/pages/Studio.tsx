@@ -213,9 +213,9 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           />
 
           {/* Sobre (Overview) */}
-          <section id="overview" className="mb-20 scroll-mt-32">
-            <h2 className="mb-8 font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
-              <span className="text-azimut-red">📖</span>
+          <section id="overview" className="mb-16 scroll-mt-40">
+            <h2 className="mb-6 font-sora text-sm font-bold uppercase tracking-[0.2em] text-azimut-red flex items-center gap-2">
+              <span>📖</span>
               {text.about.title}
             </h2>
             <p className="text-lg leading-relaxed text-theme-text-secondary max-w-4xl mb-12">
@@ -239,18 +239,18 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Diferenciais (What Makes Us Unique) */}
-          <section id="unique" className="mb-20 scroll-mt-32">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
-              <h2 className="font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
-                <span className="text-azimut-red">💡</span>
+          <section id="unique" className="mb-16 scroll-mt-40">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+              <h2 className="font-sora text-sm font-bold uppercase tracking-[0.2em] text-azimut-red flex items-center gap-2">
+                <span>💡</span>
                 {lang === 'pt' ? 'O Que Nos Torna Únicos' : lang === 'es' ? 'Lo Que Nos Hace Únicos' : lang === 'fr' ? 'Ce Qui Nous Rend Uniques' : 'What Makes Us Unique'}
               </h2>
               <LangLink
                 to="/studio/diferenciais"
-                className="text-azimut-red hover:text-red-600 font-semibold text-sm uppercase tracking-wider transition-colors flex items-center gap-2"
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-azimut-red/10 border border-azimut-red/40 text-azimut-red hover:bg-azimut-red hover:text-white font-semibold text-xs uppercase tracking-wider transition-all"
               >
                 {lang === 'pt' ? 'Ver Detalhes' : lang === 'es' ? 'Ver Detalles' : lang === 'fr' ? 'Voir Détails' : 'View Details'}
-                <span className="text-xl">→</span>
+                <span className="text-lg group-hover:translate-x-1 transition-transform">→</span>
               </LangLink>
             </div>
             
@@ -295,18 +295,18 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Equipe */}
-          <section id="team" className="mb-20 scroll-mt-32">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
-              <h2 className="font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
-                <span className="text-azimut-red">👥</span>
+          <section id="team" className="mb-16 scroll-mt-40">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+              <h2 className="font-sora text-sm font-bold uppercase tracking-[0.2em] text-azimut-red flex items-center gap-2">
+                <span>👥</span>
                 {text.team.title}
               </h2>
               <LangLink
                 to="/studio/equipe"
-                className="text-azimut-red hover:text-red-600 font-semibold text-sm uppercase tracking-wider transition-colors flex items-center gap-2"
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-azimut-red/10 border border-azimut-red/40 text-azimut-red hover:bg-azimut-red hover:text-white font-semibold text-xs uppercase tracking-wider transition-all"
               >
                 {lang === 'pt' ? 'Equipe Completa' : lang === 'es' ? 'Equipo Completo' : lang === 'fr' ? 'Équipe Complète' : 'Full Team'}
-                <span className="text-xl">→</span>
+                <span className="text-lg group-hover:translate-x-1 transition-transform">→</span>
               </LangLink>
             </div>
             <div className="grid md:grid-cols-3 gap-8">
@@ -333,18 +333,18 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Credenciais */}
-          <section id="credentials" className="mb-20 scroll-mt-32">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
-              <h2 className="font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
-                <span className="text-azimut-red">🏆</span>
+          <section id="credentials" className="mb-16 scroll-mt-40">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+              <h2 className="font-sora text-sm font-bold uppercase tracking-[0.2em] text-azimut-red flex items-center gap-2">
+                <span>🏆</span>
                 {text.credentials.title}
               </h2>
               <LangLink
                 to="/studio/credibilidade"
-                className="text-azimut-red hover:text-red-600 font-semibold text-sm uppercase tracking-wider transition-colors flex items-center gap-2"
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-azimut-red/10 border border-azimut-red/40 text-azimut-red hover:bg-azimut-red hover:text-white font-semibold text-xs uppercase tracking-wider transition-all"
               >
                 {lang === 'pt' ? 'Ver Timeline' : lang === 'es' ? 'Ver Timeline' : lang === 'fr' ? 'Voir Timeline' : 'View Timeline'}
-                <span className="text-xl">→</span>
+                <span className="text-lg group-hover:translate-x-1 transition-transform">→</span>
               </LangLink>
             </div>
             <div className="grid md:grid-cols-2 gap-4">
@@ -358,9 +358,9 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Áreas de Atuação */}
-          <section className="mb-20">
-            <h2 className="mb-8 font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
-              <span className="text-azimut-red">⚡</span>
+          <section className="mb-16">
+            <h2 className="mb-6 font-sora text-sm font-bold uppercase tracking-[0.2em] text-azimut-red flex items-center gap-2">
+              <span>⚡</span>
               {text.areas.title}
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
