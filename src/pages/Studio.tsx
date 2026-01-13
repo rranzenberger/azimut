@@ -181,54 +181,103 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
             </p>
           </div>
 
-          {/* Navegação Interna - Padrão Universal Azimut */}
+          {/* Navegação Interna - SCROLL NA MESMA PÁGINA (igual Work) */}
           <InternalNavigation
             items={[
               {
                 id: 'overview',
                 label: lang === 'pt' ? 'Visão Geral' : lang === 'es' ? 'Visión General' : lang === 'fr' ? 'Vue d\'Ensemble' : 'Overview',
-                href: '/studio',
+                href: '#overview',
                 icon: '✦'
               },
               {
-                id: 'diferenciais',
+                id: 'unique',
                 label: lang === 'pt' ? 'Diferenciais' : lang === 'es' ? 'Diferenciales' : lang === 'fr' ? 'Différenciation' : 'What Makes Us Unique',
-                href: '/studio/diferenciais',
+                href: '#unique',
                 icon: '💡'
               },
               {
-                id: 'equipe',
+                id: 'team',
                 label: lang === 'pt' ? 'Equipe' : lang === 'es' ? 'Equipo' : lang === 'fr' ? 'Équipe' : 'Team',
-                href: '/studio/equipe',
+                href: '#team',
                 icon: '👥'
               },
               {
-                id: 'credibilidade',
+                id: 'credentials',
                 label: lang === 'pt' ? 'Credenciais' : lang === 'es' ? 'Credenciales' : lang === 'fr' ? 'Références' : 'Credentials',
-                href: '/studio/credibilidade',
+                href: '#credentials',
                 icon: '🏆'
               }
             ]}
             lang={lang}
           />
 
-          {/* Sobre */}
-          <section className="mb-20 mt-12">
+          {/* Sobre (Overview) */}
+          <section id="overview" className="mb-20 mt-12 scroll-mt-32">
             <h2 className="mb-8 font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
               <span className="text-azimut-red">📖</span>
               {text.about.title}
             </h2>
-            <p className="text-lg leading-relaxed text-theme-text-secondary max-w-4xl">
+            <p className="text-lg leading-relaxed text-theme-text-secondary max-w-4xl mb-6">
               {text.about.text}
             </p>
           </section>
 
+          {/* Diferenciais (What Makes Us Unique) */}
+          <section id="unique" className="mb-20 scroll-mt-32">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
+                <span className="text-azimut-red">💡</span>
+                {lang === 'pt' ? 'O Que Nos Torna Únicos' : lang === 'es' ? 'Lo Que Nos Hace Únicos' : lang === 'fr' ? 'Ce Qui Nous Rend Uniques' : 'What Makes Us Unique'}
+              </h2>
+              <LangLink
+                to="/studio/diferenciais"
+                className="text-azimut-red hover:text-red-600 font-semibold text-sm uppercase tracking-wider transition-colors flex items-center gap-2"
+              >
+                {lang === 'pt' ? 'Ver Detalhes' : lang === 'es' ? 'Ver Detalles' : lang === 'fr' ? 'Voir Détails' : 'View Details'}
+                <span className="text-xl">→</span>
+              </LangLink>
+            </div>
+            
+            {/* Preview Cards */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="p-6 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/40 transition-all">
+                <div className="text-4xl mb-4">🎬</div>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  {lang === 'pt' ? 'Studio + Lab + Academy' : lang === 'es' ? 'Estudio + Lab + Academia' : lang === 'fr' ? 'Studio + Lab + Académie' : 'Studio + Lab + Academy'}
+                </h3>
+                <p className="text-sm text-theme-text-secondary">
+                  {lang === 'pt' ? 'Combinação única de produção, pesquisa e educação.' : lang === 'es' ? 'Combinación única de producción, investigación y educación.' : lang === 'fr' ? 'Combinaison unique de production, recherche et éducation.' : 'Unique combination of production, research and education.'}
+                </p>
+              </div>
+              
+              <div className="p-6 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/40 transition-all">
+                <div className="text-4xl mb-4">🌍</div>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  {lang === 'pt' ? 'Brasil ↔ Canadá' : lang === 'es' ? 'Brasil ↔ Canadá' : lang === 'fr' ? 'Brésil ↔ Canada' : 'Brazil ↔ Canada'}
+                </h3>
+                <p className="text-sm text-theme-text-secondary">
+                  {lang === 'pt' ? 'Operações internacionais conectando dois continentes.' : lang === 'es' ? 'Operaciones internacionales conectando dos continentes.' : lang === 'fr' ? 'Opérations internationales reliant deux continents.' : 'International operations connecting two continents.'}
+                </p>
+              </div>
+            </div>
+          </section>
+
           {/* Credenciais */}
-          <section className="mb-20">
-            <h2 className="mb-8 font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
-              <span className="text-azimut-red">🏆</span>
-              {text.credentials.title}
-            </h2>
+          <section id="credentials" className="mb-20 scroll-mt-32">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
+                <span className="text-azimut-red">🏆</span>
+                {text.credentials.title}
+              </h2>
+              <LangLink
+                to="/studio/credibilidade"
+                className="text-azimut-red hover:text-red-600 font-semibold text-sm uppercase tracking-wider transition-colors flex items-center gap-2"
+              >
+                {lang === 'pt' ? 'Ver Timeline' : lang === 'es' ? 'Ver Timeline' : lang === 'fr' ? 'Voir Timeline' : 'View Timeline'}
+                <span className="text-xl">→</span>
+              </LangLink>
+            </div>
             <div className="grid md:grid-cols-2 gap-4">
               {text.credentials.items.map((item, i) => (
                 <div key={i} className="flex items-start gap-3 p-4 rounded-lg bg-slate-900/30 hover:bg-slate-900/50 transition-colors">
@@ -256,21 +305,34 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Equipe */}
-          <section className="mb-20">
-            <h2 className="mb-8 font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
-              <span className="text-azimut-red">👥</span>
-              {text.team.title}
-            </h2>
+          <section id="team" className="mb-20 scroll-mt-32">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
+                <span className="text-azimut-red">👥</span>
+                {text.team.title}
+              </h2>
+              <LangLink
+                to="/studio/equipe"
+                className="text-azimut-red hover:text-red-600 font-semibold text-sm uppercase tracking-wider transition-colors flex items-center gap-2"
+              >
+                {lang === 'pt' ? 'Equipe Completa' : lang === 'es' ? 'Equipo Completo' : lang === 'fr' ? 'Équipe Complète' : 'Full Team'}
+                <span className="text-xl">→</span>
+              </LangLink>
+            </div>
             <div className="grid md:grid-cols-3 gap-8">
               {text.team.members.map((member, i) => (
-                <div key={i} className="p-6 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/40 transition-all overflow-hidden">
-                  <div className="mb-4 h-32 rounded-lg bg-azimut-red/10 flex items-center justify-center flex-shrink-0">
-                    <span className="text-6xl">👤</span>
+                <LangLink
+                  key={i}
+                  to="/studio/equipe"
+                  className="group p-6 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red transition-all overflow-hidden cursor-pointer"
+                >
+                  <div className="mb-4 h-32 rounded-lg bg-azimut-red/10 flex items-center justify-center flex-shrink-0 group-hover:bg-azimut-red/20 transition-colors">
+                    <span className="text-6xl group-hover:scale-110 transition-transform">👤</span>
                   </div>
                   <h3 className="text-xl font-bold text-white mb-1 line-clamp-1">{member.name}</h3>
                   <p className="text-sm text-azimut-red mb-3 uppercase tracking-wider line-clamp-1">{member.role}</p>
                   <p className="text-sm text-theme-text-secondary leading-relaxed line-clamp-4">{member.bio}</p>
-                </div>
+                </LangLink>
               ))}
             </div>
           </section>
