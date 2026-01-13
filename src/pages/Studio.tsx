@@ -154,7 +154,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         path="/studio"
       />
       
-      <main className="relative py-16 md:py-20">
+      <main className="relative pt-6 md:pt-8 pb-24">
         {/* Star Parallax */}
         <div 
           ref={starRef}
@@ -165,21 +165,21 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         </div>
 
         <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
-          {/* Hero */}
-          <div className="mb-16">
-            {/* Prefixo Narrativo - APENAS ESTE ANIMA */}
-            <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
-              <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
-                {lang === 'pt' ? 'NOSSO ESTÚDIO' : lang === 'es' ? 'NUESTRO ESTUDIO' : lang === 'fr' ? 'NOTRE STUDIO' : 'OUR STUDIO'}
-              </span>
-            </div>
-            <h1 className="mb-4 font-handel uppercase text-theme-text" style={{ fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1', letterSpacing: '0.08em' }}>
-              {text.title}
-            </h1>
-            <p className="text-theme-text-secondary max-w-4xl leading-relaxed mb-8" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
-              {text.subtitle}
-            </p>
+          {/* Hero - MESMA ALTURA QUE WORK */}
+          {/* Prefixo Narrativo - APENAS ESTE ANIMA */}
+          <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+            <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
+              {lang === 'pt' ? 'NOSSO ESTÚDIO' : lang === 'es' ? 'NUESTRO ESTUDIO' : lang === 'fr' ? 'NOTRE STUDIO' : 'OUR STUDIO'}
+            </span>
           </div>
+          {/* Título - SEM animação */}
+          <h1 className="mb-4 font-handel uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)', fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1' }}>
+            {text.title}
+          </h1>
+          {/* Parágrafo - SEM animação */}
+          <p className="mb-8 max-w-3xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)', fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
+            {text.subtitle}
+          </p>
 
           {/* Navegação Interna - SCROLL NA MESMA PÁGINA (igual Work) */}
           <InternalNavigation
@@ -213,19 +213,34 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           />
 
           {/* Sobre (Overview) */}
-          <section id="overview" className="mb-20 mt-12 scroll-mt-32">
+          <section id="overview" className="mb-20 scroll-mt-32">
             <h2 className="mb-8 font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
               <span className="text-azimut-red">📖</span>
               {text.about.title}
             </h2>
-            <p className="text-lg leading-relaxed text-theme-text-secondary max-w-4xl mb-6">
+            <p className="text-lg leading-relaxed text-theme-text-secondary max-w-4xl mb-12">
               {text.about.text}
             </p>
+
+            {/* Visual Hero Image - Placeholder for backoffice image */}
+            <div className="relative rounded-2xl overflow-hidden mb-12" style={{ height: '400px' }}>
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-900/50 to-slate-900/30 backdrop-blur-sm flex items-center justify-center border border-azimut-red/20">
+                <div className="text-center p-8">
+                  <div className="text-6xl mb-4">🎬</div>
+                  <p className="text-white font-sora text-xl uppercase tracking-wider">
+                    {lang === 'pt' ? 'Studio Azimut' : lang === 'es' ? 'Estudio Azimut' : lang === 'fr' ? 'Studio Azimut' : 'Azimut Studio'}
+                  </p>
+                  <p className="text-slate-400 text-sm mt-2">
+                    {lang === 'pt' ? 'Imersivo • Interativo • Cinematográfico' : lang === 'es' ? 'Inmersivo • Interactivo • Cinematográfico' : lang === 'fr' ? 'Immersif • Interactif • Cinématographique' : 'Immersive • Interactive • Cinematic'}
+                  </p>
+                </div>
+              </div>
+            </div>
           </section>
 
           {/* Diferenciais (What Makes Us Unique) */}
           <section id="unique" className="mb-20 scroll-mt-32">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
               <h2 className="font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
                 <span className="text-azimut-red">💡</span>
                 {lang === 'pt' ? 'O Que Nos Torna Únicos' : lang === 'es' ? 'Lo Que Nos Hace Únicos' : lang === 'fr' ? 'Ce Qui Nous Rend Uniques' : 'What Makes Us Unique'}
@@ -239,74 +254,49 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               </LangLink>
             </div>
             
-            {/* Preview Cards */}
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="p-6 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/40 transition-all">
-                <div className="text-4xl mb-4">🎬</div>
-                <h3 className="text-xl font-bold text-white mb-2">
-                  {lang === 'pt' ? 'Studio + Lab + Academy' : lang === 'es' ? 'Estudio + Lab + Academia' : lang === 'fr' ? 'Studio + Lab + Académie' : 'Studio + Lab + Academy'}
-                </h3>
-                <p className="text-sm text-theme-text-secondary">
-                  {lang === 'pt' ? 'Combinação única de produção, pesquisa e educação.' : lang === 'es' ? 'Combinación única de producción, investigación y educación.' : lang === 'fr' ? 'Combinaison unique de production, recherche et éducation.' : 'Unique combination of production, research and education.'}
-                </p>
+            {/* Preview Cards com IMAGENS */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="group relative rounded-xl overflow-hidden border border-azimut-red/20 hover:border-azimut-red/60 transition-all cursor-pointer" style={{ height: '300px' }}>
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 to-slate-900/70 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center group-hover:bg-slate-900/80 transition-colors">
+                  <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">🎬</div>
+                  <h3 className="text-xl font-bold text-white mb-2">
+                    {lang === 'pt' ? 'Studio + Lab + Academy' : lang === 'es' ? 'Estudio + Lab + Academia' : lang === 'fr' ? 'Studio + Lab + Académie' : 'Studio + Lab + Academy'}
+                  </h3>
+                  <p className="text-sm text-slate-300">
+                    {lang === 'pt' ? 'Produção, pesquisa e educação em um só lugar' : lang === 'es' ? 'Producción, investigación y educación en un solo lugar' : lang === 'fr' ? 'Production, recherche et éducation en un seul endroit' : 'Production, research and education in one place'}
+                  </p>
+                </div>
               </div>
               
-              <div className="p-6 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/40 transition-all">
-                <div className="text-4xl mb-4">🌍</div>
-                <h3 className="text-xl font-bold text-white mb-2">
-                  {lang === 'pt' ? 'Brasil ↔ Canadá' : lang === 'es' ? 'Brasil ↔ Canadá' : lang === 'fr' ? 'Brésil ↔ Canada' : 'Brazil ↔ Canada'}
-                </h3>
-                <p className="text-sm text-theme-text-secondary">
-                  {lang === 'pt' ? 'Operações internacionais conectando dois continentes.' : lang === 'es' ? 'Operaciones internacionales conectando dos continentes.' : lang === 'fr' ? 'Opérations internationales reliant deux continents.' : 'International operations connecting two continents.'}
-                </p>
+              <div className="group relative rounded-xl overflow-hidden border border-azimut-red/20 hover:border-azimut-red/60 transition-all cursor-pointer" style={{ height: '300px' }}>
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 to-slate-900/70 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center group-hover:bg-slate-900/80 transition-colors">
+                  <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">🌍</div>
+                  <h3 className="text-xl font-bold text-white mb-2">
+                    {lang === 'pt' ? 'Brasil ↔ Canadá' : lang === 'es' ? 'Brasil ↔ Canadá' : lang === 'fr' ? 'Brésil ↔ Canada' : 'Brazil ↔ Canada'}
+                  </h3>
+                  <p className="text-sm text-slate-300">
+                    {lang === 'pt' ? 'Operações internacionais, perspectivas globais' : lang === 'es' ? 'Operaciones internacionales, perspectivas globales' : lang === 'fr' ? 'Opérations internationales, perspectives mondiales' : 'International operations, global perspectives'}
+                  </p>
+                </div>
               </div>
-            </div>
-          </section>
 
-          {/* Credenciais */}
-          <section id="credentials" className="mb-20 scroll-mt-32">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
-                <span className="text-azimut-red">🏆</span>
-                {text.credentials.title}
-              </h2>
-              <LangLink
-                to="/studio/credibilidade"
-                className="text-azimut-red hover:text-red-600 font-semibold text-sm uppercase tracking-wider transition-colors flex items-center gap-2"
-              >
-                {lang === 'pt' ? 'Ver Timeline' : lang === 'es' ? 'Ver Timeline' : lang === 'fr' ? 'Voir Timeline' : 'View Timeline'}
-                <span className="text-xl">→</span>
-              </LangLink>
-            </div>
-            <div className="grid md:grid-cols-2 gap-4">
-              {text.credentials.items.map((item, i) => (
-                <div key={i} className="flex items-start gap-3 p-4 rounded-lg bg-slate-900/30 hover:bg-slate-900/50 transition-colors">
-                  <span className="text-2xl">{item.substring(0, 2)}</span>
-                  <span className="text-theme-text-secondary">{item.substring(3)}</span>
+              <div className="group relative rounded-xl overflow-hidden border border-azimut-red/20 hover:border-azimut-red/60 transition-all cursor-pointer" style={{ height: '300px' }}>
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 to-slate-900/70 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center group-hover:bg-slate-900/80 transition-colors">
+                  <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">🎯</div>
+                  <h3 className="text-xl font-bold text-white mb-2">
+                    {lang === 'pt' ? '30+ Anos Experiência' : lang === 'es' ? '30+ Años de Experiencia' : lang === 'fr' ? '30+ Ans d\'Expérience' : '30+ Years Experience'}
+                  </h3>
+                  <p className="text-sm text-slate-300">
+                    {lang === 'pt' ? 'Expertise comprovada em projetos de grande escala' : lang === 'es' ? 'Experiencia comprobada en proyectos de gran escala' : lang === 'fr' ? 'Expertise prouvée dans des projets à grande échelle' : 'Proven expertise in large-scale projects'}
+                  </p>
                 </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Áreas de Atuação */}
-          <section className="mb-20">
-            <h2 className="mb-8 font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
-              <span className="text-azimut-red">⚡</span>
-              {text.areas.title}
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {text.areas.items.map((area, i) => (
-                <div key={i} className="text-center p-6 rounded-lg bg-slate-900/30 hover:bg-slate-900/50 border border-azimut-red/20 hover:border-azimut-red/40 transition-all">
-                  <div className="text-4xl mb-3">{area.icon}</div>
-                  <p className="text-sm font-semibold text-white">{area.name}</p>
-                </div>
-              ))}
+              </div>
             </div>
           </section>
 
           {/* Equipe */}
           <section id="team" className="mb-20 scroll-mt-32">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
               <h2 className="font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
                 <span className="text-azimut-red">👥</span>
                 {text.team.title}
@@ -324,21 +314,69 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                 <LangLink
                   key={i}
                   to="/studio/equipe"
-                  className="group p-6 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red transition-all overflow-hidden cursor-pointer"
+                  className="group relative rounded-xl overflow-hidden bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red transition-all cursor-pointer"
                 >
-                  <div className="mb-4 h-32 rounded-lg bg-azimut-red/10 flex items-center justify-center flex-shrink-0 group-hover:bg-azimut-red/20 transition-colors">
-                    <span className="text-6xl group-hover:scale-110 transition-transform">👤</span>
+                  {/* Image placeholder - altura fixa */}
+                  <div className="relative h-64 bg-gradient-to-br from-slate-800/50 to-slate-900/70 flex items-center justify-center border-b border-azimut-red/10 group-hover:bg-azimut-red/10 transition-colors">
+                    <span className="text-8xl group-hover:scale-110 transition-transform opacity-50">👤</span>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-1 line-clamp-1">{member.name}</h3>
-                  <p className="text-sm text-azimut-red mb-3 uppercase tracking-wider line-clamp-1">{member.role}</p>
-                  <p className="text-sm text-theme-text-secondary leading-relaxed line-clamp-4">{member.bio}</p>
+                  
+                  {/* Content */}
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-white mb-1">{member.name}</h3>
+                    <p className="text-sm text-azimut-red mb-3 uppercase tracking-wider font-semibold">{member.role}</p>
+                    <p className="text-sm text-theme-text-secondary leading-relaxed line-clamp-3">{member.bio}</p>
+                  </div>
                 </LangLink>
               ))}
             </div>
           </section>
 
+          {/* Credenciais */}
+          <section id="credentials" className="mb-20 scroll-mt-32">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
+              <h2 className="font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
+                <span className="text-azimut-red">🏆</span>
+                {text.credentials.title}
+              </h2>
+              <LangLink
+                to="/studio/credibilidade"
+                className="text-azimut-red hover:text-red-600 font-semibold text-sm uppercase tracking-wider transition-colors flex items-center gap-2"
+              >
+                {lang === 'pt' ? 'Ver Timeline' : lang === 'es' ? 'Ver Timeline' : lang === 'fr' ? 'Voir Timeline' : 'View Timeline'}
+                <span className="text-xl">→</span>
+              </LangLink>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              {text.credentials.items.map((item, i) => (
+                <div key={i} className="flex items-start gap-3 p-6 rounded-xl bg-gradient-to-br from-slate-900/40 to-slate-900/20 border border-azimut-red/10 hover:border-azimut-red/30 hover:bg-slate-900/50 transition-all">
+                  <span className="text-3xl shrink-0">{item.substring(0, 2)}</span>
+                  <span className="text-theme-text-secondary leading-relaxed">{item.substring(3)}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Áreas de Atuação */}
+          <section className="mb-20">
+            <h2 className="mb-8 font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
+              <span className="text-azimut-red">⚡</span>
+              {text.areas.title}
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+              {text.areas.items.map((area, i) => (
+                <div key={i} className="group relative rounded-xl overflow-hidden border border-azimut-red/20 hover:border-azimut-red/60 transition-all cursor-pointer" style={{ height: '180px' }}>
+                  <div className="absolute inset-0 bg-gradient-to-br from-slate-900/50 to-slate-900/30 hover:bg-slate-900/60 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center transition-colors">
+                    <div className="text-5xl mb-3 group-hover:scale-110 transition-transform">{area.icon}</div>
+                    <p className="text-sm font-semibold text-white uppercase tracking-wide">{area.name}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
           {/* CTA */}
-          <div className="text-center">
+          <div className="text-center py-12 px-6 rounded-2xl bg-gradient-to-br from-azimut-red/5 to-transparent border border-azimut-red/20">
             <p className="text-xl text-theme-text-secondary mb-6">{text.cta}</p>
             <LangLink
               to="/contact"
