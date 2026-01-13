@@ -213,26 +213,34 @@ html {
 @media (min-width: 768px) {
   .section-header {
     flex-direction: row;
-    align-items: flex-start;
+    align-items: flex-end; /* Alinha pela BASE (parte de baixo) - alinha com menu */
     justify-content: space-between;
   }
   
-  /* Botão alinhado com o TOPO do texto do título (não com a base) */
-  .section-header {
-    align-items: start; /* Alinha pelo topo do conteúdo */
-  }
-  
+  /* Botão alinhado com a BASE do menu de navegação interna (py-3 = 12px top/bottom) */
+  /* Menu tem altura ~48px (py-3), botão tem py-4 (16px) = ~64px */
+  /* Alinhar base do botão com base do menu */
   .section-header > a,
   .section-header > button,
   .section-header > .section-header-button {
-    /* Alinha topo do texto do botão com topo do texto do título */
-    margin-top: calc(0.75rem + 0.5em); /* eyebrow (0.75rem) + ajuste fino para alinhar texto */
-    align-self: flex-start;
+    align-self: flex-end; /* Alinha pela base */
+    margin-top: 0;
+    margin-bottom: 0;
   }
   
   .section-header .section-title {
     padding-top: 0;
     margin-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  
+  /* Container do título também alinhado pela base */
+  .section-header > div:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
   }
 }
 
