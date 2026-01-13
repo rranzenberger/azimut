@@ -869,9 +869,14 @@ html {
 /* ═══════════════════════════════════════════════════════════════
    TIPOGRAFIA WORLD-CLASS 2026 - Hierarquia Exagerada (Inversa/Igloo)
    ═══════════════════════════════════════════════════════════════ */
+/* 
+   NOTA: Regras globais h1, h2, h3, h4 REMOVIDAS
+   Cada página tem seus próprios estilos de título
+   Use classes específicas: .section-title, .text-monumental, etc.
+*/
 
-/* H1 - Monumental (como Inversa/Buttermax) */
-h1, .text-monumental {
+/* Classes utilitárias - APENAS quando explicitamente usadas */
+.text-monumental {
   font-family: var(--font-handel);
   font-size: clamp(2.5rem, 8vw, 8rem); /* 40px → 128px */
   line-height: 1.1;
@@ -880,30 +885,11 @@ h1, .text-monumental {
   text-transform: uppercase;
 }
 
-/* H2 - Forte */
-h2, .text-giant {
+.text-giant {
   font-family: var(--font-handel);
   font-size: clamp(2rem, 5vw, 4rem); /* 32px → 64px */
   line-height: 1.2;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-/* H3 - Médio */
-h3 {
-  font-family: var(--font-handel);
-  font-size: clamp(1.5rem, 3vw, 3rem); /* 24px → 48px */
-  line-height: 1.3;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-/* H4 - Pequeno */
-h4 {
-  font-family: var(--font-handel);
-  font-size: clamp(1.25rem, 2vw, 2rem); /* 20px → 32px */
-  line-height: 1.4;
-  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
