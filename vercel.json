@@ -16,12 +16,6 @@
   
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "framework": "vite",
-  
-  "buildOptimization": {
-    "cache": {
-      "node_modules": true
-    }
-  }
+  "framework": "vite"
 }
 
