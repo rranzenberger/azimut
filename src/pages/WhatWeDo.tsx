@@ -29,14 +29,24 @@ const highlightKeywords = (text: string, lang: Lang): React.ReactNode => {
       'Immerso XR', 'Petrópolis', 'Flamengo', 'Cenna Tower', 'First Nation Museum'
     ],
     en: [
+      // Tecnologias
       'VR', 'AR', 'XR', '360°', '6DoF', 'BIM', 'VFX', 'CGI', 'AI', 'Web3', 'NFTs', 'metaverse',
       '4K', '6K', '8K', 'DCP', 'ProRes', 'H.265', 'RED', 'Blackmagic', 'Sony',
+      // Processos
       'concept', 'script', 'direction', 'production', 'post-production', 'editing', 'color grading',
       'motion design', 'animation', 'composition', 'rendering', 'pipeline', 'workflow',
+      // Resultados
       'immersive', 'interactive', 'cinematic', 'experiences', 'narratives', 'installations',
       'museums', 'festivals', 'brands', 'education', 'training', 'workshops',
+      // Específicos/Marcas
       'Rio Olympic Museum', 'Gramado VR', 'VFS', 'VanArts', 'Autodesk', '30 years', '1996',
-      'Immerso XR', 'Petrópolis', 'Flamengo', 'Cenna Tower', 'First Nation Museum'
+      'Immerso XR', 'Petrópolis', 'Flamengo', 'Cenna Tower', 'First Nation Museum',
+      // Palavras adicionais dos cards em inglês
+      'design', 'spaces', 'virtual', 'scenography', 'signage', 'graphic', 'art direction',
+      'games', 'interactive', 'serious games', 'non-linear', 'generative AI', 'research',
+      'creative vision', 'visual identity', 'consulting', 'strategy', 'grants', 'theater',
+      'live shows', 'AI-generated', 'LED', 'branded', 'activations', 'engagement', 'sales',
+      'exhibitions', 'museological', 'scenography', 'technology', 'audiovisual'
     ],
     es: [
       'VR', 'AR', 'XR', '360°', '6DoF', 'BIM', 'VFX', 'CGI', 'IA', 'AI', 'Web3', 'NFTs', 'metaverso',
