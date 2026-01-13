@@ -381,10 +381,10 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
           </div>
         </section>
         
-        {/* Estrela abaixo da seta - alinhada (topo estrela = base seta), visível */}
-        {/* Posição: hero (75vh) + conteúdo + seta = aproximadamente 80vh */}
+        {/* Estrela abaixo da seta - mais visível e completa */}
+        {/* Posição ajustada para mostrar mais da estrela */}
         <div 
-          className="pointer-events-none fixed top-[80vh] -right-28 h-[520px] w-[520px] md:-right-40 md:h-[680px] md:w-[680px] opacity-0.3"
+          className="pointer-events-none fixed top-[75vh] -right-20 h-[520px] w-[520px] md:top-[70vh] md:-right-16 md:h-[680px] md:w-[680px] opacity-0.3"
           style={{ 
             zIndex: 0,
             backgroundImage: 'url(/logo-azimut-star.svg)',
