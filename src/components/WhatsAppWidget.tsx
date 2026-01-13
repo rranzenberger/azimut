@@ -73,7 +73,7 @@ const WhatsAppWidget: React.FC<WhatsAppWidgetProps> = ({
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+    <div className="fixed bottom-6 right-6 z-[50] flex flex-col items-end gap-3">
       {/* Menu expandido */}
       {isExpanded && (
         <div className="animate-slide-up bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-4 w-72 border border-slate-200 dark:border-slate-700">
