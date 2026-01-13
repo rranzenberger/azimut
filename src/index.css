@@ -907,6 +907,11 @@ h4 {
   text-transform: uppercase;
 }
 
+/* Font Handel - Títulos e Headings */
+.font-handel {
+  font-family: var(--font-handel, 'HandelGothic', 'Handel Gothic', sans-serif) !important;
+}
+
 /* Labels/UI - Sora (tracking generoso como Omega) */
 .font-sora {
   font-family: var(--font-sora);
