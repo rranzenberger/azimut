@@ -243,9 +243,9 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
       />
       
       <main className="relative py-16 md:py-20">
-        {/* Star Background - FIXA (posição correta como Studio principal) */}
+        {/* Star Background - FIXA (posição mais alta como Studio principal) */}
         <div 
-          className="pointer-events-none fixed top-32 -right-28 h-[520px] w-[520px] md:top-40 md:-right-40 md:h-[680px] md:w-[680px] opacity-0.3"
+          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-0.3"
           style={{ zIndex: 0 }}
         >
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" loading="lazy" />
