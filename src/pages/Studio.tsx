@@ -242,7 +242,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         path="/studio"
       />
       
-      <main className="relative pt-6 md:pt-8 pb-24 film-grain">
+      <main className="relative pb-24 film-grain">
         {/* Star Background - FIXA (FUNDO - atrás de tudo) */}
         <StarBackground
           className="fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px]"
@@ -250,31 +250,13 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           opacity={0.5}
         />
 
-        {/* Hero Section - DENTRO do container */}
-        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
-          {/* Prefixo Narrativo - APENAS ESTE ANIMA */}
-          <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
-            <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
-              {lang === 'pt' ? 'NOSSO ESTÚDIO' : lang === 'es' ? 'NUESTRO ESTUDIO' : lang === 'fr' ? 'NOTRE STUDIO' : 'OUR STUDIO'}
-            </span>
-          </div>
-          {/* Título - SEM animação */}
-          <h1 className="mb-4 font-handel uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)', fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1' }}>
-            {text.title}
-          </h1>
-          {/* Parágrafo - SEM animação */}
-          <p className="mb-8 max-w-3xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)', fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
-            {text.subtitle}
-          </p>
-        </div>
-
         {/* ═══════════════════════════════════════════════════════════
-            NAVEGAÇÃO INTERNA - FIXO abaixo do header (position: fixed)
+            NAVEGAÇÃO INTERNA - FIXO colado no header (position: fixed)
             ═══════════════════════════════════════════════════════════ */}
         <div 
           className="fixed left-0 right-0 z-40 backdrop-blur-xl"
           style={{
-            top: '60px',
+            top: '52px',
             backgroundColor: 'var(--theme-bg-sticky)',
             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
             borderBottom: '2px solid rgba(201, 35, 55, 0.5)'
@@ -308,11 +290,26 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </div>
         </div>
 
-        {/* Espaçador para compensar o submenu fixo */}
-        <div style={{ height: '52px' }} />
+        {/* Espaçador para compensar header + submenu fixos */}
+        <div style={{ height: '48px' }} />
 
         {/* Conteúdo - DENTRO do container */}
-        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 pt-4">
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
+          
+          {/* Hero Section */}
+          <div className="pt-6 md:pt-8 mb-8">
+            <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+              <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
+                {lang === 'pt' ? 'NOSSO ESTÚDIO' : lang === 'es' ? 'NUESTRO ESTUDIO' : lang === 'fr' ? 'NOTRE STUDIO' : 'OUR STUDIO'}
+              </span>
+            </div>
+            <h1 className="mb-4 font-handel uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)', fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1' }}>
+              {text.title}
+            </h1>
+            <p className="max-w-3xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)', fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
+              {text.subtitle}
+            </p>
+          </div>
 
           {/* Sobre (Overview) */}
           <section id="overview" className="section-container scroll-mt-32">
