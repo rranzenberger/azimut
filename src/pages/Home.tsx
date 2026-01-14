@@ -221,11 +221,25 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             )
           })()}
           
-          {/* Gradiente Direcional: Azul Opaco (esquerda) → Preto Transparente (direita) */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900 via-60% to-transparent" />
+          {/* Gradiente Direcional: Azul Opaco (esquerda) → Preto Transparente (direita) - TEMA ESCURO */}
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900 via-60% to-transparent dark:block hidden" />
           
-          {/* Gradiente Vertical: Escurece embaixo */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/70" />
+          {/* Gradiente Vertical: Escurece embaixo - TEMA ESCURO */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/70 dark:block hidden" />
+          
+          {/* ═══════════════════════════════════════════════════════════════
+              TEMA CLARO: Degradê lateral nas bordas (esquerda + direita)
+              ═══════════════════════════════════════════════════════════════ */}
+          {/* Gradiente ESQUERDA → Centro (apenas tema claro) */}
+          <div 
+            className="absolute inset-0 dark:hidden block"
+            style={{
+              background: 'linear-gradient(90deg, rgba(5, 8, 20, 0.9) 0%, rgba(5, 8, 20, 0.7) 8%, rgba(5, 8, 20, 0.4) 15%, transparent 25%, transparent 75%, rgba(5, 8, 20, 0.4) 85%, rgba(5, 8, 20, 0.7) 92%, rgba(5, 8, 20, 0.9) 100%)'
+            }}
+          />
+          
+          {/* Gradiente Vertical suave - TEMA CLARO */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/40 dark:hidden block" />
           
           {/* ═══════════════════════════════════════════════════════════════
               HERO REORGANIZADO: Texto | Logo (linha 1), 5 Cards (linha 2), 3 Cards (linha 3)

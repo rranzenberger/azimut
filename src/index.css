@@ -83,60 +83,6 @@ html {
   mix-blend-mode: soft-light;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   DEGRADÊ LATERAL - TEMA CLARO EM TELAS GRANDES (>1440px)
-   Cria vinheta nas bordas ESQUERDA e DIREITA para contenção visual
-   ═══════════════════════════════════════════════════════════════ */
-
-/* Container para o degradê lateral - apenas tema claro */
-[data-theme="light"] .film-grain::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 5; /* TESTE: acima de tudo para ver se aparece */
-  opacity: 1; /* TESTE: sempre visível */
-  /* TESTE: Degradê VERMELHO para debug - veremos se aparece */
-  background: linear-gradient(
-    90deg,
-    rgba(201, 35, 55, 0.5) 0%,
-    rgba(201, 35, 55, 0.3) 10%,
-    transparent 20%,
-    transparent 80%,
-    rgba(201, 35, 55, 0.3) 90%,
-    rgba(201, 35, 55, 0.5) 100%
-  );
-  transition: opacity 0.3s ease;
-}
-
-/* Ativar degradê lateral em TODAS as telas para teste */
-@media (min-width: 1px) {
-  [data-theme="light"] .film-grain::after {
-    opacity: 1;
-  }
-}
-
-/* Intensidade progressiva em telas muito grandes */
-@media (min-width: 1920px) {
-  [data-theme="light"] .film-grain::after {
-    background: linear-gradient(
-      90deg,
-      rgba(5, 8, 20, 0.92) 0%,
-      rgba(5, 8, 20, 0.7) 8%,
-      rgba(5, 8, 20, 0.4) 15%,
-      transparent 25%,
-      transparent 75%,
-      rgba(5, 8, 20, 0.4) 85%,
-      rgba(5, 8, 20, 0.7) 92%,
-      rgba(5, 8, 20, 0.92) 100%
-    );
-  }
-}
 
 /* Animação desabilitada - estava causando sobreposição horizontal */
 /* @keyframes grain {
