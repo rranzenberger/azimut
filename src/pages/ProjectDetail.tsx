@@ -7,6 +7,7 @@ import { trackPageView } from '../utils/analytics'
 import { useProject } from '../hooks/useProject'
 import { useAzimutContent } from '../hooks/useAzimutContent'
 import ProjectGalleryStatus from '../components/ProjectGalleryStatus'
+import StarBackground from '../components/StarBackground'
 
 interface ProjectDetailProps {
   lang: Lang
@@ -137,17 +138,18 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
         image={project.heroImage?.large || project.heroImage?.original}
       />
       <main className="relative py-16 md:py-20">
-        {/* Star background - Parallax */}
+        {/* Star background - Parallax com detecção automática de tema */}
         <div 
           ref={starRef}
-          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-32 md:-right-40 md:h-[680px] md:w-[680px] transition-transform duration-75 ease-out" 
-          style={{ 
-            opacity: 0.3,
-            zIndex: -5,
-            willChange: 'transform'
-          }}
+          className="transition-transform duration-75 ease-out" 
+          style={{ willChange: 'transform' }}
         >
-          <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" />
+          <StarBackground 
+            className="top-20 -right-28 h-[520px] w-[520px] md:top-32 md:-right-40 md:h-[680px] md:w-[680px]"
+            position="fixed"
+            opacity={0.3}
+            zIndex={-5}
+          />
         </div>
 
         <div className="mx-auto max-w-6xl px-6">

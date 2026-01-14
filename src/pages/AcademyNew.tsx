@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
 import { useUserTracking } from '../hooks/useUserTracking'
+import StarBackground from '../components/StarBackground'
 
 interface AcademyProps {
   lang: Lang
@@ -381,17 +382,12 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
           </div>
         </section>
         
-        {/* Estrela abaixo da seta - FUNDO (atrás de tudo) */}
-        {/* Posição ajustada para mostrar mais da estrela */}
-        <div 
-          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-50"
-          style={{ 
-            zIndex: -10,
-            backgroundImage: 'url(/logo-azimut-star.svg)',
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center'
-          }}
+        {/* Estrela de fundo - detecta tema automaticamente */}
+        <StarBackground 
+          className="top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px]"
+          position="fixed"
+          opacity={0.5}
+          zIndex={-10}
         />
 
         {/* ═══════════════════════════════════════════════════════════
