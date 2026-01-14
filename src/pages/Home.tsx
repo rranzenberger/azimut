@@ -195,8 +195,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
 
         {/* ════════════════════════════════════════════════════════════════ */}
         {/* HERO WORLD-CLASS 2026 - 85vh + Stats Cards Flutuantes */}
+        {/* margin-top negativo compensa o padding do Layout */}
         {/* ════════════════════════════════════════════════════════════════ */}
-        <section className="relative min-h-[90vh] flex items-center overflow-hidden film-grain py-8">
+        <section 
+          className="relative min-h-[90vh] flex items-center overflow-hidden film-grain py-8"
+          style={{ marginTop: '-80px', paddingTop: '80px' }}
+        >
           {/* Background: Imagem do Backoffice (heroBackgroundImage) ou Featured Project */}
           {(() => {
             // PRIORIDADE 1: Imagem do backoffice (page.heroBackgroundImage)
