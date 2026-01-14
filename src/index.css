@@ -2754,44 +2754,107 @@ select.dropdown-azimut::-ms-expand {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   PÁGINA VANCOUVER - Contraste tema claro
+   PÁGINA VANCOUVER - Contraste tema claro (PREMIUM FIX)
    ═══════════════════════════════════════════════════════════════ */
 
-/* Títulos principais - preto no tema claro */
-[data-theme="light"] .vancouver-page h1,
-[data-theme="light"] .vancouver-page h2,
-[data-theme="light"] .vancouver-page h3 {
+/* 
+ * ESTRATÉGIA: 
+ * 1. Textos FORA de cards escuros → preto/escuro
+ * 2. Textos DENTRO de cards escuros (card-adaptive, school-card-*) → branco
+ * 3. Usar :not() para excluir cards escuros das regras gerais
+ */
+
+/* =========================
+   1. TEXTOS FORA DE CARDS - Escuros no tema claro
+   ========================= */
+
+/* Títulos principais FORA de cards - preto */
+[data-theme="light"] .vancouver-page h1:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="light"] .vancouver-page h2:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="light"] .vancouver-page h3:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *) {
   color: #0d0d0d !important;
 }
 
-/* Textos descritivos - cinza escuro no tema claro */
-[data-theme="light"] .vancouver-page .text-white\/70,
-[data-theme="light"] .vancouver-page .text-white\/60,
-[data-theme="light"] .vancouver-page .text-white\/50 {
-  color: #4a4a4a !important;
+/* Textos descritivos FORA de cards - cinza escuro */
+[data-theme="light"] .vancouver-page p:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *),
+[data-theme="light"] .vancouver-page span:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *):not(.text-azimut-red) {
+  color: #2a2a2a !important;
 }
 
-/* Textos principais - preto no tema claro */
-[data-theme="light"] .vancouver-page .text-white {
+/* Textos .text-white FORA de cards e elementos com fundo - escuros */
+[data-theme="light"] .vancouver-page .text-white:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *) {
   color: #1a1a1a !important;
 }
 
-/* Manter branco em badges com background colorido */
-[data-theme="light"] .vancouver-page .bg-azimut-red .text-white,
-[data-theme="light"] .vancouver-page .bg-azimut-red\/80 .text-white,
-[data-theme="light"] .vancouver-page .bg-purple-600\/80 .text-white,
-[data-theme="light"] .vancouver-page .bg-green-600\/20 .text-green-400,
-[data-theme="light"] .vancouver-page [class*="bg-azimut-red"] .text-white {
+[data-theme="light"] .vancouver-page .text-white\/90:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="light"] .vancouver-page .text-white\/80:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="light"] .vancouver-page .text-white\/70:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="light"] .vancouver-page .text-white\/60:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *) {
+  color: #4a4a4a !important;
+}
+
+/* =========================
+   2. CARDS ESCUROS - Texto BRANCO sempre
+   ========================= */
+
+/* Cards adaptativos - TUDO branco (alta prioridade) */
+[data-theme="light"] .vancouver-page .card-adaptive,
+[data-theme="light"] .vancouver-page .card-adaptive *,
+[data-theme="light"] .vancouver-page .card-adaptive h1,
+[data-theme="light"] .vancouver-page .card-adaptive h2,
+[data-theme="light"] .vancouver-page .card-adaptive h3,
+[data-theme="light"] .vancouver-page .card-adaptive h4,
+[data-theme="light"] .vancouver-page .card-adaptive p,
+[data-theme="light"] .vancouver-page .card-adaptive span,
+[data-theme="light"] .vancouver-page .card-adaptive div,
+[data-theme="light"] .vancouver-page .card-adaptive .text-white,
+[data-theme="light"] .vancouver-page .card-adaptive .text-white\/70,
+[data-theme="light"] .vancouver-page .card-adaptive .text-white\/60,
+[data-theme="light"] .vancouver-page .card-adaptive .text-white\/80 {
   color: #ffffff !important;
 }
 
-/* Cards com fundo escuro no tema claro - manter texto branco */
-[data-theme="light"] .vancouver-page .card-dark .text-white,
-[data-theme="light"] .vancouver-page .card-adaptive .text-white {
+/* Texto descritivo nos cards adaptativos - mais visível */
+[data-theme="light"] .vancouver-page .card-adaptive p {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 450;
+  line-height: 1.65;
+}
+
+/* School cards VFS/VanArts - texto branco no content area */
+[data-theme="light"] .vancouver-page [class*="school-card-"] .school-card-content,
+[data-theme="light"] .vancouver-page [class*="school-card-"] .school-card-content * {
   color: #ffffff !important;
 }
 
-/* Tabela comparativa - manter legível */
+/* Texto descritivo nos cards - mais legível */
+[data-theme="light"] .vancouver-page .card-adaptive p,
+[data-theme="light"] .vancouver-page [class*="school-card-"] p {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 450;
+  letter-spacing: 0.01em;
+  line-height: 1.65;
+}
+
+/* Listas de programas nos cards VFS/VanArts - branco forte */
+[data-theme="light"] .vancouver-page [class*="school-card-"] .grid div,
+[data-theme="light"] .vancouver-page [class*="school-card-"] ul li,
+[data-theme="light"] .vancouver-page [class*="school-card-"] .flex.items-center {
+  color: #ffffff !important;
+}
+
+/* =========================
+   3. EXCEÇÕES ESPECÍFICAS
+   ========================= */
+
+/* Vermelho Azimut - sempre vermelho */
+[data-theme="light"] .vancouver-page .text-azimut-red,
+[data-theme="light"] .vancouver-page .card-adaptive .text-azimut-red,
+[data-theme="light"] .vancouver-page [class*="school-card-"] .text-azimut-red {
+  color: #c92337 !important;
+}
+
+/* Tabela comparativa - texto escuro legível */
 [data-theme="light"] .vancouver-page table td,
 [data-theme="light"] .vancouver-page table th {
   color: #1a1a1a !important;
@@ -2801,38 +2864,129 @@ select.dropdown-azimut::-ms-expand {
   color: #c92337 !important;
 }
 
-/* Seção de empresas - texto escuro no tema claro */
-[data-theme="light"] .vancouver-page .company-logos .text-white\/70 {
-  color: #4a4a4a !important;
+/* Badges com fundo colorido - texto branco */
+[data-theme="light"] .vancouver-page [class*="bg-azimut-red"] {
+  color: #ffffff !important;
 }
 
-/* Banner internacional - manter legível */
-[data-theme="light"] .vancouver-page .international-banner .text-white {
+/* Box de informações práticas (fundo rosa claro) - texto escuro */
+[data-theme="light"] .vancouver-page .bg-azimut-red\/10 {
+  background: rgba(201, 35, 55, 0.08) !important;
+}
+[data-theme="light"] .vancouver-page .bg-azimut-red\/10 * {
   color: #1a1a1a !important;
 }
-
-/* REMOVIDO: estava forçando texto vermelho em botões vermelhos no tema claro */
-/* [data-theme="light"] .card-adaptive .text-azimut-red,
-[data-theme="light"] .card-adaptive .bg-azimut-red {
-  color: #c92337;
-} */
-
-/* Garantir que títulos, textos e badges nos cards fiquem CLAROS no tema light (inversão) */
-[data-theme="light"] .card-adaptive h1,
-[data-theme="light"] .card-adaptive h2,
-[data-theme="light"] .card-adaptive h3,
-[data-theme="light"] .card-adaptive h4,
-[data-theme="light"] .card-adaptive p,
-[data-theme="light"] .card-adaptive span,
-[data-theme="light"] .card-adaptive div {
-  color: #ffffff; /* Branco puro para contraste no fundo escuro */
+[data-theme="light"] .vancouver-page .bg-azimut-red\/10 .text-azimut-red {
+  color: #c92337 !important;
 }
 
-/* Texto descritivo com mais peso - tema claro */
-[data-theme="light"] .card-adaptive p {
+/* =========================
+   4. HERO - Texto legível sobre imagem
+   ========================= */
+
+/* Hero description precisa de sombra para legibilidade sobre imagem */
+[data-theme="light"] .vancouver-page section:first-of-type h1,
+[data-theme="light"] .vancouver-page section:first-of-type p {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Hero título e subtítulo - branco com sombra (sobre imagem) */
+[data-theme="light"] .vancouver-page section:first-of-type h1 {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .vancouver-page section:first-of-type > div > p {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* =========================
+   5. SEÇÃO "POR QUE VANCOUVER?" - Cards WhyVancouver  
+   ========================= */
+
+/* WhyVancouverConvincing component - texto branco em cards */
+[data-theme="light"] .vancouver-page [class*="bg-gradient-to-br"] h3,
+[data-theme="light"] .vancouver-page [class*="bg-gradient-to-br"] p,
+[data-theme="light"] .vancouver-page [class*="bg-gradient-to-br"] li,
+[data-theme="light"] .vancouver-page [class*="bg-gradient-to-br"] div {
+  color: #ffffff !important;
+}
+
+/* =========================
+   6. VANCOUVER MAGAZINE - Componente
+   ========================= */
+
+/* Título "VANCOUVER" no magazine - preto no tema claro */
+[data-theme="light"] .vancouver-page .vancouver-magazine-title {
+  color: #0d0d0d !important;
+}
+
+/* Títulos de seção na página Vancouver - adaptativos */
+.section-title-vancouver {
+  color: #ffffff; /* Branco no tema escuro */
+}
+
+[data-theme="light"] .section-title-vancouver {
+  color: #0d0d0d !important; /* Preto no tema claro */
+}
+
+/* Subtítulos de seção na página Vancouver - adaptativos */
+.section-subtitle-vancouver {
+  color: rgba(255, 255, 255, 0.6); /* Branco translúcido no tema escuro */
+}
+
+[data-theme="light"] .section-subtitle-vancouver {
+  color: #4a4a4a !important; /* Cinza escuro no tema claro */
+}
+
+/* =========================
+   7. SCHOOL CARDS VFS/VANARTS - Fundo escuro SEMPRE
+   ========================= */
+
+/* School cards sempre têm fundo escuro e texto branco */
+.school-card {
+  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
+}
+
+.school-card-content {
+  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%) !important;
+}
+
+/* Todos os textos dentro de school cards são brancos */
+.school-card-content,
+.school-card-content * {
+  color: #ffffff !important;
+}
+
+/* Textos descritivos nos school cards - mais legíveis */
+.school-card-content p {
+  color: rgba(255, 255, 255, 0.85) !important;
   font-weight: 450;
-  letter-spacing: 0.01em;
-  line-height: 1.6;
+  line-height: 1.65;
+}
+
+/* Labels secundários */
+.school-card-content .text-white\/60,
+.school-card-content .text-white\/70 {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* Manter vermelho Azimut */
+.school-card-content .text-azimut-red {
+  color: #c92337 !important;
+}
+
+/* Box de informações práticas dentro do school card - fundo mais claro para contraste */
+[data-theme="light"] .school-card-content .bg-azimut-red\/10 {
+  background: rgba(201, 35, 55, 0.15) !important;
+  border-color: rgba(201, 35, 55, 0.4) !important;
+}
+
+[data-theme="light"] .school-card-content .bg-azimut-red\/10 * {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .school-card-content .bg-azimut-red\/10 .text-azimut-red {
+  color: #ff6b7a !important; /* Vermelho mais claro para contraste */
 }
 
 /* Texto com gradiente - vermelho puro Azimut */

@@ -575,7 +575,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         <section className="py-20" style={{ background: 'var(--theme-bg)' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+              <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
                 {t.compareTitle}
               </h2>
               <p className="text-lg text-white/70 max-w-3xl mx-auto">
@@ -652,7 +652,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         <section className="py-20" style={{ background: 'var(--theme-bg)' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+              <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
                 {t.whyTitle}
               </h2>
             </div>
@@ -685,16 +685,16 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   🏫 {lang === 'pt' ? 'Escolas Parceiras Oficiais' : lang === 'es' ? 'Escuelas Socias Oficiales' : lang === 'fr' ? 'Écoles Partenaires Officielles' : 'Official Partner Schools'}
                 </span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+              <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
                 {t.schoolsTitle}
               </h2>
-              <p className="text-white/60 max-w-2xl mx-auto">
+              <p className="section-subtitle-vancouver max-w-2xl mx-auto">
                 {lang === 'pt' ? 'As melhores escolas de mídia e entretenimento da América do Norte' : lang === 'es' ? 'Las mejores escuelas de medios y entretenimiento de Norteamérica' : lang === 'fr' ? 'Les meilleures écoles de médias et divertissement d\'Amérique du Nord' : 'The best media and entertainment schools in North America'}
               </p>
             </div>
 
             {/* VFS */}
-            <div className="mb-16 rounded-2xl overflow-hidden border border-white/10 hover:border-azimut-red/30 transition-all duration-500 group">
+            <div className="school-card school-card-vfs mb-16 rounded-2xl overflow-hidden border border-white/10 hover:border-azimut-red/30 transition-all duration-500 group">
               {/* VFS Hero Image */}
               <div className="relative h-64 md:h-80 overflow-hidden">
                 <div 
@@ -721,7 +721,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               </div>
               
               {/* VFS Content */}
-              <div className="p-8" style={{ background: 'var(--theme-bg)' }}>
+              <div className="school-card-content p-8" style={{ background: 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)' }}>
                 <p className="text-white/70 mb-6">{t.vfsDescription}</p>
 
               <div className="grid md:grid-cols-3 gap-6 mb-6">
@@ -773,7 +773,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
             </div>
 
             {/* VanArts */}
-            <div className="rounded-2xl overflow-hidden border border-white/10 hover:border-azimut-red/30 transition-all duration-500 group">
+            <div className="school-card school-card-vanarts rounded-2xl overflow-hidden border border-white/10 hover:border-azimut-red/30 transition-all duration-500 group">
               {/* VanArts Hero Image */}
               <div className="relative h-64 md:h-80 overflow-hidden">
                 <div 
@@ -800,7 +800,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               </div>
               
               {/* VanArts Content */}
-              <div className="p-8" style={{ background: 'var(--theme-bg)' }}>
+              <div className="school-card-content p-8" style={{ background: 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)' }}>
                 <p className="text-white/70 mb-6">{t.vanartsDescription}</p>
 
               <div className="grid md:grid-cols-3 gap-6 mb-6">
@@ -909,7 +909,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   ✅ {lang === 'pt' ? 'Casos de Sucesso Reais' : lang === 'es' ? 'Casos de Éxito Reales' : lang === 'fr' ? 'Cas de Succès Réels' : 'Real Success Stories'}
                 </span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+              <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
                 {t.testimonialsTitle}
               </h2>
               <p className="text-lg text-white/70 max-w-3xl mx-auto mb-8">
@@ -960,7 +960,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         <section className="py-20" style={{ background: 'var(--theme-bg-secondary)' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+              <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
                 {t.azimutHelpTitle}
               </h2>
               <p className="text-lg text-white/70 max-w-3xl mx-auto">
@@ -1027,7 +1027,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   🤖 IA Interativa
                 </span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+              <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
                 {lang === 'pt' ? 'Ferramentas Inteligentes' : 'Smart Tools'}
               </h2>
               <p className="text-xl text-white/70 max-w-3xl mx-auto">
@@ -1069,7 +1069,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         <section className="py-20" style={{ background: 'var(--theme-bg-secondary)' }}>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+              <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
                 {t.faqTitle}
               </h2>
             </div>
@@ -1104,7 +1104,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         <section className="py-20" style={{ background: 'var(--theme-bg)' }}>
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+              <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
                 {lang === 'pt' ? 'Qual escola é sua vibe?' : 'Which school is your vibe?'}
               </h2>
               <p className="text-xl text-white/70">
