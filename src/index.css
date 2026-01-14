@@ -42,25 +42,25 @@ html {
    VARIÁVEIS CSS GLOBAIS - LAYOUT RESPONSIVO
    ═══════════════════════════════════════════════════════════════ */
 :root {
-  /* Header heights */
-  --header-height: 80px;
-  --header-height-scrolled: 72px;
+  /* Header: valores EXATOS do Layout.tsx */
+  /* Header container: 60px normal, 52px scrollado */
+  /* Main padding-top: 80px normal, 72px scrollado */
+  --header-height: 60px;
   
   /* Internal navigation (submenu) */
   --internal-nav-height: 52px;
   
   /* Scroll margin para anchors (header + internal nav + margem) */
-  --scroll-offset: calc(var(--header-height) + var(--internal-nav-height) + 20px);
+  --scroll-offset: calc(var(--header-height) + var(--internal-nav-height) + 24px);
   
   /* Cores de fundo sticky */
   --theme-bg-sticky: rgba(10, 14, 23, 0.98);
 }
 
-/* Mobile: heights menores */
+/* Mobile: header mais compacto */
 @media (max-width: 639px) {
   :root {
-    --header-height: 72px;
-    --header-height-scrolled: 64px;
+    --header-height: 56px;
     --internal-nav-height: 48px;
   }
 }

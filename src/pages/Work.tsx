@@ -256,6 +256,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           opacity={0.5}
         />
 
+        {/* Hero Section - DENTRO do container */}
         <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
           {/* Prefixo Narrativo - APENAS ESTE ANIMA */}
           <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
@@ -277,44 +278,59 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               ? 'Projets qui transforment espaces, marques et expériences. De musées olympiques à la curation de festivals internationaux, chaque travail est une opportunité de créer des narrations immersives qui connectent personnes et histoires de manière unique.'
               : 'Projects that transform spaces, brands and experiences. From Olympic museums to international festival curation, each work is an opportunity to create immersive narratives that uniquely connect people and stories.'}
           </p>
+        </div>
 
-          {/* Navegação Interna - Padrão Universal Azimut */}
-          <InternalNavigation
-            items={[
-              {
-                id: 'all',
-                label: lang === 'pt' ? 'Todos os Projetos' : lang === 'es' ? 'Todos los Proyectos' : lang === 'fr' ? 'Tous les Projets' : 'All Projects',
-                href: '/work',
-                icon: '✦'
-              },
-              {
-                id: 'museum',
-                label: lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture',
-                href: '/work?type=museum',
-                icon: '🏛️'
-              },
-              {
-                id: 'festival',
-                label: lang === 'pt' ? 'Festivais' : lang === 'es' ? 'Festivales' : lang === 'fr' ? 'Festivals' : 'Festivals',
-                href: '/work?type=festival',
-                icon: '🎪'
-              },
-              {
-                id: 'brand',
-                label: lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events',
-                href: '/work?type=brand',
-                icon: '🎯'
-              },
-              {
-                id: 'vr-xr',
-                label: lang === 'pt' ? 'VR & XR' : lang === 'es' ? 'VR & XR' : lang === 'fr' ? 'VR & XR' : 'VR & XR',
-                href: '/work?type=vr-xr',
-                icon: '🥽'
-              }
-            ]}
-            lang={lang}
-          />
+        {/* ═══════════════════════════════════════════════════════════
+            NAVEGAÇÃO INTERNA - FORA do max-w-7xl para sticky funcionar
+            ═══════════════════════════════════════════════════════════ */}
+        <div className="sticky z-40 backdrop-blur-xl" style={{
+          top: 'var(--header-height)',
+          backgroundColor: 'var(--theme-bg-sticky)',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+          borderBottom: '2px solid rgba(201, 35, 55, 0.6)'
+        }}>
+          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3">
+            <InternalNavigation
+              items={[
+                {
+                  id: 'all',
+                  label: lang === 'pt' ? 'Todos os Projetos' : lang === 'es' ? 'Todos los Proyectos' : lang === 'fr' ? 'Tous les Projets' : 'All Projects',
+                  href: '/work',
+                  icon: '✦'
+                },
+                {
+                  id: 'museum',
+                  label: lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture',
+                  href: '/work?type=museum',
+                  icon: '🏛️'
+                },
+                {
+                  id: 'festival',
+                  label: lang === 'pt' ? 'Festivais' : lang === 'es' ? 'Festivales' : lang === 'fr' ? 'Festivals' : 'Festivals',
+                  href: '/work?type=festival',
+                  icon: '🎪'
+                },
+                {
+                  id: 'brand',
+                  label: lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events',
+                  href: '/work?type=brand',
+                  icon: '🎯'
+                },
+                {
+                  id: 'vr-xr',
+                  label: lang === 'pt' ? 'VR & XR' : lang === 'es' ? 'VR & XR' : lang === 'fr' ? 'VR & XR' : 'VR & XR',
+                  href: '/work?type=vr-xr',
+                  icon: '🥽'
+                }
+              ]}
+              lang={lang}
+              className="!sticky !top-0 !z-0 !mb-0 !mx-0 !px-0 !shadow-none !border-none !backdrop-blur-none"
+            />
+          </div>
+        </div>
 
+        {/* Conteúdo - DENTRO do container */}
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
           {/* Filtros */}
           <div id="filters-section" className="mb-8 flex flex-wrap gap-4 items-center">
             {/* Busca */}

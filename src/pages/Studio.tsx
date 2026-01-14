@@ -250,8 +250,8 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           opacity={0.5}
         />
 
+        {/* Hero Section - DENTRO do container */}
         <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
-          {/* Hero - MESMA ALTURA QUE WORK */}
           {/* Prefixo Narrativo - APENAS ESTE ANIMA */}
           <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
             <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
@@ -266,37 +266,53 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           <p className="mb-8 max-w-3xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)', fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
             {text.subtitle}
           </p>
+        </div>
 
-          {/* Navegação Interna - SCROLL NA MESMA PÁGINA (igual Work) */}
-          <InternalNavigation
-            items={[
-              {
-                id: 'overview',
-                label: lang === 'pt' ? 'Visão Geral' : lang === 'es' ? 'Visión General' : lang === 'fr' ? 'Vue d\'Ensemble' : 'Overview',
-                href: '#overview',
-                icon: '✦'
-              },
-              {
-                id: 'unique',
-                label: lang === 'pt' ? 'Diferenciais' : lang === 'es' ? 'Diferenciales' : lang === 'fr' ? 'Différenciation' : 'What Makes Us Unique',
-                href: '#unique',
-                icon: '💡'
-              },
-              {
-                id: 'team',
-                label: lang === 'pt' ? 'Equipe' : lang === 'es' ? 'Equipo' : lang === 'fr' ? 'Équipe' : 'Team',
-                href: '#team',
-                icon: '👥'
-              },
-              {
-                id: 'credentials',
-                label: lang === 'pt' ? 'Credenciais' : lang === 'es' ? 'Credenciales' : lang === 'fr' ? 'Références' : 'Credentials',
-                href: '#credentials',
-                icon: '🏆'
-              }
-            ]}
-            lang={lang}
-          />
+        {/* ═══════════════════════════════════════════════════════════
+            NAVEGAÇÃO INTERNA - FORA do max-w-7xl para sticky funcionar
+            ═══════════════════════════════════════════════════════════ */}
+        <div className="sticky z-40 backdrop-blur-xl" style={{
+          top: 'var(--header-height)',
+          backgroundColor: 'var(--theme-bg-sticky)',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+          borderBottom: '2px solid rgba(201, 35, 55, 0.6)'
+        }}>
+          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3">
+            <InternalNavigation
+              items={[
+                {
+                  id: 'overview',
+                  label: lang === 'pt' ? 'Visão Geral' : lang === 'es' ? 'Visión General' : lang === 'fr' ? 'Vue d\'Ensemble' : 'Overview',
+                  href: '#overview',
+                  icon: '✦'
+                },
+                {
+                  id: 'unique',
+                  label: lang === 'pt' ? 'Diferenciais' : lang === 'es' ? 'Diferenciales' : lang === 'fr' ? 'Différenciation' : 'What Makes Us Unique',
+                  href: '#unique',
+                  icon: '💡'
+                },
+                {
+                  id: 'team',
+                  label: lang === 'pt' ? 'Equipe' : lang === 'es' ? 'Equipo' : lang === 'fr' ? 'Équipe' : 'Team',
+                  href: '#team',
+                  icon: '👥'
+                },
+                {
+                  id: 'credentials',
+                  label: lang === 'pt' ? 'Credenciais' : lang === 'es' ? 'Credenciales' : lang === 'fr' ? 'Références' : 'Credentials',
+                  href: '#credentials',
+                  icon: '🏆'
+                }
+              ]}
+              lang={lang}
+              className="!sticky !top-0 !z-0 !mb-0 !mx-0 !px-0 !shadow-none !border-none !backdrop-blur-none"
+            />
+          </div>
+        </div>
+
+        {/* Conteúdo - DENTRO do container */}
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
 
           {/* Sobre (Overview) */}
           <section id="overview" className="section-container" style={{ scrollMarginTop: 'var(--scroll-offset)' }}>

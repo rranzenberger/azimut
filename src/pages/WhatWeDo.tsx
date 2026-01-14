@@ -166,7 +166,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
           opacity={0.5}
         />
 
-        {/* Hero Section */}
+        {/* Hero Section - DENTRO do container */}
         <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             {/* Prefixo Narrativo - APENAS ESTE ANIMA */}
             <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
@@ -188,44 +188,56 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                 ? 'Nous créons des expériences immersives, interactives et cinématographiques de bout en bout. De la conception à l\'exécution, nous intégrons art, technologie et récit pour connecter personnes, histoires et espaces.'
                 : 'We create end-to-end immersive, interactive and cinematic experiences. From conception to execution, we integrate art, technology and narrative to connect people, stories and spaces.'}
             </p>
+        </div>
 
-          {/* Navegação Interna - Padrão Universal Azimut */}
-          <InternalNavigation
-          items={[
-            {
-              id: 'all',
-              label: lang === 'pt' ? 'Todas' : lang === 'es' ? 'Todas' : lang === 'fr' ? 'Tous' : 'All',
-              href: '/what',
-              icon: '✦'
-            },
-            {
-              id: 'culture',
-              label: lang === 'pt' ? 'Cultura' : lang === 'es' ? 'Cultura' : lang === 'fr' ? 'Culture' : 'Culture',
-              href: '/what?filter=culture',
-              icon: '🎭'
-            },
-            {
-              id: 'brands',
-              label: lang === 'pt' ? 'Marcas' : lang === 'es' ? 'Marcas' : lang === 'fr' ? 'Marques' : 'Brands',
-              href: '/what?filter=brands',
-              icon: '🎯'
-            },
-            {
-              id: 'production',
-              label: lang === 'pt' ? 'Produção' : lang === 'es' ? 'Producción' : lang === 'fr' ? 'Production' : 'Production',
-              href: '/what?filter=production',
-              icon: '🎬'
-            },
-            {
-              id: 'technology',
-              label: lang === 'pt' ? 'Tecnologia' : lang === 'es' ? 'Tecnología' : lang === 'fr' ? 'Technologie' : 'Technology',
-              href: '/what?filter=technology',
-              icon: '🚀'
-            }
-          ]}
-          defaultActive={activeFilter}
-          lang={lang}
-        />
+        {/* ═══════════════════════════════════════════════════════════
+            NAVEGAÇÃO INTERNA - FORA do max-w-7xl para sticky funcionar
+            ═══════════════════════════════════════════════════════════ */}
+        <div className="sticky z-40 backdrop-blur-xl" style={{
+          top: 'var(--header-height)',
+          backgroundColor: 'var(--theme-bg-sticky)',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+          borderBottom: '2px solid rgba(201, 35, 55, 0.6)'
+        }}>
+          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3">
+            <InternalNavigation
+              items={[
+                {
+                  id: 'all',
+                  label: lang === 'pt' ? 'Todas' : lang === 'es' ? 'Todas' : lang === 'fr' ? 'Tous' : 'All',
+                  href: '/what',
+                  icon: '✦'
+                },
+                {
+                  id: 'culture',
+                  label: lang === 'pt' ? 'Cultura' : lang === 'es' ? 'Cultura' : lang === 'fr' ? 'Culture' : 'Culture',
+                  href: '/what?filter=culture',
+                  icon: '🎭'
+                },
+                {
+                  id: 'brands',
+                  label: lang === 'pt' ? 'Marcas' : lang === 'es' ? 'Marcas' : lang === 'fr' ? 'Marques' : 'Brands',
+                  href: '/what?filter=brands',
+                  icon: '🎯'
+                },
+                {
+                  id: 'production',
+                  label: lang === 'pt' ? 'Produção' : lang === 'es' ? 'Producción' : lang === 'fr' ? 'Production' : 'Production',
+                  href: '/what?filter=production',
+                  icon: '🎬'
+                },
+                {
+                  id: 'technology',
+                  label: lang === 'pt' ? 'Tecnologia' : lang === 'es' ? 'Tecnología' : lang === 'fr' ? 'Technologie' : 'Technology',
+                  href: '/what?filter=technology',
+                  icon: '🚀'
+                }
+              ]}
+              defaultActive={activeFilter}
+              lang={lang}
+              className="!sticky !top-0 !z-0 !mb-0 !mx-0 !px-0 !shadow-none !border-none !backdrop-blur-none"
+            />
+          </div>
         </div>
 
         {/* Grid de Serviços 4x4 - CONTAINER ABAIXADO 60px para linha vermelha aparecer */}
