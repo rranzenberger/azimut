@@ -2829,3 +2829,231 @@ p .keyword-highlight,
   color: #c92337 !important;
   font-weight: 600 !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   PREMIUM MICRO-INTERACTIONS 2026
+   Micro-animações sutis para sensação world-class
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Transição suave universal para elementos interativos */
+.premium-transition {
+  transition: all var(--transition-base) var(--ease-out);
+}
+
+/* Hover lift effect - elevação sutil ao passar o mouse */
+.hover-lift {
+  transition: transform var(--transition-base) var(--ease-out), 
+              box-shadow var(--transition-base) var(--ease-out);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Hover glow vermelho Azimut */
+.hover-glow-red {
+  transition: box-shadow var(--transition-base) var(--ease-out),
+              border-color var(--transition-base) var(--ease-out);
+}
+
+.hover-glow-red:hover {
+  box-shadow: 0 0 24px rgba(201, 35, 55, 0.3), 0 8px 32px rgba(0, 0, 0, 0.4);
+  border-color: rgba(201, 35, 55, 0.5);
+}
+
+/* Scale sutil no hover */
+.hover-scale {
+  transition: transform var(--transition-fast) var(--ease-out);
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+.hover-scale-sm:hover {
+  transform: scale(1.01);
+}
+
+.hover-scale-md:hover {
+  transform: scale(1.03);
+}
+
+/* Focus ring premium vermelho */
+.focus-ring-red:focus,
+.focus-ring-red:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.4), 0 0 12px rgba(201, 35, 55, 0.2);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TIPOGRAFIA PREMIUM - Melhorias de legibilidade
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Texto com melhor legibilidade */
+.text-readable {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Espaçamento entre linhas otimizado para blocos de texto */
+.leading-comfortable {
+  line-height: 1.75;
+}
+
+/* Texto de corpo otimizado */
+.body-text {
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+/* Subtítulos premium */
+.subtitle-premium {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ESPAÇAMENTOS PREMIUM - Breathing room
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Seções com espaçamento generoso */
+.section-spacing {
+  padding-top: clamp(4rem, 8vw, 8rem);
+  padding-bottom: clamp(4rem, 8vw, 8rem);
+}
+
+.section-spacing-sm {
+  padding-top: clamp(2rem, 4vw, 4rem);
+  padding-bottom: clamp(2rem, 4vw, 4rem);
+}
+
+/* Gap responsivo entre elementos */
+.gap-responsive {
+  gap: clamp(1rem, 3vw, 2rem);
+}
+
+.gap-responsive-lg {
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EFEITOS VISUAIS PREMIUM
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Borda gradiente sutil */
+.border-gradient-red {
+  position: relative;
+}
+
+.border-gradient-red::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0.4), rgba(201, 35, 55, 0.1));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Overlay escuro para imagens */
+.img-overlay-dark {
+  position: relative;
+}
+
+.img-overlay-dark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.7) 100%);
+  pointer-events: none;
+}
+
+/* Blur sutil de fundo */
+.backdrop-blur-premium {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMAÇÕES DE ENTRADA PREMIUM
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Fade in suave com slide */
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-slide {
+  animation: fadeInSlide 0.6s var(--ease-out) forwards;
+}
+
+/* Fade in com scale */
+@keyframes fadeInZoom {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-zoom {
+  animation: fadeInZoom 0.5s var(--ease-out) forwards;
+}
+
+/* Stagger delays para listas */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.3s; }
+
+/* ═══════════════════════════════════════════════════════════════
+   MELHORIAS DE CONTRASTE - TEMA CLARO
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Texto secundário mais legível no tema claro */
+[data-theme="light"] .text-secondary-adaptive {
+  color: #374151 !important; /* Gray-700 - bom contraste */
+}
+
+/* Títulos no tema claro - mais contraste */
+[data-theme="light"] .title-adaptive {
+  color: #0f172a !important; /* Slate-900 */
+}
+
+/* Cards com fundo claro no tema claro */
+[data-theme="light"] .card-light-adaptive {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #1f2937;
+}
+
+[data-theme="light"] .card-light-adaptive h1,
+[data-theme="light"] .card-light-adaptive h2,
+[data-theme="light"] .card-light-adaptive h3 {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .card-light-adaptive p {
+  color: #374151 !important;
+}
