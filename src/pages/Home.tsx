@@ -847,10 +847,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 
                 {/* Conteúdo (sempre legível) */}
                 <div className="relative z-10 p-6 md:p-8">
-                  <h2 className="mb-4 font-handel text-3xl md:text-4xl uppercase tracking-[0.12em]">
+                  <h2 className="mb-4 font-handel text-3xl md:text-4xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-card-text)' }}>
                     {t(lang, 'cardTitle')}
                   </h2>
-                  <p className="mb-6 text-base md:text-lg leading-relaxed text-slate-300">
+                  <p className="mb-6 text-base md:text-lg leading-relaxed" style={{ color: 'var(--theme-card-text-secondary)' }}>
                     {t(lang, 'cardBody')}
                   </p>
                   
@@ -873,7 +873,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     ))}
                   </div>
                   
-                  <p className="text-sm text-slate-400">
+                  <p className="text-sm" style={{ color: 'var(--theme-card-text-secondary)' }}>
                     📍 {t(lang, 'cities')}
                   </p>
                 </div>
@@ -887,7 +887,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   border: '1px solid rgba(255, 255, 255, 0.1)'
                 }}
               >
-                <h3 className="mb-4 font-sora text-sm uppercase tracking-[0.24em] text-white/70">
+                <h3 className="mb-4 font-sora text-sm uppercase tracking-[0.24em]" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>
                   {lang === 'pt' ? 'Especialidades' : lang === 'es' ? 'Especialidades' : lang === 'fr' ? 'Spécialités' : 'Expertise'}
                 </h3>
                 <div className="flex flex-wrap gap-3">
