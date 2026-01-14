@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -10,7 +11,22 @@ interface StudioTeamProps {
 
 const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
   useUserTracking()
-  // Estrela FIXA (sem parallax) - Padronizada com Studio principal
+  const location = useLocation()
+  
+  // Scroll para o membro específico quando a página carrega com hash
+  useEffect(() => {
+    const hash = location.hash.replace('#', '')
+    if (hash) {
+      // Pequeno delay para garantir que o DOM está renderizado
+      setTimeout(() => {
+        const element = document.getElementById(`member-${hash}`)
+        if (element) {
+          const top = element.getBoundingClientRect().top + window.scrollY - 100
+          window.scrollTo({ top, behavior: 'smooth' })
+        }
+      }, 100)
+    }
+  }, [location.hash])
 
   const content = {
     pt: {
@@ -18,12 +34,13 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
       subtitle: 'Os diretores e especialistas por trás das experiências imersivas da Azimut',
       team: [
         {
+          slug: 'ranz',
           name: 'Ranz Enberger',
           role: 'DIRETOR CRIATIVO & DE TECNOLOGIA',
           subtitle: 'Cineasta · Pesquisador · Curador',
-          bio: 'Lidera direção criativa, tecnologia, storytelling imersivo, VR/XR, curadoria e pipelines com IA. Diretor Geral no Rio Museu Olímpico. Mestrado em Mídias Criativas (UFRJ-VF), pós em Análise de Sistemas. Iniciou pesquisa em IA para animação em 1997. Cidadão canadense com atuação global. Certificado em VFX (EUA/Canadá).',
+          bio: 'Lidera direção criativa, tecnologia, storytelling imersivo, VR/XR, curadoria e pipelines com IA. Mestrado em Mídias Criativas (UFRJ-VF), pós em Análise de Sistemas. Iniciou pesquisa em IA para animação em 1997. Cidadão canadense com atuação global. Certificado em VFX (EUA/Canadá).',
           credentials: [
-            'Diretor de Tecnologia, Rio Museu Olímpico',
+            'Direção Geral e Tecnologia na Montagem do Rio Museu Olímpico',
             'Curador VR, Festival de Gramado (2017-hoje)',
             'Ex-Application Engineer & Training Specialist Autodesk',
             'Demo Artist Autodesk Discreet (1996-2008)',
@@ -36,12 +53,13 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
           photo: '/Ranz.jpeg'
         },
         {
+          slug: 'anick',
           name: 'Anick Couto',
           role: 'DIRETORA DE ARTE',
           subtitle: 'Designer Visual & de Experiência',
-          bio: 'Responsável pela direção visual, design de personagens e ambientes, cenografia, concept art e estética de animação. Liderou toda a equipe de arte no Rio Museu Olímpico – UI, grafismo, textos de parede, sinalização e design. Co-cria a linguagem visual de instalações imersivas, incluindo o universo Casa dos Duendes.',
+          bio: 'Responsável pela direção visual, design de personagens e ambientes, cenografia, concept art e estética de animação. Co-cria a linguagem visual de instalações imersivas, incluindo o universo Casa dos Duendes.',
           credentials: [
-            'Diretora de Arte, Rio Museu Olímpico',
+            'Liderança da Equipe de Arte na Montagem do Rio Museu Olímpico',
             'Designer Visual + Cenografia Digital',
             'Concept Art + Character Design',
             'Liderou equipe completa de arte (UI, grafismo, sinalização)',
@@ -51,12 +69,13 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
           photo: '/anick.jpg'
         },
         {
+          slug: 'alberto',
           name: 'Alberto Moura',
           role: 'DIRETOR AUDIOVISUAL & OPERAÇÕES',
           subtitle: 'Educador · Estrategista Cultural',
-          bio: 'Lidera produção criativa, coordenação de projetos, parcerias acadêmicas e estratégia cultural. Diretor Audiovisual no Rio Museu Olímpico. Faz a ponte entre instituições, educação e experiência pública, com trajetória em ensino audiovisual e programas multimídia.',
+          bio: 'Lidera produção criativa, coordenação de projetos, parcerias acadêmicas e estratégia cultural. Faz a ponte entre instituições, educação e experiência pública, com trajetória em ensino audiovisual e programas multimídia.',
           credentials: [
-            'Diretor Audiovisual, Rio Museu Olímpico',
+            'Diretor Audiovisual na Montagem do Rio Museu Olímpico',
             'Professor Universitário (graduação + pós)',
             'Ex-Coordenador de Curso de Audiovisual',
             'Fundador empresa de Digital Signage',
@@ -73,12 +92,13 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
       subtitle: 'The directors and specialists behind Azimut\'s immersive experiences',
       team: [
         {
+          slug: 'ranz',
           name: 'Ranz Enberger',
           role: 'CREATIVE & TECHNOLOGY DIRECTOR',
           subtitle: 'Filmmaker · Researcher · Curator',
-          bio: 'Leads creative direction, technology, immersive storytelling, VR/XR, curatorship and AI-driven pipelines. General Director at Rio Olympic Museum. Master\'s in Creative Media (UFRJ-VF), post-graduate in Systems Analysis. Started AI research for animation in 1997. Canadian citizen with global scope. Certified in VFX (USA/Canada).',
+          bio: 'Leads creative direction, technology, immersive storytelling, VR/XR, curatorship and AI-driven pipelines. Master\'s in Creative Media (UFRJ-VF), post-graduate in Systems Analysis. Started AI research for animation in 1997. Canadian citizen with global scope. Certified in VFX (USA/Canada).',
           credentials: [
-            'Technology Director, Rio Olympic Museum',
+            'General & Technology Direction at Rio Olympic Museum Setup',
             'VR Curator, Gramado Festival (2017-present)',
             'Ex-Application Engineer & Training Specialist Autodesk',
             'Autodesk Discreet Demo Artist (1996-2008)',
@@ -91,12 +111,13 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
           photo: '/Ranz.jpeg'
         },
         {
+          slug: 'anick',
           name: 'Anick Couto',
           role: 'ART DIRECTOR',
           subtitle: 'Visual & Experience Designer',
-          bio: 'Responsible for visual direction, character and environment design, scenography, concept art and animation aesthetics. Led the entire art team at Rio Olympic Museum – UI, graphics, wall texts, signage, and design. Co-creates the visual language of immersive installations, including the Casa dos Duendes universe.',
+          bio: 'Responsible for visual direction, character and environment design, scenography, concept art and animation aesthetics. Co-creates the visual language of immersive installations, including the Casa dos Duendes universe.',
           credentials: [
-            'Art Director, Rio Olympic Museum',
+            'Art Team Lead at Rio Olympic Museum Setup',
             'Visual Designer + Digital Scenography',
             'Concept Art + Character Design',
             'Led complete art team (UI, graphics, signage)',
@@ -106,12 +127,13 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
           photo: '/anick.jpg'
         },
         {
+          slug: 'alberto',
           name: 'Alberto Moura',
           role: 'AUDIOVISUAL & OPERATIONS DIRECTOR',
           subtitle: 'Educator · Cultural Strategist',
-          bio: 'Leads audiovisual production, operations, project coordination, academic partnerships and cultural strategy. Audiovisual Director at Rio Olympic Museum. Bridges institutions, education and public experience, with trajectory in audiovisual teaching and multimedia programs.',
+          bio: 'Leads audiovisual production, operations, project coordination, academic partnerships and cultural strategy. Bridges institutions, education and public experience, with trajectory in audiovisual teaching and multimedia programs.',
           credentials: [
-            'Audiovisual Director, Rio Olympic Museum',
+            'Audiovisual Director at Rio Olympic Museum Setup',
             'University Professor (undergraduate + graduate)',
             'Ex-Audiovisual Course Coordinator',
             'Digital Signage company founder',
@@ -128,12 +150,13 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
       subtitle: 'Les directeurs et spécialistes derrière les expériences immersives d\'Azimut',
       team: [
         {
+          slug: 'ranz',
           name: 'Ranz Enberger',
           role: 'DIRECTEUR CRÉATIF & TECHNOLOGIQUE',
           subtitle: 'Cinéaste · Chercheur · Curateur',
-          bio: 'Dirige la direction créative, la technologie, la narration immersive, VR/XR, la curation et les pipelines IA. Directeur Général au Musée Olympique de Rio. Maîtrise en Médias Créatifs (UFRJ-VF), post-grad en Analyse de Systèmes. A commencé la recherche en IA pour l\'animation en 1997. Citoyen canadien avec portée mondiale. Certifié en VFX (USA/Canada).',
+          bio: 'Dirige la direction créative, la technologie, la narration immersive, VR/XR, la curation et les pipelines IA. Maîtrise en Médias Créatifs (UFRJ-VF), post-grad en Analyse de Systèmes. A commencé la recherche en IA pour l\'animation en 1997. Citoyen canadien avec portée mondiale. Certifié en VFX (USA/Canada).',
           credentials: [
-            'Directeur de Technologie, Musée Olympique de Rio',
+            'Direction Générale et Technologie au Montage du Musée Olympique de Rio',
             'Curateur VR, Festival de Gramado (depuis 2017)',
             'Ex-Application Engineer & Training Specialist Autodesk',
             'Demo Artist Autodesk Discreet (1996-2008)',
@@ -146,12 +169,13 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
           photo: '/Ranz.jpeg'
         },
         {
+          slug: 'anick',
           name: 'Anick Couto',
           role: 'DIRECTRICE ARTISTIQUE',
           subtitle: 'Designer Visuel & d\'Expérience',
-          bio: 'Responsable de la direction visuelle, du design de personnages et d\'environnements, de la scénographie, du concept art et de l\'esthétique d\'animation. A dirigé toute l\'équipe artistique du Musée Olympique de Rio – UI, graphisme, textes muraux, signalisation et design. Co-crée le langage visuel des installations immersives, y compris l\'univers Casa dos Duendes.',
+          bio: 'Responsable de la direction visuelle, du design de personnages et d\'environnements, de la scénographie, du concept art et de l\'esthétique d\'animation. Co-crée le langage visuel des installations immersives, y compris l\'univers Casa dos Duendes.',
           credentials: [
-            'Directrice Artistique, Musée Olympique de Rio',
+            'Responsable de l\'Équipe Artistique au Montage du Musée Olympique de Rio',
             'Designer Visuel + Scénographie Numérique',
             'Concept Art + Character Design',
             'A dirigé l\'équipe complète d\'art (UI, graphisme, signalisation)',
@@ -161,12 +185,13 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
           photo: '/anick.jpg'
         },
         {
+          slug: 'alberto',
           name: 'Alberto Moura',
           role: 'DIRECTEUR AUDIOVISUEL & OPÉRATIONS',
           subtitle: 'Éducateur · Stratège Culturel',
-          bio: 'Dirige la production créative, la coordination de projets, les partenariats académiques et la stratégie culturelle. Directeur Audiovisuel au Musée Olympique de Rio. Fait le pont entre les institutions, l\'éducation et l\'expérience du public, avec une trajectoire dans l\'enseignement audiovisuel et les programmes multimédias.',
+          bio: 'Dirige la production créative, la coordination de projets, les partenariats académiques et la stratégie culturelle. Fait le pont entre les institutions, l\'éducation et l\'expérience du public, avec une trajectoire dans l\'enseignement audiovisuel et les programmes multimédias.',
           credentials: [
-            'Directeur Audiovisuel, Musée Olympique de Rio',
+            'Directeur Audiovisuel au Montage du Musée Olympique de Rio',
             'Professeur Universitaire (graduation + post)',
             'Ex-Coordinateur de Cours d\'Audiovisuel',
             'Fondateur entreprise de Digital Signage',
@@ -183,12 +208,13 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
       subtitle: 'Los directores y especialistas detrás de las experiencias inmersivas de Azimut',
       team: [
         {
+          slug: 'ranz',
           name: 'Ranz Enberger',
           role: 'DIRECTOR CREATIVO & DE TECNOLOGÍA',
           subtitle: 'Cineasta · Investigador · Curador',
-          bio: 'Lidera dirección creativa, tecnología, storytelling inmersivo, VR/XR, curaduría y pipelines con IA. Director General en el Museo Olímpico de Río. Maestría en Medios Creativos (UFRJ-VF), post-grado en Análisis de Sistemas. Comenzó investigación en IA para animación en 1997. Ciudadano canadiense con alcance global. Certificado en VFX (EE.UU./Canadá).',
+          bio: 'Lidera dirección creativa, tecnología, storytelling inmersivo, VR/XR, curaduría y pipelines con IA. Maestría en Medios Creativos (UFRJ-VF), post-grado en Análisis de Sistemas. Comenzó investigación en IA para animación en 1997. Ciudadano canadiense con alcance global. Certificado en VFX (EE.UU./Canadá).',
           credentials: [
-            'Director de Tecnología, Museo Olímpico de Río',
+            'Dirección General y Tecnología en el Montaje del Rio Museo Olímpico',
             'Curador VR, Festival de Gramado (desde 2017)',
             'Ex-Application Engineer & Training Specialist Autodesk',
             'Demo Artist Autodesk Discreet (1996-2008)',
@@ -201,12 +227,13 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
           photo: '/Ranz.jpeg'
         },
         {
+          slug: 'anick',
           name: 'Anick Couto',
           role: 'DIRECTORA DE ARTE',
           subtitle: 'Diseñadora Visual & de Experiencia',
-          bio: 'Responsable de la dirección visual, diseño de personajes y ambientes, escenografía, concept art y estética de animación. Lideró todo el equipo de arte del Museo Olímpico de Río – UI, grafismo, textos de pared, señalización y diseño. Co-crea el lenguaje visual de instalaciones inmersivas, incluyendo el universo Casa dos Duendes.',
+          bio: 'Responsable de la dirección visual, diseño de personajes y ambientes, escenografía, concept art y estética de animación. Co-crea el lenguaje visual de instalaciones inmersivas, incluyendo el universo Casa dos Duendes.',
           credentials: [
-            'Directora de Arte, Museo Olímpico de Río',
+            'Líder del Equipo de Arte en el Montaje del Rio Museo Olímpico',
             'Diseñadora Visual + Escenografía Digital',
             'Concept Art + Character Design',
             'Lideró equipo completo de arte (UI, grafismo, señalización)',
@@ -216,12 +243,13 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
           photo: '/anick.jpg'
         },
         {
+          slug: 'alberto',
           name: 'Alberto Moura',
           role: 'DIRECTOR AUDIOVISUAL & OPERACIONES',
           subtitle: 'Educador · Estratega Cultural',
-          bio: 'Lidera producción creativa, coordinación de proyectos, alianzas académicas y estrategia cultural. Director Audiovisual en el Museo Olímpico de Río. Hace el puente entre instituciones, educación y experiencia pública, con trayectoria en enseñanza audiovisual y programas multimedia.',
+          bio: 'Lidera producción creativa, coordinación de proyectos, alianzas académicas y estrategia cultural. Hace el puente entre instituciones, educación y experiencia pública, con trayectoria en enseñanza audiovisual y programas multimedia.',
           credentials: [
-            'Director Audiovisual, Museo Olímpico de Río',
+            'Director Audiovisual en el Montaje del Rio Museo Olímpico',
             'Profesor Universitario (graduación + post)',
             'Ex-Coordinador de Curso de Audiovisual',
             'Fundador empresa de Digital Signage',
@@ -289,7 +317,8 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
             {text.team.map((member, idx) => (
               <div 
                 key={idx}
-                className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500"
+                id={`member-${member.slug}`}
+                className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500 scroll-mt-28"
               >
                 <div className="flex flex-col md:flex-row">
                   {/* Foto - Larguras iguais para todos, enquadramento otimizado */}
@@ -339,17 +368,18 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                   </div>
 
                   {/* Conteúdo - Espaçamento otimizado */}
-                  <div className="flex-1 p-6 md:p-8 max-w-2xl flex flex-col justify-center">
+                  <div className="flex-1 p-6 md:p-8 max-w-2xl flex flex-col justify-start pt-4 md:pt-6">
                     {/* Linha decorativa vermelha */}
                     <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-azimut-red via-azimut-red/50 to-transparent"></div>
                     
-                    {/* Nome - Tamanho reduzido */}
-                    <h3 className="mb-2 font-handel text-base tracking-[0.08em] md:text-lg lg:text-xl" style={{ color: 'var(--theme-card-text, #d3cec3)', lineHeight: '1.2', minHeight: '2.4em' }}>
-                      {member.name}
+                    {/* Nome GRANDE - 2 LINHAS: Nome branco + Sobrenome vermelho */}
+                    <h3 className="mb-4 font-handel uppercase tracking-[0.04em] leading-[1.0]" style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)' }}>
+                      <span className="text-white block">{member.name.split(' ')[0]}</span>
+                      <span className="text-azimut-red block">{member.name.split(' ').slice(1).join(' ')}</span>
                     </h3>
                     
-                    {/* Role - Vermelho Azimut */}
-                    <p className="mb-2 font-sora text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-azimut-red">
+                    {/* Role - CINZA CLARO para não competir com sobrenome vermelho */}
+                    <p className="mb-3 font-sora text-[0.75rem] md:text-sm font-semibold uppercase tracking-[0.14em]" style={{ color: '#a8a29e' }}>
                       {member.role}
                     </p>
                     
@@ -380,22 +410,21 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                       </div>
                     )}
 
-                    {/* LinkedIn - Cinza → Azul LinkedIn no hover (ORIGINAL) */}
+                    {/* LinkedIn - Azul LinkedIn direto */}
                     <a 
                       href={member.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group inline-flex items-center gap-2 mt-4 text-[0.75rem] font-medium transition-all duration-300 hover:text-[#0A66C2]"
-                      style={{ color: 'var(--theme-card-text, var(--theme-text-muted))' }}
+                      className="linkedin-link group inline-flex items-center gap-2 mt-4 text-[0.75rem] font-medium transition-all duration-300"
                     >
                       <svg 
-                        className="w-5 h-5 transition-colors duration-300 group-hover:text-[#0A66C2]" 
+                        className="w-5 h-5 transition-all duration-300 group-hover:scale-110" 
                         fill="currentColor" 
                         viewBox="0 0 24 24"
                       >
                         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                       </svg>
-                      <span className="transition-colors duration-300 group-hover:text-[#0A66C2]">LinkedIn</span>
+                      <span className="transition-all duration-300 group-hover:underline">LinkedIn</span>
                     </a>
                   </div>
                 </div>

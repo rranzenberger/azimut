@@ -425,6 +425,24 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   description: lang === 'pt' ? 'Quem somos' : lang === 'es' ? 'Quiénes somos' : lang === 'fr' ? 'Qui nous sommes' : 'Who we are'
                 },
                 {
+                  labelHtml: 'Ranz <span style="color:#c92337">Enberger</span>',
+                  label: 'Ranz Enberger',
+                  href: '/studio/equipe#ranz',
+                  description: lang === 'pt' ? 'Direção Geral e Tecnologia · Montagem Rio Museu Olímpico' : lang === 'es' ? 'Dirección General y Tecnología · Montaje Rio Museo Olímpico' : lang === 'fr' ? 'Direction Générale et Technologie · Montage Musée Olympique de Rio' : 'General & Technology Direction · Rio Olympic Museum Setup'
+                },
+                {
+                  labelHtml: 'Anick <span style="color:#c92337">Couto</span>',
+                  label: 'Anick Couto',
+                  href: '/studio/equipe#anick',
+                  description: lang === 'pt' ? 'Liderança Equipe de Arte · Montagem Rio Museu Olímpico' : lang === 'es' ? 'Líder Equipo de Arte · Montaje Rio Museo Olímpico' : lang === 'fr' ? 'Responsable Équipe Artistique · Montage Musée Olympique de Rio' : 'Art Team Lead · Rio Olympic Museum Setup'
+                },
+                {
+                  labelHtml: 'Alberto <span style="color:#c92337">Moura</span>',
+                  label: 'Alberto Moura',
+                  href: '/studio/equipe#alberto',
+                  description: lang === 'pt' ? 'Diretor Audiovisual · Montagem Rio Museu Olímpico' : lang === 'es' ? 'Director Audiovisual · Montaje Rio Museo Olímpico' : lang === 'fr' ? 'Directeur Audiovisuel · Montage Musée Olympique de Rio' : 'Audiovisual Director · Rio Olympic Museum Setup'
+                },
+                {
                   label: lang === 'pt' ? 'Credenciais & Timeline' : lang === 'es' ? 'Credenciales & Timeline' : lang === 'fr' ? 'Références & Timeline' : 'Credentials & Timeline',
                   href: '/studio/credibilidade',
                   description: lang === 'pt' ? 'Nossa trajetória' : lang === 'es' ? 'Nuestro recorrido' : lang === 'fr' ? 'Notre parcours' : 'Our journey'
@@ -937,16 +955,6 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
       >
         {/* Container principal - MEIO TERMO EQUILIBRADO - ALARGADO UM POUCO PARA BATER COM O SITE */}
         <div className="mx-auto w-full px-4" style={{ position: 'relative', boxSizing: 'border-box', maxWidth: '1280px' }}>
-          {/* Linha vermelha de separação - MEIO TERMO (28-72% - mais larga que antes mas não tanto quanto o original) */}
-          <div 
-            className="absolute left-0 right-0 top-0"
-            style={{
-              height: '1px',
-              background: 'linear-gradient(90deg, transparent 0%, #c92337 28%, #c92337 72%, transparent 100%)',
-              boxShadow: '0 0 2px rgba(201, 35, 55, 0.2), 0 0 4px rgba(201, 35, 55, 0.1)',
-              width: '100%'
-            }}
-          ></div>
         
         <div className="py-4 sm:py-5 min-[768px]:py-6" style={{ width: '100%', boxSizing: 'border-box', overflowX: 'visible' }}>
           {/* Grid principal - Layout: Logo, Navegação, Contato e Newsletter na mesma linha - Responsivo - COM ESPAÇAMENTOS */}
@@ -1006,8 +1014,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             </div>
 
             {/* 2. NAVEGAÇÃO - Links organizados (4 colunas quando newsletter ao lado, 5 quando abaixo) - REDUZIDO PADDING ESQUERDA */}
-            <div className="min-[900px]:col-span-4 max-[899px]:col-span-5 mb-3 min-[768px]:mb-0" style={{ width: '100%', paddingLeft: '0.5rem', paddingRight: '1rem' }}>
-              <div className="grid grid-cols-3 gap-x-4 gap-y-0 md:gap-x-5">
+            <div className="min-[900px]:col-span-4 max-[899px]:col-span-5 mb-3 min-[768px]:mb-0" style={{ width: '100%', paddingLeft: '0.5rem', paddingRight: '1rem', height: '100%' }}>
+              <div className="grid grid-cols-3 gap-x-4 gap-y-0 md:gap-x-5 h-full">
                 {/* Coluna 1: Navegação Principal */}
                 <nav className="flex flex-col gap-1.5 sm:gap-2">
                   <h4 className="font-sora text-[0.65rem] sm:text-[0.7rem] font-semibold uppercase tracking-[0.15em] mb-2 sm:mb-2.5 text-white">
@@ -1032,7 +1040,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 </nav>
 
                 {/* Coluna 3: Começar + Botão CTA */}
-                <nav className="flex flex-col gap-1.5 sm:gap-2">
+                <nav className="flex flex-col gap-1.5 sm:gap-2 h-full">
                   <h4 className="font-sora text-[0.65rem] sm:text-[0.7rem] font-semibold uppercase tracking-[0.15em] mb-2 sm:mb-2.5 text-white">
                     {lang === 'en' ? 'Get Started' : lang === 'fr' ? 'Commencer' : lang === 'es' ? 'Comenzar' : 'Começar'}
                   </h4>
@@ -1045,8 +1053,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <LangLink to="/work/review" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                     {lang === 'pt' ? 'Revisar Projeto' : lang === 'es' ? 'Revisar Proyecto' : lang === 'fr' ? 'Réviser le Projet' : 'Review Project'}
                   </LangLink>
-                  {/* Botão CTA movido para cá - COMPACTO EM 2 LINHAS COMO NO HEADER - DESCIDO PARA ALINHAR COM 6ª COLUNA */}
-                  <div className="mt-4 pt-3.5 border-t border-white/10">
+                  {/* Botão CTA + Ícones Sociais - JUNTOS para alinhar */}
+                  <div className="pt-3.5 border-t border-white/10" style={{ marginTop: 'auto' }}>
+                    {/* Botão */}
                     <LangLink to="/contact" 
                       className="flex flex-col items-center justify-center rounded-xl border px-3 py-2 text-[0.65rem] sm:text-[0.68rem] md:text-[0.7rem] font-medium transition-all w-full"
                       style={{ 
@@ -1073,6 +1082,25 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       <span className="block whitespace-nowrap" style={{ fontSize: 'inherit' }}>{getCtaLines(lang)[0]}</span>
                       <span className="block whitespace-nowrap" style={{ fontSize: 'inherit' }}>{getCtaLines(lang)[1]}</span>
                     </LangLink>
+                    
+                    {/* Ícones Sociais - Logo abaixo do botão, centralizados */}
+                    <div className="flex items-center justify-center mt-3" style={{ gap: '0.7rem' }}>
+                      <a href="https://youtube.com/@azimutart" target="_blank" rel="noopener noreferrer" className="social-icon-footer transition-all duration-300 hover:scale-110" aria-label="YouTube" style={{ opacity: 0.6 }} onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#FF0000' }} onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.6'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#ffffff' }}>
+                        <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5" style={{ color: '#ffffff', transition: 'all 0.3s ease' }}><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                      </a>
+                      <a href="https://instagram.com/azimut.art" target="_blank" rel="noopener noreferrer" className="social-icon-footer transition-all duration-300 hover:scale-110" aria-label="Instagram" style={{ opacity: 0.6 }} onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#E4405F' }} onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.6'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#ffffff' }}>
+                        <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5" style={{ color: '#ffffff', transition: 'all 0.3s ease' }}><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                      </a>
+                      <a href="https://linkedin.com/company/azimut-art" target="_blank" rel="noopener noreferrer" className="social-icon-footer transition-all duration-300 hover:scale-110" aria-label="LinkedIn" style={{ opacity: 0.6 }} onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#0A66C2' }} onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.6'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#ffffff' }}>
+                        <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5" style={{ color: '#ffffff', transition: 'all 0.3s ease' }}><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                      </a>
+                      <a href="https://vimeo.com/azimutart" target="_blank" rel="noopener noreferrer" className="social-icon-footer transition-all duration-300 hover:scale-110" aria-label="Vimeo" style={{ opacity: 0.6 }} onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#1AB7EA' }} onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.6'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#ffffff' }}>
+                        <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5" style={{ color: '#ffffff', transition: 'all 0.3s ease' }}><path d="M23.977 6.416c-.105 2.338-1.739 5.543-4.894 9.609-3.268 4.247-6.026 6.37-8.29 6.37-1.409 0-2.578-1.294-3.553-3.881L5.322 11.4C4.603 8.816 3.834 7.522 3.01 7.522c-.179 0-.806.378-1.881 1.132L0 7.197c1.185-1.044 2.351-2.084 3.501-3.128C5.08 2.701 6.266 1.984 7.055 1.91c1.867-.18 3.016 1.1 3.447 3.838.465 2.953.789 4.789.971 5.507.539 2.45 1.131 3.674 1.776 3.674.502 0 1.256-.796 2.265-2.385 1.004-1.589 1.54-2.797 1.612-3.628.144-1.371-.395-2.061-1.614-2.061-.574 0-1.167.121-1.777.391 1.186-3.868 3.434-5.757 6.762-5.637 2.473.06 3.628 1.664 3.493 4.797l-.013.01z"/></svg>
+                      </a>
+                      <a href="https://behance.net/azimutart" target="_blank" rel="noopener noreferrer" className="social-icon-footer transition-all duration-300 hover:scale-110" aria-label="Behance" style={{ opacity: 0.6 }} onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#1769FF' }} onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.6'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#ffffff' }}>
+                        <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5" style={{ color: '#ffffff', transition: 'all 0.3s ease' }}><path d="M6.938 4.503c.702 0 1.34.06 1.92.188.577.13 1.07.33 1.485.61.41.28.733.65.96 1.12.225.47.34 1.05.34 1.73 0 .74-.17 1.36-.507 1.86-.338.5-.837.9-1.502 1.22.906.26 1.576.72 2.022 1.37.448.66.665 1.45.665 2.36 0 .75-.13 1.39-.41 1.93-.28.55-.67 1-1.16 1.35-.48.348-1.05.6-1.67.767-.61.165-1.252.254-1.91.254H0V4.51h6.938v-.007zM6.545 9.64c.56 0 1.01-.13 1.36-.397.35-.27.52-.678.52-1.22 0-.3-.06-.55-.165-.76-.115-.21-.27-.378-.465-.503-.2-.128-.42-.22-.665-.275-.25-.057-.51-.085-.785-.085H3.262v3.24h3.283zm.18 5.507c.305 0 .59-.03.876-.092.29-.06.548-.165.763-.3.21-.138.38-.323.507-.56.13-.238.19-.53.19-.9 0-.74-.2-1.27-.61-1.593-.41-.32-.948-.48-1.608-.48H3.262v3.93h3.463v-.005zm10.89-9.143h5.37v1.31h-5.37V6.004zm2.648 11.033c.57.56 1.39.84 2.453.84.75 0 1.397-.19 1.943-.574.545-.39.89-.8 1.017-1.254h3.37c-.545 1.67-1.39 2.9-2.535 3.69-1.145.79-2.527 1.18-4.15 1.18-1.125 0-2.14-.18-3.04-.55-.905-.37-1.68-.89-2.312-1.56-.637-.67-1.125-1.47-1.478-2.4-.35-.93-.522-1.95-.522-3.06 0-1.07.18-2.07.535-2.99.36-.92.86-1.71 1.5-2.39.64-.68 1.4-1.21 2.29-1.59.89-.38 1.87-.57 2.94-.57 1.2 0 2.25.23 3.15.7.9.47 1.64 1.09 2.22 1.87.59.79 1.02 1.69 1.29 2.7.28 1.01.37 2.07.28 3.18H18.49c.05 1.09.435 1.96 1.005 2.52l.18.04zm4.32-7.43c-.468-.47-1.19-.71-2.15-.71-.64 0-1.166.12-1.59.36-.42.24-.755.53-1.003.88-.248.35-.42.72-.518 1.11-.1.39-.158.74-.18 1.04h6.1c-.12-1.18-.47-2.2-1.158-2.68h-.5z"/></svg>
+                      </a>
+                    </div>
                   </div>
                 </nav>
               </div>
@@ -1097,22 +1125,18 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <span className="whitespace-nowrap">contact@azimutimmersive.com</span>
                 </a>
 
-                {/* WhatsApp - Destacado */}
+                {/* WhatsApp - Compacto */}
                 <a 
                   href="https://wa.me/5521999999999?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20projetos%20da%20Azimut." 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-lg transition-all duration-300 hover:scale-105"
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md transition-all duration-300 hover:scale-[1.02]"
                   style={{ 
-                    background: 'rgba(37, 211, 102, 0.12)',
-                    border: '1px solid rgba(37, 211, 102, 0.4)',
+                    background: 'rgba(37, 211, 102, 0.1)',
+                    border: '1px solid rgba(37, 211, 102, 0.35)',
                     color: '#86efac',
-                    wordBreak: 'keep-all', 
-                    overflowWrap: 'normal', 
-                    whiteSpace: 'nowrap',
-                    maxWidth: 'fit-content',
-                    marginBottom: '2.25rem',
-                    fontSize: '0.75rem'
+                    width: 'fit-content',
+                    fontSize: '0.68rem'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = 'rgba(37, 211, 102, 0.2)'
@@ -1125,232 +1149,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     e.currentTarget.style.boxShadow = 'none'
                   }}
                 >
-                  <svg className="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                   </svg>
-                  <span className="whitespace-nowrap font-medium" style={{ fontSize: '0.75rem' }}>{lang === 'en' ? 'WhatsApp' : 'WhatsApp'}</span>
+                  <span className="whitespace-nowrap font-medium" style={{ fontSize: '0.68rem' }}>WhatsApp</span>
                 </a>
-              </div>
-
-              {/* Redes Sociais - ALINHADO BASE INFERIOR COM COLUNAS 4 E 6 - RESPONSIVO */}
-              <div style={{ display: 'flex', flexDirection: 'column', flexShrink: '0', paddingTop: '0', marginTop: '-1.5rem', alignItems: 'flex-start' }}>
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end', gap: '0.5rem', marginBottom: '1rem' }}>
-                  <p className="text-[0.61rem] sm:text-[0.64rem]" style={{ color: '#94a3b8', paddingBottom: '0', margin: '0' }}>
-                    {lang === 'en' ? 'Follow us' : lang === 'es' ? 'Síguenos' : 'Siga-nos'}
-                  </p>
-                </div>
-                {/* Grid responsivo: 3 colunas mobile, 5 colunas tablet+ - ALINHADO HORIZONTALMENTE */}
-                <div className="grid grid-cols-3 min-[768px]:grid-cols-5" style={{ width: '100%', maxWidth: '100%', justifyItems: 'start', gap: '0.25rem' }}>
-                {/* YouTube - Base neutra, hover vermelho */}
-                <a 
-                  href="https://youtube.com/@azimutart" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-center rounded-lg transition-all duration-300 hover:scale-110"
-                  aria-label="YouTube"
-                  style={{ 
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    width: '24px',
-                    height: '24px',
-                    minWidth: '24px',
-                    maxWidth: '24px',
-                    minHeight: '24px',
-                    maxHeight: '24px',
-                    padding: '0.25rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(220, 38, 38, 0.2)'
-                    e.currentTarget.style.borderColor = 'rgba(220, 38, 38, 0.5)'
-                    e.currentTarget.style.boxShadow = '0 0 12px rgba(220, 38, 38, 0.3)'
-                    const svg = e.currentTarget.querySelector('svg')
-                    if (svg) svg.style.color = '#f87171'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
-                    e.currentTarget.style.boxShadow = 'none'
-                    const svg = e.currentTarget.querySelector('svg')
-                    if (svg) svg.style.color = '#8a8a8a'
-                  }}
-                >
-                  <svg className="w-3 h-3 transition-all duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24" style={{ color: '#8a8a8a', width: '14px', height: '14px', maxWidth: '14px', maxHeight: '14px', flexShrink: 0 }}>
-                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                  </svg>
-                </a>
-
-                {/* Instagram - Base neutra, hover rosa */}
-                <a 
-                  href="https://instagram.com/azimut.art" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-center rounded-lg transition-all duration-300 hover:scale-110"
-                  aria-label="Instagram"
-                  style={{ 
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    width: '24px',
-                    height: '24px',
-                    minWidth: '24px',
-                    maxWidth: '24px',
-                    minHeight: '24px',
-                    maxHeight: '24px',
-                    padding: '0.25rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(236, 72, 153, 0.2)'
-                    e.currentTarget.style.borderColor = 'rgba(236, 72, 153, 0.5)'
-                    e.currentTarget.style.boxShadow = '0 0 12px rgba(236, 72, 153, 0.3)'
-                    const svg = e.currentTarget.querySelector('svg')
-                    if (svg) svg.style.color = '#f472b6'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
-                    e.currentTarget.style.boxShadow = 'none'
-                    const svg = e.currentTarget.querySelector('svg')
-                    if (svg) svg.style.color = '#8a8a8a'
-                  }}
-                >
-                  <svg className="w-3 h-3 transition-all duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24" style={{ color: '#8a8a8a', width: '14px', height: '14px', maxWidth: '14px', maxHeight: '14px', flexShrink: 0 }}>
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                  </svg>
-                </a>
-
-                {/* LinkedIn - Base neutra, hover azul */}
-                <a 
-                  href="https://linkedin.com/company/azimut-art" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-center rounded-lg transition-all duration-300 hover:scale-110"
-                  aria-label="LinkedIn"
-                  style={{ 
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    width: '24px',
-                    height: '24px',
-                    minWidth: '24px',
-                    maxWidth: '24px',
-                    minHeight: '24px',
-                    maxHeight: '24px',
-                    padding: '0.25rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(59, 130, 246, 0.2)'
-                    e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.5)'
-                    e.currentTarget.style.boxShadow = '0 0 12px rgba(59, 130, 246, 0.3)'
-                    const svg = e.currentTarget.querySelector('svg')
-                    if (svg) svg.style.color = '#60a5fa'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
-                    e.currentTarget.style.boxShadow = 'none'
-                    const svg = e.currentTarget.querySelector('svg')
-                    if (svg) svg.style.color = '#8a8a8a'
-                  }}
-                >
-                  <svg className="w-3 h-3 transition-all duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24" style={{ color: '#8a8a8a', width: '14px', height: '14px', maxWidth: '14px', maxHeight: '14px', flexShrink: 0 }}>
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
-                </a>
-
-                {/* Vimeo - Base neutra, hover azul claro */}
-                <a 
-                  href="https://vimeo.com/azimutart" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-center rounded-lg transition-all duration-300 hover:scale-110"
-                  aria-label="Vimeo"
-                  style={{ 
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    width: '24px',
-                    height: '24px',
-                    minWidth: '24px',
-                    maxWidth: '24px',
-                    minHeight: '24px',
-                    maxHeight: '24px',
-                    padding: '0.25rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(26, 183, 234, 0.2)'
-                    e.currentTarget.style.borderColor = 'rgba(26, 183, 234, 0.5)'
-                    e.currentTarget.style.boxShadow = '0 0 12px rgba(26, 183, 234, 0.3)'
-                    const svg = e.currentTarget.querySelector('svg')
-                    if (svg) svg.style.color = '#7dd3fc'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
-                    e.currentTarget.style.boxShadow = 'none'
-                    const svg = e.currentTarget.querySelector('svg')
-                    if (svg) svg.style.color = '#8a8a8a'
-                  }}
-                >
-                  <svg className="w-3 h-3 transition-all duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24" style={{ color: '#8a8a8a', width: '14px', height: '14px', maxWidth: '14px', maxHeight: '14px', flexShrink: 0 }}>
-                    <path d="M23.977 6.416c-.105 2.338-1.739 5.543-4.894 9.609-3.268 4.247-6.026 6.37-8.29 6.37-1.409 0-2.578-1.294-3.553-3.881L5.322 11.4C4.603 8.816 3.834 7.522 3.01 7.522c-.179 0-.806.378-1.881 1.132L0 7.197c1.185-1.044 2.351-2.084 3.501-3.128C5.08 2.701 6.266 1.984 7.055 1.91c1.867-.18 3.016 1.1 3.447 3.838.465 2.953.789 4.789.971 5.507.539 2.45 1.131 3.674 1.776 3.674.502 0 1.256-.796 2.265-2.385 1.004-1.589 1.54-2.797 1.612-3.628.144-1.371-.395-2.061-1.614-2.061-.574 0-1.167.121-1.777.391 1.186-3.868 3.434-5.757 6.762-5.637 2.473.06 3.628 1.664 3.493 4.797l-.013.01z"/>
-                  </svg>
-                </a>
-
-                {/* Behance - Base neutra, hover azul */}
-                <a 
-                  href="https://behance.net/azimutart" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-center rounded-lg transition-all duration-300 hover:scale-110"
-                  aria-label="Behance"
-                  style={{ 
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    width: '24px',
-                    height: '24px',
-                    minWidth: '24px',
-                    maxWidth: '24px',
-                    minHeight: '24px',
-                    maxHeight: '24px',
-                    padding: '0.25rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(23, 105, 255, 0.2)'
-                    e.currentTarget.style.borderColor = 'rgba(23, 105, 255, 0.5)'
-                    e.currentTarget.style.boxShadow = '0 0 12px rgba(23, 105, 255, 0.3)'
-                    const svg = e.currentTarget.querySelector('svg')
-                    if (svg) svg.style.color = '#93c5fd'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
-                    e.currentTarget.style.boxShadow = 'none'
-                    const svg = e.currentTarget.querySelector('svg')
-                    if (svg) svg.style.color = '#8a8a8a'
-                  }}
-                >
-                  <svg className="w-3 h-3 transition-all duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24" style={{ color: '#8a8a8a', width: '14px', height: '14px', maxWidth: '14px', maxHeight: '14px', flexShrink: 0 }}>
-                    <path d="M6.938 4.503c.702 0 1.34.06 1.92.188.577.13 1.07.33 1.485.61.41.28.733.65.96 1.12.225.47.34 1.05.34 1.73 0 .74-.17 1.36-.507 1.86-.338.5-.837.9-1.502 1.22.906.26 1.576.72 2.022 1.37.448.66.665 1.45.665 2.36 0 .75-.13 1.39-.41 1.93-.28.55-.67 1-1.16 1.35-.48.348-1.05.6-1.67.767-.61.165-1.252.254-1.91.254H0V4.51h6.938v-.007zM6.545 9.64c.56 0 1.01-.13 1.36-.397.35-.27.52-.678.52-1.22 0-.3-.06-.55-.165-.76-.115-.21-.27-.378-.465-.503-.2-.128-.42-.22-.665-.275-.25-.057-.51-.085-.785-.085H3.262v3.24h3.283zm.18 5.507c.305 0 .59-.03.876-.092.29-.06.548-.165.763-.3.21-.138.38-.323.507-.56.13-.238.19-.53.19-.9 0-.74-.2-1.27-.61-1.593-.41-.32-.948-.48-1.608-.48H3.262v3.93h3.463v-.005zm10.89-9.143h5.37v1.31h-5.37V6.004zm2.648 11.033c.57.56 1.39.84 2.453.84.75 0 1.397-.19 1.943-.574.545-.39.89-.8 1.017-1.254h3.37c-.545 1.67-1.39 2.9-2.535 3.69-1.145.79-2.527 1.18-4.15 1.18-1.125 0-2.14-.18-3.04-.55-.905-.37-1.68-.89-2.312-1.56-.637-.67-1.125-1.47-1.478-2.4-.35-.93-.522-1.95-.522-3.06 0-1.07.18-2.07.535-2.99.36-.92.86-1.71 1.5-2.39.64-.68 1.4-1.21 2.29-1.59.89-.38 1.87-.57 2.94-.57 1.2 0 2.25.23 3.15.7.9.47 1.64 1.09 2.22 1.87.59.79 1.02 1.69 1.29 2.7.28 1.01.37 2.07.28 3.18H18.49c.05 1.09.435 1.96 1.005 2.52l.18.04zm4.32-7.43c-.468-.47-1.19-.71-2.15-.71-.64 0-1.166.12-1.59.36-.42.24-.755.53-1.003.88-.248.35-.42.72-.518 1.11-.1.39-.158.74-.18 1.04h6.1c-.12-1.18-.47-2.2-1.158-2.68h-.5z"/>
-                  </svg>
-                </a>
-                </div>
               </div>
             </div>
 

@@ -553,6 +553,26 @@ html[data-theme="dark"] .text-slate-900 {
   color: #ffffff !important;
 }
 
+/* Permitir sobrenome em vermelho dentro de h3 nos cards da equipe */
+.card-dark-fixed h3 .text-azimut-red,
+.card-adaptive h3 .text-azimut-red,
+.card-dark-adaptive h3 .text-azimut-red,
+.team-card h3 .text-azimut-red,
+.team-card-content h3 .text-azimut-red {
+  color: #c92337 !important;
+}
+
+/* Link LinkedIn com cor azul oficial */
+.linkedin-link,
+.card-dark-fixed .linkedin-link,
+.card-adaptive .linkedin-link,
+.team-card .linkedin-link {
+  color: #0A66C2 !important;
+}
+.linkedin-link:hover {
+  color: #004182 !important;
+}
+
 /* ═══════════════════════════════════════════════════════════════
    3. BOTÕES VERMELHOS - SEMPRE TEXTO BRANCO
    ═══════════════════════════════════════════════════════════════ */
@@ -672,6 +692,24 @@ html[data-theme="dark"] .card-dark-fixed * {
   --theme-text: #ffffff !important;
   --theme-text-secondary: #d3cec3 !important;
   color: #d3cec3 !important;
+}
+
+/* Link LinkedIn - FORÇA cor azul oficial (sobrescreve regras acima) */
+html[data-theme="light"] .card-dark-fixed a.linkedin-link,
+html[data-theme="light"] .card-dark-fixed a.linkedin-link *,
+html[data-theme="dark"] .card-dark-fixed a.linkedin-link,
+html[data-theme="dark"] .card-dark-fixed a.linkedin-link *,
+a.linkedin-link,
+a.linkedin-link * {
+  color: #0A66C2 !important;
+}
+html[data-theme="light"] .card-dark-fixed a.linkedin-link:hover,
+html[data-theme="light"] .card-dark-fixed a.linkedin-link:hover *,
+html[data-theme="dark"] .card-dark-fixed a.linkedin-link:hover,
+html[data-theme="dark"] .card-dark-fixed a.linkedin-link:hover *,
+a.linkedin-link:hover,
+a.linkedin-link:hover * {
+  color: #004182 !important;
 }
 
 /* 2. Cards com .card-dark-alt-adaptive (Strategy & Positioning) */
@@ -1534,6 +1572,127 @@ html {
   transform: scale(1.02);
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   CARDS DA EQUIPE - Background Sólido + Texto Claro (SEMPRE)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Card da equipe - FUNDO SÓLIDO ESCURO (ambos os temas) */
+.team-card {
+  background: linear-gradient(165deg, #141826 0%, #0c0f18 100%) !important;
+}
+
+[data-theme="light"] .team-card {
+  background: linear-gradient(165deg, #1a1f2e 0%, #0f1320 100%) !important;
+}
+
+/* Conteúdo do card - FUNDO SÓLIDO ESCURO */
+.team-card-content {
+  background: linear-gradient(180deg, #0c0f18 0%, #080a10 100%) !important;
+}
+
+[data-theme="light"] .team-card-content {
+  background: linear-gradient(180deg, #0f1320 0%, #0a0d16 100%) !important;
+}
+
+/* TEXTO DOS CARDS DA EQUIPE - SEMPRE CLARO (ambos os temas) */
+.team-card .team-member-name,
+.team-card h3,
+.team-card-content h3 {
+  color: #ffffff !important;
+}
+
+.team-card p,
+.team-card-content p {
+  color: #d3cec3 !important;
+}
+
+.team-card .text-theme-text-secondary,
+.team-card-content .text-theme-text-secondary {
+  color: #a8a29e !important;
+}
+
+/* Tema claro - forçar cores claras nos cards */
+[data-theme="light"] .team-card .team-member-name,
+[data-theme="light"] .team-card h3,
+[data-theme="light"] .team-card-content h3 {
+  color: #ffffff !important;
+}
+
+/* Permitir sobrenome em vermelho no tema claro */
+[data-theme="light"] .team-card h3 .text-azimut-red,
+[data-theme="light"] .team-card-content h3 .text-azimut-red,
+[data-theme="light"] .card-dark-fixed h3 .text-azimut-red {
+  color: #c92337 !important;
+}
+
+[data-theme="light"] .team-card p,
+[data-theme="light"] .team-card-content p {
+  color: #d3cec3 !important;
+}
+
+[data-theme="light"] .team-card .text-theme-text-secondary,
+[data-theme="light"] .team-card-content .text-theme-text-secondary {
+  color: #a8a29e !important;
+}
+
+/* Título/Nome dentro do card - SEMPRE BRANCO */
+.team-card .section-title,
+.team-card-content .section-title,
+.team-card .team-member-name,
+.team-card-content .team-member-name {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .team-card .section-title,
+[data-theme="light"] .team-card-content .section-title,
+[data-theme="light"] .team-card .team-member-name,
+[data-theme="light"] .team-card-content .team-member-name {
+  color: #ffffff !important;
+}
+
+/* Nome com parte branca e parte vermelha */
+.team-member-name .text-white,
+.team-card .text-white,
+.team-card-content .text-white {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .team-member-name .text-white,
+[data-theme="light"] .team-card .text-white,
+[data-theme="light"] .team-card-content .text-white {
+  color: #ffffff !important;
+}
+
+/* Sobrenome vermelho - ambos os temas */
+.team-member-name .text-azimut-red,
+.team-card .text-azimut-red,
+.team-card-content .text-azimut-red {
+  color: #c92337 !important;
+}
+
+[data-theme="light"] .team-member-name .text-azimut-red,
+[data-theme="light"] .team-card .text-azimut-red,
+[data-theme="light"] .team-card-content .text-azimut-red {
+  color: #c92337 !important;
+}
+
+/* Cards da página StudioTeam (.card-dark-fixed) */
+.card-dark-fixed .text-white {
+  color: #ffffff !important;
+}
+
+.card-dark-fixed .text-azimut-red {
+  color: #c92337 !important;
+}
+
+[data-theme="light"] .card-dark-fixed .text-white {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .card-dark-fixed .text-azimut-red {
+  color: #c92337 !important;
+}
+
 /* Tratamento de foto da equipe - Duotone Cinematográfico */
 .team-photo {
   position: relative;
@@ -1750,13 +1909,20 @@ footer .text-slate-500 {
   color: #94a3b8 !important;
 }
 
-/* Garantir que ícones sociais sejam visíveis */
-footer svg {
+/* Ícones do footer - cor base (NÃO forçar hover vermelho - cada rede tem sua cor) */
+footer svg:not(.social-icon-footer svg) {
   color: #cbd5e1 !important;
 }
 
-footer svg:hover {
-  color: #c92337 !important;
+/* Ícones de redes sociais - cores específicas de cada marca no hover (definido inline no JS) */
+.social-icon-footer svg {
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+/* Ícones sociais - hover controlado por JS com cores das marcas */
+.social-icon-footer:hover svg {
+  transform: scale(1.05);
 }
 
 /* ═══════════════════════════════════════════════════════════════

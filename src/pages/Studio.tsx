@@ -47,21 +47,27 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         title: 'Equipe',
         members: [
           {
+            slug: 'ranz',
             name: 'Ranz Enberger',
-            role: 'Creative Director',
-            bio: '30+ anos em produção audiovisual, VR/XR e IA. Diretor de Tecnologia no Museu Olímpico.',
+            role: 'Diretor Criativo & Tecnologia',
+            credential: 'Direção Geral e Tecnologia na Montagem do Rio Museu Olímpico',
+            bio: '30+ anos em produção audiovisual, VR/XR e IA. Curador VR no Festival de Gramado. Especialista Autodesk certificado.',
             photo: '/Ranz.jpeg'
           },
           {
+            slug: 'anick',
             name: 'Anick Couto',
-            role: 'Art Director',
-            bio: 'Direção visual, design de personagens e cenografia. Liderou arte no Museu Olímpico.',
+            role: 'Diretora de Arte',
+            credential: 'Liderança da Equipe de Arte na Montagem do Rio Museu Olímpico',
+            bio: 'Direção visual, design de personagens e cenografia digital. UI, grafismo e sinalização.',
             photo: '/anick.jpg'
           },
           {
+            slug: 'alberto',
             name: 'Alberto Moura',
-            role: 'Audiovisual Director',
-            bio: 'Produção audiovisual e estratégia cultural. Professor universitário e coordenador.',
+            role: 'Diretor Audiovisual',
+            credential: 'Diretor Audiovisual na Montagem do Rio Museu Olímpico',
+            bio: 'Produção audiovisual e estratégia cultural. Professor universitário e coordenador de cursos.',
             photo: '/alberto.jpg'
           }
         ]
@@ -101,21 +107,27 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         title: 'Team',
         members: [
           {
+            slug: 'ranz',
             name: 'Ranz Enberger',
-            role: 'Creative Director',
-            bio: '30+ years in audiovisual production, VR/XR and AI. Technology Director at Olympic Museum.',
+            role: 'Creative & Technology Director',
+            credential: 'General & Technology Direction at Rio Olympic Museum Setup',
+            bio: '30+ years in audiovisual production, VR/XR and AI. VR Curator at Gramado Festival. Certified Autodesk specialist.',
             photo: '/Ranz.jpeg'
           },
           {
+            slug: 'anick',
             name: 'Anick Couto',
             role: 'Art Director',
-            bio: 'Visual direction, character and scenography design. Led art at Olympic Museum.',
+            credential: 'Art Team Lead at Rio Olympic Museum Setup',
+            bio: 'Visual direction, character design and digital scenography. UI, graphics and signage.',
             photo: '/anick.jpg'
           },
           {
+            slug: 'alberto',
             name: 'Alberto Moura',
             role: 'Audiovisual Director',
-            bio: 'Audiovisual production and cultural strategy. University professor and coordinator.',
+            credential: 'Audiovisual Director at Rio Olympic Museum Setup',
+            bio: 'Audiovisual production and cultural strategy. University professor and course coordinator.',
             photo: '/alberto.jpg'
           }
         ]
@@ -154,21 +166,27 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         title: 'Equipo',
         members: [
           {
+            slug: 'ranz',
             name: 'Ranz Enberger',
-            role: 'Director Creativo',
-            bio: '30+ años en producción audiovisual, VR/XR e IA. Director de Tecnología en el Olympic Museum.',
+            role: 'Director Creativo & Tecnología',
+            credential: 'Dirección General y Tecnología en el Montaje del Rio Museo Olímpico',
+            bio: '30+ años en producción audiovisual, VR/XR e IA. Curador VR en Festival de Gramado. Especialista Autodesk certificado.',
             photo: '/Ranz.jpeg'
           },
           {
+            slug: 'anick',
             name: 'Anick Couto',
             role: 'Directora de Arte',
-            bio: 'Dirección visual, diseño de personajes y escenografía. Lideró arte en el Olympic Museum.',
+            credential: 'Líder del Equipo de Arte en el Montaje del Rio Museo Olímpico',
+            bio: 'Dirección visual, diseño de personajes y escenografía digital. UI, grafismo y señalización.',
             photo: '/anick.jpg'
           },
           {
+            slug: 'alberto',
             name: 'Alberto Moura',
             role: 'Director Audiovisual',
-            bio: 'Producción audiovisual y estrategia cultural. Profesor y coordinador universitario.',
+            credential: 'Director Audiovisual en el Montaje del Rio Museo Olímpico',
+            bio: 'Producción audiovisual y estrategia cultural. Profesor universitario y coordinador de cursos.',
             photo: '/alberto.jpg'
           }
         ]
@@ -207,21 +225,27 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         title: 'Équipe',
         members: [
           {
+            slug: 'ranz',
             name: 'Ranz Enberger',
-            role: 'Directeur Créatif',
-            bio: '30+ ans en production audiovisuelle, VR/XR et IA. Directeur Technologie au Olympic Museum.',
+            role: 'Directeur Créatif & Technologie',
+            credential: 'Direction Générale et Technologie au Montage du Musée Olympique de Rio',
+            bio: '30+ ans en production audiovisuelle, VR/XR et IA. Curateur VR au Festival de Gramado. Spécialiste Autodesk certifié.',
             photo: '/Ranz.jpeg'
           },
           {
+            slug: 'anick',
             name: 'Anick Couto',
             role: 'Directrice Artistique',
-            bio: 'Direction visuelle, design de personnages et scénographie. A dirigé l\'art au Olympic Museum.',
+            credential: 'Responsable de l\'Équipe Artistique au Montage du Musée Olympique de Rio',
+            bio: 'Direction visuelle, design de personnages et scénographie digitale. UI, graphisme et signalétique.',
             photo: '/anick.jpg'
           },
           {
+            slug: 'alberto',
             name: 'Alberto Moura',
             role: 'Directeur Audiovisuel',
-            bio: 'Production audiovisuelle et stratégie culturelle. Professeur et coordinateur universitaire.',
+            credential: 'Directeur Audiovisuel au Montage du Musée Olympique de Rio',
+            bio: 'Production audiovisuelle et stratégie culturelle. Professeur universitaire et coordinateur de cours.',
             photo: '/alberto.jpg'
           }
         ]
@@ -244,8 +268,9 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
       
       <main className="relative pb-24 film-grain">
         {/* Star Background - FIXA (FUNDO - atrás de tudo) */}
+        {/* Posição: header + submenu + folga visual = 160px */}
         <StarBackground
-          className="fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px]"
+          className="fixed top-[160px] -right-28 h-[520px] w-[520px] md:top-[160px] md:-right-40 md:h-[680px] md:w-[680px]"
           zIndex={-10}
           opacity={0.5}
         />
@@ -441,52 +466,63 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               {text.team.members.map((member, i) => (
                 <div
                   key={i}
-                  className="group relative rounded-2xl overflow-hidden border-2 border-azimut-red/20 hover:border-azimut-red/60 transition-all duration-500 cursor-pointer"
+                  className="team-card group relative rounded-2xl overflow-hidden border-2 border-azimut-red/20 hover:border-azimut-red/60 transition-all duration-500 cursor-pointer"
                 >
-                  {/* FOTO REAL com Duotone Cinematográfico - FORMATO HORIZONTAL */}
-                  <div className="team-photo relative overflow-hidden aspect-[4/3] w-full">
-                    <img 
-                      src={member.photo}
-                      alt={member.name}
-                      className="w-full h-full object-cover"
-                      style={{ 
-                        objectPosition: member.name.includes('Alberto') ? 'center 35%' : 'center center',
-                        transform: member.name.includes('Alberto') ? 'scale(1.2)' : 'scale(1)',
-                        transformOrigin: 'center center'
-                      }}
-                      onError={(e) => {
-                        const parent = e.currentTarget.parentElement
-                        if (parent) {
-                          parent.style.background = 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)'
-                        }
-                        e.currentTarget.src = '/logo-azimut-star.svg'
-                        e.currentTarget.className = 'absolute bottom-4 right-4 w-12 h-12 object-contain opacity-20'
-                      }}
-                    />
-                  </div>
+                  {/* FOTO REAL com Duotone Cinematográfico - FORMATO HORIZONTAL - CLICÁVEL */}
+                  <LangLink to={`/studio/equipe#${member.slug}`} className="block">
+                    <div className="team-photo relative overflow-hidden aspect-[4/3] w-full">
+                      <img 
+                        src={member.photo}
+                        alt={member.name}
+                        className="w-full h-full object-cover"
+                        style={{ 
+                          objectPosition: member.name.includes('Alberto') ? 'center 35%' : 'center center',
+                          transform: member.name.includes('Alberto') ? 'scale(1.2)' : 'scale(1)',
+                          transformOrigin: 'center center'
+                        }}
+                        onError={(e) => {
+                          const parent = e.currentTarget.parentElement
+                          if (parent) {
+                            parent.style.background = 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)'
+                          }
+                          e.currentTarget.src = '/logo-azimut-star.svg'
+                          e.currentTarget.className = 'absolute bottom-4 right-4 w-12 h-12 object-contain opacity-20'
+                        }}
+                      />
+                    </div>
+                  </LangLink>
                   
-                  {/* Content - 2 CTAs: Nome clicável + Botão premium - SEM FAIXAS PRETAS */}
-                  <div className="p-4">
-                    {/* Nome clicável (vai direto para /studio/equipe) */}
+                  {/* Content - 2 CTAs: Nome clicável + Botão premium - FUNDO SÓLIDO */}
+                  <div className="team-card-content p-4">
+                    {/* Nome clicável - 2 LINHAS: Nome branco + Sobrenome vermelho */}
                     <LangLink
-                      to="/studio/equipe"
-                      className="block mb-1 hover:text-azimut-red transition-colors"
+                      to={`/studio/equipe#${member.slug}`}
+                      className="block mb-2 hover:opacity-80 transition-opacity"
                     >
-                      <h3 className="team-member-name section-title group-hover:text-azimut-red transition-colors">
-                        {member.name}
+                      <h3 className="team-member-name font-handel uppercase tracking-[0.04em] leading-[1.05]" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.4rem)' }}>
+                        <span className="text-white block">{member.name.split(' ')[0]}</span>
+                        <span className="text-azimut-red block">{member.name.split(' ').slice(1).join(' ')}</span>
                       </h3>
                     </LangLink>
                     
-                    <p className="text-xs text-azimut-red mb-3 uppercase tracking-wider font-bold leading-tight line-clamp-2">
-                      {member.role}
-                    </p>
+                    {/* Cargo + Credencial - 2 linhas em cream */}
+                    <div className="mb-3">
+                      <p className="text-[0.6rem] uppercase tracking-[0.1em] font-semibold" style={{ color: '#d3cec3' }}>
+                        {member.role}
+                      </p>
+                      {member.credential && (
+                        <p className="text-[0.55rem] uppercase tracking-[0.08em] font-medium mt-0.5" style={{ color: '#a8a29e' }}>
+                          {member.credential}
+                        </p>
+                      )}
+                    </div>
                     <p className="text-sm text-theme-text-secondary leading-relaxed line-clamp-2 mb-4">
                       {member.bio}
                     </p>
                     
                     {/* Botão premium individual */}
                     <LangLink
-                      to="/studio/equipe"
+                      to={`/studio/equipe#${member.slug}`}
                       className="group/btn inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-azimut-red hover:text-white transition-colors"
                     >
                       <span>{lang === 'pt' ? 'Ver Perfil' : lang === 'es' ? 'Ver Perfil' : lang === 'fr' ? 'Voir Profil' : 'View Profile'}</span>

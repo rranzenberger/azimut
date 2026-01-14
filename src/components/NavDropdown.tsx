@@ -8,6 +8,7 @@ interface NavDropdownProps {
   label: string
   items: Array<{
     label: string
+    labelHtml?: string // 🆕 HTML para nome com sobrenome em vermelho
     href: string
     description?: string
   }>
@@ -233,9 +234,16 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
                     }
                   }}
                 >
-                  <div className="font-sora text-sm font-semibold mb-1 group-hover:text-azimut-red transition-colors">
-                    {item.label}
-                  </div>
+                  {item.labelHtml ? (
+                    <div 
+                      className="font-sora text-sm font-semibold mb-1 group-hover:text-azimut-red transition-colors"
+                      dangerouslySetInnerHTML={{ __html: item.labelHtml }}
+                    />
+                  ) : (
+                    <div className="font-sora text-sm font-semibold mb-1 group-hover:text-azimut-red transition-colors">
+                      {item.label}
+                    </div>
+                  )}
                   {item.description && (
                     <div className="font-sora text-xs opacity-70" style={{ color: 'var(--theme-text-secondary)' }}>
                       {item.description}

@@ -161,8 +161,9 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
       />
       <main className="relative min-h-screen pb-24 film-grain">
         {/* Background: Estrela da Azimut - FIXA (FUNDO - atrás de tudo) */}
+        {/* Posição: header + submenu + folga visual = 160px */}
         <StarBackground
-          className="fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px]"
+          className="fixed top-[160px] -right-28 h-[520px] w-[520px] md:top-[160px] md:-right-40 md:h-[680px] md:w-[680px]"
           zIndex={-10}
           opacity={0.5}
         />
@@ -225,6 +226,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                 : 'We create end-to-end immersive, interactive and cinematic experiences. From conception to execution, we integrate art, technology and narrative to connect people, stories and spaces.'}
             </p>
           </div>
+        </div>
 
         {/* Grid de Serviços */}
         <section className="relative pb-12">

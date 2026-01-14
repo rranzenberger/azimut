@@ -384,8 +384,9 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
         </section>
         
         {/* Estrela de fundo - detecta tema automaticamente */}
+        {/* Posição: header + submenu + folga visual = 160px */}
         <StarBackground 
-          className="top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px]"
+          className="top-[160px] -right-28 h-[520px] w-[520px] md:top-[160px] md:-right-40 md:h-[680px] md:w-[680px]"
           position="fixed"
           opacity={0.5}
           zIndex={-10}

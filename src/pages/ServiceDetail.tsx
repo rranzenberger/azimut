@@ -311,9 +311,9 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
       />
       
       <main className="py-16 md:py-20" style={{ position: 'relative', zIndex: 1 }}>
-        {/* Star background - FIXA (sem parallax) */}
+        {/* Star background - FIXA (padronizada com páginas principais) */}
         <StarBackground
-          className="fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px]"
+          className="fixed top-[160px] -right-28 h-[520px] w-[520px] md:top-[160px] md:-right-40 md:h-[680px] md:w-[680px]"
           zIndex={-10}
           opacity={0.5}
         />
