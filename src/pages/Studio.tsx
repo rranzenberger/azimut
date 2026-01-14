@@ -324,7 +324,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   <p className="text-white font-sora text-xl uppercase tracking-wider">
                     {lang === 'pt' ? 'Studio Azimut' : lang === 'es' ? 'Estudio Azimut' : lang === 'fr' ? 'Studio Azimut' : 'Azimut Studio'}
                   </p>
-                  <p className="text-slate-400 text-sm mt-2">
+                  <p className="text-slate-600 dark:text-slate-400 text-sm mt-2">
                     {lang === 'pt' ? 'Imersivo • Interativo • Cinematográfico' : lang === 'es' ? 'Inmersivo • Interactivo • Cinematográfico' : lang === 'fr' ? 'Immersif • Interactif • Cinématographique' : 'Immersive • Interactive • Cinematic'}
                   </p>
                 </div>
@@ -557,7 +557,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                       <div className="text-5xl mb-3 group-hover:scale-110 transition-transform">{area.icon}</div>
                       <p className="text-sm font-semibold text-white uppercase tracking-wide">{name}</p>
                       {desc && (
-                        <p className="text-xs text-slate-400 mt-1">{desc}</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">{desc}</p>
                       )}
                     </div>
                   </div>

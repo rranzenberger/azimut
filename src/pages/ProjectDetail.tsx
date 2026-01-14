@@ -105,7 +105,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
           <h1 className="mb-4 font-handel text-4xl uppercase tracking-[0.16em] text-white">
             {lang === 'pt' ? 'Projeto não encontrado' : lang === 'es' ? 'Proyecto no encontrado' : lang === 'fr' ? 'Projet non trouvé' : 'Project not found'}
           </h1>
-          <p className="mb-8 text-slate-400">
+          <p className="mb-8 text-slate-600 dark:text-slate-400">
             {lang === 'pt' 
               ? 'O projeto que você está procurando não existe ou foi removido.'
               : lang === 'es'
@@ -155,7 +155,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
         <div className="mx-auto max-w-6xl px-6">
           {/* Breadcrumb */}
           <nav className="mb-8 text-sm" aria-label="Breadcrumb">
-            <ol className="flex items-center gap-2 text-slate-400">
+            <ol className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
               <li>
                 <Link to="/" className="hover:text-white transition-colors">
                   {lang === 'pt' ? 'Início' : lang === 'es' ? 'Inicio' : lang === 'fr' ? 'Accueil' : 'Home'}
@@ -217,7 +217,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
               )}
 
               {/* Meta Info */}
-              <div className="flex flex-wrap items-center gap-4 text-sm text-slate-400">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
                 {project.year && (
                   <span className="flex items-center gap-2">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -540,7 +540,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
 
                 if (filteredGallery.length === 0) {
                   return (
-                    <div className="text-center py-12 text-slate-400">
+                    <div className="text-center py-12 text-slate-600 dark:text-slate-400">
                       {lang === 'pt' 
                         ? 'Nenhuma imagem encontrada com os filtros selecionados.'
                         : lang === 'es'

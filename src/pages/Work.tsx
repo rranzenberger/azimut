@@ -324,7 +324,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 placeholder={lang === 'pt' ? 'Buscar projetos...' : lang === 'es' ? 'Buscar proyectos...' : lang === 'fr' ? 'Rechercher...' : 'Search projects...'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-lg border border-white/10 bg-subtle px-4 py-2 text-sm text-white placeholder:text-slate-800 dark:text-slate-400 focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
+                className="w-full rounded-lg border border-white/10 bg-subtle px-4 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
               />
             </div>
             
@@ -385,7 +385,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           </div>
           
           {/* Contador de resultados */}
-          <div className="mb-6 text-sm text-slate-800 dark:text-slate-400">
+          <div className="mb-6 text-sm text-slate-600 dark:text-slate-400">
             {lang === 'pt' 
               ? `Mostrando ${cases.length} ${cases.length === 1 ? 'projeto' : 'projetos'}${hasActiveFilters ? ' (filtrado)' : ''}`
               : lang === 'es'
@@ -435,7 +435,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                             {lang === 'pt' ? 'Projeto em Destaque' : lang === 'es' ? 'Proyecto Destacado' : 'Featured Project'}
                           </span>
                         </div>
-                        <p className="text-xs text-slate-800 dark:text-slate-500 uppercase tracking-wider">
+                        <p className="text-xs text-slate-600 dark:text-slate-500 uppercase tracking-wider">
                           {lang === 'pt' ? '🖼️ Imagem/Vídeo do Backoffice' : lang === 'es' ? '🖼️ Imagen/Video del Backoffice' : '🖼️ Image/Video from Backoffice'}
                         </p>
                       </div>
@@ -488,7 +488,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           {/* Mensagem quando não há resultados */}
           {cases.length === 0 && !cmsLoading && (
             <div className="py-16 text-center">
-              <p className="text-lg text-slate-800 dark:text-slate-400 mb-4">
+              <p className="text-lg text-slate-600 dark:text-slate-400 mb-4">
                 {lang === 'pt' 
                   ? 'Nenhum projeto encontrado com os filtros selecionados.'
                   : lang === 'es'
@@ -542,7 +542,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                     <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-800/50 to-slate-900 transition-all duration-300 group-hover:from-azimut-red/20 group-hover:to-slate-900/80">
                       <div className="text-center p-4">
                         <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-subtle backdrop-blur transition-transform duration-300 group-hover:scale-110 group-hover:border-azimut-red/50">
-                          <svg className="h-6 w-6 text-slate-800 dark:text-slate-400 group-hover:text-azimut-red transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg className="h-6 w-6 text-slate-600 dark:text-slate-400 group-hover:text-azimut-red transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
                         </div>
@@ -560,7 +560,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   </p>
                   <div className="flex flex-wrap items-center justify-between gap-2 mt-3">
                     {item.tags && item.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2 text-[0.68rem] text-slate-800 dark:text-slate-400">
+                      <div className="flex flex-wrap gap-2 text-[0.68rem] text-slate-600 dark:text-slate-400">
                         {((item?.tags && Array.isArray(item.tags)) ? item.tags : []).slice(0, 3).map((tag: string, idx: number) => (
                           <span 
                             key={idx} 
@@ -572,7 +572,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                       </div>
                     )}
                     {item.year && (
-                      <span className="text-xs text-slate-800 dark:text-slate-500 font-medium">
+                      <span className="text-xs text-slate-600 dark:text-slate-500 font-medium">
                         {item.year}
                       </span>
                     )}

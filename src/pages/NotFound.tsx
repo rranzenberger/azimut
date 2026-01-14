@@ -82,12 +82,12 @@ const NotFound: React.FC<NotFoundProps> = ({ lang }) => {
         </div>
 
         {/* Título */}
-        <h1 className="mb-4 font-handel text-3xl md:text-4xl uppercase tracking-[0.16em] text-white">
+        <h1 className="mb-4 font-handel text-3xl md:text-4xl uppercase tracking-[0.16em] text-slate-900 dark:text-white">
           {msg.title}
         </h1>
 
         {/* Descrição */}
-        <p className="mb-8 max-w-md mx-auto text-base md:text-lg text-slate-400 leading-relaxed">
+        <p className="mb-8 max-w-md mx-auto text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
           {msg.description}
         </p>
 
@@ -95,25 +95,25 @@ const NotFound: React.FC<NotFoundProps> = ({ lang }) => {
         <div className="mb-8 flex flex-wrap justify-center gap-3">
           <Link
             to={`/${lang}/work`}
-            className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-azimut-red/50 rounded-lg transition-all text-white/80 hover:text-white text-sm"
+            className="px-4 py-2 bg-slate-900/5 dark:bg-white/5 hover:bg-slate-900/10 dark:hover:bg-white/10 border border-slate-900/10 dark:border-white/10 hover:border-azimut-red/50 rounded-lg transition-all text-slate-700 dark:text-white/80 hover:text-slate-900 dark:hover:text-white text-sm"
           >
             {lang === 'pt' ? 'Projetos' : lang === 'es' ? 'Proyectos' : lang === 'fr' ? 'Projets' : 'Projects'}
           </Link>
           <Link
             to={`/${lang}/academy`}
-            className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-azimut-red/50 rounded-lg transition-all text-white/80 hover:text-white text-sm"
+            className="px-4 py-2 bg-slate-900/5 dark:bg-white/5 hover:bg-slate-900/10 dark:hover:bg-white/10 border border-slate-900/10 dark:border-white/10 hover:border-azimut-red/50 rounded-lg transition-all text-slate-700 dark:text-white/80 hover:text-slate-900 dark:hover:text-white text-sm"
           >
             Academy
           </Link>
           <Link
             to={`/${lang}/studio`}
-            className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-azimut-red/50 rounded-lg transition-all text-white/80 hover:text-white text-sm"
+            className="px-4 py-2 bg-slate-900/5 dark:bg-white/5 hover:bg-slate-900/10 dark:hover:bg-white/10 border border-slate-900/10 dark:border-white/10 hover:border-azimut-red/50 rounded-lg transition-all text-slate-700 dark:text-white/80 hover:text-slate-900 dark:hover:text-white text-sm"
           >
             Studio
           </Link>
           <Link
             to={`/${lang}/contact`}
-            className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-azimut-red/50 rounded-lg transition-all text-white/80 hover:text-white text-sm"
+            className="px-4 py-2 bg-slate-900/5 dark:bg-white/5 hover:bg-slate-900/10 dark:hover:bg-white/10 border border-slate-900/10 dark:border-white/10 hover:border-azimut-red/50 rounded-lg transition-all text-slate-700 dark:text-white/80 hover:text-slate-900 dark:hover:text-white text-sm"
           >
             {lang === 'pt' ? 'Contato' : lang === 'es' ? 'Contacto' : lang === 'fr' ? 'Contact' : 'Contact'}
           </Link>

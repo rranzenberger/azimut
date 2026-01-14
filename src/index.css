@@ -2397,36 +2397,6 @@ select.dropdown-azimut::-ms-expand {
   color: #d3cec3; /* Texto creme para contraste no fundo escuro */
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   CLASSES UTILITÁRIAS PARA TEMA CLARO - REUTILIZÁVEIS
-   Padronização baseada em REGRAS_DESIGN_TEMA_CLARO.md
-   ═══════════════════════════════════════════════════════════════ */
-
-/* Texto em cards escuros (tema claro) - PRINCIPAL */
-.text-theme-card-text {
-  color: var(--theme-card-text, #d3cec3) !important;
-}
-
-/* Texto em cards escuros (tema claro) - SECUNDÁRIO */
-.text-theme-card-text-secondary {
-  color: var(--theme-card-text-secondary, #cbd5e1) !important;
-}
-
-/* Texto em fundo claro (tema claro) - PRINCIPAL */
-.text-theme-light-main {
-  color: var(--theme-text, #0f172a) !important;
-}
-
-/* Texto em fundo claro (tema claro) - SECUNDÁRIO */
-.text-theme-light-secondary {
-  color: var(--theme-text-secondary, #1a1a1a) !important;
-}
-
-/* Texto em fundo claro (tema claro) - MUTED */
-.text-theme-light-muted {
-  color: var(--theme-text-muted, #1e3a5f) !important;
-}
-
 /* Texto com gradiente - vermelho puro Azimut */
 .text-gradient-red {
   background: linear-gradient(135deg, #c92337 0%, #c92337 50%, #8B2332 100%);
