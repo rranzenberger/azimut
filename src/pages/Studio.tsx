@@ -297,7 +297,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 pt-8">
 
           {/* Sobre (Overview) */}
-          <section id="overview" className="section-container" style={{ scrollMarginTop: 'var(--scroll-offset)' }}>
+          <section id="overview" className="section-container scroll-mt-32">
             {/* LABEL PEQUENO (Eyebrow) - COM EMOJI ANIMADO */}
             <span className="section-eyebrow">
               <span>📖</span>
@@ -331,7 +331,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Diferenciais (What Makes Us Unique) */}
-          <section id="unique" className="section-container" style={{ scrollMarginTop: 'var(--scroll-offset)' }}>
+          <section id="unique" className="section-container scroll-mt-32">
             <div className="section-header">
               <div>
                 {/* LABEL PEQUENO (Eyebrow) - COM EMOJI */}
@@ -398,7 +398,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Equipe */}
-          <section id="team" className="section-container" style={{ scrollMarginTop: 'var(--scroll-offset)' }}>
+          <section id="team" className="section-container scroll-mt-32">
             <div className="section-header">
               <div>
                 {/* LABEL PEQUENO (Eyebrow) - COM EMOJI */}
@@ -487,7 +487,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Credenciais */}
-          <section id="credentials" className="section-container" style={{ scrollMarginTop: 'var(--scroll-offset)' }}>
+          <section id="credentials" className="section-container scroll-mt-32">
             <div className="section-header">
               <div>
                 {/* LABEL PEQUENO (Eyebrow) - COM EMOJI */}

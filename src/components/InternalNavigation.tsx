@@ -94,18 +94,16 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
   // Função para scroll com offset calculado
   const scrollToElement = useCallback((elementId: string) => {
     const element = document.getElementById(elementId)
-    if (!element) return
+    
+    console.log('🎯 scrollToElement:', elementId, element ? 'ENCONTRADO' : 'NÃO ENCONTRADO')
+    
+    if (!element) {
+      console.error('❌ Elemento não encontrado:', elementId)
+      return
+    }
 
-    // Offset fixo: header (60px) + submenu (~52px) + margem (20px) = ~132px
-    const offset = 140
-
-    const elementTop = element.getBoundingClientRect().top + window.scrollY
-    const targetScroll = elementTop - offset
-
-    window.scrollTo({ 
-      top: Math.max(0, targetScroll), 
-      behavior: 'smooth' 
-    })
+    // Scroll nativo com scroll-margin-top (já definido no CSS da section)
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [])
 
   const handleClick = (item: NavItem) => {
