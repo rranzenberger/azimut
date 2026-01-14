@@ -84,11 +84,11 @@ html {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   DEGRADÊ LATERAL DIREITO - TEMA CLARO EM TELAS GRANDES (>1440px)
-   Cria vinheta na borda direita para contenção visual em monitores grandes
+   DEGRADÊ LATERAL - TEMA CLARO EM TELAS GRANDES (>1440px)
+   Cria vinheta nas bordas ESQUERDA e DIREITA para contenção visual
    ═══════════════════════════════════════════════════════════════ */
 
-/* Container para o degradê lateral direito - apenas tema claro */
+/* Container para o degradê lateral - apenas tema claro */
 [data-theme="light"] .film-grain::after {
   content: '';
   position: fixed;
@@ -101,15 +101,17 @@ html {
   pointer-events: none;
   z-index: -12; /* Entre o grão (-15) e a estrela (-10) */
   opacity: 0; /* Invisível por padrão */
-  /* Degradê apenas no lado DIREITO: transparente até 70%, depois escurece */
+  /* Degradê nas DUAS laterais: escuro nas bordas, transparente no centro */
   background: linear-gradient(
     90deg,
-    transparent 0%,
-    transparent 70%,
-    rgba(5, 8, 20, 0.25) 80%,
-    rgba(5, 8, 20, 0.5) 88%,
-    rgba(5, 8, 20, 0.75) 95%,
-    rgba(5, 8, 20, 0.9) 100%
+    rgba(5, 8, 20, 0.85) 0%,
+    rgba(5, 8, 20, 0.6) 5%,
+    rgba(5, 8, 20, 0.3) 12%,
+    transparent 20%,
+    transparent 80%,
+    rgba(5, 8, 20, 0.3) 88%,
+    rgba(5, 8, 20, 0.6) 95%,
+    rgba(5, 8, 20, 0.85) 100%
   );
   transition: opacity 0.3s ease;
 }
@@ -126,12 +128,14 @@ html {
   [data-theme="light"] .film-grain::after {
     background: linear-gradient(
       90deg,
-      transparent 0%,
-      transparent 65%,
-      rgba(5, 8, 20, 0.3) 75%,
-      rgba(5, 8, 20, 0.55) 85%,
-      rgba(5, 8, 20, 0.8) 93%,
-      rgba(5, 8, 20, 0.95) 100%
+      rgba(5, 8, 20, 0.92) 0%,
+      rgba(5, 8, 20, 0.7) 8%,
+      rgba(5, 8, 20, 0.4) 15%,
+      transparent 25%,
+      transparent 75%,
+      rgba(5, 8, 20, 0.4) 85%,
+      rgba(5, 8, 20, 0.7) 92%,
+      rgba(5, 8, 20, 0.92) 100%
     );
   }
 }
