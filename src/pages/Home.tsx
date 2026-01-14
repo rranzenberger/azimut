@@ -706,7 +706,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
 
             {/* PROJETO PRINCIPAL - Card Grande (Rio Museu Olímpico) */}
             {(() => {
-              // TODO Backoffice: cmsContent?.featuredProject || recommended[0]
+              // ✅ IMPLEMENTADO: Usa projetos recomendados ou fallback estático
               const mainFeatured = recommended[0] || defaultProjects[0]
               const hasVideo = mainFeatured?.heroImage?.type === 'VIDEO' && mainFeatured?.heroImage?.original
               

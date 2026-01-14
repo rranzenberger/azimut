@@ -436,9 +436,9 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
                     animationDelay: `${idx * 100}ms`
                   }}
                 >
-                  {/* Image/Video Thumbnail (PLACEHOLDER) */}
+                  {/* Image/Video Thumbnail */}
                   <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-slate-800 to-black">
-                    {/* TODO: Imagem real do backoffice */}
+                    {/* Ícone decorativo - Imagens do backoffice serão adicionadas quando disponíveis */}
                     <div className="absolute inset-0 flex items-center justify-center">
                       <span className="text-9xl opacity-20 group-hover:scale-110 transition-transform duration-700">
                         {section.icon}
