@@ -865,8 +865,8 @@ html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"] *
   --theme-card-bg: rgba(30, 35, 45, 0.95); /* Card ESCURO no tema claro */
   --theme-overlay: rgba(245, 241, 232, 0.98); /* Overlay alinhado com novo fundo */
   --pattern-opacity: 0.06;
-  --grain-opacity: 0.08; /* Granulação bem sutil no tema claro */
-  --gradient-overlay: linear-gradient(135deg, rgba(201, 35, 55, 0.02) 0%, transparent 50%, rgba(201, 35, 55, 0.015) 100%); /* Gradiente vermelho extremamente sutil */
+  --grain-opacity: 0.25; /* Granulação mais visível mas ainda sutil no tema claro */
+  --gradient-overlay: linear-gradient(135deg, rgba(201, 35, 55, 0.08) 0%, transparent 50%, rgba(201, 35, 55, 0.05) 100%); /* Gradiente vermelho sutil mas perceptível */
   /* Cores específicas para tema claro */
   --theme-card-text: #d3cec3;      /* Texto creme (mesma cor da logo clara) no card escuro - NÃO usar branco puro */
   --theme-card-text-secondary: #cbd5e1; /* Cinza claro para descrições em cards escuros */
