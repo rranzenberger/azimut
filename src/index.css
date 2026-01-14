@@ -3057,3 +3057,249 @@ p .keyword-highlight,
 [data-theme="light"] .card-light-adaptive p {
   color: #374151 !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLL REVEAL ANIMATIONS - CSS Only (sem JS)
+   Elementos aparecem quando visíveis no viewport
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Estado inicial - elementos escondidos */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Variações de direção */
+.reveal-left {
+  transform: translateX(-24px);
+}
+
+.reveal-left.revealed {
+  transform: translateX(0);
+}
+
+.reveal-right {
+  transform: translateX(24px);
+}
+
+.reveal-right.revealed {
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  transform: scale(0.95);
+}
+
+.reveal-scale.revealed {
+  transform: scale(1);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LOADING STATES PREMIUM
+   Skeleton screens e placeholders
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+[data-theme="light"] .skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.04) 0%,
+    rgba(0, 0, 0, 0.08) 50%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BUTTON STATES PREMIUM
+   Hover, active, focus e disabled
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Botão primário (vermelho) */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  font-family: var(--font-sora);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  background: #c92337;
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.btn-primary:hover {
+  background: #d42844;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.4), 0 0 40px rgba(201, 35, 55, 0.2);
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(201, 35, 55, 0.3);
+}
+
+.btn-primary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 35, 55, 0.4), 0 8px 24px rgba(201, 35, 55, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Botão secundário (outline) */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  font-family: var(--font-sora);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  background: transparent;
+  border: 2px solid rgba(201, 35, 55, 0.5);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base) var(--ease-out);
+}
+
+.btn-secondary:hover {
+  background: rgba(201, 35, 55, 0.1);
+  border-color: #c92337;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(201, 35, 55, 0.2);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 35, 55, 0.3);
+}
+
+[data-theme="light"] .btn-secondary {
+  color: #0f172a;
+  border-color: rgba(201, 35, 55, 0.4);
+}
+
+[data-theme="light"] .btn-secondary:hover {
+  color: #ffffff;
+  background: #c92337;
+  border-color: #c92337;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVIDADE PREMIUM - Breakpoints otimizados
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Mobile-first - telefones pequenos */
+@media (max-width: 479px) {
+  .section-title {
+    font-size: clamp(1.5rem, 8vw, 2.5rem) !important;
+    letter-spacing: 0.04em;
+  }
+  
+  .body-large {
+    font-size: clamp(1rem, 4vw, 1.15rem) !important;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    padding: 1rem 1.5rem;
+  }
+}
+
+/* Tablets em portrait */
+@media (min-width: 480px) and (max-width: 767px) {
+  .section-title {
+    font-size: clamp(2rem, 6vw, 3rem) !important;
+  }
+}
+
+/* Tablets em landscape e laptops pequenos */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .section-spacing {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+/* Desktop normal */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .section-spacing {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+/* Desktop grande e monitores */
+@media (min-width: 1280px) {
+  .section-spacing {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+  
+  .container-max {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+}
