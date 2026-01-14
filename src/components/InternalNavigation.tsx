@@ -130,12 +130,12 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
         if (!cleanPath || cleanPath === currentPath) {
           const element = document.getElementById(anchor)
           if (element) {
-            // Calcular posição: header (60px) + submenu (~56px) + margem (20px)
+            // Calcular posição responsiva: header + submenu + margem
             const elementTop = element.getBoundingClientRect().top + window.scrollY
-            const headerHeight = 60 // Altura do header fixo
-            const navHeight = navRef.current ? navRef.current.offsetHeight : 56
-            const margin = 20 // Margem extra
-            const targetScroll = elementTop - headerHeight - navHeight - margin
+            const currentHeaderHeight = window.innerWidth < 640 ? 56 : 60 // Mobile vs Desktop
+            const navHeight = navRef.current ? navRef.current.offsetHeight : 50
+            const margin = 16 // Margem mínima
+            const targetScroll = elementTop - currentHeaderHeight - navHeight - margin
             
             window.scrollTo({ 
               top: targetScroll > 0 ? targetScroll : 0, 
@@ -166,15 +166,18 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
     }
   }
 
+  // Altura do header varia: mobile ~56px, desktop 60px (52px quando scrollado)
+  const headerHeight = typeof window !== 'undefined' && window.innerWidth < 640 ? 56 : 60
+
   return (
     <nav 
       ref={navRef}
-      className={`mb-8 sticky z-40 backdrop-blur-xl transition-all duration-300 -mx-3 sm:-mx-4 md:-mx-6 lg:-mx-8 px-3 sm:px-4 md:px-6 lg:px-8 ${className}`}
+      className={`mb-6 sm:mb-8 sticky z-40 backdrop-blur-xl transition-all duration-300 -mx-3 sm:-mx-4 md:-mx-6 lg:-mx-8 px-3 sm:px-4 md:px-6 lg:px-8 ${className}`}
       style={{
-        top: '60px', // Logo abaixo do header fixo (60px)
+        top: `${headerHeight}px`, // Responsivo: 56px mobile, 60px desktop
         backgroundColor: 'var(--theme-bg-sticky, rgba(10, 14, 23, 0.98))',
-        paddingTop: '0.875rem',
-        paddingBottom: '0.875rem',
+        paddingTop: '0.75rem',
+        paddingBottom: '0.75rem',
         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
         borderBottom: '2px solid rgba(201, 35, 55, 0.6)' // Linha vermelha Azimut
       }}
