@@ -373,7 +373,7 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                     <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-azimut-red via-azimut-red/50 to-transparent"></div>
                     
                     {/* Nome GRANDE - 2 LINHAS: Nome branco + Sobrenome vermelho */}
-                    <h3 className="mb-4 font-handel uppercase tracking-[0.04em] leading-[1.0]" style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)' }}>
+                    <h3 className="team-member-name mb-4 font-handel uppercase tracking-[0.04em] leading-[1.0]" style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)' }}>
                       <span className="text-white block">{member.name.split(' ')[0]}</span>
                       <span className="text-azimut-red block">{member.name.split(' ').slice(1).join(' ')}</span>
                     </h3>
