@@ -83,6 +83,63 @@ html {
   mix-blend-mode: soft-light;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   DEGRADÊ LATERAL - TEMA CLARO EM TELAS GRANDES (>1280px)
+   Cria vinheta nas bordas para contenção visual em monitores grandes
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Container para o degradê lateral - apenas tema claro */
+[data-theme="light"] .film-grain::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -12; /* Entre o grão (-15) e a estrela (-10) */
+  opacity: 0; /* Invisível por padrão */
+  /* Degradê lateral: escuro nas bordas, transparente no centro */
+  background: linear-gradient(
+    90deg,
+    rgba(5, 8, 20, 0.85) 0%,
+    rgba(5, 8, 20, 0.6) 5%,
+    rgba(5, 8, 20, 0.3) 12%,
+    transparent 20%,
+    transparent 80%,
+    rgba(5, 8, 20, 0.3) 88%,
+    rgba(5, 8, 20, 0.6) 95%,
+    rgba(5, 8, 20, 0.85) 100%
+  );
+  transition: opacity 0.3s ease;
+}
+
+/* Ativar degradê lateral apenas em telas maiores que 1280px */
+@media (min-width: 1440px) {
+  [data-theme="light"] .film-grain::after {
+    opacity: 1;
+  }
+}
+
+/* Intensidade progressiva em telas muito grandes */
+@media (min-width: 1920px) {
+  [data-theme="light"] .film-grain::after {
+    background: linear-gradient(
+      90deg,
+      rgba(5, 8, 20, 0.92) 0%,
+      rgba(5, 8, 20, 0.7) 8%,
+      rgba(5, 8, 20, 0.4) 15%,
+      transparent 25%,
+      transparent 75%,
+      rgba(5, 8, 20, 0.4) 85%,
+      rgba(5, 8, 20, 0.7) 92%,
+      rgba(5, 8, 20, 0.92) 100%
+    );
+  }
+}
+
 /* Animação desabilitada - estava causando sobreposição horizontal */
 /* @keyframes grain {
   0%, 100% { transform: translate(0, 0) }
