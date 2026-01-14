@@ -555,10 +555,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         <section className="py-8 md:py-10 border-y border-white/5">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-6">
-              <h3 className="font-sora text-xs uppercase tracking-[0.24em] mb-3 text-slate-400">
+              <h3 className="font-sora text-xs uppercase tracking-[0.24em] mb-3 text-slate-600 dark:text-slate-400">
                 {lang === 'pt' ? 'TECNOLOGIA CRIATIVA' : lang === 'es' ? 'TECNOLOGÍA CREATIVA' : lang === 'fr' ? 'TECHNOLOGIE CRÉATIVE' : 'CREATIVE TECHNOLOGY'}
               </h3>
-              <p className="text-sm md:text-base max-w-3xl mx-auto leading-relaxed text-slate-300">
+              <p className="text-sm md:text-base max-w-3xl mx-auto leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
                 {lang === 'pt' 
                   ? 'Criamos experiências imersivas, interativas e cinematográficas para cultura, marcas e cidades. Da curadoria e consultoria em festivais à direção técnica de museus, navegamos entre cinema, design, engenharia, educação e pesquisa — buscando formatos que sejam ao mesmo tempo precisos e poéticos.' 
                   : lang === 'es' 
