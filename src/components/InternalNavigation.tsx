@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useLanguageRoute } from '../hooks/useLanguageRoute'
 import type { Lang } from '../i18n'
@@ -18,14 +18,12 @@ interface InternalNavigationProps {
 }
 
 /**
- * Componente de Navegação Interna UNIVERSAL - VERSÃO 2.0
+ * Componente de Navegação Interna - VERSÃO SIMPLIFICADA
  * 
- * ✅ Sticky funciona em TODAS as páginas
- * ✅ Scroll para anchors calcula offset corretamente
- * ✅ Usa variáveis CSS globais (--header-height, --internal-nav-height)
- * ✅ Responsivo: mobile, tablet, desktop
+ * ⚠️ Este componente NÃO tem sticky próprio!
+ * O sticky é controlado pelo container pai na página.
  * 
- * Design System Azimut - Padrão Universal
+ * Isso evita conflitos de posicionamento.
  */
 const InternalNavigation: React.FC<InternalNavigationProps> = ({ 
   items, 
@@ -38,9 +36,8 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
   const navigate = useNavigate()
   const location = useLocation()
   const { getLangPath } = useLanguageRoute()
-  const navRef = useRef<HTMLElement>(null)
 
-  // 🆕 Sincronizar activeId com defaultActive quando prop mudar
+  // Sincronizar activeId com defaultActive
   useEffect(() => {
     if (defaultActive) {
       setActiveId(defaultActive)
@@ -94,19 +91,16 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
     }
   }, [location.pathname, location.search, location.hash, items])
 
-  // 🆕 Função robusta para scroll com offset calculado
+  // Função para scroll com offset calculado
   const scrollToElement = useCallback((elementId: string) => {
     const element = document.getElementById(elementId)
     if (!element) return
 
-    // Calcular offset usando variáveis CSS
-    const computedStyle = getComputedStyle(document.documentElement)
-    const headerHeight = parseInt(computedStyle.getPropertyValue('--header-height')) || 80
-    const navHeight = navRef.current?.offsetHeight || 52
-    const margin = 20
+    // Offset fixo: header (60px) + submenu (~52px) + margem (20px) = ~132px
+    const offset = 140
 
     const elementTop = element.getBoundingClientRect().top + window.scrollY
-    const targetScroll = elementTop - headerHeight - navHeight - margin
+    const targetScroll = elementTop - offset
 
     window.scrollTo({ 
       top: Math.max(0, targetScroll), 
@@ -137,100 +131,79 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
         }
       }
       
-      // Navegação normal (com query string ou outra página)
+      // Navegação normal (URL com query string ou outra página)
       const fullPath = lang ? `/${lang}${item.href}` : getLangPath(item.href)
       navigate(fullPath)
-      
-      // Scroll suave para o topo após navegação
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-      }, 100)
     }
   }
 
   return (
     <nav 
-      ref={navRef}
-      className={`mb-6 sm:mb-8 sticky z-40 backdrop-blur-xl transition-all duration-300 -mx-3 sm:-mx-4 md:-mx-6 lg:-mx-8 px-3 sm:px-4 md:px-6 lg:px-8 ${className}`}
-      style={{
-        // ✅ Usa variável CSS para posicionamento responsivo
-        top: 'var(--header-height)',
-        backgroundColor: 'var(--theme-bg-sticky)',
-        paddingTop: '0.75rem',
-        paddingBottom: '0.75rem',
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
-        borderBottom: '2px solid rgba(201, 35, 55, 0.6)'
-      }}
+      className={`flex flex-wrap gap-1 sm:gap-2 ${className}`}
       aria-label="Internal navigation"
     >
-      <div className="flex flex-wrap gap-2 -mb-px">
-        {items.map((item) => {
-          const isActive = activeId === item.id
-          const isHovered = hoveredId === item.id
-          const shouldShowLine = isActive || isHovered
-          
-          return (
-            <button
-              key={item.id}
-              onClick={() => handleClick(item)}
-              className={`
-                relative flex items-center gap-2 
-                px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl
-                font-sora text-xs sm:text-sm font-medium uppercase tracking-[0.08em]
-                transition-all duration-300 ease-out
-              `}
-              style={{
-                color: isActive 
-                  ? 'var(--theme-accent-red)'
-                  : 'var(--theme-text-secondary)',
-                backgroundColor: 'transparent',
-                opacity: isActive ? 1 : 0.6,
-                textShadow: 'none',
-                border: '1px solid transparent'
-              }}
-              onMouseEnter={(e) => {
-                setHoveredId(item.id)
-                if (!isActive) {
-                  e.currentTarget.style.opacity = '1'
-                  e.currentTarget.style.color = 'var(--theme-accent-red)'
-                  e.currentTarget.style.transform = 'translateY(-1px)'
-                }
-              }}
-              onMouseLeave={(e) => {
-                setHoveredId(null)
-                if (!isActive) {
-                  e.currentTarget.style.opacity = '0.6'
-                  e.currentTarget.style.color = 'var(--theme-text-secondary)'
-                  e.currentTarget.style.transform = 'translateY(0)'
-                }
-              }}
-              aria-current={isActive ? 'page' : undefined}
-            >
-              <span className="relative inline-flex items-center gap-2">
-                {item.icon && (
-                  <span 
-                    className="text-base leading-none" 
-                    aria-hidden="true"
-                    style={{ opacity: isActive ? 1 : 0.7 }}
-                  >
-                    {item.icon}
-                  </span>
-                )}
-                
-                <span>{item.label}</span>
-                
-                {shouldShowLine && (
-                  <span 
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-azimut-red transition-opacity duration-200"
-                    style={{ opacity: isActive ? 0.6 : 0.4 }}
-                    aria-hidden="true"
-                  />
-                )}
+      {items.map((item) => {
+        const isActive = activeId === item.id
+        const isHovered = hoveredId === item.id
+        const shouldShowLine = isActive || isHovered
+        
+        return (
+          <button
+            key={item.id}
+            onClick={() => handleClick(item)}
+            className={`
+              relative flex items-center gap-1.5 sm:gap-2 
+              px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg
+              font-sora text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.06em] sm:tracking-[0.08em]
+              transition-all duration-300 ease-out
+              whitespace-nowrap
+            `}
+            style={{
+              color: isActive 
+                ? 'var(--theme-accent-red)'
+                : 'var(--theme-text-secondary)',
+              backgroundColor: 'transparent',
+              opacity: isActive ? 1 : 0.6
+            }}
+            onMouseEnter={(e) => {
+              setHoveredId(item.id)
+              if (!isActive) {
+                e.currentTarget.style.opacity = '1'
+                e.currentTarget.style.color = 'var(--theme-accent-red)'
+              }
+            }}
+            onMouseLeave={(e) => {
+              setHoveredId(null)
+              if (!isActive) {
+                e.currentTarget.style.opacity = '0.6'
+                e.currentTarget.style.color = 'var(--theme-text-secondary)'
+              }
+            }}
+            aria-current={isActive ? 'page' : undefined}
+          >
+            {item.icon && (
+              <span 
+                className="text-sm sm:text-base leading-none" 
+                aria-hidden="true"
+                style={{ opacity: isActive ? 1 : 0.7 }}
+              >
+                {item.icon}
               </span>
-            </button>
-          )
-        })}
-      </div>
+            )}
+            
+            <span className="relative">
+              {item.label}
+              {shouldShowLine && (
+                <span 
+                  className="absolute -bottom-1 left-0 right-0 h-[2px] bg-azimut-red"
+                  style={{ opacity: isActive ? 0.8 : 0.4 }}
+                  aria-hidden="true"
+                />
+              )}
+            </span>
+          </button>
+        )
+      })}
     </nav>
   )
 }

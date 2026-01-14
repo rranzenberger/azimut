@@ -191,57 +191,34 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
         </div>
 
         {/* ═══════════════════════════════════════════════════════════
-            NAVEGAÇÃO INTERNA - FORA do max-w-7xl para sticky funcionar
+            NAVEGAÇÃO INTERNA - Sticky simples abaixo do header
             ═══════════════════════════════════════════════════════════ */}
-        <div className="sticky z-40 backdrop-blur-xl" style={{
-          top: 'var(--header-height)',
-          backgroundColor: 'var(--theme-bg-sticky)',
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
-          borderBottom: '2px solid rgba(201, 35, 55, 0.6)'
-        }}>
+        <div 
+          className="sticky z-40 backdrop-blur-xl"
+          style={{
+            top: '60px',
+            backgroundColor: 'var(--theme-bg-sticky)',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+            borderBottom: '2px solid rgba(201, 35, 55, 0.5)'
+          }}
+        >
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3">
             <InternalNavigation
               items={[
-                {
-                  id: 'all',
-                  label: lang === 'pt' ? 'Todas' : lang === 'es' ? 'Todas' : lang === 'fr' ? 'Tous' : 'All',
-                  href: '/what',
-                  icon: '✦'
-                },
-                {
-                  id: 'culture',
-                  label: lang === 'pt' ? 'Cultura' : lang === 'es' ? 'Cultura' : lang === 'fr' ? 'Culture' : 'Culture',
-                  href: '/what?filter=culture',
-                  icon: '🎭'
-                },
-                {
-                  id: 'brands',
-                  label: lang === 'pt' ? 'Marcas' : lang === 'es' ? 'Marcas' : lang === 'fr' ? 'Marques' : 'Brands',
-                  href: '/what?filter=brands',
-                  icon: '🎯'
-                },
-                {
-                  id: 'production',
-                  label: lang === 'pt' ? 'Produção' : lang === 'es' ? 'Producción' : lang === 'fr' ? 'Production' : 'Production',
-                  href: '/what?filter=production',
-                  icon: '🎬'
-                },
-                {
-                  id: 'technology',
-                  label: lang === 'pt' ? 'Tecnologia' : lang === 'es' ? 'Tecnología' : lang === 'fr' ? 'Technologie' : 'Technology',
-                  href: '/what?filter=technology',
-                  icon: '🚀'
-                }
+                { id: 'all', label: lang === 'pt' ? 'Todas' : lang === 'es' ? 'Todas' : lang === 'fr' ? 'Tous' : 'All', href: '/what', icon: '✦' },
+                { id: 'culture', label: lang === 'pt' ? 'Cultura' : lang === 'es' ? 'Cultura' : lang === 'fr' ? 'Culture' : 'Culture', href: '/what?filter=culture', icon: '🎭' },
+                { id: 'brands', label: lang === 'pt' ? 'Marcas' : lang === 'es' ? 'Marcas' : lang === 'fr' ? 'Marques' : 'Brands', href: '/what?filter=brands', icon: '🎯' },
+                { id: 'production', label: lang === 'pt' ? 'Produção' : lang === 'es' ? 'Producción' : lang === 'fr' ? 'Production' : 'Production', href: '/what?filter=production', icon: '🎬' },
+                { id: 'technology', label: lang === 'pt' ? 'Tecnologia' : lang === 'es' ? 'Tecnología' : lang === 'fr' ? 'Technologie' : 'Technology', href: '/what?filter=technology', icon: '🚀' }
               ]}
               defaultActive={activeFilter}
               lang={lang}
-              className="!sticky !top-0 !z-0 !mb-0 !mx-0 !px-0 !shadow-none !border-none !backdrop-blur-none"
             />
           </div>
         </div>
 
-        {/* Grid de Serviços 4x4 - CONTAINER ABAIXADO 60px para linha vermelha aparecer */}
-        <section className="relative" style={{ paddingTop: '60px', paddingBottom: '48px' }}>
+        {/* Grid de Serviços */}
+        <section className="relative pt-8 pb-12">
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             {/* GAP-Y-14 = 56px entre linhas de cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-14">

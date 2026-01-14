@@ -269,50 +269,32 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         </div>
 
         {/* ═══════════════════════════════════════════════════════════
-            NAVEGAÇÃO INTERNA - FORA do max-w-7xl para sticky funcionar
+            NAVEGAÇÃO INTERNA - Sticky simples abaixo do header
             ═══════════════════════════════════════════════════════════ */}
-        <div className="sticky z-40 backdrop-blur-xl" style={{
-          top: 'var(--header-height)',
-          backgroundColor: 'var(--theme-bg-sticky)',
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
-          borderBottom: '2px solid rgba(201, 35, 55, 0.6)'
-        }}>
+        <div 
+          className="sticky z-40 backdrop-blur-xl"
+          style={{
+            top: '60px',
+            backgroundColor: 'var(--theme-bg-sticky)',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+            borderBottom: '2px solid rgba(201, 35, 55, 0.5)'
+          }}
+        >
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3">
             <InternalNavigation
               items={[
-                {
-                  id: 'overview',
-                  label: lang === 'pt' ? 'Visão Geral' : lang === 'es' ? 'Visión General' : lang === 'fr' ? 'Vue d\'Ensemble' : 'Overview',
-                  href: '#overview',
-                  icon: '✦'
-                },
-                {
-                  id: 'unique',
-                  label: lang === 'pt' ? 'Diferenciais' : lang === 'es' ? 'Diferenciales' : lang === 'fr' ? 'Différenciation' : 'What Makes Us Unique',
-                  href: '#unique',
-                  icon: '💡'
-                },
-                {
-                  id: 'team',
-                  label: lang === 'pt' ? 'Equipe' : lang === 'es' ? 'Equipo' : lang === 'fr' ? 'Équipe' : 'Team',
-                  href: '#team',
-                  icon: '👥'
-                },
-                {
-                  id: 'credentials',
-                  label: lang === 'pt' ? 'Credenciais' : lang === 'es' ? 'Credenciales' : lang === 'fr' ? 'Références' : 'Credentials',
-                  href: '#credentials',
-                  icon: '🏆'
-                }
+                { id: 'overview', label: lang === 'pt' ? 'Visão Geral' : lang === 'es' ? 'Visión General' : lang === 'fr' ? 'Vue d\'Ensemble' : 'Overview', href: '#overview', icon: '✦' },
+                { id: 'unique', label: lang === 'pt' ? 'Diferenciais' : lang === 'es' ? 'Diferenciales' : lang === 'fr' ? 'Différenciation' : 'What Makes Us Unique', href: '#unique', icon: '💡' },
+                { id: 'team', label: lang === 'pt' ? 'Equipe' : lang === 'es' ? 'Equipo' : lang === 'fr' ? 'Équipe' : 'Team', href: '#team', icon: '👥' },
+                { id: 'credentials', label: lang === 'pt' ? 'Credenciais' : lang === 'es' ? 'Credenciales' : lang === 'fr' ? 'Références' : 'Credentials', href: '#credentials', icon: '🏆' }
               ]}
               lang={lang}
-              className="!sticky !top-0 !z-0 !mb-0 !mx-0 !px-0 !shadow-none !border-none !backdrop-blur-none"
             />
           </div>
         </div>
 
         {/* Conteúdo - DENTRO do container */}
-        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 pt-8">
 
           {/* Sobre (Overview) */}
           <section id="overview" className="section-container" style={{ scrollMarginTop: 'var(--scroll-offset)' }}>

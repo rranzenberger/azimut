@@ -392,50 +392,27 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
         />
 
         {/* ═══════════════════════════════════════════════════════════
-            NAVEGAÇÃO INTERNA - FORA do max-w-7xl para sticky funcionar
+            NAVEGAÇÃO INTERNA - Sticky simples abaixo do header
             ═══════════════════════════════════════════════════════ */}
-        <div className="sticky z-40 backdrop-blur-xl" style={{
-          top: 'var(--header-height)',
-          backgroundColor: 'var(--theme-bg-sticky)',
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
-          borderBottom: '2px solid rgba(201, 35, 55, 0.6)'
-        }}>
+        <div 
+          className="sticky z-40 backdrop-blur-xl"
+          style={{
+            top: '60px',
+            backgroundColor: 'var(--theme-bg-sticky)',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+            borderBottom: '2px solid rgba(201, 35, 55, 0.5)'
+          }}
+        >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
             <InternalNavigation
               items={[
-                {
-                  id: 'all',
-                  label: lang === 'pt' ? 'Visão Geral' : lang === 'es' ? 'Visión General' : lang === 'fr' ? 'Aperçu' : 'Overview',
-                  href: '/academy',
-                  icon: '🎓'
-                },
-                {
-                  id: 'vancouver',
-                  label: 'Vancouver',
-                  href: '/academy/vancouver',
-                  icon: '🍁'
-                },
-                {
-                  id: 'courses',
-                  label: lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses',
-                  href: '/academy/courses',
-                  icon: '📚'
-                },
-                {
-                  id: 'workshops',
-                  label: 'Workshops',
-                  href: '/academy/workshops',
-                  icon: '🎬'
-                },
-                {
-                  id: 'corporate',
-                  label: lang === 'pt' ? 'Corporativo' : lang === 'es' ? 'Corporativo' : lang === 'fr' ? 'Entreprise' : 'Corporate',
-                  href: '/academy/corporate',
-                  icon: '🏢'
-                }
+                { id: 'all', label: lang === 'pt' ? 'Visão Geral' : lang === 'es' ? 'Visión General' : lang === 'fr' ? 'Aperçu' : 'Overview', href: '/academy', icon: '🎓' },
+                { id: 'vancouver', label: 'Vancouver', href: '/academy/vancouver', icon: '🍁' },
+                { id: 'courses', label: lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses', href: '/academy/courses', icon: '📚' },
+                { id: 'workshops', label: 'Workshops', href: '/academy/workshops', icon: '🎬' },
+                { id: 'corporate', label: lang === 'pt' ? 'Corporativo' : lang === 'es' ? 'Corporativo' : lang === 'fr' ? 'Entreprise' : 'Corporate', href: '/academy/corporate', icon: '🏢' }
               ]}
               lang={lang}
-              className="!sticky !top-0 !z-0 !mb-0 !mx-0 !px-0 !shadow-none !border-none !backdrop-blur-none"
             />
           </div>
         </div>
