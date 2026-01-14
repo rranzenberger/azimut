@@ -3,6 +3,7 @@ import { type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import SmartContactForm from '../components/SmartContactForm'
 import { trackPageView } from '../utils/analytics'
+import StarBackground from '../components/StarBackground'
 
 interface ContactProps {
   lang: Lang
@@ -32,15 +33,13 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
       />
       
       <main className="relative min-h-screen">
-        {/* Estrela de fundo */}
-        <div className="absolute -right-28 -bottom-40 min-[768px]:-right-40 min-[768px]:-bottom-60 h-[520px] w-[520px] min-[768px]:h-[680px] min-[768px]:w-[680px] opacity-[0.3] dark:opacity-[0.15] pointer-events-none -z-5">
-          <img
-            src="/logo-azimut-star.svg"
-            alt=""
-            className="h-full w-full object-contain"
-            loading="lazy"
-          />
-        </div>
+        {/* Estrela de fundo - detecta tema automaticamente */}
+        <StarBackground
+          className="-right-28 -bottom-40 min-[768px]:-right-40 min-[768px]:-bottom-60 h-[520px] w-[520px] min-[768px]:h-[680px] min-[768px]:w-[680px]"
+          position="absolute"
+          opacity={0.3}
+          zIndex={-5}
+        />
 
         {/* Container */}
         <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 md:py-20">

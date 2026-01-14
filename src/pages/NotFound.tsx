@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import { trackEvent } from '../components/GoogleAnalytics'
+import StarBackground from '../components/StarBackground'
 
 interface NotFoundProps {
   lang: Lang
@@ -56,16 +57,13 @@ const NotFound: React.FC<NotFoundProps> = ({ lang }) => {
         path="/404"
       />
       <main className="relative min-h-[70vh] flex items-center justify-center">
-      {/* Estrela de fundo decorativa */}
-      <div 
-        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[400px] md:h-[600px] md:w-[600px]" 
-        style={{ 
-          opacity: 0.15,
-          zIndex: -5
-        }}
-      >
-        <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" />
-      </div>
+      {/* Estrela de fundo decorativa - detecta tema automaticamente */}
+      <StarBackground
+        className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[400px] md:h-[600px] md:w-[600px]"
+        position="absolute"
+        opacity={0.15}
+        zIndex={-5}
+      />
 
       <div className="text-center px-6">
         {/* Código 404 grande */}
