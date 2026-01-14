@@ -228,13 +228,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/70 dark:block hidden" />
           
           {/* ═══════════════════════════════════════════════════════════════
-              TEMA CLARO: Degradê lateral nas bordas (esquerda + direita)
+              TEMA CLARO: Centro escuro, bordas claras (bege)
               ═══════════════════════════════════════════════════════════════ */}
-          {/* Gradiente ESQUERDA → Centro (apenas tema claro) */}
+          {/* Gradiente: Bordas transparentes (bege) → Centro escuro */}
           <div 
             className="absolute inset-0 dark:hidden block"
             style={{
-              background: 'linear-gradient(90deg, rgba(5, 8, 20, 0.9) 0%, rgba(5, 8, 20, 0.7) 8%, rgba(5, 8, 20, 0.4) 15%, transparent 25%, transparent 75%, rgba(5, 8, 20, 0.4) 85%, rgba(5, 8, 20, 0.7) 92%, rgba(5, 8, 20, 0.9) 100%)'
+              background: 'linear-gradient(90deg, transparent 0%, rgba(5, 8, 20, 0.7) 10%, rgba(5, 8, 20, 0.95) 20%, rgba(5, 8, 20, 0.98) 50%, rgba(5, 8, 20, 0.95) 80%, rgba(5, 8, 20, 0.7) 90%, transparent 100%)'
             }}
           />
           
