@@ -38,6 +38,38 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   VARIÁVEIS CSS GLOBAIS - LAYOUT RESPONSIVO
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* Header heights */
+  --header-height: 80px;
+  --header-height-scrolled: 72px;
+  
+  /* Internal navigation (submenu) */
+  --internal-nav-height: 52px;
+  
+  /* Scroll margin para anchors (header + internal nav + margem) */
+  --scroll-offset: calc(var(--header-height) + var(--internal-nav-height) + 20px);
+  
+  /* Cores de fundo sticky */
+  --theme-bg-sticky: rgba(10, 14, 23, 0.98);
+}
+
+/* Mobile: heights menores */
+@media (max-width: 639px) {
+  :root {
+    --header-height: 72px;
+    --header-height-scrolled: 64px;
+    --internal-nav-height: 48px;
+  }
+}
+
+/* Tema claro: fundo sticky diferente */
+[data-theme="light"] {
+  --theme-bg-sticky: rgba(211, 206, 195, 0.98);
+}
+
 .glass-panel {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);

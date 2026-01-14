@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useLanguageRoute } from '../hooks/useLanguageRoute'
 import type { Lang } from '../i18n'
@@ -18,18 +18,14 @@ interface InternalNavigationProps {
 }
 
 /**
- * Componente de Navegação Interna UNIVERSAL
+ * Componente de Navegação Interna UNIVERSAL - VERSÃO 2.0
  * 
- * Design System Azimut - Usado em TODAS as páginas para consistência
- * Padrão: Tabs com linha vermelha embaixo quando ativo
+ * ✅ Sticky funciona em TODAS as páginas
+ * ✅ Scroll para anchors calcula offset corretamente
+ * ✅ Usa variáveis CSS globais (--header-height, --internal-nav-height)
+ * ✅ Responsivo: mobile, tablet, desktop
  * 
- * @example
- * <InternalNavigation
- *   items={[
- *     { id: 'overview', label: 'Overview', icon: '🏠' },
- *     { id: 'details', label: 'Details', icon: '📊' }
- *   ]}
- * />
+ * Design System Azimut - Padrão Universal
  */
 const InternalNavigation: React.FC<InternalNavigationProps> = ({ 
   items, 
@@ -39,39 +35,26 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
 }) => {
   const [activeId, setActiveId] = useState<string>(defaultActive || items[0]?.id || '')
   const [hoveredId, setHoveredId] = useState<string | null>(null)
-  const [isSticky, setIsSticky] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
   const { getLangPath } = useLanguageRoute()
   const navRef = useRef<HTMLElement>(null)
 
-  // 🆕 Detectar scroll para tornar o menu sticky
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY
-      // Menu fica sticky IMEDIATAMENTE após passar do hero (50px)
-      setIsSticky(scrollY > 50)
-    }
-    
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  // 🆕 Sincronizar activeId com defaultActive quando prop mudar (navegação via dropdown externo)
+  // 🆕 Sincronizar activeId com defaultActive quando prop mudar
   useEffect(() => {
     if (defaultActive) {
       setActiveId(defaultActive)
     }
   }, [defaultActive])
 
-  // Detectar rota atual e ativar tab correspondente (incluindo query strings e anchors)
+  // Detectar rota atual e ativar tab correspondente
   useEffect(() => {
     const pathname = location.pathname
     const search = location.search
     const hash = location.hash.replace('#', '')
     const cleanPath = pathname.replace(/^\/(pt|en|fr|es)/, '')
     
-    // Se tem hash, tentar ativar o item correspondente
+    // Se tem hash, ativar o item correspondente
     if (hash) {
       const hashItem = items.find(item => item.id === hash)
       if (hashItem) {
@@ -80,31 +63,27 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
       }
     }
     
-    // Verificar qual item corresponde à rota (com query strings)
+    // Verificar qual item corresponde à rota
     let foundMatch = false
     items.forEach(item => {
       if (item.href) {
-        // Separar path e query string/anchor do href
         const [hrefPath, hrefQueryOrAnchor] = item.href.split(/[?#]/)
         const cleanHref = hrefPath.replace(/^\/(pt|en|fr|es)/, '')
         
-        // Match exato de path + query
         if (item.href.includes('?')) {
           const currentQuery = search.startsWith('?') ? search.substring(1) : search
           if (cleanPath === cleanHref && currentQuery === hrefQueryOrAnchor) {
             setActiveId(item.id)
             foundMatch = true
           }
-        } 
-        // Match de path simples
-        else if (cleanPath === cleanHref || cleanPath.endsWith(`/${item.id}`)) {
+        } else if (cleanPath === cleanHref || cleanPath.endsWith(`/${item.id}`)) {
           setActiveId(item.id)
           foundMatch = true
         }
       }
     })
     
-    // Se não encontrou match e está na página principal (sem query/hash), ativar primeiro item ou 'all'
+    // Se não encontrou match, ativar primeiro item
     if (!foundMatch && !search && !hash) {
       const allItem = items.find(i => i.id === 'all')
       if (allItem) {
@@ -115,71 +94,72 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
     }
   }, [location.pathname, location.search, location.hash, items])
 
+  // 🆕 Função robusta para scroll com offset calculado
+  const scrollToElement = useCallback((elementId: string) => {
+    const element = document.getElementById(elementId)
+    if (!element) return
+
+    // Calcular offset usando variáveis CSS
+    const computedStyle = getComputedStyle(document.documentElement)
+    const headerHeight = parseInt(computedStyle.getPropertyValue('--header-height')) || 80
+    const navHeight = navRef.current?.offsetHeight || 52
+    const margin = 20
+
+    const elementTop = element.getBoundingClientRect().top + window.scrollY
+    const targetScroll = elementTop - headerHeight - navHeight - margin
+
+    window.scrollTo({ 
+      top: Math.max(0, targetScroll), 
+      behavior: 'smooth' 
+    })
+  }, [])
+
   const handleClick = (item: NavItem) => {
     setActiveId(item.id)
     
-    // Se tem href, processar navegação
     if (item.href) {
-      // Verificar se é um anchor (#section)
+      // Anchor na mesma página (#section)
+      if (item.href.startsWith('#')) {
+        const anchor = item.href.replace('#', '')
+        scrollToElement(anchor)
+        return
+      }
+      
+      // Anchor em outra página ou mesma página com path
       if (item.href.includes('#')) {
         const [path, anchor] = item.href.split('#')
         const cleanPath = path || location.pathname.replace(/^\/(pt|en|fr|es)/, '')
         const currentPath = location.pathname.replace(/^\/(pt|en|fr|es)/, '')
         
-        // Se está na mesma página, apenas fazer scroll para o anchor
         if (!cleanPath || cleanPath === currentPath) {
-          const element = document.getElementById(anchor)
-          if (element) {
-            // Calcular posição responsiva: header + submenu + margem
-            const elementTop = element.getBoundingClientRect().top + window.scrollY
-            const currentHeaderHeight = window.innerWidth < 640 ? 56 : 60 // Mobile vs Desktop
-            const navHeight = navRef.current ? navRef.current.offsetHeight : 50
-            const margin = 16 // Margem mínima
-            const targetScroll = elementTop - currentHeaderHeight - navHeight - margin
-            
-            window.scrollTo({ 
-              top: targetScroll > 0 ? targetScroll : 0, 
-              behavior: 'smooth' 
-            })
-          }
-          return // Não navegar, apenas fazer scroll
+          scrollToElement(anchor)
+          return
         }
       }
       
-      // Navegação normal (com ou sem query string)
+      // Navegação normal (com query string ou outra página)
       const fullPath = lang ? `/${lang}${item.href}` : getLangPath(item.href)
       navigate(fullPath)
       
-      // Scroll para posição do submenu (para ficar sticky no topo)
+      // Scroll suave para o topo após navegação
       setTimeout(() => {
-        if (navRef.current) {
-          const navTop = navRef.current.getBoundingClientRect().top + window.scrollY
-          const headerHeight = 80 // Altura aproximada do header
-          const targetScroll = navTop - headerHeight
-          
-          window.scrollTo({ 
-            top: targetScroll > 0 ? targetScroll : 0, 
-            behavior: 'smooth' 
-          })
-        }
+        window.scrollTo({ top: 0, behavior: 'smooth' })
       }, 100)
     }
   }
-
-  // Altura do header varia: mobile ~56px, desktop 60px (52px quando scrollado)
-  const headerHeight = typeof window !== 'undefined' && window.innerWidth < 640 ? 56 : 60
 
   return (
     <nav 
       ref={navRef}
       className={`mb-6 sm:mb-8 sticky z-40 backdrop-blur-xl transition-all duration-300 -mx-3 sm:-mx-4 md:-mx-6 lg:-mx-8 px-3 sm:px-4 md:px-6 lg:px-8 ${className}`}
       style={{
-        top: `${headerHeight}px`, // Responsivo: 56px mobile, 60px desktop
-        backgroundColor: 'var(--theme-bg-sticky, rgba(10, 14, 23, 0.98))',
+        // ✅ Usa variável CSS para posicionamento responsivo
+        top: 'var(--header-height)',
+        backgroundColor: 'var(--theme-bg-sticky)',
         paddingTop: '0.75rem',
         paddingBottom: '0.75rem',
         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
-        borderBottom: '2px solid rgba(201, 35, 55, 0.6)' // Linha vermelha Azimut
+        borderBottom: '2px solid rgba(201, 35, 55, 0.6)'
       }}
       aria-label="Internal navigation"
     >
@@ -187,7 +167,7 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
         {items.map((item) => {
           const isActive = activeId === item.id
           const isHovered = hoveredId === item.id
-          const shouldShowLine = isActive || isHovered // Linha aparece no ativo OU no hover
+          const shouldShowLine = isActive || isHovered
           
           return (
             <button
@@ -195,26 +175,24 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
               onClick={() => handleClick(item)}
               className={`
                 relative flex items-center gap-2 
-                px-6 py-3 rounded-xl
-                font-sora text-sm font-medium uppercase tracking-[0.08em]
+                px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl
+                font-sora text-xs sm:text-sm font-medium uppercase tracking-[0.08em]
                 transition-all duration-300 ease-out
               `}
               style={{
                 color: isActive 
-                  ? 'var(--theme-accent-red)' // Usa cor adaptativa do tema!
+                  ? 'var(--theme-accent-red)'
                   : 'var(--theme-text-secondary)',
                 backgroundColor: 'transparent',
                 opacity: isActive ? 1 : 0.6,
-                textShadow: 'none', // SEM GLOW
+                textShadow: 'none',
                 border: '1px solid transparent'
               }}
               onMouseEnter={(e) => {
                 setHoveredId(item.id)
                 if (!isActive) {
                   e.currentTarget.style.opacity = '1'
-                  e.currentTarget.style.color = 'var(--theme-accent-red)' // Usa cor adaptativa!
-                  e.currentTarget.style.textShadow = 'none' // SEM GLOW no hover
-                  e.currentTarget.style.backgroundColor = 'transparent'
+                  e.currentTarget.style.color = 'var(--theme-accent-red)'
                   e.currentTarget.style.transform = 'translateY(-1px)'
                 }
               }}
@@ -223,16 +201,12 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
                 if (!isActive) {
                   e.currentTarget.style.opacity = '0.6'
                   e.currentTarget.style.color = 'var(--theme-text-secondary)'
-                  e.currentTarget.style.textShadow = 'none'
-                  e.currentTarget.style.backgroundColor = 'transparent'
                   e.currentTarget.style.transform = 'translateY(0)'
                 }
               }}
               aria-current={isActive ? 'page' : undefined}
             >
-              {/* Wrapper para ícone + texto + linha */}
               <span className="relative inline-flex items-center gap-2">
-                {/* Ícone */}
                 {item.icon && (
                   <span 
                     className="text-base leading-none" 
@@ -243,16 +217,12 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
                   </span>
                 )}
                 
-                {/* Label */}
                 <span>{item.label}</span>
                 
-                {/* Linha vermelha embaixo do conteúdo - SOBRE a linha branca */}
                 {shouldShowLine && (
                   <span 
                     className="absolute bottom-0 left-0 right-0 h-[2px] bg-azimut-red transition-opacity duration-200"
-                    style={{ 
-                      opacity: isActive ? 0.6 : 0.4
-                    }}
+                    style={{ opacity: isActive ? 0.6 : 0.4 }}
                     aria-hidden="true"
                   />
                 )}
@@ -266,4 +236,3 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
 }
 
 export default InternalNavigation
-

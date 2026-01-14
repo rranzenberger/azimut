@@ -158,7 +158,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
         lang={lang}
         path="/what"
       />
-      <main className="relative min-h-screen pt-6 md:pt-8 pb-24 film-grain" style={{ overflowX: 'hidden', overflowY: 'visible' }}>
+      <main className="relative min-h-screen pt-6 md:pt-8 pb-24 film-grain">
         {/* Background: Estrela da Azimut - FIXA (FUNDO - atrás de tudo) */}
         <StarBackground
           className="fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px]"
