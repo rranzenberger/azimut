@@ -299,7 +299,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           />
 
           {/* Sobre (Overview) */}
-          <section id="overview" className="section-container scroll-mt-[140px]">
+          <section id="overview" className="section-container scroll-mt-[136px]">
             {/* LABEL PEQUENO (Eyebrow) - COM EMOJI ANIMADO */}
             <span className="section-eyebrow">
               <span>📖</span>
@@ -333,7 +333,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Diferenciais (What Makes Us Unique) */}
-          <section id="unique" className="section-container scroll-mt-[140px]">
+          <section id="unique" className="section-container scroll-mt-[136px]">
             <div className="section-header">
               <div>
                 {/* LABEL PEQUENO (Eyebrow) - COM EMOJI */}
@@ -400,7 +400,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Equipe */}
-          <section id="team" className="section-container scroll-mt-[140px]">
+          <section id="team" className="section-container scroll-mt-[136px]">
             <div className="section-header">
               <div>
                 {/* LABEL PEQUENO (Eyebrow) - COM EMOJI */}
@@ -489,7 +489,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           </section>
 
           {/* Credenciais */}
-          <section id="credentials" className="section-container scroll-mt-[140px]">
+          <section id="credentials" className="section-container scroll-mt-[136px]">
             <div className="section-header">
               <div>
                 {/* LABEL PEQUENO (Eyebrow) - COM EMOJI */}

@@ -130,11 +130,12 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
         if (!cleanPath || cleanPath === currentPath) {
           const element = document.getElementById(anchor)
           if (element) {
-            // Calcular posição para deixar o submenu sticky no topo
+            // Calcular posição: header (60px) + submenu (~56px) + margem (20px)
             const elementTop = element.getBoundingClientRect().top + window.scrollY
-            const headerHeight = 80 // Altura do header
-            const navHeight = navRef.current ? navRef.current.offsetHeight : 60
-            const targetScroll = elementTop - headerHeight - navHeight - 60 // 60px de margem extra
+            const headerHeight = 60 // Altura do header fixo
+            const navHeight = navRef.current ? navRef.current.offsetHeight : 56
+            const margin = 20 // Margem extra
+            const targetScroll = elementTop - headerHeight - navHeight - margin
             
             window.scrollTo({ 
               top: targetScroll > 0 ? targetScroll : 0, 
@@ -170,7 +171,7 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
       ref={navRef}
       className={`mb-8 sticky z-40 backdrop-blur-xl transition-all duration-300 -mx-3 sm:-mx-4 md:-mx-6 lg:-mx-8 px-3 sm:px-4 md:px-6 lg:px-8 ${className}`}
       style={{
-        top: '0px', // Gruda no topo do viewport quando rola
+        top: '60px', // Logo abaixo do header fixo (60px)
         backgroundColor: 'var(--theme-bg-sticky, rgba(10, 14, 23, 0.98))',
         paddingTop: '0.875rem',
         paddingBottom: '0.875rem',
