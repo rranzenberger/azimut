@@ -505,6 +505,62 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
           </div>
         </section>
 
+        {/* Alumni Work At - Logos Visuais */}
+        <section className="py-12 bg-gradient-to-b from-black/90 to-[#0a0e18] border-y border-white/5">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p className="text-center text-sm text-white/50 uppercase tracking-[0.3em] mb-8">
+              {lang === 'pt' ? '🎬 Nossos alunos trabalham em' : lang === 'es' ? '🎬 Nuestros alumnos trabajan en' : lang === 'fr' ? '🎬 Nos étudiants travaillent chez' : '🎬 Our students work at'}
+            </p>
+            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+              {/* Logos estilizados com texto */}
+              {[
+                { name: 'Disney', emoji: '🏰' },
+                { name: 'Sony Pictures', emoji: '🎬' },
+                { name: 'EA Games', emoji: '🎮' },
+                { name: 'Netflix', emoji: '📺' },
+                { name: 'ILM', emoji: '⭐' },
+                { name: 'Ubisoft', emoji: '🕹️' },
+                { name: 'Marvel', emoji: '🦸' },
+                { name: 'DNEG', emoji: '🎥' }
+              ].map((company, i) => (
+                <div 
+                  key={i} 
+                  className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg border border-white/10 hover:border-azimut-red/50 hover:bg-white/10 transition-all duration-300 group"
+                >
+                  <span className="text-2xl group-hover:scale-110 transition-transform">{company.emoji}</span>
+                  <span className="text-white/70 font-semibold group-hover:text-white transition-colors">{company.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* International Students Banner */}
+        <section className="py-8 bg-gradient-to-r from-azimut-red/20 via-azimut-red/10 to-azimut-red/20 border-y border-azimut-red/20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-wrap justify-center items-center gap-4 text-center">
+              <span className="text-3xl">🌍</span>
+              <p className="text-white font-medium">
+                {lang === 'pt' ? 'Atendemos alunos de todo o mundo:' : lang === 'es' ? 'Atendemos estudiantes de todo el mundo:' : lang === 'fr' ? 'Nous accueillons des étudiants du monde entier:' : 'We serve students from around the world:'}
+              </p>
+              <div className="flex gap-2 text-2xl">
+                <span title="Brasil">🇧🇷</span>
+                <span title="México">🇲🇽</span>
+                <span title="Argentina">🇦🇷</span>
+                <span title="Colômbia">🇨🇴</span>
+                <span title="Chile">🇨🇱</span>
+                <span title="Portugal">🇵🇹</span>
+                <span title="Espanha">🇪🇸</span>
+                <span title="França">🇫🇷</span>
+                <span title="Alemanha">🇩🇪</span>
+                <span title="Itália">🇮🇹</span>
+                <span title="Índia">🇮🇳</span>
+                <span title="Japão">🇯🇵</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Why Vancouver - Ultra Convincente */}
         <section className="bg-gradient-to-b from-black to-[#0a0e18]">
           <WhyVancouverConvincing lang={lang} />
@@ -624,22 +680,49 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         <section className="py-20 bg-gradient-to-b from-[#0a0e18] to-black">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
+              <div className="inline-block px-6 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-6">
+                <span className="text-azimut-red text-sm font-semibold uppercase tracking-wider">
+                  🏫 {lang === 'pt' ? 'Escolas Parceiras Oficiais' : lang === 'es' ? 'Escuelas Socias Oficiales' : lang === 'fr' ? 'Écoles Partenaires Officielles' : 'Official Partner Schools'}
+                </span>
+              </div>
               <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
                 {t.schoolsTitle}
               </h2>
+              <p className="text-white/60 max-w-2xl mx-auto">
+                {lang === 'pt' ? 'As melhores escolas de mídia e entretenimento da América do Norte' : lang === 'es' ? 'Las mejores escuelas de medios y entretenimiento de Norteamérica' : lang === 'fr' ? 'Les meilleures écoles de médias et divertissement d\'Amérique du Nord' : 'The best media and entertainment schools in North America'}
+              </p>
             </div>
 
             {/* VFS */}
-            <div className="mb-16 p-8 card-adaptive rounded-2xl border border-white/10">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="text-4xl">🎬</div>
-                <div>
-                  <h3 className="text-3xl font-handel uppercase text-azimut-red">
-                    Vancouver Film School (VFS)
-                  </h3>
-                  <p className="text-white/70">{t.vfsDescription}</p>
+            <div className="mb-16 rounded-2xl overflow-hidden border border-white/10 hover:border-azimut-red/30 transition-all duration-500 group">
+              {/* VFS Hero Image */}
+              <div className="relative h-64 md:h-80 overflow-hidden">
+                <div 
+                  className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
+                  style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=1200)' }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-16 h-16 rounded-xl bg-azimut-red flex items-center justify-center text-3xl shadow-lg">
+                      🎬
+                    </div>
+                    <div>
+                      <h3 className="text-3xl md:text-4xl font-handel uppercase text-white drop-shadow-lg">
+                        Vancouver Film School
+                      </h3>
+                      <div className="flex gap-2 mt-2">
+                        <span className="px-3 py-1 bg-azimut-red/80 text-white text-xs font-bold rounded-full uppercase">#1 Canada</span>
+                        <span className="px-3 py-1 bg-white/20 text-white text-xs font-bold rounded-full uppercase">Since 1987</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+              
+              {/* VFS Content */}
+              <div className="p-8 bg-gradient-to-b from-black/80 to-[#0a0f1a]">
+                <p className="text-white/70 mb-6">{t.vfsDescription}</p>
 
               <div className="grid md:grid-cols-3 gap-6 mb-6">
                 {t.vfsStats.map((stat, i) => (
@@ -684,21 +767,41 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-azimut-red hover:text-azimut-red/80 transition-colors mt-4"
               >
-                Ver site oficial da VFS →
+                {lang === 'pt' ? 'Ver site oficial da VFS' : lang === 'es' ? 'Ver sitio oficial de VFS' : lang === 'fr' ? 'Voir site officiel VFS' : 'Visit VFS official site'} →
               </a>
+              </div>
             </div>
 
             {/* VanArts */}
-            <div className="p-8 card-adaptive rounded-2xl border border-white/10">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="text-4xl">🎨</div>
-                <div>
-                  <h3 className="text-3xl font-handel uppercase text-azimut-red">
-                    VanArts
-                  </h3>
-                  <p className="text-white/70">{t.vanartsDescription}</p>
+            <div className="rounded-2xl overflow-hidden border border-white/10 hover:border-azimut-red/30 transition-all duration-500 group">
+              {/* VanArts Hero Image */}
+              <div className="relative h-64 md:h-80 overflow-hidden">
+                <div 
+                  className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
+                  style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1536240478700-b869070f9279?w=1200)' }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-3xl shadow-lg">
+                      🎨
+                    </div>
+                    <div>
+                      <h3 className="text-3xl md:text-4xl font-handel uppercase text-white drop-shadow-lg">
+                        VanArts
+                      </h3>
+                      <div className="flex gap-2 mt-2">
+                        <span className="px-3 py-1 bg-purple-600/80 text-white text-xs font-bold rounded-full uppercase">{lang === 'pt' ? 'Melhor Custo-Benefício' : lang === 'es' ? 'Mejor Costo-Beneficio' : lang === 'fr' ? 'Meilleur Rapport Qualité-Prix' : 'Best Value'}</span>
+                        <span className="px-3 py-1 bg-white/20 text-white text-xs font-bold rounded-full uppercase">Since 1995</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+              
+              {/* VanArts Content */}
+              <div className="p-8 bg-gradient-to-b from-black/80 to-[#0a0f1a]">
+                <p className="text-white/70 mb-6">{t.vanartsDescription}</p>
 
               <div className="grid md:grid-cols-3 gap-6 mb-6">
                 {t.vanartsStats.map((stat, i) => (
@@ -746,7 +849,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-azimut-red hover:text-azimut-red/80 transition-colors mt-4"
               >
-                Ver site oficial da VanArts →
+                {lang === 'pt' ? 'Ver site oficial da VanArts' : lang === 'es' ? 'Ver sitio oficial de VanArts' : lang === 'fr' ? 'Voir site officiel VanArts' : 'Visit VanArts official site'} →
               </a>
 
               {/* VanArts Video */}
@@ -754,10 +857,10 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 <div className="mb-4">
                   <h4 className="text-xl font-semibold text-white mb-2 flex items-center gap-2">
                     <span className="text-2xl">🎬</span>
-                    Conheça a VanArts por dentro
+                    {lang === 'pt' ? 'Conheça a VanArts por dentro' : lang === 'es' ? 'Conoce VanArts por dentro' : lang === 'fr' ? 'Découvrez VanArts de l\'intérieur' : 'Discover VanArts Inside'}
                   </h4>
                   <p className="text-white/70 text-sm">
-                    Vídeo oficial da Vancouver Institute of Media Arts
+                    {lang === 'pt' ? 'Vídeo oficial da Vancouver Institute of Media Arts' : lang === 'es' ? 'Video oficial del Vancouver Institute of Media Arts' : lang === 'fr' ? 'Vidéo officielle du Vancouver Institute of Media Arts' : 'Official video from Vancouver Institute of Media Arts'}
                   </p>
                 </div>
                 <VideoPlayerEnhanced
@@ -765,6 +868,33 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   mode="default"
                   className="w-full rounded-xl overflow-hidden shadow-2xl"
                 />
+              </div>
+              </div>
+            </div>
+
+            {/* Vancouver City Gallery */}
+            <div className="mt-16">
+              <h3 className="text-2xl font-handel uppercase text-white text-center mb-8">
+                📍 {lang === 'pt' ? 'Viva em Vancouver' : lang === 'es' ? 'Vive en Vancouver' : lang === 'fr' ? 'Vivez à Vancouver' : 'Live in Vancouver'}
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { img: 'https://images.unsplash.com/photo-1559511260-66a654ae982a?w=600', label: 'Downtown' },
+                  { img: 'https://images.unsplash.com/photo-1609825488888-3a766db05542?w=600', label: 'Stanley Park' },
+                  { img: 'https://images.unsplash.com/photo-1560813962-ff3d8fcf59ba?w=600', label: 'Mountains' },
+                  { img: 'https://images.unsplash.com/photo-1578632292335-df3abbb0d586?w=600', label: 'Waterfront' }
+                ].map((item, i) => (
+                  <div key={i} className="relative h-40 md:h-56 rounded-xl overflow-hidden group">
+                    <div 
+                      className="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
+                      style={{ backgroundImage: `url(${item.img})` }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                    <div className="absolute bottom-3 left-3">
+                      <span className="px-3 py-1 bg-azimut-red/80 text-white text-xs font-bold rounded-full">{item.label}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -774,11 +904,16 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         <section className="py-20 bg-gradient-to-b from-black to-[#0a0e18]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
+              <div className="inline-block px-6 py-2 bg-green-600/20 border border-green-600/40 rounded-full mb-6">
+                <span className="text-green-400 text-sm font-semibold uppercase tracking-wider">
+                  ✅ {lang === 'pt' ? 'Casos de Sucesso Reais' : lang === 'es' ? 'Casos de Éxito Reales' : lang === 'fr' ? 'Cas de Succès Réels' : 'Real Success Stories'}
+                </span>
+              </div>
               <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
                 {t.testimonialsTitle}
               </h2>
               <p className="text-lg text-white/70 max-w-3xl mx-auto mb-8">
-                Conheça a história de brasileiros que transformaram suas carreiras estudando em Vancouver
+                {lang === 'pt' ? 'Conheça a história de profissionais que transformaram suas carreiras estudando em Vancouver' : lang === 'es' ? 'Conoce la historia de profesionales que transformaron sus carreras estudiando en Vancouver' : lang === 'fr' ? 'Découvrez l\'histoire de professionnels qui ont transformé leur carrière en étudiant à Vancouver' : 'Meet professionals who transformed their careers studying in Vancouver'}
               </p>
             </div>
 
