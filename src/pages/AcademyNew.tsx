@@ -11,6 +11,7 @@ import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
 import { useUserTracking } from '../hooks/useUserTracking'
 import StarBackground from '../components/StarBackground'
+import InternalNavigation from '../components/InternalNavigation'
 
 interface AcademyProps {
   lang: Lang
@@ -391,12 +392,53 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
         />
 
         {/* ═══════════════════════════════════════════════════════════
+            NAVEGAÇÃO INTERNA - Padrão Universal Azimut
+            ═══════════════════════════════════════════════════════ */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <InternalNavigation
+            items={[
+              {
+                id: 'all',
+                label: lang === 'pt' ? 'Visão Geral' : lang === 'es' ? 'Visión General' : lang === 'fr' ? 'Aperçu' : 'Overview',
+                href: '/academy',
+                icon: '🎓'
+              },
+              {
+                id: 'vancouver',
+                label: 'Vancouver',
+                href: '/academy/vancouver',
+                icon: '🍁'
+              },
+              {
+                id: 'courses',
+                label: lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses',
+                href: '/academy/courses',
+                icon: '📚'
+              },
+              {
+                id: 'workshops',
+                label: 'Workshops',
+                href: '/academy/workshops',
+                icon: '🎬'
+              },
+              {
+                id: 'corporate',
+                label: lang === 'pt' ? 'Corporativo' : lang === 'es' ? 'Corporativo' : lang === 'fr' ? 'Entreprise' : 'Corporate',
+                href: '/academy/corporate',
+                icon: '🏢'
+              }
+            ]}
+            lang={lang}
+          />
+        </div>
+
+        {/* ═══════════════════════════════════════════════════════════
             PROGRAMS GRID - 4 Programas Premium
             ═══════════════════════════════════════════════════════════
             🖼️ PLACEHOLDER: Imagens dos programas
             Backoffice: /admin/academy/programs → cada programa tem imagem
             ═══════════════════════════════════════════════════════ */}
-        <section className="py-24 relative">
+        <section className="py-12 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
               {t.sections.map((section: any, idx: number) => (

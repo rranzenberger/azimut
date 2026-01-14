@@ -168,14 +168,14 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
   return (
     <nav 
       ref={navRef}
-      className={`mb-8 sticky z-40 backdrop-blur-xl transition-all duration-300 ${className}`}
+      className={`mb-8 sticky z-40 backdrop-blur-xl transition-all duration-300 -mx-3 sm:-mx-4 md:-mx-6 lg:-mx-8 px-3 sm:px-4 md:px-6 lg:px-8 ${className}`}
       style={{
-        top: '64px', // Colado logo abaixo do header principal
-        backgroundColor: 'var(--theme-bg-sticky, rgba(10, 14, 23, 0.95))',
-        paddingTop: '0.75rem',
-        paddingBottom: '0.75rem',
-        boxShadow: isSticky ? '0 4px 20px rgba(0, 0, 0, 0.15)' : '0 2px 8px rgba(0, 0, 0, 0.08)',
-        borderBottom: '2px solid rgba(201, 35, 55, 0.5)' // Linha vermelha Azimut (mais sutil)
+        top: '0px', // Gruda no topo do viewport quando rola
+        backgroundColor: 'var(--theme-bg-sticky, rgba(10, 14, 23, 0.98))',
+        paddingTop: '0.875rem',
+        paddingBottom: '0.875rem',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+        borderBottom: '2px solid rgba(201, 35, 55, 0.6)' // Linha vermelha Azimut
       }}
       aria-label="Internal navigation"
     >
