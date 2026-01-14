@@ -506,7 +506,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* Alumni Work At - Logos Visuais */}
-        <section className="py-12 bg-gradient-to-b from-black/90 to-[#0a0e18] border-y border-white/5">
+        <section className="py-12 border-y border-white/5 dark:border-white/5" style={{ background: 'var(--theme-bg-secondary)' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-center text-sm text-white/50 uppercase tracking-[0.3em] mb-8">
               {lang === 'pt' ? '🎬 Nossos alunos trabalham em' : lang === 'es' ? '🎬 Nuestros alumnos trabajan en' : lang === 'fr' ? '🎬 Nos étudiants travaillent chez' : '🎬 Our students work at'}
@@ -562,17 +562,17 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* Why Vancouver - Ultra Convincente */}
-        <section className="bg-gradient-to-b from-black to-[#0a0e18]">
+        <section style={{ background: 'var(--theme-bg)' }}>
           <WhyVancouverConvincing lang={lang} />
         </section>
 
         {/* Vancouver Magazine - Lifestyle + Escolas + Futuro */}
-        <section className="bg-gradient-to-b from-[#0a0e18] to-black">
+        <section style={{ background: 'var(--theme-bg-secondary)' }}>
           <VancouverMagazine lang={lang} />
         </section>
 
         {/* Comparative Table */}
-        <section className="py-20 bg-gradient-to-b from-black via-[#0a0e18] to-black">
+        <section className="py-20" style={{ background: 'var(--theme-bg)' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
@@ -649,7 +649,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* Why Vancouver */}
-        <section className="py-20 bg-gradient-to-b from-black to-[#0a0e18]">
+        <section className="py-20" style={{ background: 'var(--theme-bg)' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
@@ -677,7 +677,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* Schools Section - VFS & VanArts */}
-        <section className="py-20 bg-gradient-to-b from-[#0a0e18] to-black">
+        <section className="py-20" style={{ background: 'var(--theme-bg-secondary)' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <div className="inline-block px-6 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-6">
@@ -721,7 +721,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               </div>
               
               {/* VFS Content */}
-              <div className="p-8 bg-gradient-to-b from-black/80 to-[#0a0f1a]">
+              <div className="p-8" style={{ background: 'var(--theme-bg)' }}>
                 <p className="text-white/70 mb-6">{t.vfsDescription}</p>
 
               <div className="grid md:grid-cols-3 gap-6 mb-6">
@@ -800,7 +800,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               </div>
               
               {/* VanArts Content */}
-              <div className="p-8 bg-gradient-to-b from-black/80 to-[#0a0f1a]">
+              <div className="p-8" style={{ background: 'var(--theme-bg)' }}>
                 <p className="text-white/70 mb-6">{t.vanartsDescription}</p>
 
               <div className="grid md:grid-cols-3 gap-6 mb-6">
@@ -901,7 +901,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* Testimonials */}
-        <section className="py-20 bg-gradient-to-b from-black to-[#0a0e18]">
+        <section className="py-20" style={{ background: 'var(--theme-bg)' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <div className="inline-block px-6 py-2 bg-green-600/20 border border-green-600/40 rounded-full mb-6">
@@ -957,7 +957,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* How Azimut Helps */}
-        <section className="py-20 bg-gradient-to-b from-[#0a0e18] to-black">
+        <section className="py-20" style={{ background: 'var(--theme-bg-secondary)' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
@@ -1019,7 +1019,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* AI Tools */}
-        <section className="py-20 bg-gradient-to-b from-[#0a0e18] to-black">
+        <section className="py-20" style={{ background: 'var(--theme-bg)' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <div className="inline-block px-6 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-6">
@@ -1066,7 +1066,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* FAQ */}
-        <section className="py-20 bg-gradient-to-b from-black to-[#0a0e18]">
+        <section className="py-20" style={{ background: 'var(--theme-bg-secondary)' }}>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
@@ -1101,7 +1101,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* Visual School Quiz - Ultra Interativo */}
-        <section className="py-20 bg-gradient-to-b from-black to-[#0a0e18]">
+        <section className="py-20" style={{ background: 'var(--theme-bg)' }}>
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
@@ -1116,7 +1116,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* Form Section */}
-        <section id="form" className="py-20 bg-gradient-to-b from-[#0a0e18] to-black">
+        <section id="form" className="py-20" style={{ background: 'var(--theme-bg-secondary)' }}>
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <AcademyQuickForm 
               lang={lang} 
