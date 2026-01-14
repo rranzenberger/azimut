@@ -659,11 +659,30 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 ))}
               </div>
 
+              {/* Quick Facts VFS */}
+              <div className="mt-6 p-4 bg-azimut-red/10 border border-azimut-red/30 rounded-lg">
+                <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-3">📋 {lang === 'pt' ? 'Informações Práticas' : lang === 'es' ? 'Información Práctica' : lang === 'fr' ? 'Informations Pratiques' : 'Quick Facts'}</h4>
+                <div className="grid md:grid-cols-3 gap-4 text-sm">
+                  <div>
+                    <span className="text-white/60">{lang === 'pt' ? 'Próximas Turmas' : lang === 'es' ? 'Próximas Clases' : lang === 'fr' ? 'Prochains Cours' : 'Next Intakes'}:</span>
+                    <div className="text-white font-medium">Jan, Mai, Set 2026</div>
+                  </div>
+                  <div>
+                    <span className="text-white/60">{lang === 'pt' ? 'Tuition (média)' : lang === 'es' ? 'Matrícula (media)' : lang === 'fr' ? 'Frais (moyenne)' : 'Tuition (avg)'}:</span>
+                    <div className="text-white font-medium">CAD $49,000 - $55,000</div>
+                  </div>
+                  <div>
+                    <span className="text-white/60">{lang === 'pt' ? 'Inglês Mínimo' : lang === 'es' ? 'Inglés Mínimo' : lang === 'fr' ? 'Anglais Minimum' : 'English Req.'}:</span>
+                    <div className="text-white font-medium">IELTS 6.5 / TOEFL 80</div>
+                  </div>
+                </div>
+              </div>
+
               <a
                 href="https://vfs.edu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-azimut-red hover:text-azimut-red/80 transition-colors"
+                className="inline-flex items-center gap-2 text-azimut-red hover:text-azimut-red/80 transition-colors mt-4"
               >
                 Ver site oficial da VFS →
               </a>
@@ -699,11 +718,33 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 ))}
               </div>
 
+              {/* Quick Facts VanArts */}
+              <div className="mt-6 p-4 bg-azimut-red/10 border border-azimut-red/30 rounded-lg">
+                <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-3">📋 {lang === 'pt' ? 'Informações Práticas' : lang === 'es' ? 'Información Práctica' : lang === 'fr' ? 'Informations Pratiques' : 'Quick Facts'}</h4>
+                <div className="grid md:grid-cols-3 gap-4 text-sm">
+                  <div>
+                    <span className="text-white/60">{lang === 'pt' ? 'Próximas Turmas' : lang === 'es' ? 'Próximas Clases' : lang === 'fr' ? 'Prochains Cours' : 'Next Intakes'}:</span>
+                    <div className="text-white font-medium">Fev, Mai, Set 2026</div>
+                  </div>
+                  <div>
+                    <span className="text-white/60">{lang === 'pt' ? 'Tuition (média)' : lang === 'es' ? 'Matrícula (media)' : lang === 'fr' ? 'Frais (moyenne)' : 'Tuition (avg)'}:</span>
+                    <div className="text-white font-medium">CAD $24,000 - $30,000</div>
+                  </div>
+                  <div>
+                    <span className="text-white/60">{lang === 'pt' ? 'Inglês Mínimo' : lang === 'es' ? 'Inglés Mínimo' : lang === 'fr' ? 'Anglais Minimum' : 'English Req.'}:</span>
+                    <div className="text-white font-medium">IELTS 6.0 / TOEFL 68</div>
+                  </div>
+                </div>
+                <p className="mt-3 text-xs text-white/50">
+                  💡 {lang === 'pt' ? 'VanArts é mais acessível financeiramente - ideal para quem quer qualidade com menor investimento!' : lang === 'es' ? '¡VanArts es más accesible financieramente - ideal para quien quiere calidad con menor inversión!' : lang === 'fr' ? 'VanArts est plus accessible financièrement - idéal pour qui veut la qualité avec moins d\'investissement!' : 'VanArts is more financially accessible - ideal for quality with lower investment!'}
+                </p>
+              </div>
+
               <a
                 href="https://www.vanarts.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-azimut-red hover:text-azimut-red/80 transition-colors"
+                className="inline-flex items-center gap-2 text-azimut-red hover:text-azimut-red/80 transition-colors mt-4"
               >
                 Ver site oficial da VanArts →
               </a>
@@ -790,6 +831,26 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               <p className="text-lg text-white/70 max-w-3xl mx-auto">
                 {t.azimutHelpDescription}
               </p>
+            </div>
+
+            {/* Azimut Stats - Prova Social */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+              <div className="p-6 bg-gradient-to-br from-azimut-red/20 to-azimut-red/5 rounded-xl border border-azimut-red/30 text-center">
+                <div className="text-4xl font-bold text-azimut-red mb-1">30+</div>
+                <div className="text-sm text-white/70">{lang === 'pt' ? 'Anos na Indústria' : lang === 'es' ? 'Años en la Industria' : lang === 'fr' ? 'Ans dans l\'Industrie' : 'Years in Industry'}</div>
+              </div>
+              <div className="p-6 bg-gradient-to-br from-azimut-red/20 to-azimut-red/5 rounded-xl border border-azimut-red/30 text-center">
+                <div className="text-4xl font-bold text-azimut-red mb-1">85%</div>
+                <div className="text-sm text-white/70">{lang === 'pt' ? 'Taxa de Aprovação' : lang === 'es' ? 'Tasa de Aprobación' : lang === 'fr' ? 'Taux d\'Approbation' : 'Approval Rate'}</div>
+              </div>
+              <div className="p-6 bg-gradient-to-br from-azimut-red/20 to-azimut-red/5 rounded-xl border border-azimut-red/30 text-center">
+                <div className="text-4xl font-bold text-azimut-red mb-1">100%</div>
+                <div className="text-sm text-white/70">{lang === 'pt' ? 'Gratuito' : lang === 'es' ? 'Gratuito' : lang === 'fr' ? 'Gratuit' : 'Free'}</div>
+              </div>
+              <div className="p-6 bg-gradient-to-br from-azimut-red/20 to-azimut-red/5 rounded-xl border border-azimut-red/30 text-center">
+                <div className="text-4xl font-bold text-azimut-red mb-1">🎯</div>
+                <div className="text-sm text-white/70">{lang === 'pt' ? 'Preparação Portfolio' : lang === 'es' ? 'Preparación Portfolio' : lang === 'fr' ? 'Préparation Portfolio' : 'Portfolio Prep'}</div>
+              </div>
             </div>
 
             <div className="grid md:grid-cols-5 gap-6">
