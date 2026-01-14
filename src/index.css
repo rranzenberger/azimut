@@ -115,6 +115,20 @@ html {
   mix-blend-mode: soft-light;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   SUBMENU NAVIGATION - Cor diferenciada do header
+   ═══════════════════════════════════════════════════════════════ */
+.submenu-nav {
+  /* Tema escuro: azul marinho escuro (#0a0e18) */
+  background-color: rgba(10, 14, 24, 0.98);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .submenu-nav {
+  /* Tema claro: bege claro (#d3cec3) */
+  background-color: rgba(211, 206, 195, 0.98);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
 
 /* Animação desabilitada - estava causando sobreposição horizontal */
 /* @keyframes grain {

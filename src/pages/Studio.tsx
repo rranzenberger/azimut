@@ -253,12 +253,11 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         {/* ═══════════════════════════════════════════════════════════
             NAVEGAÇÃO INTERNA - FIXO colado no header (position: fixed)
             ═══════════════════════════════════════════════════════════ */}
+        {/* Submenu - Cor diferenciada: azul marinho escuro (dark) / bege claro (light) */}
         <div 
-          className="fixed left-0 right-0 z-40 backdrop-blur-xl"
+          className="fixed left-0 right-0 z-40 backdrop-blur-xl submenu-nav"
           style={{
             top: '52px',
-            backgroundColor: 'var(--theme-bg-sticky)',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
             borderBottom: '2px solid rgba(201, 35, 55, 0.5)'
           }}
         >

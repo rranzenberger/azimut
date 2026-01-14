@@ -248,7 +248,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         description={seo.description}
         path="/work"
       />
-      <main className="relative pt-6 md:pt-8 pb-24 film-grain">
+      <main className="relative pb-24 film-grain">
         {/* Star background - FIXA (FUNDO - atrás de tudo) */}
         <StarBackground
           className="fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px]"
@@ -256,58 +256,65 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           opacity={0.5}
         />
 
-        {/* Hero Section - DENTRO do container */}
-        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
-          {/* Prefixo Narrativo - APENAS ESTE ANIMA */}
-          <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
-            <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
-              {lang === 'pt' ? 'NOSSO TRABALHO' : lang === 'es' ? 'NUESTRO TRABAJO' : lang === 'fr' ? 'NOTRE TRAVAIL' : 'OUR WORK'}
-            </span>
-          </div>
-          {/* Título - SEM animação */}
-          <h1 className="mb-4 font-handel uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)', fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1' }}>
-            {t(lang, 'navWork')}
-          </h1>
-          {/* Parágrafo - SEM animação */}
-          <p className="mb-8 max-w-3xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)', fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
-            {lang === 'pt' 
-              ? 'Projetos que transformam espaços, marcas e experiências. De museus olímpicos a curadoria de festivais internacionais, cada trabalho é uma oportunidade de criar narrativas imersivas que conectam pessoas e histórias de forma única.'
-              : lang === 'es'
-              ? 'Proyectos que transforman espacios, marcas y experiencias. De museos olímpicos a curaduría de festivales internacionales, cada trabajo es una oportunidad de crear narrativas inmersivas que conectan personas e historias de forma única.'
-              : lang === 'fr'
-              ? 'Projets qui transforment espaces, marques et expériences. De musées olympiques à la curation de festivals internationaux, chaque travail est une opportunité de créer des narrations immersives qui connectent personnes et histoires de manière unique.'
-              : 'Projects that transform spaces, brands and experiences. From Olympic museums to international festival curation, each work is an opportunity to create immersive narratives that uniquely connect people and stories.'}
-          </p>
-        </div>
-
         {/* ═══════════════════════════════════════════════════════════
-            NAVEGAÇÃO INTERNA - Sticky simples abaixo do header
+            NAVEGAÇÃO INTERNA - FIXO colado no header
             ═══════════════════════════════════════════════════════════ */}
         <div 
-          className="sticky z-40 backdrop-blur-xl"
+          className="fixed left-0 right-0 z-40 backdrop-blur-xl submenu-nav"
           style={{
-            top: '60px',
-            backgroundColor: 'var(--theme-bg-sticky)',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+            top: '52px',
             borderBottom: '2px solid rgba(201, 35, 55, 0.5)'
           }}
         >
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3">
-            <InternalNavigation
-              items={[
-                { id: 'all', label: lang === 'pt' ? 'Todos os Projetos' : lang === 'es' ? 'Todos los Proyectos' : lang === 'fr' ? 'Tous les Projets' : 'All Projects', href: '/work', icon: '✦' },
-                { id: 'museum', label: lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture', href: '/work?type=museum', icon: '🏛️' },
-                { id: 'festival', label: lang === 'pt' ? 'Festivais' : lang === 'es' ? 'Festivales' : lang === 'fr' ? 'Festivals' : 'Festivals', href: '/work?type=festival', icon: '🎪' },
-                { id: 'brand', label: lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events', href: '/work?type=brand', icon: '🎯' },
-                { id: 'vr-xr', label: lang === 'pt' ? 'VR & XR' : lang === 'es' ? 'VR & XR' : lang === 'fr' ? 'VR & XR' : 'VR & XR', href: '/work?type=vr-xr', icon: '🥽' }
-              ]}
-              lang={lang}
-            />
+            <nav className="flex flex-wrap gap-1 sm:gap-2">
+              {[
+                { id: 'all', label: lang === 'pt' ? 'Todos os Projetos' : 'All Projects', href: '/work', icon: '✦' },
+                { id: 'museum', label: lang === 'pt' ? 'Museus & Cultura' : 'Museums & Culture', href: '/work?type=museum', icon: '🏛️' },
+                { id: 'festival', label: lang === 'pt' ? 'Festivais' : 'Festivals', href: '/work?type=festival', icon: '🎪' },
+                { id: 'brand', label: lang === 'pt' ? 'Marcas & Eventos' : 'Brands & Events', href: '/work?type=brand', icon: '🎯' },
+                { id: 'vr-xr', label: 'VR & XR', href: '/work?type=vr-xr', icon: '🥽' }
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    if (item.href.startsWith('/')) {
+                      navigate(item.href.startsWith('/') ? `/${lang}${item.href}` : item.href)
+                    }
+                  }}
+                  className="flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide hover:text-azimut-red transition-colors"
+                  style={{ color: 'var(--theme-text-secondary)' }}
+                >
+                  <span>{item.icon}</span>
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </nav>
           </div>
         </div>
 
+        {/* Espaçador para compensar header + submenu fixos */}
+        <div style={{ height: '48px' }} />
+
         {/* Conteúdo - DENTRO do container */}
-        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 pt-6">
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
+          
+          {/* Hero Section */}
+          <div className="pt-6 md:pt-8 mb-8">
+            <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+              <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
+                {lang === 'pt' ? 'NOSSO TRABALHO' : 'OUR WORK'}
+              </span>
+            </div>
+            <h1 className="mb-4 font-handel uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)', fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1' }}>
+              {t(lang, 'navWork')}
+            </h1>
+            <p className="max-w-3xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)', fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
+              {lang === 'pt' 
+                ? 'Projetos que transformam espaços, marcas e experiências. De museus olímpicos a curadoria de festivais internacionais, cada trabalho é uma oportunidade de criar narrativas imersivas que conectam pessoas e histórias de forma única.'
+                : 'Projects that transform spaces, brands and experiences. From Olympic museums to international festival curation, each work is an opportunity to create immersive narratives that uniquely connect people and stories.'}
+            </p>
+          </div>
           {/* Filtros */}
           <div id="filters-section" className="mb-8 flex flex-wrap gap-4 items-center">
             {/* Busca */}

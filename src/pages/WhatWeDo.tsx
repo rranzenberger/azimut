@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { t, type Lang } from '../i18n'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
@@ -81,6 +81,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   const { trackInteraction } = useUserTracking()
   const seo = seoData.what[lang]
   const location = useLocation()
+  const navigate = useNavigate()
   
   // Ler filtro da URL (?filter=culture)
   const [activeFilter, setActiveFilter] = useState<FilterCategory>(() => {
@@ -158,7 +159,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
         lang={lang}
         path="/what"
       />
-      <main className="relative min-h-screen pt-6 md:pt-8 pb-24 film-grain">
+      <main className="relative min-h-screen pb-24 film-grain">
         {/* Background: Estrela da Azimut - FIXA (FUNDO - atrás de tudo) */}
         <StarBackground
           className="fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px]"
@@ -166,59 +167,67 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
           opacity={0.5}
         />
 
-        {/* Hero Section - DENTRO do container */}
-        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
-            {/* Prefixo Narrativo - APENAS ESTE ANIMA */}
-            <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
-              <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
-                {lang === 'pt' ? 'O QUE CRIAMOS' : lang === 'es' ? 'LO QUE CREAMOS' : lang === 'fr' ? 'CE QUE NOUS CRÉONS' : 'WHAT WE CREATE'}
-              </span>
-            </div>
-            {/* Título - SEM animação */}
-            <h1 className="font-handel uppercase tracking-[0.12em] mb-4" style={{ color: 'var(--theme-text)', fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1' }}>
-              {t(lang, 'navWhat')}
-            </h1>
-            {/* Parágrafo - SEM animação */}
-            <p className="max-w-3xl leading-relaxed mb-8" style={{ color: 'var(--theme-text-secondary)', fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
-              {lang === 'pt' 
-                ? 'Criamos experiências imersivas, interativas e cinematográficas de ponta a ponta. Da concepção à execução, integramos arte, tecnologia e narrativa para conectar pessoas, histórias e espaços.'
-                : lang === 'es' 
-                ? 'Creamos experiencias inmersivas, interactivas y cinematográficas de punta a punta. De la concepción a la ejecución, integramos arte, tecnología y narrativa para conectar personas, historias y espacios.'
-                : lang === 'fr' 
-                ? 'Nous créons des expériences immersives, interactives et cinématographiques de bout en bout. De la conception à l\'exécution, nous intégrons art, technologie et récit pour connecter personnes, histoires et espaces.'
-                : 'We create end-to-end immersive, interactive and cinematic experiences. From conception to execution, we integrate art, technology and narrative to connect people, stories and spaces.'}
-            </p>
-        </div>
-
         {/* ═══════════════════════════════════════════════════════════
-            NAVEGAÇÃO INTERNA - Sticky simples abaixo do header
+            NAVEGAÇÃO INTERNA - FIXO colado no header
             ═══════════════════════════════════════════════════════════ */}
         <div 
-          className="sticky z-40 backdrop-blur-xl"
+          className="fixed left-0 right-0 z-40 backdrop-blur-xl submenu-nav"
           style={{
-            top: '60px',
-            backgroundColor: 'var(--theme-bg-sticky)',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+            top: '52px',
             borderBottom: '2px solid rgba(201, 35, 55, 0.5)'
           }}
         >
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3">
-            <InternalNavigation
-              items={[
-                { id: 'all', label: lang === 'pt' ? 'Todas' : lang === 'es' ? 'Todas' : lang === 'fr' ? 'Tous' : 'All', href: '/what', icon: '✦' },
-                { id: 'culture', label: lang === 'pt' ? 'Cultura' : lang === 'es' ? 'Cultura' : lang === 'fr' ? 'Culture' : 'Culture', href: '/what?filter=culture', icon: '🎭' },
-                { id: 'brands', label: lang === 'pt' ? 'Marcas' : lang === 'es' ? 'Marcas' : lang === 'fr' ? 'Marques' : 'Brands', href: '/what?filter=brands', icon: '🎯' },
-                { id: 'production', label: lang === 'pt' ? 'Produção' : lang === 'es' ? 'Producción' : lang === 'fr' ? 'Production' : 'Production', href: '/what?filter=production', icon: '🎬' },
-                { id: 'technology', label: lang === 'pt' ? 'Tecnologia' : lang === 'es' ? 'Tecnología' : lang === 'fr' ? 'Technologie' : 'Technology', href: '/what?filter=technology', icon: '🚀' }
-              ]}
-              defaultActive={activeFilter}
-              lang={lang}
-            />
+            <nav className="flex flex-wrap gap-1 sm:gap-2">
+              {[
+                { id: 'all', label: lang === 'pt' ? 'Todas' : 'All', href: '/what', icon: '✦' },
+                { id: 'culture', label: lang === 'pt' ? 'Cultura' : 'Culture', href: '/what?filter=culture', icon: '🎭' },
+                { id: 'brands', label: lang === 'pt' ? 'Marcas' : 'Brands', href: '/what?filter=brands', icon: '🎯' },
+                { id: 'production', label: lang === 'pt' ? 'Produção' : 'Production', href: '/what?filter=production', icon: '🎬' },
+                { id: 'technology', label: lang === 'pt' ? 'Tecnologia' : 'Technology', href: '/what?filter=technology', icon: '🚀' }
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    const fullPath = `/${lang}${item.href}`
+                    navigate(fullPath)
+                  }}
+                  className="flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide hover:text-azimut-red transition-colors"
+                  style={{ color: 'var(--theme-text-secondary)' }}
+                >
+                  <span>{item.icon}</span>
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </nav>
           </div>
         </div>
 
+        {/* Espaçador para compensar header + submenu fixos */}
+        <div style={{ height: '48px' }} />
+
+        {/* Conteúdo - DENTRO do container */}
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
+          
+          {/* Hero Section */}
+          <div className="pt-6 md:pt-8 mb-8">
+            <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+              <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
+                {lang === 'pt' ? 'O QUE CRIAMOS' : 'WHAT WE CREATE'}
+              </span>
+            </div>
+            <h1 className="font-handel uppercase tracking-[0.12em] mb-4" style={{ color: 'var(--theme-text)', fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1' }}>
+              {t(lang, 'navWhat')}
+            </h1>
+            <p className="max-w-3xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)', fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
+              {lang === 'pt' 
+                ? 'Criamos experiências imersivas, interativas e cinematográficas de ponta a ponta. Da concepção à execução, integramos arte, tecnologia e narrativa para conectar pessoas, histórias e espaços.'
+                : 'We create end-to-end immersive, interactive and cinematic experiences. From conception to execution, we integrate art, technology and narrative to connect people, stories and spaces.'}
+            </p>
+          </div>
+
         {/* Grid de Serviços */}
-        <section className="relative pt-8 pb-12">
+        <section className="relative pb-12">
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             {/* GAP-Y-14 = 56px entre linhas de cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-14">
