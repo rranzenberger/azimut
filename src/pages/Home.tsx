@@ -230,11 +230,11 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           {/* ═══════════════════════════════════════════════════════════════
               TEMA CLARO: Centro escuro, bordas claras (bege)
               ═══════════════════════════════════════════════════════════════ */}
-          {/* Gradiente: Bordas transparentes (bege) → Centro escuro */}
+          {/* Gradiente: Bordas transparentes (bege) → Centro escuro - SUAVIZADO */}
           <div 
             className="absolute inset-0 dark:hidden block"
             style={{
-              background: 'linear-gradient(90deg, transparent 0%, rgba(5, 8, 20, 0.7) 10%, rgba(5, 8, 20, 0.95) 20%, rgba(5, 8, 20, 0.98) 50%, rgba(5, 8, 20, 0.95) 80%, rgba(5, 8, 20, 0.7) 90%, transparent 100%)'
+              background: 'linear-gradient(90deg, transparent 0%, rgba(5, 8, 20, 0.15) 3%, rgba(5, 8, 20, 0.4) 6%, rgba(5, 8, 20, 0.7) 10%, rgba(5, 8, 20, 0.9) 15%, rgba(5, 8, 20, 0.98) 25%, rgba(5, 8, 20, 0.98) 75%, rgba(5, 8, 20, 0.9) 85%, rgba(5, 8, 20, 0.7) 90%, rgba(5, 8, 20, 0.4) 94%, rgba(5, 8, 20, 0.15) 97%, transparent 100%)'
             }}
           />
           
