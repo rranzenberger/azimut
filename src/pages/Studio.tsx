@@ -269,10 +269,10 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         </div>
 
         {/* ═══════════════════════════════════════════════════════════
-            NAVEGAÇÃO INTERNA - Sticky simples abaixo do header
+            NAVEGAÇÃO INTERNA - FIXO abaixo do header (position: fixed)
             ═══════════════════════════════════════════════════════════ */}
         <div 
-          className="sticky z-40 backdrop-blur-xl"
+          className="fixed left-0 right-0 z-40 backdrop-blur-xl"
           style={{
             top: '60px',
             backgroundColor: 'var(--theme-bg-sticky)',
@@ -281,20 +281,38 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
           }}
         >
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3">
-            <InternalNavigation
-              items={[
-                { id: 'overview', label: lang === 'pt' ? 'Visão Geral' : lang === 'es' ? 'Visión General' : lang === 'fr' ? 'Vue d\'Ensemble' : 'Overview', href: '#overview', icon: '✦' },
-                { id: 'unique', label: lang === 'pt' ? 'Diferenciais' : lang === 'es' ? 'Diferenciales' : lang === 'fr' ? 'Différenciation' : 'What Makes Us Unique', href: '#unique', icon: '💡' },
-                { id: 'team', label: lang === 'pt' ? 'Equipe' : lang === 'es' ? 'Equipo' : lang === 'fr' ? 'Équipe' : 'Team', href: '#team', icon: '👥' },
-                { id: 'credentials', label: lang === 'pt' ? 'Credenciais' : lang === 'es' ? 'Credenciales' : lang === 'fr' ? 'Références' : 'Credentials', href: '#credentials', icon: '🏆' }
-              ]}
-              lang={lang}
-            />
+            <nav className="flex flex-wrap gap-1 sm:gap-2">
+              {[
+                { id: 'overview', label: lang === 'pt' ? 'Visão Geral' : 'Overview', icon: '✦' },
+                { id: 'unique', label: lang === 'pt' ? 'Diferenciais' : 'What Makes Us Unique', icon: '💡' },
+                { id: 'team', label: lang === 'pt' ? 'Equipe' : 'Team', icon: '👥' },
+                { id: 'credentials', label: lang === 'pt' ? 'Credenciais' : 'Credentials', icon: '🏆' }
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    const el = document.getElementById(item.id)
+                    if (el) {
+                      const top = el.getBoundingClientRect().top + window.scrollY - 120
+                      window.scrollTo({ top, behavior: 'smooth' })
+                    }
+                  }}
+                  className="flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide hover:text-azimut-red transition-colors"
+                  style={{ color: 'var(--theme-text-secondary)' }}
+                >
+                  <span>{item.icon}</span>
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </nav>
           </div>
         </div>
 
+        {/* Espaçador para compensar o submenu fixo */}
+        <div style={{ height: '52px' }} />
+
         {/* Conteúdo - DENTRO do container */}
-        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 pt-8">
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 pt-4">
 
           {/* Sobre (Overview) */}
           <section id="overview" className="section-container scroll-mt-32">
