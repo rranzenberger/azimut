@@ -268,7 +268,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           }}
         >
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3">
-            <nav className="flex flex-wrap gap-1 sm:gap-2">
+            <nav className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
               {[
                 { id: 'all', label: lang === 'pt' ? 'Todos os Projetos' : 'All Projects', href: '/work', icon: '✦' },
                 { id: 'museum', label: lang === 'pt' ? 'Museus & Cultura' : 'Museums & Culture', href: '/work?type=museum', icon: '🏛️' },

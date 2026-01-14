@@ -179,7 +179,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
           }}
         >
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3">
-            <nav className="flex flex-wrap gap-1 sm:gap-2">
+            <nav className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
               {[
                 { id: 'all', label: lang === 'pt' ? 'Todas' : 'All', href: '/what', icon: '✦' },
                 { id: 'culture', label: lang === 'pt' ? 'Cultura' : 'Culture', href: '/what?filter=culture', icon: '🎭' },
