@@ -574,8 +574,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </p>
             </div>
             
-            {/* Grid de Soluções COMPLETO - Baseado nos dados reais do site */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto mb-6">
+            {/* Grid de Soluções COMPLETO - Alinhado com pills abaixo */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full mb-6">
               {/* Integração Audiovisual */}
               <div className="glass-panel card-adaptive rounded-xl p-4 md:p-5 border border-white/10 hover:border-azimut-red/50 transition-all duration-300 group text-center relative overflow-hidden">
                 <div className="absolute top-2 right-2 text-2xl opacity-30 group-hover:opacity-50 transition-opacity">📽️</div>
@@ -665,26 +665,40 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </div>
             </div>
             
-            {/* Pills Expertise - Foco no REAL: Cultura + Tecnologia + Educação */}
-            <div className="flex flex-wrap justify-center gap-3">
-              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🎯</span> {lang === 'pt' ? 'Gramado VR (2017+)' : lang === 'es' ? 'Gramado VR (2017+)' : lang === 'fr' ? 'Gramado VR (2017+)' : 'Gramado VR (2017+)'}
-              </span>
-              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🏛️</span> {lang === 'pt' ? 'Rio Museu Olímpico' : lang === 'es' ? 'Museo Olímpico Río' : lang === 'fr' ? 'Musée Olympique Rio' : 'Rio Olympic Museum'}
-              </span>
-              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">⚡</span> {lang === 'pt' ? 'Autodesk (1996-2018)' : lang === 'es' ? 'Autodesk (1996-2018)' : lang === 'fr' ? 'Autodesk (1996-2018)' : 'Autodesk (1996-2018)'}
-              </span>
-              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🎓</span> {lang === 'pt' ? 'Centenas Formados' : lang === 'es' ? 'Cientos Formados' : lang === 'fr' ? 'Des Centaines Formés' : 'Hundreds Trained'}
-              </span>
-              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🌐</span> {lang === 'pt' ? 'Brasil ↔ Canadá' : lang === 'es' ? 'Brasil ↔ Canadá' : lang === 'fr' ? 'Brésil ↔ Canada' : 'Brazil ↔ Canada'}
-              </span>
-              <span className="pill-adaptive rounded-full border border-azimut-red/30 bg-azimut-red/5 px-4 py-2 font-sora text-[0.7rem] uppercase tracking-[0.2em] hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-105">
-                <span className="mr-2 opacity-60">🔬</span> {lang === 'pt' ? 'Pesquisa IA (1997+)' : lang === 'es' ? 'Investigación IA (1997+)' : lang === 'fr' ? 'Recherche IA (1997+)' : 'AI Research (1997+)'}
-              </span>
+            {/* Pills Expertise - Grid 4x2 com links para páginas relevantes */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full overflow-visible">
+              {/* Filmes 360° & VR → Soluções Cinema */}
+              <Link to={`/${lang}/what/cinema-audiovisual`} className="credential-pill rounded-xl px-5 py-3 font-sora text-[0.7rem] sm:text-[0.75rem] uppercase tracking-[0.08em] transition-all duration-300 text-center cursor-pointer no-underline">
+                <span className="mr-2">🎬</span>{lang === 'pt' ? 'Filmes 360° & VR' : lang === 'es' ? 'Películas 360° & VR' : lang === 'fr' ? 'Films 360° & VR' : '360° Films & VR'}
+              </Link>
+              {/* Exposições Imersivas → Soluções Museus */}
+              <Link to={`/${lang}/what/museus-exposicoes`} className="credential-pill rounded-xl px-5 py-3 font-sora text-[0.7rem] sm:text-[0.75rem] uppercase tracking-[0.08em] transition-all duration-300 text-center cursor-pointer no-underline">
+                <span className="mr-2">🏛️</span>{lang === 'pt' ? 'Exposições Imersivas' : lang === 'es' ? 'Exposiciones Inmersivas' : lang === 'fr' ? 'Expositions Immersives' : 'Immersive Exhibitions'}
+              </Link>
+              {/* Curadoria Gramado → Credenciais */}
+              <Link to={`/${lang}/studio/credibilidade`} className="credential-pill rounded-xl px-5 py-3 font-sora text-[0.7rem] sm:text-[0.75rem] uppercase tracking-[0.08em] transition-all duration-300 text-center cursor-pointer no-underline">
+                <span className="mr-2">🎯</span>{lang === 'pt' ? 'Curadoria Gramado VR & IA' : lang === 'es' ? 'Curaduría Gramado VR & IA' : lang === 'fr' ? 'Curation Gramado VR & IA' : 'Gramado VR & AI Curation'}
+              </Link>
+              {/* Edu Agent VFS & VanArts → Academy Vancouver */}
+              <Link to={`/${lang}/academy/vancouver`} className="credential-pill rounded-xl px-5 py-3 font-sora text-[0.7rem] sm:text-[0.75rem] uppercase tracking-[0.08em] transition-all duration-300 text-center cursor-pointer no-underline">
+                <span className="mr-2">🎓</span>{lang === 'pt' ? 'Edu Agent VFS & VanArts' : lang === 'es' ? 'Agente Edu VFS & VanArts' : lang === 'fr' ? 'Agent Édu VFS & VanArts' : 'Edu Agent VFS & VanArts'}
+              </Link>
+              {/* Brasil ↔ Canadá → Vancouver */}
+              <Link to={`/${lang}/academy/vancouver`} className="credential-pill rounded-xl px-5 py-3 font-sora text-[0.7rem] sm:text-[0.75rem] uppercase tracking-[0.08em] transition-all duration-300 text-center cursor-pointer no-underline">
+                <span className="mr-2">🌐</span>{lang === 'pt' ? 'Brasil ↔ Canadá' : lang === 'es' ? 'Brasil ↔ Canadá' : lang === 'fr' ? 'Brésil ↔ Canada' : 'Brazil ↔ Canada'}
+              </Link>
+              {/* IA Generativa → Soluções IA */}
+              <Link to={`/${lang}/what/ia-criativa`} className="credential-pill rounded-xl px-5 py-3 font-sora text-[0.7rem] sm:text-[0.75rem] uppercase tracking-[0.08em] transition-all duration-300 text-center cursor-pointer no-underline">
+                <span className="mr-2">🔬</span>{lang === 'pt' ? 'IA Generativa' : lang === 'es' ? 'IA Generativa' : lang === 'fr' ? 'IA Générative' : 'Generative AI'}
+              </Link>
+              {/* Autodesk → Credenciais */}
+              <Link to={`/${lang}/studio/credibilidade`} className="credential-pill rounded-xl px-5 py-3 font-sora text-[0.7rem] sm:text-[0.75rem] uppercase tracking-[0.08em] transition-all duration-300 text-center cursor-pointer no-underline">
+                <span className="mr-2">⚡</span>Autodesk (1996-2018)
+              </Link>
+              {/* Montagem Museu Olímpico → Projeto específico */}
+              <Link to={`/${lang}/work/museu-olimpico-rio`} className="credential-pill rounded-xl px-5 py-3 font-sora text-[0.7rem] sm:text-[0.75rem] uppercase tracking-[0.08em] transition-all duration-300 text-center cursor-pointer no-underline">
+                <span className="mr-2">🏆</span>{lang === 'pt' ? 'Montagem Museu Olímpico' : lang === 'es' ? 'Montaje Museo Olímpico' : lang === 'fr' ? 'Montage Musée Olympique' : 'Olympic Museum Setup'}
+              </Link>
             </div>
           </div>
         </section>
@@ -835,31 +849,28 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* SOBRE - Card Lateral (Conteúdo Preservado) */}
+        {/* SOBRE - Layout Assimétrico Premium (60/40) */}
         <section className="py-10 md:py-12">
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              {/* Texto Esquerdo - COM IMAGEM DE FUNDO (Placeholder) */}
-              <div className="glass-panel card-adaptive rounded-2xl overflow-hidden border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.35)] group relative">
-                {/* PLACEHOLDER: Imagem de fundo sutil (substituir no backoffice) */}
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-stretch">
+              {/* Texto Esquerdo - MAIS LARGO (3/5) */}
+              <div className="lg:col-span-3 glass-panel card-adaptive rounded-2xl overflow-hidden border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.35)] group relative">
+                {/* PLACEHOLDER: Imagem de fundo sutil */}
                 <div className="absolute inset-0 opacity-10 group-hover:opacity-15 transition-opacity duration-500">
                   <div className="absolute inset-0 bg-gradient-to-br from-azimut-red/20 via-transparent to-transparent" />
-                  {/* Ícone placeholder (será substituído por foto da equipe/estúdio no backoffice) */}
-                  <div className="absolute bottom-4 right-4 text-8xl opacity-20">
-                    🎬
-                  </div>
+                  <div className="absolute bottom-4 right-4 text-8xl opacity-20">🎬</div>
                 </div>
                 
-                {/* Conteúdo (sempre legível) */}
-                <div className="relative z-10 p-6 md:p-8">
+                {/* Conteúdo */}
+                <div className="relative z-10 p-6 md:p-8 h-full flex flex-col">
                   <h2 className="mb-4 font-handel text-3xl md:text-4xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-card-text)' }}>
                     {t(lang, 'cardTitle')}
                   </h2>
-                  <p className="mb-6 text-base md:text-lg leading-relaxed" style={{ color: 'var(--theme-card-text-secondary)' }}>
+                  <p className="mb-6 text-base md:text-lg leading-relaxed flex-grow" style={{ color: 'var(--theme-card-text-secondary)' }}>
                     {t(lang, 'cardBody')}
                   </p>
                   
-                  {/* Pillars */}
+                  {/* Pillars - Estilo OUTLINE BRANCO no card escuro */}
                   <div className="flex flex-wrap gap-3 mb-6">
                     {(Array.isArray(cmsContent?.page?.pillars) && cmsContent.page.pillars.length > 0
                       ? cmsContent.page.pillars 
@@ -871,7 +882,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     ).filter(Boolean).map((pillar: string, index: number) => (
                       <span 
                         key={index}
-                        className="pill-adaptive rounded-full border px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-azimut-red/50 hover:bg-azimut-red/10 hover:scale-105"
+                        className="rounded-full border-2 border-white/40 px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] text-white/90 transition-all duration-300 hover:border-white hover:bg-white/10 hover:scale-105"
                       >
                         {pillar}
                       </span>
@@ -884,25 +895,26 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 </div>
               </div>
               
-              {/* Card Direito - Tags */}
+              {/* Card Direito - Tags VERTICAIS (2/5) */}
               <div 
-                className="glass-panel backdrop-blur-xl card-dark-fixed relative rounded-2xl sm:rounded-3xl p-6 md:p-8 shadow-[0_24px_60px_rgba(0,0,0,0.6)] hover:shadow-[0_32px_80px_rgba(201,35,55,0.3)] transition-all duration-500 hover:scale-[1.02]" 
+                className="lg:col-span-2 glass-panel backdrop-blur-xl card-dark-fixed relative rounded-2xl sm:rounded-3xl p-6 md:p-8 shadow-[0_24px_60px_rgba(0,0,0,0.6)] hover:shadow-[0_32px_80px_rgba(201,35,55,0.3)] transition-all duration-500 hover:scale-[1.02] flex flex-col justify-center" 
                 style={{ 
                   background: 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)',
                   border: '1px solid rgba(255, 255, 255, 0.1)'
                 }}
               >
-                <h3 className="mb-4 font-sora text-sm uppercase tracking-[0.24em]" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>
+                <h3 className="mb-5 font-sora text-sm uppercase tracking-[0.24em]" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>
                   {lang === 'pt' ? 'Especialidades' : lang === 'es' ? 'Especialidades' : lang === 'fr' ? 'Spécialités' : 'Expertise'}
                 </h3>
-                <div className="flex flex-wrap gap-3">
-                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white hover:border-azimut-red hover:bg-azimut-red/10 transition-all duration-300">
+                {/* Tags em COLUNA - uma abaixo da outra */}
+                <div className="flex flex-col gap-3">
+                  <span className="rounded-xl border-2 border-white/30 px-5 py-3 font-sora text-[0.8rem] uppercase tracking-[0.15em] text-white text-center hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-[1.02]">
                     {t(lang, 'tag1')}
                   </span>
-                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white hover:border-azimut-red hover:bg-azimut-red/10 transition-all duration-300">
+                  <span className="rounded-xl border-2 border-white/30 px-5 py-3 font-sora text-[0.8rem] uppercase tracking-[0.15em] text-white text-center hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-[1.02]">
                     {t(lang, 'tag2')}
                   </span>
-                  <span className="pill-adaptive rounded-full border border-white/20 px-4 py-2 font-sora text-[0.75rem] uppercase tracking-[0.18em] text-white hover:border-azimut-red hover:bg-azimut-red/10 transition-all duration-300">
+                  <span className="rounded-xl border-2 border-white/30 px-5 py-3 font-sora text-[0.8rem] uppercase tracking-[0.15em] text-white text-center hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-[1.02]">
                     {t(lang, 'tag3')}
                   </span>
                 </div>

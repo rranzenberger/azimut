@@ -16,22 +16,58 @@ import StarBackground from '../components/StarBackground'
 const highlightKeywords = (text: string, lang: Lang): React.ReactNode => {
   if (typeof text !== 'string' || !text) return text
 
-  // PRIMÁRIAS: Tecnologias e focos principais (coral)
+  // ═══════════════════════════════════════════════════════════════
+  // CURADORIA DE ARTE - HIERARQUIA VISUAL PREMIUM
+  // ═══════════════════════════════════════════════════════════════
+  
+  // 🔴 PRIMÁRIAS (VERMELHO BOLD): Tecnologias core + termos de IMPACTO
+  // São as palavras que VENDEM, que o cliente procura
   const primary = [
-    'VR', 'AR', 'XR', 'AI', 'IA', 'BIM', '3D', '2D', '360', 'NFTs', 'Web3', 'VFX',
-    'educação', 'education', 'éducation', 'educación'
+    // Tecnologias Core - O QUE ENTREGAMOS
+    'VR', 'AR', 'XR', 'AI', 'IA', 'VFX', '3D', '2D', 'BIM', '360', 'NFTs', 'Web3', 'LED',
+    // Experiências de Impacto - COMO ENTREGAMOS  
+    'imersivo', 'imersiva', 'imersivas', 'immersive', 'inmersivo', 'inmersiva', 'imersivos',
+    'cinematográfico', 'cinematográfica', 'cinematográficas', 'cinematic', 'cinématographique', 'cinematográficos',
+    'interativo', 'interativa', 'interativas', 'interativos', 'interactive', 'interactif', 'interactives',
+    // Verticais Premium
+    'metaverso', 'metaverse', 'métavers', 'blockchain',
+    'games', 'jogos', 'gaming', 'jeux', 'juegos',
+    // Educação (vertical forte)
+    'educação', 'education', 'éducation', 'educación', 'treinamento', 'training', 'formação',
+    // Museologia e Cultura
+    'museológicas', 'museological', 'muséologiques', 'museológico',
+    // Arte e Direção (para cards de arte)
+    'direção', 'direction', 'criativa', 'criativo', 'creative', 'créatif',
+    // Cenografia e Espaços
+    'cenografia', 'scenography', 'scénographie', 'cenografias',
+    'virtuais', 'virtual', 'virtuel', 'virtuales',
+    // Qualidade alta
+    'alta', 'high', 'haute', 'alto', 'premium', 'high-quality'
   ]
   
-  // SECUNDÁRIAS: Conceitos diferenciadores (bege + semi-bold)
+  // 🟡 SECUNDÁRIAS (CREME DOURADO): Conceitos de valor, contexto
+  // Complementam a leitura, agregam significado
   const secondary = [
-    'immersive', 'imersivo', 'imersiva', 'imersivas', 'imersivos', 'inmersivo',
-    'interactive', 'interativo', 'interativa', 'interativas', 'interativos', 'interactif',
-    'cinematic', 'cinematográfico', 'cinematográfica', 'cinematográficas', 'cinématographique',
-    'experience', 'experiences', 'experiência', 'experiências', 'experiencias', 'expériences',
-    'narrativa', 'narrativas', 'narrative', 'narratives', 'récits',
-    'virtual', 'digital', 'creative', 'criativo', 'criativa',
-    'museums', 'museus', 'musées', 'museos', 'museum',
-    'brands', 'marcas', 'marques'
+    // Experiências e resultados
+    'experiência', 'experiências', 'experience', 'experiences', 'expériences',
+    'narrativa', 'narrativas', 'narrative', 'storytelling', 'récits',
+    // Qualificadores 
+    'inovação', 'innovation', 'inovador', 'innovative',
+    'expertise', 'técnica', 'technical', 'technique',
+    // Lugares e contexto
+    'museus', 'museums', 'musées', 'exposições', 'exhibitions',
+    'festivais', 'festivals', 'eventos', 'events', 'festival',
+    'marcas', 'brands', 'marques', 'brand',
+    'teatro', 'theatre', 'espetáculos', 'shows', 'spectacles',
+    // Produção e processo
+    'animação', 'animation', 'motion', 'animações',
+    'design', 'espacial', 'spatial',
+    'produção', 'production', 'pipeline', 'pipelines',
+    // Extras contextuais
+    'audiovisual', 'tecnologia', 'technology', 'technologie',
+    'conceito', 'concept', 'conception',
+    'identidade', 'identity', 'identité',
+    'coordenamos', 'coordinate', 'coordonnons'
   ]
 
   const allKeywords = [...primary, ...secondary]
@@ -48,18 +84,26 @@ const highlightKeywords = (text: string, lang: Lang): React.ReactNode => {
         const isSecondary = secondary.some(kw => kw.toLowerCase() === part.toLowerCase())
         
         if (isPrimary) {
-          // PRIMÁRIA: Coral médio - visível e elegante
+          // 🔴 PRIMÁRIA: Vermelho Azimut BOLD - máximo destaque
           return (
-            <span key={i} style={{ color: '#e8707e', fontWeight: 550 }}>
+            <span key={i} style={{ 
+              color: '#e63946', 
+              fontWeight: 700, 
+              letterSpacing: '0.02em',
+              textShadow: '0 0 20px rgba(201, 35, 55, 0.3)'
+            }}>
               {part}
             </span>
           )
         }
         
         if (isSecondary) {
-          // SECUNDÁRIA: Bege quente + semi-bold
+          // 🟡 SECUNDÁRIA: Dourado warm BOLD - destaque elegante
           return (
-            <span key={i} style={{ color: '#d4c4a8', fontWeight: 500 }}>
+            <span key={i} style={{ 
+              color: '#f4c97e', 
+              fontWeight: 600 
+            }}>
               {part}
             </span>
           )
@@ -303,8 +347,8 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                     
                     {/* Descrição - FORÇA BRUTA: cor inline para garantir legibilidade */}
                     <p 
-                      className="text-[0.8rem] leading-[1.7] transition-colors duration-300 flex-grow line-clamp-3"
-                      style={{ color: '#d3cec3' }}
+                      className="text-[0.82rem] leading-[1.75] transition-colors duration-300 flex-grow line-clamp-3"
+                      style={{ color: '#9a9590', fontWeight: 400 }}
                     >
                       {(() => {
                         const desc = getServiceShortDesc(service, lang)

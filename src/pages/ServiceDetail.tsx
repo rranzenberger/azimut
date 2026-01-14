@@ -402,9 +402,9 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
                   key={index}
                   className="relative group p-4 rounded-xl bg-gradient-to-br from-slate-900/60 to-slate-900/40 border border-azimut-red/20 hover:border-azimut-red/50 hover:shadow-[0_20px_60px_rgba(201,35,55,0.2)] transition-all overflow-hidden"
                 >
-                  {/* Número de fundo - opacidade ajustada */}
-                  <div className="absolute -top-2 -right-2 text-6xl font-bold text-azimut-red/10 font-handel group-hover:text-azimut-red/18 transition-colors">
-                    {String(index + 1).padStart(2, '0')}
+                  {/* Número de fundo - opacidade aumentada para destaque */}
+                  <div className="absolute -top-2 -right-2 text-6xl font-bold text-azimut-red/25 font-handel group-hover:text-azimut-red/40 transition-colors">
+                    {index + 1}
                   </div>
                   <div className="relative z-10 flex items-start gap-3">
                     <span className="text-azimut-red text-xl font-bold mt-0.5 group-hover:scale-110 transition-transform flex-shrink-0">✓</span>
@@ -434,9 +434,9 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
                   key={index} 
                   className="relative p-4 rounded-2xl bg-gradient-to-br from-slate-900/80 to-slate-900/65 border border-azimut-red/20 hover:border-azimut-red/50 hover:shadow-[0_20px_60px_rgba(201,35,55,0.2)] transition-all group overflow-hidden"
                 >
-                  {/* Número de fundo - opacidade ajustada para melhor legibilidade */}
-                  <div className="absolute -top-3 -right-3 text-7xl font-bold text-azimut-red/15 font-handel group-hover:text-azimut-red/25 transition-colors">
-                    {String(index + 1).padStart(2, '0')}
+                  {/* Número de fundo - opacidade aumentada para destaque premium */}
+                  <div className="absolute -top-3 -right-3 text-7xl font-bold text-azimut-red/30 font-handel group-hover:text-azimut-red/45 transition-colors">
+                    {index + 1}
                   </div>
                   
                   {/* Conteúdo */}
@@ -480,7 +480,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
                 {service.technologies.map((tech, index) => (
                   <span
                     key={index}
-                    className="group relative px-6 py-3 rounded-full text-sm font-semibold bg-gradient-to-r from-azimut-red/10 to-azimut-red/5 text-theme-text border border-azimut-red/30 hover:border-azimut-red hover:bg-azimut-red hover:text-black transition-all cursor-default hover:scale-105 hover:shadow-[0_8px_24px_rgba(201,35,55,0.3)]"
+                    className="tech-pill group relative px-6 py-3 rounded-full text-sm font-semibold transition-all cursor-default hover:scale-105"
                   >
                     {tech}
                   </span>

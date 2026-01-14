@@ -109,10 +109,17 @@ html {
   will-change: auto;
 }
 
-/* Granulação reduzida no tema claro */
+/* Granulação mais visível no tema escuro */
+[data-theme="dark"] .film-grain::before {
+  opacity: 0.28; /* BEM visível no escuro */
+  mix-blend-mode: screen; /* Screen para realçar no fundo escuro */
+  filter: contrast(1.4) brightness(1.3);
+}
+
+/* Granulação média no tema claro */
 [data-theme="light"] .film-grain::before {
-  opacity: 0.12;
-  mix-blend-mode: soft-light;
+  opacity: 0.22; /* Médio - visível sem exagero */
+  mix-blend-mode: soft-light; /* Soft-light para equilíbrio */
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -477,7 +484,31 @@ html[data-theme="dark"] [class*="bg-slate-8"],
 html[data-theme="dark"] [class*="bg-slate-8"] *,
 html[data-theme="dark"] [class*="bg-slate-9"],
 html[data-theme="dark"] [class*="bg-slate-9"] * {
-  color: #d3cec3 !important;
+  color: #ffffff !important; /* Branco puro para máxima legibilidade */
+}
+
+/* Texto descritivo nos cards - mais peso para legibilidade */
+html[data-theme="dark"] .card-adaptive p,
+html[data-theme="dark"] .card-dark-adaptive p,
+.card-adaptive p,
+.card-dark-adaptive p {
+  font-weight: 450; /* Peso médio para melhor leitura */
+  letter-spacing: 0.01em; /* Leve espaçamento */
+  line-height: 1.6; /* Altura de linha confortável */
+}
+
+/* Texto vermelho em BOLD para destaque máximo - AMBOS OS TEMAS */
+.text-azimut-red,
+.card-adaptive .text-azimut-red,
+.card-dark-adaptive .text-azimut-red,
+.card-dark-fixed .text-azimut-red,
+[data-theme="dark"] .text-azimut-red,
+[data-theme="light"] .text-azimut-red,
+[style*="color: rgb(201, 35, 55)"],
+[style*="color:#c92337"],
+[class*="text-red-"] {
+  font-weight: 600 !important; /* Semi-bold para destaque */
+  letter-spacing: 0.02em;
 }
 
 /* Títulos sempre brancos no tema escuro */
@@ -489,7 +520,7 @@ html[data-theme="dark"] .card-adaptive h3 {
 
 /* Forçar .text-slate-900 a ser claro no tema escuro */
 html[data-theme="dark"] .text-slate-900 {
-  color: #d3cec3 !important;
+  color: #ffffff !important; /* Bege mais claro */
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -514,7 +545,7 @@ html[data-theme="dark"] .text-slate-900 {
 /* Força texto claro (para fundos escuros) */
 .dark-bg-text,
 .dark-bg-text * {
-  color: #d3cec3 !important;
+  color: #ffffff !important;
 }
 
 .dark-bg-text-white,
@@ -542,7 +573,7 @@ html[data-theme="dark"] .text-slate-900 {
 .card-dark-fixed *,
 .card-dark-alt-adaptive,
 .card-dark-alt-adaptive * {
-  color: #d3cec3 !important;
+  color: #ffffff !important;
 }
 
 /* Títulos em cards escuros são brancos */
@@ -682,16 +713,16 @@ html[data-theme="dark"] .pill-adaptive {
 html[data-theme="light"] .card-dark-fixed,
 html[data-theme="light"] .card-dark-fixed * {
   --theme-text: #ffffff !important;
-  --theme-text-secondary: #d3cec3 !important;
-  --theme-card-text: #d3cec3 !important;
-  color: #d3cec3 !important;
+  --theme-text-secondary: #f0ece5 !important;
+  --theme-card-text: #ffffff !important;
+  color: #ffffff !important;
 }
 
 html[data-theme="dark"] .card-dark-fixed,
 html[data-theme="dark"] .card-dark-fixed * {
   --theme-text: #ffffff !important;
-  --theme-text-secondary: #d3cec3 !important;
-  color: #d3cec3 !important;
+  --theme-text-secondary: #f0ece5 !important;
+  color: #ffffff !important;
 }
 
 /* Link LinkedIn - FORÇA cor azul oficial (sobrescreve regras acima) */
@@ -716,45 +747,45 @@ a.linkedin-link:hover * {
 html[data-theme="light"] .card-dark-alt-adaptive,
 html[data-theme="light"] .card-dark-alt-adaptive * {
   --theme-text: #ffffff !important;
-  --theme-text-secondary: #d3cec3 !important;
-  color: #d3cec3 !important;
+  --theme-text-secondary: #f0ece5 !important;
+  color: #ffffff !important;
 }
 
 html[data-theme="dark"] .card-dark-alt-adaptive,
 html[data-theme="dark"] .card-dark-alt-adaptive * {
   --theme-text: #ffffff !important;
-  --theme-text-secondary: #d3cec3 !important;
-  color: #d3cec3 !important;
+  --theme-text-secondary: #f0ece5 !important;
+  color: #ffffff !important;
 }
 
 /* 3. Cards com .card-dark-adaptive (Modelo de Cocriação, Timeline) */
 html[data-theme="light"] .card-dark-adaptive,
 html[data-theme="light"] .card-dark-adaptive * {
   --theme-text: #ffffff !important;
-  --theme-text-secondary: #d3cec3 !important;
-  color: #d3cec3 !important;
+  --theme-text-secondary: #f0ece5 !important;
+  color: #ffffff !important;
 }
 
 html[data-theme="dark"] .card-dark-adaptive,
 html[data-theme="dark"] .card-dark-adaptive * {
   --theme-text: #ffffff !important;
-  --theme-text-secondary: #d3cec3 !important;
-  color: #d3cec3 !important;
+  --theme-text-secondary: #f0ece5 !important;
+  color: #ffffff !important;
 }
 
 /* 4. Elementos com background inline escuro (detecta por ancestral com estilo inline) */
 html[data-theme="light"] [style*="background: linear-gradient(135deg, #0a0f1a"],
 html[data-theme="light"] [style*="background: linear-gradient(135deg, #0a0f1a"] * {
   --theme-text: #ffffff !important;
-  --theme-text-secondary: #d3cec3 !important;
-  color: #d3cec3 !important;
+  --theme-text-secondary: #f0ece5 !important;
+  color: #ffffff !important;
 }
 
 html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"],
 html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"] * {
   --theme-text: #ffffff !important;
-  --theme-text-secondary: #d3cec3 !important;
-  color: #d3cec3 !important;
+  --theme-text-secondary: #f0ece5 !important;
+  color: #ffffff !important;
 }
 
 /* 5. Cards de Soluções (WhatWeDo) - REMOVIDO */
@@ -790,13 +821,13 @@ html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"] *
   --theme-bg-secondary: #0a0f1a;
   --theme-bg-sticky: rgba(10, 14, 23, 0.95); /* Background sticky com blur */
   --theme-text: #ffffff;
-  --theme-text-secondary: #d3cec3;
+  --theme-text-secondary: #f0ece5;
   --theme-text-muted: #8a8a8a;
   --theme-border: rgba(255, 255, 255, 0.1);
   --theme-card-bg: rgba(10, 15, 26, 0.8);
   --theme-overlay: rgba(5, 8, 20, 0.95);
   --pattern-opacity: 0.12;
-  --grain-opacity: 0.65;
+  --grain-opacity: 0.85; /* Granulação intensa no tema escuro */
   --gradient-overlay: linear-gradient(135deg, rgba(201, 35, 55, 0.35) 0%, transparent 50%, rgba(68, 27, 68, 0.25) 100%); /* GRADIENTE VERMELHO LATERAL MAIS VISÍVEL! */
   
   /* COR VERMELHA ADAPTATIVA */
@@ -865,10 +896,10 @@ html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"] *
   --theme-card-bg: rgba(30, 35, 45, 0.95); /* Card ESCURO no tema claro */
   --theme-overlay: rgba(245, 241, 232, 0.98); /* Overlay alinhado com novo fundo */
   --pattern-opacity: 0.06;
-  --grain-opacity: 0.25; /* Granulação mais visível mas ainda sutil no tema claro */
-  --gradient-overlay: linear-gradient(135deg, rgba(201, 35, 55, 0.08) 0%, transparent 50%, rgba(201, 35, 55, 0.05) 100%); /* Gradiente vermelho sutil mas perceptível */
+  --grain-opacity: 0.35; /* Granulação média no tema claro */
+  --gradient-overlay: linear-gradient(135deg, rgba(201, 35, 55, 0.08) 0%, transparent 45%, rgba(201, 35, 55, 0.06) 100%); /* Gradiente vermelho médio no tema claro */
   /* Cores específicas para tema claro */
-  --theme-card-text: #d3cec3;      /* Texto creme (mesma cor da logo clara) no card escuro - NÃO usar branco puro */
+  --theme-card-text: #ffffff;      /* Branco puro para máxima legibilidade */
   --theme-card-text-secondary: #cbd5e1; /* Cinza claro para descrições em cards escuros */
   --theme-card-border: rgba(211, 206, 195, 0.3);
   
@@ -1219,9 +1250,15 @@ body::after {
   will-change: auto;
 }
 
+[data-theme="dark"] #root::after {
+  mix-blend-mode: screen; /* Screen para realçar no fundo escuro */
+  opacity: 0.25; /* Granulação BEM visível no escuro */
+  filter: contrast(1.5) brightness(1.4); /* Mais contraste e brilho */
+}
+
 [data-theme="light"] #root::after {
-  mix-blend-mode: soft-light;
-  opacity: 0.08; /* Granulação bem sutil no tema claro */
+  mix-blend-mode: soft-light; /* Soft-light para equilíbrio */
+  opacity: 0.20; /* Granulação média - visível sem exagero */
 }
 
 /* Animação desabilitada - estava causando sobreposição horizontal */
@@ -1282,7 +1319,7 @@ body::after {
 
 /* Texto adaptativo - garante legibilidade */
 .text-adaptive {
-  color: #d3cec3;
+  color: #ffffff;
 }
 
 [data-theme="light"] .text-adaptive {
@@ -1363,6 +1400,129 @@ html {
 [data-theme="dark"] .nav-link-glow:hover::before {
   background: radial-gradient(ellipse at center, rgba(201, 35, 55, 0.18) 0%, rgba(201, 35, 55, 0.08) 50%, transparent 70%);
   opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TECH PILLS - Badges de Tecnologia Premium Adaptativos
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Base - Tema Escuro (padrão) */
+.tech-pill {
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0.15) 0%, rgba(201, 35, 55, 0.08) 100%);
+  color: #ffffff;
+  border: 1px solid rgba(201, 35, 55, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tech-pill:hover {
+  background: linear-gradient(135deg, #c92337 0%, #e84858 100%);
+  color: #ffffff;
+  border-color: #c92337;
+  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.4);
+}
+
+/* Tema Claro - Estilo Outline Premium */
+[data-theme="light"] .tech-pill {
+  background: rgba(201, 35, 55, 0.08);
+  color: #8b1a2a; /* Vermelho escuro para contraste */
+  border: 2px solid rgba(201, 35, 55, 0.5);
+  box-shadow: 0 2px 8px rgba(201, 35, 55, 0.1);
+  font-weight: 600;
+}
+
+[data-theme="light"] .tech-pill:hover {
+  background: #c92337;
+  color: #ffffff;
+  border-color: #c92337;
+  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.35);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BADGE/PILL GENÉRICO ADAPTATIVO - Usar em todo o site
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Pill vermelho adaptativo - funciona em ambos os temas */
+.pill-red-adaptive {
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0.15) 0%, rgba(201, 35, 55, 0.08) 100%);
+  color: #ffffff;
+  border: 1px solid rgba(201, 35, 55, 0.4);
+  transition: all 0.3s ease;
+}
+
+.pill-red-adaptive:hover {
+  background: #c92337;
+  color: #ffffff;
+  border-color: #c92337;
+  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.4);
+}
+
+[data-theme="light"] .pill-red-adaptive {
+  background: rgba(201, 35, 55, 0.06);
+  color: #7a1525; /* Vermelho escuro legível */
+  border: 2px solid rgba(201, 35, 55, 0.45);
+  font-weight: 600;
+}
+
+[data-theme="light"] .pill-red-adaptive:hover {
+  background: #c92337;
+  color: #ffffff;
+  border-color: #c92337;
+}
+
+/* Tag/Badge pequeno adaptativo */
+.tag-adaptive {
+  background: rgba(201, 35, 55, 0.12);
+  color: #f5f5f5;
+  border: 1px solid rgba(201, 35, 55, 0.3);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+[data-theme="light"] .tag-adaptive {
+  background: rgba(201, 35, 55, 0.08);
+  color: #6b1420;
+  border: 1px solid rgba(201, 35, 55, 0.35);
+  font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CREDENTIAL PILLS - Estilo OUTLINE PREMIUM
+   Minimalista, elegante, alta legibilidade
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Tema Escuro - Outline vermelho, fundo transparente */
+.credential-pill {
+  background: transparent;
+  color: #ffffff;
+  border: 2px solid rgba(201, 35, 55, 0.6);
+  font-weight: 600;
+  letter-spacing: 0.02em; /* Reduzido para caber mais texto */
+  overflow: visible; /* Não cortar texto */
+}
+
+.credential-pill:hover {
+  background: #c92337;
+  color: #ffffff;
+  border-color: #c92337;
+  box-shadow: 0 4px 20px rgba(201, 35, 55, 0.4);
+  overflow: visible; /* Garantir que não corta */
+}
+
+/* Tema Claro - Outline vermelho, fundo transparente, texto escuro */
+[data-theme="light"] .credential-pill {
+  background: transparent;
+  color: #1a1a1a; /* Preto - máximo contraste */
+  border: 2px solid rgba(201, 35, 55, 0.5);
+  font-weight: 700; /* Mais pesado para legibilidade */
+}
+
+[data-theme="light"] .credential-pill:hover {
+  background: #c92337;
+  color: #ffffff;
+  border-color: #c92337;
+  box-shadow: 0 4px 20px rgba(201, 35, 55, 0.35);
 }
 
 /* Efeito magnético - aplicado via JS */
@@ -1603,7 +1763,7 @@ html {
 
 .team-card p,
 .team-card-content p {
-  color: #d3cec3 !important;
+  color: #ffffff !important;
 }
 
 .team-card .text-theme-text-secondary,
@@ -1627,7 +1787,7 @@ html {
 
 [data-theme="light"] .team-card p,
 [data-theme="light"] .team-card-content p {
-  color: #d3cec3 !important;
+  color: #ffffff !important;
 }
 
 [data-theme="light"] .team-card .text-theme-text-secondary,
@@ -2459,7 +2619,7 @@ select.dropdown-azimut::-ms-expand {
   border: 1px solid rgba(201, 35, 55, 0.3);
   background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
   backdrop-filter: blur(12px);
-  color: #d3cec3; /* Texto creme para contraste no fundo escuro */
+  color: #ffffff; /* Texto creme para contraste no fundo escuro */
 }
 
 /* Card escuro adaptativo - escuro no dark, claro no light */
@@ -2473,7 +2633,7 @@ select.dropdown-azimut::-ms-expand {
 [data-theme="light"] .card-dark-adaptive {
   border: 1px solid rgba(201, 35, 55, 0.3);
   background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
-  color: #d3cec3; /* Texto creme para contraste */
+  color: #ffffff; /* Texto creme para contraste */
 }
 
 /* Card escuro alternativo (gradiente mais escuro) */
@@ -2487,7 +2647,7 @@ select.dropdown-azimut::-ms-expand {
 [data-theme="light"] .card-dark-alt-adaptive {
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: linear-gradient(135deg, #1a1f2e 0%, #252a38 100%);
-  color: #d3cec3; /* Texto creme para contraste */
+  color: #ffffff; /* Texto creme para contraste */
 }
 
 /* Card escuro fixo - sempre mantém fundo azul escuro, mesmo no tema claro */
@@ -2496,14 +2656,14 @@ select.dropdown-azimut::-ms-expand {
   border: 1px solid rgba(201, 35, 55, 0.3);
   background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
   transition: all 0.3s ease;
-  color: var(--theme-card-text, #d3cec3); /* Texto creme no tema claro */
+  color: var(--theme-card-text, #f5f3ef); /* Texto claro para legibilidade */
 }
 
 [data-theme="light"] .card-dark-fixed {
   /* Mantém fundo azul escuro mesmo no tema claro */
   border: 1px solid rgba(201, 35, 55, 0.3);
   background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
-  color: #d3cec3; /* Texto creme para contraste no fundo escuro */
+  color: #ffffff; /* Texto creme para contraste no fundo escuro */
 }
 
 /* REMOVIDA A REGRA DUPLICADA E CONFLITANTE */
@@ -2525,7 +2685,7 @@ select.dropdown-azimut::-ms-expand {
 .badge-red-bg {
   background: rgba(201, 35, 55, 0.1);
   border: 1px solid rgba(201, 35, 55, 0.3);
-  color: #d3cec3 !important; /* Creme da logo */
+  color: #ffffff !important; /* Creme da logo */
 }
 
 /* Badge status adaptativo */
@@ -2560,7 +2720,7 @@ select.dropdown-azimut::-ms-expand {
 
 [data-theme="light"] .card-adaptive * {
   /* Textos CLAROS em cards escuros no tema claro (inversão para contraste) */
-  color: #d3cec3;
+  color: #ffffff;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -2570,7 +2730,7 @@ select.dropdown-azimut::-ms-expand {
 
 /* Texto em cards escuros (tema claro) - PRINCIPAL */
 .text-theme-card-text {
-  color: var(--theme-card-text, #d3cec3) !important;
+  color: var(--theme-card-text, #f5f3ef) !important;
 }
 
 /* Texto em cards escuros (tema claro) - SECUNDÁRIO */
@@ -2607,7 +2767,14 @@ select.dropdown-azimut::-ms-expand {
 [data-theme="light"] .card-adaptive p,
 [data-theme="light"] .card-adaptive span,
 [data-theme="light"] .card-adaptive div {
-  color: #d3cec3; /* Texto creme para contraste no fundo escuro */
+  color: #ffffff; /* Branco puro para contraste no fundo escuro */
+}
+
+/* Texto descritivo com mais peso - tema claro */
+[data-theme="light"] .card-adaptive p {
+  font-weight: 450;
+  letter-spacing: 0.01em;
+  line-height: 1.6;
 }
 
 /* Texto com gradiente - vermelho puro Azimut */
