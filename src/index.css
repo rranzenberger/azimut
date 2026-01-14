@@ -2753,6 +2753,64 @@ select.dropdown-azimut::-ms-expand {
   color: var(--theme-text-muted, #1e3a5f) !important;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   PÁGINA VANCOUVER - Contraste tema claro
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Títulos principais - preto no tema claro */
+[data-theme="light"] .vancouver-page h1,
+[data-theme="light"] .vancouver-page h2,
+[data-theme="light"] .vancouver-page h3 {
+  color: #0d0d0d !important;
+}
+
+/* Textos descritivos - cinza escuro no tema claro */
+[data-theme="light"] .vancouver-page .text-white\/70,
+[data-theme="light"] .vancouver-page .text-white\/60,
+[data-theme="light"] .vancouver-page .text-white\/50 {
+  color: #4a4a4a !important;
+}
+
+/* Textos principais - preto no tema claro */
+[data-theme="light"] .vancouver-page .text-white {
+  color: #1a1a1a !important;
+}
+
+/* Manter branco em badges com background colorido */
+[data-theme="light"] .vancouver-page .bg-azimut-red .text-white,
+[data-theme="light"] .vancouver-page .bg-azimut-red\/80 .text-white,
+[data-theme="light"] .vancouver-page .bg-purple-600\/80 .text-white,
+[data-theme="light"] .vancouver-page .bg-green-600\/20 .text-green-400,
+[data-theme="light"] .vancouver-page [class*="bg-azimut-red"] .text-white {
+  color: #ffffff !important;
+}
+
+/* Cards com fundo escuro no tema claro - manter texto branco */
+[data-theme="light"] .vancouver-page .card-dark .text-white,
+[data-theme="light"] .vancouver-page .card-adaptive .text-white {
+  color: #ffffff !important;
+}
+
+/* Tabela comparativa - manter legível */
+[data-theme="light"] .vancouver-page table td,
+[data-theme="light"] .vancouver-page table th {
+  color: #1a1a1a !important;
+}
+
+[data-theme="light"] .vancouver-page table .text-azimut-red {
+  color: #c92337 !important;
+}
+
+/* Seção de empresas - texto escuro no tema claro */
+[data-theme="light"] .vancouver-page .company-logos .text-white\/70 {
+  color: #4a4a4a !important;
+}
+
+/* Banner internacional - manter legível */
+[data-theme="light"] .vancouver-page .international-banner .text-white {
+  color: #1a1a1a !important;
+}
+
 /* REMOVIDO: estava forçando texto vermelho em botões vermelhos no tema claro */
 /* [data-theme="light"] .card-adaptive .text-azimut-red,
 [data-theme="light"] .card-adaptive .bg-azimut-red {

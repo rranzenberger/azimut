@@ -426,7 +426,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
       <VancouverPageSchema lang={lang} />
       <VancouverFAQSchema lang={lang} faqs={t.faqs} />
 
-      <div className="min-h-screen">
+      <div className="min-h-screen vancouver-page">
         {/* Hero Section */}
         <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
           {/* Background Image */}
@@ -506,9 +506,9 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* Alumni Work At - Logos Visuais */}
-        <section className="py-12 border-y border-white/5 dark:border-white/5" style={{ background: 'var(--theme-bg-secondary)' }}>
+        <section className="py-12 border-y border-white/5 dark:border-white/5 company-logos" style={{ background: 'var(--theme-bg-secondary)' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="text-center text-sm text-white/50 uppercase tracking-[0.3em] mb-8">
+            <p className="text-center text-sm text-theme-light-secondary uppercase tracking-[0.3em] mb-8">
               {lang === 'pt' ? '🎬 Nossos alunos trabalham em' : lang === 'es' ? '🎬 Nuestros alumnos trabajan en' : lang === 'fr' ? '🎬 Nos étudiants travaillent chez' : '🎬 Our students work at'}
             </p>
             <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
@@ -528,7 +528,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg border border-white/10 hover:border-azimut-red/50 hover:bg-white/10 transition-all duration-300 group"
                 >
                   <span className="text-2xl group-hover:scale-110 transition-transform">{company.emoji}</span>
-                  <span className="text-white/70 font-semibold group-hover:text-white transition-colors">{company.name}</span>
+                  <span className="text-theme-light-secondary font-semibold group-hover:text-azimut-red transition-colors">{company.name}</span>
                 </div>
               ))}
             </div>
@@ -536,11 +536,11 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* International Students Banner */}
-        <section className="py-8 bg-gradient-to-r from-azimut-red/20 via-azimut-red/10 to-azimut-red/20 border-y border-azimut-red/20">
+        <section className="py-8 bg-gradient-to-r from-azimut-red/20 via-azimut-red/10 to-azimut-red/20 border-y border-azimut-red/20 international-banner">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-wrap justify-center items-center gap-4 text-center">
               <span className="text-3xl">🌍</span>
-              <p className="text-white font-medium">
+              <p className="text-theme-light-main font-medium">
                 {lang === 'pt' ? 'Atendemos alunos de todo o mundo:' : lang === 'es' ? 'Atendemos estudiantes de todo el mundo:' : lang === 'fr' ? 'Nous accueillons des étudiants du monde entier:' : 'We serve students from around the world:'}
               </p>
               <div className="flex gap-2 text-2xl">
