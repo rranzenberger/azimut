@@ -3207,7 +3207,8 @@ select.dropdown-azimut::-ms-expand {
 }
 
 [data-theme="light"] .section-subtitle-vancouver {
-  color: #4a4a4a !important; /* Cinza escuro no tema claro */
+  color: rgba(255, 255, 255, 0.9) !important; /* Branco no tema claro - igual ao escuro */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 /* =========================
