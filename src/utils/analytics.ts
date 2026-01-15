@@ -483,13 +483,60 @@ export async function calculateLeadScore(visitorFingerprint: string): Promise<Le
     });
 
     if (response.ok) {
-      return await response.json();
+      const data = await response.json();
+      // Validar estrutura da resposta
+      if (data.score !== undefined && data.level && data.factors) {
+        return data;
+      }
+    }
+  } catch (error) {
+    // Silencioso - usar fallback
+  }
+
+  // Fallback: buscar dados de tracking e calcular score básico
+  try {
+    const trackingResponse = await fetch(`${API_URL}/track/visitor/${visitorFingerprint}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (trackingResponse.ok) {
+      const trackingData = await trackingResponse.json();
+      
+      // Calcular score baseado em tracking
+      let score = 0;
+      const factors = {
+        pagesVisited: trackingData.pagesVisited || 0,
+        timeSpent: trackingData.timeSpent || 0,
+        videosWatched: trackingData.videosWatched || 0,
+        formsStarted: trackingData.formsStarted || 0,
+        formsCompleted: trackingData.formsCompleted || 0,
+        scrollDepth: trackingData.scrollDepth || 0,
+        ctaClicks: trackingData.ctaClicks || 0,
+      };
+
+      // Cálculo de score
+      score += factors.pagesVisited * 5;
+      score += Math.min(factors.timeSpent / 10, 30); // Max 30 pontos
+      score += factors.videosWatched * 10;
+      score += factors.formsStarted * 15;
+      score += factors.formsCompleted * 30;
+      score += factors.scrollDepth * 0.5;
+      score += factors.ctaClicks * 5;
+
+      score = Math.min(Math.round(score), 100);
+
+      return {
+        score,
+        level: score >= 70 ? 'hot' : score >= 40 ? 'warm' : 'cold',
+        factors,
+      };
     }
   } catch (error) {
     // Silencioso
   }
 
-  // Fallback: score básico
+  // Fallback final: score zero
   return {
     score: 0,
     level: 'cold',
