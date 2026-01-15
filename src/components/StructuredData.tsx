@@ -8,7 +8,7 @@ import React from 'react'
 import { Helmet } from 'react-helmet-async'
 
 interface StructuredDataProps {
-  type: 'Organization' | 'EducationalOrganization' | 'Course' | 'Event' | 'FAQPage' | 'Article' | 'LocalBusiness' | 'Service'
+  type: 'Organization' | 'EducationalOrganization' | 'Course' | 'Event' | 'FAQPage' | 'Article' | 'LocalBusiness' | 'Service' | 'BreadcrumbList'
   data: any
 }
 

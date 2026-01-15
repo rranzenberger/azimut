@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useParams, Navigate } from 'react-router-dom'
 import { type Lang } from '../i18n'
-import { getServiceBySlug, getServiceTitle, getServiceShortDesc, getServiceLongDesc, getServiceDeliverables, getServiceProcess } from '../data/servicesData'
+import { getServiceBySlug, getServiceTitle, getServiceShortDesc, getServiceLongDesc, getServiceDeliverables, getServiceProcess, servicesData } from '../data/servicesData'
 import { getServiceFAQs, hasServiceFAQs } from '../data/serviceFAQs'
 import LangLink from '../components/LangLink'
 import SEO from '../components/SEO'
@@ -340,6 +340,40 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
     }
   }
 
+  // Breadcrumb Schema para SEO (Google identifica navegação)
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: lang === 'pt' ? 'Home' : lang === 'en' ? 'Home' : lang === 'es' ? 'Inicio' : 'Accueil',
+        item: `https://azmt.com.br/${lang}`
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: lang === 'pt' ? 'Soluções' : lang === 'en' ? 'Solutions' : lang === 'es' ? 'Soluciones' : 'Solutions',
+        item: `https://azmt.com.br/${lang}/what`
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: title,
+        item: `https://azmt.com.br/${lang}/what/${slug}`
+      }
+    ]
+  }
+
+  // Serviços relacionados para internal linking (Google identifica relacionamento)
+  const relatedServices = servicesData
+    .filter(s => s.slug !== slug && (
+      s.projectCategories.some(cat => service.projectCategories.includes(cat)) ||
+      s.technologies.some(tech => service.technologies.includes(tech))
+    ))
+    .slice(0, 4)
+
   return (
     <>
       <SEO
@@ -355,6 +389,9 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
       
       {/* Service Schema */}
       <StructuredData type="Service" data={serviceSchema} />
+      
+      {/* Breadcrumb Schema para navegação (Google identifica estrutura) */}
+      <StructuredData type="BreadcrumbList" data={breadcrumbSchema} />
       
       <main className="py-16 md:py-20" style={{ position: 'relative', zIndex: 1 }}>
         {/* Star background - FIXA (padronizada com páginas principais) */}
@@ -625,10 +662,52 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
             </section>
           )}
 
+          {/* Serviços Relacionados - INTERNAL LINKING para SEO */}
+          {relatedServices.length > 0 && (
+            <section 
+              ref={(el) => { sectionRefs.current[4] = el }}
+              className="section-container opacity-0"
+            >
+              <span className="section-eyebrow">
+                <span>🔗</span>
+                {lang === 'pt' ? 'SERVIÇOS RELACIONADOS' : lang === 'es' ? 'SERVICIOS RELACIONADOS' : lang === 'fr' ? 'SERVICES CONNEXES' : 'RELATED SERVICES'}
+              </span>
+              <h2 className="section-title">
+                {lang === 'pt' ? 'Serviços Relacionados' : lang === 'es' ? 'Servicios Relacionados' : lang === 'fr' ? 'Services Connexes' : 'Related Services'}
+              </h2>
+              <p className="text-center text-theme-text-secondary mb-8 max-w-2xl mx-auto">
+                {lang === 'pt' ? 'Explore outros serviços que podem complementar seu projeto:' : lang === 'es' ? 'Explora otros servicios que pueden complementar tu proyecto:' : lang === 'fr' ? 'Explorez d\'autres services qui peuvent compléter votre projet:' : 'Explore other services that can complement your project:'}
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {relatedServices.map((related) => {
+                  const relatedTitle = getServiceTitle(related, lang)
+                  const relatedShortDesc = getServiceShortDesc(related, lang)
+                  return (
+                    <LangLink
+                      key={related.slug}
+                      to={`/what/${related.slug}`}
+                      onClick={() => trackInteraction('service_related_click', { from: slug, to: related.slug })}
+                      className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-slate-900/60 to-slate-900/40 border border-azimut-red/20 hover:border-azimut-red/50 transition-all p-6 hover:scale-[1.02]"
+                    >
+                      <div className="text-3xl mb-3">{related.icon}</div>
+                      <h3 className="font-handel text-lg uppercase tracking-wide mb-2 text-theme-card-text group-hover:text-azimut-red transition-colors">
+                        {relatedTitle}
+                      </h3>
+                      <p className="text-sm text-theme-card-text-secondary line-clamp-3">
+                        {relatedShortDesc}
+                      </p>
+                      <span className="absolute bottom-4 right-4 text-azimut-red text-xl opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                    </LangLink>
+                  )
+                })}
+              </div>
+            </section>
+          )}
+
           {/* Projetos relacionados - Apenas para outros serviços */}
           {slug !== 'educacao-treinamento' && slug !== 'consultoria-estrategia' && (
             <section 
-              ref={(el) => { sectionRefs.current[4] = el }}
+              ref={(el) => { sectionRefs.current[5] = el }}
               className="section-container opacity-0"
             >
               <span className="section-eyebrow">
