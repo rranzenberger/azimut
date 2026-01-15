@@ -2972,7 +2972,8 @@ select.dropdown-azimut::-ms-expand {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* Forçar variáveis CSS na página Vancouver a serem brancas no tema claro */
+/* Forçar variáveis CSS na página Vancouver a serem brancas em AMBOS os temas */
+[data-theme="dark"] .vancouver-page,
 [data-theme="light"] .vancouver-page {
   --theme-text: #ffffff !important;
   --theme-text-secondary: rgba(255, 255, 255, 0.9) !important;
