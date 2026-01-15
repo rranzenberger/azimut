@@ -488,7 +488,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
             </div>
 
             {/* Stats */}
-            <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="mt-10 mb-16 grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
                 { value: '90%+', label: lang === 'pt' ? 'Empregabilidade' : lang === 'es' ? 'Empleabilidad' : lang === 'fr' ? 'Employabilité' : 'Employability' },
                 { value: lang === 'pt' ? '1 ano' : lang === 'es' ? '1 año' : lang === 'fr' ? '1 an' : '1 year', label: lang === 'pt' ? 'Duração' : lang === 'es' ? 'Duración' : lang === 'fr' ? 'Durée' : 'Duration' },
