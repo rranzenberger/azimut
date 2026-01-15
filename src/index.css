@@ -2931,9 +2931,21 @@ select.dropdown-azimut::-ms-expand {
 
 /* Sobrescrever var(--theme-text) na página Vancouver - SEMPRE branco no tema claro */
 [data-theme="light"] .vancouver-page [style*="var(--theme-text)"],
-[data-theme="light"] .vancouver-page [style*="--theme-text"] {
+[data-theme="light"] .vancouver-page [style*="--theme-text"],
+[data-theme="light"] .vancouver-page [style*="var(--theme-card-text)"],
+[data-theme="light"] .vancouver-page [style*="--theme-card-text"],
+[data-theme="light"] .vancouver-page [style*="var(--theme-text-secondary)"],
+[data-theme="light"] .vancouver-page [style*="--theme-text-secondary"] {
   color: #ffffff !important;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Forçar variáveis CSS na página Vancouver a serem brancas no tema claro */
+[data-theme="light"] .vancouver-page {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: rgba(255, 255, 255, 0.9) !important;
+  --theme-card-text: #ffffff !important;
+  --theme-card-text-secondary: rgba(255, 255, 255, 0.8) !important;
 }
 
 [data-theme="light"] .vancouver-page h1,
