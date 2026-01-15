@@ -556,14 +556,19 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         
         <div className="space-y-6">
           {t.comparison.cities.map((city: any, i: number) => (
-            <div key={i} className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+            <div 
+              key={i} 
+              className={`comparison-card rounded-2xl p-6 ${
+                i === 0 ? 'comparison-card-first' : ''
+              }`}
+            >
               <div className="flex items-center justify-between mb-4">
-                <h4 className="text-2xl font-black text-white">{city.name}</h4>
-                <div className="text-3xl font-black text-white">{city.total}%</div>
+                <h4 className="comparison-card-title text-2xl font-black">{city.name}</h4>
+                <div className="comparison-card-score text-3xl font-black">{city.total}%</div>
               </div>
-              <div className="h-4 bg-white/10 rounded-full overflow-hidden">
+              <div className="h-4 bg-white/10 rounded-full overflow-hidden comparison-card-bar-bg">
                 <div
-                  className={`h-full rounded-full ${
+                  className={`h-full rounded-full transition-all duration-500 ${
                     i === 0 ? 'bg-green-500' : 'bg-gray-500'
                   }`}
                   style={{ width: `${city.total}%` }}

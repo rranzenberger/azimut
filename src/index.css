@@ -2939,7 +2939,82 @@ select.dropdown-azimut::-ms-expand {
 }
 
 /* =========================
-   7. SCHOOL CARDS VFS/VANARTS - Fundo escuro SEMPRE
+   7. COMPARISON CARDS - Tabela comparativa adapta ao tema
+   ========================= */
+
+/* Cards de comparação - tema escuro (translúcidos) */
+.comparison-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.comparison-card:hover {
+  border-color: rgba(201, 35, 55, 0.5);
+  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.2);
+}
+
+/* Primeiro card (Vancouver) - destaque verde */
+.comparison-card-first {
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.comparison-card-first:hover {
+  border-color: rgba(34, 197, 94, 0.6);
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);
+}
+
+/* Textos nos cards de comparação - tema escuro */
+.comparison-card-title,
+.comparison-card-score {
+  color: #ffffff;
+}
+
+.comparison-card-bar-bg {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* =========================
+   TEMA CLARO - Cards de comparação com fundo sólido escuro
+   ========================= */
+
+[data-theme="light"] .comparison-card {
+  background: linear-gradient(135deg, #1a1f2e 0%, #2a2f3e 100%);
+  backdrop-filter: blur(16px);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .comparison-card:hover {
+  border-color: rgba(201, 35, 55, 0.6);
+  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.25);
+  transform: translateY(-2px);
+}
+
+[data-theme="light"] .comparison-card-first {
+  background: linear-gradient(135deg, #0a2a1a 0%, #1a3a2a 100%);
+  border-color: rgba(34, 197, 94, 0.5);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.15);
+}
+
+[data-theme="light"] .comparison-card-first:hover {
+  border-color: rgba(34, 197, 94, 0.7);
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);
+}
+
+/* Textos SEMPRE brancos nos cards de comparação (ambos os temas) */
+[data-theme="light"] .comparison-card-title,
+[data-theme="light"] .comparison-card-score {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .comparison-card-bar-bg {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* =========================
+   8. SCHOOL CARDS VFS/VANARTS - Fundo escuro SEMPRE
    ========================= */
 
 /* School cards sempre têm fundo escuro e texto branco */
