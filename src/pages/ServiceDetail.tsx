@@ -5,6 +5,7 @@ import { getServiceBySlug, getServiceTitle, getServiceShortDesc, getServiceLongD
 import { getServiceFAQs, hasServiceFAQs } from '../data/serviceFAQs'
 import LangLink from '../components/LangLink'
 import SEO from '../components/SEO'
+import StructuredData from '../components/StructuredData'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { trackPageView } from '../utils/analytics'
 import ServiceHero from '../components/ServiceHero'
@@ -302,14 +303,58 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
 
   const t = translations[lang]
 
+  // FAQ Schema para SEO (Rich Snippets)
+  const faqs = hasServiceFAQs(slug) ? getServiceFAQs(slug, lang) : []
+  const faqSchema = faqs.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer
+      }
+    }))
+  } : null
+
+  // Service Schema para SEO
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: title,
+    description: shortDesc,
+    provider: {
+      '@type': 'Organization',
+      name: 'Azimut',
+      url: 'https://azmt.com.br'
+    },
+    areaServed: {
+      '@type': 'Country',
+      name: ['BR', 'CA', 'US', 'Global']
+    },
+    offers: {
+      '@type': 'Offer',
+      category: 'Creative Services',
+      availability: 'https://schema.org/InStock'
+    }
+  }
+
   return (
     <>
       <SEO
-        title={`${title} - Azimut`}
-        description={longDesc[0]}
-        lang={lang}
-        path={`/what/${slug}`}
+        title={`${title} - Azimut | Produção Audiovisual e Experiências Imersivas`}
+        description={`${shortDesc} ${longDesc[0]?.substring(0, 100)}...`}
+        keywords={`${title.toLowerCase()}, produção audiovisual, experiências imersivas, VR, AR, XR, ${lang === 'pt' ? 'Rio de Janeiro, Brasil' : lang === 'en' ? 'Brazil, Canada' : 'Brasil, Canadá'}`}
+        url={`/${lang}/what/${slug}`}
+        locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
       />
+      
+      {/* FAQ Schema para Rich Snippets */}
+      {faqSchema && <StructuredData type="FAQPage" data={faqSchema} />}
+      
+      {/* Service Schema */}
+      <StructuredData type="Service" data={serviceSchema} />
       
       <main className="py-16 md:py-20" style={{ position: 'relative', zIndex: 1 }}>
         {/* Star background - FIXA (padronizada com páginas principais) */}
