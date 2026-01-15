@@ -3041,6 +3041,11 @@ select.dropdown-azimut::-ms-expand {
    ========================= */
 
 /* WhyVancouverConvincing component - texto branco em cards */
+/* Cards com gradiente - SEMPRE brancos (tema claro e escuro) */
+.vancouver-page [class*="bg-gradient-to-br"] h3,
+.vancouver-page [class*="bg-gradient-to-br"] p,
+.vancouver-page [class*="bg-gradient-to-br"] li,
+.vancouver-page [class*="bg-gradient-to-br"] div,
 [data-theme="light"] .vancouver-page [class*="bg-gradient-to-br"] h3,
 [data-theme="light"] .vancouver-page [class*="bg-gradient-to-br"] p,
 [data-theme="light"] .vancouver-page [class*="bg-gradient-to-br"] li,
