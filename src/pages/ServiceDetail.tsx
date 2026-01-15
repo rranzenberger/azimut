@@ -24,6 +24,9 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
   const starRef = useRef<HTMLDivElement>(null)
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
 
+  // Animação automática de seções ao entrar na viewport
+  useScrollAnimation()
+
   // Tracking
   useEffect(() => {
     if (slug) {
