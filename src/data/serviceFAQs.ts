@@ -868,6 +868,324 @@ export const serviceFAQs: ServiceFAQs = {
         answer: 'Nous implémentons systèmes de monétisation: achats in-app, abonnements, publicités, DLCs. Nous travaillons avec modèles freemium, premium et hybrides. Nous développons stratégies de monétisation qui équilibrent revenu avec expérience joueur.'
       }
     ]
+  },
+  'cenografia-design-espacial': {
+    pt: [
+      {
+        question: 'Quanto custa um projeto de cenografia?',
+        answer: 'Projetos de cenografia variam de R$ 50.000 (conceito e visualizações) a R$ 500.000+ (projeto completo com implantação). Investimento depende de complexidade, tamanho do espaço, tecnologias integradas e escopo de execução. Oferecemos orçamento personalizado após análise do briefing.'
+      },
+      {
+        question: 'Vocês fazem apenas visualizações 3D ou também executam?',
+        answer: 'Ambas opções! Podemos fazer apenas projeto conceitual e visualizações 3D, ou acompanhar execução completa incluindo coordenação com construtoras, fornecedores e equipes técnicas. Adaptamos nosso escopo conforme necessidade do cliente.'
+      },
+      {
+        question: 'Como funciona integração de tecnologia em cenografia?',
+        answer: 'Integramos projeções mapeadas, iluminação inteligente, telas interativas, sensores e sistemas de áudio espacial. Trabalhamos em parceria com especialistas técnicos para garantir que tecnologia funcione perfeitamente integrada ao design espacial.'
+      },
+      {
+        question: 'Vocês trabalham com acessibilidade?',
+        answer: 'Sim! Acessibilidade é prioridade em todos nossos projetos. Desenvolvemos soluções inclusivas: sinalética tátil, contrastes adequados, percursos alternativos, integração com tecnologias assistivas. Garantimos que espaços sejam acessíveis para todos os visitantes.'
+      },
+      {
+        question: 'Qual o prazo para desenvolvimento de projeto?',
+        answer: 'Prazos variam: conceito e visualizações (4-8 semanas), projeto executivo completo (8-16 semanas), acompanhamento de execução (conforme cronograma da obra). Sempre trabalhamos com prazos realistas e entregas progressivas.'
+      },
+      {
+        question: 'Vocês fazem sinalética e wayfinding?',
+        answer: 'Sim! Desenvolvemos sistemas completos de sinalética e wayfinding que guiam visitantes de forma intuitiva. Criamos iconografia, tipografia e layouts que comunicam claramente sem sobrecarregar visualmente, garantindo navegação fácil e agradável.'
+      }
+    ],
+    en: [
+      {
+        question: 'How much does a scenography project cost?',
+        answer: 'Scenography projects range from R$ 50,000 (concept and visualizations) to R$ 500,000+ (complete project with implementation). Investment depends on complexity, space size, integrated technologies and execution scope. We offer personalized quote after briefing analysis.'
+      },
+      {
+        question: 'Do you do only 3D visualizations or also execute?',
+        answer: 'Both options! We can do only conceptual project and 3D visualizations, or follow complete execution including coordination with construction companies, suppliers and technical teams. We adapt our scope according to client needs.'
+      },
+      {
+        question: 'How does technology integration work in scenography?',
+        answer: 'We integrate projection mapping, smart lighting, interactive screens, sensors and spatial audio systems. We work in partnership with technical specialists to ensure technology works perfectly integrated with spatial design.'
+      },
+      {
+        question: 'Do you work with accessibility?',
+        answer: 'Yes! Accessibility is priority in all our projects. We develop inclusive solutions: tactile signage, adequate contrasts, alternative routes, integration with assistive technologies. We ensure spaces are accessible for all visitors.'
+      },
+      {
+        question: 'What is the deadline for project development?',
+        answer: 'Deadlines vary: concept and visualizations (4-8 weeks), complete executive project (8-16 weeks), execution follow-up (according to construction schedule). We always work with realistic deadlines and progressive deliveries.'
+      },
+      {
+        question: 'Do you do signage and wayfinding?',
+        answer: 'Yes! We develop complete signage and wayfinding systems that guide visitors intuitively. We create iconography, typography and layouts that communicate clearly without visual overload, ensuring easy and pleasant navigation.'
+      }
+    ],
+    es: [
+      {
+        question: '¿Cuánto cuesta un proyecto de escenografía?',
+        answer: 'Proyectos de escenografía varían de R$ 50.000 (concepto y visualizaciones) a R$ 500.000+ (proyecto completo con implementación). La inversión depende de complejidad, tamaño del espacio, tecnologías integradas y alcance de ejecución. Ofrecemos presupuesto personalizado tras análisis del briefing.'
+      },
+      {
+        question: '¿Hacen solo visualizaciones 3D o también ejecutan?',
+        answer: '¡Ambas opciones! Podemos hacer solo proyecto conceptual y visualizaciones 3D, o acompañar ejecución completa incluyendo coordinación con constructoras, proveedores y equipos técnicos. Adaptamos nuestro alcance conforme necesidad del cliente.'
+      },
+      {
+        question: '¿Cómo funciona integración de tecnología en escenografía?',
+        answer: 'Integramos proyecciones mapeadas, iluminación inteligente, pantallas interactivas, sensores y sistemas de audio espacial. Trabajamos en asociación con especialistas técnicos para garantizar que tecnología funcione perfectamente integrada al diseño espacial.'
+      },
+      {
+        question: '¿Trabajan con accesibilidad?',
+        answer: '¡Sí! Accesibilidad es prioridad en todos nuestros proyectos. Desarrollamos soluciones inclusivas: señalética táctil, contrastes adecuados, recorridos alternativos, integración con tecnologías asistivas. Garantizamos que espacios sean accesibles para todos los visitantes.'
+      },
+      {
+        question: '¿Cuál el plazo para desarrollo de proyecto?',
+        answer: 'Plazos varían: concepto y visualizaciones (4-8 semanas), proyecto ejecutivo completo (8-16 semanas), seguimiento de ejecución (conforme cronograma de obra). Siempre trabajamos con plazos realistas y entregas progresivas.'
+      },
+      {
+        question: '¿Hacen señalética y orientación?',
+        answer: '¡Sí! Desarrollamos sistemas completos de señalética y orientación que guían visitantes de forma intuitiva. Creamos iconografía, tipografía y layouts que comunican claramente sin sobrecargar visualmente, garantizando navegación fácil y agradable.'
+      }
+    ],
+    fr: [
+      {
+        question: 'Combien coûte un projet de scénographie?',
+        answer: 'Projets de scénographie varient de R$ 50.000 (concept et visualisations) à R$ 500.000+ (projet complet avec mise en œuvre). L\'investissement dépend de complexité, taille de l\'espace, technologies intégrées et portée d\'exécution. Nous offrons devis personnalisé après analyse du briefing.'
+      },
+      {
+        question: 'Faites-vous seulement visualisations 3D ou aussi exécutez?',
+        answer: 'Les deux options! Nous pouvons faire seulement projet conceptuel et visualisations 3D, ou suivre exécution complète incluant coordination avec entreprises de construction, fournisseurs et équipes techniques. Nous adaptons notre portée selon besoins du client.'
+      },
+      {
+        question: 'Comment fonctionne intégration de technologie en scénographie?',
+        answer: 'Nous intégrons projections mappées, éclairage intelligent, écrans interactifs, capteurs et systèmes audio spatiaux. Nous travaillons en partenariat avec spécialistes techniques pour garantir que technologie fonctionne parfaitement intégrée au design spatial.'
+      },
+      {
+        question: 'Travaillez-vous avec accessibilité?',
+        answer: 'Oui! Accessibilité est priorité dans tous nos projets. Nous développons solutions inclusives: signalétique tactile, contrastes adéquats, parcours alternatifs, intégration avec technologies d\'assistance. Nous garantissons que espaces soient accessibles pour tous visiteurs.'
+      },
+      {
+        question: 'Quel est le délai pour développement de projet?',
+        answer: 'Délais varient: concept et visualisations (4-8 semaines), projet exécutif complet (8-16 semaines), suivi d\'exécution (selon calendrier de chantier). Nous travaillons toujours avec délais réalistes et livraisons progressives.'
+      },
+      {
+        question: 'Faites-vous signalétique et orientation?',
+        answer: 'Oui! Nous développons systèmes complets de signalétique et orientation qui guident visiteurs intuitivement. Nous créons iconographie, typographie et layouts qui communiquent clairement sans surcharge visuelle, assurant navigation facile et agréable.'
+      }
+    ]
+  },
+  'direcao-arte-criativa': {
+    pt: [
+      {
+        question: 'Quanto custa direção de arte?',
+        answer: 'Direção de arte varia de R$ 30.000 (projeto simples) a R$ 300.000+ (projeto complexo com múltiplas entregas). Investimento depende de escopo, número de entregas, complexidade e duração do projeto. Oferecemos orçamento personalizado após análise do briefing.'
+      },
+      {
+        question: 'Vocês desenvolvem identidade visual completa?',
+        answer: 'Sim! Desenvolvemos identidades visuais completas incluindo logotipo, tipografia, paleta de cores, iconografia, guidelines e aplicações. Criamos sistemas de design coesos que funcionam em múltiplos contextos e plataformas.'
+      },
+      {
+        question: 'Como funciona supervisão de produção?',
+        answer: 'Acompanhamos todas as etapas de produção, revisando e aprovando elementos visuais, garantindo que atendam padrões de qualidade e coerência com identidade visual. Trabalhamos em parceria com equipes de produção para garantir execução perfeita.'
+      },
+      {
+        question: 'Vocês coordenam equipes criativas?',
+        answer: 'Sim! Coordenamos equipes multidisciplinares incluindo fotógrafos, videomakers, designers, ilustradores e desenvolvedores. Garantimos que todos estejam alinhados com visão criativa e que entregas sejam consistentes e de alta qualidade.'
+      },
+      {
+        question: 'Qual o prazo para desenvolvimento de identidade visual?',
+        answer: 'Prazos variam: conceito e mood board (2-4 semanas), desenvolvimento de identidade (4-8 semanas), style guide completo (2-4 semanas). Sempre trabalhamos com cronogramas realistas e entregas progressivas para garantir qualidade.'
+      },
+      {
+        question: 'Vocês fazem art direction para vídeo e foto?',
+        answer: 'Sim! Oferecemos direção de arte para produções audiovisuais e fotográficas. Desenvolvemos conceitos visuais, selecionamos locações, coordenamos styling, iluminação e composição. Garantimos que cada frame comunique a mensagem desejada com impacto visual.'
+      }
+    ],
+    en: [
+      {
+        question: 'How much does art direction cost?',
+        answer: 'Art direction ranges from R$ 30,000 (simple project) to R$ 300,000+ (complex project with multiple deliveries). Investment depends on scope, number of deliveries, complexity and project duration. We offer personalized quote after briefing analysis.'
+      },
+      {
+        question: 'Do you develop complete visual identity?',
+        answer: 'Yes! We develop complete visual identities including logo, typography, color palette, iconography, guidelines and applications. We create cohesive design systems that work in multiple contexts and platforms.'
+      },
+      {
+        question: 'How does production supervision work?',
+        answer: 'We follow all production stages, reviewing and approving visual elements, ensuring they meet quality standards and coherence with visual identity. We work in partnership with production teams to ensure perfect execution.'
+      },
+      {
+        question: 'Do you coordinate creative teams?',
+        answer: 'Yes! We coordinate multidisciplinary teams including photographers, videomakers, designers, illustrators and developers. We ensure everyone is aligned with creative vision and that deliveries are consistent and high quality.'
+      },
+      {
+        question: 'What is the deadline for visual identity development?',
+        answer: 'Deadlines vary: concept and mood board (2-4 weeks), identity development (4-8 weeks), complete style guide (2-4 weeks). We always work with realistic schedules and progressive deliveries to ensure quality.'
+      },
+      {
+        question: 'Do you do art direction for video and photo?',
+        answer: 'Yes! We offer art direction for audiovisual and photographic productions. We develop visual concepts, select locations, coordinate styling, lighting and composition. We ensure each frame communicates desired message with visual impact.'
+      }
+    ],
+    es: [
+      {
+        question: '¿Cuánto cuesta dirección de arte?',
+        answer: 'Dirección de arte varía de R$ 30.000 (proyecto simple) a R$ 300.000+ (proyecto complejo con múltiples entregas). La inversión depende de alcance, número de entregas, complejidad y duración del proyecto. Ofrecemos presupuesto personalizado tras análisis del briefing.'
+      },
+      {
+        question: '¿Desarrollan identidad visual completa?',
+        answer: '¡Sí! Desarrollamos identidades visuales completas incluyendo logotipo, tipografía, paleta de colores, iconografía, guías y aplicaciones. Creamos sistemas de diseño cohesivos que funcionan en múltiples contextos y plataformas.'
+      },
+      {
+        question: '¿Cómo funciona supervisión de producción?',
+        answer: 'Acompañamos todas las etapas de producción, revisando y aprobando elementos visuales, garantizando que cumplan estándares de calidad y coherencia con identidad visual. Trabajamos en asociación con equipos de producción para garantizar ejecución perfecta.'
+      },
+      {
+        question: '¿Coordinan equipos creativos?',
+        answer: '¡Sí! Coordinamos equipos multidisciplinares incluyendo fotógrafos, videomakers, diseñadores, ilustradores y desarrolladores. Garantizamos que todos estén alineados con visión creativa y que entregas sean consistentes y de alta calidad.'
+      },
+      {
+        question: '¿Cuál el plazo para desarrollo de identidad visual?',
+        answer: 'Plazos varían: concepto y mood board (2-4 semanas), desarrollo de identidad (4-8 semanas), guía de estilo completa (2-4 semanas). Siempre trabajamos con cronogramas realistas y entregas progresivas para garantizar calidad.'
+      },
+      {
+        question: '¿Hacen dirección de arte para video y foto?',
+        answer: '¡Sí! Ofrecemos dirección de arte para producciones audiovisuales y fotográficas. Desarrollamos conceptos visuales, seleccionamos locaciones, coordinamos styling, iluminación y composición. Garantizamos que cada frame comunique el mensaje deseado con impacto visual.'
+      }
+    ],
+    fr: [
+      {
+        question: 'Combien coûte direction artistique?',
+        answer: 'Direction artistique varie de R$ 30.000 (projet simple) à R$ 300.000+ (projet complexe avec multiples livraisons). L\'investissement dépend de portée, nombre de livraisons, complexité et durée du projet. Nous offrons devis personnalisé après analyse du briefing.'
+      },
+      {
+        question: 'Développez-vous identité visuelle complète?',
+        answer: 'Oui! Nous développons identités visuelles complètes incluant logo, typographie, palette de couleurs, iconographie, guides et applications. Nous créons systèmes de design cohésifs qui fonctionnent dans multiples contextes et plateformes.'
+      },
+      {
+        question: 'Comment fonctionne supervision de production?',
+        answer: 'Nous suivons toutes les étapes de production, révisant et approuvant éléments visuels, assurant qu\'ils répondent aux standards de qualité et cohérence avec identité visuelle. Nous travaillons en partenariat avec équipes de production pour assurer exécution parfaite.'
+      },
+      {
+        question: 'Coordonnez-vous équipes créatives?',
+        answer: 'Oui! Nous coordonnons équipes multidisciplinaires incluant photographes, vidéastes, designers, illustrateurs et développeurs. Nous assurons que tous soient alignés avec vision créative et que livraisons soient cohérentes et haute qualité.'
+      },
+      {
+        question: 'Quel est le délai pour développement d\'identité visuelle?',
+        answer: 'Délais varient: concept et mood board (2-4 semaines), développement d\'identité (4-8 semaines), guide de style complet (2-4 semaines). Nous travaillons toujours avec calendriers réalistes et livraisons progressives pour assurer qualité.'
+      },
+      {
+        question: 'Faites-vous direction artistique pour vidéo et photo?',
+        answer: 'Oui! Nous offrons direction artistique pour productions audiovisuelles et photographiques. Nous développons concepts visuels, sélectionnons lieux, coordonnons styling, éclairage et composition. Nous assurons que chaque frame communique message désiré avec impact visuel.'
+      }
+    ]
+  },
+  'consultoria-estrategia': {
+    pt: [
+      {
+        question: 'Como funciona consultoria estratégica?',
+        answer: 'Oferecemos consultoria completa desde concepção até execução. Analisamos viabilidade, desenvolvemos estratégias, ajudamos na captação de recursos e coordenamos implementação. Adaptamos nosso modelo de trabalho conforme necessidade de cada cliente.'
+      },
+      {
+        question: 'Vocês ajudam com captação de recursos via editais?',
+        answer: 'Sim! Temos experiência em editais nacionais (Ancine, Lei Rouanet) e internacionais. Ajudamos a identificar oportunidades, desenvolver projetos, escrever propostas e acompanhar processos de aprovação. Nossa expertise aumenta significativamente chances de aprovação.'
+      },
+      {
+        question: 'Como funciona integração tecnológica?',
+        answer: 'Desenvolvemos estratégias para adoção de IA, XR, blockchain e outras tecnologias. Analisamos necessidades, identificamos oportunidades, selecionamos ferramentas adequadas e desenvolvemos planos de implementação. Garantimos que tecnologia seja adotada de forma estratégica e eficiente.'
+      },
+      {
+        question: 'Vocês fazem gestão de projetos?',
+        answer: 'Sim! Oferecemos gestão completa de projetos culturais e tecnológicos. Coordenamos equipes, gerenciamos prazos e orçamentos, garantimos qualidade de entregas e comunicação constante com stakeholders. Nossa experiência garante que projetos sejam concluídos com sucesso.'
+      },
+      {
+        question: 'Qual o investimento para consultoria?',
+        answer: 'Consultoria varia de R$ 20.000 (projeto pontual) a R$ 200.000+ (acompanhamento completo). Investimento depende de escopo, duração e complexidade. Oferecemos modelos: por projeto, mensalidade ou sucesso (percentual sobre recursos captados).'
+      },
+      {
+        question: 'Vocês trabalham com projetos internacionais?',
+        answer: 'Sim! Trabalhamos com editais e projetos internacionais. Temos experiência em processos de diferentes países e ajudamos a adaptar projetos para contextos culturais e regulatórios específicos. Facilitamos conexões e parcerias internacionais quando necessário.'
+      }
+    ],
+    en: [
+      {
+        question: 'How does strategic consulting work?',
+        answer: 'We offer complete consulting from conception to execution. We analyze feasibility, develop strategies, help with resource acquisition and coordinate implementation. We adapt our working model according to each client\'s needs.'
+      },
+      {
+        question: 'Do you help with resource acquisition through grants?',
+        answer: 'Yes! We have experience with national (Ancine, Lei Rouanet) and international grants. We help identify opportunities, develop projects, write proposals and follow approval processes. Our expertise significantly increases approval chances.'
+      },
+      {
+        question: 'How does technology integration work?',
+        answer: 'We develop strategies for adoption of AI, XR, blockchain and other technologies. We analyze needs, identify opportunities, select appropriate tools and develop implementation plans. We ensure technology is adopted strategically and efficiently.'
+      },
+      {
+        question: 'Do you do project management?',
+        answer: 'Yes! We offer complete management of cultural and technological projects. We coordinate teams, manage deadlines and budgets, ensure delivery quality and constant communication with stakeholders. Our experience ensures projects are completed successfully.'
+      },
+      {
+        question: 'What is the investment for consulting?',
+        answer: 'Consulting ranges from R$ 20,000 (punctual project) to R$ 200,000+ (complete follow-up). Investment depends on scope, duration and complexity. We offer models: per project, monthly fee or success-based (percentage on acquired resources).'
+      },
+      {
+        question: 'Do you work with international projects?',
+        answer: 'Yes! We work with international grants and projects. We have experience in processes from different countries and help adapt projects to specific cultural and regulatory contexts. We facilitate connections and international partnerships when needed.'
+      }
+    ],
+    es: [
+      {
+        question: '¿Cómo funciona consultoría estratégica?',
+        answer: 'Ofrecemos consultoría completa desde concepción hasta ejecución. Analizamos viabilidad, desarrollamos estrategias, ayudamos en captación de recursos y coordinamos implementación. Adaptamos nuestro modelo de trabajo conforme necesidad de cada cliente.'
+      },
+      {
+        question: '¿Ayudan con captación de recursos vía convocatorias?',
+        answer: '¡Sí! Tenemos experiencia en convocatorias nacionales (Ancine, Lei Rouanet) e internacionales. Ayudamos a identificar oportunidades, desarrollar proyectos, escribir propuestas y acompañar procesos de aprobación. Nuestra expertise aumenta significativamente chances de aprobación.'
+      },
+      {
+        question: '¿Cómo funciona integración tecnológica?',
+        answer: 'Desarrollamos estrategias para adopción de IA, XR, blockchain y otras tecnologías. Analizamos necesidades, identificamos oportunidades, seleccionamos herramientas adecuadas y desarrollamos planes de implementación. Garantizamos que tecnología sea adoptada de forma estratégica y eficiente.'
+      },
+      {
+        question: '¿Hacen gestión de proyectos?',
+        answer: '¡Sí! Ofrecemos gestión completa de proyectos culturales y tecnológicos. Coordinamos equipos, gestionamos plazos y presupuestos, garantizamos calidad de entregas y comunicación constante con stakeholders. Nuestra experiencia garantiza que proyectos sean concluidos con éxito.'
+      },
+      {
+        question: '¿Cuál la inversión para consultoría?',
+        answer: 'Consultoría varía de R$ 20.000 (proyecto puntual) a R$ 200.000+ (seguimiento completo). La inversión depende de alcance, duración y complejidad. Ofrecemos modelos: por proyecto, mensualidad o éxito (porcentaje sobre recursos captados).'
+      },
+      {
+        question: '¿Trabajan con proyectos internacionales?',
+        answer: '¡Sí! Trabajamos con convocatorias y proyectos internacionales. Tenemos experiencia en procesos de diferentes países y ayudamos a adaptar proyectos para contextos culturales y regulatorios específicos. Facilitamos conexiones y partnerships internacionales cuando necesario.'
+      }
+    ],
+    fr: [
+      {
+        question: 'Comment fonctionne conseil stratégique?',
+        answer: 'Nous offrons conseil complet de conception à exécution. Nous analysons faisabilité, développons stratégies, aidons à acquisition de ressources et coordonnons mise en œuvre. Nous adaptons notre modèle de travail selon besoins de chaque client.'
+      },
+      {
+        question: 'Aidez-vous avec acquisition de ressources via subventions?',
+        answer: 'Oui! Nous avons expérience avec subventions nationales (Ancine, Lei Rouanet) et internationales. Nous aidons à identifier opportunités, développer projets, écrire propositions et suivre processus d\'approbation. Notre expertise augmente significativement chances d\'approbation.'
+      },
+      {
+        question: 'Comment fonctionne intégration technologique?',
+        answer: 'Nous développons stratégies pour adoption d\'IA, XR, blockchain et autres technologies. Nous analysons besoins, identifions opportunités, sélectionnons outils appropriés et développons plans d\'implémentation. Nous assurons que technologie soit adoptée stratégiquement et efficacement.'
+      },
+      {
+        question: 'Faites-vous gestion de projets?',
+        answer: 'Oui! Nous offrons gestion complète de projets culturels et technologiques. Nous coordonnons équipes, gérons délais et budgets, assurons qualité de livraisons et communication constante avec parties prenantes. Notre expérience assure que projets soient complétés avec succès.'
+      },
+      {
+        question: 'Quel est l\'investissement pour conseil?',
+        answer: 'Conseil varie de R$ 20.000 (projet ponctuel) à R$ 200.000+ (suivi complet). L\'investissement dépend de portée, durée et complexité. Nous offrons modèles: par projet, mensualité ou succès (pourcentage sur ressources acquises).'
+      },
+      {
+        question: 'Travaillez-vous avec projets internationaux?',
+        answer: 'Oui! Nous travaillons avec subventions et projets internationaux. Nous avons expérience dans processus de différents pays et aidons à adapter projets à contextes culturels et réglementaires spécifiques. Nous facilitons connexions et partenariats internationaux si nécessaire.'
+      }
+    ]
   }
 }
 
