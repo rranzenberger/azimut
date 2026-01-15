@@ -61,8 +61,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         },
         {
           icon: '🇨🇦',
-          title: 'Pathway Residência Permanente',
-          description: 'Após estudar, você pode trabalhar legalmente no Canadá e aplicar para residência permanente.'
+          title: 'Possibilidade de Residência Permanente',
+          description: 'Após estudar, você pode trabalhar legalmente no Canadá e aplicar para residência permanente (sujeito a requisitos do governo canadense).'
         },
         {
           icon: '💼',
@@ -190,7 +190,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         },
         {
           question: 'E depois da formatura?',
-          answer: 'Você recebe PGWP (Post-Graduation Work Permit) para trabalhar legalmente no Canadá. Após 1 ano de experiência, pode aplicar para residência permanente.'
+          answer: 'Você recebe PGWP (Post-Graduation Work Permit) para trabalhar legalmente no Canadá. Após 1 ano de experiência, pode aplicar para residência permanente (sujeito aos requisitos e critérios de elegibilidade do governo canadense).'
         },
         {
           question: 'Qual escola é melhor: VFS ou VanArts?',
@@ -220,7 +220,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
       whyItems: [
         { icon: '🎬', title: 'Global Media Hub', description: 'Vancouver is known as "Hollywood North". Studios like Disney, Sony, ILM, EA and Ubisoft have bases here.' },
         { icon: '🏆', title: 'Top 3 World Quality of Life', description: 'Vancouver is constantly ranked among the 3 best cities in the world to live. Safe, multicultural and with stunning nature.' },
-        { icon: '🇨🇦', title: 'Permanent Residence Pathway', description: 'After studying, you can work legally in Canada and apply for permanent residence.' },
+        { icon: '🇨🇦', title: 'Permanent Residence Possibility', description: 'After studying, you can work legally in Canada and apply for permanent residence (subject to Canadian government requirements).' },
         { icon: '💼', title: '40,000+ Digital Media Vacancies', description: 'Hot market with high demand for qualified professionals in VFX, Animation, Games and Design.' }
       ],
       compareTitle: 'Traditional University vs Vancouver',
@@ -259,7 +259,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         { question: 'Do I need to have a portfolio?', answer: 'Yes, but it doesn\'t need to be complete. Azimut offers preparatory course to build a strong portfolio.' },
         { question: 'How long does the process take?', answer: 'From 6 to 12 months from decision to starting classes. Preparation (2-4 months) + Application (2-3 months) + Visa (3-4 months).' },
         { question: 'Can I work while studying?', answer: 'Yes! Study permit allows working 20h/week during classes and 40h/week on vacation. Minimum wage: CAD $17/h.' },
-        { question: 'And after graduation?', answer: 'You receive PGWP (Post-Graduation Work Permit) to work legally in Canada. After 1 year of experience, you can apply for permanent residence.' },
+        { question: 'And after graduation?', answer: 'You receive PGWP (Post-Graduation Work Permit) to work legally in Canada. After 1 year of experience, you may be eligible to apply for permanent residence (subject to government requirements and eligibility criteria).' },
         { question: 'Which school is better: VFS or VanArts?', answer: 'It depends on your profile! VFS is more intensive and expensive, VanArts is more accessible. In the free consultation, we analyze which is better for you.' },
         { question: 'Does Azimut charge anything?', answer: 'NO! We earn commission directly from VFS/VanArts. You pay nothing extra. Our interest is that you are accepted and succeed.' },
         { question: 'Is there an age limit?', answer: 'No! We have students from 18 to 40+ years. The important thing is to have the desire to learn and dedicate yourself.' }
@@ -316,7 +316,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         { question: '¿Necesito tener portafolio?', answer: 'Sí, pero no necesita estar completo. Azimut ofrece curso preparatorio para construir un portafolio sólido.' },
         { question: '¿Cuánto tiempo tarda el proceso?', answer: 'De 6 a 12 meses desde la decisión hasta comenzar las clases. Preparación (2-4 meses) + Solicitud (2-3 meses) + Visa (3-4 meses).' },
         { question: '¿Puedo trabajar mientras estudio?', answer: 'Sí! El permiso de estudio permite trabajar 20h/semana durante clases y 40h/semana en vacaciones. Salario mínimo: CAD $17/h.' },
-        { question: '¿Y después de graduarme?', answer: 'Recibes PGWP (Post-Graduation Work Permit) para trabajar legalmente en Canadá. Después de 1 año de experiencia, puedes solicitar residencia permanente.' },
+        { question: '¿Y después de graduarme?', answer: 'Recibes PGWP (Post-Graduation Work Permit) para trabajar legalmente en Canadá. Después de 1 año de experiencia, puedes solicitar residencia permanente (sujeto a requisitos y criterios de elegibilidad del gobierno canadiense).' },
         { question: '¿Qué escuela es mejor: VFS o VanArts?', answer: '¡Depende de tu perfil! VFS es más intensivo y caro, VanArts es más accesible. En la consulta gratuita, analizamos cuál es mejor para ti.' },
         { question: '¿Azimut cobra algo?', answer: '¡NO! Ganamos comisión directamente de VFS/VanArts. No pagas nada extra. Nuestro interés es que seas aceptado y tengas éxito.' },
         { question: '¿Hay límite de edad?', answer: '¡No! Tenemos estudiantes de 18 a 40+ años. Lo importante es tener ganas de aprender y dedicarse.' }
@@ -373,7 +373,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         { question: 'Ai-je besoin d\'avoir un portfolio?', answer: 'Oui, mais il n\'a pas besoin d\'être complet. Azimut offre un cours préparatoire pour construire un portfolio solide.' },
         { question: 'Combien de temps prend le processus?', answer: 'De 6 à 12 mois depuis la décision jusqu\'au début des cours. Préparation (2-4 mois) + Application (2-3 mois) + Visa (3-4 mois).' },
         { question: 'Puis-je travailler pendant mes études?', answer: 'Oui! Le permis d\'étude permet de travailler 20h/semaine pendant les cours et 40h/semaine pendant les vacances. Salaire minimum: CAD $17/h.' },
-        { question: 'Et après la graduation?', answer: 'Vous recevez PGWP (Post-Graduation Work Permit) pour travailler légalement au Canada. Après 1 an d\'expérience, vous pouvez demander la résidence permanente.' },
+        { question: 'Et après la graduation?', answer: 'Vous recevez PGWP (Post-Graduation Work Permit) pour travailler légalement au Canada. Après 1 an d\'expérience, vous pouvez demander la résidence permanente (sous réserve des exigences et critères d\'éligibilité du gouvernement canadien).' },
         { question: 'Quelle école est meilleure: VFS ou VanArts?', answer: 'Ça dépend de votre profil! VFS est plus intensif et cher, VanArts est plus accessible. Dans la consultation gratuite, nous analysons laquelle est meilleure pour vous.' },
         { question: 'Azimut facture quelque chose?', answer: 'NON! Nous gagnons une commission directement de VFS/VanArts. Vous ne payez rien de plus. Notre intérêt est que vous soyez accepté et ayez du succès.' },
         { question: 'Y a-t-il une limite d\'âge?', answer: 'Non! Nous avons des étudiants de 18 à 40+ ans. L\'important est d\'avoir envie d\'apprendre et de se consacrer.' }
@@ -483,7 +483,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 { value: '90%+', label: lang === 'pt' ? 'Empregabilidade' : lang === 'es' ? 'Empleabilidad' : lang === 'fr' ? 'Employabilité' : 'Employability' },
                 { value: lang === 'pt' ? '1 ano' : lang === 'es' ? '1 año' : lang === 'fr' ? '1 an' : '1 year', label: lang === 'pt' ? 'Duração' : lang === 'es' ? 'Duración' : lang === 'fr' ? 'Durée' : 'Duration' },
                 { value: '40k+', label: lang === 'pt' ? 'Vagas em Mídia' : lang === 'es' ? 'Vacantes Medios' : lang === 'fr' ? 'Postes Médias' : 'Media Jobs' },
-                { value: '🇨🇦', label: lang === 'pt' ? 'Residência PR' : lang === 'es' ? 'Residencia PR' : lang === 'fr' ? 'Résidence PR' : 'PR Residence' }
+                { value: '🇨🇦', label: lang === 'pt' ? 'Possibilidade PR' : lang === 'es' ? 'Posibilidad PR' : lang === 'fr' ? 'Possibilité PR' : 'PR Possibility' }
               ].map((stat, i) => (
                 <div key={i} className="text-center">
                   <div className="text-3xl md:text-4xl font-bold text-azimut-red mb-1">
@@ -638,10 +638,10 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                     <td className="p-4 text-white">English ✅</td>
                   </tr>
                   <tr>
-                    <td className="text-left p-4 text-white/70 font-medium">Residência PR</td>
-                    <td className="p-4 text-white">Não</td>
-                    <td className="p-4 text-azimut-red font-bold">Sim 🇨🇦 ✅</td>
-                    <td className="p-4 text-white">Sim 🇨🇦 ✅</td>
+                    <td className="text-left p-4 text-white/70 font-medium">{lang === 'pt' ? 'Possibilidade PR' : lang === 'es' ? 'Posibilidad PR' : lang === 'fr' ? 'Possibilité PR' : 'PR Possibility'}</td>
+                    <td className="p-4 text-white">{lang === 'pt' ? 'Não' : lang === 'es' ? 'No' : lang === 'fr' ? 'Non' : 'No'}</td>
+                    <td className="p-4 text-azimut-red font-bold">{lang === 'pt' ? 'Sim' : lang === 'es' ? 'Sí' : lang === 'fr' ? 'Oui' : 'Yes'} 🇨🇦 ✅</td>
+                    <td className="p-4 text-white">{lang === 'pt' ? 'Sim' : lang === 'es' ? 'Sí' : lang === 'fr' ? 'Oui' : 'Yes'} 🇨🇦 ✅</td>
                   </tr>
                 </tbody>
               </table>
@@ -649,7 +649,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
 
             <div className="mt-8 p-6 bg-azimut-red/10 border border-azimut-red/30 rounded-lg">
               <p className="text-white/90 text-center text-lg">
-                <strong className="text-azimut-red">VEREDITO:</strong> VanArts/VFS são <strong>MAIS FOCADAS</strong>, <strong>4x MAIS RÁPIDAS</strong>, <strong>2x MAIOR EMPREGABILIDADE</strong> e com <strong>MERCADO GLOBAL</strong> + <strong>PATHWAY PR 🇨🇦</strong>! 🚀
+                <strong className="text-azimut-red">VEREDITO:</strong> VanArts/VFS são <strong>MAIS FOCADAS</strong>, <strong>4x MAIS RÁPIDAS</strong>, <strong>2x MAIOR EMPREGABILIDADE</strong> e com <strong>MERCADO GLOBAL</strong> + <strong>POSSIBILIDADE DE PR 🇨🇦</strong>! 🚀
               </p>
             </div>
           </div>
