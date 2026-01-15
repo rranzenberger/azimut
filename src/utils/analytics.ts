@@ -279,7 +279,7 @@ export async function submitLead(data: {
 
 // Track visitor behavior (clicks, scrolls, hovers, etc)
 export async function trackBehavior(
-  behaviorType: 'click' | 'scroll' | 'hover' | 'form_start' | 'form_abandon' | 'video_play' | 'download' | 'share' | 'search' | 'filter' | 'cta_click' | 'external_link',
+  behaviorType: 'click' | 'scroll' | 'hover' | 'form_start' | 'form_abandon' | 'form_field_focus' | 'form_field_blur' | 'form_submit' | 'video_play' | 'video_pause' | 'video_complete' | 'video_progress' | 'download' | 'share' | 'search' | 'filter' | 'cta_click' | 'external_link' | 'scroll_depth',
   data?: {
     element?: string;
     elementType?: string;
@@ -304,12 +304,205 @@ export async function trackBehavior(
         behaviorType,
         visitorFingerprint: fingerprint,
         pageSlug: typeof window !== 'undefined' ? window.location.pathname : data?.pageSlug,
+        timestamp: new Date().toISOString(),
         ...data,
       },
     }),
   }).catch(() => {
     // Silencioso
   });
+}
+
+// ════════════════════════════════════════════════════════════
+// TIME ON PAGE TRACKING - Detalhado
+// ════════════════════════════════════════════════════════════
+export function trackTimeOnPage(pageSlug: string): () => void {
+  const sessionId = getSessionId();
+  const startTime = Date.now();
+  let lastReportTime = startTime;
+  const reportInterval = 30000; // Reportar a cada 30 segundos
+
+  // Reportar periodicamente enquanto usuário está na página
+  const intervalId = setInterval(async () => {
+    const timeSpent = Math.floor((Date.now() - startTime) / 1000);
+    const timeSinceLastReport = Math.floor((Date.now() - lastReportTime) / 1000);
+    
+    const fingerprint = await getVisitorFingerprint();
+    
+    fetch(`${API_URL}/track`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sessionId,
+        event: 'time_on_page',
+        data: {
+          pageSlug,
+          timeSpent,
+          timeSinceLastReport,
+          visitorFingerprint: fingerprint,
+          timestamp: new Date().toISOString(),
+        },
+      }),
+    }).catch(() => {});
+    
+    lastReportTime = Date.now();
+  }, reportInterval);
+
+  // Reportar ao sair da página
+  const sendFinalData = async () => {
+    clearInterval(intervalId);
+    const timeSpent = Math.floor((Date.now() - startTime) / 1000);
+    const fingerprint = await getVisitorFingerprint();
+    
+    fetch(`${API_URL}/track`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sessionId,
+        event: 'time_on_page_final',
+        data: {
+          pageSlug,
+          timeSpent,
+          visitorFingerprint: fingerprint,
+          timestamp: new Date().toISOString(),
+        },
+      }),
+    }).catch(() => {});
+  };
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener('beforeunload', sendFinalData);
+  }
+
+  return () => {
+    clearInterval(intervalId);
+    sendFinalData();
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('beforeunload', sendFinalData);
+    }
+  };
+}
+
+// ════════════════════════════════════════════════════════════
+// VIDEO TRACKING - Play, Pause, Complete, Progress
+// ════════════════════════════════════════════════════════════
+export async function trackVideoEvent(
+  videoId: string,
+  videoUrl: string,
+  eventType: 'play' | 'pause' | 'complete' | 'progress',
+  data?: {
+    currentTime?: number;
+    duration?: number;
+    progress?: number; // 0-100
+    platform?: 'youtube' | 'vimeo' | 'custom';
+  }
+) {
+  const sessionId = getSessionId();
+  const fingerprint = await getVisitorFingerprint();
+
+  fetch(`${API_URL}/track`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sessionId,
+      event: 'video_event',
+      data: {
+        videoId,
+        videoUrl,
+        eventType,
+        visitorFingerprint: fingerprint,
+        pageSlug: typeof window !== 'undefined' ? window.location.pathname : '',
+        timestamp: new Date().toISOString(),
+        ...data,
+      },
+    }),
+  }).catch(() => {});
+}
+
+// ════════════════════════════════════════════════════════════
+// FORM TRACKING - Start, Field Focus, Submit, Abandon
+// ════════════════════════════════════════════════════════════
+export async function trackFormEvent(
+  formId: string,
+  formName: string,
+  eventType: 'start' | 'field_focus' | 'field_blur' | 'field_change' | 'submit' | 'abandon',
+  data?: {
+    fieldName?: string;
+    fieldType?: string;
+    fieldValue?: string;
+    timeSpent?: number;
+    fieldsCompleted?: number;
+    totalFields?: number;
+  }
+) {
+  const sessionId = getSessionId();
+  const fingerprint = await getVisitorFingerprint();
+
+  fetch(`${API_URL}/track`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sessionId,
+      event: 'form_event',
+      data: {
+        formId,
+        formName,
+        eventType,
+        visitorFingerprint: fingerprint,
+        pageSlug: typeof window !== 'undefined' ? window.location.pathname : '',
+        timestamp: new Date().toISOString(),
+        ...data,
+      },
+    }),
+  }).catch(() => {});
+}
+
+// ════════════════════════════════════════════════════════════
+// LEAD SCORING - Calcular score de interesse
+// ════════════════════════════════════════════════════════════
+export interface LeadScore {
+  score: number; // 0-100
+  level: 'cold' | 'warm' | 'hot';
+  factors: {
+    pagesVisited: number;
+    timeSpent: number;
+    videosWatched: number;
+    formsStarted: number;
+    formsCompleted: number;
+    scrollDepth: number;
+    ctaClicks: number;
+  };
+}
+
+export async function calculateLeadScore(visitorFingerprint: string): Promise<LeadScore> {
+  try {
+    const response = await fetch(`${API_URL}/leads/score`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ visitorFingerprint }),
+    });
+
+    if (response.ok) {
+      return await response.json();
+    }
+  } catch (error) {
+    // Silencioso
+  }
+
+  // Fallback: score básico
+  return {
+    score: 0,
+    level: 'cold',
+    factors: {
+      pagesVisited: 0,
+      timeSpent: 0,
+      videosWatched: 0,
+      formsStarted: 0,
+      formsCompleted: 0,
+      scrollDepth: 0,
+      ctaClicks: 0,
+    },
+  };
 }
 
 export { getSessionId, getVisitorFingerprint };

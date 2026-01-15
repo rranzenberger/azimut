@@ -29,6 +29,12 @@ interface FormData {
 }
 
 const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) => {
+  const formRef = useRef<HTMLFormElement>(null)
+  const { fieldsCompleted, totalFields } = useFormTracking({
+    formId: 'vancouver-interest-form',
+    formName: 'Vancouver Interest Form',
+    enabled: true
+  })
   const navigate = useNavigate()
   const [formData, setFormData] = useState<FormData>({
     name: '',

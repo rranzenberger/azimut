@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import { addPoints, loadProgress, saveProgress } from '../utils/gamification'
+import { trackTimeOnPage } from '../utils/analytics'
 
 type InteractionType = 'cta_click' | 'project_view' | 'service_view' | 'language_change'
 
@@ -74,19 +75,27 @@ export function useUserTracking() {
 
     try {
       trackPageView(path)
+      // Track time on page detalhado
+      const cleanupTimeTracking = trackTimeOnPage(path)
+      
+      return () => {
+        cleanupTimeTracking()
+        try {
+          const timeSpent = Math.round((Date.now() - startTimeRef.current) / 1000)
+          updatePageVisit(path, timeSpent, maxScrollRef.current)
+        } catch (error) {
+          // Silencioso - não quebrar renderização
+          if (process.env.NODE_ENV === 'development') {
+            console.warn('Erro ao atualizar page visit:', error)
+          }
+        }
+      }
     } catch (error) {
       // Se tracking falhar, não quebrar renderização
-      console.warn('Erro ao rastrear page view:', error)
-    }
-
-    return () => {
-      try {
-        const timeSpent = Math.round((Date.now() - startTimeRef.current) / 1000)
-        updatePageVisit(path, timeSpent, maxScrollRef.current)
-      } catch (error) {
-        // Silencioso - não quebrar renderização
-        console.warn('Erro ao atualizar page visit:', error)
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Erro ao rastrear page view:', error)
       }
+      return () => {}
     }
   }, [location.pathname])
 

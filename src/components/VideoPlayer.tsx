@@ -4,7 +4,8 @@
 // Renderiza vídeos do YouTube ou Vimeo
 // ════════════════════════════════════════════════════════════
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { trackVideoEvent } from '../utils/analytics'
 
 interface VideoPlayerProps {
   videoUrl: string
@@ -42,6 +43,10 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   platform
 }) => {
   const [isPlaying, setIsPlaying] = useState(false)
+  const videoIdRef = React.useRef<string | null>(null)
+  const progressTracked = React.useRef<Set<number>>(new Set())
+  const hasPlayed = React.useRef(false)
+  const hasCompleted = React.useRef(false)
 
   // Detectar plataforma automaticamente se não fornecida
   const detectedPlatform = platform || 
@@ -64,6 +69,11 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
   const youtubeId = detectedPlatform === 'youtube' ? extractYouTubeId(videoUrl) : null
   const vimeoId = detectedPlatform === 'vimeo' ? extractVimeoId(videoUrl) : null
+  
+  // Armazenar videoId para tracking
+  useEffect(() => {
+    videoIdRef.current = youtubeId || vimeoId || videoUrl
+  }, [youtubeId, vimeoId, videoUrl])
 
   if (!youtubeId && !vimeoId) {
     return (
@@ -94,6 +104,16 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
         enablejsapi: '1'
       })
       
+      // Track play quando iframe carrega (YouTube API)
+      useEffect(() => {
+        if (youtubeId && isPlaying && !hasPlayed.current) {
+          hasPlayed.current = true
+          trackVideoEvent(youtubeId, videoUrl, 'play', {
+            platform: 'youtube',
+          })
+        }
+      }, [youtubeId, videoUrl, isPlaying])
+
       return (
         <div className={`relative aspect-video ${className}`}>
           <iframe
@@ -138,10 +158,20 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg` : null) ||
     (vimeoId ? `https://vumbnail.com/${vimeoId}.jpg` : null)
 
+  const handlePlay = () => {
+    setIsPlaying(true)
+    if (videoIdRef.current && !hasPlayed.current) {
+      hasPlayed.current = true
+      trackVideoEvent(videoIdRef.current, videoUrl, 'play', {
+        platform: detectedPlatform || 'custom',
+      })
+    }
+  }
+
   return (
     <div 
       className={`relative aspect-video cursor-pointer group ${className}`}
-      onClick={() => setIsPlaying(true)}
+      onClick={handlePlay}
     >
       {thumbnail && (
         <img

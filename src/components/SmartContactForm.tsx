@@ -251,6 +251,12 @@ const PremiumField = ({
 
 export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps) {
   const navigate = useNavigate()
+  const formRef = React.useRef<HTMLFormElement>(null)
+  const { fieldsCompleted, totalFields } = useFormTracking({
+    formId: 'smart-contact-form',
+    formName: 'Smart Contact Form',
+    enabled: true
+  })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
