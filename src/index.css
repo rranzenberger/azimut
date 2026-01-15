@@ -2881,7 +2881,20 @@ select.dropdown-azimut::-ms-expand {
 }
 
 /* =========================
-   4. HERO - Overlay cinematográfico + vinheta vintage
+   4. HERO - Animação Ken Burns (zoom cinematográfico)
+   ========================= */
+
+@keyframes kenBurns {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.08);
+  }
+}
+
+/* =========================
+   5. HERO - Overlay cinematográfico + vinheta vintage
    ========================= */
 
 /* Overlay cinematográfico premium - TEMA ESCURO */
