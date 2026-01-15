@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { useParams, Navigate } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import { getServiceBySlug, getServiceTitle, getServiceShortDesc, getServiceLongDesc, getServiceDeliverables, getServiceProcess } from '../data/servicesData'
+import { getServiceFAQs, hasServiceFAQs } from '../data/serviceFAQs'
 import LangLink from '../components/LangLink'
 import SEO from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -616,6 +617,39 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
                     <span className="text-lg">→</span>
                   </LangLink>
                 </div>
+              </div>
+            </section>
+          )}
+
+          {/* FAQs - Perguntas Frequentes */}
+          {hasServiceFAQs(slug) && (
+            <section 
+              ref={(el) => { sectionRefs.current[5] = el }}
+              className="section-container relative opacity-0"
+            >
+              <span className="section-eyebrow">
+                <span>❓</span>
+                {lang === 'pt' ? 'PERGUNTAS FREQUENTES' : lang === 'es' ? 'PREGUNTAS FRECUENTES' : lang === 'fr' ? 'QUESTIONS FRÉQUENTES' : 'FREQUENTLY ASKED QUESTIONS'}
+              </span>
+              <h2 className="section-title">
+                {lang === 'pt' ? 'Perguntas Frequentes' : lang === 'es' ? 'Preguntas Frecuentes' : lang === 'fr' ? 'Questions Fréquentes' : 'Frequently Asked Questions'}
+              </h2>
+              
+              <div className="mt-8 space-y-4">
+                {getServiceFAQs(slug, lang).map((faq, index) => (
+                  <details
+                    key={index}
+                    className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-slate-900/60 to-slate-900/40 border border-azimut-red/20 hover:border-azimut-red/50 transition-all"
+                  >
+                    <summary className="cursor-pointer p-6 font-sora text-base font-semibold text-theme-card-text hover:text-azimut-red transition-colors flex items-center justify-between list-none">
+                      <span className="pr-4">{faq.question}</span>
+                      <span className="text-azimut-red text-xl font-bold transition-transform group-open:rotate-180 flex-shrink-0">▼</span>
+                    </summary>
+                    <div className="px-6 pb-6 pt-0 text-theme-card-text-secondary leading-relaxed">
+                      <p className="text-sm md:text-base">{faq.answer}</p>
+                    </div>
+                  </details>
+                ))}
               </div>
             </section>
           )}
