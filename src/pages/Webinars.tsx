@@ -44,7 +44,7 @@ const Webinars: React.FC<WebinarsProps> = ({ lang }) => {
         title: 'Temas Abordados',
         list: [
           {
-            icon: '🍁',
+            icon: '🇨🇦',
             title: 'Info Session Vancouver',
             description: 'Tudo sobre VFS e VanArts: cursos, custos, vistos, moradia, empregabilidade.'
           },
@@ -115,7 +115,7 @@ const Webinars: React.FC<WebinarsProps> = ({ lang }) => {
         title: 'Topics Covered',
         list: [
           {
-            icon: '🍁',
+            icon: '🇨🇦',
             title: 'Vancouver Info Session',
             description: 'Everything about VFS and VanArts: programs, costs, visas, housing, employability.'
           },

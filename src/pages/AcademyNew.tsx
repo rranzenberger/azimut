@@ -39,7 +39,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
       sections: [
         {
           id: 'vancouver',
-          icon: '🍁',
+          icon: '🇨🇦',
           title: 'Estudar em Vancouver',
           description: 'Agente oficial VFS/VanArts. Forme-se em 1 ano nas melhores escolas de mídia do Canadá com 90%+ empregabilidade.',
           link: '/academy/vancouver',
@@ -113,7 +113,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
       sections: [
         {
           id: 'vancouver',
-          icon: '🍁',
+          icon: '🇨🇦',
           title: 'Study in Vancouver',
           description: 'Official VFS/VanArts agent. Graduate in 1 year from Canada\'s top media schools with 90%+ employability.',
           link: '/academy/vancouver',
@@ -187,7 +187,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
       sections: [
         {
           id: 'vancouver',
-          icon: '🍁',
+          icon: '🇨🇦',
           title: 'Estudiar en Vancouver',
           description: 'Agente oficial VFS/VanArts. Fórmate en 1 año en las mejores escuelas de medios de Canadá con 90%+ empleabilidad.',
           link: '/academy/vancouver',
@@ -261,7 +261,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
       sections: [
         {
           id: 'vancouver',
-          icon: '🍁',
+          icon: '🇨🇦',
           title: 'Étudier à Vancouver',
           description: 'Agent officiel VFS/VanArts. Diplômez en 1 an des meilleures écoles de médias au Canada avec 90%+ d\'employabilité.',
           link: '/academy/vancouver',
@@ -408,7 +408,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
             <InternalNavigation
               items={[
                 { id: 'all', label: lang === 'pt' ? 'Visão Geral' : lang === 'es' ? 'Visión General' : lang === 'fr' ? 'Aperçu' : 'Overview', href: '/academy', icon: '🎓' },
-                { id: 'vancouver', label: 'Vancouver', href: '/academy/vancouver', icon: '🍁' },
+                { id: 'vancouver', label: 'Vancouver', href: '/academy/vancouver', icon: '🇨🇦' },
                 { id: 'courses', label: lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses', href: '/academy/courses', icon: '📚' },
                 { id: 'workshops', label: 'Workshops', href: '/academy/workshops', icon: '🎬' },
                 { id: 'corporate', label: lang === 'pt' ? 'Corporativo' : lang === 'es' ? 'Corporativo' : lang === 'fr' ? 'Entreprise' : 'Corporate', href: '/academy/corporate', icon: '🏢' }

@@ -622,7 +622,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
       <div className="text-center mb-8">
         <div className="inline-block px-6 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-4">
           <span className="text-azimut-red text-sm font-semibold uppercase">
-            {type === 'vancouver' ? '🍁' : type === 'course' ? '📚' : type === 'workshop' ? '🎬' : '🏢'} Formulário Rápido
+            {type === 'vancouver' ? '🇨🇦' : type === 'course' ? '📚' : type === 'workshop' ? '🎬' : '🏢'} Formulário Rápido
           </span>
         </div>
         

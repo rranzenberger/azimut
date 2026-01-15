@@ -62,7 +62,7 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
         { icon: '🎬', title: 'Gramado Festival', desc: 'Curadoria VR oficial (8 anos consecutivos)', year: '2017' },
         { icon: '🏛️', title: 'Museu Olímpico', desc: 'Direção Geral de Tecnologia', year: '2015-2017' },
         { icon: '🔥', title: 'Autodesk Flame', desc: 'Único Flame Trainer certificado no Brasil', year: '2000-2015' },
-        { icon: '🍁', title: 'Autodesk Canadá', desc: 'Único contrato na América do Sul', year: '1996-2008' },
+        { icon: '🇨🇦', title: 'Autodesk Canadá', desc: 'Único contrato na América do Sul', year: '1996-2008' },
         { icon: '🌍', title: 'Internacional', desc: 'Rio, SP, Belém, Florianópolis, Vancouver', year: '2020' },
         { icon: '🤖', title: 'IA Pioneer', desc: 'Pesquisa em IA para animação', year: '1997' }
       ]
@@ -116,7 +116,7 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
         { icon: '🎬', title: 'Festival Gramado', desc: 'Curation VR officielle (8 ans consécutifs)', year: '2017' },
         { icon: '🏛️', title: 'Musée Olympique', desc: 'Direction Générale Technologie', year: '2015-2017' },
         { icon: '🔥', title: 'Autodesk Flame', desc: 'Seul Flame Trainer certifié au Brésil', year: '2000-2015' },
-        { icon: '🍁', title: 'Autodesk Canada', desc: 'Seul contrat en Amérique du Sud', year: '1996-2008' },
+        { icon: '🇨🇦', title: 'Autodesk Canada', desc: 'Seul contrat en Amérique du Sud', year: '1996-2008' },
         { icon: '🌍', title: 'International', desc: 'Rio, SP, Belém, Florianópolis, Vancouver', year: '2020' },
         { icon: '🤖', title: 'Pionnier IA', desc: 'Recherche IA pour animation', year: '1997' }
       ]
@@ -170,7 +170,7 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
         { icon: '🎬', title: 'Festival Gramado', desc: 'Curaduría VR oficial (8 años consecutivos)', year: '2017' },
         { icon: '🏛️', title: 'Museo Olímpico', desc: 'Dirección General Tecnología', year: '2015-2017' },
         { icon: '🔥', title: 'Autodesk Flame', desc: 'Único Flame Trainer certificado en Brasil', year: '2000-2015' },
-        { icon: '🍁', title: 'Autodesk Canadá', desc: 'Único contrato en América del Sur', year: '1996-2008' },
+        { icon: '🇨🇦', title: 'Autodesk Canadá', desc: 'Único contrato en América del Sur', year: '1996-2008' },
         { icon: '🌍', title: 'Internacional', desc: 'Río, SP, Belém, Florianópolis, Vancouver', year: '2020' },
         { icon: '🤖', title: 'Pionero IA', desc: 'Investigación IA para animación', year: '1997' }
       ]
@@ -224,7 +224,7 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
         { icon: '🎬', title: 'Gramado Festival', desc: 'Official VR Curation (8 consecutive years)', year: '2017' },
         { icon: '🏛️', title: 'Olympic Museum', desc: 'General Technology Direction', year: '2015-2017' },
         { icon: '🔥', title: 'Autodesk Flame', desc: 'Only certified Flame Trainer in Brazil', year: '2000-2015' },
-        { icon: '🍁', title: 'Autodesk Canada', desc: 'Only contract in South America', year: '1996-2008' },
+        { icon: '🇨🇦', title: 'Autodesk Canada', desc: 'Only contract in South America', year: '1996-2008' },
         { icon: '🌍', title: 'International', desc: 'Rio, SP, Belém, Florianópolis, Vancouver', year: '2020' },
         { icon: '🤖', title: 'AI Pioneer', desc: 'AI research for animation', year: '1997' }
       ]

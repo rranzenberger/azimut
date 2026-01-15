@@ -122,7 +122,7 @@ export const BADGES_DATABASE: Omit<Badge, 'unlockedAt'>[] = [
   { id: 'curious_mind', name: 'Mente Curiosa', description: 'Visitou a Academy', emoji: '🎓', rarity: 'common', category: 'learner' },
   { id: 'quiz_master', name: 'Mestre dos Quizzes', description: 'Completou 3 quizzes', emoji: '🧠', rarity: 'rare', category: 'learner' },
   { id: 'budget_planner', name: 'Planejador', description: 'Usou a calculadora de orçamento', emoji: '💰', rarity: 'common', category: 'learner' },
-  { id: 'vancouver_dreamer', name: 'Sonhador de Vancouver', description: 'Explorou a página Vancouver', emoji: '🍁', rarity: 'common', category: 'learner' },
+  { id: 'vancouver_dreamer', name: 'Sonhador de Vancouver', description: 'Explorou a página Vancouver', emoji: '🇨🇦', rarity: 'common', category: 'learner' },
   { id: 'school_expert', name: 'Expert em Escolas', description: 'Completou o quiz VFS vs VanArts', emoji: '🏫', rarity: 'rare', category: 'learner' },
   
   // SOCIAL
