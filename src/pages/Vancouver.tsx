@@ -442,15 +442,15 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             {/* Badges - sempre escuros para funcionar sobre qualquer fundo */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
-              <div className="inline-block px-4 py-2 rounded-full backdrop-blur-md" style={{ background: 'rgba(201, 35, 55, 0.25)', border: '1px solid rgba(201, 35, 55, 0.5)' }}>
-                <span className="text-sm font-semibold uppercase tracking-wider inline-flex items-center gap-1.5" style={{ color: '#ff4d5a' }}>
+              <div className="inline-block px-4 py-2 rounded-full backdrop-blur-md" style={{ background: 'rgba(201, 35, 55, 0.85)', border: '1px solid rgba(201, 35, 55, 0.9)' }}>
+                <span className="text-sm font-semibold uppercase tracking-wider inline-flex items-center gap-1.5" style={{ color: '#ffffff', textShadow: '0 1px 3px rgba(0, 0, 0, 0.5)' }}>
                   <CanadaMapleLeaf size="md" /> {lang === 'pt' ? 'Agenciamento Educacional' : lang === 'es' ? 'Agenciamiento Educacional' : lang === 'fr' ? 'Agence Éducative' : 'Educational Agency'}
                 </span>
               </div>
               
               {/* Badge hora de Vancouver */}
-              <div className="inline-block px-4 py-2 rounded-full backdrop-blur-md" style={{ background: 'rgba(0, 0, 0, 0.5)', border: '1px solid rgba(255, 255, 255, 0.3)' }}>
-                <span className="text-sm font-medium inline-flex items-center gap-2" style={{ color: '#ffffff' }}>
+              <div className="inline-block px-4 py-2 rounded-full backdrop-blur-md" style={{ background: 'rgba(10, 15, 30, 0.9)', border: '1px solid rgba(255, 255, 255, 0.3)' }}>
+                <span className="text-sm font-medium inline-flex items-center gap-2" style={{ color: '#ffffff', textShadow: '0 1px 3px rgba(0, 0, 0, 0.5)' }}>
                   🇨🇦 {lang === 'pt' ? 'Vancouver agora' : lang === 'es' ? 'Vancouver ahora' : lang === 'fr' ? 'Vancouver maintenant' : 'Vancouver now'}: <span className="font-bold">{vancouverTime}</span>
                 </span>
               </div>
