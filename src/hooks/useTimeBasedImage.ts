@@ -30,17 +30,17 @@ export const useTimeBasedImage = (): TimeBasedImage => {
       const vancouverMinutes = vancouverTime.getMinutes()
       const vancouverTimeString = `${vancouverHour.toString().padStart(2, '0')}:${vancouverMinutes.toString().padStart(2, '0')}`
 
-      // MADRUGADA (0-4h) - Noite tranquila
+      // MADRUGADA (0-4h) - Sunset Science World ⭐ (imagem destaque)
       if (hour >= 0 && hour < 5) {
         return {
-          image: '/vancouver-hero-night.jpg',
+          image: '/vancouver-hero-sunset.jpg',
           period: 'night',
           vancouverTime: vancouverTimeString,
           vancouverHour
         }
       }
 
-      // AMANHECER (5-7h) - Twilight
+      // AMANHECER (5-7h) - Twilight/Bluehour
       if (hour >= 5 && hour < 8) {
         return {
           image: '/vancouver-hero-twilight.jpg',
@@ -50,7 +50,7 @@ export const useTimeBasedImage = (): TimeBasedImage => {
         }
       }
 
-      // MANHÃ (8-11h) - Dia ensolarado
+      // MANHÃ (8-11h) - Day marina com reflexo
       if (hour >= 8 && hour < 12) {
         return {
           image: '/vancouver-hero-day.jpg',
@@ -60,28 +60,28 @@ export const useTimeBasedImage = (): TimeBasedImage => {
         }
       }
 
-      // MEIO-DIA (12-14h) - Vista aérea
+      // MEIO-DIA (12-14h) - Flag (identidade canadense)
       if (hour >= 12 && hour < 15) {
         return {
-          image: '/vancouver-hero-aerial.jpg',
+          image: '/vancouver-hero-flag.jpg',
           period: 'noon',
           vancouverTime: vancouverTimeString,
           vancouverHour
         }
       }
 
-      // TARDE (15-16h) - Bandeira
+      // TARDE (15-16h) - Aerial (vista aérea)
       if (hour >= 15 && hour < 17) {
         return {
-          image: '/vancouver-hero-flag.jpg',
+          image: '/vancouver-hero-aerial.jpg',
           period: 'afternoon',
           vancouverTime: vancouverTimeString,
           vancouverHour
         }
       }
 
-      // SUNSET (17-19h) - Pôr do sol ⭐
-      if (hour >= 17 && hour < 20) {
+      // SUNSET (17-21h) - Sunset Science World ⭐ JANELA MAIOR
+      if (hour >= 17 && hour < 22) {
         return {
           image: '/vancouver-hero-sunset.jpg',
           period: 'sunset',
@@ -90,17 +90,7 @@ export const useTimeBasedImage = (): TimeBasedImage => {
         }
       }
 
-      // BLUE HOUR (20-21h) - Crepúsculo
-      if (hour >= 20 && hour < 22) {
-        return {
-          image: '/vancouver-hero-bluehour.jpg',
-          period: 'bluehour',
-          vancouverTime: vancouverTimeString,
-          vancouverHour
-        }
-      }
-
-      // NOITE (22-23h) - Noite com luzes
+      // NOITE (22-23h) - Night False Creek
       return {
         image: '/vancouver-hero-night.jpg',
         period: 'evening',
