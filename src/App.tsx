@@ -62,8 +62,8 @@ const shouldShowLogin = (): boolean => {
 // Páginas secundárias: Lazy loading com preload estratégico
 // ════════════════════════════════════════════════════════════
 
-// Home: Lazy (pode ser primeira rota, mas não bloqueia)
-const Home = lazy(() => import('./pages/Home'))
+// Home: Import direto (primeira rota, crítico para LCP)
+import Home from './pages/Home'
 
 // Páginas críticas: Import direto (menos erros, mais rápido)
 import Studio from './pages/Studio'

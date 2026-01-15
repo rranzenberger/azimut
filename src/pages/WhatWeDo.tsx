@@ -7,6 +7,7 @@ import LangLink from '../components/LangLink'
 import InternalNavigation from '../components/InternalNavigation'
 import { servicesData, getServiceTitle, getServiceShortDesc } from '../data/servicesData'
 import StarBackground from '../components/StarBackground'
+import { useScrollAnimation } from '../hooks/useScrollAnimation'
 
 // ═══════════════════════════════════════════════════════════════
 // FUNÇÃO: Destacar palavras-chave com DUAS cores harmônicas

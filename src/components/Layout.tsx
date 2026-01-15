@@ -1282,7 +1282,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 })
               })
             } catch (emailErr) {
-              console.warn('Email notification failed (non-critical):', emailErr)
+              // Email notification failed (não crítico, silencioso em produção)
+              if (process.env.NODE_ENV === 'development') {
+                console.warn('Email notification failed (non-critical):', emailErr)
+              }
             }
             
             // 3. Fechar modal
@@ -1294,7 +1297,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             }, 500)
             
           } catch (error) {
-            console.error('Erro ao enviar lead:', error)
+            // Erro ao enviar lead (manter em produção para debug)
+            if (process.env.NODE_ENV === 'development') {
+              console.error('Erro ao enviar lead:', error)
+            }
             alert(
               lang === 'pt'
                 ? 'Erro ao enviar. Por favor, tente novamente ou entre em contato diretamente.'

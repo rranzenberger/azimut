@@ -253,7 +253,10 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
           setGalleryImages(getServiceGalleryPlaceholders(slug, title, 6))
         }
       } catch (error) {
-        console.warn('Erro ao buscar imagens do backoffice:', error)
+        // Erro ao buscar imagens (não crítico, silencioso em produção)
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('Erro ao buscar imagens do backoffice:', error)
+        }
         // Fallback para placeholders
         setGalleryImages(getServiceGalleryPlaceholders(slug, title, 6))
       }

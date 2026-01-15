@@ -11,6 +11,7 @@ import { VideoPlayer } from '../components/VideoPlayer'
 import { AnimatedLogo } from '../components/AnimatedLogo'
 import StarBackground from '../components/StarBackground'
 import OptimizedImage from '../components/OptimizedImage'
+import { useScrollAnimation } from '../hooks/useScrollAnimation'
 
 interface HomeProps {
   lang: Lang
@@ -94,7 +95,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
       return cleanup
     } catch (error) {
       // Se tracking falhar, não quebrar renderização
-      console.warn('Tracking error:', error)
+      // Tracking error (não crítico, silencioso em produção)
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Tracking error:', error)
+      }
       return () => {} // Cleanup vazio
     }
   }, [])

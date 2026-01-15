@@ -94,6 +94,11 @@ const SEO: React.FC<SEOProps> = ({
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link rel="dns-prefetch" href="https://www.youtube.com" />
       <link rel="dns-prefetch" href="https://img.youtube.com" />
+      
+      {/* Preload recursos críticos */}
+      <link rel="preload" href="/fonts/HandelGothic-Regular.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+      <link rel="preload" href="/fonts/Inter-VariableFont.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+      <link rel="preload" href="/logo-azimut-star.svg" as="image" />
     </Helmet>
   )
 }

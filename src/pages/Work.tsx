@@ -23,6 +23,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   const location = useLocation()
   const seo = seoData.work[lang]
   
+  // Animação automática de seções
+  useScrollAnimation()
+  
   // Filtros - Inicializar com valores da URL
   const [selectedTag, setSelectedTag] = useState<string | null>(() => {
     const params = new URLSearchParams(window.location.search)
