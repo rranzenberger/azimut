@@ -329,7 +329,7 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                       overflow: 'hidden'
                     }}
                   >
-                    <img 
+                    <OptimizedImage
                       src={member.photo}
                       alt={member.name}
                       className="w-full h-full"

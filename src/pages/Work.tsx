@@ -528,10 +528,11 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   {/* Renderizar imagem se disponível */}
                   {item.heroImage?.medium || item.heroImage?.large ? (
                     <>
-                      <img
+                      <OptimizedImage
                         src={item.heroImage.large || item.heroImage.medium}
                         alt={item.heroImage.alt || item.title}
-                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="absolute inset-0 h-full w-full transition-transform duration-500 group-hover:scale-110"
+                        objectFit="cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none opacity-100 group-hover:from-azimut-red/20 group-hover:via-slate-950/40 transition-all duration-300"></div>
                     </>

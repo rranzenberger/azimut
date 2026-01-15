@@ -212,11 +212,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             
             return (
               <div className="absolute inset-0 w-full h-full">
-                <img 
+                <OptimizedImage
                   src={backgroundImage}
                   alt=""
-                  className="w-full h-full object-cover opacity-20"
-                  loading="eager"
+                  className="w-full h-full opacity-20"
+                  objectFit="cover"
+                  priority={true}
                 />
               </div>
             )
