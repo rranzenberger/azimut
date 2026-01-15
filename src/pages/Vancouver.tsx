@@ -60,7 +60,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
           description: 'Vancouver é constantemente ranqueada entre as 3 melhores cidades do mundo para se viver. Segura, multicultural e com natureza deslumbrante.'
         },
         {
-          icon: '🍁',
+          icon: '🇨🇦',
           title: 'Pathway Residência Permanente',
           description: 'Após estudar, você pode trabalhar legalmente no Canadá e aplicar para residência permanente.'
         },
@@ -220,7 +220,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
       whyItems: [
         { icon: '🎬', title: 'Global Media Hub', description: 'Vancouver is known as "Hollywood North". Studios like Disney, Sony, ILM, EA and Ubisoft have bases here.' },
         { icon: '🏆', title: 'Top 3 World Quality of Life', description: 'Vancouver is constantly ranked among the 3 best cities in the world to live. Safe, multicultural and with stunning nature.' },
-        { icon: '🍁', title: 'Permanent Residence Pathway', description: 'After studying, you can work legally in Canada and apply for permanent residence.' },
+        { icon: '🇨🇦', title: 'Permanent Residence Pathway', description: 'After studying, you can work legally in Canada and apply for permanent residence.' },
         { icon: '💼', title: '40,000+ Digital Media Vacancies', description: 'Hot market with high demand for qualified professionals in VFX, Animation, Games and Design.' }
       ],
       compareTitle: 'Traditional University vs Vancouver',
@@ -277,7 +277,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
       whyItems: [
         { icon: '🎬', title: 'Hub Global de Medios', description: 'Vancouver es conocida como "Hollywood del Norte". Estudios como Disney, Sony, ILM, EA y Ubisoft tienen bases aquí.' },
         { icon: '🏆', title: 'Calidad de Vida Top 3 Mundial', description: 'Vancouver está constantemente clasificada entre las 3 mejores ciudades del mundo para vivir. Segura, multicultural y con naturaleza impresionante.' },
-        { icon: '🍁', title: 'Camino a Residencia Permanente', description: 'Después de estudiar, puedes trabajar legalmente en Canadá y solicitar residencia permanente.' },
+        { icon: '🇨🇦', title: 'Camino a Residencia Permanente', description: 'Después de estudiar, puedes trabajar legalmente en Canadá y solicitar residencia permanente.' },
         { icon: '💼', title: '40.000+ Vacantes en Medios Digitales', description: 'Mercado activo con alta demanda de profesionales calificados en VFX, Animación, Juegos y Diseño.' }
       ],
       compareTitle: 'Universidad Tradicional vs Vancouver',
@@ -334,7 +334,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
       whyItems: [
         { icon: '🎬', title: 'Hub Mondial des Médias', description: 'Vancouver est connue comme "Hollywood du Nord". Des studios comme Disney, Sony, ILM, EA et Ubisoft ont des bases ici.' },
         { icon: '🏆', title: 'Qualité de Vie Top 3 Mondial', description: 'Vancouver est constamment classée parmi les 3 meilleures villes du monde pour vivre. Sûre, multiculturelle et avec une nature époustouflante.' },
-        { icon: '🍁', title: 'Chemin vers Résidence Permanente', description: 'Après vos études, vous pouvez travailler légalement au Canada et demander la résidence permanente.' },
+        { icon: '🇨🇦', title: 'Chemin vers Résidence Permanente', description: 'Après vos études, vous pouvez travailler légalement au Canada et demander la résidence permanente.' },
         { icon: '💼', title: '40.000+ Postes en Médias Numériques', description: 'Marché actif avec forte demande de professionnels qualifiés en VFX, Animation, Jeux et Design.' }
       ],
       compareTitle: 'Université Traditionnelle vs Vancouver',
@@ -483,7 +483,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 { value: '90%+', label: lang === 'pt' ? 'Empregabilidade' : lang === 'es' ? 'Empleabilidad' : lang === 'fr' ? 'Employabilité' : 'Employability' },
                 { value: lang === 'pt' ? '1 ano' : lang === 'es' ? '1 año' : lang === 'fr' ? '1 an' : '1 year', label: lang === 'pt' ? 'Duração' : lang === 'es' ? 'Duración' : lang === 'fr' ? 'Durée' : 'Duration' },
                 { value: '40k+', label: lang === 'pt' ? 'Vagas em Mídia' : lang === 'es' ? 'Vacantes Medios' : lang === 'fr' ? 'Postes Médias' : 'Media Jobs' },
-                { value: '🍁', label: lang === 'pt' ? 'Residência PR' : lang === 'es' ? 'Residencia PR' : lang === 'fr' ? 'Résidence PR' : 'PR Residence' }
+                { value: '🇨🇦', label: lang === 'pt' ? 'Residência PR' : lang === 'es' ? 'Residencia PR' : lang === 'fr' ? 'Résidence PR' : 'PR Residence' }
               ].map((stat, i) => (
                 <div key={i} className="text-center">
                   <div className="text-3xl md:text-4xl font-bold text-azimut-red mb-1">
@@ -596,8 +596,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   <tr className="comparison-table-header">
                     <th className="text-left p-4 text-white/70 font-semibold uppercase text-sm"></th>
                     <th className="p-4 text-white font-semibold text-lg">{lang === 'pt' ? 'Univ. Tradicional' : lang === 'es' ? 'Univ. Tradicional' : lang === 'fr' ? 'Univ. Traditionnelle' : 'Traditional Univ.'}</th>
-                    <th className="p-4 text-azimut-red font-semibold text-lg">VanArts 🍁</th>
-                    <th className="p-4 text-white font-semibold text-lg">VFS 🍁</th>
+                    <th className="p-4 text-azimut-red font-semibold text-lg">VanArts 🇨🇦</th>
+                    <th className="p-4 text-white font-semibold text-lg">VFS 🇨🇦</th>
                   </tr>
                 </thead>
                 <tbody className="text-center">
@@ -640,8 +640,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   <tr>
                     <td className="text-left p-4 text-white/70 font-medium">Residência PR</td>
                     <td className="p-4 text-white">Não</td>
-                    <td className="p-4 text-azimut-red font-bold">Sim 🍁 ✅</td>
-                    <td className="p-4 text-white">Sim 🍁 ✅</td>
+                    <td className="p-4 text-azimut-red font-bold">Sim 🇨🇦 ✅</td>
+                    <td className="p-4 text-white">Sim 🇨🇦 ✅</td>
                   </tr>
                 </tbody>
               </table>
@@ -649,7 +649,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
 
             <div className="mt-8 p-6 bg-azimut-red/10 border border-azimut-red/30 rounded-lg">
               <p className="text-white/90 text-center text-lg">
-                <strong className="text-azimut-red">VEREDITO:</strong> VanArts/VFS são <strong>MAIS FOCADAS</strong>, <strong>4x MAIS RÁPIDAS</strong>, <strong>2x MAIOR EMPREGABILIDADE</strong> e com <strong>MERCADO GLOBAL</strong> + <strong>PATHWAY PR 🍁</strong>! 🚀
+                <strong className="text-azimut-red">VEREDITO:</strong> VanArts/VFS são <strong>MAIS FOCADAS</strong>, <strong>4x MAIS RÁPIDAS</strong>, <strong>2x MAIOR EMPREGABILIDADE</strong> e com <strong>MERCADO GLOBAL</strong> + <strong>PATHWAY PR 🇨🇦</strong>! 🚀
               </p>
             </div>
           </div>
