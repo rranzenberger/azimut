@@ -2815,30 +2815,34 @@ select.dropdown-azimut::-ms-expand {
    1. TEXTOS FORA DE CARDS - Escuros no tema claro
    ========================= */
 
-/* Títulos principais FORA de cards - preto */
+/* Títulos principais FORA de cards - SEMPRE brancos (igual tema escuro) */
 [data-theme="light"] .vancouver-page h1:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
 [data-theme="light"] .vancouver-page h2:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
 [data-theme="light"] .vancouver-page h3:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *) {
-  color: #0d0d0d !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-/* Textos descritivos FORA de cards - cinza escuro */
+/* Textos descritivos FORA de cards - SEMPRE brancos (igual tema escuro) */
 [data-theme="light"] .vancouver-page p:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *),
 [data-theme="light"] .vancouver-page span:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *):not(.text-azimut-red) {
-  color: #2a2a2a !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-/* Textos .text-white FORA de cards e elementos com fundo - escuros */
+/* Textos .text-white FORA de cards - SEMPRE brancos (igual tema escuro) */
 [data-theme="light"] .vancouver-page .text-white:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *):not([class*="bg-slate-"] *):not([class*="bg-black"] *) {
-  color: #1a1a1a !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-/* Hero section - texto adaptativo */
+/* Hero section - SEMPRE branco (igual tema escuro) */
 [data-theme="light"] .vancouver-page section[class*="hero"] h1,
 [data-theme="light"] .vancouver-page section[class*="hero"] h2,
 [data-theme="light"] .vancouver-page section[class*="hero"] h3,
 [data-theme="light"] .vancouver-page section[class*="hero"] p {
-  color: #0d0d0d !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 [data-theme="light"] .vancouver-page .text-white\/90:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
