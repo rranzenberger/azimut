@@ -2845,11 +2845,13 @@ select.dropdown-azimut::-ms-expand {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
+/* Textos com opacidade - SEMPRE brancos com opacidade (igual tema escuro) */
 [data-theme="light"] .vancouver-page .text-white\/90:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
 [data-theme="light"] .vancouver-page .text-white\/80:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
 [data-theme="light"] .vancouver-page .text-white\/70:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
 [data-theme="light"] .vancouver-page .text-white\/60:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *) {
-  color: #4a4a4a !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 /* =========================
@@ -2913,10 +2915,11 @@ select.dropdown-azimut::-ms-expand {
   color: #c92337 !important;
 }
 
-/* Tabela comparativa - texto escuro legível */
+/* Tabela comparativa - SEMPRE branca (igual tema escuro) */
 [data-theme="light"] .vancouver-page table td,
 [data-theme="light"] .vancouver-page table th {
-  color: #1a1a1a !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="light"] .vancouver-page table .text-azimut-red {
