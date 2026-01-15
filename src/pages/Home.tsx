@@ -10,6 +10,7 @@ import { usePersonalizedContent } from '../hooks/usePersonalizedContent'
 import { VideoPlayer } from '../components/VideoPlayer'
 import { AnimatedLogo } from '../components/AnimatedLogo'
 import StarBackground from '../components/StarBackground'
+import OptimizedImage from '../components/OptimizedImage'
 
 interface HomeProps {
   lang: Lang
