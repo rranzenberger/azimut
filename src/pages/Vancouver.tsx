@@ -12,6 +12,7 @@ import AcademyQuickForm from '../components/AcademyQuickForm'
 import WhyVancouverConvincing from '../components/WhyVancouverConvincing'
 import VancouverMagazine from '../components/VancouverMagazine'
 import VisualSchoolQuiz from '../components/VisualSchoolQuiz'
+import CanadaMapleLeaf from '../components/CanadaMapleLeaf'
 
 interface VancouverProps {
   lang: Lang
@@ -596,8 +597,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   <tr className="comparison-table-header">
                     <th className="text-left p-4 text-white/70 font-semibold uppercase text-sm"></th>
                     <th className="p-4 text-white font-semibold text-lg">{lang === 'pt' ? 'Univ. Tradicional' : lang === 'es' ? 'Univ. Tradicional' : lang === 'fr' ? 'Univ. Traditionnelle' : 'Traditional Univ.'}</th>
-                    <th className="p-4 text-azimut-red font-semibold text-lg">VanArts 🇨🇦</th>
-                    <th className="p-4 text-white font-semibold text-lg">VFS 🇨🇦</th>
+                    <th className="p-4 text-azimut-red font-semibold text-lg">VanArts <CanadaMapleLeaf size="md" /></th>
+                    <th className="p-4 text-white font-semibold text-lg">VFS <CanadaMapleLeaf size="md" /></th>
                   </tr>
                 </thead>
                 <tbody className="text-center">
@@ -640,8 +641,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   <tr>
                     <td className="text-left p-4 text-white/70 font-medium">{lang === 'pt' ? 'Possibilidade PR' : lang === 'es' ? 'Posibilidad PR' : lang === 'fr' ? 'Possibilité PR' : 'PR Possibility'}</td>
                     <td className="p-4 text-white">{lang === 'pt' ? 'Não' : lang === 'es' ? 'No' : lang === 'fr' ? 'Non' : 'No'}</td>
-                    <td className="p-4 text-azimut-red font-bold">{lang === 'pt' ? 'Sim' : lang === 'es' ? 'Sí' : lang === 'fr' ? 'Oui' : 'Yes'} 🇨🇦 ✅</td>
-                    <td className="p-4 text-white">{lang === 'pt' ? 'Sim' : lang === 'es' ? 'Sí' : lang === 'fr' ? 'Oui' : 'Yes'} 🇨🇦 ✅</td>
+                    <td className="p-4 text-azimut-red font-bold">{lang === 'pt' ? 'Sim' : lang === 'es' ? 'Sí' : lang === 'fr' ? 'Oui' : 'Yes'} <CanadaMapleLeaf /> ✅</td>
+                    <td className="p-4 text-white">{lang === 'pt' ? 'Sim' : lang === 'es' ? 'Sí' : lang === 'fr' ? 'Oui' : 'Yes'} <CanadaMapleLeaf /> ✅</td>
                   </tr>
                 </tbody>
               </table>
@@ -649,7 +650,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
 
             <div className="mt-8 p-6 bg-azimut-red/10 border border-azimut-red/30 rounded-lg">
               <p className="text-white/90 text-center text-lg">
-                <strong className="text-azimut-red">VEREDITO:</strong> VanArts/VFS são <strong>MAIS FOCADAS</strong>, <strong>4x MAIS RÁPIDAS</strong>, <strong>2x MAIOR EMPREGABILIDADE</strong> e com <strong>MERCADO GLOBAL</strong> + <strong>POSSIBILIDADE DE PR 🇨🇦</strong>! 🚀
+                <strong className="text-azimut-red">VEREDITO:</strong> VanArts/VFS são <strong>MAIS FOCADAS</strong>, <strong>4x MAIS RÁPIDAS</strong>, <strong>2x MAIOR EMPREGABILIDADE</strong> e com <strong>MERCADO GLOBAL</strong> + <strong>POSSIBILIDADE DE PR <CanadaMapleLeaf size="md" /></strong>! 🚀
               </p>
             </div>
           </div>
