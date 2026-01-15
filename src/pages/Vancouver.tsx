@@ -458,8 +458,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
 
             <h1 className="text-5xl md:text-7xl font-handel uppercase tracking-wider text-white dark:text-white mb-6 leading-tight flex flex-col items-center gap-2" style={{ color: 'var(--theme-text)' }}>
               <span>{t.title}</span>
-              <span className="inline-flex items-center gap-3">
-                {lang === 'pt' ? 'CANADÁ' : lang === 'es' ? 'CANADÁ' : lang === 'fr' ? 'CANADA' : 'CANADA'} <CanadaMapleLeaf size="lg" />
+              <span className="inline-flex items-center gap-2" style={{ alignItems: 'center', lineHeight: '1' }}>
+                {lang === 'pt' ? 'CANADÁ' : lang === 'es' ? 'CANADÁ' : lang === 'fr' ? 'CANADA' : 'CANADA'} <CanadaMapleLeaf size="match-text" />
               </span>
             </h1>
 
