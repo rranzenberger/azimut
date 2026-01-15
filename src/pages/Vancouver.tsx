@@ -448,10 +448,19 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 </span>
               </div>
               
-              {/* Badge hora de Vancouver */}
-              <div className="inline-block px-4 py-2 rounded-full backdrop-blur-md" style={{ background: 'rgba(10, 15, 30, 0.9)', border: '1px solid rgba(255, 255, 255, 0.3)' }}>
-                <span className="text-sm font-medium inline-flex items-center gap-2" style={{ color: '#ffffff', textShadow: '0 1px 3px rgba(0, 0, 0, 0.5)' }}>
-                  🇨🇦 {lang === 'pt' ? 'Vancouver agora' : lang === 'es' ? 'Vancouver ahora' : lang === 'fr' ? 'Vancouver maintenant' : 'Vancouver now'}: <span className="font-bold">{vancouverTime}</span>
+              {/* Badge hora de Vancouver - Texto chamativo */}
+              <div className="inline-block px-5 py-3 rounded-full backdrop-blur-md" style={{ background: 'rgba(10, 15, 30, 0.9)', border: '1px solid rgba(255, 255, 255, 0.3)' }}>
+                <span className="text-sm font-semibold inline-flex items-center gap-2" style={{ color: '#ffffff', textShadow: '0 1px 3px rgba(0, 0, 0, 0.5)' }}>
+                  <CanadaMapleLeaf size="match-text" /> 
+                  {lang === 'pt' ? (
+                    <>Sinta-se em Vancouver <span className="font-bold">{vancouverTime}</span> - um dos locais mais belos e seguros do mundo</>
+                  ) : lang === 'es' ? (
+                    <>Siéntete en Vancouver <span className="font-bold">{vancouverTime}</span> - uno de los lugares más bellos y seguros del mundo</>
+                  ) : lang === 'fr' ? (
+                    <>Sentez-vous à Vancouver <span className="font-bold">{vancouverTime}</span> - l'un des endroits les plus beaux et sûrs du monde</>
+                  ) : (
+                    <>Feel in Vancouver <span className="font-bold">{vancouverTime}</span> - one of the most beautiful and safest places in the world</>
+                  )}
                 </span>
               </div>
             </div>

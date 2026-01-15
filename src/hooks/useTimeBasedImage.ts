@@ -1,6 +1,7 @@
 /**
- * Hook para selecionar imagem baseada na hora LOCAL do usuário
+ * Hook para selecionar imagem baseada na hora de VANCOUVER (não local)
  * Uma imagem por período - sem carousel
+ * A imagem corresponde ao horário atual de Vancouver
  */
 import { useState, useEffect } from 'react'
 
@@ -22,70 +23,78 @@ export const useTimeBasedImage = (): TimeBasedImage => {
   useEffect(() => {
     const getImageByTime = (): TimeBasedImage => {
       const now = new Date()
-      const hour = now.getHours()
       
-      // Calcular hora de Vancouver (Pacific Time)
-      const vancouverTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Vancouver' }))
-      const vancouverHour = vancouverTime.getHours()
-      const vancouverMinutes = vancouverTime.getMinutes()
-      const vancouverTimeString = `${vancouverHour.toString().padStart(2, '0')}:${vancouverMinutes.toString().padStart(2, '0')}`
+      // Calcular hora de Vancouver (Pacific Time) - USA APENAS ESTA HORA
+      const vancouverTimeString = now.toLocaleString('en-US', { 
+        timeZone: 'America/Vancouver',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      })
+      
+      // Extrair hora e minutos de Vancouver
+      const vancouverDate = new Date(now.toLocaleString('en-US', { timeZone: 'America/Vancouver' }))
+      const vancouverHour = vancouverDate.getHours()
+      const vancouverMinutes = vancouverDate.getMinutes()
+      const vancouverTimeFormatted = `${vancouverHour.toString().padStart(2, '0')}:${vancouverMinutes.toString().padStart(2, '0')}`
 
+      // USAR APENAS HORA DE VANCOUVER para determinar a imagem
       // MADRUGADA (0-5h) - Science World à noite ⭐ (6 horas)
-      if (hour >= 0 && hour < 6) {
+      if (vancouverHour >= 0 && vancouverHour < 6) {
         return {
           image: '/vancouver-hero-madrugada.jpg',
           period: 'night',
-          vancouverTime: vancouverTimeString,
+          vancouverTime: vancouverTimeFormatted,
           vancouverHour
         }
       }
 
       // AMANHECER (6-7h) - Twilight (2 horas)
-      if (hour >= 6 && hour < 8) {
+      if (vancouverHour >= 6 && vancouverHour < 8) {
         return {
           image: '/vancouver-hero-twilight.jpg',
           period: 'dawn',
-          vancouverTime: vancouverTimeString,
+          vancouverTime: vancouverTimeFormatted,
           vancouverHour
         }
       }
 
       // MANHÃ (8-10h) - Dia ensolarado marina (3 horas)
-      if (hour >= 8 && hour < 11) {
+      if (vancouverHour >= 8 && vancouverHour < 11) {
         return {
           image: '/vancouver-hero-day.jpg',
           period: 'morning',
-          vancouverTime: vancouverTimeString,
+          vancouverTime: vancouverTimeFormatted,
           vancouverHour
         }
       }
 
       // MEIO-DIA (11-13h) - Vista aérea sunset ⭐ (3 horas)
-      if (hour >= 11 && hour < 14) {
+      if (vancouverHour >= 11 && vancouverHour < 14) {
         return {
           image: '/vancouver-hero-aerial.jpg',
           period: 'noon',
-          vancouverTime: vancouverTimeString,
+          vancouverTime: vancouverTimeFormatted,
           vancouverHour
         }
       }
 
       // TARDE (14-15h) - Bandeira do Canadá 🇨🇦 (2 horas)
-      if (hour >= 14 && hour < 16) {
+      if (vancouverHour >= 14 && vancouverHour < 16) {
         return {
           image: '/vancouver-hero-flag.jpg',
           period: 'afternoon',
-          vancouverTime: vancouverTimeString,
+          vancouverTime: vancouverTimeFormatted,
           vancouverHour
         }
       }
 
       // SUNSET (16-21h) - Sunset Science World ⭐⭐ DESTAQUE! (6 horas)
-      if (hour >= 16 && hour < 22) {
+      if (vancouverHour >= 16 && vancouverHour < 22) {
         return {
           image: '/vancouver-hero-sunset.jpg',
           period: 'sunset',
-          vancouverTime: vancouverTimeString,
+          vancouverTime: vancouverTimeFormatted,
           vancouverHour
         }
       }
@@ -94,17 +103,17 @@ export const useTimeBasedImage = (): TimeBasedImage => {
       return {
         image: '/vancouver-hero-night.jpg',
         period: 'evening',
-        vancouverTime: vancouverTimeString,
+        vancouverTime: vancouverTimeFormatted,
         vancouverHour
       }
     }
 
     setCurrentImage(getImageByTime())
 
-    // Atualizar a cada 30 minutos
+    // Atualizar a cada minuto para manter sincronizado
     const interval = setInterval(() => {
       setCurrentImage(getImageByTime())
-    }, 30 * 60 * 1000)
+    }, 60 * 1000)
 
     return () => clearInterval(interval)
   }, [])
