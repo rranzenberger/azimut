@@ -656,6 +656,218 @@ export const serviceFAQs: ServiceFAQs = {
         answer: 'Oui! Nous offrons production complète: voice-over professionnel (doublage en multiples langues), composition de bande sonore originale, sound design et mixage. Tout intégré pour créer expérience audiovisuelle complète et impactante.'
       }
     ]
+  },
+  'xr-interatividade-web3': {
+    pt: [
+      {
+        question: 'O que é XR e como difere de VR/AR?',
+        answer: 'XR (Extended Reality) é termo guarda-chuva que inclui VR (Realidade Virtual), AR (Realidade Aumentada) e MR (Realidade Mista). VR é totalmente imersivo, AR sobrepõe digital ao real, MR combina ambos. Escolhemos a melhor tecnologia por projeto.'
+      },
+      {
+        question: 'Quanto custa desenvolver uma experiência XR?',
+        answer: 'Experiências XR variam de R$ 60.000 (AR simples) a R$ 600.000+ (VR complexa com múltiplos cenários). Investimento depende de complexidade, plataforma (mobile/web/headset), interatividade e qualidade gráfica. Oferecemos orçamento personalizado.'
+      },
+      {
+        question: 'Vocês desenvolvem para WebXR (navegador)?',
+        answer: 'Sim! Desenvolvemos experiências WebXR que funcionam diretamente no navegador, sem necessidade de apps. Ideal para acessibilidade e distribuição ampla. Utilizamos Three.js, A-Frame e frameworks modernos para garantir compatibilidade multiplataforma.'
+      },
+      {
+        question: 'Como funciona interatividade em XR?',
+        answer: 'Criamos interações naturais: gestos, voz, movimento, toque. Utilizamos sensores de movimento, reconhecimento de voz, eye-tracking e controllers. Cada interação é projetada para ser intuitiva e imersiva, aproveitando capacidades únicas de cada plataforma XR.'
+      },
+      {
+        question: 'Vocês trabalham com Web3 e NFTs?',
+        answer: 'Sim! Desenvolvemos experiências que integram blockchain, NFTs e metaverso. Criamos galerias virtuais, experiências tokenizadas e integrações com wallets Web3. Entendemos que Web3 é o futuro da propriedade digital e criamos pontes entre mundos físico e virtual.'
+      },
+      {
+        question: 'Qual plataforma XR vocês suportam?',
+        answer: 'Desenvolvemos para todas principais: Meta Quest, Apple Vision Pro, HoloLens, Magic Leap, Pico, HTC Vive, além de WebXR (navegadores) e AR mobile (iOS/Android). Garantimos compatibilidade multiplataforma quando necessário.'
+      }
+    ],
+    en: [
+      {
+        question: 'What is XR and how does it differ from VR/AR?',
+        answer: 'XR (Extended Reality) is umbrella term that includes VR (Virtual Reality), AR (Augmented Reality) and MR (Mixed Reality). VR is fully immersive, AR overlays digital on real, MR combines both. We choose best technology per project.'
+      },
+      {
+        question: 'How much does it cost to develop an XR experience?',
+        answer: 'XR experiences range from R$ 60,000 (simple AR) to R$ 600,000+ (complex VR with multiple scenarios). Investment depends on complexity, platform (mobile/web/headset), interactivity and graphic quality. We offer personalized quote.'
+      },
+      {
+        question: 'Do you develop for WebXR (browser)?',
+        answer: 'Yes! We develop WebXR experiences that work directly in browser, without apps. Ideal for accessibility and wide distribution. We use Three.js, A-Frame and modern frameworks to ensure multiplatform compatibility.'
+      },
+      {
+        question: 'How does interactivity work in XR?',
+        answer: 'We create natural interactions: gestures, voice, movement, touch. We use motion sensors, voice recognition, eye-tracking and controllers. Each interaction is designed to be intuitive and immersive, leveraging unique capabilities of each XR platform.'
+      },
+      {
+        question: 'Do you work with Web3 and NFTs?',
+        answer: 'Yes! We develop experiences that integrate blockchain, NFTs and metaverse. We create virtual galleries, tokenized experiences and Web3 wallet integrations. We understand Web3 is future of digital ownership and create bridges between physical and virtual worlds.'
+      },
+      {
+        question: 'Which XR platforms do you support?',
+        answer: 'We develop for all major ones: Meta Quest, Apple Vision Pro, HoloLens, Magic Leap, Pico, HTC Vive, plus WebXR (browsers) and mobile AR (iOS/Android). We guarantee multiplatform compatibility when needed.'
+      }
+    ],
+    es: [
+      {
+        question: '¿Qué es XR y cómo difiere de VR/AR?',
+        answer: 'XR (Extended Reality) es término paraguas que incluye VR (Realidad Virtual), AR (Realidad Aumentada) y MR (Realidad Mixta). VR es totalmente inmersivo, AR superpone digital al real, MR combina ambos. Elegimos la mejor tecnología por proyecto.'
+      },
+      {
+        question: '¿Cuánto cuesta desarrollar una experiencia XR?',
+        answer: 'Experiencias XR varían de R$ 60.000 (AR simple) a R$ 600.000+ (VR compleja con múltiples escenarios). La inversión depende de complejidad, plataforma (mobile/web/headset), interactividad y calidad gráfica. Ofrecemos presupuesto personalizado.'
+      },
+      {
+        question: '¿Desarrollan para WebXR (navegador)?',
+        answer: '¡Sí! Desarrollamos experiencias WebXR que funcionan directamente en el navegador, sin necesidad de apps. Ideal para accesibilidad y distribución amplia. Utilizamos Three.js, A-Frame y frameworks modernos para garantizar compatibilidad multiplataforma.'
+      },
+      {
+        question: '¿Cómo funciona interactividad en XR?',
+        answer: 'Creamos interacciones naturales: gestos, voz, movimiento, toque. Utilizamos sensores de movimiento, reconocimiento de voz, eye-tracking y controllers. Cada interacción está diseñada para ser intuitiva e inmersiva, aprovechando capacidades únicas de cada plataforma XR.'
+      },
+      {
+        question: '¿Trabajan con Web3 y NFTs?',
+        answer: '¡Sí! Desarrollamos experiencias que integran blockchain, NFTs y metaverso. Creamos galerías virtuales, experiencias tokenizadas e integraciones con wallets Web3. Entendemos que Web3 es el futuro de la propiedad digital y creamos puentes entre mundos físico y virtual.'
+      },
+      {
+        question: '¿Qué plataformas XR soportan?',
+        answer: 'Desarrollamos para todas principales: Meta Quest, Apple Vision Pro, HoloLens, Magic Leap, Pico, HTC Vive, además de WebXR (navegadores) y AR mobile (iOS/Android). Garantizamos compatibilidad multiplataforma cuando sea necesario.'
+      }
+    ],
+    fr: [
+      {
+        question: 'Qu\'est-ce que XR et comment diffère-t-il de VR/AR?',
+        answer: 'XR (Extended Reality) est terme parapluie qui inclut VR (Réalité Virtuelle), AR (Réalité Augmentée) et MR (Réalité Mixte). VR est totalement immersive, AR superpose numérique au réel, MR combine les deux. Nous choisissons meilleure technologie par projet.'
+      },
+      {
+        question: 'Combien coûte développer une expérience XR?',
+        answer: 'Expériences XR varient de R$ 60.000 (AR simple) à R$ 600.000+ (VR complexe avec multiples scénarios). L\'investissement dépend de complexité, plateforme (mobile/web/headset), interactivité et qualité graphique. Nous offrons devis personnalisé.'
+      },
+      {
+        question: 'Développez-vous pour WebXR (navigateur)?',
+        answer: 'Oui! Nous développons expériences WebXR qui fonctionnent directement dans navigateur, sans apps. Idéal pour accessibilité et distribution large. Nous utilisons Three.js, A-Frame et frameworks modernes pour garantir compatibilité multiplateforme.'
+      },
+      {
+        question: 'Comment fonctionne interactivité en XR?',
+        answer: 'Nous créons interactions naturelles: gestes, voix, mouvement, toucher. Nous utilisons capteurs de mouvement, reconnaissance vocale, eye-tracking et controllers. Chaque interaction est conçue pour être intuitive et immersive, exploitant capacités uniques de chaque plateforme XR.'
+      },
+      {
+        question: 'Travaillez-vous avec Web3 et NFTs?',
+        answer: 'Oui! Nous développons expériences qui intègrent blockchain, NFTs et métavers. Nous créons galeries virtuelles, expériences tokenisées et intégrations avec wallets Web3. Nous comprenons que Web3 est avenir de propriété numérique et créons ponts entre mondes physique et virtuel.'
+      },
+      {
+        question: 'Quelles plateformes XR supportez-vous?',
+        answer: 'Nous développons pour toutes principales: Meta Quest, Apple Vision Pro, HoloLens, Magic Leap, Pico, HTC Vive, plus WebXR (navigateurs) et AR mobile (iOS/Android). Nous garantissons compatibilité multiplateforme si nécessaire.'
+      }
+    ]
+  },
+  'games-interativos': {
+    pt: [
+      {
+        question: 'Vocês desenvolvem jogos completos?',
+        answer: 'Sim! Desenvolvemos jogos desde conceito até publicação. Criamos jogos educacionais, serious games, jogos promocionais e experiências gamificadas. Trabalhamos com Unity e Unreal Engine, garantindo qualidade profissional e performance otimizada.'
+      },
+      {
+        question: 'Quanto custa desenvolver um jogo?',
+        answer: 'Jogos variam de R$ 80.000 (simples, 2D) a R$ 1.000.000+ (AAA, 3D complexo). Investimento depende de complexidade, plataforma (mobile/PC/console), gráficos, mecânicas e prazos. Oferecemos orçamento detalhado após análise do conceito.'
+      },
+      {
+        question: 'Vocês fazem serious games para treinamento?',
+        answer: 'Sim! Especializamo-nos em serious games para educação corporativa, treinamento de segurança, simulações médicas e educação. Jogos aumentam engajamento e retenção de aprendizado em até 75% comparado a métodos tradicionais.'
+      },
+      {
+        question: 'Quais plataformas vocês suportam?',
+        answer: 'Desenvolvemos para PC (Windows/Mac/Linux), mobile (iOS/Android), web (HTML5), consoles (quando aplicável) e VR/AR. Garantimos otimização específica para cada plataforma, garantindo melhor performance e experiência do usuário.'
+      },
+      {
+        question: 'Vocês fazem port de jogos existentes?',
+        answer: 'Sim! Realizamos port de jogos entre plataformas, adaptando controles, interface e otimizando performance. Nossa experiência garante que o jogo funcione perfeitamente na nova plataforma mantendo qualidade e jogabilidade originais.'
+      },
+      {
+        question: 'Como funciona monetização de jogos?',
+        answer: 'Implementamos sistemas de monetização: compras in-app, assinaturas, anúncios, DLCs. Trabalhamos com modelos freemium, premium e híbridos. Desenvolvemos estratégias de monetização que equilibram receita com experiência do jogador.'
+      }
+    ],
+    en: [
+      {
+        question: 'Do you develop complete games?',
+        answer: 'Yes! We develop games from concept to publication. We create educational games, serious games, promotional games and gamified experiences. We work with Unity and Unreal Engine, ensuring professional quality and optimized performance.'
+      },
+      {
+        question: 'How much does it cost to develop a game?',
+        answer: 'Games range from R$ 80,000 (simple, 2D) to R$ 1,000,000+ (AAA, complex 3D). Investment depends on complexity, platform (mobile/PC/console), graphics, mechanics and deadlines. We offer detailed quote after concept analysis.'
+      },
+      {
+        question: 'Do you do serious games for training?',
+        answer: 'Yes! We specialize in serious games for corporate education, safety training, medical simulations and education. Games increase engagement and learning retention by up to 75% compared to traditional methods.'
+      },
+      {
+        question: 'Which platforms do you support?',
+        answer: 'We develop for PC (Windows/Mac/Linux), mobile (iOS/Android), web (HTML5), consoles (when applicable) and VR/AR. We guarantee specific optimization for each platform, ensuring best performance and user experience.'
+      },
+      {
+        question: 'Do you do port of existing games?',
+        answer: 'Yes! We perform game ports between platforms, adapting controls, interface and optimizing performance. Our experience ensures game works perfectly on new platform maintaining original quality and gameplay.'
+      },
+      {
+        question: 'How does game monetization work?',
+        answer: 'We implement monetization systems: in-app purchases, subscriptions, ads, DLCs. We work with freemium, premium and hybrid models. We develop monetization strategies that balance revenue with player experience.'
+      }
+    ],
+    es: [
+      {
+        question: '¿Desarrollan juegos completos?',
+        answer: '¡Sí! Desarrollamos juegos desde concepto hasta publicación. Creamos juegos educacionales, serious games, juegos promocionales y experiencias gamificadas. Trabajamos con Unity y Unreal Engine, garantizando calidad profesional y performance optimizada.'
+      },
+      {
+        question: '¿Cuánto cuesta desarrollar un juego?',
+        answer: 'Juegos varían de R$ 80.000 (simple, 2D) a R$ 1.000.000+ (AAA, 3D complejo). La inversión depende de complejidad, plataforma (mobile/PC/consola), gráficos, mecánicas y plazos. Ofrecemos presupuesto detallado tras análisis del concepto.'
+      },
+      {
+        question: '¿Hacen serious games para capacitación?',
+        answer: '¡Sí! Nos especializamos en serious games para educación corporativa, capacitación de seguridad, simulaciones médicas y educación. Juegos aumentan engagement y retención de aprendizaje hasta 75% comparado con métodos tradicionales.'
+      },
+      {
+        question: '¿Qué plataformas soportan?',
+        answer: 'Desarrollamos para PC (Windows/Mac/Linux), mobile (iOS/Android), web (HTML5), consolas (cuando aplicable) y VR/AR. Garantizamos optimización específica para cada plataforma, garantizando mejor performance y experiencia del usuario.'
+      },
+      {
+        question: '¿Hacen port de juegos existentes?',
+        answer: '¡Sí! Realizamos port de juegos entre plataformas, adaptando controles, interfaz y optimizando performance. Nuestra experiencia garantiza que el juego funcione perfectamente en la nueva plataforma manteniendo calidad y jugabilidad originales.'
+      },
+      {
+        question: '¿Cómo funciona monetización de juegos?',
+        answer: 'Implementamos sistemas de monetización: compras in-app, suscripciones, anuncios, DLCs. Trabajamos con modelos freemium, premium e híbridos. Desarrollamos estrategias de monetización que equilibran receita con experiencia del jugador.'
+      }
+    ],
+    fr: [
+      {
+        question: 'Développez-vous jeux complets?',
+        answer: 'Oui! Nous développons jeux de concept à publication. Nous créons jeux éducatifs, serious games, jeux promotionnels et expériences gamifiées. Nous travaillons avec Unity et Unreal Engine, garantissant qualité professionnelle et performance optimisée.'
+      },
+      {
+        question: 'Combien coûte développer un jeu?',
+        answer: 'Jeux varient de R$ 80.000 (simple, 2D) à R$ 1.000.000+ (AAA, 3D complexe). L\'investissement dépend de complexité, plateforme (mobile/PC/console), graphiques, mécaniques et délais. Nous offrons devis détaillé après analyse du concept.'
+      },
+      {
+        question: 'Faites-vous serious games pour formation?',
+        answer: 'Oui! Nous spécialisons en serious games pour éducation corporative, formation sécurité, simulations médicales et éducation. Jeux augmentent engagement et rétention d\'apprentissage jusqu\'à 75% comparé aux méthodes traditionnelles.'
+      },
+      {
+        question: 'Quelles plateformes supportez-vous?',
+        answer: 'Nous développons pour PC (Windows/Mac/Linux), mobile (iOS/Android), web (HTML5), consoles (quand applicable) et VR/AR. Nous garantissons optimisation spécifique pour chaque plateforme, assurant meilleure performance et expérience utilisateur.'
+      },
+      {
+        question: 'Faites-vous port de jeux existants?',
+        answer: 'Oui! Nous réalisons port de jeux entre plateformes, adaptant contrôles, interface et optimisant performance. Notre expérience assure que jeu fonctionne parfaitement sur nouvelle plateforme maintenant qualité et jouabilité originales.'
+      },
+      {
+        question: 'Comment fonctionne monétisation de jeux?',
+        answer: 'Nous implémentons systèmes de monétisation: achats in-app, abonnements, publicités, DLCs. Nous travaillons avec modèles freemium, premium et hybrides. Nous développons stratégies de monétisation qui équilibrent revenu avec expérience joueur.'
+      }
+    ]
   }
 }
 
