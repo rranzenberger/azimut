@@ -2881,22 +2881,28 @@ select.dropdown-azimut::-ms-expand {
 }
 
 /* =========================
-   4. HERO - Texto legível sobre imagem
+   4. HERO - Texto BRANCO sobre imagem (AMBOS OS TEMAS)
    ========================= */
 
-/* Hero description precisa de sombra para legibilidade sobre imagem */
-[data-theme="light"] .vancouver-page section:first-of-type h1,
-[data-theme="light"] .vancouver-page section:first-of-type p {
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-/* Hero título e subtítulo - branco com sombra (sobre imagem) */
-[data-theme="light"] .vancouver-page section:first-of-type h1 {
+/* Hero - SEMPRE texto branco com sombra (sobre imagem escurecida) */
+.vancouver-page section:first-of-type h1,
+.vancouver-page section:first-of-type h1 *,
+.vancouver-page section:first-of-type p,
+.vancouver-page section:first-of-type span {
   color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-[data-theme="light"] .vancouver-page section:first-of-type > div > p {
-  color: rgba(255, 255, 255, 0.95) !important;
+/* Reforçar no tema claro */
+[data-theme="light"] .vancouver-page section:first-of-type h1,
+[data-theme="light"] .vancouver-page section:first-of-type h1 *,
+[data-theme="light"] .vancouver-page section:first-of-type h1 span,
+[data-theme="light"] .vancouver-page section:first-of-type p,
+[data-theme="light"] .vancouver-page section:first-of-type .text-white,
+[data-theme="light"] .vancouver-page section:first-of-type .text-white\/90,
+[data-theme="light"] .vancouver-page section:first-of-type .text-white\/70 {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 /* =========================

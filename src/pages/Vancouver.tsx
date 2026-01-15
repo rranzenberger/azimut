@@ -450,8 +450,11 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               </span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-handel uppercase tracking-wider text-white mb-6 leading-tight">
-              {t.title}
+            <h1 className="text-5xl md:text-7xl font-handel uppercase tracking-wider text-white mb-6 leading-tight flex flex-col items-center gap-2">
+              <span>{t.title}</span>
+              <span className="inline-flex items-center gap-3">
+                {lang === 'pt' ? 'CANADÁ' : lang === 'es' ? 'CANADÁ' : lang === 'fr' ? 'CANADA' : 'CANADA'} <CanadaMapleLeaf size="lg" />
+              </span>
             </h1>
 
             <p className="text-2xl md:text-3xl text-white/90 mb-4 font-light">
