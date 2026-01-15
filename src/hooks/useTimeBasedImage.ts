@@ -30,10 +30,10 @@ export const useTimeBasedImage = (): TimeBasedImage => {
       const vancouverMinutes = vancouverTime.getMinutes()
       const vancouverTimeString = `${vancouverHour.toString().padStart(2, '0')}:${vancouverMinutes.toString().padStart(2, '0')}`
 
-      // MADRUGADA (0-4h) - Sunset Science World ⭐ (imagem destaque)
+      // MADRUGADA (0-4h) - Science World à noite ⭐
       if (hour >= 0 && hour < 5) {
         return {
-          image: '/vancouver-hero-sunset.jpg',
+          image: '/vancouver-hero-madrugada.jpg',
           period: 'night',
           vancouverTime: vancouverTimeString,
           vancouverHour
