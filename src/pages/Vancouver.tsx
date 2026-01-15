@@ -439,7 +439,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               backgroundPosition: 'center'
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
+            {/* Overlay cinematográfico premium - vinheta + gradiente */}
+            <div className="absolute inset-0 hero-cinematic-overlay" />
           </div>
 
           {/* Content */}

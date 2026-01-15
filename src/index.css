@@ -2881,7 +2881,69 @@ select.dropdown-azimut::-ms-expand {
 }
 
 /* =========================
-   4. HERO - Texto BRANCO sobre imagem (AMBOS OS TEMAS)
+   4. HERO - Overlay cinematográfico + vinheta vintage
+   ========================= */
+
+/* Overlay cinematográfico premium - TEMA ESCURO */
+.hero-cinematic-overlay {
+  background: 
+    /* Vinheta radial - escurece bordas (clássico cinematográfico) */
+    radial-gradient(
+      ellipse 120% 100% at 50% 50%,
+      transparent 0%,
+      transparent 40%,
+      rgba(0, 0, 0, 0.3) 70%,
+      rgba(0, 0, 0, 0.7) 100%
+    ),
+    /* Gradiente vertical - mais escuro embaixo */
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0.3) 40%,
+      rgba(0, 0, 0, 0.6) 100%
+    ),
+    /* Grain sutil para textura cinematográfica */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.03) 2px,
+      rgba(0, 0, 0, 0.03) 4px
+    );
+  mix-blend-mode: normal;
+}
+
+/* Overlay cinematográfico - TEMA CLARO (mais suave, menos contraste) */
+[data-theme="light"] .hero-cinematic-overlay {
+  background: 
+    /* Vinheta radial - mais sutil no tema claro */
+    radial-gradient(
+      ellipse 120% 100% at 50% 50%,
+      transparent 0%,
+      transparent 45%,
+      rgba(0, 0, 0, 0.2) 75%,
+      rgba(0, 0, 0, 0.5) 100%
+    ),
+    /* Gradiente vertical - equilibrado */
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.25) 40%,
+      rgba(0, 0, 0, 0.5) 100%
+    ),
+    /* Grain para textura */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.02) 2px,
+      rgba(0, 0, 0, 0.02) 4px
+    );
+  mix-blend-mode: normal;
+}
+
+/* =========================
+   5. HERO - Texto BRANCO sobre imagem (AMBOS OS TEMAS)
    ========================= */
 
 /* Hero - SEMPRE texto branco com sombra (sobre imagem escurecida) */
