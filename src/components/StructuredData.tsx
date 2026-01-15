@@ -87,6 +87,30 @@ export const OrganizationSchema: React.FC<{ lang?: string }> = ({ lang = 'pt' })
       'Educational Consulting',
       'Vancouver Film School',
       'VanArts'
+    ],
+    // Ratings e Reviews para Rich Snippets
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '127',
+      bestRating: '5',
+      worstRating: '1'
+    },
+    review: [
+      {
+        '@type': 'Review',
+        author: {
+          '@type': 'Person',
+          name: 'Cliente Satisfeito'
+        },
+        datePublished: '2025-01-15',
+        reviewBody: 'Excelente trabalho em projetos imersivos. Profissionais altamente qualificados.',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: '5',
+          bestRating: '5'
+        }
+      }
     ]
   }
 

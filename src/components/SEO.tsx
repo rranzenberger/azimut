@@ -6,6 +6,7 @@
 
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
+import { useLocation } from 'react-router-dom'
 
 interface SEOProps {
   title?: string
@@ -36,10 +37,31 @@ const SEO: React.FC<SEOProps> = ({
   noindex = false,
   canonical
 }) => {
+  const location = useLocation()
   const siteUrl = 'https://azmt.com.br'
   const fullUrl = url.startsWith('http') ? url : `${siteUrl}${url}`
   const fullImage = image.startsWith('http') ? image : `${siteUrl}${image}`
   const canonicalUrl = canonical || fullUrl
+
+  // Gerar hreflang tags para todas as versões de idioma
+  const generateHreflangTags = () => {
+    const languages = ['pt', 'en', 'es', 'fr']
+    const currentPath = location.pathname
+    
+    // Extrair path sem idioma (ex: /pt/what -> /what)
+    const pathWithoutLang = currentPath.replace(/^\/(pt|en|es|fr)/, '') || '/'
+    
+    // Se path está vazio ou é só '/', é a home
+    const cleanPath = pathWithoutLang === '/' ? '' : pathWithoutLang
+    
+    return languages.map(lang => {
+      const langUrl = `${siteUrl}/${lang}${cleanPath}${location.search}${location.hash}`
+      const hreflang = lang === 'pt' ? 'pt-BR' : lang === 'en' ? 'en-US' : lang === 'es' ? 'es-ES' : 'fr-FR'
+      return (
+        <link key={lang} rel="alternate" hreflang={hreflang} href={langUrl} />
+      )
+    })
+  }
 
   return (
     <Helmet>
@@ -49,6 +71,10 @@ const SEO: React.FC<SEOProps> = ({
       <meta name="keywords" content={keywords} />
       <meta name="author" content={author} />
       <link rel="canonical" href={canonicalUrl} />
+      
+      {/* hreflang Tags - Versões de idioma para SEO internacional */}
+      {generateHreflangTags()}
+      <link rel="alternate" hreflang="x-default" href={`${siteUrl}/en${location.pathname.replace(/^\/(pt|en|es|fr)/, '') || ''}${location.search}${location.hash}`} />
       
             {/* Robots - Otimizado para Google, Bing e outros buscadores */}
             {noindex ? (
