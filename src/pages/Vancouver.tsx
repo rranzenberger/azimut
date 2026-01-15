@@ -445,8 +445,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
           {/* Content */}
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="inline-block px-4 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-6">
-              <span className="text-azimut-red text-sm font-semibold uppercase tracking-wider">
-                🇨🇦 Agente Educacional Oficial
+              <span className="text-azimut-red text-sm font-semibold uppercase tracking-wider inline-flex items-center gap-1.5">
+                <CanadaMapleLeaf size="sm" /> {lang === 'pt' ? 'Agente Educacional Oficial' : lang === 'es' ? 'Agente Educacional Oficial' : lang === 'fr' ? 'Agent Éducatif Officiel' : 'Official Educational Agent'}
               </span>
             </div>
 
@@ -488,7 +488,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               ].map((stat, i) => (
                 <div key={i} className="text-center">
                   <div className="text-3xl md:text-4xl font-bold text-azimut-red mb-1">
-                    {stat.value}
+                    {i === 3 ? <CanadaMapleLeaf size="lg" /> : stat.value}
                   </div>
                   <div className="text-sm text-white/60 uppercase tracking-wider">
                     {stat.label}
