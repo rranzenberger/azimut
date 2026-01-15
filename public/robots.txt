@@ -21,6 +21,26 @@ Allow: /
 # Allow Googlebot (crawler principal)
 User-agent: Googlebot
 Allow: /
+
+# Allow Bingbot (Microsoft Bing)
+User-agent: Bingbot
+Allow: /
+
+# Allow DuckDuckGo Bot
+User-agent: DuckDuckBot
+Allow: /
+
+# Allow Yandex Bot
+User-agent: Yandex
+Allow: /
+
+# Allow Baidu Bot (China)
+User-agent: Baiduspider
+Allow: /
+
+# Sitemap location (para todos os buscadores)
+Sitemap: https://azmt.com.br/sitemap.xml
+Allow: /
 Crawl-delay: 0
 
 # Allow Bingbot

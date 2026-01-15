@@ -50,12 +50,19 @@ const SEO: React.FC<SEOProps> = ({
       <meta name="author" content={author} />
       <link rel="canonical" href={canonicalUrl} />
       
-      {/* Robots */}
-      {noindex ? (
-        <meta name="robots" content="noindex, nofollow" />
-      ) : (
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-      )}
+            {/* Robots - Otimizado para Google, Bing e outros buscadores */}
+            {noindex ? (
+              <meta name="robots" content="noindex, nofollow" />
+            ) : (
+              <>
+                <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+                <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+                <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+                <meta name="slurp" content="index, follow" />
+                <meta name="duckduckbot" content="index, follow" />
+                <meta name="yandex" content="index, follow" />
+              </>
+            )}
 
       {/* Open Graph (Facebook, LinkedIn) */}
       <meta property="og:type" content={type} />
