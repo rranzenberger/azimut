@@ -36,7 +36,7 @@ export const useTimeBasedImage = (): TimeBasedImage => {
       if (hour >= 0 && hour < 6) {
         return {
           primary: '/vancouver-hero-night.jpg',
-          carousel: ['/vancouver-hero-night.jpg', '/vancouver-hero-twilight.jpg'],
+          carousel: ['/vancouver-hero-night.jpg', '/vancouver-hero-twilight.png'],
           period: 'night',
           vancouverTime: vancouverTimeString,
           vancouverHour
@@ -80,7 +80,7 @@ export const useTimeBasedImage = (): TimeBasedImage => {
       if (hour >= 17 && hour < 20) {
         return {
           primary: '/vancouver-hero-sunset.jpg',
-          carousel: ['/vancouver-hero-sunset.jpg', '/vancouver-hero-aerial.jpg', '/vancouver-hero-twilight.jpg'],
+          carousel: ['/vancouver-hero-sunset.jpg', '/vancouver-hero-aerial.jpg', '/vancouver-hero-twilight.png'],
           period: 'sunset',
           vancouverTime: vancouverTimeString,
           vancouverHour
@@ -90,8 +90,8 @@ export const useTimeBasedImage = (): TimeBasedImage => {
       // BLUE HOUR (20-21h) - Crepúsculo
       if (hour >= 20 && hour < 22) {
         return {
-          primary: '/vancouver-hero-twilight.jpg',
-          carousel: ['/vancouver-hero-twilight.jpg', '/vancouver-hero-sunset.jpg'],
+          primary: '/vancouver-hero-twilight.png',
+          carousel: ['/vancouver-hero-twilight.png', '/vancouver-hero-sunset.jpg'],
           period: 'twilight',
           vancouverTime: vancouverTimeString,
           vancouverHour
@@ -101,7 +101,7 @@ export const useTimeBasedImage = (): TimeBasedImage => {
       // NOITE (22-23h) - Noite com luzes
       return {
         primary: '/vancouver-hero-night.jpg',
-        carousel: ['/vancouver-hero-night.jpg', '/vancouver-hero-twilight.jpg'],
+        carousel: ['/vancouver-hero-night.jpg', '/vancouver-hero-twilight.png'],
         period: 'evening',
         vancouverTime: vancouverTimeString,
         vancouverHour
