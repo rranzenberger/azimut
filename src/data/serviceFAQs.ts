@@ -1186,6 +1186,536 @@ export const serviceFAQs: ServiceFAQs = {
         answer: 'Oui! Nous travaillons avec subventions et projets internationaux. Nous avons expérience dans processus de différents pays et aidons à adapter projets à contextes culturels et réglementaires spécifiques. Nous facilitons connexions et partenariats internationaux si nécessaire.'
       }
     ]
+  },
+  'teatro-espetaculos-imersivos': {
+    pt: [
+      {
+        question: 'Como funciona teatro imersivo com tecnologia?',
+        answer: 'Integramos atores ao vivo com animações, projeções e mundos virtuais. Utilizamos painéis LED, compositing em tempo real, animações geradas por IA e sincronização precisa entre luz, som e imagem. Criamos experiências híbridas onde físico e digital se fundem.'
+      },
+      {
+        question: 'Quanto custa criar um espetáculo imersivo?',
+        answer: 'Espetáculos imersivos variam de R$ 100.000 (conceito e conteúdo) a R$ 800.000+ (produção completa com tecnologia). Investimento depende de complexidade, número de cenas, tecnologias integradas e duração do espetáculo. Oferecemos orçamento personalizado.'
+      },
+      {
+        question: 'Vocês operam os espetáculos ao vivo?',
+        answer: 'Sim! Oferecemos operação técnica completa durante apresentações. Nossa equipe técnica opera sistemas de projeção, LED, compositing e sincronização em tempo real. Também treinamos equipes do cliente para operação autônoma quando necessário.'
+      },
+      {
+        question: 'Como funciona sincronização com atores?',
+        answer: 'Desenvolvemos sistemas de sincronização que respondem a ações dos atores em tempo real. Utilizamos sensores, triggers manuais e automação inteligente para garantir que animações e projeções reajam naturalmente à performance, criando interação fluida entre atores e tecnologia.'
+      },
+      {
+        question: 'Vocês usam IA generativa nos espetáculos?',
+        answer: 'Sim! Utilizamos IA para gerar animações de fundo, efeitos visuais e conteúdo generativo que se adapta à narrativa. Isso permite criar cenografias dinâmicas e únicas a cada apresentação, mantendo coerência visual e narrativa.'
+      },
+      {
+        question: 'Qual o prazo para desenvolvimento?',
+        answer: 'Prazos variam: conceito e storyboard (4-6 semanas), desenvolvimento de conteúdo (8-16 semanas), testes e ajustes (4-6 semanas). Sempre trabalhamos com cronogramas realistas e testes extensivos antes da estreia para garantir qualidade.'
+      }
+    ],
+    en: [
+      {
+        question: 'How does immersive theater with technology work?',
+        answer: 'We integrate live actors with animations, projections and virtual worlds. We use LED panels, real-time compositing, AI-generated animations and precise synchronization between light, sound and image. We create hybrid experiences where physical and digital merge.'
+      },
+      {
+        question: 'How much does it cost to create an immersive show?',
+        answer: 'Immersive shows range from R$ 100,000 (concept and content) to R$ 800,000+ (complete production with technology). Investment depends on complexity, number of scenes, integrated technologies and show duration. We offer personalized quote.'
+      },
+      {
+        question: 'Do you operate shows live?',
+        answer: 'Yes! We offer complete technical operation during performances. Our technical team operates projection systems, LED, compositing and real-time synchronization. We also train client teams for autonomous operation when needed.'
+      },
+      {
+        question: 'How does synchronization with actors work?',
+        answer: 'We develop synchronization systems that respond to actor actions in real time. We use sensors, manual triggers and intelligent automation to ensure animations and projections react naturally to performance, creating fluid interaction between actors and technology.'
+      },
+      {
+        question: 'Do you use generative AI in shows?',
+        answer: 'Yes! We use AI to generate background animations, visual effects and generative content that adapts to narrative. This allows creating dynamic and unique scenographies at each presentation, maintaining visual and narrative coherence.'
+      },
+      {
+        question: 'What is the deadline for development?',
+        answer: 'Deadlines vary: concept and storyboard (4-6 weeks), content development (8-16 weeks), testing and adjustments (4-6 weeks). We always work with realistic schedules and extensive testing before premiere to ensure quality.'
+      }
+    ],
+    es: [
+      {
+        question: '¿Cómo funciona teatro inmersivo con tecnología?',
+        answer: 'Integramos actores en vivo con animaciones, proyecciones y mundos virtuales. Utilizamos paneles LED, compositing en tiempo real, animaciones generadas por IA y sincronización precisa entre luz, sonido e imagen. Creamos experiencias híbridas donde físico y digital se fusionan.'
+      },
+      {
+        question: '¿Cuánto cuesta crear un espectáculo inmersivo?',
+        answer: 'Espectáculos inmersivos varían de R$ 100.000 (concepto y contenido) a R$ 800.000+ (producción completa con tecnología). La inversión depende de complejidad, número de escenas, tecnologías integradas y duración del espectáculo. Ofrecemos presupuesto personalizado.'
+      },
+      {
+        question: '¿Operan los espectáculos en vivo?',
+        answer: '¡Sí! Ofrecemos operación técnica completa durante presentaciones. Nuestro equipo técnico opera sistemas de proyección, LED, compositing y sincronización en tiempo real. También capacitamos equipos del cliente para operación autónoma cuando necesario.'
+      },
+      {
+        question: '¿Cómo funciona sincronización con actores?',
+        answer: 'Desarrollamos sistemas de sincronización que responden a acciones de actores en tiempo real. Utilizamos sensores, triggers manuales y automatización inteligente para garantizar que animaciones y proyecciones reaccionen naturalmente a la performance, creando interacción fluida entre actores y tecnología.'
+      },
+      {
+        question: '¿Usan IA generativa en espectáculos?',
+        answer: '¡Sí! Utilizamos IA para generar animaciones de fondo, efectos visuales y contenido generativo que se adapta a la narrativa. Esto permite crear escenografías dinámicas y únicas en cada presentación, manteniendo coherencia visual y narrativa.'
+      },
+      {
+        question: '¿Cuál el plazo para desarrollo?',
+        answer: 'Plazos varían: concepto y storyboard (4-6 semanas), desarrollo de contenido (8-16 semanas), pruebas y ajustes (4-6 semanas). Siempre trabajamos con cronogramas realistas y pruebas extensivas antes del estreno para garantizar calidad.'
+      }
+    ],
+    fr: [
+      {
+        question: 'Comment fonctionne théâtre immersif avec technologie?',
+        answer: 'Nous intégrons acteurs en direct avec animations, projections et mondes virtuels. Nous utilisons panneaux LED, compositing en temps réel, animations générées par IA et synchronisation précise entre lumière, son et image. Nous créons expériences hybrides où physique et numérique fusionnent.'
+      },
+      {
+        question: 'Combien coûte créer spectacle immersif?',
+        answer: 'Spectacles immersifs varient de R$ 100.000 (concept et contenu) à R$ 800.000+ (production complète avec technologie). L\'investissement dépend de complexité, nombre de scènes, technologies intégrées et durée du spectacle. Nous offrons devis personnalisé.'
+      },
+      {
+        question: 'Opérez-vous spectacles en direct?',
+        answer: 'Oui! Nous offrons opération technique complète pendant représentations. Notre équipe technique opère systèmes de projection, LED, compositing et synchronisation en temps réel. Nous formons aussi équipes client pour opération autonome si nécessaire.'
+      },
+      {
+        question: 'Comment fonctionne synchronisation avec acteurs?',
+        answer: 'Nous développons systèmes de synchronisation qui répondent à actions d\'acteurs en temps réel. Nous utilisons capteurs, déclencheurs manuels et automatisation intelligente pour assurer que animations et projections réagissent naturellement à performance, créant interaction fluide entre acteurs et technologie.'
+      },
+      {
+        question: 'Utilisez-vous IA générative dans spectacles?',
+        answer: 'Oui! Nous utilisons IA pour générer animations de fond, effets visuels et contenu génératif qui s\'adapte au récit. Cela permet créer scénographies dynamiques et uniques à chaque présentation, maintenant cohérence visuelle et narrative.'
+      },
+      {
+        question: 'Quel est le délai pour développement?',
+        answer: 'Délais varient: concept et storyboard (4-6 semaines), développement de contenu (8-16 semaines), tests et ajustements (4-6 semaines). Nous travaillons toujours avec calendriers réalistes et tests extensifs avant première pour assurer qualité.'
+      }
+    ]
+  },
+  'branded-experiences-ativacoes': {
+    pt: [
+      {
+        question: 'Como funciona uma ativação de marca imersiva?',
+        answer: 'Criamos experiências que combinam tecnologia (VR, AR, 360°) com narrativa de marca para gerar engajamento e vendas. Desenvolvemos conteúdo customizado, fornecemos equipamentos e operamos ativações em pontos de venda, eventos e ações de marketing.'
+      },
+      {
+        question: 'Quanto custa uma ativação de marca?',
+        answer: 'Ativações variam de R$ 50.000 (conteúdo simples) a R$ 500.000+ (ativação completa com tecnologia e operação). Investimento depende de escopo, duração, tecnologias integradas e número de pontos de ativação. Oferecemos orçamento personalizado.'
+      },
+      {
+        question: 'Vocês fornecem equipamentos VR/AR?',
+        answer: 'Sim! Oferecemos aluguel de equipamentos VR (Meta Quest, HTC Vive) e AR, além de conteúdo customizado. Fornecemos suporte técnico, treinamento de promotores e operação em campo quando necessário. Tudo integrado em uma solução completa.'
+      },
+      {
+        question: 'Como medem resultados das ativações?',
+        answer: 'Desenvolvemos dashboards de analytics que medem engajamento, tempo de experiência, leads gerados, vendas e ROI. Utilizamos tracking de usuários, pesquisas pós-experiência e integração com sistemas de CRM para fornecer relatórios detalhados de performance.'
+      },
+      {
+        question: 'Vocês operam ativações em múltiplos pontos?',
+        answer: 'Sim! Coordenamos ativações simultâneas em múltiplos pontos de venda, eventos ou locais. Fornecemos treinamento de equipes locais, suporte remoto e sistemas de monitoramento que garantem qualidade consistente em todos os pontos de ativação.'
+      },
+      {
+        question: 'Qual o prazo para desenvolvimento?',
+        answer: 'Prazos variam: conceito e conteúdo (4-8 semanas), produção e testes (4-6 semanas), deploy e operação (conforme cronograma). Sempre trabalhamos com prazos realistas e testes extensivos antes do lançamento para garantir sucesso da ativação.'
+      }
+    ],
+    en: [
+      {
+        question: 'How does an immersive brand activation work?',
+        answer: 'We create experiences that combine technology (VR, AR, 360°) with brand narrative to generate engagement and sales. We develop custom content, provide equipment and operate activations at points of sale, events and marketing actions.'
+      },
+      {
+        question: 'How much does a brand activation cost?',
+        answer: 'Activations range from R$ 50,000 (simple content) to R$ 500,000+ (complete activation with technology and operation). Investment depends on scope, duration, integrated technologies and number of activation points. We offer personalized quote.'
+      },
+      {
+        question: 'Do you provide VR/AR equipment?',
+        answer: 'Yes! We offer VR equipment rental (Meta Quest, HTC Vive) and AR, plus custom content. We provide technical support, promoter training and field operation when needed. Everything integrated into a complete solution.'
+      },
+      {
+        question: 'How do you measure activation results?',
+        answer: 'We develop analytics dashboards that measure engagement, experience time, leads generated, sales and ROI. We use user tracking, post-experience surveys and CRM integration to provide detailed performance reports.'
+      },
+      {
+        question: 'Do you operate activations at multiple points?',
+        answer: 'Yes! We coordinate simultaneous activations at multiple points of sale, events or locations. We provide local team training, remote support and monitoring systems that ensure consistent quality at all activation points.'
+      },
+      {
+        question: 'What is the deadline for development?',
+        answer: 'Deadlines vary: concept and content (4-8 weeks), production and testing (4-6 weeks), deploy and operation (according to schedule). We always work with realistic deadlines and extensive testing before launch to ensure activation success.'
+      }
+    ],
+    es: [
+      {
+        question: '¿Cómo funciona una activación de marca inmersiva?',
+        answer: 'Creamos experiencias que combinan tecnología (VR, AR, 360°) con narrativa de marca para generar engagement y ventas. Desarrollamos contenido customizado, proporcionamos equipos y operamos activaciones en puntos de venta, eventos y acciones de marketing.'
+      },
+      {
+        question: '¿Cuánto cuesta una activación de marca?',
+        answer: 'Activaciones varían de R$ 50.000 (contenido simple) a R$ 500.000+ (activación completa con tecnología y operación). La inversión depende de alcance, duración, tecnologías integradas y número de puntos de activación. Ofrecemos presupuesto personalizado.'
+      },
+      {
+        question: '¿Proporcionan equipos VR/AR?',
+        answer: '¡Sí! Ofrecemos alquiler de equipos VR (Meta Quest, HTC Vive) y AR, además de contenido customizado. Proporcionamos soporte técnico, capacitación de promotores y operación en campo cuando necesario. Todo integrado en una solución completa.'
+      },
+      {
+        question: '¿Cómo miden resultados de activaciones?',
+        answer: 'Desarrollamos dashboards de analytics que miden engagement, tiempo de experiencia, leads generados, ventas y ROI. Utilizamos tracking de usuarios, encuestas post-experiencia e integración con sistemas de CRM para proporcionar informes detallados de performance.'
+      },
+      {
+        question: '¿Operan activaciones en múltiples puntos?',
+        answer: '¡Sí! Coordinamos activaciones simultáneas en múltiples puntos de venta, eventos o locaciones. Proporcionamos capacitación de equipos locales, soporte remoto y sistemas de monitoreo que garantizan calidad consistente en todos los puntos de activación.'
+      },
+      {
+        question: '¿Cuál el plazo para desarrollo?',
+        answer: 'Plazos varían: concepto y contenido (4-8 semanas), producción y pruebas (4-6 semanas), deploy y operación (conforme cronograma). Siempre trabajamos con plazos realistas y pruebas extensivas antes del lanzamiento para garantizar éxito de la activación.'
+      }
+    ],
+    fr: [
+      {
+        question: 'Comment fonctionne activation de marque immersive?',
+        answer: 'Nous créons expériences qui combinent technologie (VR, AR, 360°) avec récit de marque pour générer engagement et ventes. Nous développons contenu personnalisé, fournissons équipements et opérons activations en points de vente, événements et actions marketing.'
+      },
+      {
+        question: 'Combien coûte activation de marque?',
+        answer: 'Activations varient de R$ 50.000 (contenu simple) à R$ 500.000+ (activation complète avec technologie et opération). L\'investissement dépend de portée, durée, technologies intégrées et nombre de points d\'activation. Nous offrons devis personnalisé.'
+      },
+      {
+        question: 'Fournissez-vous équipements VR/AR?',
+        answer: 'Oui! Nous offrons location d\'équipements VR (Meta Quest, HTC Vive) et AR, plus contenu personnalisé. Nous fournissons support technique, formation de promoteurs et opération terrain si nécessaire. Tout intégré dans une solution complète.'
+      },
+      {
+        question: 'Comment mesurez-vous résultats d\'activations?',
+        answer: 'Nous développons tableaux de bord analytics qui mesurent engagement, temps d\'expérience, leads générés, ventes et ROI. Nous utilisons suivi d\'utilisateurs, enquêtes post-expérience et intégration CRM pour fournir rapports détaillés de performance.'
+      },
+      {
+        question: 'Opérez-vous activations en multiples points?',
+        answer: 'Oui! Nous coordonnons activations simultanées en multiples points de vente, événements ou lieux. Nous fournissons formation d\'équipes locales, support à distance et systèmes de monitoring qui assurent qualité cohérente à tous points d\'activation.'
+      },
+      {
+        question: 'Quel est le délai pour développement?',
+        answer: 'Délais varient: concept et contenu (4-8 semaines), production et tests (4-6 semaines), déploiement et opération (selon calendrier). Nous travaillons toujours avec délais réalistes et tests extensifs avant lancement pour assurer succès de l\'activation.'
+      }
+    ]
+  },
+  'festivais-curadoria-eventos': {
+    pt: [
+      {
+        question: 'Como funciona curadoria de festivais?',
+        answer: 'Desenvolvemos curadoria completa para festivais de cinema, arte e tecnologia. Selecionamos filmes, organizamos programação, coordenamos júris e desenvolvemos identidade visual. Nossa experiência inclui curadoria do Festival Immerso XR e Mostra Competitiva de Filmes IA.'
+      },
+      {
+        question: 'Vocês organizam eventos completos?',
+        answer: 'Sim! Organizamos eventos desde concepção até execução. Desenvolvemos conceito, coordenamos programação, gerenciamos inscrições, organizamos cerimônias e garantimos que tudo funcione perfeitamente. Oferecemos gestão completa ou suporte em áreas específicas conforme necessidade.'
+      },
+      {
+        question: 'Quanto custa organizar um festival?',
+        answer: 'Organização de festivais varia de R$ 100.000 (evento pequeno) a R$ 1.000.000+ (festival internacional grande). Investimento depende de tamanho, duração, número de participantes e complexidade. Oferecemos orçamento personalizado após análise do escopo.'
+      },
+      {
+        question: 'Vocês fazem curadoria de filmes?',
+        answer: 'Sim! Desenvolvemos curadoria de filmes para festivais, mostras e eventos. Selecionamos filmes baseados em critérios artísticos e técnicos, organizamos programação temática e coordenamos júris. Nossa experiência garante programação de alta qualidade.'
+      },
+      {
+        question: 'Como funciona curadoria de tecnologia?',
+        answer: 'Desenvolvemos curadoria especializada em tecnologias imersivas (VR, AR, XR). Testamos e validamos experiências, selecionamos as melhores para exibição e organizamos programação que equilibra inovação técnica com qualidade artística e narrativa.'
+      },
+      {
+        question: 'Qual o prazo para organização?',
+        answer: 'Prazos variam: planejamento inicial (2-3 meses), curadoria e seleção (3-6 meses), organização e execução (1-2 meses antes do evento). Sempre trabalhamos com cronogramas realistas e entregas progressivas para garantir sucesso do evento.'
+      }
+    ],
+    en: [
+      {
+        question: 'How does festival curation work?',
+        answer: 'We develop complete curation for film, art and technology festivals. We select films, organize programming, coordinate juries and develop visual identity. Our experience includes curation of Immerso XR Festival and Competitive Show of AI Films.'
+      },
+      {
+        question: 'Do you organize complete events?',
+        answer: 'Yes! We organize events from conception to execution. We develop concept, coordinate programming, manage registrations, organize ceremonies and ensure everything works perfectly. We offer complete management or support in specific areas as needed.'
+      },
+      {
+        question: 'How much does it cost to organize a festival?',
+        answer: 'Festival organization ranges from R$ 100,000 (small event) to R$ 1,000,000+ (large international festival). Investment depends on size, duration, number of participants and complexity. We offer personalized quote after scope analysis.'
+      },
+      {
+        question: 'Do you do film curation?',
+        answer: 'Yes! We develop film curation for festivals, shows and events. We select films based on artistic and technical criteria, organize thematic programming and coordinate juries. Our experience ensures high-quality programming.'
+      },
+      {
+        question: 'How does technology curation work?',
+        answer: 'We develop specialized curation in immersive technologies (VR, AR, XR). We test and validate experiences, select best ones for exhibition and organize programming that balances technical innovation with artistic and narrative quality.'
+      },
+      {
+        question: 'What is the deadline for organization?',
+        answer: 'Deadlines vary: initial planning (2-3 months), curation and selection (3-6 months), organization and execution (1-2 months before event). We always work with realistic schedules and progressive deliveries to ensure event success.'
+      }
+    ],
+    es: [
+      {
+        question: '¿Cómo funciona curaduría de festivales?',
+        answer: 'Desarrollamos curaduría completa para festivales de cine, arte y tecnología. Seleccionamos películas, organizamos programación, coordinamos jurados y desarrollamos identidad visual. Nuestra experiencia incluye curaduría del Festival Immerso XR y Muestra Competitiva de Películas IA.'
+      },
+      {
+        question: '¿Organizan eventos completos?',
+        answer: '¡Sí! Organizamos eventos desde concepción hasta ejecución. Desarrollamos concepto, coordinamos programación, gestionamos inscripciones, organizamos ceremonias y garantizamos que todo funcione perfectamente. Ofrecemos gestión completa o soporte en áreas específicas conforme necesidad.'
+      },
+      {
+        question: '¿Cuánto cuesta organizar un festival?',
+        answer: 'Organización de festivales varía de R$ 100.000 (evento pequeño) a R$ 1.000.000+ (festival internacional grande). La inversión depende de tamaño, duración, número de participantes y complejidad. Ofrecemos presupuesto personalizado tras análisis del alcance.'
+      },
+      {
+        question: '¿Hacen curaduría de películas?',
+        answer: '¡Sí! Desarrollamos curaduría de películas para festivales, muestras y eventos. Seleccionamos películas basadas en criterios artísticos y técnicos, organizamos programación temática y coordinamos jurados. Nuestra experiencia garantiza programación de alta calidad.'
+      },
+      {
+        question: '¿Cómo funciona curaduría de tecnología?',
+        answer: 'Desarrollamos curaduría especializada en tecnologías inmersivas (VR, AR, XR). Probamos y validamos experiencias, seleccionamos las mejores para exhibición y organizamos programación que equilibra innovación técnica con calidad artística y narrativa.'
+      },
+      {
+        question: '¿Cuál el plazo para organización?',
+        answer: 'Plazos varían: planificación inicial (2-3 meses), curaduría y selección (3-6 meses), organización y ejecución (1-2 meses antes del evento). Siempre trabajamos con cronogramas realistas y entregas progresivas para garantizar éxito del evento.'
+      }
+    ],
+    fr: [
+      {
+        question: 'Comment fonctionne curation de festivals?',
+        answer: 'Nous développons curation complète pour festivals de cinéma, art et technologie. Nous sélectionnons films, organisons programmation, coordonnons jurys et développons identité visuelle. Notre expérience inclut curation du Festival Immerso XR et Show Compétitif de Films IA.'
+      },
+      {
+        question: 'Organisez-vous événements complets?',
+        answer: 'Oui! Nous organisons événements de conception à exécution. Nous développons concept, coordonnons programmation, gérons inscriptions, organisons cérémonies et assurons que tout fonctionne parfaitement. Nous offrons gestion complète ou support dans domaines spécifiques selon besoin.'
+      },
+      {
+        question: 'Combien coûte organiser un festival?',
+        answer: 'Organisation de festivals varie de R$ 100.000 (petit événement) à R$ 1.000.000+ (grand festival international). L\'investissement dépend de taille, durée, nombre de participants et complexité. Nous offrons devis personnalisé après analyse de portée.'
+      },
+      {
+        question: 'Faites-vous curation de films?',
+        answer: 'Oui! Nous développons curation de films pour festivals, shows et événements. Nous sélectionnons films basés sur critères artistiques et techniques, organisons programmation thématique et coordonnons jurys. Notre expérience assure programmation de haute qualité.'
+      },
+      {
+        question: 'Comment fonctionne curation de technologie?',
+        answer: 'Nous développons curation spécialisée en technologies immersives (VR, AR, XR). Nous testons et validons expériences, sélectionnons meilleures pour exposition et organisons programmation qui équilibre innovation technique avec qualité artistique et narrative.'
+      },
+      {
+        question: 'Quel est le délai pour organisation?',
+        answer: 'Délais varient: planification initiale (2-3 mois), curation et sélection (3-6 mois), organisation et exécution (1-2 mois avant événement). Nous travaillons toujours avec calendriers réalistes et livraisons progressives pour assurer succès de l\'événement.'
+      }
+    ]
+  },
+  'educacao-treinamento': {
+    pt: [
+      {
+        question: 'Quais tipos de treinamento vocês oferecem?',
+        answer: 'Oferecemos treinamentos corporativos, workshops técnicos, cursos profissionalizantes e programas educacionais. Cobertura: tecnologias imersivas (VR/AR), produção audiovisual, IA criativa, gestão de projetos culturais e desenvolvimento de habilidades técnicas específicas.'
+      },
+      {
+        question: 'Vocês fazem treinamento in-company?',
+        answer: 'Sim! Realizamos treinamentos in-company personalizados para empresas, instituições e equipes. Desenvolvemos conteúdo específico para necessidades do cliente, adaptamos metodologia e garantimos que equipes adquiram habilidades práticas aplicáveis imediatamente ao trabalho.'
+      },
+      {
+        question: 'Quanto custa um treinamento?',
+        answer: 'Treinamentos variam de R$ 15.000 (workshop de 1 dia) a R$ 200.000+ (programa completo de capacitação). Investimento depende de duração, número de participantes, complexidade do conteúdo e formato (presencial/online/híbrido). Oferecemos orçamento personalizado.'
+      },
+      {
+        question: 'Vocês oferecem certificação?',
+        answer: 'Sim! Oferecemos certificados de conclusão para participantes que completam treinamentos. Certificados são reconhecidos e podem ser utilizados para comprovar habilidades adquiridas. Também desenvolvemos programas de certificação customizados para empresas quando necessário.'
+      },
+      {
+        question: 'Como funciona treinamento online?',
+        answer: 'Desenvolvemos treinamentos online com plataformas interativas, conteúdo multimídia, exercícios práticos e acompanhamento personalizado. Utilizamos ferramentas modernas de ensino à distância que garantem engajamento e aprendizado eficaz mesmo em formato remoto.'
+      },
+      {
+        question: 'Vocês fazem treinamento para Vancouver (VFS/VanArts)?',
+        answer: 'Sim! Somos agentes educacionais oficiais para VFS e VanArts em Vancouver. Oferecemos suporte completo para estudantes brasileiros: orientação sobre programas, processo de aplicação, preparação de portfólio e suporte durante estudos no Canadá.'
+      }
+    ],
+    en: [
+      {
+        question: 'What types of training do you offer?',
+        answer: 'We offer corporate training, technical workshops, professional courses and educational programs. Coverage: immersive technologies (VR/AR), audiovisual production, creative AI, cultural project management and development of specific technical skills.'
+      },
+      {
+        question: 'Do you do in-company training?',
+        answer: 'Yes! We conduct personalized in-company training for companies, institutions and teams. We develop content specific to client needs, adapt methodology and ensure teams acquire practical skills immediately applicable to work.'
+      },
+      {
+        question: 'How much does training cost?',
+        answer: 'Training ranges from R$ 15,000 (1-day workshop) to R$ 200,000+ (complete training program). Investment depends on duration, number of participants, content complexity and format (in-person/online/hybrid). We offer personalized quote.'
+      },
+      {
+        question: 'Do you offer certification?',
+        answer: 'Yes! We offer completion certificates for participants who complete training. Certificates are recognized and can be used to prove acquired skills. We also develop custom certification programs for companies when needed.'
+      },
+      {
+        question: 'How does online training work?',
+        answer: 'We develop online training with interactive platforms, multimedia content, practical exercises and personalized follow-up. We use modern distance learning tools that ensure engagement and effective learning even in remote format.'
+      },
+      {
+        question: 'Do you do training for Vancouver (VFS/VanArts)?',
+        answer: 'Yes! We are official education agents for VFS and VanArts in Vancouver. We offer complete support for Brazilian students: guidance on programs, application process, portfolio preparation and support during studies in Canada.'
+      }
+    ],
+    es: [
+      {
+        question: '¿Qué tipos de capacitación ofrecen?',
+        answer: 'Ofrecemos capacitaciones corporativas, talleres técnicos, cursos profesionalizantes y programas educacionales. Cobertura: tecnologías inmersivas (VR/AR), producción audiovisual, IA creativa, gestión de proyectos culturales y desarrollo de habilidades técnicas específicas.'
+      },
+      {
+        question: '¿Hacen capacitación in-company?',
+        answer: '¡Sí! Realizamos capacitaciones in-company personalizadas para empresas, instituciones y equipos. Desarrollamos contenido específico para necesidades del cliente, adaptamos metodología y garantizamos que equipos adquieran habilidades prácticas aplicables inmediatamente al trabajo.'
+      },
+      {
+        question: '¿Cuánto cuesta una capacitación?',
+        answer: 'Capacitaciones varían de R$ 15.000 (taller de 1 día) a R$ 200.000+ (programa completo de capacitación). La inversión depende de duración, número de participantes, complejidad del contenido y formato (presencial/online/híbrido). Ofrecemos presupuesto personalizado.'
+      },
+      {
+        question: '¿Ofrecen certificación?',
+        answer: '¡Sí! Ofrecemos certificados de conclusión para participantes que completan capacitaciones. Certificados son reconocidos y pueden ser utilizados para comprobar habilidades adquiridas. También desarrollamos programas de certificación customizados para empresas cuando necesario.'
+      },
+      {
+        question: '¿Cómo funciona capacitación online?',
+        answer: 'Desarrollamos capacitaciones online con plataformas interactivas, contenido multimedia, ejercicios prácticos y seguimiento personalizado. Utilizamos herramientas modernas de enseñanza a distancia que garantizan engagement y aprendizaje eficaz incluso en formato remoto.'
+      },
+      {
+        question: '¿Hacen capacitación para Vancouver (VFS/VanArts)?',
+        answer: '¡Sí! Somos agentes educacionales oficiales para VFS y VanArts en Vancouver. Ofrecemos soporte completo para estudiantes brasileños: orientación sobre programas, proceso de aplicación, preparación de portafolio y soporte durante estudios en Canadá.'
+      }
+    ],
+    fr: [
+      {
+        question: 'Quels types de formation offrez-vous?',
+        answer: 'Nous offrons formation corporative, ateliers techniques, cours professionnels et programmes éducatifs. Couverture: technologies immersives (VR/AR), production audiovisuelle, IA créative, gestion de projets culturels et développement de compétences techniques spécifiques.'
+      },
+      {
+        question: 'Faites-vous formation en entreprise?',
+        answer: 'Oui! Nous réalisons formations en entreprise personnalisées pour entreprises, institutions et équipes. Nous développons contenu spécifique aux besoins du client, adaptons méthodologie et assurons que équipes acquièrent compétences pratiques immédiatement applicables au travail.'
+      },
+      {
+        question: 'Combien coûte une formation?',
+        answer: 'Formations varient de R$ 15.000 (atelier 1 jour) à R$ 200.000+ (programme complet de formation). L\'investissement dépend de durée, nombre de participants, complexité du contenu et format (présentiel/online/hybride). Nous offrons devis personnalisé.'
+      },
+      {
+        question: 'Offrez-vous certification?',
+        answer: 'Oui! Nous offrons certificats de complétion pour participants qui complètent formations. Certificats sont reconnus et peuvent être utilisés pour prouver compétences acquises. Nous développons aussi programmes de certification personnalisés pour entreprises si nécessaire.'
+      },
+      {
+        question: 'Comment fonctionne formation en ligne?',
+        answer: 'Nous développons formations en ligne avec plateformes interactives, contenu multimédia, exercices pratiques et suivi personnalisé. Nous utilisons outils modernes d\'enseignement à distance qui assurent engagement et apprentissage efficace même en format distant.'
+      },
+      {
+        question: 'Faites-vous formation pour Vancouver (VFS/VanArts)?',
+        answer: 'Oui! Nous sommes agents éducatifs officiels pour VFS et VanArts à Vancouver. Nous offrons support complet pour étudiants brésiliens: orientation sur programmes, processus d\'application, préparation de portfolio et support pendant études au Canada.'
+      }
+    ]
+  },
+  'arquitetura-virtual-bim': {
+    pt: [
+      {
+        question: 'O que é arquitetura virtual e BIM?',
+        answer: 'Arquitetura virtual usa modelagem 3D e visualizações para projetar espaços antes da construção. BIM (Building Information Modeling) é metodologia que integra informações técnicas, custos e prazos em modelos 3D inteligentes. Combinamos ambos para criar projetos precisos e eficientes.'
+      },
+      {
+        question: 'Quanto custa um projeto de arquitetura virtual?',
+        answer: 'Projetos variam de R$ 30.000 (visualizações simples) a R$ 500.000+ (projeto completo com BIM). Investimento depende de complexidade, tamanho do projeto, nível de detalhamento e tecnologias integradas. Oferecemos orçamento personalizado após análise do briefing.'
+      },
+      {
+        question: 'Vocês fazem tours virtuais?',
+        answer: 'Sim! Criamos tours virtuais interativos que permitem explorar espaços antes da construção. Utilizamos renderização fotorrealista, integração com VR/AR e navegação intuitiva. Tours virtuais são ideais para apresentação de projetos a clientes e investidores.'
+      },
+      {
+        question: 'Como funciona integração BIM?',
+        answer: 'Desenvolvemos modelos BIM que integram arquitetura, estrutura, instalações e custos. Utilizamos Revit, ArchiCAD e outras ferramentas para criar modelos inteligentes que facilitam planejamento, coordenação entre equipes e gestão de projetos de construção.'
+      },
+      {
+        question: 'Vocês trabalham com realidade virtual para arquitetura?',
+        answer: 'Sim! Criamos experiências VR que permitem "caminhar" por projetos antes da construção. Utilizamos Unreal Engine e Unity para criar ambientes imersivos onde clientes podem explorar espaços em escala real, testar diferentes materiais e visualizar iluminação natural.'
+      },
+      {
+        question: 'Qual o prazo para desenvolvimento?',
+        answer: 'Prazos variam: visualizações simples (2-4 semanas), projeto completo com BIM (8-16 semanas), tour virtual interativo (4-8 semanas). Sempre trabalhamos com cronogramas realistas e entregas progressivas para garantir qualidade e alinhamento com expectativas do cliente.'
+      }
+    ],
+    en: [
+      {
+        question: 'What is virtual architecture and BIM?',
+        answer: 'Virtual architecture uses 3D modeling and visualizations to design spaces before construction. BIM (Building Information Modeling) is methodology that integrates technical information, costs and deadlines into intelligent 3D models. We combine both to create precise and efficient projects.'
+      },
+      {
+        question: 'How much does a virtual architecture project cost?',
+        answer: 'Projects range from R$ 30,000 (simple visualizations) to R$ 500,000+ (complete project with BIM). Investment depends on complexity, project size, level of detail and integrated technologies. We offer personalized quote after briefing analysis.'
+      },
+      {
+        question: 'Do you do virtual tours?',
+        answer: 'Yes! We create interactive virtual tours that allow exploring spaces before construction. We use photorealistic rendering, VR/AR integration and intuitive navigation. Virtual tours are ideal for presenting projects to clients and investors.'
+      },
+      {
+        question: 'How does BIM integration work?',
+        answer: 'We develop BIM models that integrate architecture, structure, installations and costs. We use Revit, ArchiCAD and other tools to create intelligent models that facilitate planning, coordination between teams and construction project management.'
+      },
+      {
+        question: 'Do you work with virtual reality for architecture?',
+        answer: 'Yes! We create VR experiences that allow "walking" through projects before construction. We use Unreal Engine and Unity to create immersive environments where clients can explore spaces at real scale, test different materials and visualize natural lighting.'
+      },
+      {
+        question: 'What is the deadline for development?',
+        answer: 'Deadlines vary: simple visualizations (2-4 weeks), complete project with BIM (8-16 weeks), interactive virtual tour (4-8 weeks). We always work with realistic schedules and progressive deliveries to ensure quality and alignment with client expectations.'
+      }
+    ],
+    es: [
+      {
+        question: '¿Qué es arquitectura virtual y BIM?',
+        answer: 'Arquitectura virtual usa modelado 3D y visualizaciones para proyectar espacios antes de construcción. BIM (Building Information Modeling) es metodología que integra información técnica, costos y plazos en modelos 3D inteligentes. Combinamos ambos para crear proyectos precisos y eficientes.'
+      },
+      {
+        question: '¿Cuánto cuesta un proyecto de arquitectura virtual?',
+        answer: 'Proyectos varían de R$ 30.000 (visualizaciones simples) a R$ 500.000+ (proyecto completo con BIM). La inversión depende de complejidad, tamaño del proyecto, nivel de detalle y tecnologías integradas. Ofrecemos presupuesto personalizado tras análisis del briefing.'
+      },
+      {
+        question: '¿Hacen tours virtuales?',
+        answer: '¡Sí! Creamos tours virtuales interactivos que permiten explorar espacios antes de construcción. Utilizamos renderizado fotorrealista, integración con VR/AR y navegación intuitiva. Tours virtuales son ideales para presentación de proyectos a clientes e inversores.'
+      },
+      {
+        question: '¿Cómo funciona integración BIM?',
+        answer: 'Desarrollamos modelos BIM que integran arquitectura, estructura, instalaciones y costos. Utilizamos Revit, ArchiCAD y otras herramientas para crear modelos inteligentes que facilitan planificación, coordinación entre equipos y gestión de proyectos de construcción.'
+      },
+      {
+        question: '¿Trabajan con realidad virtual para arquitectura?',
+        answer: '¡Sí! Creamos experiencias VR que permiten "caminar" por proyectos antes de construcción. Utilizamos Unreal Engine y Unity para crear ambientes inmersivos donde clientes pueden explorar espacios en escala real, probar diferentes materiales y visualizar iluminación natural.'
+      },
+      {
+        question: '¿Cuál el plazo para desarrollo?',
+        answer: 'Plazos varían: visualizaciones simples (2-4 semanas), proyecto completo con BIM (8-16 semanas), tour virtual interactivo (4-8 semanas). Siempre trabajamos con cronogramas realistas y entregas progresivas para garantizar calidad y alineación con expectativas del cliente.'
+      }
+    ],
+    fr: [
+      {
+        question: 'Qu\'est-ce que architecture virtuelle et BIM?',
+        answer: 'Architecture virtuelle utilise modélisation 3D et visualisations pour projeter espaces avant construction. BIM (Building Information Modeling) est méthodologie qui intègre informations techniques, coûts et délais dans modèles 3D intelligents. Nous combinons les deux pour créer projets précis et efficients.'
+      },
+      {
+        question: 'Combien coûte projet d\'architecture virtuelle?',
+        answer: 'Projets varient de R$ 30.000 (visualisations simples) à R$ 500.000+ (projet complet avec BIM). L\'investissement dépend de complexité, taille du projet, niveau de détail et technologies intégrées. Nous offrons devis personnalisé après analyse du briefing.'
+      },
+      {
+        question: 'Faites-vous visites virtuelles?',
+        answer: 'Oui! Nous créons visites virtuelles interactives qui permettent explorer espaces avant construction. Nous utilisons rendu photoréaliste, intégration VR/AR et navigation intuitive. Visites virtuelles sont idéales pour présentation de projets à clients et investisseurs.'
+      },
+      {
+        question: 'Comment fonctionne intégration BIM?',
+        answer: 'Nous développons modèles BIM qui intègrent architecture, structure, installations et coûts. Nous utilisons Revit, ArchiCAD et autres outils pour créer modèles intelligents qui facilitent planification, coordination entre équipes et gestion de projets de construction.'
+      },
+      {
+        question: 'Travaillez-vous avec réalité virtuelle pour architecture?',
+        answer: 'Oui! Nous créons expériences VR qui permettent "marcher" dans projets avant construction. Nous utilisons Unreal Engine et Unity pour créer environnements immersifs où clients peuvent explorer espaces à échelle réelle, tester différents matériaux et visualiser éclairage naturel.'
+      },
+      {
+        question: 'Quel est le délai pour développement?',
+        answer: 'Délais varient: visualisations simples (2-4 semaines), projet complet avec BIM (8-16 semaines), visite virtuelle interactive (4-8 semaines). Nous travaillons toujours avec calendriers réalistes et livraisons progressives pour assurer qualité et alignement avec attentes du client.'
+      }
+    ]
   }
 }
 
