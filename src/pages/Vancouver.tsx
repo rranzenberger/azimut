@@ -444,7 +444,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
               <div className="inline-block px-4 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full backdrop-blur-md">
                 <span className="text-azimut-red text-sm font-semibold uppercase tracking-wider inline-flex items-center gap-1.5">
-                  <CanadaMapleLeaf size="sm" /> {lang === 'pt' ? 'Agente Educacional Oficial' : lang === 'es' ? 'Agente Educacional Oficial' : lang === 'fr' ? 'Agent Éducatif Officiel' : 'Official Educational Agent'}
+                  <CanadaMapleLeaf size="sm" /> {lang === 'pt' ? 'Agenciamento Educacional' : lang === 'es' ? 'Agenciamiento Educacional' : lang === 'fr' ? 'Agence Éducative' : 'Educational Agency'}
                 </span>
               </div>
               
