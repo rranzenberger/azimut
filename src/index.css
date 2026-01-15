@@ -3056,16 +3056,18 @@ select.dropdown-azimut::-ms-expand {
    5. HERO - Texto BRANCO sobre imagem (AMBOS OS TEMAS)
    ========================= */
 
-/* Hero - SEMPRE texto branco com sombra (sobre imagem escurecida) */
-.vancouver-page section:first-of-type h1,
-.vancouver-page section:first-of-type h1 *,
-.vancouver-page section:first-of-type p,
-.vancouver-page section:first-of-type span {
-  color: #ffffff !important;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+/* Hero - INVERTIDO: escuro no tema escuro, branco no tema claro */
+[data-theme="dark"] .vancouver-page section:first-of-type h1,
+[data-theme="dark"] .vancouver-page section:first-of-type h1 *,
+[data-theme="dark"] .vancouver-page section:first-of-type p,
+[data-theme="dark"] .vancouver-page section:first-of-type span,
+[data-theme="dark"] .vancouver-page section:first-of-type .text-white,
+[data-theme="dark"] .vancouver-page section:first-of-type .text-white\/90,
+[data-theme="dark"] .vancouver-page section:first-of-type .text-white\/70 {
+  color: #0d0d0d !important;
 }
 
-/* Reforçar no tema claro */
+/* Tema claro - branco com sombra */
 [data-theme="light"] .vancouver-page section:first-of-type h1,
 [data-theme="light"] .vancouver-page section:first-of-type h1 *,
 [data-theme="light"] .vancouver-page section:first-of-type h1 span,
