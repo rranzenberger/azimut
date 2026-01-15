@@ -618,12 +618,9 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             key={key}
             onClick={() => setActiveTab(key as any)}
             className={`
-              px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-bold uppercase tracking-wider
+              magazine-tab px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-bold uppercase tracking-wider
               transition-all duration-300 transform hover:scale-105
-              ${activeTab === key
-                ? 'bg-azimut-red text-white shadow-2xl shadow-azimut-red/50'
-                : 'bg-white/10 backdrop-blur-xl text-white hover:bg-white/20'
-              }
+              ${activeTab === key ? 'magazine-tab-active' : ''}
             `}
           >
             {label}
@@ -633,10 +630,10 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
 
       {/* Title */}
       <div className="text-center mb-12 md:mb-16 px-4">
-        <h2 className="text-5xl md:text-7xl font-black text-white mb-4 uppercase tracking-tight">
+        <h2 className="section-title-vancouver text-5xl md:text-7xl font-black mb-4 uppercase tracking-tight">
           {currentSection.title}
         </h2>
-        <p className="text-xl md:text-2xl text-white/70">
+        <p className="section-subtitle-vancouver text-xl md:text-2xl">
           {currentSection.subtitle}
         </p>
       </div>

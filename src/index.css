@@ -3014,7 +3014,70 @@ select.dropdown-azimut::-ms-expand {
 }
 
 /* =========================
-   8. SCHOOL CARDS VFS/VANARTS - Fundo escuro SEMPRE
+   8. MAGAZINE TABS - Botões adaptativos (VancouverMagazine)
+   ========================= */
+
+/* Tab não ativo - tema escuro (translúcido) */
+.magazine-tab {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  color: #ffffff;
+  border: 2px solid transparent;
+}
+
+.magazine-tab:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Tab ativo - vermelho Azimut (ambos os temas) */
+.magazine-tab-active {
+  background: #c92337 !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.5);
+  border-color: transparent !important;
+}
+
+.magazine-tab-active:hover {
+  background: #b01f2e !important;
+  box-shadow: 0 12px 32px rgba(201, 35, 55, 0.6);
+}
+
+/* =========================
+   TEMA CLARO - Magazine tabs com fundo sólido
+   ========================= */
+
+[data-theme="light"] .magazine-tab {
+  background: linear-gradient(135deg, #1a1f2e 0%, #2a2f3e 100%);
+  backdrop-filter: blur(16px);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .magazine-tab:hover {
+  background: linear-gradient(135deg, #2a2f3e 0%, #3a3f4e 100%);
+  border-color: rgba(201, 35, 55, 0.4);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05) translateY(-2px);
+}
+
+/* Tab ativo no tema claro - vermelho ainda mais vibrante */
+[data-theme="light"] .magazine-tab-active {
+  background: #c92337 !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.5) !important;
+  border-color: transparent !important;
+}
+
+[data-theme="light"] .magazine-tab-active:hover {
+  background: #b01f2e !important;
+  box-shadow: 0 12px 32px rgba(201, 35, 55, 0.6) !important;
+  transform: scale(1.05) translateY(-2px) !important;
+}
+
+/* =========================
+   9. SCHOOL CARDS VFS/VANARTS - Fundo escuro SEMPRE
    ========================= */
 
 /* School cards sempre têm fundo escuro e texto branco */
