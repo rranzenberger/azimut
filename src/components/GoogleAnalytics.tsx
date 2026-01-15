@@ -24,7 +24,6 @@ const GoogleAnalytics: React.FC<GoogleAnalyticsProps> = ({
   // Install Google Analytics script
   useEffect(() => {
     if (!measurementId || measurementId === 'G-XXXXXXXXXX') {
-      console.log('⚠️ Google Analytics não configurado. Configure VITE_GA_MEASUREMENT_ID no Vercel.')
       return
     }
 
@@ -44,8 +43,6 @@ const GoogleAnalytics: React.FC<GoogleAnalyticsProps> = ({
       send_page_view: false // We'll send manually on route change
     })
 
-    console.log('✅ Google Analytics inicializado:', measurementId)
-
     return () => {
       // Cleanup script on unmount
       document.head.removeChild(script)
@@ -63,8 +60,6 @@ const GoogleAnalytics: React.FC<GoogleAnalyticsProps> = ({
       page_title: document.title,
       page_location: window.location.href
     })
-
-    console.log('📊 GA Pageview:', pagePath)
   }, [location, measurementId])
 
   return null // This component doesn't render anything
@@ -83,7 +78,6 @@ export default GoogleAnalytics
 export const trackEvent = (eventName: string, parameters?: Record<string, any>) => {
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', eventName, parameters)
-    console.log('📊 GA Event:', eventName, parameters)
   }
 }
 

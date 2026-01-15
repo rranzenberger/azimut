@@ -393,10 +393,8 @@ const CourseRecommender: React.FC<CourseRecommenderProps> = ({ lang, onComplete 
             course3Match: recommendations.topCourses[2]?.match || 0,
             lang
           })
-          
-          console.log('✅ Recomendação salva no CRM')
         } catch (error) {
-          console.warn('⚠️ Erro ao salvar Recomendação (não-crítico):', error)
+          // Erro ao salvar Recomendação (não-crítico)
           // Não exibir erro para o usuário - é não-crítico
         }
       }, 300)

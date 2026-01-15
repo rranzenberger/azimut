@@ -91,7 +91,6 @@ export function useBackofficeContent(
         };
 
         setPage(pageContent);
-        console.log(`✅ [Backoffice] Conteúdo carregado: ${slug} (${lang})`);
       } catch (err) {
         if (isCancelled) return;
 

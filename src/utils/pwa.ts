@@ -16,16 +16,13 @@ export async function registerServiceWorker() {
         scope: '/'
       })
       
-      console.log('[PWA] ✅ Service Worker registered:', registration.scope)
-      
       // Verificar atualizações periodicamente
       registration.addEventListener('updatefound', () => {
         const newWorker = registration.installing
         if (newWorker) {
           newWorker.addEventListener('statechange', () => {
             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              console.log('[PWA] Nova versão disponível! Recarregue a página.')
-              // Opcional: mostrar notificação para usuário atualizar
+              // Nova versão disponível - mostrar notificação para usuário
             }
           })
         }
@@ -38,10 +35,8 @@ export async function registerServiceWorker() {
       
       return registration
     } catch (error) {
-      console.error('[PWA] ❌ Service Worker registration failed:', error)
+      console.error('[PWA] Service Worker registration failed:', error)
     }
-  } else {
-    console.log('[PWA] Service Workers not supported')
   }
 }
 
@@ -56,15 +51,12 @@ export function setupInstallPrompt() {
     // Guardar evento para usar depois
     deferredPrompt = e
     
-    console.log('[PWA] Install prompt available')
-    
     // Disparar evento customizado para UI
     window.dispatchEvent(new CustomEvent('pwa-installable'))
   })
   
   // Detectar quando PWA é instalado
   window.addEventListener('appinstalled', () => {
-    console.log('[PWA] App installed successfully')
     deferredPrompt = null
     
     // Analytics - Enviar para backoffice
@@ -75,7 +67,6 @@ export function setupInstallPrompt() {
 // Mostrar prompt de instalação
 export async function showInstallPrompt(): Promise<boolean> {
   if (!deferredPrompt) {
-    console.log('[PWA] Install prompt not available')
     return false
   }
   
@@ -84,8 +75,6 @@ export async function showInstallPrompt(): Promise<boolean> {
   
   // Aguardar escolha do usuário
   const { outcome } = await deferredPrompt.userChoice
-  
-  console.log('[PWA] User choice:', outcome)
   
   // Analytics - Enviar para backoffice
   trackPWAInstall('prompt_shown', { outcome })

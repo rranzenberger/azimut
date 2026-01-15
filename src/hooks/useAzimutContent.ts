@@ -51,12 +51,10 @@ export function useAzimutContent(options: ContentOptions = {}) {
             
             if (ipGeo && ipGeo.countryCode && ipGeo.countryCode !== 'DEFAULT') {
               country = ipGeo.countryCode;
-              console.log(`🌍 País detectado via IP (VPN-aware): ${ipGeo.country} (${ipGeo.countryCode})`);
               
               // Ajustar idioma baseado no país detectado (se não foi salvo manualmente)
               if (!savedLang) {
                 lang = getLanguageFromCountry(ipGeo.countryCode);
-                console.log(`🌐 Idioma ajustado para ${lang.toUpperCase()} baseado no país: ${ipGeo.country}`);
                 localStorage.setItem('azimut-lang', lang);
               }
             } else {
@@ -64,24 +62,16 @@ export function useAzimutContent(options: ContentOptions = {}) {
               const geo = detectGeoFromTimezone();
               country = geo.countryCode;
               
-              console.log(`🌍 País detectado via timezone (fallback): ${geo.country} (${geo.countryCode})`);
-              if (geo.region) {
-                console.log(`📍 Região: ${geo.region}`);
-              }
-              
               // Ajustar idioma baseado no país detectado (se não foi salvo manualmente)
               if (!savedLang && country !== 'DEFAULT') {
                 lang = geo.language;
-                console.log(`🌐 Idioma ajustado para ${geo.language.toUpperCase()} baseado no país: ${geo.country}`);
                 localStorage.setItem('azimut-lang', geo.language);
               }
             }
           } catch (fallbackErr) {
-            console.warn('Geo detection failed, using browser language');
             // Fallback: usar idioma do navegador
             if (!savedLang) {
               lang = detectLanguageFromBrowser();
-              console.log(`🌐 Idioma detectado via navegador: ${lang.toUpperCase()}`);
               localStorage.setItem('azimut-lang', lang);
             }
           }
@@ -100,11 +90,8 @@ export function useAzimutContent(options: ContentOptions = {}) {
             .then(geoData => {
               if (geoData?.detected && geoData.country) {
                 country = geoData.country;
-                console.log('🌍 País confirmado via CMS:', country);
                 
                 // Ajustar idioma se API confirmar país diferente
-                // REMOVIDO: window.location.reload() estava causando problemas na navegação
-                // O idioma já é atualizado via App.tsx useEffect, não precisa recarregar
                 if (!savedLang && country !== 'DEFAULT') {
                   const geo = detectGeoFromTimezone();
                   const apiLanguage = geo.language;
@@ -112,8 +99,6 @@ export function useAzimutContent(options: ContentOptions = {}) {
                   if (lang !== apiLanguage) {
                     // Apenas atualizar localStorage, App.tsx vai detectar e atualizar
                     localStorage.setItem('azimut-lang', apiLanguage);
-                    console.log(`🌐 Idioma ajustado para ${apiLanguage.toUpperCase()} (confirmado pela API)`);
-                    // Não recarregar - deixar App.tsx gerenciar a atualização
                   }
                 }
               }

@@ -92,7 +92,6 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
       // Aplicar filtro sugerido SUTILMENTE (não forçado, mas sugerido)
       if (suggestedType && !selectedType) {
         // Não navega, apenas sugere visualmente (InternalNavigation vai destacar)
-        console.log(`💡 IA sugere filtro: ${suggestedType} para ${profile.visitorType}`)
       }
     }
   }, [profile, location.search, selectedType])
@@ -140,10 +139,8 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   // MIGRAÇÃO GRADUAL: Backoffice → Estático (sempre funciona)
   const allCases = useMemo(() => {
     if (cmsContent?.highlightProjects && Array.isArray(cmsContent.highlightProjects) && cmsContent.highlightProjects.length > 0) {
-      console.log('✅ Usando projetos do backoffice');
       return cmsContent.highlightProjects;
     }
-    console.log('⚠️ Usando projetos estáticos (fallback) - Preencher no backoffice!');
     return defaultCases;
   }, [cmsContent?.highlightProjects, defaultCases])
   

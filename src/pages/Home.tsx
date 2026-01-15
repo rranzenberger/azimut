@@ -128,16 +128,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   const projects = useMemo(() => {
     // 1º: Tentar projetos personalizados por IA (se disponível)
     if (personalizedProjects && Array.isArray(personalizedProjects) && personalizedProjects.length > 0) {
-      console.log('✅ Usando projetos personalizados por IA');
       return personalizedProjects;
     } 
     // 2º: Tentar projetos do backoffice (se disponível)
     if (cmsContent?.highlightProjects && Array.isArray(cmsContent.highlightProjects) && cmsContent.highlightProjects.length > 0) {
-      console.log('✅ Usando projetos do backoffice');
       return cmsContent.highlightProjects;
     }
     // 3º: Fallback estático (SEMPRE funciona)
-    console.log('⚠️ Usando projetos estáticos (fallback) - Preencher no backoffice!');
     return defaultProjects;
   }, [personalizedProjects, cmsContent?.highlightProjects, defaultProjects]);
   

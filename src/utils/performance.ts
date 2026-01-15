@@ -136,8 +136,6 @@ export const measurePerformance = <T>(
 
   if (label && typeof console !== 'undefined' && console.time) {
     console.timeEnd(label || 'Performance')
-  } else if (label && typeof console !== 'undefined') {
-    console.log(`${label}: ${duration.toFixed(2)}ms`)
   }
 
   return result

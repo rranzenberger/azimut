@@ -334,8 +334,6 @@ export async function callClaude(request: ClaudeRequest): Promise<ClaudeResponse
   
   // Selecionar prompt (fallback para EN se não existir)
   let systemPrompt = SYSTEM_PROMPTS[promptKey] || SYSTEM_PROMPTS.student_en
-  
-  console.log(`🌍 Claude: Using prompt for lang=${lang}, profile=${profile} → ${promptKey}`)
 
   // Adicionar contexto COMPLETO da Azimut + página atual
   const langKey = (lang === 'pt' || lang === 'en' || lang === 'es' || lang === 'fr') ? lang : 'en'

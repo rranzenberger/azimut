@@ -13,10 +13,6 @@ interface AppLayoutProps {
 }
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children, lang, setLang, theme, toggleTheme }) => {
-  // DEBUG: Verificar se children está chegando
-  console.log('🔵 AppLayout - children:', children)
-  console.log('🔵 AppLayout - children type:', typeof children)
-  
   // Sempre usar Layout para todas as rotas
   return (
     <>

@@ -20,7 +20,6 @@ const SimplePasswordGate: React.FC<SimplePasswordGateProps> = ({ children }) => 
     
     // Se bypass ativo, autenticar automaticamente
     if (bypassActive || devBypassToken) {
-      console.log('🔓 Bypass ativo - Login automático')
       setIsAuthenticated(true)
       return
     }

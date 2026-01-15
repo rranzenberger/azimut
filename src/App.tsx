@@ -43,12 +43,10 @@ const SITE_ABERTO = true // ← MUDE AQUI: true = aberto, false = pede senha
 const shouldShowLogin = (): boolean => {
   // Se SITE_ABERTO = true, nunca mostra login
   if (SITE_ABERTO) {
-    console.log('🔓 Site ABERTO para todos (SITE_ABERTO = true)')
     return false
   }
   
   // Se SITE_ABERTO = false, mostra login
-  console.log('🔒 Site FECHADO - Login necessário (SITE_ABERTO = false)')
   return true
 }
 
@@ -103,7 +101,6 @@ const App: React.FC = () => {
     const checkProtection = () => {
       const newProtected = shouldShowLogin()
       if (newProtected !== siteProtected) {
-        console.log(`🔄 Proteção mudou: ${siteProtected ? 'desativada' : 'ativada'}`)
         setSiteProtected(newProtected)
       }
     }
@@ -114,7 +111,6 @@ const App: React.FC = () => {
     // Event listener customizado (disparado pelo DevTools)
     const handleProtectionChange = ((e: CustomEvent) => {
       const newProtected = e.detail?.protected ?? shouldShowLogin()
-      console.log(`🔔 Evento: Proteção mudou para ${newProtected}`)
       setSiteProtected(newProtected)
     }) as EventListener
 
@@ -155,12 +151,10 @@ const App: React.FC = () => {
       // Fallback: usar idioma do navegador se timezone falhar
       const browserLang = detectLanguageFromBrowser()
       localStorage.setItem('azimut-lang', browserLang)
-      console.log(`🌐 Fallback: idioma do navegador (${browserLang.toUpperCase()})`)
       return browserLang
     }
     
     // Último fallback: INGLÊS (língua internacional, não PT)
-    console.log('🌐 Último fallback: EN (internacional)')
     return 'en'
     } catch (e) {
       // Fallback se localStorage não estiver disponível
@@ -176,20 +170,16 @@ const App: React.FC = () => {
     
     const detectAndUpdateLanguage = async () => {
       try {
-        console.log('🔍 Iniciando detecção de idioma...')
-        
-        // 🆕 VERIFICAR SE HÁ IDIOMA NA URL ATUAL
+        // Verificar se há idioma na URL atual
         const currentPath = window.location.pathname
         const urlLangMatch = currentPath.match(/^\/(pt|en|fr|es)(\/|$)/)
         const urlLang = urlLangMatch ? urlLangMatch[1] as Lang : null
         
-        // 🆕 SE TEM IDIOMA NA URL, USAR ELE E SALVAR NO LOCALSTORAGE
+        // Se tem idioma na URL, usar ele e salvar no localStorage
         if (urlLang) {
-          console.log(`✅ AZIMUT: Idioma da URL detectado → ${urlLang}`)
           const currentLang = localStorage.getItem('azimut-lang') as Lang | null
           
           if (currentLang !== urlLang) {
-            console.log(`🌐 AZIMUT: Atualizando preferência de ${currentLang || 'nenhum'} para ${urlLang}`)
             setLang(urlLang)
             localStorage.setItem('azimut-lang', urlLang)
           }
@@ -206,50 +196,36 @@ const App: React.FC = () => {
         if (!mounted) return
         
         if (ipGeo && ipGeo.countryCode) {
-          // ✅ IP detectado com sucesso
+          // IP detectado com sucesso
           const detectedLang = getLanguageFromCountry(ipGeo.countryCode)
           const currentLang = localStorage.getItem('azimut-lang') as Lang | null
           
-          console.log(`🌍 GEO: IP detectado - ${ipGeo.countryCode} → lang: ${detectedLang}`)
-          console.log(`🌐 AZIMUT: Idioma detectado → ${detectedLang}`)
-          
           // Atualizar se o idioma detectado for diferente
           if (currentLang !== detectedLang) {
-            console.log(`🌐 AZIMUT: Atualizando idioma de ${currentLang || 'nenhum'} para ${detectedLang}`)
             setLang(detectedLang)
             localStorage.setItem('azimut-lang', detectedLang)
-            console.log(`🌐 AZIMUT: Salvando preferência → ${detectedLang}`)
-          } else {
-            console.log(`✅ AZIMUT: Idioma já correto (${detectedLang})`)
           }
         } else {
-          // ⚠️ TODAS as APIs de IP falharam - usar timezone como fallback
-          console.log('⚠️ GEO: APIs de IP indisponíveis, usando timezone...')
+          // TODAS as APIs de IP falharam - usar timezone como fallback
           const timezoneGeo = detectGeoFromTimezone()
           const detectedLang = timezoneGeo.language
           const currentLang = localStorage.getItem('azimut-lang') as Lang | null
           
-          console.log(`🌍 GEO: Timezone detectado - ${timezoneGeo.timeZone || 'unknown'} → lang: ${detectedLang}`)
-          
           if (currentLang !== detectedLang) {
-            console.log(`🌐 AZIMUT: Idioma detectado via timezone → ${detectedLang}`)
             setLang(detectedLang)
             localStorage.setItem('azimut-lang', detectedLang)
           }
         }
       } catch (error) {
-        // ❌ ERRO CRÍTICO: usar navegador ou manter idioma atual
-        console.error('❌ GEO: Erro crítico na detecção:', error)
+        // ERRO CRÍTICO: usar navegador ou manter idioma atual
+        console.error('GEO: Erro crítico na detecção:', error)
         
         const currentLang = localStorage.getItem('azimut-lang') as Lang | null
         if (!currentLang) {
           // Se não tem idioma salvo, usar navegador
           const browserLang = detectLanguageFromBrowser()
-          console.log(`🌐 AZIMUT: Fallback final → navegador (${browserLang})`)
           setLang(browserLang)
           localStorage.setItem('azimut-lang', browserLang)
-        } else {
-          console.log(`✅ AZIMUT: Mantendo idioma atual (${currentLang})`)
         }
       }
     }

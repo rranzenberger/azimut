@@ -5,11 +5,7 @@ function sendToAnalytics(metric: Metric) {
   // Em produção, enviar para seu analytics (Google Analytics, Plausible, etc.)
   const body = JSON.stringify(metric)
   
-  // Log no desenvolvimento
-  if (import.meta.env.DEV) {
-    console.log('[Web Vitals]', metric.name, metric.value.toFixed(2), metric.rating)
-  }
-  
+
   // Enviar para analytics em produção
   if (import.meta.env.PROD && 'sendBeacon' in navigator) {
     // Exemplo: navigator.sendBeacon('/analytics', body)

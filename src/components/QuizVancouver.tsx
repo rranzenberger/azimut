@@ -429,10 +429,8 @@ const QuizVancouver: React.FC<QuizVancouverProps> = ({ lang, onComplete }) => {
         estimatedBudget: quizResult.estimatedBudget,
         lang
       })
-      
-      console.log('✅ Quiz salvo no CRM')
     } catch (error) {
-      console.warn('⚠️ Erro ao salvar Quiz (não-crítico):', error)
+      // Erro ao salvar Quiz (não-crítico)
       // Não exibir erro para o usuário - é não-crítico
     }
   }

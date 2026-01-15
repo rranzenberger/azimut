@@ -95,8 +95,6 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
   const scrollToElement = useCallback((elementId: string) => {
     const element = document.getElementById(elementId)
     
-    console.log('🎯 scrollToElement:', elementId, element ? 'ENCONTRADO' : 'NÃO ENCONTRADO')
-    
     if (!element) {
       console.error('❌ Elemento não encontrado:', elementId)
       return

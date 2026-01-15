@@ -18,20 +18,17 @@ export default function DevToolsButton() {
     const newValue = !debugMode
     setDebugMode(newValue)
     localStorage.setItem('azimut-debug-mode', String(newValue))
-    console.log('🔧 Debug Mode:', newValue)
   }
 
   const toggleShowStats = () => {
     const newValue = !showStats
     setShowStats(newValue)
     localStorage.setItem('azimut-show-stats', String(newValue))
-    console.log('📊 Show Stats:', newValue)
   }
 
   const clearCache = () => {
     localStorage.clear()
     sessionStorage.clear()
-    console.log('🗑️ Cache cleared!')
     alert('Cache limpo! A página será recarregada.')
     window.location.reload()
   }

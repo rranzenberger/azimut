@@ -192,8 +192,6 @@ export async function callDeepSeek(request: DeepSeekRequest): Promise<DeepSeekRe
   
   // Selecionar prompt (fallback para EN se não existir)
   let systemPrompt = DEEPSEEK_PROMPTS[promptKey] || DEEPSEEK_PROMPTS.student_en
-  
-  console.log(`🌍 DeepSeek: Using prompt for lang=${lang}, profile=${profile} → ${promptKey}`)
 
   // Adicionar contexto COMPLETO da Azimut
   const langKey = (lang === 'pt' || lang === 'en' || lang === 'es' || lang === 'fr') ? lang : 'en'

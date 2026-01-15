@@ -287,7 +287,6 @@ export const GamificationWidget: React.FC<GamificationWidgetProps> = ({
               <button
                 onClick={() => {
                   // TODO: Abrir modal de perfil completo
-                  console.log('Ver perfil completo')
                 }}
                 className="w-full bg-gradient-to-r from-azimut-red to-orange-600 hover:from-azimut-red/90 hover:to-orange-600/90 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-azimut-red/20"
               >

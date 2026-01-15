@@ -946,9 +946,7 @@ export function detectLanguageFromBrowser(): 'pt' | 'en' | 'fr' | 'es' {
  * ⚠️ GARANTIDO: Tenta 3 APIs diferentes, NUNCA bloqueia o site
  */
 export async function detectCountryFromIP(): Promise<{ country: string; countryCode: string } | null> {
-  console.log('🌍 GEO: Tentando detectar via IP (3 APIs disponíveis)...');
-  
-  // ✅ API 1: ipapi.co (limite: 1k/dia)
+  // API 1: ipapi.co (limite: 1k/dia)
   try {
     const response = await fetch('https://ipapi.co/json/', {
       signal: createTimeoutSignal(3000),
@@ -957,19 +955,17 @@ export async function detectCountryFromIP(): Promise<{ country: string; countryC
     if (response.ok) {
       const data = await response.json();
       if (data.country_code) {
-        console.log(`✅ GEO: IP detectado (ipapi.co) - ${data.country_name} (${data.country_code})`);
         return {
           country: data.country_name || 'Unknown',
           countryCode: data.country_code,
         };
       }
     }
-    console.warn('⚠️ ipapi.co: não retornou country_code');
-  } catch (error) {
-    console.warn('⚠️ ipapi.co falhou (tentando próxima API):', error);
+  } catch {
+    // Tentar próxima API
   }
   
-  // ✅ API 2: ip-api.com (limite: 45 req/min, sem chave)
+  // API 2: ip-api.com (limite: 45 req/min, sem chave)
   try {
     const response = await fetch('https://ip-api.com/json/?fields=country,countryCode', {
       signal: createTimeoutSignal(3000),
@@ -978,19 +974,17 @@ export async function detectCountryFromIP(): Promise<{ country: string; countryC
     if (response.ok) {
       const data = await response.json();
       if (data.countryCode) {
-        console.log(`✅ GEO: IP detectado (ip-api.com) - ${data.country} (${data.countryCode})`);
         return {
           country: data.country || 'Unknown',
           countryCode: data.countryCode,
         };
       }
     }
-    console.warn('⚠️ ip-api.com: não retornou countryCode');
-  } catch (error) {
-    console.warn('⚠️ ip-api.com falhou (tentando próxima API):', error);
+  } catch {
+    // Tentar próxima API
   }
   
-  // ✅ API 3: ipwhois.app (sem limite conhecido, gratuito)
+  // API 3: ipwhois.app (sem limite conhecido, gratuito)
   try {
     const response = await fetch('https://ipwhois.app/json/', {
       signal: createTimeoutSignal(3000),
@@ -999,20 +993,17 @@ export async function detectCountryFromIP(): Promise<{ country: string; countryC
     if (response.ok) {
       const data = await response.json();
       if (data.country_code) {
-        console.log(`✅ GEO: IP detectado (ipwhois.app) - ${data.country} (${data.country_code})`);
         return {
           country: data.country || 'Unknown',
           countryCode: data.country_code,
         };
       }
     }
-    console.warn('⚠️ ipwhois.app: não retornou country_code');
-  } catch (error) {
-    console.warn('⚠️ ipwhois.app falhou');
+  } catch {
+    // API falhou
   }
   
-  // ❌ TODAS as APIs falharam - retornar null (fallback para timezone)
-  console.warn('❌ GEO: Todas as APIs de IP falharam - usando timezone como fallback');
+  // TODAS as APIs falharam - retornar null (fallback para timezone)
   return null;
 }
 

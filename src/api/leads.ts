@@ -40,11 +40,7 @@ export async function submitLead(profile: UserProfile): Promise<Lead> {
   // })
   // return response.json()
   
-  // Log apenas em desenvolvimento
-  if (import.meta.env.DEV) {
-    console.log('📊 LEAD CAPTURADO:', lead)
-  }
-  
+
   return lead
 }
 

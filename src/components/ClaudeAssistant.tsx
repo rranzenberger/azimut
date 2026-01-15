@@ -122,8 +122,6 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
       }])
       setHasGreeted(true)
       
-      // Log para analytics
-      console.log(`🎯 Chatbot opened - Profile: ${userProfile.profile} (${userProfile.confidence}% confidence)`)
     }
   }, [isOpen, hasGreeted, messages.length, t.greeting, userProfile, lang])
 
@@ -198,15 +196,6 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
         aiModel: data.aiModel || 'deepseek' // FASE 2: Badge de IA
       }
       setMessages(prev => [...prev, assistantMessage])
-
-      // Log AI usage for debugging
-      if (data.aiModel) {
-        console.log(`💬 AI Used: ${data.aiModel}`, {
-          costSaved: data.costSaved,
-          userProfile: userProfile.profile,
-          confidence: userProfile.confidence
-        })
-      }
 
       // If lead data was captured, save it
       if (data.leadData) {

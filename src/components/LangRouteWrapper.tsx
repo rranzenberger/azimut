@@ -20,9 +20,6 @@ const LangRouteWrapper: React.FC<LangRouteWrapperProps> = ({ children, setLang }
   const urlLang = params.lang
   const validLangs: Lang[] = ['pt', 'en', 'fr', 'es']
   
-  console.log('🔍 LangRouteWrapper - params:', JSON.stringify(params))
-  console.log('🔍 LangRouteWrapper - urlLang:', urlLang, '| isValid:', validLangs.includes(urlLang as Lang))
-  
   // Validar idioma
   const isValidLang = urlLang && validLangs.includes(urlLang as Lang)
   

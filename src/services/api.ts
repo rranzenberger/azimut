@@ -50,12 +50,6 @@ export class ApiService {
         throw new Error('API não configurada')
       }
       
-      // Log apenas em desenvolvimento
-      if (import.meta.env.DEV) {
-        console.log('📤 Enviando lead para:', `${API_URL}/api/leads`)
-        console.log('✅ Usando backoffice de produção')
-      }
-
       // Criar AbortController para timeout
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 segundos
@@ -117,7 +111,6 @@ export class ApiService {
    */
   static async getAiSuggestions(data: any) {
     if (!AI_ENABLED) {
-      console.log('ℹ️ AI suggestions disabled')
       return null
     }
 
@@ -162,7 +155,6 @@ export class ApiService {
       })
     } catch (error) {
       // Fail silently - tracking is optional
-      console.debug('Tracking failed (non-critical):', error)
     }
   }
 
@@ -186,7 +178,7 @@ export class ApiService {
 
       return await response.json()
     } catch (error) {
-      console.debug('Recommendations not available:', error)
+      // Recommendations not available
       return null
     }
   }
@@ -201,10 +193,6 @@ export class ApiService {
         throw new Error('API não configurada')
       }
       
-      if (import.meta.env.DEV) {
-        console.log('📤 Enviando lead Vancouver para:', `${API_URL}/api/leads/vancouver`)
-      }
-
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 10000)
 
@@ -259,10 +247,6 @@ export class ApiService {
         throw new Error('API não configurada')
       }
       
-      if (import.meta.env.DEV) {
-        console.log('📤 Enviando Quiz Vancouver para:', `${API_URL}/api/quiz/vancouver`)
-      }
-
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 10000)
 
@@ -317,10 +301,6 @@ export class ApiService {
         throw new Error('API não configurada')
       }
       
-      if (import.meta.env.DEV) {
-        console.log('📤 Enviando Recomendador de Cursos para:', `${API_URL}/api/quiz/course-recommender`)
-      }
-
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 10000)
 

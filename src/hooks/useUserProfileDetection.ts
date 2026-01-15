@@ -268,10 +268,6 @@ export const useUserProfileDetection = (lang: Lang): UserProfileData => {
     const detected = detectProfile()
     setProfile(detected)
 
-    // Log para debug (REMOVER EM PRODUÇÃO)
-    if (process.env.NODE_ENV === 'development') {
-      console.log('🎯 USER PROFILE DETECTED:', detected)
-    }
   }, [behavior])
 
   return profile

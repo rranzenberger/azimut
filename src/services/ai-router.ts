@@ -45,8 +45,6 @@ export async function routeToAI(request: AIRouterRequest): Promise<AIRouterRespo
   // - Ser "humilde mas não modesto" 💪
   // ═══════════════════════════════════════════════════════════
   
-  console.log('🔥 Routing to CLAUDE (humanized conversation)')
-  
   try {
     const claudeResponse = await callClaude({
       message: request.message,
@@ -104,7 +102,9 @@ export async function routeToAI(request: AIRouterRequest): Promise<AIRouterRespo
 // ═══════════════════════════════════════════════════════════
 
 export function logAIUsage(response: AIRouterResponse) {
-  console.log(`AI Usage: ${response.aiUsed}`, {
+  // AI usage tracking
+  void {
+    aiUsed: response.aiUsed,
     shouldFollowUp: response.shouldFollowUp,
     timestamp: new Date().toISOString()
   })
