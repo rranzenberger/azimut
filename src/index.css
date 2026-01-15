@@ -2848,7 +2848,7 @@ select.dropdown-azimut::-ms-expand {
 }
 
 /* =========================
-   1. TEXTOS FORA DE CARDS - Escuros no tema claro
+   1. TEXTOS FORA DE CARDS - BRANCOS no tema claro (igual ao escuro)
    ========================= */
 
 /* Títulos principais FORA de cards - INVERTIDO: escuros no tema escuro, brancos no tema claro */
@@ -3047,12 +3047,13 @@ select.dropdown-azimut::-ms-expand {
   color: #ffffff !important;
 }
 
-/* Box de informações práticas (fundo rosa claro) - texto escuro */
+/* Box de informações práticas (fundo rosa claro) - texto branco no tema claro */
 [data-theme="light"] .vancouver-page .bg-azimut-red\/10 {
-  background: rgba(201, 35, 55, 0.08) !important;
+  background: rgba(201, 35, 55, 0.15) !important;
 }
 [data-theme="light"] .vancouver-page .bg-azimut-red\/10 * {
-  color: #1a1a1a !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 [data-theme="light"] .vancouver-page .bg-azimut-red\/10 .text-azimut-red {
   color: #c92337 !important;
