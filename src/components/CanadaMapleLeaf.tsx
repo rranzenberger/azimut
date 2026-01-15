@@ -22,25 +22,23 @@ const CanadaMapleLeaf: React.FC<CanadaMapleLeafProps> = ({
     sm: 14,
     md: 18,
     lg: 22,
-    'match-text': '1em' // Tamanho igual ao texto ao lado
+    'match-text': undefined // Usar 1em para match com texto
   }
 
-  const imgSize = size === 'match-text' ? sizeMap['match-text'] : sizeMap[size as 'sm' | 'md' | 'lg']
+  const imgSize = size === 'match-text' ? undefined : sizeMap[size]
 
   // Maple Leaf PNG oficial do Canadá
   const MapleLeafImage = (
     <img 
       src="/Maple-Leaf-Canada.png" 
       alt="Canada Maple Leaf"
-      width={typeof imgSize === 'number' ? imgSize : undefined}
-      height={typeof imgSize === 'number' ? imgSize : undefined}
-      className="inline-block"
+      width={imgSize}
+      height={imgSize}
+      className="inline-block align-middle"
       style={{ 
         filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1))',
         verticalAlign: 'middle',
-        width: typeof imgSize === 'string' ? imgSize : undefined,
-        height: typeof imgSize === 'string' ? imgSize : undefined,
-        display: 'inline-block'
+        ...(size === 'match-text' ? { width: '1em', height: '1em' } : {})
       }}
     />
   )
