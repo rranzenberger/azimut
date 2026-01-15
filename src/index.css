@@ -3155,12 +3155,26 @@ select.dropdown-azimut::-ms-expand {
 
 /* Garantir que textos no card internacional sejam sempre brancos */
 .international-card,
-.international-card * {
-  color: #ffffff;
+.international-card *,
+.international-card h3,
+.international-card h2,
+.international-card h1,
+.international-card span,
+.international-card div {
+  color: #ffffff !important;
 }
 
 .international-card p {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Tema claro - forçar textos brancos */
+[data-theme="light"] .international-card,
+[data-theme="light"] .international-card *,
+[data-theme="light"] .international-card h3,
+[data-theme="light"] .international-card h2,
+[data-theme="light"] .international-card .text-white {
+  color: #ffffff !important;
 }
 
 /* =========================
