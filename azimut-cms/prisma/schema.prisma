@@ -36,40 +36,40 @@ model Market {
 }
 
 model Media {
-  id               String          @id @default(uuid())
-  type             MediaType       @default(IMAGE)
-  originalUrl      String
-  thumbnailUrl     String?
-  mediumUrl        String?
-  largeUrl         String?
-  webpUrl          String?
-  avifUrl          String?
-  width            Int?
-  height           Int?
-  sizeBytes        Int?
-  durationSeconds  Int?
-  format           String?
-  contentType      String?
-  altPt            String?
-  altEn            String?
-  altEs            String?
-  altFr            String?
-  createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @updatedAt
-  projectHero      Project?
-  projectGalleries ProjectMedia[]
-  pageHeroBackgrounds Page[]       @relation("PageHeroBackground")
-  pageDemoreelVideos  Page[]       @relation("PageDemoreelVideo")
-  analysis         MediaAnalysis?
-  
+  id                  String         @id @default(uuid())
+  type                MediaType      @default(IMAGE)
+  originalUrl         String
+  thumbnailUrl        String?
+  mediumUrl           String?
+  largeUrl            String?
+  webpUrl             String?
+  avifUrl             String?
+  width               Int?
+  height              Int?
+  sizeBytes           Int?
+  durationSeconds     Int?
+  format              String?
+  contentType         String?
+  altPt               String?
+  altEn               String?
+  altEs               String?
+  altFr               String?
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  projectHero         Project?
+  projectGalleries    ProjectMedia[]
+  pageHeroBackgrounds Page[]         @relation("PageHeroBackground")
+  pageDemoreelVideos  Page[]         @relation("PageDemoreelVideo")
+  analysis            MediaAnalysis?
+
   // ═══════════════════════════════════════════
   // Sistema de Tags (Opção 2) - Contexto da imagem
   // ═══════════════════════════════════════════
-  pageSlug         String?         // "what/cinema-audiovisual", "home", "work", etc.
-  sectionSlug      String?         // "hero", "gallery", "section-image"
-  imageType        String?         // "hero-background", "gallery-image", "service-icon"
-  servicesTags     String[]        // ["cinema-audiovisual", "pos-producao-vfx"]
-  
+  pageSlug     String? // "what/cinema-audiovisual", "home", "work", etc.
+  sectionSlug  String? // "hero", "gallery", "section-image"
+  imageType    String? // "hero-background", "gallery-image", "service-icon"
+  servicesTags String[] // ["cinema-audiovisual", "pos-producao-vfx"]
+
   @@index([pageSlug])
   @@index([sectionSlug])
 }
@@ -226,43 +226,43 @@ model ProjectMedia {
 }
 
 model VisitorSession {
-  sessionId           String               @id
-  ipAddress           String?
-  userAgent           String?
-  language            String?
-  country             String?
-  region              String?
-  city                String?
-  duration            Int                  @default(0)
-  lastActivityAt      DateTime             @default(now())
-  leadId              String?
-  createdAt           DateTime             @default(now())
-  updatedAt           DateTime             @updatedAt
-  
+  sessionId      String   @id
+  ipAddress      String?
+  userAgent      String?
+  language       String?
+  country        String?
+  region         String?
+  city           String?
+  duration       Int      @default(0)
+  lastActivityAt DateTime @default(now())
+  leadId         String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
   // NOVOS CAMPOS PARA ANALYTICS AVANÇADO
-  visitorFingerprint  String?              @unique // Hash único do visitante (identifica anônimo)
-  deviceType          String?              // mobile, desktop, tablet
-  browser             String?              // Chrome, Safari, Firefox, etc
-  os                  String?              // Windows, macOS, iOS, Android
-  screenResolution    String?              // 1920x1080
-  referrer            String?              // De onde veio
-  utmSource           String?              // utm_source da URL
-  utmMedium           String?              // utm_medium
-  utmCampaign         String?              // utm_campaign
-  visitCount          Int                  @default(1) // Quantas vezes voltou
-  isReturning         Boolean              @default(false) // Visitante frequente
-  isPWAInstalled      Boolean              @default(false) // Instalou PWA
-  bounceRate          Boolean              @default(false) // Só entrou e saiu (sem interação)
-  engagementScore     Int                  @default(0) // 0-100 (baseado em interações)
-  conversionProbability Float?             // Probabilidade de converter (0-1, calculado por IA)
-  
+  visitorFingerprint    String? @unique // Hash único do visitante (identifica anônimo)
+  deviceType            String? // mobile, desktop, tablet
+  browser               String? // Chrome, Safari, Firefox, etc
+  os                    String? // Windows, macOS, iOS, Android
+  screenResolution      String? // 1920x1080
+  referrer              String? // De onde veio
+  utmSource             String? // utm_source da URL
+  utmMedium             String? // utm_medium
+  utmCampaign           String? // utm_campaign
+  visitCount            Int     @default(1) // Quantas vezes voltou
+  isReturning           Boolean @default(false) // Visitante frequente
+  isPWAInstalled        Boolean @default(false) // Instalou PWA
+  bounceRate            Boolean @default(false) // Só entrou e saiu (sem interação)
+  engagementScore       Int     @default(0) // 0-100 (baseado em interações)
+  conversionProbability Float? // Probabilidade de converter (0-1, calculado por IA)
+
   interestScore       InterestScore?
   pageViews           PageView[]
   projectInteractions ProjectInteraction[]
   pwaInstalls         PWAInstall[]
   visitorBehaviors    VisitorBehavior[]
   lead                Lead?                @relation(fields: [leadId], references: [id], onDelete: SetNull)
-  
+
   @@index([visitorFingerprint])
   @@index([country])
   @@index([isReturning])
@@ -317,54 +317,54 @@ model InterestScore {
 }
 
 model Lead {
-  id            String           @id @default(uuid())
-  name          String
-  email         String
-  phone         String?
-  company       String?
-  position      String?
-  leadType      LeadType         @default(CONTACT_FORM)
-  projectType   String?
-  budget        String?
-  timeline      String?
-  description   String?
-  sourceUrl     String?
-  referrer      String?
-  utmSource     String?
-  utmMedium     String?
-  utmCampaign   String?
-  status        LeadStatus       @default(NEW)
-  priority      LeadPriority     @default(MEDIUM)
-  createdAt     DateTime         @default(now())
-  updatedAt     DateTime         @updatedAt
-  assignedToId  String?
-  assignedAt    DateTime?
-  notes         String?
-  lastContactAt DateTime?
+  id               String       @id @default(uuid())
+  name             String
+  email            String
+  phone            String?
+  company          String?
+  position         String?
+  leadType         LeadType     @default(CONTACT_FORM)
+  projectType      String?
+  budget           String?
+  timeline         String?
+  description      String?
+  sourceUrl        String?
+  referrer         String?
+  utmSource        String?
+  utmMedium        String?
+  utmCampaign      String?
+  status           LeadStatus   @default(NEW)
+  priority         LeadPriority @default(MEDIUM)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  assignedToId     String?
+  assignedAt       DateTime?
+  notes            String?
+  lastContactAt    DateTime?
   // NOVOS CAMPOS PARA ANALYTICS
-  leadScore     Int              @default(0) // 0-100
-  organizationType String?        // governo, museu, corporativo, etc
-  estimatedValue Float?           // R$
-  interestInGrants Boolean        @default(false)
-  country       String?
-  city          String?
-  
+  leadScore        Int          @default(0) // 0-100
+  organizationType String? // governo, museu, corporativo, etc
+  estimatedValue   Float? // R$
+  interestInGrants Boolean      @default(false)
+  country          String?
+  city             String?
+
   // CAMPOS VANCOUVER (Estudar em Vancouver)
-  age                  Int?
-  currentSituation     String?
-  targetSchool         String?         // VFS, VanArts, etc
-  areaInterest         String?         // 3D Animation, Game Design, etc
-  intakeYear           String?         // 2026, 2027, 2028
-  englishLevel         String?         // Iniciante, Intermediário, Avançado, Fluente
-  hasPortfolio         String?         // sim-completo, sim-precisa-melhorar, comecando, nao-tenho
-  budgetRange          String?         // ate-100k, 100k-200k, etc
-  fundingSource        String?         // familia, economia-propria, financiamento, bolsa
-  howHeard             String?         // webinar, palestra-escola, feira, redes-sociais, indicacao, google
-  comments             String?
-  
-  assignedTo    User?            @relation("LeadAssignedTo", fields: [assignedToId], references: [id])
-  editalLeads   LeadEdital[]
-  sessions      VisitorSession[]
+  age              Int?
+  currentSituation String?
+  targetSchool     String? // VFS, VanArts, etc
+  areaInterest     String? // 3D Animation, Game Design, etc
+  intakeYear       String? // 2026, 2027, 2028
+  englishLevel     String? // Iniciante, Intermediário, Avançado, Fluente
+  hasPortfolio     String? // sim-completo, sim-precisa-melhorar, comecando, nao-tenho
+  budgetRange      String? // ate-100k, 100k-200k, etc
+  fundingSource    String? // familia, economia-propria, financiamento, bolsa
+  howHeard         String? // webinar, palestra-escola, feira, redes-sociais, indicacao, google
+  comments         String?
+
+  assignedTo  User?            @relation("LeadAssignedTo", fields: [assignedToId], references: [id])
+  editalLeads LeadEdital[]
+  sessions    VisitorSession[]
 
   @@index([status])
   @@index([priority])
@@ -571,33 +571,33 @@ enum ProjectInteractionType {
 // ════════════════════════════════════════════════════════════
 
 model QuizVancouverResponse {
-  id                String   @id @default(uuid())
-  sessionId         String?  // Se anônimo (antes do lead)
-  leadId            String?  // Se já preencheu formulário
-  
+  id        String  @id @default(uuid())
+  sessionId String? // Se anônimo (antes do lead)
+  leadId    String? // Se já preencheu formulário
+
   // Respostas do Quiz (10 perguntas)
-  experience        String   // zero, beginner, intermediate, advanced
-  english           String   // basic, intermediate, advanced, native
-  goal              String   // career-change, skill-up, portfolio, immigration
-  area              String   // animation, vfx, game, film
-  budget            String   // low, medium, high, very-high
-  timeline          String   // asap, soon, planning, researching
-  portfolio         String   // none, basic, good, professional
-  software          String   // none, basic, intermediate, advanced
-  commitment        String   // exploring, serious, decided, ready
-  support           String   // self, partial, full, sponsored
-  
+  experience String // zero, beginner, intermediate, advanced
+  english    String // basic, intermediate, advanced, native
+  goal       String // career-change, skill-up, portfolio, immigration
+  area       String // animation, vfx, game, film
+  budget     String // low, medium, high, very-high
+  timeline   String // asap, soon, planning, researching
+  portfolio  String // none, basic, good, professional
+  software   String // none, basic, intermediate, advanced
+  commitment String // exploring, serious, decided, ready
+  support    String // self, partial, full, sponsored
+
   // Resultado calculado
-  score             Int      // 0-100
-  readiness         String   // low, medium, high
-  bestSchool        String   // VFS, VanArts
-  estimatedBudget   String   // CAD 25k-30k, etc
-  
+  score           Int // 0-100
+  readiness       String // low, medium, high
+  bestSchool      String // VFS, VanArts
+  estimatedBudget String // CAD 25k-30k, etc
+
   // Metadata
-  lang              String   @default("pt")
-  completedAt       DateTime @default(now())
-  createdAt         DateTime @default(now())
-  
+  lang        String   @default("pt")
+  completedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+
   @@index([sessionId])
   @@index([leadId])
   @@index([score])
@@ -606,30 +606,30 @@ model QuizVancouverResponse {
 }
 
 model CourseRecommendationResponse {
-  id                String   @id @default(uuid())
-  sessionId         String?  // Se anônimo (antes do lead)
-  leadId            String?  // Se já preencheu formulário
-  
+  id        String  @id @default(uuid())
+  sessionId String? // Se anônimo (antes do lead)
+  leadId    String? // Se já preencheu formulário
+
   // Respostas do Recomendador (5 perguntas)
-  experience        String   // zero, beginner, intermediate, advanced
-  goal              String   // job, freelance, career-change, level-up
-  time              String   // part-time, weekends, full-time
-  budget            String   // low, medium, high
-  interest          String   // ai, creative, technical, immersive
-  
+  experience String // zero, beginner, intermediate, advanced
+  goal       String // job, freelance, career-change, level-up
+  time       String // part-time, weekends, full-time
+  budget     String // low, medium, high
+  interest   String // ai, creative, technical, immersive
+
   // Cursos recomendados (Top 3)
-  course1Id         String
-  course1Match      Int      // % match
-  course2Id         String
-  course2Match      Int
-  course3Id         String
-  course3Match      Int
-  
+  course1Id    String
+  course1Match Int // % match
+  course2Id    String
+  course2Match Int
+  course3Id    String
+  course3Match Int
+
   // Metadata
-  lang              String   @default("pt")
-  completedAt       DateTime @default(now())
-  createdAt         DateTime @default(now())
-  
+  lang        String   @default("pt")
+  completedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+
   @@index([sessionId])
   @@index([leadId])
   @@index([completedAt])
@@ -640,38 +640,38 @@ model CourseRecommendationResponse {
 // ════════════════════════════════════════════════════════════
 
 model AcademyVideo {
-  id              String          @id @default(uuid())
-  
+  id String @id @default(uuid())
+
   // Video Info
-  videoUrl        String          // YouTube/Vimeo URL
-  thumbnailUrl    String?
-  type            VideoType       @default(YOUTUBE)
-  
+  videoUrl     String // YouTube/Vimeo URL
+  thumbnailUrl String?
+  type         VideoType @default(YOUTUBE)
+
   // Content
-  titlePt         String
-  titleEn         String
-  titleEs         String?
-  titleFr         String?
-  descriptionPt   String?
-  descriptionEn   String?
-  descriptionEs   String?
-  descriptionFr   String?
-  
+  titlePt       String
+  titleEn       String
+  titleEs       String?
+  titleFr       String?
+  descriptionPt String?
+  descriptionEn String?
+  descriptionEs String?
+  descriptionFr String?
+
   // Category
-  category        VideoCategory   @default(INSTITUTIONAL)
-  section         VideoSection    @default(VANCOUVER) // Vancouver, Courses, Workshops, Corporate
-  school          String?         // VFS, VanArts, Azimut
-  
+  category VideoCategory @default(INSTITUTIONAL)
+  section  VideoSection  @default(VANCOUVER) // Vancouver, Courses, Workshops, Corporate
+  school   String? // VFS, VanArts, Azimut
+
   // Metadata
-  duration        Int?            // seconds
-  views           Int             @default(0)
-  featured        Boolean         @default(false)
-  priority        Int             @default(0)
-  status          VideoStatus     @default(PUBLISHED)
-  
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
-  
+  duration Int? // seconds
+  views    Int         @default(0)
+  featured Boolean     @default(false)
+  priority Int         @default(0)
+  status   VideoStatus @default(PUBLISHED)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@index([category])
   @@index([section])
   @@index([school])
@@ -714,67 +714,67 @@ enum VideoStatus {
 // ════════════════════════════════════════════════════════════
 
 model Webinar {
-  id                String        @id @default(uuid())
-  
+  id String @id @default(uuid())
+
   // Content
-  titlePt           String
-  titleEn           String
-  titleEs           String?
-  titleFr           String?
-  descriptionPt     String?
-  descriptionEn     String?
-  descriptionEs     String?
-  descriptionFr     String?
-  
+  titlePt       String
+  titleEn       String
+  titleEs       String?
+  titleFr       String?
+  descriptionPt String?
+  descriptionEn String?
+  descriptionEs String?
+  descriptionFr String?
+
   // Schedule
-  scheduledAt       DateTime
-  duration          Int           // minutes
-  timezone          String        @default("America/Sao_Paulo")
-  
+  scheduledAt DateTime
+  duration    Int // minutes
+  timezone    String   @default("America/Sao_Paulo")
+
   // Platform
-  platform          String        // Zoom, Google Meet, YouTube Live
-  meetingUrl        String?       // URL da reunião
-  recordingUrl      String?       // URL da gravação (depois do evento)
-  
+  platform     String // Zoom, Google Meet, YouTube Live
+  meetingUrl   String? // URL da reunião
+  recordingUrl String? // URL da gravação (depois do evento)
+
   // Target
-  targetAudience    String[]      // students, corporate, schools, general
-  language          String        @default("pt")
-  
+  targetAudience String[] // students, corporate, schools, general
+  language       String   @default("pt")
+
   // Registration
-  registrations     WebinarRegistration[]
-  maxParticipants   Int?
-  requiresApproval  Boolean       @default(false)
-  
+  registrations    WebinarRegistration[]
+  maxParticipants  Int?
+  requiresApproval Boolean               @default(false)
+
   // Metadata
-  status            WebinarStatus @default(SCHEDULED)
-  featured          Boolean       @default(false)
-  thumbnailUrl      String?
-  
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
-  
+  status       WebinarStatus @default(SCHEDULED)
+  featured     Boolean       @default(false)
+  thumbnailUrl String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@index([scheduledAt])
   @@index([status])
   @@index([featured])
 }
 
 model WebinarRegistration {
-  id          String   @id @default(uuid())
-  webinarId   String
-  
+  id        String @id @default(uuid())
+  webinarId String
+
   // User Info
-  name        String
-  email       String
-  phone       String?
-  company     String?
-  
+  name    String
+  email   String
+  phone   String?
+  company String?
+
   // Metadata
-  status      String   @default("CONFIRMED") // CONFIRMED, CANCELLED, ATTENDED, NO_SHOW
-  registeredAt DateTime @default(now())
-  attendedAt  DateTime?
-  
-  webinar     Webinar  @relation(fields: [webinarId], references: [id], onDelete: Cascade)
-  
+  status       String    @default("CONFIRMED") // CONFIRMED, CANCELLED, ATTENDED, NO_SHOW
+  registeredAt DateTime  @default(now())
+  attendedAt   DateTime?
+
+  webinar Webinar @relation(fields: [webinarId], references: [id], onDelete: Cascade)
+
   @@index([webinarId])
   @@index([email])
   @@index([status])
@@ -794,12 +794,12 @@ enum WebinarStatus {
 model MediaAnalysis {
   id        String   @id @default(uuid())
   mediaId   String   @unique
-  analysis  Json     // Armazena o JSON completo da análise
+  analysis  Json // Armazena o JSON completo da análise
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
-  media     Media    @relation(fields: [mediaId], references: [id], onDelete: Cascade)
-  
+
+  media Media @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
   @@index([mediaId])
 }
 
@@ -808,20 +808,20 @@ model MediaAnalysis {
 // ════════════════════════════════════════════════════════════
 
 model PWAInstall {
-  id          String   @id @default(uuid())
-  sessionId   String
-  type        String   // 'installed' | 'prompt_shown' | 'prompt_dismissed' | 'prompt_accepted'
-  platform    String?  // Win32, Linux x86_64, iPhone, etc
-  userAgent   String?
-  browser     String?  // Chrome, Safari, Firefox, etc
-  deviceType  String?  // mobile, desktop, tablet
-  outcome     String?  // 'accepted' | 'dismissed'
-  country     String?
-  city        String?
-  createdAt   DateTime @default(now())
-  
-  session     VisitorSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
-  
+  id         String   @id @default(uuid())
+  sessionId  String
+  type       String // 'installed' | 'prompt_shown' | 'prompt_dismissed' | 'prompt_accepted'
+  platform   String? // Win32, Linux x86_64, iPhone, etc
+  userAgent  String?
+  browser    String? // Chrome, Safari, Firefox, etc
+  deviceType String? // mobile, desktop, tablet
+  outcome    String? // 'accepted' | 'dismissed'
+  country    String?
+  city       String?
+  createdAt  DateTime @default(now())
+
+  session VisitorSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+
   @@index([sessionId])
   @@index([type])
   @@index([country])
@@ -829,20 +829,91 @@ model PWAInstall {
 }
 
 model VisitorBehavior {
-  id              String   @id @default(uuid())
-  sessionId       String
-  behaviorType    String   // 'page_view' | 'click' | 'scroll' | 'hover' | 'form_start' | 'form_abandon' | 'video_play' | 'download' | 'share' | 'search' | 'filter' | 'pwa_install' | 'cta_click' | 'external_link'
-  element         String?  // ID ou classe do elemento interagido
-  elementType     String?  // 'button' | 'link' | 'image' | 'video' | 'form' | etc
-  pageSlug        String?  // Página onde aconteceu
-  value           String?  // Valor (ex: termo de busca, filtro selecionado)
-  metadata        Json?    // Dados extras (coordenadas, tempo, etc)
-  timestamp       DateTime @default(now())
-  
-  session         VisitorSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
-  
+  id           String   @id @default(uuid())
+  sessionId    String
+  behaviorType String // 'page_view' | 'click' | 'scroll' | 'hover' | 'form_start' | 'form_abandon' | 'video_play' | 'download' | 'share' | 'search' | 'filter' | 'pwa_install' | 'cta_click' | 'external_link'
+  element      String? // ID ou classe do elemento interagido
+  elementType  String? // 'button' | 'link' | 'image' | 'video' | 'form' | etc
+  pageSlug     String? // Página onde aconteceu
+  value        String? // Valor (ex: termo de busca, filtro selecionado)
+  metadata     Json? // Dados extras (coordenadas, tempo, etc)
+  timestamp    DateTime @default(now())
+
+  session VisitorSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+
   @@index([sessionId])
   @@index([behaviorType])
   @@index([pageSlug])
   @@index([timestamp])
+}
+
+model FieldMetadata {
+  id         String @id @default(uuid())
+  pageSlug   String @map("page_slug")
+  sectionKey String @map("section_key")
+  fieldKey   String @map("field_key")
+
+  fieldLabel       String  @map("field_label")
+  fieldDescription String? @map("field_description")
+  fieldType        String  @map("field_type")
+
+  maxLength      Int?     @map("max_length")
+  minLength      Int?     @map("min_length")
+  required       Boolean  @default(false)
+  allowedFormats String[] @map("allowed_formats")
+
+  imageWidth       Int?    @map("image_width")
+  imageHeight      Int?    @map("image_height")
+  imageAspectRatio String? @map("image_aspect_ratio")
+  videoMaxDuration Int?    @map("video_max_duration")
+  videoMaxSizeMb   Int?    @map("video_max_size_mb")
+
+  textFormat        String? @map("text_format")
+  lineBreaksAllowed Boolean @default(false) @map("line_breaks_allowed")
+
+  whereAppears   String? @map("where_appears")
+  visualGuideUrl String? @map("visual_guide_url")
+  cardPosition   Int?    @map("card_position")
+
+  exampleValue    String? @map("example_value")
+  exampleImageUrl String? @map("example_image_url")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([pageSlug, sectionKey, fieldKey])
+  @@index([pageSlug, sectionKey])
+  @@map("field_metadata")
+}
+
+model ImageSpecification {
+  id         String @id @default(uuid())
+  pageSlug   String @map("page_slug")
+  sectionKey String @map("section_key")
+  fieldKey   String @map("field_key")
+
+  recommendedWidth  Int      @map("recommended_width")
+  recommendedHeight Int      @map("recommended_height")
+  minWidth          Int?     @map("min_width")
+  minHeight         Int?     @map("min_height")
+  maxWidth          Int?     @map("max_width")
+  maxHeight         Int?     @map("max_height")
+  aspectRatio       String?  @map("aspect_ratio")
+  maxFileSizeMb     Int      @default(5) @map("max_file_size_mb")
+  allowedFormats    String[] @default(["jpg", "jpeg", "png", "webp", "avif"]) @map("allowed_formats")
+
+  description    String? @map("description")
+  whereAppears   String? @map("where_appears")
+  visualGuideUrl String? @map("visual_guide_url")
+
+  autoCompress       Boolean @default(true) @map("auto_compress")
+  autoConvertWebp    Boolean @default(true) @map("auto_convert_webp")
+  generateThumbnails Boolean @default(false) @map("generate_thumbnails")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([pageSlug, sectionKey, fieldKey])
+  @@index([pageSlug, sectionKey])
+  @@map("image_specifications")
 }
