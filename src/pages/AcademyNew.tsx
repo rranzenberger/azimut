@@ -13,6 +13,7 @@ import { useUserTracking } from '../hooks/useUserTracking'
 import StarBackground from '../components/StarBackground'
 import InternalNavigation from '../components/InternalNavigation'
 import CanadaMapleLeaf from '../components/CanadaMapleLeaf'
+import { CourseSchema } from '../components/StructuredData'
 
 interface AcademyProps {
   lang: Lang
@@ -331,6 +332,24 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
         <title>{t.meta.title}</title>
         <meta name="description" content={t.meta.description} />
       </Helmet>
+      
+      {/* Course Schema para SEO */}
+      <CourseSchema
+        name={lang === 'pt' ? 'Azimut Academy - Cursos Profissionais' : lang === 'en' ? 'Azimut Academy - Professional Courses' : lang === 'es' ? 'Azimut Academy - Cursos Profesionales' : 'Azimut Academy - Cours Professionnels'}
+        description={t.meta.description}
+        provider="Azimut Academy"
+        educationalLevel="Professional"
+        teaches={[
+          'Virtual Reality',
+          'Augmented Reality',
+          'VFX',
+          'Animation',
+          'Game Design',
+          'Audiovisual Production',
+          'AI for Marketing'
+        ]}
+        lang={lang}
+      />
 
       <div className="min-h-screen bg-gradient-to-b from-black via-[#0a0e18] to-black" style={{ marginTop: '-80px' }}>
         {/* ═══════════════════════════════════════════════════════════
