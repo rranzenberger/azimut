@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import ApiService from '../services/api'
 import CanadaMapleLeaf from './CanadaMapleLeaf'
+import { useFormTracking } from '../hooks/useFormTracking'
 
 // SelectField Component - Customizado (igual SmartContactForm)
 interface SelectFieldProps {
@@ -109,6 +110,11 @@ interface FormData {
 
 const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefilledData }) => {
   const navigate = useNavigate()
+  const { formRef } = useFormTracking({
+    formId: 'academy-quick-form',
+    formName: 'Academy Quick Form',
+    enabled: true
+  })
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
