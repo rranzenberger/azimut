@@ -2851,11 +2851,12 @@ select.dropdown-azimut::-ms-expand {
    1. TEXTOS FORA DE CARDS - BRANCOS no tema claro (igual ao escuro)
    ========================= */
 
-/* Títulos principais FORA de cards - INVERTIDO: escuros no tema escuro, brancos no tema claro */
+/* Títulos principais FORA de cards - BRANCOS em AMBOS os temas */
 [data-theme="dark"] .vancouver-page h1:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
 [data-theme="dark"] .vancouver-page h2:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
 [data-theme="dark"] .vancouver-page h3:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *) {
-  color: #0d0d0d !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 [data-theme="light"] .vancouver-page h1:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
@@ -2865,10 +2866,11 @@ select.dropdown-azimut::-ms-expand {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-/* Textos descritivos FORA de cards - INVERTIDO: escuros no tema escuro, brancos no tema claro */
+/* Textos descritivos FORA de cards - BRANCOS em AMBOS os temas */
 [data-theme="dark"] .vancouver-page p:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *),
 [data-theme="dark"] .vancouver-page span:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *):not(.text-azimut-red) {
-  color: #2a2a2a !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 [data-theme="light"] .vancouver-page p:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *),
@@ -2877,9 +2879,10 @@ select.dropdown-azimut::-ms-expand {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-/* Textos .text-white FORA de cards - INVERTIDO: escuros no tema escuro, brancos no tema claro */
+/* Textos .text-white FORA de cards - BRANCOS em AMBOS os temas */
 [data-theme="dark"] .vancouver-page .text-white:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *):not([class*="bg-slate-"] *):not([class*="bg-black"] *) {
-  color: #1a1a1a !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 [data-theme="light"] .vancouver-page .text-white:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *):not([class*="bg-slate-"] *):not([class*="bg-black"] *) {
@@ -2887,12 +2890,13 @@ select.dropdown-azimut::-ms-expand {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-/* Hero section - INVERTIDO: escuro no tema escuro, branco no tema claro */
+/* Hero section - BRANCO em AMBOS os temas */
 [data-theme="dark"] .vancouver-page section[class*="hero"] h1,
 [data-theme="dark"] .vancouver-page section[class*="hero"] h2,
 [data-theme="dark"] .vancouver-page section[class*="hero"] h3,
 [data-theme="dark"] .vancouver-page section[class*="hero"] p {
-  color: #0d0d0d !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 [data-theme="light"] .vancouver-page section[class*="hero"] h1,
@@ -2903,12 +2907,13 @@ select.dropdown-azimut::-ms-expand {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-/* Textos com opacidade - INVERTIDO: escuros no tema escuro, brancos no tema claro */
+/* Textos com opacidade - BRANCOS em AMBOS os temas */
 [data-theme="dark"] .vancouver-page .text-white\/90:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
 [data-theme="dark"] .vancouver-page .text-white\/80:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
 [data-theme="dark"] .vancouver-page .text-white\/70:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
 [data-theme="dark"] .vancouver-page .text-white\/60:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *) {
-  color: #4a4a4a !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 [data-theme="light"] .vancouver-page .text-white\/90:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
@@ -2922,6 +2927,33 @@ select.dropdown-azimut::-ms-expand {
 /* =========================
    REGRA GERAL VANCOUVER - Tema claro: TODOS textos brancos
    ========================= */
+
+/* FORÇA TODOS os textos na página Vancouver a serem brancos em AMBOS os temas */
+[data-theme="dark"] .vancouver-page h1,
+[data-theme="dark"] .vancouver-page h2,
+[data-theme="dark"] .vancouver-page h3,
+[data-theme="dark"] .vancouver-page h4,
+[data-theme="dark"] .vancouver-page h5,
+[data-theme="dark"] .vancouver-page h6,
+[data-theme="dark"] .vancouver-page p,
+[data-theme="dark"] .vancouver-page span,
+[data-theme="dark"] .vancouver-page div,
+[data-theme="dark"] .vancouver-page li,
+[data-theme="dark"] .vancouver-page td,
+[data-theme="dark"] .vancouver-page th,
+[data-theme="dark"] .vancouver-page label,
+[data-theme="dark"] .vancouver-page a:not(.text-azimut-red),
+[data-theme="dark"] .vancouver-page button:not(.bg-azimut-red) {
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Títulos com sombra mais forte no tema escuro */
+[data-theme="dark"] .vancouver-page h1,
+[data-theme="dark"] .vancouver-page h2,
+[data-theme="dark"] .vancouver-page h3 {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
 
 /* FORÇA TODOS os textos na página Vancouver a serem brancos no tema claro */
 [data-theme="light"] .vancouver-page,
@@ -3087,10 +3119,11 @@ select.dropdown-azimut::-ms-expand {
   color: #c92337 !important;
 }
 
-/* Tabela comparativa - INVERTIDO: escura no tema escuro, branca no tema claro */
+/* Tabela comparativa - BRANCA em AMBOS os temas */
 [data-theme="dark"] .vancouver-page table td,
 [data-theme="dark"] .vancouver-page table th {
-  color: #1a1a1a !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="light"] .vancouver-page table td,
@@ -3200,7 +3233,7 @@ select.dropdown-azimut::-ms-expand {
    5. HERO - Texto BRANCO sobre imagem (AMBOS OS TEMAS)
    ========================= */
 
-/* Hero - INVERTIDO: escuro no tema escuro, branco no tema claro */
+/* Hero - BRANCO em AMBOS os temas */
 [data-theme="dark"] .vancouver-page section:first-of-type h1,
 [data-theme="dark"] .vancouver-page section:first-of-type h1 *,
 [data-theme="dark"] .vancouver-page section:first-of-type p,
@@ -3208,7 +3241,8 @@ select.dropdown-azimut::-ms-expand {
 [data-theme="dark"] .vancouver-page section:first-of-type .text-white,
 [data-theme="dark"] .vancouver-page section:first-of-type .text-white\/90,
 [data-theme="dark"] .vancouver-page section:first-of-type .text-white\/70 {
-  color: #0d0d0d !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 /* Tema claro - branco com sombra */
@@ -3229,12 +3263,12 @@ select.dropdown-azimut::-ms-expand {
 
 /* WhyVancouverConvincing component - texto branco em cards */
 /* Cards com gradiente - SEMPRE brancos (tema claro e escuro) */
-/* WhyVancouverConvincing component - INVERTIDO: escuro no tema escuro, branco no tema claro */
+/* WhyVancouverConvincing component - BRANCO em AMBOS os temas */
 [data-theme="dark"] .vancouver-page [class*="bg-gradient-to-br"] h3,
 [data-theme="dark"] .vancouver-page [class*="bg-gradient-to-br"] p,
 [data-theme="dark"] .vancouver-page [class*="bg-gradient-to-br"] li,
 [data-theme="dark"] .vancouver-page [class*="bg-gradient-to-br"] div {
-  color: #1a1a1a !important;
+  color: #ffffff !important;
 }
 
 [data-theme="light"] .vancouver-page [class*="bg-gradient-to-br"] h3,
