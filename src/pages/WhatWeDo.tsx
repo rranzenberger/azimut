@@ -128,6 +128,9 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   const location = useLocation()
   const navigate = useNavigate()
   
+  // Animação automática de seções
+  useScrollAnimation()
+  
   // Ler filtro da URL (?filter=culture)
   const [activeFilter, setActiveFilter] = useState<FilterCategory>(() => {
     if (typeof window !== 'undefined') {
