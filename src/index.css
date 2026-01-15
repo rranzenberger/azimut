@@ -2815,7 +2815,13 @@ select.dropdown-azimut::-ms-expand {
    1. TEXTOS FORA DE CARDS - Escuros no tema claro
    ========================= */
 
-/* Títulos principais FORA de cards - SEMPRE brancos (igual tema escuro) */
+/* Títulos principais FORA de cards - INVERTIDO: escuros no tema escuro, brancos no tema claro */
+[data-theme="dark"] .vancouver-page h1:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="dark"] .vancouver-page h2:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="dark"] .vancouver-page h3:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *) {
+  color: #0d0d0d !important;
+}
+
 [data-theme="light"] .vancouver-page h1:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
 [data-theme="light"] .vancouver-page h2:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
 [data-theme="light"] .vancouver-page h3:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *) {
@@ -2823,20 +2829,36 @@ select.dropdown-azimut::-ms-expand {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-/* Textos descritivos FORA de cards - SEMPRE brancos (igual tema escuro) */
+/* Textos descritivos FORA de cards - INVERTIDO: escuros no tema escuro, brancos no tema claro */
+[data-theme="dark"] .vancouver-page p:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *),
+[data-theme="dark"] .vancouver-page span:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *):not(.text-azimut-red) {
+  color: #2a2a2a !important;
+}
+
 [data-theme="light"] .vancouver-page p:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *),
 [data-theme="light"] .vancouver-page span:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *):not(.text-azimut-red) {
   color: #ffffff !important;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-/* Textos .text-white FORA de cards - SEMPRE brancos (igual tema escuro) */
+/* Textos .text-white FORA de cards - INVERTIDO: escuros no tema escuro, brancos no tema claro */
+[data-theme="dark"] .vancouver-page .text-white:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *):not([class*="bg-slate-"] *):not([class*="bg-black"] *) {
+  color: #1a1a1a !important;
+}
+
 [data-theme="light"] .vancouver-page .text-white:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *):not([class*="bg-slate-"] *):not([class*="bg-black"] *) {
   color: #ffffff !important;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-/* Hero section - SEMPRE branco (igual tema escuro) */
+/* Hero section - INVERTIDO: escuro no tema escuro, branco no tema claro */
+[data-theme="dark"] .vancouver-page section[class*="hero"] h1,
+[data-theme="dark"] .vancouver-page section[class*="hero"] h2,
+[data-theme="dark"] .vancouver-page section[class*="hero"] h3,
+[data-theme="dark"] .vancouver-page section[class*="hero"] p {
+  color: #0d0d0d !important;
+}
+
 [data-theme="light"] .vancouver-page section[class*="hero"] h1,
 [data-theme="light"] .vancouver-page section[class*="hero"] h2,
 [data-theme="light"] .vancouver-page section[class*="hero"] h3,
@@ -2845,7 +2867,14 @@ select.dropdown-azimut::-ms-expand {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-/* Textos com opacidade - SEMPRE brancos com opacidade (igual tema escuro) */
+/* Textos com opacidade - INVERTIDO: escuros no tema escuro, brancos no tema claro */
+[data-theme="dark"] .vancouver-page .text-white\/90:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="dark"] .vancouver-page .text-white\/80:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="dark"] .vancouver-page .text-white\/70:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="dark"] .vancouver-page .text-white\/60:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *) {
+  color: #4a4a4a !important;
+}
+
 [data-theme="light"] .vancouver-page .text-white\/90:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
 [data-theme="light"] .vancouver-page .text-white\/80:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
 [data-theme="light"] .vancouver-page .text-white\/70:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
@@ -2915,7 +2944,12 @@ select.dropdown-azimut::-ms-expand {
   color: #c92337 !important;
 }
 
-/* Tabela comparativa - SEMPRE branca (igual tema escuro) */
+/* Tabela comparativa - INVERTIDO: escura no tema escuro, branca no tema claro */
+[data-theme="dark"] .vancouver-page table td,
+[data-theme="dark"] .vancouver-page table th {
+  color: #1a1a1a !important;
+}
+
 [data-theme="light"] .vancouver-page table td,
 [data-theme="light"] .vancouver-page table th {
   color: #ffffff !important;
