@@ -343,9 +343,9 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
   return (
     <>
       <SEO
-        title={`${title} - Azimut | Produção Audiovisual e Experiências Imersivas`}
-        description={`${shortDesc} ${longDesc[0]?.substring(0, 100)}...`}
-        keywords={`${title.toLowerCase()}, produção audiovisual, experiências imersivas, VR, AR, XR, ${lang === 'pt' ? 'Rio de Janeiro, Brasil' : lang === 'en' ? 'Brazil, Canada' : 'Brasil, Canadá'}`}
+        title={`${title} ${lang === 'pt' ? 'Rio de Janeiro' : lang === 'en' ? 'Brazil' : 'Brasil'} - Azimut | ${lang === 'pt' ? 'Produção Audiovisual, Experiências Imersivas, VR AR XR' : lang === 'en' ? 'Audiovisual Production, Immersive Experiences, VR AR XR' : 'Producción Audiovisual, Experiencias Inmersivas, VR AR XR'}`}
+        description={`${shortDesc} ${lang === 'pt' ? '30 anos de experiência em produção audiovisual, VR, AR, XR e projetos culturais. Especialistas em' : lang === 'en' ? '30 years of experience in audiovisual production, VR, AR, XR and cultural projects. Specialists in' : '30 años de experiencia en producción audiovisual, VR, AR, XR y proyectos culturales. Especialistas en'} ${title.toLowerCase()}. ${longDesc[0]?.substring(0, 80)}...`}
+        keywords={`${title.toLowerCase()}, produção audiovisual ${lang === 'pt' ? 'rio de janeiro' : 'brasil'}, experiências imersivas, realidade virtual VR, realidade aumentada AR, XR, ${lang === 'pt' ? 'produtora audiovisual rio, VR brasil, AR brasil' : lang === 'en' ? 'audiovisual production brazil, VR brazil, AR brazil' : 'producción audiovisual brasil, VR brasil, AR brasil'}, museus, exposições, ${slug === 'realidade-virtual-vr' ? 'VR studio brasil, realidade virtual imersiva' : slug === 'cinema-audiovisual' ? 'produção de filmes, documentários, cinema' : slug === 'museus-exposicoes' ? 'museus imersivos, exposições interativas' : ''}`}
         url={`/${lang}/what/${slug}`}
         locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
       />
