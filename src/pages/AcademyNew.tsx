@@ -332,14 +332,14 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
         <meta name="description" content={t.meta.description} />
       </Helmet>
 
-      <div className="min-h-screen bg-gradient-to-b from-black via-[#0a0e18] to-black">
+      <div className="min-h-screen bg-gradient-to-b from-black via-[#0a0e18] to-black" style={{ marginTop: '-80px' }}>
         {/* ═══════════════════════════════════════════════════════════
             HERO SECTION - Video Background
             ═══════════════════════════════════════════════════════════
             📹 PLACEHOLDER: Vídeo institucional Academy
             Backoffice: /admin/academy/settings → "Hero Video URL"
             ═══════════════════════════════════════════════════════ */}
-        <section className="relative min-h-[75vh] flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-[75vh] flex items-center justify-center overflow-hidden pt-20">
           {/* Background Image/Video (PLACEHOLDER) */}
           <div className="absolute inset-0 z-0">
             <div 
