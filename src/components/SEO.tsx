@@ -99,6 +99,20 @@ const SEO: React.FC<SEOProps> = ({
       <link rel="preload" href="/fonts/HandelGothic-Regular.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
       <link rel="preload" href="/fonts/Inter-VariableFont.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
       <link rel="preload" href="/logo-azimut-star.svg" as="image" />
+      
+      {/* Open Graph adicional - melhor compartilhamento */}
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:type" content="image/jpeg" />
+      <meta property="og:image:alt" content={title} />
+      
+      {/* Twitter adicional */}
+      <meta name="twitter:image:alt" content={title} />
+      
+      {/* Schema.org adicional */}
+      <meta itemProp="name" content={title} />
+      <meta itemProp="description" content={description} />
+      <meta itemProp="image" content={fullImage} />
     </Helmet>
   )
 }

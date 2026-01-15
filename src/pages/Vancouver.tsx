@@ -456,7 +456,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               </div>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-handel uppercase tracking-wider text-white mb-6 leading-tight flex flex-col items-center gap-2">
+            <h1 className="text-5xl md:text-7xl font-handel uppercase tracking-wider text-white dark:text-white mb-6 leading-tight flex flex-col items-center gap-2" style={{ color: 'var(--theme-text)' }}>
               <span>{t.title}</span>
               <span className="inline-flex items-center gap-3">
                 {lang === 'pt' ? 'CANADÁ' : lang === 'es' ? 'CANADÁ' : lang === 'fr' ? 'CANADA' : 'CANADA'} <CanadaMapleLeaf size="lg" />
@@ -649,7 +649,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   </tr>
                   <tr>
                     <td className="text-left p-4 text-white/70 font-medium">{lang === 'pt' ? 'Possibilidade PR' : lang === 'es' ? 'Posibilidad PR' : lang === 'fr' ? 'Possibilité PR' : 'PR Possibility'}</td>
-                    <td className="p-4 text-white">{lang === 'pt' ? 'Não' : lang === 'es' ? 'No' : lang === 'fr' ? 'Non' : 'No'}</td>
+                    <td className="p-4 text-white dark:text-white" style={{ color: 'var(--theme-card-text)' }}>{lang === 'pt' ? 'Não' : lang === 'es' ? 'No' : lang === 'fr' ? 'Non' : 'No'}</td>
                     <td className="p-4 text-azimut-red font-bold">{lang === 'pt' ? 'Sim' : lang === 'es' ? 'Sí' : lang === 'fr' ? 'Oui' : 'Yes'} <CanadaMapleLeaf /> ✅</td>
                     <td className="p-4 text-white">{lang === 'pt' ? 'Sim' : lang === 'es' ? 'Sí' : lang === 'fr' ? 'Oui' : 'Yes'} <CanadaMapleLeaf /> ✅</td>
                   </tr>

@@ -2788,8 +2788,16 @@ select.dropdown-azimut::-ms-expand {
 }
 
 /* Textos .text-white FORA de cards e elementos com fundo - escuros */
-[data-theme="light"] .vancouver-page .text-white:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *) {
+[data-theme="light"] .vancouver-page .text-white:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *):not([class*="bg-slate-"] *):not([class*="bg-black"] *) {
   color: #1a1a1a !important;
+}
+
+/* Hero section - texto adaptativo */
+[data-theme="light"] .vancouver-page section[class*="hero"] h1,
+[data-theme="light"] .vancouver-page section[class*="hero"] h2,
+[data-theme="light"] .vancouver-page section[class*="hero"] h3,
+[data-theme="light"] .vancouver-page section[class*="hero"] p {
+  color: #0d0d0d !important;
 }
 
 [data-theme="light"] .vancouver-page .text-white\/90:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),

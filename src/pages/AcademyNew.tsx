@@ -351,7 +351,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
         lang={lang}
       />
 
-      <div className="min-h-screen bg-gradient-to-b from-black via-[#0a0e18] to-black" style={{ marginTop: '-80px' }}>
+      <div className="min-h-screen bg-gradient-to-b dark:from-black dark:via-[#0a0e18] dark:to-black from-[#f5f1e8] via-[#e8e5df] to-[#f5f1e8]" style={{ marginTop: '-80px' }}>
         {/* ═══════════════════════════════════════════════════════════
             HERO SECTION - Video Background
             ═══════════════════════════════════════════════════════════
