@@ -1,47 +1,26 @@
 /**
- * Carrossel premium de imagens do hero
- * Transição fade suave + efeito Ken Burns
+ * Hero image com efeito Ken Burns (zoom que para)
+ * Uma imagem por horário - cinematográfico premium
  */
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
-interface HeroImageCarouselProps {
-  images: string[]
-  interval?: number // ms entre trocas (default: 8000)
+interface HeroImageProps {
+  image: string
 }
 
-const HeroImageCarousel: React.FC<HeroImageCarouselProps> = ({ 
-  images, 
-  interval = 8000 
-}) => {
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  useEffect(() => {
-    if (images.length <= 1) return
-
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length)
-    }, interval)
-
-    return () => clearInterval(timer)
-  }, [images, interval])
-
+const HeroImage: React.FC<HeroImageProps> = ({ image }) => {
   return (
     <div className="absolute inset-0 z-0">
-      {images.map((image, index) => (
-        <div
-          key={image}
-          className={`
-            absolute inset-0 transition-opacity duration-[2000ms] ease-in-out
-            ${index === currentIndex ? 'opacity-100' : 'opacity-0'}
-          `}
-          style={{
-            backgroundImage: `url(${image})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            animation: index === currentIndex ? 'kenBurns 12s ease-out forwards' : 'none'
-          }}
-        />
-      ))}
+      {/* Imagem com Ken Burns - zoom suave que para */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `url(${image})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          animation: 'kenBurnsOnce 8s ease-out forwards'
+        }}
+      />
       
       {/* Overlay cinematográfico premium - vinheta + gradiente */}
       <div className="absolute inset-0 hero-cinematic-overlay" />
@@ -49,4 +28,4 @@ const HeroImageCarousel: React.FC<HeroImageCarouselProps> = ({
   )
 }
 
-export default HeroImageCarousel
+export default HeroImage

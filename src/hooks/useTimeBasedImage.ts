@@ -1,12 +1,11 @@
 /**
- * Hook para selecionar imagem baseada na hora do dia
- * Premium feature - mostra Vancouver no momento certo
+ * Hook para selecionar imagem baseada na hora LOCAL do usuário
+ * Uma imagem por período - sem carousel
  */
 import { useState, useEffect } from 'react'
 
 interface TimeBasedImage {
-  primary: string
-  carousel: string[]
+  image: string
   period: string
   vancouverTime: string
   vancouverHour: number
@@ -14,8 +13,7 @@ interface TimeBasedImage {
 
 export const useTimeBasedImage = (): TimeBasedImage => {
   const [currentImage, setCurrentImage] = useState<TimeBasedImage>({
-    primary: '/vancouver-hero-sunset.jpg', // Fallback
-    carousel: [],
+    image: '/vancouver-hero-sunset.jpg', // Fallback
     period: 'sunset',
     vancouverTime: '18:00',
     vancouverHour: 18
@@ -26,61 +24,66 @@ export const useTimeBasedImage = (): TimeBasedImage => {
       const now = new Date()
       const hour = now.getHours()
       
-      // Calcular hora de Vancouver (Pacific Time: UTC-8 ou UTC-7 no horário de verão)
+      // Calcular hora de Vancouver (Pacific Time)
       const vancouverTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Vancouver' }))
       const vancouverHour = vancouverTime.getHours()
       const vancouverMinutes = vancouverTime.getMinutes()
       const vancouverTimeString = `${vancouverHour.toString().padStart(2, '0')}:${vancouverMinutes.toString().padStart(2, '0')}`
 
-      // MADRUGADA (0-5h) - Noite tranquila
-      if (hour >= 0 && hour < 6) {
+      // MADRUGADA (0-4h) - Noite tranquila
+      if (hour >= 0 && hour < 5) {
         return {
-          primary: '/vancouver-hero-night.jpg',
-          carousel: ['/vancouver-hero-night.jpg', '/vancouver-hero-twilight.jpg'],
+          image: '/vancouver-hero-night.jpg',
           period: 'night',
           vancouverTime: vancouverTimeString,
           vancouverHour
         }
       }
 
-      // MANHÃ (6-11h) - Dia ensolarado
-      if (hour >= 6 && hour < 12) {
+      // AMANHECER (5-7h) - Twilight
+      if (hour >= 5 && hour < 8) {
         return {
-          primary: '/vancouver-hero-day.jpg',
-          carousel: ['/vancouver-hero-day.jpg', '/vancouver-hero-flag.jpg'],
+          image: '/vancouver-hero-twilight.jpg',
+          period: 'dawn',
+          vancouverTime: vancouverTimeString,
+          vancouverHour
+        }
+      }
+
+      // MANHÃ (8-11h) - Dia ensolarado
+      if (hour >= 8 && hour < 12) {
+        return {
+          image: '/vancouver-hero-day.jpg',
           period: 'morning',
           vancouverTime: vancouverTimeString,
           vancouverHour
         }
       }
 
-      // MEIO-DIA (12-14h) - Dia energético
+      // MEIO-DIA (12-14h) - Vista aérea
       if (hour >= 12 && hour < 15) {
         return {
-          primary: '/vancouver-hero-day.jpg',
-          carousel: ['/vancouver-hero-day.jpg', '/vancouver-hero-aerial.jpg'],
+          image: '/vancouver-hero-aerial.jpg',
           period: 'noon',
           vancouverTime: vancouverTimeString,
           vancouverHour
         }
       }
 
-      // TARDE (15-17h) - Golden hour se aproximando
-      if (hour >= 15 && hour < 18) {
+      // TARDE (15-16h) - Bandeira
+      if (hour >= 15 && hour < 17) {
         return {
-          primary: '/vancouver-hero-aerial.jpg',
-          carousel: ['/vancouver-hero-aerial.jpg', '/vancouver-hero-flag.jpg', '/vancouver-hero-sunset.jpg'],
+          image: '/vancouver-hero-flag.jpg',
           period: 'afternoon',
           vancouverTime: vancouverTimeString,
           vancouverHour
         }
       }
 
-      // PRÉ-SUNSET (17-20h) - Sunset épico ⭐ (JANELA MAIOR!)
+      // SUNSET (17-19h) - Pôr do sol ⭐
       if (hour >= 17 && hour < 20) {
         return {
-          primary: '/vancouver-hero-sunset.jpg',
-          carousel: ['/vancouver-hero-sunset.jpg', '/vancouver-hero-aerial.jpg', '/vancouver-hero-twilight.jpg'],
+          image: '/vancouver-hero-sunset.jpg',
           period: 'sunset',
           vancouverTime: vancouverTimeString,
           vancouverHour
@@ -90,9 +93,8 @@ export const useTimeBasedImage = (): TimeBasedImage => {
       // BLUE HOUR (20-21h) - Crepúsculo
       if (hour >= 20 && hour < 22) {
         return {
-          primary: '/vancouver-hero-twilight.jpg',
-          carousel: ['/vancouver-hero-twilight.jpg', '/vancouver-hero-sunset.jpg'],
-          period: 'twilight',
+          image: '/vancouver-hero-bluehour.jpg',
+          period: 'bluehour',
           vancouverTime: vancouverTimeString,
           vancouverHour
         }
@@ -100,8 +102,7 @@ export const useTimeBasedImage = (): TimeBasedImage => {
 
       // NOITE (22-23h) - Noite com luzes
       return {
-        primary: '/vancouver-hero-night.jpg',
-        carousel: ['/vancouver-hero-night.jpg', '/vancouver-hero-twilight.jpg'],
+        image: '/vancouver-hero-night.jpg',
         period: 'evening',
         vancouverTime: vancouverTimeString,
         vancouverHour
@@ -110,7 +111,7 @@ export const useTimeBasedImage = (): TimeBasedImage => {
 
     setCurrentImage(getImageByTime())
 
-    // Atualizar a cada 30 minutos (caso usuário fique na página)
+    // Atualizar a cada 30 minutos
     const interval = setInterval(() => {
       setCurrentImage(getImageByTime())
     }, 30 * 60 * 1000)

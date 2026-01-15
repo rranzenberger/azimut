@@ -13,7 +13,7 @@ import WhyVancouverConvincing from '../components/WhyVancouverConvincing'
 import VancouverMagazine from '../components/VancouverMagazine'
 import VisualSchoolQuiz from '../components/VisualSchoolQuiz'
 import CanadaMapleLeaf from '../components/CanadaMapleLeaf'
-import HeroImageCarousel from '../components/HeroImageCarousel'
+import HeroImage from '../components/HeroImageCarousel'
 import { useTimeBasedImage } from '../hooks/useTimeBasedImage'
 
 interface VancouverProps {
@@ -24,8 +24,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
   // Tracking interno do site (analytics para backoffice)
   useUserTracking();
   
-  // Sistema inteligente de imagens baseado na hora do dia
-  const { carousel, vancouverTime, vancouverHour } = useTimeBasedImage()
+  // Sistema inteligente de imagens baseado na hora LOCAL do usuário
+  const { image, vancouverTime } = useTimeBasedImage()
   
   // Função para scroll suave até a calculadora com efeito de destaque
   const scrollToCalculator = () => {
@@ -436,7 +436,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         {/* Hero Section */}
         <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-20">
           {/* Background Image Carousel - Inteligente por hora do dia */}
-          <HeroImageCarousel images={carousel} interval={8000} />
+          <HeroImage image={image} />
 
           {/* Content */}
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

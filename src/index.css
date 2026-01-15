@@ -2893,6 +2893,16 @@ select.dropdown-azimut::-ms-expand {
   }
 }
 
+/* Ken Burns que faz zoom e PARA (não repete) */
+@keyframes kenBurnsOnce {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.12);
+  }
+}
+
 /* =========================
    5. HERO - Overlay cinematográfico + vinheta vintage
    ========================= */
