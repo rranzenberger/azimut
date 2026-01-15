@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import ApiService from '../services/api'
+import CanadaMapleLeaf from './CanadaMapleLeaf'
 
 interface VancouverInterestFormProps {
   lang: Lang

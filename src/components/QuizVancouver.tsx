@@ -8,6 +8,7 @@
 import React, { useState } from 'react'
 import { type Lang } from '../i18n'
 import ApiService from '../services/api'
+import CanadaMapleLeaf from './CanadaMapleLeaf'
 
 interface QuizVancouverProps {
   lang: Lang
