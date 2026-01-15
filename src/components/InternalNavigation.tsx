@@ -153,6 +153,7 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
               font-sora text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.06em] sm:tracking-[0.08em]
               transition-all duration-300 ease-out
               whitespace-nowrap
+              focus:outline-none focus:ring-2 focus:ring-azimut-red focus:ring-offset-2 focus:ring-offset-transparent
             `}
             style={{
               color: isActive 
@@ -176,6 +177,7 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
               }
             }}
             aria-current={isActive ? 'page' : undefined}
+            aria-label={item.label}
           >
             {item.icon && (
               <span 

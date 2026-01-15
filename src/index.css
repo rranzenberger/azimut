@@ -1,6 +1,47 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════
+   ACESSIBILIDADE - Screen Reader Only e Focus Styles
+   ═══════════════════════════════════════════════════════════════ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.focus\:not-sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Focus visible melhorado para acessibilidade */
+*:focus-visible {
+  outline: 2px solid #c92337;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip link melhorado */
+.skip-link:focus {
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  z-index: 9999 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    FONTES PERSONALIZADAS - CARREGAR PRIMEIRO (ANTES DE @theme)
    ═══════════════════════════════════════════════════════════════ */
 @font-face {

@@ -13,7 +13,11 @@ const ESSENTIAL_ASSETS = [
   '/logo-azimut-star.svg',
   '/azimut-star-32.png',
   '/logo-topo-site.svg',
-  '/logo-topo-preto-site.svg'
+  '/logo-topo-preto-site.svg',
+  '/offline.html',
+  '/fonts/HandelGothic-Regular.ttf',
+  '/fonts/Inter-VariableFont.ttf',
+  '/fonts/Sora-VariableFont_wght.ttf'
 ]
 
 // Install - cachear assets essenciais
@@ -91,7 +95,7 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
-  // Estratégia 2: HTML/JS/CSS - Network First (sempre atualizado)
+  // Estratégia 2: HTML/JS/CSS - Network First com fallback robusto
   if (
     request.destination === 'document' ||
     request.destination === 'script' ||
@@ -119,10 +123,16 @@ self.addEventListener('fetch', (event) => {
             
             // Se é navegação, mostrar página offline
             if (request.mode === 'navigate') {
-              return caches.match(OFFLINE_URL) || new Response(
-                '<html><body><h1>Offline</h1><p>Você está offline. Verifique sua conexão.</p></body></html>',
-                { headers: { 'Content-Type': 'text/html' } }
-              )
+              return caches.match(OFFLINE_URL).then((offlinePage) => {
+                if (offlinePage) {
+                  return offlinePage
+                }
+                // Fallback HTML básico
+                return new Response(
+                  '<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><title>Offline - Azimut</title><style>body{font-family:sans-serif;text-align:center;padding:2rem;background:#050814;color:#fff}h1{color:#c92337}</style></head><body><h1>Você está offline</h1><p>Verifique sua conexão com a internet.</p><p>Algumas páginas visitadas anteriormente podem estar disponíveis.</p></body></html>',
+                  { headers: { 'Content-Type': 'text/html' } }
+                )
+              })
             }
             
             return new Response('Offline', { status: 503 })
