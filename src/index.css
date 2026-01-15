@@ -2920,6 +2920,48 @@ select.dropdown-azimut::-ms-expand {
 }
 
 /* =========================
+   REGRA GERAL VANCOUVER - Tema claro: TODOS textos brancos
+   ========================= */
+
+/* FORÇA TODOS os textos na página Vancouver a serem brancos no tema claro */
+[data-theme="light"] .vancouver-page,
+[data-theme="light"] .vancouver-page * {
+  /* Exceções: vermelho Azimut, elementos com fundo claro específico */
+}
+
+[data-theme="light"] .vancouver-page h1,
+[data-theme="light"] .vancouver-page h2,
+[data-theme="light"] .vancouver-page h3,
+[data-theme="light"] .vancouver-page h4,
+[data-theme="light"] .vancouver-page h5,
+[data-theme="light"] .vancouver-page h6,
+[data-theme="light"] .vancouver-page p,
+[data-theme="light"] .vancouver-page span,
+[data-theme="light"] .vancouver-page div,
+[data-theme="light"] .vancouver-page li,
+[data-theme="light"] .vancouver-page td,
+[data-theme="light"] .vancouver-page th,
+[data-theme="light"] .vancouver-page label,
+[data-theme="light"] .vancouver-page a:not(.text-azimut-red),
+[data-theme="light"] .vancouver-page button:not(.bg-azimut-red) {
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Títulos com sombra mais forte */
+[data-theme="light"] .vancouver-page h1,
+[data-theme="light"] .vancouver-page h2,
+[data-theme="light"] .vancouver-page h3 {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Exceções: vermelho Azimut sempre vermelho */
+[data-theme="light"] .vancouver-page .text-azimut-red {
+  color: #c92337 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================
    SEÇÕES INFERIORES VANCOUVER - Tema claro igual ao escuro
    ========================= */
 
