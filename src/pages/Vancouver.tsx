@@ -535,27 +535,34 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* International Students Banner */}
-        <section className="py-8 bg-gradient-to-r from-azimut-red/20 via-azimut-red/10 to-azimut-red/20 border-y border-azimut-red/20 international-banner">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-wrap justify-center items-center gap-4 text-center">
-              <span className="text-3xl">🌍</span>
-              <p className="text-theme-light-main font-medium">
-                {lang === 'pt' ? 'Atendemos alunos de todo o mundo:' : lang === 'es' ? 'Atendemos estudiantes de todo el mundo:' : lang === 'fr' ? 'Nous accueillons des étudiants du monde entier:' : 'We serve students from around the world:'}
-              </p>
-              <div className="flex gap-2 text-2xl">
-                <span title="Brasil">🇧🇷</span>
-                <span title="México">🇲🇽</span>
-                <span title="Argentina">🇦🇷</span>
-                <span title="Colômbia">🇨🇴</span>
-                <span title="Chile">🇨🇱</span>
-                <span title="Portugal">🇵🇹</span>
-                <span title="Espanha">🇪🇸</span>
-                <span title="França">🇫🇷</span>
-                <span title="Alemanha">🇩🇪</span>
-                <span title="Itália">🇮🇹</span>
-                <span title="Índia">🇮🇳</span>
-                <span title="Japão">🇯🇵</span>
+        {/* International Students Premium Card */}
+        <section className="py-12" style={{ background: 'var(--theme-bg)' }}>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="international-card rounded-2xl p-8 md:p-12 text-center">
+              <div className="flex flex-col items-center gap-6">
+                <div className="flex items-center gap-4">
+                  <span className="text-5xl md:text-6xl">🌍</span>
+                  <h3 className="text-2xl md:text-3xl font-bold text-white">
+                    {lang === 'pt' ? 'Alunos do Mundo Todo' : lang === 'es' ? 'Estudiantes de Todo el Mundo' : lang === 'fr' ? 'Étudiants du Monde Entier' : 'Students from Around the World'}
+                  </h3>
+                </div>
+                <div className="flex flex-wrap justify-center gap-3 md:gap-4 text-3xl md:text-4xl">
+                  <span className="international-flag" title="Brasil">🇧🇷</span>
+                  <span className="international-flag" title="México">🇲🇽</span>
+                  <span className="international-flag" title="Argentina">🇦🇷</span>
+                  <span className="international-flag" title="Colômbia">🇨🇴</span>
+                  <span className="international-flag" title="Chile">🇨🇱</span>
+                  <span className="international-flag" title="Portugal">🇵🇹</span>
+                  <span className="international-flag" title="Espanha">🇪🇸</span>
+                  <span className="international-flag" title="França">🇫🇷</span>
+                  <span className="international-flag" title="Alemanha">🇩🇪</span>
+                  <span className="international-flag" title="Itália">🇮🇹</span>
+                  <span className="international-flag" title="Índia">🇮🇳</span>
+                  <span className="international-flag" title="Japão">🇯🇵</span>
+                </div>
+                <p className="text-white/80 text-base md:text-lg max-w-2xl">
+                  {lang === 'pt' ? 'Agente oficial credenciado para VFS e VanArts em Vancouver' : lang === 'es' ? 'Agente oficial acreditado para VFS y VanArts en Vancouver' : lang === 'fr' ? 'Agent officiel accrédité pour VFS et VanArts à Vancouver' : 'Official accredited agent for VFS and VanArts in Vancouver'}
+                </p>
               </div>
             </div>
           </div>
@@ -584,9 +591,9 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
+              <table className="comparison-table w-full border-collapse">
                 <thead>
-                  <tr className="border-b-2 border-azimut-red">
+                  <tr className="comparison-table-header">
                     <th className="text-left p-4 text-white/70 font-semibold uppercase text-sm"></th>
                     <th className="p-4 text-white font-semibold text-lg">{lang === 'pt' ? 'Univ. Tradicional' : lang === 'es' ? 'Univ. Tradicional' : lang === 'fr' ? 'Univ. Traditionnelle' : 'Traditional Univ.'}</th>
                     <th className="p-4 text-azimut-red font-semibold text-lg">VanArts 🍁</th>
@@ -594,37 +601,37 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   </tr>
                 </thead>
                 <tbody className="text-center">
-                  <tr className="border-b border-white/10">
+                  <tr className="comparison-table-row">
                     <td className="text-left p-4 text-white/70 font-medium">{lang === 'pt' ? 'Custo Total (aprox.)' : lang === 'es' ? 'Costo Total (aprox.)' : lang === 'fr' ? 'Coût Total (approx.)' : 'Total Cost (approx.)'}</td>
                     <td className="p-4 text-white">US$ 40-80k</td>
                     <td className="p-4 text-azimut-red font-bold text-xl">US$ 35k ✅</td>
                     <td className="p-4 text-white">US$ 55k</td>
                   </tr>
-                  <tr className="border-b border-white/10">
+                  <tr className="comparison-table-row">
                     <td className="text-left p-4 text-white/70 font-medium">{lang === 'pt' ? 'Duração' : lang === 'es' ? 'Duración' : lang === 'fr' ? 'Durée' : 'Duration'}</td>
                     <td className="p-4 text-white">{lang === 'pt' ? '4 anos' : lang === 'es' ? '4 años' : lang === 'fr' ? '4 ans' : '4 years'}</td>
                     <td className="p-4 text-azimut-red font-bold">{lang === 'pt' ? '1 ano' : lang === 'es' ? '1 año' : lang === 'fr' ? '1 an' : '1 year'} ✅</td>
                     <td className="p-4 text-white">{lang === 'pt' ? '1 ano' : lang === 'es' ? '1 año' : lang === 'fr' ? '1 an' : '1 year'} ✅</td>
                   </tr>
-                  <tr className="border-b border-white/10">
+                  <tr className="comparison-table-row">
                     <td className="text-left p-4 text-white/70 font-medium">{lang === 'pt' ? 'Empregabilidade' : lang === 'es' ? 'Empleabilidad' : lang === 'fr' ? 'Employabilité' : 'Employability'}</td>
                     <td className="p-4 text-white">50-60%</td>
                     <td className="p-4 text-azimut-red font-bold">90%+ ✅</td>
                     <td className="p-4 text-white">92% ✅</td>
                   </tr>
-                  <tr className="border-b border-white/10">
+                  <tr className="comparison-table-row">
                     <td className="text-left p-4 text-white/70 font-medium">{lang === 'pt' ? 'Salário Inicial' : lang === 'es' ? 'Salario Inicial' : lang === 'fr' ? 'Salaire Initial' : 'Starting Salary'}</td>
                     <td className="p-4 text-white">{lang === 'pt' ? 'US$ 2-4k/mês' : lang === 'es' ? 'US$ 2-4k/mes' : lang === 'fr' ? 'US$ 2-4k/mois' : 'US$ 2-4k/month'}</td>
                     <td className="p-4 text-azimut-red font-bold">{lang === 'pt' ? 'CAD $3.5-5k/mês' : lang === 'es' ? 'CAD $3.5-5k/mes' : lang === 'fr' ? 'CAD $3,5-5k/mois' : 'CAD $3.5-5k/month'} ✅</td>
                     <td className="p-4 text-white">{lang === 'pt' ? 'CAD $4-6k/mês' : lang === 'es' ? 'CAD $4-6k/mes' : lang === 'fr' ? 'CAD $4-6k/mois' : 'CAD $4-6k/month'} ✅</td>
                   </tr>
-                  <tr className="border-b border-white/10">
+                  <tr className="comparison-table-row">
                     <td className="text-left p-4 text-white/70 font-medium">{lang === 'pt' ? 'Mercado' : lang === 'es' ? 'Mercado' : lang === 'fr' ? 'Marché' : 'Market'}</td>
                     <td className="p-4 text-white">{lang === 'pt' ? 'Regional' : lang === 'es' ? 'Regional' : lang === 'fr' ? 'Régional' : 'Regional'}</td>
                     <td className="p-4 text-azimut-red font-bold">Global ✅</td>
                     <td className="p-4 text-white">Global ✅</td>
                   </tr>
-                  <tr className="border-b border-white/10">
+                  <tr className="comparison-table-row">
                     <td className="text-left p-4 text-white/70 font-medium">Idioma</td>
                     <td className="p-4 text-white">Local</td>
                     <td className="p-4 text-azimut-red font-bold">English ✅</td>
