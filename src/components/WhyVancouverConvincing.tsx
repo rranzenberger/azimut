@@ -7,6 +7,7 @@
 
 import React, { useState } from 'react'
 import { type Lang } from '../i18n'
+import CanadaMapleLeaf from './CanadaMapleLeaf'
 
 interface WhyVancouverConvincingProps {
   lang: Lang

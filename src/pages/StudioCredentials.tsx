@@ -3,6 +3,7 @@ import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
+import CanadaMapleLeaf from '../components/CanadaMapleLeaf'
 
 interface StudioCredentialsProps {
   lang: Lang

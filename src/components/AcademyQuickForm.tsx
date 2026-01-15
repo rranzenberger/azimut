@@ -8,6 +8,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import ApiService from '../services/api'
+import CanadaMapleLeaf from './CanadaMapleLeaf'
 
 // SelectField Component - Customizado (igual SmartContactForm)
 interface SelectFieldProps {
@@ -621,8 +622,8 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
     <div className="card-adaptive rounded-2xl p-8 md:p-10 border border-white/10">
       <div className="text-center mb-8">
         <div className="inline-block px-6 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-4">
-          <span className="text-azimut-red text-sm font-semibold uppercase">
-            {type === 'vancouver' ? '🇨🇦' : type === 'course' ? '📚' : type === 'workshop' ? '🎬' : '🏢'} Formulário Rápido
+          <span className="text-azimut-red text-sm font-semibold uppercase inline-flex items-center gap-1">
+            {type === 'vancouver' ? <CanadaMapleLeaf size="sm" /> : type === 'course' ? '📚' : type === 'workshop' ? '🎬' : '🏢'} Formulário Rápido
           </span>
         </div>
         

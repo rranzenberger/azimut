@@ -12,6 +12,7 @@ import { type Lang } from '../i18n'
 import { useUserTracking } from '../hooks/useUserTracking'
 import StarBackground from '../components/StarBackground'
 import InternalNavigation from '../components/InternalNavigation'
+import CanadaMapleLeaf from '../components/CanadaMapleLeaf'
 
 interface AcademyProps {
   lang: Lang

@@ -9,6 +9,7 @@ import React, { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
 import { useUserTracking } from '../hooks/useUserTracking'
+import CanadaMapleLeaf from '../components/CanadaMapleLeaf'
 
 interface WebinarsProps {
   lang: Lang
