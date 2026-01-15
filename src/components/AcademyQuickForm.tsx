@@ -639,7 +639,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
       {success && null}
 
       {!success && (
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
           {/* Name */}
           <div>
             <label className="block text-sm font-semibold text-white/90 mb-2 uppercase tracking-wider">
