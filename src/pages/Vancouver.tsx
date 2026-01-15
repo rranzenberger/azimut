@@ -432,9 +432,9 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
       <VancouverPageSchema lang={lang} />
       <VancouverFAQSchema lang={lang} faqs={t.faqs} />
 
-      <div className="min-h-screen vancouver-page">
+      <div className="min-h-screen vancouver-page" style={{ marginTop: '-80px' }}>
         {/* Hero Section */}
-        <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-20">
           {/* Background Image Carousel - Inteligente por hora do dia */}
           <HeroImageCarousel images={carousel} interval={8000} />
 
