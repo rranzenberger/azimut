@@ -2929,6 +2929,13 @@ select.dropdown-azimut::-ms-expand {
   /* Exceções: vermelho Azimut, elementos com fundo claro específico */
 }
 
+/* Sobrescrever var(--theme-text) na página Vancouver - SEMPRE branco no tema claro */
+[data-theme="light"] .vancouver-page [style*="var(--theme-text)"],
+[data-theme="light"] .vancouver-page [style*="--theme-text"] {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+
 [data-theme="light"] .vancouver-page h1,
 [data-theme="light"] .vancouver-page h2,
 [data-theme="light"] .vancouver-page h3,
