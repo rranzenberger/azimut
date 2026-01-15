@@ -8,25 +8,38 @@ interface TimeBasedImage {
   primary: string
   carousel: string[]
   period: string
+  vancouverTime: string
+  vancouverHour: number
 }
 
 export const useTimeBasedImage = (): TimeBasedImage => {
   const [currentImage, setCurrentImage] = useState<TimeBasedImage>({
     primary: '/vancouver-hero-sunset.jpg', // Fallback
     carousel: [],
-    period: 'sunset'
+    period: 'sunset',
+    vancouverTime: '18:00',
+    vancouverHour: 18
   })
 
   useEffect(() => {
     const getImageByTime = (): TimeBasedImage => {
-      const hour = new Date().getHours()
+      const now = new Date()
+      const hour = now.getHours()
+      
+      // Calcular hora de Vancouver (Pacific Time: UTC-8 ou UTC-7 no horário de verão)
+      const vancouverTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Vancouver' }))
+      const vancouverHour = vancouverTime.getHours()
+      const vancouverMinutes = vancouverTime.getMinutes()
+      const vancouverTimeString = `${vancouverHour.toString().padStart(2, '0')}:${vancouverMinutes.toString().padStart(2, '0')}`
 
       // MADRUGADA (0-5h) - Noite tranquila
       if (hour >= 0 && hour < 6) {
         return {
           primary: '/vancouver-hero-night.jpg',
           carousel: ['/vancouver-hero-night.jpg', '/vancouver-hero-twilight.jpg'],
-          period: 'night'
+          period: 'night',
+          vancouverTime: vancouverTimeString,
+          vancouverHour
         }
       }
 
@@ -35,7 +48,9 @@ export const useTimeBasedImage = (): TimeBasedImage => {
         return {
           primary: '/vancouver-hero-day.jpg',
           carousel: ['/vancouver-hero-day.jpg', '/vancouver-hero-flag.jpg'],
-          period: 'morning'
+          period: 'morning',
+          vancouverTime: vancouverTimeString,
+          vancouverHour
         }
       }
 
@@ -44,7 +59,9 @@ export const useTimeBasedImage = (): TimeBasedImage => {
         return {
           primary: '/vancouver-hero-day.jpg',
           carousel: ['/vancouver-hero-day.jpg', '/vancouver-hero-aerial.jpg'],
-          period: 'noon'
+          period: 'noon',
+          vancouverTime: vancouverTimeString,
+          vancouverHour
         }
       }
 
@@ -53,16 +70,20 @@ export const useTimeBasedImage = (): TimeBasedImage => {
         return {
           primary: '/vancouver-hero-aerial.jpg',
           carousel: ['/vancouver-hero-aerial.jpg', '/vancouver-hero-flag.jpg', '/vancouver-hero-sunset.jpg'],
-          period: 'afternoon'
+          period: 'afternoon',
+          vancouverTime: vancouverTimeString,
+          vancouverHour
         }
       }
 
-      // PRÉ-SUNSET (18-19h) - Sunset épico ⭐
-      if (hour >= 18 && hour < 20) {
+      // PRÉ-SUNSET (17-20h) - Sunset épico ⭐ (JANELA MAIOR!)
+      if (hour >= 17 && hour < 20) {
         return {
           primary: '/vancouver-hero-sunset.jpg',
           carousel: ['/vancouver-hero-sunset.jpg', '/vancouver-hero-aerial.jpg', '/vancouver-hero-twilight.jpg'],
-          period: 'sunset'
+          period: 'sunset',
+          vancouverTime: vancouverTimeString,
+          vancouverHour
         }
       }
 
@@ -70,8 +91,10 @@ export const useTimeBasedImage = (): TimeBasedImage => {
       if (hour >= 20 && hour < 22) {
         return {
           primary: '/vancouver-hero-twilight.jpg',
-          carousel: ['/vancouver-hero-twilight.jpg', '/vancouver-hero-night.jpg'],
-          period: 'twilight'
+          carousel: ['/vancouver-hero-twilight.jpg', '/vancouver-hero-sunset.jpg'],
+          period: 'twilight',
+          vancouverTime: vancouverTimeString,
+          vancouverHour
         }
       }
 
@@ -79,7 +102,9 @@ export const useTimeBasedImage = (): TimeBasedImage => {
       return {
         primary: '/vancouver-hero-night.jpg',
         carousel: ['/vancouver-hero-night.jpg', '/vancouver-hero-twilight.jpg'],
-        period: 'evening'
+        period: 'evening',
+        vancouverTime: vancouverTimeString,
+        vancouverHour
       }
     }
 

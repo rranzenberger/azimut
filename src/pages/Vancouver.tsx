@@ -25,7 +25,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
   useUserTracking();
   
   // Sistema inteligente de imagens baseado na hora do dia
-  const { carousel } = useTimeBasedImage()
+  const { carousel, vancouverTime, vancouverHour } = useTimeBasedImage()
   
   // Função para scroll suave até a calculadora com efeito de destaque
   const scrollToCalculator = () => {
@@ -440,10 +440,20 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
 
           {/* Content */}
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="inline-block px-4 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-6">
-              <span className="text-azimut-red text-sm font-semibold uppercase tracking-wider inline-flex items-center gap-1.5">
-                <CanadaMapleLeaf size="sm" /> {lang === 'pt' ? 'Agente Educacional Oficial' : lang === 'es' ? 'Agente Educacional Oficial' : lang === 'fr' ? 'Agent Éducatif Officiel' : 'Official Educational Agent'}
-              </span>
+            {/* Badges */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
+              <div className="inline-block px-4 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full backdrop-blur-md">
+                <span className="text-azimut-red text-sm font-semibold uppercase tracking-wider inline-flex items-center gap-1.5">
+                  <CanadaMapleLeaf size="sm" /> {lang === 'pt' ? 'Agente Educacional Oficial' : lang === 'es' ? 'Agente Educacional Oficial' : lang === 'fr' ? 'Agent Éducatif Officiel' : 'Official Educational Agent'}
+                </span>
+              </div>
+              
+              {/* Badge hora de Vancouver */}
+              <div className="inline-block px-4 py-2 bg-white/10 border border-white/30 rounded-full backdrop-blur-md">
+                <span className="text-white text-sm font-medium inline-flex items-center gap-2">
+                  🇨🇦 {lang === 'pt' ? 'Vancouver agora' : lang === 'es' ? 'Vancouver ahora' : lang === 'fr' ? 'Vancouver maintenant' : 'Vancouver now'}: <span className="font-bold">{vancouverTime}</span>
+                </span>
+              </div>
             </div>
 
             <h1 className="text-5xl md:text-7xl font-handel uppercase tracking-wider text-white mb-6 leading-tight flex flex-col items-center gap-2">
