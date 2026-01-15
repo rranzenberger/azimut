@@ -2920,6 +2920,52 @@ select.dropdown-azimut::-ms-expand {
 }
 
 /* =========================
+   SEÇÕES INFERIORES VANCOUVER - Tema claro igual ao escuro
+   ========================= */
+
+/* Seções "Why Vancouver", "Schools", "Testimonials", "FAQ", etc. - textos brancos no tema claro */
+[data-theme="light"] .vancouver-page section:not(:first-of-type) h2,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) h3,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) h4,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) p,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) span,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) .text-white,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) .text-white\/90,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) .text-white\/80,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) .text-white\/70,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) .text-white\/60 {
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Títulos de seção - brancos com sombra mais forte */
+[data-theme="light"] .vancouver-page section:not(:first-of-type) .section-title-vancouver,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) h2.section-title-vancouver {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Subtítulos de seção - brancos */
+[data-theme="light"] .vancouver-page section:not(:first-of-type) .section-subtitle-vancouver,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) p.section-subtitle-vancouver {
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Badges de seção (verde, vermelho, etc.) - texto branco */
+[data-theme="light"] .vancouver-page section:not(:first-of-type) [class*="bg-green"],
+[data-theme="light"] .vancouver-page section:not(:first-of-type) [class*="bg-azimut-red"] {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Links e botões - brancos */
+[data-theme="light"] .vancouver-page section:not(:first-of-type) a:not(.text-azimut-red),
+[data-theme="light"] .vancouver-page section:not(:first-of-type) button:not(.bg-azimut-red) {
+  color: #ffffff !important;
+}
+
+/* =========================
    2. CARDS ESCUROS - Texto BRANCO sempre
    ========================= */
 
