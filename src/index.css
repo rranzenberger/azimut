@@ -2914,15 +2914,8 @@ select.dropdown-azimut::-ms-expand {
       rgba(0, 0, 0, 0.5) 0%,
       rgba(0, 0, 0, 0.3) 40%,
       rgba(0, 0, 0, 0.6) 100%
-    ),
-    /* Grain sutil para textura cinematográfica */
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.03) 2px,
-      rgba(0, 0, 0, 0.03) 4px
     );
+    /* GRAIN REMOVIDO - fica mais limpo e cinematográfico */
   mix-blend-mode: normal;
 }
 
@@ -2934,25 +2927,23 @@ select.dropdown-azimut::-ms-expand {
       ellipse 120% 100% at 50% 50%,
       transparent 0%,
       transparent 45%,
-      rgba(0, 0, 0, 0.2) 75%,
-      rgba(0, 0, 0, 0.5) 100%
+      rgba(0, 0, 0, 0.15) 75%,
+      rgba(0, 0, 0, 0.4) 100%
     ),
     /* Gradiente vertical - equilibrado */
     linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.4) 0%,
-      rgba(0, 0, 0, 0.25) 40%,
-      rgba(0, 0, 0, 0.5) 100%
-    ),
-    /* Grain para textura */
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.02) 2px,
-      rgba(0, 0, 0, 0.02) 4px
+      rgba(0, 0, 0, 0.35) 0%,
+      rgba(0, 0, 0, 0.2) 40%,
+      rgba(0, 0, 0, 0.45) 100%
     );
+    /* GRAIN REMOVIDO no tema claro - mais limpo */
   mix-blend-mode: normal;
+}
+
+/* Esconder granulação global no hero da Vancouver - tema claro */
+[data-theme="light"] .vancouver-page section:first-of-type {
+  isolation: isolate;
 }
 
 /* =========================
