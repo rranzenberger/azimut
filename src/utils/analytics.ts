@@ -42,9 +42,9 @@ async function getVisitorFingerprint(): Promise<string> {
   return '';
 }
 
-// ⚠️ TRACKING DESABILITADO - Debug erro #310
-// O site funciona 100% sem tracking. Reativar após resolver erro.
-const TRACKING_ENABLED = false;
+// ✅ ETAPA 5: TRACKING REATIVADO
+// Sistema de analytics e tracking ativado
+const TRACKING_ENABLED = true;
 
 // Usar VITE_BACKOFFICE_URL se disponível, senão VITE_CMS_API_URL, senão fallback
 const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br';

@@ -9,9 +9,9 @@
 import { useEffect, useRef, useCallback } from 'react'
 import { useLocation } from 'react-router-dom'
 
-// ⚠️ TRACKING DESABILITADO TEMPORARIAMENTE
-// Quando o backoffice estiver pronto, mudar para true
-const TRACKING_ENABLED = false;
+// ✅ ETAPA 5: TRACKING REATIVADO
+// Tracking de comportamento do usuário ativado
+const TRACKING_ENABLED = true;
 
 type InteractionType = 'cta_click' | 'project_view' | 'service_view' | 'language_change'
 

@@ -8,9 +8,9 @@
 
 import { useState, useEffect, useRef } from 'react';
 
-// ⚠️ BACKOFFICE DESABILITADO TEMPORARIAMENTE
-// Quando o backoffice estiver pronto, mudar para true
-const CMS_ENABLED = false;
+// ✅ ETAPA 5: BACKOFFICE REATIVADO
+// Tracking de conteúdo do CMS ativado
+const CMS_ENABLED = true;
 
 const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br';
 const API_URL = `${BACKOFFICE_URL}/api`;

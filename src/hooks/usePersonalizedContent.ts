@@ -8,9 +8,9 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 
-// ⚠️ PERSONALIZAÇÃO DESABILITADA TEMPORARIAMENTE
-// Quando o backoffice estiver pronto, mudar para true
-const PERSONALIZATION_ENABLED = false;
+// ✅ ETAPA 5: PERSONALIZAÇÃO REATIVADA
+// Personalização de conteúdo baseada em IA ativada
+const PERSONALIZATION_ENABLED = true;
 
 export interface VisitorProfile {
   sessionId: string;
