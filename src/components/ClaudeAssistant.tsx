@@ -226,7 +226,7 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-[51] w-16 h-16 rounded-full bg-gradient-to-br from-azimut-red to-red-700 shadow-2xl hover:shadow-azimut-red/50 transition-all duration-300 transform hover:scale-110 flex items-center justify-center group"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[51] w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-azimut-red to-red-700 shadow-2xl hover:shadow-azimut-red/50 transition-all duration-300 transform hover:scale-110 flex items-center justify-center group"
           aria-label="Open assistant"
         >
           <span className="text-3xl animate-bounce">💬</span>
@@ -245,7 +245,7 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-[51] w-[380px] h-[600px] rounded-2xl shadow-2xl flex flex-col overflow-hidden card-adaptive border border-white/10 animate-fade-in">
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[51] w-[calc(100vw-2rem)] sm:w-[380px] max-w-[380px] h-[calc(100vh-8rem)] sm:h-[600px] max-h-[600px] rounded-2xl shadow-2xl flex flex-col overflow-hidden card-adaptive border border-white/10 animate-fade-in">
           {/* Header */}
           <div className="bg-gradient-to-r from-azimut-red to-red-700 p-3 flex items-center justify-between">
             <div className="flex items-center gap-2.5 min-w-0">

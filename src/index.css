@@ -77,6 +77,16 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden; /* Previne scroll horizontal */
+  width: 100%;
+  max-width: 100vw; /* Limita largura máxima */
+}
+
+body {
+  overflow-x: hidden; /* Previne scroll horizontal */
+  width: 100%;
+  max-width: 100vw; /* Limita largura máxima */
+  position: relative;
 }
 
 /* ═══════════════════════════════════════════════════════════════

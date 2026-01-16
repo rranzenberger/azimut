@@ -207,9 +207,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
       <main className="relative">
         {/* Estrela de fundo - HOME: Padronizada com outras páginas */}
         <StarBackground
-          className="fixed top-[160px] -right-28 h-[520px] w-[520px] md:top-[160px] md:-right-40 md:h-[680px] md:w-[680px]"
+          className="fixed top-[160px] -right-28 h-[520px] w-[520px] md:top-[160px] md:-right-40 md:h-[680px] md:w-[680px] pointer-events-none"
           zIndex={-5}
           opacity={0.5}
+          style={{ 
+            maxWidth: '100vw',
+            overflow: 'hidden'
+          }}
         />
 
         {/* ════════════════════════════════════════════════════════════════ */}
@@ -217,7 +221,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* margin-top negativo compensa o padding do Layout */}
         {/* ════════════════════════════════════════════════════════════════ */}
         <section 
-          className="relative min-h-[90vh] flex items-center overflow-hidden film-grain py-8"
+          className="relative min-h-[90vh] flex items-center overflow-x-hidden overflow-y-auto film-grain py-4 sm:py-6 md:py-8"
           style={{ marginTop: '-80px', paddingTop: '80px' }}
         >
           {/* Background: Imagem do Backoffice (heroBackgroundImage) ou Featured Project */}
@@ -444,62 +448,93 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
           
           {/* MOBILE/TABLET: Watermark Central + Texto Sobre */}
-          <div className="relative z-10 lg:hidden flex flex-col justify-center h-full px-4 sm:px-6 mx-auto max-w-7xl">
+          <div className="relative z-10 lg:hidden flex flex-col justify-center min-h-[calc(100vh-80px)] w-full px-3 sm:px-4 mx-auto max-w-full overflow-x-hidden">
             {/* Logo como Watermark (fundo) */}
             <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
-              <div className="w-[200px] h-[200px] sm:w-[250px] sm:h-[250px]">
+              <div className="w-[180px] h-[180px] sm:w-[220px] sm:h-[220px]">
                 <AnimatedLogo />
               </div>
             </div>
             
             {/* Conteúdo Texto (frente) */}
-            <div className="relative z-10 max-w-4xl text-center mx-auto space-y-8">
+            <div className="relative z-10 w-full text-center mx-auto space-y-6 sm:space-y-8 px-2">
               {/* Badge AZIMUT */}
-              <div className="inline-flex items-center gap-2 font-sora text-[0.7rem] uppercase tracking-[0.3em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
+              <div className="inline-flex items-center gap-1.5 sm:gap-2 font-sora text-[0.65rem] sm:text-[0.7rem] uppercase tracking-[0.25em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
                 <img 
                   src="/estela6-clara.svg" 
                   alt="" 
-                  className="w-3 h-3"
+                  className="w-2.5 h-2.5 sm:w-3 sm:h-3"
                 />
                 <span className="text-azimut-red font-semibold">AZIMUT</span>
                 <span className="!text-white/40">•</span>
-                <span className="!text-white/60 text-[0.65rem]">SINCE 1996</span>
+                <span className="!text-white/60 text-[0.6rem] sm:text-[0.65rem]">SINCE 1996</span>
               </div>
               
-              {/* Título */}
-              <h1 className="font-handel uppercase !text-white animate-fade-in-up opacity-0" style={{ 
-                fontSize: 'clamp(2.5rem, 8vw, 5rem)',
-                lineHeight: '1.1',
-                letterSpacing: '0.12em',
-                animationDelay: '0.2s'
+              {/* Título - AJUSTADO PARA MOBILE */}
+              <h1 className="font-handel uppercase !text-white animate-fade-in-up opacity-0 px-2" style={{ 
+                fontSize: 'clamp(2rem, 7vw, 4rem)',
+                lineHeight: '1.15',
+                letterSpacing: '0.1em',
+                animationDelay: '0.2s',
+                wordBreak: 'break-word'
               }}>
-                {heroSlogan.split(' ').map((word: string, i: number) => (
-                  <span key={i}>
-                    {i === heroSlogan.split(' ').length - 1 ? (
-                      <span className="text-azimut-red">{word}</span>
-                    ) : (
-                      `${word} `
-                    )}
-                  </span>
-                ))}
+                {(() => {
+                  if (lang === 'pt') {
+                    return (
+                      <>
+                        EXPERIÊNCIAS<br />
+                        QUE CONECTAM<br />
+                        <span className="text-azimut-red">MUNDOS</span>
+                      </>
+                    )
+                  }
+                  if (lang === 'en') {
+                    return (
+                      <>
+                        EXPERIENCES<br />
+                        THAT CONNECT<br />
+                        <span className="text-azimut-red">WORLDS</span>
+                      </>
+                    )
+                  }
+                  if (lang === 'fr') {
+                    return (
+                      <>
+                        EXPÉRIENCES<br />
+                        QUI CONNECTENT<br />
+                        <span className="text-azimut-red">LES MONDES</span>
+                      </>
+                    )
+                  }
+                  if (lang === 'es') {
+                    return (
+                      <>
+                        EXPERIENCIAS<br />
+                        QUE CONECTAN<br />
+                        <span className="text-azimut-red">MUNDOS</span>
+                      </>
+                    )
+                  }
+                  return heroSlogan
+                })()}
               </h1>
               
               {/* Subtítulo */}
-              <p className="max-w-2xl mx-auto text-[1rem] leading-relaxed animate-fade-in-up opacity-0 !text-white/90" style={{ animationDelay: '0.3s' }}>
+              <p className="max-w-[90%] sm:max-w-2xl mx-auto text-[0.9rem] sm:text-[1rem] leading-relaxed animate-fade-in-up opacity-0 !text-white/90 px-2" style={{ animationDelay: '0.3s' }}>
                 {heroSubtitle.split('.')[0]}.
               </p>
               
-              {/* Stats Cards - SEM PAÍSES! */}
-              <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-2xl animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
-                <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 sm:p-6 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
-                  <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">100+</span>
-                  <span className="block text-[0.65rem] sm:text-xs text-white/60 uppercase tracking-widest mt-1">
+              {/* Stats Cards - AJUSTADO PARA MOBILE */}
+              <div className="grid grid-cols-2 gap-2.5 sm:gap-3 max-w-[90%] sm:max-w-2xl mx-auto animate-fade-in-up opacity-0 px-2" style={{ animationDelay: '0.4s' }}>
+                <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-3 sm:p-4 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
+                  <span className="block text-2xl sm:text-3xl md:text-4xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">100+</span>
+                  <span className="block text-[0.6rem] sm:text-[0.65rem] md:text-xs text-white/60 uppercase tracking-widest mt-1">
                     {lang === 'pt' ? 'Projetos' : lang === 'es' ? 'Proyectos' : 'Projects'}
                   </span>
                 </div>
-                <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-4 sm:p-6 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
-                  <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">1996</span>
-                  <span className="block text-[0.65rem] sm:text-xs text-white/60 uppercase tracking-widest mt-1">
+                <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-3 sm:p-4 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
+                  <span className="block text-2xl sm:text-3xl md:text-4xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">1996</span>
+                  <span className="block text-[0.6rem] sm:text-[0.65rem] md:text-xs text-white/60 uppercase tracking-widest mt-1">
                     {lang === 'pt' ? 'Desde' : lang === 'es' ? 'Desde' : lang === 'fr' ? 'Depuis' : 'Since'}
                   </span>
                 </div>

@@ -50,6 +50,8 @@ const StarBackground: React.FC<StarBackgroundProps> = ({
     zIndex,
     opacity,
     pointerEvents: 'none',
+    overflow: 'hidden', // Previne overflow
+    maxWidth: '100vw', // Limita largura máxima
     ...style
   }
 
