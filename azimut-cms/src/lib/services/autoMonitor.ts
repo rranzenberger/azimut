@@ -72,6 +72,7 @@ export async function monitorProject(projectId: string): Promise<number> {
       id: true,
       title: true,
       slug: true,
+      monitorEnabled: true,
       monitorKeywords: true,
       creditType: true,
       creditText: true,
@@ -164,7 +165,7 @@ Retorne apenas os resultados RELEVANTES em formato JSON.
           sourceImageUrl: item.imageUrl,
           sourceVideoUrl: item.videoUrl,
           sourceAuthor: item.author,
-          publishedAt: item.publishedAt,
+          sourceDate: item.publishedAt,
           keywords: project.monitorKeywords,
           status: 'PENDING', // Aguarda curadoria
         },

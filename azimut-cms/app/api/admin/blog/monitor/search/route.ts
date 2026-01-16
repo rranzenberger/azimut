@@ -110,9 +110,8 @@ export async function POST(request: NextRequest) {
           sourceContent: fullContent,
           sourceImageUrl: result.imageUrl,
           sourceVideoUrl: result.videoUrl,
-          author: result.author || undefined,
+          sourceAuthor: result.author || undefined,
           sourceDate: result.publishedAt || undefined,
-          keywords: keywords,
           status: 'PENDING',
         },
       });

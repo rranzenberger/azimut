@@ -21,7 +21,6 @@ export async function GET(request: NextRequest) {
     const result = await runAutoMonitoring();
 
     return NextResponse.json({
-      success: result.success,
       message: `Monitoramento concluído: ${result.projectsMonitored} projetos, ${result.resultsFound} resultados`,
       ...result,
     });

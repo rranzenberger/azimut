@@ -129,9 +129,9 @@ FORMATO DE RESPOSTA (JSON):
     }
 
     // Fallback: extrair título e conteúdo do texto
-    const lines = content.split('\n').filter(l => l.trim());
-    const title = lines.find(l => l.includes('Título') || l.length < 100) || 'Título não gerado';
-    const contentStart = lines.findIndex(l => l.length > 100);
+    const lines = content.split('\n').filter((l: string) => l.trim());
+    const title = lines.find((l: string) => l.includes('Título') || l.length < 100) || 'Título não gerado';
+    const contentStart = lines.findIndex((l: string) => l.length > 100);
     const processedContent = contentStart >= 0 
       ? lines.slice(contentStart).join('\n\n')
       : content;

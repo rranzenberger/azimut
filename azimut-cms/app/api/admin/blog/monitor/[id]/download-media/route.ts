@@ -57,13 +57,12 @@ export async function POST(
     // Criar registro na tabela Media
     const media = await prisma.media.create({
       data: {
-        filename: downloaded.filename,
         originalUrl: downloaded.url,
         thumbnailUrl: downloaded.type === 'image' ? downloaded.url : undefined,
-        mimeType: downloaded.mimeType,
-        size: downloaded.size,
+        contentType: downloaded.mimeType,
+        sizeBytes: downloaded.size,
         type: downloaded.type === 'image' ? 'IMAGE' : 'VIDEO',
-        uploadedBy: session.userId,
+        format: downloaded.filename?.split('.').pop() || 'unknown',
       },
     });
 

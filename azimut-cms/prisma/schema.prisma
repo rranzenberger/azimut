@@ -1132,6 +1132,7 @@ enum SourceType {
   JOURNAL    // Jornais impressos/digitais
   TV         // Telejornais, programas de TV
   PODCAST    // Podcasts
+  NOTION     // Páginas do Notion
   OTHER      // Outras fontes
 }
 
