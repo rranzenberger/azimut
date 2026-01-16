@@ -11,7 +11,8 @@ interface StudioProps {
 }
 
 const Studio: React.FC<StudioProps> = ({ lang }) => {
-  useUserTracking()
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
+  // useUserTracking()
   // Estrela FIXA (sem parallax) - Padronizada com WhatWeDo e Work
 
   const content = {

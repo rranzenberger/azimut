@@ -22,12 +22,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   const demoreelRef = useRef<HTMLDivElement>(null)
   const [isDemoreelVisible, setIsDemoreelVisible] = useState(false)
   
-  // CORREÇÃO: useUserTracking deve ser chamado SEMPRE (não condicionalmente)
-  // O tratamento de erro está dentro do hook
-  useUserTracking()
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
+  // Evitar duplicação de hooks que causava erro #310
+  // useUserTracking()
   
-  // Ativar animações de scroll
-  useScrollAnimation()
+  // REMOVIDO: useScrollAnimation temporariamente para debug
+  // useScrollAnimation()
   
   // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
   // Tenta buscar do backoffice, mas sempre tem fallback estático seguro

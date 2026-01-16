@@ -11,7 +11,8 @@ interface StudioTeamProps {
 }
 
 const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
-  useUserTracking()
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
+  // useUserTracking()
   const location = useLocation()
   
   // Scroll para o membro específico quando a página carrega com hash

@@ -10,7 +10,8 @@ interface ThankYouProps {
 }
 
 const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
-  useUserTracking()
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
+  // useUserTracking()
   const starRef = useRef<HTMLDivElement>(null)
   
   useEffect(() => {

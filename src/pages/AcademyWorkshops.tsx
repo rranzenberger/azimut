@@ -13,7 +13,8 @@ interface AcademyWorkshopsProps {
 }
 
 const AcademyWorkshops: React.FC<AcademyWorkshopsProps> = ({ lang }) => {
-  useUserTracking()
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
+  // useUserTracking()
 
   const content: Record<Lang, any> = {
     pt: {

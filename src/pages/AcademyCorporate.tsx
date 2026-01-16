@@ -13,7 +13,8 @@ interface AcademyCorporateProps {
 }
 
 const AcademyCorporate: React.FC<AcademyCorporateProps> = ({ lang }) => {
-  useUserTracking()
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
+  // useUserTracking()
 
   const content: Record<Lang, any> = {
     pt: {

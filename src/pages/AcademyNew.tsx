@@ -20,7 +20,8 @@ interface AcademyProps {
 }
 
 const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
-  useUserTracking()
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
+  // useUserTracking()
 
   // ═══════════════════════════════════════════════════════════
   // CONTEÚDO POR IDIOMA

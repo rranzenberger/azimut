@@ -15,7 +15,8 @@ interface AcademyCoursesProps {
 }
 
 const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
-  useUserTracking()
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
+  // useUserTracking()
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
 
   const content: Record<Lang, any> = {

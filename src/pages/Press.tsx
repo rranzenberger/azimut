@@ -13,7 +13,8 @@ const Press: React.FC<PressProps> = ({ lang }) => {
     title: lang === 'pt' ? 'Imprensa - Azimut' : lang === 'es' ? 'Prensa - Azimut' : 'Press - Azimut',
     description: lang === 'pt' ? 'Material de imprensa e assessoria de comunicação da Azimut' : lang === 'es' ? 'Material de prensa y asesoría de comunicación de Azimut' : 'Press materials and communication support from Azimut'
   }
-  useUserTracking()
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
+  // useUserTracking()
 
   const pressContent = {
     pt: {

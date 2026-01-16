@@ -21,8 +21,8 @@ interface VancouverProps {
 }
 
 const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
-  // Tracking interno do site (analytics para backoffice)
-  useUserTracking();
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
+  // useUserTracking();
   
   // Sistema inteligente de imagens baseado na hora LOCAL do usuário
   const { image, vancouverTime } = useTimeBasedImage()

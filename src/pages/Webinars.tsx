@@ -16,7 +16,8 @@ interface WebinarsProps {
 }
 
 const Webinars: React.FC<WebinarsProps> = ({ lang }) => {
-  useUserTracking()
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
+  // useUserTracking()
   const [selectedWebinar, setSelectedWebinar] = useState<string | null>(null)
 
   const content: Record<Lang, any> = {

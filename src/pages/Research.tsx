@@ -10,7 +10,8 @@ interface ResearchProps {
 }
 
 const Research: React.FC<ResearchProps> = ({ lang }) => {
-  useUserTracking()
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
+  // useUserTracking()
   const seo = seoData.research[lang]
   const starRef = useRef<HTMLDivElement>(null)
   

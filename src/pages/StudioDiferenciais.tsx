@@ -9,7 +9,8 @@ interface StudioDiferenciaisProps {
 }
 
 const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
-  useUserTracking()
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
+  // useUserTracking()
   // Estrela FIXA (sem parallax) - Padronizada com Studio principal
 
   const content = {
