@@ -82,6 +82,32 @@ interface MediaItem {
   createdAt: string;
 }
 
+// ═══════════════════════════════════════════════════════════════
+// SISTEMA DE METADADOS - NOVA ABORDAGEM (15/01/2026)
+// ═══════════════════════════════════════════════════════════════
+// Para usar o novo sistema de metadados com FieldEditorWithMetadata:
+//
+// import { FieldEditorWithMetadata } from '@/components/admin/FieldEditorWithMetadata';
+//
+// Exemplo de uso (substitui MultilangTextField):
+// <FieldEditorWithMetadata
+//   pageSlug="home"
+//   sectionKey="hero"
+//   fieldKey="hero_title"
+//   value={formData.heroSloganPt}
+//   onChange={(value) => setFormData({ ...formData, heroSloganPt: value })}
+// />
+//
+// VANTAGENS:
+// - Busca metadados do banco (field_metadata table)
+// - Validação automática (min/max length, required, format)
+// - Exibe especificações de imagem (image_specifications table)
+// - Contador de caracteres automático
+// - Mensagens de ajuda e exemplos
+// - Sem hardcoded limits (tudo vem do banco)
+//
+// ═══════════════════════════════════════════════════════════════
+
 // Definições de limites de caracteres para cada campo
 const FIELD_LIMITS: Record<string, { max: number; label: string; location: string }> = {
   name: { max: 100, label: 'Nome da Página', location: 'Páginas > Informações Básicas' },
