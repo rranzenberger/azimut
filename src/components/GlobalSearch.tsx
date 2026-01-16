@@ -95,11 +95,13 @@ const SERVICES = {
 interface GlobalSearchProps {
   isOpen: boolean;
   onClose: () => void;
-  language: Lang;
+  lang: Lang;  // Renomeado para consistência com App.tsx
   theme: 'light' | 'dark';
 }
 
-export default function GlobalSearch({ isOpen, onClose, language, theme }: GlobalSearchProps) {
+export default function GlobalSearch({ isOpen, onClose, lang, theme }: GlobalSearchProps) {
+  // Usar 'lang' diretamente, criar alias 'language' para compatibilidade interna
+  const language = lang
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
