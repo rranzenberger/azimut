@@ -341,8 +341,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </div>
               
               {/* Coluna Direita: Logo 3D Animada (movida para esquerda) */}
-              <div className="flex justify-start" style={{ alignItems: 'flex-start', zIndex: 10, position: 'relative', marginLeft: '-140px' }}>
-                <div className="w-full max-w-[600px] aspect-square -mt-28" style={{ zIndex: 10, position: 'relative' }}>
+              <div className="flex justify-start" style={{ alignItems: 'flex-start', zIndex: 10, position: 'relative', marginLeft: '-140px', isolation: 'isolate' }}>
+                <div className="w-full max-w-[600px] aspect-square -mt-28" style={{ zIndex: 10, position: 'relative', isolation: 'isolate' }}>
                   <AnimatedLogo />
                 </div>
               </div>

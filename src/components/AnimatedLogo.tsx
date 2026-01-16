@@ -53,7 +53,9 @@ export const AnimatedLogo: React.FC = () => {
         mixBlendMode: 'screen', // Luma key: preto vira transparente
         filter: 'drop-shadow(0 0 30px rgba(201, 35, 55, 0.5)) drop-shadow(0 0 60px rgba(201, 35, 55, 0.25))',
         zIndex: 10, // Acima do grain (que está em -15 e -18)
-        position: 'relative'
+        position: 'relative',
+        isolation: 'isolate', // Isola o blend mode para evitar interferências
+        willChange: 'opacity' // Otimiza renderização
       }}
     >
       {/* WebM VP9 720p com chroma key (otimizado para 720px uso real) */}
