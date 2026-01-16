@@ -1406,8 +1406,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         }}
       />
 
-      {/* 🍪 Cookie Banner - LGPD/GDPR Compliance */}
+      {/* ⚠️ 🍪 Cookie Banner DESABILITADO - Debug erro #310
       <CookieBanner lang={lang} />
+      */}
 
       {/* 🤖 Claude AI Assistant - DESABILITADO (debug erro #310)
       <ClaudeAssistant lang={lang} />

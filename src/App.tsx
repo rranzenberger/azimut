@@ -292,8 +292,9 @@ const App: React.FC = () => {
           <GlobalSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} lang={lang} theme={theme} />
           */}
           
-          {/* PWA Install Prompt */}
+          {/* ⚠️ PWA Install Prompt DESABILITADO - Debug erro #310
           <InstallPrompt />
+          */}
           
           <AppLayout lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
             <Suspense 

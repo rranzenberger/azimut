@@ -2,9 +2,10 @@
 // COMPONENTE: VideoPlayer
 // ════════════════════════════════════════════════════════════
 // Renderiza vídeos do YouTube ou Vimeo
+// CORRIGIDO: Todos os hooks no topo para evitar erro #310
 // ════════════════════════════════════════════════════════════
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { trackVideoEvent } from '../utils/analytics'
 
 interface VideoPlayerProps {
@@ -42,19 +43,34 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   playsinline = false,
   platform
 }) => {
+  // ═══════════════════════════════════════════════════════════
+  // TODOS OS HOOKS NO TOPO - OBRIGATÓRIO PARA EVITAR ERRO #310
+  // ═══════════════════════════════════════════════════════════
   const [isPlaying, setIsPlaying] = useState(false)
-  const videoIdRef = React.useRef<string | null>(null)
-  const progressTracked = React.useRef<Set<number>>(new Set())
-  const hasPlayed = React.useRef(false)
-  const hasCompleted = React.useRef(false)
+  const videoIdRef = useRef<string | null>(null)
+  const progressTracked = useRef<Set<number>>(new Set())
+  const hasPlayed = useRef(false)
+  const hasCompleted = useRef(false)
 
   // Detectar plataforma automaticamente se não fornecida
   const detectedPlatform = platform || 
     (videoUrl.includes('youtube') || videoUrl.includes('youtu.be') ? 'youtube' : 
      videoUrl.includes('vimeo') ? 'vimeo' : null)
 
+  const youtubeId = detectedPlatform === 'youtube' ? extractYouTubeId(videoUrl) : null
+  const vimeoId = detectedPlatform === 'vimeo' ? extractVimeoId(videoUrl) : null
+
+  // Armazenar videoId para tracking - HOOK SEMPRE EXECUTADO
+  useEffect(() => {
+    videoIdRef.current = youtubeId || vimeoId || videoUrl
+  }, [youtubeId, vimeoId, videoUrl])
+
+  // ═══════════════════════════════════════════════════════════
+  // AGORA SIM PODEMOS TER RETURNS CONDICIONAIS (DEPOIS DOS HOOKS)
+  // ═══════════════════════════════════════════════════════════
+
+  // Plataforma não suportada
   if (!detectedPlatform) {
-    // Se não for YouTube nem Vimeo, mostrar placeholder
     return (
       <div className={`relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center ${className}`}>
         <div className="text-center p-6">
@@ -67,14 +83,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     )
   }
 
-  const youtubeId = detectedPlatform === 'youtube' ? extractYouTubeId(videoUrl) : null
-  const vimeoId = detectedPlatform === 'vimeo' ? extractVimeoId(videoUrl) : null
-  
-  // Armazenar videoId para tracking
-  useEffect(() => {
-    videoIdRef.current = youtubeId || vimeoId || videoUrl
-  }, [youtubeId, vimeoId, videoUrl])
-
+  // ID não extraído
   if (!youtubeId && !vimeoId) {
     return (
       <div className={`relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center ${className}`}>
@@ -88,116 +97,115 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     )
   }
 
-  // Se autoplay ou já está playing, mostrar iframe diretamente
-  if (autoplay || isPlaying) {
-    if (detectedPlatform === 'youtube' && youtubeId) {
-      // Parâmetros YouTube para autoplay automático
-      const params = new URLSearchParams({
-        autoplay: '1',
-        mute: muted ? '1' : '0',
-        loop: loop ? '1' : '0',
-        playlist: loop ? youtubeId : '', // Necessário para loop funcionar
-        playsinline: playsinline ? '1' : '0',
-        rel: '0',
-        modestbranding: '1',
-        controls: '1',
-        enablejsapi: '1'
-      })
-      
-      // Track play quando iframe carrega (YouTube API)
-      useEffect(() => {
-        if (youtubeId && isPlaying && !hasPlayed.current) {
-          hasPlayed.current = true
-          trackVideoEvent(youtubeId, videoUrl, 'play', {
-            platform: 'youtube',
-          })
-        }
-      }, [youtubeId, videoUrl, isPlaying])
-
-      return (
-        <div className={`relative aspect-video ${className}`}>
-          <iframe
-            src={`https://www.youtube.com/embed/${youtubeId}?${params.toString()}`}
-            title={alt || 'Vídeo do YouTube'}
-            className="absolute inset-0 w-full h-full"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-      )
-    }
-
-    if (detectedPlatform === 'vimeo' && vimeoId) {
-      // Parâmetros Vimeo para autoplay automático
-      const params = new URLSearchParams({
-        autoplay: '1',
-        muted: muted ? '1' : '0',
-        loop: loop ? '1' : '0',
-        autopause: '0',
-        title: '0',
-        byline: '0',
-        portrait: '0'
-      })
-      
-      return (
-        <div className={`relative aspect-video ${className}`}>
-          <iframe
-            src={`https://player.vimeo.com/video/${vimeoId}?${params.toString()}`}
-            title={alt || 'Vídeo do Vimeo'}
-            className="absolute inset-0 w-full h-full"
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-      )
-    }
+  // Thumbnail para clique (se não autoplay)
+  const getThumbnail = () => {
+    if (thumbnailUrl) return thumbnailUrl
+    if (youtubeId) return `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`
+    return null
   }
 
-  // Mostrar thumbnail com botão play
-  const thumbnail = thumbnailUrl || 
-    (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg` : null) ||
-    (vimeoId ? `https://vumbnail.com/${vimeoId}.jpg` : null)
+  const thumbnail = getThumbnail()
 
   const handlePlay = () => {
     setIsPlaying(true)
-    if (videoIdRef.current && !hasPlayed.current) {
-      hasPlayed.current = true
-      trackVideoEvent(videoIdRef.current, videoUrl, 'play', {
-        platform: detectedPlatform || 'custom',
-      })
+    
+    // Track video play
+    if (!hasPlayed.current && videoIdRef.current) {
+      try {
+        trackVideoEvent('play', videoIdRef.current, {
+          platform: detectedPlatform,
+          position: 0
+        })
+        hasPlayed.current = true
+      } catch {
+        // Silencioso
+      }
     }
   }
 
-  return (
-    <div 
-      className={`relative aspect-video cursor-pointer group ${className}`}
-      onClick={handlePlay}
-    >
-      {thumbnail && (
-        <img
-          src={thumbnail}
-          alt={alt || 'Thumbnail do vídeo'}
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-      )}
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent" />
-      
-      {/* Botão Play */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-20 h-20 rounded-full bg-azimut-red/90 backdrop-blur-sm flex items-center justify-center group-hover:bg-azimut-red group-hover:scale-110 transition-all duration-300">
-          <svg className="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-        </div>
-      </div>
+  // YouTube embed
+  if (detectedPlatform === 'youtube') {
+    const embedUrl = `https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1${autoplay || isPlaying ? '&autoplay=1' : ''}${muted ? '&mute=1' : ''}${loop ? '&loop=1&playlist=' + youtubeId : ''}${playsinline ? '&playsinline=1' : ''}`
 
-      {/* Badge da plataforma */}
-      <div className="absolute top-4 right-4">
-        <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-sm text-xs text-white uppercase tracking-wider">
-          {detectedPlatform === 'youtube' ? 'YouTube' : 'Vimeo'}
-        </span>
+    if (!isPlaying && !autoplay && thumbnail) {
+      return (
+        <div className={`relative aspect-video cursor-pointer group ${className}`} onClick={handlePlay}>
+          <img 
+            src={thumbnail} 
+            alt={alt || 'Video thumbnail'} 
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              // Fallback para thumbnail de qualidade menor
+              const target = e.currentTarget
+              if (target.src.includes('maxresdefault')) {
+                target.src = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`
+              }
+            }}
+          />
+          {/* Play button overlay */}
+          <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
+            <div className="w-20 h-20 rounded-full bg-azimut-red/90 flex items-center justify-center transform group-hover:scale-110 transition-transform shadow-lg">
+              <svg className="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div className={`relative aspect-video ${className}`}>
+        <iframe
+          src={embedUrl}
+          title={alt || 'YouTube Video'}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="w-full h-full"
+        />
       </div>
-    </div>
-  )
+    )
+  }
+
+  // Vimeo embed
+  if (detectedPlatform === 'vimeo') {
+    const embedUrl = `https://player.vimeo.com/video/${vimeoId}?${autoplay || isPlaying ? 'autoplay=1&' : ''}${muted ? 'muted=1&' : ''}${loop ? 'loop=1&' : ''}${playsinline ? 'playsinline=1&' : ''}title=0&byline=0&portrait=0`
+
+    if (!isPlaying && !autoplay && thumbnail) {
+      return (
+        <div className={`relative aspect-video cursor-pointer group ${className}`} onClick={handlePlay}>
+          <img 
+            src={thumbnail} 
+            alt={alt || 'Video thumbnail'} 
+            className="w-full h-full object-cover"
+          />
+          {/* Play button overlay */}
+          <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
+            <div className="w-20 h-20 rounded-full bg-azimut-red/90 flex items-center justify-center transform group-hover:scale-110 transition-transform shadow-lg">
+              <svg className="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div className={`relative aspect-video ${className}`}>
+        <iframe
+          src={embedUrl}
+          title={alt || 'Vimeo Video'}
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+          className="w-full h-full"
+        />
+      </div>
+    )
+  }
+
+  // Fallback (não deveria chegar aqui)
+  return null
 }
 
+export default VideoPlayer
