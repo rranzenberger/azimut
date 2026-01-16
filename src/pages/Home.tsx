@@ -207,12 +207,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
       <main className="relative">
         {/* Estrela de fundo - HOME: Padronizada com outras páginas */}
         <StarBackground
-          className="fixed top-[160px] -right-28 h-[520px] w-[520px] md:top-[160px] md:-right-40 md:h-[680px] md:w-[680px] pointer-events-none"
+          className="fixed top-[160px] right-0 translate-x-[30%] md:translate-x-[40%] h-[520px] w-[520px] md:top-[160px] md:h-[680px] md:w-[680px] pointer-events-none"
           zIndex={-5}
           opacity={0.5}
           style={{ 
             maxWidth: '100vw',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            clipPath: 'inset(0)'
           }}
         />
 
