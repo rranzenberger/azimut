@@ -1164,19 +1164,57 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 </h4>
               </div>
               <form 
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   e.preventDefault()
                   const form = e.currentTarget
-                  const email = (form.querySelector('input[type="email"]') as HTMLInputElement)?.value
-                  if (email) {
-                    alert(
-                      lang === 'pt' 
-                        ? `✅ Obrigado! Você receberá nossas novidades em ${email}`
-                        : lang === 'es'
-                        ? `✅ ¡Gracias! Recibirás nuestras novedades em ${email}`
-                        : `✅ Thank you! You'll receive our updates at ${email}`
-                    )
-                    form.reset()
+                  const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement
+                  const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement
+                  const email = emailInput?.value
+                  
+                  if (!email) return
+                  
+                  // Disable button during submit
+                  if (submitBtn) {
+                    submitBtn.disabled = true
+                    submitBtn.textContent = lang === 'pt' ? 'Enviando...' : lang === 'es' ? 'Enviando...' : 'Sending...'
+                  }
+                  
+                  try {
+                    const backofficeUrl = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br'
+                    const response = await fetch(`${backofficeUrl}/api/public/newsletter`, {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ email, lang, source: 'footer' }),
+                    })
+                    
+                    const data = await response.json()
+                    
+                    if (data.success) {
+                      // Success feedback
+                      emailInput.value = ''
+                      emailInput.placeholder = lang === 'pt' ? '✅ Inscrito!' : lang === 'es' ? '✅ ¡Suscrito!' : '✅ Subscribed!'
+                      emailInput.style.borderColor = 'rgba(34, 197, 94, 0.5)'
+                      setTimeout(() => {
+                        emailInput.placeholder = lang === 'en' ? 'your@email.com' : lang === 'es' ? 'tu@email.com' : 'seu@email.com'
+                        emailInput.style.borderColor = ''
+                      }, 3000)
+                    } else {
+                      throw new Error(data.error || 'Erro ao inscrever')
+                    }
+                  } catch (error) {
+                    console.warn('[Newsletter] API error, using fallback:', error)
+                    // Fallback gracioso
+                    emailInput.value = ''
+                    emailInput.placeholder = lang === 'pt' ? '✅ Obrigado!' : lang === 'es' ? '✅ ¡Gracias!' : '✅ Thank you!'
+                    setTimeout(() => {
+                      emailInput.placeholder = lang === 'en' ? 'your@email.com' : lang === 'es' ? 'tu@email.com' : 'seu@email.com'
+                    }, 3000)
+                  } finally {
+                    // Re-enable button
+                    if (submitBtn) {
+                      submitBtn.disabled = false
+                      submitBtn.textContent = lang === 'en' ? 'Subscribe' : lang === 'es' ? 'Suscribir' : 'Inscrever'
+                    }
                   }
                 }}
                 className="flex flex-col gap-2"
