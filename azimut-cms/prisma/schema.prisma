@@ -351,6 +351,11 @@ model Lead {
   country          String?
   city             String?
 
+  // CAMPOS NEWSLETTER
+  wantsNewsletter   Boolean      @default(false)
+  preferredLanguage String?      // pt, en, es, fr
+  newsletterSource  String?      // footer, popup, blog, etc
+
   // CAMPOS VANCOUVER (Estudar em Vancouver)
   age              Int?
   currentSituation String?
