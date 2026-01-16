@@ -12,6 +12,7 @@ interface MonitorSuggestion {
   sourceTitle: string | null;
   sourceContent: string | null;
   sourceImageUrl: string | null;
+  sourceVideoUrl: string | null;
   creditType: string;
   creditText: string | null;
   azimutContributions: string[];
