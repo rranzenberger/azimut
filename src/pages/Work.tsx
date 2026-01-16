@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { t, type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
+import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { trackPageView, trackProjectInteraction } from '../utils/analytics'
 import InternalNavigation from '../components/InternalNavigation'
 // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
