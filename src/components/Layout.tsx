@@ -1406,9 +1406,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         }}
       />
 
-      {/* ⚠️ 🍪 Cookie Banner DESABILITADO - Debug erro #310
+      {/* ✅ ETAPA 1: 🍪 Cookie Banner REATIVADO - Componente simples */}
       <CookieBanner lang={lang} />
-      */}
 
       {/* 🤖 Claude AI Assistant - DESABILITADO (debug erro #310)
       <ClaudeAssistant lang={lang} />

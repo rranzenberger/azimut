@@ -288,13 +288,11 @@ const App: React.FC = () => {
             {/* Vinheta cinematográfica - efeito de bordas escuras */}
             <div className="cinematic-vignette" aria-hidden="true" />
           
-          {/* ⚠️ Global Search DESABILITADO - Debug erro #310
+          {/* ✅ ETAPA 2: Global Search REATIVADO - Hooks simples, sem API */}
           <GlobalSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} lang={lang} theme={theme} />
-          */}
           
-          {/* ⚠️ PWA Install Prompt DESABILITADO - Debug erro #310
+          {/* ✅ ETAPA 1: PWA Install Prompt REATIVADO - Componente simples */}
           <InstallPrompt />
-          */}
           
           <AppLayout lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
             <Suspense 
