@@ -28,36 +28,25 @@ export async function POST(request: NextRequest) {
     });
 
     if (existing) {
-      // Atualizar lead existente - marcar interesse em newsletter
-      await prisma.lead.update({
-        where: { id: existing.id },
-        data: {
-          wantsNewsletter: true,
-          preferredLanguage: lang,
-          updatedAt: new Date(),
-        },
-      });
-
+      // Lead já existe - apenas informar sucesso
       return NextResponse.json({
         success: true,
-        message: 'Inscrição atualizada com sucesso!',
+        message: 'Email já cadastrado!',
         isNew: false,
       });
     }
 
-    // Criar novo lead
+    // Criar novo lead para newsletter
     await prisma.lead.create({
       data: {
         email: normalizedEmail,
-        name: '',
-        source: `newsletter_${source}`,
+        name: 'Newsletter Subscriber',
+        leadType: 'CONTACT_FORM',
+        sourceUrl: `newsletter_${source}_${lang}`,
         status: 'NEW',
-        wantsNewsletter: true,
-        preferredLanguage: lang,
-        organizationType: 'INDIVIDUAL',
-        leadScore: 10, // Score inicial baixo para newsletter
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        priority: 'LOW',
+        notes: `Inscrito na newsletter via ${source} (idioma: ${lang})`,
+        leadScore: 10,
       },
     });
 
@@ -102,7 +91,6 @@ export async function GET(request: NextRequest) {
     const lead = await prisma.lead.findFirst({
       where: { 
         email: email.toLowerCase().trim(),
-        wantsNewsletter: true,
       },
     });
 
