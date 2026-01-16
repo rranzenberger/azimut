@@ -39,7 +39,7 @@ interface Category {
   postCount: number;
 }
 
-const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://azimut-backoffice.vercel.app';
+const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br';
 
 export default function Blog({ lang }: BlogProps) {
   const language = lang;

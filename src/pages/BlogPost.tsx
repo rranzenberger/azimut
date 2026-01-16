@@ -45,7 +45,7 @@ interface RelatedPost {
   publishedAt: string;
 }
 
-const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://azimut-backoffice.vercel.app';
+const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br';
 
 export default function BlogPost({ lang }: BlogPostProps) {
   const { slug } = useParams<{ slug: string }>();
