@@ -490,16 +490,33 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               hovered={hoveredRoute === 'academy'}
             />
             {/* Blog - Link simples */}
-            <NavItem
-              label="Blog"
-              href="/blog"
-              lang={lang}
-              theme={theme}
-              isActive={activeRoute === 'blog'}
+            <LangLink to="/blog" 
+              className="nav-link-glow relative whitespace-nowrap touch-manipulation shrink-0 transition-colors duration-200 font-sora font-semibold"
               onMouseEnter={() => setHoveredRoute('blog')}
               onMouseLeave={() => setHoveredRoute(null)}
-              hovered={hoveredRoute === 'blog'}
-            />
+              style={{ 
+                minHeight: '44px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                padding: '0 6px', 
+                position: 'relative',
+                color: activeRoute === 'blog' 
+                  ? (theme === 'light' ? '#ff5a6e' : '#c92337') // Light: vermelho vibrante! Dark: vermelho original
+                  : (hoveredRoute === 'blog' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-secondary)')), // Texto CLARO no light!
+                textShadow: activeRoute === 'blog' && theme === 'dark' ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' : undefined,
+                lineHeight: '1'
+              }}
+            >
+              <span>Blog</span>
+              <span 
+                className="absolute left-0 h-[1px] min-[768px]:h-[1.5px] md:h-[1.5px] lg:h-[2px] xl:h-[2px] bg-azimut-red transition-all duration-200 ease-in-out"
+                style={{ 
+                  bottom: '10px', // Mais perto do texto! (subiu ainda mais!)
+                  width: shouldShowLine('blog') ? '100%' : '0%',
+                  opacity: shouldShowLine('blog') ? 1 : 0
+                }}
+              ></span>
+            </LangLink>
           </nav>
           )}
 
