@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import { FieldEditorWithMetadata } from '@/components/admin/FieldEditorWithMetadata';
 // Force rebuild: 2025-12-30-v2
 
 interface Section {
@@ -770,6 +771,16 @@ export default function EditPagePage() {
             Texto principal exibido no topo da página, acima do conteúdo. Aparece no hero/banner da página.
           </p>
 
+          {/* ✨ NOVO: Usando FieldEditorWithMetadata com metadados do banco */}
+          <FieldEditorWithMetadata
+            pageSlug="home"
+            sectionKey="hero"
+            fieldKey="hero_title"
+            value={formData.heroSloganPt || ''}
+            onChange={(value) => setFormData({ ...formData, heroSloganPt: value })}
+          />
+          
+          {/* ANTIGO: MultilangTextField (hardcoded)
           <MultilangTextField
             label="Hero Slogan (Português)"
             location="Páginas > Hero > Slogan > Português"
@@ -780,6 +791,7 @@ export default function EditPagePage() {
             multiline
             onTranslate={undefined}
           />
+          */}
 
           <MultilangTextField
             label="Hero Slogan (English)"
