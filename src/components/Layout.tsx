@@ -507,7 +507,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 lineHeight: '1'
               }}
             >
-              <span>Blog</span>
+              <span>{t(lang, 'navBlog')}</span>
               <span 
                 className="absolute left-0 h-[1px] min-[768px]:h-[1.5px] md:h-[1.5px] lg:h-[2px] xl:h-[2px] bg-azimut-red transition-all duration-200 ease-in-out"
                 style={{ 
@@ -846,7 +846,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   alignItems: 'center'
                 }}
               >
-                Blog
+                {t(lang, 'navBlog')}
               </LangLink>
               <LangLink to="/press"
                 onClick={() => setIsMobileMenuOpen(false)}

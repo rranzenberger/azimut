@@ -16,6 +16,7 @@ export const translations: Dict = {
     navWork: 'Work',
     navStudio: 'Studio',
     navAcademy: 'Academy',
+    navBlog: 'Blog',
     navPress: 'Press',
     heroLead:
       'Immersive, interactive and cinematic experiences for culture, brands and hybrid spaces – operating between Brazil and Canada.',
@@ -52,6 +53,7 @@ export const translations: Dict = {
     navWork: 'Projets',
     navStudio: 'Studio',
     navAcademy: 'Academy',
+    navBlog: 'Blog',
     navPress: 'Presse',
     heroLead:
       'Expériences immersives, interactives et cinématographiques pour la culture, les marques et les espaces hybrides – entre le Brésil et le Canada.',
@@ -87,6 +89,7 @@ export const translations: Dict = {
     navWork: 'Projetos',
     navStudio: 'Estúdio',
     navAcademy: 'Academy',
+    navBlog: 'Blog',
     navPress: 'Imprensa',
     heroLead:
       'Experiências imersivas, interativas e cinematográficas para cultura, marcas e espaços híbridos – atuando entre Brasil e Canadá.',
@@ -123,6 +126,7 @@ export const translations: Dict = {
     navWork: 'Proyectos',
     navStudio: 'Estudio',
     navAcademy: 'Academy',
+    navBlog: 'Blog',
     navPress: 'Prensa',
     heroLead:
       'Experiencias inmersivas, interactivas y cinematográficas para cultura, marcas y espacios híbridos – operando entre Brasil y Canadá.',
