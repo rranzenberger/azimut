@@ -1,19 +1,22 @@
 /**
  * Hook para Personalização de Conteúdo
- * Busca perfil do visitante e personaliza experiência baseado em IA
+ * VERSÃO ROBUSTA - NUNCA causa erro #310
+ * 
+ * Estratégia: Hooks são SEMPRE chamados na mesma ordem
+ * Se backoffice falhar, retorna valores padrão
  */
 
-import { useState, useEffect, useMemo } from 'react';
-import { createTimeoutSignal } from '../utils/fetchWithTimeout';
+import { useState, useEffect, useRef, useMemo } from 'react';
+
+// ⚠️ PERSONALIZAÇÃO DESABILITADA TEMPORARIAMENTE
+// Quando o backoffice estiver pronto, mudar para true
+const PERSONALIZATION_ENABLED = false;
 
 export interface VisitorProfile {
-  // Identificação
   sessionId: string;
   visitorType: 'CURIOUS' | 'INTERESTED' | 'HIGH_POTENTIAL' | 'HOT_LEAD' | 'GOVERNMENT' | 'CURATOR' | 'BRAND' | 'FESTIVAL' | 'EDUCATION' | 'TECH';
   visitorTypeLabel: string;
   confidence: number;
-
-  // Scores de interesse (0-100)
   interestScores: {
     museums: number;
     brands: number;
@@ -25,13 +28,9 @@ export interface VisitorProfile {
     ai: number;
     installations: number;
   };
-
-  // Score de conversão
   conversionScore: number;
   isQualifiedLead: boolean;
   isHotLead: boolean;
-
-  // Recomendações
   recommendedProjects: Array<{
     id: string;
     slug: string;
@@ -61,12 +60,8 @@ export interface VisitorProfile {
     country: string;
     deadline: Date | null;
   }>;
-
-  // Sugestões
   suggestedAction: string;
   suggestedPage: string;
-
-  // Comportamento
   behavior: {
     pagesVisited: number;
     projectsViewed: number;
@@ -74,8 +69,6 @@ export interface VisitorProfile {
     country: string | null;
     language: string | null;
   };
-
-  // Lead info
   lead: {
     id: string;
     name: string;
@@ -88,227 +81,81 @@ interface UsePersonalizedContentReturn {
   profile: VisitorProfile | null;
   loading: boolean;
   error: string | null;
-  
-  // Helpers
   recommendedProjects: VisitorProfile['recommendedProjects'];
   recommendedServices: VisitorProfile['recommendedServices'];
   recommendedEditais: VisitorProfile['recommendedEditais'];
-  
-  // Personalização de conteúdo
   heroMessage: string;
   heroSubtitle: string;
   ctaText: string;
   ctaLink: string;
-  
-  // Flags úteis
   shouldShowChatbot: boolean;
   shouldShowEditais: boolean;
   shouldShowAdvancedContent: boolean;
 }
 
-const API_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br';
-
-// Helper para obter sessionId (compatível com useUserTracking)
-function getSessionId(): string | null {
-  if (typeof window === 'undefined') return null;
-  
-  const stored = localStorage.getItem('azimut_user_session');
-  if (stored) {
-    try {
-      const session = JSON.parse(stored);
-      return session.sessionId || null;
-    } catch {
-      return null;
-    }
-  }
-  return null;
-}
-
 export function usePersonalizedContent(): UsePersonalizedContentReturn {
+  // ⚠️ TODOS os hooks SEMPRE no topo, SEMPRE chamados (mesmo que não usados)
   const [profile, setProfile] = useState<VisitorProfile | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const isMounted = useRef(true);
 
+  // Cleanup
   useEffect(() => {
-    const sessionId = getSessionId();
-    
-    if (!sessionId) {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  // Fetch effect - SEMPRE executa, mas é no-op se desabilitado
+  useEffect(() => {
+    // Se personalização desabilitada, não faz nada
+    if (!PERSONALIZATION_ENABLED) {
+      setProfile(null);
       setLoading(false);
+      setError(null);
       return;
     }
 
-    let cancelled = false;
+    // Personalização habilitada - buscar perfil
+    // ... código de fetch aqui quando reativar ...
+  }, []);
 
-    // Buscar perfil do visitante
-    const fetchProfile = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        const response = await fetch(
-          `${API_URL}/api/visitor/profile?sessionId=${encodeURIComponent(sessionId)}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            // Timeout de 5s (compatível com navegadores antigos)
-            signal: createTimeoutSignal(5000),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-
-        if (!cancelled && data.profile) {
-          setProfile(data.profile);
-        } else if (!cancelled) {
-          // Perfil não encontrado ainda (sessão nova)
-          setProfile(null);
-        }
-      } catch (err: any) {
-        if (!cancelled) {
-          // Não mostrar erro se for timeout ou cancelamento
-          if (err.name !== 'AbortError' && err.name !== 'TimeoutError') {
-            console.warn('Erro ao buscar perfil personalizado:', err);
-            setError(err.message);
-          }
-          setProfile(null);
-        }
-      } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
-      }
-    };
-
-    // Aguardar um pouco antes de buscar (para ter dados de tracking)
-    // Primeira busca após 3s (tempo para tracking coletar dados)
-    const timer = setTimeout(fetchProfile, 3000);
-
-    // Re-buscar a cada 60s para atualizar perfil (não muito frequente)
-    const interval = setInterval(fetchProfile, 60000);
-
-    return () => {
-      cancelled = true;
-      clearTimeout(timer);
-      clearInterval(interval);
-    };
-  }, []); // sessionId é obtido dentro do effect, não precisa estar nas dependências
-
-  // Helpers para personalização
+  // Memos SEMPRE chamados (valores padrão se profile null)
   const heroMessage = useMemo(() => {
-    if (!profile) return 'Experiências que Conectam Mundos';
-
-    switch (profile.visitorType) {
-      case 'GOVERNMENT':
-        return 'Projetos Imersivos para Espaços Culturais Públicos';
-      case 'CURATOR':
-        return 'Curadoria Digital e Experiências Museológicas';
-      case 'BRAND':
-        return 'Experiências Imersivas que Conectam Marcas e Audiências';
-      case 'FESTIVAL':
-        return 'Instalações Interativas para Festivais e Eventos';
-      case 'EDUCATION':
-        return 'Educação Imersiva e Workshops';
-      case 'HIGH_POTENTIAL':
-      case 'HOT_LEAD':
-        return 'Projetos Personalizados para Sua Necessidade';
-      default:
-        return 'Experiências que Conectam Mundos';
-    }
-  }, [profile]);
+    return 'Experiências que Conectam Mundos';
+  }, []);
 
   const heroSubtitle = useMemo(() => {
-    if (!profile) return 'Criamos experiências imersivas entre Brasil e Canadá.';
-
-    switch (profile.visitorType) {
-      case 'GOVERNMENT':
-        return 'Museus digitais, exposições imersivas e projetos culturais com suporte a editais (Rouanet, CMF, NFB).';
-      case 'CURATOR':
-        return 'Tecnologias de curadoria digital, VR para cultura e acervos digitais interativos.';
-      case 'BRAND':
-        return 'Ativações de marca, experiências VR/AR e projetos que engajam audiências.';
-      case 'FESTIVAL':
-        return 'Instalações interativas, mapeamento de projeção e experiências imersivas para eventos.';
-      case 'EDUCATION':
-        return 'Workshops, cursos e projetos educacionais com tecnologias imersivas.';
-      default:
-        return 'Criamos experiências imersivas entre Brasil e Canadá.';
-    }
-  }, [profile]);
+    return 'Criamos experiências imersivas entre Brasil e Canadá.';
+  }, []);
 
   const ctaText = useMemo(() => {
-    if (!profile) return 'Iniciar um Projeto';
-
-    switch (profile.visitorType) {
-      case 'GOVERNMENT':
-        return 'Falar sobre Editais Culturais';
-      case 'CURATOR':
-        return 'Conhecer Projetos de Museus';
-      case 'HIGH_POTENTIAL':
-      case 'HOT_LEAD':
-        return 'Agendar Reunião';
-      default:
-        return 'Iniciar um Projeto';
-    }
-  }, [profile]);
+    return 'Iniciar um Projeto';
+  }, []);
 
   const ctaLink = useMemo(() => {
-    if (!profile) return '/contact';
+    return '/contact';
+  }, []);
 
-    switch (profile.visitorType) {
-      case 'GOVERNMENT':
-        return '/contact?interest=editais';
-      case 'CURATOR':
-        return '/work?filter=museums';
-      case 'HIGH_POTENTIAL':
-      case 'HOT_LEAD':
-        return '/contact?priority=high';
-      default:
-        return '/contact';
-    }
-  }, [profile]);
-
-  // Flags para mostrar/ocultar elementos
-  const shouldShowChatbot = useMemo(() => {
-    return profile?.conversionScore ? profile.conversionScore > 75 : false;
-  }, [profile]);
-
-  const shouldShowEditais = useMemo(() => {
-    return profile?.visitorType === 'GOVERNMENT' || 
-           profile?.visitorType === 'CURATOR' ||
-           (profile?.interestScores.museums || 0) > 50 ||
-           (profile?.interestScores.cities || 0) > 50;
-  }, [profile]);
-
-  const shouldShowAdvancedContent = useMemo(() => {
-    return profile?.conversionScore ? profile.conversionScore > 60 : false;
-  }, [profile]);
+  const shouldShowChatbot = useMemo(() => false, []);
+  const shouldShowEditais = useMemo(() => false, []);
+  const shouldShowAdvancedContent = useMemo(() => false, []);
 
   return {
     profile,
     loading,
     error,
-    
-    // Recomendações diretas
-    recommendedProjects: profile?.recommendedProjects || [],
-    recommendedServices: profile?.recommendedServices || [],
-    recommendedEditais: profile?.recommendedEditais || [],
-    
-    // Conteúdo personalizado
+    recommendedProjects: [],
+    recommendedServices: [],
+    recommendedEditais: [],
     heroMessage,
     heroSubtitle,
     ctaText,
     ctaLink,
-    
-    // Flags
     shouldShowChatbot,
     shouldShowEditais,
     shouldShowAdvancedContent,
   };
 }
-

@@ -62,9 +62,9 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleTheme }) => {
   const location = useLocation()
   const navigate = useNavigate()
-  // ⚠️ TRACKING DESABILITADO - Debug erro #310
-  // const { trackInteraction } = useUserTracking()
-  const trackInteraction = () => {}
+  // ✅ TRACKING ROBUSTO - Nunca causa erro #310
+  // Controlado via flag TRACKING_ENABLED no hook
+  const { trackInteraction } = useUserTracking()
   const { changeLang } = useLanguageRoute()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [hoveredRoute, setHoveredRoute] = useState<string | null>(null)

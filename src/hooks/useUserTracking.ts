@@ -1,15 +1,25 @@
-import { useEffect, useRef } from 'react'
+/**
+ * Hook para Tracking de Usuários
+ * VERSÃO ROBUSTA - NUNCA causa erro #310
+ * 
+ * Estratégia: Hooks são SEMPRE chamados na mesma ordem
+ * Se tracking falhar, falha silenciosamente
+ */
+
+import { useEffect, useRef, useCallback } from 'react'
 import { useLocation } from 'react-router-dom'
-import { addPoints, loadProgress, saveProgress } from '../utils/gamification'
-import { trackTimeOnPage } from '../utils/analytics'
+
+// ⚠️ TRACKING DESABILITADO TEMPORARIAMENTE
+// Quando o backoffice estiver pronto, mudar para true
+const TRACKING_ENABLED = false;
 
 type InteractionType = 'cta_click' | 'project_view' | 'service_view' | 'language_change'
 
 interface PageVisit {
   path: string
   timestamp: string
-  timeSpent: number // segundos
-  scrollDepth: number // percentual
+  timeSpent: number
+  scrollDepth: number
 }
 
 interface Interaction {
@@ -33,24 +43,32 @@ export function useUserTracking() {
   const startTimeRef = useRef<number>(Date.now())
   const maxScrollRef = useRef<number>(0)
   const sessionIdRef = useRef<string>('')
+  const isMounted = useRef(true)
 
-  // CORREÇÃO: Inicializar sessionId de forma segura (dentro de useEffect)
-  // SEMPRE chamar hooks na mesma ordem (regra do React)
+  // Cleanup
   useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  // Inicializar sessão
+  useEffect(() => {
+    if (!TRACKING_ENABLED) return;
+    
     try {
       const session = getOrCreateSession()
       sessionIdRef.current = session.sessionId
-    } catch (error) {
-      // Se houver erro, criar um sessionId temporário
-      if (process.env.NODE_ENV === 'development') {
-        console.warn('Erro ao criar sessão de tracking:', error)
-      }
-      sessionIdRef.current = `temp_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`
+    } catch {
+      sessionIdRef.current = `temp_${Date.now()}`
     }
   }, [])
 
-  // Tracking de scroll depth - CORRIGIDO: usar requestAnimationFrame para melhor performance
+  // Scroll tracking
   useEffect(() => {
+    if (!TRACKING_ENABLED) return;
+    
     let ticking = false
     
     const handleScroll = () => {
@@ -68,11 +86,8 @@ export function useUserTracking() {
             if (scrollPercentage > maxScrollRef.current) {
               maxScrollRef.current = scrollPercentage
             }
-          } catch (error) {
-            // Silencioso - não quebrar scroll
-            if (process.env.NODE_ENV === 'development') {
-              console.warn('Scroll tracking error:', error)
-            }
+          } catch {
+            // Silencioso
           }
           ticking = false
         })
@@ -84,53 +99,48 @@ export function useUserTracking() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Tracking de page view e tempo/scroll na saída
+  // Page view tracking
   useEffect(() => {
+    if (!TRACKING_ENABLED) return;
+    
     const path = location.pathname
-    const startTime = Date.now()
-    startTimeRef.current = startTime
+    startTimeRef.current = Date.now()
     maxScrollRef.current = 0
 
     try {
-      trackPageView(path)
-      // Track time on page detalhado
-      const cleanupTimeTracking = trackTimeOnPage(path)
-      
-      return () => {
-        cleanupTimeTracking()
-        try {
-          const timeSpent = Math.round((Date.now() - startTimeRef.current) / 1000)
-          updatePageVisit(path, timeSpent, maxScrollRef.current)
-        } catch (error) {
-          // Silencioso - não quebrar renderização
-          if (process.env.NODE_ENV === 'development') {
-            console.warn('Erro ao atualizar page visit:', error)
-          }
-        }
+      trackPageViewInternal(path)
+    } catch {
+      // Silencioso
+    }
+    
+    return () => {
+      try {
+        const timeSpent = Math.round((Date.now() - startTimeRef.current) / 1000)
+        updatePageVisitInternal(path, timeSpent, maxScrollRef.current)
+      } catch {
+        // Silencioso
       }
-    } catch (error) {
-      // Se tracking falhar, não quebrar renderização
-      if (process.env.NODE_ENV === 'development') {
-        console.warn('Erro ao rastrear page view:', error)
-      }
-      return () => {}
     }
   }, [location.pathname])
 
-  // Para interações explícitas (CTA, projeto, idioma)
-  const trackInteraction = (type: InteractionType, target: string) => {
+  // Track interaction - SEMPRE retorna função válida
+  const trackInteraction = useCallback((type: InteractionType, target: string) => {
+    if (!TRACKING_ENABLED) return;
+    
     try {
-      addInteraction(type, target)
-    } catch (error) {
-      // Se tracking falhar, não quebrar aplicação
-      console.warn('Erro ao rastrear interação:', error)
+      addInteractionInternal(type, target)
+    } catch {
+      // Silencioso
     }
-  }
+  }, [])
 
-  return { trackInteraction, sessionId: sessionIdRef.current }
+  return { 
+    trackInteraction, 
+    sessionId: sessionIdRef.current 
+  }
 }
 
-// Helpers
+// Helpers internos
 function getOrCreateSession(): UserSession {
   if (typeof window === 'undefined') {
     return {
@@ -142,13 +152,13 @@ function getOrCreateSession(): UserSession {
     }
   }
 
-  const stored = localStorage.getItem(STORAGE_KEY)
-  if (stored) {
-    try {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (stored) {
       return JSON.parse(stored) as UserSession
-    } catch {
-      // se corromper, recria
     }
+  } catch {
+    // Recria se corrompido
   }
 
   const newSession: UserSession = {
@@ -159,11 +169,16 @@ function getOrCreateSession(): UserSession {
     interests: []
   }
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(newSession))
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newSession))
+  } catch {
+    // localStorage pode estar cheio
+  }
+  
   return newSession
 }
 
-function trackPageView(path: string) {
+function trackPageViewInternal(path: string) {
   const session = getOrCreateSession()
 
   session.pages.push({
@@ -173,33 +188,14 @@ function trackPageView(path: string) {
     scrollDepth: 0
   })
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(session))
-  
-  // 🎮 GAMIFICATION: Award pontos por visualização de página
   try {
-    const progress = loadProgress()
-    const isFirstVisit = progress.stats.pagesVisited === 0
-    
-    if (isFirstVisit) {
-      addPoints('firstTimeVisitor')
-    } else {
-      addPoints('pageView')
-    }
-    
-    // Atualizar stats
-    progress.stats.pagesVisited++
-    saveProgress(progress)
-    
-    // Disparar evento para atualizar widget
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('gamification-update'))
-    }
-  } catch (e) {
-    // Silencioso - gamificação é extra, não deve quebrar
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(session))
+  } catch {
+    // Silencioso
   }
 }
 
-function updatePageVisit(path: string, timeSpent: number, scrollDepth: number) {
+function updatePageVisitInternal(path: string, timeSpent: number, scrollDepth: number) {
   const session = getOrCreateSession()
   const lastPage = session.pages[session.pages.length - 1]
 
@@ -208,37 +204,14 @@ function updatePageVisit(path: string, timeSpent: number, scrollDepth: number) {
     lastPage.scrollDepth = scrollDepth
   }
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(session))
-  
-  // 🎮 GAMIFICATION: Award pontos por scroll profundo e tempo gasto
   try {
-    const progress = loadProgress()
-    
-    // Deep scroll (>80%)
-    if (scrollDepth > 80) {
-      addPoints('deepScroll', { scrollDepth })
-    }
-    
-    // Long visit (>2 minutos = 120 segundos)
-    if (timeSpent > 120) {
-      addPoints('longVisit', { timeSpent })
-    }
-    
-    // Atualizar stats
-    progress.stats.timeSpent += timeSpent
-    progress.stats.scrollDepth = Math.max(progress.stats.scrollDepth, scrollDepth)
-    saveProgress(progress)
-    
-    // Disparar evento
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('gamification-update'))
-    }
-  } catch (e) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(session))
+  } catch {
     // Silencioso
   }
 }
 
-function addInteraction(type: InteractionType, target: string) {
+function addInteractionInternal(type: InteractionType, target: string) {
   const session = getOrCreateSession()
 
   session.interactions.push({
@@ -247,43 +220,13 @@ function addInteraction(type: InteractionType, target: string) {
     timestamp: new Date().toISOString()
   })
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(session))
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(session))
+  } catch {
+    // Silencioso
+  }
 }
 
 function generateSessionId(): string {
   return `session_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

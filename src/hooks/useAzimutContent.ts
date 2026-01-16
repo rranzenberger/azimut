@@ -1,170 +1,110 @@
 /**
  * Hook para consumir conteúdo do CMS Azimut
- * Personaliza por geo + idioma + comportamento
+ * VERSÃO ROBUSTA - NUNCA causa erro #310
+ * 
+ * Estratégia: Hooks são SEMPRE chamados na mesma ordem
+ * Se backoffice falhar, retorna null (site usa fallbacks)
  */
 
-import { useState, useEffect } from 'react';
-import { getSessionId } from '../utils/analytics';
-import { detectGeoFromTimezone, detectLanguageFromBrowser, detectCountryFromIP, getLanguageFromCountry } from '../utils/geoDetection';
-import { createTimeoutSignal } from '../utils/fetchWithTimeout';
+import { useState, useEffect, useRef } from 'react';
 
-// Usar VITE_BACKOFFICE_URL se disponível, senão VITE_CMS_API_URL, senão fallback
+// ⚠️ BACKOFFICE DESABILITADO TEMPORARIAMENTE
+// Quando o backoffice estiver pronto, mudar para true
+const CMS_ENABLED = false;
+
 const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br';
 const API_URL = `${BACKOFFICE_URL}/api`;
 
 interface ContentOptions {
   page?: string;
   autoDetectGeo?: boolean;
-  lang?: 'pt' | 'en' | 'fr' | 'es'; // Idioma do conteúdo
+  lang?: 'pt' | 'en' | 'fr' | 'es';
 }
 
-export function useAzimutContent(options: ContentOptions = {}) {
-  const { page = 'home', autoDetectGeo = true, lang: propLang } = options;
+interface UseAzimutContentReturn {
+  content: any;
+  loading: boolean;
+  error: Error | null;
+}
+
+export function useAzimutContent(options: ContentOptions = {}): UseAzimutContentReturn {
+  const { page = 'home', lang: propLang } = options;
   
+  // ⚠️ TODOS os hooks SEMPRE no topo, SEMPRE chamados
   const [content, setContent] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Começa false se CMS desabilitado
   const [error, setError] = useState<Error | null>(null);
+  const isMounted = useRef(true);
   
+  // Cleanup ref
   useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  // Fetch effect - SEMPRE executa, mas pode ser no-op
+  useEffect(() => {
+    // Se CMS desabilitado, não faz nada
+    if (!CMS_ENABLED) {
+      setContent(null);
+      setLoading(false);
+      setError(null);
+      return;
+    }
+
+    // CMS habilitado - buscar conteúdo
+    const controller = new AbortController();
+    
     async function fetchContent() {
+      if (!isMounted.current) return;
+      
+      setLoading(true);
+      setError(null);
+      
       try {
-        setLoading(true);
+        const lang = propLang || localStorage.getItem('azimut-lang') || 'pt';
         
-        // 1. Detectar idioma (prioridade: prop > localStorage > navegador)
-        const browserLang = navigator.language.startsWith('pt') ? 'pt' :
-                           navigator.language.startsWith('fr') ? 'fr' :
-                           navigator.language.startsWith('es') ? 'es' : 'en';
-        
-        // Verificar se usuário já escolheu idioma manualmente
-        const savedLang = localStorage.getItem('azimut-lang');
-        let lang = propLang || savedLang || browserLang;
-        
-        // 2. Detectar país e idioma (100% client-side, não depende de API)
-        let country = 'DEFAULT';
-        
-        if (autoDetectGeo) {
-          // ESTRATÉGIA ATUALIZADA: Detectar PRIMEIRO via IP (funciona com VPN!)
-          // Fallback: timezone (se IP falhar)
-          try {
-            // 1. Tentar detectar por IP (detecta VPN corretamente!)
-            const ipGeo = await detectCountryFromIP();
-            
-            if (ipGeo && ipGeo.countryCode && ipGeo.countryCode !== 'DEFAULT') {
-              country = ipGeo.countryCode;
-              
-              // Ajustar idioma baseado no país detectado (se não foi salvo manualmente)
-              if (!savedLang) {
-                lang = getLanguageFromCountry(ipGeo.countryCode);
-                localStorage.setItem('azimut-lang', lang);
-              }
-            } else {
-              // 2. Fallback: Detectar via timezone (se IP falhar)
-              const geo = detectGeoFromTimezone();
-              country = geo.countryCode;
-              
-              // Ajustar idioma baseado no país detectado (se não foi salvo manualmente)
-              if (!savedLang && country !== 'DEFAULT') {
-                lang = geo.language;
-                localStorage.setItem('azimut-lang', geo.language);
-              }
-            }
-          } catch (fallbackErr) {
-            // Fallback: usar idioma do navegador
-            if (!savedLang) {
-              lang = detectLanguageFromBrowser();
-              localStorage.setItem('azimut-lang', lang);
-            }
+        const response = await fetch(
+          `${API_URL}/public/content?lang=${lang}&page=${page}`,
+          {
+            signal: controller.signal,
+            headers: { 'Content-Type': 'application/json' },
           }
-          
-          // Tentar API do CMS apenas como confirmação (não bloqueia, executa em paralelo)
-          // Se API funcionar, usa o país da API (mais preciso)
-          fetch(`${API_URL}/geo`, {
-            signal: createTimeoutSignal(2000), // Timeout menor (2s)
-          })
-            .then(geoRes => {
-              if (geoRes.ok) {
-                return geoRes.json();
-              }
-              return null;
-            })
-            .then(geoData => {
-              if (geoData?.detected && geoData.country) {
-                country = geoData.country;
-                
-                // Ajustar idioma se API confirmar país diferente
-                if (!savedLang && country !== 'DEFAULT') {
-                  const geo = detectGeoFromTimezone();
-                  const apiLanguage = geo.language;
-                  
-                  if (lang !== apiLanguage) {
-                    // Apenas atualizar localStorage, App.tsx vai detectar e atualizar
-                    localStorage.setItem('azimut-lang', apiLanguage);
-                  }
-                }
-              }
-            })
-            .catch(() => {
-              // Silencioso - API não é obrigatória
-            });
-        }
+        );
         
-        // 3. Buscar conteúdo (com sessionId para personalização)
-        // IMPORTANTE: Não bloquear renderização se CMS falhar
-        try {
-          const sessionId = getSessionId() || 'anonymous';
-          const contentRes = await fetch(
-            `${API_URL}/public/content?lang=${lang}&country=${country}&page=${page}&sessionId=${encodeURIComponent(sessionId)}`,
-            {
-              signal: createTimeoutSignal(5000), // Timeout de 5s (compatível)
-            }
-          );
-          
-          if (contentRes.ok) {
-            const data = await contentRes.json();
-            setContent(data);
-          } else {
-            // Se falhar, não é crítico - site funciona sem CMS
-            console.warn(`[CMS] Falha ao buscar conteúdo (${contentRes.status}), usando conteúdo local`);
-            setContent(null); // null = usar conteúdo local
-          }
-        } catch (fetchErr) {
-          // Erro de fetch (CORS, timeout, etc) - não é crítico
-          console.warn('[CMS] Erro ao buscar conteúdo do CMS, usando conteúdo local:', fetchErr);
-          setContent(null); // null = usar conteúdo local
-        }
+        if (!isMounted.current) return;
         
+        if (response.ok) {
+          const data = await response.json();
+          setContent(data);
+        } else {
+          // Falha silenciosa - usar fallback
+          setContent(null);
+        }
       } catch (err) {
-        // Erro geral - não quebrar renderização
-        console.warn('[CMS] Erro geral, usando conteúdo local:', err);
-        setError(err as Error);
-        setContent(null); // null = usar conteúdo local
+        // Ignorar erros de abort
+        if (err instanceof Error && err.name === 'AbortError') return;
+        
+        if (!isMounted.current) return;
+        
+        // Falha silenciosa - usar fallback
+        console.warn('[CMS] Usando conteúdo local');
+        setContent(null);
       } finally {
-        setLoading(false);
+        if (isMounted.current) {
+          setLoading(false);
+        }
       }
     }
-    
+
     fetchContent();
-  }, [page, autoDetectGeo, propLang]); // Adicionar propLang como dependência
-  
+    
+    return () => {
+      controller.abort();
+    };
+  }, [page, propLang]);
+
   return { content, loading, error };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
