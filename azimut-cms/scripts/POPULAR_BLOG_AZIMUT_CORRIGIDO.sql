@@ -82,7 +82,7 @@ INSERT INTO "BlogPost" (
   "excerptPt", "excerptEn", "excerptEs", "excerptFr",
   "contentPt", "contentEn", "contentEs", "contentFr",
   "seoTitlePt", "seoTitleEn", "seoDescPt", "seoDescEn",
-  status, featured, "publishedAt", "categoryId", "authorName", "readTimeMinutes", "viewCount",
+  status, featured, "publishedAt", "categoryId", "authorName", "readingTimeMin", "viewCount",
   "createdAt", "updatedAt"
 )
 SELECT
@@ -154,7 +154,7 @@ INSERT INTO "BlogPost" (
   "excerptPt", "excerptEn", "excerptEs", "excerptFr",
   "contentPt", "contentEn",
   "seoTitlePt", "seoTitleEn", "seoDescPt", "seoDescEn",
-  status, featured, "publishedAt", "categoryId", "authorName", "readTimeMinutes", "viewCount",
+  status, featured, "publishedAt", "categoryId", "authorName", "readingTimeMin", "viewCount",
   "createdAt", "updatedAt"
 )
 SELECT
@@ -223,7 +223,7 @@ INSERT INTO "BlogPost" (
   "excerptPt", "excerptEn", "excerptEs", "excerptFr",
   "contentPt", "contentEn",
   "seoTitlePt", "seoTitleEn", "seoDescPt", "seoDescEn",
-  status, featured, "publishedAt", "categoryId", "authorName", "readTimeMinutes", "viewCount",
+  status, featured, "publishedAt", "categoryId", "authorName", "readingTimeMin", "viewCount",
   "createdAt", "updatedAt"
 )
 SELECT
@@ -292,7 +292,7 @@ INSERT INTO "BlogPost" (
   "excerptPt", "excerptEn", "excerptEs", "excerptFr",
   "contentPt", "contentEn",
   "seoTitlePt", "seoTitleEn", "seoDescPt", "seoDescEn",
-  status, featured, "publishedAt", "categoryId", "authorName", "readTimeMinutes", "viewCount",
+  status, featured, "publishedAt", "categoryId", "authorName", "readingTimeMin", "viewCount",
   "createdAt", "updatedAt"
 )
 SELECT
