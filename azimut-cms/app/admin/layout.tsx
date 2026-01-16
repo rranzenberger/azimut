@@ -101,6 +101,7 @@ export default async function AdminLayout({
           <AdminLink href="/admin" label="Dashboard" />
           <AdminLink href="/admin/analytics" label="📊 Analytics IA" />
           <AdminLink href="/admin/projects" label="Projetos" />
+          <AdminLink href="/admin/blog" label="📝 Blog" />
           <AdminLink href="/admin/site-pages" label="Páginas" />
           <AdminLink href="/admin/media" label="Mídias" />
           <AdminLink href="/admin/leads" label="Leads" />

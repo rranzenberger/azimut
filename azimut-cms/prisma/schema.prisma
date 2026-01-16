@@ -61,6 +61,7 @@ model Media {
   pageHeroBackgrounds Page[]         @relation("PageHeroBackground")
   pageDemoreelVideos  Page[]         @relation("PageDemoreelVideo")
   analysis            MediaAnalysis?
+  blogPostCovers      BlogPost[]     @relation("BlogPostCover")
 
   // ═══════════════════════════════════════════
   // Sistema de Tags (Opção 2) - Contexto da imagem
@@ -85,6 +86,7 @@ model Tag {
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   projects  Project[]   @relation("ProjectToTag")
+  blogPosts BlogPost[]  @relation("BlogPostToTag")
 }
 
 model Service {
@@ -916,4 +918,103 @@ model ImageSpecification {
   @@unique([pageSlug, sectionKey, fieldKey])
   @@index([pageSlug, sectionKey])
   @@map("image_specifications")
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 📝 BLOG - Sistema completo de artigos
+// ═══════════════════════════════════════════════════════════════
+
+model BlogCategory {
+  id          String   @id @default(uuid())
+  slug        String   @unique
+  namePt      String
+  nameEn      String
+  nameEs      String?
+  nameFr      String?
+  descPt      String?
+  descEn      String?
+  descEs      String?
+  descFr      String?
+  color       String?  @default("#c92337") // Cor do badge
+  icon        String?  // Ícone (emoji ou nome do ícone)
+  priority    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  posts       BlogPost[]
+}
+
+model BlogPost {
+  id              String         @id @default(uuid())
+  slug            String         @unique
+  
+  // Títulos (4 idiomas)
+  titlePt         String
+  titleEn         String
+  titleEs         String?
+  titleFr         String?
+  
+  // Resumo/Excerpt (4 idiomas) - aparece na listagem
+  excerptPt       String?
+  excerptEn       String?
+  excerptEs       String?
+  excerptFr       String?
+  
+  // Conteúdo completo (4 idiomas) - Markdown ou HTML
+  contentPt       String?        @db.Text
+  contentEn       String?        @db.Text
+  contentEs       String?        @db.Text
+  contentFr       String?        @db.Text
+  
+  // SEO (4 idiomas)
+  seoTitlePt      String?
+  seoTitleEn      String?
+  seoTitleEs      String?
+  seoTitleFr      String?
+  seoDescPt       String?
+  seoDescEn       String?
+  seoDescEs       String?
+  seoDescFr       String?
+  
+  // Imagem de capa
+  coverImageId    String?
+  coverImage      Media?         @relation("BlogPostCover", fields: [coverImageId], references: [id])
+  coverImageUrl   String?        // URL alternativa se não usar Media
+  coverImageAlt   String?
+  
+  // Metadados
+  authorName      String?
+  authorImageUrl  String?
+  readingTimeMin  Int?           @default(5) // Tempo de leitura em minutos
+  
+  // Status e publicação
+  status          BlogPostStatus @default(DRAFT)
+  featured        Boolean        @default(false) // Destaque na home do blog
+  publishedAt     DateTime?      // Data de publicação (permite agendar)
+  
+  // Categoria (uma por post)
+  categoryId      String?
+  category        BlogCategory?  @relation(fields: [categoryId], references: [id])
+  
+  // Tags (muitas por post) - reutiliza Tag existente
+  tags            Tag[]          @relation("BlogPostToTag")
+  
+  // Métricas
+  viewCount       Int            @default(0)
+  shareCount      Int            @default(0)
+  
+  // Timestamps
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  
+  @@index([slug])
+  @@index([status, publishedAt])
+  @@index([categoryId])
+  @@index([featured])
+}
+
+enum BlogPostStatus {
+  DRAFT      // Rascunho - não visível
+  PUBLISHED  // Publicado - visível
+  SCHEDULED  // Agendado - publicar em publishedAt
+  ARCHIVED   // Arquivado - não visível
 }
