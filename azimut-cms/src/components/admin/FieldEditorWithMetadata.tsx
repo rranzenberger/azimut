@@ -165,7 +165,7 @@ export function FieldEditorWithMetadata({
           <textarea
             value={value}
             onChange={(e) => handleChange(e.target.value)}
-            maxLength={metadata.maxLength}
+            maxLength={metadata?.maxLength ?? undefined}
             rows={metadata.textFormat === 'two_lines' ? 2 : 5}
             className={`w-full p-2 border rounded ${
               errors.length > 0 ? 'border-red-500' : 'border-gray-300'
@@ -176,7 +176,7 @@ export function FieldEditorWithMetadata({
             type="text"
             value={value}
             onChange={(e) => handleChange(e.target.value)}
-            maxLength={metadata.maxLength}
+            maxLength={metadata?.maxLength ?? undefined}
             className={`w-full p-2 border rounded ${
               errors.length > 0 ? 'border-red-500' : 'border-gray-300'
             }`}
