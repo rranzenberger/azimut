@@ -245,16 +245,16 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-[51] w-96 h-[600px] rounded-2xl shadow-2xl flex flex-col overflow-hidden card-adaptive border border-white/10 animate-fade-in">
+        <div className="fixed bottom-6 right-6 z-[51] w-[380px] h-[600px] rounded-2xl shadow-2xl flex flex-col overflow-hidden card-adaptive border border-white/10 animate-fade-in">
           {/* Header */}
-          <div className="bg-gradient-to-r from-azimut-red to-red-700 p-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                <span className="text-2xl">🤖</span>
+          <div className="bg-gradient-to-r from-azimut-red to-red-700 p-3 flex items-center justify-between">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                <span className="text-xl">🤖</span>
               </div>
-              <div>
-                <h3 className="text-white font-bold text-lg">{t.title}</h3>
-                <p className="text-white/80 text-xs">{t.subtitle}</p>
+              <div className="min-w-0 flex-1">
+                <h3 className="text-white font-bold text-sm leading-tight whitespace-nowrap overflow-hidden text-ellipsis">{t.title}</h3>
+                <p className="text-white/80 text-[10px] leading-tight whitespace-nowrap overflow-hidden text-ellipsis">{t.subtitle}</p>
               </div>
             </div>
             <button
