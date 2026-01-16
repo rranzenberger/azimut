@@ -52,6 +52,7 @@ export async function GET(request: NextRequest) {
 }
 
 // POST - Criar projeto
+// 🔄 AUTO-CRIA PÁGINA para SEO/traduções quando projeto é criado
 export async function POST(request: NextRequest) {
   try {
     const cookieStore = cookies();
@@ -139,6 +140,54 @@ export async function POST(request: NextRequest) {
         services: true,
       },
     });
+
+    // ═══════════════════════════════════════════════════════════════
+    // 🔄 HOOK: AUTO-CRIAR PÁGINA PARA SEO/TRADUÇÕES
+    // ═══════════════════════════════════════════════════════════════
+    try {
+      const pageSlug = `projetos/${slug}`;
+      
+      // Verificar se página já existe
+      const existingPage = await prisma.page.findUnique({
+        where: { slug: pageSlug },
+      });
+
+      if (!existingPage) {
+        // Criar página automaticamente associada ao projeto
+        await prisma.page.create({
+          data: {
+            name: `Projeto: ${title}`,
+            slug: pageSlug,
+            status: 'DRAFT', // Sempre como rascunho para revisão
+            // SEO Titles - baseados no título do projeto
+            seoTitlePt: `${title} | Projetos | Azimut`,
+            seoTitleEn: `${title} | Projects | Azimut`,
+            seoTitleEs: `${title} | Proyectos | Azimut`,
+            seoTitleFr: `${title} | Projets | Azimut`,
+            // SEO Descriptions - baseadas no resumo
+            seoDescPt: summaryPt || `Conheça o projeto ${title} da Azimut.`,
+            seoDescEn: summaryEn || `Discover ${title} project by Azimut.`,
+            seoDescEs: summaryEs || `Conoce el proyecto ${title} de Azimut.`,
+            seoDescFr: summaryFr || `Découvrez le projet ${title} d'Azimut.`,
+            // Hero Slogans - título do projeto
+            heroSloganPt: title,
+            heroSloganEn: title,
+            heroSloganEs: title,
+            heroSloganFr: title,
+            // Hero Subtitles - resumos
+            heroSubtitlePt: summaryPt || null,
+            heroSubtitleEn: summaryEn || null,
+            heroSubtitleEs: summaryEs || null,
+            heroSubtitleFr: summaryFr || null,
+          },
+        });
+        console.log(`✅ Página "${pageSlug}" criada automaticamente para projeto "${title}"`);
+      }
+    } catch (pageError) {
+      // Não falha a criação do projeto se a página der erro
+      console.error('⚠️ Erro ao criar página automática (projeto criado normalmente):', pageError);
+    }
+    // ═══════════════════════════════════════════════════════════════
 
     return NextResponse.json({ project }, { status: 201 });
   } catch (error: any) {

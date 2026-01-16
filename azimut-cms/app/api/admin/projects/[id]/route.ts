@@ -161,6 +161,80 @@ export async function PUT(
       },
     });
 
+    // ═══════════════════════════════════════════════════════════════
+    // 🔄 HOOK: SINCRONIZAR PÁGINA QUANDO PROJETO É ATUALIZADO
+    // ═══════════════════════════════════════════════════════════════
+    try {
+      const oldPageSlug = `projetos/${existing.slug}`;
+      const newPageSlug = `projetos/${project.slug}`;
+      
+      // Buscar página existente
+      const existingPage = await prisma.page.findUnique({
+        where: { slug: oldPageSlug },
+      });
+
+      if (existingPage) {
+        // Atualizar página com novos dados do projeto
+        await prisma.page.update({
+          where: { slug: oldPageSlug },
+          data: {
+            name: `Projeto: ${project.title}`,
+            slug: newPageSlug, // Atualiza slug se mudou
+            // SEO Titles
+            seoTitlePt: `${project.title} | Projetos | Azimut`,
+            seoTitleEn: `${project.title} | Projects | Azimut`,
+            seoTitleEs: `${project.title} | Proyectos | Azimut`,
+            seoTitleFr: `${project.title} | Projets | Azimut`,
+            // SEO Descriptions
+            seoDescPt: project.summaryPt || `Conheça o projeto ${project.title} da Azimut.`,
+            seoDescEn: project.summaryEn || `Discover ${project.title} project by Azimut.`,
+            seoDescEs: project.summaryEs || `Conoce el proyecto ${project.title} de Azimut.`,
+            seoDescFr: project.summaryFr || `Découvrez le projet ${project.title} d'Azimut.`,
+            // Hero Slogans
+            heroSloganPt: project.title,
+            heroSloganEn: project.title,
+            heroSloganEs: project.title,
+            heroSloganFr: project.title,
+            // Hero Subtitles
+            heroSubtitlePt: project.summaryPt || null,
+            heroSubtitleEn: project.summaryEn || null,
+            heroSubtitleEs: project.summaryEs || null,
+            heroSubtitleFr: project.summaryFr || null,
+          },
+        });
+        console.log(`✅ Página "${newPageSlug}" sincronizada com projeto "${project.title}"`);
+      } else {
+        // Criar página se não existe (caso projeto antigo não tinha página)
+        await prisma.page.create({
+          data: {
+            name: `Projeto: ${project.title}`,
+            slug: newPageSlug,
+            status: 'DRAFT',
+            seoTitlePt: `${project.title} | Projetos | Azimut`,
+            seoTitleEn: `${project.title} | Projects | Azimut`,
+            seoTitleEs: `${project.title} | Proyectos | Azimut`,
+            seoTitleFr: `${project.title} | Projets | Azimut`,
+            seoDescPt: project.summaryPt || `Conheça o projeto ${project.title} da Azimut.`,
+            seoDescEn: project.summaryEn || `Discover ${project.title} project by Azimut.`,
+            seoDescEs: project.summaryEs || `Conoce el proyecto ${project.title} de Azimut.`,
+            seoDescFr: project.summaryFr || `Découvrez le projet ${project.title} d'Azimut.`,
+            heroSloganPt: project.title,
+            heroSloganEn: project.title,
+            heroSloganEs: project.title,
+            heroSloganFr: project.title,
+            heroSubtitlePt: project.summaryPt || null,
+            heroSubtitleEn: project.summaryEn || null,
+            heroSubtitleEs: project.summaryEs || null,
+            heroSubtitleFr: project.summaryFr || null,
+          },
+        });
+        console.log(`✅ Página "${newPageSlug}" criada para projeto existente "${project.title}"`);
+      }
+    } catch (pageError) {
+      console.error('⚠️ Erro ao sincronizar página (projeto atualizado normalmente):', pageError);
+    }
+    // ═══════════════════════════════════════════════════════════════
+
     return NextResponse.json({ project });
   } catch (error: any) {
     console.error('Project update error:', error);
@@ -172,6 +246,7 @@ export async function PUT(
 }
 
 // DELETE - Deletar projeto
+// 🔄 AUTO-DELETA PÁGINA associada quando projeto é deletado
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -193,6 +268,34 @@ export async function DELETE(
     if (!existing) {
       return NextResponse.json({ error: 'Projeto não encontrado' }, { status: 404 });
     }
+
+    // ═══════════════════════════════════════════════════════════════
+    // 🔄 HOOK: DELETAR PÁGINA ASSOCIADA ANTES DE DELETAR PROJETO
+    // ═══════════════════════════════════════════════════════════════
+    try {
+      const pageSlug = `projetos/${existing.slug}`;
+      
+      // Deletar página associada se existir
+      const existingPage = await prisma.page.findUnique({
+        where: { slug: pageSlug },
+      });
+
+      if (existingPage) {
+        // Primeiro deletar sections da página (se houver)
+        await prisma.section.deleteMany({
+          where: { pageId: existingPage.id },
+        });
+        
+        // Depois deletar a página
+        await prisma.page.delete({
+          where: { slug: pageSlug },
+        });
+        console.log(`✅ Página "${pageSlug}" deletada junto com projeto "${existing.title}"`);
+      }
+    } catch (pageError) {
+      console.error('⚠️ Erro ao deletar página associada (projeto será deletado):', pageError);
+    }
+    // ═══════════════════════════════════════════════════════════════
 
     await prisma.project.delete({
       where: { id: params.id },
