@@ -3,46 +3,86 @@
 @tailwind utilities;
 
 /* ═══════════════════════════════════════════════════════════════
-   DROPDOWN AZIMUT - Estilo do site principal
+   DROPDOWN AZIMUT - COPIADO DO SITE PRINCIPAL (src/index.css)
    ═══════════════════════════════════════════════════════════════ */
 
-/* Dropdown com estilo Azimut */
+/* Dropdown Azimut - Padrão completo do site principal */
+.dropdown-azimut,
 select.dropdown-azimut,
 select[style*="rgba(10, 15, 30"] {
+  /* Aparência */
   background: rgba(10, 15, 30, 0.95) !important;
   border: 1px solid rgba(201, 35, 55, 0.4) !important;
   color: #ffffff !important;
+  
+  /* Tamanho e espaçamento */
+  min-height: 48px !important;
+  padding: 0.75rem 2.75rem 0.75rem 1rem !important;
+  border-radius: 0.5rem !important;
+  
+  /* Tipografia */
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  
+  /* Efeitos */
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  outline: none;
+  
+  /* Seta customizada VERMELHA */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23c92337'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.75rem center !important;
+  background-size: 1.2em !important;
 }
 
-/* Options do dropdown */
+/* Hover */
+.dropdown-azimut:hover,
+select.dropdown-azimut:hover,
+select[style*="rgba(10, 15, 30"]:hover {
+  border-color: rgba(201, 35, 55, 0.6) !important;
+  background: rgba(10, 15, 30, 0.98) !important;
+  box-shadow: 0 0 0 1px rgba(201, 35, 55, 0.2) !important;
+}
+
+/* Focus */
+.dropdown-azimut:focus,
+select.dropdown-azimut:focus,
+select[style*="rgba(10, 15, 30"]:focus {
+  border-color: #c92337 !important;
+  background: rgba(10, 15, 30, 0.98) !important;
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.25), 0 0 8px rgba(201, 35, 55, 0.15) !important;
+}
+
+/* Options - SEMPRE ESCURAS */
+.dropdown-azimut option,
 select.dropdown-azimut option,
 select[style*="rgba(10, 15, 30"] option {
   background-color: rgba(10, 15, 30, 0.98) !important;
   color: #ffffff !important;
-  padding: 8px !important;
+  padding: 0.75rem 1rem !important;
 }
 
-/* Option selecionada */
+/* Option selecionada - VERMELHO AZIMUT */
+.dropdown-azimut option:checked,
 select.dropdown-azimut option:checked,
 select[style*="rgba(10, 15, 30"] option:checked {
   background-color: rgba(201, 35, 55, 0.8) !important;
   color: #ffffff !important;
 }
 
-/* Optgroups */
+/* Optgroups - FUNDO VERMELHO CLARO */
+.dropdown-azimut optgroup,
 select.dropdown-azimut optgroup,
 select[style*="rgba(10, 15, 30"] optgroup {
   background-color: rgba(201, 35, 55, 0.15) !important;
   color: #ffffff !important;
   font-weight: bold !important;
-}
-
-/* Hover */
-select.dropdown-azimut:hover,
-select[style*="rgba(10, 15, 30"]:hover {
-  border-color: rgba(201, 35, 55, 0.6) !important;
-  background: rgba(10, 15, 30, 0.98) !important;
-  box-shadow: 0 0 0 1px rgba(201, 35, 55, 0.2) !important;
+  padding: 0.5rem 1rem !important;
 }
 
 /* Reset básico */
