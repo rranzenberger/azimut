@@ -4,7 +4,7 @@
 // ════════════════════════════════════════════════════════════
 
 import { prisma } from '@/lib/prisma';
-import { AIProviderService } from '@/src/lib/ai-provider';
+import { AIProviderService } from '@/lib/ai-provider';
 import { searchMultipleSources, detectSourceType, getSourceInfo } from './enhancedContentMonitor';
 
 /**
