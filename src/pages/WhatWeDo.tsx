@@ -123,7 +123,9 @@ interface WhatWeDoProps {
 type FilterCategory = 'all' | 'culture' | 'brands' | 'production' | 'technology'
 
 const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
-  const { trackInteraction } = useUserTracking()
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
+  // const { trackInteraction } = useUserTracking()
+  const trackInteraction = (type: string, target: string) => {} // Dummy
   const seo = seoData.what[lang]
   const location = useLocation()
   const navigate = useNavigate()

@@ -20,7 +20,9 @@ interface ServiceDetailProps {
 
 const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
   const { slug } = useParams<{ slug: string }>()
-  const { trackInteraction } = useUserTracking()
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
+  // const { trackInteraction } = useUserTracking()
+  const trackInteraction = (type: string, target: string) => {} // Dummy
   const starRef = useRef<HTMLDivElement>(null)
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
 

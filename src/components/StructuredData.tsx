@@ -133,7 +133,6 @@ export const LocalBusinessSchema: React.FC = () => {
     '@id': 'https://azmt.com.br/#business',
     name: 'Azimut - Experiências Imersivas',
     image: 'https://azmt.com.br/og-image.png',
-    '@id': 'https://azmt.com.br',
     url: 'https://azmt.com.br',
     telephone: '+55-21-99999-9999',
     priceRange: '$$',

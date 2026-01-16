@@ -16,7 +16,9 @@ interface ProjectDetailProps {
 const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
-  const { trackInteraction } = useUserTracking()
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
+  // const { trackInteraction } = useUserTracking()
+  const trackInteraction = (type: string, target: string) => {} // Dummy
   const starRef = useRef<HTMLDivElement>(null)
   
   const { project, loading, error } = useProject(slug || '', lang)

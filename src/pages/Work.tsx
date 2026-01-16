@@ -20,7 +20,9 @@ interface WorkProps {
 }
 
 const Work: React.FC<WorkProps> = ({ lang }) => {
-  const { trackInteraction } = useUserTracking()
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
+  // const { trackInteraction } = useUserTracking()
+  const trackInteraction = (type: string, target: string) => {} // Dummy
   const navigate = useNavigate()
   const location = useLocation()
   const seo = seoData.work[lang]

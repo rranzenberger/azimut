@@ -18,35 +18,45 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ lang }) => {
+  // TODOS OS HOOKS DESABILITADOS TEMPORARIAMENTE PARA DEBUG ERRO #310
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
   const demoreelRef = useRef<HTMLDivElement>(null)
   const [isDemoreelVisible, setIsDemoreelVisible] = useState(false)
   
   // REMOVIDO: useUserTracking já é chamado no Layout.tsx
-  // Evitar duplicação de hooks que causava erro #310
   // useUserTracking()
   
   // REMOVIDO: useScrollAnimation temporariamente para debug
   // useScrollAnimation()
   
-  // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
-  // Tenta buscar do backoffice, mas sempre tem fallback estático seguro
-  const { content: cmsContent, loading: cmsLoading, error: cmsError } = useAzimutContent({ 
-    page: 'home',
-    lang // Passar idioma para backoffice
-  })
+  // REMOVIDO: useAzimutContent temporariamente para debug
+  // const { content: cmsContent, loading: cmsLoading, error: cmsError } = useAzimutContent({ 
+  //   page: 'home',
+  //   lang
+  // })
+  const cmsContent = null
+  const cmsLoading = false
+  const cmsError = null
   
-  // Personalização de IA (opcional - não bloqueia se falhar)
-  const {
-    profile,
-    recommendedProjects: personalizedProjects,
-    heroMessage: personalizedHeroMessage,
-    heroSubtitle: personalizedHeroSubtitle,
-    ctaText: personalizedCtaText,
-    ctaLink: personalizedCtaLink,
-    shouldShowEditais,
-    loading: personalizationLoading,
-  } = usePersonalizedContent()
+  // REMOVIDO: usePersonalizedContent temporariamente para debug
+  // const {
+  //   profile,
+  //   recommendedProjects: personalizedProjects,
+  //   heroMessage: personalizedHeroMessage,
+  //   heroSubtitle: personalizedHeroSubtitle,
+  //   ctaText: personalizedCtaText,
+  //   ctaLink: personalizedCtaLink,
+  //   shouldShowEditais,
+  //   loading: personalizationLoading,
+  // } = usePersonalizedContent()
+  const profile = null
+  const personalizedProjects: any[] = []
+  const personalizedHeroMessage = ''
+  const personalizedHeroSubtitle = ''
+  const personalizedCtaText = ''
+  const personalizedCtaLink = ''
+  const shouldShowEditais = false
+  const personalizationLoading = false
   
   // ESTRATÉGIA CORRIGIDA: i18n.ts → Personalizado → Backoffice
   // Priorizar i18n.ts (sempre correto por idioma) sobre backoffice (que pode estar desatualizado)
