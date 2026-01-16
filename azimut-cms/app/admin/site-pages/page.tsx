@@ -44,6 +44,7 @@ export default async function PagesPage() {
   const organizarPaginas = () => {
     const home = pages.filter(p => p.slug === 'home');
     const work = pages.filter(p => p.slug === 'work');
+    const workSub = pages.filter(p => p.slug.startsWith('work/') || p.slug.startsWith('project/'));
     const what = pages.filter(p => p.slug === 'what');
     const whatSub = pages.filter(p => p.slug.startsWith('what/'));
     const studio = pages.filter(p => p.slug === 'studio');
@@ -52,21 +53,29 @@ export default async function PagesPage() {
     const academySub = pages.filter(p => p.slug.startsWith('academy/'));
     const contact = pages.filter(p => p.slug === 'contact');
     const vancouver = pages.filter(p => p.slug === 'vancouver');
+    const blog = pages.filter(p => p.slug === 'blog');
+    const blogSub = pages.filter(p => p.slug.startsWith('blog/'));
+    const newsletter = pages.filter(p => p.slug === 'newsletter');
     const outros = pages.filter(p => 
-      !['home', 'work', 'what', 'studio', 'academy', 'contact', 'vancouver'].includes(p.slug) &&
+      !['home', 'work', 'what', 'studio', 'academy', 'contact', 'vancouver', 'blog', 'newsletter'].includes(p.slug) &&
       !p.slug.startsWith('what/') &&
+      !p.slug.startsWith('work/') &&
+      !p.slug.startsWith('project/') &&
       !p.slug.startsWith('studio/') &&
-      !p.slug.startsWith('academy/')
+      !p.slug.startsWith('academy/') &&
+      !p.slug.startsWith('blog/')
     );
     
     return {
       home,
-      work,
+      work: { principal: work, sub: workSub },
       what: { principal: what, sub: whatSub },
       studio: { principal: studio, sub: studioSub },
       academy: { principal: academy, sub: academySub },
+      blog: { principal: blog, sub: blogSub },
       contact,
       vancouver,
+      newsletter,
       outros
     };
   };
@@ -74,9 +83,11 @@ export default async function PagesPage() {
   const paginasOrganizadas = organizarPaginas();
 
   // Contar total de subpáginas para cada seção
+  const totalProjetos = paginasOrganizadas.work.sub.length;
   const totalSolucoes = paginasOrganizadas.what.sub.length;
   const totalEstudio = paginasOrganizadas.studio.sub.length;
   const totalAcademy = paginasOrganizadas.academy.sub.length;
+  const totalBlog = paginasOrganizadas.blog.sub.length;
 
   return (
     <div style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box' }}>
@@ -148,15 +159,28 @@ export default async function PagesPage() {
           )}
 
           {/* ═══════════════════════════════════════════════════════════════ */}
-          {/* 🎬 PROJETOS - Card Único */}
+          {/* 🎬 PROJETOS - Card Principal + Subprojetos */}
           {/* ═══════════════════════════════════════════════════════════════ */}
-          {paginasOrganizadas.work.length > 0 && (
+          {(paginasOrganizadas.work.principal.length > 0 || totalProjetos > 0) && (
             <section>
-              <SectionHeader icon="🎬" title="Projetos" subtitle="Portfólio de trabalhos" />
-              <div style={{ display: 'grid', gap: 16 }}>
-                {paginasOrganizadas.work.map((page) => (
+              <SectionHeader 
+                icon="🎬" 
+                title="Projetos" 
+                subtitle={totalProjetos > 0 ? `${totalProjetos} projetos no portfólio` : 'Portfólio de trabalhos'} 
+              />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                {paginasOrganizadas.work.principal.map((page) => (
                   <MainPageCard key={page.id} page={page} />
                 ))}
+                
+                {totalProjetos > 0 && (
+                  <SubpagesGrid 
+                    title="Projetos do Portfólio" 
+                    pages={paginasOrganizadas.work.sub}
+                    accentColor="rgba(251, 146, 60, 0.15)"
+                    borderColor="rgba(251, 146, 60, 0.3)"
+                  />
+                )}
               </div>
             </section>
           )}
@@ -259,6 +283,33 @@ export default async function PagesPage() {
           )}
 
           {/* ═══════════════════════════════════════════════════════════════ */}
+          {/* 📝 BLOG */}
+          {/* ═══════════════════════════════════════════════════════════════ */}
+          {(paginasOrganizadas.blog.principal.length > 0 || totalBlog > 0) && (
+            <section>
+              <SectionHeader 
+                icon="📝" 
+                title="Blog" 
+                subtitle={totalBlog > 0 ? `${totalBlog} artigos` : 'Em breve'} 
+              />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                {paginasOrganizadas.blog.principal.map((page) => (
+                  <MainPageCard key={page.id} page={page} />
+                ))}
+                
+                {totalBlog > 0 && (
+                  <SubpagesGrid 
+                    title="Artigos do Blog" 
+                    pages={paginasOrganizadas.blog.sub}
+                    accentColor="rgba(56, 189, 248, 0.15)"
+                    borderColor="rgba(56, 189, 248, 0.3)"
+                  />
+                )}
+              </div>
+            </section>
+          )}
+
+          {/* ═══════════════════════════════════════════════════════════════ */}
           {/* 📧 CONTATO */}
           {/* ═══════════════════════════════════════════════════════════════ */}
           {paginasOrganizadas.contact.length > 0 && (
@@ -266,6 +317,20 @@ export default async function PagesPage() {
               <SectionHeader icon="📧" title="Contato" />
               <div style={{ display: 'grid', gap: 16 }}>
                 {paginasOrganizadas.contact.map((page) => (
+                  <MainPageCard key={page.id} page={page} />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* ═══════════════════════════════════════════════════════════════ */}
+          {/* 📬 NEWSLETTER */}
+          {/* ═══════════════════════════════════════════════════════════════ */}
+          {paginasOrganizadas.newsletter.length > 0 && (
+            <section>
+              <SectionHeader icon="📬" title="Newsletter" subtitle="Captação de leads" />
+              <div style={{ display: 'grid', gap: 16 }}>
+                {paginasOrganizadas.newsletter.map((page) => (
                   <MainPageCard key={page.id} page={page} />
                 ))}
               </div>
