@@ -16,17 +16,30 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
   const location = useLocation()
   
   // Scroll para o membro específico quando a página carrega com hash
+  // ROBUSTO: try/catch para evitar quebrar a página
   useEffect(() => {
-    const hash = location.hash.replace('#', '')
-    if (hash) {
-      // Pequeno delay para garantir que o DOM está renderizado
-      setTimeout(() => {
-        const element = document.getElementById(`member-${hash}`)
-        if (element) {
-          const top = element.getBoundingClientRect().top + window.scrollY - 100
-          window.scrollTo({ top, behavior: 'smooth' })
-        }
-      }, 100)
+    try {
+      const hash = location.hash.replace('#', '')
+      if (hash) {
+        // Pequeno delay para garantir que o DOM está renderizado
+        const timeoutId = setTimeout(() => {
+          try {
+            const element = document.getElementById(`member-${hash}`)
+            if (element) {
+              const top = element.getBoundingClientRect().top + window.scrollY - 100
+              window.scrollTo({ top, behavior: 'smooth' })
+            }
+          } catch (scrollError) {
+            // Silencioso - não quebrar a página se scroll falhar
+            console.warn('Erro no scroll:', scrollError)
+          }
+        }, 150) // Delay aumentado para maior estabilidade
+        
+        return () => clearTimeout(timeoutId)
+      }
+    } catch (error) {
+      // Silencioso - não quebrar a página
+      console.warn('Erro ao processar hash:', error)
     }
   }, [location.hash])
 

@@ -103,25 +103,43 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   }, [])
   
   // ✅ NOVO: IntersectionObserver para autoplay do demoreel
+  // ROBUSTO: try/catch para evitar quebrar a página
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsDemoreelVisible(entry.isIntersecting)
-      },
-      {
-        root: null, // viewport
-        rootMargin: '0px',
-        threshold: 0.5, // 50% do vídeo visível
-      }
-    )
+    let observer: IntersectionObserver | null = null
+    const currentRef = demoreelRef.current
+    
+    try {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          try {
+            setIsDemoreelVisible(entry.isIntersecting)
+          } catch (e) {
+            // Silencioso
+          }
+        },
+        {
+          root: null, // viewport
+          rootMargin: '0px',
+          threshold: 0.5, // 50% do vídeo visível
+        }
+      )
 
-    if (demoreelRef.current) {
-      observer.observe(demoreelRef.current)
+      if (currentRef) {
+        observer.observe(currentRef)
+      }
+    } catch (error) {
+      // IntersectionObserver pode não estar disponível em alguns navegadores antigos
+      console.warn('IntersectionObserver não disponível:', error)
     }
 
     return () => {
-      if (demoreelRef.current) {
-        observer.unobserve(demoreelRef.current)
+      try {
+        if (observer && currentRef) {
+          observer.unobserve(currentRef)
+        }
+        observer?.disconnect()
+      } catch (e) {
+        // Silencioso
       }
     }
   }, [])

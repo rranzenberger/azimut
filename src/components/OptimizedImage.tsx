@@ -3,9 +3,10 @@
 // ════════════════════════════════════════════════════════════
 // Lazy loading com Intersection Observer, WebP/AVIF support,
 // Blur placeholder, Responsive images, Performance optimized
+// MEMOIZADO: Evita re-renders desnecessários
 // ════════════════════════════════════════════════════════════
 
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, memo, useCallback } from 'react'
 
 interface OptimizedImageProps {
   src: string
@@ -22,7 +23,7 @@ interface OptimizedImageProps {
   onError?: (e: React.SyntheticEvent<HTMLImageElement, Event>) => void // Handler de erro
 }
 
-const OptimizedImage: React.FC<OptimizedImageProps> = ({
+const OptimizedImage: React.FC<OptimizedImageProps> = memo(({
   src,
   alt,
   width,
@@ -157,6 +158,8 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
       )}
     </div>
   )
-}
+})
+
+OptimizedImage.displayName = 'OptimizedImage'
 
 export default OptimizedImage
