@@ -42,10 +42,8 @@ async function getVisitorFingerprint(): Promise<string> {
   return '';
 }
 
-// ⚠️ TRACKING DESABILITADO TEMPORARIAMENTE
-// O /api/track estava causando erros no site
-// TODO: Reabilitar quando o banco de dados estiver configurado corretamente
-const TRACKING_ENABLED = false;
+// ✅ TRACKING REATIVADO - Tabelas criadas no Neon em 16/Jan/2026
+const TRACKING_ENABLED = true;
 
 // Usar VITE_BACKOFFICE_URL se disponível, senão VITE_CMS_API_URL, senão fallback
 const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br';

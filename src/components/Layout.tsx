@@ -62,9 +62,8 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleTheme }) => {
   const location = useLocation()
   const navigate = useNavigate()
-  // ⚠️ TRACKING DESABILITADO - causava erro #310 no scroll
-  // const { trackInteraction } = useUserTracking()
-  const trackInteraction = () => {} // função noop
+  // ✅ TRACKING REATIVADO - tabelas criadas em 16/Jan/2026
+  const { trackInteraction } = useUserTracking()
   const { changeLang } = useLanguageRoute()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [hoveredRoute, setHoveredRoute] = useState<string | null>(null)
