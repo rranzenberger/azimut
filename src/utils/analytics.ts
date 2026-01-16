@@ -42,12 +42,22 @@ async function getVisitorFingerprint(): Promise<string> {
   return '';
 }
 
+// ⚠️ TRACKING DESABILITADO TEMPORARIAMENTE
+// O /api/track estava causando erros no site
+// TODO: Reabilitar quando o banco de dados estiver configurado corretamente
+const TRACKING_ENABLED = false;
+
 // Usar VITE_BACKOFFICE_URL se disponível, senão VITE_CMS_API_URL, senão fallback
 const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br';
 const API_URL = `${BACKOFFICE_URL}/api`;
 
 // Track page view com fingerprinting
 export function trackPageView(pageSlug: string): () => void {
+  // ⚠️ TRACKING DESABILITADO
+  if (!TRACKING_ENABLED) {
+    return () => {}; // Retorna função vazia de cleanup
+  }
+  
   const sessionId = getSessionId();
   const startTime = Date.now();
 
@@ -125,6 +135,8 @@ export async function trackProjectInteraction(
   projectSlug: string,
   type: 'VIEW' | 'CLICK' | 'HOVER'
 ) {
+  if (!TRACKING_ENABLED) return; // ⚠️ DESABILITADO
+  
   const sessionId = getSessionId();
 
   fetch(`${API_URL}/track`, {
@@ -150,6 +162,8 @@ export async function trackBudgetWizard(data: {
   budget?: string;
   completed?: boolean;
 }) {
+  if (!TRACKING_ENABLED) return; // ⚠️ DESABILITADO
+  
   const sessionId = getSessionId();
 
   fetch(`${API_URL}/track`, {
@@ -167,6 +181,8 @@ export async function trackBudgetWizard(data: {
 
 // Track CTA clicks
 export async function trackCTA(ctaName: string, location?: string) {
+  if (!TRACKING_ENABLED) return; // ⚠️ DESABILITADO
+  
   const sessionId = getSessionId();
 
   fetch(`${API_URL}/track`, {
@@ -187,6 +203,8 @@ export async function trackCTA(ctaName: string, location?: string) {
 
 // Track language change
 export async function trackLanguageChange(from: string, to: string) {
+  if (!TRACKING_ENABLED) return; // ⚠️ DESABILITADO
+  
   const sessionId = getSessionId();
 
   fetch(`${API_URL}/track`, {
@@ -210,6 +228,7 @@ export async function trackPWAEvent(
   type: 'installed' | 'prompt_shown' | 'prompt_dismissed',
   data?: any
 ) {
+  if (!TRACKING_ENABLED) return; // ⚠️ DESABILITADO
   if (typeof window === 'undefined') return;
   
   const sessionId = getSessionId();
@@ -293,6 +312,8 @@ export async function trackBehavior(
     metadata?: any;
   }
 ) {
+  if (!TRACKING_ENABLED) return; // ⚠️ DESABILITADO
+  
   const sessionId = getSessionId();
   
   // Importar helpers dinamicamente para evitar circular
@@ -322,6 +343,8 @@ export async function trackBehavior(
 // TIME ON PAGE TRACKING - Detalhado
 // ════════════════════════════════════════════════════════════
 export function trackTimeOnPage(pageSlug: string): () => void {
+  if (!TRACKING_ENABLED) return () => {}; // ⚠️ DESABILITADO
+  
   const sessionId = getSessionId();
   const startTime = Date.now();
   let lastReportTime = startTime;
@@ -402,6 +425,8 @@ export async function trackVideoEvent(
     platform?: 'youtube' | 'vimeo' | 'custom';
   }
 ) {
+  if (!TRACKING_ENABLED) return; // ⚠️ DESABILITADO
+  
   const sessionId = getSessionId();
   const fingerprint = await getVisitorFingerprint();
 
@@ -440,6 +465,8 @@ export async function trackFormEvent(
     totalFields?: number;
   }
 ) {
+  if (!TRACKING_ENABLED) return; // ⚠️ DESABILITADO
+  
   const sessionId = getSessionId();
   const fingerprint = await getVisitorFingerprint();
 
