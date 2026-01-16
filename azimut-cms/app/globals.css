@@ -2,6 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════════════════════════
+   DROPDOWN AZIMUT - Estilo do site principal
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Dropdown com estilo Azimut */
+select.dropdown-azimut,
+select[style*="rgba(10, 15, 30"] {
+  background: rgba(10, 15, 30, 0.95) !important;
+  border: 1px solid rgba(201, 35, 55, 0.4) !important;
+  color: #ffffff !important;
+}
+
+/* Options do dropdown */
+select.dropdown-azimut option,
+select[style*="rgba(10, 15, 30"] option {
+  background-color: rgba(10, 15, 30, 0.98) !important;
+  color: #ffffff !important;
+  padding: 8px !important;
+}
+
+/* Option selecionada */
+select.dropdown-azimut option:checked,
+select[style*="rgba(10, 15, 30"] option:checked {
+  background-color: rgba(201, 35, 55, 0.8) !important;
+  color: #ffffff !important;
+}
+
+/* Optgroups */
+select.dropdown-azimut optgroup,
+select[style*="rgba(10, 15, 30"] optgroup {
+  background-color: rgba(201, 35, 55, 0.15) !important;
+  color: #ffffff !important;
+  font-weight: bold !important;
+}
+
+/* Hover */
+select.dropdown-azimut:hover,
+select[style*="rgba(10, 15, 30"]:hover {
+  border-color: rgba(201, 35, 55, 0.6) !important;
+  background: rgba(10, 15, 30, 0.98) !important;
+  box-shadow: 0 0 0 1px rgba(201, 35, 55, 0.2) !important;
+}
+
 /* Reset básico */
 * {
   box-sizing: border-box;
