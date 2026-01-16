@@ -187,6 +187,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
     if (path === '/press') return 'press'
     if (path === '/studio') return 'studio'
     if (path === '/academy') return 'academy'
+    if (path === '/blog' || path.startsWith('/blog/')) return 'blog'
     if (path === '/contact') return null // Contact não é um item do menu principal
     return null // Não retorna 'home' por padrão para evitar linha fixa
   }
@@ -487,6 +488,17 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               onMouseEnter={() => setHoveredRoute('academy')}
               onMouseLeave={() => setHoveredRoute(null)}
               hovered={hoveredRoute === 'academy'}
+            />
+            {/* Blog - Link simples */}
+            <NavItem
+              label="Blog"
+              href="/blog"
+              lang={lang}
+              theme={theme}
+              isActive={activeRoute === 'blog'}
+              onMouseEnter={() => setHoveredRoute('blog')}
+              onMouseLeave={() => setHoveredRoute(null)}
+              hovered={hoveredRoute === 'blog'}
             />
           </nav>
           )}
@@ -805,6 +817,19 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 }}
               >
                 {t(lang, 'navAcademy')}
+              </LangLink>
+              <LangLink to="/blog"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block py-3 px-3 sm:px-4 font-sora text-[0.7rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors rounded-lg touch-manipulation"
+                style={{ 
+                  color: activeRoute === 'blog' ? '#c92337' : 'var(--theme-text-secondary)',
+                  backgroundColor: activeRoute === 'blog' ? 'rgba(201, 35, 55, 0.1)' : 'transparent',
+                  minHeight: '44px',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
+              >
+                Blog
               </LangLink>
               <LangLink to="/press"
                 onClick={() => setIsMobileMenuOpen(false)}
