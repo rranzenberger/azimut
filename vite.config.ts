@@ -37,11 +37,11 @@ export default defineConfig({
         assetFileNames: 'assets/[name]-[hash:8].[ext]',
         // Separar vendor chunks para melhor cache
         manualChunks: (id) => {
-          // React core
+          // React core (separado para melhor cache)
           if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
             return 'react-vendor'
           }
-          // Router
+          // Router (separado)
           if (id.includes('node_modules/react-router')) {
             return 'router-vendor'
           }
@@ -49,11 +49,27 @@ export default defineConfig({
           if (id.includes('node_modules/framer-motion') || id.includes('node_modules/lucide-react')) {
             return 'ui-vendor'
           }
-          // Analytics/tracking
-          if (id.includes('analytics') || id.includes('tracking') || id.includes('plausible')) {
+          // Analytics/tracking (lazy load)
+          if (id.includes('analytics') || id.includes('tracking') || id.includes('plausible') || id.includes('gamification')) {
             return 'analytics-vendor'
           }
-          // Large dependencies
+          // Markdown/Blog (lazy load)
+          if (id.includes('react-markdown') || id.includes('remark') || id.includes('rehype')) {
+            return 'markdown-vendor'
+          }
+          // Forms (lazy load)
+          if (id.includes('react-hook-form') || id.includes('zod') || id.includes('validator')) {
+            return 'forms-vendor'
+          }
+          // Utils próprios (separar do vendor)
+          if (id.includes('/utils/') && !id.includes('node_modules')) {
+            return 'app-utils'
+          }
+          // Hooks próprios (separar do vendor)
+          if (id.includes('/hooks/') && !id.includes('node_modules')) {
+            return 'app-hooks'
+          }
+          // Outros node_modules (vendor genérico)
           if (id.includes('node_modules')) {
             return 'vendor'
           }
