@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useLanguage } from '../contexts/LanguageContext';
-import { useTheme } from '../contexts/ThemeContext';
+import { type Lang } from '../i18n';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+
+interface BlogPostProps {
+  lang: Lang;
+}
 
 interface Post {
   id: string;
@@ -44,10 +47,10 @@ interface RelatedPost {
 
 const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://azimut-backoffice.vercel.app';
 
-export default function BlogPost() {
+export default function BlogPost({ lang }: BlogPostProps) {
   const { slug } = useParams<{ slug: string }>();
-  const { language } = useLanguage();
-  const { theme } = useTheme();
+  const language = lang;
+  const theme = 'dark'; // TODO: receber via props se necessário
   const [post, setPost] = useState<Post | null>(null);
   const [related, setRelated] = useState<RelatedPost[]>([]);
   const [loading, setLoading] = useState(true);

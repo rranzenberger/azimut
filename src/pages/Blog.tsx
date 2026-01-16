@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useLanguage } from '../contexts/LanguageContext';
-import { useTheme } from '../contexts/ThemeContext';
+import { type Lang } from '../i18n';
+
+interface BlogProps {
+  lang: Lang;
+}
 
 interface BlogPost {
   id: string;
@@ -38,9 +41,9 @@ interface Category {
 
 const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://azimut-backoffice.vercel.app';
 
-export default function Blog() {
-  const { language } = useLanguage();
-  const { theme } = useTheme();
+export default function Blog({ lang }: BlogProps) {
+  const language = lang;
+  const theme = 'dark'; // TODO: receber via props se necessário
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
