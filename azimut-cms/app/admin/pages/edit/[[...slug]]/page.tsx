@@ -590,7 +590,7 @@ export default function EditPagePage() {
           </span>
         </div>
 
-        {/* Dropdown de Navegação Rápida - BUSCA DO BANCO */}
+        {/* Dropdown de Navegação Rápida - ESTILO AZIMUT */}
         <div style={{ position: 'relative' }}>
           <select
             value={slug}
@@ -600,19 +600,34 @@ export default function EditPagePage() {
               }
             }}
             style={{
-              padding: '8px 32px 8px 12px',
+              // Estilo Azimut Dropdown (do site principal)
+              padding: '12px 40px 12px 16px',
               borderRadius: 8,
-              border: '1px solid rgba(255,255,255,0.15)',
-              background: 'rgba(255,255,255,0.05)',
-              color: '#e8e6f2',
+              border: '1px solid rgba(201, 35, 55, 0.4)',
+              background: 'rgba(10, 15, 30, 0.95)',
+              backdropFilter: 'blur(8px)',
+              color: '#ffffff',
               fontSize: 14,
               fontWeight: 500,
               cursor: 'pointer',
               appearance: 'none',
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 4L6 8L10 4' stroke='%23e8e6f2' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")`,
+              // Seta customizada vermelha
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23c92337'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
               backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'right 10px center',
-              minWidth: 220,
+              backgroundPosition: 'right 12px center',
+              backgroundSize: '1.2em',
+              minWidth: 280,
+              transition: 'all 0.3s ease',
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.borderColor = 'rgba(201, 35, 55, 0.6)';
+              e.currentTarget.style.background = 'rgba(10, 15, 30, 0.98)';
+              e.currentTarget.style.boxShadow = '0 0 0 1px rgba(201, 35, 55, 0.2)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.borderColor = 'rgba(201, 35, 55, 0.4)';
+              e.currentTarget.style.background = 'rgba(10, 15, 30, 0.95)';
+              e.currentTarget.style.boxShadow = 'none';
             }}
           >
             {allPages.length > 0 ? (
@@ -645,41 +660,47 @@ export default function EditPagePage() {
                 return (
                   <>
                     {homePages.length > 0 && (
-                      <optgroup label="🏠 Principal">
+                      <optgroup label="━━━ 🏠 PRINCIPAL ━━━" style={{ background: 'rgba(201, 35, 55, 0.1)', color: '#ffffff', fontWeight: 'bold' }}>
                         {homePages.map(p => (
-                          <option key={p.slug} value={p.slug}>{p.name}</option>
+                          <option key={p.slug} value={p.slug} style={{ background: 'rgba(10, 15, 30, 0.98)', color: '#ffffff', padding: '8px' }}>
+                            🏠 {p.name}
+                          </option>
                         ))}
                       </optgroup>
                     )}
                     {mainMenuPages.length > 0 && (
-                      <optgroup label="📋 Menu Principal">
+                      <optgroup label="━━━ 📋 MENU PRINCIPAL ━━━" style={{ background: 'rgba(201, 35, 55, 0.1)', color: '#ffffff', fontWeight: 'bold' }}>
                         {mainMenuPages.map(p => (
-                          <option key={p.slug} value={p.slug}>{p.name}</option>
+                          <option key={p.slug} value={p.slug} style={{ background: 'rgba(10, 15, 30, 0.98)', color: '#ffffff', padding: '8px' }}>
+                            {p.slug === 'work' ? '💼' : '🎯'} {p.name}
+                          </option>
                         ))}
                       </optgroup>
                     )}
                     {sortStudio.length > 0 && (
-                      <optgroup label="🎨 Estúdio">
+                      <optgroup label="━━━ 🎨 ESTÚDIO ━━━" style={{ background: 'rgba(201, 35, 55, 0.1)', color: '#ffffff', fontWeight: 'bold' }}>
                         {sortStudio.map(p => (
-                          <option key={p.slug} value={p.slug}>
-                            {p.slug === 'studio' ? p.name : `└─ ${p.name}`}
+                          <option key={p.slug} value={p.slug} style={{ background: 'rgba(10, 15, 30, 0.98)', color: '#ffffff', padding: '8px' }}>
+                            {p.slug === 'studio' ? '🎨 ' + p.name : '  └─ ' + p.name}
                           </option>
                         ))}
                       </optgroup>
                     )}
                     {sortAcademy.length > 0 && (
-                      <optgroup label="🎓 Academy">
+                      <optgroup label="━━━ 🎓 ACADEMY ━━━" style={{ background: 'rgba(201, 35, 55, 0.1)', color: '#ffffff', fontWeight: 'bold' }}>
                         {sortAcademy.map(p => (
-                          <option key={p.slug} value={p.slug}>
-                            {p.slug === 'academy' ? p.name : `└─ ${p.name}`}
+                          <option key={p.slug} value={p.slug} style={{ background: 'rgba(10, 15, 30, 0.98)', color: '#ffffff', padding: '8px' }}>
+                            {p.slug === 'academy' ? '🎓 ' + p.name : '  └─ ' + p.name}
                           </option>
                         ))}
                       </optgroup>
                     )}
                     {otherPages.length > 0 && (
-                      <optgroup label="📧 Outros">
+                      <optgroup label="━━━ 📧 OUTROS ━━━" style={{ background: 'rgba(201, 35, 55, 0.1)', color: '#ffffff', fontWeight: 'bold' }}>
                         {otherPages.map(p => (
-                          <option key={p.slug} value={p.slug}>{p.name}</option>
+                          <option key={p.slug} value={p.slug} style={{ background: 'rgba(10, 15, 30, 0.98)', color: '#ffffff', padding: '8px' }}>
+                            📄 {p.name}
+                          </option>
                         ))}
                       </optgroup>
                     )}
