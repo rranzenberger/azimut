@@ -15,6 +15,7 @@ import SimplePasswordGate from './components/SimplePasswordGate'
 import LangRouteWrapper from './components/LangRouteWrapper'
 import LangRedirect from './components/LangRedirect'
 import GoogleAnalytics from './components/GoogleAnalytics'
+import GlobalSearch from './components/GlobalSearch'
 import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDetection'
 
 // ═══════════════════════════════════════════════════════════════
@@ -253,6 +254,24 @@ const App: React.FC = () => {
     }
   }, [lang])
 
+  // ═══════════════════════════════════════════════════════════════
+  // 🔍 GLOBAL SEARCH (Ctrl+K)
+  // ═══════════════════════════════════════════════════════════════
+  const [searchOpen, setSearchOpen] = useState(false)
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ctrl+K ou Cmd+K para abrir busca
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault()
+        setSearchOpen(true)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
   return (
     <BrowserCompatibility>
       {siteProtected ? (
@@ -267,6 +286,9 @@ const App: React.FC = () => {
             <PlausibleScript />
             {/* Vinheta cinematográfica - efeito de bordas escuras */}
             <div className="cinematic-vignette" aria-hidden="true" />
+          
+          {/* Global Search - Ctrl+K */}
+          <GlobalSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
           
           {/* PWA Install Prompt */}
           <InstallPrompt />
