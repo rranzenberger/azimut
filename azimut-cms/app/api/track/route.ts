@@ -23,6 +23,8 @@ export async function OPTIONS() {
 }
 
 export async function POST(request: NextRequest) {
+  // ⚠️ TRACKING NUNCA DEVE FALHAR - Retornar sucesso mesmo com erro interno
+  // Isso garante que o frontend NUNCA quebre por causa de tracking
   try {
     const body = await request.json();
     const {
@@ -31,13 +33,12 @@ export async function POST(request: NextRequest) {
       data,
     } = body;
 
+    // Validação básica - retornar sucesso mesmo se inválido (não quebrar frontend)
     if (!sessionId || !event) {
+      console.warn('Track: sessionId ou event ausente, ignorando silenciosamente');
       return NextResponse.json(
-        { error: 'sessionId e event são obrigatórios' },
-        { 
-          status: 400,
-          headers: corsHeaders,
-        }
+        { success: true, ignored: true },
+        { headers: corsHeaders }
       );
     }
 
@@ -49,53 +50,62 @@ export async function POST(request: NextRequest) {
     const userAgent = request.headers.get('user-agent') || '';
     const language = request.headers.get('accept-language')?.split(',')[0] || '';
 
-    // Criar ou atualizar sessão
-    const session = await prisma.visitorSession.upsert({
-      where: { sessionId },
-      create: {
-        sessionId,
-        ipAddress: ip,
-        userAgent,
-        language,
-        lastActivityAt: new Date(),
-      },
-      update: {
-        lastActivityAt: new Date(),
-        duration: {
-          increment: data.timeSpent || 0,
+    // ⚠️ Todas as operações de banco são opcionais - se falharem, continuamos
+    try {
+      // Criar ou atualizar sessão
+      await prisma.visitorSession.upsert({
+        where: { sessionId },
+        create: {
+          sessionId,
+          ipAddress: ip,
+          userAgent,
+          language,
+          lastActivityAt: new Date(),
         },
-      },
-    });
-
-    // Processar eventos
-    switch (event) {
-      case 'page_view':
-        await handlePageView(sessionId, data);
-        break;
-      
-      case 'project_interaction':
-        await handleProjectInteraction(sessionId, data);
-        break;
-      
-      case 'scroll':
-        await handleScroll(sessionId, data);
-        break;
-      
-      case 'pwa_event':
-        await handlePWAEvent(sessionId, data);
-        break;
-      
-      case 'budget_wizard':
-      case 'cta_click':
-      case 'language_change':
-      case 'behavior':
-        await handleBehaviorEvent(sessionId, event, data);
-        break;
+        update: {
+          lastActivityAt: new Date(),
+          duration: {
+            increment: data?.timeSpent || 0,
+          },
+        },
+      });
+    } catch (dbError) {
+      console.warn('Track: Erro ao criar/atualizar sessão (ignorado):', dbError instanceof Error ? dbError.message : dbError);
     }
 
-    // Calcular scores de interesse com IA (assíncrono)
+    // Processar eventos - cada um em try/catch próprio
+    try {
+      switch (event) {
+        case 'page_view':
+          await handlePageView(sessionId, data);
+          break;
+        
+        case 'project_interaction':
+          await handleProjectInteraction(sessionId, data);
+          break;
+        
+        case 'scroll':
+          await handleScroll(sessionId, data);
+          break;
+        
+        case 'pwa_event':
+          await handlePWAEvent(sessionId, data);
+          break;
+        
+        case 'budget_wizard':
+        case 'cta_click':
+        case 'language_change':
+        case 'behavior':
+          await handleBehaviorEvent(sessionId, event, data);
+          break;
+      }
+    } catch (eventError) {
+      console.warn('Track: Erro ao processar evento (ignorado):', eventError instanceof Error ? eventError.message : eventError);
+    }
+
+    // Calcular scores de interesse com IA (assíncrono, nunca falha)
     if (Math.random() < 0.3) { // 30% das vezes para não sobrecarregar
-      calculateScoresAsync(sessionId);
+      calculateScoresAsync(sessionId).catch(() => {});
     }
 
     return NextResponse.json({ 
@@ -106,22 +116,13 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Track error:', error);
-    // Log detalhado do erro para debug
-    if (error instanceof Error) {
-      console.error('Error details:', {
-        message: error.message,
-        stack: error.stack,
-        name: error.name,
-      });
-    }
-    // Retornar erro 500 mas com CORS headers para não quebrar o frontend
+    // ⚠️ NUNCA RETORNAR 500 - Tracking não pode quebrar o frontend
+    console.error('Track error (silenciado):', error instanceof Error ? error.message : error);
+    
+    // SEMPRE retornar sucesso - o frontend não deve saber que houve erro
     return NextResponse.json(
-      { error: 'Erro ao processar tracking', details: error instanceof Error ? error.message : 'Unknown error' },
-      { 
-        status: 500,
-        headers: corsHeaders,
-      }
+      { success: true, silent_error: true },
+      { headers: corsHeaders }
     );
   }
 }
