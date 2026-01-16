@@ -6,6 +6,8 @@ import { AdminLogo } from './components/Logo';
 import { AdminLink } from './components/AdminLink';
 import { LogoutButton } from './components/LogoutButton';
 import { ViewSiteButton } from './components/ViewSiteButton';
+import { ToastWrapper } from './components/ToastWrapper';
+import { KeyboardShortcuts } from './components/KeyboardShortcuts';
 
 export default async function AdminLayout({
   children,
@@ -137,9 +139,12 @@ export default async function AdminLayout({
           boxSizing: 'border-box',
         }}
       >
-        <div style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box' }}>
-          {children}
-        </div>
+        <ToastWrapper>
+          <KeyboardShortcuts />
+          <div style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box' }}>
+            {children}
+          </div>
+        </ToastWrapper>
       </main>
     </div>
   );
