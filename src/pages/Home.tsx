@@ -23,34 +23,23 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   const demoreelRef = useRef<HTMLDivElement>(null)
   const [isDemoreelVisible, setIsDemoreelVisible] = useState(false)
   
-  // ⚠️ Hooks de conteúdo DESABILITADOS (debug erro #310)
-  // const { content: cmsContent, loading: cmsLoading, error: cmsError } = useAzimutContent({ 
-  //   page: 'home',
-  //   lang
-  // })
-  const cmsContent = null
-  const cmsLoading = false
-  const cmsError = null
+  // ✅ Hooks de conteúdo REATIVADOS
+  const { content: cmsContent, loading: cmsLoading, error: cmsError } = useAzimutContent({ 
+    page: 'home',
+    lang
+  })
   
-  // ⚠️ Personalização DESABILITADA (debug erro #310)
-  // const {
-  //   profile,
-  //   recommendedProjects: personalizedProjects,
-  //   heroMessage: personalizedHeroMessage,
-  //   heroSubtitle: personalizedHeroSubtitle,
-  //   ctaText: personalizedCtaText,
-  //   ctaLink: personalizedCtaLink,
-  //   shouldShowEditais,
-  //   loading: personalizationLoading,
-  // } = usePersonalizedContent()
-  const profile = null
-  const personalizedProjects: any[] = []
-  const personalizedHeroMessage = ''
-  const personalizedHeroSubtitle = ''
-  const personalizedCtaText = ''
-  const personalizedCtaLink = ''
-  const shouldShowEditais = false
-  const personalizationLoading = false
+  // ✅ Personalização REATIVADA
+  const {
+    profile,
+    recommendedProjects: personalizedProjects,
+    heroMessage: personalizedHeroMessage,
+    heroSubtitle: personalizedHeroSubtitle,
+    ctaText: personalizedCtaText,
+    ctaLink: personalizedCtaLink,
+    shouldShowEditais,
+    loading: personalizationLoading,
+  } = usePersonalizedContent()
   
   // ESTRATÉGIA CORRIGIDA: i18n.ts → Personalizado → Backoffice
   // Priorizar i18n.ts (sempre correto por idioma) sobre backoffice (que pode estar desatualizado)

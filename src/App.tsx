@@ -288,9 +288,8 @@ const App: React.FC = () => {
             {/* Vinheta cinematográfica - efeito de bordas escuras */}
             <div className="cinematic-vignette" aria-hidden="true" />
           
-          {/* Global Search - Ctrl+K - DESABILITADO (debug erro #310)
+          {/* ✅ Global Search - Ctrl+K - REATIVADO */}
           <GlobalSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} lang={lang} theme={theme} />
-          */}
           
           {/* PWA Install Prompt */}
           <InstallPrompt />
@@ -456,9 +455,8 @@ const App: React.FC = () => {
             </Suspense>
           </AppLayout>
           
-          {/* Chatbot - Assistente Virtual - DESABILITADO (debug erro #310)
+          {/* ✅ Chatbot - Assistente Virtual - REATIVADO */}
           <Chatbot lang={lang} />
-          */}
         </BrowserRouter>
         </SimplePasswordGate>
       ) : (
@@ -622,9 +620,8 @@ const App: React.FC = () => {
               </Routes>
           </AppLayout>
           
-          {/* Chatbot - Assistente Virtual - DESABILITADO (debug erro #310)
+          {/* ✅ Chatbot - Assistente Virtual - REATIVADO */}
           <Chatbot lang={lang} />
-          */}
         </BrowserRouter>
       )}
     </BrowserCompatibility>
