@@ -36,8 +36,9 @@ import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDet
 // Para ABRIR o site para todos: SITE_ABERTO = true
 // Para FECHAR o site (pedir senha): SITE_ABERTO = false
 //
+// ✅ ATIVO PARA TESTES LOCAIS - Site aberto sem senha
 // ════════════════════════════════════════════════════════════
-const SITE_ABERTO = true // ← MUDE AQUI: true = aberto, false = pede senha
+const SITE_ABERTO = true // ✅ ATIVO: Site aberto para testes locais
 // ════════════════════════════════════════════════════════════
 
 // Função para verificar se deve mostrar login

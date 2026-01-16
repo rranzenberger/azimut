@@ -107,9 +107,21 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error('Track error:', error);
+    // Log detalhado do erro para debug
+    if (error instanceof Error) {
+      console.error('Error details:', {
+        message: error.message,
+        stack: error.stack,
+        name: error.name,
+      });
+    }
+    // Retornar erro 500 mas com CORS headers para não quebrar o frontend
     return NextResponse.json(
-      { error: 'Erro ao processar tracking' },
-      { status: 500 }
+      { error: 'Erro ao processar tracking', details: error instanceof Error ? error.message : 'Unknown error' },
+      { 
+        status: 500,
+        headers: corsHeaders,
+      }
     );
   }
 }
@@ -344,34 +356,37 @@ async function calculateScoresAsync(sessionId: string) {
     if (!session) return;
 
     // Preparar dados para scoring (garantindo tipos compatíveis)
+    const pageViews = session.pageViews || [];
+    const projectInteractions = session.projectInteractions || [];
+    
     const sessionData: SessionData = {
       sessionId: session.sessionId,
       country: session.country ?? null,
       language: session.language ?? null,
-      pagesVisited: (session.pageViews || []).map(pv => ({
-        slug: pv.pageSlug ?? '',
-        timeSpent: pv.timeSpent ?? 0,
-        scrollDepth: pv.scrollDepth ?? 0,
-      })),
-      projectsViewed: (session.pageViews || [])
-        .filter(pv => pv.project)
+      pagesVisited: Array.isArray(pageViews) ? pageViews.map(pv => ({
+        slug: pv?.pageSlug ?? '',
+        timeSpent: pv?.timeSpent ?? 0,
+        scrollDepth: pv?.scrollDepth ?? 0,
+      })) : [],
+      projectsViewed: Array.isArray(pageViews) ? pageViews
+        .filter(pv => pv && pv.project)
         .map(pv => {
           const tags = (pv.project?.tags || [])
-            .map(t => t.labelEn)
+            .map(t => t?.labelEn)
             .filter((t): t is string => Boolean(t));
 
           return {
             projectId: pv.project?.id ?? '',
             type: pv.project?.type ?? '',
             tags,
-            timeSpent: pv.timeSpent ?? 0,
+            timeSpent: pv?.timeSpent ?? 0,
           };
         })
-        .filter(p => p.projectId !== ''),
-      interactions: (session.projectInteractions || []).map(pi => ({
-        type: pi.type ?? '',
-        projectId: pi.projectId ?? null,
-      })),
+        .filter(p => p.projectId !== '') : [],
+      interactions: Array.isArray(projectInteractions) ? projectInteractions.map(pi => ({
+        type: pi?.type ?? '',
+        projectId: pi?.projectId ?? null,
+      })) : [],
     };
 
     // Calcular scores com IA

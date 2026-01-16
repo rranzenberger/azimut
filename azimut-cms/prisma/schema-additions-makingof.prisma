@@ -1,0 +1,129 @@
+// ════════════════════════════════════════════════════════════
+// ADIÇÕES AO SCHEMA: Sistema de Making-of Manual
+// ════════════════════════════════════════════════════════════
+
+// Adicionar ao schema.prisma existente
+
+model MakingOf {
+  id                String          @id @default(uuid())
+  
+  // Relação com Projeto
+  projectId         String?
+  project           Project?        @relation("ProjectMakingOf", fields: [projectId], references: [id])
+  projectName       String?         // Nome do projeto se não tiver cadastrado
+  
+  // Tipo de Making-of
+  makingOfType      MakingOfType   @default(PERSONAL)
+  source            MakingOfSource  @default(INTERNAL)
+  
+  // Colaborador/Criador
+  collaboratorId    String?
+  collaborator     Collaborator?   @relation(fields: [collaboratorId], references: [id])
+  collaboratorName  String?         // Nome se não tiver cadastrado (ex: "Eduardo Nartino")
+  
+  // Cliente (se for depoimento/material do cliente)
+  clientName        String?
+  clientEmail       String?
+  
+  // Conteúdo
+  title             String
+  description       String?         @db.Text
+  mediaType         MediaType       @default(IMAGE) // IMAGE, VIDEO, MIXED
+  
+  // Mídias
+  mediaFiles        Media[]         @relation("MakingOfMedia")
+  
+  // Metadados
+  location          String?         // Local onde foi feito
+  eventDate         DateTime?      // Data do evento/gravação
+  tags              String[]
+  
+  // Status e Publicação
+  status            MakingOfStatus  @default(DRAFT)
+  featured          Boolean         @default(false)
+  publishToBlog     Boolean         @default(false)
+  publishToNewsletter Boolean      @default(false)
+  publishToSocial   Boolean         @default(false)
+  
+  // Créditos e Permissões
+  creditText        String?         // "Making-of por Eduardo Nartino"
+  canPublishNow     Boolean         @default(true)  // Making-of pessoal pode publicar imediatamente
+  publishAfterDate  DateTime?       // Se precisar aguardar data
+  
+  // Upload
+  uploadedBy        String
+  uploadedByUser    User            @relation("UserMakingOf", fields: [uploadedBy], references: [id])
+  
+  // Timestamps
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  
+  @@index([projectId])
+  @@index([collaboratorId])
+  @@index([status])
+  @@index([makingOfType])
+  @@index([createdAt])
+}
+
+model Collaborator {
+  id            String      @id @default(uuid())
+  name          String
+  email         String?     @unique
+  phone         String?
+  instagram     String?     // @username
+  portfolio     String?     // URL do portfolio
+  bio           String?     @db.Text
+  specialties   String[]    // ["making-of", "fotografia", "vídeo"]
+  
+  // Relação
+  makingOfs     MakingOf[]
+  
+  // Status
+  isActive      Boolean     @default(true)
+  
+  // Timestamps
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  @@index([name])
+  @@index([isActive])
+}
+
+enum MakingOfType {
+  PERSONAL      // Making-of pessoal da equipe Azimut
+  PARTNERSHIP   // Parceria (troca de apoio)
+  HIRED         // Contratado para fazer making-of
+  CLIENT        // Material/depoimento do cliente
+  EVENT         // Evento (Festival VR, etc.)
+}
+
+enum MakingOfSource {
+  INTERNAL      // Feito pela equipe Azimut
+  COLLABORATOR  // Feito por colaborador (Eduardo Nartino, etc.)
+  CLIENT        // Enviado pelo cliente
+  PARTNER       // Parceria
+}
+
+enum MediaType {
+  IMAGE         // Apenas imagens
+  VIDEO         // Apenas vídeos
+  MIXED         // Imagens + vídeos
+}
+
+enum MakingOfStatus {
+  DRAFT         // Rascunho
+  REVIEW        // Em revisão
+  APPROVED      // Aprovado
+  PUBLISHED     // Publicado
+  ARCHIVED      // Arquivado
+}
+
+// Adicionar relação no model Project
+// project MakingOf[] @relation("ProjectMakingOf")
+
+// Adicionar relação no model User
+// makingOfs MakingOf[] @relation("UserMakingOf")
+
+// Adicionar relação no model Media
+// makingOf MakingOf? @relation("MakingOfMedia", fields: [makingOfId], references: [id])
+// makingOfId String?

@@ -136,6 +136,33 @@ export function ProjectCard({ project }: { project: any }) {
           >
             {statusLabels[project.status] || project.status}
           </span>
+          {project.monitorEnabled && (
+            <Link
+              href={`/admin/projects/${project.id}/monitoring`}
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                fontSize: 12,
+                padding: '6px 12px',
+                borderRadius: 8,
+                background: 'rgba(147, 51, 234, 0.15)',
+                color: '#c084fc',
+                border: '1px solid rgba(147, 51, 234, 0.35)',
+                fontWeight: 600,
+                textDecoration: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(147, 51, 234, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(147, 51, 234, 0.15)';
+              }}
+            >
+              🤖 Monitorando
+            </Link>
+          )}
           {project.priorityHome > 0 && (
             <span style={{ fontSize: 13, color: '#8f8ba2', fontWeight: 500 }}>Prioridade: {project.priorityHome}</span>
           )}

@@ -13,6 +13,7 @@ import OportunidadesAtivas from '../components/OportunidadesAtivas'
 import CredibilidadeEditais from '../components/CredibilidadeEditais'
 import CuradoriaFestivais from '../components/CuradoriaFestivais'
 import StarBackground from '../components/StarBackground'
+import OptimizedImage from '../components/OptimizedImage'
 
 interface WorkProps {
   lang: Lang

@@ -21,7 +21,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
   const demoreelRef = useRef<HTMLDivElement>(null)
   const [isDemoreelVisible, setIsDemoreelVisible] = useState(false)
+  
+  // CORREÇÃO: useUserTracking deve ser chamado SEMPRE (não condicionalmente)
+  // O tratamento de erro está dentro do hook
   useUserTracking()
+  
+  // Ativar animações de scroll
+  useScrollAnimation()
   
   // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
   // Tenta buscar do backoffice, mas sempre tem fallback estático seguro

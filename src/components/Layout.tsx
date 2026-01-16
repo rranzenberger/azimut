@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo, useCallback } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { t, type Lang } from '../i18n'
 import { useLanguageRoute } from '../hooks/useLanguageRoute'
@@ -15,6 +15,7 @@ import ScrollToTopButton from './ScrollToTopButton'
 import { type UserProfile } from './BudgetWizard'
 import { trackCTA, trackLanguageChange } from '../utils/analytics'
 import { useUserTracking } from '../hooks/useUserTracking'
+// throttle removido - usando requestAnimationFrame diretamente
 
 // ═══════════════════════════════════════════════════════════════
 // 🔒 AVISO: ESTE ARQUIVO CONTÉM CÓDIGO TRAVADO
@@ -70,10 +71,20 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   // 🆕 Detectar scroll para compactar header
   const [isScrolled, setIsScrolled] = useState(false)
   
+  // Otimizado: throttle no scroll para melhor performance
+  // CORREÇÃO: throttle criado uma vez e reutilizado
   React.useEffect(() => {
+    let ticking = false
+    
     const handleScroll = () => {
-      const scroll = window.scrollY
-      setIsScrolled(scroll > 50) // Compacta após 50px de scroll
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scroll = window.scrollY
+          setIsScrolled(scroll > 50) // Compacta após 50px de scroll
+          ticking = false
+        })
+        ticking = true
+      }
     }
     
     // Verificar posição inicial

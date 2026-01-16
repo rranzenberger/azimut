@@ -13,11 +13,13 @@ interface OptimizedImageProps {
   width?: number
   height?: number
   className?: string
+  style?: React.CSSProperties // Adicionado para suportar estilos inline
   objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'
   priority?: boolean // Se true, carrega imediatamente (hero images)
   placeholder?: string // Imagem blur base64 ou URL baixa resolução
   sizes?: string // Para responsive images (ex: "(max-width: 768px) 100vw, 50vw")
   srcSet?: string // Para responsive images
+  onError?: (e: React.SyntheticEvent<HTMLImageElement, Event>) => void // Handler de erro
 }
 
 const OptimizedImage: React.FC<OptimizedImageProps> = ({
@@ -26,11 +28,13 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   width,
   height,
   className = '',
+  style,
   objectFit = 'cover',
   priority = false,
   placeholder,
   sizes,
-  srcSet
+  srcSet,
+  onError
 }) => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isInView, setIsInView] = useState(priority) // Se priority, já está "in view"
@@ -90,7 +94,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
     <div 
       ref={imgRef}
       className={`relative overflow-hidden ${className}`}
-      style={{ width, height, minHeight: height || 'auto' }}
+      style={{ width, height, minHeight: height || 'auto', ...style }}
     >
       {/* Placeholder blur enquanto carrega */}
       {!isLoaded && placeholder && (
@@ -133,11 +137,14 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
             decoding="async"
             fetchPriority={priority ? 'high' : 'auto'}
             onLoad={handleLoad}
-            onError={handleError}
+            onError={(e) => {
+              handleError()
+              if (onError) onError(e)
+            }}
             className={`w-full h-full transition-opacity duration-500 ${
               isLoaded ? 'opacity-100' : 'opacity-0'
             }`}
-            style={{ objectFit }}
+            style={{ objectFit, ...(style || {}) }}
           />
         </picture>
       )}

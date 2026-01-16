@@ -34,31 +34,49 @@ export function useUserTracking() {
   const maxScrollRef = useRef<number>(0)
   const sessionIdRef = useRef<string>('')
 
-  // Inicializar sessionId de forma segura (dentro de useEffect)
+  // CORREÇÃO: Inicializar sessionId de forma segura (dentro de useEffect)
+  // SEMPRE chamar hooks na mesma ordem (regra do React)
   useEffect(() => {
     try {
       const session = getOrCreateSession()
       sessionIdRef.current = session.sessionId
     } catch (error) {
       // Se houver erro, criar um sessionId temporário
-      console.warn('Erro ao criar sessão de tracking:', error)
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Erro ao criar sessão de tracking:', error)
+      }
       sessionIdRef.current = `temp_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`
     }
   }, [])
 
-  // Tracking de scroll depth
+  // Tracking de scroll depth - CORRIGIDO: usar requestAnimationFrame para melhor performance
   useEffect(() => {
+    let ticking = false
+    
     const handleScroll = () => {
-      const windowHeight = window.innerHeight
-      const documentHeight = document.documentElement.scrollHeight
-      const scrollTop = window.scrollY
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          try {
+            const windowHeight = window.innerHeight
+            const documentHeight = document.documentElement.scrollHeight
+            const scrollTop = window.scrollY
 
-      const scrollPercentage = Math.round(
-        ((scrollTop + windowHeight) / documentHeight) * 100
-      )
+            const scrollPercentage = Math.round(
+              ((scrollTop + windowHeight) / documentHeight) * 100
+            )
 
-      if (scrollPercentage > maxScrollRef.current) {
-        maxScrollRef.current = scrollPercentage
+            if (scrollPercentage > maxScrollRef.current) {
+              maxScrollRef.current = scrollPercentage
+            }
+          } catch (error) {
+            // Silencioso - não quebrar scroll
+            if (process.env.NODE_ENV === 'development') {
+              console.warn('Scroll tracking error:', error)
+            }
+          }
+          ticking = false
+        })
+        ticking = true
       }
     }
 

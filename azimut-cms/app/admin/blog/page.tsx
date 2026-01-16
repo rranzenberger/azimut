@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { PendingSuggestionsBanner } from '../components/PendingSuggestionsBanner';
 
 interface BlogPost {
   id: string;
@@ -67,6 +68,9 @@ export default function BlogPage() {
 
   return (
     <>
+      {/* Banner de Sugestões Pendentes */}
+      <PendingSuggestionsBanner />
+
       {/* Header */}
       <header style={{ 
         display: 'flex', 

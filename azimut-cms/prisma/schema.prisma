@@ -16,6 +16,7 @@ model User {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   assignedLeads Lead[]   @relation("LeadAssignedTo")
+  makingOfs     MakingOf[] @relation("UserMakingOf")
 }
 
 model Market {
@@ -62,6 +63,8 @@ model Media {
   pageDemoreelVideos  Page[]         @relation("PageDemoreelVideo")
   analysis            MediaAnalysis?
   blogPostCovers      BlogPost[]     @relation("BlogPostCover")
+  makingOf            MakingOf?      @relation("MakingOfMedia", fields: [makingOfId], references: [id])
+  makingOfId          String?
 
   // ═══════════════════════════════════════════
   // Sistema de Tags (Opção 2) - Contexto da imagem
@@ -155,6 +158,7 @@ model Project {
   tags          Tag[]                @relation("ProjectToTag")
   sections      Section[]            @relation("SectionProjects")
   monitoredPosts BlogPostMonitor[]   @relation("ProjectMonitoredPosts") // Relação com monitoramento
+  makingOfs      MakingOf[]          @relation("ProjectMakingOf") // Making-ofs do projeto
 }
 
 model Page {
@@ -1087,6 +1091,14 @@ model BlogPostMonitor {
   mentions              String[]          // Influencers, veículos, etc.
   status                MonitorStatus     @default(PENDING) // PENDING, APPROVED, REJECTED, PUBLISHED
   
+  // Data de Publicação (para projetos que precisam aguardar estreia)
+  publishAfterDate      DateTime?         // Data a partir da qual pode publicar (ex: data de estreia)
+  canPublishNow         Boolean           @default(false)  // Se true, pode publicar imediatamente
+  
+  // Tipo de Crédito e Publicação
+  creditMode            CreditMode        @default(FULL_CREDIT) // FULL_CREDIT ou REWRITE
+  isAutoral             Boolean           @default(false)  // Se é projeto autoral (pode publicar livremente)
+  
   // Relação com Post Aprovado
   blogPostId            String?
   blogPost              BlogPost?         @relation("BlogPostMonitorToPost", fields: [blogPostId], references: [id])
@@ -1116,6 +1128,16 @@ enum SourceType {
   TWITTER    // Tweets
   FACEBOOK   // Posts do Facebook
   RSS        // Feeds RSS
+  LINKEDIN   // Posts do LinkedIn
+  JOURNAL    // Jornais impressos/digitais
+  TV         // Telejornais, programas de TV
+  PODCAST    // Podcasts
+  OTHER      // Outras fontes
+}
+
+enum CreditMode {
+  FULL_CREDIT  // Postar matéria original com créditos completos
+  REWRITE      // Reorganizar texto/imagens com IA (reescrever)
 }
 
 enum MonitorStatus {
@@ -1123,5 +1145,123 @@ enum MonitorStatus {
   APPROVED   // Aprovado (já virou post ou será publicado)
   REJECTED   // Rejeitado
   PUBLISHED  // Já publicado como post
+}
+
+// ════════════════════════════════════════════════════════════
+// SISTEMA DE MAKING-OF
+// ════════════════════════════════════════════════════════════
+
+model MakingOf {
+  id                String          @id @default(uuid())
+  
+  // Relação com Projeto
+  projectId         String?
+  project           Project?        @relation("ProjectMakingOf", fields: [projectId], references: [id])
+  projectName       String?         // Nome do projeto se não tiver cadastrado
+  
+  // Tipo de Making-of
+  makingOfType      MakingOfType    @default(PERSONAL)
+  source            MakingOfSource  @default(INTERNAL)
+  
+  // Colaborador/Criador
+  collaboratorId    String?
+  collaborator      Collaborator?   @relation(fields: [collaboratorId], references: [id])
+  collaboratorName  String?         // Nome se não tiver cadastrado (ex: "Eduardo Nartino")
+  
+  // Cliente (se for depoimento/material do cliente)
+  clientName        String?
+  clientEmail       String?
+  
+  // Conteúdo
+  title             String
+  description       String?         @db.Text
+  mediaType         MakingOfMediaType @default(IMAGE)
+  
+  // Mídias
+  mediaFiles        Media[]         @relation("MakingOfMedia")
+  
+  // Metadados
+  location          String?         // Local onde foi feito
+  eventDate         DateTime?       // Data do evento/gravação
+  tags              String[]
+  
+  // Status e Publicação
+  status            MakingOfStatus  @default(DRAFT)
+  featured          Boolean         @default(false)
+  publishToBlog     Boolean         @default(false)
+  publishToNewsletter Boolean       @default(false)
+  publishToSocial   Boolean         @default(false)
+  
+  // Créditos e Permissões
+  creditText        String?         // "Making-of por Eduardo Nartino"
+  canPublishNow     Boolean         @default(true)
+  publishAfterDate  DateTime?       // Se precisar aguardar data
+  
+  // Upload
+  uploadedBy        String
+  uploadedByUser    User            @relation("UserMakingOf", fields: [uploadedBy], references: [id])
+  
+  // Timestamps
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  
+  @@index([projectId])
+  @@index([collaboratorId])
+  @@index([status])
+  @@index([makingOfType])
+  @@index([createdAt])
+}
+
+model Collaborator {
+  id            String      @id @default(uuid())
+  name          String
+  email         String?     @unique
+  phone         String?
+  instagram     String?     // @username
+  portfolio     String?     // URL do portfolio
+  bio           String?     @db.Text
+  specialties   String[]    // ["making-of", "fotografia", "vídeo"]
+  
+  // Relação
+  makingOfs     MakingOf[]
+  
+  // Status
+  isActive      Boolean     @default(true)
+  
+  // Timestamps
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  @@index([name])
+  @@index([isActive])
+}
+
+enum MakingOfType {
+  PERSONAL      // Making-of pessoal da equipe Azimut
+  PARTNERSHIP   // Parceria (troca de apoio)
+  HIRED         // Contratado para fazer making-of
+  CLIENT        // Material/depoimento do cliente
+  EVENT         // Evento (Festival VR, etc.)
+}
+
+enum MakingOfSource {
+  INTERNAL      // Feito pela equipe Azimut
+  COLLABORATOR  // Feito por colaborador (Eduardo Nartino, etc.)
+  CLIENT        // Enviado pelo cliente
+  PARTNER       // Parceria
+}
+
+enum MakingOfMediaType {
+  IMAGE         // Apenas imagens
+  VIDEO         // Apenas vídeos
+  MIXED         // Imagens + vídeos
+}
+
+enum MakingOfStatus {
+  DRAFT         // Rascunho
+  REVIEW        // Em revisão
+  APPROVED      // Aprovado
+  PUBLISHED     // Publicado
+  ARCHIVED      // Arquivado
 }
 

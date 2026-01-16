@@ -4,6 +4,7 @@ import { verifyAuthToken } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { AdminLogo } from './components/Logo';
 import { AdminLink } from './components/AdminLink';
+import { MonitorLink } from './components/MonitorLink';
 import { LogoutButton } from './components/LogoutButton';
 import { ViewSiteButton } from './components/ViewSiteButton';
 import { ToastWrapper } from './components/ToastWrapper';
@@ -42,7 +43,7 @@ export default async function AdminLayout({
         color: '#d3cec3',
         fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
         display: 'grid',
-        gridTemplateColumns: '280px 1fr',
+        gridTemplateColumns: '280px 1fr 320px', // Adiciona coluna para sidebar de mídia social
       }}
     >
       {/* Sidebar - Menu Lateral Sempre Visível */}
@@ -102,6 +103,9 @@ export default async function AdminLayout({
           <AdminLink href="/admin/analytics" label="📊 Analytics IA" />
           <AdminLink href="/admin/projects" label="Projetos" />
           <AdminLink href="/admin/blog" label="📝 Blog" />
+          <MonitorLink />
+          <AdminLink href="/admin/making-of" label="🎬 Making-of" />
+          <AdminLink href="/admin/making-of/curation" label="🎨 Curadoria" />
           <AdminLink href="/admin/site-pages" label="Páginas" />
           <AdminLink href="/admin/media" label="Mídias" />
           <AdminLink href="/admin/leads" label="Leads" />

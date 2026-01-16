@@ -4,6 +4,7 @@ import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
+import OptimizedImage from '../components/OptimizedImage'
 
 interface StudioTeamProps {
   lang: Lang
@@ -268,10 +269,10 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
   return (
     <>
       <SEO 
-        lang={lang}
+        locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
         title={`${text.title} - Studio - Azimut`}
         description={text.subtitle}
-        path="/studio/equipe"
+        url="/studio/equipe"
       />
       
       <main className="relative py-16 md:py-20">
@@ -333,36 +334,32 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                       src={member.photo}
                       alt={member.name}
                       className="w-full h-full"
+                      objectFit="cover"
                       style={member.name.includes('Alberto') ? {
-                        objectFit: 'cover',
                         objectPosition: 'center 35%',
-                        width: '100%',
-                        height: '100%',
-                        display: 'block',
                         transform: 'scale(1.25)',
                         transformOrigin: 'center center'
                       } : member.name.includes('Ranz') ? {
-                        objectFit: 'cover',
                         objectPosition: 'center 30%',
-                        width: '100%',
-                        height: '100%',
-                        display: 'block',
                         transform: 'scale(1.2)',
                         transformOrigin: 'center center'
                       } : {
-                        objectFit: 'cover',
-                        objectPosition: 'center center',
-                        width: '100%',
-                        height: '100%',
-                        display: 'block'
+                        objectPosition: 'center center'
                       }}
                       onError={(e) => {
-                        const parent = e.currentTarget.parentElement
-                        if (parent) {
-                          parent.style.background = 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)'
+                        // Tratamento de erro silencioso - não quebrar renderização
+                        try {
+                          const img = e.currentTarget as HTMLImageElement
+                          if (img && img.parentElement) {
+                            const container = img.parentElement.parentElement
+                            if (container) {
+                              container.style.background = 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)'
+                            }
+                          }
+                        } catch (error) {
+                          // Silencioso - não quebrar renderização
+                          // Erro tratado silenciosamente
                         }
-                        e.currentTarget.src = '/logo-azimut-star.svg'
-                        e.currentTarget.className = 'absolute bottom-4 right-4 w-12 h-12 object-contain opacity-20'
                       }}
                     />
                   </div>

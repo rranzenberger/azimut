@@ -4,13 +4,18 @@
  */
 
 // Gerar ou recuperar sessionId
-function getSessionId(): string {
-  let sessionId = sessionStorage.getItem('azimut_session_id');
-  if (!sessionId) {
-    sessionId = crypto.randomUUID();
-    sessionStorage.setItem('azimut_session_id', sessionId);
+export function getSessionId(): string {
+  try {
+    let sessionId = sessionStorage.getItem('azimut_session_id');
+    if (!sessionId) {
+      sessionId = crypto.randomUUID();
+      sessionStorage.setItem('azimut_session_id', sessionId);
+    }
+    return sessionId;
+  } catch (error) {
+    // Fallback se sessionStorage não estiver disponível
+    return `fallback_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
   }
-  return sessionId;
 }
 
 // Gerar ou recuperar visitorFingerprint (identifica visitante anônimo)
@@ -552,4 +557,5 @@ export async function calculateLeadScore(visitorFingerprint: string): Promise<Le
   };
 }
 
-export { getSessionId, getVisitorFingerprint };
+// Export já feito inline acima
+// export { getSessionId, getVisitorFingerprint };

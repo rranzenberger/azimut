@@ -1,0 +1,79 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+
+interface Suggestion {
+  id: string;
+  sourceTitle: string | null;
+  suggestedTitlePt: string | null;
+  aiProcessedAt: string | null;
+}
+
+export function PendingSuggestionsBanner() {
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchSuggestions();
+    const interval = setInterval(fetchSuggestions, 60000); // Atualizar a cada 1 minuto
+    return () => clearInterval(interval);
+  }, []);
+
+  const fetchSuggestions = async () => {
+    try {
+      const res = await fetch('/api/admin/blog/monitor?status=PENDING&limit=5');
+      if (res.ok) {
+        const data = await res.json();
+        setSuggestions(data.suggestions || []);
+      }
+    } catch (error) {
+      console.error('Erro ao buscar sugestões:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading || suggestions.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="relative bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 p-4 rounded-lg mb-6 border-2 border-yellow-400 animate-pulse">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="text-3xl animate-bounce">🔔</div>
+          <div>
+            <h3 className="text-lg font-bold text-white mb-1">
+              ⚠️ {suggestions.length} Sugestão{suggestions.length > 1 ? 'ões' : ''} Pendente{suggestions.length > 1 ? 's' : ''} de Aprovação!
+            </h3>
+            <p className="text-sm text-white/90">
+              {suggestions.length === 1 
+                ? 'Há uma sugestão de post aguardando sua aprovação'
+                : `Há ${suggestions.length} sugestões de posts aguardando sua aprovação`
+              }
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {suggestions.slice(0, 3).map(s => (
+                <span key={s.id} className="text-xs bg-white/20 text-white px-2 py-1 rounded">
+                  {s.suggestedTitlePt || s.sourceTitle || 'Sem título'}
+                </span>
+              ))}
+              {suggestions.length > 3 && (
+                <span className="text-xs bg-white/20 text-white px-2 py-1 rounded">
+                  +{suggestions.length - 3} mais
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+        <Link
+          href="/admin/blog/monitor?status=PENDING"
+          className="px-6 py-3 bg-white text-red-600 font-bold rounded-lg hover:bg-gray-100 transition-colors shadow-lg whitespace-nowrap"
+        >
+          👉 Ver e Aprovar Agora
+        </Link>
+      </div>
+    </div>
+  );
+}

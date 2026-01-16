@@ -12,7 +12,7 @@ interface AppLayoutProps {
   toggleTheme: () => void
 }
 
-const AppLayout: React.FC<AppLayoutProps> = ({ children, lang, setLang, theme, toggleTheme }) => {
+const AppLayout: React.FC<AppLayoutProps> = React.memo(({ children, lang, setLang, theme, toggleTheme }) => {
   // Sempre usar Layout para todas as rotas
   return (
     <>
@@ -28,7 +28,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, lang, setLang, theme, t
       />
     </>
   )
-}
+})
+
+AppLayout.displayName = 'AppLayout'
 
 export default AppLayout
 
