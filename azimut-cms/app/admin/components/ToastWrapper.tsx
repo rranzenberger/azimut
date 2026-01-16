@@ -1,6 +1,6 @@
 'use client';
 
-import { ToastProvider, useToast, setToastRef } from '@/src/components/admin/Toast';
+import { ToastProvider, useToast, setToastRef } from '@/components/admin/Toast';
 import { useEffect } from 'react';
 
 function ToastInitializer({ children }: { children: React.ReactNode }) {

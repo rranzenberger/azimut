@@ -288,7 +288,7 @@ const App: React.FC = () => {
             <div className="cinematic-vignette" aria-hidden="true" />
           
           {/* Global Search - Ctrl+K */}
-          <GlobalSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+          <GlobalSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} language={lang} theme={theme} />
           
           {/* PWA Install Prompt */}
           <InstallPrompt />

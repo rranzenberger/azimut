@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLanguage } from '../contexts/LanguageContext';
-import { useTheme } from '../contexts/ThemeContext';
+import { type Lang } from '../i18n';
 
 interface SearchResult {
   type: 'page' | 'service' | 'project' | 'blog';
@@ -96,11 +95,11 @@ const SERVICES = {
 interface GlobalSearchProps {
   isOpen: boolean;
   onClose: () => void;
+  language: Lang;
+  theme: 'light' | 'dark';
 }
 
-export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
-  const { language } = useLanguage();
-  const { theme } = useTheme();
+export default function GlobalSearch({ isOpen, onClose, language, theme }: GlobalSearchProps) {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
