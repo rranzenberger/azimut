@@ -17,10 +17,27 @@ export default async function PagesPage() {
 
   let pages: any[] = [];
   let error: string | null = null;
+  
+  // Tipo para páginas organizadas
+  type PaginasOrganizadas = {
+    home: any[];
+    menuPrincipal: any[];
+    estudio: { principal: any[]; sub: any[] };
+    academy: { principal: any[]; sub: any[] };
+    outros: any[];
+  };
+  
+  let paginasOrganizadas: PaginasOrganizadas = { 
+    home: [], 
+    menuPrincipal: [], 
+    estudio: { principal: [], sub: [] }, 
+    academy: { principal: [], sub: [] }, 
+    outros: [] 
+  };
 
   try {
     pages = await prisma.page.findMany({
-      orderBy: { name: 'asc' }, // Ordem alfabética para organizar depois
+      orderBy: { name: 'asc' },
       include: {
         sections: {
           orderBy: { order: 'asc' },
@@ -30,34 +47,29 @@ export default async function PagesPage() {
     });
     
     // Reorganizar páginas por hierarquia (seguindo menu do site)
-    const organizarPaginas = (pages: any[]) => {
-      const home = pages.filter(p => p.slug === 'home');
-      const menuPrincipal = pages.filter(p => ['what', 'work'].includes(p.slug));
-      const estudio = pages.filter(p => p.slug === 'studio');
-      const estudioSub = pages.filter(p => p.slug.startsWith('studio/'));
-      const academy = pages.filter(p => p.slug === 'academy');
-      const academySub = pages.filter(p => p.slug.startsWith('academy/'));
-      const outros = pages.filter(p => 
-        p.slug !== 'home' && 
-        !['what', 'work', 'studio', 'academy'].includes(p.slug) &&
-        !p.slug.startsWith('studio/') &&
-        !p.slug.startsWith('academy/')
-      );
-      
-      return {
-        home,
-        menuPrincipal,
-        estudio: { principal: estudio, sub: estudioSub },
-        academy: { principal: academy, sub: academySub },
-        outros
-      };
-    };
+    const home = pages.filter(p => p.slug === 'home');
+    const menuPrincipal = pages.filter(p => ['what', 'work'].includes(p.slug));
+    const estudio = pages.filter(p => p.slug === 'studio');
+    const estudioSub = pages.filter(p => p.slug.startsWith('studio/'));
+    const academy = pages.filter(p => p.slug === 'academy');
+    const academySub = pages.filter(p => p.slug.startsWith('academy/'));
+    const outros = pages.filter(p => 
+      p.slug !== 'home' && 
+      !['what', 'work', 'studio', 'academy'].includes(p.slug) &&
+      !p.slug.startsWith('studio/') &&
+      !p.slug.startsWith('academy/')
+    );
     
-    var paginasOrganizadas = organizarPaginas(pages);
+    paginasOrganizadas = {
+      home,
+      menuPrincipal,
+      estudio: { principal: estudio, sub: estudioSub },
+      academy: { principal: academy, sub: academySub },
+      outros
+    };
   } catch (err: any) {
     console.error('Pages fetch error:', err);
     error = 'Erro ao carregar páginas. Verifique a conexão com o banco.';
-    var paginasOrganizadas = { home: [], menuPrincipal: [], estudio: { principal: [], sub: [] }, academy: { principal: [], sub: [] }, outros: [] };
   }
 
   return (
