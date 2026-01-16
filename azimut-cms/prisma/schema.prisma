@@ -138,6 +138,14 @@ model Project {
   descriptionEs String?
   descriptionFr String?
   descriptionPt String?
+  
+  // 🤖 Monitoramento Automático de Conteúdo
+  monitorEnabled        Boolean           @default(false)
+  monitorKeywords       String[]          // Keywords para busca automática
+  creditType            CreditType?       // Tipo de crédito para posts relacionados
+  creditText            String?           // Texto do crédito ("Animação por Azimut")
+  azimutContributions   String[]          // Lista de contribuições da Azimut
+  
   pageViews     PageView[]
   heroImage     Media?               @relation(fields: [heroImageId], references: [id])
   market        Market?              @relation(fields: [marketId], references: [id])
@@ -146,6 +154,7 @@ model Project {
   services      Service[]            @relation("ProjectToService")
   tags          Tag[]                @relation("ProjectToTag")
   sections      Section[]            @relation("SectionProjects")
+  monitoredPosts BlogPostMonitor[]   @relation("ProjectMonitoredPosts") // Relação com monitoramento
 }
 
 model Page {
@@ -1007,6 +1016,9 @@ model BlogPost {
   viewCount       Int            @default(0)
   shareCount      Int            @default(0)
   
+  // Relação com Monitoramento
+  monitorSuggestions BlogPostMonitor[] @relation("BlogPostMonitorToPost")
+  
   // Timestamps
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
@@ -1023,3 +1035,93 @@ enum BlogPostStatus {
   SCHEDULED  // Agendado - publicar em publishedAt
   ARCHIVED   // Arquivado - não visível
 }
+
+// ═══════════════════════════════════════════════════════════════
+// 🤖 SISTEMA DE MONITORAMENTO AUTOMÁTICO DE CONTEÚDO
+// ═══════════════════════════════════════════════════════════════
+// Monitora automaticamente notícias, redes sociais, vídeos
+// sobre projetos da Azimut e sugere posts para o blog
+// ═══════════════════════════════════════════════════════════════
+
+model BlogPostMonitor {
+  id                    String            @id @default(uuid())
+  
+  // Relação com Projeto
+  projectId             String?
+  project               Project?          @relation("ProjectMonitoredPosts", fields: [projectId], references: [id])
+  projectName           String?           // Nome do projeto para busca (se não tiver projeto cadastrado)
+  
+  // Tipo de Crédito
+  creditType            CreditType        @default(CLIENTE)
+  creditText            String?           // "Animação por Azimut", "Produção Azimut", etc.
+  azimutRole            String?           // "Animação", "Produção", "Realização", etc.
+  azimutContributions   String[]          // ["arte generativa", "motion design", "led 20x5m"]
+  
+  // Fonte do Conteúdo
+  sourceType            SourceType        // NEWS, INSTAGRAM, YOUTUBE, BLOG, PRESS, TWITTER, FACEBOOK
+  sourceUrl             String
+  sourceTitle           String?
+  sourceContent         String?           @db.Text
+  sourceImageUrl        String?
+  sourceVideoUrl        String?
+  sourceAuthor          String?
+  sourceDate            DateTime?
+  
+  // Conteúdo Processado por IA
+  suggestedTitlePt      String?
+  suggestedTitleEn      String?
+  suggestedTitleEs      String?
+  suggestedTitleFr      String?
+  suggestedExcerptPt    String?
+  suggestedExcerptEn    String?
+  suggestedExcerptEs    String?
+  suggestedExcerptFr    String?
+  suggestedContentPt    String?           @db.Text
+  suggestedContentEn    String?           @db.Text
+  suggestedContentEs    String?           @db.Text
+  suggestedContentFr    String?           @db.Text
+  aiProcessedAt         DateTime?
+  
+  // Metadados
+  keywords              String[]
+  mentions              String[]          // Influencers, veículos, etc.
+  status                MonitorStatus     @default(PENDING) // PENDING, APPROVED, REJECTED, PUBLISHED
+  
+  // Relação com Post Aprovado
+  blogPostId            String?
+  blogPost              BlogPost?         @relation("BlogPostMonitorToPost", fields: [blogPostId], references: [id])
+  
+  // Timestamps
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+  
+  @@index([projectId])
+  @@index([status])
+  @@index([sourceType])
+  @@index([createdAt])
+}
+
+enum CreditType {
+  CLIENTE   // Projeto do cliente - crédito parcial ("Animação por Azimut")
+  AUTORAL   // Projeto autoral - crédito total ("Produção Azimut")
+  EVENTO    // Evento - crédito total ("Realização Azimut")
+}
+
+enum SourceType {
+  NEWS       // Notícias (Google News, sites de notícias)
+  INSTAGRAM  // Posts do Instagram
+  YOUTUBE    // Vídeos do YouTube
+  BLOG       // Posts de blogs
+  PRESS      // Matérias de imprensa
+  TWITTER    // Tweets
+  FACEBOOK   // Posts do Facebook
+  RSS        // Feeds RSS
+}
+
+enum MonitorStatus {
+  PENDING    // Aguardando aprovação
+  APPROVED   // Aprovado (já virou post ou será publicado)
+  REJECTED   // Rejeitado
+  PUBLISHED  // Já publicado como post
+}
+
