@@ -1409,9 +1409,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
       {/* ✅ ETAPA 1: 🍪 Cookie Banner REATIVADO - Componente simples */}
       <CookieBanner lang={lang} />
 
-      {/* 🤖 Claude AI Assistant - DESABILITADO (debug erro #310)
+      {/* ✅ ETAPA 3: 🤖 Claude AI Assistant REATIVADO - Tem fallbacks */}
       <ClaudeAssistant lang={lang} />
-      */}
 
       {/* ⬆️ Scroll to Top Button */}
       <ScrollToTopButton />
