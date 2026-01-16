@@ -288,8 +288,8 @@ const App: React.FC = () => {
             {/* Vinheta cinematográfica - efeito de bordas escuras */}
             <div className="cinematic-vignette" aria-hidden="true" />
           
-          {/* Global Search - DESABILITADO PARA DEBUG ERRO #310 */}
-          {/* <GlobalSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} lang={lang} theme={theme} /> */}
+          {/* Global Search - Ctrl+K */}
+          <GlobalSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} lang={lang} theme={theme} />
           
           {/* PWA Install Prompt */}
           <InstallPrompt />
@@ -455,8 +455,8 @@ const App: React.FC = () => {
             </Suspense>
           </AppLayout>
           
-          {/* Chatbot - DESABILITADO PARA DEBUG ERRO #310 */}
-          {/* <Chatbot lang={lang} /> */}
+          {/* Chatbot - Assistente Virtual */}
+          <Chatbot lang={lang} />
         </BrowserRouter>
         </SimplePasswordGate>
       ) : (
@@ -620,8 +620,8 @@ const App: React.FC = () => {
               </Routes>
           </AppLayout>
           
-          {/* Chatbot - DESABILITADO PARA DEBUG ERRO #310 */}
-          {/* <Chatbot lang={lang} /> */}
+          {/* Chatbot - Assistente Virtual */}
+          <Chatbot lang={lang} />
         </BrowserRouter>
       )}
     </BrowserCompatibility>

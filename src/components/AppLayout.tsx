@@ -20,12 +20,12 @@ const AppLayout: React.FC<AppLayoutProps> = React.memo(({ children, lang, setLan
         {children}
       </Layout>
       
-      {/* 🎮 GAMIFICATION WIDGET - TEMPORARIAMENTE DESABILITADO para debug erro #310 */}
-      {/* <GamificationWidget 
+      {/* 🎮 GAMIFICATION WIDGET - Reativado */}
+      <GamificationWidget 
         lang={lang}
         position="bottom-right"
         showOnMount={true}
-      /> */}
+      />
     </>
   )
 })
