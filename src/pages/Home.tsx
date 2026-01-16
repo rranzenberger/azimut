@@ -23,23 +23,19 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   const demoreelRef = useRef<HTMLDivElement>(null)
   const [isDemoreelVisible, setIsDemoreelVisible] = useState(false)
   
-  // ✅ Hooks de conteúdo REATIVADOS
-  const { content: cmsContent, loading: cmsLoading, error: cmsError } = useAzimutContent({ 
-    page: 'home',
-    lang
-  })
-  
-  // ✅ Personalização REATIVADA
-  const {
-    profile,
-    recommendedProjects: personalizedProjects,
-    heroMessage: personalizedHeroMessage,
-    heroSubtitle: personalizedHeroSubtitle,
-    ctaText: personalizedCtaText,
-    ctaLink: personalizedCtaLink,
-    shouldShowEditais,
-    loading: personalizationLoading,
-  } = usePersonalizedContent()
+  // ⚠️ HOOKS DESABILITADOS TEMPORARIAMENTE - Debug erro #310
+  // O backoffice está causando erros. Site funciona 100% sem CMS.
+  const cmsContent = null
+  const cmsLoading = false
+  const cmsError = null
+  const profile = null
+  const personalizedProjects: any[] = []
+  const personalizedHeroMessage = ''
+  const personalizedHeroSubtitle = ''
+  const personalizedCtaText = ''
+  const personalizedCtaLink = ''
+  const shouldShowEditais = false
+  const personalizationLoading = false
   
   // ESTRATÉGIA CORRIGIDA: i18n.ts → Personalizado → Backoffice
   // Priorizar i18n.ts (sempre correto por idioma) sobre backoffice (que pode estar desatualizado)
