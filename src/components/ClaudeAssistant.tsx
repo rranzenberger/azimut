@@ -24,17 +24,9 @@ interface ClaudeAssistantProps {
 }
 
 const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
-  // FASE 2: Detecção automática de perfil! 🎯
-  // Temporariamente desabilitado até resolver erro
-  const userProfile = {
-    profile: 'unknown' as const,
-    confidence: 0,
-    interests: [],
-    likelyBudget: 'unknown' as const,
-    conversionProbability: 0,
-    recommendedContent: []
-  }
-  // const userProfile = useUserProfileDetection(lang)
+  // ✅ FASE 2: Detecção automática de perfil! 🎯
+  // REATIVADO - Sistema robusto implementado, não causa erro #310
+  const userProfile = useUserProfileDetection(lang)
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
