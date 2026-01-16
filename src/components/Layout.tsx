@@ -62,8 +62,9 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleTheme }) => {
   const location = useLocation()
   const navigate = useNavigate()
-  // Tracking reativado - chamado UMA VEZ aqui no Layout (não nas páginas)
-  const { trackInteraction } = useUserTracking()
+  // ⚠️ TRACKING DESABILITADO TEMPORARIAMENTE - /api/track retorna 500 e quebra o site
+  // const { trackInteraction } = useUserTracking()
+  const trackInteraction = () => {} // Função noop temporária
   const { changeLang } = useLanguageRoute()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [hoveredRoute, setHoveredRoute] = useState<string | null>(null)
