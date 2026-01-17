@@ -1,8 +1,8 @@
 // API route for media uploads (images and videos)
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { optimizeAndUploadImage } from '@/lib/image-optimizer';
-import { verifyAuthToken } from '@/lib/auth';
+import { prisma } from '@/src/lib/prisma';
+import { optimizeAndUploadImage } from '@/src/lib/image-optimizer';
+import { verifyAuthToken } from '@/src/lib/auth';
 import { cookies } from 'next/headers';
 import sharp from 'sharp';
 

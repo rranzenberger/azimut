@@ -8,10 +8,10 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { verifyAuthToken } from '@/lib/auth';
+import { prisma } from '@/src/lib/prisma';
+import { verifyAuthToken } from '@/src/lib/auth';
 import { cookies } from 'next/headers';
-import { analyzeImageWithAI } from '@/lib/image-analysis';
+import { analyzeImageWithAI } from '@/src/lib/image-analysis';
 import * as path from 'path';
 
 export const runtime = 'nodejs';

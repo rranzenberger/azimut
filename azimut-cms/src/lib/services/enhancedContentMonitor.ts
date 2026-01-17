@@ -3,7 +3,7 @@
 // Integra DeepSeek/Claude para análise inteligente
 // ════════════════════════════════════════════════════════════
 
-import { AIProviderService } from '@/lib/ai-provider';
+import { AIProviderService } from '@/src/lib/ai-provider';
 
 export interface EnhancedSearchResult {
   title: string;

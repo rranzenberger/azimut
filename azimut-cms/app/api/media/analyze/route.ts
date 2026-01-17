@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
-import { prisma } from '@/lib/prisma'
+import { prisma } from '@/src/lib/prisma'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'

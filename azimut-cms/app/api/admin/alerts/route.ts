@@ -6,10 +6,10 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
-import { prisma } from '@/lib/prisma'
-import { verifyAuthToken } from '@/lib/auth'
-import { hotLeadNotification, type HotLeadData } from '@/lib/email-templates'
-import { sendEmail } from '@/lib/email-service'
+import { prisma } from '@/src/lib/prisma'
+import { verifyAuthToken } from '@/src/lib/auth'
+import { hotLeadNotification, type HotLeadData } from '@/src/lib/email-templates'
+import { sendEmail } from '@/src/lib/email-service'
 
 export const runtime = 'nodejs'
 

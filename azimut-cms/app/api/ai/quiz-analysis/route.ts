@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { analyzeWithAI } from '@/lib/ai-provider'
+import { analyzeWithAI } from '@/src/lib/ai-provider'
 
 /**
  * API de Análise de Quiz Interativo

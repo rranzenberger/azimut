@@ -4,8 +4,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { calculateInterestScores, SessionData } from '@/lib/ai-scoring';
+import { prisma } from '@/src/lib/prisma';
+import { calculateInterestScores, SessionData } from '@/src/lib/ai-scoring';
 
 export const runtime = 'nodejs';
 

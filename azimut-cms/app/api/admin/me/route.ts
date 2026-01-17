@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { verifyAuthToken } from '@/lib/auth';
+import { prisma } from '@/src/lib/prisma';
+import { verifyAuthToken } from '@/src/lib/auth';
 
 export const runtime = 'nodejs'; // Necessário para usar crypto
 export const dynamic = 'force-dynamic'; // Força renderização dinâmica (usa cookies)

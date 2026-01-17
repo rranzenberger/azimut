@@ -4,8 +4,8 @@
  */
 
 import { NextResponse } from 'next/server'
-import { hotLeadNotification, type HotLeadData } from '@/lib/email-templates'
-import { sendEmail } from '@/lib/email-service'
+import { hotLeadNotification, type HotLeadData } from '@/src/lib/email-templates'
+import { sendEmail } from '@/src/lib/email-service'
 
 // Email do admin para receber notificações
 const ADMIN_EMAIL = process.env.ADMIN_NOTIFICATION_EMAIL || 'contato@azmt.com.br'

@@ -1,6 +1,6 @@
 // API pública para buscar mídias por tags (Sistema de Tags - Opção 2)
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/src/lib/prisma';
 
 export const runtime = 'nodejs';
 

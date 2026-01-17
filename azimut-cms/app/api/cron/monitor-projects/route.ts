@@ -4,7 +4,7 @@
 // ════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from 'next/server';
-import { runAutoMonitoring } from '@/lib/services/autoMonitor';
+import { runAutoMonitoring } from '@/src/lib/services/autoMonitor';
 
 export const dynamic = 'force-dynamic';
 

@@ -3,8 +3,8 @@
 // Monitora projetos configurados e traz resultados automaticamente
 // ════════════════════════════════════════════════════════════
 
-import { prisma } from '@/lib/prisma';
-import { AIProviderService } from '@/lib/ai-provider';
+import { prisma } from '@/src/lib/prisma';
+import { AIProviderService } from '@/src/lib/ai-provider';
 import { searchMultipleSources, detectSourceType, getSourceInfo } from './enhancedContentMonitor';
 
 /**

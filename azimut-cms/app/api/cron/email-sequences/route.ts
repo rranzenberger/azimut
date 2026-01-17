@@ -13,8 +13,8 @@
  */
 
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
-import { sendFollowUpEmail } from '@/lib/email-service'
+import { prisma } from '@/src/lib/prisma'
+import { sendFollowUpEmail } from '@/src/lib/email-service'
 
 // Verificar token de segurança do cron (Vercel Cron Secret)
 const CRON_SECRET = process.env.CRON_SECRET

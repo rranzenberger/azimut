@@ -3,10 +3,10 @@
 // ════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { verifyAuthToken } from '@/lib/auth';
+import { prisma } from '@/src/lib/prisma';
+import { verifyAuthToken } from '@/src/lib/auth';
 import { cookies } from 'next/headers';
-import { repostToAllPlatforms, type RepostConfig } from '@/lib/services/socialMediaReposter';
+import { repostToAllPlatforms, type RepostConfig } from '@/src/lib/services/socialMediaReposter';
 
 export const dynamic = 'force-dynamic';
 

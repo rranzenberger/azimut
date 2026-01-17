@@ -5,8 +5,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { verifyAuthToken } from '@/lib/auth';
-import { AIProviderService } from '@/lib/ai-provider';
+import { verifyAuthToken } from '@/src/lib/auth';
+import { AIProviderService } from '@/src/lib/ai-provider';
 
 export const runtime = 'nodejs';
 

@@ -4,8 +4,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { createAuthToken } from '@/lib/auth';
+import { prisma } from '@/src/lib/prisma';
+import { createAuthToken } from '@/src/lib/auth';
 import bcrypt from 'bcryptjs';
 
 export const runtime = 'nodejs'; // Necessário para usar crypto

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
-import { calculateInterestScores } from '@/lib/ai-scoring'
+import { prisma } from '@/src/lib/prisma'
+import { calculateInterestScores } from '@/src/lib/ai-scoring'
 
 // CORS headers
 const corsHeaders = {

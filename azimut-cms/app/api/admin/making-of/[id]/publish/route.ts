@@ -3,10 +3,10 @@
 // ════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { verifyAuthToken } from '@/lib/auth';
+import { prisma } from '@/src/lib/prisma';
+import { verifyAuthToken } from '@/src/lib/auth';
 import { cookies } from 'next/headers';
-import { publishMakingOf } from '@/lib/services/makingOfPublisher';
+import { publishMakingOf } from '@/src/lib/services/makingOfPublisher';
 
 export const dynamic = 'force-dynamic';
 

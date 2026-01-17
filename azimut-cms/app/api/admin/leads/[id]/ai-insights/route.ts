@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { verifyAuthToken } from '@/lib/auth';
+import { prisma } from '@/src/lib/prisma';
+import { verifyAuthToken } from '@/src/lib/auth';
 import { cookies } from 'next/headers';
 
 export const runtime = 'nodejs';
@@ -91,7 +91,7 @@ export async function GET(
       const hasAI = process.env.DEEPSEEK_API_KEY || process.env.OPENAI_API_KEY || process.env.GEMINI_API_KEY;
       
       if (hasAI) {
-        const { getAIProvider } = await import('@/lib/ai-provider');
+        const { getAIProvider } = await import('@/src/lib/ai-provider');
         const ai = getAIProvider();
 
         const prompt = `
