@@ -1,0 +1,122 @@
+{
+  "page": {
+    "name": "Home",
+    "slug": "home",
+    "status": "PUBLISHED",
+    "seo": {
+      "pt": {
+        "title": "Azimut – Experiências Imersivas, Interativas e Cinematográficas",
+        "description": "Criamos experiências imersivas, interativas e cinematográficas para cultura, marcas e espaços híbridos – atuando entre Brasil e Canadá."
+      },
+      "en": {
+        "title": "Azimut – Immersive, Interactive and Cinematic Experiences",
+        "description": "We create immersive, interactive and cinematic experiences for culture, brands and hybrid spaces – operating between Brazil and Canada."
+      },
+      "fr": {
+        "title": "Azimut – Expériences Immersives, Interactives et Cinématographiques",
+        "description": "Nous créons des expériences immersives, interactives et cinématographiques pour la culture, les marques et les espaces hybrides – entre le Brésil et le Canada."
+      },
+      "es": {
+        "title": "Azimut – Experiencias Inmersivas, Interactivas y Cinematográficas",
+        "description": "Creamos experiencias inmersivas, interactivas y cinematográficas para cultura, marcas y espacios híbridos – operando entre Brasil y Canadá."
+      }
+    },
+    "hero": {
+      "slogan": {
+        "pt": "EXPERIÊNCIAS QUE CONECTAM MUNDOS",
+        "en": "EXPERIENCES THAT CONNECT WORLDS",
+        "fr": "EXPÉRIENCES QUI CONNECTENT LES MONDES",
+        "es": "EXPERIENCIAS QUE CONECTAN MUNDOS"
+      },
+      "subtitle": {
+        "pt": "Criamos experiências imersivas entre Brasil e Canadá.",
+        "en": "We create immersive experiences between Brazil and Canada.",
+        "fr": "Nous créons des expériences immersives entre le Brésil et le Canada.",
+        "es": "Creamos experiencias inmersivas entre Brasil y Canadá."
+      },
+      "lead": {
+        "pt": "Experiências imersivas, interativas e cinematográficas para cultura, marcas e espaços híbridos – atuando entre Brasil e Canadá.",
+        "en": "Immersive, interactive and cinematic experiences for culture, brands and hybrid spaces – operating between Brazil and Canada.",
+        "fr": "Expériences immersives, interactives et cinématographiques pour la culture, les marques et les espaces hybrides – entre le Brésil et le Canada.",
+        "es": "Experiencias inmersivas, interactivas y cinematográficas para cultura, marcas y espacios híbridos – operando entre Brasil y Canadá."
+      },
+      "backgroundImageUrl": "/hero-background.jpg",
+      "demoreelVideoUrl": "/videos/azimut-demoreel-2024.mp4"
+    },
+    "pillars": {
+      "pillar1": {
+        "pt": "Museus & exposições",
+        "en": "Museums & exhibitions",
+        "fr": "Musées & expositions",
+        "es": "Museos & exposiciones"
+      },
+      "pillar2": {
+        "pt": "Ativações de marca & sazonais",
+        "en": "Brand & seasonal activations",
+        "fr": "Activations de marque & saisonnières",
+        "es": "Activaciones de marca & estacionales"
+      },
+      "pillar3": {
+        "pt": "Audiovisual híbrido & IA",
+        "en": "Hybrid AV & AI",
+        "fr": "Audiovisuel hybride & IA",
+        "es": "Audiovisual híbrido & IA"
+      }
+    }
+  },
+  "studioSnapshotSection": {
+    "title": {
+      "pt": "Retrato do estúdio",
+      "en": "Studio snapshot",
+      "fr": "Aperçu du studio",
+      "es": "Vista del estudio"
+    },
+    "body": {
+      "pt": "Combinamos cinema, design interativo, storytelling espacial e pipelines com IA para criar instalações narrativas, ambientes híbridos e experiências temporais para museus, festivais, marcas e laboratórios de pesquisa.",
+      "en": "We combine cinema, interactive design, spatial storytelling and AI-driven pipelines to build narrative installations, hybrid environments and time-based experiences for museums, festivals, brands and research labs.",
+      "fr": "Nous combinons cinéma, design interactif, narration spatiale et pipelines pilotés par l'IA pour créer des installations narratives, des environnements hybrides et des expériences temporelles pour musées, festivaux, marques et laboratoires de recherche.",
+      "es": "Combinamos cine, diseño interactivo, narrativa espacial y flujos impulsados por IA para crear instalaciones narrativas, entornos híbridos y experiencias temporales para museos, festivales, marcas y laboratorios de investigación."
+    }
+  },
+  "tags": [
+    {
+      "pt": "Espaços imersivos",
+      "en": "Immersive spaces",
+      "fr": "Espaces immersifs",
+      "es": "Espacios inmersivos"
+    },
+    {
+      "pt": "Exposições & cultura",
+      "en": "Exhibitions & culture",
+      "fr": "Expositions & culture",
+      "es": "Exposiciones & cultura"
+    },
+    {
+      "pt": "Audiovisual híbrido & IA",
+      "en": "Hybrid AV & AI",
+      "fr": "Audiovisuel hybride & IA",
+      "es": "Audiovisual híbrido & IA"
+    }
+  ],
+  "cities": "Rio • São Paulo • Belém • Florianópolis • Vancouver",
+  "contactSection": {
+    "title": {
+      "pt": "Conte o que você precisa e onde vive o seu projeto.",
+      "en": "Tell us what you need and where your project lives.",
+      "fr": "Dites-nous ce dont vous avez besoin et où vit votre projet.",
+      "es": "Cuéntanos qué necesitas y dónde vive tu proyecto."
+    },
+    "note": {
+      "pt": "Por enquanto, o contato é por e-mail ou WhatsApp. Em breve aqui será um formulário completo conectado ao nosso backoffice.",
+      "en": "For now, contact is via e-mail or WhatsApp. Soon this will open a full brief form connected to our backoffice.",
+      "fr": "Pour l'instant, le contact se fait par e-mail ou WhatsApp. Bientôt, ceci ouvrira un formulaire complet relié à notre backoffice.",
+      "es": "Por ahora, el contacto es por correo electrónico o WhatsApp. Pronto aquí habrá un formulario completo conectado a nuestro backoffice."
+    }
+  },
+  "cta": {
+    "pt": "Iniciar um projeto",
+    "en": "Start a project",
+    "fr": "Commencer un projet",
+    "es": "Iniciar un proyecto"
+  }
+}
