@@ -13,19 +13,21 @@
 
 ## 🎯 COMO EXECUTAR (5 MINUTOS):
 
-### **PASSO 1: Abrir Neon Console**
+### **PASSO 1: Abrir Vercel Dashboard**
 
 1. Abra seu navegador
-2. Vá em: https://console.neon.tech
+2. Vá em: https://vercel.com/rranzenbergers-projects
 3. Faça login (se necessário)
-4. Selecione o projeto **Azimut**
+4. Clique no projeto **"azimut-backoffice"** (ou "azimut" se for o mesmo)
 
 ---
 
-### **PASSO 2: Abrir SQL Editor**
+### **PASSO 2: Acessar o Banco Neon via Vercel**
 
-1. No menu lateral, clique em **"SQL Editor"**
-2. Aguarde carregar (pode demorar alguns segundos)
+1. No projeto, clique na aba **"Storage"**
+2. Clique no banco **"Neon Postgres"** (deve aparecer listado)
+3. Clique em **"Query"** ou **"Open in Neon"**
+4. Aguarde abrir o SQL Editor do Neon
 
 ---
 
