@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { verifyAuthToken } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
+import { verifyAuthToken } from '@/src/lib/auth';
+import { prisma } from '@/src/lib/prisma';
 import { SettingsForm } from './components/SettingsForm';
 import { UsersManagement } from './components/UsersManagement';
 
