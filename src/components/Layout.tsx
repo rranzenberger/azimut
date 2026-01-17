@@ -97,56 +97,28 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   }, [])
   
   // 🆕 DETECÇÃO DINÂMICA DE MOBILE/DESKTOP
-  // Não usa apenas breakpoint fixo - calcula se o menu cabe na tela
+  // SOLUÇÃO DEFINITIVA: Mobile = < 768px (SEMPRE hamburger)
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window !== 'undefined') {
-      return window.innerWidth < 640  // Fallback inicial: mobile se < 640px
+      return window.innerWidth < 768  // Mobile DEFINITIVO: < 768px
     }
     return false
   })
   
-  // Detectar mobile/desktop com cálculo dinâmico
+  // Detectar mobile/desktop com breakpoint FIXO (não calcular espaço)
   React.useEffect(() => {
-    const checkMenuFits = () => {
+    const checkMobile = () => {
       const windowWidth = window.innerWidth
       
-      // REGRA 1: Mobile garantido (< 640px) → SEMPRE hamburger
-      if (windowWidth < 640) {
-        setIsMobile(true)
-        return
-      }
-      
-      // REGRA 2: Desktop garantido (≥ 1024px) → SEMPRE menu horizontal
-      if (windowWidth >= 1024) {
-        setIsMobile(false)
-        return
-      }
-      
-      // REGRA 3: Zona crítica (640-1024px) → Calcular dinamicamente
-      // Larguras do menu por idioma (em pixels) - AJUSTADAS PARA VALORES REAIS
-      const menuWidths: Record<Lang, number> = {
-        pt: 360,  // Reduzido de 460
-        en: 320,  // Reduzido de 420
-        fr: 380,  // Reduzido de 480
-        es: 350   // Reduzido de 450
-      }
-      
-      const logoWidth = 140  // Reduzido de 180 (logo real é menor)
-      const menuWidth = menuWidths[lang]
-      const rightSideWidth = 180  // Reduzido de 220 (idiomas + theme + CTA)
-      const gaps = 60  // Reduzido de 80 (espaços entre elementos)
-      
-      const totalNeeded = logoWidth + menuWidth + rightSideWidth + gaps
-      
-      // Se não cabe, mostrar hamburger
-      setIsMobile(windowWidth < totalNeeded)
+      // REGRA ÚNICA E DEFINITIVA: < 768px = MOBILE (hamburger)
+      setIsMobile(windowWidth < 768)
     }
     
-    checkMenuFits()
-    window.addEventListener('resize', checkMenuFits)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
     
-    return () => window.removeEventListener('resize', checkMenuFits)
-  }, [lang])  // Recalcular quando idioma mudar
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])  // Não depende de 'lang' - breakpoint fixo
   
   // Fechar menu mobile ao mudar para desktop
   React.useEffect(() => {
