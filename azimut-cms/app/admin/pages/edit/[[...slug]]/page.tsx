@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { FieldEditorWithMetadata } from '@/components/admin/FieldEditorWithMetadata';
-import MediaUploadField from '@/components/admin/MediaUploadField';
+// import MediaUploadField from '@/components/admin/MediaUploadField'; // TEMPORARIAMENTE DESABILITADO
 // Force rebuild: 2025-12-30-v2
 
 interface Section {
