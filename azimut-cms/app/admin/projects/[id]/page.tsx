@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { GalleryManager } from '../components/GalleryManager';
-import MediaUploadField from '@/components/admin/MediaUploadField';
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
@@ -25,7 +24,6 @@ export default function EditProjectPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [gallery, setGallery] = useState<any[]>([]);
-  const [allMedia, setAllMedia] = useState<any[]>([]);
   const [formData, setFormData] = useState({
     title: '',
     shortTitle: '',
@@ -47,7 +45,6 @@ export default function EditProjectPage() {
     status: 'DRAFT',
     featured: false,
     priorityHome: 0,
-    heroImageId: '',
   });
 
   useEffect(() => {
@@ -58,13 +55,6 @@ export default function EditProjectPage() {
 
         if (!res.ok) {
           setError(data.error || 'Erro ao carregar projeto');
-
-        // Buscar mÃ­dias existentes
-        const mediaRes = await fetch('/api/media/upload');
-        if (mediaRes.ok) {
-          const mediaData = await mediaRes.json();
-          setAllMedia(mediaData.media || []);
-        }
           setLoading(false);
           return;
         }
@@ -72,11 +62,6 @@ export default function EditProjectPage() {
         const project = data.project;
         
         // Carregar galeria
-        // Carregar heroImageId
-        if (project.heroImageId) {
-          setFormData(prev => ({ ...prev, heroImageId: project.heroImageId }));
-        }
-
         if (project.gallery) {
           setGallery(project.gallery);
         }
@@ -154,7 +139,7 @@ export default function EditProjectPage() {
     <>
       <header style={{ marginBottom: 24 }}>
         <h1 style={{ margin: 0, fontSize: 26 }}>Editar Projeto</h1>
-        <p style={{ margin: 4, color: '#c0bccf' }}>Edite as informações do projeto.</p>
+        <p style={{ margin: 4, color: '#c0bccf' }}>Edite as informaÃ§Ãµes do projeto.</p>
       </header>
 
       {error && (
@@ -185,7 +170,7 @@ export default function EditProjectPage() {
         }}
       >
         <div style={{ display: 'grid', gap: 8 }}>
-          <label style={{ fontSize: 14, fontWeight: 600 }}>Título *</label>
+          <label style={{ fontSize: 14, fontWeight: 600 }}>TÃ­tulo *</label>
           <input
             type="text"
             value={formData.title}
@@ -197,13 +182,13 @@ export default function EditProjectPage() {
         </div>
 
         <div style={{ display: 'grid', gap: 8 }}>
-          <label style={{ fontSize: 14, fontWeight: 600 }}>Título Curto</label>
+          <label style={{ fontSize: 14, fontWeight: 600 }}>TÃ­tulo Curto</label>
           <input
             type="text"
             value={formData.shortTitle}
             onChange={(e) => setFormData({ ...formData, shortTitle: e.target.value })}
             style={inputStyle}
-            placeholder="Título curto para cards"
+            placeholder="TÃ­tulo curto para cards"
           />
         </div>
 
@@ -232,7 +217,7 @@ export default function EditProjectPage() {
               onChange={(e) => setFormData({ ...formData, summaryPt: e.target.value })}
               rows={3}
               style={{ ...inputStyle, resize: 'vertical' }}
-              placeholder="Breve descrição em português"
+              placeholder="Breve descriÃ§Ã£o em portuguÃªs"
             />
           </div>
           <div style={{ display: 'grid', gap: 8 }}>
@@ -255,7 +240,7 @@ export default function EditProjectPage() {
               onChange={(e) => setFormData({ ...formData, summaryEs: e.target.value })}
               rows={3}
               style={{ ...inputStyle, resize: 'vertical' }}
-              placeholder="Breve descripción en español"
+              placeholder="Breve descripciÃ³n en espaÃ±ol"
             />
           </div>
           <div style={{ display: 'grid', gap: 8 }}>
@@ -265,33 +250,33 @@ export default function EditProjectPage() {
               onChange={(e) => setFormData({ ...formData, summaryFr: e.target.value })}
               rows={3}
               style={{ ...inputStyle, resize: 'vertical' }}
-              placeholder="Brève description en français"
+              placeholder="BrÃ¨ve description en franÃ§ais"
             />
           </div>
         </div>
 
         <div style={{ marginTop: 8, marginBottom: 8, padding: '12px 16px', background: 'rgba(201,35,55,0.1)', borderRadius: 8, border: '1px solid rgba(201,35,55,0.3)' }}>
           <p style={{ margin: 0, fontSize: 13, color: '#fca5a5' }}>
-            ?? <strong>Descrição Completa:</strong> Use os campos abaixo para textos longos/rich text que aparecerão na página de detalhe do projeto.
+            ðŸ’¡ <strong>DescriÃ§Ã£o Completa:</strong> Use os campos abaixo para textos longos/rich text que aparecerÃ£o na pÃ¡gina de detalhe do projeto.
           </p>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Descrição Completa (PT)</label>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>DescriÃ§Ã£o Completa (PT)</label>
             <textarea
               value={formData.descriptionPt}
               onChange={(e) => setFormData({ ...formData, descriptionPt: e.target.value })}
               rows={6}
               style={{ ...inputStyle, resize: 'vertical' }}
-              placeholder="Descrição completa em português (texto longo/rich text)"
+              placeholder="DescriÃ§Ã£o completa em portuguÃªs (texto longo/rich text)"
             />
             <small style={{ color: '#8f8ba2', fontSize: 12 }}>
-              Texto completo que aparece na página de detalhe. Suporta quebras de linha.
+              Texto completo que aparece na pÃ¡gina de detalhe. Suporta quebras de linha.
             </small>
           </div>
           <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Descrição Completa (EN)</label>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>DescriÃ§Ã£o Completa (EN)</label>
             <textarea
               value={formData.descriptionEn}
               onChange={(e) => setFormData({ ...formData, descriptionEn: e.target.value })}
@@ -307,23 +292,23 @@ export default function EditProjectPage() {
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Descrição Completa (ES)</label>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>DescriÃ§Ã£o Completa (ES)</label>
             <textarea
               value={formData.descriptionEs}
               onChange={(e) => setFormData({ ...formData, descriptionEs: e.target.value })}
               rows={6}
               style={{ ...inputStyle, resize: 'vertical' }}
-              placeholder="Descripción completa en español"
+              placeholder="DescripciÃ³n completa en espaÃ±ol"
             />
           </div>
           <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Descrição Completa (FR)</label>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>DescriÃ§Ã£o Completa (FR)</label>
             <textarea
               value={formData.descriptionFr}
               onChange={(e) => setFormData({ ...formData, descriptionFr: e.target.value })}
               rows={6}
               style={{ ...inputStyle, resize: 'vertical' }}
-              placeholder="Description complète en français"
+              placeholder="Description complÃ¨te en franÃ§ais"
             />
           </div>
         </div>
@@ -340,7 +325,7 @@ export default function EditProjectPage() {
             />
           </div>
           <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>País</label>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>PaÃ­s</label>
             <input
               type="text"
               value={formData.country}
@@ -425,28 +410,7 @@ export default function EditProjectPage() {
           </label>
         </div>
 
-
-        {/* Imagem de Capa (Hero) */}
-        <div style={{ marginBottom: 24, padding: 20, background: 'rgba(201,35,55,0.05)', borderRadius: 12, border: '1px solid rgba(201,35,55,0.2)' }}>
-          <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 600, color: '#c92337' }}>
-            Imagem de Capa do Projeto
-          </h3>
-          <MediaUploadField
-            label="Imagem de Capa"
-            value={formData.heroImageId}
-            onChange={(mediaId) => setFormData({ ...formData, heroImageId: mediaId })}
-            mediaType="image"
-            specs={{
-              width: 1920,
-              height: 1080,
-              maxSizeMB: 5,
-              description: 'Imagem principal do projeto (recomendado: 16:9)'
-            }}
-            existingMedia={allMedia}
-          />
-        </div>
-
-        {/* Galeria de Mídias */}
+        {/* Galeria de MÃ­dias */}
         <GalleryManager projectId={id} initialGallery={gallery} />
 
         <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
@@ -464,7 +428,7 @@ export default function EditProjectPage() {
               cursor: saving ? 'not-allowed' : 'pointer',
             }}
           >
-            {saving ? 'Salvando...' : 'Salvar Alterações'}
+            {saving ? 'Salvando...' : 'Salvar AlteraÃ§Ãµes'}
           </button>
           <button
             type="button"
