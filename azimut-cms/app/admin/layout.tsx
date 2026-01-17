@@ -106,7 +106,7 @@ export default async function AdminLayout({
           <MonitorLink />
           <AdminLink href="/admin/making-of" label="🎬 Making-of" />
           <AdminLink href="/admin/making-of/curation" label="🎨 Curadoria" />
-          <AdminLink href="/admin/site-pages" label="Páginas" />
+          <AdminLink href="/admin/site-pages" label="📄 Páginas" />
           <AdminLink href="/admin/media" label="Mídias" />
           <AdminLink href="/admin/leads" label="Leads" />
           <AdminLink href="/admin/services" label="Serviços" />

@@ -30,31 +30,41 @@ export function MonitorLink() {
       style={{
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'space-between',
         gap: 8,
-        padding: '10px 16px',
-        borderRadius: 8,
+        padding: '12px 16px',
+        borderRadius: 10,
         textDecoration: 'none',
-        color: pendingCount > 0 ? '#ef4444' : '#a0a0a0',
-        background: pendingCount > 0 ? 'rgba(239, 68, 68, 0.1)' : 'transparent',
-        border: pendingCount > 0 ? '1px solid rgba(239, 68, 68, 0.3)' : 'none',
+        fontSize: 15,
+        fontWeight: 500,
+        // Cor e estilo igual aos outros botões
+        color: '#ffffff',
+        background: pendingCount > 0 ? 'rgba(239, 68, 68, 0.15)' : 'rgba(255, 255, 255, 0.03)',
+        border: pendingCount > 0 ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(255, 255, 255, 0.08)',
+        transition: 'all 0.2s ease',
         position: 'relative',
         animation: pendingCount > 0 ? 'pulse 2s infinite' : 'none',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = pendingCount > 0 ? 'rgba(239, 68, 68, 0.2)' : 'rgba(255, 255, 255, 0.06)';
+        e.currentTarget.style.borderColor = pendingCount > 0 ? 'rgba(239, 68, 68, 0.6)' : 'rgba(201, 35, 55, 0.3)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = pendingCount > 0 ? 'rgba(239, 68, 68, 0.15)' : 'rgba(255, 255, 255, 0.03)';
+        e.currentTarget.style.borderColor = pendingCount > 0 ? 'rgba(239, 68, 68, 0.4)' : 'rgba(255, 255, 255, 0.08)';
       }}
     >
       <span>🤖 Monitoramento</span>
       {pendingCount > 0 && (
         <span
           style={{
-            position: 'absolute',
-            top: 4,
-            right: 4,
             background: '#ef4444',
             color: '#fff',
             fontSize: 10,
             fontWeight: 'bold',
-            padding: '2px 6px',
-            borderRadius: 10,
-            minWidth: 18,
+            padding: '3px 7px',
+            borderRadius: 12,
+            minWidth: 20,
             textAlign: 'center',
             animation: 'bounce 1s infinite',
           }}
@@ -65,7 +75,7 @@ export function MonitorLink() {
       <style jsx>{`
         @keyframes pulse {
           0%, 100% { opacity: 1; }
-          50% { opacity: 0.7; }
+          50% { opacity: 0.85; }
         }
         @keyframes bounce {
           0%, 100% { transform: translateY(0); }
