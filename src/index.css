@@ -1,0 +1,4786 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════
+   ACESSIBILIDADE - Screen Reader Only e Focus Styles
+   ═══════════════════════════════════════════════════════════════ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.focus\:not-sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Focus visible melhorado para acessibilidade */
+*:focus-visible {
+  outline: 2px solid #c92337;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip link melhorado */
+.skip-link:focus {
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  z-index: 9999 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FONTES PERSONALIZADAS - CARREGAR PRIMEIRO (ANTES DE @theme)
+   ═══════════════════════════════════════════════════════════════ */
+@font-face {
+  font-family: 'HandelGothic';
+  src: url('/fonts/HandelGothic-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap; /* Garante que a fonte sempre carregue quando disponível */
+  unicode-range: U+0020-007F, U+00A0-00FF; /* Latim + acentos */
+}
+
+@font-face {
+  font-family: 'InterCustom';
+  src: url('/fonts/Inter-VariableFont.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap; /* Mudado para swap para garantir carregamento */
+  unicode-range: U+0020-007F, U+00A0-00FF, U+0100-017F;
+}
+
+@font-face {
+  font-family: 'SoraCustom';
+  src: url('/fonts/Sora-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap; /* Mudado para swap para garantir carregamento */
+  unicode-range: U+0020-007F, U+00A0-00FF;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SMOOTH SCROLL + WORLD-CLASS 2026 GLOBALS
+   ═══════════════════════════════════════════════════════════════ */
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden; /* Previne scroll horizontal */
+  width: 100%;
+  max-width: 100vw; /* Limita largura máxima */
+}
+
+body {
+  overflow-x: hidden; /* Previne scroll horizontal */
+  width: 100%;
+  max-width: 100vw; /* Limita largura máxima */
+  position: relative;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VARIÁVEIS CSS GLOBAIS - LAYOUT RESPONSIVO
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* Header: valores EXATOS do Layout.tsx */
+  /* Header container: 60px normal, 52px scrollado */
+  /* Main padding-top: 80px normal, 72px scrollado */
+  --header-height: 60px;
+  
+  /* Internal navigation (submenu) */
+  --internal-nav-height: 52px;
+  
+  /* Scroll margin para anchors (header + internal nav + margem) */
+  --scroll-offset: calc(var(--header-height) + var(--internal-nav-height) + 24px);
+  
+  /* Cores de fundo sticky */
+  --theme-bg-sticky: rgba(10, 14, 23, 0.98);
+}
+
+/* Mobile: header mais compacto */
+@media (max-width: 639px) {
+  :root {
+    --header-height: 56px;
+    --internal-nav-height: 48px;
+  }
+}
+
+/* Tema claro: fundo sticky diferente */
+[data-theme="light"] {
+  --theme-bg-sticky: rgba(211, 206, 195, 0.98);
+}
+
+.glass-panel {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GRÃO CINEMATOGRÁFICO - AZIMUT IDENTITY
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Film grain overlay para dar atmosfera cinematográfica - TEXTURA INTENSA (SEM ANIMAÇÃO) */
+/* ORDEM: FUNDO (estrela z-index -10) -> GRÃO (z-index -5) -> ELEMENTOS (z-index 0+) */
+.film-grain {
+  position: relative;
+}
+
+.film-grain::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,.4) 1px, rgba(0,0,0,.4) 2px),
+    repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(0,0,0,.4) 1px, rgba(0,0,0,.4) 2px),
+    repeating-linear-gradient(45deg, transparent, transparent 1px, rgba(0,0,0,.3) 1px, rgba(0,0,0,.3) 2px),
+    repeating-linear-gradient(135deg, transparent, transparent 1px, rgba(0,0,0,.2) 1px, rgba(0,0,0,.2) 2px);
+  opacity: 1;
+  pointer-events: none;
+  z-index: -15; /* Muito atrás - abaixo da estrela (-10) e não interfere com logo */
+  mix-blend-mode: overlay;
+  /* SEM ANIMAÇÃO - apenas textura estática intensa */
+  animation: none !important;
+  transform: none !important;
+  will-change: auto;
+}
+
+/* Granulação mais visível no tema escuro */
+[data-theme="dark"] .film-grain::before {
+  opacity: 0.28; /* BEM visível no escuro */
+  mix-blend-mode: screen; /* Screen para realçar no fundo escuro */
+  filter: contrast(1.4) brightness(1.3);
+}
+
+/* Granulação média no tema claro */
+[data-theme="light"] .film-grain::before {
+  opacity: 0.22; /* Médio - visível sem exagero */
+  mix-blend-mode: soft-light; /* Soft-light para equilíbrio */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SUBMENU NAVIGATION - Cor diferenciada do header
+   ═══════════════════════════════════════════════════════════════ */
+.submenu-nav {
+  /* Tema escuro: azul marinho escuro (#0a0e18) */
+  background-color: rgba(10, 14, 24, 0.98);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .submenu-nav {
+  /* Tema claro: bege claro (#d3cec3) */
+  background-color: rgba(211, 206, 195, 0.98);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Animação desabilitada - estava causando sobreposição horizontal */
+/* @keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+} */
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMAÇÕES GAMIFICADAS - ACADEMY GAME FORM
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s ease-in-out infinite;
+}
+
+.hover\:scale-102:hover {
+  transform: scale(1.02);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HIERARQUIA VISUAL PREMIUM - DESIGN SYSTEM REUTILIZÁVEL
+   Framestore/The Mill/AKQA style - Para TODO o site
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 1. EYEBROW (Label Pequeno - Categoria) - COM EMOJI OPCIONAL */
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sora, 'Sora', sans-serif);
+  font-size: 0.65rem; /* 10.4px */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: #c92337; /* azimut-red */
+  margin-bottom: 0.75rem;
+}
+
+/* Linha decorativa (sempre presente) */
+.section-eyebrow::before {
+  content: '';
+  width: 1.5rem; /* 24px */
+  height: 2px;
+  background-color: #c92337; /* azimut-red */
+  display: block;
+}
+
+/* Emoji dentro do eyebrow (opcional, mas animado!) */
+.section-eyebrow > span:first-child,
+.section-eyebrow > emoji:first-child {
+  font-size: 0.9rem; /* 14.4px - emoji um pouco maior */
+  line-height: 1;
+  display: inline-block;
+  animation: emoji-bounce 2s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+/* Animação sutil para emojis (divertida mas não exagerada) */
+@keyframes emoji-bounce {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-2px) rotate(-3deg);
+  }
+  75% {
+    transform: translateY(-2px) rotate(3deg);
+  }
+}
+
+/* Versão "funny" com emoji mais destacado */
+.section-eyebrow-funny {
+  gap: 0.75rem; /* Mais espaço para o emoji */
+}
+
+.section-eyebrow-funny > span:first-child,
+.section-eyebrow-funny > emoji:first-child {
+  font-size: 1.1rem; /* 17.6px - emoji maior */
+  animation: emoji-bounce-funny 2.5s ease-in-out infinite;
+}
+
+@keyframes emoji-bounce-funny {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-3px) rotate(-5deg) scale(1.05);
+  }
+  50% {
+    transform: translateY(-4px) rotate(0deg) scale(1.1);
+  }
+  75% {
+    transform: translateY(-3px) rotate(5deg) scale(1.05);
+  }
+}
+
+/* 2. SECTION TITLE (Título Grande - Impacto) */
+.section-title {
+  font-family: 'HandelGothic', 'Handel Gothic', var(--font-handel, 'Sora', system-ui, sans-serif) !important;
+  font-size: clamp(1.875rem, 4vw, 3rem); /* 30px - 48px */
+  font-weight: 400 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  line-height: 1.25;
+  margin-bottom: 1.5rem;
+}
+
+/* Section title no tema claro - texto escuro */
+[data-theme="light"] .section-title:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *) {
+  color: #0f172a !important; /* Slate-900 - máximo contraste */
+}
+
+/* Variação menor para subseções */
+.section-title-md {
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem); /* 24px - 40px */
+}
+
+/* Variação pequena para cards */
+.section-title-sm {
+  font-size: clamp(1.25rem, 3vw, 2rem); /* 20px - 32px */
+}
+
+/* 3. BODY TEXT LARGE (Texto de Introdução) */
+.body-large {
+  font-size: clamp(1.25rem, 2vw, 1.5rem); /* 20px - 24px */
+  font-weight: 300; /* light */
+  line-height: 1.625; /* relaxed */
+  color: #cbd5e1; /* slate-300 */
+  max-width: 56rem; /* max-w-4xl */
+}
+
+/* Body large no tema claro - texto escuro */
+[data-theme="light"] .body-large:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *) {
+  color: #1a1a1a !important; /* Quase preto - bom contraste */
+}
+
+/* 4. SECTION CONTAINER (Espaçamento generoso) */
+.section-container {
+  margin-bottom: 6rem; /* mb-24 */
+}
+
+.section-container-sm {
+  margin-bottom: 4rem; /* mb-16 */
+}
+
+/* 5. SECTION HEADER (Eyebrow + Title + Button container) */
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 3rem; /* mb-12 */
+}
+
+@media (min-width: 768px) {
+  .section-header {
+    flex-direction: row;
+    align-items: flex-end; /* Alinha pela BASE (parte de baixo) - alinha com menu */
+    justify-content: space-between;
+  }
+  
+  /* Botão alinhado com a BASE do menu de navegação interna (py-3 = 12px top/bottom) */
+  /* Menu tem altura ~48px (py-3), botão tem py-4 (16px) = ~64px */
+  /* Alinhar base do botão com base do menu */
+  .section-header > a,
+  .section-header > button,
+  .section-header > .section-header-button {
+    align-self: flex-end; /* Alinha pela base */
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  .section-header .section-title {
+    padding-top: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  
+  /* Container do título também alinhado pela base */
+  .section-header > div:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+}
+
+/* Helper: Remove underline de eyebrow se for link */
+.section-eyebrow a {
+  text-decoration: none;
+}
+
+.section-eyebrow a:hover {
+  opacity: 0.8;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CORREÇÕES DE CONTRASTE - PRIORIDADE MÁXIMA (ANTES DE @theme)
+   DEVE VIR LOGO APÓS @import PARA TER MÁXIMA PRECEDÊNCIA
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════
+   CORREÇÃO GLOBAL DE CONTRASTE - TEMA CLARO
+   FORÇA TODAS AS CLASSES DE TEXTO CLARO A SEREM ESCURAS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Slate - Forçar cores escuras no tema claro */
+[data-theme="light"] .text-slate-50,
+[data-theme="light"] .text-slate-100,
+[data-theme="light"] .text-slate-200,
+[data-theme="light"] .text-slate-300,
+[data-theme="light"] .text-slate-400,
+html[data-theme="light"] .text-slate-50,
+html[data-theme="light"] .text-slate-100,
+html[data-theme="light"] .text-slate-200,
+html[data-theme="light"] .text-slate-300,
+html[data-theme="light"] .text-slate-400 {
+  color: #1e293b !important; /* slate-800 - ESCURO! */
+}
+
+[data-theme="light"] .text-slate-500,
+html[data-theme="light"] .text-slate-500 {
+  color: #334155 !important; /* slate-700 - ESCURO! */
+}
+
+[data-theme="light"] .text-slate-600,
+html[data-theme="light"] .text-slate-600 {
+  color: #475569 !important; /* slate-600 - ESCURO! */
+}
+
+[data-theme="light"] .text-slate-700,
+html[data-theme="light"] .text-slate-700 {
+  color: #334155 !important; /* slate-700 - ESCURO! */
+}
+
+[data-theme="light"] .text-slate-800,
+html[data-theme="light"] .text-slate-800 {
+  color: #1e293b !important; /* slate-800 - ESCURO! */
+}
+
+[data-theme="light"] .text-slate-900,
+html[data-theme="light"] .text-slate-900 {
+  color: #0f172a !important; /* slate-900 - MÁXIMO CONTRASTE! */
+}
+
+/* Gray - Forçar cores escuras no tema claro */
+[data-theme="light"] .text-gray-50,
+[data-theme="light"] .text-gray-100,
+[data-theme="light"] .text-gray-200,
+[data-theme="light"] .text-gray-300,
+[data-theme="light"] .text-gray-400,
+[data-theme="light"] .text-gray-500,
+html[data-theme="light"] .text-gray-50,
+html[data-theme="light"] .text-gray-100,
+html[data-theme="light"] .text-gray-200,
+html[data-theme="light"] .text-gray-300,
+html[data-theme="light"] .text-gray-400,
+html[data-theme="light"] .text-gray-500 {
+  color: #1f2937 !important; /* gray-800 - ESCURO! */
+}
+
+[data-theme="light"] .text-gray-600,
+[data-theme="light"] .text-gray-700,
+[data-theme="light"] .text-gray-800,
+[data-theme="light"] .text-gray-900,
+html[data-theme="light"] .text-gray-600,
+html[data-theme="light"] .text-gray-700,
+html[data-theme="light"] .text-gray-800,
+html[data-theme="light"] .text-gray-900 {
+  color: #111827 !important; /* gray-900 - MÁXIMO CONTRASTE! */
+}
+
+/* Zinc - Forçar cores escuras no tema claro */
+[data-theme="light"] .text-zinc-50,
+[data-theme="light"] .text-zinc-100,
+[data-theme="light"] .text-zinc-200,
+[data-theme="light"] .text-zinc-300,
+[data-theme="light"] .text-zinc-400,
+[data-theme="light"] .text-zinc-500,
+html[data-theme="light"] .text-zinc-50,
+html[data-theme="light"] .text-zinc-100,
+html[data-theme="light"] .text-zinc-200,
+html[data-theme="light"] .text-zinc-300,
+html[data-theme="light"] .text-zinc-400,
+html[data-theme="light"] .text-zinc-500 {
+  color: #18181b !important; /* zinc-800 - ESCURO! */
+}
+
+[data-theme="light"] .text-zinc-600,
+[data-theme="light"] .text-zinc-700,
+[data-theme="light"] .text-zinc-800,
+[data-theme="light"] .text-zinc-900,
+html[data-theme="light"] .text-zinc-600,
+html[data-theme="light"] .text-zinc-700,
+html[data-theme="light"] .text-zinc-800,
+html[data-theme="light"] .text-zinc-900 {
+  color: #09090b !important; /* zinc-900 - MÁXIMO CONTRASTE! */
+}
+
+/* Texto branco/claro - Forçar escuro no tema claro (exceto em cards escuros) */
+[data-theme="light"] .text-white:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-white\/90:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-white\/80:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-white\/70:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-white:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-white\/90:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-white\/80:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-white\/70:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *) {
+  color: #0f172a !important; /* slate-900 - MÁXIMO CONTRASTE! */
+}
+
+/* Fundos claros - Melhorar contraste */
+[data-theme="light"] .bg-white,
+[data-theme="light"] .bg-slate-50,
+[data-theme="light"] .bg-slate-100,
+[data-theme="light"] .bg-gray-50,
+[data-theme="light"] .bg-gray-100,
+html[data-theme="light"] .bg-white,
+html[data-theme="light"] .bg-slate-50,
+html[data-theme="light"] .bg-slate-100,
+html[data-theme="light"] .bg-gray-50,
+html[data-theme="light"] .bg-gray-100 {
+  background-color: #f5f1e8 !important; /* Bege Azimut */
+}
+
+/* Bordas - Melhorar visibilidade no tema claro */
+[data-theme="light"] .border-white\/10,
+[data-theme="light"] .border-slate-200,
+[data-theme="light"] .border-gray-200,
+html[data-theme="light"] .border-white\/10,
+html[data-theme="light"] .border-slate-200,
+html[data-theme="light"] .border-gray-200 {
+  border-color: rgba(0, 0, 0, 0.2) !important; /* Borda mais visível */
+}
+
+[data-theme="light"] .border-slate-300,
+[data-theme="light"] .border-gray-300,
+html[data-theme="light"] .border-slate-300,
+html[data-theme="light"] .border-gray-300 {
+  border-color: rgba(0, 0, 0, 0.3) !important; /* Borda mais visível */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FORMULÁRIO: FORÇAR ESTILOS INPUT-ADAPTIVE (MÁXIMA PRIORIDADE!)
+   DESIGN: ADAPTATIVO AO TEMA DA PÁGINA (CLARO OU ESCURO)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* TEMA ESCURO - Campos escuros */
+.input-adaptive,
+input.input-adaptive,
+select.input-adaptive,
+textarea.input-adaptive {
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(201, 35, 55, 0.3) !important;
+  color: #ffffff !important;
+}
+
+.input-adaptive::placeholder,
+input.input-adaptive::placeholder,
+textarea.input-adaptive::placeholder {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+
+.input-adaptive:focus,
+input.input-adaptive:focus,
+select.input-adaptive:focus,
+textarea.input-adaptive:focus {
+  background: rgba(0, 0, 0, 0.55) !important;
+  border-color: #c92337 !important;
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.15) !important;
+}
+
+/* Autocomplete do Chrome - Tema escuro */
+.input-adaptive:-webkit-autofill,
+input.input-adaptive:-webkit-autofill,
+.input-adaptive:-webkit-autofill:hover,
+.input-adaptive:-webkit-autofill:focus,
+.input-adaptive:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgba(0, 0, 0, 0.4) inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* TEMA CLARO - CAMPOS MANTÊM IDENTIDADE AZIMUT (ESCUROS COM TEXTO BRANCO) */
+[data-theme="light"] .input-adaptive,
+[data-theme="light"] input.input-adaptive,
+[data-theme="light"] select.input-adaptive,
+[data-theme="light"] textarea.input-adaptive,
+html[data-theme="light"] .input-adaptive,
+html[data-theme="light"] input.input-adaptive,
+html[data-theme="light"] select.input-adaptive,
+html[data-theme="light"] textarea.input-adaptive {
+  background: rgba(10, 15, 30, 0.95) !important;
+  border: 1px solid rgba(201, 35, 55, 0.4) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(4px);
+}
+
+[data-theme="light"] .input-adaptive::placeholder,
+[data-theme="light"] input.input-adaptive::placeholder,
+[data-theme="light"] textarea.input-adaptive::placeholder,
+html[data-theme="light"] .input-adaptive::placeholder,
+html[data-theme="light"] input.input-adaptive::placeholder,
+html[data-theme="light"] textarea.input-adaptive::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+[data-theme="light"] .input-adaptive:focus,
+[data-theme="light"] input.input-adaptive:focus,
+[data-theme="light"] select.input-adaptive:focus,
+[data-theme="light"] textarea.input-adaptive:focus,
+html[data-theme="light"] .input-adaptive:focus,
+html[data-theme="light"] input.input-adaptive:focus,
+html[data-theme="light"] select.input-adaptive:focus,
+html[data-theme="light"] textarea.input-adaptive:focus {
+  background: rgba(10, 15, 30, 0.98) !important;
+  border-color: #c92337 !important;
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.25) !important;
+}
+
+/* Autocomplete do Chrome - Tema claro (MANTER ESCURO) */
+[data-theme="light"] .input-adaptive:-webkit-autofill,
+[data-theme="light"] input.input-adaptive:-webkit-autofill,
+[data-theme="light"] .input-adaptive:-webkit-autofill:hover,
+[data-theme="light"] .input-adaptive:-webkit-autofill:focus,
+[data-theme="light"] .input-adaptive:-webkit-autofill:active,
+html[data-theme="light"] .input-adaptive:-webkit-autofill,
+html[data-theme="light"] input.input-adaptive:-webkit-autofill,
+html[data-theme="light"] .input-adaptive:-webkit-autofill:hover,
+html[data-theme="light"] .input-adaptive:-webkit-autofill:focus,
+html[data-theme="light"] .input-adaptive:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgba(10, 15, 30, 0.95) inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMAÇÃO SHAKE PARA ERROS (Premium UX)
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TEMA ESCURO: CARDS COM TEXTO CLARO SEMPRE
+   ═══════════════════════════════════════════════════════════════ */
+html[data-theme="dark"] .card-adaptive,
+html[data-theme="dark"] .card-adaptive *,
+html[data-theme="dark"] .card-dark-adaptive,
+html[data-theme="dark"] .card-dark-adaptive *,
+html[data-theme="dark"] [class*="bg-slate-8"],
+html[data-theme="dark"] [class*="bg-slate-8"] *,
+html[data-theme="dark"] [class*="bg-slate-9"],
+html[data-theme="dark"] [class*="bg-slate-9"] * {
+  color: #ffffff !important; /* Branco puro para máxima legibilidade */
+}
+
+/* Texto descritivo nos cards - mais peso para legibilidade */
+html[data-theme="dark"] .card-adaptive p,
+html[data-theme="dark"] .card-dark-adaptive p,
+.card-adaptive p,
+.card-dark-adaptive p {
+  font-weight: 450; /* Peso médio para melhor leitura */
+  letter-spacing: 0.01em; /* Leve espaçamento */
+  line-height: 1.6; /* Altura de linha confortável */
+}
+
+/* Texto vermelho em BOLD para destaque máximo - AMBOS OS TEMAS */
+.text-azimut-red,
+.card-adaptive .text-azimut-red,
+.card-dark-adaptive .text-azimut-red,
+.card-dark-fixed .text-azimut-red,
+[data-theme="dark"] .text-azimut-red,
+[data-theme="light"] .text-azimut-red,
+[style*="color: rgb(201, 35, 55)"],
+[style*="color:#c92337"],
+[class*="text-red-"] {
+  font-weight: 600 !important; /* Semi-bold para destaque */
+  letter-spacing: 0.02em;
+}
+
+/* Títulos sempre brancos no tema escuro */
+html[data-theme="dark"] .card-adaptive h1,
+html[data-theme="dark"] .card-adaptive h2,
+html[data-theme="dark"] .card-adaptive h3 {
+  color: #ffffff !important;
+}
+
+/* Forçar .text-slate-900 a ser claro no tema escuro */
+html[data-theme="dark"] .text-slate-900 {
+  color: #ffffff !important; /* Bege mais claro */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CORREÇÃO GLOBAL DE CONTRASTE - TEMA CLARO
+   FORÇA TODAS AS CLASSES DE TEXTO CLARO A SEREM ESCURAS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Slate - Forçar cores escuras no tema claro (exceto em cards escuros) */
+[data-theme="light"] .text-slate-50:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-slate-100:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-slate-200:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-slate-300:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-slate-400:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-slate-50:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-slate-100:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-slate-200:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-slate-300:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-slate-400:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *) {
+  color: #1e293b !important; /* slate-800 - ESCURO! */
+}
+
+[data-theme="light"] .text-slate-500:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-slate-500:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *) {
+  color: #334155 !important; /* slate-700 - ESCURO! */
+}
+
+[data-theme="light"] .text-slate-600:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-slate-600:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *) {
+  color: #475569 !important; /* slate-600 - ESCURO! */
+}
+
+[data-theme="light"] .text-slate-700:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-slate-700:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *) {
+  color: #334155 !important; /* slate-700 - ESCURO! */
+}
+
+[data-theme="light"] .text-slate-800:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-slate-800:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *) {
+  color: #1e293b !important; /* slate-800 - ESCURO! */
+}
+
+[data-theme="light"] .text-slate-900:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-slate-900:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *) {
+  color: #0f172a !important; /* slate-900 - MÁXIMO CONTRASTE! */
+}
+
+/* Gray - Forçar cores escuras no tema claro */
+[data-theme="light"] .text-gray-50:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-gray-100:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-gray-200:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-gray-300:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-gray-400:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-gray-500:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-gray-50:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-gray-100:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-gray-200:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-gray-300:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-gray-400:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-gray-500:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *) {
+  color: #1f2937 !important; /* gray-800 - ESCURO! */
+}
+
+[data-theme="light"] .text-gray-600:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-gray-700:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-gray-800:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-gray-900:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-gray-600:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-gray-700:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-gray-800:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-gray-900:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *) {
+  color: #111827 !important; /* gray-900 - MÁXIMO CONTRASTE! */
+}
+
+/* Zinc - Forçar cores escuras no tema claro */
+[data-theme="light"] .text-zinc-50:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-zinc-100:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-zinc-200:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-zinc-300:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-zinc-400:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-zinc-500:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-zinc-50:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-zinc-100:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-zinc-200:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-zinc-300:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-zinc-400:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-zinc-500:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *) {
+  color: #18181b !important; /* zinc-800 - ESCURO! */
+}
+
+[data-theme="light"] .text-zinc-600:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-zinc-700:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-zinc-800:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+[data-theme="light"] .text-zinc-900:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-zinc-600:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-zinc-700:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-zinc-800:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *),
+html[data-theme="light"] .text-zinc-900:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="bg-gradient"] *):not([class*="bg-azimut"] *) {
+  color: #09090b !important; /* zinc-900 - MÁXIMO CONTRASTE! */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TEMA CLARO: REGRAS SIMPLIFICADAS E CLASSES UTILITÁRIAS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 
+   PADRÃO AZIMUT TEMA CLARO:
+   - Fundo claro (#f5f1e8) = texto escuro (#0f172a)
+   - Fundo escuro (cards) = texto claro (#d3cec3)
+   - Botões vermelhos = texto branco (#ffffff)
+   
+   CLASSES UTILITÁRIAS:
+   - .dark-bg-text: Força texto claro em qualquer elemento
+   - .light-bg-text: Força texto escuro em qualquer elemento
+*/
+
+/* ═══════════════════════════════════════════════════════════════
+   1. CLASSES UTILITÁRIAS GLOBAIS (usar quando precisar forçar cor)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Força texto claro (para fundos escuros) */
+.dark-bg-text,
+.dark-bg-text * {
+  color: #ffffff !important;
+}
+
+.dark-bg-text-white,
+.dark-bg-text-white * {
+  color: #ffffff !important;
+}
+
+/* Força texto escuro (para fundos claros) */
+[data-theme="light"] .light-bg-text,
+[data-theme="light"] .light-bg-text * {
+  color: #0f172a !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   2. REGRAS AUTOMÁTICAS PARA CARDS COM FUNDO ESCURO
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Cards escuros SEMPRE têm texto claro (em qualquer tema) */
+/* NOTA: .solution-card-dark REMOVIDO - usa estilos inline no componente */
+.card-adaptive,
+.card-adaptive *,
+.card-dark-adaptive,
+.card-dark-adaptive *,
+.card-dark-fixed,
+.card-dark-fixed *,
+.card-dark-alt-adaptive,
+.card-dark-alt-adaptive * {
+  color: #ffffff !important;
+}
+
+/* Títulos em cards escuros são brancos */
+.card-adaptive h1, .card-adaptive h2, .card-adaptive h3,
+.card-dark-adaptive h1, .card-dark-adaptive h2, .card-dark-adaptive h3,
+.card-dark-fixed h1, .card-dark-fixed h2, .card-dark-fixed h3,
+.card-dark-alt-adaptive h1, .card-dark-alt-adaptive h2, .card-dark-alt-adaptive h3 {
+  color: #ffffff !important;
+}
+
+/* Permitir sobrenome em vermelho dentro de h3 nos cards da equipe */
+.card-dark-fixed h3 .text-azimut-red,
+.card-adaptive h3 .text-azimut-red,
+.card-dark-adaptive h3 .text-azimut-red,
+.team-card h3 .text-azimut-red,
+.team-card-content h3 .text-azimut-red {
+  color: #c92337 !important;
+}
+
+/* Link LinkedIn com cor azul oficial */
+.linkedin-link,
+.card-dark-fixed .linkedin-link,
+.card-adaptive .linkedin-link,
+.team-card .linkedin-link {
+  color: #0A66C2 !important;
+}
+.linkedin-link:hover {
+  color: #004182 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   3. BOTÕES VERMELHOS - SEMPRE TEXTO BRANCO
+   ═══════════════════════════════════════════════════════════════ */
+
+.bg-azimut-red,
+.bg-azimut-red *,
+[class*="bg-azimut-red"],
+[class*="bg-azimut-red"] * {
+  color: #ffffff !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   4. TEMA CLARO: TEXTO ESCURO NO FUNDO BEGE
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Regra geral: no tema claro, texto principal é escuro */
+[data-theme="light"] body {
+  color: #0f172a;
+}
+
+/* Exceção: Pills no tema claro têm estilo próprio */
+[data-theme="light"] .pill-adaptive {
+  color: #8b1f2f !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FUNDOS SUTIS ADAPTIVOS (Substitui bg-white/5, bg-white/10, etc)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Fundo sutil (5% opacidade) */
+.bg-subtle {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="light"] .bg-subtle {
+  background: rgba(42, 40, 37, 0.04); /* Cinza terroso Azimut #2a2825 */
+}
+
+/* Fundo sutil médio (10% opacidade) - para hover */
+.bg-subtle-md {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] .bg-subtle-md {
+  background: rgba(42, 40, 37, 0.08);
+}
+
+/* Fundo sutil forte (20% opacidade) - para active */
+.bg-subtle-strong {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="light"] .bg-subtle-strong {
+  background: rgba(42, 40, 37, 0.12);
+}
+
+/* Hover transitions */
+.hover\:bg-subtle-md:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] .hover\:bg-subtle-md:hover {
+  background: rgba(42, 40, 37, 0.08);
+}
+
+.hover\:bg-subtle-strong:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="light"] .hover\:bg-subtle-strong:hover {
+  background: rgba(42, 40, 37, 0.12);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PILLS - REGRA ESPECÍFICA COM MÁXIMA PRIORIDADE
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Pills tema claro - CORES AZIMUT COM CONTRASTE */
+html[data-theme="light"] span.pill-adaptive,
+html[data-theme="light"] .pill-adaptive {
+  border-color: rgba(201, 35, 55, 0.3) !important; /* Vermelho Azimut */
+  color: #8b1f2f !important; /* Vermelho escuro (contraste alto) */
+  background: rgba(201, 35, 55, 0.12) !important; /* Fundo vermelho suave */
+  font-weight: 600 !important; /* Semibold */
+}
+
+/* Pills tema escuro - TEXTO CLARO */
+html[data-theme="dark"] span.pill-adaptive,
+html[data-theme="dark"] .pill-adaptive {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #f1f5f9 !important;
+  background: transparent !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CORREÇÃO ESPECÍFICA: CARDS COM FUNDO ESCURO INLINE
+   ═══════════════════════════════════════════════════════════════ */
+
+/* PROBLEMA: Elementos com background inline (style="background: linear-gradient(...)")
+   que usam var(--theme-text) ou var(--theme-text-secondary) não são detectados
+   pelas regras anteriores baseadas em classes. */
+
+/* SOLUÇÃO: Detectar cards com classes conhecidas (.card-dark-fixed, .card-dark-alt-adaptive)
+   e FORÇAR que var(--theme-text) e var(--theme-text-secondary) sejam sempre CLAROS */
+
+/* 1. Cards com .card-dark-fixed (Pilares, etc.) */
+html[data-theme="light"] .card-dark-fixed,
+html[data-theme="light"] .card-dark-fixed * {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: #f0ece5 !important;
+  --theme-card-text: #ffffff !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .card-dark-fixed,
+html[data-theme="dark"] .card-dark-fixed * {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: #f0ece5 !important;
+  color: #ffffff !important;
+}
+
+/* Link LinkedIn - FORÇA cor azul oficial (sobrescreve regras acima) */
+html[data-theme="light"] .card-dark-fixed a.linkedin-link,
+html[data-theme="light"] .card-dark-fixed a.linkedin-link *,
+html[data-theme="dark"] .card-dark-fixed a.linkedin-link,
+html[data-theme="dark"] .card-dark-fixed a.linkedin-link *,
+a.linkedin-link,
+a.linkedin-link * {
+  color: #0A66C2 !important;
+}
+html[data-theme="light"] .card-dark-fixed a.linkedin-link:hover,
+html[data-theme="light"] .card-dark-fixed a.linkedin-link:hover *,
+html[data-theme="dark"] .card-dark-fixed a.linkedin-link:hover,
+html[data-theme="dark"] .card-dark-fixed a.linkedin-link:hover *,
+a.linkedin-link:hover,
+a.linkedin-link:hover * {
+  color: #004182 !important;
+}
+
+/* 2. Cards com .card-dark-alt-adaptive (Strategy & Positioning) */
+html[data-theme="light"] .card-dark-alt-adaptive,
+html[data-theme="light"] .card-dark-alt-adaptive * {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: #f0ece5 !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .card-dark-alt-adaptive,
+html[data-theme="dark"] .card-dark-alt-adaptive * {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: #f0ece5 !important;
+  color: #ffffff !important;
+}
+
+/* 3. Cards com .card-dark-adaptive (Modelo de Cocriação, Timeline) */
+html[data-theme="light"] .card-dark-adaptive,
+html[data-theme="light"] .card-dark-adaptive * {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: #f0ece5 !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .card-dark-adaptive,
+html[data-theme="dark"] .card-dark-adaptive * {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: #f0ece5 !important;
+  color: #ffffff !important;
+}
+
+/* 4. Elementos com background inline escuro (detecta por ancestral com estilo inline) */
+html[data-theme="light"] [style*="background: linear-gradient(135deg, #0a0f1a"],
+html[data-theme="light"] [style*="background: linear-gradient(135deg, #0a0f1a"] * {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: #f0ece5 !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"],
+html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"] * {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: #f0ece5 !important;
+  color: #ffffff !important;
+}
+
+/* 5. Cards de Soluções (WhatWeDo) - REMOVIDO */
+/* Os cards de soluções usam estilos INLINE no componente WhatWeDo.tsx */
+/* Não usar regras CSS aqui pois !important sobrescreve estilos inline */
+
+/* ═══════════════════════════════════════════════════════════════
+   TEMA PERSONALIZADO - Azimut 2026
+   Cinematographic • Immersive • Interactive
+   ═══════════════════════════════════════════════════════════════ */
+@theme {
+  /* Cores - Paleta Azimut Oficial */
+  --color-azimut-bg: #050814;
+  --color-azimut-bg-light: #d3cec3;
+  --color-azimut-red: #c92337;
+  --color-azimut-red-light: #c92337; /* Mesmo vermelho para hover */
+  --color-azimut-red-dark: #8B2332;
+  --color-azimut-gold: #F7C400;
+  --color-azimut-cream: #d3cec3;
+  
+  /* Fontes personalizadas */
+  --font-handel: 'HandelGothic', 'Sora', system-ui, sans-serif;
+  --font-inter: 'InterCustom', system-ui, sans-serif;
+  --font-sora: 'SoraCustom', system-ui, sans-serif;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CSS VARIABLES PARA TEMA DINÂMICO
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* Tema Escuro (Default) - Cinematográfico */
+  --theme-bg: #050814;
+  --theme-bg-secondary: #0a0f1a;
+  --theme-bg-sticky: rgba(10, 14, 23, 0.95); /* Background sticky com blur */
+  --theme-text: #ffffff;
+  --theme-text-secondary: #f0ece5;
+  --theme-text-muted: #8a8a8a;
+  --theme-border: rgba(255, 255, 255, 0.1);
+  --theme-card-bg: rgba(10, 15, 26, 0.8);
+  --theme-overlay: rgba(5, 8, 20, 0.95);
+  --pattern-opacity: 0.12;
+  --grain-opacity: 0.85; /* Granulação intensa no tema escuro */
+  --gradient-overlay: linear-gradient(135deg, rgba(201, 35, 55, 0.35) 0%, transparent 50%, rgba(68, 27, 68, 0.25) 100%); /* GRADIENTE VERMELHO LATERAL MAIS VISÍVEL! */
+  
+  /* COR VERMELHA ADAPTATIVA */
+  --theme-accent-red: #c92337; /* Vermelho original para tema escuro! */
+  --theme-accent-red-rgb: 201, 35, 55; /* RGB para rgba() */
+  
+  /* ═══════════════════════════════════════════════════════════════
+     DESIGN SYSTEM PREMIUM - Adicionado 02/01/2026
+     ═══════════════════════════════════════════════════════════════ */
+  
+  /* ESPAÇAMENTOS (Sistema 4px base) */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;  /* 4px */
+  --spacing-2: 0.5rem;   /* 8px */
+  --spacing-3: 0.75rem;  /* 12px */
+  --spacing-4: 1rem;     /* 16px */
+  --spacing-5: 1.25rem;  /* 20px */
+  --spacing-6: 1.5rem;   /* 24px */
+  --spacing-8: 2rem;     /* 32px */
+  --spacing-10: 2.5rem;  /* 40px */
+  --spacing-12: 3rem;    /* 48px */
+  --spacing-16: 4rem;    /* 64px */
+  --spacing-20: 5rem;    /* 80px */
+  --spacing-24: 6rem;    /* 96px */
+  
+  /* BORDER RADIUS (Consistente) */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+  
+  /* TRANSIÇÕES (Suaves e Naturais) */
+  --transition-fast: 150ms;
+  --transition-base: 250ms;
+  --transition-slow: 400ms;
+  --transition-slowest: 600ms;
+  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* SOMBRAS (Cinematográficas) */
+  --shadow-xs: 0 1px 4px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.5);
+  --glow-red: 0 0 12px rgba(201, 35, 55, 0.4);
+  --glow-red-strong: 0 0 24px rgba(201, 35, 55, 0.6);
+  
+  /* HOVER/FOCUS STATES */
+  --theme-hover-bg: rgba(255, 255, 255, 0.05);
+  --theme-focus-ring: 0 0 0 2px rgba(201, 35, 55, 0.3);
+}
+
+[data-theme="light"] {
+  /* Tema Claro - Alto Contraste */
+  --theme-bg: #f5f1e8; /* Bege quase branco - Premium (Opção 3 escolhida) */
+  --theme-bg-secondary: #e8e5df; /* Bege claro - Secundário */
+  --theme-bg-sticky: rgba(245, 241, 232, 0.95); /* Background sticky claro com blur */
+  --theme-text: #0d0d0d;           /* Preto puro para máximo contraste */
+  --theme-text-secondary: #1a1a1a; /* Quase preto */
+  --theme-text-muted: #1a1a1a;     /* Preto em vez de cinza */
+  --theme-border: rgba(0, 0, 0, 0.25); /* Bordas mais visíveis */
+  --theme-card-bg: rgba(30, 35, 45, 0.95); /* Card ESCURO no tema claro */
+  --theme-overlay: rgba(245, 241, 232, 0.98); /* Overlay alinhado com novo fundo */
+  --pattern-opacity: 0.06;
+  --grain-opacity: 0.35; /* Granulação média no tema claro */
+  --gradient-overlay: linear-gradient(135deg, rgba(201, 35, 55, 0.08) 0%, transparent 45%, rgba(201, 35, 55, 0.06) 100%); /* Gradiente vermelho médio no tema claro */
+  /* Cores específicas para tema claro */
+  --theme-card-text: #ffffff;      /* Branco puro para máxima legibilidade */
+  --theme-card-text-secondary: #cbd5e1; /* Cinza claro para descrições em cards escuros */
+  --theme-card-border: rgba(211, 206, 195, 0.3);
+  
+  /* COR VERMELHA ADAPTATIVA - VERMELHO ESCURO NO TEMA CLARO (não rosa!) */
+  --theme-accent-red: #a01a2a; /* Vermelho escuro para tema claro (não rosa!) */
+  --theme-accent-red-rgb: 160, 26, 42; /* RGB para rgba() */
+  
+  /* HOVER/FOCUS STATES - Tema Claro */
+  --theme-hover-bg: rgba(0, 0, 0, 0.04);
+  --theme-focus-ring: 0 0 0 2px rgba(201, 35, 55, 0.2);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SMOOTH SCROLL COM "RESPIRO" NO TOPO
+   ═══════════════════════════════════════════════════════════════ */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Espaço para header fixo + respiro visual */
+}
+
+/* Todos os elementos scrolláveis também têm o respiro */
+* {
+  scroll-margin-top: 80px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FONT FACES
+   ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════
+   FONT OPTIMIZATION - Fontes movidas para o topo (linha 2-40)
+   ═══════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════
+   FALLBACKS PARA NAVEGADORES ANTIGOS E EQUIPAMENTOS LIMITADOS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Fallback 1: Navegadores sem suporte a CSS Variables */
+@supports not (--css: variables) {
+  :root {
+    /* Cores fixas como fallback */
+    background-color: #050814 !important;
+    color: #ffffff !important;
+  }
+  
+  body {
+    background-color: #050814 !important;
+    color: #ffffff !important;
+  }
+  
+  /* Links */
+  a {
+    color: #c92337 !important;
+  }
+  
+  /* Botões */
+  button {
+    background-color: #c92337 !important;
+    color: #ffffff !important;
+  }
+}
+
+/* Fallback 2: Telas MUITO pequenas (800x600, 1024x768 CRT antigas) */
+@media (max-width: 800px) and (max-height: 600px) {
+  body {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+  }
+  
+  /* Reduzir paddings em telas antigas */
+  * {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+}
+
+/* Fallback 3: Suporte para IE11 e Edge Legacy */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  /* IE 10-11 */
+  body {
+    background-color: #050814;
+    color: #ffffff;
+  }
+  
+  /* Forçar Flexbox antigo (IE) */
+  .flex {
+    display: -ms-flexbox;
+    display: flex;
+  }
+  
+  /* Grid fallback para IE11 (usa Flexbox) */
+  .grid {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+}
+
+/* Fallback 4: Firefox muito antigo (< 60) */
+@-moz-document url-prefix() {
+  body {
+    /* Garantir fonte padrão */
+    font-family: Arial, Helvetica, sans-serif;
+  }
+}
+
+/* Fallback 5: Safari antigo (< 12) */
+@supports (-webkit-appearance: none) and (not (backdrop-filter: blur(10px))) {
+  /* Safari 11 ou anterior */
+  body {
+    background-color: #050814;
+  }
+  
+  /* Remover backdrop-filter que não funciona */
+  .glass {
+    background-color: rgba(5, 8, 20, 0.9) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/* Fallback 6: Telas de baixa resolução (1024x768 ou menor) */
+@media (max-width: 1024px) and (max-height: 768px) {
+  html {
+    font-size: 14px; /* Reduz tamanho base para caber melhor */
+  }
+  
+  /* Reduzir margens e paddings */
+  .container {
+    padding: 1rem !important;
+  }
+}
+
+/* Fallback 7: Impressão (caso alguém queira imprimir) */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  /* Esconder elementos de navegação */
+  header, nav, footer, .nav, .navigation {
+    display: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TIPOGRAFIA WORLD-CLASS 2026 - Hierarquia Exagerada (Inversa/Igloo)
+   ═══════════════════════════════════════════════════════════════ */
+/* 
+   NOTA: Regras globais h1, h2, h3, h4 REMOVIDAS
+   Cada página tem seus próprios estilos de título
+   Use classes específicas: .section-title, .text-monumental, etc.
+*/
+
+/* Classes utilitárias - APENAS quando explicitamente usadas */
+.text-monumental {
+  font-family: var(--font-handel);
+  font-size: clamp(2.5rem, 8vw, 8rem); /* 40px → 128px */
+  line-height: 1.1;
+  letter-spacing: 0.12em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.text-giant {
+  font-family: var(--font-handel);
+  font-size: clamp(2rem, 5vw, 4rem); /* 32px → 64px */
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Font Handel - Títulos e Headings - FORÇA CARREGAMENTO */
+.font-handel {
+  font-family: 'HandelGothic', 'Handel Gothic', var(--font-handel, 'Sora', system-ui, sans-serif) !important;
+  font-weight: 400 !important;
+}
+
+/* Labels/UI - Sora (tracking generoso como Omega) */
+.font-sora {
+  font-family: var(--font-sora);
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ESTILOS BASE - Cinematográfico 2026
+   ═══════════════════════════════════════════════════════════════ */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Fallback para navegadores sem suporte a scroll-behavior */
+@supports not (scroll-behavior: smooth) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  font-family: var(--font-inter, system-ui, -apple-system, sans-serif);
+  background-color: var(--theme-bg, #050814);
+  color: var(--theme-text, #ffffff);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  position: relative;
+}
+
+/* Prevenir overflow horizontal em todos os elementos */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   OTIMIZAÇÕES PARA TABLETS E TOUCH
+   ═══════════════════════════════════════════════════════════════ */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+/* Melhorar área de toque em tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Tablets: aumentar espaçamentos e áreas de toque */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Menu desktop em tablets */
+  nav a {
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+#root {
+  position: relative;
+  min-height: 100vh;
+  /* Garantir que o conteúdo respeite as safe areas do iPhone */
+  min-height: calc(100vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+}
+
+/* Safe area para conteúdo principal - evita crop em iPhone */
+main {
+  /* Padding lateral para safe area em landscape (notch nas laterais) */
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  position: relative;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CAMADA 0: REMOVIDA - Cor base agora vem do body
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════
+   CAMADA 1: Pattern Tile de Fundo (Estilo WhatsApp/Cinematográfico)
+   ═══════════════════════════════════════════════════════════════ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -15;
+  background-image: url('/pattern-azimut.png');
+  background-size: 300px 300px;
+  background-repeat: repeat;
+  opacity: 0.15;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CAMADA 2: Gradiente Vermelho Overlay
+   ═══════════════════════════════════════════════════════════════ */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -14;
+  background: var(--gradient-overlay);
+  pointer-events: none;
+  transition: background 0.5s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CAMADA 3: Atmosfera Cinematográfica (Tema Escuro)
+   ═══════════════════════════════════════════════════════════════ */
+#root::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -13;
+  background:
+    /* Gradiente superior azulado - luz de cinema */
+    radial-gradient(ellipse 90% 50% at 15% -15%, rgba(34, 38, 70, 0.85) 0%, transparent 55%),
+    /* Gradiente inferior roxo/magenta - profundidade */
+    radial-gradient(ellipse 80% 50% at 90% 115%, rgba(68, 27, 68, 0.75) 0%, transparent 50%),
+    /* Brilho central vermelho Azimut sutil */
+    radial-gradient(ellipse 50% 35% at 50% 50%, rgba(201, 35, 55, 0.08) 0%, transparent 45%),
+    /* Gradiente lateral ESQUERDA→DIREITA vermelho - não atrapalha logo */
+    radial-gradient(ellipse 60% 100% at 0% 50%, rgba(201, 35, 55, 0.22) 0%, transparent 45%);
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+[data-theme="light"] #root::before {
+  background:
+    radial-gradient(ellipse 90% 50% at 15% -15%, rgba(201, 35, 55, 0.008) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 50% at 90% 115%, rgba(139, 35, 50, 0.006) 0%, transparent 50%);
+  opacity: 0.15;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CAMADA 4: Grão Cinematográfico (Film Grain) - TEXTURA INTENSA (SEM ANIMAÇÃO)
+   ═══════════════════════════════════════════════════════════════ */
+#root::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -18; /* Muito atrás - abaixo do film-grain::before (-15) e não interfere com logo */
+  background-image: url('/fundo grao.png');
+  background-size: 200px 200px; /* Aumentado para menos repetição */
+  background-repeat: repeat;
+  background-position: 0 0; /* Fixo - sem movimento */
+  mix-blend-mode: overlay;
+  opacity: 0.85; /* INTENSO - Textura bem visível (aumentado de 0.65) */
+  pointer-events: none;
+  /* SEM ANIMAÇÃO - apenas textura estática intensa */
+  animation: none !important;
+  transform: none !important;
+  transition: none !important;
+  will-change: auto;
+}
+
+[data-theme="dark"] #root::after {
+  mix-blend-mode: screen; /* Screen para realçar no fundo escuro */
+  opacity: 0.25; /* Granulação BEM visível no escuro */
+  filter: contrast(1.5) brightness(1.4); /* Mais contraste e brilho */
+}
+
+[data-theme="light"] #root::after {
+  mix-blend-mode: soft-light; /* Soft-light para equilíbrio */
+  opacity: 0.20; /* Granulação média - visível sem exagero */
+}
+
+/* Animação desabilitada - estava causando sobreposição horizontal */
+/* @keyframes grainShift {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-1px, 1px); }
+  50% { transform: translate(1px, -1px); }
+  75% { transform: translate(-0.5px, -0.5px); }
+} */
+
+/* ═══════════════════════════════════════════════════════════════
+   CAMADA 5: Vinheta Cinematográfica (Bordas Escuras)
+   ═══════════════════════════════════════════════════════════════ */
+.cinematic-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: -7;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.4) 100%);
+  pointer-events: none;
+}
+
+[data-theme="light"] .cinematic-vignette {
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 50%, rgba(0, 0, 0, 0.08) 100%);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ESTRELA DE FUNDO - Adaptação para Tema Claro
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Estrela com tag <img> - inverter cores: linhas brancas viram escuras no tema claro */
+[data-theme="light"] img[src*="logo-azimut-star.svg"] {
+  filter: invert(1) brightness(0.15);
+  opacity: 0.5 !important;
+}
+
+/* Estrela com background-image - aplicar filtro no container div */
+/* Seleciona divs com backgroundImage contendo logo-azimut-star.svg */
+[data-theme="light"] div[style*="backgroundImage"][style*="logo-azimut-star"] {
+  filter: invert(1) brightness(0.15);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COMPONENTES ADAPTATIVOS POR TEMA
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Pills/Tags adaptativas */
+.pill-adaptive {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #f1f5f9; /* slate-100 */
+  background: transparent;
+}
+
+[data-theme="light"] .pill-adaptive {
+  border-color: rgba(201, 35, 55, 0.3) !important; /* Vermelho Azimut */
+  color: #8b1f2f !important; /* Vermelho escuro (contraste alto) */
+  background: rgba(201, 35, 55, 0.12) !important; /* Fundo vermelho suave */
+}
+
+/* Texto adaptativo - garante legibilidade */
+.text-adaptive {
+  color: #ffffff;
+}
+
+[data-theme="light"] .text-adaptive {
+  color: #1a1a1a;
+}
+
+/* Estrela amarela - mais visível no tema claro */
+.star-gold {
+  color: #F7C400;
+}
+
+[data-theme="light"] .star-gold {
+  color: #D4A000; /* Dourado mais escuro para contraste */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SMOOTH SCROLL PREMIUM - Estilo Locomotive/Lenis
+   ═══════════════════════════════════════════════════════════════ */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar - cinematográfico */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--theme-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-azimut-red);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-azimut-red-light);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MICRO-INTERAÇÕES - Web 2026
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Efeito glow cinematográfico nos links */
+.nav-link-glow {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.nav-link-glow::before {
+  content: '';
+  position: absolute;
+  inset: -8px -12px;
+  background: radial-gradient(ellipse at center, rgba(201, 35, 55, 0) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+  border-radius: 8px;
+}
+
+.nav-link-glow:hover {
+  color: #c92337 !important; /* Vermelho puro Azimut - sem laranja */
+  text-shadow: 0 0 25px rgba(201, 35, 55, 0.8), 0 0 50px rgba(201, 35, 55, 0.5);
+}
+
+.nav-link-glow:hover::before {
+  background: radial-gradient(ellipse at center, rgba(201, 35, 55, 0.15) 0%, transparent 70%);
+  opacity: 1;
+}
+
+/* Glow mais intenso no tema escuro */
+[data-theme="dark"] .nav-link-glow:hover {
+  color: #c92337 !important; /* Vermelho puro Azimut - sem laranja */
+  text-shadow: 0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4); /* Diminuído de 0.9/0.6 */
+}
+
+[data-theme="dark"] .nav-link-glow:hover::before {
+  background: radial-gradient(ellipse at center, rgba(201, 35, 55, 0.18) 0%, rgba(201, 35, 55, 0.08) 50%, transparent 70%);
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TECH PILLS - Badges de Tecnologia Premium Adaptativos
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Base - Tema Escuro (padrão) */
+.tech-pill {
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0.15) 0%, rgba(201, 35, 55, 0.08) 100%);
+  color: #ffffff;
+  border: 1px solid rgba(201, 35, 55, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tech-pill:hover {
+  background: linear-gradient(135deg, #c92337 0%, #e84858 100%);
+  color: #ffffff;
+  border-color: #c92337;
+  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.4);
+}
+
+/* Tema Claro - Estilo Outline Premium */
+[data-theme="light"] .tech-pill {
+  background: rgba(201, 35, 55, 0.08);
+  color: #8b1a2a; /* Vermelho escuro para contraste */
+  border: 2px solid rgba(201, 35, 55, 0.5);
+  box-shadow: 0 2px 8px rgba(201, 35, 55, 0.1);
+  font-weight: 600;
+}
+
+[data-theme="light"] .tech-pill:hover {
+  background: #c92337;
+  color: #ffffff;
+  border-color: #c92337;
+  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.35);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BADGE/PILL GENÉRICO ADAPTATIVO - Usar em todo o site
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Pill vermelho adaptativo - funciona em ambos os temas */
+.pill-red-adaptive {
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0.15) 0%, rgba(201, 35, 55, 0.08) 100%);
+  color: #ffffff;
+  border: 1px solid rgba(201, 35, 55, 0.4);
+  transition: all 0.3s ease;
+}
+
+.pill-red-adaptive:hover {
+  background: #c92337;
+  color: #ffffff;
+  border-color: #c92337;
+  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.4);
+}
+
+[data-theme="light"] .pill-red-adaptive {
+  background: rgba(201, 35, 55, 0.06);
+  color: #7a1525; /* Vermelho escuro legível */
+  border: 2px solid rgba(201, 35, 55, 0.45);
+  font-weight: 600;
+}
+
+[data-theme="light"] .pill-red-adaptive:hover {
+  background: #c92337;
+  color: #ffffff;
+  border-color: #c92337;
+}
+
+/* Tag/Badge pequeno adaptativo */
+.tag-adaptive {
+  background: rgba(201, 35, 55, 0.12);
+  color: #f5f5f5;
+  border: 1px solid rgba(201, 35, 55, 0.3);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+[data-theme="light"] .tag-adaptive {
+  background: rgba(201, 35, 55, 0.08);
+  color: #6b1420;
+  border: 1px solid rgba(201, 35, 55, 0.35);
+  font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CREDENTIAL PILLS - Estilo OUTLINE PREMIUM
+   Minimalista, elegante, alta legibilidade
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Tema Escuro - Outline vermelho, fundo transparente */
+.credential-pill {
+  background: transparent;
+  color: #ffffff;
+  border: 2px solid rgba(201, 35, 55, 0.6);
+  font-weight: 600;
+  letter-spacing: 0.02em; /* Reduzido para caber mais texto */
+  overflow: visible; /* Não cortar texto */
+}
+
+.credential-pill:hover {
+  background: #c92337;
+  color: #ffffff;
+  border-color: #c92337;
+  box-shadow: 0 4px 20px rgba(201, 35, 55, 0.4);
+  overflow: visible; /* Garantir que não corta */
+}
+
+/* Tema Claro - Outline vermelho, fundo transparente, texto escuro */
+[data-theme="light"] .credential-pill {
+  background: transparent;
+  color: #1a1a1a; /* Preto - máximo contraste */
+  border: 2px solid rgba(201, 35, 55, 0.5);
+  font-weight: 700; /* Mais pesado para legibilidade */
+}
+
+[data-theme="light"] .credential-pill:hover {
+  background: #c92337;
+  color: #ffffff;
+  border-color: #c92337;
+  box-shadow: 0 4px 20px rgba(201, 35, 55, 0.35);
+}
+
+/* Efeito magnético - aplicado via JS */
+.magnetic-hover {
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+/* Botão CTA com glow cinematográfico */
+.cta-glow {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 
+    0 0 0 0 rgba(201, 35, 55, 0),
+    inset 0 0 0 0 rgba(201, 35, 55, 0);
+}
+
+.cta-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0.5), rgba(139, 35, 50, 0.5));
+  border-radius: inherit;
+  opacity: 0;
+  z-index: -1;
+  filter: blur(12px);
+  transition: opacity 0.4s ease;
+}
+
+.cta-glow:hover {
+  box-shadow: 
+    0 0 30px rgba(201, 35, 55, 0.5),
+    0 0 60px rgba(201, 35, 55, 0.25),
+    inset 0 0 20px rgba(201, 35, 55, 0.1);
+  border-color: #c92337;
+  background: rgba(201, 35, 55, 0.12);
+  transform: translateY(-2px);
+}
+
+.cta-glow:hover::before {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMAÇÕES CINEMATOGRÁFICAS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Fade in com parallax sutil */
+/* Classe utilitária para animação automática */
+.animate-fadeInUp {
+  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  opacity: 1 !important;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMAÇÕES CTA PREMIUM - GLOW PULSANTE & SHINE
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Glow pulsante suave - respira como batimento cardíaco */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 30px rgba(201, 35, 55, 0.3),
+      0 0 60px rgba(201, 35, 55, 0.15),
+      0 0 90px rgba(201, 35, 55, 0.05);
+  }
+  50% {
+    box-shadow: 
+      0 0 50px rgba(201, 35, 55, 0.6),
+      0 0 100px rgba(201, 35, 55, 0.3),
+      0 0 150px rgba(201, 35, 55, 0.1);
+  }
+}
+
+/* Brilho passando (shine effect) */
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+    opacity: 0;
+  }
+}
+
+/* Rotação suave e lenta para logo SVG */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Efeito de revelação cinematográfica */
+@keyframes revealMask {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Classes de animação */
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-reveal {
+  animation: revealMask 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Stagger delays para sequências cinematográficas */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+.delay-700 { animation-delay: 0.7s; }
+.delay-800 { animation-delay: 0.8s; }
+
+/* ═══════════════════════════════════════════════════════════════
+   GLASSMORPHISM - Efeito de Vidro Premium
+   ═══════════════════════════════════════════════════════════════ */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EFEITOS DE IMAGEM - Tratamento Cinematográfico
+   ═══════════════════════════════════════════════════════════════ */
+.img-cinematic {
+  filter: contrast(1.05) saturate(0.95);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.img-cinematic:hover {
+  filter: contrast(1.1) saturate(1.1);
+  transform: scale(1.02);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CARDS DA EQUIPE - Background Sólido + Texto Claro (SEMPRE)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Card da equipe - FUNDO SÓLIDO ESCURO (ambos os temas) */
+.team-card {
+  background: linear-gradient(165deg, #141826 0%, #0c0f18 100%) !important;
+}
+
+[data-theme="light"] .team-card {
+  background: linear-gradient(165deg, #1a1f2e 0%, #0f1320 100%) !important;
+}
+
+/* Conteúdo do card - FUNDO SÓLIDO ESCURO */
+.team-card-content {
+  background: linear-gradient(180deg, #0c0f18 0%, #080a10 100%) !important;
+}
+
+[data-theme="light"] .team-card-content {
+  background: linear-gradient(180deg, #0f1320 0%, #0a0d16 100%) !important;
+}
+
+/* TEXTO DOS CARDS DA EQUIPE - SEMPRE CLARO (ambos os temas) */
+.team-card .team-member-name,
+.team-card h3,
+.team-card-content h3 {
+  color: #ffffff !important;
+}
+
+.team-card p,
+.team-card-content p {
+  color: #ffffff !important;
+}
+
+.team-card .text-theme-text-secondary,
+.team-card-content .text-theme-text-secondary {
+  color: #a8a29e !important;
+}
+
+/* Tema claro - forçar cores claras nos cards */
+[data-theme="light"] .team-card .team-member-name,
+[data-theme="light"] .team-card h3,
+[data-theme="light"] .team-card-content h3 {
+  color: #ffffff !important;
+}
+
+/* Permitir sobrenome em vermelho no tema claro */
+[data-theme="light"] .team-card h3 .text-azimut-red,
+[data-theme="light"] .team-card-content h3 .text-azimut-red,
+[data-theme="light"] .card-dark-fixed h3 .text-azimut-red {
+  color: #c92337 !important;
+}
+
+[data-theme="light"] .team-card p,
+[data-theme="light"] .team-card-content p {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .team-card .text-theme-text-secondary,
+[data-theme="light"] .team-card-content .text-theme-text-secondary {
+  color: #a8a29e !important;
+}
+
+/* Título/Nome dentro do card - SEMPRE BRANCO */
+.team-card .section-title,
+.team-card-content .section-title,
+.team-card .team-member-name,
+.team-card-content .team-member-name {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .team-card .section-title,
+[data-theme="light"] .team-card-content .section-title,
+[data-theme="light"] .team-card .team-member-name,
+[data-theme="light"] .team-card-content .team-member-name {
+  color: #ffffff !important;
+}
+
+/* Nome com parte branca e parte vermelha */
+.team-member-name .text-white,
+.team-card .text-white,
+.team-card-content .text-white {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .team-member-name .text-white,
+[data-theme="light"] .team-card .text-white,
+[data-theme="light"] .team-card-content .text-white {
+  color: #ffffff !important;
+}
+
+/* Sobrenome vermelho - ambos os temas */
+.team-member-name .text-azimut-red,
+.team-card .text-azimut-red,
+.team-card-content .text-azimut-red {
+  color: #c92337 !important;
+}
+
+[data-theme="light"] .team-member-name .text-azimut-red,
+[data-theme="light"] .team-card .text-azimut-red,
+[data-theme="light"] .team-card-content .text-azimut-red {
+  color: #c92337 !important;
+}
+
+/* Cards da página StudioTeam (.card-dark-fixed) */
+.card-dark-fixed .text-white {
+  color: #ffffff !important;
+}
+
+.card-dark-fixed .text-azimut-red {
+  color: #c92337 !important;
+}
+
+[data-theme="light"] .card-dark-fixed .text-white {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .card-dark-fixed .text-azimut-red {
+  color: #c92337 !important;
+}
+
+/* Tratamento de foto da equipe - Duotone Cinematográfico */
+.team-photo {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #0a0f1a 0%, #151a28 100%);
+}
+
+/* Nome do membro da equipe - SEMPRE BRANCO e 2 LINHAS */
+/* Nome do membro da equipe - SEMPRE 2 LINHAS para nomes longos */
+.team-member-name {
+  color: #ffffff !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  line-height: 1.3 !important;
+  word-break: break-word !important;
+  word-wrap: break-word !important;
+  hyphens: auto !important;
+  max-width: 100% !important;
+  white-space: normal !important;
+  min-height: 2.6em !important; /* Garante espaço para 2 linhas */
+  font-family: var(--font-handel, 'HandelGothic', 'Handel Gothic', sans-serif) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* Efeito Duotone: Grayscale + toque vermelho */
+.team-photo > img:first-child {
+  filter: grayscale(100%) contrast(1.15) brightness(0.9);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Overlay vermelho Azimut sutil para criar duotone */
+.team-photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg, 
+    rgba(201, 35, 55, 0.15) 0%, 
+    rgba(139, 35, 50, 0.12) 50%,
+    rgba(80, 20, 40, 0.1) 100%
+  );
+  mix-blend-mode: color;
+  z-index: 2;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* Gradiente inferior para transição suave com o card */
+.team-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg, 
+    transparent 50%, 
+    rgba(5, 8, 20, 0.4) 80%,
+    rgba(5, 8, 20, 0.7) 100%
+  );
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Hover: Revela cor original com zoom suave */
+.team-photo:hover > img:first-child {
+  filter: grayscale(0%) contrast(1.05) brightness(1.02);
+  transform: scale(1.03);
+}
+
+.team-photo:hover::before {
+  opacity: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BOTÃO DE TEMA (Toggle Escuro/Claro)
+   ═══════════════════════════════════════════════════════════════ */
+.theme-toggle {
+  position: relative;
+  width: 48px;
+  height: 24px;
+  border-radius: 12px;
+  background: var(--theme-border);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid var(--theme-border);
+}
+
+.theme-toggle::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-azimut-red);
+  transition: transform 0.3s ease, background 0.3s ease;
+  box-shadow: 0 2px 8px rgba(201, 35, 55, 0.4);
+}
+
+[data-theme="light"] .theme-toggle::before {
+  transform: translateX(24px);
+  background: var(--color-azimut-gold);
+  box-shadow: 0 2px 8px rgba(247, 196, 0, 0.4);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TRANSIÇÕES DE PÁGINA - Cinematográfico
+   ═══════════════════════════════════════════════════════════════ */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CORREÇÕES DE CONTRASTE - TEMA CLARO
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Variáveis adicionais para tema claro */
+html[data-theme="light"] {
+  /* Azul marinho para substituir azuis claros */
+  --blue-navy: #1e3a5f; /* Azul marinho forte */
+  --blue-navy-dark: #0f1f35; /* Azul marinho mais escuro */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TEMA CLARO: REGRAS SIMPLIFICADAS (REMOVIDAS DUPLICATAS)
+   Todas as regras principais estão na seção superior (linhas 448-530)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Azul claro/bebê -> AZUL MARINHO no tema claro (para elementos fora de cards) */
+[data-theme="light"] .text-blue-100:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *),
+[data-theme="light"] .text-blue-200:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *),
+[data-theme="light"] .text-blue-300:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *),
+[data-theme="light"] .text-blue-400:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *) {
+  color: #1e3a5f !important;
+}
+
+/* Títulos fora de cards escuros - escuros no tema claro */
+[data-theme="light"] h1:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="!text-"]),
+[data-theme="light"] h2:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="!text-"]),
+[data-theme="light"] h3:not(.card-adaptive *):not(.card-dark-adaptive *):not(.card-dark-fixed *):not([class*="!text-"]) {
+  color: #0f172a;
+}
+
+html[data-theme="light"] .glass-panel:not(.card-adaptive):not(.card-dark-adaptive):hover {
+  border-color: #c92337 !important;
+  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.15) !important;
+}
+
+/* Textos em cards normais (não .card-adaptive) no tema claro */
+html[data-theme="light"] .glass-panel:not(.card-adaptive) h3,
+html[data-theme="light"] .glass-panel:not(.card-adaptive) .card-title {
+  color: #0f172a !important; /* Escuro */
+}
+
+html[data-theme="light"] .glass-panel:not(.card-adaptive) p,
+html[data-theme="light"] .glass-panel:not(.card-adaptive) .card-description {
+  color: #475569 !important; /* Médio */
+}
+
+/* Ícones mantêm vermelho Azimut */
+html[data-theme="light"] .glass-panel .icon,
+html[data-theme="light"] .icon-adaptive {
+  color: #c92337 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RODAPÉ - CURADORIA TEMA CLARO
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Rodapé tem fundo escuro em AMBOS os temas, então textos sempre claros */
+footer {
+  /* Links principais */
+}
+
+footer h4 {
+  color: #ffffff !important; /* Títulos sempre brancos */
+}
+
+footer a,
+footer p,
+footer span {
+  color: #cbd5e1 !important; /* Links e textos claros */
+}
+
+footer a:hover {
+  color: #c92337 !important; /* Hover vermelho */
+}
+
+/* Textos secundários (submenu, copyright) */
+/* Rodapé - Tema claro: texto escuro */
+[data-theme="light"] footer .text-slate-400,
+[data-theme="light"] footer .text-slate-500,
+html[data-theme="light"] footer .text-slate-400,
+html[data-theme="light"] footer .text-slate-500 {
+  color: #475569 !important; /* slate-600 - ESCURO! */
+}
+
+/* Rodapé - Tema escuro: texto claro (mantém) */
+/* Textos secundários (submenu, copyright) */
+/* Tema escuro: mantém claro */
+footer .text-slate-400,
+footer .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+/* Tema claro: força escuro */
+[data-theme="light"] footer .text-slate-400,
+[data-theme="light"] footer .text-slate-500,
+html[data-theme="light"] footer .text-slate-400,
+html[data-theme="light"] footer .text-slate-500 {
+  color: #475569 !important; /* slate-600 - ESCURO! */
+}
+
+/* Ícones do footer - cor base (NÃO forçar hover vermelho - cada rede tem sua cor) */
+footer svg:not(.social-icon-footer svg) {
+  color: #cbd5e1 !important;
+}
+
+/* Ícones de redes sociais - cores específicas de cada marca no hover (definido inline no JS) */
+.social-icon-footer svg {
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+/* Ícones sociais - hover controlado por JS com cores das marcas */
+.social-icon-footer:hover svg {
+  transform: scale(1.05);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   UTILITÁRIOS EXTRAS
+   ═══════════════════════════════════════════════════════════════ */
+
+.input-adaptive {
+  width: 100%;
+  min-height: 48px !important;
+  padding: 0.75rem !important;
+  border-radius: 10px;
+  border: 1px solid rgba(201, 35, 55, 0.3);
+  background: rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+  transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  outline: none;
+  appearance: none;
+  font-size: 0.95rem;
+  backdrop-filter: blur(8px);
+}
+
+.input-adaptive::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.input-adaptive:focus {
+  border-color: #c92337;
+  background: rgba(0, 0, 0, 0.55);
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.15);
+}
+
+select.input-adaptive {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23c92337'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.2em;
+  padding-right: 2.75rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0.5rem !important;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Hover no select - azimut-red */
+select.input-adaptive:hover:not(:disabled) {
+  border-color: rgba(201, 35, 55, 0.5) !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 0 0 1px rgba(201, 35, 55, 0.2) !important;
+}
+
+/* Focus no select - azimut-red premium */
+select.input-adaptive:focus {
+  border-color: #c92337 !important;
+  background-color: rgba(0, 0, 0, 0.55) !important;
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.25), 0 0 8px rgba(201, 35, 55, 0.15) !important;
+  outline: none !important;
+}
+
+/* Remover azul nativo do select em todos os navegadores */
+select.input-adaptive::-ms-expand {
+  display: none;
+}
+
+select.input-adaptive::-webkit-select-arrow {
+  display: none;
+}
+
+select.input-adaptive option {
+  background-color: #0a0f1a !important;
+  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%) !important;
+  color: #e2e8f0 !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 0 !important;
+  margin: 0.125rem 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Opção selecionada - azimut-red premium (azul nosso) */
+select.input-adaptive option:checked,
+select.input-adaptive:focus option:checked {
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0.35) 0%, rgba(201, 35, 55, 0.25) 100%) !important;
+  background-color: rgba(201, 35, 55, 0.3) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  border-left: 3px solid #c92337 !important;
+  padding-left: calc(1rem - 3px) !important;
+}
+
+/* Opção hover (funciona no Firefox) */
+select.input-adaptive option:hover {
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0.25) 0%, rgba(201, 35, 55, 0.15) 100%) !important;
+  background-color: rgba(201, 35, 55, 0.2) !important;
+  color: #ffffff !important;
+}
+
+/* Quando o select está aberto, destacar opção selecionada */
+select.input-adaptive:focus option:checked {
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0.4) 0%, rgba(201, 35, 55, 0.3) 100%) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+/* Remover outline azul do Firefox */
+select.input-adaptive:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #ffffff;
+}
+
+/* Remover outline azul do Chrome/Safari */
+select.input-adaptive:focus {
+  outline: none;
+  border-color: #c92337;
+  background: rgba(0, 0, 0, 0.55);
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.15);
+}
+
+/* Removido duplicado - usando o de cima */
+
+[data-theme="light"] .input-adaptive {
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: #1a1a1a;
+}
+
+[data-theme="light"] .input-adaptive::placeholder {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="light"] .input-adaptive:focus {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] select.input-adaptive {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23c92337'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+}
+
+[data-theme="light"] select.input-adaptive option {
+  background-color: rgba(10, 15, 30, 0.98) !important;
+  color: #ffffff !important;
+  padding: 0.75rem !important;
+}
+
+/* Opção selecionada/hover no tema claro - MANTER IDENTIDADE AZIMUT */
+[data-theme="light"] select.input-adaptive:focus option:checked,
+[data-theme="light"] select.input-adaptive option:checked,
+[data-theme="light"] select.input-adaptive option:hover {
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0.35) 0%, rgba(201, 35, 55, 0.25) 100%) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+.input-adaptive:disabled,
+select.input-adaptive:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LABELS ADAPTATIVOS - AZIMUT PREMIUM
+   ═══════════════════════════════════════════════════════════════ */
+.label-adaptive {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.2s ease;
+}
+
+[data-theme="light"] .label-adaptive,
+html[data-theme="light"] .label-adaptive {
+  color: rgba(0, 0, 0, 0.85) !important;
+  font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DROPDOWN AZIMUT - CLASSE UNIVERSAL PARA TODOS OS DROPDOWNS
+   ═══════════════════════════════════════════════════════════════ */
+.dropdown-azimut,
+select.dropdown-azimut,
+[data-theme="light"] .dropdown-azimut,
+[data-theme="light"] select.dropdown-azimut,
+html[data-theme="light"] .dropdown-azimut,
+html[data-theme="light"] select.dropdown-azimut {
+  /* Aparência */
+  background: rgba(10, 15, 30, 0.95) !important;
+  border: 1px solid rgba(201, 35, 55, 0.4) !important;
+  color: #ffffff !important;
+  
+  /* Tamanho e espaçamento PADRÃO */
+  width: 100%; /* Apenas se não tiver width inline !important */
+  min-height: 48px !important;
+  padding: 0.75rem 2.75rem 0.75rem 1rem !important;
+  border-radius: 0.5rem !important;
+  
+  /* Tipografia */
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  
+  /* Efeitos */
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  outline: none;
+  
+  /* Seta customizada */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23c92337'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.75rem center !important;
+  background-size: 1.2em !important;
+}
+
+/* Hover */
+.dropdown-azimut:hover,
+select.dropdown-azimut:hover,
+[data-theme="light"] .dropdown-azimut:hover,
+[data-theme="light"] select.dropdown-azimut:hover {
+  border-color: rgba(201, 35, 55, 0.6) !important;
+  background: rgba(10, 15, 30, 0.98) !important;
+  box-shadow: 0 0 0 1px rgba(201, 35, 55, 0.2) !important;
+}
+
+/* Focus */
+.dropdown-azimut:focus,
+select.dropdown-azimut:focus,
+[data-theme="light"] .dropdown-azimut:focus,
+[data-theme="light"] select.dropdown-azimut:focus {
+  border-color: #c92337 !important;
+  background: rgba(10, 15, 30, 0.98) !important;
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.25), 0 0 8px rgba(201, 35, 55, 0.15) !important;
+}
+
+/* Options - SEMPRE ESCURAS */
+.dropdown-azimut option,
+select.dropdown-azimut option,
+[data-theme="light"] .dropdown-azimut option,
+[data-theme="light"] select.dropdown-azimut option {
+  background-color: rgba(10, 15, 30, 0.98) !important;
+  color: #ffffff !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 0 !important;
+  margin: 0.125rem 0 !important;
+}
+
+/* Option checked/selected - FORÇA VERMELHO (SOBRESCREVE AZUL DO BROWSER) */
+.dropdown-azimut option:checked,
+select.dropdown-azimut option:checked,
+select.dropdown-azimut:focus option:checked,
+select.dropdown-azimut option[selected],
+select.dropdown-azimut option[selected="selected"],
+[data-theme="light"] .dropdown-azimut option:checked,
+[data-theme="light"] select.dropdown-azimut option:checked,
+[data-theme="light"] select.dropdown-azimut:focus option:checked,
+[data-theme="light"] select.dropdown-azimut option[selected] {
+  /* FORÇA VERMELHO - SOBRESCREVE AZUL DO CHROME/EDGE */
+  background: #c92337 !important;
+  background-color: #c92337 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border: none !important;
+  border-left: 3px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 0.25rem !important;
+  padding: 0.75rem 1rem !important;
+  padding-left: calc(1rem - 3px) !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
+/* Option hover - FORÇA VERMELHO (SOBRESCREVE AZUL DO BROWSER) */
+.dropdown-azimut option:hover,
+select.dropdown-azimut option:hover,
+select.dropdown-azimut:focus option:hover,
+[data-theme="light"] .dropdown-azimut option:hover,
+[data-theme="light"] select.dropdown-azimut option:hover,
+[data-theme="light"] select.dropdown-azimut:focus option:hover {
+  /* FORÇA VERMELHO NO HOVER */
+  background: rgba(201, 35, 55, 0.5) !important;
+  background-color: rgba(201, 35, 55, 0.5) !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border-left: 3px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 0.25rem !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
+/* Dropdown aberto - FORÇA VERMELHO NO SELECT */
+select.dropdown-azimut:focus,
+select.dropdown-azimut:active,
+select.dropdown-azimut[open] {
+  border-color: #c92337 !important;
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.3), 0 0 12px rgba(201, 35, 55, 0.2) !important;
+}
+
+/* Disabled state */
+.dropdown-azimut:disabled,
+select.dropdown-azimut:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DROPDOWN CÓDIGO DE PAÍS - CLASSE ESPECÍFICA (NÃO USA .dropdown-azimut)
+   ═══════════════════════════════════════════════════════════════ */
+.dropdown-country-code,
+select.dropdown-country-code,
+[data-theme="light"] .dropdown-country-code,
+[data-theme="light"] select.dropdown-country-code {
+  /* Aparência idêntica ao dropdown-azimut */
+  background: rgba(10, 15, 30, 0.95) !important;
+  border: 1px solid rgba(201, 35, 55, 0.4) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  outline: none;
+  
+  /* Tamanho FIXO E FORÇADO */
+  width: 120px !important;
+  min-width: 120px !important;
+  max-width: 120px !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  
+  /* Padding e tipografia otimizados para compacto */
+  padding: 0.75rem 1.75rem 0.75rem 0.65rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  
+  /* NUNCA quebra linha */
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: clip !important;
+  
+  /* Seta customizada */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23c92337'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.5rem center !important;
+  background-size: 1em !important;
+  
+  /* Flex */
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  flex-basis: 120px !important;
+  
+  /* Transições */
+  transition: all 0.3s ease;
+  border-radius: 0.5rem !important;
+}
+
+.dropdown-country-code:hover {
+  border-color: rgba(201, 35, 55, 0.6) !important;
+  box-shadow: 0 0 0 1px rgba(201, 35, 55, 0.2) !important;
+}
+
+.dropdown-country-code:focus {
+  border-color: #c92337 !important;
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.25) !important;
+}
+
+.dropdown-country-code option {
+  background-color: rgba(10, 15, 30, 0.98) !important;
+  color: #ffffff !important;
+  padding: 0.75rem !important;
+}
+
+/* FORÇA VERMELHO NO DROPDOWN-COUNTRY-CODE - SOBRESCREVE AZUL DO BROWSER */
+.dropdown-country-code option:checked,
+select.dropdown-country-code option:checked,
+select.dropdown-country-code:focus option:checked,
+select.dropdown-country-code option[selected],
+select.dropdown-country-code option[selected="selected"] {
+  /* FORÇA VERMELHO - SOBRESCREVE AZUL DO CHROME/EDGE */
+  background: #c92337 !important;
+  background-color: #c92337 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border: none !important;
+  border-left: 3px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 0.25rem !important;
+  padding: 0.75rem !important;
+  padding-left: calc(0.75rem - 3px) !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
+.dropdown-country-code option:hover,
+select.dropdown-country-code option:hover,
+select.dropdown-country-code:focus option:hover {
+  /* FORÇA VERMELHO NO HOVER */
+  background: rgba(201, 35, 55, 0.5) !important;
+  background-color: rgba(201, 35, 55, 0.5) !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border-left: 3px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 0.25rem !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
+/* FORÇAR inputs e selects adjacentes (telefone) a terem mesma altura */
+.input-adaptive[type="tel"],
+input.input-adaptive[type="tel"] {
+  height: 48px !important;
+  max-height: 48px !important;
+  min-height: 48px !important;
+  line-height: normal !important;
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+}
+
+/* Remover setas nativas */
+.dropdown-azimut::-ms-expand,
+select.dropdown-azimut::-ms-expand {
+  display: none;
+}
+
+/* Custom select (Contact form) */
+.select-trigger {
+  @apply w-full min-h-[44px] rounded-lg border border-white/10 px-4 py-3.5 text-left text-slate-100 flex items-center justify-between gap-2;
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(201, 35, 55, 0.3) !important;
+  transition: all 0.25s ease;
+  font-size: 15px !important;
+  line-height: 1.5 !important;
+}
+.select-trigger:hover {
+  border-color: rgba(201, 35, 55, 0.5) !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 0 0 1px rgba(201, 35, 55, 0.2) !important;
+}
+.select-trigger:focus {
+  outline: none !important;
+  border-color: #c92337 !important;
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.25), 0 0 8px rgba(201, 35, 55, 0.15) !important;
+  background: rgba(0, 0, 0, 0.55) !important;
+}
+.select-arrow {
+  @apply text-slate-400 transition-transform duration-200;
+}
+.select-panel {
+  @apply absolute z-30 mt-2 w-full rounded-xl border border-white/10 bg-slate-900/98 text-slate-100 shadow-2xl backdrop-blur-xl;
+  max-height: 260px;
+  overflow-y: auto;
+  padding: 0.5rem;
+  background: linear-gradient(135deg, rgba(10, 15, 26, 0.98) 0%, rgba(15, 23, 42, 0.98) 100%) !important;
+}
+.select-option {
+  @apply px-4 py-2.5 text-sm text-slate-100 cursor-pointer rounded-lg transition-all duration-200;
+  margin-bottom: 0.25rem;
+  background: transparent;
+}
+.select-option:hover {
+  background: rgba(201, 35, 55, 0.15) !important;
+  color: #ffffff !important;
+}
+.select-option[aria-selected="true"] {
+  background: rgba(201, 35, 55, 0.3) !important;
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0.35) 0%, rgba(201, 35, 55, 0.25) 100%) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  border-left: 3px solid #c92337 !important;
+  padding-left: calc(1rem - 3px) !important;
+}
+.select-option:last-child {
+  margin-bottom: 0;
+}
+[data-theme="light"] .select-trigger {
+  background: rgba(10, 15, 30, 0.95) !important;
+  border: 1px solid rgba(201, 35, 55, 0.4) !important;
+  color: #ffffff !important;
+}
+[data-theme="light"] .select-panel {
+  background: rgba(10, 15, 30, 0.98) !important;
+  border: 1px solid rgba(201, 35, 55, 0.3) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(8px);
+}
+[data-theme="light"] .select-option {
+  color: #ffffff !important;
+}
+[data-theme="light"] .select-option:hover {
+  background: rgba(201, 35, 55, 0.2) !important;
+}
+
+/* DDI Select - Compacto em UMA linha */
+.ddi-select .select-trigger {
+  width: 140px !important;
+  min-width: 140px !important;
+  max-width: 140px !important;
+  min-height: 48px !important;
+  height: 48px !important;
+  padding: 0.5rem 0.75rem !important;
+  font-size: 0.85rem !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+}
+.ddi-select .select-panel {
+  width: 170px !important;
+  min-width: 170px !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CARDS E ELEMENTOS ADAPTATIVOS - NUNCA BRANCOS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Cards adaptativos - Tema dark: escuro, Tema light: CLARO */
+.card-adaptive {
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+}
+
+[data-theme="light"] .card-adaptive {
+  /* CORREÇÃO: No tema light, cards MANTÊM fundo escuro com texto CLARO */
+  border: 1px solid rgba(201, 35, 55, 0.3);
+  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
+  backdrop-filter: blur(12px);
+  color: #ffffff; /* Texto creme para contraste no fundo escuro */
+}
+
+/* Card escuro adaptativo - escuro no dark, claro no light */
+.card-dark-adaptive {
+  border-radius: 1rem;
+  border: 1px solid rgba(201, 35, 55, 0.3);
+  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
+  transition: all 0.3s ease;
+}
+
+[data-theme="light"] .card-dark-adaptive {
+  border: 1px solid rgba(201, 35, 55, 0.3);
+  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
+  color: #ffffff; /* Texto creme para contraste */
+}
+
+/* Card escuro alternativo (gradiente mais escuro) */
+.card-dark-alt-adaptive {
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, #1a1f2e 0%, #252a38 100%);
+  transition: all 0.3s ease;
+}
+
+[data-theme="light"] .card-dark-alt-adaptive {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, #1a1f2e 0%, #252a38 100%);
+  color: #ffffff; /* Texto creme para contraste */
+}
+
+/* Card escuro fixo - sempre mantém fundo azul escuro, mesmo no tema claro */
+.card-dark-fixed {
+  border-radius: 1rem;
+  border: 1px solid rgba(201, 35, 55, 0.3);
+  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
+  transition: all 0.3s ease;
+  color: var(--theme-card-text, #f5f3ef); /* Texto claro para legibilidade */
+}
+
+[data-theme="light"] .card-dark-fixed {
+  /* Mantém fundo azul escuro mesmo no tema claro */
+  border: 1px solid rgba(201, 35, 55, 0.3);
+  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
+  color: #ffffff; /* Texto creme para contraste no fundo escuro */
+}
+
+/* REMOVIDA A REGRA DUPLICADA E CONFLITANTE */
+
+/* Pills/badges adaptativos */
+.pill-adaptive {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+}
+
+[data-theme="light"] .pill-adaptive {
+  border: 1px solid rgba(160, 26, 42, 0.6); /* Borda vermelha escura (não rosa!) */
+  background: rgba(160, 26, 42, 0.1); /* Fundo vermelho escuro sutil */
+  color: #1a1a1a; /* Texto escuro para contraste */
+}
+
+/* Badges vermelhos sempre com texto creme da logo (elegante + contraste) */
+.badge-red-bg {
+  background: rgba(201, 35, 55, 0.1);
+  border: 1px solid rgba(201, 35, 55, 0.3);
+  color: #ffffff !important; /* Creme da logo */
+}
+
+/* Badge status adaptativo */
+.badge-adaptive {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+
+[data-theme="light"] .badge-adaptive {
+  background: rgba(201, 35, 55, 0.2);
+  color: #ffffff; /* Texto branco */
+}
+
+/* Texto adaptativo */
+.text-adaptive {
+  color: var(--theme-text-secondary);
+}
+
+[data-theme="light"] .text-adaptive {
+  /* No card escuro do tema light, usar texto claro */
+  color: #f1f5f9;
+}
+
+/* Texto adaptativo para cards */
+.card-adaptive .text-slate-100,
+.card-adaptive .text-slate-200,
+.card-adaptive .text-slate-300,
+.card-adaptive .text-white {
+  /* Garantir que textos permanecem claros em cards escuros do tema light */
+  color: inherit;
+}
+
+[data-theme="light"] .card-adaptive * {
+  /* Textos CLAROS em cards escuros no tema claro (inversão para contraste) */
+  color: #ffffff;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CLASSES UTILITÁRIAS PARA TEMA CLARO - REUTILIZÁVEIS
+   Padronização baseada em REGRAS_DESIGN_TEMA_CLARO.md
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Texto em cards escuros (tema claro) - PRINCIPAL */
+.text-theme-card-text {
+  color: var(--theme-card-text, #f5f3ef) !important;
+}
+
+/* Texto em cards escuros (tema claro) - SECUNDÁRIO */
+.text-theme-card-text-secondary {
+  color: var(--theme-card-text-secondary, #cbd5e1) !important;
+}
+
+/* Texto em fundo claro (tema claro) - PRINCIPAL */
+.text-theme-light-main {
+  color: var(--theme-text, #0f172a) !important;
+}
+
+/* Texto em fundo claro (tema claro) - SECUNDÁRIO */
+.text-theme-light-secondary {
+  color: var(--theme-text-secondary, #1a1a1a) !important;
+}
+
+/* Texto em fundo claro (tema claro) - MUTED */
+.text-theme-light-muted {
+  color: var(--theme-text-muted, #1e3a5f) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PÁGINA VANCOUVER - Contraste tema claro (PREMIUM FIX)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 
+ * ESTRATÉGIA: 
+ * 1. Textos FORA de cards escuros → preto/escuro
+ * 2. Textos DENTRO de cards escuros (card-adaptive, school-card-*) → branco
+ * 3. Usar :not() para excluir cards escuros das regras gerais
+ */
+
+/* =========================
+   STATS SECTION VANCOUVER - Legibilidade tema claro
+   ========================= */
+[data-theme="light"] .vancouver-page section:first-of-type .grid.grid-cols-2 .text-white\/60,
+[data-theme="light"] .vancouver-page section:first-of-type .grid.grid-cols-4 .text-white\/60 {
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  opacity: 0.9;
+}
+
+[data-theme="light"] .vancouver-page section:first-of-type .text-azimut-red {
+  color: #c92337 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* =========================
+   BADGES HERO VANCOUVER - Legibilidade tema claro
+   ========================= */
+[data-theme="light"] .vancouver-page section:first-of-type [class*="backdrop-blur"],
+[data-theme="light"] .vancouver-page section:first-of-type [style*="backdrop-blur"],
+[data-theme="light"] .vancouver-page section:first-of-type [style*="background: rgba"] {
+  /* Badges com fundo mais escuro no tema claro para legibilidade */
+}
+
+[data-theme="light"] .vancouver-page section:first-of-type [style*="background: rgba(201, 35, 55"] *,
+[data-theme="light"] .vancouver-page section:first-of-type [style*="background: rgba(201, 35, 55"] span {
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .vancouver-page section:first-of-type [style*="background: rgba(10, 15, 30"] *,
+[data-theme="light"] .vancouver-page section:first-of-type [style*="background: rgba(10, 15, 30"] span {
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* =========================
+   1. TEXTOS FORA DE CARDS - BRANCOS no tema claro (igual ao escuro)
+   ========================= */
+
+/* Títulos principais FORA de cards - BRANCOS em AMBOS os temas */
+[data-theme="dark"] .vancouver-page h1:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="dark"] .vancouver-page h2:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="dark"] .vancouver-page h3:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *) {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] .vancouver-page h1:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="light"] .vancouver-page h2:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="light"] .vancouver-page h3:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *) {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Textos descritivos FORA de cards - BRANCOS em AMBOS os temas */
+[data-theme="dark"] .vancouver-page p:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *),
+[data-theme="dark"] .vancouver-page span:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *):not(.text-azimut-red) {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] .vancouver-page p:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *),
+[data-theme="light"] .vancouver-page span:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *):not(.text-azimut-red) {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Textos .text-white FORA de cards - BRANCOS em AMBOS os temas */
+[data-theme="dark"] .vancouver-page .text-white:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *):not([class*="bg-slate-"] *):not([class*="bg-black"] *) {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] .vancouver-page .text-white:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *):not([class*="bg-azimut-red"] *):not([class*="bg-slate-"] *):not([class*="bg-black"] *) {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Hero section - BRANCO em AMBOS os temas */
+[data-theme="dark"] .vancouver-page section[class*="hero"] h1,
+[data-theme="dark"] .vancouver-page section[class*="hero"] h2,
+[data-theme="dark"] .vancouver-page section[class*="hero"] h3,
+[data-theme="dark"] .vancouver-page section[class*="hero"] p {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] .vancouver-page section[class*="hero"] h1,
+[data-theme="light"] .vancouver-page section[class*="hero"] h2,
+[data-theme="light"] .vancouver-page section[class*="hero"] h3,
+[data-theme="light"] .vancouver-page section[class*="hero"] p {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Textos com opacidade - BRANCOS em AMBOS os temas */
+[data-theme="dark"] .vancouver-page .text-white\/90:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="dark"] .vancouver-page .text-white\/80:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="dark"] .vancouver-page .text-white\/70:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="dark"] .vancouver-page .text-white\/60:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *) {
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] .vancouver-page .text-white\/90:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="light"] .vancouver-page .text-white\/80:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="light"] .vancouver-page .text-white\/70:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *),
+[data-theme="light"] .vancouver-page .text-white\/60:not(.card-adaptive *):not([class*="school-card-"] *):not([class*="bg-gradient-"] *) {
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* =========================
+   REGRA GERAL VANCOUVER - Tema claro: TODOS textos brancos
+   ========================= */
+
+/* FORÇA TODOS os textos na página Vancouver a serem brancos em AMBOS os temas */
+[data-theme="dark"] .vancouver-page h1,
+[data-theme="dark"] .vancouver-page h2,
+[data-theme="dark"] .vancouver-page h3,
+[data-theme="dark"] .vancouver-page h4,
+[data-theme="dark"] .vancouver-page h5,
+[data-theme="dark"] .vancouver-page h6,
+[data-theme="dark"] .vancouver-page p,
+[data-theme="dark"] .vancouver-page span,
+[data-theme="dark"] .vancouver-page div,
+[data-theme="dark"] .vancouver-page li,
+[data-theme="dark"] .vancouver-page td,
+[data-theme="dark"] .vancouver-page th,
+[data-theme="dark"] .vancouver-page label,
+[data-theme="dark"] .vancouver-page a:not(.text-azimut-red),
+[data-theme="dark"] .vancouver-page button:not(.bg-azimut-red) {
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Títulos com sombra mais forte no tema escuro */
+[data-theme="dark"] .vancouver-page h1,
+[data-theme="dark"] .vancouver-page h2,
+[data-theme="dark"] .vancouver-page h3 {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* FORÇA TODOS os textos na página Vancouver a serem brancos no tema claro */
+[data-theme="light"] .vancouver-page,
+[data-theme="light"] .vancouver-page * {
+  /* Exceções: vermelho Azimut, elementos com fundo claro específico */
+}
+
+/* Sobrescrever var(--theme-text) na página Vancouver - SEMPRE branco no tema claro */
+[data-theme="light"] .vancouver-page [style*="var(--theme-text)"],
+[data-theme="light"] .vancouver-page [style*="--theme-text"],
+[data-theme="light"] .vancouver-page [style*="var(--theme-card-text)"],
+[data-theme="light"] .vancouver-page [style*="--theme-card-text"],
+[data-theme="light"] .vancouver-page [style*="var(--theme-text-secondary)"],
+[data-theme="light"] .vancouver-page [style*="--theme-text-secondary"] {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Forçar variáveis CSS na página Vancouver a serem brancas em AMBOS os temas */
+[data-theme="dark"] .vancouver-page,
+[data-theme="light"] .vancouver-page {
+  --theme-text: #ffffff !important;
+  --theme-text-secondary: rgba(255, 255, 255, 0.9) !important;
+  --theme-card-text: #ffffff !important;
+  --theme-card-text-secondary: rgba(255, 255, 255, 0.8) !important;
+}
+
+[data-theme="light"] .vancouver-page h1,
+[data-theme="light"] .vancouver-page h2,
+[data-theme="light"] .vancouver-page h3,
+[data-theme="light"] .vancouver-page h4,
+[data-theme="light"] .vancouver-page h5,
+[data-theme="light"] .vancouver-page h6,
+[data-theme="light"] .vancouver-page p,
+[data-theme="light"] .vancouver-page span,
+[data-theme="light"] .vancouver-page div,
+[data-theme="light"] .vancouver-page li,
+[data-theme="light"] .vancouver-page td,
+[data-theme="light"] .vancouver-page th,
+[data-theme="light"] .vancouver-page label,
+[data-theme="light"] .vancouver-page a:not(.text-azimut-red),
+[data-theme="light"] .vancouver-page button:not(.bg-azimut-red) {
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Títulos com sombra mais forte */
+[data-theme="light"] .vancouver-page h1,
+[data-theme="light"] .vancouver-page h2,
+[data-theme="light"] .vancouver-page h3 {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Exceções: vermelho Azimut sempre vermelho */
+[data-theme="light"] .vancouver-page .text-azimut-red {
+  color: #c92337 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================
+   SEÇÕES INFERIORES VANCOUVER - Tema claro igual ao escuro
+   ========================= */
+
+/* Seções "Why Vancouver", "Schools", "Testimonials", "FAQ", etc. - textos brancos no tema claro */
+[data-theme="light"] .vancouver-page section:not(:first-of-type) h2,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) h3,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) h4,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) p,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) span,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) .text-white,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) .text-white\/90,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) .text-white\/80,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) .text-white\/70,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) .text-white\/60 {
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Títulos de seção - brancos com sombra mais forte */
+[data-theme="light"] .vancouver-page section:not(:first-of-type) .section-title-vancouver,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) h2.section-title-vancouver {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Subtítulos de seção - brancos */
+[data-theme="light"] .vancouver-page section:not(:first-of-type) .section-subtitle-vancouver,
+[data-theme="light"] .vancouver-page section:not(:first-of-type) p.section-subtitle-vancouver {
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Badges de seção (verde, vermelho, etc.) - texto branco */
+[data-theme="light"] .vancouver-page section:not(:first-of-type) [class*="bg-green"],
+[data-theme="light"] .vancouver-page section:not(:first-of-type) [class*="bg-azimut-red"] {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Links e botões - brancos */
+[data-theme="light"] .vancouver-page section:not(:first-of-type) a:not(.text-azimut-red),
+[data-theme="light"] .vancouver-page section:not(:first-of-type) button:not(.bg-azimut-red) {
+  color: #ffffff !important;
+}
+
+/* =========================
+   2. CARDS ESCUROS - Texto BRANCO sempre
+   ========================= */
+
+/* Cards adaptativos - TUDO branco (alta prioridade) */
+[data-theme="light"] .vancouver-page .card-adaptive,
+[data-theme="light"] .vancouver-page .card-adaptive *,
+[data-theme="light"] .vancouver-page .card-adaptive h1,
+[data-theme="light"] .vancouver-page .card-adaptive h2,
+[data-theme="light"] .vancouver-page .card-adaptive h3,
+[data-theme="light"] .vancouver-page .card-adaptive h4,
+[data-theme="light"] .vancouver-page .card-adaptive p,
+[data-theme="light"] .vancouver-page .card-adaptive span,
+[data-theme="light"] .vancouver-page .card-adaptive div,
+[data-theme="light"] .vancouver-page .card-adaptive .text-white,
+[data-theme="light"] .vancouver-page .card-adaptive .text-white\/70,
+[data-theme="light"] .vancouver-page .card-adaptive .text-white\/60,
+[data-theme="light"] .vancouver-page .card-adaptive .text-white\/80 {
+  color: #ffffff !important;
+}
+
+/* Texto descritivo nos cards adaptativos - mais visível */
+[data-theme="light"] .vancouver-page .card-adaptive p {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 450;
+  line-height: 1.65;
+}
+
+/* School cards VFS/VanArts - texto branco no content area */
+[data-theme="light"] .vancouver-page [class*="school-card-"] .school-card-content,
+[data-theme="light"] .vancouver-page [class*="school-card-"] .school-card-content * {
+  color: #ffffff !important;
+}
+
+/* Texto descritivo nos cards - mais legível */
+[data-theme="light"] .vancouver-page .card-adaptive p,
+[data-theme="light"] .vancouver-page [class*="school-card-"] p {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 450;
+  letter-spacing: 0.01em;
+  line-height: 1.65;
+}
+
+/* Listas de programas nos cards VFS/VanArts - branco forte */
+[data-theme="light"] .vancouver-page [class*="school-card-"] .grid div,
+[data-theme="light"] .vancouver-page [class*="school-card-"] ul li,
+[data-theme="light"] .vancouver-page [class*="school-card-"] .flex.items-center {
+  color: #ffffff !important;
+}
+
+/* =========================
+   3. EXCEÇÕES ESPECÍFICAS
+   ========================= */
+
+/* Vermelho Azimut - sempre vermelho */
+[data-theme="light"] .vancouver-page .text-azimut-red,
+[data-theme="light"] .vancouver-page .card-adaptive .text-azimut-red,
+[data-theme="light"] .vancouver-page [class*="school-card-"] .text-azimut-red {
+  color: #c92337 !important;
+}
+
+/* Tabela comparativa - BRANCA em AMBOS os temas */
+[data-theme="dark"] .vancouver-page table td,
+[data-theme="dark"] .vancouver-page table th {
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .vancouver-page table td,
+[data-theme="light"] .vancouver-page table th {
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .vancouver-page table .text-azimut-red {
+  color: #c92337 !important;
+}
+
+/* Badges com fundo colorido - texto branco */
+[data-theme="light"] .vancouver-page [class*="bg-azimut-red"] {
+  color: #ffffff !important;
+}
+
+/* Box de informações práticas (fundo rosa claro) - texto branco no tema claro */
+[data-theme="light"] .vancouver-page .bg-azimut-red\/10 {
+  background: rgba(201, 35, 55, 0.15) !important;
+}
+[data-theme="light"] .vancouver-page .bg-azimut-red\/10 * {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+[data-theme="light"] .vancouver-page .bg-azimut-red\/10 .text-azimut-red {
+  color: #c92337 !important;
+}
+
+/* =========================
+   4. HERO - Animação Ken Burns (zoom cinematográfico)
+   ========================= */
+
+@keyframes kenBurns {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.08);
+  }
+}
+
+/* Ken Burns que faz zoom e PARA (não repete) */
+@keyframes kenBurnsOnce {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.12);
+  }
+}
+
+/* =========================
+   5. HERO - Overlay cinematográfico + vinheta vintage
+   ========================= */
+
+/* Overlay cinematográfico premium - TEMA ESCURO */
+.hero-cinematic-overlay {
+  background: 
+    /* Vinheta radial - escurece bordas (clássico cinematográfico) */
+    radial-gradient(
+      ellipse 120% 100% at 50% 50%,
+      transparent 0%,
+      transparent 40%,
+      rgba(0, 0, 0, 0.3) 70%,
+      rgba(0, 0, 0, 0.7) 100%
+    ),
+    /* Gradiente vertical - mais escuro embaixo */
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0.3) 40%,
+      rgba(0, 0, 0, 0.6) 100%
+    );
+    /* GRAIN REMOVIDO - fica mais limpo e cinematográfico */
+  mix-blend-mode: normal;
+}
+
+/* Overlay cinematográfico - TEMA CLARO (mais suave, menos contraste) */
+[data-theme="light"] .hero-cinematic-overlay {
+  background: 
+    /* Vinheta radial - mais sutil no tema claro */
+    radial-gradient(
+      ellipse 120% 100% at 50% 50%,
+      transparent 0%,
+      transparent 45%,
+      rgba(0, 0, 0, 0.15) 75%,
+      rgba(0, 0, 0, 0.4) 100%
+    ),
+    /* Gradiente vertical - equilibrado */
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.35) 0%,
+      rgba(0, 0, 0, 0.2) 40%,
+      rgba(0, 0, 0, 0.45) 100%
+    );
+    /* GRAIN REMOVIDO no tema claro - mais limpo */
+  mix-blend-mode: normal;
+}
+
+/* Esconder granulação global no hero da Vancouver - tema claro */
+[data-theme="light"] .vancouver-page section:first-of-type {
+  isolation: isolate;
+}
+
+/* =========================
+   5. HERO - Texto BRANCO sobre imagem (AMBOS OS TEMAS)
+   ========================= */
+
+/* Hero - BRANCO em AMBOS os temas */
+[data-theme="dark"] .vancouver-page section:first-of-type h1,
+[data-theme="dark"] .vancouver-page section:first-of-type h1 *,
+[data-theme="dark"] .vancouver-page section:first-of-type p,
+[data-theme="dark"] .vancouver-page section:first-of-type span,
+[data-theme="dark"] .vancouver-page section:first-of-type .text-white,
+[data-theme="dark"] .vancouver-page section:first-of-type .text-white\/90,
+[data-theme="dark"] .vancouver-page section:first-of-type .text-white\/70 {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Tema claro - branco com sombra */
+[data-theme="light"] .vancouver-page section:first-of-type h1,
+[data-theme="light"] .vancouver-page section:first-of-type h1 *,
+[data-theme="light"] .vancouver-page section:first-of-type h1 span,
+[data-theme="light"] .vancouver-page section:first-of-type p,
+[data-theme="light"] .vancouver-page section:first-of-type .text-white,
+[data-theme="light"] .vancouver-page section:first-of-type .text-white\/90,
+[data-theme="light"] .vancouver-page section:first-of-type .text-white\/70 {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* =========================
+   5. SEÇÃO "POR QUE VANCOUVER?" - Cards WhyVancouver  
+   ========================= */
+
+/* WhyVancouverConvincing component - texto branco em cards */
+/* Cards com gradiente - SEMPRE brancos (tema claro e escuro) */
+/* WhyVancouverConvincing component - BRANCO em AMBOS os temas */
+[data-theme="dark"] .vancouver-page [class*="bg-gradient-to-br"] h3,
+[data-theme="dark"] .vancouver-page [class*="bg-gradient-to-br"] p,
+[data-theme="dark"] .vancouver-page [class*="bg-gradient-to-br"] li,
+[data-theme="dark"] .vancouver-page [class*="bg-gradient-to-br"] div {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .vancouver-page [class*="bg-gradient-to-br"] h3,
+[data-theme="light"] .vancouver-page [class*="bg-gradient-to-br"] p,
+[data-theme="light"] .vancouver-page [class*="bg-gradient-to-br"] li,
+[data-theme="light"] .vancouver-page [class*="bg-gradient-to-br"] div {
+  color: #ffffff !important;
+}
+
+/* =========================
+   6. VANCOUVER MAGAZINE - Componente
+   ========================= */
+
+/* Título "VANCOUVER" no magazine - preto no tema claro */
+[data-theme="light"] .vancouver-page .vancouver-magazine-title {
+  color: #0d0d0d !important;
+}
+
+/* Títulos de seção na página Vancouver - adaptativos */
+.section-title-vancouver {
+  color: #ffffff; /* Branco no tema escuro */
+}
+
+[data-theme="light"] .section-title-vancouver {
+  color: #0d0d0d !important; /* Preto no tema claro */
+}
+
+/* Subtítulos de seção na página Vancouver - adaptativos */
+.section-subtitle-vancouver {
+  color: rgba(255, 255, 255, 0.6); /* Branco translúcido no tema escuro */
+}
+
+[data-theme="light"] .section-subtitle-vancouver {
+  color: rgba(255, 255, 255, 0.9) !important; /* Branco no tema claro - igual ao escuro */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* =========================
+   7. COMPARISON CARDS - Tabela comparativa adapta ao tema
+   ========================= */
+
+/* Cards de comparação - tema escuro (translúcidos) */
+.comparison-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.comparison-card:hover {
+  border-color: rgba(201, 35, 55, 0.5);
+  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.2);
+}
+
+/* Primeiro card (Vancouver) - destaque verde */
+.comparison-card-first {
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.comparison-card-first:hover {
+  border-color: rgba(34, 197, 94, 0.6);
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);
+}
+
+/* Textos nos cards de comparação - tema escuro */
+.comparison-card-title,
+.comparison-card-score {
+  color: #ffffff;
+}
+
+.comparison-card-bar-bg {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* =========================
+   TEMA CLARO - Cards de comparação com fundo sólido escuro
+   ========================= */
+
+[data-theme="light"] .comparison-card {
+  background: linear-gradient(135deg, #1a1f2e 0%, #2a2f3e 100%);
+  backdrop-filter: blur(16px);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .comparison-card:hover {
+  border-color: rgba(201, 35, 55, 0.6);
+  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.25);
+  transform: translateY(-2px);
+}
+
+[data-theme="light"] .comparison-card-first {
+  background: linear-gradient(135deg, #0a2a1a 0%, #1a3a2a 100%);
+  border-color: rgba(34, 197, 94, 0.5);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.15);
+}
+
+[data-theme="light"] .comparison-card-first:hover {
+  border-color: rgba(34, 197, 94, 0.7);
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);
+}
+
+/* Textos SEMPRE brancos nos cards de comparação (ambos os temas) */
+[data-theme="light"] .comparison-card-title,
+[data-theme="light"] .comparison-card-score {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .comparison-card-bar-bg {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* =========================
+   8. MAGAZINE TABS - Botões adaptativos (VancouverMagazine)
+   ========================= */
+
+/* Tab não ativo - tema escuro (translúcido) */
+.magazine-tab {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  color: #ffffff;
+  border: 2px solid transparent;
+}
+
+.magazine-tab:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Tab ativo - vermelho Azimut (ambos os temas) */
+.magazine-tab-active {
+  background: #c92337 !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.5);
+  border-color: transparent !important;
+}
+
+.magazine-tab-active:hover {
+  background: #b01f2e !important;
+  box-shadow: 0 12px 32px rgba(201, 35, 55, 0.6);
+}
+
+/* =========================
+   TEMA CLARO - Magazine tabs com fundo sólido
+   ========================= */
+
+[data-theme="light"] .magazine-tab {
+  background: linear-gradient(135deg, #1a1f2e 0%, #2a2f3e 100%);
+  backdrop-filter: blur(16px);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .magazine-tab:hover {
+  background: linear-gradient(135deg, #2a2f3e 0%, #3a3f4e 100%);
+  border-color: rgba(201, 35, 55, 0.4);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05) translateY(-2px);
+}
+
+/* Tab ativo no tema claro - vermelho ainda mais vibrante */
+[data-theme="light"] .magazine-tab-active {
+  background: #c92337 !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.5) !important;
+  border-color: transparent !important;
+}
+
+[data-theme="light"] .magazine-tab-active:hover {
+  background: #b01f2e !important;
+  box-shadow: 0 12px 32px rgba(201, 35, 55, 0.6) !important;
+  transform: scale(1.05) translateY(-2px) !important;
+}
+
+/* =========================
+   9. COMPARISON TABLE - Tabela comparativa VFS/VanArts/Tradicional
+   ========================= */
+
+/* Tema escuro - bordas sutis brancas */
+.comparison-table-header {
+  border-bottom: 2px solid #c92337;
+}
+
+.comparison-table-row {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Tema claro - bordas bem definidas */
+[data-theme="light"] .comparison-table-header {
+  border-bottom: 3px solid #c92337;
+}
+
+[data-theme="light"] .comparison-table-row {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+}
+
+/* Textos da tabela já são controlados pelas regras do .vancouver-page */
+
+/* =========================
+   10. INTERNATIONAL CARD - Card premium de bandeiras
+   ========================= */
+
+/* Card internacional - fundo escuro premium SEMPRE (ambos os temas) */
+.international-card {
+  background: linear-gradient(135deg, #1a1f2e 0%, #2a2f3e 100%);
+  border: 2px solid rgba(201, 35, 55, 0.3);
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    0 0 40px rgba(201, 35, 55, 0.1);
+  backdrop-filter: blur(16px);
+  transition: all 0.3s ease;
+}
+
+.international-card:hover {
+  border-color: rgba(201, 35, 55, 0.5);
+  box-shadow: 
+    0 12px 32px rgba(0, 0, 0, 0.3),
+    0 0 60px rgba(201, 35, 55, 0.15);
+  transform: translateY(-4px);
+}
+
+/* Bandeiras com efeito hover premium */
+.international-flag {
+  display: inline-block;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  filter: grayscale(0);
+}
+
+.international-flag:hover {
+  transform: scale(1.3) translateY(-4px);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* Tema claro - card ainda mais destacado */
+[data-theme="light"] .international-card {
+  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
+  border: 2px solid rgba(201, 35, 55, 0.4);
+  box-shadow: 
+    0 12px 32px rgba(0, 0, 0, 0.25),
+    0 0 60px rgba(201, 35, 55, 0.15);
+}
+
+[data-theme="light"] .international-card:hover {
+  border-color: rgba(201, 35, 55, 0.6);
+  box-shadow: 
+    0 16px 40px rgba(0, 0, 0, 0.35),
+    0 0 80px rgba(201, 35, 55, 0.2);
+  transform: translateY(-6px);
+}
+
+/* Garantir que textos no card internacional sejam sempre brancos */
+.international-card,
+.international-card *,
+.international-card h3,
+.international-card h2,
+.international-card h1,
+.international-card span,
+.international-card div {
+  color: #ffffff !important;
+}
+
+.international-card p {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Tema claro - forçar textos brancos */
+[data-theme="light"] .international-card,
+[data-theme="light"] .international-card *,
+[data-theme="light"] .international-card h3,
+[data-theme="light"] .international-card h2,
+[data-theme="light"] .international-card .text-white {
+  color: #ffffff !important;
+}
+
+/* =========================
+   11. SCHOOL CARDS VFS/VANARTS - Fundo escuro SEMPRE
+   ========================= */
+
+/* School cards sempre têm fundo escuro e texto branco */
+.school-card {
+  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
+}
+
+.school-card-content {
+  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%) !important;
+}
+
+/* Todos os textos dentro de school cards são brancos */
+.school-card-content,
+.school-card-content * {
+  color: #ffffff !important;
+}
+
+/* Textos descritivos nos school cards - mais legíveis */
+.school-card-content p {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-weight: 450;
+  line-height: 1.65;
+}
+
+/* Labels secundários */
+.school-card-content .text-white\/60,
+.school-card-content .text-white\/70 {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* Manter vermelho Azimut */
+.school-card-content .text-azimut-red {
+  color: #c92337 !important;
+}
+
+/* Box de informações práticas dentro do school card - fundo mais claro para contraste */
+[data-theme="light"] .school-card-content .bg-azimut-red\/10 {
+  background: rgba(201, 35, 55, 0.15) !important;
+  border-color: rgba(201, 35, 55, 0.4) !important;
+}
+
+[data-theme="light"] .school-card-content .bg-azimut-red\/10 * {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .school-card-content .bg-azimut-red\/10 .text-azimut-red {
+  color: #ff6b7a !important; /* Vermelho mais claro para contraste */
+}
+
+/* Texto com gradiente - vermelho puro Azimut */
+.text-gradient-red {
+  background: linear-gradient(135deg, #c92337 0%, #c92337 50%, #8B2332 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Borda com gradiente */
+.border-gradient {
+  position: relative;
+}
+
+.border-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0.5), rgba(139, 35, 50, 0.3));
+  border-radius: inherit;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* Linha decorativa animada */
+.animated-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-line::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-azimut-red), transparent);
+  transform: translateX(-100%);
+  animation: lineSlide 3s infinite;
+}
+
+@keyframes lineSlide {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ════════════════════════════════════════════════════════════ */
+/* HIGHLIGHT PULSE - Efeito de destaque ao clicar em botão CTA */
+/* ════════════════════════════════════════════════════════════ */
+
+@keyframes highlight-pulse-animation {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(201, 35, 55, 0);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px 10px rgba(201, 35, 55, 0.6);
+    border-color: rgba(201, 35, 55, 0.8);
+  }
+}
+
+.highlight-pulse {
+  animation: highlight-pulse-animation 1s ease-in-out 3;
+  border-radius: 1rem;
+  border: 2px solid rgba(201, 35, 55, 0.5);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   ANTI-OVERFLOW GLOBAL - PREVENIR TEXTOS E CONTEÚDOS VAZANDO
+   Aplicado automaticamente em todo o site
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* CARDS - Garantir que conteúdo não vaze */
+.card-adaptive,
+.card-dark-adaptive,
+[class*="rounded-lg"],
+[class*="rounded-xl"],
+[class*="rounded-2xl"] {
+  overflow: hidden;
+}
+
+/* TEXTOS EM CARDS - Truncar se necessário */
+.card-adaptive h1,
+.card-adaptive h2,
+.card-adaptive h3,
+.card-adaptive h4,
+.card-dark-adaptive h1,
+.card-dark-adaptive h2,
+.card-dark-adaptive h3,
+.card-dark-adaptive h4 {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+/* PARÁGRAFOS - Quebrar palavras longas */
+p, span, div {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* LINKS LONGOS - Não quebrar layout */
+a {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* IMAGENS - Sempre conter dentro do pai */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* VÍDEOS E IFRAMES - Responsivos */
+video, iframe {
+  max-width: 100%;
+}
+
+/* TÍTULOS LONGOS - Line clamp para evitar overflow */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* TRUNCATE COM ELLIPSIS */
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* GRID E FLEX - Prevenir overflow */
+.grid, [class*="grid-cols"] {
+  overflow: hidden;
+}
+
+/* CONTAINERS - Max width seguro */
+.container-safe {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* MOBILE - Garantir que nada vaze horizontalmente */
+@media (max-width: 768px) {
+  .card-adaptive,
+  .card-dark-adaptive,
+  section,
+  article {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  /* Títulos menores em mobile */
+  h1 {
+    font-size: clamp(1.5rem, 5vw, 2.5rem) !important;
+  }
+  
+  h2 {
+    font-size: clamp(1.25rem, 4vw, 2rem) !important;
+  }
+  
+  h3 {
+    font-size: clamp(1rem, 3vw, 1.5rem) !important;
+  }
+}
+
+/* TAGS E BADGES - Não quebrar */
+.tag, .badge, [class*="rounded-full"] {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DESTAQUE DE PALAVRAS-CHAVE - SOLUTIONS PAGE
+   ═══════════════════════════════════════════════════════════════ */
+.keyword-highlight {
+  color: #c92337 !important;
+  font-weight: 600 !important;
+  display: inline !important;
+}
+
+/* Garantir que funciona mesmo dentro de elementos com text-slate-200 */
+.text-slate-200 .keyword-highlight,
+.text-slate-300 .keyword-highlight,
+.card-adaptive .keyword-highlight,
+p .keyword-highlight,
+[class*="text-slate"] .keyword-highlight {
+  color: #c92337 !important;
+  font-weight: 600 !important;
+  display: inline !important;
+}
+
+/* Sobrescrever qualquer regra que possa estar interferindo */
+* .keyword-highlight {
+  color: #c92337 !important;
+  font-weight: 600 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PREMIUM MICRO-INTERACTIONS 2026
+   Micro-animações sutis para sensação world-class
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Transição suave universal para elementos interativos */
+.premium-transition {
+  transition: all var(--transition-base) var(--ease-out);
+}
+
+/* Hover lift effect - elevação sutil ao passar o mouse */
+.hover-lift {
+  transition: transform var(--transition-base) var(--ease-out), 
+              box-shadow var(--transition-base) var(--ease-out);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Hover glow vermelho Azimut */
+.hover-glow-red {
+  transition: box-shadow var(--transition-base) var(--ease-out),
+              border-color var(--transition-base) var(--ease-out);
+}
+
+.hover-glow-red:hover {
+  box-shadow: 0 0 24px rgba(201, 35, 55, 0.3), 0 8px 32px rgba(0, 0, 0, 0.4);
+  border-color: rgba(201, 35, 55, 0.5);
+}
+
+/* Scale sutil no hover */
+.hover-scale {
+  transition: transform var(--transition-fast) var(--ease-out);
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+.hover-scale-sm:hover {
+  transform: scale(1.01);
+}
+
+.hover-scale-md:hover {
+  transform: scale(1.03);
+}
+
+/* Focus ring premium vermelho */
+.focus-ring-red:focus,
+.focus-ring-red:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(201, 35, 55, 0.4), 0 0 12px rgba(201, 35, 55, 0.2);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TIPOGRAFIA PREMIUM - Melhorias de legibilidade
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Texto com melhor legibilidade */
+.text-readable {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Espaçamento entre linhas otimizado para blocos de texto */
+.leading-comfortable {
+  line-height: 1.75;
+}
+
+/* Texto de corpo otimizado */
+.body-text {
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+/* Subtítulos premium */
+.subtitle-premium {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ESPAÇAMENTOS PREMIUM - Breathing room
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Seções com espaçamento generoso */
+.section-spacing {
+  padding-top: clamp(4rem, 8vw, 8rem);
+  padding-bottom: clamp(4rem, 8vw, 8rem);
+}
+
+.section-spacing-sm {
+  padding-top: clamp(2rem, 4vw, 4rem);
+  padding-bottom: clamp(2rem, 4vw, 4rem);
+}
+
+/* Gap responsivo entre elementos */
+.gap-responsive {
+  gap: clamp(1rem, 3vw, 2rem);
+}
+
+.gap-responsive-lg {
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EFEITOS VISUAIS PREMIUM
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Borda gradiente sutil */
+.border-gradient-red {
+  position: relative;
+}
+
+.border-gradient-red::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0.4), rgba(201, 35, 55, 0.1));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Overlay escuro para imagens */
+.img-overlay-dark {
+  position: relative;
+}
+
+.img-overlay-dark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.7) 100%);
+  pointer-events: none;
+}
+
+/* Blur sutil de fundo */
+.backdrop-blur-premium {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMAÇÕES DE ENTRADA PREMIUM
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Fade in suave com slide */
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-slide {
+  animation: fadeInSlide 0.6s var(--ease-out) forwards;
+}
+
+/* Fade in com scale */
+@keyframes fadeInZoom {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-zoom {
+  animation: fadeInZoom 0.5s var(--ease-out) forwards;
+}
+
+/* Stagger delays para listas */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.3s; }
+
+/* ═══════════════════════════════════════════════════════════════
+   MELHORIAS DE CONTRASTE - TEMA CLARO
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Texto secundário mais legível no tema claro */
+[data-theme="light"] .text-secondary-adaptive {
+  color: #374151 !important; /* Gray-700 - bom contraste */
+}
+
+/* Títulos no tema claro - mais contraste */
+[data-theme="light"] .title-adaptive {
+  color: #0f172a !important; /* Slate-900 */
+}
+
+/* Cards com fundo claro no tema claro */
+[data-theme="light"] .card-light-adaptive {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #1f2937;
+}
+
+[data-theme="light"] .card-light-adaptive h1,
+[data-theme="light"] .card-light-adaptive h2,
+[data-theme="light"] .card-light-adaptive h3 {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .card-light-adaptive p {
+  color: #374151 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLL REVEAL ANIMATIONS - CSS Only (sem JS)
+   Elementos aparecem quando visíveis no viewport
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Estado inicial - elementos escondidos */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Variações de direção */
+.reveal-left {
+  transform: translateX(-24px);
+}
+
+.reveal-left.revealed {
+  transform: translateX(0);
+}
+
+.reveal-right {
+  transform: translateX(24px);
+}
+
+.reveal-right.revealed {
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  transform: scale(0.95);
+}
+
+.reveal-scale.revealed {
+  transform: scale(1);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LOADING STATES PREMIUM
+   Skeleton screens e placeholders
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+[data-theme="light"] .skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.04) 0%,
+    rgba(0, 0, 0, 0.08) 50%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BUTTON STATES PREMIUM
+   Hover, active, focus e disabled
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Botão primário (vermelho) */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  font-family: var(--font-sora);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  background: #c92337;
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.btn-primary:hover {
+  background: #d42844;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.4), 0 0 40px rgba(201, 35, 55, 0.2);
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(201, 35, 55, 0.3);
+}
+
+.btn-primary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 35, 55, 0.4), 0 8px 24px rgba(201, 35, 55, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Botão secundário (outline) */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  font-family: var(--font-sora);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  background: transparent;
+  border: 2px solid rgba(201, 35, 55, 0.5);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base) var(--ease-out);
+}
+
+.btn-secondary:hover {
+  background: rgba(201, 35, 55, 0.1);
+  border-color: #c92337;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(201, 35, 55, 0.2);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 35, 55, 0.3);
+}
+
+[data-theme="light"] .btn-secondary {
+  color: #0f172a;
+  border-color: rgba(201, 35, 55, 0.4);
+}
+
+[data-theme="light"] .btn-secondary:hover {
+  color: #ffffff;
+  background: #c92337;
+  border-color: #c92337;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVIDADE PREMIUM - Breakpoints otimizados
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Mobile-first - telefones pequenos */
+@media (max-width: 479px) {
+  .section-title {
+    font-size: clamp(1.5rem, 8vw, 2.5rem) !important;
+    letter-spacing: 0.04em;
+  }
+  
+  .body-large {
+    font-size: clamp(1rem, 4vw, 1.15rem) !important;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    padding: 1rem 1.5rem;
+  }
+}
+
+/* Tablets em portrait */
+@media (min-width: 480px) and (max-width: 767px) {
+  .section-title {
+    font-size: clamp(2rem, 6vw, 3rem) !important;
+  }
+}
+
+/* Tablets em landscape e laptops pequenos */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .section-spacing {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+/* Desktop normal */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .section-spacing {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+/* Desktop grande e monitores */
+@media (min-width: 1280px) {
+  .section-spacing {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+  
+  .container-max {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   🎨 MICRO-ANIMAÇÕES PREMIUM - Hover Effects World-Class
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Card hover lift - efeito de elevação suave */
+.card-hover-lift {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+}
+
+.card-hover-lift:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 
+              0 0 60px rgba(201, 35, 55, 0.15);
+}
+
+/* Card hover glow - brilho vermelho Azimut */
+.card-hover-glow {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.card-hover-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, rgba(201, 35, 55, 0) 0%, rgba(201, 35, 55, 0.3) 50%, rgba(201, 35, 55, 0) 100%);
+  border-radius: inherit;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.4s ease;
+}
+
+.card-hover-glow:hover::before {
+  opacity: 1;
+}
+
+/* Hover scale suave */
+.hover-scale {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Hover rotate sutil */
+.hover-tilt {
+  transition: transform 0.3s ease;
+}
+
+.hover-tilt:hover {
+  transform: perspective(1000px) rotateX(2deg) rotateY(-2deg);
+}
+
+/* Imagem zoom suave */
+.img-zoom {
+  overflow: hidden;
+}
+
+.img-zoom img,
+.img-zoom video {
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.img-zoom:hover img,
+.img-zoom:hover video {
+  transform: scale(1.08);
+}
+
+/* Texto com underline animado */
+.link-underline {
+  position: relative;
+  text-decoration: none;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #c92337;
+  transition: width 0.3s ease;
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* Botão pulse - animação de pulso */
+.btn-pulse {
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(201, 35, 55, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(201, 35, 55, 0);
+  }
+}
+
+/* Fade in up - entrada suave */
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger animation - delay em cascata */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+
+/* Shimmer loading - efeito brilho */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Icon bounce hover */
+.icon-bounce:hover {
+  animation: iconBounce 0.5s ease;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-5px); }
+  50% { transform: translateY(0); }
+  75% { transform: translateY(-3px); }
+}
+
+/* Border gradient animation */
+.border-gradient-animated {
+  position: relative;
+  background: transparent;
+}
+
+.border-gradient-animated::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  background: linear-gradient(135deg, #c92337, #8B2332, #c92337);
+  background-size: 200% 200%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  border-radius: inherit;
+  animation: borderRotate 3s linear infinite;
+}
+
+@keyframes borderRotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Glass morphism hover */
+.glass-hover {
+  backdrop-filter: blur(8px);
+  transition: backdrop-filter 0.3s ease, background 0.3s ease;
+}
+
+.glass-hover:hover {
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Text gradient animated */
+.text-gradient-animated {
+  background: linear-gradient(90deg, #fff, #c92337, #fff);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textGradient 3s linear infinite;
+}
+
+@keyframes textGradient {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Focus ring premium */
+.focus-ring-premium:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 35, 55, 0.4), 
+              0 0 20px rgba(201, 35, 55, 0.2);
+}
+
+/* Smooth scroll behavior */
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+}
