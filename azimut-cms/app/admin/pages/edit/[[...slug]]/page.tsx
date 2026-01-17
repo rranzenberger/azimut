@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { FieldEditorWithMetadata } from '@/components/admin/FieldEditorWithMetadata';
+import { FieldEditorWithMetadata } from '@/src/components/admin/FieldEditorWithMetadata';
 import MediaUploadField from '@/components/admin/MediaUploadField';
 // Force rebuild: 2026-01-17-v1
 
