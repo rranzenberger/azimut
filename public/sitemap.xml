@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- ═══════════════════════════════════════════════════════════
+       HOME - PRIORIDADE MÁXIMA
+       ═══════════════════════════════════════════════════════════ -->
+  <url>
+    <loc>https://azmt.com.br/pt</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://azmt.com.br/en" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/en</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/es</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/fr</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr" />
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ACADEMY - VANCOUVER (ALTA PRIORIDADE - SEO GOLD)
+       ═══════════════════════════════════════════════════════════ -->
+  <url>
+    <loc>https://azmt.com.br/pt/academy/vancouver</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/academy/vancouver" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/academy/vancouver" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/academy/vancouver" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/academy/vancouver" />
+    <image:image>
+      <image:loc>https://azmt.com.br/vancouver-hero-sunset.jpg</image:loc>
+      <image:title>Estude em Vancouver - VFS & VanArts</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/en/academy/vancouver</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/academy/vancouver" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/academy/vancouver" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/academy/vancouver" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/academy/vancouver" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/es/academy/vancouver</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/academy/vancouver" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/academy/vancouver" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/academy/vancouver" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/academy/vancouver" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/fr/academy/vancouver</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/academy/vancouver" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/academy/vancouver" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/academy/vancouver" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/academy/vancouver" />
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ACADEMY HUB
+       ═══════════════════════════════════════════════════════════ -->
+  <url>
+    <loc>https://azmt.com.br/pt/academy</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/academy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/academy" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/academy" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/academy" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/en/academy</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/academy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/academy" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/academy" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/academy" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/pt/academy/courses</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/academy/courses" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/academy/courses" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/academy/courses" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/academy/courses" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/pt/academy/workshops</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/academy/workshops" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/academy/workshops" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/academy/workshops" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/academy/workshops" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/pt/academy/corporate</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/academy/corporate" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/academy/corporate" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/academy/corporate" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/academy/corporate" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/pt/academy/research</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/academy/research" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/academy/research" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/academy/research" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/academy/research" />
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SERVICES (WHAT WE DO)
+       ═══════════════════════════════════════════════════════════ -->
+  <url>
+    <loc>https://azmt.com.br/pt/what</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/what" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/what" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/what" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/what" />
+  </url>
+  
+  <!-- Serviços principais (slug dinâmico - adicionar conforme necessário) -->
+  <url>
+    <loc>https://azmt.com.br/pt/what/cinema-audiovisual</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/what/cinema-audiovisual" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/what/cinema-audiovisual" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/what/cinema-audiovisual" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/what/cinema-audiovisual" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/pt/what/museus-exposicoes</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/what/museus-exposicoes" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/what/museus-exposicoes" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/what/museus-exposicoes" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/what/museus-exposicoes" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/pt/what/realidade-virtual-vr</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/what/realidade-virtual-vr" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/what/realidade-virtual-vr" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/what/realidade-virtual-vr" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/what/realidade-virtual-vr" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/pt/what/ia-criativa</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/what/ia-criativa" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/what/ia-criativa" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/what/ia-criativa" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/what/ia-criativa" />
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       WORK (PORTFOLIO)
+       ═══════════════════════════════════════════════════════════ -->
+  <url>
+    <loc>https://azmt.com.br/pt/work</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/work" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/work" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/work" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/work" />
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STUDIO
+       ═══════════════════════════════════════════════════════════ -->
+  <url>
+    <loc>https://azmt.com.br/pt/studio</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/studio" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/studio" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/studio" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/studio" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/pt/studio/equipe</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/studio/equipe" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/studio/equipe" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/studio/equipe" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/studio/equipe" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/pt/studio/credibilidade</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/studio/credibilidade" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/studio/credibilidade" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/studio/credibilidade" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/studio/credibilidade" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/pt/studio/diferenciais</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/studio/diferenciais" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/studio/diferenciais" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/studio/diferenciais" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/studio/diferenciais" />
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       CONTACT & LEGAL
+       ═══════════════════════════════════════════════════════════ -->
+  <url>
+    <loc>https://azmt.com.br/pt/contact</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/contact" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/contact" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/contact" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/contact" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/pt/press</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/press" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/press" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/press" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/press" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/pt/privacy</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/privacy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/privacy" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/privacy" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/privacy" />
+  </url>
+  
+  <url>
+    <loc>https://azmt.com.br/pt/terms</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/terms" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/terms" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/terms" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/terms" />
+  </url>
+
+</urlset>

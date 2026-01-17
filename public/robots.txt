@@ -1,0 +1,71 @@
+# ═══════════════════════════════════════════════════════════
+# robots.txt - Azimut Site
+# Otimizado para SEO e buscadores de IA
+# ═══════════════════════════════════════════════════════════
+
+# Allow all bots (Google, Bing, Perplexity, ChatGPT, etc)
+User-agent: *
+Allow: /
+
+# Disallow admin/backoffice URLs
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+Disallow: /debug/
+
+# Allow Google Image Bot (para Image SEO)
+User-agent: Googlebot-Image
+Allow: /
+
+# Allow Googlebot (crawler principal)
+User-agent: Googlebot
+Allow: /
+
+# Allow Bingbot (Microsoft Bing)
+User-agent: Bingbot
+Allow: /
+
+# Allow DuckDuckGo Bot
+User-agent: DuckDuckBot
+Allow: /
+
+# Allow Yandex Bot
+User-agent: Yandex
+Allow: /
+
+# Allow Baidu Bot (China)
+User-agent: Baiduspider
+Allow: /
+
+# Sitemap location (para todos os buscadores)
+Sitemap: https://azmt.com.br/sitemap.xml
+Allow: /
+Crawl-delay: 0
+
+# Allow Bingbot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Allow AI Search Bots (Perplexity, ChatGPT, etc)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+# Sitemap (obrigatório para SEO)
+Sitemap: https://azmt.com.br/sitemap.xml
+
+# Host (opcional, mas recomendado)
+Host: https://azmt.com.br
