@@ -371,4 +371,302 @@ export const CourseSchema: React.FC<{
   )
 }
 
+// ════════════════════════════════════════════════════════════
+// BREADCRUMB SCHEMA - Navegação estruturada
+// ════════════════════════════════════════════════════════════
+export const BreadcrumbSchema: React.FC<{
+  items: Array<{ name: string; url: string }>
+  lang?: string
+}> = ({ items, lang = 'pt' }) => {
+  const baseUrl = 'https://azmt.com.br'
+  
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url.startsWith('http') ? item.url : `${baseUrl}${item.url}`
+    }))
+  }
+
+  return (
+    <Helmet>
+      <script type="application/ld+json">
+        {JSON.stringify(schema)}
+      </script>
+    </Helmet>
+  )
+}
+
+// ════════════════════════════════════════════════════════════
+// SERVICE SCHEMA - Para páginas de serviços (What We Do)
+// ════════════════════════════════════════════════════════════
+export const ServiceSchema: React.FC<{
+  name: string
+  description: string
+  serviceType?: string
+  areaServed?: string[]
+  image?: string
+  url?: string
+  lang?: string
+}> = ({ 
+  name, 
+  description, 
+  serviceType = 'Professional Service',
+  areaServed = ['Brazil', 'Canada', 'United States'],
+  image,
+  url,
+  lang = 'pt'
+}) => {
+  const baseUrl = 'https://azmt.com.br'
+  
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name,
+    description,
+    serviceType,
+    provider: {
+      '@type': 'Organization',
+      name: 'Azimut',
+      url: baseUrl
+    },
+    areaServed: areaServed.map(area => ({
+      '@type': 'Country',
+      name: area
+    })),
+    ...(image && { image: image.startsWith('http') ? image : `${baseUrl}${image}` }),
+    ...(url && { url: url.startsWith('http') ? url : `${baseUrl}${url}` }),
+    availableChannel: {
+      '@type': 'ServiceChannel',
+      serviceUrl: baseUrl,
+      servicePhone: '+55-21-99999-9999',
+      availableLanguage: ['Portuguese', 'English', 'Spanish', 'French']
+    }
+  }
+
+  return (
+    <Helmet>
+      <script type="application/ld+json">
+        {JSON.stringify(schema)}
+      </script>
+    </Helmet>
+  )
+}
+
+// ════════════════════════════════════════════════════════════
+// VIDEO OBJECT SCHEMA - Para portfolio de vídeos
+// ════════════════════════════════════════════════════════════
+export const VideoObjectSchema: React.FC<{
+  name: string
+  description: string
+  thumbnailUrl: string
+  uploadDate: string
+  duration?: string // ISO 8601 format: PT1M30S
+  contentUrl?: string
+  embedUrl?: string
+  lang?: string
+}> = ({ 
+  name, 
+  description, 
+  thumbnailUrl,
+  uploadDate,
+  duration,
+  contentUrl,
+  embedUrl,
+  lang = 'pt'
+}) => {
+  const baseUrl = 'https://azmt.com.br'
+  
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name,
+    description,
+    thumbnailUrl: thumbnailUrl.startsWith('http') ? thumbnailUrl : `${baseUrl}${thumbnailUrl}`,
+    uploadDate,
+    ...(duration && { duration }),
+    ...(contentUrl && { contentUrl }),
+    ...(embedUrl && { embedUrl }),
+    publisher: {
+      '@type': 'Organization',
+      name: 'Azimut',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/logo-azimut-star.svg`
+      }
+    },
+    potentialAction: {
+      '@type': 'WatchAction',
+      target: contentUrl || embedUrl
+    }
+  }
+
+  return (
+    <Helmet>
+      <script type="application/ld+json">
+        {JSON.stringify(schema)}
+      </script>
+    </Helmet>
+  )
+}
+
+// ════════════════════════════════════════════════════════════
+// ARTICLE SCHEMA - Para blog posts
+// ════════════════════════════════════════════════════════════
+export const ArticleSchema: React.FC<{
+  headline: string
+  description: string
+  image: string
+  datePublished: string
+  dateModified?: string
+  author?: string
+  url?: string
+  lang?: string
+}> = ({ 
+  headline, 
+  description, 
+  image,
+  datePublished,
+  dateModified,
+  author = 'Azimut Team',
+  url,
+  lang = 'pt'
+}) => {
+  const baseUrl = 'https://azmt.com.br'
+  
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline,
+    description,
+    image: image.startsWith('http') ? image : `${baseUrl}${image}`,
+    datePublished,
+    dateModified: dateModified || datePublished,
+    author: {
+      '@type': 'Person',
+      name: author,
+      url: baseUrl
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Azimut',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/logo-azimut-star.svg`
+      }
+    },
+    ...(url && { mainEntityOfPage: { '@type': 'WebPage', '@id': url.startsWith('http') ? url : `${baseUrl}${url}` } }),
+    inLanguage: lang === 'pt' ? 'pt-BR' : lang === 'en' ? 'en-US' : lang === 'es' ? 'es-ES' : 'fr-FR'
+  }
+
+  return (
+    <Helmet>
+      <script type="application/ld+json">
+        {JSON.stringify(schema)}
+      </script>
+    </Helmet>
+  )
+}
+
+// ════════════════════════════════════════════════════════════
+// PROJECT SCHEMA - Para projetos do portfolio (Work)
+// ════════════════════════════════════════════════════════════
+export const ProjectSchema: React.FC<{
+  name: string
+  description: string
+  image: string
+  dateCreated: string
+  creator?: string
+  client?: string
+  category?: string
+  url?: string
+  lang?: string
+}> = ({ 
+  name, 
+  description, 
+  image,
+  dateCreated,
+  creator = 'Azimut',
+  client,
+  category,
+  url,
+  lang = 'pt'
+}) => {
+  const baseUrl = 'https://azmt.com.br'
+  
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name,
+    description,
+    image: image.startsWith('http') ? image : `${baseUrl}${image}`,
+    dateCreated,
+    creator: {
+      '@type': 'Organization',
+      name: creator,
+      url: baseUrl
+    },
+    ...(client && { 
+      contributor: {
+        '@type': 'Organization',
+        name: client
+      }
+    }),
+    ...(category && { genre: category }),
+    ...(url && { url: url.startsWith('http') ? url : `${baseUrl}${url}` }),
+    inLanguage: lang === 'pt' ? 'pt-BR' : lang === 'en' ? 'en-US' : lang === 'es' ? 'es-ES' : 'fr-FR'
+  }
+
+  return (
+    <Helmet>
+      <script type="application/ld+json">
+        {JSON.stringify(schema)}
+      </script>
+    </Helmet>
+  )
+}
+
+// ════════════════════════════════════════════════════════════
+// ITEM LIST SCHEMA - Para listas de projetos/cursos
+// ════════════════════════════════════════════════════════════
+export const ItemListSchema: React.FC<{
+  name: string
+  description?: string
+  items: Array<{ name: string; url: string; image?: string; position?: number }>
+  lang?: string
+}> = ({ 
+  name, 
+  description,
+  items,
+  lang = 'pt'
+}) => {
+  const baseUrl = 'https://azmt.com.br'
+  
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name,
+    ...(description && { description }),
+    numberOfItems: items.length,
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: item.position || index + 1,
+      name: item.name,
+      url: item.url.startsWith('http') ? item.url : `${baseUrl}${item.url}`,
+      ...(item.image && { image: item.image.startsWith('http') ? item.image : `${baseUrl}${item.image}` })
+    }))
+  }
+
+  return (
+    <Helmet>
+      <script type="application/ld+json">
+        {JSON.stringify(schema)}
+      </script>
+    </Helmet>
+  )
+}
+
 export default StructuredData

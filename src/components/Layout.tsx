@@ -12,6 +12,7 @@ import DevToolsButton from './DevToolsButton'
 import ClaudeAssistant from './ClaudeAssistant'
 // Breadcrumbs removido - cada página tem seu próprio breadcrumb
 import ScrollToTopButton from './ScrollToTopButton'
+import SEOGlobal from './SEOGlobal' // SEO Global Schemas
 import { type UserProfile } from './BudgetWizard'
 import { trackCTA, trackLanguageChange } from '../utils/analytics'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -191,6 +192,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden" style={{ color: 'var(--theme-text)' }}>
+      {/* SEO Global - Schema JSON-LD para todas as páginas */}
+      <SEOGlobal lang={lang} />
+      
       {/* Skip to content - Accessibility */}
       <SkipLink />
       
