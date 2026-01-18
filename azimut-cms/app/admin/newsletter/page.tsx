@@ -171,6 +171,36 @@ export default function NewsletterPage() {
     }
   }
 
+  const handleCleanInvalid = async () => {
+    const message = 'Isso vai DELETAR:\n\n' +
+      '1. Emails BOUNCED (erro de entrega)\n' +
+      '2. Emails que receberam 3+ newsletters e nunca responderam\n\n' +
+      'Continuar?';
+    
+    if (!confirm(message)) return
+    
+    setSeedStatus('Limpando emails inválidos e inativos...')
+    
+    try {
+      const res = await fetch('/api/admin/newsletter/cleanup', {
+        method: 'DELETE'
+      })
+      
+      const data = await res.json()
+      
+      if (data.success) {
+        setSeedStatus(`✅ ${data.count} emails inválidos/inativos deletados!`)
+        fetchSubscribers()
+        fetchStats()
+        setTimeout(() => setSeedStatus(''), 5000)
+      } else {
+        setSeedStatus(`❌ Erro: ${data.message}`)
+      }
+    } catch (error) {
+      setSeedStatus(`❌ Erro ao limpar: ${error}`)
+    }
+  }
+
   const handleSendCampaign = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const form = e.currentTarget
@@ -218,6 +248,13 @@ export default function NewsletterPage() {
             className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition-colors"
           >
             🗑️ Limpar Dados de Teste
+          </button>
+          <button
+            onClick={handleCleanInvalid}
+            className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-sm font-medium transition-colors"
+            title="Remove emails bounced e inativos (3+ envios sem resposta)"
+          >
+            🧹 Limpar Inválidos
           </button>
         </div>
       </div>
