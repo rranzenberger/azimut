@@ -4,19 +4,25 @@ type Theme = 'dark' | 'light'
 
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>(() => {
-    // Verificar localStorage ou preferência do sistema
     if (typeof window !== 'undefined') {
+      // 📱 MOBILE (< 768px): SEMPRE CLARO por padrão (melhor UX)
+      // 💻 DESKTOP (>= 768px): SEMPRE ESCURO por padrão (cinematográfico)
+      const isMobile = window.innerWidth < 768
+      const defaultTheme = isMobile ? 'light' : 'dark'
+      
+      // Verificar se usuário já escolheu uma preferência manualmente
       const savedTheme = localStorage.getItem('azimut-theme') as Theme | null
-      if (savedTheme && ['dark', 'light'].includes(savedTheme)) {
+      const userHasPreference = localStorage.getItem('azimut-theme-manual') === 'true'
+      
+      // Se usuário trocou manualmente (via toggle), respeitar escolha
+      if (userHasPreference && savedTheme && ['dark', 'light'].includes(savedTheme)) {
         return savedTheme
       }
       
-      // 📱 MOBILE: Iniciar em CLARO (melhor UX)
-      // 💻 DESKTOP: Iniciar em ESCURO (cinematográfico)
-      const isMobile = window.innerWidth < 768
-      return isMobile ? 'light' : 'dark'
+      // Caso contrário, usar tema padrão baseado em mobile/desktop
+      return defaultTheme
     }
-    return 'dark' // Default Azimut é escuro (cinematográfico)
+    return 'dark'
   })
 
   useEffect(() => {
@@ -32,7 +38,12 @@ export function useTheme() {
   }, [theme])
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'dark' ? 'light' : 'dark')
+    setTheme(prev => {
+      const newTheme = prev === 'dark' ? 'light' : 'dark'
+      // Marcar que usuário trocou manualmente (respeitar escolha dele)
+      localStorage.setItem('azimut-theme-manual', 'true')
+      return newTheme
+    })
   }
 
   const setThemeMode = (newTheme: Theme) => {
