@@ -545,8 +545,11 @@ const AcademyCorporate: React.FC<AcademyCorporateProps> = ({ lang }) => {
       </Helmet>
 
       <div className="min-h-screen bg-theme-primary">
-        {/* HERO */}
-        <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+        {/* HERO - GRUDADO NO MENU (margin-top negativo compensa padding do main) */}
+        <section 
+          className="relative min-h-[60vh] flex items-center justify-center overflow-hidden"
+          style={{ marginTop: '-80px', paddingTop: '80px' }}
+        >
           <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-black to-slate-900 opacity-90" />
           
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
