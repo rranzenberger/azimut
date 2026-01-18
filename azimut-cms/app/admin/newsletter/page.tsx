@@ -37,6 +37,7 @@ export default function NewsletterPage() {
   const [activeTab, setActiveTab] = useState<'list' | 'stats' | 'send'>('list')
   const [sendStatus, setSendStatus] = useState<string>('')
   const [filterStatus, setFilterStatus] = useState<string>('all')
+  const [seedStatus, setSeedStatus] = useState<string>('')
 
   useEffect(() => {
     fetchSubscribers()
@@ -105,6 +106,59 @@ export default function NewsletterPage() {
     }
   }
 
+  const handleSeedData = async () => {
+    const count = prompt('Quantos inscritos de teste gerar? (max 2000)', '100')
+    if (!count) return
+    
+    setSeedStatus('Gerando dados de teste...')
+    
+    try {
+      const res = await fetch('/api/admin/newsletter/seed', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ count: parseInt(count) })
+      })
+      
+      const data = await res.json()
+      
+      if (data.success) {
+        setSeedStatus(`✅ ${data.count} inscritos de teste criados!`)
+        fetchSubscribers()
+        fetchStats()
+        setTimeout(() => setSeedStatus(''), 3000)
+      } else {
+        setSeedStatus(`❌ Erro: ${data.message}`)
+      }
+    } catch (error) {
+      setSeedStatus(`❌ Erro ao gerar dados: ${error}`)
+    }
+  }
+
+  const handleClearTestData = async () => {
+    if (!confirm('Tem certeza que deseja DELETAR TODOS os inscritos de teste (emails teste_*)?')) return
+    
+    setSeedStatus('Deletando dados de teste...')
+    
+    try {
+      const res = await fetch('/api/admin/newsletter/seed', {
+        method: 'DELETE'
+      })
+      
+      const data = await res.json()
+      
+      if (data.success) {
+        setSeedStatus(`✅ ${data.count} inscritos de teste deletados!`)
+        fetchSubscribers()
+        fetchStats()
+        setTimeout(() => setSeedStatus(''), 3000)
+      } else {
+        setSeedStatus(`❌ Erro: ${data.message}`)
+      }
+    } catch (error) {
+      setSeedStatus(`❌ Erro ao deletar: ${error}`)
+    }
+  }
+
   const handleSendCampaign = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const form = e.currentTarget
@@ -138,7 +192,32 @@ export default function NewsletterPage() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">📧 Newsletter</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold">📧 Newsletter</h1>
+        <div className="flex gap-3">
+          <button
+            onClick={handleSeedData}
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors"
+          >
+            🧪 Gerar Dados de Teste
+          </button>
+          <button
+            onClick={handleClearTestData}
+            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition-colors"
+          >
+            🗑️ Limpar Dados de Teste
+          </button>
+        </div>
+      </div>
+
+      {seedStatus && (
+        <div className={`mb-4 p-3 rounded-lg text-sm ${
+          seedStatus.includes('✅') ? 'bg-green-900/30 text-green-300 border border-green-700' :
+          'bg-red-900/30 text-red-300 border border-red-700'
+        }`}>
+          {seedStatus}
+        </div>
+      )}
       
       {/* Tabs */}
       <div className="flex gap-4 mb-6 border-b border-slate-700">
