@@ -1293,6 +1293,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   {lang === 'en' ? 'Subscribe' : lang === 'es' ? 'Suscribir' : 'Inscrever'}
                 </button>
               </form>
+              </div>
             </div>
           </div>
 
