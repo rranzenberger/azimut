@@ -397,6 +397,25 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
       // 1. Submeter para o backoffice (API existente)
       await ApiService.submitVancouverLead(submitData)
       
+      // 🆕 Se marcou newsletter, criar NewsletterSubscriber
+      if (formData.wantsNewsletter && formData.email) {
+        try {
+          const backofficeUrl = import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azmt.com.br'
+          await fetch(`${backofficeUrl}/api/public/newsletter`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: formData.email,
+              name: formData.name,
+              lang: lang,
+              source: 'vancouver_form'
+            })
+          })
+        } catch (newsletterError) {
+          console.warn('Newsletter subscription failed (non-critical):', newsletterError)
+        }
+      }
+      
       // 2. Enviar notificação por email (API nova)
       try {
         await fetch('/api/notify-form', {
@@ -856,6 +875,9 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
           <label className="flex items-start gap-3 cursor-pointer">
             <input
               type="checkbox"
+              name="wantsNewsletter"
+              checked={formData.wantsNewsletter || false}
+              onChange={(e) => setFormData({ ...formData, wantsNewsletter: e.target.checked })}
               className="mt-1 border-white/30 text-azimut-red focus:ring-2 focus:ring-azimut-red bg-white/10 rounded"
             />
             <span className="text-sm text-white/80">{t.newsletter}</span>
