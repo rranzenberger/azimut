@@ -1040,9 +1040,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               </div>
             </div>
 
-            {/* 2. NAVEGAÇÃO - Links organizados (4 colunas quando newsletter ao lado, 5 quando abaixo) - REDUZIDO PADDING ESQUERDA */}
-            <div className="min-[900px]:col-span-4 max-[899px]:col-span-5 mb-3 min-[768px]:mb-0" style={{ width: '100%', paddingLeft: '0.5rem', paddingRight: '1rem', height: '100%' }}>
-              <div className="grid grid-cols-3 gap-x-4 gap-y-0 md:gap-x-5 h-full">
+            {/* 2. NAVEGAÇÃO - Links organizados - GET STARTED MAIS LARGO */}
+            <div className="min-[900px]:col-span-5 max-[899px]:col-span-6 mb-3 min-[768px]:mb-0" style={{ width: '100%', paddingLeft: '0.5rem', paddingRight: '1rem', height: '100%' }}>
+              <div className="grid grid-cols-4 gap-x-3 gap-y-0 md:gap-x-4 h-full">
                 {/* Coluna 1: Navegação Principal */}
                 <nav className="flex flex-col gap-1.5 sm:gap-2">
                   <h4 className="font-sora text-[0.65rem] sm:text-[0.7rem] font-semibold uppercase tracking-[0.15em] mb-2 sm:mb-2.5 text-white">
@@ -1066,8 +1066,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   </div>
                 </nav>
 
-                {/* Coluna 3: Começar + Botão CTA */}
-                <nav className="flex flex-col gap-1.5 sm:gap-2 h-full">
+                {/* Coluna 3: Começar - MAIS LARGO */}
+                <nav className="flex flex-col gap-1.5 sm:gap-2 h-full col-span-2">
                   <h4 className="font-sora text-[0.65rem] sm:text-[0.7rem] font-semibold uppercase tracking-[0.15em] mb-2 sm:mb-2.5 text-white">
                     {lang === 'en' ? 'Get Started' : lang === 'fr' ? 'Commencer' : lang === 'es' ? 'Comenzar' : 'Começar'}
                   </h4>
@@ -1080,11 +1080,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <LangLink to="/work/review" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                     {lang === 'pt' ? 'Revisar Projeto' : lang === 'es' ? 'Revisar Proyecto' : lang === 'fr' ? 'Réviser le Projet' : 'Review Project'}
                   </LangLink>
-                  {/* Botão CTA + Ícones Sociais - JUNTOS para alinhar */}
+                  {/* Botão CTA + Ícones Sociais - JUNTOS EM UMA LINHA */}
                   <div className="pt-3.5 border-t border-white/10" style={{ marginTop: 'auto' }}>
-                    {/* Botão */}
+                    {/* Botão - MAIS LARGO */}
                     <LangLink to="/contact" 
-                      className="flex flex-col items-center justify-center rounded-xl border px-3 py-2 text-[0.65rem] sm:text-[0.68rem] md:text-[0.7rem] font-medium transition-all w-full"
+                      className="flex flex-col items-center justify-center rounded-xl border px-4 py-2.5 text-[0.68rem] sm:text-[0.7rem] md:text-[0.72rem] font-medium transition-all w-full mb-3"
                       style={{ 
                         color: '#ffffff',
                         borderColor: 'rgba(201, 35, 55, 0.4)',
@@ -1110,8 +1110,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       <span className="block whitespace-nowrap" style={{ fontSize: 'inherit' }}>{getCtaLines(lang)[1]}</span>
                     </LangLink>
                     
-                    {/* Ícones Sociais - Logo abaixo do botão, centralizados */}
-                    <div className="flex items-center justify-center flex-wrap mt-3" style={{ gap: '0.6rem', minWidth: '120px' }}>
+                    {/* Ícones Sociais - TODOS EM UMA LINHA */}
+                    <div className="flex items-center justify-center" style={{ gap: '0.7rem' }}>
                       <a href="https://youtube.com/@azimutart" target="_blank" rel="noopener noreferrer" className="social-icon-footer transition-all duration-300 hover:scale-110" aria-label="YouTube" style={{ opacity: 0.6 }} onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#FF0000' }} onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.6'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#ffffff' }}>
                         <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5" style={{ color: '#ffffff', transition: 'all 0.3s ease' }}><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                       </a>
@@ -1133,8 +1133,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               </div>
             </div>
 
-            {/* 3. CONTATO + NEWSLETTER JUNTOS (5 colunas quando couber, 12 no mobile) */}
-            <div className="min-[900px]:col-span-5 max-[899px]:col-span-12 mb-3 min-[768px]:mb-0" style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingLeft: '1rem', paddingRight: '1rem' }}>
+            {/* 3. CONTATO + NEWSLETTER JUNTOS - MAIS PARA DIREITA (4 colunas) */}
+            <div className="min-[900px]:col-span-4 max-[899px]:col-span-12 mb-3 min-[768px]:mb-0" style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingLeft: '1.5rem', paddingRight: '0.5rem' }}>
               
               {/* CONNECT - Contato */}
               <div style={{ flexGrow: '0' }}>
