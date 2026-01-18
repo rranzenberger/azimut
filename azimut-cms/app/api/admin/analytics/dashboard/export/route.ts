@@ -54,14 +54,13 @@ export async function GET(request: NextRequest) {
           city: true,
           sourceUrl: true,
           createdAt: true,
-          wantsNewsletter: true,
         },
         orderBy: { createdAt: 'desc' },
       });
 
       filename = `leads_${new Date().toISOString().split('T')[0]}.csv`;
       csvData = [
-        'ID,Name,Email,Phone,Company,Type,Status,Score,Country,City,Source,Newsletter,Created At',
+        'ID,Name,Email,Phone,Company,Type,Status,Score,Country,City,Source,Created At',
         ...leads.map(l => [
           l.id,
           `"${l.name?.replace(/"/g, '""') || ''}"`,
@@ -74,7 +73,6 @@ export async function GET(request: NextRequest) {
           l.country || '',
           l.city || '',
           `"${l.sourceUrl?.replace(/"/g, '""') || ''}"`,
-          l.wantsNewsletter ? 'Yes' : 'No',
           l.createdAt.toISOString(),
         ].join(',')),
       ].join('\n');

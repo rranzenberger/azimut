@@ -1318,6 +1318,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             </div>
           </div>
         </div>
+        </div>
       </footer>
 
       {/* Budget Wizard Modal */}

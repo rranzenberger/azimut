@@ -1279,7 +1279,7 @@ model NewsletterSubscriber {
   unsubscribedAt    DateTime?
   lastEmailSentAt   DateTime?
   emailCount        Int                 @default(0) // Quantos emails já recebeu
-  leadId            String?             // Relação opcional com Lead (se vier de formulário)
+  leadId            String?             @unique // Relação opcional com Lead (se vier de formulário)
   lead              Lead?               @relation(fields: [leadId], references: [id], onDelete: SetNull)
   
   createdAt         DateTime            @default(now())

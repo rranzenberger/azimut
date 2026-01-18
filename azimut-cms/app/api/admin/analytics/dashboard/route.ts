@@ -47,7 +47,6 @@ export async function GET(request: NextRequest) {
         createdAt: true,
         leadType: true,
         sourceUrl: true,
-        newsletterSource: true,
         leadScore: true,
         status: true,
       },
@@ -136,10 +135,8 @@ export async function GET(request: NextRequest) {
     allLeads.forEach(lead => {
       let source = 'Outros';
       
-      // Priorizar newsletterSource se existir
-      if (lead.newsletterSource) {
-        source = `Newsletter: ${lead.newsletterSource}`;
-      } else if (lead.sourceUrl) {
+      // Analisar sourceUrl para identificar origem
+      if (lead.sourceUrl) {
         // Analisar sourceUrl para identificar origem
         const url = lead.sourceUrl.toLowerCase();
         if (url.includes('newsletter')) {
