@@ -10,8 +10,11 @@ export function useTheme() {
       if (savedTheme && ['dark', 'light'].includes(savedTheme)) {
         return savedTheme
       }
-      // Se não houver tema salvo, usar preferência do sistema (mas default dark para Azimut)
-      // return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+      
+      // 📱 MOBILE: Iniciar em CLARO (melhor UX)
+      // 💻 DESKTOP: Iniciar em ESCURO (cinematográfico)
+      const isMobile = window.innerWidth < 768
+      return isMobile ? 'light' : 'dark'
     }
     return 'dark' // Default Azimut é escuro (cinematográfico)
   })
