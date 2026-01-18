@@ -352,7 +352,10 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
         lang={lang}
       />
 
-      <div className="min-h-screen bg-gradient-to-b dark:from-black dark:via-[#0a0e18] dark:to-black from-[#f5f1e8] via-[#e8e5df] to-[#f5f1e8]" style={{ marginTop: '-80px' }}>
+      <div className="min-h-screen" style={{ 
+        background: 'var(--theme-bg-primary)',
+        marginTop: '-80px' 
+      }}>
         {/* ═══════════════════════════════════════════════════════════
             HERO SECTION - Video Background
             ═══════════════════════════════════════════════════════════
@@ -414,15 +417,18 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
         />
 
         {/* ═══════════════════════════════════════════════════════════
-            NAVEGAÇÃO INTERNA - Sticky simples abaixo do header
+            NAVEGAÇÃO INTERNA - Sticky colado no header principal
             ═══════════════════════════════════════════════════════ */}
         <div 
           className="sticky z-40 backdrop-blur-xl"
           style={{
-            top: '60px',
+            top: '80px',
             backgroundColor: 'var(--theme-bg-sticky)',
             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
-            borderBottom: '2px solid rgba(201, 35, 55, 0.5)'
+            borderTop: '1px solid rgba(201, 35, 55, 0.3)',
+            borderBottom: '1px solid rgba(201, 35, 55, 0.3)',
+            marginTop: '-80px',
+            paddingTop: '80px'
           }}
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">

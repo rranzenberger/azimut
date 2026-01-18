@@ -430,7 +430,7 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
         <meta name="description" content={t.meta.description} />
       </Helmet>
 
-      <div className="min-h-screen bg-gradient-to-b from-black via-[#0a0e18] to-black">
+      <div className="min-h-screen" style={{ background: 'var(--theme-bg-primary)' }}>
         {/* HERO */}
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-black to-slate-900 opacity-90" />
