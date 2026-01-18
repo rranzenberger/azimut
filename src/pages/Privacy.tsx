@@ -38,7 +38,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
       title: 'Política de Privacidade',
       subtitle: 'Transparência total sobre como protegemos seus dados',
       lastUpdate: 'Última atualização: Janeiro 2026',
-      badge: '🔒 LGPD • GDPR • Lei 25 Québec • PIPEDA • CCPA',
+      badge: '🔒 LGPD • GDPR • BC PIPA • Lei 25 Québec • PIPEDA • CCPA/VCDPA',
       quickLinks: {
         title: 'Navegação Rápida',
         items: [
@@ -128,28 +128,30 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           cta: '📧 Exercer direitos: privacy@azimut.art (resposta em até 15 dias úteis)'
         },
         {
-          id: 'quebec',
+          id: 'canada',
           icon: '🍁',
-          title: '7. Québec & Canadá (Lei 25 / PIPEDA)',
-          content: `Para residentes do Québec e Canadá, cumprimos integralmente a Lei 25 (Loi 25) e a PIPEDA:`,
+          title: '7. Canadá (PIPEDA, BC PIPA, Alberta PIPA, Lei 25 Québec)',
+          content: `Para residentes do Canadá, cumprimos as leis federais e provinciais de privacidade:`,
           items: [
-            { subtitle: '🏛️ Lei 25 do Québec', list: ['Política de privacidade disponível em francês', 'Consentimento expresso para dados sensíveis', 'Portabilidade de dados garantida', 'Avaliação de impacto para projetos com dados significativos', 'Responsável pela proteção de dados designado'] },
-            { subtitle: '🍁 PIPEDA (Federal)', list: ['Consentimento informado e válido', 'Finalidades claramente identificadas', 'Coleta limitada ao necessário', 'Notificação de violações de segurança'] }
+            { subtitle: '🏛️ British Columbia - PIPA', list: ['Personal Information Protection Act (BC)', 'Aplica-se a Vancouver e residentes de BC', 'Consentimento informado obrigatório', 'Direito de acessar e corrigir dados', 'Notificação de violações de segurança'] },
+            { subtitle: '🏔️ Alberta - PIPA', list: ['Personal Information Protection Act (Alberta)', 'Proteções similares ao PIPEDA federal', 'Consentimento expresso para dados sensíveis', 'Direito de retirar consentimento'] },
+            { subtitle: '⚜️ Québec - Lei 25', list: ['Política em francês obrigatória', 'Consentimento expresso para dados sensíveis', 'Portabilidade de dados garantida', 'Avaliação de Impacto à Privacidade', 'Responsável pela proteção de dados'] },
+            { subtitle: '🍁 PIPEDA (Federal)', list: ['Aplica-se em todo o Canadá para atividades comerciais', 'Consentimento informado e válido', 'Coleta limitada ao necessário', 'Notificação de violações ao OPC'] }
           ],
-          highlight: '🇨🇦 Dados podem ser armazenados no Canadá (Vancouver) ou EUA com proteção adequada'
+          highlight: '🇨🇦 Estamos baseados em Vancouver, BC - Total conformidade com BC PIPA e PIPEDA'
         },
         {
-          id: 'ccpa',
+          id: 'usa',
           icon: '🇺🇸',
-          title: '8. Califórnia, EUA (CCPA/CPRA)',
-          content: `Para residentes da Califórnia, você tem direitos adicionais sob o CCPA/CPRA:`,
-          rights: [
-            { icon: '📋', title: 'Saber', desc: 'Quais dados coletamos e como usamos' },
-            { icon: '🗑️', title: 'Deletar', desc: 'Solicitar exclusão de dados pessoais' },
-            { icon: '🚫', title: 'Opt-out', desc: 'Recusar venda/compartilhamento de dados' },
-            { icon: '⚖️', title: 'Não-discriminação', desc: 'Mesmo serviço independente de escolhas de privacidade' }
+          title: '8. Estados Unidos (Leis Estaduais de Privacidade)',
+          content: `Para residentes dos EUA, cumprimos as leis estaduais de privacidade aplicáveis:`,
+          items: [
+            { subtitle: '🌴 Califórnia (CCPA/CPRA)', list: ['Direito de saber, deletar, corrigir dados', 'Opt-out de venda/compartilhamento', 'Não-discriminação por exercer direitos', '"Do Not Sell My Personal Information" respeitado'] },
+            { subtitle: '🏛️ Virginia (VCDPA)', list: ['Direito de acessar, corrigir, deletar', 'Opt-in obrigatório para dados sensíveis', 'Direito de recusar publicidade direcionada', 'Portabilidade de dados'] },
+            { subtitle: '🏔️ Colorado (CPA)', list: ['Direito de acessar, corrigir, deletar', 'Opt-out de perfilamento', 'Mecanismo universal de opt-out respeitado', 'Direitos de portabilidade de dados'] },
+            { subtitle: '📋 Outros Estados', list: ['Connecticut, Utah, Oregon, Montana, Iowa', 'Direitos similares: acessar, deletar, corrigir', 'Opt-out de venda de dados', 'Respeitamos todos os direitos estaduais'] }
           ],
-          highlight: '🚫 A Azimut NÃO vende dados pessoais. Não compartilhamos com terceiros para marketing.'
+          highlight: '🚫 A Azimut NÃO vende dados pessoais. Não compartilhamos com terceiros para marketing ou publicidade.'
         },
         {
           id: 'transferencia',
@@ -350,7 +352,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
       title: 'Privacy Policy',
       subtitle: 'Full transparency on how we protect your data',
       lastUpdate: 'Last updated: January 2026',
-      badge: '🔒 GDPR • LGPD • Quebec Law 25 • PIPEDA • CCPA',
+      badge: '🔒 GDPR • LGPD • BC PIPA • Quebec Law 25 • PIPEDA • CCPA/VCDPA/CPA',
       quickLinks: {
         title: 'Quick Navigation',
         items: [
@@ -442,26 +444,28 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
         {
           id: 'quebec',
           icon: '🍁',
-          title: '7. Quebec & Canada (Law 25 / PIPEDA)',
-          content: `For Quebec and Canada residents, we fully comply with Law 25 and PIPEDA:`,
+          title: '7. Canada (PIPEDA, BC PIPA, Alberta PIPA, Quebec Law 25)',
+          content: `For Canadian residents, we comply with federal and provincial privacy laws:`,
           items: [
-            { subtitle: '🏛️ Quebec Law 25', list: ['Privacy policy available in French', 'Express consent for sensitive data', 'Data portability guaranteed', 'Privacy Impact Assessment when required', 'Designated privacy officer'] },
-            { subtitle: '🍁 PIPEDA (Federal)', list: ['Informed and valid consent', 'Clearly identified purposes', 'Collection limited to necessary', 'Security breach notification'] }
+            { subtitle: '🏛️ British Columbia - PIPA', list: ['Personal Information Protection Act (BC)', 'Applies to Vancouver and BC residents', 'Informed consent required', 'Right to access and correct data', 'Security breach notification'] },
+            { subtitle: '🏔️ Alberta - PIPA', list: ['Personal Information Protection Act (Alberta)', 'Similar protections to federal PIPEDA', 'Express consent for sensitive data', 'Right to withdraw consent'] },
+            { subtitle: '⚜️ Quebec - Law 25', list: ['Privacy policy in French required', 'Express consent for sensitive data', 'Data portability guaranteed', 'Privacy Impact Assessment', 'Designated privacy officer'] },
+            { subtitle: '🍁 PIPEDA (Federal)', list: ['Applies across Canada for commercial activities', 'Informed and valid consent', 'Collection limited to necessary', 'Security breach notification to OPC'] }
           ],
-          highlight: '🇨🇦 Data may be stored in Canada (Vancouver) or USA with adequate protection'
+          highlight: '🇨🇦 We are based in Vancouver, BC - Full compliance with BC PIPA and PIPEDA'
         },
         {
-          id: 'ccpa',
+          id: 'usa',
           icon: '🇺🇸',
-          title: '8. California, USA (CCPA/CPRA)',
-          content: `For California residents, you have additional rights under CCPA/CPRA:`,
-          rights: [
-            { icon: '📋', title: 'Know', desc: 'What data we collect and how we use it' },
-            { icon: '🗑️', title: 'Delete', desc: 'Request deletion of personal data' },
-            { icon: '🚫', title: 'Opt-out', desc: 'Opt-out of sale/sharing of data' },
-            { icon: '⚖️', title: 'Non-discrimination', desc: 'Same service regardless of privacy choices' }
+          title: '8. United States (State Privacy Laws)',
+          content: `For US residents, we comply with applicable state privacy laws:`,
+          items: [
+            { subtitle: '🌴 California (CCPA/CPRA)', list: ['Right to know, delete, correct data', 'Opt-out of sale/sharing', 'Non-discrimination for exercising rights', '"Do Not Sell My Personal Information" honored'] },
+            { subtitle: '🏛️ Virginia (VCDPA)', list: ['Right to access, correct, delete', 'Opt-in required for sensitive data', 'Right to opt-out of targeted advertising', 'Data portability in portable format'] },
+            { subtitle: '🏔️ Colorado (CPA)', list: ['Right to access, correct, delete', 'Opt-out of profiling', 'Universal opt-out mechanism honored', 'Data portability rights'] },
+            { subtitle: '📋 Other States', list: ['Connecticut, Utah, Oregon, Montana, Iowa', 'Similar rights: access, delete, correct', 'Opt-out of data sales', 'We honor all state privacy rights'] }
           ],
-          highlight: '🚫 Azimut does NOT sell personal data. We do not share with third parties for marketing.'
+          highlight: '🚫 Azimut does NOT sell personal data. We do not share with third parties for marketing or advertising.'
         },
         {
           id: 'transferencia',
