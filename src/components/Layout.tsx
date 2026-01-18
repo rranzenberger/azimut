@@ -1133,9 +1133,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               </div>
             </div>
 
-            {/* 3. CONTATO + SOCIAL (3 colunas quando newsletter ao lado, 4 quando abaixo) */}
-            <div className="min-[900px]:col-span-3 max-[899px]:col-span-4 mb-3 min-[768px]:mb-0" style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', paddingLeft: '1rem', paddingRight: '1rem' }}>
-              <div style={{ flexGrow: '1' }}>
+            {/* 3. CONTATO + NEWSLETTER JUNTOS (5 colunas quando couber, 12 no mobile) */}
+            <div className="min-[900px]:col-span-5 max-[899px]:col-span-12 mb-3 min-[768px]:mb-0" style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingLeft: '1rem', paddingRight: '1rem' }}>
+              
+              {/* CONNECT - Contato */}
+              <div style={{ flexGrow: '0' }}>
                 <h4 className="font-sora text-[0.64rem] sm:text-[0.67rem] font-semibold uppercase tracking-[0.15em] mb-2.5 sm:mb-3 text-white">
                   {lang === 'en' ? 'Connect' : lang === 'fr' ? 'Contact' : lang === 'es' ? 'Contacto' : 'Contato'}
                 </h4>
@@ -1182,22 +1184,21 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <span className="whitespace-nowrap font-medium" style={{ fontSize: '0.68rem' }}>WhatsApp</span>
                 </a>
               </div>
-            </div>
 
-            {/* 4. NEWSLETTER (2 colunas quando couber, 12 no mobile) */}
-            <div className="sm:col-span-2 min-[768px]:col-span-2 mb-4 sm:mb-0" style={{ width: '100%' }}>
-              <h4 className="font-sora text-[0.65rem] sm:text-[0.7rem] font-semibold uppercase tracking-[0.15em] mb-2 sm:mb-3 text-white">
+              {/* NEWSLETTER - Texto e formulário JUNTOS */}
+              <div style={{ flexGrow: '0', width: '100%', maxWidth: '100%' }}>
+                <h4 className="font-sora text-[0.65rem] sm:text-[0.7rem] font-semibold uppercase tracking-[0.15em] mb-2 sm:mb-2.5 text-white">
                   {lang === 'en' ? 'Newsletter' : lang === 'es' ? 'Boletín' : 'Newsletter'}
                 </h4>
-              {/* Texto descritivo movido para CIMA do formulário */}
-              <p className="text-[0.7rem] sm:text-[0.72rem] mb-3" style={{ color: '#94a3b8', lineHeight: '1.35', maxWidth: '200px' }}>
-                {lang === 'en' 
-                  ? 'Stay updated with our latest projects and insights.' 
-                  : lang === 'es'
-                  ? 'Mantente al día con nuestros últimos proyectos.'
-                  : 'Receba nossas novidades e projetos em primeira mão.'}
-              </p>
-              <form 
+                {/* Texto descritivo - JUNTO com o formulário */}
+                <p className="text-[0.7rem] sm:text-[0.72rem] mb-3" style={{ color: '#94a3b8', lineHeight: '1.35', maxWidth: '100%' }}>
+                  {lang === 'en' 
+                    ? 'Stay updated with our latest projects and insights.' 
+                    : lang === 'es'
+                    ? 'Mantente al día con nuestros últimos proyectos.'
+                    : 'Receba nossas novidades e projetos em primeira mão.'}
+                </p>
+                <form 
                 onSubmit={async (e) => {
                   e.preventDefault()
                   const form = e.currentTarget
