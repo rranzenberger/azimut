@@ -286,7 +286,8 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
     interestInGrants: false,
     country: '',
     city: '',
-    acceptContact: false
+    acceptContact: false,
+    wantsNewsletter: false // 🆕 Checkbox newsletter
   })
 
   // Detectar geolocalização e configurar código de país AUTOMATICAMENTE
@@ -725,6 +726,25 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       }
       
       await ApiService.submitLead(submitData)
+
+      // 🆕 Se marcou newsletter, criar NewsletterSubscriber
+      if (formData.wantsNewsletter && formData.email) {
+        try {
+          const backofficeUrl = import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azmt.com.br'
+          await fetch(`${backofficeUrl}/api/public/newsletter`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: formData.email,
+              name: formData.name,
+              lang: lang,
+              source: 'contact_form'
+            })
+          })
+        } catch (newsletterError) {
+          console.warn('Newsletter subscription failed (non-critical):', newsletterError)
+        }
+      }
 
       // Enviar notificação por email
       try {
@@ -1431,6 +1451,28 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                     {fieldErrors.acceptContact}
                   </p>
                 )}
+              </div>
+
+              {/* 🆕 Checkbox Newsletter */}
+              <div>
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <input
+                    type="checkbox"
+                    name="wantsNewsletter"
+                    checked={formData.wantsNewsletter}
+                    onChange={handleChange}
+                    className="mt-1 w-5 h-5 rounded border-white/30 text-azimut-red focus:ring-2 focus:ring-azimut-red bg-white/10 transition-all group-hover:border-azimut-red/50 [data-theme='light']:border-slate-300 [data-theme='light']:bg-white"
+                  />
+                  <span className="text-sm transition-colors leading-relaxed text-white/85 [data-theme='light']:text-slate-700 group-hover:text-white">
+                    {lang === 'pt' 
+                      ? 'Gostaria de receber informações e novidades por email'
+                      : lang === 'es'
+                      ? 'Me gustaría recibir información y novedades por correo'
+                      : lang === 'fr'
+                      ? 'J\'aimerais recevoir des informations et des nouveautés par email'
+                      : 'I would like to receive information and news by email'}
+                  </span>
+                </label>
               </div>
             </div>
 

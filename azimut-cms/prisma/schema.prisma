@@ -364,10 +364,8 @@ model Lead {
   country          String?
   city             String?
 
-  // CAMPOS NEWSLETTER
-  wantsNewsletter   Boolean      @default(false)
-  preferredLanguage String?      // pt, en, es, fr
-  newsletterSource  String?      // footer, popup, blog, etc
+  // RELAÇÃO COM NEWSLETTER (opcional)
+  newsletterSubscriber NewsletterSubscriber? // Relação opcional com Newsletter
 
   // CAMPOS VANCOUVER (Estudar em Vancouver)
   age              Int?
@@ -1264,6 +1262,41 @@ enum MakingOfStatus {
   APPROVED      // Aprovado
   PUBLISHED     // Publicado
   ARCHIVED      // Arquivado
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NEWSLETTER SUBSCRIBERS - Separado de Leads
+// ═══════════════════════════════════════════════════════════════
+
+model NewsletterSubscriber {
+  id                String              @id @default(uuid())
+  email             String              @unique
+  name              String?             // Opcional (se vier de formulário)
+  preferredLanguage String              @default("pt") // pt, en, es, fr
+  source            String              // footer, contact_form, vancouver_form, manual, blog
+  status            NewsletterStatus    @default(ACTIVE) // ACTIVE, UNSUBSCRIBED, BOUNCED, SPAM
+  subscribedAt      DateTime            @default(now())
+  unsubscribedAt    DateTime?
+  lastEmailSentAt   DateTime?
+  emailCount        Int                 @default(0) // Quantos emails já recebeu
+  leadId            String?             // Relação opcional com Lead (se vier de formulário)
+  lead              Lead?               @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  @@index([email])
+  @@index([status])
+  @@index([source])
+  @@index([preferredLanguage])
+  @@index([leadId])
+}
+
+enum NewsletterStatus {
+  ACTIVE
+  UNSUBSCRIBED
+  BOUNCED
+  SPAM
 }
 
 

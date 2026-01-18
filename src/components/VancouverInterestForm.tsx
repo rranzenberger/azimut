@@ -26,6 +26,7 @@ interface FormData {
   fundingSource: string
   howHeard: string
   comments: string
+  wantsNewsletter?: boolean // 🆕 Checkbox newsletter
 }
 
 const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) => {
@@ -53,7 +54,8 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
     budgetRange: '',
     fundingSource: '',
     howHeard: '',
-    comments: ''
+    comments: '',
+    wantsNewsletter: false // 🆕 Checkbox newsletter
   })
 
   const [loading, setLoading] = useState(false)

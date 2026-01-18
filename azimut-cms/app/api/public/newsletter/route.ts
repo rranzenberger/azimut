@@ -9,7 +9,7 @@ import { prisma } from '@/src/lib/prisma';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, lang = 'pt', source = 'footer' } = body;
+    const { email, name, lang = 'pt', source = 'footer' } = body;
 
     // Validação básica
     if (!email || !email.includes('@')) {
@@ -22,42 +22,47 @@ export async function POST(request: NextRequest) {
     // Normalizar email
     const normalizedEmail = email.toLowerCase().trim();
 
-    // Verificar se já existe
-    const existing = await prisma.lead.findFirst({
+    // Verificar se já existe subscriber
+    const existingSubscriber = await prisma.newsletterSubscriber.findUnique({
       where: { email: normalizedEmail },
     });
 
-    if (existing) {
-      // Lead já existe - atualizar para newsletter
-      await prisma.lead.update({
-        where: { id: existing.id },
-        data: {
-          wantsNewsletter: true,
-          preferredLanguage: lang,
-          newsletterSource: source,
-        },
-      });
+    if (existingSubscriber) {
+      // Se já existe e está desinscrito, reativar
+      if (existingSubscriber.status === 'UNSUBSCRIBED') {
+        await prisma.newsletterSubscriber.update({
+          where: { id: existingSubscriber.id },
+          data: {
+            status: 'ACTIVE',
+            preferredLanguage: lang,
+            source: source,
+            subscribedAt: new Date(),
+            unsubscribedAt: null,
+          },
+        });
+      }
 
       return NextResponse.json({
         success: true,
-        message: 'Inscrição atualizada!',
+        message: 'Email já está inscrito!',
         isNew: false,
       });
     }
 
-    // Criar novo lead para newsletter
-    await prisma.lead.create({
+    // Verificar se existe Lead com este email (para relacionar)
+    const existingLead = await prisma.lead.findFirst({
+      where: { email: normalizedEmail },
+    });
+
+    // Criar novo subscriber
+    await prisma.newsletterSubscriber.create({
       data: {
         email: normalizedEmail,
-        name: 'Newsletter Subscriber',
-        leadType: 'CONTACT_FORM',
-        sourceUrl: `newsletter_${source}`,
-        status: 'NEW',
-        priority: 'LOW',
-        wantsNewsletter: true,
+        name: name || null,
         preferredLanguage: lang,
-        newsletterSource: source,
-        leadScore: 10,
+        source: source,
+        status: 'ACTIVE',
+        leadId: existingLead?.id || null,
       },
     });
 
@@ -99,16 +104,15 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const lead = await prisma.lead.findFirst({
+    const subscriber = await prisma.newsletterSubscriber.findUnique({
       where: { 
         email: email.toLowerCase().trim(),
-        wantsNewsletter: true,
       },
     });
 
     return NextResponse.json({
       success: true,
-      isSubscribed: !!lead,
+      isSubscribed: subscriber?.status === 'ACTIVE' || false,
     });
   } catch (error) {
     return NextResponse.json(
