@@ -1062,38 +1062,42 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <LangLink to="/work/review" className="text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                     {lang === 'pt' ? 'Revisar Projeto' : lang === 'es' ? 'Revisar Proyecto' : lang === 'fr' ? 'Réviser le Projet' : 'Review Project'}
                   </LangLink>
-                  {/* Botão CTA + Ícones Sociais - JUNTOS EM UMA LINHA */}
+                  {/* Botão CTA + Ícones Sociais - SEPARADOS EM LINHAS */}
                   <div className="pt-2 border-t border-white/10" style={{ marginTop: 'auto' }}>
-                    {/* Botão - MAIS LARGO */}
-                    <LangLink to="/contact" 
-                      className="flex flex-col items-center justify-center rounded-xl border px-4 py-2 text-[0.68rem] sm:text-[0.7rem] md:text-[0.72rem] font-medium transition-all w-full mb-2"
-                      style={{ 
-                        color: '#ffffff',
-                        borderColor: 'rgba(201, 35, 55, 0.4)',
-                        backgroundColor: 'rgba(201, 35, 55, 0.12)',
-                        textAlign: 'center',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        lineHeight: '1.2',
-                        gap: '2px'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = 'rgba(201, 35, 55, 0.2)'
-                        e.currentTarget.style.borderColor = 'rgba(201, 35, 55, 0.6)'
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = 'rgba(201, 35, 55, 0.12)'
-                        e.currentTarget.style.borderColor = 'rgba(201, 35, 55, 0.4)'
-                      }}
-                    >
-                      <span className="block whitespace-nowrap" style={{ fontSize: 'inherit' }}>{getCtaLines(lang)[0]}</span>
-                      <span className="block whitespace-nowrap" style={{ fontSize: 'inherit' }}>{getCtaLines(lang)[1]}</span>
-                    </LangLink>
+                    {/* Botão - COMPACTO E CENTRALIZADO */}
+                    <div className="flex justify-center mb-3">
+                      <LangLink to="/contact" 
+                        className="flex flex-col items-center justify-center rounded-xl border px-3 py-1.5 text-[0.65rem] sm:text-[0.67rem] font-medium transition-all"
+                        style={{ 
+                          color: '#ffffff',
+                          borderColor: 'rgba(201, 35, 55, 0.4)',
+                          backgroundColor: 'rgba(201, 35, 55, 0.12)',
+                          textAlign: 'center',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          lineHeight: '1.2',
+                          gap: '1px',
+                          minWidth: '110px',
+                          maxWidth: '130px'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = 'rgba(201, 35, 55, 0.2)'
+                          e.currentTarget.style.borderColor = 'rgba(201, 35, 55, 0.6)'
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = 'rgba(201, 35, 55, 0.12)'
+                          e.currentTarget.style.borderColor = 'rgba(201, 35, 55, 0.4)'
+                        }}
+                      >
+                        <span className="block whitespace-nowrap" style={{ fontSize: 'inherit' }}>{getCtaLines(lang)[0]}</span>
+                        <span className="block whitespace-nowrap" style={{ fontSize: 'inherit' }}>{getCtaLines(lang)[1]}</span>
+                      </LangLink>
+                    </div>
                     
                     {/* Ícones Sociais - TODOS EM UMA LINHA */}
-                    <div className="flex items-center justify-center" style={{ gap: '0.5rem' }}>
+                    <div className="flex items-center justify-center flex-wrap" style={{ gap: '0.5rem' }}>
                       <a href="https://youtube.com/@azimutart" target="_blank" rel="noopener noreferrer" className="social-icon-footer transition-all duration-300 hover:scale-110" aria-label="YouTube" style={{ opacity: 0.6 }} onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#FF0000' }} onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.6'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#ffffff' }}>
                         <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5" style={{ color: '#ffffff', transition: 'all 0.3s ease' }}><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                       </a>
