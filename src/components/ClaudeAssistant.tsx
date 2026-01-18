@@ -39,7 +39,7 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
       title: '💬 Assistente Azimut',
       subtitle: 'Estou aqui para ajudar!',
       placeholder: 'Digite sua mensagem...',
-      send: 'Enviar',
+      send: '✓',
       greeting: 'Olá! 👋 Sou o assistente virtual da Azimut. Como posso te ajudar hoje?',
       examples: [
         '💼 Quero criar um projeto',
@@ -52,7 +52,7 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
       title: '💬 Azimut Assistant',
       subtitle: 'I\'m here to help!',
       placeholder: 'Type your message...',
-      send: 'Send',
+      send: '✓',
       greeting: 'Hello! 👋 I\'m Azimut\'s virtual assistant. How can I help you today?',
       examples: [
         '💼 Start a project',
@@ -65,7 +65,7 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
       title: '💬 Asistente Azimut',
       subtitle: '¡Estoy aquí para ayudar!',
       placeholder: 'Escribe tu mensaje...',
-      send: 'Enviar',
+      send: '✓',
       greeting: '¡Hola! 👋 Soy el asistente virtual de Azimut. ¿Cómo puedo ayudarte hoy?',
       examples: [
         '💼 Crear un proyecto',
@@ -78,7 +78,7 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
       title: '💬 Assistant Azimut',
       subtitle: 'Je suis là pour vous aider!',
       placeholder: 'Tapez votre message...',
-      send: 'Envoyer',
+      send: '✓',
       greeting: 'Bonjour! 👋 Je suis l\'assistant virtuel d\'Azimut. Comment puis-je vous aider aujourd\'hui?',
       examples: [
         '💼 Créer un projet',
@@ -253,7 +253,7 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
                 <span className="text-xl">🤖</span>
               </div>
               <div className="min-w-0 flex-1">
-                <h3 className="text-white font-bold text-sm leading-tight whitespace-nowrap overflow-hidden text-ellipsis">{t.title}</h3>
+                <h3 className="text-white font-bold text-xs leading-tight whitespace-nowrap overflow-hidden text-ellipsis">{t.title}</h3>
                 <p className="text-white/80 text-[10px] leading-tight whitespace-nowrap overflow-hidden text-ellipsis">{t.subtitle}</p>
               </div>
             </div>
@@ -355,7 +355,8 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
               <button
                 type="submit"
                 disabled={isLoading || !input.trim()}
-                className="px-6 py-3 bg-azimut-red hover:bg-azimut-red/90 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-white font-semibold transition-colors"
+                className="w-12 h-12 flex items-center justify-center bg-azimut-red hover:bg-azimut-red/90 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-white text-xl font-bold transition-colors flex-shrink-0"
+                title={t.send === '✓' ? (lang === 'pt' ? 'Enviar' : lang === 'es' ? 'Enviar' : lang === 'fr' ? 'Envoyer' : 'Send') : t.send}
               >
                 {t.send}
               </button>
