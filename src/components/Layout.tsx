@@ -98,10 +98,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   }, [])
   
   // 🆕 DETECÇÃO DINÂMICA DE MOBILE/DESKTOP
-  // SOLUÇÃO DEFINITIVA: Mobile = < 768px (SEMPRE hamburger)
+  // SOLUÇÃO DEFINITIVA: Mobile = < 900px (SEMPRE hamburger) - Evita truncamento em tablets
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window !== 'undefined') {
-      return window.innerWidth < 768  // Mobile DEFINITIVO: < 768px
+      return window.innerWidth < 900  // Mobile DEFINITIVO: < 900px
     }
     return false
   })
@@ -111,8 +111,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
     const checkMobile = () => {
       const windowWidth = window.innerWidth
       
-      // REGRA ÚNICA E DEFINITIVA: < 768px = MOBILE (hamburger)
-      setIsMobile(windowWidth < 768)
+      // REGRA ÚNICA E DEFINITIVA: < 900px = MOBILE (hamburger)
+      setIsMobile(windowWidth < 900)
     }
     
     checkMobile()
@@ -271,7 +271,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               style={{ display: 'block' }}
             >
               <img
-                src="/logo-topo-site.svg"
+                src={
+                  isMobile 
+                    ? (theme === 'light' ? '/Logo_Mobile_escuro.svg' : '/Logo_Mobile_claro.svg')
+                    : '/logo-topo-site.svg'
+                }
                 alt="Azimut – Immersive • Interactive • Cinematic Experiences"
                 className="transition-all duration-300"
                 style={{ 
