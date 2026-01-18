@@ -1189,7 +1189,14 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               <h4 className="font-sora text-[0.65rem] sm:text-[0.7rem] font-semibold uppercase tracking-[0.15em] mb-2 sm:mb-3 text-white">
                   {lang === 'en' ? 'Newsletter' : lang === 'es' ? 'Boletín' : 'Newsletter'}
                 </h4>
-              </div>
+              {/* Texto descritivo movido para CIMA do formulário */}
+              <p className="text-[0.7rem] sm:text-[0.72rem] mb-3" style={{ color: '#94a3b8', lineHeight: '1.35', maxWidth: '200px' }}>
+                {lang === 'en' 
+                  ? 'Stay updated with our latest projects and insights.' 
+                  : lang === 'es'
+                  ? 'Mantente al día con nuestros últimos proyectos.'
+                  : 'Receba nossas novidades e projetos em primeira mão.'}
+              </p>
               <form 
                 onSubmit={async (e) => {
                   e.preventDefault()
@@ -1251,46 +1258,40 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   type="email"
                   placeholder={lang === 'en' ? 'seu@email.com' : lang === 'es' ? 'tu@email.com' : 'seu@email.com'}
                   required
-                  className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 placeholder-slate-500 text-[0.7rem] focus:outline-none focus:border-azimut-red/50 focus:bg-white/8 transition-colors"
+                  className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 placeholder-slate-500 text-[0.7rem] sm:text-[0.75rem] focus:outline-none focus:border-azimut-red/50 focus:bg-white/8 transition-colors"
                   style={{ 
                     color: theme === 'dark' ? '#8a8a8a' : '#ffffff',
-                    height: '38px',
+                    height: '44px',
                     width: '100%',
                     boxSizing: 'border-box'
                   }}
                 />
                 <button
                   type="submit"
-                  className="w-full px-4 py-2 rounded-lg text-[0.7rem] font-medium transition-all duration-300"
+                  className="w-full px-4 py-2 rounded-lg text-[0.7rem] sm:text-[0.8rem] font-medium transition-all duration-300"
                   style={{ 
-                    background: 'rgba(201, 35, 55, 0.12)',
-                    border: '1px solid rgba(201, 35, 55, 0.4)',
+                    background: 'rgba(201, 35, 55, 0.2)',
+                    border: '1px solid rgba(201, 35, 55, 0.6)',
                     color: '#ffffff',
-                    height: '38px',
+                    height: '44px',
                     width: '100%',
                     maxWidth: '100%',
                     boxSizing: 'border-box'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(201, 35, 55, 0.2)'
-                    e.currentTarget.style.borderColor = 'rgba(201, 35, 55, 0.6)'
+                    e.currentTarget.style.backgroundColor = 'rgba(201, 35, 55, 0.4)'
+                    e.currentTarget.style.borderColor = 'rgba(201, 35, 55, 0.8)'
+                    e.currentTarget.style.boxShadow = '0 0 12px rgba(201, 35, 55, 0.3)'
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(201, 35, 55, 0.12)'
-                    e.currentTarget.style.borderColor = 'rgba(201, 35, 55, 0.4)'
+                    e.currentTarget.style.backgroundColor = 'rgba(201, 35, 55, 0.2)'
+                    e.currentTarget.style.borderColor = 'rgba(201, 35, 55, 0.6)'
+                    e.currentTarget.style.boxShadow = 'none'
                   }}
                 >
                   {lang === 'en' ? 'Subscribe' : lang === 'es' ? 'Suscribir' : 'Inscrever'}
                 </button>
               </form>
-              {/* Texto descritivo movido para baixo */}
-              <p className="text-[0.7rem] sm:text-[0.72rem] mt-2" style={{ color: '#94a3b8', lineHeight: '1.35', maxWidth: '200px' }}>
-                {lang === 'en' 
-                  ? 'Stay updated with our latest projects and insights.' 
-                  : lang === 'es'
-                  ? 'Mantente al día con nuestros últimos proyectos.'
-                  : 'Receba nossas novidades e projetos em primeira mão.'}
-              </p>
             </div>
           </div>
 
