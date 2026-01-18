@@ -52,7 +52,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
       },
       highlights: [
         { icon: '🛡️', title: 'LGPD & GDPR', desc: 'Brasil e União Europeia' },
-        { icon: '🍁', title: 'Lei 25 & PIPEDA', desc: 'Québec e Canadá' },
+        { icon: 'maple-leaf', title: 'Lei 25 & PIPEDA', desc: 'Québec e Canadá' },
         { icon: '🇺🇸', title: 'CCPA Compliant', desc: 'Califórnia, EUA' },
         { icon: '🚫', title: 'Sem Venda de Dados', desc: 'Nunca vendemos seus dados' }
       ],
@@ -71,7 +71,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           content: `Conforme exigido pela Lei 25 do Québec e GDPR, designamos um responsável pela proteção de dados:`,
           contacts: [
             { label: '👤 Responsável', value: 'Data Protection Officer (DPO)', type: 'text' },
-            { label: '📧 Email DPO', value: 'privacy@azimut.art', type: 'email' },
+            { label: '📧 Email DPO', value: 'privacy@azimutimmersive.com', type: 'email' },
             { label: '🏢 Empresa', value: 'Azimut Immersive Inc.', type: 'text' },
             { label: '📍 Canadá', value: 'Vancouver, BC, Canadá', type: 'text' }
           ]
@@ -125,11 +125,11 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
             { icon: '⚙️', title: 'Revisão', desc: 'Solicitar revisão de decisões automatizadas (IA)' },
             { icon: '📵', title: 'Opt-out', desc: 'Cancelar newsletter e comunicações' }
           ],
-          cta: '📧 Exercer direitos: privacy@azimut.art (resposta em até 15 dias úteis)'
+          cta: '📧 Exercer direitos: privacy@azimutimmersive.com (resposta em até 15 dias úteis)'
         },
         {
           id: 'canada',
-          icon: '🍁',
+          icon: 'maple-leaf',
           title: '7. Canadá (PIPEDA, BC PIPA, Alberta PIPA, Lei 25 Québec)',
           content: `Para residentes do Canadá, cumprimos as leis federais e provinciais de privacidade:`,
           items: [
@@ -179,8 +179,8 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           title: '11. Contato e Reclamações',
           content: 'Para exercer seus direitos ou fazer reclamações:',
           contacts: [
-            { label: '📧 Privacidade/DPO', value: 'privacy@azimut.art', type: 'email' },
-            { label: '📧 Geral', value: 'contact@azimut.art', type: 'email' },
+            { label: '📧 Privacidade/DPO', value: 'privacy@azimutimmersive.com', type: 'email' },
+            { label: '📧 Geral', value: 'contact@azimutimmersive.com', type: 'email' },
             { label: '🇧🇷 Brasil', value: 'Rio de Janeiro & Florianópolis', type: 'address' },
             { label: '🇨🇦 Canadá', value: 'Vancouver, BC', type: 'address' }
           ],
@@ -209,7 +209,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
         ]
       },
       highlights: [
-        { icon: '🍁', title: 'Loi 25 & LPRPDE', desc: 'Québec et Canada' },
+        { icon: 'maple-leaf', title: 'Loi 25 & LPRPDE', desc: 'Québec et Canada' },
         { icon: '🛡️', title: 'RGPD & LGPD', desc: 'Europe et Brésil' },
         { icon: '🇺🇸', title: 'CCPA Conforme', desc: 'Californie, É-U' },
         { icon: '🚫', title: 'Aucune Vente', desc: 'Nous ne vendons jamais vos données' }
@@ -229,7 +229,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           content: `Conformément à la Loi 25 du Québec et au RGPD, nous avons désigné un responsable de la protection des renseignements personnels :`,
           contacts: [
             { label: '👤 Responsable', value: 'Délégué à la Protection des Données (DPO)', type: 'text' },
-            { label: '📧 Courriel DPO', value: 'privacy@azimut.art', type: 'email' },
+            { label: '📧 Courriel DPO', value: 'privacy@azimutimmersive.com', type: 'email' },
             { label: '🏢 Entreprise', value: 'Azimut Immersive Inc.', type: 'text' },
             { label: '📍 Canada', value: 'Vancouver, BC, Canada', type: 'text' }
           ]
@@ -283,11 +283,11 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
             { icon: '⚙️', title: 'Révision', desc: 'Demander la révision des décisions automatisées (IA)' },
             { icon: '📵', title: 'Désinscription', desc: 'Annuler l\'infolettre et les communications' }
           ],
-          cta: '📧 Exercer vos droits : privacy@azimut.art (réponse dans les 30 jours)'
+          cta: '📧 Exercer vos droits : privacy@azimutimmersive.com (réponse dans les 30 jours)'
         },
         {
           id: 'quebec',
-          icon: '🍁',
+          icon: 'maple-leaf',
           title: '7. Québec & Canada (Loi 25 / LPRPDE)',
           content: `Pour les résidents du Québec et du Canada, nous respectons intégralement la Loi 25 et la LPRPDE :`,
           items: [
@@ -335,8 +335,8 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           title: '11. Contact et Plaintes',
           content: 'Pour exercer vos droits ou déposer une plainte :',
           contacts: [
-            { label: '📧 Confidentialité/DPO', value: 'privacy@azimut.art', type: 'email' },
-            { label: '📧 Général', value: 'contact@azimut.art', type: 'email' },
+            { label: '📧 Confidentialité/DPO', value: 'privacy@azimutimmersive.com', type: 'email' },
+            { label: '📧 Général', value: 'contact@azimutimmersive.com', type: 'email' },
             { label: '🇧🇷 Brésil', value: 'Rio de Janeiro & Florianópolis', type: 'address' },
             { label: '🇨🇦 Canada', value: 'Vancouver, BC', type: 'address' }
           ],
@@ -366,7 +366,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
       },
       highlights: [
         { icon: '🛡️', title: 'GDPR & LGPD', desc: 'Europe and Brazil' },
-        { icon: '🍁', title: 'Law 25 & PIPEDA', desc: 'Quebec and Canada' },
+        { icon: 'maple-leaf', title: 'Law 25 & PIPEDA', desc: 'Quebec and Canada' },
         { icon: '🇺🇸', title: 'CCPA Compliant', desc: 'California, USA' },
         { icon: '🚫', title: 'No Data Sales', desc: 'We never sell your data' }
       ],
@@ -385,7 +385,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           content: `As required by Quebec's Law 25 and GDPR, we have designated a data protection officer:`,
           contacts: [
             { label: '👤 Officer', value: 'Data Protection Officer (DPO)', type: 'text' },
-            { label: '📧 DPO Email', value: 'privacy@azimut.art', type: 'email' },
+            { label: '📧 DPO Email', value: 'privacy@azimutimmersive.com', type: 'email' },
             { label: '🏢 Company', value: 'Azimut Immersive Inc.', type: 'text' },
             { label: '📍 Canada', value: 'Vancouver, BC, Canada', type: 'text' }
           ]
@@ -439,11 +439,11 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
             { icon: '⚙️', title: 'Review', desc: 'Request review of automated decisions (AI)' },
             { icon: '📵', title: 'Opt-out', desc: 'Unsubscribe from newsletter and communications' }
           ],
-          cta: '📧 Exercise rights: privacy@azimut.art (response within 15 business days)'
+          cta: '📧 Exercise rights: privacy@azimutimmersive.com (response within 15 business days)'
         },
         {
           id: 'quebec',
-          icon: '🍁',
+          icon: 'maple-leaf',
           title: '7. Canada (PIPEDA, BC PIPA, Alberta PIPA, Quebec Law 25)',
           content: `For Canadian residents, we comply with federal and provincial privacy laws:`,
           items: [
@@ -493,8 +493,8 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           title: '11. Contact and Complaints',
           content: 'To exercise your rights or file complaints:',
           contacts: [
-            { label: '📧 Privacy/DPO', value: 'privacy@azimut.art', type: 'email' },
-            { label: '📧 General', value: 'contact@azimut.art', type: 'email' },
+            { label: '📧 Privacy/DPO', value: 'privacy@azimutimmersive.com', type: 'email' },
+            { label: '📧 General', value: 'contact@azimutimmersive.com', type: 'email' },
             { label: '🇧🇷 Brazil', value: 'Rio de Janeiro & Florianópolis', type: 'address' },
             { label: '🇨🇦 Canada', value: 'Vancouver, BC', type: 'address' }
           ],
@@ -524,7 +524,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
       },
       highlights: [
         { icon: '🛡️', title: 'LGPD & RGPD', desc: 'Brasil y Unión Europea' },
-        { icon: '🍁', title: 'Ley 25 & PIPEDA', desc: 'Québec y Canadá' },
+        { icon: 'maple-leaf', title: 'Ley 25 & PIPEDA', desc: 'Québec y Canadá' },
         { icon: '🇺🇸', title: 'CCPA Conforme', desc: 'California, EE.UU.' },
         { icon: '🚫', title: 'Sin Venta de Datos', desc: 'Nunca vendemos sus datos' }
       ],
@@ -543,7 +543,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           content: `Según lo exigido por la Ley 25 de Québec y el RGPD, hemos designado un responsable de protección de datos:`,
           contacts: [
             { label: '👤 Responsable', value: 'Delegado de Protección de Datos (DPO)', type: 'text' },
-            { label: '📧 Email DPO', value: 'privacy@azimut.art', type: 'email' },
+            { label: '📧 Email DPO', value: 'privacy@azimutimmersive.com', type: 'email' },
             { label: '🏢 Empresa', value: 'Azimut Immersive Inc.', type: 'text' },
             { label: '📍 Canadá', value: 'Vancouver, BC, Canadá', type: 'text' }
           ]
@@ -571,7 +571,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
             { icon: '🚫', title: 'Oposición', desc: 'Oponerse al tratamiento' },
             { icon: '🔄', title: 'Revocación', desc: 'Retirar consentimiento en cualquier momento' }
           ],
-          cta: '📧 Ejercer derechos: privacy@azimut.art (respuesta en 15 días hábiles)'
+          cta: '📧 Ejercer derechos: privacy@azimutimmersive.com (respuesta en 15 días hábiles)'
         },
         {
           id: 'contato',
@@ -579,8 +579,8 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           title: '11. Contacto y Reclamaciones',
           content: 'Para ejercer sus derechos o presentar reclamaciones:',
           contacts: [
-            { label: '📧 Privacidad/DPO', value: 'privacy@azimut.art', type: 'email' },
-            { label: '📧 General', value: 'contact@azimut.art', type: 'email' },
+            { label: '📧 Privacidad/DPO', value: 'privacy@azimutimmersive.com', type: 'email' },
+            { label: '📧 General', value: 'contact@azimutimmersive.com', type: 'email' },
             { label: '🇧🇷 Brasil', value: 'Rio de Janeiro & Florianópolis', type: 'address' },
             { label: '🇨🇦 Canadá', value: 'Vancouver, BC', type: 'address' }
           ]
@@ -632,7 +632,13 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
               {text.highlights.map((item, i) => (
                 <div key={i} className="text-center p-4 md:p-6 rounded-lg bg-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/40 transition-colors">
-                  <div className="text-4xl md:text-5xl mb-3">{item.icon}</div>
+                  <div className="text-4xl md:text-5xl mb-3">
+                    {item.icon === 'maple-leaf' ? (
+                      <img src="/Maple-Leaf-Canada.png" alt="Canada" className="w-12 h-12 md:w-14 md:h-14 inline-block" />
+                    ) : (
+                      item.icon
+                    )}
+                  </div>
                   <h3 className="text-sm md:text-lg font-bold text-white mb-1">{item.title}</h3>
                   <p className="text-xs md:text-sm text-theme-text-secondary">{item.desc}</p>
                 </div>
@@ -647,7 +653,13 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
               {text.sections && text.sections.map((section, i) => (
                 <section key={i} id={section.id} className="scroll-mt-24">
                   <div className="flex items-start gap-4 mb-6">
-                    <span className="text-4xl">{section.icon}</span>
+                    <span className="text-4xl">
+                      {section.icon === 'maple-leaf' ? (
+                        <img src="/Maple-Leaf-Canada.png" alt="Canada" className="w-10 h-10 inline-block" />
+                      ) : (
+                        section.icon
+                      )}
+                    </span>
                     <h2 className="font-handel text-2xl md:text-3xl font-bold text-theme-text">
                       {section.title}
                     </h2>

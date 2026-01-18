@@ -80,7 +80,7 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
           icon: '📰',
           title: '5. Newsletter e Comunicações',
           content: 'Ao se inscrever em nossa newsletter, você concorda em receber comunicações da Azimut sobre projetos, novidades e conteúdo relevante.',
-          highlight: '📵 Cancelamento: Você pode cancelar a inscrição a qualquer momento através do link no email ou em privacy@azimut.art',
+          highlight: '📵 Cancelamento: Você pode cancelar a inscrição a qualquer momento através do link no email ou em privacy@azimutimmersive.com',
           type: 'simple'
         },
         {
@@ -128,8 +128,8 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
           icon: '📧',
           title: '11. Contato',
           contact: {
-            email: 'contact@azimut.art',
-            legal: 'legal@azimut.art',
+            email: 'contact@azimutimmersive.com',
+            legal: 'legal@azimutimmersive.com',
             locations: ['🇧🇷 Rio de Janeiro & Florianópolis, Brasil', '🇨🇦 Vancouver, BC, Canadá']
           },
           type: 'contact'
@@ -186,7 +186,7 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
           icon: '📰',
           title: '5. Infolettre et Communications',
           content: 'En vous inscrivant à notre infolettre, vous acceptez de recevoir des communications d\'Azimut sur les projets, nouveautés et contenu pertinent.',
-          highlight: '📵 Désinscription : Vous pouvez vous désinscrire à tout moment via le lien dans le courriel ou à privacy@azimut.art',
+          highlight: '📵 Désinscription : Vous pouvez vous désinscrire à tout moment via le lien dans le courriel ou à privacy@azimutimmersive.com',
           type: 'simple'
         },
         {
@@ -234,8 +234,8 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
           icon: '📧',
           title: '11. Contact',
           contact: {
-            email: 'contact@azimut.art',
-            legal: 'legal@azimut.art',
+            email: 'contact@azimutimmersive.com',
+            legal: 'legal@azimutimmersive.com',
             locations: ['🇧🇷 Rio de Janeiro & Florianópolis, Brésil', '🇨🇦 Vancouver, BC, Canada']
           },
           type: 'contact'
@@ -292,7 +292,7 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
           icon: '📰',
           title: '5. Newsletter and Communications',
           content: 'By subscribing to our newsletter, you agree to receive communications from Azimut about projects, news and relevant content.',
-          highlight: '📵 Unsubscribe: You can unsubscribe at any time via the link in the email or at privacy@azimut.art',
+          highlight: '📵 Unsubscribe: You can unsubscribe at any time via the link in the email or at privacy@azimutimmersive.com',
           type: 'simple'
         },
         {
@@ -340,8 +340,8 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
           icon: '📧',
           title: '11. Contact',
           contact: {
-            email: 'contact@azimut.art',
-            legal: 'legal@azimut.art',
+            email: 'contact@azimutimmersive.com',
+            legal: 'legal@azimutimmersive.com',
             locations: ['🇧🇷 Rio de Janeiro & Florianópolis, Brazil', '🇨🇦 Vancouver, BC, Canada']
           },
           type: 'contact'
@@ -402,8 +402,8 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
           icon: '📧',
           title: '11. Contacto',
           contact: {
-            email: 'contact@azimut.art',
-            legal: 'legal@azimut.art',
+            email: 'contact@azimutimmersive.com',
+            legal: 'legal@azimutimmersive.com',
             locations: ['🇧🇷 Rio de Janeiro & Florianópolis, Brasil', '🇨🇦 Vancouver, BC, Canadá']
           },
           type: 'contact'
