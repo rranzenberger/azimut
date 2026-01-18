@@ -301,6 +301,7 @@ export default function NewsletterPage() {
                       <th className="px-2 py-2 text-left text-xs font-medium text-center">Lang</th>
                       <th className="px-2 py-2 text-left text-xs font-medium">Origem</th>
                       <th className="px-2 py-2 text-left text-xs font-medium">Status</th>
+                      <th className="px-2 py-2 text-left text-xs font-medium">Email Status</th>
                       <th className="px-2 py-2 text-left text-xs font-medium">Empresa</th>
                       <th className="px-2 py-2 text-left text-xs font-medium">Objetivo</th>
                       <th className="px-2 py-2 text-left text-xs font-medium">Data</th>
@@ -336,6 +337,28 @@ export default function NewsletterPage() {
                           }`}>
                             {sub.status === 'ACTIVE' ? 'Ativo' : sub.status === 'UNSUBSCRIBED' ? 'Desinsc.' : 'Bounce'}
                           </span>
+                        </td>
+                        <td className="px-2 py-2 text-xs">
+                          <div className="flex flex-col gap-1">
+                            {sub.status === 'BOUNCED' ? (
+                              <span className="text-red-400 text-[10px] flex items-center gap-1" title="Email retornou - erro de entrega">
+                                ❌ Erro entrega
+                              </span>
+                            ) : sub.lastEmailSentAt ? (
+                              <>
+                                <span className="text-green-400 text-[10px] flex items-center gap-1" title={`Último envio: ${new Date(sub.lastEmailSentAt).toLocaleString('pt-BR')}`}>
+                                  ✅ Entregue
+                                </span>
+                                <span className="text-slate-400 text-[9px]" title="Quantidade de emails enviados">
+                                  📊 {sub.emailCount}x
+                                </span>
+                              </>
+                            ) : (
+                              <span className="text-slate-500 text-[10px] flex items-center gap-1" title="Nunca recebeu email">
+                                📧 Sem envio
+                              </span>
+                            )}
+                          </div>
                         </td>
                         <td className="px-2 py-2 text-xs max-w-[120px] truncate" title={sub.lead?.company || ''}>
                           {sub.lead?.company || <span className="text-slate-500 italic text-[10px]">-</span>}
