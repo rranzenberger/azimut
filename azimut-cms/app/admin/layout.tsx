@@ -99,19 +99,19 @@ export default async function AdminLayout({
             gap: 10,
           }}
         >
-          <AdminLink href="/admin" label="Dashboard" />
+          <AdminLink href="/admin" label="🏠 Dashboard" />
           <AdminLink href="/admin/analytics" label="📊 Analytics IA" />
-          <AdminLink href="/admin/projects" label="Projetos" />
+          <AdminLink href="/admin/projects" label="🎥 Projetos" />
           <AdminLink href="/admin/blog" label="📝 Blog" />
           <MonitorLink />
           <AdminLink href="/admin/making-of" label="🎬 Making-of" />
           <AdminLink href="/admin/making-of/curation" label="🎨 Curadoria" />
           <AdminLink href="/admin/site-pages" label="📄 Páginas" />
-          <AdminLink href="/admin/media" label="Mídias" />
-          <AdminLink href="/admin/leads" label="Leads" />
+          <AdminLink href="/admin/media" label="🖼️ Mídias" />
+          <AdminLink href="/admin/leads" label="👥 Leads" />
           <AdminLink href="/admin/n8n-workflow" label="🤖 Automação n8n" />
-          <AdminLink href="/admin/services" label="Serviços" />
-          <AdminLink href="/admin/settings" label="Configurações" />
+          <AdminLink href="/admin/services" label="⚡ Serviços" />
+          <AdminLink href="/admin/settings" label="⚙️ Configurações" />
         </nav>
 
         {/* Link para Site Principal */}
