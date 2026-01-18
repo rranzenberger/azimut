@@ -480,8 +480,8 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
           <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
             <p className="text-red-400 text-sm mb-2">{t.errorMessage}</p>
             <div className="flex flex-col gap-2 text-sm text-red-300">
-              <a href="mailto:contato@azmt.com.br" className="hover:text-red-200">
-                📧 contato@azmt.com.br
+              <a href="mailto:contact@azimutimmersive.com" className="hover:text-red-200">
+                📧 contact@azimutimmersive.com
               </a>
               <a href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer" className="hover:text-red-200">
                 💬 WhatsApp

@@ -401,10 +401,10 @@ export async function callClaude(request: ClaudeRequest): Promise<ClaudeResponse
     
     // Fallback response
     const fallbackResponses: Record<string, string> = {
-      pt: 'Desculpe, estou com dificuldades técnicas no momento. 😅 Você pode me enviar um email em contato@azimut.com.br ou WhatsApp +55 11 98765-4321 e nossa equipe te responde rapidinho!',
-      en: 'Sorry, I\'m having technical difficulties at the moment. 😅 You can email me at contact@azimut.com or WhatsApp +1 604 123-4567 and our team will respond quickly!',
-      es: 'Lo siento, tengo dificultades técnicas en este momento. 😅 Puedes enviarme un correo a contacto@azimut.com o WhatsApp +55 11 98765-4321 y nuestro equipo te responderá rápidamente!',
-      fr: 'Désolé, j\'ai des difficultés techniques en ce moment. 😅 Vous pouvez m\'envoyer un email à contact@azimut.com ou WhatsApp +55 11 98765-4321 et notre équipe vous répondra rapidement!'
+      pt: 'Desculpe, estou com dificuldades técnicas no momento. 😅 Você pode me enviar um email em contact@azimutimmersive.com ou WhatsApp +55 48 99970-1301 e nossa equipe te responde rapidinho!',
+      en: 'Sorry, I\'m having technical difficulties at the moment. 😅 You can email me at contact@azimutimmersive.com or WhatsApp +1 604 123-4567 and our team will respond quickly!',
+      es: 'Lo siento, tengo dificultades técnicas en este momento. 😅 Puedes enviarme un correo a contact@azimutimmersive.com o WhatsApp +55 48 99970-1301 y nuestro equipo te responderá rápidamente!',
+      fr: 'Désolé, j\'ai des difficultés techniques en ce moment. 😅 Vous pouvez m\'envoyer un email à contact@azimutimmersive.com ou WhatsApp +55 48 99970-1301 et notre équipe vous répondra rapidement!'
     }
 
     return {

@@ -61,7 +61,7 @@ export const OrganizationSchema: React.FC<{ lang?: string }> = ({ lang = 'pt' })
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'Customer Service',
-      email: 'contact@azmt.com.br',
+      email: 'contact@azimutimmersive.com',
       availableLanguage: ['Portuguese', 'English', 'Spanish', 'French']
     },
     sameAs: [
@@ -223,7 +223,7 @@ export const VancouverPageSchema = ({ lang }: { lang: string }) => {
     logo: `${baseUrl}/logo-azimut-star.svg`,
     image: `${baseUrl}/vancouver-hero-sunset.jpg`,
     telephone: '+55-21-99999-9999',
-    email: 'academy@azmt.com.br',
+    email: 'academy@azimutimmersive.com',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'BR',

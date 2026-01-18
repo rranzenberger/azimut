@@ -15,7 +15,7 @@ export const AZIMUT_CONTEXT = {
     founded: 1996,
     yearsExperience: '30+',
     locations: ['Rio de Janeiro, Brasil', 'Vancouver, Canadá'],
-    email: 'contato@azimut.com.br',
+    email: 'contact@azimutimmersive.com',
     website: 'azmt.com.br',
     
     mission: 'Criar experiências imersivas, interativas e cinematográficas que emocionam e transformam.',

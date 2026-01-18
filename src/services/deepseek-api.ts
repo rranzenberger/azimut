@@ -243,10 +243,10 @@ export async function callDeepSeek(request: DeepSeekRequest): Promise<DeepSeekRe
     
     // Fallback: retornar resposta simples
     const fallbackResponses: Record<string, string> = {
-      pt: 'Desculpe, estou com dificuldades no momento. Você pode me enviar um email em contato@azimut.com.br? 😊',
-      en: 'Sorry, I\'m having difficulties at the moment. Can you email me at contact@azimut.com? 😊',
-      es: 'Lo siento, tengo dificultades en este momento. ¿Puedes enviarme un correo a contacto@azimut.com? 😊',
-      fr: 'Désolé, j\'ai des difficultés en ce moment. Pouvez-vous m\'envoyer un email à contact@azimut.com? 😊'
+      pt: 'Desculpe, estou com dificuldades no momento. Você pode me enviar um email em contact@azimutimmersive.com? 😊',
+      en: 'Sorry, I\'m having difficulties at the moment. Can you email me at contact@azimutimmersive.com? 😊',
+      es: 'Lo siento, tengo dificultades en este momento. ¿Puedes enviarme un correo a contact@azimutimmersive.com? 😊',
+      fr: 'Désolé, j\'ai des difficultés en ce moment. Pouvez-vous m\'envoyer un email à contact@azimutimmersive.com? 😊'
     }
 
     return {

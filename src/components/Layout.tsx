@@ -1081,10 +1081,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     {lang === 'pt' ? 'Revisar Projeto' : lang === 'es' ? 'Revisar Proyecto' : lang === 'fr' ? 'Réviser le Projet' : 'Review Project'}
                   </LangLink>
                   {/* Botão CTA + Ícones Sociais - JUNTOS EM UMA LINHA */}
-                  <div className="pt-3.5 border-t border-white/10" style={{ marginTop: 'auto' }}>
+                  <div className="pt-2 border-t border-white/10" style={{ marginTop: 'auto' }}>
                     {/* Botão - MAIS LARGO */}
                     <LangLink to="/contact" 
-                      className="flex flex-col items-center justify-center rounded-xl border px-4 py-2.5 text-[0.68rem] sm:text-[0.7rem] md:text-[0.72rem] font-medium transition-all w-full mb-3"
+                      className="flex flex-col items-center justify-center rounded-xl border px-4 py-2 text-[0.68rem] sm:text-[0.7rem] md:text-[0.72rem] font-medium transition-all w-full mb-2"
                       style={{ 
                         color: '#ffffff',
                         borderColor: 'rgba(201, 35, 55, 0.4)',
@@ -1111,7 +1111,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     </LangLink>
                     
                     {/* Ícones Sociais - TODOS EM UMA LINHA */}
-                    <div className="flex items-center justify-center" style={{ gap: '0.7rem' }}>
+                    <div className="flex items-center justify-center" style={{ gap: '0.5rem' }}>
                       <a href="https://youtube.com/@azimutart" target="_blank" rel="noopener noreferrer" className="social-icon-footer transition-all duration-300 hover:scale-110" aria-label="YouTube" style={{ opacity: 0.6 }} onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#FF0000' }} onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.6'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#ffffff' }}>
                         <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5" style={{ color: '#ffffff', transition: 'all 0.3s ease' }}><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                       </a>
@@ -1134,7 +1134,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             </div>
 
             {/* 3. CONTATO + NEWSLETTER JUNTOS - MAIS PARA DIREITA (4 colunas) */}
-            <div className="min-[900px]:col-span-4 max-[899px]:col-span-12 mb-3 min-[768px]:mb-0" style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingLeft: '1.5rem', paddingRight: '0.5rem' }}>
+            <div className="min-[900px]:col-span-4 max-[899px]:col-span-12 mb-3 min-[768px]:mb-0" style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '1rem', paddingLeft: '1rem', paddingRight: '0.5rem' }}>
               
               {/* CONNECT - Contato */}
               <div style={{ flexGrow: '0' }}>
@@ -1145,7 +1145,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 {/* Email */}
                 <a 
                   href="mailto:contact@azimutimmersive.com" 
-                  className="flex items-center gap-2 mb-3 text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] hover:text-[#8B2332] transition-colors"
+                  className="flex items-center gap-2 mb-2 text-[0.7rem] sm:text-[0.72rem] md:text-[0.75rem] hover:text-[#8B2332] transition-colors"
                   style={{ color: '#cbd5e1' }}
                 >
                   <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1154,17 +1154,18 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <span>contact@azimutimmersive.com</span>
                 </a>
 
-                {/* WhatsApp - Botão maior e em linha separada */}
+                {/* WhatsApp - Botão alinhado à esquerda */}
                 <a 
                   href="https://wa.me/5521999999999?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20projetos%20da%20Azimut." 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-lg transition-all duration-300 hover:scale-[1.02]"
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 hover:scale-[1.02]"
                   style={{ 
                     background: 'rgba(37, 211, 102, 0.15)',
                     border: '1px solid rgba(37, 211, 102, 0.4)',
                     color: '#86efac',
-                    fontSize: '0.75rem'
+                    fontSize: '0.75rem',
+                    width: 'fit-content'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = 'rgba(37, 211, 102, 0.25)'
@@ -1190,7 +1191,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   {lang === 'en' ? 'Newsletter' : lang === 'es' ? 'Boletín' : 'Newsletter'}
                 </h4>
                 {/* Texto descritivo - JUNTO com o formulário */}
-                <p className="text-[0.7rem] sm:text-[0.72rem] mb-3" style={{ color: '#94a3b8', lineHeight: '1.35', maxWidth: '100%' }}>
+                <p className="text-[0.7rem] sm:text-[0.72rem] mb-2" style={{ color: '#94a3b8', lineHeight: '1.35', maxWidth: '100%' }}>
                   {lang === 'en' 
                     ? 'Stay updated with our latest projects and insights.' 
                     : lang === 'es'
