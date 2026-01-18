@@ -30,6 +30,18 @@ interface Stats {
   bySource: Record<string, number>
 }
 
+// Função para abreviar origens
+const formatSource = (source: string): { short: string; full: string } => {
+  const sourceMap: Record<string, { short: string; full: string }> = {
+    'footer': { short: 'Footer', full: 'Formulário do Footer' },
+    'contact_form': { short: 'Contato', full: 'Formulário de Contato' },
+    'vancouver_form': { short: 'Vancouver', full: 'Formulário Vancouver' },
+    'manual': { short: 'Manual', full: 'Adicionado Manualmente' },
+    'blog': { short: 'Blog', full: 'Blog / Artigos' },
+  };
+  return sourceMap[source] || { short: source, full: source };
+};
+
 export default function NewsletterPage() {
   const [subscribers, setSubscribers] = useState<NewsletterSubscriber[]>([])
   const [stats, setStats] = useState<Stats | null>(null)
@@ -281,18 +293,18 @@ export default function NewsletterPage() {
               </div>
             ) : (
               <div className="overflow-x-auto">
-                <table className="w-full">
+                <table className="w-full text-xs">
                   <thead className="bg-slate-700">
                     <tr>
-                      <th className="p-3 text-left text-sm font-medium">Nome</th>
-                      <th className="p-3 text-left text-sm font-medium">Email</th>
-                      <th className="p-3 text-left text-sm font-medium">Idioma</th>
-                      <th className="p-3 text-left text-sm font-medium">Origem</th>
-                      <th className="p-3 text-left text-sm font-medium">Status</th>
-                      <th className="p-3 text-left text-sm font-medium">Empresa</th>
-                      <th className="p-3 text-left text-sm font-medium">Objetivo</th>
-                      <th className="p-3 text-left text-sm font-medium">Inscrito em</th>
-                      <th className="p-3 text-left text-sm font-medium">Ações</th>
+                      <th className="px-2 py-2 text-left text-xs font-medium">Nome</th>
+                      <th className="px-2 py-2 text-left text-xs font-medium">Email</th>
+                      <th className="px-2 py-2 text-left text-xs font-medium text-center">Lang</th>
+                      <th className="px-2 py-2 text-left text-xs font-medium">Origem</th>
+                      <th className="px-2 py-2 text-left text-xs font-medium">Status</th>
+                      <th className="px-2 py-2 text-left text-xs font-medium">Empresa</th>
+                      <th className="px-2 py-2 text-left text-xs font-medium">Objetivo</th>
+                      <th className="px-2 py-2 text-left text-xs font-medium">Data</th>
+                      <th className="px-2 py-2 text-left text-xs font-medium">Ações</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-700">
@@ -300,53 +312,61 @@ export default function NewsletterPage() {
                       .filter(sub => filterStatus === 'all' || sub.status === filterStatus)
                       .map((sub) => (
                       <tr key={sub.id} className="hover:bg-slate-700/50">
-                        <td className="p-3 text-sm">
-                          {sub.name || sub.lead?.name || <span className="text-slate-500 italic">Não informado</span>}
+                        <td className="px-2 py-2 text-xs max-w-[150px] truncate" title={sub.name || sub.lead?.name || ''}>
+                          {sub.name || sub.lead?.name || <span className="text-slate-500 italic text-[10px]">-</span>}
                         </td>
-                        <td className="p-3 text-sm font-mono text-xs">{sub.email}</td>
-                        <td className="p-3 text-sm uppercase text-center">{sub.preferredLanguage}</td>
-                        <td className="p-3 text-sm">
-                          <span className="px-2 py-1 rounded text-xs bg-slate-700">
-                            {sub.source}
+                        <td className="px-2 py-2 font-mono text-[10px] max-w-[180px] truncate" title={sub.email}>
+                          {sub.email}
+                        </td>
+                        <td className="px-2 py-2 text-xs uppercase text-center">
+                          <span className="px-1.5 py-0.5 bg-slate-700 rounded text-[10px]">
+                            {sub.preferredLanguage}
                           </span>
                         </td>
-                        <td className="p-3 text-sm">
-                          <span className={`px-2 py-1 rounded text-xs ${
+                        <td className="px-2 py-2 text-xs" title={formatSource(sub.source).full}>
+                          <span className="px-1.5 py-0.5 rounded text-[10px] bg-slate-700 whitespace-nowrap">
+                            {formatSource(sub.source).short}
+                          </span>
+                        </td>
+                        <td className="px-2 py-2 text-xs">
+                          <span className={`px-1.5 py-0.5 rounded text-[10px] whitespace-nowrap ${
                             sub.status === 'ACTIVE' ? 'bg-green-900 text-green-300' :
                             sub.status === 'UNSUBSCRIBED' ? 'bg-yellow-900 text-yellow-300' :
                             'bg-red-900 text-red-300'
                           }`}>
-                            {sub.status}
+                            {sub.status === 'ACTIVE' ? 'Ativo' : sub.status === 'UNSUBSCRIBED' ? 'Desinsc.' : 'Bounce'}
                           </span>
                         </td>
-                        <td className="p-3 text-sm">
-                          {sub.lead?.company || <span className="text-slate-500 italic">Não informado</span>}
+                        <td className="px-2 py-2 text-xs max-w-[120px] truncate" title={sub.lead?.company || ''}>
+                          {sub.lead?.company || <span className="text-slate-500 italic text-[10px]">-</span>}
                         </td>
-                        <td className="p-3 text-sm max-w-[200px] truncate" title={sub.lead?.message || ''}>
+                        <td className="px-2 py-2 text-xs max-w-[150px] truncate" title={sub.lead?.message || ''}>
                           {sub.lead?.message ? (
-                            <span className="text-slate-300">{sub.lead.message}</span>
+                            <span className="text-slate-300 text-[10px]">{sub.lead.message}</span>
                           ) : (
-                            <span className="text-slate-500 italic">Não informado</span>
+                            <span className="text-slate-500 italic text-[10px]">-</span>
                           )}
                         </td>
-                        <td className="p-3 text-sm text-slate-400">
-                          {new Date(sub.subscribedAt).toLocaleDateString('pt-BR')}
+                        <td className="px-2 py-2 text-[10px] text-slate-400 whitespace-nowrap">
+                          {new Date(sub.subscribedAt).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' })}
                         </td>
-                        <td className="p-3 text-sm">
-                          <div className="flex gap-2">
+                        <td className="px-2 py-2 text-xs">
+                          <div className="flex gap-1">
                             {sub.status === 'ACTIVE' && (
                               <button
                                 onClick={() => handleUnsubscribe(sub.id)}
-                                className="text-yellow-400 hover:text-yellow-300 text-xs whitespace-nowrap"
+                                className="text-yellow-400 hover:text-yellow-300 text-[10px] whitespace-nowrap"
+                                title="Desinscrever"
                               >
-                                Desinscrever
+                                ❌
                               </button>
                             )}
                             <button
                               onClick={() => handleDelete(sub.id)}
-                              className="text-red-400 hover:text-red-300 text-xs"
+                              className="text-red-400 hover:text-red-300 text-[10px]"
+                              title="Deletar permanentemente"
                             >
-                              Deletar
+                              🗑️
                             </button>
                           </div>
                         </td>
