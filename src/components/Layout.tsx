@@ -411,24 +411,6 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   description: lang === 'pt' ? 'Quem somos' : lang === 'es' ? 'Quiénes somos' : lang === 'fr' ? 'Qui nous sommes' : 'Who we are'
                 },
                 {
-                  labelHtml: 'Ranz <span style="color:#c92337">Enberger</span>',
-                  label: 'Ranz Enberger',
-                  href: '/studio/equipe#ranz',
-                  description: lang === 'pt' ? 'Direção Geral e Tecnologia · Montagem Rio Museu Olímpico' : lang === 'es' ? 'Dirección General y Tecnología · Montaje Rio Museo Olímpico' : lang === 'fr' ? 'Direction Générale et Technologie · Montage Musée Olympique de Rio' : 'General & Technology Direction · Rio Olympic Museum Setup'
-                },
-                {
-                  labelHtml: 'Anick <span style="color:#c92337">Couto</span>',
-                  label: 'Anick Couto',
-                  href: '/studio/equipe#anick',
-                  description: lang === 'pt' ? 'Liderança Equipe de Arte · Montagem Rio Museu Olímpico' : lang === 'es' ? 'Líder Equipo de Arte · Montaje Rio Museo Olímpico' : lang === 'fr' ? 'Responsable Équipe Artistique · Montage Musée Olympique de Rio' : 'Art Team Lead · Rio Olympic Museum Setup'
-                },
-                {
-                  labelHtml: 'Alberto <span style="color:#c92337">Moura</span>',
-                  label: 'Alberto Moura',
-                  href: '/studio/equipe#alberto',
-                  description: lang === 'pt' ? 'Diretor Audiovisual · Montagem Rio Museu Olímpico' : lang === 'es' ? 'Director Audiovisual · Montaje Rio Museo Olímpico' : lang === 'fr' ? 'Directeur Audiovisuel · Montage Musée Olympique de Rio' : 'Audiovisual Director · Rio Olympic Museum Setup'
-                },
-                {
                   label: lang === 'pt' ? 'Credenciais & Timeline' : lang === 'es' ? 'Credenciales & Timeline' : lang === 'fr' ? 'Références & Timeline' : 'Credentials & Timeline',
                   href: '/studio/credibilidade',
                   description: lang === 'pt' ? 'Nossa trajetória' : lang === 'es' ? 'Nuestro recorrido' : lang === 'fr' ? 'Notre parcours' : 'Our journey'
