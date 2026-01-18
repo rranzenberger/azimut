@@ -113,8 +113,8 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
           icon: '🌍',
           title: '9. Lei Aplicável e Jurisdição',
           content: 'Estes Termos são regidos pelas leis aplicáveis conforme a localização do projeto:',
-          flags: '🇧🇷 Brasil (São Paulo) | 🇨🇦 Canadá (Québec/Montreal)',
-          highlight: '⚖️ Disputas serão resolvidas nos tribunais competentes de São Paulo (BR) ou Montreal (CA), conforme o caso.',
+          flags: '🇧🇷 Brasil (RJ/SC) | 🇨🇦 Canadá (BC/Vancouver)',
+          highlight: '⚖️ Disputas serão resolvidas nos tribunais competentes do Rio de Janeiro (BR) ou Vancouver (CA), conforme o caso.',
           type: 'simple'
         },
         {
@@ -130,7 +130,7 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
           contact: {
             email: 'contact@azimut.art',
             legal: 'legal@azimut.art',
-            locations: ['🇧🇷 São Paulo, Brasil', '🇨🇦 Montreal, Québec, Canadá']
+            locations: ['🇧🇷 Rio de Janeiro & Florianópolis, Brasil', '🇨🇦 Vancouver, BC, Canadá']
           },
           type: 'contact'
         }
@@ -219,8 +219,8 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
           icon: '🌍',
           title: '9. Loi Applicable et Juridiction',
           content: 'Ces Conditions sont régies par les lois applicables selon l\'emplacement du projet :',
-          flags: '🇧🇷 Brésil (São Paulo) | 🇨🇦 Canada (Québec/Montréal)',
-          highlight: '⚖️ Les litiges seront résolus devant les tribunaux compétents de São Paulo (BR) ou Montréal (CA), selon le cas.',
+          flags: '🇧🇷 Brésil (RJ/SC) | 🇨🇦 Canada (BC/Vancouver)',
+          highlight: '⚖️ Les litiges seront résolus devant les tribunaux compétents de Rio de Janeiro (BR) ou Vancouver (CA), selon le cas.',
           type: 'simple'
         },
         {
@@ -236,7 +236,7 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
           contact: {
             email: 'contact@azimut.art',
             legal: 'legal@azimut.art',
-            locations: ['🇧🇷 São Paulo, Brésil', '🇨🇦 Montréal, Québec, Canada']
+            locations: ['🇧🇷 Rio de Janeiro & Florianópolis, Brésil', '🇨🇦 Vancouver, BC, Canada']
           },
           type: 'contact'
         }
@@ -325,8 +325,8 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
           icon: '🌍',
           title: '9. Governing Law and Jurisdiction',
           content: 'These Terms are governed by the applicable laws according to the project location:',
-          flags: '🇧🇷 Brazil (São Paulo) | 🇨🇦 Canada (Quebec/Montreal)',
-          highlight: '⚖️ Disputes will be resolved in the competent courts of São Paulo (BR) or Montreal (CA), as applicable.',
+          flags: '🇧🇷 Brazil (RJ/SC) | 🇨🇦 Canada (BC/Vancouver)',
+          highlight: '⚖️ Disputes will be resolved in the competent courts of Rio de Janeiro (BR) or Vancouver (CA), as applicable.',
           type: 'simple'
         },
         {
@@ -342,7 +342,7 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
           contact: {
             email: 'contact@azimut.art',
             legal: 'legal@azimut.art',
-            locations: ['🇧🇷 São Paulo, Brazil', '🇨🇦 Montreal, Quebec, Canada']
+            locations: ['🇧🇷 Rio de Janeiro & Florianópolis, Brazil', '🇨🇦 Vancouver, BC, Canada']
           },
           type: 'contact'
         }
@@ -395,7 +395,7 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
           icon: '🌍',
           title: '9. Ley Aplicable y Jurisdicción',
           content: 'Estos Términos se rigen por las leyes aplicables según la ubicación del proyecto:',
-          flags: '🇧🇷 Brasil (São Paulo) | 🇨🇦 Canadá (Quebec/Montreal)',
+          flags: '🇧🇷 Brasil (RJ/SC) | 🇨🇦 Canadá (BC/Vancouver)',
           type: 'simple'
         },
         {
@@ -404,7 +404,7 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
           contact: {
             email: 'contact@azimut.art',
             legal: 'legal@azimut.art',
-            locations: ['🇧🇷 São Paulo, Brasil', '🇨🇦 Montreal, Quebec, Canadá']
+            locations: ['🇧🇷 Rio de Janeiro & Florianópolis, Brasil', '🇨🇦 Vancouver, BC, Canadá']
           },
           type: 'contact'
         }

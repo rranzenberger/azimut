@@ -73,7 +73,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
             { label: '👤 Responsável', value: 'Data Protection Officer (DPO)', type: 'text' },
             { label: '📧 Email DPO', value: 'privacy@azimut.art', type: 'email' },
             { label: '🏢 Empresa', value: 'Azimut Immersive Inc.', type: 'text' },
-            { label: '📍 Québec', value: 'Montreal, QC, Canadá', type: 'text' }
+            { label: '📍 Canadá', value: 'Vancouver, BC, Canadá', type: 'text' }
           ]
         },
         {
@@ -136,7 +136,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
             { subtitle: '🏛️ Lei 25 do Québec', list: ['Política de privacidade disponível em francês', 'Consentimento expresso para dados sensíveis', 'Portabilidade de dados garantida', 'Avaliação de impacto para projetos com dados significativos', 'Responsável pela proteção de dados designado'] },
             { subtitle: '🍁 PIPEDA (Federal)', list: ['Consentimento informado e válido', 'Finalidades claramente identificadas', 'Coleta limitada ao necessário', 'Notificação de violações de segurança'] }
           ],
-          highlight: '🇨🇦 Dados podem ser armazenados no Canadá (Montreal) ou EUA com proteção adequada'
+          highlight: '🇨🇦 Dados podem ser armazenados no Canadá (Vancouver) ou EUA com proteção adequada'
         },
         {
           id: 'ccpa',
@@ -179,8 +179,8 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           contacts: [
             { label: '📧 Privacidade/DPO', value: 'privacy@azimut.art', type: 'email' },
             { label: '📧 Geral', value: 'contact@azimut.art', type: 'email' },
-            { label: '🇧🇷 Brasil', value: 'São Paulo, SP', type: 'address' },
-            { label: '🇨🇦 Canadá', value: 'Montreal, QC', type: 'address' }
+            { label: '🇧🇷 Brasil', value: 'Rio de Janeiro & Florianópolis', type: 'address' },
+            { label: '🇨🇦 Canadá', value: 'Vancouver, BC', type: 'address' }
           ],
           highlight: '⏱️ Prazo de resposta: 15 dias úteis (LGPD/GDPR) | 30 dias (Lei 25/PIPEDA)'
         }
@@ -229,7 +229,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
             { label: '👤 Responsable', value: 'Délégué à la Protection des Données (DPO)', type: 'text' },
             { label: '📧 Courriel DPO', value: 'privacy@azimut.art', type: 'email' },
             { label: '🏢 Entreprise', value: 'Azimut Immersive Inc.', type: 'text' },
-            { label: '📍 Québec', value: 'Montréal, QC, Canada', type: 'text' }
+            { label: '📍 Canada', value: 'Vancouver, BC, Canada', type: 'text' }
           ]
         },
         {
@@ -292,7 +292,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
             { subtitle: '🏛️ Loi 25 du Québec', list: ['Politique de confidentialité disponible en français', 'Consentement exprès pour les données sensibles', 'Portabilité des données garantie', 'Évaluation des facteurs relatifs à la vie privée (EFVP)', 'Responsable de la protection des renseignements personnels désigné'] },
             { subtitle: '🍁 LPRPDE (Fédéral)', list: ['Consentement éclairé et valide', 'Finalités clairement identifiées', 'Collecte limitée au nécessaire', 'Notification des atteintes à la sécurité'] }
           ],
-          highlight: '🇨🇦 Les données peuvent être stockées au Canada (Montréal) ou aux É-U avec protection adéquate'
+          highlight: '🇨🇦 Les données peuvent être stockées au Canada (Vancouver) ou aux É-U avec protection adéquate'
         },
         {
           id: 'ccpa',
@@ -335,8 +335,8 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           contacts: [
             { label: '📧 Confidentialité/DPO', value: 'privacy@azimut.art', type: 'email' },
             { label: '📧 Général', value: 'contact@azimut.art', type: 'email' },
-            { label: '🇧🇷 Brésil', value: 'São Paulo, SP', type: 'address' },
-            { label: '🇨🇦 Canada', value: 'Montréal, QC', type: 'address' }
+            { label: '🇧🇷 Brésil', value: 'Rio de Janeiro & Florianópolis', type: 'address' },
+            { label: '🇨🇦 Canada', value: 'Vancouver, BC', type: 'address' }
           ],
           highlight: '⏱️ Délai de réponse : 30 jours (Loi 25/LPRPDE) | 15 jours ouvrables (RGPD/LGPD)'
         }
@@ -385,7 +385,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
             { label: '👤 Officer', value: 'Data Protection Officer (DPO)', type: 'text' },
             { label: '📧 DPO Email', value: 'privacy@azimut.art', type: 'email' },
             { label: '🏢 Company', value: 'Azimut Immersive Inc.', type: 'text' },
-            { label: '📍 Quebec', value: 'Montreal, QC, Canada', type: 'text' }
+            { label: '📍 Canada', value: 'Vancouver, BC, Canada', type: 'text' }
           ]
         },
         {
@@ -448,7 +448,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
             { subtitle: '🏛️ Quebec Law 25', list: ['Privacy policy available in French', 'Express consent for sensitive data', 'Data portability guaranteed', 'Privacy Impact Assessment when required', 'Designated privacy officer'] },
             { subtitle: '🍁 PIPEDA (Federal)', list: ['Informed and valid consent', 'Clearly identified purposes', 'Collection limited to necessary', 'Security breach notification'] }
           ],
-          highlight: '🇨🇦 Data may be stored in Canada (Montreal) or USA with adequate protection'
+          highlight: '🇨🇦 Data may be stored in Canada (Vancouver) or USA with adequate protection'
         },
         {
           id: 'ccpa',
@@ -491,8 +491,8 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           contacts: [
             { label: '📧 Privacy/DPO', value: 'privacy@azimut.art', type: 'email' },
             { label: '📧 General', value: 'contact@azimut.art', type: 'email' },
-            { label: '🇧🇷 Brazil', value: 'São Paulo, SP', type: 'address' },
-            { label: '🇨🇦 Canada', value: 'Montreal, QC', type: 'address' }
+            { label: '🇧🇷 Brazil', value: 'Rio de Janeiro & Florianópolis', type: 'address' },
+            { label: '🇨🇦 Canada', value: 'Vancouver, BC', type: 'address' }
           ],
           highlight: '⏱️ Response time: 15 business days (LGPD/GDPR) | 30 days (Law 25/PIPEDA)'
         }
@@ -541,7 +541,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
             { label: '👤 Responsable', value: 'Delegado de Protección de Datos (DPO)', type: 'text' },
             { label: '📧 Email DPO', value: 'privacy@azimut.art', type: 'email' },
             { label: '🏢 Empresa', value: 'Azimut Immersive Inc.', type: 'text' },
-            { label: '📍 Québec', value: 'Montreal, QC, Canadá', type: 'text' }
+            { label: '📍 Canadá', value: 'Vancouver, BC, Canadá', type: 'text' }
           ]
         },
         {
@@ -577,8 +577,8 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           contacts: [
             { label: '📧 Privacidad/DPO', value: 'privacy@azimut.art', type: 'email' },
             { label: '📧 General', value: 'contact@azimut.art', type: 'email' },
-            { label: '🇧🇷 Brasil', value: 'São Paulo, SP', type: 'address' },
-            { label: '🇨🇦 Canadá', value: 'Montreal, QC', type: 'address' }
+            { label: '🇧🇷 Brasil', value: 'Rio de Janeiro & Florianópolis', type: 'address' },
+            { label: '🇨🇦 Canadá', value: 'Vancouver, BC', type: 'address' }
           ]
         }
       ]
