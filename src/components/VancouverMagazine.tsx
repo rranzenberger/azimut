@@ -660,9 +660,9 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             {/* Content - Layout Premium */}
             <div className="relative z-10 h-full flex flex-col justify-between p-5 sm:p-7 md:p-8">
               
-              {/* ═══ TOP: EMOJI GIGANTE com GLOW ═══ */}
+              {/* ═══ TOP: EMOJI GIGANTE com GLOW - COMPACTO ═══ */}
               <div 
-                className="text-[4.5rem] sm:text-[5.5rem] md:text-[6rem] leading-none"
+                className="text-[3.5rem] sm:text-[4rem] md:text-[4.5rem] leading-none"
                 style={{ 
                   filter: 'drop-shadow(0 4px 20px rgba(255,255,255,0.3))',
                   animation: 'pulse 3s ease-in-out infinite'
@@ -671,13 +671,13 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
                 {card.emoji}
               </div>
               
-              {/* ═══ MIDDLE: Emojis secundários - ESPAÇADOS ═══ */}
+              {/* ═══ MIDDLE: Emojis secundários - COMPACTO ═══ */}
               {card.image && (
                 <div 
-                  className="text-center py-3"
+                  className="text-center py-2 flex-1 flex items-center justify-center"
                   style={{ 
-                    fontSize: 'clamp(2rem, 6vw, 3rem)',
-                    letterSpacing: '0.3em',
+                    fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
+                    letterSpacing: '0.2em',
                     opacity: 0.65,
                     filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))'
                   }}
@@ -686,11 +686,11 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
                 </div>
               )}
               
-              {/* ═══ BOTTOM: Textos Premium ═══ */}
-              <div>
-                {/* Título - BOLD e Legível */}
+              {/* ═══ BOTTOM: Textos Premium - ALTURA FIXA ═══ */}
+              <div className="mt-auto">
+                {/* Título - BOLD e Legível - ALTURA FIXA */}
                 <h3 
-                  className="text-xl sm:text-2xl md:text-3xl font-black text-white mb-2 uppercase tracking-wide"
+                  className="text-xl sm:text-2xl md:text-2xl font-black text-white mb-2 uppercase tracking-wide min-h-[2.5rem] sm:min-h-[3rem] flex items-end"
                   style={{ 
                     textShadow: '0 2px 8px rgba(0,0,0,0.6), 0 4px 20px rgba(0,0,0,0.4)',
                     letterSpacing: '0.05em'
@@ -699,9 +699,9 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
                   {card.title}
                 </h3>
                 
-                {/* Texto - Sedutor e Legível */}
+                {/* Texto - Sedutor e Legível - ALTURA FIXA COM LINE-CLAMP */}
                 <p 
-                  className="text-sm sm:text-base md:text-lg text-white/95 mb-3 font-medium leading-relaxed"
+                  className="text-sm sm:text-base text-white/95 mb-3 font-medium leading-relaxed min-h-[3rem] sm:min-h-[3.5rem] line-clamp-2"
                   style={{ 
                     textShadow: '0 1px 4px rgba(0,0,0,0.5)',
                     lineHeight: '1.4'
