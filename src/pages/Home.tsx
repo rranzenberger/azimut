@@ -259,9 +259,26 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             </>
           )}
           
-          {/* DESKTOP: TEMA CLARO - Fundo bege/cream limpo */}
+          {/* DESKTOP: TEMA CLARO - Gradiente Champagne/Dourado/Âmbar */}
+          {theme === 'light' && (
+            <div 
+              className="hidden lg:block absolute inset-0"
+              style={{
+                background: `
+                  radial-gradient(ellipse 50% 100% at 48% 50%, rgba(200, 180, 160, 0.4) 0%, transparent 70%),
+                  radial-gradient(ellipse 50% 100% at 75% 50%, rgba(255, 200, 100, 0.25) 0%, rgba(220, 140, 90, 0.15) 50%, rgba(201, 35, 55, 0.08) 100%),
+                  linear-gradient(180deg, rgba(245, 235, 210, 0.4) 0%, transparent 35%),
+                  radial-gradient(ellipse 40% 100% at 0% 50%, rgba(211, 206, 195, 0.9) 0%, transparent 60%),
+                  radial-gradient(ellipse 35% 100% at 100% 50%, rgba(211, 206, 195, 0.9) 0%, transparent 55%),
+                  linear-gradient(180deg, transparent 65%, rgba(190, 165, 145, 0.15) 100%),
+                  #d3cec3
+                `,
+                zIndex: 0
+              }}
+            />
+          )}
+          
           {/* MOBILE ONLY: Fundo sólido SEM gradientes */}
-          {/* Desktop: SEM fundo aqui - deixa o CSS global (#root::before) fazer o trabalho */}
           <div 
             className="lg:hidden absolute inset-0"
             style={{
