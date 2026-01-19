@@ -4859,20 +4859,17 @@ p .keyword-highlight,
     display: block;
     position: absolute;
     inset: 0;
+    /* Bege termina em 5% (ANTES do texto), marrom escuro no centro */
     background: linear-gradient(90deg, 
       #d3cec3 0%,
-      #c5b8a8 3%,
-      #a89885 6%,
-      #7a6555 10%,
-      #4a3d30 15%,
-      #2a2318 20%,
-      #1e1a16 28%,
-      #1e1a16 60%,
-      #2a2318 68%,
-      #4a3d30 75%,
-      #7a6555 82%,
-      #a89885 88%,
-      #c5b8a8 93%,
+      #a89885 2%,
+      #4a3d30 5%,
+      #1e1a16 8%,
+      #1e1a16 65%,
+      #2a2318 72%,
+      #4a3d30 80%,
+      #7a6555 87%,
+      #a89885 93%,
       #d3cec3 100%
     );
     pointer-events: none;
@@ -4906,27 +4903,27 @@ p .keyword-highlight,
 
 /* 📝 TEXTO HERO - Cores específicas por tema */
 [data-theme="dark"] .hero-title {
-  color: white;
+  color: white !important;
 }
 
 [data-theme="light"] .hero-title {
-  color: white;
+  color: white !important;
 }
 
 [data-theme="dark"] .hero-subtitle {
-  color: rgba(211, 206, 195, 0.9); /* cream */
+  color: rgba(211, 206, 195, 0.9) !important; /* cream */
 }
 
 [data-theme="light"] .hero-subtitle {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.8) !important;
 }
 
 /* ⭐ AZIMUT SINCE - Cores específicas */
 [data-theme="dark"] .azimut-since-year {
-  color: rgba(211, 206, 195, 0.6);
+  color: rgba(211, 206, 195, 0.6) !important;
 }
 
 [data-theme="light"] .azimut-since-year {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 
