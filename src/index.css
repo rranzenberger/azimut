@@ -1519,39 +1519,40 @@ body::after {
   opacity: 0.15;
 }
 
-/* Desktop: CINEMATOGRÁFICO - Laterais começam com cor de fundo */
+/* Desktop: CINEMATOGRÁFICO - Gradientes ASSIMÉTRICOS */
 @media (min-width: 768px) {
   [data-theme="light"] #root::before {
     background:
       /* Camada 1: Centro Hero - Champagne (bege + dourado quente) */
-      radial-gradient(ellipse 38% 85% at 50% 45%, rgba(200, 185, 170, 0.28) 0%, transparent 100%),
-      /* Camada 2: Pós-texto - Cores da estrela (dourado→âmbar→vermelho) */
-      radial-gradient(ellipse 45% 85% at 70% 50%, rgba(255, 215, 130, 0.14) 0%, rgba(220, 140, 100, 0.1) 50%, rgba(201, 35, 55, 0.06) 100%),
-      /* Camada 3: Topo - Luz dourada suave (sunrise cinematográfico) */
+      radial-gradient(ellipse 35% 85% at 48% 45%, rgba(200, 185, 170, 0.28) 0%, transparent 100%),
+      /* Camada 2: Pós-texto - Cores da estrela (dourado→âmbar→vermelho) - INICIA DEPOIS DO TEXTO */
+      radial-gradient(ellipse 40% 85% at 68% 50%, rgba(255, 215, 130, 0.14) 0%, rgba(220, 140, 100, 0.1) 50%, rgba(201, 35, 55, 0.06) 100%),
+      /* Camada 3: Topo - Luz dourada suave */
       linear-gradient(180deg, rgba(250, 240, 220, 0.22) 0%, transparent 32%),
-      /* Camada 4: Vinheta ESQUERDA - Da cor de fundo (#d3cec3) pro centro */
-      radial-gradient(ellipse 35% 100% at 0% 50%, rgba(211, 206, 195, 1) 0%, transparent 68%),
-      /* Camada 5: Vinheta DIREITA - Da cor de fundo (#d3cec3) pro centro */
-      radial-gradient(ellipse 35% 100% at 100% 50%, rgba(211, 206, 195, 1) 0%, transparent 68%),
+      /* Camada 4: Vinheta ESQUERDA - Da cor de fundo, TERMINA BEM ANTES DO TEXTO (em telas pequenas não aparece) */
+      radial-gradient(ellipse 45% 100% at -5% 50%, rgba(211, 206, 195, 1) 0%, transparent 75%),
+      /* Camada 5: Vinheta DIREITA - Da cor de fundo, INICIA DEPOIS DO TEXTO */
+      radial-gradient(ellipse 38% 100% at 105% 50%, rgba(211, 206, 195, 1) 0%, transparent 70%),
       /* Camada 6: Base inferior - Tom âmbar rico */
       linear-gradient(180deg, transparent 68%, rgba(195, 175, 160, 0.12) 100%);
     opacity: 1;
   }
 }
 
-/* Monitores grandes (>1920px): Efeito estrela intensificado */
+/* Monitores grandes (>1920px): Assimetria mais pronunciada */
 @media (min-width: 1920px) {
   [data-theme="light"] #root::before {
     background:
       /* Centro Hero - Champagne mais pronunciado */
-      radial-gradient(ellipse 32% 78% at 50% 45%, rgba(195, 180, 165, 0.35) 0%, transparent 100%),
-      /* Pós-texto - Gradiente estrela (dourado→âmbar→vermelho) */
-      radial-gradient(ellipse 42% 82% at 72% 50%, rgba(255, 215, 130, 0.2) 0%, rgba(220, 140, 100, 0.14) 50%, rgba(201, 35, 55, 0.08) 100%),
+      radial-gradient(ellipse 30% 78% at 48% 45%, rgba(195, 180, 165, 0.35) 0%, transparent 100%),
+      /* Pós-texto - Gradiente estrela - COMEÇA DEPOIS DO TEXTO */
+      radial-gradient(ellipse 38% 82% at 70% 50%, rgba(255, 215, 130, 0.2) 0%, rgba(220, 140, 100, 0.14) 50%, rgba(201, 35, 55, 0.08) 100%),
       /* Topo - Luz dourada cinematográfica */
       linear-gradient(180deg, rgba(250, 240, 220, 0.28) 0%, transparent 36%),
-      /* Vinhetas laterais - Da cor de fundo (#d3cec3) pro centro */
-      radial-gradient(ellipse 32% 100% at 0% 50%, rgba(211, 206, 195, 1) 0%, transparent 64%),
-      radial-gradient(ellipse 32% 100% at 100% 50%, rgba(211, 206, 195, 1) 0%, transparent 64%),
+      /* Vinheta ESQUERDA - LARGA, termina ANTES do texto (cortada em telas pequenas) */
+      radial-gradient(ellipse 42% 100% at -8% 50%, rgba(211, 206, 195, 1) 0%, transparent 78%),
+      /* Vinheta DIREITA - COMEÇA DEPOIS do texto, vai até limite */
+      radial-gradient(ellipse 35% 100% at 108% 50%, rgba(211, 206, 195, 1) 0%, transparent 72%),
       /* Base inferior âmbar */
       linear-gradient(180deg, transparent 64%, rgba(190, 170, 155, 0.16) 100%);
     opacity: 1;
