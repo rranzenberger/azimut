@@ -197,7 +197,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           className="hidden lg:block pointer-events-none fixed top-[120px] -right-28 md:-right-40 h-[520px] w-[520px] md:h-[680px] md:w-[680px]"
           style={{ 
             zIndex: -5,
-            opacity: theme === 'dark' ? 0.4 : 0.25,
+            opacity: theme === 'dark' ? 0.4 : 0.5,
             maxWidth: '100vw',
             overflow: 'hidden'
           }}
@@ -207,7 +207,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             alt="" 
             className="h-full w-full object-contain"
             style={{
-              filter: theme === 'light' ? 'invert(1) brightness(0.2) sepia(0.3)' : 'none'
+              filter: theme === 'light' ? 'brightness(0.3) sepia(0.4)' : 'none'
             }}
           />
         </div>
@@ -642,16 +642,16 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         <div className={`relative py-12 md:py-16 ${
           theme === 'dark' 
             ? 'bg-gradient-to-b from-slate-950 to-black' 
-            : 'bg-gradient-to-b from-[#c9c4b9] to-[#d3cec3]'
+            : 'bg-gradient-to-b from-[#1e1a16] to-[#2a2318]'
         }`}>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="font-sora text-[0.75rem] uppercase tracking-[0.24em] mb-3 animate-fade-in-up text-white/60">
+            <h2 className="font-sora text-[0.75rem] uppercase tracking-[0.24em] mb-3 animate-fade-in-up text-white/70">
               {lang === 'pt' ? 'Assista Nosso Trabalho' : lang === 'es' ? 'Ve Nuestro Trabajo' : lang === 'fr' ? 'Regardez Notre Travail' : 'Watch Our Work'}
             </h2>
             {/* Linha vermelha larga com fade nas pontas - adapta ao idioma */}
             <div className="h-[2px] mx-auto" style={{
-              width: lang === 'pt' ? '220px' : lang === 'fr' ? '240px' : lang === 'es' ? '200px' : '180px',
-              background: 'linear-gradient(90deg, transparent 0%, #c92337 15%, #c92337 85%, transparent 100%)'
+              width: lang === 'pt' ? '240px' : lang === 'fr' ? '260px' : lang === 'es' ? '220px' : '200px',
+              background: 'linear-gradient(90deg, transparent 0%, #c92337 10%, #c92337 90%, transparent 100%)'
             }} />
           </div>
         </div>
