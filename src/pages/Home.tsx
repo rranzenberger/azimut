@@ -554,28 +554,56 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          
+          {/* ═══════════════════════════════════════════════════════════════════
+              SEÇÃO LOGO ANIMADA - Elemento especial com fundo escuro
+              Bordas vermelhas, fundo azul escuro, logo grande girando
+          ═══════════════════════════════════════════════════════════════════ */}
+          <div className="lg:hidden relative w-full -mx-4 mt-6 mb-6" style={{ width: 'calc(100% + 2rem)' }}>
+            {/* Borda superior vermelha */}
+            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-azimut-red to-transparent" />
+            
+            {/* Container com fundo escuro azul */}
+            <div 
+              className="relative py-8 px-4"
+              style={{
+                background: 'linear-gradient(180deg, #0a0e18 0%, #050a14 50%, #0a0e18 100%)',
+                minHeight: '280px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '1.5rem'
+              }}
+            >
+              {/* SVG estática de fundo - mais sutil */}
+              <img 
+                src="/logo-azimut-star.svg" 
+                alt="" 
+                className="absolute inset-0 w-full h-full object-contain"
+                style={{ opacity: 0.08, filter: 'blur(2px)' }}
+              />
               
-              {/* Logo Animada ENORME - ABAIXO dos cards, centralizada */}
-              <div className="flex justify-center items-center relative w-full animate-fade-in-up opacity-0" style={{ animationDelay: '0.25s' }}>
-                {/* SVG estática de fundo */}
-                <img 
-                  src="/logo-azimut-star.svg" 
-                  alt="" 
-                  className="absolute w-[180px] h-[180px] sm:w-[220px] sm:h-[220px]"
-                  style={{ opacity: 0.15, zIndex: 1 }}
-                />
-                {/* Logo animada em cima - GRANDE */}
-                <div className="relative w-[180px] h-[180px] sm:w-[220px] sm:h-[220px]" style={{ opacity: theme === 'dark' ? 0.8 : 0.6, zIndex: 2 }}>
+              {/* Logo Animada ENORME - destaque principal */}
+              <div className="relative z-10 flex justify-center items-center animate-fade-in-up opacity-0" style={{ animationDelay: '0.3s' }}>
+                <div className="relative w-[200px] h-[200px] sm:w-[240px] sm:h-[240px]">
                   <AnimatedLogo />
                 </div>
               </div>
               
-              {/* Tagline IMMERSIVE • INTERACTIVE - ABAIXO da logo */}
-              <div className={`font-sora text-[0.5rem] sm:text-[0.55rem] uppercase tracking-[0.15em] leading-tight text-center animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/60' : 'text-slate-500'}`} style={{ animationDelay: '0.3s' }}>
-                <span>IMMERSIVE • INTERACTIVE</span><br />
-                <span>CINEMATIC EXPERIENCES</span>
+              {/* Tagline IMMERSIVE - MAIOR e mais destaque */}
+              <div className="relative z-10 text-center animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+                <p className="font-sora text-[0.7rem] sm:text-[0.8rem] uppercase tracking-[0.18em] leading-relaxed text-white/90 font-medium">
+                  <span className="block">IMMERSIVE • INTERACTIVE</span>
+                  <span className="block mt-1">CINEMATIC EXPERIENCES</span>
+                </p>
               </div>
             </div>
+            
+            {/* Borda inferior vermelha */}
+            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-azimut-red to-transparent" />
           </div>
         </section>
 
