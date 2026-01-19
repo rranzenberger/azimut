@@ -549,7 +549,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 background: theme === 'dark'
                   ? '#0a0e18' // Azul escuro sólido
                   : '#2a2825', // Marrom escuro sólido
-                height: '250px', // ✅ Altura REDUZIDA (260px → 250px)
+                height: '240px', // ✅ Altura REDUZIDA (250px → 240px)
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
