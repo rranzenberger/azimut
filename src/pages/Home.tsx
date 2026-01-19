@@ -444,12 +444,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </div>
             </div>
             
-            {/* LINHA 3: 3 Cards de Credibilidade VERMELHOS - MESMAS CORES ESCURO E CLARO */}
+            {/* LINHA 3: 3 Cards de Credibilidade VERMELHOS */}
             <div className="grid grid-cols-3 gap-4 mt-2">
               {/* Rio Museu Olímpico */}
               <div className="backdrop-blur-xl border border-azimut-red/50 p-4 rounded-lg hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(201, 35, 55, 0.15)' }}>
                 <span className="block text-sm font-semibold text-azimut-red group-hover:text-red-400 transition-colors break-words">Rio Museum</span>
-                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 leading-tight text-slate-300">
+                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 leading-tight text-white/80">
                   {lang === 'pt' ? 'Direção Geral · Tecnologia · Arte Audiovisual' : lang === 'es' ? 'Dirección General · Tecnología · Arte Audiovisual' : lang === 'fr' ? 'Direction Générale · Technologie · Art Audiovisuel' : 'General Direction · Technology · Audiovisual Art'}
                 </span>
               </div>
@@ -459,7 +459,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 <span className="block text-sm font-semibold text-azimut-red group-hover:text-red-400 transition-colors break-words">
                   {lang === 'pt' ? 'Festival de Gramado' : lang === 'es' ? 'Festival de Gramado' : lang === 'fr' ? 'Festival de Gramado' : 'Gramado Festival'}
                 </span>
-                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 text-slate-300">
+                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 text-white/80">
                   {lang === 'pt' ? 'VR desde 2017' : lang === 'es' ? 'VR desde 2017' : lang === 'fr' ? 'VR depuis 2017' : 'VR since 2017'}
                 </span>
               </div>
@@ -467,7 +467,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               {/* BR ↔ CA */}
               <div className="backdrop-blur-xl border border-azimut-red/50 p-4 rounded-lg hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(201, 35, 55, 0.15)' }}>
                 <span className="block text-sm font-semibold text-azimut-red group-hover:text-red-400 transition-colors break-words">Brasil ↔ Canadá</span>
-                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 text-slate-300">
+                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 text-white/80">
                   {lang === 'pt' ? 'Binacional' : lang === 'es' ? 'Binacional' : lang === 'fr' ? 'Binational' : 'Binational'}
                 </span>
               </div>
