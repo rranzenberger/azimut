@@ -75,8 +75,8 @@ export async function POST(request: NextRequest) {
           data: {
             email: normalizedEmail,
             name: name || 'Contato Manual',
-            message: notes,
-            leadType: 'NEWSLETTER',
+            message: `[Newsletter Manual] ${notes}`,
+            leadType: 'CONTACT_FORM', // Usando tipo genérico (NEWSLETTER não existe no enum)
             status: 'NEW',
             sourceUrl: 'backoffice-manual',
           },
