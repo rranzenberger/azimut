@@ -178,11 +178,17 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   useEffect(() => {
     // Detectar tema do documento
     const currentTheme = document.documentElement.getAttribute('data-theme') as 'dark' | 'light' | null
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/cd5c9e98-fcf8-48d0-8a4c-847d5c0a34f9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Home.tsx:themeDetect',message:'Home detecting theme from DOM',data:{currentTheme,windowWidth:window.innerWidth},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+    // #endregion
     setTheme(currentTheme === 'light' ? 'light' : 'dark')
     
     // Observar mudanças no tema
     const observer = new MutationObserver(() => {
       const newTheme = document.documentElement.getAttribute('data-theme') as 'dark' | 'light' | null
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/cd5c9e98-fcf8-48d0-8a4c-847d5c0a34f9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Home.tsx:themeMutation',message:'Theme mutation observed',data:{newTheme},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+      // #endregion
       setTheme(newTheme === 'light' ? 'light' : 'dark')
     })
     

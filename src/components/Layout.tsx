@@ -112,7 +112,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
       const windowWidth = window.innerWidth
       
       // REGRA ÚNICA E DEFINITIVA: < 900px = MOBILE (hamburger)
-      setIsMobile(windowWidth < 900)
+      const newIsMobile = windowWidth < 900
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/cd5c9e98-fcf8-48d0-8a4c-847d5c0a34f9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Layout.tsx:checkMobile',message:'Layout mobile detection',data:{windowWidth,newIsMobile,theme},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+      // #endregion
+      setIsMobile(newIsMobile)
     }
     
     checkMobile()
@@ -270,6 +274,15 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               onClick={() => setIsMobileMenuOpen(false)}
               style={{ display: 'block' }}
             >
+              {/* #region agent log */}
+              {(() => {
+                const logoSrc = isMobile 
+                  ? (theme === 'light' ? '/logo-mobile-escuro.svg' : '/logo-mobile-claro.svg')
+                  : '/logo-topo-site.svg';
+                fetch('http://127.0.0.1:7242/ingest/cd5c9e98-fcf8-48d0-8a4c-847d5c0a34f9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Layout.tsx:logoRender',message:'Logo being rendered',data:{isMobile,theme,logoSrc},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+                return null;
+              })()}
+              {/* #endregion */}
               <img
                 src={
                   isMobile 
