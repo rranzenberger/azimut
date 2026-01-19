@@ -102,10 +102,11 @@ export async function routeToAI(request: AIRouterRequest): Promise<AIRouterRespo
 // ═══════════════════════════════════════════════════════════
 
 export function logAIUsage(response: AIRouterResponse) {
-  // AI usage tracking
-  void {
+  // AI usage tracking (silent)
+  const _usage = {
     aiUsed: response.aiUsed,
     shouldFollowUp: response.shouldFollowUp,
     timestamp: new Date().toISOString()
-  })
+  }
+  // Could send to analytics here
 }

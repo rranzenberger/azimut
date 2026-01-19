@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import ApiService from '../services/api'
 import CanadaMapleLeaf from './CanadaMapleLeaf'
+import { useFormTracking } from '../hooks/useFormTracking'
 
 interface VancouverInterestFormProps {
   lang: Lang
