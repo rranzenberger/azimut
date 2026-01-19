@@ -205,17 +205,19 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         path="/"
       />
       <main className="relative">
-        {/* Estrela de fundo - HOME: Padronizada com outras páginas */}
-        <StarBackground
-          className="fixed top-[160px] right-0 translate-x-[30%] md:translate-x-[40%] h-[520px] w-[520px] md:top-[160px] md:h-[680px] md:w-[680px] pointer-events-none"
-          zIndex={-5}
-          opacity={0.5}
-          style={{ 
-            maxWidth: '100vw',
-            overflow: 'hidden',
-            clipPath: 'inset(0)'
-          }}
-        />
+        {/* Estrela de fundo - HOME: Só aparece no tema ESCURO */}
+        {theme === 'dark' && (
+          <StarBackground
+            className="fixed top-[160px] right-0 translate-x-[30%] md:translate-x-[40%] h-[520px] w-[520px] md:top-[160px] md:h-[680px] md:w-[680px] pointer-events-none"
+            zIndex={-5}
+            opacity={0.5}
+            style={{ 
+              maxWidth: '100vw',
+              overflow: 'hidden',
+              clipPath: 'inset(0)'
+            }}
+          />
+        )}
 
         {/* ════════════════════════════════════════════════════════════════ */}
         {/* HERO WORLD-CLASS 2026 - 85vh + Stats Cards Flutuantes */}
@@ -250,26 +252,28 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             )
           })()}
           
-          {/* Gradiente Direcional: Azul Opaco (esquerda) → Preto Transparente (direita) - TEMA ESCURO */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900 via-60% to-transparent dark:block hidden" />
-          
-          {/* Gradiente Vertical: Escurece embaixo - TEMA ESCURO */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/70 dark:block hidden" />
-          
           {/* ═══════════════════════════════════════════════════════════════
-              TEMA CLARO: Centro escuro, bordas claras (bege)
+              GRADIENTES CONDICIONAIS POR TEMA (não usar dark: do Tailwind)
               ═══════════════════════════════════════════════════════════════ */}
-          {/* Gradiente: Fundo bege/cream premium - SEM overlay escuro */}
-          <div 
-            className="absolute inset-0 dark:hidden block"
-            style={{
-              background: 'linear-gradient(180deg, #d3cec3 0%, #e0dbd0 50%, #d3cec3 100%)',
-              zIndex: 0
-            }}
-          />
           
-          {/* Overlay sutil CLARO para profundidade - TEMA CLARO */}
-          <div className="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-transparent dark:hidden block" style={{ zIndex: 1 }} />
+          {/* TEMA ESCURO: Gradientes azul/preto */}
+          {theme === 'dark' && (
+            <>
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900 via-60% to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/70" />
+            </>
+          )}
+          
+          {/* TEMA CLARO: Fundo bege/cream limpo */}
+          {theme === 'light' && (
+            <div 
+              className="absolute inset-0"
+              style={{
+                background: 'linear-gradient(180deg, #e8e4db 0%, #d8d3c8 50%, #cec9be 100%)',
+                zIndex: 0
+              }}
+            />
+          )}
           
           {/* ═══════════════════════════════════════════════════════════════
               HERO REORGANIZADO: Texto | Logo (linha 1), 5 Cards (linha 2), 3 Cards (linha 3)
@@ -449,29 +453,19 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             
           </div>
           
-          {/* MOBILE/TABLET: Logo Watermark + Texto Alinhado Esquerda */}
-          <div className="relative z-10 lg:hidden flex flex-col justify-center min-h-[calc(100vh-80px)] w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden">
-            {/* Logo como Watermark (fundo) - Posicionada à esquerda, atrás do texto */}
-            <div className="absolute inset-0 flex items-center justify-start pointer-events-none pl-4" style={{ zIndex: 0 }}>
-              <div className="w-[200px] h-[200px] sm:w-[240px] sm:h-[240px]">
-                {theme === 'dark' ? (
+          {/* MOBILE/TABLET: Conteúdo Alinhado TOPO ESQUERDA */}
+          <div className="relative z-10 lg:hidden flex flex-col justify-start pt-4 w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden">
+            {/* Logo Watermark - SÓ no tema ESCURO */}
+            {theme === 'dark' && (
+              <div className="absolute top-20 right-0 pointer-events-none" style={{ zIndex: 0 }}>
+                <div className="w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] opacity-20">
                   <AnimatedLogo />
-                ) : (
-                  <img 
-                    src="/logo-azimut-star.svg" 
-                    alt="Azimut" 
-                    className="w-full h-full object-contain"
-                    style={{ 
-                      opacity: 0.08,
-                      filter: 'grayscale(100%)'
-                    }}
-                  />
-                )}
+                </div>
               </div>
-            </div>
+            )}
             
-            {/* Conteúdo Texto (frente) - ALINHADO ESQUERDA */}
-            <div className="relative z-10 w-full text-left space-y-6 sm:space-y-8 px-0">
+            {/* Conteúdo Texto (frente) - ALINHADO ESQUERDA, MAIS ACIMA */}
+            <div className="relative z-10 w-full text-left space-y-5 sm:space-y-6 px-0">
               {/* Badge AZIMUT */}
               <div className="inline-flex items-center gap-1.5 sm:gap-2 font-sora text-[0.65rem] sm:text-[0.7rem] uppercase tracking-[0.25em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
                 <img 
@@ -538,17 +532,25 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 {heroSubtitle.split('.')[0]}.
               </p>
               
-              {/* Stats Cards - ALINHADO ESQUERDA */}
+              {/* Stats Cards - ALINHADO ESQUERDA, cores por tema */}
               <div className="grid grid-cols-2 gap-2.5 sm:gap-3 max-w-[90%] animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
-                <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-3 sm:p-4 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
+                <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 p-3 sm:p-4 rounded-xl hover:border-azimut-red transition-all duration-300 group ${
+                  theme === 'dark' ? 'bg-black/60 hover:bg-black/70' : 'bg-white/70 hover:bg-white/90'
+                }`}>
                   <span className="block text-2xl sm:text-3xl md:text-4xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">100+</span>
-                  <span className="block text-[0.6rem] sm:text-[0.65rem] md:text-xs text-white/60 uppercase tracking-widest mt-1">
+                  <span className={`block text-[0.6rem] sm:text-[0.65rem] md:text-xs uppercase tracking-widest mt-1 ${
+                    theme === 'dark' ? 'text-white/60' : 'text-slate-600'
+                  }`}>
                     {lang === 'pt' ? 'Projetos' : lang === 'es' ? 'Proyectos' : 'Projects'}
                   </span>
                 </div>
-                <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-3 sm:p-4 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
+                <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 p-3 sm:p-4 rounded-xl hover:border-azimut-red transition-all duration-300 group ${
+                  theme === 'dark' ? 'bg-black/60 hover:bg-black/70' : 'bg-white/70 hover:bg-white/90'
+                }`}>
                   <span className="block text-2xl sm:text-3xl md:text-4xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">1996</span>
-                  <span className="block text-[0.6rem] sm:text-[0.65rem] md:text-xs text-white/60 uppercase tracking-widest mt-1">
+                  <span className={`block text-[0.6rem] sm:text-[0.65rem] md:text-xs uppercase tracking-widest mt-1 ${
+                    theme === 'dark' ? 'text-white/60' : 'text-slate-600'
+                  }`}>
                     {lang === 'pt' ? 'Desde' : lang === 'es' ? 'Desde' : lang === 'fr' ? 'Depuis' : 'Since'}
                   </span>
                 </div>
