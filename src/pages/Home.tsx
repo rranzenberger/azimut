@@ -272,17 +272,17 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               {/* Badge AZIMUT */}
               <div className="inline-flex items-center gap-2 font-sora text-[0.75rem] uppercase tracking-[0.3em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
                 <img 
-                  src="/estela6-clara.svg" 
+                  src={theme === 'dark' ? '/estela6-clara.svg' : '/estela6-escura.svg'}
                   alt="" 
                   className="w-4 h-4"
                 />
                 <span className="text-azimut-red font-semibold">AZIMUT</span>
-                <span className="!text-white/40">•</span>
-                <span className="!text-white/60 text-[0.7rem]">SINCE 1996</span>
+                <span className={theme === 'dark' ? 'text-white/40' : 'text-slate-600'}>•</span>
+                <span className={`text-[0.7rem] ${theme === 'dark' ? 'text-white/60' : 'text-slate-600'}`}>SINCE 1996</span>
               </div>
                 
                 {/* Título em 3 LINHAS - MULTILÍNGUE */}
-                <h1 className="font-handel uppercase !text-white animate-fade-in-up opacity-0" style={{ 
+                <h1 className={`font-handel uppercase animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ 
                   fontSize: 'clamp(3rem, 5.5vw, 5.8rem)',
                   lineHeight: '1.1',
                   letterSpacing: '0.08em',
@@ -327,7 +327,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 </h1>
                   
                 {/* Subtítulo COMPACTO */}
-                <p className="max-w-xl text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0 !text-white/90" style={{ animationDelay: '0.3s' }}>
+                <p className={`max-w-xl text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/90' : 'text-[#4a4543]'}`} style={{ animationDelay: '0.3s' }}>
                   {heroSubtitle.split('.')[0]}.
                 </p>
               </div>
