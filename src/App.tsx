@@ -1,7 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom'
 import { type Lang } from './i18n'
-import { useTheme } from './hooks/useTheme'
+import { ThemeProvider, useTheme } from './contexts/ThemeContext'
 import BrowserCompatibility from './components/BrowserCompatibility'
 import ScrollToTop from './components/ScrollToTop'
 import LoadingSkeleton from './components/LoadingSkeleton'

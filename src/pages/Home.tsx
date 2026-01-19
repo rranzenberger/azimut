@@ -13,7 +13,7 @@ import { AnimatedLogo } from '../components/AnimatedLogo'
 import StarBackground from '../components/StarBackground'
 import OptimizedImage from '../components/OptimizedImage'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
-import { useTheme } from '../hooks/useTheme'
+import { useTheme } from '../contexts/ThemeContext'
 
 interface HomeProps {
   lang: Lang

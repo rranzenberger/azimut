@@ -10,7 +10,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { useTheme } from './useTheme';
+import { useTheme } from '../contexts/ThemeContext';
 import { createTimeoutSignal } from '../utils/fetchWithTimeout';
 
 // URL do backoffice (produção)

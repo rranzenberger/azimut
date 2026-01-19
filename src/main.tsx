@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
+import { ThemeProvider } from './contexts/ThemeContext'
 import App from './App'
 import './index.css'
 import { initWebVitals } from './utils/web-vitals'
@@ -18,7 +19,9 @@ if (import.meta.env.PROD) {
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <HelmetProvider>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </HelmetProvider>
   </React.StrictMode>,
 )
