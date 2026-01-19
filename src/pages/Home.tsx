@@ -452,14 +452,14 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             {/* Borda superior vermelha SÓLIDA */}
             <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
             
-            {/* Container com fundo escuro - Altura reduzida para 260px */}
+            {/* Container com fundo escuro - Altura 250px */}
             <div 
               className="relative"
               style={{
                 background: theme === 'dark'
                   ? '#0a0e18' // Azul escuro sólido
                   : '#2a2825', // Marrom escuro sólido
-                height: '260px', // Altura FIXA menor (antes era 320px)
+                height: '250px', // ✅ Altura REDUZIDA (260px → 250px)
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
