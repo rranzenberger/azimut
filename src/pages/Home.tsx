@@ -259,16 +259,16 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           {/* ═══════════════════════════════════════════════════════════════
               TEMA CLARO: Centro escuro, bordas claras (bege)
               ═══════════════════════════════════════════════════════════════ */}
-          {/* Gradiente: Bordas transparentes (bege) → Centro escuro - SUAVIZADO */}
+          {/* Gradiente: Fundo bege/cream premium */}
           <div 
             className="absolute inset-0 dark:hidden block"
             style={{
-              background: 'linear-gradient(90deg, transparent 0%, rgba(5, 8, 20, 0.15) 3%, rgba(5, 8, 20, 0.4) 6%, rgba(5, 8, 20, 0.7) 10%, rgba(5, 8, 20, 0.9) 15%, rgba(5, 8, 20, 0.98) 25%, rgba(5, 8, 20, 0.98) 75%, rgba(5, 8, 20, 0.9) 85%, rgba(5, 8, 20, 0.7) 90%, rgba(5, 8, 20, 0.4) 94%, rgba(5, 8, 20, 0.15) 97%, transparent 100%)'
+              background: 'linear-gradient(180deg, #d3cec3 0%, #c9c4b9 50%, #bfbab0 100%)'
             }}
           />
           
-          {/* Gradiente Vertical suave - TEMA CLARO */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/40 dark:hidden block" />
+          {/* Overlay sutil para profundidade - TEMA CLARO */}
+          <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-black/5 dark:hidden block" />
           
           {/* ═══════════════════════════════════════════════════════════════
               HERO REORGANIZADO: Texto | Logo (linha 1), 5 Cards (linha 2), 3 Cards (linha 3)
@@ -448,17 +448,26 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             
           </div>
           
-          {/* MOBILE/TABLET: Watermark Central + Texto Sobre */}
-          <div className="relative z-10 lg:hidden flex flex-col justify-center min-h-[calc(100vh-80px)] w-full px-3 sm:px-4 mx-auto max-w-full overflow-x-hidden">
+          {/* MOBILE/TABLET: Logo Watermark + Texto Alinhado Esquerda */}
+          <div className="relative z-10 lg:hidden flex flex-col justify-center min-h-[calc(100vh-80px)] w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden">
             {/* Logo como Watermark (fundo) */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
-              <div className="w-[180px] h-[180px] sm:w-[220px] sm:h-[220px]">
-                <AnimatedLogo />
+            <div className="absolute inset-0 flex items-center justify-start opacity-15 pointer-events-none pl-4">
+              <div className="w-[200px] h-[200px] sm:w-[240px] sm:h-[240px]">
+                {theme === 'dark' ? (
+                  <AnimatedLogo />
+                ) : (
+                  <img 
+                    src="/logo-azimut-star.svg" 
+                    alt="Azimut" 
+                    className="w-full h-full object-contain"
+                    style={{ filter: 'grayscale(50%) opacity(0.6)' }}
+                  />
+                )}
               </div>
             </div>
             
-            {/* Conteúdo Texto (frente) */}
-            <div className="relative z-10 w-full text-center mx-auto space-y-6 sm:space-y-8 px-2">
+            {/* Conteúdo Texto (frente) - ALINHADO ESQUERDA */}
+            <div className="relative z-10 w-full text-left space-y-6 sm:space-y-8 px-0">
               {/* Badge AZIMUT */}
               <div className="inline-flex items-center gap-1.5 sm:gap-2 font-sora text-[0.65rem] sm:text-[0.7rem] uppercase tracking-[0.25em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
                 <img 
@@ -467,12 +476,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   className="w-2.5 h-2.5 sm:w-3 sm:h-3"
                 />
                 <span className="text-azimut-red font-semibold">AZIMUT</span>
-                <span className="!text-white/40">•</span>
-                <span className="!text-white/60 text-[0.6rem] sm:text-[0.65rem]">SINCE 1996</span>
+                <span className={theme === 'dark' ? 'text-white/40' : 'text-slate-600'}>•</span>
+                <span className={`text-[0.6rem] sm:text-[0.65rem] ${theme === 'dark' ? 'text-white/60' : 'text-slate-600'}`}>SINCE 1996</span>
               </div>
               
               {/* Título - AJUSTADO PARA MOBILE */}
-              <h1 className="font-handel uppercase !text-white animate-fade-in-up opacity-0 px-2" style={{ 
+              <h1 className={`font-handel uppercase animate-fade-in-up opacity-0 px-2 ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ 
                 fontSize: 'clamp(2rem, 7vw, 4rem)',
                 lineHeight: '1.15',
                 letterSpacing: '0.1em',
@@ -521,7 +530,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </h1>
               
               {/* Subtítulo */}
-              <p className="max-w-[90%] sm:max-w-2xl mx-auto text-[0.9rem] sm:text-[1rem] leading-relaxed animate-fade-in-up opacity-0 !text-white/90 px-2" style={{ animationDelay: '0.3s' }}>
+              <p className={`max-w-[90%] sm:max-w-2xl mx-auto text-[0.9rem] sm:text-[1rem] leading-relaxed animate-fade-in-up opacity-0 px-2 ${theme === 'dark' ? 'text-white/90' : 'text-[#4a4543]'}`} style={{ animationDelay: '0.3s' }}>
                 {heroSubtitle.split('.')[0]}.
               </p>
               
@@ -550,9 +559,15 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             ══════════════════════════════════════════════════════════════ */}
         
         {/* Título da Seção - ACIMA do vídeo */}
-        <div className="relative bg-gradient-to-b from-slate-950 to-black py-12 md:py-16">
+        <div className={`relative py-12 md:py-16 ${
+          theme === 'dark' 
+            ? 'bg-gradient-to-b from-slate-950 to-black' 
+            : 'bg-gradient-to-b from-[#c9c4b9] to-[#d3cec3]'
+        }`}>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="font-sora text-[0.75rem] uppercase tracking-[0.24em] text-white/50 mb-3 animate-fade-in-up">
+            <h2 className={`font-sora text-[0.75rem] uppercase tracking-[0.24em] mb-3 animate-fade-in-up ${
+              theme === 'dark' ? 'text-white/50' : 'text-slate-700'
+            }`}>
               {lang === 'pt' ? 'Assista Nosso Trabalho' : lang === 'es' ? 'Ve Nuestro Trabajo' : lang === 'fr' ? 'Regardez Notre Travail' : 'Watch Our Work'}
             </h2>
             <div className="h-[2px] w-16 bg-azimut-red mx-auto opacity-50" />

@@ -33,6 +33,26 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [hasGreeted, setHasGreeted] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  
+  // Detectar tema (dark/light)
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
+  
+  useEffect(() => {
+    const currentTheme = document.documentElement.getAttribute('data-theme') as 'dark' | 'light' | null
+    setTheme(currentTheme === 'light' ? 'light' : 'dark')
+    
+    const observer = new MutationObserver(() => {
+      const newTheme = document.documentElement.getAttribute('data-theme') as 'dark' | 'light' | null
+      setTheme(newTheme === 'light' ? 'light' : 'dark')
+    })
+    
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    })
+    
+    return () => observer.disconnect()
+  }, [])
 
   const content: Record<Lang, any> = {
     pt: {
@@ -245,7 +265,11 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[51] w-[calc(100vw-2rem)] sm:w-[380px] max-w-[380px] h-[calc(100vh-8rem)] sm:h-[600px] max-h-[600px] rounded-2xl shadow-2xl flex flex-col overflow-hidden card-adaptive border border-white/10 animate-fade-in">
+        <div className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[51] w-[calc(100vw-2rem)] sm:w-[380px] max-w-[380px] h-[50vh] sm:h-[500px] max-h-[500px] rounded-2xl shadow-2xl flex flex-col overflow-hidden border animate-fade-in ${
+          theme === 'dark' 
+            ? 'bg-slate-900/95 border-white/10' 
+            : 'bg-[#f5f3f0] border-[#c9c4b9]'
+        }`}>
           {/* Header */}
           <div className="bg-gradient-to-r from-azimut-red to-red-700 p-3 flex items-center justify-between">
             <div className="flex items-center gap-2.5 min-w-0">
@@ -279,7 +303,9 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
                   className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                     msg.role === 'user'
                       ? 'bg-azimut-red text-white'
-                      : 'bg-white/10 text-white'
+                      : theme === 'dark' 
+                        ? 'bg-white/10 text-white' 
+                        : 'bg-[#e8e5e0] text-[#1e1c1a]'
                   }`}
                 >
                   <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
@@ -304,11 +330,11 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
 
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-white/10 rounded-2xl px-4 py-3">
+                <div className={`rounded-2xl px-4 py-3 ${theme === 'dark' ? 'bg-white/10' : 'bg-[#e8e5e0]'}`}>
                   <div className="flex gap-2">
-                    <span className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                    <span className={`w-2 h-2 rounded-full animate-bounce ${theme === 'dark' ? 'bg-white/60' : 'bg-slate-600'}`} style={{ animationDelay: '0ms' }} />
+                    <span className={`w-2 h-2 rounded-full animate-bounce ${theme === 'dark' ? 'bg-white/60' : 'bg-slate-600'}`} style={{ animationDelay: '150ms' }} />
+                    <span className={`w-2 h-2 rounded-full animate-bounce ${theme === 'dark' ? 'bg-white/60' : 'bg-slate-600'}`} style={{ animationDelay: '300ms' }} />
                   </div>
                 </div>
               </div>
@@ -317,14 +343,18 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
             {/* Quick Actions (show on first message) */}
             {messages.length === 1 && (
               <div className="space-y-2">
-                <p className="text-white/60 text-xs text-center mb-2">
+                <p className={`text-xs text-center mb-2 ${theme === 'dark' ? 'text-white/60' : 'text-slate-600'}`}>
                   {lang === 'pt' ? 'Ou escolha uma opção:' : 'Or choose an option:'}
                 </p>
                 {t.examples.map((example: string, i: number) => (
                   <button
                     key={i}
                     onClick={() => handleQuickAction(example)}
-                    className="w-full text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white text-sm transition-colors"
+                    className={`w-full text-left px-4 py-3 rounded-xl text-sm transition-colors ${
+                      theme === 'dark'
+                        ? 'bg-white/5 hover:bg-white/10 text-white'
+                        : 'bg-azimut-red/5 hover:bg-azimut-red/10 text-[#1e1c1a] border border-azimut-red/20'
+                    }`}
                   >
                     {example}
                   </button>
@@ -341,7 +371,7 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
               e.preventDefault()
               sendMessage(input)
             }}
-            className="p-4 border-t border-white/10"
+            className={`p-4 border-t ${theme === 'dark' ? 'border-white/10' : 'border-[#c9c4b9]'}`}
           >
             <div className="flex gap-2">
               <input
@@ -349,7 +379,11 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder={t.placeholder}
-                className="flex-1 px-4 py-3 rounded-xl bg-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-azimut-red"
+                className={`flex-1 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-azimut-red ${
+                  theme === 'dark'
+                    ? 'bg-white/10 text-white placeholder-white/40'
+                    : 'bg-white text-[#1e1c1a] placeholder-slate-400 border border-[#c9c4b9]'
+                }`}
                 disabled={isLoading}
               />
               <button
@@ -365,7 +399,7 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
 
           {/* Powered by */}
           <div className="px-4 py-2 text-center">
-            <p className="text-white/40 text-xs">
+            <p className={`text-xs ${theme === 'dark' ? 'text-white/40' : 'text-slate-500'}`}>
               Powered by Claude AI • Azimut
             </p>
           </div>
