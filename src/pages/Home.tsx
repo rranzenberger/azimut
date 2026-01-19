@@ -259,7 +259,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             </>
           )}
           
-          {/* DESKTOP: TEMA CLARO - Bege | Marrom escuro (texto) | Degradê estrela → Bege */}
+          {/* DESKTOP: TEMA CLARO - Bege | Marrom ESCURO (texto) | Marrom → Bege */}
           {theme === 'light' && (
             <div 
               className="hidden lg:block absolute inset-0"
@@ -267,16 +267,16 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 background: `
                   linear-gradient(90deg, 
                     #d3cec3 0%,
-                    #d3cec3 12%,
-                    #3d3530 25%,
-                    #2a2520 40%,
-                    #2a2520 50%,
-                    #3d3530 60%,
-                    #6b5a4d 70%,
-                    #8b7055 75%,
-                    #a08060 80%,
-                    #c9a070 85%,
-                    #d3cec3 95%,
+                    #d3cec3 8%,
+                    #a09080 12%,
+                    #5a4a40 18%,
+                    #2a2218 28%,
+                    #1a1510 38%,
+                    #1a1510 52%,
+                    #2a2218 62%,
+                    #4a3a30 72%,
+                    #7a6a5a 82%,
+                    #a09585 90%,
                     #d3cec3 100%
                   )
                 `,
