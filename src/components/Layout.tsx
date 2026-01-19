@@ -279,10 +279,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 alt="Azimut – Immersive • Interactive • Cinematic Experiences"
                 className="transition-all duration-300"
                 style={{ 
-                height: isScrolled ? '46px' : '52px', // Logo NO MÁXIMO! 52px → 46px
+                height: isScrolled ? '42px' : (isMobile ? '48px' : '52px'), // Mobile: 48px, Desktop: 52px
                 width: 'auto',
                 maxWidth: 'none',
-                display: 'block'
+                display: 'block',
+                transition: 'height 0.3s ease'
               }}
             />
             </LangLink>
