@@ -672,9 +672,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             <h2 className="font-sora text-[0.75rem] uppercase tracking-[0.24em] mb-3 animate-fade-in-up text-white/60">
               {lang === 'pt' ? 'Assista Nosso Trabalho' : lang === 'es' ? 'Ve Nuestro Trabajo' : lang === 'fr' ? 'Regardez Notre Travail' : 'Watch Our Work'}
             </h2>
-            {/* Linha vermelha com fade nas pontas */}
-            <div className="h-[2px] w-32 mx-auto" style={{
-              background: 'linear-gradient(90deg, transparent 0%, #c92337 20%, #c92337 80%, transparent 100%)'
+            {/* Linha vermelha larga com fade nas pontas - adapta ao idioma */}
+            <div className="h-[2px] mx-auto" style={{
+              width: lang === 'pt' ? '220px' : lang === 'fr' ? '240px' : lang === 'es' ? '200px' : '180px',
+              background: 'linear-gradient(90deg, transparent 0%, #c92337 15%, #c92337 85%, transparent 100%)'
             }} />
           </div>
         </div>
