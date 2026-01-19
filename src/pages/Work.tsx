@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { t, type Lang } from '../i18n'
-import SEO from '../components/SEO'
+import SEO, { seoData } from '../components/SEO'
 import { usePageSEO } from '../hooks/usePageSEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
