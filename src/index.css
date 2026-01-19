@@ -4859,17 +4859,17 @@ p .keyword-highlight,
     display: block;
     position: absolute;
     inset: 0;
-    /* Bege termina em 5% (ANTES do texto), marrom escuro no centro */
+    /* Bege só na borda extrema (0-2%), marrom escuro no resto */
     background: linear-gradient(90deg, 
       #d3cec3 0%,
-      #a89885 2%,
-      #4a3d30 5%,
-      #1e1a16 8%,
-      #1e1a16 65%,
-      #2a2318 72%,
-      #4a3d30 80%,
-      #7a6555 87%,
-      #a89885 93%,
+      #7a6555 1%,
+      #2a2318 2%,
+      #1e1a16 3%,
+      #1e1a16 70%,
+      #2a2318 78%,
+      #4a3d30 85%,
+      #7a6555 90%,
+      #a89885 95%,
       #d3cec3 100%
     );
     pointer-events: none;
