@@ -46,7 +46,7 @@ const SEOGlobal: React.FC<SEOGlobalProps> = ({ lang }) => {
     address: [
       {
         '@type': 'PostalAddress',
-        streetAddress: 'Rua Senador Vergueiro, 52, Flamengo',
+        streetAddress: 'Rua Senador Vergueiro, 52, Sala 13, Flamengo',
         addressLocality: 'Rio de Janeiro',
         addressRegion: 'RJ',
         postalCode: '22230-000',
@@ -54,7 +54,7 @@ const SEOGlobal: React.FC<SEOGlobalProps> = ({ lang }) => {
       },
       {
         '@type': 'PostalAddress',
-        streetAddress: 'Av Hercilio Luz, 839, Centro',
+        streetAddress: 'Av Hercilio Luz, 839, Sala 1104, Centro',
         addressLocality: 'Florianópolis',
         addressRegion: 'SC',
         postalCode: '88020-010',
@@ -62,7 +62,7 @@ const SEOGlobal: React.FC<SEOGlobalProps> = ({ lang }) => {
       },
       {
         '@type': 'PostalAddress',
-        streetAddress: '#1636 Rarost, Downtown Westend',
+        streetAddress: '1636 Haro St, Unit 802, Downtown Westend',
         addressLocality: 'Vancouver',
         addressRegion: 'BC',
         postalCode: 'V6G 1G7',
@@ -225,7 +225,7 @@ const SEOGlobal: React.FC<SEOGlobalProps> = ({ lang }) => {
     priceRange: '$$$',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Rua Senador Vergueiro, 52, Flamengo',
+      streetAddress: 'Rua Senador Vergueiro, 52, Sala 13, Flamengo',
       addressLocality: 'Rio de Janeiro',
       addressRegion: 'RJ',
       postalCode: '22230-000',

@@ -44,7 +44,7 @@ const SchemaOrganization: React.FC<SchemaOrganizationProps> = ({
   const addresses = [
     {
       '@type': 'PostalAddress',
-      streetAddress: 'Rua Senador Vergueiro, 52, Flamengo',
+      streetAddress: 'Rua Senador Vergueiro, 52, Sala 13, Flamengo',
       addressLocality: 'Rio de Janeiro',
       addressRegion: 'RJ',
       postalCode: '22230-000',
@@ -52,7 +52,7 @@ const SchemaOrganization: React.FC<SchemaOrganizationProps> = ({
     },
     {
       '@type': 'PostalAddress',
-      streetAddress: '#1636 Rarost, Downtown Westend',
+      streetAddress: '1636 Haro St, Unit 802, Downtown Westend',
       addressLocality: 'Vancouver',
       addressRegion: 'BC',
       postalCode: 'V6G 1G7',
