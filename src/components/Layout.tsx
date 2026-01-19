@@ -281,6 +281,13 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 }
                 alt="Azimut – Immersive • Interactive • Cinematic Experiences"
                 className="transition-all duration-300"
+                onError={(e) => {
+                  // Fallback: se SVG não carregar no Safari, usar logo padrão
+                  const target = e.target as HTMLImageElement
+                  if (target.src.includes('logo_mobile_basica')) {
+                    target.src = '/logo-topo-site.svg'
+                  }
+                }}
                 style={{ 
                 height: isScrolled ? '42px' : (isMobile ? '48px' : '52px'), // Mobile: 48px, Desktop: 52px
                 width: 'auto',
