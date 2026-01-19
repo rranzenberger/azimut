@@ -1519,31 +1519,38 @@ body::after {
   opacity: 0.15;
 }
 
-/* Desktop: gradiente HORIZONTAL - escuro no centro (hero), claro nas laterais */
+/* Desktop: CINEMATOGRÁFICO - Múltiplas camadas de profundidade */
 @media (min-width: 768px) {
   [data-theme="light"] #root::before {
     background:
-      /* Centro (hero text) - azul/creme mais escuro (SEM gradiente) */
-      radial-gradient(ellipse 30% 100% at 50% 50%, rgba(180, 175, 170, 0.6) 0%, rgba(180, 175, 170, 0.6) 100%),
-      /* Gradiente ESQUERDA: claro (bege) → escuro (creme) - PARA antes do texto */
-      radial-gradient(ellipse 35% 100% at 20% 50%, transparent 0%, rgba(190, 180, 170, 0.4) 100%),
-      /* Gradiente DIREITA: escuro (creme) → claro (bege) - INICIA depois do texto */
-      radial-gradient(ellipse 35% 100% at 80% 50%, transparent 0%, rgba(190, 180, 170, 0.4) 100%);
-    opacity: 0.5;
+      /* Camada 1: Centro Hero - Champagne/Creme dourado */
+      radial-gradient(ellipse 35% 80% at 50% 45%, rgba(210, 195, 175, 0.35) 0%, transparent 100%),
+      /* Camada 2: Topo - Luz quente (sol nascendo) */
+      linear-gradient(180deg, rgba(245, 235, 220, 0.25) 0%, transparent 35%),
+      /* Camada 3: Vinheta lateral ESQUERDA - Sépia/Marrom */
+      radial-gradient(ellipse 40% 100% at 0% 50%, rgba(180, 160, 140, 0.15) 0%, transparent 70%),
+      /* Camada 4: Vinheta lateral DIREITA - Sépia/Marrom */
+      radial-gradient(ellipse 40% 100% at 100% 50%, rgba(180, 160, 140, 0.15) 0%, transparent 70%),
+      /* Camada 5: Base inferior - Tom mais rico */
+      linear-gradient(180deg, transparent 70%, rgba(200, 185, 165, 0.12) 100%);
+    opacity: 0.75;
   }
 }
 
-/* Monitores grandes (>1920px): efeito completo visível */
+/* Monitores grandes (>1920px): Efeito completo intensificado */
 @media (min-width: 1920px) {
   [data-theme="light"] #root::before {
     background:
-      /* Centro (hero) - azul/marrom/creme escuro */
-      radial-gradient(ellipse 25% 100% at 50% 50%, rgba(170, 165, 160, 0.7) 0%, rgba(170, 165, 160, 0.7) 100%),
-      /* Esquerda: bege claro → creme escuro (para antes do texto) */
-      radial-gradient(ellipse 40% 100% at 15% 50%, transparent 0%, rgba(185, 175, 165, 0.5) 100%),
-      /* Direita: creme escuro → bege claro (inicia depois do texto) */
-      radial-gradient(ellipse 40% 100% at 85% 50%, transparent 0%, rgba(185, 175, 165, 0.5) 100%);
-    opacity: 0.65;
+      /* Centro Hero - Mais pronunciado em telas grandes */
+      radial-gradient(ellipse 30% 75% at 50% 45%, rgba(200, 185, 165, 0.45) 0%, transparent 100%),
+      /* Topo - Luz dourada mais forte */
+      linear-gradient(180deg, rgba(245, 235, 220, 0.35) 0%, transparent 40%),
+      /* Vinhetas laterais mais fortes */
+      radial-gradient(ellipse 35% 100% at 0% 50%, rgba(170, 150, 130, 0.2) 0%, transparent 65%),
+      radial-gradient(ellipse 35% 100% at 100% 50%, rgba(170, 150, 130, 0.2) 0%, transparent 65%),
+      /* Base inferior cinematográfica */
+      linear-gradient(180deg, transparent 65%, rgba(190, 175, 155, 0.18) 100%);
+    opacity: 0.85;
   }
 }
 
