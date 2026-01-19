@@ -1519,16 +1519,31 @@ body::after {
   opacity: 0.15;
 }
 
-/* Desktop: gradiente mais claro e consistente */
+/* Desktop: gradiente HORIZONTAL - escuro no centro (hero), claro nas laterais */
 @media (min-width: 768px) {
   [data-theme="light"] #root::before {
     background:
-      /* Centro CLARO - onde está o hero text */
-      radial-gradient(ellipse 60% 40% at 50% 45%, rgba(255, 250, 245, 0.6) 0%, transparent 70%),
-      /* Laterais levemente mais escuras para profundidade */
-      radial-gradient(ellipse 90% 50% at 15% -15%, rgba(230, 220, 210, 0.25) 0%, transparent 60%),
-      radial-gradient(ellipse 80% 50% at 90% 115%, rgba(220, 210, 200, 0.2) 0%, transparent 55%);
-    opacity: 0.7;
+      /* Centro (hero text) - azul/creme mais escuro (SEM gradiente) */
+      radial-gradient(ellipse 30% 100% at 50% 50%, rgba(180, 175, 170, 0.6) 0%, rgba(180, 175, 170, 0.6) 100%),
+      /* Gradiente ESQUERDA: claro (bege) → escuro (creme) - PARA antes do texto */
+      radial-gradient(ellipse 35% 100% at 20% 50%, transparent 0%, rgba(190, 180, 170, 0.4) 100%),
+      /* Gradiente DIREITA: escuro (creme) → claro (bege) - INICIA depois do texto */
+      radial-gradient(ellipse 35% 100% at 80% 50%, transparent 0%, rgba(190, 180, 170, 0.4) 100%);
+    opacity: 0.5;
+  }
+}
+
+/* Monitores grandes (>1920px): efeito completo visível */
+@media (min-width: 1920px) {
+  [data-theme="light"] #root::before {
+    background:
+      /* Centro (hero) - azul/marrom/creme escuro */
+      radial-gradient(ellipse 25% 100% at 50% 50%, rgba(170, 165, 160, 0.7) 0%, rgba(170, 165, 160, 0.7) 100%),
+      /* Esquerda: bege claro → creme escuro (para antes do texto) */
+      radial-gradient(ellipse 40% 100% at 15% 50%, transparent 0%, rgba(185, 175, 165, 0.5) 100%),
+      /* Direita: creme escuro → bege claro (inicia depois do texto) */
+      radial-gradient(ellipse 40% 100% at 85% 50%, transparent 0%, rgba(185, 175, 165, 0.5) 100%);
+    opacity: 0.65;
   }
 }
 
