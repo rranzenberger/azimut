@@ -282,7 +282,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     #d3cec3 100%
                   )
                 `,
-                zIndex: 0
+                zIndex: -1
               }}
             />
           )}
