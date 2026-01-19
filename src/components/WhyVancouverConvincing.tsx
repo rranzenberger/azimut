@@ -481,15 +481,15 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
     <div className="py-16 md:py-24">
       {/* Hero */}
       <div className="text-center mb-16 px-4">
-        <div className="inline-block px-6 py-2 bg-yellow-500/20 border border-yellow-500/40 rounded-full mb-6">
-          <span className="text-yellow-400 font-bold text-sm uppercase">
+        <div className="inline-block px-6 py-2 rounded-full mb-6" style={{ background: 'var(--theme-card-bg)', border: '2px solid #c92337' }}>
+          <span className="text-azimut-red font-bold text-sm uppercase">
             {t.hero.badge}
           </span>
         </div>
-        <h2 className="text-5xl md:text-7xl font-black text-white mb-4 uppercase tracking-tight">
+        <h2 className="text-5xl md:text-7xl font-black mb-4 uppercase tracking-tight" style={{ color: 'var(--theme-text)' }}>
           {t.hero.title}
         </h2>
-        <p className="text-2xl md:text-3xl text-white/70 font-bold">
+        <p className="text-2xl md:text-3xl font-bold" style={{ color: 'var(--theme-text-secondary)' }}>
           {t.hero.subtitle}
         </p>
       </div>
