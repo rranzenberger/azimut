@@ -559,17 +559,20 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           
           {/* ═══════════════════════════════════════════════════════════════════
               SEÇÃO LOGO ANIMADA - Elemento especial com fundo escuro
-              Bordas vermelhas, fundo azul escuro, logo grande girando
+              Bordas vermelhas, fundo escuro elegante (azul/marrom), logo girando
+              Curadoria: Marrom escuro no tema claro combina com rodapé
           ═══════════════════════════════════════════════════════════════════ */}
           <div className="lg:hidden relative w-full -mx-4 mt-6 mb-6" style={{ width: 'calc(100% + 2rem)' }}>
             {/* Borda superior vermelha */}
             <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-azimut-red to-transparent" />
             
-            {/* Container com fundo escuro azul */}
+            {/* Container com fundo escuro - Condicional por tema */}
             <div 
               className="relative py-8 px-4"
               style={{
-                background: 'linear-gradient(180deg, #0a0e18 0%, #050a14 50%, #0a0e18 100%)',
+                background: theme === 'dark'
+                  ? 'linear-gradient(180deg, #0a0e18 0%, #050a14 50%, #0a0e18 100%)' // Azul escuro
+                  : 'linear-gradient(180deg, #2a2825 0%, #1e1c1a 50%, #2a2825 100%)', // Marrom escuro (rodapé)
                 minHeight: '280px',
                 display: 'flex',
                 flexDirection: 'column',
