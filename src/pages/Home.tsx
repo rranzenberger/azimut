@@ -235,27 +235,39 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           })()}
           
           {/* ═══════════════════════════════════════════════════════════════
-              GRADIENTES CONDICIONAIS POR TEMA (não usar dark: do Tailwind)
+              GRADIENTES CONDICIONAIS POR TEMA - APENAS DESKTOP (lg:)
+              Mobile: Fundo sólido claro/escuro SEM gradientes
               ═══════════════════════════════════════════════════════════════ */}
           
-          {/* TEMA ESCURO: Gradientes azul/preto */}
+          {/* DESKTOP: TEMA ESCURO - Gradientes azul/preto */}
           {theme === 'dark' && (
             <>
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900 via-60% to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/70" />
+              <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900 via-60% to-transparent" />
+              <div className="hidden lg:block absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/70" />
             </>
           )}
           
-          {/* TEMA CLARO: Fundo bege/cream limpo */}
+          {/* DESKTOP: TEMA CLARO - Fundo bege/cream limpo */}
           {theme === 'light' && (
             <div 
-              className="absolute inset-0"
+              className="hidden lg:block absolute inset-0"
               style={{
                 background: 'linear-gradient(180deg, #e8e4db 0%, #d8d3c8 50%, #cec9be 100%)',
                 zIndex: 0
               }}
             />
           )}
+          
+          {/* MOBILE: Fundo sólido SEM gradientes */}
+          <div 
+            className="lg:hidden absolute inset-0"
+            style={{
+              background: theme === 'dark' 
+                ? '#050814' // Azul escuro sólido
+                : '#d3cec3', // Bege claro sólido (tema claro)
+              zIndex: 0
+            }}
+          />
           
           {/* ═══════════════════════════════════════════════════════════════
               HERO REORGANIZADO: Texto | Logo (linha 1), 5 Cards (linha 2), 3 Cards (linha 3)
