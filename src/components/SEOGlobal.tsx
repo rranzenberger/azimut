@@ -57,7 +57,7 @@ const SEOGlobal: React.FC<SEOGlobalProps> = ({ lang }) => {
         streetAddress: 'Av Hercilio Luz, 839, Sala 1104, Centro',
         addressLocality: 'Florianópolis',
         addressRegion: 'SC',
-        postalCode: '88020-010',
+        postalCode: '88020-001',
         addressCountry: 'BR'
       },
       {
