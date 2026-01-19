@@ -435,8 +435,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             
           </div>
           
-          {/* MOBILE/TABLET: Conteúdo ANTES do vídeo */}
-          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ marginTop: '-80px', paddingTop: '80px' }}>
+          {/* MOBILE/TABLET: Conteúdo ANTES do vídeo - ORDEM CORRETA */}
+          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ paddingTop: '100px' }}>
             
             {/* Conteúdo Principal */}
             <div className="relative z-10 w-full text-left space-y-3 px-0">
@@ -513,13 +513,15 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           {/* ═══════════════════════════════════════════════════════════════════
               SEÇÃO LOGO ANIMADA - APÓS "EXPERIÊNCIAS QUE CONECTAM MUNDOS"
               Full-width: De borda a borda da tela (viewport completo)
+              ORDEM: Menu → Badge → Título → Subtítulo → VÍDEO → Cards
           ═══════════════════════════════════════════════════════════════════ */}
           <div 
-            className="lg:hidden relative mt-6" 
+            className="lg:hidden relative mt-8" 
             style={{ 
               width: '100vw',
               marginLeft: 'calc(-50vw + 50%)',
-              marginRight: 'calc(-50vw + 50%)'
+              marginRight: 'calc(-50vw + 50%)',
+              zIndex: 5
             }}
           >
             {/* Borda superior vermelha SÓLIDA */}

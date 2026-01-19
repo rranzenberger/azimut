@@ -273,20 +273,27 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             >
               <img
                 src="/logobasicaa.png"
-                alt="Azimut"
+                alt="Azimut – Immersive • Interactive • Cinematic Experiences"
                 className="transition-all duration-300"
                 style={{ 
-                height: isScrolled ? '42px' : '48px',
-                width: 'auto',
-                maxWidth: 'none',
-                display: 'block',
-                transition: 'height 0.3s ease'
-              }}
+                  height: isScrolled ? '42px' : (isMobile ? '48px' : '52px'),
+                  width: 'auto',
+                  maxWidth: 'none',
+                  display: 'block',
+                  transition: 'height 0.3s ease',
+                  backgroundColor: 'transparent'
+                }}
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   console.error('[Logo Error] Tentando fallback:', target.src);
-                  target.src = '/logobasica.svg';
+                  // Fallback em cascata: PNG → SVG → SVG alternativo
+                  if (target.src.includes('logobasicaa.png')) {
+                    target.src = '/logobasica.svg';
+                  } else if (target.src.includes('logobasica.svg')) {
+                    target.src = '/logo-topo-site.svg';
+                  }
                 }}
+                loading="eager"
               />
             </LangLink>
           </div>
