@@ -436,10 +436,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
           
           {/* MOBILE/TABLET: Layout compacto e organizado */}
-          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ paddingTop: '90px' }}>
+          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ paddingTop: '100px' }}>
             
             {/* Conteúdo Principal */}
-            <div className="relative z-10 w-full text-left space-y-2 px-0">
+            <div className="relative z-10 w-full text-left space-y-3 px-0">
               
               {/* Badge AZIMUT - NO TOPO */}
               <div className="inline-flex items-center gap-1.5 font-sora text-[0.6rem] sm:text-[0.65rem] uppercase tracking-[0.2em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.05s' }}>
@@ -508,73 +508,69 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 {heroSubtitle.split('.')[0]}.
               </p>
               
-              {/* ÁREA DE CARDS + LOGO ANIMADA - Grid com logo ao lado */}
-              <div className="grid grid-cols-[1fr_auto] gap-3 items-center animate-fade-in-up opacity-0" style={{ animationDelay: '0.2s' }}>
-                
-                {/* Coluna Esquerda: 4 Cards (2x2) */}
-                <div className="grid grid-cols-2 gap-1.5">
-                  {/* Cinema & AV */}
-                  <div className={`flex items-center gap-1.5 p-2 rounded-lg border border-azimut-red/30 ${
-                    theme === 'dark' ? 'bg-black/60' : 'bg-white/80'
-                  }`}>
-                    <span className="text-base">🎬</span>
-                    <div>
-                      <span className={`block text-[0.6rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Cinema & AV</span>
-                      <span className={`block text-[0.45rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>AUDIOVISUAL</span>
-                    </div>
-                  </div>
-                  
-                  {/* XR/VR/AR */}
-                  <div className={`flex items-center gap-1.5 p-2 rounded-lg border border-azimut-red/30 ${
-                    theme === 'dark' ? 'bg-black/60' : 'bg-white/80'
-                  }`}>
-                    <span className="text-base">🥽</span>
-                    <div>
-                      <span className={`block text-[0.6rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>XR/VR/AR</span>
-                      <span className={`block text-[0.45rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>IMERSIVO</span>
-                    </div>
-                  </div>
-                  
-                  {/* Exposições */}
-                  <div className={`flex items-center gap-1.5 p-2 rounded-lg border border-azimut-red/30 ${
-                    theme === 'dark' ? 'bg-black/60' : 'bg-white/80'
-                  }`}>
-                    <span className="text-base">🏛️</span>
-                    <div>
-                      <span className={`block text-[0.6rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Exposições</span>
-                      <span className={`block text-[0.45rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>& MUSEUS</span>
-                    </div>
-                  </div>
-                  
-                  {/* Educação */}
-                  <div className={`flex items-center gap-1.5 p-2 rounded-lg border border-azimut-red/30 ${
-                    theme === 'dark' ? 'bg-black/60' : 'bg-white/80'
-                  }`}>
-                    <span className="text-base">🎓</span>
-                    <div>
-                      <span className={`block text-[0.6rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Educação</span>
-                      <span className={`block text-[0.45rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>ACADEMIA</span>
-                    </div>
+              {/* 4 Cards de Serviços - Grid 2x2 */}
+              <div className="grid grid-cols-2 gap-2 w-full animate-fade-in-up opacity-0" style={{ animationDelay: '0.2s' }}>
+                {/* Cinema & AV */}
+                <div className={`flex items-center gap-1.5 p-2.5 rounded-lg border border-azimut-red/30 ${
+                  theme === 'dark' ? 'bg-black/60' : 'bg-white/80'
+                }`}>
+                  <span className="text-lg">🎬</span>
+                  <div>
+                    <span className={`block text-[0.65rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Cinema & AV</span>
+                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>AUDIOVISUAL</span>
                   </div>
                 </div>
                 
-                {/* Coluna Direita: Logo Animada GRANDE + SVG de fundo */}
-                <div className="flex items-center justify-center relative">
-                  {/* SVG estática de fundo */}
-                  <img 
-                    src="/logo-azimut-star.svg" 
-                    alt="" 
-                    className="absolute w-[130px] h-[130px] sm:w-[150px] sm:h-[150px]"
-                    style={{ opacity: 0.15, zIndex: 1 }}
-                  />
-                  {/* Logo animada em cima */}
-                  <div className="relative w-[130px] h-[130px] sm:w-[150px] sm:h-[150px]" style={{ opacity: theme === 'dark' ? 0.7 : 0.5, zIndex: 2 }}>
-                    <AnimatedLogo />
+                {/* XR/VR/AR */}
+                <div className={`flex items-center gap-1.5 p-2.5 rounded-lg border border-azimut-red/30 ${
+                  theme === 'dark' ? 'bg-black/60' : 'bg-white/80'
+                }`}>
+                  <span className="text-lg">🥽</span>
+                  <div>
+                    <span className={`block text-[0.65rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>XR/VR/AR</span>
+                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>IMERSIVO</span>
+                  </div>
+                </div>
+                
+                {/* Exposições */}
+                <div className={`flex items-center gap-1.5 p-2.5 rounded-lg border border-azimut-red/30 ${
+                  theme === 'dark' ? 'bg-black/60' : 'bg-white/80'
+                }`}>
+                  <span className="text-lg">🏛️</span>
+                  <div>
+                    <span className={`block text-[0.65rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Exposições</span>
+                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>& MUSEUS</span>
+                  </div>
+                </div>
+                
+                {/* Educação */}
+                <div className={`flex items-center gap-1.5 p-2.5 rounded-lg border border-azimut-red/30 ${
+                  theme === 'dark' ? 'bg-black/60' : 'bg-white/80'
+                }`}>
+                  <span className="text-lg">🎓</span>
+                  <div>
+                    <span className={`block text-[0.65rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Educação</span>
+                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>ACADEMIA</span>
                   </div>
                 </div>
               </div>
               
-              {/* Tagline IMMERSIVE • INTERACTIVE - ABAIXO dos cards */}
+              {/* Logo Animada ENORME - ABAIXO dos cards, centralizada */}
+              <div className="flex justify-center items-center relative w-full animate-fade-in-up opacity-0" style={{ animationDelay: '0.25s' }}>
+                {/* SVG estática de fundo */}
+                <img 
+                  src="/logo-azimut-star.svg" 
+                  alt="" 
+                  className="absolute w-[180px] h-[180px] sm:w-[220px] sm:h-[220px]"
+                  style={{ opacity: 0.15, zIndex: 1 }}
+                />
+                {/* Logo animada em cima - GRANDE */}
+                <div className="relative w-[180px] h-[180px] sm:w-[220px] sm:h-[220px]" style={{ opacity: theme === 'dark' ? 0.8 : 0.6, zIndex: 2 }}>
+                  <AnimatedLogo />
+                </div>
+              </div>
+              
+              {/* Tagline IMMERSIVE • INTERACTIVE - ABAIXO da logo */}
               <div className={`font-sora text-[0.5rem] sm:text-[0.55rem] uppercase tracking-[0.15em] leading-tight text-center animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/60' : 'text-slate-500'}`} style={{ animationDelay: '0.3s' }}>
                 <span>IMMERSIVE • INTERACTIVE</span><br />
                 <span>CINEMATIC EXPERIENCES</span>
