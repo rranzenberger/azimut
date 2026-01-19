@@ -459,9 +459,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 {/* Badge AZIMUT - NO TOPO */}
                 <div className="inline-flex items-center gap-1.5 font-sora text-[0.6rem] sm:text-[0.65rem] uppercase tracking-[0.2em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.05s' }}>
                   <img 
-                    src={theme === 'dark' ? '/estela6-clara.svg' : '/estela6-escura.svg'}
+                    src="/estela6-clara.svg"
                     alt="" 
                     className="w-2.5 h-2.5 sm:w-3 sm:h-3"
+                    style={{
+                      filter: theme === 'light' ? 'brightness(0) invert(0.2)' : 'none' // Escurece no tema claro
+                    }}
                   />
                   <span className="text-azimut-red font-semibold">AZIMUT</span>
                   <span className={theme === 'dark' ? 'text-white/40' : 'text-slate-600'}>•</span>
