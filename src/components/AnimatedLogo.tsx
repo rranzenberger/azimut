@@ -14,17 +14,13 @@ export const AnimatedLogo: React.FC = () => {
     let fadeInTimeout: NodeJS.Timeout | undefined;
 
     const handleEnded = () => {
-      video.pause(); // Pause the video on the last frame
-      setOpacity(1); // Ensure it's fully visible when paused
-
-      pauseTimeout = setTimeout(() => {
-        setOpacity(0); // Start fade out
-        fadeOutTimeout = setTimeout(() => {
-          video.currentTime = 0; // Reset video to start
-          setOpacity(1); // Fade back in
-          video.play(); // Restart video
-        }, 3000); // Fade out duration (3 seconds)
-      }, 27000); // Pause duration (27 seconds)
+      // Comportamento: Fade out rápido → Reset → Fade in → Reinicia
+      setOpacity(0); // Fade out imediato (sem espera)
+      fadeOutTimeout = setTimeout(() => {
+        video.currentTime = 0; // Reset video para início
+        setOpacity(1); // Fade in
+        video.play(); // Reinicia imediatamente
+      }, 1500); // Fade out rápido (1.5s) - sem pausa longa
     };
 
     video.addEventListener('ended', handleEnded);

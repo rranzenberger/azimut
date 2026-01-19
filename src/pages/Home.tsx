@@ -453,7 +453,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           <div className="lg:hidden flex flex-col">
             
             {/* 1️⃣ BADGE + TÍTULO + SUBTÍTULO - PRIMEIRO */}
-            <div className="relative z-20 flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ paddingTop: '100px' }}>
+            <div className="relative z-20 flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ marginTop: '-80px', paddingTop: '80px' }}>
               <div className="relative z-20 w-full text-left space-y-3 px-0">
                 
                 {/* Badge AZIMUT - NO TOPO */}
@@ -573,11 +573,11 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </p>
             </div>
             
-            {/* 3️⃣ CARDS - TERCEIRO (APÓS vídeo) */}
+            {/* 3️⃣ CARDS - TERCEIRO (APÓS vídeo) - GRID 2x2 */}
             <div className="relative z-10 flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden mt-6" style={{ order: 4 }}>
-            
-            {/* Conteúdo Principal */}
-            <div className="relative z-10 w-full text-left space-y-3 px-0">
+              
+              {/* Grid 2x2 para os 4 cards */}
+              <div className="grid grid-cols-2 gap-2 w-full">
                 {/* Cinema & AV */}
                 <div className={`flex items-center gap-1.5 p-2.5 rounded-lg border border-azimut-red/30 ${
                   theme === 'dark' ? 'bg-black/60' : 'bg-white/80'
