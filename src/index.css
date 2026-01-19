@@ -4827,3 +4827,106 @@ p .keyword-highlight,
     scroll-behavior: smooth;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   CLASSES DE TEMA - DESKTOP WEB (min-width: 1024px)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 🌙 TEMA ESCURO - Gradientes AZUL/PRETO originais */
+.hero-gradient-dark {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  [data-theme="dark"] .hero-gradient-dark {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: 
+      linear-gradient(to right, rgb(2, 6, 23), rgb(15, 23, 42) 60%, transparent),
+      linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7));
+    pointer-events: none;
+  }
+}
+
+/* ☀️ TEMA CLARO - Gradiente MARROM/BEGE horizontal */
+.hero-gradient-light {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  [data-theme="light"] .hero-gradient-light {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, 
+      #d3cec3 0%,
+      #c5b8a8 3%,
+      #a89885 6%,
+      #7a6555 10%,
+      #4a3d30 15%,
+      #2a2318 20%,
+      #1e1a16 28%,
+      #1e1a16 60%,
+      #2a2318 68%,
+      #4a3d30 75%,
+      #7a6555 82%,
+      #a89885 88%,
+      #c5b8a8 93%,
+      #d3cec3 100%
+    );
+    pointer-events: none;
+  }
+}
+
+/* 🎨 CARDS VERMELHOS - Mesmas cores para ambos temas */
+.card-red-adaptive {
+  background: rgba(201, 35, 55, 0.15);
+  border: 1px solid rgba(201, 35, 55, 0.5);
+  backdrop-filter: blur(16px);
+  transition: all 0.3s ease;
+}
+
+.card-red-adaptive:hover {
+  border-color: #c92337;
+}
+
+.card-red-title {
+  color: #c92337;
+  transition: color 0.3s ease;
+}
+
+.card-red-adaptive:hover .card-red-title {
+  color: rgb(248, 113, 113); /* red-400 */
+}
+
+.card-red-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* 📝 TEXTO HERO - Cores específicas por tema */
+[data-theme="dark"] .hero-title {
+  color: white;
+}
+
+[data-theme="light"] .hero-title {
+  color: white;
+}
+
+[data-theme="dark"] .hero-subtitle {
+  color: rgba(211, 206, 195, 0.9); /* cream */
+}
+
+[data-theme="light"] .hero-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ⭐ AZIMUT SINCE - Cores específicas */
+[data-theme="dark"] .azimut-since-year {
+  color: rgba(211, 206, 195, 0.6);
+}
+
+[data-theme="light"] .azimut-since-year {
+  color: rgba(255, 255, 255, 0.6);
+}
+

@@ -247,45 +247,15 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           })()}
           
           {/* ═══════════════════════════════════════════════════════════════
-              GRADIENTES CONDICIONAIS POR TEMA - APENAS DESKTOP (lg:)
-              Mobile: Fundo sólido claro/escuro SEM gradientes
-              ═══════════════════════════════════════════════════════════════ */}
+              GRADIENTES POR TEMA - APENAS DESKTOP (lg:)
+              Usando classes CSS separadas em index.css
+              ═══════════════════════════════════════════════════════════ */}
           
-          {/* DESKTOP: TEMA ESCURO - Gradientes azul/preto */}
-          {theme === 'dark' && (
-            <>
-              <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900 via-60% to-transparent" />
-              <div className="hidden lg:block absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/70" />
-            </>
-          )}
+          {/* 🌙 TEMA ESCURO - Gradientes AZUL/PRETO */}
+          <div className="hero-gradient-dark" style={{ zIndex: -1 }} />
           
-          {/* DESKTOP: TEMA CLARO - Bege | Degradê → Marrom ESCURO (texto) | Degradê → Bege */}
-          {theme === 'light' && (
-            <div 
-              className="hidden lg:block absolute inset-0"
-              style={{
-                background: `
-                  linear-gradient(90deg, 
-                    #d3cec3 0%,
-                    #c5b8a8 3%,
-                    #a89885 6%,
-                    #7a6555 10%,
-                    #4a3d30 15%,
-                    #2a2318 20%,
-                    #1e1a16 28%,
-                    #1e1a16 60%,
-                    #2a2318 68%,
-                    #4a3d30 75%,
-                    #7a6555 82%,
-                    #a89885 88%,
-                    #c5b8a8 93%,
-                    #d3cec3 100%
-                  )
-                `,
-                zIndex: -1
-              }}
-            />
-          )}
+          {/* ☀️ TEMA CLARO - Gradiente MARROM/BEGE */}
+          <div className="hero-gradient-light" style={{ zIndex: -1 }} />
           
           {/* MOBILE ONLY: Fundo sólido SEM gradientes */}
           <div 
@@ -317,12 +287,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 />
                 <span className="text-azimut-red font-semibold">AZIMUT</span>
                 <span className="text-white/40">•</span>
-                <span className="text-[0.7rem] text-white/60">SINCE 1996</span>
+                <span className="text-[0.7rem] azimut-since-year">SINCE 1996</span>
               </div>
                 
                 {/* Título em 3 LINHAS - MULTILÍNGUE */}
                 {/* ESCURO: branco | CLARO: branco (fundo marrom escuro) */}
-                <h1 className="font-handel uppercase animate-fade-in-up opacity-0 text-white" style={{ 
+                <h1 className="font-handel uppercase animate-fade-in-up opacity-0 hero-title" style={{ 
                   fontSize: 'clamp(3rem, 5.5vw, 5.8rem)',
                   lineHeight: '1.1',
                   letterSpacing: '0.08em',
@@ -367,7 +337,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 </h1>
                   
                 {/* Subtítulo COMPACTO */}
-                <p className={`max-w-xl text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/90' : 'text-white/80'}`} style={{ animationDelay: '0.3s' }}>
+                <p className="max-w-xl text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0 hero-subtitle" style={{ animationDelay: '0.3s' }}>
                   {heroSubtitle.split('.')[0]}.
                 </p>
               </div>
@@ -447,27 +417,27 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             {/* LINHA 3: 3 Cards de Credibilidade VERMELHOS */}
             <div className="grid grid-cols-3 gap-4 mt-2">
               {/* Rio Museu Olímpico */}
-              <div className="backdrop-blur-xl border border-azimut-red/50 p-4 rounded-lg hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(201, 35, 55, 0.15)' }}>
-                <span className="block text-sm font-semibold text-azimut-red group-hover:text-red-400 transition-colors break-words">Rio Museum</span>
-                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 leading-tight text-white/80">
+              <div className="card-red-adaptive p-4 rounded-lg group">
+                <span className="block text-sm font-semibold card-red-title break-words">Rio Museum</span>
+                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 leading-tight card-red-subtitle">
                   {lang === 'pt' ? 'Direção Geral · Tecnologia · Arte Audiovisual' : lang === 'es' ? 'Dirección General · Tecnología · Arte Audiovisual' : lang === 'fr' ? 'Direction Générale · Technologie · Art Audiovisuel' : 'General Direction · Technology · Audiovisual Art'}
                 </span>
               </div>
 
               {/* Gramado VR */}
-              <div className="backdrop-blur-xl border border-azimut-red/50 p-4 rounded-lg hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(201, 35, 55, 0.15)' }}>
-                <span className="block text-sm font-semibold text-azimut-red group-hover:text-red-400 transition-colors break-words">
+              <div className="card-red-adaptive p-4 rounded-lg group">
+                <span className="block text-sm font-semibold card-red-title break-words">
                   {lang === 'pt' ? 'Festival de Gramado' : lang === 'es' ? 'Festival de Gramado' : lang === 'fr' ? 'Festival de Gramado' : 'Gramado Festival'}
                 </span>
-                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 text-white/80">
+                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 card-red-subtitle">
                   {lang === 'pt' ? 'VR desde 2017' : lang === 'es' ? 'VR desde 2017' : lang === 'fr' ? 'VR depuis 2017' : 'VR since 2017'}
                 </span>
               </div>
 
               {/* BR ↔ CA */}
-              <div className="backdrop-blur-xl border border-azimut-red/50 p-4 rounded-lg hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(201, 35, 55, 0.15)' }}>
-                <span className="block text-sm font-semibold text-azimut-red group-hover:text-red-400 transition-colors break-words">Brasil ↔ Canadá</span>
-                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 text-white/80">
+              <div className="card-red-adaptive p-4 rounded-lg group">
+                <span className="block text-sm font-semibold card-red-title break-words">Brasil ↔ Canadá</span>
+                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 card-red-subtitle">
                   {lang === 'pt' ? 'Binacional' : lang === 'es' ? 'Binacional' : lang === 'fr' ? 'Binational' : 'Binational'}
                 </span>
               </div>
