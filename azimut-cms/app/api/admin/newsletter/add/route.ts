@@ -68,29 +68,10 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    // Se tiver notas, criar um Lead relacionado para contexto
+    // Notas são salvas apenas como contexto no log
+    // (não criamos Lead separado - NewsletterSubscriber é suficiente)
     if (notes && notes.trim()) {
-      try {
-        const lead = await prisma.lead.create({
-          data: {
-            email: normalizedEmail,
-            name: name || 'Contato Manual',
-            notes: `[Newsletter Manual] ${notes}`,
-            leadType: 'CONTACT_FORM',
-            status: 'NEW',
-            sourceUrl: 'backoffice-manual',
-          },
-        })
-
-        // Relacionar o subscriber com o lead
-        await prisma.newsletterSubscriber.update({
-          where: { email: normalizedEmail },
-          data: { leadId: lead.id },
-        })
-      } catch (leadError) {
-        // Se falhar criar lead, não é crítico
-        console.warn('Could not create related lead:', leadError)
-      }
+      console.log(`[Newsletter Manual] ${name || normalizedEmail}: ${notes}`)
     }
 
     return NextResponse.json({
