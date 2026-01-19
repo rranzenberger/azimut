@@ -669,12 +669,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             : 'bg-gradient-to-b from-[#c9c4b9] to-[#d3cec3]'
         }`}>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className={`font-sora text-[0.75rem] uppercase tracking-[0.24em] mb-3 animate-fade-in-up ${
-              theme === 'dark' ? 'text-white/50' : 'text-slate-700'
-            }`}>
+            <h2 className="font-sora text-[0.75rem] uppercase tracking-[0.24em] mb-3 animate-fade-in-up text-white/60">
               {lang === 'pt' ? 'Assista Nosso Trabalho' : lang === 'es' ? 'Ve Nuestro Trabajo' : lang === 'fr' ? 'Regardez Notre Travail' : 'Watch Our Work'}
             </h2>
-            <div className="h-[2px] w-16 bg-azimut-red mx-auto opacity-50" />
+            {/* Linha vermelha com fade nas pontas */}
+            <div className="h-[2px] w-32 mx-auto" style={{
+              background: 'linear-gradient(90deg, transparent 0%, #c92337 20%, #c92337 80%, transparent 100%)'
+            }} />
           </div>
         </div>
 
