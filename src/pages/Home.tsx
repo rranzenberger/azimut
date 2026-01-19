@@ -415,7 +415,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             </div>
             
             {/* LINHA 3: 3 Cards de Credibilidade VERMELHOS */}
-            <div className="grid grid-cols-3 gap-4 mt-2">
+            <div className="grid grid-cols-3 gap-4 mt-6">
               {/* Rio Museu Olímpico */}
               <div className="card-red-adaptive p-4 rounded-lg group">
                 <span className="block text-sm font-semibold card-red-title break-words">Rio Museum</span>
