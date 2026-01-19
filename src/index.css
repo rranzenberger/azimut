@@ -1519,38 +1519,42 @@ body::after {
   opacity: 0.15;
 }
 
-/* Desktop: CINEMATOGRÁFICO - Múltiplas camadas de profundidade */
+/* Desktop: CINEMATOGRÁFICO - Com cores da estrela */
 @media (min-width: 768px) {
   [data-theme="light"] #root::before {
     background:
-      /* Camada 1: Centro Hero - Champagne/Creme dourado */
-      radial-gradient(ellipse 35% 80% at 50% 45%, rgba(210, 195, 175, 0.35) 0%, transparent 100%),
-      /* Camada 2: Topo - Luz quente (sol nascendo) */
-      linear-gradient(180deg, rgba(245, 235, 220, 0.25) 0%, transparent 35%),
-      /* Camada 3: Vinheta lateral ESQUERDA - Sépia/Marrom */
-      radial-gradient(ellipse 40% 100% at 0% 50%, rgba(180, 160, 140, 0.15) 0%, transparent 70%),
-      /* Camada 4: Vinheta lateral DIREITA - Sépia/Marrom */
-      radial-gradient(ellipse 40% 100% at 100% 50%, rgba(180, 160, 140, 0.15) 0%, transparent 70%),
-      /* Camada 5: Base inferior - Tom mais rico */
-      linear-gradient(180deg, transparent 70%, rgba(200, 185, 165, 0.12) 100%);
-    opacity: 0.75;
+      /* Camada 1: Centro Hero - Cinza escuro (cor da imagem) */
+      radial-gradient(ellipse 35% 80% at 50% 45%, rgba(60, 60, 60, 0.25) 0%, transparent 100%),
+      /* Camada 2: Pós-texto - Cores da estrela (dourado→rosa→vermelho) */
+      radial-gradient(ellipse 45% 85% at 70% 50%, rgba(255, 215, 120, 0.12) 0%, rgba(255, 150, 150, 0.08) 50%, rgba(201, 35, 55, 0.06) 100%),
+      /* Camada 3: Topo - Luz quente suave */
+      linear-gradient(180deg, rgba(245, 235, 220, 0.2) 0%, transparent 30%),
+      /* Camada 4: Vinheta ESQUERDA - Sépia/Marrom */
+      radial-gradient(ellipse 35% 100% at 0% 50%, rgba(180, 160, 140, 0.12) 0%, transparent 70%),
+      /* Camada 5: Vinheta DIREITA - Tom rosado da estrela */
+      radial-gradient(ellipse 35% 100% at 100% 50%, rgba(220, 180, 170, 0.1) 0%, transparent 70%),
+      /* Camada 6: Base inferior - Tom rico */
+      linear-gradient(180deg, transparent 70%, rgba(200, 185, 165, 0.1) 100%);
+    opacity: 0.8;
   }
 }
 
-/* Monitores grandes (>1920px): Efeito completo intensificado */
+/* Monitores grandes (>1920px): Efeito estrela intensificado */
 @media (min-width: 1920px) {
   [data-theme="light"] #root::before {
     background:
-      /* Centro Hero - Mais pronunciado em telas grandes */
-      radial-gradient(ellipse 30% 75% at 50% 45%, rgba(200, 185, 165, 0.45) 0%, transparent 100%),
-      /* Topo - Luz dourada mais forte */
-      linear-gradient(180deg, rgba(245, 235, 220, 0.35) 0%, transparent 40%),
-      /* Vinhetas laterais mais fortes */
-      radial-gradient(ellipse 35% 100% at 0% 50%, rgba(170, 150, 130, 0.2) 0%, transparent 65%),
-      radial-gradient(ellipse 35% 100% at 100% 50%, rgba(170, 150, 130, 0.2) 0%, transparent 65%),
-      /* Base inferior cinematográfica */
-      linear-gradient(180deg, transparent 65%, rgba(190, 175, 155, 0.18) 100%);
-    opacity: 0.85;
+      /* Centro Hero - Cinza mais pronunciado */
+      radial-gradient(ellipse 30% 75% at 50% 45%, rgba(55, 55, 55, 0.3) 0%, transparent 100%),
+      /* Pós-texto - Gradiente estrela mais visível (dourado→rosa→vermelho) */
+      radial-gradient(ellipse 40% 80% at 72% 50%, rgba(255, 215, 120, 0.18) 0%, rgba(255, 150, 150, 0.12) 50%, rgba(201, 35, 55, 0.08) 100%),
+      /* Topo - Luz dourada */
+      linear-gradient(180deg, rgba(245, 235, 220, 0.25) 0%, transparent 35%),
+      /* Vinhetas laterais */
+      radial-gradient(ellipse 30% 100% at 0% 50%, rgba(170, 150, 130, 0.15) 0%, transparent 65%),
+      radial-gradient(ellipse 30% 100% at 100% 50%, rgba(220, 180, 170, 0.12) 0%, transparent 65%),
+      /* Base inferior */
+      linear-gradient(180deg, transparent 65%, rgba(190, 175, 155, 0.15) 100%);
+    opacity: 0.9;
   }
 }
 
