@@ -4859,15 +4859,14 @@ p .keyword-highlight,
     display: block;
     position: absolute;
     inset: 0;
-    /* MEIO TERMO: Bege até 3%, transição suave até 6%, marrom escuro no centro */
+    /* Bege até 2%, transição rápida até 7%, marrom escuro no centro */
     background: linear-gradient(90deg, 
       #d3cec3 0%,
-      #c5b8a8 1.5%,
-      #a89885 3%,
-      #7a6555 4.5%,
-      #4a3d30 6%,
-      #2a2318 8%,
-      #1e1a16 10%,
+      #b5a896 1%,
+      #8a7560 2%,
+      #5a4a3a 3.5%,
+      #3a3025 5%,
+      #1e1a16 7%,
       #1e1a16 68%,
       #2a2318 75%,
       #4a3d30 82%,
