@@ -14,13 +14,23 @@ export const AnimatedLogo: React.FC = () => {
     let fadeInTimeout: NodeJS.Timeout | undefined;
 
     const handleEnded = () => {
-      // Comportamento: Fade out rápido → Reset → Fade in → Reinicia
-      setOpacity(0); // Fade out imediato (sem espera)
-      fadeOutTimeout = setTimeout(() => {
-        video.currentTime = 0; // Reset video para início
-        setOpacity(1); // Fade in
-        video.play(); // Reinicia imediatamente
-      }, 1500); // Fade out rápido (1.5s) - sem pausa longa
+      // Comportamento igual ao desktop:
+      // 1. Pausa no último frame
+      video.pause();
+      setOpacity(1); // Garante visibilidade no último frame
+      
+      // 2. Espera 10 segundos (pausa)
+      pauseTimeout = setTimeout(() => {
+        // 3. Fade out por 2 segundos
+        setOpacity(0);
+        
+        fadeOutTimeout = setTimeout(() => {
+          // 4. Reset e fade in por 2 segundos
+          video.currentTime = 0; // Reset para início
+          setOpacity(1); // Fade in
+          video.play(); // Reinicia animação
+        }, 2000); // Fade out: 2s
+      }, 10000); // Pausa: 10s
     };
 
     video.addEventListener('ended', handleEnded);
@@ -45,7 +55,7 @@ export const AnimatedLogo: React.FC = () => {
       className="w-full h-full object-contain pointer-events-none"
       style={{ 
         opacity: opacity, 
-        transition: 'opacity 3s ease-in-out',
+        transition: 'opacity 2s ease-in-out', // Fade de 2s (igual desktop)
         mixBlendMode: 'lighten', // Preto vira transparente, cores ficam visíveis (melhor que screen)
         filter: 'drop-shadow(0 0 20px rgba(201, 35, 55, 0.6)) drop-shadow(0 0 40px rgba(201, 35, 55, 0.4)) drop-shadow(0 0 80px rgba(201, 35, 55, 0.2))',
         zIndex: 10,
