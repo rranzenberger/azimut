@@ -5,22 +5,24 @@ type Theme = 'dark' | 'light'
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window !== 'undefined') {
-      // 📱 MOBILE (< 768px): SEMPRE CLARO por padrão (melhor UX)
+      // 📱 MOBILE (< 768px): SEMPRE CLARO - sem exceção!
       // 💻 DESKTOP (>= 768px): SEMPRE ESCURO por padrão (cinematográfico)
       const isMobile = window.innerWidth < 768
-      const defaultTheme = isMobile ? 'light' : 'dark'
       
-      // Verificar se usuário já escolheu uma preferência manualmente
+      // Mobile: SEMPRE claro (ignora preferência salva para garantir UX)
+      if (isMobile) {
+        return 'light'
+      }
+      
+      // Desktop: respeitar preferência salva ou usar escuro
       const savedTheme = localStorage.getItem('azimut-theme') as Theme | null
       const userHasPreference = localStorage.getItem('azimut-theme-manual') === 'true'
       
-      // Se usuário trocou manualmente (via toggle), respeitar escolha
       if (userHasPreference && savedTheme && ['dark', 'light'].includes(savedTheme)) {
         return savedTheme
       }
       
-      // Caso contrário, usar tema padrão baseado em mobile/desktop
-      return defaultTheme
+      return 'dark'
     }
     return 'dark'
   })

@@ -436,28 +436,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
           
           {/* MOBILE/TABLET: Layout compacto e organizado */}
-          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ paddingTop: '20px' }}>
-            
-            {/* Estrela/Logo - DIREITA, ambos os temas */}
-            <div className="absolute top-[15px] right-2 pointer-events-none" style={{ zIndex: 5 }}>
-              {theme === 'dark' ? (
-                <div className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px]" style={{ opacity: 0.4 }}>
-                  <AnimatedLogo />
-                </div>
-              ) : (
-                <img 
-                  src="/logo-azimut-star.svg" 
-                  alt="" 
-                  className="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px]"
-                  style={{ opacity: 0.2, filter: 'grayscale(20%)' }}
-                />
-              )}
-            </div>
+          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ paddingTop: '8px' }}>
             
             {/* Conteúdo Texto (frente) - COMPACTO */}
-            <div className="relative z-10 w-full text-left space-y-3 sm:space-y-4 px-0">
+            <div className="relative z-10 w-full text-left space-y-2 sm:space-y-3 px-0">
               {/* Tagline da logo completa - IMMERSIVE • INTERACTIVE / CINEMATIC EXPERIENCES */}
-              <div className={`font-sora text-[0.5rem] sm:text-[0.55rem] uppercase tracking-[0.15em] leading-tight animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/70' : 'text-slate-500'}`} style={{ animationDelay: '0.05s' }}>
+              <div className={`font-sora text-[0.5rem] sm:text-[0.55rem] uppercase tracking-[0.15em] leading-tight animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/70' : 'text-slate-600'}`} style={{ animationDelay: '0.05s' }}>
                 <span>IMMERSIVE • INTERACTIVE</span><br />
                 <span>CINEMATIC EXPERIENCES</span>
               </div>
@@ -476,12 +460,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               
               {/* Título - COMPACTO */}
               <h1 className={`font-handel uppercase animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ 
-                fontSize: 'clamp(1.8rem, 6.5vw, 3.5rem)',
+                fontSize: 'clamp(1.6rem, 6vw, 3rem)',
                 lineHeight: '1.1',
                 letterSpacing: '0.08em',
                 animationDelay: '0.2s',
                 wordBreak: 'break-word',
-                maxWidth: '85%'
+                maxWidth: '100%'
               }}>
                 {(() => {
                   if (lang === 'pt') {
@@ -525,32 +509,71 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </h1>
               
               {/* Subtítulo - menor */}
-              <p className={`max-w-[85%] text-[0.85rem] sm:text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/90' : 'text-[#4a4543]'}`} style={{ animationDelay: '0.3s' }}>
+              <p className={`text-[0.8rem] sm:text-[0.9rem] leading-relaxed animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/90' : 'text-[#4a4543]'}`} style={{ animationDelay: '0.3s' }}>
                 {heroSubtitle.split('.')[0]}.
               </p>
               
-              {/* Stats Cards - COMPACTO */}
-              <div className="grid grid-cols-2 gap-2 sm:gap-2.5 max-w-[85%] animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
-                <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 p-2.5 sm:p-3 rounded-lg hover:border-azimut-red transition-all duration-300 group ${
-                  theme === 'dark' ? 'bg-black/60 hover:bg-black/70' : 'bg-white/70 hover:bg-white/90'
+              {/* 4 Cards de Serviços - Grid 2x2 equilibrado */}
+              <div className="grid grid-cols-2 gap-2 w-full animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+                {/* Cinema & AV */}
+                <div className={`flex items-center gap-2 p-2.5 sm:p-3 rounded-lg border border-azimut-red/30 transition-all duration-300 group ${
+                  theme === 'dark' ? 'bg-black/60 hover:bg-black/70' : 'bg-white/80 hover:bg-white/95'
                 }`}>
-                  <span className="block text-xl sm:text-2xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">100+</span>
-                  <span className={`block text-[0.55rem] sm:text-[0.6rem] uppercase tracking-widest mt-0.5 ${
-                    theme === 'dark' ? 'text-white/60' : 'text-slate-600'
-                  }`}>
-                    {lang === 'pt' ? 'Projetos' : lang === 'es' ? 'Proyectos' : 'Projects'}
-                  </span>
+                  <span className="text-lg sm:text-xl">🎬</span>
+                  <div>
+                    <span className={`block text-[0.7rem] sm:text-[0.8rem] font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Cinema & AV</span>
+                    <span className={`block text-[0.5rem] sm:text-[0.55rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>AUDIOVISUAL</span>
+                  </div>
                 </div>
-                <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 p-2.5 sm:p-3 rounded-lg hover:border-azimut-red transition-all duration-300 group ${
-                  theme === 'dark' ? 'bg-black/60 hover:bg-black/70' : 'bg-white/70 hover:bg-white/90'
+                
+                {/* XR/VR/AR */}
+                <div className={`flex items-center gap-2 p-2.5 sm:p-3 rounded-lg border border-azimut-red/30 transition-all duration-300 group ${
+                  theme === 'dark' ? 'bg-black/60 hover:bg-black/70' : 'bg-white/80 hover:bg-white/95'
                 }`}>
-                  <span className="block text-xl sm:text-2xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">1996</span>
-                  <span className={`block text-[0.55rem] sm:text-[0.6rem] uppercase tracking-widest mt-0.5 ${
-                    theme === 'dark' ? 'text-white/60' : 'text-slate-600'
-                  }`}>
-                    {lang === 'pt' ? 'Desde' : lang === 'es' ? 'Desde' : lang === 'fr' ? 'Depuis' : 'Since'}
-                  </span>
+                  <span className="text-lg sm:text-xl">🥽</span>
+                  <div>
+                    <span className={`block text-[0.7rem] sm:text-[0.8rem] font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>XR/VR/AR</span>
+                    <span className={`block text-[0.5rem] sm:text-[0.55rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>IMERSIVO</span>
+                  </div>
                 </div>
+                
+                {/* Exposições */}
+                <div className={`flex items-center gap-2 p-2.5 sm:p-3 rounded-lg border border-azimut-red/30 transition-all duration-300 group ${
+                  theme === 'dark' ? 'bg-black/60 hover:bg-black/70' : 'bg-white/80 hover:bg-white/95'
+                }`}>
+                  <span className="text-lg sm:text-xl">🏛️</span>
+                  <div>
+                    <span className={`block text-[0.7rem] sm:text-[0.8rem] font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Exposições</span>
+                    <span className={`block text-[0.5rem] sm:text-[0.55rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>& MUSEUS</span>
+                  </div>
+                </div>
+                
+                {/* Educação */}
+                <div className={`flex items-center gap-2 p-2.5 sm:p-3 rounded-lg border border-azimut-red/30 transition-all duration-300 group ${
+                  theme === 'dark' ? 'bg-black/60 hover:bg-black/70' : 'bg-white/80 hover:bg-white/95'
+                }`}>
+                  <span className="text-lg sm:text-xl">🎓</span>
+                  <div>
+                    <span className={`block text-[0.7rem] sm:text-[0.8rem] font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Educação</span>
+                    <span className={`block text-[0.5rem] sm:text-[0.55rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>ACADEMIA</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Logo Animada - ABAIXO dos cards */}
+              <div className="flex justify-center mt-2 animate-fade-in-up opacity-0" style={{ animationDelay: '0.5s' }}>
+                {theme === 'dark' ? (
+                  <div className="w-[140px] h-[140px] sm:w-[160px] sm:h-[160px]" style={{ opacity: 0.5 }}>
+                    <AnimatedLogo />
+                  </div>
+                ) : (
+                  <img 
+                    src="/logo-azimut-star.svg" 
+                    alt="" 
+                    className="w-[120px] h-[120px] sm:w-[140px] sm:h-[140px]"
+                    style={{ opacity: 0.3 }}
+                  />
+                )}
               </div>
             </div>
           </div>
