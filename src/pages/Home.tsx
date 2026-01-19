@@ -569,16 +569,17 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             
             </div>
             
-            {/* Tagline IMMERSIVE - DESTAQUE GARANTIDO abaixo da logo */}
-            <div className="relative py-8 text-center px-4" style={{ order: 3 }}>
-              <p className={`font-sora uppercase tracking-[0.2em] leading-relaxed font-bold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ 
-                fontSize: 'clamp(1.1rem, 4.5vw, 1.6rem)',
+            {/* Tagline IMMERSIVE - DESTAQUE MÁXIMO abaixo da logo */}
+            <div className="relative py-10 text-center px-4" style={{ order: 3 }}>
+              <p className={`font-sora uppercase tracking-[0.25em] leading-relaxed font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ 
+                fontSize: 'clamp(1.2rem, 5vw, 1.8rem)',
                 textShadow: theme === 'dark' 
-                  ? '0 2px 10px rgba(255, 255, 255, 0.3)' 
-                  : '0 2px 10px rgba(0, 0, 0, 0.2)'
+                  ? '0 2px 15px rgba(255, 255, 255, 0.4)' 
+                  : '0 2px 15px rgba(0, 0, 0, 0.3)',
+                letterSpacing: '0.25em'
               }}>
                 <span className="block">IMMERSIVE • INTERACTIVE</span>
-                <span className="block mt-3">CINEMATIC EXPERIENCES</span>
+                <span className="block mt-4">CINEMATIC EXPERIENCES</span>
               </p>
             </div>
             
