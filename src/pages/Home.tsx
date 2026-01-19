@@ -317,28 +317,28 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                           <>
                             EXPERIÊNCIAS<br />
                             QUE CONECTAM<br />
-                            <span className="text-azimut-red">MUNDOS</span>
+                            <span className="text-azimut-red" style={{ textShadow: theme === 'light' ? '0 1px 3px rgba(255, 255, 255, 0.5), 0 0 20px rgba(201, 35, 55, 0.3)' : 'none' }}>MUNDOS</span>
                           </>
                         )}
                         {lang === 'en' && (
                           <>
                             EXPERIENCES<br />
                             THAT CONNECT<br />
-                            <span className="text-azimut-red">WORLDS</span>
+                            <span className="text-azimut-red" style={{ textShadow: theme === 'light' ? '0 1px 3px rgba(255, 255, 255, 0.5), 0 0 20px rgba(201, 35, 55, 0.3)' : 'none' }}>WORLDS</span>
                           </>
                         )}
                         {lang === 'fr' && (
                           <>
                             EXPÉRIENCES<br />
                             QUI CONNECTENT<br />
-                            <span className="text-azimut-red">LES MONDES</span>
+                            <span className="text-azimut-red" style={{ textShadow: theme === 'light' ? '0 1px 3px rgba(255, 255, 255, 0.5), 0 0 20px rgba(201, 35, 55, 0.3)' : 'none' }}>LES MONDES</span>
                           </>
                         )}
                         {lang === 'es' && (
                           <>
                             EXPERIENCIAS<br />
                             QUE CONECTAN<br />
-                            <span className="text-azimut-red">MUNDOS</span>
+                            <span className="text-azimut-red" style={{ textShadow: theme === 'light' ? '0 1px 3px rgba(255, 255, 255, 0.5), 0 0 20px rgba(201, 35, 55, 0.3)' : 'none' }}>MUNDOS</span>
                           </>
                         )}
                       </>
