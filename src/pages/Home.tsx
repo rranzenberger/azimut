@@ -238,7 +238,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             const backgroundImage = heroBackgroundImage || featuredImage || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072'
             
             return (
-              <div className="absolute inset-0 w-full h-full">
+              <div className={`absolute inset-0 w-full h-full ${theme === 'dark' ? '' : 'hidden'}`}>
                 <OptimizedImage
                   src={backgroundImage}
                   alt=""
@@ -259,16 +259,17 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           {/* ═══════════════════════════════════════════════════════════════
               TEMA CLARO: Centro escuro, bordas claras (bege)
               ═══════════════════════════════════════════════════════════════ */}
-          {/* Gradiente: Fundo bege/cream premium */}
+          {/* Gradiente: Fundo bege/cream premium - SEM overlay escuro */}
           <div 
             className="absolute inset-0 dark:hidden block"
             style={{
-              background: 'linear-gradient(180deg, #d3cec3 0%, #c9c4b9 50%, #bfbab0 100%)'
+              background: 'linear-gradient(180deg, #d3cec3 0%, #e0dbd0 50%, #d3cec3 100%)',
+              zIndex: 0
             }}
           />
           
-          {/* Overlay sutil para profundidade - TEMA CLARO */}
-          <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-black/5 dark:hidden block" />
+          {/* Overlay sutil CLARO para profundidade - TEMA CLARO */}
+          <div className="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-transparent dark:hidden block" style={{ zIndex: 1 }} />
           
           {/* ═══════════════════════════════════════════════════════════════
               HERO REORGANIZADO: Texto | Logo (linha 1), 5 Cards (linha 2), 3 Cards (linha 3)
@@ -450,8 +451,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           
           {/* MOBILE/TABLET: Logo Watermark + Texto Alinhado Esquerda */}
           <div className="relative z-10 lg:hidden flex flex-col justify-center min-h-[calc(100vh-80px)] w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden">
-            {/* Logo como Watermark (fundo) */}
-            <div className="absolute inset-0 flex items-center justify-start opacity-15 pointer-events-none pl-4">
+            {/* Logo como Watermark (fundo) - Posicionada à esquerda, atrás do texto */}
+            <div className="absolute inset-0 flex items-center justify-start pointer-events-none pl-4" style={{ zIndex: 0 }}>
               <div className="w-[200px] h-[200px] sm:w-[240px] sm:h-[240px]">
                 {theme === 'dark' ? (
                   <AnimatedLogo />
@@ -460,7 +461,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     src="/logo-azimut-star.svg" 
                     alt="Azimut" 
                     className="w-full h-full object-contain"
-                    style={{ filter: 'grayscale(50%) opacity(0.6)' }}
+                    style={{ 
+                      opacity: 0.08,
+                      filter: 'grayscale(100%)'
+                    }}
                   />
                 )}
               </div>

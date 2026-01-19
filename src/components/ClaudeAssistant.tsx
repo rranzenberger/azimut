@@ -268,7 +268,7 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
         <div className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[51] w-[calc(100vw-2rem)] sm:w-[380px] max-w-[380px] h-[50vh] sm:h-[500px] max-h-[500px] rounded-2xl shadow-2xl flex flex-col overflow-hidden border animate-fade-in ${
           theme === 'dark' 
             ? 'bg-slate-900/95 border-white/10' 
-            : 'bg-[#f5f3f0] border-[#c9c4b9]'
+            : 'bg-white border-[#c9c4b9] shadow-lg'
         }`}>
           {/* Header */}
           <div className="bg-gradient-to-r from-azimut-red to-red-700 p-3 flex items-center justify-between">
@@ -305,12 +305,12 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
                       ? 'bg-azimut-red text-white'
                       : theme === 'dark' 
                         ? 'bg-white/10 text-white' 
-                        : 'bg-[#e8e5e0] text-[#1e1c1a]'
+                        : 'bg-slate-100 text-slate-900 border border-slate-200'
                   }`}
                 >
                   <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                   <div className="flex items-center justify-between mt-2 gap-2">
-                    <span className="text-xs opacity-60">
+                    <span className={`text-xs ${theme === 'dark' ? 'text-white/60' : 'text-slate-500'}`}>
                       {msg.timestamp.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })}
                     </span>
                     {/* FASE 2: Badge de IA 🎯 */}
@@ -330,11 +330,11 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
 
             {isLoading && (
               <div className="flex justify-start">
-                <div className={`rounded-2xl px-4 py-3 ${theme === 'dark' ? 'bg-white/10' : 'bg-[#e8e5e0]'}`}>
+                <div className={`rounded-2xl px-4 py-3 ${theme === 'dark' ? 'bg-white/10' : 'bg-slate-100 border border-slate-200'}`}>
                   <div className="flex gap-2">
-                    <span className={`w-2 h-2 rounded-full animate-bounce ${theme === 'dark' ? 'bg-white/60' : 'bg-slate-600'}`} style={{ animationDelay: '0ms' }} />
-                    <span className={`w-2 h-2 rounded-full animate-bounce ${theme === 'dark' ? 'bg-white/60' : 'bg-slate-600'}`} style={{ animationDelay: '150ms' }} />
-                    <span className={`w-2 h-2 rounded-full animate-bounce ${theme === 'dark' ? 'bg-white/60' : 'bg-slate-600'}`} style={{ animationDelay: '300ms' }} />
+                    <span className={`w-2 h-2 rounded-full animate-bounce ${theme === 'dark' ? 'bg-white/60' : 'bg-azimut-red'}`} style={{ animationDelay: '0ms' }} />
+                    <span className={`w-2 h-2 rounded-full animate-bounce ${theme === 'dark' ? 'bg-white/60' : 'bg-azimut-red'}`} style={{ animationDelay: '150ms' }} />
+                    <span className={`w-2 h-2 rounded-full animate-bounce ${theme === 'dark' ? 'bg-white/60' : 'bg-azimut-red'}`} style={{ animationDelay: '300ms' }} />
                   </div>
                 </div>
               </div>
@@ -343,17 +343,17 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
             {/* Quick Actions (show on first message) */}
             {messages.length === 1 && (
               <div className="space-y-2">
-                <p className={`text-xs text-center mb-2 ${theme === 'dark' ? 'text-white/60' : 'text-slate-600'}`}>
+                <p className={`text-xs text-center mb-2 font-medium ${theme === 'dark' ? 'text-white/70' : 'text-slate-700'}`}>
                   {lang === 'pt' ? 'Ou escolha uma opção:' : 'Or choose an option:'}
                 </p>
                 {t.examples.map((example: string, i: number) => (
                   <button
                     key={i}
                     onClick={() => handleQuickAction(example)}
-                    className={`w-full text-left px-4 py-3 rounded-xl text-sm transition-colors ${
+                    className={`w-full text-left px-4 py-3 rounded-xl text-sm transition-colors font-medium ${
                       theme === 'dark'
                         ? 'bg-white/5 hover:bg-white/10 text-white'
-                        : 'bg-azimut-red/5 hover:bg-azimut-red/10 text-[#1e1c1a] border border-azimut-red/20'
+                        : 'bg-slate-50 hover:bg-slate-100 text-slate-900 border border-slate-200 hover:border-azimut-red/40'
                     }`}
                   >
                     {example}
@@ -399,7 +399,7 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
 
           {/* Powered by */}
           <div className="px-4 py-2 text-center">
-            <p className={`text-xs ${theme === 'dark' ? 'text-white/40' : 'text-slate-500'}`}>
+            <p className={`text-xs ${theme === 'dark' ? 'text-white/40' : 'text-slate-400'}`}>
               Powered by Claude AI • Azimut
             </p>
           </div>
