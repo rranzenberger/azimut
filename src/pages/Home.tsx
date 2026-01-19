@@ -452,26 +452,25 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             {/* Borda superior vermelha SÓLIDA */}
             <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
             
-            {/* Container com fundo escuro - APENAS LOGO ANIMADA */}
+            {/* Container com fundo escuro - EXATAMENTE a altura do vídeo */}
             <div 
               className="relative"
               style={{
                 background: theme === 'dark'
                   ? '#0a0e18' // Azul escuro sólido
                   : '#2a2825', // Marrom escuro sólido
-                minHeight: '320px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 padding: 0,
-                overflow: 'hidden'
+                overflow: 'hidden',
+                aspectRatio: '1 / 1', // Vídeo é quadrado (1:1)
+                width: '100%'
               }}
             >
               {/* Logo Animada 100VW - DE FORA A FORA */}
-              <div className="relative w-full h-full min-h-[320px] flex items-center justify-center">
-                <div className="relative w-full h-full">
-                  <AnimatedLogo />
-                </div>
+              <div className="relative w-full h-full">
+                <AnimatedLogo />
               </div>
             </div>
             
