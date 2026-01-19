@@ -1622,14 +1622,21 @@ body::after {
    ═══════════════════════════════════════════════════════════════ */
 
 /* Estrela com tag <img> - inverter cores: linhas brancas viram escuras no tema claro */
-[data-theme="light"] img[src*="logo-azimut-star.svg"] {
+/* EXCETO logos com classe .logo-keep-original (para fundos escuros no tema claro) */
+[data-theme="light"] img[src*="logo-azimut-star.svg"]:not(.logo-keep-original) {
   filter: invert(1) brightness(0.15);
   opacity: 0.5 !important;
 }
 
+/* Logo que deve manter original (para formulários com fundo escuro no tema claro) */
+.logo-keep-original {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
 /* Estrela com background-image - aplicar filtro no container div */
 /* Seleciona divs com backgroundImage contendo logo-azimut-star.svg */
-[data-theme="light"] div[style*="backgroundImage"][style*="logo-azimut-star"] {
+[data-theme="light"] div[style*="backgroundImage"][style*="logo-azimut-star"]:not(.logo-keep-original) {
   filter: invert(1) brightness(0.15);
 }
 

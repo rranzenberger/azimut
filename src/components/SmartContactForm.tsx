@@ -1002,18 +1002,20 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         <div className="relative z-10">
             {/* Header Premium com Logo */}
             <div className="text-center mb-10 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-              {/* Logo Azimut */}
+              {/* Logo Azimut - sempre a versão clara (vermelha com traços brancos) */}
               <div className="flex justify-center mb-6">
                 <div className="relative">
                   <img 
                     src="/logo-azimut-star.svg" 
                     alt="Azimut" 
-                    className="h-16 w-16 md:h-20 md:w-20 animate-fade-in-up opacity-90"
-                    style={{ animationDelay: '0.15s' }}
+                    className="h-16 w-16 md:h-20 md:w-20 animate-fade-in-up logo-keep-original"
+                    style={{ 
+                      animationDelay: '0.15s'
+                    }}
                   />
                   {/* Glow sutil na logo */}
                   <div className="absolute inset-0 animate-pulse pointer-events-none">
-                    <div className="h-full w-full rounded-full bg-azimut-red/10 blur-xl" />
+                    <div className="h-full w-full rounded-full bg-azimut-red/20 blur-xl" />
                   </div>
                 </div>
               </div>
