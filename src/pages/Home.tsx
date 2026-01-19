@@ -301,11 +301,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </div>
                 
                 {/* Título em 3 LINHAS - MULTILÍNGUE */}
-                <h1 className={`font-handel uppercase animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ 
+                <h1 className={`font-handel uppercase animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`} style={{ 
                   fontSize: 'clamp(3rem, 5.5vw, 5.8rem)',
                   lineHeight: '1.1',
                   letterSpacing: '0.08em',
-                  animationDelay: '0.2s'
+                  animationDelay: '0.2s',
+                  textShadow: theme === 'light' ? '0 1px 2px rgba(255, 255, 255, 0.3)' : 'none'
                 }}>
                   {(() => {
                     const words = heroSlogan.split(' ');
