@@ -467,16 +467,22 @@ const AdvancedVancouverCalculator: React.FC<CalculatorProps> = ({ lang }) => {
         </div>
       </div>
 
-      {/* Note */}
-      <div className="text-center text-sm text-white/50">
+      {/* Note - cores adaptáveis */}
+      <div className="text-center text-sm font-medium" style={{ color: 'var(--theme-text-secondary)' }}>
         {t.note}
       </div>
 
-      {/* CTAs */}
+      {/* CTAs - cores adaptáveis */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <button
           onClick={() => alert('Download PDF em breve!')}
-          className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg transition-all duration-300 border border-white/20"
+          className="px-8 py-4 font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
+          style={{ 
+            background: 'var(--theme-card-bg)',
+            color: 'var(--theme-text)',
+            border: '2px solid',
+            borderColor: 'var(--theme-border)'
+          }}
         >
           {t.ctaDownload}
         </button>

@@ -1142,8 +1142,23 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* FAQ */}
+        {/* Visual School Quiz - Ultra Interativo - MOVIDO PARA CIMA */}
         <section className="py-20" style={{ background: 'var(--theme-bg-secondary)' }}>
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
+                {lang === 'pt' ? 'Qual escola é sua vibe?' : 'Which school is your vibe?'}
+              </h2>
+              <p className="text-xl text-white/70">
+                {lang === 'pt' ? 'Descubra em 30 segundos! 🎮' : 'Find out in 30 seconds! 🎮'}
+              </p>
+            </div>
+            <VisualSchoolQuiz lang={lang} />
+          </div>
+        </section>
+
+        {/* FAQ - PERMANECE */}
+        <section className="py-20" style={{ background: 'var(--theme-bg)' }}>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
@@ -1174,21 +1189,6 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 </details>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* Visual School Quiz - Ultra Interativo */}
-        <section className="py-20" style={{ background: 'var(--theme-bg)' }}>
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
-                {lang === 'pt' ? 'Qual escola é sua vibe?' : 'Which school is your vibe?'}
-              </h2>
-              <p className="text-xl text-white/70">
-                {lang === 'pt' ? 'Descubra em 30 segundos! 🎮' : 'Find out in 30 seconds! 🎮'}
-              </p>
-            </div>
-            <VisualSchoolQuiz lang={lang} />
           </div>
         </section>
 
