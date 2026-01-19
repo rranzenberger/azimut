@@ -286,9 +286,19 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 width: 'auto',
                 maxWidth: 'none',
                 display: 'block',
-                transition: 'height 0.3s ease'
+                transition: 'height 0.3s ease',
+                backgroundColor: 'transparent'
               }}
-            />
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  console.error('[Logo Error] Failed to load:', target.src);
+                  // Fallback: Tentar SVG padrão
+                  if (target.src.includes('.png')) {
+                    console.log('[Logo Fallback] Tentando SVG...');
+                    target.src = '/logo-topo-site.svg';
+                  }
+                }}
+              />
             </LangLink>
           </div>
 
