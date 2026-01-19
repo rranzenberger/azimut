@@ -1519,23 +1519,23 @@ body::after {
   opacity: 0.15;
 }
 
-/* Desktop: CINEMATOGRÁFICO - Com cores da estrela */
+/* Desktop: CINEMATOGRÁFICO - Curadoria de cores com estrela Azimut */
 @media (min-width: 768px) {
   [data-theme="light"] #root::before {
     background:
-      /* Camada 1: Centro Hero - Cinza escuro (cor da imagem) */
-      radial-gradient(ellipse 35% 80% at 50% 45%, rgba(60, 60, 60, 0.25) 0%, transparent 100%),
-      /* Camada 2: Pós-texto - Cores da estrela (dourado→rosa→vermelho) */
-      radial-gradient(ellipse 45% 85% at 70% 50%, rgba(255, 215, 120, 0.12) 0%, rgba(255, 150, 150, 0.08) 50%, rgba(201, 35, 55, 0.06) 100%),
-      /* Camada 3: Topo - Luz quente suave */
-      linear-gradient(180deg, rgba(245, 235, 220, 0.2) 0%, transparent 30%),
-      /* Camada 4: Vinheta ESQUERDA - Sépia/Marrom */
-      radial-gradient(ellipse 35% 100% at 0% 50%, rgba(180, 160, 140, 0.12) 0%, transparent 70%),
-      /* Camada 5: Vinheta DIREITA - Tom rosado da estrela */
-      radial-gradient(ellipse 35% 100% at 100% 50%, rgba(220, 180, 170, 0.1) 0%, transparent 70%),
-      /* Camada 6: Base inferior - Tom rico */
-      linear-gradient(180deg, transparent 70%, rgba(200, 185, 165, 0.1) 100%);
-    opacity: 0.8;
+      /* Camada 1: Centro Hero - Champagne (bege + dourado quente) */
+      radial-gradient(ellipse 38% 85% at 50% 45%, rgba(200, 185, 170, 0.28) 0%, transparent 100%),
+      /* Camada 2: Pós-texto - Cores da estrela (dourado→âmbar→vermelho) */
+      radial-gradient(ellipse 45% 85% at 70% 50%, rgba(255, 215, 130, 0.14) 0%, rgba(220, 140, 100, 0.1) 50%, rgba(201, 35, 55, 0.06) 100%),
+      /* Camada 3: Topo - Luz dourada suave (sunrise cinematográfico) */
+      linear-gradient(180deg, rgba(250, 240, 220, 0.22) 0%, transparent 32%),
+      /* Camada 4: Vinheta ESQUERDA - Sépia/Marrom cinematográfico */
+      radial-gradient(ellipse 35% 100% at 0% 50%, rgba(175, 155, 135, 0.13) 0%, transparent 68%),
+      /* Camada 5: Vinheta DIREITA - Tom âmbar quente */
+      radial-gradient(ellipse 35% 100% at 100% 50%, rgba(210, 170, 140, 0.11) 0%, transparent 68%),
+      /* Camada 6: Base inferior - Tom âmbar rico */
+      linear-gradient(180deg, transparent 68%, rgba(195, 175, 160, 0.12) 100%);
+    opacity: 0.82;
   }
 }
 
@@ -1543,18 +1543,18 @@ body::after {
 @media (min-width: 1920px) {
   [data-theme="light"] #root::before {
     background:
-      /* Centro Hero - Cinza mais pronunciado */
-      radial-gradient(ellipse 30% 75% at 50% 45%, rgba(55, 55, 55, 0.3) 0%, transparent 100%),
-      /* Pós-texto - Gradiente estrela mais visível (dourado→rosa→vermelho) */
-      radial-gradient(ellipse 40% 80% at 72% 50%, rgba(255, 215, 120, 0.18) 0%, rgba(255, 150, 150, 0.12) 50%, rgba(201, 35, 55, 0.08) 100%),
-      /* Topo - Luz dourada */
-      linear-gradient(180deg, rgba(245, 235, 220, 0.25) 0%, transparent 35%),
-      /* Vinhetas laterais */
-      radial-gradient(ellipse 30% 100% at 0% 50%, rgba(170, 150, 130, 0.15) 0%, transparent 65%),
-      radial-gradient(ellipse 30% 100% at 100% 50%, rgba(220, 180, 170, 0.12) 0%, transparent 65%),
-      /* Base inferior */
-      linear-gradient(180deg, transparent 65%, rgba(190, 175, 155, 0.15) 100%);
-    opacity: 0.9;
+      /* Centro Hero - Champagne mais pronunciado */
+      radial-gradient(ellipse 32% 78% at 50% 45%, rgba(195, 180, 165, 0.35) 0%, transparent 100%),
+      /* Pós-texto - Gradiente estrela (dourado→âmbar→vermelho) */
+      radial-gradient(ellipse 42% 82% at 72% 50%, rgba(255, 215, 130, 0.2) 0%, rgba(220, 140, 100, 0.14) 50%, rgba(201, 35, 55, 0.08) 100%),
+      /* Topo - Luz dourada cinematográfica */
+      linear-gradient(180deg, rgba(250, 240, 220, 0.28) 0%, transparent 36%),
+      /* Vinhetas laterais premium */
+      radial-gradient(ellipse 32% 100% at 0% 50%, rgba(170, 150, 130, 0.16) 0%, transparent 64%),
+      radial-gradient(ellipse 32% 100% at 100% 50%, rgba(210, 170, 140, 0.14) 0%, transparent 64%),
+      /* Base inferior âmbar */
+      linear-gradient(180deg, transparent 64%, rgba(190, 170, 155, 0.16) 100%);
+    opacity: 0.92;
   }
 }
 
