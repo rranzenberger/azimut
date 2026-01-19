@@ -650,8 +650,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             </h2>
             {/* Linha vermelha acompanha largura do texto */}
             <div className="h-[3px] mx-auto" style={{
-              background: 'linear-gradient(90deg, transparent 0%, #c92337 5%, #c92337 95%, transparent 100%)',
-              width: lang === 'pt' ? '520px' : lang === 'fr' ? '500px' : lang === 'es' ? '510px' : '420px'
+              background: 'linear-gradient(90deg, transparent 0%, #c92337 3%, #c92337 97%, transparent 100%)',
+              width: lang === 'pt' ? '600px' : lang === 'fr' ? '560px' : lang === 'es' ? '580px' : '480px'
             }} />
           </div>
         </div>
