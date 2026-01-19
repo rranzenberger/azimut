@@ -645,13 +645,14 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             : 'bg-[#d3cec3]'
         }`}>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className={`font-sora text-[0.75rem] uppercase tracking-[0.24em] mb-3 animate-fade-in-up ${theme === 'dark' ? 'text-white/70' : 'text-[#1e1a16]/70'}`}>
+            <h2 className={`font-sora text-sm md:text-base uppercase tracking-[0.24em] font-semibold mb-4 animate-fade-in-up ${theme === 'dark' ? 'text-white/80' : 'text-[#1e1a16]/80'}`}>
               {lang === 'pt' ? 'Assista Nosso Trabalho' : lang === 'es' ? 'Ve Nuestro Trabajo' : lang === 'fr' ? 'Regardez Notre Travail' : 'Watch Our Work'}
             </h2>
-            {/* Linha vermelha GRANDE com fade nas pontas - adapta ao idioma */}
-            <div className="h-[2px] mx-auto" style={{
-              width: lang === 'pt' ? '320px' : lang === 'fr' ? '340px' : lang === 'es' ? '300px' : '280px',
-              background: 'linear-gradient(90deg, transparent 0%, #c92337 5%, #c92337 95%, transparent 100%)'
+            {/* Linha vermelha acompanha largura do texto */}
+            <div className="h-[2.5px] mx-auto max-w-max px-8" style={{
+              background: 'linear-gradient(90deg, transparent 0%, #c92337 8%, #c92337 92%, transparent 100%)',
+              width: 'fit-content',
+              minWidth: lang === 'pt' ? '380px' : lang === 'fr' ? '400px' : lang === 'es' ? '360px' : '340px'
             }} />
           </div>
         </div>
