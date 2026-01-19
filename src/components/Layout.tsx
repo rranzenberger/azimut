@@ -273,8 +273,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             >
               <img
                 src={
+                  // Mobile: SEMPRE logo clara (header é escuro em ambos os temas)
+                  // Desktop: logo padrão
                   isMobile 
-                    ? (theme === 'light' ? '/logo-mobile-escuro.svg' : '/logo-mobile-claro.svg')
+                    ? '/logo-mobile-claro.svg'
                     : '/logo-topo-site.svg'
                 }
                 alt="Azimut – Immersive • Interactive • Cinematic Experiences"

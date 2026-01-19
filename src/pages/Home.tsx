@@ -436,30 +436,23 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
           
           {/* MOBILE/TABLET: Layout compacto e organizado */}
-          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ paddingTop: '100px' }}>
+          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ paddingTop: '70px' }}>
             
-            {/* Logo Animada - DIREITA, tema escuro */}
-            {theme === 'dark' && (
-              <div className="absolute top-[100px] right-4 pointer-events-none" style={{ zIndex: 5 }}>
-                <div className="w-[140px] h-[140px] sm:w-[160px] sm:h-[160px]" style={{ opacity: 0.4 }}>
+            {/* Estrela/Logo - DIREITA, ambos os temas */}
+            <div className="absolute top-[60px] right-2 pointer-events-none" style={{ zIndex: 5 }}>
+              {theme === 'dark' ? (
+                <div className="w-[120px] h-[120px] sm:w-[140px] sm:h-[140px]" style={{ opacity: 0.4 }}>
                   <AnimatedLogo />
                 </div>
-              </div>
-            )}
-            
-            {/* Gradiente decorativo tema light - sutil */}
-            {theme === 'light' && (
-              <div 
-                className="absolute top-[80px] right-[-20px] pointer-events-none" 
-                style={{ 
-                  zIndex: 1,
-                  width: '200px',
-                  height: '200px',
-                  background: 'radial-gradient(circle, rgba(201, 35, 55, 0.08) 0%, transparent 70%)',
-                  filter: 'blur(40px)'
-                }}
-              />
-            )}
+              ) : (
+                <img 
+                  src="/logo-azimut-star.svg" 
+                  alt="" 
+                  className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px]"
+                  style={{ opacity: 0.25, filter: 'grayscale(20%)' }}
+                />
+              )}
+            </div>
             
             {/* Conteúdo Texto (frente) - COMPACTO */}
             <div className="relative z-10 w-full text-left space-y-4 sm:space-y-5 px-0">
