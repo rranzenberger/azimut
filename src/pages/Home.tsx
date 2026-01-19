@@ -210,7 +210,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           style={{ marginTop: '-80px', paddingTop: '80px' }}
         >
           {/* Background: Imagem do Backoffice (heroBackgroundImage) ou Featured Project */}
-          {(() => {
+          {/* APENAS NO TEMA ESCURO - Tema claro usa gradiente bege sem imagem */}
+          {theme === 'dark' && (() => {
             // PRIORIDADE 1: Imagem do backoffice (page.heroBackgroundImage)
             const heroBackgroundImage = cmsContent?.page?.heroBackgroundImage
             
@@ -222,7 +223,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             const backgroundImage = heroBackgroundImage || featuredImage || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072'
             
             return (
-              <div className={`absolute inset-0 w-full h-full ${theme === 'dark' ? '' : 'hidden'} lg:block`}>
+              <div className="absolute inset-0 w-full h-full hidden lg:block">
                 <OptimizedImage
                   src={backgroundImage}
                   alt=""
@@ -356,61 +357,61 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             {/* LINHA 2: 5 Cards Horizontais (SUBIDOS - SEM GAP VAZIO) */}
             <div className="grid grid-cols-5 gap-4 -mt-24">
               {/* Cinema & AV */}
-              <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 rounded-xl hover:border-azimut-red transition-all duration-300 group flex flex-row items-center gap-2 p-3" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
+              <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 rounded-xl hover:border-azimut-red transition-all duration-300 group flex flex-row items-center gap-2 p-3`} style={{ background: theme === 'dark' ? 'rgba(26, 31, 46, 0.85)' : 'rgba(255, 255, 255, 0.9)' }}>
                 <span className="block text-3xl flex-shrink-0">🎬</span>
                 <div className="flex-1 min-w-0">
-                  <span className="block text-xs font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight break-words">
+                  <span className={`block text-xs font-bold group-hover:text-azimut-red transition-colors leading-tight break-words ${theme === 'dark' ? 'text-slate-100' : 'text-[#1e1c1a]'}`}>
                     {lang === 'pt' ? 'Cinema & AV' : lang === 'es' ? 'Cine & AV' : lang === 'fr' ? 'Cinéma & AV' : 'Cinema & AV'}
                   </span>
-                  <span className="block text-[0.55rem] text-slate-400 uppercase tracking-wide mt-0.5">
+                  <span className={`block text-[0.55rem] uppercase tracking-wide mt-0.5 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
                     {lang === 'pt' ? 'Audiovisual' : lang === 'es' ? 'Audiovisual' : lang === 'fr' ? 'Audiovisuel' : 'Audiovisual'}
                   </span>
                 </div>
               </div>
 
               {/* XR/VR/AR */}
-              <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 rounded-xl hover:border-azimut-red transition-all duration-300 group flex flex-row items-center gap-2 p-3" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
+              <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 rounded-xl hover:border-azimut-red transition-all duration-300 group flex flex-row items-center gap-2 p-3`} style={{ background: theme === 'dark' ? 'rgba(26, 31, 46, 0.85)' : 'rgba(255, 255, 255, 0.9)' }}>
                 <span className="block text-3xl flex-shrink-0">🥽</span>
                 <div className="flex-1 min-w-0">
-                  <span className="block text-xs font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight break-words">XR/VR/AR</span>
-                  <span className="block text-[0.55rem] text-slate-400 uppercase tracking-wide mt-0.5">
+                  <span className={`block text-xs font-bold group-hover:text-azimut-red transition-colors leading-tight break-words ${theme === 'dark' ? 'text-slate-100' : 'text-[#1e1c1a]'}`}>XR/VR/AR</span>
+                  <span className={`block text-[0.55rem] uppercase tracking-wide mt-0.5 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
                     {lang === 'pt' ? 'Imersivo' : lang === 'es' ? 'Inmersivo' : lang === 'fr' ? 'Immersif' : 'Immersive'}
                   </span>
                 </div>
               </div>
 
               {/* Exposições & Museus */}
-              <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 rounded-xl hover:border-azimut-red transition-all duration-300 group flex flex-row items-center gap-2 p-3" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
+              <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 rounded-xl hover:border-azimut-red transition-all duration-300 group flex flex-row items-center gap-2 p-3`} style={{ background: theme === 'dark' ? 'rgba(26, 31, 46, 0.85)' : 'rgba(255, 255, 255, 0.9)' }}>
                 <span className="block text-3xl flex-shrink-0">🏛️</span>
                 <div className="flex-1 min-w-0">
-                  <span className="block text-xs font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight break-words">
+                  <span className={`block text-xs font-bold group-hover:text-azimut-red transition-colors leading-tight break-words ${theme === 'dark' ? 'text-slate-100' : 'text-[#1e1c1a]'}`}>
                     {lang === 'pt' ? 'Exposições' : lang === 'es' ? 'Exposiciones' : lang === 'fr' ? 'Expositions' : 'Exhibitions'}
                   </span>
-                  <span className="block text-[0.55rem] text-slate-400 uppercase tracking-wide mt-0.5">
+                  <span className={`block text-[0.55rem] uppercase tracking-wide mt-0.5 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
                     {lang === 'pt' ? '& Museus' : lang === 'es' ? '& Museos' : lang === 'fr' ? '& Musées' : '& Museums'}
                   </span>
                 </div>
               </div>
 
               {/* IA & Tech */}
-              <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 rounded-xl hover:border-azimut-red transition-all duration-300 group flex flex-row items-center gap-2 p-3" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
+              <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 rounded-xl hover:border-azimut-red transition-all duration-300 group flex flex-row items-center gap-2 p-3`} style={{ background: theme === 'dark' ? 'rgba(26, 31, 46, 0.85)' : 'rgba(255, 255, 255, 0.9)' }}>
                 <span className="block text-3xl flex-shrink-0">🧠</span>
                 <div className="flex-1 min-w-0">
-                  <span className="block text-xs font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight break-words">IA & Tech</span>
-                  <span className="block text-[0.55rem] text-slate-400 uppercase tracking-wide mt-0.5">
+                  <span className={`block text-xs font-bold group-hover:text-azimut-red transition-colors leading-tight break-words ${theme === 'dark' ? 'text-slate-100' : 'text-[#1e1c1a]'}`}>IA & Tech</span>
+                  <span className={`block text-[0.55rem] uppercase tracking-wide mt-0.5 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
                     {lang === 'pt' ? 'Interativo' : lang === 'es' ? 'Interactivo' : lang === 'fr' ? 'Interactif' : 'Interactive'}
                   </span>
                 </div>
               </div>
 
               {/* Educação */}
-              <div className="glass-panel backdrop-blur-xl border border-azimut-red/30 rounded-xl hover:border-azimut-red transition-all duration-300 group flex flex-row items-center gap-2 p-3" style={{ background: 'rgba(26, 31, 46, 0.85)' }}>
+              <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 rounded-xl hover:border-azimut-red transition-all duration-300 group flex flex-row items-center gap-2 p-3`} style={{ background: theme === 'dark' ? 'rgba(26, 31, 46, 0.85)' : 'rgba(255, 255, 255, 0.9)' }}>
                 <span className="block text-3xl flex-shrink-0">🎓</span>
                 <div className="flex-1 min-w-0">
-                  <span className="block text-xs font-bold text-slate-100 group-hover:text-azimut-red transition-colors leading-tight break-words">
+                  <span className={`block text-xs font-bold group-hover:text-azimut-red transition-colors leading-tight break-words ${theme === 'dark' ? 'text-slate-100' : 'text-[#1e1c1a]'}`}>
                     {lang === 'pt' ? 'Educação' : lang === 'es' ? 'Educación' : lang === 'fr' ? 'Éducation' : 'Education'}
                   </span>
-                  <span className="block text-[0.55rem] text-slate-400 uppercase tracking-wide mt-0.5">
+                  <span className={`block text-[0.55rem] uppercase tracking-wide mt-0.5 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
                     {lang === 'pt' ? 'Academia' : lang === 'es' ? 'Academia' : lang === 'fr' ? 'Académie' : 'Academy'}
                   </span>
                 </div>
@@ -420,27 +421,27 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             {/* LINHA 3: 3 Cards de Credibilidade VERMELHOS (ABAIXO DOS 5 CARDS - SEM TREPAR) */}
             <div className="grid grid-cols-3 gap-4">
               {/* Rio Museu Olímpico */}
-              <div className="glass-panel backdrop-blur-xl border border-azimut-red/50 p-4 rounded-lg hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(201, 35, 55, 0.15)' }}>
+              <div className="glass-panel backdrop-blur-xl border border-azimut-red/50 p-4 rounded-lg hover:border-azimut-red transition-all duration-300 group" style={{ background: theme === 'dark' ? 'rgba(201, 35, 55, 0.15)' : 'rgba(201, 35, 55, 0.1)' }}>
                 <span className="block text-sm font-semibold text-azimut-red group-hover:text-red-400 transition-colors break-words">Rio Museum</span>
-                <span className="block text-[0.55rem] text-slate-300 uppercase tracking-wider mt-1 leading-tight">
+                <span className={`block text-[0.55rem] uppercase tracking-wider mt-1 leading-tight ${theme === 'dark' ? 'text-slate-300' : 'text-slate-600'}`}>
                   {lang === 'pt' ? 'Direção Geral · Tecnologia · Arte Audiovisual' : lang === 'es' ? 'Dirección General · Tecnología · Arte Audiovisual' : lang === 'fr' ? 'Direction Générale · Technologie · Art Audiovisuel' : 'General Direction · Technology · Audiovisual Art'}
                 </span>
               </div>
 
               {/* Gramado VR */}
-              <div className="glass-panel backdrop-blur-xl border border-azimut-red/50 p-4 rounded-lg hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(201, 35, 55, 0.15)' }}>
+              <div className="glass-panel backdrop-blur-xl border border-azimut-red/50 p-4 rounded-lg hover:border-azimut-red transition-all duration-300 group" style={{ background: theme === 'dark' ? 'rgba(201, 35, 55, 0.15)' : 'rgba(201, 35, 55, 0.1)' }}>
                 <span className="block text-sm font-semibold text-azimut-red group-hover:text-red-400 transition-colors break-words">
                   {lang === 'pt' ? 'Festival de Gramado' : lang === 'es' ? 'Festival de Gramado' : lang === 'fr' ? 'Festival de Gramado' : 'Gramado Festival'}
                 </span>
-                <span className="block text-[0.55rem] text-slate-300 uppercase tracking-wider mt-1">
+                <span className={`block text-[0.55rem] uppercase tracking-wider mt-1 ${theme === 'dark' ? 'text-slate-300' : 'text-slate-600'}`}>
                   {lang === 'pt' ? 'VR desde 2017' : lang === 'es' ? 'VR desde 2017' : lang === 'fr' ? 'VR depuis 2017' : 'VR since 2017'}
                 </span>
               </div>
 
               {/* BR ↔ CA */}
-              <div className="glass-panel backdrop-blur-xl border border-azimut-red/50 p-4 rounded-lg hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(201, 35, 55, 0.15)' }}>
+              <div className="glass-panel backdrop-blur-xl border border-azimut-red/50 p-4 rounded-lg hover:border-azimut-red transition-all duration-300 group" style={{ background: theme === 'dark' ? 'rgba(201, 35, 55, 0.15)' : 'rgba(201, 35, 55, 0.1)' }}>
                 <span className="block text-sm font-semibold text-azimut-red group-hover:text-red-400 transition-colors break-words">Brasil ↔ Canadá</span>
-                <span className="block text-[0.55rem] text-slate-300 uppercase tracking-wider mt-1">
+                <span className={`block text-[0.55rem] uppercase tracking-wider mt-1 ${theme === 'dark' ? 'text-slate-300' : 'text-slate-600'}`}>
                   {lang === 'pt' ? 'Binacional' : lang === 'es' ? 'Binacional' : lang === 'fr' ? 'Binational' : 'Binational'}
                 </span>
               </div>
@@ -714,7 +715,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         <section className="py-8 md:py-10 border-y border-white/5">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-6">
-              <h3 className="font-sora text-xs uppercase tracking-[0.24em] mb-3 text-slate-600 dark:text-slate-400">
+              <h3 className={`font-sora text-xs uppercase tracking-[0.24em] mb-3 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
                 {lang === 'pt' ? 'TECNOLOGIA CRIATIVA' : lang === 'es' ? 'TECNOLOGÍA CREATIVA' : lang === 'fr' ? 'TECHNOLOGIE CRÉATIVE' : 'CREATIVE TECHNOLOGY'}
               </h3>
               <p className="text-sm md:text-base max-w-3xl mx-auto leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
@@ -860,14 +861,14 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* ════════════════════════════════════════════════════════════════ */}
         {/* PROJETOS EM DESTAQUE - 1 Card Grande + 3 Cards Pequenos */}
         {/* ════════════════════════════════════════════════════════════════ */}
-        <section className="py-12 md:py-16 bg-gradient-to-b from-transparent to-black/20 dark:to-black/40">
+        <section className={`py-12 md:py-16 bg-gradient-to-b from-transparent ${theme === 'dark' ? 'to-black/40' : 'to-black/10'}`}>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             {/* Título */}
             <div className="mb-10 text-center">
               <h2 className="font-handel text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.12em] mb-3 text-theme-light-main">
                 {lang === 'pt' ? 'Projetos em Destaque' : lang === 'es' ? 'Proyectos Destacados' : lang === 'fr' ? 'Projets en Vedette' : 'Featured Projects'}
               </h2>
-              <p className="text-sm md:text-base text-slate-700 dark:text-slate-300">
+              <p className={`text-sm md:text-base ${theme === 'dark' ? 'text-slate-300' : 'text-slate-700'}`}>
                 {lang === 'pt' ? 'Uma seleção dos nossos trabalhos mais emblemáticos' : lang === 'es' ? 'Una selección de nuestros trabajos más emblemáticos' : 'A selection of our most iconic work'}
               </p>
             </div>
@@ -1078,13 +1079,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         </section>
 
         {/* Nossas Soluções - Grid Visual COMPACTO */}
-        <section className="py-10 md:py-12 bg-gradient-to-b from-transparent via-black/5 to-transparent dark:via-white/5">
+        <section className={`py-10 md:py-12 bg-gradient-to-b from-transparent ${theme === 'dark' ? 'via-white/5' : 'via-black/5'} to-transparent`}>
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="mb-10 text-center">
               <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-[0.12em] mb-4 text-theme-light-main">
                 {lang === 'pt' ? 'O que criamos' : lang === 'es' ? 'Qué creamos' : lang === 'fr' ? 'Ce que nous créons' : 'What we create'}
               </h2>
-              <p className="text-slate-700 dark:text-slate-300 max-w-2xl mx-auto text-lg">
+              <p className={`${theme === 'dark' ? 'text-slate-300' : 'text-slate-700'} max-w-2xl mx-auto text-lg`}>
                 {lang === 'pt' ? 'Soluções completas para transformar ideias em experiências memoráveis' : lang === 'es' ? 'Soluciones completas para transformar ideas en experiencias memorables' : lang === 'fr' ? 'Solutions complètes pour transformer les idées en expériences mémorables' : 'Complete solutions to transform ideas into memorable experiences'}
               </p>
             </div>
@@ -1226,7 +1227,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             Inspiração: Apple, Tesla, Sites Premium 2026
             Glow animado + Destaque vermelho Azimut
         ═══════════════════════════════════════════════════════════ */}
-        <section className="relative py-20 md:py-32 overflow-hidden bg-gradient-to-b from-transparent via-black/30 to-black/60 dark:via-black/60 dark:to-black/90">
+        <section className={`relative py-20 md:py-32 overflow-hidden bg-gradient-to-b from-transparent ${theme === 'dark' ? 'via-black/60 to-black/90' : 'via-black/20 to-black/40'}`}>
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-5">
             <div className="absolute inset-0" style={{
@@ -1252,7 +1253,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
 
             {/* Subtítulo */}
             <p 
-              className="text-lg md:text-xl text-slate-300 dark:text-slate-400 max-w-3xl mx-auto mb-12"
+              className={`text-lg md:text-xl ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} max-w-3xl mx-auto mb-12`}
               style={{
                 animation: 'fadeInUp 0.8s ease-out 0.2s both'
               }}
@@ -1310,7 +1311,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
 
               {/* Texto pequeno abaixo */}
               <p 
-                className="mt-6 text-sm text-slate-400 dark:text-slate-500"
+                className={`mt-6 text-sm ${theme === 'dark' ? 'text-slate-500' : 'text-slate-600'}`}
                 style={{
                   animation: 'fadeInUp 0.8s ease-out 0.6s both'
                 }}
