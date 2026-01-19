@@ -46,26 +46,26 @@ const SEOGlobal: React.FC<SEOGlobalProps> = ({ lang }) => {
     address: [
       {
         '@type': 'PostalAddress',
-        streetAddress: 'Rio de Janeiro, RJ',
+        streetAddress: 'Rua Senador Vergueiro, 52, Flamengo',
         addressLocality: 'Rio de Janeiro',
         addressRegion: 'RJ',
-        postalCode: '22041-080',
+        postalCode: '22230-000',
         addressCountry: 'BR'
       },
       {
         '@type': 'PostalAddress',
-        streetAddress: 'Florianópolis, SC',
+        streetAddress: 'Av Hercilio Luz, 839, Centro',
         addressLocality: 'Florianópolis',
         addressRegion: 'SC',
-        postalCode: '88000-000',
+        postalCode: '88020-010',
         addressCountry: 'BR'
       },
       {
         '@type': 'PostalAddress',
-        streetAddress: 'Vancouver, BC',
+        streetAddress: '#1636 Rarost, Downtown Westend',
         addressLocality: 'Vancouver',
         addressRegion: 'BC',
-        postalCode: 'V6B 1A1',
+        postalCode: 'V6G 1G7',
         addressCountry: 'CA'
       }
     ],
@@ -225,10 +225,10 @@ const SEOGlobal: React.FC<SEOGlobalProps> = ({ lang }) => {
     priceRange: '$$$',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Copacabana',
+      streetAddress: 'Rua Senador Vergueiro, 52, Flamengo',
       addressLocality: 'Rio de Janeiro',
       addressRegion: 'RJ',
-      postalCode: '22041-080',
+      postalCode: '22230-000',
       addressCountry: 'BR'
     },
     geo: {
