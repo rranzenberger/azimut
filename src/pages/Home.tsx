@@ -191,7 +191,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         url={seo.url}
         type="website"
       />
-      <main className="relative">
+      <main className="relative film-grain">
         {/* Estrela de fundo - HOME: Ambos os temas (DESKTOP ONLY) */}
         <div 
           className="hidden lg:block pointer-events-none fixed top-[120px] -right-28 md:-right-40 h-[520px] w-[520px] md:h-[680px] md:w-[680px]"

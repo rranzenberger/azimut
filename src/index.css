@@ -167,11 +167,11 @@ body {
   filter: contrast(1.4) brightness(1.3);
 }
 
-/* Granulação mais visível no tema CLARO também */
+/* Granulação SUTIL no tema CLARO */
 [data-theme="light"] .film-grain::before {
-  opacity: 0.35; /* AUMENTADO - mais visível no claro */
-  mix-blend-mode: multiply; /* Multiply para marcar no fundo claro */
-  filter: contrast(1.3) brightness(0.95);
+  opacity: 0.15; /* REDUZIDO - sutil no claro */
+  mix-blend-mode: multiply;
+  filter: contrast(1.1) brightness(0.98);
 }
 
 /* ═══════════════════════════════════════════════════════════════
