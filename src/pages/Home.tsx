@@ -435,58 +435,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             
           </div>
           
-          {/* ═══════════════════════════════════════════════════════════════════
-              SEÇÃO LOGO ANIMADA - HERO PRINCIPAL (aparece primeiro!)
-              Full-width: De borda a borda da tela (viewport completo)
-          ═══════════════════════════════════════════════════════════════════ */}
-          <div 
-            className="lg:hidden relative" 
-            style={{ 
-              width: '100vw',
-              marginLeft: 'calc(-50vw + 50%)',
-              marginRight: 'calc(-50vw + 50%)',
-              marginTop: '-80px',
-              paddingTop: '80px'
-            }}
-          >
-            {/* Borda superior vermelha SÓLIDA */}
-            <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
-            
-            {/* Container com fundo escuro - Altura 250px */}
-            <div 
-              className="relative"
-              style={{
-                background: theme === 'dark'
-                  ? '#0a0e18' // Azul escuro sólido
-                  : '#2a2825', // Marrom escuro sólido
-                height: '250px', // ✅ Altura REDUZIDA (260px → 250px)
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: 0,
-                overflow: 'hidden'
-              }}
-            >
-              {/* Logo Animada - object-contain para não cropar */}
-              <div className="relative w-full h-full">
-                <AnimatedLogo />
-              </div>
-            </div>
-            
-            {/* Borda inferior vermelha SÓLIDA */}
-            <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
-            
-            {/* Tagline IMMERSIVE - GRANDE e destaque */}
-            <div className="relative py-8 text-center px-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
-              <p className={`font-sora uppercase tracking-[0.2em] leading-relaxed font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ fontSize: 'clamp(1rem, 4vw, 1.4rem)' }}>
-                <span className="block">IMMERSIVE • INTERACTIVE</span>
-                <span className="block mt-2">CINEMATIC EXPERIENCES</span>
-              </p>
-            </div>
-          </div>
-          
-          {/* MOBILE/TABLET: Conteúdo após logo animada */}
-          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden mt-8">
+          {/* MOBILE/TABLET: Conteúdo ANTES do vídeo */}
+          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ marginTop: '-80px', paddingTop: '80px' }}>
             
             {/* Conteúdo Principal */}
             <div className="relative z-10 w-full text-left space-y-3 px-0">
@@ -494,9 +444,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               {/* Badge AZIMUT - NO TOPO */}
               <div className="inline-flex items-center gap-1.5 font-sora text-[0.6rem] sm:text-[0.65rem] uppercase tracking-[0.2em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.05s' }}>
                 <img 
-                  src="/estela6-clara.svg" 
+                  src={theme === 'dark' ? '/estela6-clara.svg' : '/estela6-escura.svg'}
                   alt="" 
-                  className="w-2 h-2 sm:w-2.5 sm:h-2.5"
+                  className="w-2.5 h-2.5 sm:w-3 sm:h-3"
                 />
                 <span className="text-azimut-red font-semibold">AZIMUT</span>
                 <span className={theme === 'dark' ? 'text-white/40' : 'text-slate-600'}>•</span>
@@ -557,9 +507,62 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               <p className={`text-[0.75rem] sm:text-[0.85rem] leading-relaxed animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/90' : 'text-[#4a4543]'}`} style={{ animationDelay: '0.15s' }}>
                 {heroSubtitle.split('.')[0]}.
               </p>
-              
-              {/* 4 Cards de Serviços - Grid 2x2 */}
-              <div className="grid grid-cols-2 gap-2 w-full animate-fade-in-up opacity-0" style={{ animationDelay: '0.2s' }}>
+            </div>
+          </div>
+          
+          {/* ═══════════════════════════════════════════════════════════════════
+              SEÇÃO LOGO ANIMADA - APÓS "EXPERIÊNCIAS QUE CONECTAM MUNDOS"
+              Full-width: De borda a borda da tela (viewport completo)
+          ═══════════════════════════════════════════════════════════════════ */}
+          <div 
+            className="lg:hidden relative mt-6" 
+            style={{ 
+              width: '100vw',
+              marginLeft: 'calc(-50vw + 50%)',
+              marginRight: 'calc(-50vw + 50%)'
+            }}
+          >
+            {/* Borda superior vermelha SÓLIDA */}
+            <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
+            
+            {/* Container com fundo escuro - Altura 250px */}
+            <div 
+              className="relative"
+              style={{
+                background: theme === 'dark'
+                  ? '#0a0e18' // Azul escuro sólido
+                  : '#2a2825', // Marrom escuro sólido
+                height: '250px', // ✅ Altura REDUZIDA (260px → 250px)
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 0,
+                overflow: 'hidden'
+              }}
+            >
+              {/* Logo Animada - object-contain para não cropar */}
+              <div className="relative w-full h-full">
+                <AnimatedLogo />
+              </div>
+            </div>
+            
+            {/* Borda inferior vermelha SÓLIDA */}
+            <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
+            
+            {/* Tagline IMMERSIVE - GRANDE e destaque */}
+            <div className="relative py-8 text-center px-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.2s' }}>
+              <p className={`font-sora uppercase tracking-[0.2em] leading-relaxed font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ fontSize: 'clamp(1rem, 4vw, 1.4rem)' }}>
+                <span className="block">IMMERSIVE • INTERACTIVE</span>
+                <span className="block mt-2">CINEMATIC EXPERIENCES</span>
+              </p>
+            </div>
+          </div>
+          
+          {/* MOBILE/TABLET: 4 Cards APÓS o vídeo */}
+          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden mt-6">
+            
+            {/* Conteúdo Principal */}
+            <div className="relative z-10 w-full text-left space-y-3 px-0">
                 {/* Cinema & AV */}
                 <div className={`flex items-center gap-1.5 p-2.5 rounded-lg border border-azimut-red/30 ${
                   theme === 'dark' ? 'bg-black/60' : 'bg-white/80'
