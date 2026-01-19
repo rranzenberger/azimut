@@ -272,31 +272,20 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               style={{ display: 'block' }}
             >
               <img
-                src={
-                  // Mobile: logobasica.svg (logo simples sem texto)
-                  // Desktop: logo padrão SVG
-                  isMobile 
-                    ? '/logobasica.svg'
-                    : '/logo-topo-site.svg'
-                }
-                alt="Azimut – Immersive • Interactive • Cinematic Experiences"
+                src="/logobasicaa.png"
+                alt="Azimut"
                 className="transition-all duration-300"
                 style={{ 
-                height: isScrolled ? '42px' : (isMobile ? '48px' : '52px'), // Mobile: 48px, Desktop: 52px
+                height: isScrolled ? '42px' : '48px',
                 width: 'auto',
                 maxWidth: 'none',
                 display: 'block',
-                transition: 'height 0.3s ease',
-                backgroundColor: 'transparent'
+                transition: 'height 0.3s ease'
               }}
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  console.error('[Logo Error] Failed to load:', target.src);
-                  // Fallback: Tentar SVG padrão
-                  if (target.src.includes('.png')) {
-                    console.log('[Logo Fallback] Tentando SVG...');
-                    target.src = '/logo-topo-site.svg';
-                  }
+                  console.error('[Logo Error] Tentando fallback:', target.src);
+                  target.src = '/logobasica.svg';
                 }}
               />
             </LangLink>

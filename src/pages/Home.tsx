@@ -206,7 +206,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* margin-top negativo compensa o padding do Layout */}
         {/* ════════════════════════════════════════════════════════════════ */}
         <section 
-          className="relative min-h-[90vh] flex items-center overflow-x-hidden overflow-y-auto film-grain py-4 sm:py-6 md:py-8"
+          className="relative min-h-[90vh] flex flex-col lg:flex-row lg:items-center overflow-x-hidden overflow-y-auto film-grain py-4 sm:py-6 md:py-8"
           style={{ marginTop: '-80px', paddingTop: '80px' }}
         >
           {/* Background: Imagem do Backoffice (heroBackgroundImage) ou Featured Project */}
