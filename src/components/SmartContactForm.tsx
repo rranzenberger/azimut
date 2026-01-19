@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Lang } from '../i18n'
 import ApiService from '../services/api'
+import { useFormTracking } from '../hooks/useFormTracking'
 
 // SelectField Component - Customizado (original do formulário)
 interface SelectFieldProps {
@@ -799,12 +800,12 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       // Traduzir mensagens comuns
       if (!errorMsg || errorMsg.includes('Failed to fetch') || errorMsg.includes('NetworkError') || errorMsg.includes('fetch')) {
         errorMsg = lang === 'pt' 
-          ? 'Não foi possível conectar ao servidor no momento. Por favor, entre em contato diretamente por email: contact@azimutimmersive.com ou WhatsApp: +55 (48) 99970-1301'
+          ? 'Não foi possível conectar ao servidor no momento. Por favor, entre em contato diretamente por email: contact@azmt.com.br ou WhatsApp: +55 (48) 99970-1301'
           : lang === 'es'
-          ? 'No se pudo conectar al servidor en este momento. Por favor, contáctenos directamente por email: contact@azimutimmersive.com o WhatsApp: +55 (48) 99970-1301'
+          ? 'No se pudo conectar al servidor en este momento. Por favor, contáctenos directamente por email: contact@azmt.com.br o WhatsApp: +55 (48) 99970-1301'
           : lang === 'fr'
-          ? 'Impossible de se connecter au serveur pour le moment. Veuillez nous contacter directement par email: contact@azimutimmersive.com ou WhatsApp: +55 (48) 99970-1301'
-          : 'Could not connect to server at this time. Please contact us directly via email: contact@azimutimmersive.com or WhatsApp: +55 (48) 99970-1301'
+          ? 'Impossible de se connecter au serveur pour le moment. Veuillez nous contacter directement par email: contact@azmt.com.br ou WhatsApp: +55 (48) 99970-1301'
+          : 'Could not connect to server at this time. Please contact us directly via email: contact@azmt.com.br or WhatsApp: +55 (48) 99970-1301'
       } else if (errorMsg.includes('timeout') || errorMsg.includes('Tempo') || errorMsg.includes('connection timeout')) {
         errorMsg = lang === 'pt'
           ? 'Tempo de conexão esgotado. Por favor, tente novamente.'
@@ -815,23 +816,23 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
           : 'Connection timeout. Please try again.'
       } else if (errorMsg.includes('API não configurada')) {
         errorMsg = lang === 'pt'
-          ? 'Sistema em manutenção. Por favor, entre em contato: contact@azimutimmersive.com'
+          ? 'Sistema em manutenção. Por favor, entre em contato: contact@azmt.com.br'
           : lang === 'es'
-          ? 'Sistema en mantenimiento. Por favor, contáctenos: contact@azimutimmersive.com'
+          ? 'Sistema en mantenimiento. Por favor, contáctenos: contact@azmt.com.br'
           : lang === 'fr'
-          ? 'Système en maintenance. Veuillez nous contacter: contact@azimutimmersive.com'
-          : 'System maintenance. Please contact: contact@azimutimmersive.com'
+          ? 'Système en maintenance. Veuillez nous contacter: contact@azmt.com.br'
+          : 'System maintenance. Please contact: contact@azmt.com.br'
       }
       
       // Se ainda não tiver mensagem, usar padrão
       if (!errorMsg) {
         errorMsg = t.errorMessage || (lang === 'pt' 
-          ? 'Erro ao enviar. Por favor, tente novamente ou entre em contato: contact@azimutimmersive.com'
+          ? 'Erro ao enviar. Por favor, tente novamente ou entre em contato: contact@azmt.com.br'
           : lang === 'es'
-          ? 'Error al enviar. Por favor, intente nuevamente o contáctenos: contact@azimutimmersive.com'
+          ? 'Error al enviar. Por favor, intente nuevamente o contáctenos: contact@azmt.com.br'
           : lang === 'fr'
-          ? 'Erreur lors de l\'envoi. Veuillez réessayer ou nous contacter: contact@azimutimmersive.com'
-          : 'Error submitting. Please try again or contact: contact@azimutimmersive.com')
+          ? 'Erreur lors de l\'envoi. Veuillez réessayer ou nous contacter: contact@azmt.com.br'
+          : 'Error submitting. Please try again or contact: contact@azmt.com.br')
       }
       
       setError(errorMsg)
@@ -1516,10 +1517,10 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                         </p>
                         <div className="flex flex-col gap-1.5 text-xs">
                           <a 
-                            href="mailto:contact@azimutimmersive.com" 
+                            href="mailto:contact@azmt.com.br" 
                             className="text-red-300 hover:text-red-200 underline [data-theme='light']:text-red-600 [data-theme='light']:hover:text-red-700"
                           >
-                            📧 contact@azimutimmersive.com
+                            📧 contact@azmt.com.br
                           </a>
                           <a 
                             href="https://wa.me/5548999701301" 

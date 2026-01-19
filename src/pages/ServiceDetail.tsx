@@ -46,34 +46,84 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
 
   // Scroll-reveal animations para seções (sutil, não intrusivo)
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up')
-            entry.target.classList.remove('opacity-0')
-          }
-        })
-      },
-      {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1 // Dispara quando 10% da seção está visível
-      }
-    )
+    let observer: IntersectionObserver | null = null
+    let timeoutId: NodeJS.Timeout | null = null
 
-    sectionRefs.current.forEach((ref) => {
-      if (ref) {
-        observer.observe(ref)
-      }
-    })
+    // Função para verificar se elemento está visível (parcialmente ou completamente)
+    const isElementVisible = (element: Element): boolean => {
+      const rect = element.getBoundingClientRect()
+      const windowHeight = window.innerHeight || document.documentElement.clientHeight
+      const windowWidth = window.innerWidth || document.documentElement.clientWidth
+      
+      // Elemento está visível se qualquer parte dele está na viewport
+      return (
+        rect.bottom > 0 &&
+        rect.top < windowHeight &&
+        rect.right > 0 &&
+        rect.left < windowWidth
+      )
+    }
 
-    return () => {
+    // Aguardar próximo tick para garantir que os refs foram atribuídos
+    timeoutId = setTimeout(() => {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('animate-fade-in-up')
+              entry.target.classList.remove('opacity-0')
+            }
+          })
+        },
+        {
+          root: null,
+          rootMargin: '50px', // Margem para detectar antes de entrar na viewport
+          threshold: 0.01 // Dispara quando qualquer parte da seção está visível
+        }
+      )
+
+      // Observar todos os refs que existem
       sectionRefs.current.forEach((ref) => {
         if (ref) {
-          observer.unobserve(ref)
+          // Se já está visível, animar imediatamente
+          if (isElementVisible(ref)) {
+            ref.classList.add('animate-fade-in-up')
+            ref.classList.remove('opacity-0')
+          } else {
+            observer?.observe(ref)
+          }
         }
       })
+
+      // Também observar elementos com a classe section-container diretamente (fallback)
+      const sectionElements = document.querySelectorAll('.section-container.opacity-0')
+      sectionElements.forEach((el) => {
+        // Se já está visível, animar imediatamente
+        if (isElementVisible(el)) {
+          el.classList.add('animate-fade-in-up')
+          el.classList.remove('opacity-0')
+        } else {
+          observer?.observe(el)
+        }
+      })
+    }, 100) // Pequeno delay para garantir que o DOM foi atualizado
+
+    // Cleanup function
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+      if (observer) {
+        sectionRefs.current.forEach((ref) => {
+          if (ref) {
+            observer.unobserve(ref)
+          }
+        })
+        const sectionElements = document.querySelectorAll('.section-container.opacity-0')
+        sectionElements.forEach((el) => {
+          observer.unobserve(el)
+        })
+      }
     }
   }, [slug])
 
