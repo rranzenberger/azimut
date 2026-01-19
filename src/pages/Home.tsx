@@ -642,16 +642,16 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         <div className={`relative py-12 md:py-16 ${
           theme === 'dark' 
             ? 'bg-gradient-to-b from-slate-950 to-black' 
-            : 'bg-gradient-to-b from-[#1e1a16] to-[#2a2318]'
+            : 'bg-[#d3cec3]'
         }`}>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="font-sora text-[0.75rem] uppercase tracking-[0.24em] mb-3 animate-fade-in-up text-white/70">
+            <h2 className={`font-sora text-[0.75rem] uppercase tracking-[0.24em] mb-3 animate-fade-in-up ${theme === 'dark' ? 'text-white/70' : 'text-[#1e1a16]/70'}`}>
               {lang === 'pt' ? 'Assista Nosso Trabalho' : lang === 'es' ? 'Ve Nuestro Trabajo' : lang === 'fr' ? 'Regardez Notre Travail' : 'Watch Our Work'}
             </h2>
-            {/* Linha vermelha larga com fade nas pontas - adapta ao idioma */}
+            {/* Linha vermelha GRANDE com fade nas pontas - adapta ao idioma */}
             <div className="h-[2px] mx-auto" style={{
-              width: lang === 'pt' ? '240px' : lang === 'fr' ? '260px' : lang === 'es' ? '220px' : '200px',
-              background: 'linear-gradient(90deg, transparent 0%, #c92337 10%, #c92337 90%, transparent 100%)'
+              width: lang === 'pt' ? '320px' : lang === 'fr' ? '340px' : lang === 'es' ? '300px' : '280px',
+              background: 'linear-gradient(90deg, transparent 0%, #c92337 5%, #c92337 95%, transparent 100%)'
             }} />
           </div>
         </div>
