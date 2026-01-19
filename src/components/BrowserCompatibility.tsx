@@ -64,6 +64,13 @@ const BrowserCompatibility: React.FC<{ children: React.ReactNode }> = ({ childre
       // Classificar browser
       let mode: 'modern' | 'old' | 'veryOld' = 'modern'
 
+      // Se versão = 0 (não detectou), assumir navegador moderno
+      if (info.version === 0) {
+        mode = 'modern'
+        setBrowserMode(mode)
+        return
+      }
+
       // MUITO ANTIGO: Mostra versão simplificada HTML puro
       if (
         (info.browser === 'Internet Explorer' && info.version < 10) ||
