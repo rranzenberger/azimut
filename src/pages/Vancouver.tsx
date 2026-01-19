@@ -50,7 +50,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
     pt: {
       title: 'Estudar em Vancouver',
       subtitle: 'Sua carreira internacional começa aqui',
-      heroDescription: 'Forme-se em 1 ano nas melhores escolas de mídia do Canadá, com 90%+ de empregabilidade e possibilidade de residência permanente. Agente oficial VFS/VanArts para alunos de todo o mundo.',
+      heroDescription: '1 ano. 90%+ empregabilidade. Residência permanente possível.',
+      heroDescriptionFull: 'Forme-se em 1 ano nas melhores escolas de mídia do Canadá, com 90%+ de empregabilidade e possibilidade de residência permanente. Agente oficial VFS/VanArts para alunos de todo o mundo.',
       ctaHero: 'Calcule seu investimento',
       
       whyTitle: 'Por que Vancouver?',
@@ -220,7 +221,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
     en: {
       title: 'Study in Vancouver',
       subtitle: 'Your international career starts here',
-      heroDescription: 'Graduate in 1 year at Canada\'s best media schools, with 90%+ employability and possibility of permanent residence. Official VFS/VanArts agent for students worldwide.',
+      heroDescription: '1 year. 90%+ employability. Permanent residence possible.',
+      heroDescriptionFull: 'Graduate in 1 year at Canada\'s best media schools, with 90%+ employability and possibility of permanent residence. Official VFS/VanArts agent for students worldwide.',
       ctaHero: 'Calculate your investment',
       whyTitle: 'Why Vancouver?',
       whyItems: [
@@ -276,8 +278,9 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
     },
     es: {
       title: 'Estudiar en Vancouver',
-      subtitle: 'Una alternativa inteligente a la universidad tradicional',
-      heroDescription: 'Graduarse en 1 año en las mejores escuelas de medios de Canadá, con más del 90% de empleabilidad y posibilidad de residencia permanente. Agente oficial VFS/VanArts para estudiantes de todo el mundo.',
+      subtitle: 'Tu carrera internacional comienza aquí',
+      heroDescription: '1 año. 90%+ empleabilidad. Residencia permanente posible.',
+      heroDescriptionFull: 'Graduarse en 1 año en las mejores escuelas de medios de Canadá, con más del 90% de empleabilidad y posibilidad de residencia permanente. Agente oficial VFS/VanArts para estudiantes de todo el mundo.',
       ctaHero: 'Calcular mi inversión',
       whyTitle: '¿Por qué Vancouver?',
       whyItems: [
@@ -333,8 +336,9 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
     },
     fr: {
       title: 'Étudier à Vancouver',
-      subtitle: 'Une alternative intelligente à l\'université traditionnelle',
-      heroDescription: 'Diplômez-vous en 1 an dans les meilleures écoles de médias du Canada, avec plus de 90% d\'employabilité et possibilité de résidence permanente. Agent officiel VFS/VanArts pour étudiants du monde entier.',
+      subtitle: 'Votre carrière internationale commence ici',
+      heroDescription: '1 an. 90%+ employabilité. Résidence permanente possible.',
+      heroDescriptionFull: 'Diplômez-vous en 1 an dans les meilleures écoles de médias du Canada, avec plus de 90% d\'employabilité et possibilité de résidence permanente. Agent officiel VFS/VanArts pour étudiants du monde entier.',
       ctaHero: 'Calculer mon investissement',
       whyTitle: 'Pourquoi Vancouver?',
       whyItems: [
@@ -441,6 +445,20 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
           {/* Background Image Carousel - Inteligente por hora do dia */}
           <HeroImage image={image} />
 
+          {/* Overlay escuro para melhorar legibilidade do texto - MAIS ESCURO no mobile */}
+          <div 
+            className="absolute inset-0 z-[5]"
+            style={{
+              background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.7) 100%)'
+            }}
+          />
+          <div 
+            className="absolute inset-0 z-[5] sm:hidden"
+            style={{
+              background: 'rgba(0,0,0,0.5)' // Overlay extra escuro APENAS no mobile
+            }}
+          />
+
           {/* Content */}
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             {/* Badges - sempre escuros para funcionar sobre qualquer fundo */}
@@ -476,12 +494,20 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               </span>
             </h1>
 
-            <p className="text-2xl md:text-3xl text-white/90 mb-4 font-light">
+            <p className="text-xl sm:text-2xl md:text-3xl text-white/95 mb-4 font-light" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}>
               {t.subtitle}
             </p>
 
-            <p className="text-lg md:text-xl text-white/70 mb-10 max-w-3xl mx-auto leading-relaxed">
-              {t.heroDescription}
+            {/* MOBILE: Texto curto e direto | DESKTOP: Texto completo */}
+            <p 
+              className="text-base sm:text-lg md:text-xl text-white/90 mb-6 sm:mb-10 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0"
+              style={{ 
+                textShadow: '0 2px 10px rgba(0,0,0,0.8), 0 1px 3px rgba(0,0,0,0.6)',
+                fontWeight: 500
+              }}
+            >
+              <span className="block sm:hidden">{t.heroDescription}</span>
+              <span className="hidden sm:block">{t.heroDescriptionFull || t.heroDescription}</span>
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
