@@ -435,8 +435,60 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             
           </div>
           
-          {/* MOBILE/TABLET: Layout compacto e organizado */}
-          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ marginTop: '-80px', paddingTop: '90px' }}>
+          {/* ═══════════════════════════════════════════════════════════════════
+              SEÇÃO LOGO ANIMADA - HERO PRINCIPAL (aparece primeiro!)
+              Full-width: De borda a borda da tela (viewport completo)
+          ═══════════════════════════════════════════════════════════════════ */}
+          <div 
+            className="lg:hidden relative" 
+            style={{ 
+              width: '100vw',
+              marginLeft: 'calc(-50vw + 50%)',
+              marginRight: 'calc(-50vw + 50%)',
+              marginTop: '-80px',
+              paddingTop: '80px'
+            }}
+          >
+            {/* Borda superior vermelha SÓLIDA */}
+            <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
+            
+            {/* Container com fundo escuro - APENAS LOGO ANIMADA */}
+            <div 
+              className="relative"
+              style={{
+                background: theme === 'dark'
+                  ? '#0a0e18' // Azul escuro sólido
+                  : '#2a2825', // Marrom escuro sólido
+                minHeight: '320px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 0,
+                overflow: 'hidden'
+              }}
+            >
+              {/* Logo Animada 100VW - DE FORA A FORA */}
+              <div className="relative w-full h-full min-h-[320px] flex items-center justify-center">
+                <div className="relative w-full h-full">
+                  <AnimatedLogo />
+                </div>
+              </div>
+            </div>
+            
+            {/* Borda inferior vermelha SÓLIDA */}
+            <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
+            
+            {/* Tagline IMMERSIVE - GRANDE e destaque */}
+            <div className="relative py-8 text-center px-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
+              <p className={`font-sora uppercase tracking-[0.2em] leading-relaxed font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ fontSize: 'clamp(1rem, 4vw, 1.4rem)' }}>
+                <span className="block">IMMERSIVE • INTERACTIVE</span>
+                <span className="block mt-2">CINEMATIC EXPERIENCES</span>
+              </p>
+            </div>
+          </div>
+          
+          {/* MOBILE/TABLET: Conteúdo após logo animada */}
+          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden mt-8">
             
             {/* Conteúdo Principal */}
             <div className="relative z-10 w-full text-left space-y-3 px-0">
@@ -554,57 +606,6 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          
-          {/* ═══════════════════════════════════════════════════════════════════
-              SEÇÃO LOGO ANIMADA - Elemento especial com fundo escuro
-              Full-width: De borda a borda da tela (viewport completo)
-              ABAIXO DOS CARDS - Separada com bordas vermelhas
-          ═══════════════════════════════════════════════════════════════════ */}
-          <div 
-            className="lg:hidden relative mt-8 mb-8" 
-            style={{ 
-              width: '100vw',
-              marginLeft: 'calc(-50vw + 50%)',
-              marginRight: 'calc(-50vw + 50%)'
-            }}
-          >
-            {/* Borda superior vermelha SÓLIDA */}
-            <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
-            
-            {/* Container com fundo escuro - APENAS LOGO ANIMADA */}
-            <div 
-              className="relative"
-              style={{
-                background: theme === 'dark'
-                  ? '#0a0e18' // Azul escuro sólido
-                  : '#2a2825', // Marrom escuro sólido
-                minHeight: '320px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: 0,
-                overflow: 'hidden'
-              }}
-            >
-              {/* Logo Animada 100VW - DE FORA A FORA */}
-              <div className="relative w-full h-full min-h-[320px] flex items-center justify-center">
-                <div className="relative w-full h-full">
-                  <AnimatedLogo />
-                </div>
-              </div>
-            </div>
-            
-            {/* Borda inferior vermelha SÓLIDA */}
-            <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
-            
-            {/* Tagline IMMERSIVE - GRANDE e destaque */}
-            <div className="relative py-8 text-center px-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
-              <p className={`font-sora uppercase tracking-[0.2em] leading-relaxed font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ fontSize: 'clamp(1rem, 4vw, 1.4rem)' }}>
-                <span className="block">IMMERSIVE • INTERACTIVE</span>
-                <span className="block mt-2">CINEMATIC EXPERIENCES</span>
-              </p>
             </div>
           </div>
         </section>
