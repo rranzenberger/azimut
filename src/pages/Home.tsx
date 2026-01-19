@@ -436,26 +436,32 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
           
           {/* MOBILE/TABLET: Layout compacto e organizado */}
-          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ paddingTop: '70px' }}>
+          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ paddingTop: '20px' }}>
             
             {/* Estrela/Logo - DIREITA, ambos os temas */}
-            <div className="absolute top-[60px] right-2 pointer-events-none" style={{ zIndex: 5 }}>
+            <div className="absolute top-[15px] right-2 pointer-events-none" style={{ zIndex: 5 }}>
               {theme === 'dark' ? (
-                <div className="w-[120px] h-[120px] sm:w-[140px] sm:h-[140px]" style={{ opacity: 0.4 }}>
+                <div className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px]" style={{ opacity: 0.4 }}>
                   <AnimatedLogo />
                 </div>
               ) : (
                 <img 
                   src="/logo-azimut-star.svg" 
                   alt="" 
-                  className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px]"
-                  style={{ opacity: 0.25, filter: 'grayscale(20%)' }}
+                  className="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px]"
+                  style={{ opacity: 0.2, filter: 'grayscale(20%)' }}
                 />
               )}
             </div>
             
             {/* Conteúdo Texto (frente) - COMPACTO */}
-            <div className="relative z-10 w-full text-left space-y-4 sm:space-y-5 px-0">
+            <div className="relative z-10 w-full text-left space-y-3 sm:space-y-4 px-0">
+              {/* Tagline da logo completa - IMMERSIVE • INTERACTIVE / CINEMATIC EXPERIENCES */}
+              <div className={`font-sora text-[0.5rem] sm:text-[0.55rem] uppercase tracking-[0.15em] leading-tight animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/70' : 'text-slate-500'}`} style={{ animationDelay: '0.05s' }}>
+                <span>IMMERSIVE • INTERACTIVE</span><br />
+                <span>CINEMATIC EXPERIENCES</span>
+              </div>
+              
               {/* Badge AZIMUT - menor */}
               <div className="inline-flex items-center gap-1.5 font-sora text-[0.6rem] sm:text-[0.65rem] uppercase tracking-[0.2em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
                 <img 
