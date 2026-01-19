@@ -578,9 +578,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               className="relative"
               style={{
                 background: theme === 'dark'
-                  ? 'linear-gradient(180deg, #0a0e18 0%, #050a14 50%, #0a0e18 100%)' // Azul escuro
-                  : 'linear-gradient(180deg, #2a2825 0%, #1e1c1a 50%, #2a2825 100%)', // Marrom escuro
-                minHeight: '280px',
+                  ? '#0a0e18' // Azul escuro sólido
+                  : '#2a2825', // Marrom escuro sólido
+                minHeight: '320px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -589,7 +589,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               }}
             >
               {/* Logo Animada 100VW - DE FORA A FORA */}
-              <div className="relative w-full h-full min-h-[280px] flex items-center justify-center">
+              <div className="relative w-full h-full min-h-[320px] flex items-center justify-center">
                 <div className="relative w-full h-full">
                   <AnimatedLogo />
                 </div>
@@ -599,11 +599,11 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             {/* Borda inferior vermelha SÓLIDA */}
             <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
             
-            {/* Tagline IMMERSIVE - FORA da área escura, abaixo */}
-            <div className="relative py-4 text-center px-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
-              <p className={`font-sora text-[0.7rem] sm:text-[0.8rem] uppercase tracking-[0.18em] leading-relaxed font-medium ${theme === 'dark' ? 'text-white/80' : 'text-[#1e1c1a]'}`}>
+            {/* Tagline IMMERSIVE - GRANDE e destaque */}
+            <div className="relative py-8 text-center px-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+              <p className={`font-sora uppercase tracking-[0.2em] leading-relaxed font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ fontSize: 'clamp(1rem, 4vw, 1.4rem)' }}>
                 <span className="block">IMMERSIVE • INTERACTIVE</span>
-                <span className="block mt-1">CINEMATIC EXPERIENCES</span>
+                <span className="block mt-2">CINEMATIC EXPERIENCES</span>
               </p>
             </div>
           </div>
