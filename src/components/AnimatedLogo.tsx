@@ -50,7 +50,6 @@ export const AnimatedLogo: React.FC = () => {
       style={{ 
         opacity: opacity, 
         transition: 'opacity 3s ease-in-out',
-        mixBlendMode: 'screen', // Luma key: preto vira transparente
         filter: 'drop-shadow(0 0 20px rgba(201, 35, 55, 0.6)) drop-shadow(0 0 40px rgba(201, 35, 55, 0.4)) drop-shadow(0 0 80px rgba(201, 35, 55, 0.2))',
         zIndex: 10,
         position: 'relative',

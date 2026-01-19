@@ -573,40 +573,39 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             {/* Borda superior vermelha SÓLIDA */}
             <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
             
-            {/* Container com fundo escuro - Condicional por tema */}
+            {/* Container com fundo escuro - APENAS LOGO ANIMADA */}
             <div 
-              className="relative py-8"
+              className="relative"
               style={{
                 background: theme === 'dark'
                   ? 'linear-gradient(180deg, #0a0e18 0%, #050a14 50%, #0a0e18 100%)' // Azul escuro
                   : 'linear-gradient(180deg, #2a2825 0%, #1e1c1a 50%, #2a2825 100%)', // Marrom escuro
-                minHeight: '320px',
+                minHeight: '280px',
                 display: 'flex',
-                flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '1.5rem',
-                padding: 0
+                padding: 0,
+                overflow: 'hidden'
               }}
             >
-              {/* Logo Animada FULL WIDTH - ocupa tela toda */}
-              <div className="relative w-full flex justify-center items-center animate-fade-in-up opacity-0" style={{ animationDelay: '0.3s', minHeight: '240px' }}>
-                <div className="relative w-full max-w-[280px] aspect-square">
+              {/* Logo Animada 100VW - DE FORA A FORA */}
+              <div className="relative w-full h-full min-h-[280px] flex items-center justify-center">
+                <div className="relative w-full h-full">
                   <AnimatedLogo />
                 </div>
-              </div>
-              
-              {/* Tagline IMMERSIVE - Abaixo da logo */}
-              <div className="relative z-10 text-center px-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
-                <p className="font-sora text-[0.7rem] sm:text-[0.8rem] uppercase tracking-[0.18em] leading-relaxed text-white/90 font-medium">
-                  <span className="block">IMMERSIVE • INTERACTIVE</span>
-                  <span className="block mt-1">CINEMATIC EXPERIENCES</span>
-                </p>
               </div>
             </div>
             
             {/* Borda inferior vermelha SÓLIDA */}
             <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
+            
+            {/* Tagline IMMERSIVE - FORA da área escura, abaixo */}
+            <div className="relative py-4 text-center px-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+              <p className={`font-sora text-[0.7rem] sm:text-[0.8rem] uppercase tracking-[0.18em] leading-relaxed font-medium ${theme === 'dark' ? 'text-white/80' : 'text-[#1e1c1a]'}`}>
+                <span className="block">IMMERSIVE • INTERACTIVE</span>
+                <span className="block mt-1">CINEMATIC EXPERIENCES</span>
+              </p>
+            </div>
           </div>
         </section>
 
