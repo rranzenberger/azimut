@@ -646,12 +646,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         }`}>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
             <h2 className={`font-handel text-xl md:text-2xl lg:text-3xl uppercase tracking-[0.15em] font-bold mb-5 animate-fade-in-up ${theme === 'dark' ? 'text-white/90' : 'text-[#1e1a16]/90'}`}>
-              {lang === 'pt' ? 'Assista Nosso Trabalho' : lang === 'es' ? 'Ve Nuestro Trabajo' : lang === 'fr' ? 'Regardez Notre Travail' : 'Watch Our Work'}
+              {lang === 'pt' ? 'Assista Nossos Trabalhos' : lang === 'es' ? 'Ve Nuestros Trabajos' : lang === 'fr' ? 'Regardez Nos Travaux' : 'Watch Our Work'}
             </h2>
             {/* Linha vermelha acompanha largura do texto */}
             <div className="h-[3px] mx-auto" style={{
-              background: 'linear-gradient(90deg, transparent 0%, #c92337 6%, #c92337 94%, transparent 100%)',
-              width: lang === 'pt' ? '460px' : lang === 'fr' ? '480px' : lang === 'es' ? '440px' : '420px'
+              background: 'linear-gradient(90deg, transparent 0%, #c92337 5%, #c92337 95%, transparent 100%)',
+              width: lang === 'pt' ? '520px' : lang === 'fr' ? '500px' : lang === 'es' ? '510px' : '420px'
             }} />
           </div>
         </div>
