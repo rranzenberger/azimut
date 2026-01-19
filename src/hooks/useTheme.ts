@@ -23,22 +23,36 @@ export function useTheme() {
 
   useEffect(() => {
     // Aplicar tema ao document (múltiplos lugares para forçar atualização)
-    document.documentElement.setAttribute('data-theme', theme)
-    document.body.setAttribute('data-theme', theme)
-    document.body.className = document.body.className.replace(/theme-\w+/, '') + ` theme-${theme}`
+    const html = document.documentElement
+    const body = document.body
+    
+    // Remover tema anterior
+    html.removeAttribute('data-theme')
+    body.removeAttribute('data-theme')
+    body.className = body.className.replace(/theme-\w+/g, '')
+    
+    // Aplicar novo tema
+    html.setAttribute('data-theme', theme)
+    body.setAttribute('data-theme', theme)
+    body.classList.add(`theme-${theme}`)
+    
+    // Salvar no localStorage
     localStorage.setItem('azimut-theme', theme)
     
     // Atualizar meta theme-color para mobile
-    const metaThemeColor = document.querySelector('meta[name="theme-color"]')
-    if (metaThemeColor) {
-      metaThemeColor.setAttribute('content', theme === 'dark' ? '#050814' : '#d3cec3')
+    let metaThemeColor = document.querySelector('meta[name="theme-color"]')
+    if (!metaThemeColor) {
+      metaThemeColor = document.createElement('meta')
+      metaThemeColor.setAttribute('name', 'theme-color')
+      document.head.appendChild(metaThemeColor)
     }
+    metaThemeColor.setAttribute('content', theme === 'dark' ? '#050814' : '#d3cec3')
     
-    // Forçar repaint (fix para gradientes não atualizarem)
-    document.body.style.display = 'none'
-    setTimeout(() => {
-      document.body.style.display = ''
-    }, 0)
+    // Forçar reflow para garantir que CSS seja aplicado
+    void html.offsetHeight
+    
+    // Disparar evento customizado para componentes que precisam reagir
+    window.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }))
   }, [theme])
 
   const toggleTheme = () => {
