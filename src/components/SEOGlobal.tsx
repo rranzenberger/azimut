@@ -46,22 +46,27 @@ const SEOGlobal: React.FC<SEOGlobalProps> = ({ lang }) => {
     address: [
       {
         '@type': 'PostalAddress',
-        addressCountry: 'BR',
+        streetAddress: 'Rio de Janeiro, RJ',
         addressLocality: 'Rio de Janeiro',
         addressRegion: 'RJ',
-        postalCode: '22041-080'
+        postalCode: '22041-080',
+        addressCountry: 'BR'
       },
       {
         '@type': 'PostalAddress',
-        addressCountry: 'BR',
+        streetAddress: 'Florianópolis, SC',
         addressLocality: 'Florianópolis',
-        addressRegion: 'SC'
+        addressRegion: 'SC',
+        postalCode: '88000-000',
+        addressCountry: 'BR'
       },
       {
         '@type': 'PostalAddress',
-        addressCountry: 'CA',
+        streetAddress: 'Vancouver, BC',
         addressLocality: 'Vancouver',
-        addressRegion: 'BC'
+        addressRegion: 'BC',
+        postalCode: 'V6B 1A1',
+        addressCountry: 'CA'
       }
     ],
     contactPoint: [
