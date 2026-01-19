@@ -23,6 +23,8 @@ interface PageContent {
   hero: {
     slogan?: string | null;
     subtitle?: string | null;
+    descriptionMobile?: string | null;
+    descriptionDesktop?: string | null;
   };
   updatedAt: string;
 }
@@ -86,6 +88,8 @@ export function useBackofficeContent(
           hero: {
             slogan: data.hero[lang]?.slogan,
             subtitle: data.hero[lang]?.subtitle,
+            descriptionMobile: data.hero[lang]?.descriptionMobile,
+            descriptionDesktop: data.hero[lang]?.descriptionDesktop,
           },
           updatedAt: data.updatedAt,
         };

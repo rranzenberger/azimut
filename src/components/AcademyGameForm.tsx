@@ -20,6 +20,7 @@ interface FormData {
   school?: 'vanarts' | 'vfs' | 'both' | 'undecided'
   preferredLanguage?: Lang
   contactPreference?: 'email' | 'whatsapp' | 'call' | 'any'
+  wantsNewsletter?: boolean // 🆕 Checkbox newsletter
 }
 
 const AcademyGameForm: React.FC<AcademyGameFormProps> = ({ lang, type }) => {
@@ -29,7 +30,8 @@ const AcademyGameForm: React.FC<AcademyGameFormProps> = ({ lang, type }) => {
     contact: '',
     school: type === 'vancouver' ? 'undecided' : undefined,
     preferredLanguage: lang,
-    contactPreference: 'email'
+    contactPreference: 'email',
+    wantsNewsletter: false // 🆕 Checkbox newsletter
   })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -116,7 +118,8 @@ const AcademyGameForm: React.FC<AcademyGameFormProps> = ({ lang, type }) => {
       },
       error: 'Ops! Deu ruim. Tenta de novo?',
       back: '← Voltar',
-      skip: 'Pular'
+      skip: 'Pular',
+      newsletter: 'Quero receber novidades por email'
     },
     en: {
       title: {
@@ -195,7 +198,8 @@ const AcademyGameForm: React.FC<AcademyGameFormProps> = ({ lang, type }) => {
       },
       error: 'Oops! Something went wrong. Try again?',
       back: '← Back',
-      skip: 'Skip'
+      skip: 'Skip',
+      newsletter: 'I want to receive news by email'
     },
     es: {
       title: {
@@ -274,7 +278,8 @@ const AcademyGameForm: React.FC<AcademyGameFormProps> = ({ lang, type }) => {
       },
       error: '¡Ups! Algo salió mal. ¿Intentas de nuevo?',
       back: '← Atrás',
-      skip: 'Saltar'
+      skip: 'Saltar',
+      newsletter: 'Quiero recibir novedades por email'
     },
     fr: {
       title: {
@@ -353,7 +358,8 @@ const AcademyGameForm: React.FC<AcademyGameFormProps> = ({ lang, type }) => {
       },
       error: 'Oups! Erreur. Tu réessayes?',
       back: '← Retour',
-      skip: 'Passer'
+      skip: 'Passer',
+      newsletter: 'Je veux recevoir des nouvelles par email'
     }
   }
 
@@ -408,6 +414,26 @@ Preferência de contato: ${formData.contactPreference ? t.steps[4].options[formD
         await ApiService.submitVancouverLead(leadData)
       } else {
         await ApiService.submitLead(leadData)
+      }
+
+      // 🆕 Se marcou newsletter, criar NewsletterSubscriber
+      const isEmail = formData.contact.includes('@')
+      if (formData.wantsNewsletter && isEmail) {
+        const backofficeUrl = import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azmt.com.br'
+        try {
+          await fetch(`${backofficeUrl}/api/public/newsletter`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: formData.contact,
+              name: formData.name,
+              lang: formData.preferredLanguage || lang,
+              source: type === 'vancouver' ? 'vancouver_form' : 'academy_game_form'
+            })
+          })
+        } catch (newsletterError) {
+          console.warn('Newsletter subscription failed (non-critical):', newsletterError)
+        }
       }
 
       setSuccess(true)
@@ -514,6 +540,21 @@ Preferência de contato: ${formData.contactPreference ? t.steps[4].options[formD
               </button>
             ))}
           </div>
+        )}
+
+        {/* 🆕 Checkbox Newsletter - Última etapa */}
+        {step === totalSteps - 1 && (
+          <label className="flex items-center justify-center gap-3 cursor-pointer group mt-6 p-4 rounded-xl border-2 border-white/10 hover:border-white/30 transition-all">
+            <input
+              type="checkbox"
+              checked={formData.wantsNewsletter || false}
+              onChange={(e) => setFormData({ ...formData, wantsNewsletter: e.target.checked })}
+              className="w-5 h-5 rounded border-2 border-white/30 bg-transparent checked:bg-azimut-red checked:border-azimut-red focus:ring-2 focus:ring-azimut-red/50 cursor-pointer transition-all"
+            />
+            <span className="text-sm text-white/80 group-hover:text-white transition-colors">
+              📧 {t.newsletter}
+            </span>
+          </label>
         )}
 
         {/* Error */}

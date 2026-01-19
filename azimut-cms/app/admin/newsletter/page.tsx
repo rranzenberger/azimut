@@ -36,6 +36,8 @@ const formatSource = (source: string): { short: string; full: string } => {
     'footer': { short: 'Footer', full: 'Formulário do Footer' },
     'contact_form': { short: 'Contato', full: 'Formulário de Contato' },
     'vancouver_form': { short: 'Vancouver', full: 'Formulário Vancouver' },
+    'academy_form': { short: 'Academy', full: 'Formulário Academy Quick' },
+    'academy_game_form': { short: 'Game', full: 'Formulário Academy Game' },
     'manual': { short: 'Manual', full: 'Adicionado Manualmente' },
     'blog': { short: 'Blog', full: 'Blog / Artigos' },
   };
@@ -46,8 +48,9 @@ export default function NewsletterPage() {
   const [subscribers, setSubscribers] = useState<NewsletterSubscriber[]>([])
   const [stats, setStats] = useState<Stats | null>(null)
   const [loading, setLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState<'list' | 'stats' | 'send'>('list')
+  const [activeTab, setActiveTab] = useState<'list' | 'stats' | 'send' | 'add'>('list')
   const [sendStatus, setSendStatus] = useState<string>('')
+  const [addStatus, setAddStatus] = useState<string>('')
   const [filterStatus, setFilterStatus] = useState<string>('all')
   const [seedStatus, setSeedStatus] = useState<string>('')
 
@@ -288,6 +291,12 @@ export default function NewsletterPage() {
         >
           Enviar Campanha
         </button>
+        <button
+          onClick={() => setActiveTab('add')}
+          className={`pb-2 px-4 ${activeTab === 'add' ? 'border-b-2 border-green-500 text-green-500' : 'text-slate-400'}`}
+        >
+          ➕ Adicionar Manual
+        </button>
       </div>
 
       {/* Lista de Inscritos */}
@@ -526,6 +535,121 @@ export default function NewsletterPage() {
               <li>• Cada email incluirá automaticamente um link de cancelamento</li>
               <li>• O envio é feito em lotes para evitar bloqueios</li>
               <li>• Recomendamos no máximo 1 newsletter por semana</li>
+            </ul>
+          </div>
+        </div>
+      )}
+
+      {/* 🆕 Adicionar Manual */}
+      {activeTab === 'add' && (
+        <div className="max-w-2xl">
+          <div className="bg-slate-800 rounded-lg p-6">
+            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+              ➕ Adicionar Inscrito Manualmente
+            </h2>
+            <p className="text-slate-400 text-sm mb-6">
+              Use este formulário para adicionar contatos de eventos, networking ou outras fontes.
+              O contato receberá um email de boas-vindas e poderá cancelar a qualquer momento.
+            </p>
+            
+            <form onSubmit={async (e) => {
+              e.preventDefault()
+              const form = e.currentTarget
+              const formData = new FormData(form)
+              
+              setAddStatus('Adicionando...')
+              
+              try {
+                const res = await fetch('/api/admin/newsletter/add', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    email: formData.get('email'),
+                    name: formData.get('name'),
+                    lang: formData.get('lang'),
+                    notes: formData.get('notes')
+                  })
+                })
+                
+                const data = await res.json()
+                
+                if (data.success) {
+                  setAddStatus(`✅ ${data.message}`)
+                  form.reset()
+                  fetchSubscribers()
+                  fetchStats()
+                } else {
+                  setAddStatus(`❌ Erro: ${data.error}`)
+                }
+              } catch (error) {
+                setAddStatus(`❌ Erro ao adicionar: ${error}`)
+              }
+            }} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Email *</label>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  className="w-full bg-slate-700 border border-slate-600 rounded-lg p-3"
+                  placeholder="contato@exemplo.com"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-2">Nome (opcional)</label>
+                <input
+                  type="text"
+                  name="name"
+                  className="w-full bg-slate-700 border border-slate-600 rounded-lg p-3"
+                  placeholder="João Silva"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-2">Idioma preferido</label>
+                <select name="lang" className="w-full bg-slate-700 border border-slate-600 rounded-lg p-3">
+                  <option value="pt">🇧🇷 Português</option>
+                  <option value="en">🇨🇦 English</option>
+                  <option value="es">🇪🇸 Español</option>
+                  <option value="fr">🇫🇷 Français</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-2">Notas/Origem (opcional)</label>
+                <textarea
+                  name="notes"
+                  rows={3}
+                  className="w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-sm"
+                  placeholder="Ex: Conheci no evento XYZ, interessado em VFX..."
+                />
+              </div>
+              
+              <div className="flex items-center gap-4">
+                <button
+                  type="submit"
+                  className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+                >
+                  ➕ Adicionar Inscrito
+                </button>
+                
+                {addStatus && (
+                  <span className={addStatus.includes('✅') ? 'text-green-400' : addStatus.includes('❌') ? 'text-red-400' : 'text-slate-400'}>
+                    {addStatus}
+                  </span>
+                )}
+              </div>
+            </form>
+          </div>
+          
+          <div className="mt-6 p-4 bg-slate-800 rounded-lg">
+            <h3 className="font-medium mb-2">📋 Dicas</h3>
+            <ul className="text-sm text-slate-400 space-y-1">
+              <li>• O contato será marcado como origem "Manual"</li>
+              <li>• Se o email já existir, será reativado (se estava cancelado)</li>
+              <li>• O contato pode cancelar a inscrição a qualquer momento</li>
+              <li>• Use as notas para lembrar de onde conheceu a pessoa</li>
             </ul>
           </div>
         </div>

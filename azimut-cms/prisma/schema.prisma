@@ -180,6 +180,15 @@ model Page {
   heroSubtitleEs         String?
   heroSubtitleFr         String?
   heroSubtitlePt         String?
+  // ═══ Hero Description MOBILE/DESKTOP (4 idiomas) ═══
+  heroDescriptionMobilePt   String?
+  heroDescriptionMobileEn   String?
+  heroDescriptionMobileEs   String?
+  heroDescriptionMobileFr   String?
+  heroDescriptionDesktopPt String?
+  heroDescriptionDesktopEn  String?
+  heroDescriptionDesktopEs  String?
+  heroDescriptionDesktopFr  String?
   seoDescEs              String?
   seoDescFr              String?
   seoTitleEs             String?

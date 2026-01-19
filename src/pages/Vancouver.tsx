@@ -15,6 +15,8 @@ import VisualSchoolQuiz from '../components/VisualSchoolQuiz'
 import CanadaMapleLeaf from '../components/CanadaMapleLeaf'
 import HeroImage from '../components/HeroImageCarousel'
 import { useTimeBasedImage } from '../hooks/useTimeBasedImage'
+import { useBackofficeContent } from '../hooks/useBackofficeContent'
+import { usePageSEO } from '../hooks/usePageSEO'
 
 interface VancouverProps {
   lang: Lang
@@ -26,6 +28,9 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
   
   // Sistema inteligente de imagens baseado na hora LOCAL do usuário
   const { image, vancouverTime } = useTimeBasedImage()
+  
+  // Buscar conteúdo do backoffice (mobile/desktop)
+  const { page: backofficePage } = useBackofficeContent('vancouver', lang)
   
   // Função para scroll suave até a calculadora com efeito de destaque
   const scrollToCalculator = () => {
@@ -396,31 +401,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
 
   const t = content[lang] || content.pt
 
-  // SEO metadata by language
-  const seoData = {
-    pt: {
-      title: 'Estudar em Vancouver - VFS e VanArts | Azimut Academy',
-      description: 'Graduação em 1 ano nas melhores escolas de mídia do Canadá (VFS/VanArts) com 90%+ empregabilidade e pathway para residência permanente. Agente oficial.',
-      keywords: 'estudar vancouver, VFS, VanArts, vancouver film school, animação 3D, VFX, game design, estudar no canadá, residência permanente canadá, agente educacional'
-    },
-    en: {
-      title: 'Study in Vancouver - VFS and VanArts | Azimut Academy',
-      description: 'Graduate in 1 year at Canada\'s best media schools (VFS/VanArts) with 90%+ employability and PR pathway. Official education agent.',
-      keywords: 'study vancouver, VFS, VanArts, vancouver film school, 3D animation, VFX, game design, study in canada, canada PR, education agent'
-    },
-    es: {
-      title: 'Estudiar en Vancouver - VFS y VanArts | Azimut Academy',
-      description: 'Graduación en 1 año en las mejores escuelas de medios de Canadá (VFS/VanArts) con 90%+ empleabilidad y camino a residencia permanente. Agente oficial.',
-      keywords: 'estudiar vancouver, VFS, VanArts, vancouver film school, animación 3D, VFX, diseño de juegos, estudiar en canadá, residencia permanente canadá'
-    },
-    fr: {
-      title: 'Étudier à Vancouver - VFS et VanArts | Azimut Academy',
-      description: 'Diplôme en 1 an dans les meilleures écoles de médias du Canada (VFS/VanArts) avec 90%+ d\'employabilité et chemin vers la RP. Agent officiel.',
-      keywords: 'étudier vancouver, VFS, VanArts, vancouver film school, animation 3D, VFX, conception de jeux, étudier au canada, résidence permanente canada'
-    }
-  }
-
-  const seo = seoData[lang] || seoData.pt
+  // SEO otimizado com backoffice e keywords
+  const seo = usePageSEO('vancouver', lang)
 
   return (
     <>
@@ -428,8 +410,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         title={seo.title}
         description={seo.description}
         keywords={seo.keywords}
-        url="/academy/vancouver"
-        image="https://azmt.com.br/images/vancouver-og.jpg"
+        url={seo.url}
+        image={seo.image}
         type="website"
         locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
       />
@@ -506,8 +488,12 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 fontWeight: 500
               }}
             >
-              <span className="block sm:hidden">{t.heroDescription}</span>
-              <span className="hidden sm:block">{t.heroDescriptionFull || t.heroDescription}</span>
+              <span className="block sm:hidden">
+                {backofficePage?.hero.descriptionMobile || t.heroDescription}
+              </span>
+              <span className="hidden sm:block">
+                {backofficePage?.hero.descriptionDesktop || backofficePage?.hero.descriptionMobile || t.heroDescriptionFull || t.heroDescription}
+              </span>
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -90,25 +90,42 @@ const SEO: React.FC<SEOProps> = ({
               </>
             )}
 
-      {/* Open Graph (Facebook, LinkedIn) */}
+      {/* Open Graph (Facebook, LinkedIn) - OTIMIZADO */}
       <meta property="og:type" content={type} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={fullImage} />
+      <meta property="og:image:secure_url" content={fullImage.replace('http://', 'https://')} />
       <meta property="og:url" content={fullUrl} />
       <meta property="og:site_name" content="Azimut" />
       <meta property="og:locale" content={locale} />
       
-      {publishedTime && <meta property="article:published_time" content={publishedTime} />}
-      {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+      {/* Open Graph adicional para melhor compartilhamento */}
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:type" content="image/jpeg" />
+      <meta property="og:image:alt" content={title} />
+      
+      {/* Article meta tags (quando aplicável) */}
+      {type === 'article' && publishedTime && (
+        <meta property="article:published_time" content={publishedTime} />
+      )}
+      {type === 'article' && modifiedTime && (
+        <meta property="article:modified_time" content={modifiedTime} />
+      )}
+      {type === 'article' && author && (
+        <meta property="article:author" content={author} />
+      )}
 
-      {/* Twitter Card */}
+      {/* Twitter Card - OTIMIZADO */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={fullImage} />
+      <meta name="twitter:image:alt" content={title} />
       <meta name="twitter:site" content="@azimut" />
       <meta name="twitter:creator" content="@azimut" />
+      <meta name="twitter:domain" content="azmt.com.br" />
 
       {/* Additional Meta Tags */}
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -126,19 +143,17 @@ const SEO: React.FC<SEOProps> = ({
       <link rel="preload" href="/fonts/Inter-VariableFont.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
       <link rel="preload" href="/logo-azimut-star.svg" as="image" />
       
-      {/* Open Graph adicional - melhor compartilhamento */}
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
-      <meta property="og:image:type" content="image/jpeg" />
-      <meta property="og:image:alt" content={title} />
-      
-      {/* Twitter adicional */}
-      <meta name="twitter:image:alt" content={title} />
-      
-      {/* Schema.org adicional */}
+      {/* Schema.org microdata (complementar ao JSON-LD) */}
       <meta itemProp="name" content={title} />
       <meta itemProp="description" content={description} />
       <meta itemProp="image" content={fullImage} />
+      
+      {/* Geo-targeting (Brasil + Canadá) */}
+      <meta name="geo.region" content="CA-QC;BR-RJ" />
+      <meta name="geo.placename" content="Montreal;Rio de Janeiro" />
+      
+      {/* Content Language */}
+      <meta httpEquiv="content-language" content={locale.split('_')[0]} />
     </Helmet>
   )
 }

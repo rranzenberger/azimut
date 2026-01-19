@@ -40,6 +40,15 @@ interface Page {
   heroSubtitleEn?: string;
   heroSubtitleEs?: string;
   heroSubtitleFr?: string;
+  // ═══ Hero Description MOBILE/DESKTOP ═══
+  heroDescriptionMobilePt?: string;
+  heroDescriptionMobileEn?: string;
+  heroDescriptionMobileEs?: string;
+  heroDescriptionMobileFr?: string;
+  heroDescriptionDesktopPt?: string;
+  heroDescriptionDesktopEn?: string;
+  heroDescriptionDesktopEs?: string;
+  heroDescriptionDesktopFr?: string;
   // Pillars
   pillar1Pt?: string;
   pillar1En?: string;
@@ -337,6 +346,15 @@ export default function EditPagePage() {
     heroSubtitleEn: '',
     heroSubtitleEs: '',
     heroSubtitleFr: '',
+    // ═══ Hero Description MOBILE/DESKTOP ═══
+    heroDescriptionMobilePt: '',
+    heroDescriptionMobileEn: '',
+    heroDescriptionMobileEs: '',
+    heroDescriptionMobileFr: '',
+    heroDescriptionDesktopPt: '',
+    heroDescriptionDesktopEn: '',
+    heroDescriptionDesktopEs: '',
+    heroDescriptionDesktopFr: '',
     // Pillars
     pillar1Pt: '',
     pillar1En: '',
@@ -391,6 +409,15 @@ export default function EditPagePage() {
           heroSubtitleEn: data.heroSubtitleEn || '',
           heroSubtitleEs: data.heroSubtitleEs || '',
           heroSubtitleFr: data.heroSubtitleFr || '',
+          // ═══ Hero Description MOBILE/DESKTOP ═══
+          heroDescriptionMobilePt: data.heroDescriptionMobilePt || '',
+          heroDescriptionMobileEn: data.heroDescriptionMobileEn || '',
+          heroDescriptionMobileEs: data.heroDescriptionMobileEs || '',
+          heroDescriptionMobileFr: data.heroDescriptionMobileFr || '',
+          heroDescriptionDesktopPt: data.heroDescriptionDesktopPt || '',
+          heroDescriptionDesktopEn: data.heroDescriptionDesktopEn || '',
+          heroDescriptionDesktopEs: data.heroDescriptionDesktopEs || '',
+          heroDescriptionDesktopFr: data.heroDescriptionDesktopFr || '',
           // Pillars
           pillar1Pt: data.pillar1Pt || '',
           pillar1En: data.pillar1En || '',
@@ -914,6 +941,141 @@ export default function EditPagePage() {
             onTranslate={(lang) => handleTranslate('heroSubtitle', lang as 'en' | 'es' | 'fr')}
             translating={translating?.startsWith('heroSubtitle-') || false}
           />
+        </section>
+
+        {/* Hero Description - MOBILE vs DESKTOP */}
+        <section
+          style={{
+            padding: 28,
+            borderRadius: 12,
+            border: '1px solid rgba(201,35,55,0.2)',
+            background: 'rgba(201,35,55,0.05)',
+          }}
+        >
+          <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
+            📱💻 Hero Description (Mobile vs Desktop/Web)
+          </h2>
+          <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
+            <strong>Versões diferentes para cada plataforma:</strong>
+            <br />
+            📱 <strong>Mobile:</strong> Texto curto e direto (otimizado para telas pequenas)
+            <br />
+            💻 <strong>Desktop/Web:</strong> Texto completo e detalhado (mais espaço disponível)
+          </p>
+
+          {/* MOBILE */}
+          <div style={{ marginBottom: 32, padding: 20, borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+            <h3 style={{ margin: '0 0 16px', fontSize: 18, fontWeight: 600, color: '#7dd3fc' }}>
+              📱 Mobile (Texto Curto)
+            </h3>
+            <p style={{ margin: '0 0 20px', color: '#8f8ba2', fontSize: 12 }}>
+              Texto otimizado para telas pequenas. Máximo 150 caracteres recomendado.
+            </p>
+
+            <MultilangTextField
+              label="Hero Description Mobile (Português)"
+              location="Páginas > Hero > Description Mobile > Português"
+              fieldKey="heroDescriptionMobilePt"
+              value={formData.heroDescriptionMobilePt}
+              onChange={(value) => setFormData({ ...formData, heroDescriptionMobilePt: value })}
+              maxLength={150}
+              multiline
+              onTranslate={undefined}
+            />
+
+            <MultilangTextField
+              label="Hero Description Mobile (English)"
+              location="Páginas > Hero > Description Mobile > English"
+              fieldKey="heroDescriptionMobileEn"
+              value={formData.heroDescriptionMobileEn}
+              onChange={(value) => setFormData({ ...formData, heroDescriptionMobileEn: value })}
+              maxLength={150}
+              multiline
+              onTranslate={(lang) => handleTranslate('heroDescriptionMobile', lang as 'en' | 'es' | 'fr')}
+              translating={translating?.startsWith('heroDescriptionMobile-') || false}
+            />
+
+            <MultilangTextField
+              label="Hero Description Mobile (Español)"
+              location="Páginas > Hero > Description Mobile > Español"
+              fieldKey="heroDescriptionMobileEs"
+              value={formData.heroDescriptionMobileEs}
+              onChange={(value) => setFormData({ ...formData, heroDescriptionMobileEs: value })}
+              maxLength={150}
+              multiline
+              onTranslate={(lang) => handleTranslate('heroDescriptionMobile', lang as 'en' | 'es' | 'fr')}
+              translating={translating?.startsWith('heroDescriptionMobile-') || false}
+            />
+
+            <MultilangTextField
+              label="Hero Description Mobile (Français)"
+              location="Páginas > Hero > Description Mobile > Français"
+              fieldKey="heroDescriptionMobileFr"
+              value={formData.heroDescriptionMobileFr}
+              onChange={(value) => setFormData({ ...formData, heroDescriptionMobileFr: value })}
+              maxLength={150}
+              multiline
+              onTranslate={(lang) => handleTranslate('heroDescriptionMobile', lang as 'en' | 'es' | 'fr')}
+              translating={translating?.startsWith('heroDescriptionMobile-') || false}
+            />
+          </div>
+
+          {/* DESKTOP */}
+          <div style={{ padding: 20, borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+            <h3 style={{ margin: '0 0 16px', fontSize: 18, fontWeight: 600, color: '#86efac' }}>
+              💻 Desktop/Web (Texto Completo)
+            </h3>
+            <p style={{ margin: '0 0 20px', color: '#8f8ba2', fontSize: 12 }}>
+              Texto completo e detalhado para telas grandes (desktop/web). Máximo 500 caracteres recomendado.
+            </p>
+
+            <MultilangTextField
+              label="Hero Description Desktop (Português)"
+              location="Páginas > Hero > Description Desktop > Português"
+              fieldKey="heroDescriptionDesktopPt"
+              value={formData.heroDescriptionDesktopPt}
+              onChange={(value) => setFormData({ ...formData, heroDescriptionDesktopPt: value })}
+              maxLength={500}
+              multiline
+              onTranslate={undefined}
+            />
+
+            <MultilangTextField
+              label="Hero Description Desktop (English)"
+              location="Páginas > Hero > Description Desktop > English"
+              fieldKey="heroDescriptionDesktopEn"
+              value={formData.heroDescriptionDesktopEn}
+              onChange={(value) => setFormData({ ...formData, heroDescriptionDesktopEn: value })}
+              maxLength={500}
+              multiline
+              onTranslate={(lang) => handleTranslate('heroDescriptionDesktop', lang as 'en' | 'es' | 'fr')}
+              translating={translating?.startsWith('heroDescriptionDesktop-') || false}
+            />
+
+            <MultilangTextField
+              label="Hero Description Desktop (Español)"
+              location="Páginas > Hero > Description Desktop > Español"
+              fieldKey="heroDescriptionDesktopEs"
+              value={formData.heroDescriptionDesktopEs}
+              onChange={(value) => setFormData({ ...formData, heroDescriptionDesktopEs: value })}
+              maxLength={500}
+              multiline
+              onTranslate={(lang) => handleTranslate('heroDescriptionDesktop', lang as 'en' | 'es' | 'fr')}
+              translating={translating?.startsWith('heroDescriptionDesktop-') || false}
+            />
+
+            <MultilangTextField
+              label="Hero Description Desktop (Français)"
+              location="Páginas > Hero > Description Desktop > Français"
+              fieldKey="heroDescriptionDesktopFr"
+              value={formData.heroDescriptionDesktopFr}
+              onChange={(value) => setFormData({ ...formData, heroDescriptionDesktopFr: value })}
+              maxLength={500}
+              multiline
+              onTranslate={(lang) => handleTranslate('heroDescriptionDesktop', lang as 'en' | 'es' | 'fr')}
+              translating={translating?.startsWith('heroDescriptionDesktop-') || false}
+            />
+          </div>
         </section>
 
         {/* Hero Media - SISTEMA HÍBRIDO: Media OU URL */}

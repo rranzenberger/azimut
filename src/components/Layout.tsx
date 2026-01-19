@@ -13,6 +13,9 @@ import ClaudeAssistant from './ClaudeAssistant'
 // Breadcrumbs removido - cada página tem seu próprio breadcrumb
 import ScrollToTopButton from './ScrollToTopButton'
 import SEOGlobal from './SEOGlobal' // SEO Global Schemas
+import SchemaOrganization from './SchemaOrganization'
+import SchemaBreadcrumbList from './SchemaBreadcrumbList'
+import GoogleSearchConsoleVerification from './GoogleSearchConsoleVerification'
 import { type UserProfile } from './BudgetWizard'
 import { trackCTA, trackLanguageChange } from '../utils/analytics'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -1496,6 +1499,13 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         </div>
         </div>
       </footer>
+
+      {/* Schema.org - Organization e BreadcrumbList */}
+      <SchemaOrganization />
+      <SchemaBreadcrumbList lang={lang} />
+      
+      {/* Google Search Console Verification */}
+      <GoogleSearchConsoleVerification />
 
       {/* Budget Wizard Modal */}
       <BudgetWizardModal

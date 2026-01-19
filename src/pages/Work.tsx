@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { t, type Lang } from '../i18n'
-import SEO, { seoData } from '../components/SEO'
+import SEO from '../components/SEO'
+import { usePageSEO } from '../hooks/usePageSEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { trackPageView, trackProjectInteraction } from '../utils/analytics'
@@ -247,10 +248,13 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   return (
     <>
       <SEO 
-        lang={lang}
         title={seo.title}
         description={seo.description}
-        path="/work"
+        keywords={seo.keywords}
+        locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
+        image={seo.image}
+        url={seo.url}
+        type="website"
       />
       <main className="relative pb-24 film-grain">
         {/* Star background - FIXA (FUNDO - atrás de tudo) */}

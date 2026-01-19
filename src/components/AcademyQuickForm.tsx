@@ -106,6 +106,7 @@ interface FormData {
   preferredLanguage?: Lang
   contactPreference?: 'email' | 'whatsapp' | 'call' | 'any'
   interest: string
+  wantsNewsletter: boolean // 🆕 Checkbox newsletter
 }
 
 const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefilledData }) => {
@@ -124,7 +125,8 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
     courseArea: '',
     preferredLanguage: 'pt', // 🇧🇷 Padrão Português (maioria dos alunos são brasileiros)
     contactPreference: 'email',
-    interest: ''
+    interest: '',
+    wantsNewsletter: false // 🆕 Checkbox newsletter
   })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -359,6 +361,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         email: 'joao@email.com',
         phone: '21 99999-9999'
       },
+      newsletter: 'Quero receber novidades e informações por email',
       submit: 'Quero Receber Info!',
       submitting: 'Enviando...',
       required: 'Preencha pelo menos nome e email OU telefone!',
@@ -405,6 +408,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         email: 'john@email.com',
         phone: '555 1234'
       },
+      newsletter: 'I want to receive news and updates by email',
       submit: 'Send Me Info!',
       submitting: 'Sending...',
       required: 'Fill at least name and email OR phone!',
@@ -450,6 +454,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         email: 'juan@email.com',
         phone: '600 123 456'
       },
+      newsletter: 'Quiero recibir noticias y novedades por email',
       submit: '¡Quiero Info!',
       submitting: 'Enviando...',
       required: '¡Completa al menos nombre y email O teléfono!',
@@ -495,6 +500,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         email: 'marie@email.com',
         phone: '6 12 34 56 78'
       },
+      newsletter: 'Je veux recevoir des nouvelles et mises à jour par email',
       submit: 'Envoyer Info!',
       submitting: 'Envoi...',
       required: 'Remplissez au moins nom et email OU téléphone!',
@@ -596,6 +602,25 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         await ApiService.submitLead(leadData)
       }
 
+      // 🆕 Se marcou newsletter, criar NewsletterSubscriber
+      if (formData.wantsNewsletter && formData.email) {
+        const backofficeUrl = import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azmt.com.br'
+        try {
+          await fetch(`${backofficeUrl}/api/public/newsletter`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: formData.email,
+              name: formData.name,
+              lang: formData.preferredLanguage || lang,
+              source: type === 'vancouver' ? 'vancouver_form' : 'academy_form'
+            })
+          })
+        } catch (newsletterError) {
+          console.warn('Newsletter subscription failed (non-critical):', newsletterError)
+        }
+      }
+
       setSuccess(true)
       
       setTimeout(() => {
@@ -614,7 +639,8 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         courseArea: '',
         preferredLanguage: lang,
         contactPreference: 'email',
-        interest: ''
+        interest: '',
+        wantsNewsletter: false
       })
     } catch (err: any) {
       console.error('Form submission error:', err)
@@ -834,6 +860,20 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
               </div>
             </div>
           )}
+
+          {/* 🆕 Checkbox Newsletter */}
+          <label className="flex items-start gap-3 cursor-pointer group">
+            <input
+              type="checkbox"
+              name="wantsNewsletter"
+              checked={formData.wantsNewsletter}
+              onChange={(e) => setFormData({ ...formData, wantsNewsletter: e.target.checked })}
+              className="mt-1 w-5 h-5 rounded border-2 border-white/30 bg-transparent checked:bg-azimut-red checked:border-azimut-red focus:ring-2 focus:ring-azimut-red/50 cursor-pointer transition-all"
+            />
+            <span className="text-sm text-white/80 group-hover:text-white transition-colors">
+              {t.newsletter}
+            </span>
+          </label>
 
           {/* Error */}
           {error && (

@@ -1,0 +1,22 @@
+═══════════════════════════════════════════════════════════════
+DIRETÓRIO CORRETO DO PROJETO
+═══════════════════════════════════════════════════════════════
+
+C:\Users\ranz\Documents\azimut-site-vite-tailwind
+
+═══════════════════════════════════════════════════════════════
+SEMPRE VERIFICAR ANTES DE TRABALHAR:
+═══════════════════════════════════════════════════════════════
+
+1. Execute: .\verify-location.ps1
+   OU
+2. Verifique se existe: package.json na raiz
+3. Verifique se existe: src/ e public/ na raiz
+
+═══════════════════════════════════════════════════════════════
+COMANDO RÁPIDO PARA NAVEGAR:
+═══════════════════════════════════════════════════════════════
+
+cd C:\Users\ranz\Documents\azimut-site-vite-tailwind
+
+═══════════════════════════════════════════════════════════════

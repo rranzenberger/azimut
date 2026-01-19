@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { t, type Lang } from '../i18n'
-import SEO, { seoData } from '../components/SEO'
+import SEO from '../components/SEO'
+import { usePageSEO } from '../hooks/usePageSEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { trackPageView } from '../utils/analytics'
 // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
@@ -176,15 +177,19 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     return projs.slice(0, minRequired);
   }, [projects, defaultProjects]);
 
-  const seo = seoData.home[lang]
+  // SEO otimizado com backoffice e keywords
+  const seo = usePageSEO('home', lang)
 
   return (
     <>
       <SEO 
-        lang={lang}
         title={seo.title}
         description={seo.description}
-        path="/"
+        keywords={seo.keywords}
+        locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
+        image={seo.image}
+        url={seo.url}
+        type="website"
       />
       <main className="relative">
         {/* Estrela de fundo - HOME: Só aparece no tema ESCURO */}

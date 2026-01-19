@@ -91,6 +91,15 @@ export async function PUT(
       heroSubtitleEn,
       heroSubtitleEs,
       heroSubtitleFr,
+      // ═══ Hero Description MOBILE/DESKTOP ═══
+      heroDescriptionMobilePt,
+      heroDescriptionMobileEn,
+      heroDescriptionMobileEs,
+      heroDescriptionMobileFr,
+      heroDescriptionDesktopPt,
+      heroDescriptionDesktopEn,
+      heroDescriptionDesktopEs,
+      heroDescriptionDesktopFr,
       // Pillars
       pillar1Pt,
       pillar1En,
@@ -127,6 +136,15 @@ export async function PUT(
         ...(heroSubtitleEn !== undefined && { heroSubtitleEn }),
         ...(heroSubtitleEs !== undefined && { heroSubtitleEs }),
         ...(heroSubtitleFr !== undefined && { heroSubtitleFr }),
+        // ═══ Hero Description MOBILE/DESKTOP ═══
+        ...(heroDescriptionMobilePt !== undefined && { heroDescriptionMobilePt }),
+        ...(heroDescriptionMobileEn !== undefined && { heroDescriptionMobileEn }),
+        ...(heroDescriptionMobileEs !== undefined && { heroDescriptionMobileEs }),
+        ...(heroDescriptionMobileFr !== undefined && { heroDescriptionMobileFr }),
+        ...(heroDescriptionDesktopPt !== undefined && { heroDescriptionDesktopPt }),
+        ...(heroDescriptionDesktopEn !== undefined && { heroDescriptionDesktopEn }),
+        ...(heroDescriptionDesktopEs !== undefined && { heroDescriptionDesktopEs }),
+        ...(heroDescriptionDesktopFr !== undefined && { heroDescriptionDesktopFr }),
         // Pillars
         ...(pillar1Pt !== undefined && { pillar1Pt }),
         ...(pillar1En !== undefined && { pillar1En }),
