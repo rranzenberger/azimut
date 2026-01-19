@@ -559,10 +559,17 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           
           {/* ═══════════════════════════════════════════════════════════════════
               SEÇÃO LOGO ANIMADA - Elemento especial com fundo escuro
-              Bordas vermelhas, fundo escuro elegante (azul/marrom), logo girando
+              Full-width: De borda a borda da tela (viewport completo)
               Curadoria: Marrom escuro no tema claro combina com rodapé
           ═══════════════════════════════════════════════════════════════════ */}
-          <div className="lg:hidden relative w-full -mx-4 mt-6 mb-6" style={{ width: 'calc(100% + 2rem)' }}>
+          <div 
+            className="lg:hidden relative mt-6 mb-6" 
+            style={{ 
+              width: '100vw',
+              marginLeft: 'calc(-50vw + 50%)',
+              marginRight: 'calc(-50vw + 50%)'
+            }}
+          >
             {/* Borda superior vermelha */}
             <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-azimut-red to-transparent" />
             
