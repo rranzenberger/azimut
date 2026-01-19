@@ -246,6 +246,13 @@ const App: React.FC = () => {
   // Hook de tema (escuro/claro)
   const { theme, toggleTheme } = useTheme()
 
+  // 🐛 DEBUG: Monitorar mudanças de tema
+  useEffect(() => {
+    console.log('🎨 [App.tsx] Theme changed to:', theme)
+    console.log('🎨 [App.tsx] document.documentElement.getAttribute("data-theme"):', document.documentElement.getAttribute('data-theme'))
+    console.log('🎨 [App.tsx] document.body.getAttribute("data-theme"):', document.body.getAttribute('data-theme'))
+  }, [theme])
+
   // Salvar idioma no localStorage quando mudar
   useEffect(() => {
     try {
@@ -294,7 +301,7 @@ const App: React.FC = () => {
           {/* ✅ ETAPA 1: PWA Install Prompt REATIVADO - Componente simples */}
           <InstallPrompt />
           
-          <AppLayout lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
+          <AppLayout key={theme} lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
             <Suspense 
               fallback={<LoadingSkeleton />}
               // Error boundary para capturar erros no lazy loading
@@ -472,7 +479,7 @@ const App: React.FC = () => {
           {/* Vinheta cinematográfica - efeito de bordas escuras */}
           <div className="cinematic-vignette" aria-hidden="true" />
           
-          <AppLayout lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
+          <AppLayout key={theme} lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
             <Routes>
               {/* Redirect / para idioma detectado */}
               <Route path="/" element={<LangRedirect />} />
