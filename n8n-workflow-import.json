@@ -1,0 +1,263 @@
+{
+  "name": "Enriquecimento Automático de Lead",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-enrichment",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "webhook-node",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "lead-enrichment"
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "leadId",
+              "value": "={{ $json.body.id || $json.id }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.body.email || $json.email }}"
+            },
+            {
+              "name": "name",
+              "value": "={{ $json.body.name || $json.name }}"
+            },
+            {
+              "name": "company",
+              "value": "={{ $json.body.company || $json.company }}"
+            },
+            {
+              "name": "phone",
+              "value": "={{ $json.body.phone || $json.phone }}"
+            },
+            {
+              "name": "lang",
+              "value": "={{ $json.body.lang || $json.lang || 'pt' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-node",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://serpapi.com/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $json.name }} {{ $json.company }}"
+            },
+            {
+              "name": "engine",
+              "value": "google"
+            },
+            {
+              "name": "gl",
+              "value": "={{ $json.lang === 'en' ? 'ca' : $json.lang === 'pt' ? 'br' : $json.lang === 'es' ? 'es' : 'fr' }}"
+            },
+            {
+              "name": "api_key",
+              "value": "={{ $env.SERPAPI_KEY }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "serpapi-node",
+      "name": "SerpAPI",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [650, 300],
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "serpapi-credential",
+          "name": "SerpAPI Query Auth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Processar dados do SerpAPI e extrair informações relevantes\nconst serpData = $input.item.json;\nconst leadData = $('Set').item.json;\n\n// Extrair informações relevantes\nconst results = {\n  organic_results: serpData.organic_results || [],\n  people_also_search_for: serpData.people_also_search_for || [],\n  knowledge_graph: serpData.knowledge_graph || {},\n  related_questions: serpData.related_questions || []\n};\n\n// Extrair LinkedIn URL se disponível\nlet linkedinUrl = null;\nif (serpData.organic_results) {\n  for (const result of serpData.organic_results) {\n    if (result.link && result.link.includes('linkedin.com/in/')) {\n      linkedinUrl = result.link;\n      break;\n    }\n  }\n}\n\n// Extrair cidade/empresa de resultados\nlet detectedCity = null;\nlet detectedCompany = leadData.company || null;\n\nif (serpData.knowledge_graph && serpData.knowledge_graph.address) {\n  detectedCity = serpData.knowledge_graph.address;\n}\n\n// Combinar dados\nreturn {\n  json: {\n    leadData: leadData,\n    serpResults: results,\n    linkedinUrl: linkedinUrl,\n    detectedCity: detectedCity,\n    detectedCompany: detectedCompany,\n    searchQuery: `${leadData.name} ${leadData.company}`\n  }\n};"
+      },
+      "id": "code-serpapi-node",
+      "name": "Processar SerpAPI",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "headerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "={{ $env.CLAUDE_API_KEY }}"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": []
+        },
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-3-5-sonnet-20241022\",\n  \"max_tokens\": 2000,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Analise o perfil do lead com base nos seguintes dados:\\n\\n**Dados do Lead:**\\n- Nome: {{ $json.leadData.name }}\\n- Email: {{ $json.leadData.email }}\\n- Empresa: {{ $json.leadData.company }}\\n- Telefone: {{ $json.leadData.phone }}\\n- Idioma: {{ $json.leadData.lang }}\\n\\n**Resultados da Busca Google:**\\n{{ JSON.stringify($json.serpResults, null, 2) }}\\n\\n**LinkedIn:** {{ $json.linkedinUrl || 'Não encontrado' }}\\n\\n**Tarefa:**\\nAnalise todas as informações e identifique:\\n\\n1. **Interesses Pessoais:** Esportes favoritos, hobbies, origem/cidade, times, atividades\\n2. **Perfil Profissional:** Cargo atual, área de atuação, nível hierárquico\\n3. **Poder de Decisão:** Alto, Médio ou Baixo (baseado em cargo e empresa)\\n4. **Tom de Comunicação Ideal:** Formal, Semiformal, Casual, Técnico\\n5. **Small Talk Personalizado:** 2-3 tópicos para iniciar conversa (ex: \\\"Vi que você é fã do Flamengo...\\\")\\n6. **Abordagem Recomendada:** Estratégia de comunicação (ex: \\\"Focar em ROI\\\", \\\"Enfatizar inovação\\\")\\n7. **Score do Lead:** 0-100 (baseado em poder de decisão, empresa, interesse)\\n\\n**Formato de Resposta (JSON):**\\n```json\\n{\\n  \\\"interests\\\": {\\n    \\\"sports\\\": \\\"\\\",\\n    \\\"hobbies\\\": \\\"\\\",\\n    \\\"origin\\\": \\\"\\\",\\n    \\\"teams\\\": \\\"\\\"\\n  },\\n  \\\"role\\\": \\\"\\\",\\n  \\\"decisionPower\\\": \\\"Alto|Médio|Baixo\\\",\\n  \\\"communicationTone\\\": \\\"Formal|Semiformal|Casual|Técnico\\\",\\n  \\\"smallTalk\\\": [\\\"\\\", \\\"\\\"],\\n  \\\"recommendedApproach\\\": \\\"\\\",\\n  \\\"leadScore\\\": 0\\n}\\n```\\n\\nRetorne APENAS o JSON, sem markdown ou explicações adicionais.\"\n    }\n  ]\n}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "claude-node",
+      "name": "Claude AI",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1050, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Processar resposta do Claude e extrair JSON\nconst claudeResponse = $input.item.json;\nconst previousData = $('Processar SerpAPI').item.json;\n\n// Extrair texto da resposta do Claude\nlet analysisText = '';\nif (claudeResponse.content && claudeResponse.content[0]) {\n  analysisText = claudeResponse.content[0].text;\n} else if (claudeResponse.body && claudeResponse.body.content) {\n  analysisText = claudeResponse.body.content[0].text;\n} else {\n  analysisText = JSON.stringify(claudeResponse);\n}\n\n// Tentar extrair JSON da resposta\nlet analysis = {};\ntry {\n  // Remover markdown code blocks se houver\n  const jsonMatch = analysisText.match(/\\{[\\s\\S]*\\}/);\n  if (jsonMatch) {\n    analysis = JSON.parse(jsonMatch[0]);\n  } else {\n    analysis = JSON.parse(analysisText);\n  }\n} catch (e) {\n  // Se falhar, criar estrutura básica\n  analysis = {\n    interests: {},\n    role: 'Não identificado',\n    decisionPower: 'Médio',\n    communicationTone: 'Semiformal',\n    smallTalk: [],\n    recommendedApproach: 'Abordagem padrão',\n    leadScore: 50\n  };\n}\n\n// Combinar todos os dados\nreturn {\n  json: {\n    leadId: previousData.leadData.id || previousData.leadData.leadId,\n    email: previousData.leadData.email,\n    name: previousData.leadData.name,\n    company: previousData.leadData.company,\n    phone: previousData.leadData.phone,\n    enrichedProfile: analysis,\n    conversationContext: JSON.stringify(analysis),\n    recommendedApproach: analysis.recommendedApproach || 'Abordagem padrão',\n    leadScore: analysis.leadScore || 50,\n    decisionPower: analysis.decisionPower || 'Médio',\n    detectedCity: previousData.detectedCity,\n    detectedCompany: previousData.detectedCompany,\n    linkedinUrl: previousData.linkedinUrl,\n    enrichmentStatus: 'completed'\n  }\n};"
+      },
+      "id": "code-claude-node",
+      "name": "Processar Claude",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1250, 300]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE \"Lead\" \nSET \n  enriched_profile = $1::jsonb,\n  conversation_context = $2,\n  recommended_approach = $3,\n  enrichment_status = $4,\n  enriched_at = NOW(),\n  lead_score = $5,\n  decision_power = $6,\n  detected_city = $7,\n  detected_company = $8,\n  linkedin_url = $9\nWHERE id = $10",
+        "additionalFields": {
+          "queryParameters": "={{ [\n  JSON.stringify($json.enrichedProfile),\n  $json.conversationContext,\n  $json.recommendedApproach,\n  'completed',\n  $json.leadScore,\n  $json.decisionPower,\n  $json.detectedCity || null,\n  $json.detectedCompany || null,\n  $json.linkedinUrl || null,\n  $json.leadId\n] }}"
+        }
+      },
+      "id": "postgresql-node",
+      "name": "PostgreSQL",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1450, 300],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-credential",
+          "name": "Neon PostgreSQL"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "SerpAPI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI": {
+      "main": [
+        [
+          {
+            "node": "Processar SerpAPI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Processar SerpAPI": {
+      "main": [
+        [
+          {
+            "node": "Claude AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude AI": {
+      "main": [
+        [
+          {
+            "node": "Processar Claude",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Processar Claude": {
+      "main": [
+        [
+          {
+            "node": "PostgreSQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-01-18T00:00:00.000Z",
+  "versionId": "1"
+}

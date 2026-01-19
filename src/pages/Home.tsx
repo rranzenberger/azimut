@@ -453,38 +453,54 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             
           </div>
           
-          {/* MOBILE/TABLET: Conteúdo Alinhado TOPO ESQUERDA */}
-          <div className="relative z-10 lg:hidden flex flex-col justify-start pt-4 w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden">
-            {/* Logo Watermark - SÓ no tema ESCURO */}
+          {/* MOBILE/TABLET: Layout compacto e organizado */}
+          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ paddingTop: '100px' }}>
+            
+            {/* Logo Animada - DIREITA, tema escuro */}
             {theme === 'dark' && (
-              <div className="absolute top-20 right-0 pointer-events-none" style={{ zIndex: 0 }}>
-                <div className="w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] opacity-20">
+              <div className="absolute top-[100px] right-4 pointer-events-none" style={{ zIndex: 5 }}>
+                <div className="w-[140px] h-[140px] sm:w-[160px] sm:h-[160px]" style={{ opacity: 0.4 }}>
                   <AnimatedLogo />
                 </div>
               </div>
             )}
             
-            {/* Conteúdo Texto (frente) - ALINHADO ESQUERDA, MAIS ACIMA */}
-            <div className="relative z-10 w-full text-left space-y-5 sm:space-y-6 px-0">
-              {/* Badge AZIMUT */}
-              <div className="inline-flex items-center gap-1.5 sm:gap-2 font-sora text-[0.65rem] sm:text-[0.7rem] uppercase tracking-[0.25em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
+            {/* Gradiente decorativo tema light - sutil */}
+            {theme === 'light' && (
+              <div 
+                className="absolute top-[80px] right-[-20px] pointer-events-none" 
+                style={{ 
+                  zIndex: 1,
+                  width: '200px',
+                  height: '200px',
+                  background: 'radial-gradient(circle, rgba(201, 35, 55, 0.08) 0%, transparent 70%)',
+                  filter: 'blur(40px)'
+                }}
+              />
+            )}
+            
+            {/* Conteúdo Texto (frente) - COMPACTO */}
+            <div className="relative z-10 w-full text-left space-y-4 sm:space-y-5 px-0">
+              {/* Badge AZIMUT - menor */}
+              <div className="inline-flex items-center gap-1.5 font-sora text-[0.6rem] sm:text-[0.65rem] uppercase tracking-[0.2em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
                 <img 
                   src="/estela6-clara.svg" 
                   alt="" 
-                  className="w-2.5 h-2.5 sm:w-3 sm:h-3"
+                  className="w-2 h-2 sm:w-2.5 sm:h-2.5"
                 />
                 <span className="text-azimut-red font-semibold">AZIMUT</span>
                 <span className={theme === 'dark' ? 'text-white/40' : 'text-slate-600'}>•</span>
-                <span className={`text-[0.6rem] sm:text-[0.65rem] ${theme === 'dark' ? 'text-white/60' : 'text-slate-600'}`}>SINCE 1996</span>
+                <span className={`text-[0.55rem] sm:text-[0.6rem] ${theme === 'dark' ? 'text-white/60' : 'text-slate-600'}`}>SINCE 1996</span>
               </div>
               
-              {/* Título - ALINHADO ESQUERDA (sem padding) */}
+              {/* Título - COMPACTO */}
               <h1 className={`font-handel uppercase animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ 
-                fontSize: 'clamp(2rem, 7vw, 4rem)',
-                lineHeight: '1.15',
-                letterSpacing: '0.1em',
+                fontSize: 'clamp(1.8rem, 6.5vw, 3.5rem)',
+                lineHeight: '1.1',
+                letterSpacing: '0.08em',
                 animationDelay: '0.2s',
-                wordBreak: 'break-word'
+                wordBreak: 'break-word',
+                maxWidth: '85%'
               }}>
                 {(() => {
                   if (lang === 'pt') {
@@ -527,28 +543,28 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 })()}
               </h1>
               
-              {/* Subtítulo */}
-              <p className={`max-w-[90%] text-[0.9rem] sm:text-[1rem] leading-relaxed animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/90' : 'text-[#4a4543]'}`} style={{ animationDelay: '0.3s' }}>
+              {/* Subtítulo - menor */}
+              <p className={`max-w-[85%] text-[0.85rem] sm:text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/90' : 'text-[#4a4543]'}`} style={{ animationDelay: '0.3s' }}>
                 {heroSubtitle.split('.')[0]}.
               </p>
               
-              {/* Stats Cards - ALINHADO ESQUERDA, cores por tema */}
-              <div className="grid grid-cols-2 gap-2.5 sm:gap-3 max-w-[90%] animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
-                <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 p-3 sm:p-4 rounded-xl hover:border-azimut-red transition-all duration-300 group ${
+              {/* Stats Cards - COMPACTO */}
+              <div className="grid grid-cols-2 gap-2 sm:gap-2.5 max-w-[85%] animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+                <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 p-2.5 sm:p-3 rounded-lg hover:border-azimut-red transition-all duration-300 group ${
                   theme === 'dark' ? 'bg-black/60 hover:bg-black/70' : 'bg-white/70 hover:bg-white/90'
                 }`}>
-                  <span className="block text-2xl sm:text-3xl md:text-4xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">100+</span>
-                  <span className={`block text-[0.6rem] sm:text-[0.65rem] md:text-xs uppercase tracking-widest mt-1 ${
+                  <span className="block text-xl sm:text-2xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">100+</span>
+                  <span className={`block text-[0.55rem] sm:text-[0.6rem] uppercase tracking-widest mt-0.5 ${
                     theme === 'dark' ? 'text-white/60' : 'text-slate-600'
                   }`}>
                     {lang === 'pt' ? 'Projetos' : lang === 'es' ? 'Proyectos' : 'Projects'}
                   </span>
                 </div>
-                <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 p-3 sm:p-4 rounded-xl hover:border-azimut-red transition-all duration-300 group ${
+                <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 p-2.5 sm:p-3 rounded-lg hover:border-azimut-red transition-all duration-300 group ${
                   theme === 'dark' ? 'bg-black/60 hover:bg-black/70' : 'bg-white/70 hover:bg-white/90'
                 }`}>
-                  <span className="block text-2xl sm:text-3xl md:text-4xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">1996</span>
-                  <span className={`block text-[0.6rem] sm:text-[0.65rem] md:text-xs uppercase tracking-widest mt-1 ${
+                  <span className="block text-xl sm:text-2xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">1996</span>
+                  <span className={`block text-[0.55rem] sm:text-[0.6rem] uppercase tracking-widest mt-0.5 ${
                     theme === 'dark' ? 'text-white/60' : 'text-slate-600'
                   }`}>
                     {lang === 'pt' ? 'Desde' : lang === 'es' ? 'Desde' : lang === 'fr' ? 'Depuis' : 'Since'}

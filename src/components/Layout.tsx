@@ -273,7 +273,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               <img
                 src={
                   isMobile 
-                    ? (theme === 'light' ? '/logo-mobile-claro.svg' : '/logo-mobile-escuro.svg')
+                    ? (theme === 'light' ? '/logo-mobile-escuro.svg' : '/logo-mobile-claro.svg')
                     : '/logo-topo-site.svg'
                 }
                 alt="Azimut – Immersive • Interactive • Cinematic Experiences"
