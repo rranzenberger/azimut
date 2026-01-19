@@ -480,8 +480,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 <span className={`text-[0.6rem] sm:text-[0.65rem] ${theme === 'dark' ? 'text-white/60' : 'text-slate-600'}`}>SINCE 1996</span>
               </div>
               
-              {/* Título - AJUSTADO PARA MOBILE */}
-              <h1 className={`font-handel uppercase animate-fade-in-up opacity-0 px-2 ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ 
+              {/* Título - ALINHADO ESQUERDA (sem padding) */}
+              <h1 className={`font-handel uppercase animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ 
                 fontSize: 'clamp(2rem, 7vw, 4rem)',
                 lineHeight: '1.15',
                 letterSpacing: '0.1em',
@@ -530,12 +530,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </h1>
               
               {/* Subtítulo */}
-              <p className={`max-w-[90%] sm:max-w-2xl mx-auto text-[0.9rem] sm:text-[1rem] leading-relaxed animate-fade-in-up opacity-0 px-2 ${theme === 'dark' ? 'text-white/90' : 'text-[#4a4543]'}`} style={{ animationDelay: '0.3s' }}>
+              <p className={`max-w-[90%] text-[0.9rem] sm:text-[1rem] leading-relaxed animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/90' : 'text-[#4a4543]'}`} style={{ animationDelay: '0.3s' }}>
                 {heroSubtitle.split('.')[0]}.
               </p>
               
-              {/* Stats Cards - AJUSTADO PARA MOBILE */}
-              <div className="grid grid-cols-2 gap-2.5 sm:gap-3 max-w-[90%] sm:max-w-2xl mx-auto animate-fade-in-up opacity-0 px-2" style={{ animationDelay: '0.4s' }}>
+              {/* Stats Cards - ALINHADO ESQUERDA */}
+              <div className="grid grid-cols-2 gap-2.5 sm:gap-3 max-w-[90%] animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
                 <div className="glass-panel backdrop-blur-xl bg-black/60 border border-azimut-red/30 p-3 sm:p-4 rounded-xl hover:border-azimut-red hover:bg-black/70 transition-all duration-300 group">
                   <span className="block text-2xl sm:text-3xl md:text-4xl font-bold text-azimut-red group-hover:text-red-400 transition-colors">100+</span>
                   <span className="block text-[0.6rem] sm:text-[0.65rem] md:text-xs text-white/60 uppercase tracking-widest mt-1">
