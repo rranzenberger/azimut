@@ -433,8 +433,11 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
       <VancouverFAQSchema lang={lang} faqs={t.faqs} />
 
       <div className="min-h-screen vancouver-page" style={{ marginTop: '-80px' }}>
-        {/* Hero Section */}
-        <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-20">
+        {/* Hero Section - FALLBACK: cor de fundo caso imagem não carregue */}
+        <section 
+          className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-20"
+          style={{ backgroundColor: '#0a1628' }}
+        >
           {/* Background Image Carousel - Inteligente por hora do dia */}
           <HeroImage image={image} />
 
