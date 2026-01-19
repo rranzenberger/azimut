@@ -1523,13 +1523,12 @@ body::after {
 @media (min-width: 768px) {
   [data-theme="light"] #root::before {
     background:
-      /* Gradiente suave amarelado/bege - consistência clara */
-      radial-gradient(ellipse 90% 50% at 15% -15%, rgba(245, 235, 220, 0.4) 0%, transparent 60%),
-      /* Gradiente inferior rosado suave */
-      radial-gradient(ellipse 80% 50% at 90% 115%, rgba(230, 210, 200, 0.3) 0%, transparent 55%),
-      /* Brilho central muito sutil */
-      radial-gradient(ellipse 60% 40% at 50% 50%, rgba(250, 245, 235, 0.2) 0%, transparent 50%);
-    opacity: 0.6;
+      /* Centro CLARO - onde está o hero text */
+      radial-gradient(ellipse 60% 40% at 50% 45%, rgba(255, 250, 245, 0.6) 0%, transparent 70%),
+      /* Laterais levemente mais escuras para profundidade */
+      radial-gradient(ellipse 90% 50% at 15% -15%, rgba(230, 220, 210, 0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 50% at 90% 115%, rgba(220, 210, 200, 0.2) 0%, transparent 55%);
+    opacity: 0.7;
   }
 }
 
