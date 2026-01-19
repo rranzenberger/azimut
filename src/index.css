@@ -1519,7 +1519,7 @@ body::after {
   opacity: 0.15;
 }
 
-/* Desktop: CINEMATOGRÁFICO - Curadoria de cores com estrela Azimut */
+/* Desktop: CINEMATOGRÁFICO - Laterais começam com cor de fundo */
 @media (min-width: 768px) {
   [data-theme="light"] #root::before {
     background:
@@ -1529,13 +1529,13 @@ body::after {
       radial-gradient(ellipse 45% 85% at 70% 50%, rgba(255, 215, 130, 0.14) 0%, rgba(220, 140, 100, 0.1) 50%, rgba(201, 35, 55, 0.06) 100%),
       /* Camada 3: Topo - Luz dourada suave (sunrise cinematográfico) */
       linear-gradient(180deg, rgba(250, 240, 220, 0.22) 0%, transparent 32%),
-      /* Camada 4: Vinheta ESQUERDA - Sépia/Marrom cinematográfico */
-      radial-gradient(ellipse 35% 100% at 0% 50%, rgba(175, 155, 135, 0.13) 0%, transparent 68%),
-      /* Camada 5: Vinheta DIREITA - Tom âmbar quente */
-      radial-gradient(ellipse 35% 100% at 100% 50%, rgba(210, 170, 140, 0.11) 0%, transparent 68%),
+      /* Camada 4: Vinheta ESQUERDA - Da cor de fundo (#d3cec3) pro centro */
+      radial-gradient(ellipse 35% 100% at 0% 50%, rgba(211, 206, 195, 1) 0%, transparent 68%),
+      /* Camada 5: Vinheta DIREITA - Da cor de fundo (#d3cec3) pro centro */
+      radial-gradient(ellipse 35% 100% at 100% 50%, rgba(211, 206, 195, 1) 0%, transparent 68%),
       /* Camada 6: Base inferior - Tom âmbar rico */
       linear-gradient(180deg, transparent 68%, rgba(195, 175, 160, 0.12) 100%);
-    opacity: 0.82;
+    opacity: 1;
   }
 }
 
@@ -1549,12 +1549,12 @@ body::after {
       radial-gradient(ellipse 42% 82% at 72% 50%, rgba(255, 215, 130, 0.2) 0%, rgba(220, 140, 100, 0.14) 50%, rgba(201, 35, 55, 0.08) 100%),
       /* Topo - Luz dourada cinematográfica */
       linear-gradient(180deg, rgba(250, 240, 220, 0.28) 0%, transparent 36%),
-      /* Vinhetas laterais premium */
-      radial-gradient(ellipse 32% 100% at 0% 50%, rgba(170, 150, 130, 0.16) 0%, transparent 64%),
-      radial-gradient(ellipse 32% 100% at 100% 50%, rgba(210, 170, 140, 0.14) 0%, transparent 64%),
+      /* Vinhetas laterais - Da cor de fundo (#d3cec3) pro centro */
+      radial-gradient(ellipse 32% 100% at 0% 50%, rgba(211, 206, 195, 1) 0%, transparent 64%),
+      radial-gradient(ellipse 32% 100% at 100% 50%, rgba(211, 206, 195, 1) 0%, transparent 64%),
       /* Base inferior âmbar */
       linear-gradient(180deg, transparent 64%, rgba(190, 170, 155, 0.16) 100%);
-    opacity: 0.92;
+    opacity: 1;
   }
 }
 
