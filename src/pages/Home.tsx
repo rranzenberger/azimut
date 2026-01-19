@@ -436,7 +436,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
           
           {/* MOBILE/TABLET: Layout compacto e organizado */}
-          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ paddingTop: '5px' }}>
+          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ paddingTop: '90px' }}>
             
             {/* Conteúdo Principal */}
             <div className="relative z-10 w-full text-left space-y-2 px-0">
@@ -560,18 +560,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 
                 {/* Coluna Direita: Logo Animada GRANDE */}
                 <div className="flex items-center justify-center">
-                  {theme === 'dark' ? (
-                    <div className="w-[130px] h-[130px] sm:w-[150px] sm:h-[150px]" style={{ opacity: 0.7 }}>
-                      <AnimatedLogo />
-                    </div>
-                  ) : (
-                    <img 
-                      src="/logo-azimut-star.svg" 
-                      alt="" 
-                      className="w-[110px] h-[110px] sm:w-[130px] sm:h-[130px]"
-                      style={{ opacity: 0.4 }}
-                    />
-                  )}
+                  <div className="w-[130px] h-[130px] sm:w-[150px] sm:h-[150px]" style={{ opacity: theme === 'dark' ? 0.7 : 0.5 }}>
+                    <AnimatedLogo />
+                  </div>
                 </div>
               </div>
               
