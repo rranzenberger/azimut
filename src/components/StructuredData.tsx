@@ -54,9 +54,11 @@ export const OrganizationSchema: React.FC<{ lang?: string }> = ({ lang = 'pt' })
     },
     address: {
       '@type': 'PostalAddress',
-      addressCountry: 'BR',
+      streetAddress: 'Rua Senador Vergueiro, 52, Sala 13, Flamengo',
       addressLocality: 'Rio de Janeiro',
-      addressRegion: 'RJ'
+      addressRegion: 'RJ',
+      postalCode: '22230-000',
+      addressCountry: 'BR'
     },
     contactPoint: {
       '@type': 'ContactPoint',
