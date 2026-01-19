@@ -657,25 +657,25 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-all duration-300" />
             
             {/* Content */}
-            <div className="relative z-10 h-full flex flex-col justify-between p-8">
-              {/* Top: Emoji */}
-              <div className="text-6xl md:text-7xl animate-bounce-slow">
+            <div className="relative z-10 h-full flex flex-col justify-between p-6 sm:p-8">
+              {/* Top: Emoji - MAIOR para mobile */}
+              <div className="text-7xl sm:text-8xl animate-bounce-slow drop-shadow-lg">
                 {card.emoji}
               </div>
               
-              {/* Middle: Image emojis (if lifestyle) */}
+              {/* Middle: Image emojis (if lifestyle) - MAIOR e MAIS CONTRASTE */}
               {card.image && (
-                <div className="text-center text-4xl md:text-5xl opacity-30 group-hover:opacity-50 transition-opacity">
+                <div className="text-center text-5xl sm:text-6xl opacity-50 group-hover:opacity-70 transition-opacity drop-shadow-md">
                   {card.image}
                 </div>
               )}
               
-              {/* Bottom: Text */}
+              {/* Bottom: Text - MAIS CONTRASTE */}
               <div>
-                <h3 className="text-2xl md:text-3xl font-black text-white mb-2 uppercase">
+                <h3 className="text-2xl sm:text-3xl font-black text-white mb-2 uppercase drop-shadow-lg" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                   {card.title}
                 </h3>
-                <p className="text-lg text-white/90 mb-3">
+                <p className="text-base sm:text-lg text-white mb-3 font-medium" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.4)' }}>
                   {card.text}
                 </p>
                 
