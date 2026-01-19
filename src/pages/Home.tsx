@@ -222,7 +222,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             const backgroundImage = heroBackgroundImage || featuredImage || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072'
             
             return (
-              <div className={`absolute inset-0 w-full h-full ${theme === 'dark' ? '' : 'hidden'}`}>
+              <div className={`absolute inset-0 w-full h-full ${theme === 'dark' ? '' : 'hidden'} lg:block`}>
                 <OptimizedImage
                   src={backgroundImage}
                   alt=""
@@ -258,14 +258,15 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             />
           )}
           
-          {/* MOBILE: Fundo sólido SEM gradientes */}
+          {/* MOBILE: Fundo sólido SEM gradientes - PRIORIDADE MÁXIMA */}
           <div 
             className="lg:hidden absolute inset-0"
             style={{
               background: theme === 'dark' 
                 ? '#050814' // Azul escuro sólido
                 : '#d3cec3', // Bege claro sólido (tema claro)
-              zIndex: 0
+              zIndex: 1,
+              backgroundColor: theme === 'dark' ? '#050814' : '#d3cec3' // Força cor sólida
             }}
           />
           
