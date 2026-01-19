@@ -861,7 +861,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* ════════════════════════════════════════════════════════════════ */}
         {/* PROJETOS EM DESTAQUE - 1 Card Grande + 3 Cards Pequenos */}
         {/* ════════════════════════════════════════════════════════════════ */}
-        <section className={`py-12 md:py-16 bg-gradient-to-b from-transparent ${theme === 'dark' ? 'to-black/40' : 'to-black/10'}`}>
+        <section className={`py-12 md:py-16 ${theme === 'dark' ? 'bg-gradient-to-b from-transparent to-black/40' : 'bg-[#d3cec3]'}`}>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             {/* Título */}
             <div className="mb-10 text-center">
@@ -1079,7 +1079,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         </section>
 
         {/* Nossas Soluções - Grid Visual COMPACTO */}
-        <section className={`py-10 md:py-12 bg-gradient-to-b from-transparent ${theme === 'dark' ? 'via-white/5' : 'via-black/5'} to-transparent`}>
+        <section className={`py-10 md:py-12 ${theme === 'dark' ? 'bg-gradient-to-b from-transparent via-white/5 to-transparent' : 'bg-[#d8d3c8]'}`}>
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="mb-10 text-center">
               <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-[0.12em] mb-4 text-theme-light-main">
@@ -1227,7 +1227,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             Inspiração: Apple, Tesla, Sites Premium 2026
             Glow animado + Destaque vermelho Azimut
         ═══════════════════════════════════════════════════════════ */}
-        <section className={`relative py-20 md:py-32 overflow-hidden bg-gradient-to-b from-transparent ${theme === 'dark' ? 'via-black/60 to-black/90' : 'via-black/20 to-black/40'}`}>
+        <section className={`relative py-20 md:py-32 overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-b from-transparent via-black/60 to-black/90' : 'bg-[#c9c4b9]'}`}>
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-5">
             <div className="absolute inset-0" style={{
@@ -1239,10 +1239,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
             {/* Título com animação */}
             <h2 
-              className="font-handel text-4xl md:text-5xl lg:text-6xl uppercase tracking-[0.08em] mb-6 text-white"
+              className={`font-handel text-4xl md:text-5xl lg:text-6xl uppercase tracking-[0.08em] mb-6 ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}
               style={{
                 animation: 'fadeInUp 0.8s ease-out both',
-                textShadow: '0 0 40px rgba(201, 35, 55, 0.3)'
+                textShadow: theme === 'dark' ? '0 0 40px rgba(201, 35, 55, 0.3)' : 'none'
               }}
             >
               {lang === 'pt' ? "Vamos criar algo incrível juntos?" : 
