@@ -259,19 +259,26 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             </>
           )}
           
-          {/* DESKTOP: TEMA CLARO - Gradiente Champagne/Dourado/Âmbar */}
+          {/* DESKTOP: TEMA CLARO - Bege | Marrom escuro (texto) | Degradê estrela → Bege */}
           {theme === 'light' && (
             <div 
               className="hidden lg:block absolute inset-0"
               style={{
                 background: `
-                  radial-gradient(ellipse 50% 100% at 48% 50%, rgba(200, 180, 160, 0.4) 0%, transparent 70%),
-                  radial-gradient(ellipse 50% 100% at 75% 50%, rgba(255, 200, 100, 0.25) 0%, rgba(220, 140, 90, 0.15) 50%, rgba(201, 35, 55, 0.08) 100%),
-                  linear-gradient(180deg, rgba(245, 235, 210, 0.4) 0%, transparent 35%),
-                  radial-gradient(ellipse 40% 100% at 0% 50%, rgba(211, 206, 195, 0.9) 0%, transparent 60%),
-                  radial-gradient(ellipse 35% 100% at 100% 50%, rgba(211, 206, 195, 0.9) 0%, transparent 55%),
-                  linear-gradient(180deg, transparent 65%, rgba(190, 165, 145, 0.15) 100%),
-                  #d3cec3
+                  linear-gradient(90deg, 
+                    #d3cec3 0%,
+                    #d3cec3 12%,
+                    #3d3530 25%,
+                    #2a2520 40%,
+                    #2a2520 50%,
+                    #3d3530 60%,
+                    #6b5a4d 70%,
+                    #8b7055 75%,
+                    #a08060 80%,
+                    #c9a070 85%,
+                    #d3cec3 95%,
+                    #d3cec3 100%
+                  )
                 `,
                 zIndex: 0
               }}
