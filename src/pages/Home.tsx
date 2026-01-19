@@ -452,23 +452,22 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             {/* Borda superior vermelha SÓLIDA */}
             <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
             
-            {/* Container com fundo escuro - EXATAMENTE a altura do vídeo */}
+            {/* Container com fundo escuro - Altura reduzida para 260px */}
             <div 
               className="relative"
               style={{
                 background: theme === 'dark'
                   ? '#0a0e18' // Azul escuro sólido
                   : '#2a2825', // Marrom escuro sólido
+                height: '260px', // Altura FIXA menor (antes era 320px)
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 padding: 0,
-                overflow: 'hidden',
-                aspectRatio: '1 / 1', // Vídeo é quadrado (1:1)
-                width: '100%'
+                overflow: 'hidden'
               }}
             >
-              {/* Logo Animada 100VW - DE FORA A FORA */}
+              {/* Logo Animada - object-contain para não cropar */}
               <div className="relative w-full h-full">
                 <AnimatedLogo />
               </div>
