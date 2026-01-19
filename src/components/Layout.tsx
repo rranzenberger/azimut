@@ -273,10 +273,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             >
               <img
                 src={
-                  // Mobile: logo_mobile_basica.png (melhor compatibilidade Safari iOS)
+                  // Mobile: logobasicaa.png (melhor compatibilidade Safari iOS)
                   // Desktop: logo padrão SVG
                   isMobile 
-                    ? '/logo_mobile_basica.png'
+                    ? '/logobasicaa.png'
                     : '/logo-topo-site.svg'
                 }
                 alt="Azimut – Immersive • Interactive • Cinematic Experiences"
