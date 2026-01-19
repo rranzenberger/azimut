@@ -575,36 +575,29 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             
             {/* Container com fundo escuro - Condicional por tema */}
             <div 
-              className="relative py-10 px-4"
+              className="relative py-8"
               style={{
                 background: theme === 'dark'
                   ? 'linear-gradient(180deg, #0a0e18 0%, #050a14 50%, #0a0e18 100%)' // Azul escuro
-                  : 'linear-gradient(180deg, #2a2825 0%, #1e1c1a 50%, #2a2825 100%)', // Marrom escuro (rodapé)
-                minHeight: '300px',
+                  : 'linear-gradient(180deg, #2a2825 0%, #1e1c1a 50%, #2a2825 100%)', // Marrom escuro
+                minHeight: '320px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '2rem'
+                gap: '1.5rem',
+                padding: 0
               }}
             >
-              {/* SVG estática de fundo - mais sutil */}
-              <img 
-                src="/logo-azimut-star.svg" 
-                alt="" 
-                className="absolute inset-0 w-full h-full object-contain"
-                style={{ opacity: 0.08, filter: 'blur(2px)' }}
-              />
-              
-              {/* Logo Animada ENORME - destaque principal */}
-              <div className="relative z-10 flex justify-center items-center animate-fade-in-up opacity-0" style={{ animationDelay: '0.3s' }}>
-                <div className="relative w-[200px] h-[200px] sm:w-[240px] sm:h-[240px]">
+              {/* Logo Animada FULL WIDTH - ocupa tela toda */}
+              <div className="relative w-full flex justify-center items-center animate-fade-in-up opacity-0" style={{ animationDelay: '0.3s', minHeight: '240px' }}>
+                <div className="relative w-full max-w-[280px] aspect-square">
                   <AnimatedLogo />
                 </div>
               </div>
               
-              {/* Tagline IMMERSIVE - MAIOR e mais destaque */}
-              <div className="relative z-10 text-center animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+              {/* Tagline IMMERSIVE - Abaixo da logo */}
+              <div className="relative z-10 text-center px-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
                 <p className="font-sora text-[0.7rem] sm:text-[0.8rem] uppercase tracking-[0.18em] leading-relaxed text-white/90 font-medium">
                   <span className="block">IMMERSIVE • INTERACTIVE</span>
                   <span className="block mt-1">CINEMATIC EXPERIENCES</span>
