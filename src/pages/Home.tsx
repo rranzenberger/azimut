@@ -436,7 +436,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
           
           {/* MOBILE/TABLET: Layout compacto e organizado */}
-          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ paddingTop: '100px' }}>
+          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ marginTop: '-80px', paddingTop: '90px' }}>
             
             {/* Conteúdo Principal */}
             <div className="relative z-10 w-full text-left space-y-3 px-0">
