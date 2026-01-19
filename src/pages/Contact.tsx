@@ -32,7 +32,15 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
         lang={lang}
       />
       
-      <main className="relative min-h-screen">
+      <main 
+        className="relative min-h-screen"
+        style={{
+          background: 'var(--theme-bg-primary)',
+          color: 'var(--theme-text)',
+          marginTop: '-80px',
+          paddingTop: '80px'
+        }}
+      >
         {/* Estrela de fundo - detecta tema automaticamente */}
         <StarBackground
           className="-right-28 -bottom-40 min-[768px]:-right-40 min-[768px]:-bottom-60 h-[520px] w-[520px] min-[768px]:h-[680px] min-[768px]:w-[680px]"
