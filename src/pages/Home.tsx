@@ -217,8 +217,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* margin-top negativo compensa o padding do Layout */}
         {/* ════════════════════════════════════════════════════════════════ */}
         <section 
-          className="relative min-h-[90vh] flex flex-col lg:flex-row lg:items-center overflow-x-hidden overflow-y-auto film-grain py-4 sm:py-6 md:py-8"
-          style={{ marginTop: '-80px', paddingTop: '80px' }}
+          className="relative min-h-[85vh] flex flex-col lg:flex-row lg:items-start overflow-x-hidden overflow-y-auto film-grain py-4 sm:py-6 md:py-8"
+          style={{ marginTop: '-80px', paddingTop: '100px' }}
         >
           {/* Background: Imagem do Backoffice (heroBackgroundImage) ou Featured Project */}
           {/* APENAS NO TEMA ESCURO - Tema claro usa gradiente bege sem imagem */}
@@ -259,7 +259,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             </>
           )}
           
-          {/* DESKTOP: TEMA CLARO - Bege | Marrom ESCURO (texto) | Marrom → Bege */}
+          {/* DESKTOP: TEMA CLARO - Bege (margem) | Marrom SÓLIDO (texto) | Degradê → Bege */}
           {theme === 'light' && (
             <div 
               className="hidden lg:block absolute inset-0"
@@ -267,16 +267,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 background: `
                   linear-gradient(90deg, 
                     #d3cec3 0%,
-                    #d3cec3 8%,
-                    #a09080 12%,
-                    #5a4a40 18%,
-                    #2a2218 28%,
-                    #1a1510 38%,
-                    #1a1510 52%,
-                    #2a2218 62%,
-                    #4a3a30 72%,
-                    #7a6a5a 82%,
-                    #a09585 90%,
+                    #1e1a16 5%,
+                    #1e1a16 65%,
+                    #2a2520 72%,
+                    #4a4035 80%,
+                    #7a6a5a 88%,
+                    #b0a090 94%,
                     #d3cec3 100%
                   )
                 `,
