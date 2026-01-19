@@ -1520,22 +1520,22 @@ body::after {
   opacity: 0.15;
 }
 
-/* Desktop: CINEMATOGRÁFICO - Gradientes ASSIMÉTRICOS */
+/* Desktop: CINEMATOGRÁFICO - Gradientes ASSIMÉTRICOS - MAIS INTENSOS */
 @media (min-width: 768px) {
   [data-theme="light"] #root::before {
     background:
-      /* Camada 1: Centro Hero - Champagne (bege + dourado quente) */
-      radial-gradient(ellipse 35% 85% at 48% 45%, rgba(200, 185, 170, 0.28) 0%, transparent 100%),
-      /* Camada 2: Pós-texto - Cores da estrela (dourado→âmbar→vermelho) - INICIA DEPOIS DO TEXTO */
-      radial-gradient(ellipse 40% 85% at 68% 50%, rgba(255, 215, 130, 0.14) 0%, rgba(220, 140, 100, 0.1) 50%, rgba(201, 35, 55, 0.06) 100%),
-      /* Camada 3: Topo - Luz dourada suave */
-      linear-gradient(180deg, rgba(250, 240, 220, 0.22) 0%, transparent 32%),
-      /* Camada 4: Vinheta ESQUERDA - Da cor de fundo, TERMINA BEM ANTES DO TEXTO (em telas pequenas não aparece) */
+      /* Camada 1: Centro Hero - Champagne INTENSO (bege + dourado quente) */
+      radial-gradient(ellipse 40% 90% at 48% 45%, rgba(190, 175, 155, 0.45) 0%, transparent 100%),
+      /* Camada 2: Pós-texto - Cores da estrela (dourado→âmbar→vermelho) - MAIS VISÍVEL */
+      radial-gradient(ellipse 45% 90% at 70% 50%, rgba(255, 200, 100, 0.25) 0%, rgba(220, 130, 80, 0.18) 50%, rgba(201, 35, 55, 0.12) 100%),
+      /* Camada 3: Topo - Luz dourada MAIS FORTE */
+      linear-gradient(180deg, rgba(245, 230, 200, 0.35) 0%, transparent 40%),
+      /* Camada 4: Vinheta ESQUERDA - Da cor de fundo */
       radial-gradient(ellipse 45% 100% at -5% 50%, rgba(211, 206, 195, 1) 0%, transparent 75%),
-      /* Camada 5: Vinheta DIREITA - Da cor de fundo, INICIA DEPOIS DO TEXTO */
+      /* Camada 5: Vinheta DIREITA - Da cor de fundo */
       radial-gradient(ellipse 38% 100% at 105% 50%, rgba(211, 206, 195, 1) 0%, transparent 70%),
-      /* Camada 6: Base inferior - Tom âmbar rico */
-      linear-gradient(180deg, transparent 68%, rgba(195, 175, 160, 0.12) 100%);
+      /* Camada 6: Base inferior - Tom âmbar MAIS RICO */
+      linear-gradient(180deg, transparent 60%, rgba(185, 160, 140, 0.2) 100%);
     opacity: 1;
   }
 }
