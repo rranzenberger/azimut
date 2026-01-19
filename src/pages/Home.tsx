@@ -192,19 +192,25 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         type="website"
       />
       <main className="relative">
-        {/* Estrela de fundo - HOME: Só aparece no tema ESCURO */}
-        {theme === 'dark' && (
-          <StarBackground
-            className="fixed top-[160px] right-0 translate-x-[30%] md:translate-x-[40%] h-[520px] w-[520px] md:top-[160px] md:h-[680px] md:w-[680px] pointer-events-none"
-            zIndex={-5}
-            opacity={0.5}
-            style={{ 
-              maxWidth: '100vw',
-              overflow: 'hidden',
-              clipPath: 'inset(0)'
+        {/* Estrela de fundo - HOME: Ambos os temas (DESKTOP ONLY) */}
+        <div 
+          className="hidden lg:block pointer-events-none fixed top-[120px] -right-28 md:-right-40 h-[520px] w-[520px] md:h-[680px] md:w-[680px]"
+          style={{ 
+            zIndex: -5,
+            opacity: theme === 'dark' ? 0.4 : 0.25,
+            maxWidth: '100vw',
+            overflow: 'hidden'
+          }}
+        >
+          <img 
+            src="/logo-azimut-star.svg" 
+            alt="" 
+            className="h-full w-full object-contain"
+            style={{
+              filter: theme === 'light' ? 'invert(1) brightness(0.2) sepia(0.3)' : 'none'
             }}
           />
-        )}
+        </div>
 
         {/* ════════════════════════════════════════════════════════════════ */}
         {/* HERO WORLD-CLASS 2026 - 85vh + Stats Cards Flutuantes */}
