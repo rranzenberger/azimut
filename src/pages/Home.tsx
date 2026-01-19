@@ -560,32 +560,32 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           {/* ═══════════════════════════════════════════════════════════════════
               SEÇÃO LOGO ANIMADA - Elemento especial com fundo escuro
               Full-width: De borda a borda da tela (viewport completo)
-              Curadoria: Marrom escuro no tema claro combina com rodapé
+              ABAIXO DOS CARDS - Separada com bordas vermelhas
           ═══════════════════════════════════════════════════════════════════ */}
           <div 
-            className="lg:hidden relative mt-6 mb-6" 
+            className="lg:hidden relative mt-8 mb-8" 
             style={{ 
               width: '100vw',
               marginLeft: 'calc(-50vw + 50%)',
               marginRight: 'calc(-50vw + 50%)'
             }}
           >
-            {/* Borda superior vermelha */}
-            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-azimut-red to-transparent" />
+            {/* Borda superior vermelha SÓLIDA */}
+            <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
             
             {/* Container com fundo escuro - Condicional por tema */}
             <div 
-              className="relative py-8 px-4"
+              className="relative py-10 px-4"
               style={{
                 background: theme === 'dark'
                   ? 'linear-gradient(180deg, #0a0e18 0%, #050a14 50%, #0a0e18 100%)' // Azul escuro
                   : 'linear-gradient(180deg, #2a2825 0%, #1e1c1a 50%, #2a2825 100%)', // Marrom escuro (rodapé)
-                minHeight: '280px',
+                minHeight: '300px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '1.5rem'
+                gap: '2rem'
               }}
             >
               {/* SVG estática de fundo - mais sutil */}
@@ -612,8 +612,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </div>
             </div>
             
-            {/* Borda inferior vermelha */}
-            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-azimut-red to-transparent" />
+            {/* Borda inferior vermelha SÓLIDA */}
+            <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
           </div>
         </section>
 
