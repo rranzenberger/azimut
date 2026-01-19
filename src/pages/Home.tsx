@@ -447,95 +447,95 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             
           </div>
           
-          {/* MOBILE/TABLET: Conteúdo ANTES do vídeo - ORDEM CORRETA */}
-          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ paddingTop: '100px' }}>
-            
-            {/* Conteúdo Principal */}
-            <div className="relative z-10 w-full text-left space-y-3 px-0">
-              
-              {/* Badge AZIMUT - NO TOPO */}
-              <div className="inline-flex items-center gap-1.5 font-sora text-[0.6rem] sm:text-[0.65rem] uppercase tracking-[0.2em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.05s' }}>
-                <img 
-                  src={theme === 'dark' ? '/estela6-clara.svg' : '/estela6-escura.svg'}
-                  alt="" 
-                  className="w-2.5 h-2.5 sm:w-3 sm:h-3"
-                />
-                <span className="text-azimut-red font-semibold">AZIMUT</span>
-                <span className={theme === 'dark' ? 'text-white/40' : 'text-slate-600'}>•</span>
-                <span className={`text-[0.55rem] sm:text-[0.6rem] ${theme === 'dark' ? 'text-white/60' : 'text-slate-600'}`}>SINCE 1996</span>
-              </div>
-              
-              {/* Título - COMPACTO */}
-              <h1 className={`font-handel uppercase animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ 
-                fontSize: 'clamp(1.5rem, 5.5vw, 2.8rem)',
-                lineHeight: '1.1',
-                letterSpacing: '0.08em',
-                animationDelay: '0.1s',
-                wordBreak: 'break-word',
-                maxWidth: '100%'
-              }}>
-                {(() => {
-                  if (lang === 'pt') {
-                    return (
-                      <>
-                        EXPERIÊNCIAS<br />
-                        QUE CONECTAM<br />
-                        <span className="text-azimut-red">MUNDOS</span>
-                      </>
-                    )
-                  }
-                  if (lang === 'en') {
-                    return (
-                      <>
-                        EXPERIENCES<br />
-                        THAT CONNECT<br />
-                        <span className="text-azimut-red">WORLDS</span>
-                      </>
-                    )
-                  }
-                  if (lang === 'fr') {
-                    return (
-                      <>
-                        EXPÉRIENCES<br />
-                        QUI CONNECTENT<br />
-                        <span className="text-azimut-red">LES MONDES</span>
-                      </>
-                    )
-                  }
-                  if (lang === 'es') {
-                    return (
-                      <>
-                        EXPERIENCIAS<br />
-                        QUE CONECTAN<br />
-                        <span className="text-azimut-red">MUNDOS</span>
-                      </>
-                    )
-                  }
-                  return heroSlogan
-                })()}
-              </h1>
-              
-              {/* Subtítulo */}
-              <p className={`text-[0.75rem] sm:text-[0.85rem] leading-relaxed animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/90' : 'text-[#4a4543]'}`} style={{ animationDelay: '0.15s' }}>
-                {heroSubtitle.split('.')[0]}.
-              </p>
-            </div>
-          </div>
-          
           {/* ═══════════════════════════════════════════════════════════════════
-              SEÇÃO LOGO ANIMADA - APÓS "EXPERIÊNCIAS QUE CONECTAM MUNDOS"
-              Full-width: De borda a borda da tela (viewport completo)
-              ORDEM: Menu → Badge → Título → Subtítulo → VÍDEO → Cards
-          ═══════════════════════════════════════════════════════════════════ */}
-          <div 
-            className="lg:hidden relative mt-8" 
-            style={{ 
-              width: '100vw',
-              marginLeft: 'calc(-50vw + 50%)',
-              marginRight: 'calc(-50vw + 50%)',
-              zIndex: 5
-            }}
-          >
+              MOBILE: ORDEM CORRETA - Badge → Título → Subtítulo → VÍDEO → Cards
+              ═══════════════════════════════════════════════════════════════════ */}
+          <div className="lg:hidden flex flex-col">
+            
+            {/* 1️⃣ BADGE + TÍTULO + SUBTÍTULO - PRIMEIRO */}
+            <div className="relative z-20 flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ paddingTop: '100px' }}>
+              <div className="relative z-20 w-full text-left space-y-3 px-0">
+                
+                {/* Badge AZIMUT - NO TOPO */}
+                <div className="inline-flex items-center gap-1.5 font-sora text-[0.6rem] sm:text-[0.65rem] uppercase tracking-[0.2em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.05s' }}>
+                  <img 
+                    src={theme === 'dark' ? '/estela6-clara.svg' : '/estela6-escura.svg'}
+                    alt="" 
+                    className="w-2.5 h-2.5 sm:w-3 sm:h-3"
+                  />
+                  <span className="text-azimut-red font-semibold">AZIMUT</span>
+                  <span className={theme === 'dark' ? 'text-white/40' : 'text-slate-600'}>•</span>
+                  <span className={`text-[0.55rem] sm:text-[0.6rem] ${theme === 'dark' ? 'text-white/60' : 'text-slate-600'}`}>SINCE 1996</span>
+                </div>
+                
+                {/* Título - COMPACTO */}
+                <h1 className={`font-handel uppercase animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ 
+                  fontSize: 'clamp(1.5rem, 5.5vw, 2.8rem)',
+                  lineHeight: '1.1',
+                  letterSpacing: '0.08em',
+                  animationDelay: '0.1s',
+                  wordBreak: 'break-word',
+                  maxWidth: '100%'
+                }}>
+                  {(() => {
+                    if (lang === 'pt') {
+                      return (
+                        <>
+                          EXPERIÊNCIAS<br />
+                          QUE CONECTAM<br />
+                          <span className="text-azimut-red">MUNDOS</span>
+                        </>
+                      )
+                    }
+                    if (lang === 'en') {
+                      return (
+                        <>
+                          EXPERIENCES<br />
+                          THAT CONNECT<br />
+                          <span className="text-azimut-red">WORLDS</span>
+                        </>
+                      )
+                    }
+                    if (lang === 'fr') {
+                      return (
+                        <>
+                          EXPÉRIENCES<br />
+                          QUI CONNECTENT<br />
+                          <span className="text-azimut-red">LES MONDES</span>
+                        </>
+                      )
+                    }
+                    if (lang === 'es') {
+                      return (
+                        <>
+                          EXPERIENCIAS<br />
+                          QUE CONECTAN<br />
+                          <span className="text-azimut-red">MUNDOS</span>
+                        </>
+                      )
+                    }
+                    return heroSlogan
+                  })()}
+                </h1>
+                
+                {/* Subtítulo */}
+                <p className={`text-[0.75rem] sm:text-[0.85rem] leading-relaxed animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/90' : 'text-[#4a4543]'}`} style={{ animationDelay: '0.15s' }}>
+                  {heroSubtitle.split('.')[0]}.
+                </p>
+              </div>
+            </div>
+            
+            {/* 2️⃣ VÍDEO ANIMADO - SEGUNDO (APÓS badge/título/subtítulo) */}
+            <div 
+              className="relative mt-8" 
+              style={{ 
+                width: '100vw',
+                marginLeft: 'calc(-50vw + 50%)',
+                marginRight: 'calc(-50vw + 50%)',
+                zIndex: 10,
+                order: 2
+              }}
+            >
             {/* Borda superior vermelha SÓLIDA */}
             <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
             
@@ -563,17 +563,18 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             {/* Borda inferior vermelha SÓLIDA */}
             <div className="h-[3px] w-full bg-azimut-red" style={{ boxShadow: '0 0 8px rgba(201, 35, 55, 0.5)' }} />
             
-            {/* Tagline IMMERSIVE - GRANDE e destaque */}
-            <div className="relative py-8 text-center px-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.2s' }}>
+            </div>
+            
+            {/* Tagline IMMERSIVE - FORA da seção do vídeo, DEPOIS */}
+            <div className="relative py-8 text-center px-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.2s', order: 3 }}>
               <p className={`font-sora uppercase tracking-[0.2em] leading-relaxed font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ fontSize: 'clamp(1rem, 4vw, 1.4rem)' }}>
                 <span className="block">IMMERSIVE • INTERACTIVE</span>
                 <span className="block mt-2">CINEMATIC EXPERIENCES</span>
               </p>
             </div>
-          </div>
-          
-          {/* MOBILE/TABLET: 4 Cards APÓS o vídeo */}
-          <div className="relative z-10 lg:hidden flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden mt-6">
+            
+            {/* 3️⃣ CARDS - TERCEIRO (APÓS vídeo) */}
+            <div className="relative z-10 flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden mt-6" style={{ order: 4 }}>
             
             {/* Conteúdo Principal */}
             <div className="relative z-10 w-full text-left space-y-3 px-0">
