@@ -217,8 +217,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* margin-top negativo compensa o padding do Layout */}
         {/* ════════════════════════════════════════════════════════════════ */}
         <section 
-          className="relative min-h-[85vh] flex flex-col lg:flex-row lg:items-start overflow-x-hidden overflow-y-auto film-grain py-4 sm:py-6 md:py-8"
-          style={{ marginTop: '-80px', paddingTop: '100px' }}
+          className="relative flex flex-col lg:flex-row lg:items-start overflow-x-hidden overflow-y-auto film-grain py-4 sm:py-6 md:py-8"
+          style={{ marginTop: '-80px', paddingTop: '100px', minHeight: 'auto' }}
         >
           {/* Background: Imagem do Backoffice (heroBackgroundImage) ou Featured Project */}
           {/* APENAS NO TEMA ESCURO - Tema claro usa gradiente bege sem imagem */}
@@ -305,22 +305,21 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               {/* Badge AZIMUT */}
               <div className="inline-flex items-center gap-2 font-sora text-[0.75rem] uppercase tracking-[0.3em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
                 <img 
-                  src={theme === 'dark' ? '/estela6-clara.svg' : '/estela6-escura.svg'}
+                  src="/estela6-clara.svg"
                   alt="" 
                   className="w-4 h-4"
                 />
                 <span className="text-azimut-red font-semibold">AZIMUT</span>
-                <span className={theme === 'dark' ? 'text-white/40' : 'text-slate-600'}>•</span>
-                <span className={`text-[0.7rem] ${theme === 'dark' ? 'text-white/60' : 'text-slate-600'}`}>SINCE 1996</span>
+                <span className="text-white/40">•</span>
+                <span className="text-[0.7rem] text-white/70">SINCE 1996</span>
               </div>
                 
                 {/* Título em 3 LINHAS - MULTILÍNGUE */}
-                <h1 className={`font-handel uppercase animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`} style={{ 
+                <h1 className="font-handel uppercase animate-fade-in-up opacity-0 text-white" style={{ 
                   fontSize: 'clamp(3rem, 5.5vw, 5.8rem)',
                   lineHeight: '1.1',
                   letterSpacing: '0.08em',
-                  animationDelay: '0.2s',
-                  textShadow: theme === 'light' ? '0 1px 2px rgba(255, 255, 255, 0.3)' : 'none'
+                  animationDelay: '0.2s'
                 }}>
                   {(() => {
                     const words = heroSlogan.split(' ');
@@ -331,28 +330,28 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                           <>
                             EXPERIÊNCIAS<br />
                             QUE CONECTAM<br />
-                            <span className="text-azimut-red" style={{ textShadow: theme === 'light' ? '0 1px 3px rgba(255, 255, 255, 0.5), 0 0 20px rgba(201, 35, 55, 0.3)' : 'none' }}>MUNDOS</span>
+                            <span className="text-azimut-red">MUNDOS</span>
                           </>
                         )}
                         {lang === 'en' && (
                           <>
                             EXPERIENCES<br />
                             THAT CONNECT<br />
-                            <span className="text-azimut-red" style={{ textShadow: theme === 'light' ? '0 1px 3px rgba(255, 255, 255, 0.5), 0 0 20px rgba(201, 35, 55, 0.3)' : 'none' }}>WORLDS</span>
+                            <span className="text-azimut-red">WORLDS</span>
                           </>
                         )}
                         {lang === 'fr' && (
                           <>
                             EXPÉRIENCES<br />
                             QUI CONNECTENT<br />
-                            <span className="text-azimut-red" style={{ textShadow: theme === 'light' ? '0 1px 3px rgba(255, 255, 255, 0.5), 0 0 20px rgba(201, 35, 55, 0.3)' : 'none' }}>LES MONDES</span>
+                            <span className="text-azimut-red">LES MONDES</span>
                           </>
                         )}
                         {lang === 'es' && (
                           <>
                             EXPERIENCIAS<br />
                             QUE CONECTAN<br />
-                            <span className="text-azimut-red" style={{ textShadow: theme === 'light' ? '0 1px 3px rgba(255, 255, 255, 0.5), 0 0 20px rgba(201, 35, 55, 0.3)' : 'none' }}>MUNDOS</span>
+                            <span className="text-azimut-red">MUNDOS</span>
                           </>
                         )}
                       </>
@@ -361,7 +360,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 </h1>
                   
                 {/* Subtítulo COMPACTO */}
-                <p className={`max-w-xl text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/90' : 'text-[#4a4543]'}`} style={{ animationDelay: '0.3s' }}>
+                <p className="max-w-xl text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0 text-white/80" style={{ animationDelay: '0.3s' }}>
                   {heroSubtitle.split('.')[0]}.
                 </p>
               </div>
@@ -438,30 +437,30 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </div>
             </div>
             
-            {/* LINHA 3: 3 Cards de Credibilidade VERMELHOS (ABAIXO DOS 5 CARDS - SEM TREPAR) */}
-            <div className="grid grid-cols-3 gap-4">
+            {/* LINHA 3: 3 Cards de Credibilidade VERMELHOS */}
+            <div className="grid grid-cols-3 gap-4 mt-2">
               {/* Rio Museu Olímpico */}
-              <div className="glass-panel backdrop-blur-xl border border-azimut-red/50 p-4 rounded-lg hover:border-azimut-red transition-all duration-300 group" style={{ background: theme === 'dark' ? 'rgba(201, 35, 55, 0.15)' : 'rgba(201, 35, 55, 0.1)' }}>
-                <span className="block text-sm font-semibold text-azimut-red group-hover:text-red-400 transition-colors break-words">Rio Museum</span>
-                <span className={`block text-[0.55rem] uppercase tracking-wider mt-1 leading-tight ${theme === 'dark' ? 'text-slate-300' : 'text-slate-600'}`}>
+              <div className="backdrop-blur-xl border border-azimut-red/60 p-4 rounded-lg hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(139, 30, 45, 0.85)' }}>
+                <span className="block text-sm font-semibold text-red-200 group-hover:text-white transition-colors break-words">Rio Museum</span>
+                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 leading-tight text-red-100/70">
                   {lang === 'pt' ? 'Direção Geral · Tecnologia · Arte Audiovisual' : lang === 'es' ? 'Dirección General · Tecnología · Arte Audiovisual' : lang === 'fr' ? 'Direction Générale · Technologie · Art Audiovisuel' : 'General Direction · Technology · Audiovisual Art'}
                 </span>
               </div>
 
               {/* Gramado VR */}
-              <div className="glass-panel backdrop-blur-xl border border-azimut-red/50 p-4 rounded-lg hover:border-azimut-red transition-all duration-300 group" style={{ background: theme === 'dark' ? 'rgba(201, 35, 55, 0.15)' : 'rgba(201, 35, 55, 0.1)' }}>
-                <span className="block text-sm font-semibold text-azimut-red group-hover:text-red-400 transition-colors break-words">
+              <div className="backdrop-blur-xl border border-azimut-red/60 p-4 rounded-lg hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(139, 30, 45, 0.85)' }}>
+                <span className="block text-sm font-semibold text-red-200 group-hover:text-white transition-colors break-words">
                   {lang === 'pt' ? 'Festival de Gramado' : lang === 'es' ? 'Festival de Gramado' : lang === 'fr' ? 'Festival de Gramado' : 'Gramado Festival'}
                 </span>
-                <span className={`block text-[0.55rem] uppercase tracking-wider mt-1 ${theme === 'dark' ? 'text-slate-300' : 'text-slate-600'}`}>
+                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 text-red-100/70">
                   {lang === 'pt' ? 'VR desde 2017' : lang === 'es' ? 'VR desde 2017' : lang === 'fr' ? 'VR depuis 2017' : 'VR since 2017'}
                 </span>
               </div>
 
               {/* BR ↔ CA */}
-              <div className="glass-panel backdrop-blur-xl border border-azimut-red/50 p-4 rounded-lg hover:border-azimut-red transition-all duration-300 group" style={{ background: theme === 'dark' ? 'rgba(201, 35, 55, 0.15)' : 'rgba(201, 35, 55, 0.1)' }}>
-                <span className="block text-sm font-semibold text-azimut-red group-hover:text-red-400 transition-colors break-words">Brasil ↔ Canadá</span>
-                <span className={`block text-[0.55rem] uppercase tracking-wider mt-1 ${theme === 'dark' ? 'text-slate-300' : 'text-slate-600'}`}>
+              <div className="backdrop-blur-xl border border-azimut-red/60 p-4 rounded-lg hover:border-azimut-red transition-all duration-300 group" style={{ background: 'rgba(139, 30, 45, 0.85)' }}>
+                <span className="block text-sm font-semibold text-red-200 group-hover:text-white transition-colors break-words">Brasil ↔ Canadá</span>
+                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 text-red-100/70">
                   {lang === 'pt' ? 'Binacional' : lang === 'es' ? 'Binacional' : lang === 'fr' ? 'Binational' : 'Binational'}
                 </span>
               </div>
