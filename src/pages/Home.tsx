@@ -260,25 +260,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           )}
           
           {/* DESKTOP: TEMA CLARO - Fundo bege/cream limpo */}
-          {theme === 'light' && (
-            <div 
-              className="hidden lg:block absolute inset-0"
-              style={{
-                background: 'linear-gradient(180deg, #e8e4db 0%, #d8d3c8 50%, #cec9be 100%)',
-                zIndex: 0
-              }}
-            />
-          )}
-          
-          {/* MOBILE: Fundo sólido SEM gradientes - PRIORIDADE MÁXIMA */}
+          {/* MOBILE ONLY: Fundo sólido SEM gradientes */}
+          {/* Desktop: SEM fundo aqui - deixa o CSS global (#root::before) fazer o trabalho */}
           <div 
             className="lg:hidden absolute inset-0"
             style={{
-              background: theme === 'dark' 
-                ? '#050814' // Azul escuro sólido
-                : '#d3cec3', // Bege claro sólido (tema claro)
-              zIndex: 1,
-              backgroundColor: theme === 'dark' ? '#050814' : '#d3cec3' // Força cor sólida
+              background: theme === 'dark' ? '#050814' : '#d3cec3',
+              zIndex: 1
             }}
           />
           
