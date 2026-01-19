@@ -558,9 +558,17 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   </div>
                 </div>
                 
-                {/* Coluna Direita: Logo Animada GRANDE */}
-                <div className="flex items-center justify-center">
-                  <div className="w-[130px] h-[130px] sm:w-[150px] sm:h-[150px]" style={{ opacity: theme === 'dark' ? 0.7 : 0.5 }}>
+                {/* Coluna Direita: Logo Animada GRANDE + SVG de fundo */}
+                <div className="flex items-center justify-center relative">
+                  {/* SVG estática de fundo */}
+                  <img 
+                    src="/logo-azimut-star.svg" 
+                    alt="" 
+                    className="absolute w-[130px] h-[130px] sm:w-[150px] sm:h-[150px]"
+                    style={{ opacity: 0.15, zIndex: 1 }}
+                  />
+                  {/* Logo animada em cima */}
+                  <div className="relative w-[130px] h-[130px] sm:w-[150px] sm:h-[150px]" style={{ opacity: theme === 'dark' ? 0.7 : 0.5, zIndex: 2 }}>
                     <AnimatedLogo />
                   </div>
                 </div>
