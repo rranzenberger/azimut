@@ -30,18 +30,18 @@ interface Stats {
   bySource: Record<string, number>
 }
 
-// Função para abreviar origens
-const formatSource = (source: string): { short: string; full: string } => {
-  const sourceMap: Record<string, { short: string; full: string }> = {
-    'footer': { short: 'Footer', full: 'Formulário do Footer' },
-    'contact_form': { short: 'Contato', full: 'Formulário de Contato' },
-    'vancouver_form': { short: 'Vancouver', full: 'Formulário Vancouver' },
-    'academy_form': { short: 'Academy', full: 'Formulário Academy Quick' },
-    'academy_game_form': { short: 'Game', full: 'Formulário Academy Game' },
-    'manual': { short: 'Manual', full: 'Adicionado Manualmente' },
-    'blog': { short: 'Blog', full: 'Blog / Artigos' },
+// Função para formatar origens com emoji e detalhes
+const formatSource = (source: string): { short: string; full: string; emoji: string; color: string } => {
+  const sourceMap: Record<string, { short: string; full: string; emoji: string; color: string }> = {
+    'footer': { short: 'Footer', full: '🔻 Rodapé do Site', emoji: '🔻', color: 'bg-slate-600' },
+    'contact_form': { short: 'Contato', full: '📧 Formulário de Contato (/contact)', emoji: '📧', color: 'bg-blue-700' },
+    'vancouver_form': { short: 'Vancouver', full: '🇨🇦 Formulário Vancouver Interest', emoji: '🇨🇦', color: 'bg-red-700' },
+    'academy_form': { short: 'Academy', full: '🎓 Academy Quick Form', emoji: '🎓', color: 'bg-purple-700' },
+    'academy_game_form': { short: 'Game', full: '🎮 Academy Game Form (Quiz)', emoji: '🎮', color: 'bg-green-700' },
+    'manual': { short: 'Manual', full: '✍️ Adicionado Manualmente (Evento/Networking)', emoji: '✍️', color: 'bg-yellow-700' },
+    'blog': { short: 'Blog', full: '📰 Blog / Artigos', emoji: '📰', color: 'bg-orange-700' },
   };
-  return sourceMap[source] || { short: source, full: source };
+  return sourceMap[source] || { short: source, full: source, emoji: '❓', color: 'bg-slate-700' };
 };
 
 export default function NewsletterPage() {
@@ -371,8 +371,8 @@ export default function NewsletterPage() {
                           </span>
                         </td>
                         <td className="px-2 py-2 text-xs" title={formatSource(sub.source).full}>
-                          <span className="px-1.5 py-0.5 rounded text-[10px] bg-slate-700 whitespace-nowrap">
-                            {formatSource(sub.source).short}
+                          <span className={`px-1.5 py-0.5 rounded text-[10px] ${formatSource(sub.source).color} whitespace-nowrap`}>
+                            {formatSource(sub.source).emoji} {formatSource(sub.source).short}
                           </span>
                         </td>
                         <td className="px-2 py-2 text-xs">
