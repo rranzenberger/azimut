@@ -567,13 +567,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             </div>
             
             {/* Tagline IMMERSIVE - DESTAQUE MÁXIMO abaixo da logo */}
-            <div className="relative py-12 text-center px-4" style={{ order: 3 }}>
-              <p className={`font-sora uppercase tracking-[0.28em] leading-[1.4] font-bold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ 
-                fontSize: 'clamp(1.4rem, 6vw, 2.2rem)',
+            <div className="relative py-8 text-center px-4" style={{ order: 3, zIndex: 20 }}>
+              <p className={`font-sora uppercase tracking-[0.25em] leading-[1.5] font-bold ${theme === 'dark' ? 'text-white' : 'text-[#1a1817]'}`} style={{ 
+                fontSize: 'clamp(1.1rem, 5vw, 1.6rem)',
                 textShadow: theme === 'dark' 
-                  ? '0 3px 20px rgba(255, 255, 255, 0.5)' 
-                  : '0 3px 20px rgba(0, 0, 0, 0.35)',
-                letterSpacing: '0.28em',
+                  ? '0 2px 15px rgba(255, 255, 255, 0.6)' 
+                  : '0 2px 10px rgba(0, 0, 0, 0.4)',
+                letterSpacing: '0.22em',
                 fontWeight: 700
               }}>
                 {lang === 'pt' ? (
