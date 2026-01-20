@@ -1,0 +1,361 @@
+{
+  "name": "Lead Intelligence & Qualificação",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-intelligence",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "name": "Webhook - Novo Lead",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://ipapi.co/{{ $json.ip }}/json/",
+        "options": {}
+      },
+      "name": "1️⃣ Validar IP (Geolocalização)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.hunter.io/v2/email-verifier",
+        "qs": {
+          "email": "={{ $json.email }}",
+          "api_key": "={{ $credentials.hunterApiKey }}"
+        },
+        "options": {}
+      },
+      "name": "2️⃣ Validar Email (Hunter.io)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/customsearch/v1",
+        "qs": {
+          "key": "={{ $credentials.googleApiKey }}",
+          "cx": "={{ $credentials.googleSearchEngineId }}",
+          "q": "={{ $json.name }} {{ $json.company }}"
+        }
+      },
+      "name": "3️⃣ Google Search (Nome + Empresa)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://nubela.co/proxycurl/api/v2/search/person",
+        "authentication": "headerAuth",
+        "headerAuth": "proxycurlAuth",
+        "qs": {
+          "first_name": "={{ $json.name.split(' ')[0] }}",
+          "last_name": "={{ $json.name.split(' ').slice(-1)[0] }}",
+          "current_company_name": "={{ $json.company }}"
+        }
+      },
+      "name": "4️⃣ LinkedIn Search (Proxycurl)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [1050, 300],
+      "notes": "API paga - $0.01 por busca"
+    },
+    {
+      "parameters": {
+        "url": "https://api.clearbit.com/v2/companies/find",
+        "authentication": "headerAuth",
+        "headerAuth": "clearbitAuth",
+        "qs": {
+          "domain": "={{ $json.email.split('@')[1] }}"
+        }
+      },
+      "name": "5️⃣ Enriquecer Empresa (Clearbit)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [1250, 300],
+      "notes": "Busca dados da empresa pelo domínio do email"
+    },
+    {
+      "parameters": {
+        "functionCode": "// ═══════════════════════════════════════════════════════════\n// 🧠 ANÁLISE DE RISCO E QUALIFICAÇÃO\n// ═══════════════════════════════════════════════════════════\n\nconst lead = $input.first().json;\nconst ipData = $node['1️⃣ Validar IP (Geolocalização)'].json;\nconst emailData = $node['2️⃣ Validar Email (Hunter.io)'].json;\nconst googleResults = $node['3️⃣ Google Search (Nome + Empresa)'].json;\nconst linkedinData = $node['4️⃣ LinkedIn Search (Proxycurl)'].json;\nconst companyData = $node['5️⃣ Enriquecer Empresa (Clearbit)'].json;\n\nlet riskScore = 0; // 0-100 (quanto maior, mais suspeito)\nlet qualityScore = 100; // 0-100 (quanto maior, melhor)\nlet flags = [];\nlet insights = [];\n\n// ═══════════════════════════════════════════════════════════\n// 🚩 VERIFICAÇÕES DE RISCO\n// ═══════════════════════════════════════════════════════════\n\n// 1️⃣ IP SUSPEITO\nif (ipData.proxy || ipData.hosting) {\n  riskScore += 30;\n  flags.push('🚨 IP via proxy/VPN/hosting');\n}\n\nif (ipData.threat_level === 'high') {\n  riskScore += 50;\n  flags.push('⛔ IP em lista de ameaças');\n}\n\n// Verificar se IP condiz com cidade informada\nif (lead.city && ipData.city && lead.city.toLowerCase() !== ipData.city.toLowerCase()) {\n  riskScore += 20;\n  flags.push(`⚠️ Cidade informada (${lead.city}) ≠ IP real (${ipData.city})`);\n}\n\n// 2️⃣ EMAIL SUSPEITO\nif (emailData.result === 'undeliverable') {\n  riskScore += 100; // Email inválido = descarte imediato\n  flags.push('❌ Email inválido/inexistente');\n}\n\nif (emailData.disposable) {\n  riskScore += 60;\n  flags.push('🗑️ Email descartável (temp mail)');\n}\n\nif (emailData.role) {\n  riskScore += 10;\n  insights.push('📧 Email genérico (info@, contato@, etc)');\n}\n\n// 3️⃣ GOOGLE SEARCH - NADA ENCONTRADO\nif (!googleResults.items || googleResults.items.length === 0) {\n  riskScore += 25;\n  flags.push('🔍 Nome/empresa não encontrados no Google');\n  qualityScore -= 30;\n}\n\n// 4️⃣ LINKEDIN - PERFIL FALSO/INEXISTENTE\nif (!linkedinData.results || linkedinData.results.length === 0) {\n  riskScore += 20;\n  flags.push('👤 Não encontrado no LinkedIn');\n  qualityScore -= 20;\n} else {\n  const profile = linkedinData.results[0];\n  \n  // Perfil recente = suspeito\n  if (profile.profile_created_recently) {\n    riskScore += 15;\n    flags.push('🆕 Perfil LinkedIn criado recentemente');\n  }\n  \n  // Sem conexões = suspeito\n  if (profile.connections < 10) {\n    riskScore += 10;\n    flags.push('📉 Perfil com poucas conexões (<10)');\n  }\n  \n  // Cargo condiz?\n  insights.push(`💼 Cargo: ${profile.headline}`);\n  insights.push(`🏢 Empresa: ${profile.company}`);\n}\n\n// 5️⃣ EMPRESA - CONCORRENTE?\nconst competitorDomains = [\n  'studioazul.com.br',\n  'outroproducao.com',\n  'concorrente.com'\n  // Adicione seus concorrentes aqui\n];\n\nconst emailDomain = lead.email.split('@')[1];\nif (competitorDomains.includes(emailDomain)) {\n  riskScore += 80;\n  flags.push('⚔️ ALERTA: Concorrente identificado!');\n}\n\n// Empresa legítima?\nif (companyData.error) {\n  riskScore += 15;\n  flags.push('🏭 Empresa não encontrada no Clearbit');\n  qualityScore -= 20;\n} else {\n  insights.push(`🏢 Empresa: ${companyData.name} (${companyData.domain})`);\n  insights.push(`👥 Funcionários: ${companyData.metrics.employees || 'N/A'}`);\n  insights.push(`💰 Receita: ${companyData.metrics.estimatedAnnualRevenue || 'N/A'}`);\n  \n  // Empresa grande = lead qualificado\n  if (companyData.metrics.employees > 50) {\n    qualityScore += 20;\n  }\n}\n\n// 6️⃣ COMPORTAMENTO NO SITE\nif (lead.timeOnSite < 30) {\n  riskScore += 10;\n  flags.push('⏱️ Tempo no site muito curto (<30s)');\n}\n\nif (lead.pagesVisited?.length === 1) {\n  riskScore += 5;\n  flags.push('📄 Visitou apenas 1 página');\n}\n\n// ═══════════════════════════════════════════════════════════\n// 🎯 DECISÃO FINAL\n// ═══════════════════════════════════════════════════════════\n\nlet decision = 'SEND'; // SEND | CAUTION | REJECT\nlet action = '';\n\nif (riskScore >= 80) {\n  decision = 'REJECT';\n  action = '❌ NÃO ENVIAR EMAIL - Lead muito suspeito';\n} else if (riskScore >= 40) {\n  decision = 'CAUTION';\n  action = '⚠️ ENVIAR EMAIL GENÉRICO - Lead suspeito, monitorar';\n} else {\n  decision = 'SEND';\n  action = '✅ ENVIAR EMAIL PERSONALIZADO - Lead legítimo';\n}\n\n// ═══════════════════════════════════════════════════════════\n// 📊 OUTPUT\n// ═══════════════════════════════════════════════════════════\n\nreturn {\n  json: {\n    // Dados originais\n    lead: lead,\n    \n    // Dados enriquecidos\n    enrichment: {\n      realCity: ipData.city,\n      realCountry: ipData.country_name,\n      emailValid: emailData.result === 'deliverable',\n      emailCorporate: !emailData.disposable && !emailData.free,\n      linkedinProfile: linkedinData.results?.[0]?.public_identifier || null,\n      companyName: companyData.name || lead.company,\n      companySize: companyData.metrics?.employees || null\n    },\n    \n    // Análise de risco\n    analysis: {\n      riskScore: riskScore,\n      qualityScore: qualityScore,\n      decision: decision,\n      action: action,\n      flags: flags,\n      insights: insights\n    }\n  }\n};"
+      },
+      "name": "6️⃣ Análise de Risco",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1450, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.analysis.decision }}",
+              "value2": "REJECT"
+            }
+          ]
+        }
+      },
+      "name": "Decision: REJECT?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [1650, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.BACKOFFICE_URL }}/api/leads/{{ $json.lead.id }}/mark-spam",
+        "method": "PATCH",
+        "jsonParameters": true,
+        "options": {}
+      },
+      "name": "❌ Marcar como SPAM",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [1850, 200]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.analysis.decision }}",
+              "value2": "CAUTION"
+            }
+          ]
+        }
+      },
+      "name": "Decision: CAUTION?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [1850, 400]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.BACKOFFICE_URL }}/api/notify-form",
+        "method": "POST",
+        "jsonParameters": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "lead",
+              "value": "={{ $json.lead }}"
+            },
+            {
+              "name": "enrichment",
+              "value": "={{ $json.enrichment }}"
+            },
+            {
+              "name": "riskAnalysis",
+              "value": "={{ $json.analysis }}"
+            },
+            {
+              "name": "emailType",
+              "value": "generic"
+            }
+          ]
+        }
+      },
+      "name": "⚠️ Enviar Email Genérico",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [2050, 400]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.BACKOFFICE_URL }}/api/notify-form",
+        "method": "POST",
+        "jsonParameters": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "lead",
+              "value": "={{ $json.lead }}"
+            },
+            {
+              "name": "enrichment",
+              "value": "={{ $json.enrichment }}"
+            },
+            {
+              "name": "riskAnalysis",
+              "value": "={{ $json.analysis }}"
+            },
+            {
+              "name": "emailType",
+              "value": "personalized"
+            }
+          ]
+        }
+      },
+      "name": "✅ Enviar Email Personalizado",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [2050, 600]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.BACKOFFICE_URL }}/api/internal-notification",
+        "method": "POST",
+        "jsonParameters": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "type",
+              "value": "risk_alert"
+            },
+            {
+              "name": "lead",
+              "value": "={{ $json.lead }}"
+            },
+            {
+              "name": "analysis",
+              "value": "={{ $json.analysis }}"
+            }
+          ]
+        }
+      },
+      "name": "🚨 Notificar Time (Leads Suspeitos)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [2250, 300],
+      "notes": "Envia notificação interna sempre que detectar algo suspeito"
+    }
+  ],
+  "connections": {
+    "Webhook - Novo Lead": {
+      "main": [
+        [
+          {
+            "node": "1️⃣ Validar IP (Geolocalização)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1️⃣ Validar IP (Geolocalização)": {
+      "main": [
+        [
+          {
+            "node": "2️⃣ Validar Email (Hunter.io)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2️⃣ Validar Email (Hunter.io)": {
+      "main": [
+        [
+          {
+            "node": "3️⃣ Google Search (Nome + Empresa)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3️⃣ Google Search (Nome + Empresa)": {
+      "main": [
+        [
+          {
+            "node": "4️⃣ LinkedIn Search (Proxycurl)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4️⃣ LinkedIn Search (Proxycurl)": {
+      "main": [
+        [
+          {
+            "node": "5️⃣ Enriquecer Empresa (Clearbit)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5️⃣ Enriquecer Empresa (Clearbit)": {
+      "main": [
+        [
+          {
+            "node": "6️⃣ Análise de Risco",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "6️⃣ Análise de Risco": {
+      "main": [
+        [
+          {
+            "node": "Decision: REJECT?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decision: REJECT?": {
+      "main": [
+        [
+          {
+            "node": "❌ Marcar como SPAM",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "🚨 Notificar Time (Leads Suspeitos)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Decision: CAUTION?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decision: CAUTION?": {
+      "main": [
+        [
+          {
+            "node": "⚠️ Enviar Email Genérico",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "🚨 Notificar Time (Leads Suspeitos)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "✅ Enviar Email Personalizado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-20T00:00:00.000Z",
+  "versionId": "1"
+}
