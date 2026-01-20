@@ -453,6 +453,9 @@ model Lead {
   interestInGrants Boolean      @default(false)
   country          String?
   city             String?
+  
+  // 🕵️ LEAD INTELLIGENCE - Toda investigação sobre o lead
+  leadIntelligence Json? // Armazena classificação, risco, verificações, enriquecimento, flags, histórico
 
   // RELAÇÃO COM NEWSLETTER (opcional)
   newsletterSubscriber NewsletterSubscriber? // Relação opcional com Newsletter
