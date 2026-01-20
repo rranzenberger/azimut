@@ -567,37 +567,34 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             </div>
             
             {/* Tagline IMMERSIVE - DESTAQUE MÁXIMO abaixo da logo */}
-            <div className="relative py-10 text-center px-4" style={{ order: 3 }}>
-              <p className={`font-sora uppercase tracking-[0.25em] leading-relaxed font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ 
-                fontSize: 'clamp(1.2rem, 5vw, 1.8rem)',
+            <div className="relative py-12 text-center px-4" style={{ order: 3 }}>
+              <p className={`font-sora uppercase tracking-[0.28em] leading-[1.4] font-bold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ 
+                fontSize: 'clamp(1.4rem, 6vw, 2.2rem)',
                 textShadow: theme === 'dark' 
-                  ? '0 2px 15px rgba(255, 255, 255, 0.4)' 
-                  : '0 2px 15px rgba(0, 0, 0, 0.3)',
-                letterSpacing: '0.25em'
+                  ? '0 3px 20px rgba(255, 255, 255, 0.5)' 
+                  : '0 3px 20px rgba(0, 0, 0, 0.35)',
+                letterSpacing: '0.28em',
+                fontWeight: 700
               }}>
                 {lang === 'pt' ? (
                   <>
-                    <span className="block">CRIAMOS EXPERIÊNCIAS</span>
-                    <span className="block mt-4">IMERSIVAS ENTRE</span>
-                    <span className="block mt-4 text-azimut-red">BRASIL E CANADÁ</span>
+                    <span className="block">IMERSIVO • INTERATIVO</span>
+                    <span className="block mt-6">EXPERIÊNCIAS CINEMÁTICAS</span>
                   </>
                 ) : lang === 'es' ? (
                   <>
-                    <span className="block">CREAMOS EXPERIENCIAS</span>
-                    <span className="block mt-4">INMERSIVAS ENTRE</span>
-                    <span className="block mt-4 text-azimut-red">BRASIL Y CANADÁ</span>
+                    <span className="block">INMERSIVO • INTERACTIVO</span>
+                    <span className="block mt-6">EXPERIENCIAS CINEMATOGRÁFICAS</span>
                   </>
                 ) : lang === 'fr' ? (
                   <>
-                    <span className="block">NOUS CRÉONS DES</span>
-                    <span className="block mt-4">EXPÉRIENCES IMMERSIVES</span>
-                    <span className="block mt-4 text-azimut-red">BRÉSIL ET CANADA</span>
+                    <span className="block">IMMERSIF • INTERACTIF</span>
+                    <span className="block mt-6">EXPÉRIENCES CINÉMATOGRAPHIQUES</span>
                   </>
                 ) : (
                   <>
-                    <span className="block">WE CREATE IMMERSIVE</span>
-                    <span className="block mt-4">EXPERIENCES BETWEEN</span>
-                    <span className="block mt-4 text-azimut-red">BRAZIL AND CANADA</span>
+                    <span className="block">IMMERSIVE • INTERACTIVE</span>
+                    <span className="block mt-6">CINEMATIC EXPERIENCES</span>
                   </>
                 )}
               </p>
