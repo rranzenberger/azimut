@@ -985,7 +985,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
   return (
     <div className="relative">
       {/* Container usando card-adaptive (estilo original do site) */}
-      <form onSubmit={handleSubmit} className="relative space-y-8 rounded-2xl border border-white/10 card-adaptive p-8 md:p-10 lg:p-12 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur animate-fade-in-up overflow-hidden">
+      <form onSubmit={handleSubmit} className="relative space-y-8 rounded-2xl border border-white/10 card-adaptive p-8 md:p-10 lg:p-12 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur animate-fade-in-up">
         {/* Glow effect sutil ao redor */}
         <div className="absolute -inset-0.5 bg-gradient-to-r from-azimut-red/10 via-azimut-red/5 to-azimut-red/10 rounded-2xl blur-xl opacity-50 pointer-events-none" />
         

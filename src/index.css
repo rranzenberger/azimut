@@ -2921,7 +2921,8 @@ select.dropdown-azimut::-ms-expand {
   @apply text-slate-400 transition-transform duration-200;
 }
 .select-panel {
-  @apply absolute z-30 mt-2 w-full rounded-xl border border-white/10 bg-slate-900/98 text-slate-100 shadow-2xl backdrop-blur-xl;
+  @apply absolute mt-2 w-full rounded-xl border border-white/10 bg-slate-900/98 text-slate-100 shadow-2xl backdrop-blur-xl;
+  z-index: 9999 !important;
   max-height: 260px;
   overflow-y: auto;
   padding: 0.5rem;
