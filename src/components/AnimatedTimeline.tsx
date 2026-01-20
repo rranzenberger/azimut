@@ -195,9 +195,9 @@ export const AnimatedTimeline: React.FC<AnimatedTimelineProps> = ({
     >
       {/* Linha vertical */}
       <div 
-        className="absolute left-6 top-0 bottom-0 w-[2px]"
+        className="absolute left-6 top-0 bottom-0 w-1"
         style={{ 
-          background: `linear-gradient(to bottom, transparent, rgba(${lineColor.replace('white/', '255,255,255,')}), transparent)` 
+          background: `linear-gradient(to bottom, transparent, rgba(255,255,255,0.3), transparent)` 
         }}
       />
 
