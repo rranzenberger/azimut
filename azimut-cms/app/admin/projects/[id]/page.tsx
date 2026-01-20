@@ -45,6 +45,22 @@ export default function EditProjectPage() {
     status: 'DRAFT',
     featured: false,
     priorityHome: 0,
+    // ═══════════════════════════════════════════════════════════════
+    // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
+    // ═══════════════════════════════════════════════════════════════
+    projectCategory: [] as string[],
+    workType: [] as string[],
+    technologies: [] as string[],
+    industry: '',
+    azimutRole: [] as string[],
+    duration: '',
+    awards: '',
+    metrics: '',
+    videoUrl: '',
+    videoShowreel: '',
+    externalLinks: '',
+    partnerLogos: '',
+    beforeAfterImages: '',
   });
 
   useEffect(() => {
@@ -87,6 +103,22 @@ export default function EditProjectPage() {
           status: project.status || 'DRAFT',
           featured: project.featured || false,
           priorityHome: project.priorityHome || 0,
+          // ═══════════════════════════════════════════════════════════════
+          // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
+          // ═══════════════════════════════════════════════════════════════
+          projectCategory: Array.isArray(project.projectCategory) ? project.projectCategory : [],
+          workType: Array.isArray(project.workType) ? project.workType : [],
+          technologies: Array.isArray(project.technologies) ? project.technologies : [],
+          industry: project.industry || '',
+          azimutRole: Array.isArray(project.azimutRole) ? project.azimutRole : [],
+          duration: project.duration || '',
+          awards: project.awards ? JSON.stringify(project.awards, null, 2) : '',
+          metrics: project.metrics ? JSON.stringify(project.metrics, null, 2) : '',
+          videoUrl: project.videoUrl || '',
+          videoShowreel: project.videoShowreel || '',
+          externalLinks: project.externalLinks ? JSON.stringify(project.externalLinks, null, 2) : '',
+          partnerLogos: Array.isArray(project.partnerLogos) ? project.partnerLogos.join(', ') : '',
+          beforeAfterImages: project.beforeAfterImages ? JSON.stringify(project.beforeAfterImages, null, 2) : '',
         });
         setLoading(false);
       } catch (err) {
@@ -106,10 +138,22 @@ export default function EditProjectPage() {
     setSaving(true);
 
     try {
+      // Processar campos JSON e arrays antes de enviar
+      const payload = {
+        ...formData,
+        awards: formData.awards ? JSON.parse(formData.awards) : null,
+        metrics: formData.metrics ? JSON.parse(formData.metrics) : null,
+        externalLinks: formData.externalLinks ? JSON.parse(formData.externalLinks) : null,
+        beforeAfterImages: formData.beforeAfterImages ? JSON.parse(formData.beforeAfterImages) : null,
+        partnerLogos: formData.partnerLogos
+          ? formData.partnerLogos.split(',').map((url) => url.trim()).filter(Boolean)
+          : [],
+      };
+
       const res = await fetch(`/api/admin/projects/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
@@ -408,6 +452,319 @@ export default function EditProjectPage() {
           <label htmlFor="featured" style={{ fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>
             Projeto em destaque
           </label>
+        </div>
+
+        {/* ═══════════════════════════════════════════════════════════════ */}
+        {/* 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026 */}
+        {/* ═══════════════════════════════════════════════════════════════ */}
+        <div
+          style={{
+            marginTop: 32,
+            padding: '20px 24px',
+            borderRadius: 12,
+            border: '1px solid rgba(201,35,55,0.3)',
+            background: 'rgba(201,35,55,0.08)',
+          }}
+        >
+          <h2 style={{ margin: '0 0 16px 0', fontSize: 18, color: '#fff' }}>
+            🎯 Filtros Avançados - Portfolio Premium
+          </h2>
+          <p style={{ margin: '0 0 24px 0', fontSize: 13, color: '#c0bccf' }}>
+            Categorize o projeto para filtros visuais na página de portfólio.
+          </p>
+
+          {/* Categoria Principal */}
+          <div style={{ display: 'grid', gap: 12, marginBottom: 20 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Categoria Principal (multi-select)</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {['curadoria', 'vr-360', 'museum', 'education', 'motion', 'games', 'corporate', 'festival', 'animacao', 'personagens-3d', 'projetos-3d', 'ambientes-virtuais', 'maquete-virtual', 'renders-3d'].map(
+                (cat) => (
+                  <label
+                    key={cat}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      padding: '6px 12px',
+                      borderRadius: 6,
+                      border: '1px solid rgba(255,255,255,0.15)',
+                      background: formData.projectCategory.includes(cat)
+                        ? 'rgba(201,35,55,0.2)'
+                        : 'rgba(255,255,255,0.04)',
+                      cursor: 'pointer',
+                      fontSize: 13,
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={formData.projectCategory.includes(cat)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setFormData({
+                            ...formData,
+                            projectCategory: [...formData.projectCategory, cat],
+                          });
+                        } else {
+                          setFormData({
+                            ...formData,
+                            projectCategory: formData.projectCategory.filter((c) => c !== cat),
+                          });
+                        }
+                      }}
+                      style={{ width: 16, height: 16, cursor: 'pointer' }}
+                    />
+                    {cat}
+                  </label>
+                )
+              )}
+            </div>
+          </div>
+
+          {/* Tipo de Trabalho */}
+          <div style={{ display: 'grid', gap: 12, marginBottom: 20 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Tipo de Trabalho (multi-select)</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {['filme', 'exposicao', 'curso', 'palestra', 'workshop', 'instalacao', 'making-of', 'evento'].map(
+                (type) => (
+                  <label
+                    key={type}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      padding: '6px 12px',
+                      borderRadius: 6,
+                      border: '1px solid rgba(255,255,255,0.15)',
+                      background: formData.workType.includes(type)
+                        ? 'rgba(201,35,55,0.2)'
+                        : 'rgba(255,255,255,0.04)',
+                      cursor: 'pointer',
+                      fontSize: 13,
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={formData.workType.includes(type)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setFormData({ ...formData, workType: [...formData.workType, type] });
+                        } else {
+                          setFormData({ ...formData, workType: formData.workType.filter((t) => t !== type) });
+                        }
+                      }}
+                      style={{ width: 16, height: 16, cursor: 'pointer' }}
+                    />
+                    {type}
+                  </label>
+                )
+              )}
+            </div>
+          </div>
+
+          {/* Tecnologias */}
+          <div style={{ display: 'grid', gap: 12, marginBottom: 20 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Tecnologias Utilizadas (multi-select)</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {['VR', '360', 'IA', '3D', 'Motion Graphics', 'Interactive', 'AR', 'XR', 'Animation', '3D Characters', '3D Renders', 'Virtual Environments', 'Virtual Mockup', 'Renders 3D'].map((tech) => (
+                <label
+                  key={tech}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    padding: '6px 12px',
+                    borderRadius: 6,
+                    border: '1px solid rgba(255,255,255,0.15)',
+                    background: formData.technologies.includes(tech)
+                      ? 'rgba(201,35,55,0.2)'
+                      : 'rgba(255,255,255,0.04)',
+                    cursor: 'pointer',
+                    fontSize: 13,
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={formData.technologies.includes(tech)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setFormData({ ...formData, technologies: [...formData.technologies, tech] });
+                      } else {
+                        setFormData({
+                          ...formData,
+                          technologies: formData.technologies.filter((t) => t !== tech),
+                        });
+                      }
+                    }}
+                    style={{ width: 16, height: 16, cursor: 'pointer' }}
+                  />
+                  {tech}
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Setor/Indústria */}
+          <div style={{ display: 'grid', gap: 8, marginBottom: 20 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Setor/Indústria</label>
+            <select
+              value={formData.industry}
+              onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
+              style={inputStyle}
+            >
+              <option value="">Selecione...</option>
+              <option value="cultural">Cultural</option>
+              <option value="entertainment">Entretenimento</option>
+              <option value="education">Educação</option>
+              <option value="corporate">Corporativo</option>
+              <option value="government">Governo</option>
+              <option value="research">Pesquisa</option>
+            </select>
+          </div>
+
+          {/* Papel da Azimut */}
+          <div style={{ display: 'grid', gap: 12, marginBottom: 20 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Papel da Azimut (multi-select)</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {['direcao', 'curadoria', 'producao', 'animacao', 'consultoria', 'treinamento'].map((role) => (
+                <label
+                  key={role}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    padding: '6px 12px',
+                    borderRadius: 6,
+                    border: '1px solid rgba(255,255,255,0.15)',
+                    background: formData.azimutRole.includes(role)
+                      ? 'rgba(201,35,55,0.2)'
+                      : 'rgba(255,255,255,0.04)',
+                    cursor: 'pointer',
+                    fontSize: 13,
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={formData.azimutRole.includes(role)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setFormData({ ...formData, azimutRole: [...formData.azimutRole, role] });
+                      } else {
+                        setFormData({ ...formData, azimutRole: formData.azimutRole.filter((r) => r !== role) });
+                      }
+                    }}
+                    style={{ width: 16, height: 16, cursor: 'pointer' }}
+                  />
+                  {role}
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Duração */}
+          <div style={{ display: 'grid', gap: 8, marginBottom: 20 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Duração do Projeto</label>
+            <input
+              type="text"
+              value={formData.duration}
+              onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
+              style={inputStyle}
+              placeholder="Ex: 3 meses, 2015-2017, 8 anos consecutivos"
+            />
+          </div>
+
+          {/* Vídeos */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>URL do Vídeo Principal</label>
+              <input
+                type="url"
+                value={formData.videoUrl}
+                onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
+                style={inputStyle}
+                placeholder="https://youtube.com/..."
+              />
+            </div>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>URL do Showreel</label>
+              <input
+                type="url"
+                value={formData.videoShowreel}
+                onChange={(e) => setFormData({ ...formData, videoShowreel: e.target.value })}
+                style={inputStyle}
+                placeholder="https://vimeo.com/..."
+              />
+            </div>
+          </div>
+
+          {/* Prêmios (JSON) */}
+          <div style={{ display: 'grid', gap: 8, marginBottom: 20 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Prêmios (JSON)</label>
+            <textarea
+              value={formData.awards}
+              onChange={(e) => setFormData({ ...formData, awards: e.target.value })}
+              rows={4}
+              style={{ ...inputStyle, resize: 'vertical', fontFamily: 'monospace', fontSize: 12 }}
+              placeholder='[{"title": "Best VR", "organization": "Festival X", "year": 2024, "category": "Imersivo"}]'
+            />
+            <small style={{ color: '#8f8ba2', fontSize: 11 }}>
+              Formato JSON: array de objetos com title, organization, year, category
+            </small>
+          </div>
+
+          {/* Métricas (JSON) */}
+          <div style={{ display: 'grid', gap: 8, marginBottom: 20 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Métricas de Impacto (JSON)</label>
+            <textarea
+              value={formData.metrics}
+              onChange={(e) => setFormData({ ...formData, metrics: e.target.value })}
+              rows={4}
+              style={{ ...inputStyle, resize: 'vertical', fontFamily: 'monospace', fontSize: 12 }}
+              placeholder='{"visitors": 50000, "revenue": "R$ 2M", "duration": "2 anos", "impact": "Formou 300 alunos"}'
+            />
+            <small style={{ color: '#8f8ba2', fontSize: 11 }}>
+              Formato JSON: objeto com visitors, revenue, duration, impact, stats
+            </small>
+          </div>
+
+          {/* Links Externos (JSON) */}
+          <div style={{ display: 'grid', gap: 8, marginBottom: 20 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Links Externos (JSON)</label>
+            <textarea
+              value={formData.externalLinks}
+              onChange={(e) => setFormData({ ...formData, externalLinks: e.target.value })}
+              rows={3}
+              style={{ ...inputStyle, resize: 'vertical', fontFamily: 'monospace', fontSize: 12 }}
+              placeholder='[{"label": "Site Oficial", "url": "https://..."}]'
+            />
+            <small style={{ color: '#8f8ba2', fontSize: 11 }}>Formato JSON: array de objetos com label e url</small>
+          </div>
+
+          {/* Logos de Parceiros */}
+          <div style={{ display: 'grid', gap: 8, marginBottom: 20 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Logos de Parceiros (URLs separadas por vírgula)</label>
+            <textarea
+              value={formData.partnerLogos}
+              onChange={(e) => setFormData({ ...formData, partnerLogos: e.target.value })}
+              rows={2}
+              style={{ ...inputStyle, resize: 'vertical' }}
+              placeholder="https://exemplo.com/logo1.png, https://exemplo.com/logo2.png"
+            />
+          </div>
+
+          {/* Before/After Images (JSON) */}
+          <div style={{ display: 'grid', gap: 8, marginBottom: 20 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Before/After Images (JSON)</label>
+            <textarea
+              value={formData.beforeAfterImages}
+              onChange={(e) => setFormData({ ...formData, beforeAfterImages: e.target.value })}
+              rows={3}
+              style={{ ...inputStyle, resize: 'vertical', fontFamily: 'monospace', fontSize: 12 }}
+              placeholder='{"before": "https://...", "after": "https://...", "label": "Evolução do conceito"}'
+            />
+            <small style={{ color: '#8f8ba2', fontSize: 11 }}>
+              Formato JSON: objeto com before, after, label
+            </small>
+          </div>
         </div>
 
         {/* Galeria de Mídias */}

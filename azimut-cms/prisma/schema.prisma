@@ -142,12 +142,55 @@ model Project {
   descriptionFr String?
   descriptionPt String?
   
-  // ­ƒñû Monitoramento Autom├ítico de Conte├║do
+  // 🔍 Monitoramento Automático de Conteúdo
   monitorEnabled        Boolean           @default(false)
-  monitorKeywords       String[]          // Keywords para busca autom├ítica
-  creditType            CreditType?       // Tipo de cr├®dito para posts relacionados
-  creditText            String?           // Texto do cr├®dito ("Anima├º├úo por Azimut")
-  azimutContributions   String[]          // Lista de contribui├º├Áes da Azimut
+  monitorKeywords       String[]          // Keywords para busca automática
+  creditType            CreditType?       // Tipo de crédito para posts relacionados
+  creditText            String?           // Texto do crédito ("Animação por Azimut")
+  azimutContributions   String[]          // Lista de contribuições da Azimut
+  
+  // ═══════════════════════════════════════════════════════════════
+  // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
+  // ═══════════════════════════════════════════════════════════════
+  
+  // Categoria Principal (multi-select)
+  projectCategory    String[]  // ['curadoria', 'vr-360', 'museum', 'education', 'motion', 'games', 'corporate']
+  
+  // Tipo de Trabalho (multi-select)
+  workType          String[]  // ['filme', 'exposicao', 'curso', 'palestra', 'workshop', 'instalacao', 'making-of', 'evento']
+  
+  // Tecnologias Utilizadas (multi-select)
+  technologies      String[]  // ['VR', '360', 'IA', '3D', 'Motion Graphics', 'Interactive', 'AR', 'XR']
+  
+  // Setor/Indústria (single-select)
+  industry          String?   // 'cultural', 'entertainment', 'education', 'corporate', 'government', 'research'
+  
+  // Papel da Azimut no Projeto (multi-select)
+  azimutRole        String[]  // ['direcao', 'curadoria', 'producao', 'animacao', 'consultoria', 'treinamento']
+  
+  // Duração do Projeto
+  duration          String?   // "3 meses", "2015-2017", "8 anos consecutivos"
+  
+  // Prêmios (JSON estruturado)
+  awards            Json?     // [{title, organization, year, category, logo?, link?}]
+  
+  // Métricas de Impacto (JSON estruturado)
+  metrics           Json?     // {visitors, revenue, duration, impact, stats}
+  
+  // Vídeos
+  videoUrl          String?   // URL principal (YouTube/Vimeo)
+  videoShowreel     String?   // URL do showreel/highlights
+  
+  // Links Externos (JSON estruturado)
+  externalLinks     Json?     // [{label, url}]
+  
+  // Logos de Parceiros
+  partnerLogos      String[]  // URLs das imagens dos parceiros
+  
+  // Before/After Images (JSON estruturado)
+  beforeAfterImages Json?     // {before, after, label}
+  
+  // ═══════════════════════════════════════════════════════════════
   
   pageViews     PageView[]
   heroImage     Media?               @relation(fields: [heroImageId], references: [id])
@@ -157,8 +200,14 @@ model Project {
   services      Service[]            @relation("ProjectToService")
   tags          Tag[]                @relation("ProjectToTag")
   sections      Section[]            @relation("SectionProjects")
-  monitoredPosts BlogPostMonitor[]   @relation("ProjectMonitoredPosts") // Rela├º├úo com monitoramento
+  monitoredPosts BlogPostMonitor[]   @relation("ProjectMonitoredPosts") // Relação com monitoramento
   makingOfs      MakingOf[]          @relation("ProjectMakingOf") // Making-ofs do projeto
+  
+  @@index([year])
+  @@index([projectCategory])
+  @@index([industry])
+  @@index([featured])
+  @@index([status])
 }
 
 model Page {

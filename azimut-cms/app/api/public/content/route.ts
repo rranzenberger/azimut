@@ -272,6 +272,7 @@ function formatProject(project: any, lang: string) {
     country: project.country,
     year: project.year,
     client: project.client,
+    type: project.type,
     tags: project.tags?.map((t: any) => 
       lang === 'pt' ? t.labelPt 
       : lang === 'es' ? (t.labelEs || t.labelEn)
@@ -296,6 +297,22 @@ function formatProject(project: any, lang: string) {
       label: lang === 'pt' ? project.ctaLabelPt : project.ctaLabelEn,
       url: project.ctaUrl,
     },
+    // ═══════════════════════════════════════════════════════════════
+    // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
+    // ═══════════════════════════════════════════════════════════════
+    projectCategory: project.projectCategory || [],
+    workType: project.workType || [],
+    technologies: project.technologies || [],
+    industry: project.industry || null,
+    azimutRole: project.azimutRole || [],
+    duration: project.duration || null,
+    awards: project.awards || null,
+    metrics: project.metrics || null,
+    videoUrl: project.videoUrl || null,
+    videoShowreel: project.videoShowreel || null,
+    externalLinks: project.externalLinks || null,
+    partnerLogos: project.partnerLogos || [],
+    beforeAfterImages: project.beforeAfterImages || null,
   };
 }
 

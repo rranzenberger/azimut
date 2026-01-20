@@ -94,6 +94,22 @@ export async function PUT(
       ctaUrl,
       heroImageId,
       marketId,
+      // ═══════════════════════════════════════════════════════════════
+      // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
+      // ═══════════════════════════════════════════════════════════════
+      projectCategory,
+      workType,
+      technologies,
+      industry,
+      azimutRole,
+      duration,
+      awards,
+      metrics,
+      videoUrl,
+      videoShowreel,
+      externalLinks,
+      partnerLogos,
+      beforeAfterImages,
     } = body;
 
     // Verificar se projeto existe
@@ -144,6 +160,32 @@ export async function PUT(
         ctaUrl: ctaUrl !== undefined ? ctaUrl : existing.ctaUrl,
         heroImageId: heroImageId !== undefined ? heroImageId : existing.heroImageId,
         marketId: marketId !== undefined ? marketId : existing.marketId,
+        // ═══════════════════════════════════════════════════════════════
+        // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
+        // ═══════════════════════════════════════════════════════════════
+        projectCategory: projectCategory !== undefined 
+          ? (Array.isArray(projectCategory) ? projectCategory : [])
+          : (existing.projectCategory || []),
+        workType: workType !== undefined 
+          ? (Array.isArray(workType) ? workType : [])
+          : (existing.workType || []),
+        technologies: technologies !== undefined 
+          ? (Array.isArray(technologies) ? technologies : [])
+          : (existing.technologies || []),
+        industry: industry !== undefined ? industry : existing.industry,
+        azimutRole: azimutRole !== undefined 
+          ? (Array.isArray(azimutRole) ? azimutRole : [])
+          : (existing.azimutRole || []),
+        duration: duration !== undefined ? duration : existing.duration,
+        awards: awards !== undefined ? awards : existing.awards,
+        metrics: metrics !== undefined ? metrics : existing.metrics,
+        videoUrl: videoUrl !== undefined ? videoUrl : existing.videoUrl,
+        videoShowreel: videoShowreel !== undefined ? videoShowreel : existing.videoShowreel,
+        externalLinks: externalLinks !== undefined ? externalLinks : existing.externalLinks,
+        partnerLogos: partnerLogos !== undefined 
+          ? (Array.isArray(partnerLogos) ? partnerLogos : [])
+          : (existing.partnerLogos || []),
+        beforeAfterImages: beforeAfterImages !== undefined ? beforeAfterImages : existing.beforeAfterImages,
       },
       include: {
         heroImage: true,

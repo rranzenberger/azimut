@@ -66,7 +66,8 @@ export const CompanyTimeline: React.FC<CompanyTimelineProps> = ({
       if (yearStart) params.set('yearStart', yearStart.toString())
       if (yearEnd) params.set('yearEnd', yearEnd.toString())
 
-      const response = await fetch(`${import.meta.env.VITE_CMS_API_URL}/api/public/history?${params.toString()}`)
+      const apiUrl = import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azmt.com.br'
+      const response = await fetch(`${apiUrl}/api/public/history?${params.toString()}`)
       
       if (!response.ok) {
         throw new Error('Failed to fetch company history')

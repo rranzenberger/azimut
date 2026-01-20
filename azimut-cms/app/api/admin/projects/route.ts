@@ -90,6 +90,22 @@ export async function POST(request: NextRequest) {
       ctaUrl,
       heroImageId,
       marketId,
+      // ═══════════════════════════════════════════════════════════════
+      // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
+      // ═══════════════════════════════════════════════════════════════
+      projectCategory,
+      workType,
+      technologies,
+      industry,
+      azimutRole,
+      duration,
+      awards,
+      metrics,
+      videoUrl,
+      videoShowreel,
+      externalLinks,
+      partnerLogos,
+      beforeAfterImages,
     } = body;
 
     if (!title || !slug) {
@@ -132,6 +148,22 @@ export async function POST(request: NextRequest) {
         ctaUrl: ctaUrl || null,
         heroImageId: heroImageId || null,
         marketId: marketId || null,
+        // ═══════════════════════════════════════════════════════════════
+        // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
+        // ═══════════════════════════════════════════════════════════════
+        projectCategory: Array.isArray(projectCategory) ? projectCategory : [],
+        workType: Array.isArray(workType) ? workType : [],
+        technologies: Array.isArray(technologies) ? technologies : [],
+        industry: industry || null,
+        azimutRole: Array.isArray(azimutRole) ? azimutRole : [],
+        duration: duration || null,
+        awards: awards || null,
+        metrics: metrics || null,
+        videoUrl: videoUrl || null,
+        videoShowreel: videoShowreel || null,
+        externalLinks: externalLinks || null,
+        partnerLogos: Array.isArray(partnerLogos) ? partnerLogos : [],
+        beforeAfterImages: beforeAfterImages || null,
       },
       include: {
         heroImage: true,
