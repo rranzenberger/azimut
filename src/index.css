@@ -2897,7 +2897,7 @@ select.dropdown-azimut::-ms-expand {
   display: none;
 }
 
-/* Custom select (Contact form) */
+/* Custom select (Contact form) - 2026-01-20 FIX */
 .select-trigger {
   @apply w-full min-h-[44px] rounded-lg border border-white/10 px-4 py-3.5 text-left text-slate-100 flex items-center justify-between gap-2;
   background: rgba(0, 0, 0, 0.4) !important;
@@ -2905,6 +2905,9 @@ select.dropdown-azimut::-ms-expand {
   transition: all 0.25s ease;
   font-size: 15px !important;
   line-height: 1.5 !important;
+  cursor: pointer !important;
+  position: relative !important;
+  z-index: 10 !important;
 }
 .select-trigger:hover {
   border-color: rgba(201, 35, 55, 0.5) !important;

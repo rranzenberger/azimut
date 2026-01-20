@@ -38,12 +38,16 @@ const SelectField: React.FC<SelectFieldProps> = ({
   const currentLabel = options.find(o => o.value === value)?.label || placeholder
 
   return (
-    <div className={`relative ${className}`} ref={ref}>
+    <div className={`relative ${className}`} ref={ref} style={{ zIndex: 50 }}>
       <button
         type="button"
         aria-label={ariaLabel}
         className="select-trigger"
-        onClick={() => setOpen(o => !o)}
+        onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          setOpen(o => !o)
+        }}
       >
         <span className={value ? 'text-slate-100' : 'text-slate-400'}>
           {currentLabel}
