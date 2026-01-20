@@ -789,14 +789,13 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         city: '',
         acceptContact: false
       })
-    } catch (err: unknown) {
+    } catch (err: any) {
       console.error('Error submitting form:', err)
       // Limpar erros de campo (erro de servidor é diferente)
       setFieldErrors({})
       
       // Mensagem de erro mais específica e útil
-      const errorObj = err as Error & { message?: string }
-      let errorMsg = errorObj?.message || ''
+      let errorMsg = err?.message || ''
       
       // Traduzir mensagens comuns
       if (!errorMsg || errorMsg.includes('Failed to fetch') || errorMsg.includes('NetworkError') || errorMsg.includes('fetch')) {
@@ -986,7 +985,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
   return (
     <div className="relative">
       {/* Container usando card-adaptive (estilo original do site) */}
-      <form onSubmit={handleSubmit} className="relative space-y-8 rounded-2xl border border-white/10 card-adaptive p-8 md:p-10 lg:p-12 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur animate-fade-in-up">
+      <form onSubmit={handleSubmit} className="relative space-y-8 rounded-2xl border border-white/10 card-adaptive p-8 md:p-10 lg:p-12 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur animate-fade-in-up overflow-hidden">
         {/* Glow effect sutil ao redor */}
         <div className="absolute -inset-0.5 bg-gradient-to-r from-azimut-red/10 via-azimut-red/5 to-azimut-red/10 rounded-2xl blur-xl opacity-50 pointer-events-none" />
         
