@@ -1,353 +1,809 @@
-import React, { useRef, useEffect } from 'react'
+// ════════════════════════════════════════════════════════════
+// PÁGINA: Studio Credentials PREMIUM
+// ════════════════════════════════════════════════════════════
+// Versão super visual e envolvente da página de credibilidade
+// - Timeline completa do banco de dados
+// - Estatísticas visuais animadas
+// - Curadoria de arte moderna
+// - Não massante, envolvente
+// ════════════════════════════════════════════════════════════
+
+import React, { useState } from 'react'
 import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
-import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
-import CanadaMapleLeaf from '../components/CanadaMapleLeaf'
+import CompanyTimeline from '../components/CompanyTimeline'
 
 interface StudioCredentialsProps {
   lang: Lang
 }
 
 const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
-  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
-  // useUserTracking()
-  // Estrela FIXA (sem parallax) - Padronizada com Studio principal
+  const [activeFilter, setActiveFilter] = useState<string>('all')
 
   const content = {
     pt: {
-      title: 'Credenciais & Timeline',
-      subtitle: 'Nossa jornada de 30 anos',
-      timeline: [
-        {
-          period: '1996-2004',
-          title: 'Architecad + Fundações',
-          icon: '🏗️',
-          items: [
-            'Pioneiros em Maquete Virtual no Brasil',
-            'Centro de Treinamento Autodesk',
-            'Único Application Engineer na América do Sul',
-            'Demo Artist Autodesk Discreet (1996-2008)',
-            'Azimut Computação e Produções Cinematográficas (1998-2004)'
-          ]
-        },
-        {
-          period: '2004-2018',
-          title: 'Azimut Escola',
-          icon: '🎓',
-          items: [
-            'Cursos profissionalizantes: Animação, VFX, Maquete Virtual',
-            'Único Flame Trainer certificado no Brasil',
-            'Formamos centenas de profissionais',
-            'Centro de Treinamento Autodesk (único na América do Sul)',
-            'Cursos de 1-2 anos + cursos de curta duração',
-            'CAD, 3ds Max, Photoshop, After Effects, Flame'
-          ]
-        },
-        {
-          period: '2018-2025',
-          title: 'Azimut Projetos Audiovisuais',
-          icon: '🎬',
-          items: [
-            'Direção Técnica Rio Museu Olímpico',
-            'Curadoria VR Festival de Gramado (desde 2017)',
-            'Instalações imersivas + IA',
-            'Projetos com YDreams e instituições',
-            'Operação binacional Brasil-Canadá',
-            'Foco em cultura, museus, festivais e marcas'
-          ]
-        }
+      title: 'Nossa História',
+      subtitle: '46 anos transformando ideias em experiências imersivas',
+      eyebrow: 'CREDIBILIDADE',
+      hero: {
+        bigNumber: '46',
+        bigNumberLabel: 'anos de inovação',
+        description: 'Da computação gráfica pioneira nos anos 80 às experiências imersivas com IA em 2026. Somos referência em animação 3D, realidade virtual e projetos audiovisuais de alto impacto.'
+      },
+      stats: [
+        { number: '30+', label: 'Eventos Históricos', icon: '📅' },
+        { number: '15+', label: 'Parcerias Globais', icon: '🤝' },
+        { number: '7+', label: 'Projetos Relevantes', icon: '🚀' },
+        { number: '5+', label: 'Prêmios & Reconhecimentos', icon: '🏆' }
       ],
-      credentials: [
-        { icon: '🏆', title: 'XRBR', desc: 'Membros fundadores da Associação de Realidade Estendida Brasil', year: '2018' },
-        { icon: '🎓', title: 'Mestrado UFRJ', desc: 'Mídias Criativas & Tecnologia na Educação', year: '2010' },
-        { icon: '🎬', title: 'Gramado Festival', desc: 'Curadoria VR oficial (8 anos consecutivos)', year: '2017' },
-        { icon: '🏛️', title: 'Museu Olímpico', desc: 'Direção Geral de Tecnologia', year: '2015-2017' },
-        { icon: '🔥', title: 'Autodesk Flame', desc: 'Único Flame Trainer certificado no Brasil', year: '2000-2015' },
-        { icon: '🇨🇦', title: 'Autodesk Canadá', desc: 'Único contrato na América do Sul', year: '1996-2008' },
-        { icon: '🌍', title: 'Internacional', desc: 'Rio, SP, Belém, Florianópolis, Vancouver', year: '2020' },
-        { icon: '🤖', title: 'IA Pioneer', desc: 'Pesquisa em IA para animação', year: '1997' }
-      ]
-    },
-    fr: {
-      title: 'Références & Timeline',
-      subtitle: 'Notre parcours de 30 ans',
-      timeline: [
-        {
-          period: '1996-2004',
-          title: 'Architecad + Fondations',
-          icon: '🏗️',
-          items: [
-            'Pionniers en Maquette Virtuelle au Brésil',
-            'Centre de Formation Autodesk',
-            'Seul Application Engineer en Amérique du Sud',
-            'Demo Artist Autodesk Discreet (1996-2008)',
-            'Azimut Informatique et Productions Cinématographiques (1998-2004)'
-          ]
-        },
-        {
-          period: '2004-2018',
-          title: 'Azimut École',
-          icon: '🎓',
-          items: [
-            'Cours professionnels : Animation, VFX, Maquette Virtuelle',
-            'Seul Flame Trainer certifié au Brésil',
-            'Nous avons formé des centaines de professionnels',
-            'Centre de Formation Autodesk (seul en Amérique du Sud)',
-            'Cours de 1-2 ans + cours de courte durée',
-            'CAD, 3ds Max, Photoshop, After Effects, Flame'
-          ]
-        },
-        {
-          period: '2018-2025',
-          title: 'Azimut Projets Audiovisuels',
-          icon: '🎬',
-          items: [
-            'Direction Technique Musée Olympique de Rio',
-            'Curation VR Festival de Gramado (depuis 2017)',
-            'Installations immersives + IA',
-            'Projets avec YDreams et institutions',
-            'Opération binationale Brésil-Canada',
-            'Focus culture, musées, festivals et marques'
-          ]
+      highlights: {
+        title: 'Destaques da Trajetória',
+        items: [
+          {
+            icon: '🌟',
+            year: '2002',
+            title: '1 de 15 no mundo',
+            desc: 'Training Specialist Discreet Montreal - elite mundial de especialistas certificados'
+          },
+          {
+            icon: '🏆',
+            year: '2005',
+            title: 'Digital Designer',
+            desc: 'Pessoa do ano em computação gráfica no Brasil - MAC Niterói'
+          },
+          {
+            icon: '🚀',
+            year: '2005-2007',
+            title: 'Taikodom',
+            desc: 'Maior projeto de game desenvolvido no Brasil - MMORPG espacial'
+          },
+          {
+            icon: '🏛️',
+            year: '2015-2017',
+            title: 'Museu Olímpico',
+            desc: 'Direção Geral de Tecnologia para o Museu Olímpico do Rio 2016'
+          },
+          {
+            icon: '🎬',
+            year: '2017-2025',
+            title: 'Gramado Festival',
+            desc: 'Curadoria VR oficial por 8 anos consecutivos - único no Brasil'
+          },
+          {
+            icon: '🤖',
+            year: '2018-2026',
+            title: 'IA + XR Pioneer',
+            desc: 'Membro fundador XRBR + pesquisa IA para animação desde 1997'
+          }
+        ]
+      },
+      partnerships: {
+        title: 'Parcerias que Marcaram Época',
+        subtitle: 'Trabalhamos com as maiores empresas e instituições do mundo',
+        items: [
+          {
+            icon: '🎓',
+            name: 'Autodesk',
+            role: 'Training Center',
+            period: '1996-2018',
+            highlight: 'Único na América do Sul por 22 anos',
+            color: 'from-blue-500 to-cyan-500'
+          },
+          {
+            icon: '🇨🇦',
+            name: 'Discreet Logic',
+            role: 'Training Specialist',
+            period: '1998-2008',
+            highlight: '1 de 15 especialistas certificados no mundo',
+            color: 'from-red-500 to-orange-500'
+          },
+          {
+            icon: '🎬',
+            name: 'TV Globo',
+            role: 'Consultoria Videographics',
+            period: '1997-2004',
+            highlight: 'Departamento de Hans Donner',
+            color: 'from-purple-500 to-pink-500'
+          },
+          {
+            icon: '🎮',
+            name: 'Hoplon Infotainment',
+            role: 'Art Direction',
+            period: '2005-2007',
+            highlight: 'Taikodom - maior game brasileiro',
+            color: 'from-green-500 to-emerald-500'
+          },
+          {
+            icon: '🏛️',
+            name: 'Museu Olímpico',
+            role: 'Direção de Tecnologia',
+            period: '2015-2017',
+            highlight: 'Rio 2016 - Olimpíadas',
+            color: 'from-yellow-500 to-amber-500'
+          },
+          {
+            icon: '🏆',
+            name: 'XRBR',
+            role: 'Membro Fundador',
+            period: '2018-atual',
+            highlight: 'Associação Brasileira de XR',
+            color: 'from-indigo-500 to-violet-500'
+          }
+        ]
+      },
+      timeline: {
+        title: 'Linha do Tempo Completa',
+        subtitle: 'Explore 46 anos de história, inovação e pioneirismo',
+        filters: {
+          all: 'Todos',
+          milestone: 'Marcos',
+          partnership: 'Parcerias',
+          project: 'Projetos',
+          award: 'Prêmios'
         }
-      ],
-      credentials: [
-        { icon: '🏆', title: 'XRBR', desc: 'Membres fondateurs Association XR Brésil', year: '2018' },
-        { icon: '🎓', title: 'Maîtrise UFRJ', desc: 'Médias Créatifs & Technologie Éducative', year: '2010' },
-        { icon: '🎬', title: 'Festival Gramado', desc: 'Curation VR officielle (8 ans consécutifs)', year: '2017' },
-        { icon: '🏛️', title: 'Musée Olympique', desc: 'Direction Générale Technologie', year: '2015-2017' },
-        { icon: '🔥', title: 'Autodesk Flame', desc: 'Seul Flame Trainer certifié au Brésil', year: '2000-2015' },
-        { icon: '🇨🇦', title: 'Autodesk Canada', desc: 'Seul contrat en Amérique du Sud', year: '1996-2008' },
-        { icon: '🌍', title: 'International', desc: 'Rio, SP, Belém, Florianópolis, Vancouver', year: '2020' },
-        { icon: '🤖', title: 'Pionnier IA', desc: 'Recherche IA pour animation', year: '1997' }
-      ]
-    },
-    es: {
-      title: 'Credenciales & Timeline',
-      subtitle: 'Nuestro recorrido de 30 años',
-      timeline: [
-        {
-          period: '1996-2004',
-          title: 'Architecad + Fundaciones',
-          icon: '🏗️',
-          items: [
-            'Pioneros en Maqueta Virtual en Brasil',
-            'Centro de Formación Autodesk',
-            'Único Application Engineer en América del Sur',
-            'Demo Artist Autodesk Discreet (1996-2008)',
-            'Azimut Informática y Producciones Cinematográficas (1998-2004)'
-          ]
-        },
-        {
-          period: '2004-2018',
-          title: 'Azimut Escuela',
-          icon: '🎓',
-          items: [
-            'Cursos profesionales: Animación, VFX, Maqueta Virtual',
-            'Único Flame Trainer certificado en Brasil',
-            'Formamos cientos de profesionales',
-            'Centro de Formación Autodesk (único en América del Sur)',
-            'Cursos de 1-2 años + cursos de corta duración',
-            'CAD, 3ds Max, Photoshop, After Effects, Flame'
-          ]
-        },
-        {
-          period: '2018-2025',
-          title: 'Azimut Proyectos Audiovisuales',
-          icon: '🎬',
-          items: [
-            'Dirección Técnica Museo Olímpico de Río',
-            'Curaduría VR Festival de Gramado (desde 2017)',
-            'Instalaciones inmersivas + IA',
-            'Proyectos con YDreams e instituciones',
-            'Operación binacional Brasil-Canadá',
-            'Enfoque en cultura, museos, festivales y marcas'
-          ]
-        }
-      ],
-      credentials: [
-        { icon: '🏆', title: 'XRBR', desc: 'Miembros fundadores Asociación XR Brasil', year: '2018' },
-        { icon: '🎓', title: 'Maestría UFRJ', desc: 'Medios Creativos & Tecnología Educativa', year: '2010' },
-        { icon: '🎬', title: 'Festival Gramado', desc: 'Curaduría VR oficial (8 años consecutivos)', year: '2017' },
-        { icon: '🏛️', title: 'Museo Olímpico', desc: 'Dirección General Tecnología', year: '2015-2017' },
-        { icon: '🔥', title: 'Autodesk Flame', desc: 'Único Flame Trainer certificado en Brasil', year: '2000-2015' },
-        { icon: '🇨🇦', title: 'Autodesk Canadá', desc: 'Único contrato en América del Sur', year: '1996-2008' },
-        { icon: '🌍', title: 'Internacional', desc: 'Río, SP, Belém, Florianópolis, Vancouver', year: '2020' },
-        { icon: '🤖', title: 'Pionero IA', desc: 'Investigación IA para animación', year: '1997' }
-      ]
+      },
+      cta: {
+        title: 'Pronto para criar algo incrível?',
+        subtitle: 'Vamos transformar sua visão em realidade',
+        primaryButton: 'Iniciar um Projeto',
+        secondaryButton: 'Voltar para Studio'
+      }
     },
     en: {
-      title: 'Credentials & Timeline',
-      subtitle: 'Our 30-year journey',
-      timeline: [
-        {
-          period: '1996-2004',
-          title: 'Architecad + Foundations',
-          icon: '🏗️',
-          items: [
-            'Pioneers in Virtual Mockup in Brazil',
-            'Autodesk Training Center',
-            'Only Application Engineer in South America',
-            'Autodesk Discreet Demo Artist (1996-2008)',
-            'Azimut Computing and Cinematographic Productions (1998-2004)'
-          ]
-        },
-        {
-          period: '2004-2018',
-          title: 'Azimut School',
-          icon: '🎓',
-          items: [
-            'Professional courses: Animation, VFX, Virtual Mockup',
-            'Only certified Flame Trainer in Brazil',
-            'We trained hundreds of professionals',
-            'Autodesk Training Center (only one in South America)',
-            '1-2 year courses + short-term courses',
-            'CAD, 3ds Max, Photoshop, After Effects, Flame'
-          ]
-        },
-        {
-          period: '2018-2025',
-          title: 'Azimut Audiovisual Projects',
-          icon: '🎬',
-          items: [
-            'Technical Direction Rio Olympic Museum',
-            'VR Curation Gramado Festival (since 2017)',
-            'Immersive installations + AI',
-            'Projects with YDreams and institutions',
-            'Binational operation Brazil-Canada',
-            'Focus on culture, museums, festivals and brands'
-          ]
-        }
+      title: 'Our History',
+      subtitle: '46 years transforming ideas into immersive experiences',
+      eyebrow: 'CREDIBILITY',
+      hero: {
+        bigNumber: '46',
+        bigNumberLabel: 'years of innovation',
+        description: 'From pioneering computer graphics in the 80s to immersive AI experiences in 2026. We are a reference in 3D animation, virtual reality and high-impact audiovisual projects.'
+      },
+      stats: [
+        { number: '30+', label: 'Historical Events', icon: '📅' },
+        { number: '15+', label: 'Global Partnerships', icon: '🤝' },
+        { number: '7+', label: 'Relevant Projects', icon: '🚀' },
+        { number: '5+', label: 'Awards & Recognition', icon: '🏆' }
       ],
-      credentials: [
-        { icon: '🏆', title: 'XRBR', desc: 'Founding members of Extended Reality Brazil Association', year: '2018' },
-        { icon: '🎓', title: 'Master UFRJ', desc: 'Creative Media & Technology in Education', year: '2010' },
-        { icon: '🎬', title: 'Gramado Festival', desc: 'Official VR Curation (8 consecutive years)', year: '2017' },
-        { icon: '🏛️', title: 'Olympic Museum', desc: 'General Technology Direction', year: '2015-2017' },
-        { icon: '🔥', title: 'Autodesk Flame', desc: 'Only certified Flame Trainer in Brazil', year: '2000-2015' },
-        { icon: '🇨🇦', title: 'Autodesk Canada', desc: 'Only contract in South America', year: '1996-2008' },
-        { icon: '🌍', title: 'International', desc: 'Rio, SP, Belém, Florianópolis, Vancouver', year: '2020' },
-        { icon: '🤖', title: 'AI Pioneer', desc: 'AI research for animation', year: '1997' }
-      ]
+      highlights: {
+        title: 'Journey Highlights',
+        items: [
+          {
+            icon: '🌟',
+            year: '2002',
+            title: '1 of 15 worldwide',
+            desc: 'Discreet Montreal Training Specialist - global elite of certified specialists'
+          },
+          {
+            icon: '🏆',
+            year: '2005',
+            title: 'Digital Designer',
+            desc: 'Person of the year in computer graphics in Brazil - MAC Niterói'
+          },
+          {
+            icon: '🚀',
+            year: '2005-2007',
+            title: 'Taikodom',
+            desc: 'Largest game project developed in Brazil - space MMORPG'
+          },
+          {
+            icon: '🏛️',
+            year: '2015-2017',
+            title: 'Olympic Museum',
+            desc: 'General Technology Director for Rio 2016 Olympic Museum'
+          },
+          {
+            icon: '🎬',
+            year: '2017-2025',
+            title: 'Gramado Festival',
+            desc: 'Official VR curatorship for 8 consecutive years - unique in Brazil'
+          },
+          {
+            icon: '🤖',
+            year: '2018-2026',
+            title: 'AI + XR Pioneer',
+            desc: 'XRBR founding member + AI research for animation since 1997'
+          }
+        ]
+      },
+      partnerships: {
+        title: 'Partnerships that Made History',
+        subtitle: 'We worked with the world\'s largest companies and institutions',
+        items: [
+          {
+            icon: '🎓',
+            name: 'Autodesk',
+            role: 'Training Center',
+            period: '1996-2018',
+            highlight: 'Only one in South America for 22 years',
+            color: 'from-blue-500 to-cyan-500'
+          },
+          {
+            icon: '🇨🇦',
+            name: 'Discreet Logic',
+            role: 'Training Specialist',
+            period: '1998-2008',
+            highlight: '1 of 15 certified specialists worldwide',
+            color: 'from-red-500 to-orange-500'
+          },
+          {
+            icon: '🎬',
+            name: 'TV Globo',
+            role: 'Videographics Consulting',
+            period: '1997-2004',
+            highlight: 'Hans Donner Department',
+            color: 'from-purple-500 to-pink-500'
+          },
+          {
+            icon: '🎮',
+            name: 'Hoplon Infotainment',
+            role: 'Art Direction',
+            period: '2005-2007',
+            highlight: 'Taikodom - largest Brazilian game',
+            color: 'from-green-500 to-emerald-500'
+          },
+          {
+            icon: '🏛️',
+            name: 'Olympic Museum',
+            role: 'Technology Direction',
+            period: '2015-2017',
+            highlight: 'Rio 2016 - Olympics',
+            color: 'from-yellow-500 to-amber-500'
+          },
+          {
+            icon: '🏆',
+            name: 'XRBR',
+            role: 'Founding Member',
+            period: '2018-present',
+            highlight: 'Brazilian XR Association',
+            color: 'from-indigo-500 to-violet-500'
+          }
+        ]
+      },
+      timeline: {
+        title: 'Complete Timeline',
+        subtitle: 'Explore 46 years of history, innovation and pioneering',
+        filters: {
+          all: 'All',
+          milestone: 'Milestones',
+          partnership: 'Partnerships',
+          project: 'Projects',
+          award: 'Awards'
+        }
+      },
+      cta: {
+        title: 'Ready to create something amazing?',
+        subtitle: 'Let\'s turn your vision into reality',
+        primaryButton: 'Start a Project',
+        secondaryButton: 'Back to Studio'
+      }
+    },
+    es: {
+      title: 'Nuestra Historia',
+      subtitle: '46 años transformando ideas en experiencias inmersivas',
+      eyebrow: 'CREDIBILIDAD',
+      hero: {
+        bigNumber: '46',
+        bigNumberLabel: 'años de innovación',
+        description: 'Desde la computación gráfica pionera en los 80 hasta experiencias inmersivas con IA en 2026. Somos referencia en animación 3D, realidad virtual y proyectos audiovisuales de alto impacto.'
+      },
+      stats: [
+        { number: '30+', label: 'Eventos Históricos', icon: '📅' },
+        { number: '15+', label: 'Alianzas Globales', icon: '🤝' },
+        { number: '7+', label: 'Proyectos Relevantes', icon: '🚀' },
+        { number: '5+', label: 'Premios & Reconocimientos', icon: '🏆' }
+      ],
+      highlights: {
+        title: 'Momentos Destacados',
+        items: [
+          {
+            icon: '🌟',
+            year: '2002',
+            title: '1 de 15 en el mundo',
+            desc: 'Training Specialist Discreet Montreal - élite mundial de especialistas certificados'
+          },
+          {
+            icon: '🏆',
+            year: '2005',
+            title: 'Digital Designer',
+            desc: 'Persona del año en computación gráfica en Brasil - MAC Niterói'
+          },
+          {
+            icon: '🚀',
+            year: '2005-2007',
+            title: 'Taikodom',
+            desc: 'Mayor proyecto de juego desarrollado en Brasil - MMORPG espacial'
+          },
+          {
+            icon: '🏛️',
+            year: '2015-2017',
+            title: 'Museo Olímpico',
+            desc: 'Dirección General de Tecnología para el Museo Olímpico de Río 2016'
+          },
+          {
+            icon: '🎬',
+            year: '2017-2025',
+            title: 'Festival de Gramado',
+            desc: 'Curaduría VR oficial por 8 años consecutivos - único en Brasil'
+          },
+          {
+            icon: '🤖',
+            year: '2018-2026',
+            title: 'Pionero IA + XR',
+            desc: 'Miembro fundador XRBR + investigación IA para animación desde 1997'
+          }
+        ]
+      },
+      partnerships: {
+        title: 'Alianzas que Marcaron Época',
+        subtitle: 'Trabajamos con las mayores empresas e instituciones del mundo',
+        items: [
+          {
+            icon: '🎓',
+            name: 'Autodesk',
+            role: 'Training Center',
+            period: '1996-2018',
+            highlight: 'Único en América del Sur por 22 años',
+            color: 'from-blue-500 to-cyan-500'
+          },
+          {
+            icon: '🇨🇦',
+            name: 'Discreet Logic',
+            role: 'Training Specialist',
+            period: '1998-2008',
+            highlight: '1 de 15 especialistas certificados en el mundo',
+            color: 'from-red-500 to-orange-500'
+          },
+          {
+            icon: '🎬',
+            name: 'TV Globo',
+            role: 'Consultoría Videographics',
+            period: '1997-2004',
+            highlight: 'Departamento de Hans Donner',
+            color: 'from-purple-500 to-pink-500'
+          },
+          {
+            icon: '🎮',
+            name: 'Hoplon Infotainment',
+            role: 'Dirección de Arte',
+            period: '2005-2007',
+            highlight: 'Taikodom - mayor juego brasileño',
+            color: 'from-green-500 to-emerald-500'
+          },
+          {
+            icon: '🏛️',
+            name: 'Museo Olímpico',
+            role: 'Dirección de Tecnología',
+            period: '2015-2017',
+            highlight: 'Río 2016 - Olimpiadas',
+            color: 'from-yellow-500 to-amber-500'
+          },
+          {
+            icon: '🏆',
+            name: 'XRBR',
+            role: 'Miembro Fundador',
+            period: '2018-actual',
+            highlight: 'Asociación Brasileña de XR',
+            color: 'from-indigo-500 to-violet-500'
+          }
+        ]
+      },
+      timeline: {
+        title: 'Línea de Tiempo Completa',
+        subtitle: 'Explora 46 años de historia, innovación y pionerismo',
+        filters: {
+          all: 'Todos',
+          milestone: 'Hitos',
+          partnership: 'Alianzas',
+          project: 'Proyectos',
+          award: 'Premios'
+        }
+      },
+      cta: {
+        title: '¿Listo para crear algo increíble?',
+        subtitle: 'Transformemos tu visión en realidad',
+        primaryButton: 'Iniciar un Proyecto',
+        secondaryButton: 'Volver al Estudio'
+      }
+    },
+    fr: {
+      title: 'Notre Histoire',
+      subtitle: '46 ans à transformer des idées en expériences immersives',
+      eyebrow: 'CRÉDIBILITÉ',
+      hero: {
+        bigNumber: '46',
+        bigNumberLabel: 'ans d\'innovation',
+        description: 'De l\'infographie pionnière des années 80 aux expériences immersives avec IA en 2026. Nous sommes une référence en animation 3D, réalité virtuelle et projets audiovisuels à fort impact.'
+      },
+      stats: [
+        { number: '30+', label: 'Événements Historiques', icon: '📅' },
+        { number: '15+', label: 'Partenariats Mondiaux', icon: '🤝' },
+        { number: '7+', label: 'Projets Pertinents', icon: '🚀' },
+        { number: '5+', label: 'Prix & Reconnaissances', icon: '🏆' }
+      ],
+      highlights: {
+        title: 'Points Forts du Parcours',
+        items: [
+          {
+            icon: '🌟',
+            year: '2002',
+            title: '1 sur 15 dans le monde',
+            desc: 'Training Specialist Discreet Montreal - élite mondiale de spécialistes certifiés'
+          },
+          {
+            icon: '🏆',
+            year: '2005',
+            title: 'Digital Designer',
+            desc: 'Personne de l\'année en infographie au Brésil - MAC Niterói'
+          },
+          {
+            icon: '🚀',
+            year: '2005-2007',
+            title: 'Taikodom',
+            desc: 'Plus grand projet de jeu développé au Brésil - MMORPG spatial'
+          },
+          {
+            icon: '🏛️',
+            year: '2015-2017',
+            title: 'Musée Olympique',
+            desc: 'Direction Générale de la Technologie pour le Musée Olympique de Rio 2016'
+          },
+          {
+            icon: '🎬',
+            year: '2017-2025',
+            title: 'Festival de Gramado',
+            desc: 'Curation VR officielle pendant 8 années consécutives - unique au Brésil'
+          },
+          {
+            icon: '🤖',
+            year: '2018-2026',
+            title: 'Pionnier IA + XR',
+            desc: 'Membre fondateur XRBR + recherche IA pour l\'animation depuis 1997'
+          }
+        ]
+      },
+      partnerships: {
+        title: 'Partenariats qui ont Marqué l\'Époque',
+        subtitle: 'Nous avons travaillé avec les plus grandes entreprises et institutions du monde',
+        items: [
+          {
+            icon: '🎓',
+            name: 'Autodesk',
+            role: 'Training Center',
+            period: '1996-2018',
+            highlight: 'Seul en Amérique du Sud pendant 22 ans',
+            color: 'from-blue-500 to-cyan-500'
+          },
+          {
+            icon: '🇨🇦',
+            name: 'Discreet Logic',
+            role: 'Training Specialist',
+            period: '1998-2008',
+            highlight: '1 sur 15 spécialistes certifiés dans le monde',
+            color: 'from-red-500 to-orange-500'
+          },
+          {
+            icon: '🎬',
+            name: 'TV Globo',
+            role: 'Conseil Videographics',
+            period: '1997-2004',
+            highlight: 'Département de Hans Donner',
+            color: 'from-purple-500 to-pink-500'
+          },
+          {
+            icon: '🎮',
+            name: 'Hoplon Infotainment',
+            role: 'Direction Artistique',
+            period: '2005-2007',
+            highlight: 'Taikodom - plus grand jeu brésilien',
+            color: 'from-green-500 to-emerald-500'
+          },
+          {
+            icon: '🏛️',
+            name: 'Musée Olympique',
+            role: 'Direction de la Technologie',
+            period: '2015-2017',
+            highlight: 'Rio 2016 - Jeux Olympiques',
+            color: 'from-yellow-500 to-amber-500'
+          },
+          {
+            icon: '🏆',
+            name: 'XRBR',
+            role: 'Membre Fondateur',
+            period: '2018-présent',
+            highlight: 'Association Brésilienne de XR',
+            color: 'from-indigo-500 to-violet-500'
+          }
+        ]
+      },
+      timeline: {
+        title: 'Chronologie Complète',
+        subtitle: 'Explorez 46 ans d\'histoire, d\'innovation et de pionnier',
+        filters: {
+          all: 'Tous',
+          milestone: 'Jalons',
+          partnership: 'Partenariats',
+          project: 'Projets',
+          award: 'Prix'
+        }
+      },
+      cta: {
+        title: 'Prêt à créer quelque chose d\'incroyable?',
+        subtitle: 'Transformons votre vision en réalité',
+        primaryButton: 'Démarrer un Projet',
+        secondaryButton: 'Retour au Studio'
+      }
     }
   }
 
-  const text = content[lang] || content.pt
+  const t = content[lang]
 
   return (
     <>
       <SEO 
         lang={lang}
-        title={`${text.title} - Studio - Azimut`}
-        description={text.subtitle}
+        title={`${t.title} - Studio - Azimut`}
+        description={t.subtitle}
         path="/studio/credibilidade"
       />
       
-      <main className="relative py-16 md:py-20">
-        {/* Star Background - FIXA (FUNDO - atrás de tudo) */}
+      <main className="relative">
+        {/* Star Background - FIXA */}
         <div 
-          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-50"
+          className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-30"
           style={{ zIndex: -10 }}
         >
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" loading="lazy" />
         </div>
 
-        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
-          {/* Breadcrumbs */}
-          <nav className="mb-8 flex items-center gap-2 text-sm text-theme-text-secondary">
-            <LangLink to="/" className="hover:text-azimut-red transition-colors">Home</LangLink>
-            <span>›</span>
-            <LangLink to="/studio" className="hover:text-azimut-red transition-colors">Studio</LangLink>
-            <span>›</span>
-            <span className="text-azimut-red font-medium">{text.title}</span>
-          </nav>
+        {/* HERO SECTION - IMPACTANTE */}
+        <section className="relative py-20 md:py-32 overflow-hidden">
+          <div className="container-padding max-w-7xl mx-auto">
+            {/* Breadcrumbs */}
+            <nav className="mb-8 flex items-center gap-2 text-sm text-theme-text-secondary">
+              <LangLink to="/" className="hover:text-azimut-red transition-colors">Home</LangLink>
+              <span>›</span>
+              <LangLink to="/studio" className="hover:text-azimut-red transition-colors">Studio</LangLink>
+              <span>›</span>
+              <span className="text-azimut-red font-medium">{t.title}</span>
+            </nav>
 
-          {/* Hero */}
-          <div className="mb-16">
-            {/* Eyebrow com emoji */}
-            <span className="section-eyebrow">
-              <span>🏆</span>
-              {lang === 'pt' ? 'CREDENCIAIS' : lang === 'es' ? 'CREDENCIALES' : lang === 'fr' ? 'RÉFÉRENCES' : 'CREDENTIALS'}
-            </span>
-            
-            {/* Título grande */}
-            <h1 className="section-title">
-              {text.title}
-            </h1>
-            
-            {/* Subtítulo */}
-            <p className="body-large">
-              {text.subtitle}
-            </p>
+            {/* Hero Content */}
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Left: Text */}
+              <div>
+                <span className="section-eyebrow mb-6">
+                  <span>🏆</span>
+                  {t.eyebrow}
+                </span>
+                
+                <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                  {t.title}
+                </h1>
+                
+                <p className="text-xl md:text-2xl text-white/70 mb-8 leading-relaxed">
+                  {t.subtitle}
+                </p>
+
+                <p className="text-lg text-white/60 leading-relaxed">
+                  {t.hero.description}
+                </p>
+              </div>
+
+              {/* Right: Big Number */}
+              <div className="relative">
+                <div className="relative z-10 bg-gradient-to-br from-azimut-red/20 to-purple-500/20 backdrop-blur-sm border border-azimut-red/30 rounded-3xl p-12 text-center">
+                  <div className="text-9xl md:text-[12rem] font-bold text-transparent bg-clip-text bg-gradient-to-br from-azimut-red via-orange-500 to-yellow-500 leading-none mb-4">
+                    {t.hero.bigNumber}
+                  </div>
+                  <div className="text-2xl md:text-3xl font-bold text-white uppercase tracking-wider">
+                    {t.hero.bigNumberLabel}
+                  </div>
+                </div>
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-azimut-red/30 to-purple-500/30 blur-3xl -z-10" />
+              </div>
+            </div>
           </div>
+        </section>
 
-          {/* Timeline Vertical */}
-          <section className="mb-20">
-            <h2 className="mb-12 font-handel text-3xl font-bold uppercase text-theme-text text-center">
-              📅 Nossa Jornada
-            </h2>
-            <div className="relative space-y-12">
-              <div className="absolute left-12 top-0 bottom-0 w-1 bg-azimut-red/30"></div>
-              {text.timeline.map((period, i) => (
-                <div key={i} className="relative pl-28">
-                  <div className="absolute left-0 top-0 w-24 h-24 rounded-full bg-gradient-to-br from-azimut-red to-azimut-red/70 flex flex-col items-center justify-center font-bold text-white border-4 border-slate-900 shadow-lg">
-                    <div className="text-2xl">{period.icon}</div>
-                    <div className="text-xs">{period.period}</div>
+        {/* STATS SECTION - VISUAL */}
+        <section className="py-16 bg-gradient-to-b from-slate-900/50 to-transparent">
+          <div className="container-padding max-w-7xl mx-auto">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+              {t.stats.map((stat, i) => (
+                <div 
+                  key={i}
+                  className="relative group"
+                >
+                  <div className="card-adaptive rounded-2xl p-8 text-center h-full hover:scale-105 transition-transform duration-300">
+                    <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">
+                      {stat.icon}
+                    </div>
+                    <div className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-azimut-red to-orange-500 mb-2">
+                      {stat.number}
+                    </div>
+                    <div className="text-sm md:text-base text-white/70 font-medium uppercase tracking-wide">
+                      {stat.label}
+                    </div>
                   </div>
-                  <div className="p-8 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/40 transition-all">
-                    <h3 className="text-3xl font-bold text-white mb-6">{period.title}</h3>
-                    <ul className="space-y-3">
-                      {period.items.map((item, j) => (
-                        <li key={j} className="flex items-start gap-3">
-                          <span className="text-azimut-red mt-1">✓</span>
-                          <span className="text-theme-text-secondary">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  {/* Glow on hover */}
+                  <div className="absolute inset-0 bg-azimut-red/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity -z-10 rounded-2xl" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* HIGHLIGHTS SECTION - CARDS GRANDES */}
+        <section className="py-20">
+          <div className="container-padding max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                {t.highlights.title}
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-azimut-red to-transparent mx-auto" />
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {t.highlights.items.map((item, i) => (
+                <div 
+                  key={i}
+                  className="group relative"
+                >
+                  <div className="card-adaptive rounded-2xl p-8 h-full hover:border-azimut-red/50 transition-all duration-300">
+                    {/* Icon */}
+                    <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">
+                      {item.icon}
+                    </div>
+                    
+                    {/* Year badge */}
+                    <div className="inline-block px-4 py-1 bg-azimut-red/20 rounded-full text-azimut-red font-mono text-sm font-bold mb-4">
+                      {item.year}
+                    </div>
+                    
+                    {/* Title */}
+                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-azimut-red transition-colors">
+                      {item.title}
+                    </h3>
+                    
+                    {/* Description */}
+                    <p className="text-white/70 leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                  
+                  {/* Glow on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-azimut-red/10 to-purple-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity -z-10 rounded-2xl" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* PARTNERSHIPS SECTION - CARDS COM GRADIENTES */}
+        <section className="py-20 bg-gradient-to-b from-transparent via-slate-900/30 to-transparent">
+          <div className="container-padding max-w-7xl mx-auto">
+            <div className="text-center mb-4">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                {t.partnerships.title}
+              </h2>
+              <p className="text-xl text-white/60 max-w-3xl mx-auto mb-8">
+                {t.partnerships.subtitle}
+              </p>
+              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-azimut-red to-transparent mx-auto" />
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+              {t.partnerships.items.map((partner, i) => (
+                <div 
+                  key={i}
+                  className="group relative overflow-hidden rounded-2xl"
+                >
+                  {/* Gradient background */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${partner.color} opacity-10 group-hover:opacity-20 transition-opacity`} />
+                  
+                  <div className="relative card-adaptive rounded-2xl p-6 h-full hover:border-azimut-red/30 transition-all">
+                    {/* Icon */}
+                    <div className="text-5xl mb-3 group-hover:scale-110 transition-transform">
+                      {partner.icon}
+                    </div>
+                    
+                    {/* Name */}
+                    <h3 className="text-xl font-bold text-white mb-2">
+                      {partner.name}
+                    </h3>
+                    
+                    {/* Role */}
+                    <div className="text-sm text-azimut-red font-semibold mb-2 uppercase tracking-wide">
+                      {partner.role}
+                    </div>
+                    
+                    {/* Period */}
+                    <div className="text-sm text-white/50 font-mono mb-3">
+                      {partner.period}
+                    </div>
+                    
+                    {/* Highlight */}
+                    <p className="text-sm text-white/70 leading-relaxed">
+                      {partner.highlight}
+                    </p>
                   </div>
                 </div>
               ))}
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* Credentials Cards */}
-          <section className="mb-20">
-            <h2 className="mb-12 font-handel text-3xl font-bold uppercase text-theme-text text-center">
-              🎖️ Certificações & Conquistas
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {text.credentials.map((cred, i) => (
-                <div key={i} className="p-6 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/40 transition-all text-center group">
-                  <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">{cred.icon}</div>
-                  <h3 className="text-sm font-bold text-white mb-2 uppercase tracking-wide line-clamp-2" style={{ minHeight: '2.5rem' }}>{cred.title}</h3>
-                  <p className="text-xs text-theme-text-secondary mb-2 line-clamp-3" style={{ minHeight: '3rem' }}>{cred.desc}</p>
-                  <div className="text-xs text-azimut-red font-semibold">{cred.year}</div>
-                </div>
+        {/* TIMELINE COMPLETA SECTION */}
+        <section className="py-20">
+          <div className="container-padding max-w-7xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                {t.timeline.title}
+              </h2>
+              <p className="text-xl text-white/60 max-w-3xl mx-auto mb-8">
+                {t.timeline.subtitle}
+              </p>
+              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-azimut-red to-transparent mx-auto" />
+            </div>
+
+            {/* Filtros */}
+            <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
+              {Object.entries(t.timeline.filters).map(([key, label]) => (
+                <button
+                  key={key}
+                  onClick={() => setActiveFilter(key)}
+                  className={`px-6 py-2 rounded-full font-medium transition-all ${
+                    activeFilter === key
+                      ? 'bg-azimut-red text-white shadow-lg shadow-azimut-red/30'
+                      : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white'
+                  }`}
+                >
+                  {label}
+                </button>
               ))}
             </div>
-          </section>
 
-          {/* CTA */}
-          <div className="text-center">
+            {/* Timeline Component */}
+            <CompanyTimeline
+              lang={lang}
+              type={activeFilter === 'all' ? undefined : activeFilter}
+              layout="vertical"
+              className="max-w-5xl mx-auto"
+            />
+          </div>
+        </section>
+
+        {/* CTA FINAL - IMPACTANTE */}
+        <section className="py-20 bg-gradient-to-b from-transparent to-slate-900/50">
+          <div className="container-padding max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              {t.cta.title}
+            </h2>
+            <p className="text-xl text-white/60 mb-12">
+              {t.cta.subtitle}
+            </p>
+
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
               <LangLink
                 to="/contact"
-                className="inline-flex items-center gap-3 px-10 py-5 rounded-lg bg-azimut-red text-white font-sora font-bold uppercase tracking-wider hover:bg-azimut-red/90 transition-all shadow-xl"
+                className="group inline-flex items-center gap-3 px-10 py-5 rounded-xl bg-gradient-to-r from-azimut-red to-orange-600 text-white font-bold uppercase tracking-wider hover:shadow-2xl hover:shadow-azimut-red/50 transition-all transform hover:scale-105"
               >
-                {lang === 'pt' ? 'Iniciar um Projeto' : lang === 'es' ? 'Iniciar un Proyecto' : lang === 'fr' ? 'Démarrer un Projet' : 'Start a Project'}
-                <span className="text-xl">→</span>
+                {t.cta.primaryButton}
+                <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
               </LangLink>
+              
               <LangLink
                 to="/studio"
-                className="inline-flex items-center gap-3 px-10 py-5 rounded-lg border-2 border-white/30 text-white hover:bg-white hover:text-black transition-all font-sora font-bold uppercase tracking-wider"
+                className="group inline-flex items-center gap-3 px-10 py-5 rounded-xl border-2 border-white/20 text-white hover:bg-white hover:text-black transition-all font-bold uppercase tracking-wider"
               >
-                <span className="text-xl">←</span>
-                {lang === 'pt' ? 'Voltar para Studio' : lang === 'es' ? 'Volver al Estudio' : lang === 'fr' ? 'Retour au Studio' : 'Back to Studio'}
+                <span className="text-xl group-hover:-translate-x-1 transition-transform">←</span>
+                {t.cta.secondaryButton}
               </LangLink>
             </div>
           </div>
-        </div>
+        </section>
       </main>
     </>
   )

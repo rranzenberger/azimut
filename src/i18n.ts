@@ -29,7 +29,7 @@ export const translations: Dict = {
     tag1: 'Immersive spaces',
     tag2: 'Exhibitions & culture',
     tag3: 'Hybrid AV & AI',
-    cities: 'Rio • São Paulo • Belém • Florianópolis • Vancouver',
+    cities: 'Rio • Belém • Florianópolis • Vancouver',
     contactTitle: 'Tell us what you need and where your project lives.',
     contactNote:
       'For now, contact is via e-mail or WhatsApp. Soon this will open a full brief form connected to our backoffice.',
@@ -66,7 +66,7 @@ export const translations: Dict = {
     tag1: 'Espaces immersifs',
     tag2: 'Expositions & culture',
     tag3: 'Audiovisuel hybride & IA',
-    cities: 'Rio • São Paulo • Belém • Florianópolis • Vancouver',
+    cities: 'Rio • Belém • Florianópolis • Vancouver',
     contactTitle: 'Dites-nous ce dont vous avez besoin et où vit votre projet.',
     contactNote:
       'Pour l’instant, le contact se fait par e-mail ou WhatsApp. Bientôt, ceci ouvrira un formulaire complet relié à notre backoffice.',
@@ -102,7 +102,7 @@ export const translations: Dict = {
     tag1: 'Espaços imersivos',
     tag2: 'Exposições & cultura',
     tag3: 'Audiovisual híbrido & IA',
-    cities: 'Rio • São Paulo • Belém • Florianópolis • Vancouver',
+    cities: 'Rio • Belém • Florianópolis • Vancouver',
     contactTitle: 'Conte o que você precisa e onde vive o seu projeto.',
     contactNote:
       'Por enquanto, o contato é por e-mail ou WhatsApp. Em breve aqui será um formulário completo conectado ao nosso backoffice.',
@@ -139,7 +139,7 @@ export const translations: Dict = {
     tag1: 'Espacios inmersivos',
     tag2: 'Exposiciones & cultura',
     tag3: 'Audiovisual híbrido & IA',
-    cities: 'Río • São Paulo • Belém • Florianópolis • Vancouver',
+    cities: 'Río • Belém • Florianópolis • Vancouver',
     contactTitle: 'Cuéntanos qué necesitas y dónde vive tu proyecto.',
     contactNote:
       'Por ahora, el contacto es por correo electrónico o WhatsApp. Pronto aquí habrá un formulario completo conectado a nuestro backoffice.',

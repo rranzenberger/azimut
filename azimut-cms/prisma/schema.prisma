@@ -235,6 +235,38 @@ model Section {
   linkedProjects Project[] @relation("SectionProjects")
 }
 
+model CompanyHistory {
+  id             String   @id @default(uuid())
+  year           Int
+  yearEnd        Int?
+  displayOrder   Int      @default(0)
+  type           HistoryType
+  titlePt        String
+  titleEn        String
+  titleEs        String?
+  titleFr        String?
+  descriptionPt  String?
+  descriptionEn  String?
+  descriptionEs  String?
+  descriptionFr  String?
+  bulletsPt      String[]
+  bulletsEn      String[]
+  bulletsEs      String[]
+  bulletsFr      String[]
+  icon           String?
+  logoUrl        String?
+  externalLink   String?
+  isPublished    Boolean  @default(true)
+  isFeatured     Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([year])
+  @@index([type])
+  @@index([isPublished])
+  @@index([displayOrder])
+}
+
 model ProjectMedia {
   id        String   @id @default(uuid())
   projectId String
@@ -508,6 +540,15 @@ enum TagCategory {
   INDUSTRY
   FORMAT
   OTHER
+}
+
+enum HistoryType {
+  milestone
+  partnership
+  project
+  award
+  location
+  other
 }
 
 enum ServiceStatus {
