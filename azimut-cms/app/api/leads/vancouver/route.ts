@@ -131,8 +131,33 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    // TODO: Enviar email de confirmação para o lead
-    // TODO: Enviar notificação para a equipe Azimut
+    // ═══════════════════════════════════════════════════════════
+    // 📧 ENVIAR EMAILS AUTOMÁTICOS
+    // ═══════════════════════════════════════════════════════════
+    try {
+      // Chamar API de notificação (não aguarda para não atrasar resposta)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/notify-form`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: body.name,
+          email: body.email,
+          phone: body.whatsapp,
+          formType: 'vancouver_academy',
+          interest: `Vancouver - ${body.targetSchool || 'VFS/VanArts'}`,
+          project: body.areaInterest,
+          budget: body.budgetRange,
+          timeline: body.intakeYear,
+          message: `Situação: ${body.currentSituation}\nInglês: ${body.englishLevel}\nPortfólio: ${body.hasPortfolio}\nComentários: ${body.comments || 'N/A'}`,
+          score: leadScore,
+          lang: 'pt'
+        })
+      }).catch(err => {
+        console.warn('Email notification failed (non-critical):', err)
+      })
+    } catch (emailError) {
+      console.warn('Failed to send email notification:', emailError)
+    }
 
     console.log(`✅ Lead Vancouver criado: ${lead.id} (Score: ${leadScore}, Priority: ${priority})`)
 

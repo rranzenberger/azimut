@@ -123,11 +123,41 @@ export async function POST(request: Request) {
       }
     })
 
-    // TODO: Enviar email notification para equipe
-    // TODO: Enviar email confirmation para lead
-    // TODO: Integrar com CRM/Webhook
+    // ═══════════════════════════════════════════════════════════
+    // 📧 ENVIAR EMAILS AUTOMÁTICOS
+    // ═══════════════════════════════════════════════════════════
+    try {
+      // Chamar API de notificação (não aguarda para não atrasar resposta)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/notify-form`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          company: data.company,
+          position: data.position,
+          formType: 'contact_form',
+          project: data.projectType,
+          interest: data.projectType,
+          budget: data.budget,
+          timeline: data.timeline,
+          message: data.description,
+          score: leadScore,
+          lang: data.lang || 'pt',
+          organizationType: data.organizationType,
+          interestInGrants: data.interestInGrants
+        })
+      }).catch(err => {
+        // Log mas não interrompe o fluxo
+        console.warn('Email notification failed (non-critical):', err)
+      })
+    } catch (emailError) {
+      // Email falhou mas não é crítico
+      console.warn('Failed to send email notification:', emailError)
+    }
 
-    // Se score alto, pode notificar equipe imediatamente
+    // Se score alto, log para debug
     if (leadScore >= 70) {
       console.log(`🔥 HOT LEAD! Score: ${leadScore}`, {
         name: data.name,
@@ -135,7 +165,6 @@ export async function POST(request: Request) {
         company: data.company,
         budget: data.budget
       })
-      // TODO: Enviar SMS/WhatsApp/Slack para equipe
     }
 
     return NextResponse.json({
