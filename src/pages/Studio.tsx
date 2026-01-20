@@ -475,6 +475,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                       <img 
                         src={member.photo}
                         alt={member.name}
+                        loading="lazy"
                         className="w-full h-full object-cover"
                         style={{ 
                           objectPosition: member.name.includes('Alberto') ? 'center 35%' : 'center center',

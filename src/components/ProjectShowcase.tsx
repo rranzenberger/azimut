@@ -227,6 +227,7 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({ projects, lang
                 <img 
                   src={selectedProject.heroImage?.large || selectedProject.heroImage?.medium || selectedProject.heroImage?.thumbnail || ''} 
                   alt={selectedProject.heroImage?.alt || selectedProject.title}
+                  loading="lazy"
                   className="w-full h-48 md:h-64 object-cover rounded-xl mb-6" 
                 />
               )}

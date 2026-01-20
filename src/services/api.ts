@@ -241,7 +241,7 @@ export class ApiService {
   /**
    * Submit Vancouver interest lead
    */
-  static async submitVancouverLead(data: any) {
+  static async submitVancouverLead(data: VancouverLeadData & Record<string, unknown>) {
     try {
       if (!API_URL || API_URL === 'undefined' || API_URL.includes('undefined')) {
         if (isDevelopment) console.warn('⚠️ VITE_API_URL não configurada')
