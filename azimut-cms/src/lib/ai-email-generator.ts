@@ -27,6 +27,65 @@ interface LeadData {
 }
 
 /**
+ * Gerar small talk personalizado baseado em localização
+ */
+function generateSmallTalk(data: LeadData): string {
+  const city = data.location?.city
+  const country = data.location?.country
+  const company = data.company
+  
+  // Base de conhecimento para small talk (expandível)
+  const locationContext: Record<string, Record<string, string>> = {
+    pt: {
+      'São Paulo': 'Legal ver interesse de São Paulo! A cidade tem uma cena cultural incrível.',
+      'Rio de Janeiro': 'Que bom receber contato do Rio! A cidade é inspiradora para projetos imersivos.',
+      'Brasília': 'Interessante vir de Brasília! Trabalhamos com várias instituições governamentais.',
+      'Porto Alegre': 'Ótimo saber de interesse do Sul! Região tem projetos culturais muito interessantes.',
+      'Curitiba': 'Legal o contato de Curitiba! Cidade com forte presença cultural.',
+      'Gramado': 'Gramado! Cidade que conhecemos bem, inclusive fazemos curadoria lá.',
+      'Lisboa': 'Que bom receber contato de Portugal! Temos alguns projetos em Lisboa.',
+      'Porto': 'Legal o interesse do Porto! Cidade com cena cultural incrível.',
+      'default': city ? `Interessante o contato de ${city}!` : ''
+    },
+    en: {
+      'Vancouver': 'Great to hear from Vancouver! We work with VFS and VanArts there.',
+      'Toronto': 'Nice to connect with Toronto! Canada has amazing creative scene.',
+      'Montreal': 'Montreal! Beautiful city with great cultural projects.',
+      'New York': 'Great to hear from NY! The immersive scene there is incredible.',
+      'Los Angeles': 'LA! Perfect place for immersive experiences.',
+      'London': 'Nice to connect with London! Amazing creative industry there.',
+      'default': city ? `Great to hear from ${city}!` : ''
+    },
+    es: {
+      'Buenos Aires': '¡Qué bueno recibir contacto de Buenos Aires! Ciudad con escena cultural increíble.',
+      'Madrid': 'Madrid! Tenemos algunos proyectos en España.',
+      'Barcelona': '¡Barcelona! Ciudad inspiradora para proyectos inmersivos.',
+      'default': city ? `¡Interesante el contacto de ${city}!` : ''
+    },
+    fr: {
+      'Paris': 'Super de recevoir un contact de Paris! Ville inspirante.',
+      'Lyon': 'Lyon! Belle ville avec une scène culturelle intéressante.',
+      'default': city ? `Intéressant le contact de ${city}!` : ''
+    }
+  }
+
+  const lang = data.lang as keyof typeof locationContext || 'pt'
+  const cityTalk = city && locationContext[lang]?.[city] 
+    ? locationContext[lang][city] 
+    : locationContext[lang]?.['default'] || ''
+
+  // Small talk sobre empresa (se for conhecida)
+  const companyTalk = company ? 
+    (company.toLowerCase().includes('museu') || company.toLowerCase().includes('museum') ? 
+      'Trabalhar com museus é sempre especial.' : 
+      company.toLowerCase().includes('universidade') || company.toLowerCase().includes('university') ?
+      'Projetos acadêmicos são sempre desafiadores e recompensadores.' :
+      '') : ''
+
+  return [cityTalk, companyTalk].filter(Boolean).join(' ')
+}
+
+/**
  * Gerar email personalizado para o LEAD (usando IA)
  */
 export async function generatePersonalizedEmail(data: LeadData): Promise<string> {
@@ -39,25 +98,32 @@ export async function generatePersonalizedEmail(data: LeadData): Promise<string>
   }
   const config = langConfig[data.lang as keyof typeof langConfig] || langConfig.en
 
+  // Gerar small talk personalizado
+  const smallTalk = generateSmallTalk(data)
+
   const prompt = `You are Ranz Enberger, Creative & Technology Director at Azimut (VR/Cinema/Immersive Experiences company).
 
 LEAD CONTEXT:
 - Name: ${data.name}
+- Location: ${data.location?.city || 'Unknown'}, ${data.location?.country || ''}
+- Company: ${data.company || 'Not specified'}
 - Interest: ${data.interest || data.project || 'Immersive projects'}
 - Budget: ${data.budget || 'Not specified'}
 - LANGUAGE: ${data.lang.toUpperCase()} ← IMPORTANT!
 
+${smallTalk ? `SMALL TALK TO USE: "${smallTalk}" (incorporate naturally in the 2nd sentence)\n` : ''}
 TASK:
 Write a SIMPLE, FRIENDLY reply email.
 
 CRITICAL RULES:
 1. **WRITE IN ${data.lang.toUpperCase()}** (${data.lang === 'pt' ? 'Portuguese' : data.lang === 'en' ? 'English' : data.lang === 'fr' ? 'French' : 'Spanish'})
 2. Use PLAIN TEXT (no HTML, no emojis, no bold)
-3. Be BRIEF (max 100 words)
+3. Be BRIEF (max 120 words)
 4. Sound HUMAN and WARM, not like a marketing bot
-5. Mention 1 similar case (ex: Olympic Museum)
-6. Propose SIMPLE next step (call/meeting)
-7. Sign as "${config.signature}"
+5. ${smallTalk ? 'Include the small talk naturally in 2nd sentence' : 'Skip small talk if no location'}
+6. Mention 1 similar case (ex: Olympic Museum)
+7. Propose SIMPLE next step (call/meeting)
+8. Sign as "${config.signature}"
 
 TONE: Friendly colleague, not salesperson. Empathetic, curious about their project.
 
@@ -108,11 +174,12 @@ FORMAT: Plain text email (like you're texting a colleague).`
  */
 function generateFallbackEmail(data: LeadData): string {
   const firstName = data.name.split(' ')[0]
+  const smallTalk = generateSmallTalk(data)
   
   const templates = {
     pt: `Olá ${firstName},
 
-Obrigado pelo contato! Vi que você se interessou por ${data.interest || 'nossos projetos'}.
+Obrigado pelo contato!${smallTalk ? ` ${smallTalk}` : ''} Vi que você se interessou por ${data.interest || 'nossos projetos'}.
 
 Trabalhamos em projetos como o Museu Olímpico do Rio (tour virtual 360° + instalações interativas) e ficamos curiosos para entender melhor sua visão.${data.budget ? `\n\nCom o orçamento que você mencionou, podemos criar algo especial.` : ''}
 
@@ -129,7 +196,7 @@ Site: azimutimmersive.com`,
 
     en: `Hello ${firstName},
 
-Thank you for reaching out! I saw you're interested in ${data.interest || 'our projects'}.
+Thank you for reaching out!${smallTalk ? ` ${smallTalk}` : ''} I saw you're interested in ${data.interest || 'our projects'}.
 
 We work on projects like Rio Olympic Museum (360° virtual tour + interactive installations) and we're curious to better understand your vision.${data.budget ? `\n\nWith the budget you mentioned, we can create something special.` : ''}
 
@@ -146,7 +213,7 @@ Site: azimutimmersive.com`,
 
     fr: `Bonjour ${firstName},
 
-Merci pour votre contact! J'ai vu que vous vous intéressez à ${data.interest || 'nos projets'}.
+Merci pour votre contact!${smallTalk ? ` ${smallTalk}` : ''} J'ai vu que vous vous intéressez à ${data.interest || 'nos projets'}.
 
 Nous travaillons sur des projets comme le Musée Olympique de Rio (tour virtuel 360° + installations interactives) et nous sommes curieux de mieux comprendre votre vision.${data.budget ? `\n\nAvec le budget que vous avez mentionné, nous pouvons créer quelque chose de spécial.` : ''}
 
@@ -163,7 +230,7 @@ Site: azimutimmersive.com`,
 
     es: `Hola ${firstName},
 
-¡Gracias por contactarnos! Vi que te interesas por ${data.interest || 'nuestros proyectos'}.
+¡Gracias por contactarnos!${smallTalk ? ` ${smallTalk}` : ''} Vi que te interesas por ${data.interest || 'nuestros proyectos'}.
 
 Trabajamos en proyectos como el Museo Olímpico de Río (tour virtual 360° + instalaciones interactivas) y tenemos curiosidad por entender mejor tu visión.${data.budget ? `\n\nCon el presupuesto que mencionaste, podemos crear algo especial.` : ''}
 
