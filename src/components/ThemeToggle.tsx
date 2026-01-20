@@ -6,16 +6,9 @@ interface ThemeToggleProps {
 }
 
 const ThemeToggle: React.FC<ThemeToggleProps> = ({ theme, onToggle }) => {
-  const handleClick = () => {
-    console.log('🔘 ThemeToggle clicked! Current theme:', theme)
-    console.log('🔘 Calling onToggle()...')
-    onToggle()
-    console.log('🔘 onToggle() called!')
-  }
-  
   return (
     <button
-      onClick={handleClick}
+      onClick={onToggle}
       className="relative flex items-center justify-center transition-all duration-300 group"
       aria-label={theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}
       title={theme === 'dark' ? 'Modo claro' : 'Modo escuro'}

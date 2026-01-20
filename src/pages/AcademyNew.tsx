@@ -429,15 +429,15 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
               </span>
             </div>
 
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-handel uppercase tracking-wider text-white mb-8 leading-none animate-fade-in-up">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-handel uppercase tracking-wider mb-8 leading-none animate-fade-in-up" style={{ color: 'var(--theme-text)' }}>
               {t.hero.title}
             </h1>
 
-            <p className="text-2xl md:text-4xl text-white/90 mb-6 font-light animate-fade-in-up animation-delay-100">
+            <p className="text-2xl md:text-4xl mb-6 font-light animate-fade-in-up animation-delay-100" style={{ color: 'var(--theme-text-secondary)' }}>
               {t.hero.subtitle}
             </p>
 
-            <p className="text-lg md:text-xl text-white/70 mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200">
+            <p className="text-lg md:text-xl mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200" style={{ color: 'var(--theme-text-muted)' }}>
               {t.hero.description}
             </p>
 
@@ -497,7 +497,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
         <section className="py-12 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
-              {t.sections.map((section: any, idx: number) => (
+              {t.sections.map((section: AcademySection, idx: number) => (
                 <Link
                   key={section.id}
                   to={`/${lang}${section.link}`}
@@ -530,12 +530,12 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
                   <div className="p-8">
                     <div className="flex items-center gap-4 mb-4">
                       <span className="text-5xl">{section.icon}</span>
-                      <h3 className="text-3xl font-handel uppercase tracking-wider text-white group-hover:text-azimut-red transition-colors">
+                      <h3 className="text-3xl font-handel uppercase tracking-wider group-hover:text-azimut-red transition-colors" style={{ color: 'var(--theme-text)' }}>
                         {section.title}
                       </h3>
                     </div>
 
-                    <p className="text-lg text-white/70 leading-relaxed mb-6">
+                    <p className="text-lg leading-relaxed mb-6" style={{ color: 'var(--theme-text-secondary)' }}>
                       {section.description}
                     </p>
 
@@ -570,13 +570,13 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
         <section className="py-20 bg-gradient-to-b from-transparent via-azimut-red/5 to-transparent">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-6xl font-handel uppercase tracking-wider text-white mb-4">
+              <h2 className="text-4xl md:text-6xl font-handel uppercase tracking-wider mb-4" style={{ color: 'var(--theme-text)' }}>
                 {t.statsSection.title}
               </h2>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {t.statsSection.stats.map((stat: any, idx: number) => (
+              {t.statsSection.stats.map((stat: AcademyStat, idx: number) => (
                 <div 
                   key={idx}
                   className="text-center p-8 card-adaptive rounded-xl border border-white/10 hover:border-azimut-red/50 transition-all hover:scale-105"
@@ -584,7 +584,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
                   <div className="text-5xl md:text-6xl font-handel text-azimut-red mb-3">
                     {stat.value}
                   </div>
-                  <div className="text-sm md:text-base text-white/70 uppercase tracking-wider">
+                  <div className="text-sm md:text-base uppercase tracking-wider" style={{ color: 'var(--theme-text-secondary)' }}>
                     {stat.label}
                   </div>
                 </div>
@@ -599,7 +599,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
         <section className="py-20">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+              <h2 className="text-3xl md:text-5xl font-handel uppercase tracking-wider mb-4" style={{ color: 'var(--theme-text)' }}>
                 {t.credibility.title}
               </h2>
             </div>
@@ -613,7 +613,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
                   <div className="text-2xl flex-shrink-0">
                     {item.split(' ')[0]}
                   </div>
-                  <p className="text-white/80 leading-relaxed">
+                  <p className="leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
                     {item.substring(item.indexOf(' ') + 1)}
                   </p>
                 </div>
@@ -627,10 +627,10 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
             ═══════════════════════════════════════════════════════ */}
         <section className="py-24 bg-gradient-to-b from-transparent to-black">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-4xl md:text-6xl font-handel uppercase tracking-wider text-white mb-6">
+            <h2 className="text-4xl md:text-6xl font-handel uppercase tracking-wider mb-6" style={{ color: 'var(--theme-text)' }}>
               {t.cta.title}
             </h2>
-            <p className="text-xl md:text-2xl text-white/70 mb-10">
+            <p className="text-xl md:text-2xl mb-10" style={{ color: 'var(--theme-text-secondary)' }}>
               {t.cta.subtitle}
             </p>
 

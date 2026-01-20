@@ -31,8 +31,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   })
 
   useEffect(() => {
-    console.log('🎨 [ThemeContext] Theme changed to:', theme)
-    
     // Aplicar tema ao document
     const html = document.documentElement
     const body = document.body
@@ -46,8 +44,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     html.setAttribute('data-theme', theme)
     body.setAttribute('data-theme', theme)
     body.classList.add(`theme-${theme}`)
-    
-    console.log('🎨 [ThemeContext] HTML data-theme:', html.getAttribute('data-theme'))
     
     // Salvar no localStorage
     localStorage.setItem('azimut-theme', theme)
@@ -69,10 +65,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [theme])
 
   const toggleTheme = () => {
-    console.log('🎨 [ThemeContext] Toggle clicked! Current:', theme)
     setThemeState(prev => {
       const newTheme = prev === 'dark' ? 'light' : 'dark'
-      console.log('🎨 [ThemeContext] New theme:', newTheme)
       localStorage.setItem('azimut-theme-manual', 'true')
       return newTheme
     })

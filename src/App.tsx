@@ -246,13 +246,6 @@ const App: React.FC = () => {
   // Hook de tema (escuro/claro)
   const { theme, toggleTheme } = useTheme()
 
-  // 🐛 DEBUG: Monitorar mudanças de tema
-  useEffect(() => {
-    console.log('🎨 [App.tsx] Theme changed to:', theme)
-    console.log('🎨 [App.tsx] document.documentElement.getAttribute("data-theme"):', document.documentElement.getAttribute('data-theme'))
-    console.log('🎨 [App.tsx] document.body.getAttribute("data-theme"):', document.body.getAttribute('data-theme'))
-  }, [theme])
-
   // Salvar idioma no localStorage quando mudar
   useEffect(() => {
     try {

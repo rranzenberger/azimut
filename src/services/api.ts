@@ -97,8 +97,8 @@ export class ApiService {
     try {
       // Verificar se API_URL está configurada
       if (!API_URL || API_URL === 'undefined' || API_URL.includes('undefined')) {
-        console.warn('⚠️ VITE_API_URL não configurada')
         if (isDevelopment) {
+          console.warn('⚠️ VITE_API_URL não configurada')
           console.warn('💡 Dica: Configure VITE_API_URL no arquivo .env ou use o email direto: contact@azmt.com.br')
         }
         throw new Error('API não configurada')
@@ -180,13 +180,13 @@ export class ApiService {
       })
 
       if (!response.ok) {
-        console.warn('⚠️ AI suggestions not available')
+        if (isDevelopment) console.warn('⚠️ AI suggestions not available')
         return null
       }
 
       return await response.json()
     } catch (error) {
-      console.warn('⚠️ AI suggestions failed (non-critical):', error)
+      if (isDevelopment) console.warn('⚠️ AI suggestions failed (non-critical):', error)
       return null // Fail silently
     }
   }
@@ -244,7 +244,7 @@ export class ApiService {
   static async submitVancouverLead(data: any) {
     try {
       if (!API_URL || API_URL === 'undefined' || API_URL.includes('undefined')) {
-        console.warn('⚠️ VITE_API_URL não configurada')
+        if (isDevelopment) console.warn('⚠️ VITE_API_URL não configurada')
         throw new Error('API não configurada')
       }
       
@@ -299,7 +299,7 @@ export class ApiService {
   static async submitQuizVancouver(data: QuizVancouverData) {
     try {
       if (!API_URL || API_URL === 'undefined' || API_URL.includes('undefined')) {
-        console.warn('⚠️ VITE_API_URL não configurada')
+        if (isDevelopment) console.warn('⚠️ VITE_API_URL não configurada')
         throw new Error('API não configurada')
       }
       
@@ -354,7 +354,7 @@ export class ApiService {
   static async submitCourseRecommendation(data: CourseRecommendationData) {
     try {
       if (!API_URL || API_URL === 'undefined' || API_URL.includes('undefined')) {
-        console.warn('⚠️ VITE_API_URL não configurada')
+        if (isDevelopment) console.warn('⚠️ VITE_API_URL não configurada')
         throw new Error('API não configurada')
       }
       

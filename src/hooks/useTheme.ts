@@ -22,8 +22,6 @@ export function useTheme() {
   })
 
   useEffect(() => {
-    console.log('🎨 Theme changed to:', theme)
-    
     // Aplicar tema ao document (múltiplos lugares para forçar atualização)
     const html = document.documentElement
     const body = document.body
@@ -37,9 +35,6 @@ export function useTheme() {
     html.setAttribute('data-theme', theme)
     body.setAttribute('data-theme', theme)
     body.classList.add(`theme-${theme}`)
-    
-    console.log('🎨 HTML data-theme:', html.getAttribute('data-theme'))
-    console.log('🎨 Body data-theme:', body.getAttribute('data-theme'))
     
     // Salvar no localStorage
     localStorage.setItem('azimut-theme', theme)
@@ -61,10 +56,8 @@ export function useTheme() {
   }, [theme])
 
   const toggleTheme = () => {
-    console.log('🎨 Toggle theme clicked! Current:', theme)
     setTheme(prev => {
       const newTheme = prev === 'dark' ? 'light' : 'dark'
-      console.log('🎨 New theme will be:', newTheme)
       // Marcar que usuário trocou manualmente (respeitar escolha dele)
       localStorage.setItem('azimut-theme-manual', 'true')
       return newTheme
