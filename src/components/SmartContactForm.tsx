@@ -789,13 +789,14 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         city: '',
         acceptContact: false
       })
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error submitting form:', err)
       // Limpar erros de campo (erro de servidor é diferente)
       setFieldErrors({})
       
       // Mensagem de erro mais específica e útil
-      let errorMsg = err?.message || ''
+      const errorObj = err as Error & { message?: string }
+      let errorMsg = errorObj?.message || ''
       
       // Traduzir mensagens comuns
       if (!errorMsg || errorMsg.includes('Failed to fetch') || errorMsg.includes('NetworkError') || errorMsg.includes('fetch')) {

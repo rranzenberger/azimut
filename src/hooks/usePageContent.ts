@@ -42,14 +42,16 @@ interface SEOContent {
   keywords?: string | null;
 }
 
+interface SectionContent {
+  key: string;
+  content: Record<string, unknown>;
+}
+
 interface PageContent {
   hero: HeroContent;
   colors: ColorsContent;
   seo: SEOContent;
-  sections?: Array<{
-    key: string;
-    content: any;
-  }>;
+  sections?: SectionContent[];
 }
 
 interface UsePageContentReturn {

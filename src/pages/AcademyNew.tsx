@@ -19,6 +19,49 @@ interface AcademyProps {
   lang: Lang
 }
 
+// Interface TypeScript para conteúdo da Academy
+interface AcademySection {
+  id: string
+  icon: string
+  title: string
+  description: string
+  link: string
+  badge: string
+  highlight?: string
+}
+
+interface AcademyStat {
+  value: string
+  label: string
+}
+
+interface AcademyContent {
+  meta: {
+    title: string
+    description: string
+  }
+  hero: {
+    badge: string
+    title: string
+    subtitle: string
+    description: string
+  }
+  sections: AcademySection[]
+  statsSection: {
+    title: string
+    stats: AcademyStat[]
+  }
+  credibility: {
+    title: string
+    items: string[]
+  }
+  cta: {
+    title: string
+    subtitle: string
+    button: string
+  }
+}
+
 const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
   // REMOVIDO: useUserTracking já é chamado no Layout.tsx
   // useUserTracking()
@@ -26,7 +69,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
   // ═══════════════════════════════════════════════════════════
   // CONTEÚDO POR IDIOMA
   // ═══════════════════════════════════════════════════════════
-  const content: Record<Lang, any> = {
+  const content: Record<Lang, AcademyContent> = {
     pt: {
       meta: {
         title: 'Azimut Academy - Educação de Excelência',

@@ -35,11 +35,65 @@ const API_KEY = import.meta.env.VITE_API_KEY || ''
 const AI_ENABLED = import.meta.env.VITE_ENABLE_AI_SUGGESTIONS !== 'false'
 const TRACKING_ENABLED = import.meta.env.VITE_ENABLE_TRACKING !== 'false'
 
+// ═══════════════════════════════════════════════════════════════
+// INTERFACES TYPESCRIPT
+// ═══════════════════════════════════════════════════════════════
+
+export interface LeadData {
+  name: string
+  email: string
+  phone?: string
+  company?: string
+  message?: string
+  leadType?: string
+  source?: string
+  lang?: string
+  interest?: string
+  budget?: string
+}
+
+export interface AiSuggestionData {
+  field: string
+  value: string
+  context?: Record<string, string>
+}
+
+export interface VisitorTrackingData {
+  sessionId?: string
+  page: string
+  event?: string
+  metadata?: Record<string, unknown>
+}
+
+export interface VancouverLeadData extends LeadData {
+  school?: string
+  program?: string
+  startDate?: string
+  hasPassport?: boolean
+  englishLevel?: string
+}
+
+export interface QuizVancouverData {
+  answers: Record<string, string | number>
+  score?: number
+  recommendation?: string
+  email?: string
+  name?: string
+}
+
+export interface CourseRecommendationData {
+  interests: string[]
+  experience?: string
+  goals?: string[]
+  budget?: string
+  timeline?: string
+}
+
 export class ApiService {
   /**
    * Submit lead to CRM
    */
-  static async submitLead(data: any) {
+  static async submitLead(data: LeadData) {
     try {
       // Verificar se API_URL está configurada
       if (!API_URL || API_URL === 'undefined' || API_URL.includes('undefined')) {
@@ -85,19 +139,20 @@ export class ApiService {
       }
 
       return await response.json()
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('❌ Error submitting lead:', error)
       
       // Mensagens de erro mais específicas
-      if (error.name === 'AbortError' || error.name === 'TimeoutError') {
+      const err = error as Error & { name?: string; message?: string }
+      if (err.name === 'AbortError' || err.name === 'TimeoutError') {
         throw new Error('Tempo de conexão esgotado. Verifique sua internet e tente novamente.')
       }
       
-      if (error.message?.includes('Failed to fetch') || error.message?.includes('NetworkError')) {
+      if (err.message?.includes('Failed to fetch') || err.message?.includes('NetworkError')) {
         throw new Error('Não foi possível conectar ao servidor. Verifique sua conexão ou tente novamente mais tarde.')
       }
       
-      if (error.message?.includes('CORS')) {
+      if (err.message?.includes('CORS')) {
         throw new Error('Erro de conexão. Por favor, entre em contato diretamente: contact@azmt.com.br')
       }
       
@@ -109,7 +164,7 @@ export class ApiService {
   /**
    * Get AI suggestions for form fields (optional)
    */
-  static async getAiSuggestions(data: any) {
+  static async getAiSuggestions(data: AiSuggestionData) {
     if (!AI_ENABLED) {
       return null
     }
@@ -139,7 +194,7 @@ export class ApiService {
   /**
    * Track visitor behavior (optional)
    */
-  static async trackVisitor(data: any) {
+  static async trackVisitor(data: VisitorTrackingData) {
     if (!TRACKING_ENABLED) {
       return
     }
@@ -222,14 +277,15 @@ export class ApiService {
       }
 
       return await response.json()
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('❌ Error submitting Vancouver lead:', error)
+      const err = error as Error & { name?: string; message?: string }
       
-      if (error.name === 'AbortError' || error.name === 'TimeoutError') {
+      if (err.name === 'AbortError' || err.name === 'TimeoutError') {
         throw new Error('Tempo de conexão esgotado. Verifique sua internet e tente novamente.')
       }
       
-      if (error.message?.includes('Failed to fetch') || error.message?.includes('NetworkError')) {
+      if (err.message?.includes('Failed to fetch') || err.message?.includes('NetworkError')) {
         throw new Error('Não foi possível conectar ao servidor. Verifique sua conexão ou tente novamente mais tarde.')
       }
       
@@ -240,7 +296,7 @@ export class ApiService {
   /**
    * Submit Quiz Vancouver response
    */
-  static async submitQuizVancouver(data: any) {
+  static async submitQuizVancouver(data: QuizVancouverData) {
     try {
       if (!API_URL || API_URL === 'undefined' || API_URL.includes('undefined')) {
         console.warn('⚠️ VITE_API_URL não configurada')
@@ -276,14 +332,15 @@ export class ApiService {
       }
 
       return await response.json()
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('❌ Error submitting Quiz Vancouver:', error)
+      const err = error as Error & { name?: string; message?: string }
       
-      if (error.name === 'AbortError' || error.name === 'TimeoutError') {
+      if (err.name === 'AbortError' || err.name === 'TimeoutError') {
         throw new Error('Tempo de conexão esgotado.')
       }
       
-      if (error.message?.includes('Failed to fetch') || error.message?.includes('NetworkError')) {
+      if (err.message?.includes('Failed to fetch') || err.message?.includes('NetworkError')) {
         throw new Error('Não foi possível conectar ao servidor.')
       }
       
@@ -294,7 +351,7 @@ export class ApiService {
   /**
    * Submit Course Recommender response
    */
-  static async submitCourseRecommendation(data: any) {
+  static async submitCourseRecommendation(data: CourseRecommendationData) {
     try {
       if (!API_URL || API_URL === 'undefined' || API_URL.includes('undefined')) {
         console.warn('⚠️ VITE_API_URL não configurada')
@@ -330,14 +387,15 @@ export class ApiService {
       }
 
       return await response.json()
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('❌ Error submitting Course Recommendation:', error)
+      const err = error as Error & { name?: string; message?: string }
       
-      if (error.name === 'AbortError' || error.name === 'TimeoutError') {
+      if (err.name === 'AbortError' || err.name === 'TimeoutError') {
         throw new Error('Tempo de conexão esgotado.')
       }
       
-      if (error.message?.includes('Failed to fetch') || error.message?.includes('NetworkError')) {
+      if (err.message?.includes('Failed to fetch') || err.message?.includes('NetworkError')) {
         throw new Error('Não foi possível conectar ao servidor.')
       }
       

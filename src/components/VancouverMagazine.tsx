@@ -13,10 +13,42 @@ interface VancouverMagazineProps {
   lang: Lang
 }
 
+// Interfaces TypeScript
+interface MagazineCard {
+  emoji: string
+  title: string
+  text: string
+  video?: string
+  gradient: string
+  image?: string
+  stats?: string[]
+}
+
+interface MagazineSection {
+  title: string
+  subtitle: string
+  cards: MagazineCard[]
+}
+
+interface MagazineContent {
+  tabs: {
+    lifestyle: string
+    schools: string
+    future: string
+  }
+  lifestyle: MagazineSection
+  schools: MagazineSection
+  future: MagazineSection
+  cta: {
+    title: string
+    button: string
+  }
+}
+
 const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
   const [activeTab, setActiveTab] = useState<'lifestyle' | 'schools' | 'future'>('lifestyle')
 
-  const content: Record<Lang, any> = {
+  const content: Record<Lang, MagazineContent> = {
     pt: {
       tabs: {
         lifestyle: '🏔️ Lifestyle',
@@ -641,7 +673,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
 
       {/* Grid - MAGAZINE STYLE */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-8 max-w-7xl mx-auto">
-        {currentSection.cards.map((card: any, i: number) => (
+        {currentSection.cards.map((card: MagazineCard, i: number) => (
           <div
             key={i}
             className={`

@@ -20,6 +20,26 @@ interface WorkProps {
   lang: Lang
 }
 
+// Interface TypeScript para projetos
+interface WorkProject {
+  id?: string
+  slug: string
+  title: string
+  summary?: string
+  description?: string
+  type?: string
+  tags?: string[]
+  year?: number
+  city?: string
+  country?: string
+  heroImage?: {
+    original?: string
+    thumbnail?: string
+    medium?: string
+    large?: string
+  } | null
+}
+
 const Work: React.FC<WorkProps> = ({ lang }) => {
   // REMOVIDO: useUserTracking já é chamado no Layout.tsx
   // const { trackInteraction } = useUserTracking()
@@ -156,7 +176,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   const cases = useMemo(() => {
     if (!Array.isArray(allCases)) return []
     
-    return allCases.filter((project: any) => {
+    return allCases.filter((project: WorkProject) => {
       // Filtro por tag
       if (selectedTag && (!project.tags || !project.tags.includes(selectedTag))) {
         return false
@@ -191,7 +211,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   const allTags = useMemo(() => {
     const tags = new Set<string>()
     if (Array.isArray(allCases)) {
-      allCases.forEach((project: any) => {
+      allCases.forEach((project: WorkProject) => {
         if (project?.tags && Array.isArray(project.tags)) {
           project.tags.forEach((tag: string) => tags.add(tag))
         }
@@ -203,7 +223,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   const allTypes = useMemo(() => {
     const types = new Set<string>()
     if (Array.isArray(allCases)) {
-      allCases.forEach((project: any) => {
+      allCases.forEach((project: WorkProject) => {
         if (project?.type) types.add(project.type)
       })
     }
@@ -213,7 +233,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   const allYears = useMemo(() => {
     const years = new Set<number>()
     if (Array.isArray(allCases)) {
-      allCases.forEach((project: any) => {
+      allCases.forEach((project: WorkProject) => {
         if (project?.year) years.add(project.year)
       })
     }
@@ -547,7 +567,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           {/* Other Projects Grid */}
           {cases.length > 1 && (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
-              {cases.slice(1).map((item: any, index: number) => (
+              {cases.slice(1).map((item: WorkProject, index: number) => (
               <article
                 key={item.slug}
                 className="group rounded-2xl border border-white/10 card-adaptive overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(var(--theme-accent-red-rgb),0.3)]"

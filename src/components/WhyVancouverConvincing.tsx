@@ -13,10 +13,50 @@ interface WhyVancouverConvincingProps {
   lang: Lang
 }
 
+// Interfaces TypeScript
+interface VancouverReason {
+  emoji: string
+  title: string
+  stat: string
+  statLabel: string
+  facts: string[]
+  video: string
+  gradient: string
+  proof: string
+}
+
+interface VancouverCity {
+  name: string
+  flag: string
+  salary: string
+  jobs: string
+  visa: string
+  life: string
+  score: number
+  winner?: boolean
+}
+
+interface VancouverContent {
+  hero: {
+    title: string
+    subtitle: string
+    badge: string
+  }
+  reasons: VancouverReason[]
+  comparison: {
+    title: string
+    cities: VancouverCity[]
+  }
+  cta: {
+    title: string
+    button: string
+  }
+}
+
 const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang }) => {
   const [expandedCard, setExpandedCard] = useState<number | null>(null)
 
-  const content: Record<Lang, any> = {
+  const content: Record<Lang, VancouverContent> = {
     pt: {
       hero: {
         title: 'Por Que Vancouver?',
@@ -496,7 +536,7 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
 
       {/* Reasons Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-8 max-w-7xl mx-auto mb-20">
-        {t.reasons.map((reason: any, i: number) => (
+        {t.reasons.map((reason: VancouverReason, i: number) => (
           <div
             key={i}
             className={`
@@ -556,7 +596,7 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         </h3>
         
         <div className="space-y-6">
-          {t.comparison.cities.map((city: any, i: number) => (
+          {t.comparison.cities.map((city: VancouverCity, i: number) => (
             <div 
               key={i} 
               className={`comparison-card rounded-2xl p-6 ${

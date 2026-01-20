@@ -19,6 +19,33 @@ interface HomeProps {
   lang: Lang
 }
 
+// Interfaces TypeScript para tipagem correta
+interface ProjectHeroImage {
+  type?: string
+  original?: string
+  thumbnail?: string
+  alt?: string
+}
+
+interface HomeProject {
+  slug: string
+  title: string
+  shortTitle?: string
+  summary: string
+  city?: string
+  country?: string
+  year?: number
+  tags: string[]
+  heroImage?: ProjectHeroImage | null
+}
+
+interface HomeService {
+  icon: string
+  title: string
+  description: string
+  slug?: string
+}
+
 const Home: React.FC<HomeProps> = ({ lang }) => {
   // 🎨 TEMA: Usar hook centralizado (não criar estado local!)
   const { theme } = useTheme()
@@ -952,7 +979,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
 
             {/* 3 PROJETOS SECUNDÁRIOS - Grid 1x3 */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              {recommended.slice(1, 4).map((project: any, index: number) => {
+              {recommended.slice(1, 4).map((project: HomeProject, index: number) => {
                 const hasVideo = project?.heroImage?.type === 'VIDEO' && project?.heroImage?.original
                 const imageUrl = project?.heroImage?.large || project?.heroImage?.medium || project?.heroImage?.original || project?.image || ''
                 
@@ -1111,7 +1138,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             {/* MIGRAÇÃO GRADUAL: Backoffice → Estático */}
             {(Array.isArray(cmsContent?.services) && cmsContent.services.length > 0) ? (
               <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                {cmsContent.services.slice(0, 6).map((service: any, index: number) => (
+                {cmsContent.services.slice(0, 6).map((service: HomeService, index: number) => (
                   <article
                     key={service.slug}
                     className="group relative rounded-2xl border border-white/10 card-adaptive p-8 shadow-[0_16px_40px_rgba(0,0,0,0.4)] transition-all duration-500 hover:scale-[1.05] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(201,35,55,0.3)] cursor-pointer overflow-hidden"
@@ -1187,7 +1214,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     description: lang === 'pt' ? 'Acompanhamento estratégico de projetos end-to-end com foco em resultados' : lang === 'es' ? 'Acompañamiento estratégico de proyectos end-to-end con foco en resultados' : lang === 'fr' ? 'Accompagnement stratégique de projets end-to-end axé sur les résultats' : 'Strategic end-to-end project support focused on results',
                     icon: '💡'
                   }
-                ].map((service: any, index: number) => (
+                ].map((service: HomeService, index: number) => (
                   <article
                     key={service.slug}
                     className="group relative rounded-2xl border border-white/10 card-adaptive p-8 shadow-[0_16px_40px_rgba(0,0,0,0.4)] transition-all duration-500 hover:scale-[1.05] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(201,35,55,0.3)] cursor-pointer overflow-hidden"
