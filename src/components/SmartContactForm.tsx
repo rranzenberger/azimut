@@ -4,84 +4,7 @@ import type { Lang } from '../i18n'
 import ApiService from '../services/api'
 import { useFormTracking } from '../hooks/useFormTracking'
 
-// SelectField Component - Customizado (original do formulário)
-interface SelectFieldProps {
-  value: string
-  onChange: (value: string) => void
-  options: Array<{ value: string; label: string }>
-  placeholder: string
-  ariaLabel: string
-  className?: string
-}
-
-const SelectField: React.FC<SelectFieldProps> = ({ 
-  value, 
-  onChange, 
-  options, 
-  placeholder, 
-  ariaLabel,
-  className = '' 
-}) => {
-  const [open, setOpen] = useState(false)
-  const ref = useRef<HTMLDivElement | null>(null)
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [])
-
-  const currentLabel = options.find(o => o.value === value)?.label || placeholder
-
-  return (
-    <div className={`relative ${className}`} ref={ref} style={{ zIndex: 50 }}>
-      <button
-        type="button"
-        aria-label={ariaLabel}
-        className="select-trigger"
-        onClick={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          setOpen(o => !o)
-        }}
-      >
-        <span className={value ? 'text-slate-100' : 'text-slate-400'}>
-          {currentLabel}
-        </span>
-        <svg
-          className={`select-arrow w-4 h-4 ${open ? 'rotate-180' : ''}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      {open && (
-        <div className="select-panel">
-          {options.map(opt => (
-            <div
-              key={opt.value}
-              className="select-option"
-              role="option"
-              aria-selected={opt.value === value}
-              onClick={() => {
-                onChange(opt.value)
-                setOpen(false)
-              }}
-            >
-              {opt.label}
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
+// Componente SelectField removido - agora usamos <select> nativo com classe dropdown-azimut
 
 interface SmartContactFormProps {
   lang?: Lang
@@ -1160,37 +1083,39 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4" style={{ marginTop: '1.5rem' }}>
               <PremiumField label={t.phone}>
                 <div className="flex gap-2" style={{ alignItems: 'center', flexWrap: 'nowrap' }}>
-                  {/* Dropdown SelectField customizado - Estilo Azimut vermelho */}
+                  {/* Dropdown nativo - igual ao Vancouver */}
                   {!customCodeMode ? (
-                    <div style={{ width: '140px', minWidth: '140px', maxWidth: '140px', flexShrink: 0 }}>
-                      <SelectField
-                        value={formData.countryCode}
-                        onChange={(value) => {
-                          if (value === 'custom') {
-                            setCustomCodeMode(true)
-                            setFormData(prev => ({ ...prev, countryCode: '+', phone: '' }))
-                          } else {
-                            setFormData(prev => ({ ...prev, countryCode: value, phone: '' }))
-                          }
-                        }}
-                        options={[
-                          { value: 'custom', label: '🌍➕ Outro' },
-                          { value: '+55', label: '🇧🇷 BR +55' },
-                          { value: '+1', label: '🇨🇦 CA +1' },
-                          { value: '+34', label: '🇪🇸 ES +34' },
-                          { value: '+33', label: '🇫🇷 FR +33' },
-                          { value: '+351', label: '🇵🇹 PT +351' },
-                          { value: '+52', label: '🇲🇽 MX +52' },
-                          { value: '+54', label: '🇦🇷 AR +54' },
-                          { value: '+56', label: '🇨🇱 CL +56' },
-                          { value: '+44', label: '🇬🇧 UK +44' },
-                          { value: '+49', label: '🇩🇪 DE +49' }
-                        ]}
-                        placeholder="BR +55"
-                        ariaLabel="Código do país"
-                        className="ddi-select"
-                      />
-                    </div>
+                    <select
+                      value={formData.countryCode}
+                      onChange={(e) => {
+                        if (e.target.value === 'custom') {
+                          setCustomCodeMode(true)
+                          setFormData(prev => ({ ...prev, countryCode: '+', phone: '' }))
+                        } else {
+                          setFormData(prev => ({ ...prev, countryCode: e.target.value, phone: '' }))
+                        }
+                      }}
+                      className="dropdown-azimut"
+                      style={{ 
+                        width: '140px', 
+                        minWidth: '140px', 
+                        maxWidth: '140px', 
+                        flexShrink: 0,
+                        height: '48px'
+                      }}
+                    >
+                      <option value="custom">🌍➕ Outro</option>
+                      <option value="+55">🇧🇷 BR +55</option>
+                      <option value="+1">🇨🇦 CA +1</option>
+                      <option value="+34">🇪🇸 ES +34</option>
+                      <option value="+33">🇫🇷 FR +33</option>
+                      <option value="+351">🇵🇹 PT +351</option>
+                      <option value="+52">🇲🇽 MX +52</option>
+                      <option value="+54">🇦🇷 AR +54</option>
+                      <option value="+56">🇨🇱 CL +56</option>
+                      <option value="+44">🇬🇧 UK +44</option>
+                      <option value="+49">🇩🇪 DE +49</option>
+                    </select>
                   ) : (
                     <div className="flex gap-1" style={{ width: '140px', minWidth: '140px', flexShrink: 0 }}>
                       <input
@@ -1220,7 +1145,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       </button>
                     </div>
                   )}
-                  {/* Campo de telefone - flex-1 para preencher espaço restante */}
+                  {/* Campo de telefone */}
                   <input
                     type="tel"
                     name="phone"
@@ -1289,10 +1214,11 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4" style={{ marginTop: '1.5rem' }}>
               <PremiumField label={t.organizationType} error={fieldErrors.organizationType} required>
-                <SelectField
+                <select
+                  name="organizationType"
                   value={formData.organizationType}
-                  onChange={(v) => {
-                    setFormData(prev => ({ ...prev, organizationType: v }))
+                  onChange={(e) => {
+                    setFormData(prev => ({ ...prev, organizationType: e.target.value }))
                     if (fieldErrors.organizationType) {
                       setFieldErrors(prev => {
                         const newErrors = { ...prev }
@@ -1301,18 +1227,20 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       })
                     }
                   }}
-                  options={Object.entries(t.orgTypes).map(([value, label]) => ({ value, label }))}
-                  placeholder={lang === 'pt' ? 'Selecione...' : lang === 'es' ? 'Seleccione...' : lang === 'fr' ? 'Sélectionnez...' : 'Select...'}
-                  ariaLabel={t.organizationType}
-                  className={fieldErrors.organizationType ? 'border-red-500/50' : ''}
-                />
+                  className={`dropdown-azimut w-full ${fieldErrors.organizationType ? 'border-red-500/50' : ''}`}
+                >
+                  {Object.entries(t.orgTypes).map(([value, label]) => (
+                    <option key={value} value={value}>{label}</option>
+                  ))}
+                </select>
               </PremiumField>
 
               <PremiumField label={t.projectType} error={fieldErrors.projectType} required>
-                <SelectField
+                <select
+                  name="projectType"
                   value={formData.projectType}
-                  onChange={(v) => {
-                    setFormData(prev => ({ ...prev, projectType: v }))
+                  onChange={(e) => {
+                    setFormData(prev => ({ ...prev, projectType: e.target.value }))
                     if (fieldErrors.projectType) {
                       setFieldErrors(prev => {
                         const newErrors = { ...prev }
@@ -1321,20 +1249,22 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       })
                     }
                   }}
-                  options={Object.entries(t.projectTypes).map(([value, label]) => ({ value, label }))}
-                  placeholder={lang === 'pt' ? 'Selecione...' : lang === 'es' ? 'Seleccione...' : lang === 'fr' ? 'Sélectionnez...' : 'Select...'}
-                  ariaLabel={t.projectType}
-                  className={fieldErrors.projectType ? 'border-red-500/50' : ''}
-                />
+                  className={`dropdown-azimut w-full ${fieldErrors.projectType ? 'border-red-500/50' : ''}`}
+                >
+                  {Object.entries(t.projectTypes).map(([value, label]) => (
+                    <option key={value} value={value}>{label}</option>
+                  ))}
+                </select>
               </PremiumField>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4" style={{ marginTop: '1.5rem' }}>
               <PremiumField label={t.budget} error={fieldErrors.budget} required>
-                <SelectField
+                <select
+                  name="budget"
                   value={formData.budget}
-                  onChange={(v) => {
-                    setFormData(prev => ({ ...prev, budget: v }))
+                  onChange={(e) => {
+                    setFormData(prev => ({ ...prev, budget: e.target.value }))
                     if (fieldErrors.budget) {
                       setFieldErrors(prev => {
                         const newErrors = { ...prev }
@@ -1343,18 +1273,20 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       })
                     }
                   }}
-                  options={Object.entries(tWithCurrency.budgetRanges).map(([value, label]) => ({ value, label }))}
-                  placeholder={lang === 'pt' ? 'Selecione...' : lang === 'es' ? 'Seleccione...' : lang === 'fr' ? 'Sélectionnez...' : 'Select...'}
-                  ariaLabel={t.budget}
-                  className={fieldErrors.budget ? 'border-red-500/50' : ''}
-                />
+                  className={`dropdown-azimut w-full ${fieldErrors.budget ? 'border-red-500/50' : ''}`}
+                >
+                  {Object.entries(tWithCurrency.budgetRanges).map(([value, label]) => (
+                    <option key={value} value={value}>{label}</option>
+                  ))}
+                </select>
               </PremiumField>
 
               <PremiumField label={t.timeline} error={fieldErrors.timeline} required>
-                <SelectField
+                <select
+                  name="timeline"
                   value={formData.timeline}
-                  onChange={(v) => {
-                    setFormData(prev => ({ ...prev, timeline: v }))
+                  onChange={(e) => {
+                    setFormData(prev => ({ ...prev, timeline: e.target.value }))
                     if (fieldErrors.timeline) {
                       setFieldErrors(prev => {
                         const newErrors = { ...prev }
@@ -1363,11 +1295,12 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       })
                     }
                   }}
-                  options={Object.entries(t.timelines).map(([value, label]) => ({ value, label }))}
-                  placeholder={lang === 'pt' ? 'Selecione...' : lang === 'es' ? 'Seleccione...' : lang === 'fr' ? 'Sélectionnez...' : 'Select...'}
-                  ariaLabel={t.timeline}
-                  className={fieldErrors.timeline ? 'border-red-500/50' : ''}
-                />
+                  className={`dropdown-azimut w-full ${fieldErrors.timeline ? 'border-red-500/50' : ''}`}
+                >
+                  {Object.entries(t.timelines).map(([value, label]) => (
+                    <option key={value} value={value}>{label}</option>
+                  ))}
+                </select>
               </PremiumField>
             </div>
 
