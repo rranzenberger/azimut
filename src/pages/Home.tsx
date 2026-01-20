@@ -575,8 +575,31 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   : '0 2px 15px rgba(0, 0, 0, 0.3)',
                 letterSpacing: '0.25em'
               }}>
-                <span className="block">IMMERSIVE • INTERACTIVE</span>
-                <span className="block mt-4">CINEMATIC EXPERIENCES</span>
+                {lang === 'pt' ? (
+                  <>
+                    <span className="block">CRIAMOS EXPERIÊNCIAS</span>
+                    <span className="block mt-4">IMERSIVAS ENTRE</span>
+                    <span className="block mt-4 text-azimut-red">BRASIL E CANADÁ</span>
+                  </>
+                ) : lang === 'es' ? (
+                  <>
+                    <span className="block">CREAMOS EXPERIENCIAS</span>
+                    <span className="block mt-4">INMERSIVAS ENTRE</span>
+                    <span className="block mt-4 text-azimut-red">BRASIL Y CANADÁ</span>
+                  </>
+                ) : lang === 'fr' ? (
+                  <>
+                    <span className="block">NOUS CRÉONS DES</span>
+                    <span className="block mt-4">EXPÉRIENCES IMMERSIVES</span>
+                    <span className="block mt-4 text-azimut-red">BRÉSIL ET CANADA</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="block">WE CREATE IMMERSIVE</span>
+                    <span className="block mt-4">EXPERIENCES BETWEEN</span>
+                    <span className="block mt-4 text-azimut-red">BRAZIL AND CANADA</span>
+                  </>
+                )}
               </p>
             </div>
             

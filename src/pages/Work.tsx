@@ -311,14 +311,14 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           {/* Hero Section */}
           <div className="pt-6 md:pt-8 mb-8">
             <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
-              <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
+              <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
                 {lang === 'pt' ? 'NOSSO TRABALHO' : 'OUR WORK'}
               </span>
             </div>
-            <h1 className="mb-4 font-handel uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)', fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1' }}>
+            <h1 className="mb-4 font-handel uppercase tracking-[0.12em] text-white" style={{ fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1' }}>
               {t(lang, 'navWork')}
             </h1>
-            <p className="max-w-3xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)', fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
+            <p className="max-w-3xl leading-relaxed text-slate-400 dark:text-slate-300" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
               {lang === 'pt' 
                 ? 'Projetos que transformam espaços, marcas e experiências. De museus olímpicos a curadoria de festivais internacionais, cada trabalho é uma oportunidade de criar narrativas imersivas que conectam pessoas e histórias de forma única.'
                 : 'Projects that transform spaces, brands and experiences. From Olympic museums to international festival curation, each work is an opportunity to create immersive narratives that uniquely connect people and stories.'}
@@ -333,7 +333,10 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 placeholder={lang === 'pt' ? 'Buscar projetos...' : lang === 'es' ? 'Buscar proyectos...' : lang === 'fr' ? 'Rechercher...' : 'Search projects...'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-lg border border-white/10 bg-subtle px-4 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
+                className="w-full rounded-lg border border-white/10 bg-subtle px-4 py-2 text-sm focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
+                style={{ 
+                  color: 'var(--theme-text)',
+                }}
               />
             </div>
             
@@ -342,8 +345,15 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               <select
                 value={selectedTag || ''}
                 onChange={(e) => setSelectedTag(e.target.value || null)}
-                className="rounded-lg border border-white/10 bg-subtle px-4 py-2 text-sm text-white focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
-                style={{ appearance: 'none', backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', paddingRight: '32px' }}
+                className="rounded-lg border border-white/10 bg-subtle px-4 py-2 text-sm focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
+                style={{ 
+                  appearance: 'none', 
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`, 
+                  backgroundRepeat: 'no-repeat', 
+                  backgroundPosition: 'right 12px center', 
+                  paddingRight: '32px',
+                  color: 'var(--theme-text)'
+                }}
               >
                 <option value="">{lang === 'pt' ? 'Todas as tags' : lang === 'es' ? 'Todas las etiquetas' : lang === 'fr' ? 'Tous les tags' : 'All tags'}</option>
                 {allTags.map(tag => (
@@ -357,8 +367,15 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               <select
                 value={selectedType || ''}
                 onChange={(e) => setSelectedType(e.target.value || null)}
-                className="rounded-lg border border-white/10 bg-subtle px-4 py-2 text-sm text-white focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
-                style={{ appearance: 'none', backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', paddingRight: '32px' }}
+                className="rounded-lg border border-white/10 bg-subtle px-4 py-2 text-sm focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
+                style={{ 
+                  appearance: 'none', 
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`, 
+                  backgroundRepeat: 'no-repeat', 
+                  backgroundPosition: 'right 12px center', 
+                  paddingRight: '32px',
+                  color: 'var(--theme-text)'
+                }}
               >
                 <option value="">{lang === 'pt' ? 'Todos os tipos' : lang === 'es' ? 'Todos los tipos' : lang === 'fr' ? 'Tous les types' : 'All types'}</option>
                 {allTypes.map(type => (
@@ -372,8 +389,15 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               <select
                 value={selectedYear || ''}
                 onChange={(e) => setSelectedYear(e.target.value ? parseInt(e.target.value) : null)}
-                className="rounded-lg border border-white/10 bg-subtle px-4 py-2 text-sm text-white focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
-                style={{ appearance: 'none', backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', paddingRight: '32px' }}
+                className="rounded-lg border border-white/10 bg-subtle px-4 py-2 text-sm focus:border-azimut-red/50 focus:outline-none focus:ring-2 focus:ring-azimut-red/20"
+                style={{ 
+                  appearance: 'none', 
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`, 
+                  backgroundRepeat: 'no-repeat', 
+                  backgroundPosition: 'right 12px center', 
+                  paddingRight: '32px',
+                  color: 'var(--theme-text)'
+                }}
               >
                 <option value="">{lang === 'pt' ? 'Todos os anos' : lang === 'es' ? 'Todos los años' : lang === 'fr' ? 'Toutes les années' : 'All years'}</option>
                 {allYears.map(year => (
@@ -386,7 +410,8 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
             {hasActiveFilters && (
               <button
                 onClick={clearFilters}
-                className="rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-4 py-2 text-sm text-slate-900 dark:text-white hover:bg-azimut-red/20 transition-colors"
+                className="rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-4 py-2 text-sm hover:bg-azimut-red/20 transition-colors"
+                style={{ color: 'var(--theme-text)' }}
               >
                 {lang === 'pt' ? 'Limpar' : lang === 'es' ? 'Limpiar' : lang === 'fr' ? 'Effacer' : 'Clear'}
               </button>
@@ -394,7 +419,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           </div>
           
           {/* Contador de resultados */}
-          <div className="mb-6 text-sm text-slate-600 dark:text-slate-400">
+          <div className="mb-6 text-sm text-slate-600 dark:text-slate-500">
             {lang === 'pt' 
               ? `Mostrando ${cases.length} ${cases.length === 1 ? 'projeto' : 'projetos'}${hasActiveFilters ? ' (filtrado)' : ''}`
               : lang === 'es'
@@ -416,7 +441,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               >
               <div className="grid md:grid-cols-2">
                 {/* Image Area - BACKOFFICE: cases[0].heroImage */}
-                <div className="relative aspect-video md:aspect-auto md:min-h-[400px] bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden group">
+                <div className="relative aspect-video md:aspect-auto md:min-h-[400px] bg-gradient-to-br from-slate-800/80 to-slate-950 overflow-hidden group">
                   {/* Renderizar imagem se disponível */}
                   {cases[0].heroImage?.large ? (
                     <>
@@ -427,11 +452,11 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                         className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105"
                       />
                       {/* Overlay gradient para legibilidade */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent pointer-events-none"></div>
                     </>
                   ) : (
                     /* Placeholder quando não há mídia */
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-azimut-red/10 via-slate-900 to-slate-950 transition-all group-hover:from-azimut-red/15">
+                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-azimut-red/10 via-slate-900/80 to-slate-950 transition-all group-hover:from-azimut-red/15 group-hover:via-slate-900">
                       <div className="text-center p-6">
                         <div className="mb-4 inline-flex h-20 w-20 items-center justify-center rounded-full border-2 border-azimut-red/30 bg-azimut-red/10 backdrop-blur transition-all group-hover:scale-110">
                           <svg className="h-10 w-10 text-azimut-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -454,14 +479,14 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
 
                 {/* Content */}
                 <div className="p-6 md:p-8 overflow-hidden">
-                  <h2 className="mb-3 font-handel text-3xl uppercase tracking-[0.12em] text-white line-clamp-2">
+                  <h2 className="mb-3 font-handel text-3xl uppercase tracking-[0.12em] line-clamp-2 text-white">
                     {cases[0].title}
                   </h2>
-                  <p className="mb-4 text-base leading-relaxed text-slate-900 dark:text-slate-200 line-clamp-4">
+                  <p className="mb-4 text-base leading-relaxed line-clamp-4 text-slate-400 dark:text-slate-300">
                     {cases[0].summary || cases[0].shortTitle}
                   </p>
                   {(cases[0].city || cases[0].country) && (
-                    <p className="mb-4 text-sm text-slate-900 dark:text-slate-300">
+                    <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
                       📍 {[cases[0].city, cases[0].country].filter(Boolean).join(', ')}
                     </p>
                   )}
@@ -482,7 +507,8 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                       trackInteraction('project_view', cases[0].slug)
                       trackProjectInteraction(cases[0].slug, 'CLICK')
                     }}
-                    className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-slate-900 dark:text-white hover:bg-azimut-red/20 transition-all mt-4"
+                    className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-[0.75rem] font-semibold uppercase tracking-[0.1em] hover:bg-azimut-red/20 transition-all mt-4"
+                    style={{ color: 'var(--theme-text)' }}
                   >
                     {lang === 'pt' ? 'Ver Projeto' : lang === 'es' ? 'Ver Proyecto' : lang === 'fr' ? 'Voir le projet' : 'View Project'}
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -509,7 +535,8 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               {hasActiveFilters && (
                 <button
                   onClick={clearFilters}
-                  className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-sm font-semibold uppercase tracking-[0.1em] text-slate-900 dark:text-white hover:bg-azimut-red/20 transition-all"
+                  className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-sm font-semibold uppercase tracking-[0.1em] hover:bg-azimut-red/20 transition-all"
+                  style={{ color: 'var(--theme-text)' }}
                 >
                   {lang === 'pt' ? 'Limpar Filtros' : lang === 'es' ? 'Limpiar Filtros' : lang === 'fr' ? 'Effacer les filtres' : 'Clear Filters'}
                 </button>
@@ -535,7 +562,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 onMouseEnter={() => trackProjectInteraction(item.slug, 'HOVER')}
               >
                 {/* Image - BACKOFFICE: item.heroImage */}
-                <div className="relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">
+                <div className="relative aspect-video bg-gradient-to-br from-slate-800/80 to-slate-950 overflow-hidden">
                   {/* Renderizar imagem se disponível */}
                   {item.heroImage?.medium || item.heroImage?.large ? (
                     <>
@@ -545,11 +572,11 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                         className="absolute inset-0 h-full w-full transition-transform duration-500 group-hover:scale-110"
                         objectFit="cover"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none opacity-100 group-hover:from-azimut-red/20 group-hover:via-slate-950/40 transition-all duration-300"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent pointer-events-none opacity-100 group-hover:from-azimut-red/20 group-hover:via-slate-950/40 transition-all duration-300"></div>
                     </>
                   ) : (
                     /* Placeholder quando não há imagem */
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-800/50 to-slate-900 transition-all duration-300 group-hover:from-azimut-red/20 group-hover:to-slate-900/80">
+                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-800/60 to-slate-950 transition-all duration-300 group-hover:from-azimut-red/20 group-hover:to-slate-950">
                       <div className="text-center p-4">
                         <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-subtle backdrop-blur transition-transform duration-300 group-hover:scale-110 group-hover:border-azimut-red/50">
                           <svg className="h-6 w-6 text-slate-600 dark:text-slate-400 group-hover:text-azimut-red transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -562,19 +589,19 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 </div>
 
                 <div className="p-4 relative z-10 overflow-hidden">
-                  <h3 className="mb-2 font-sora text-[1.05rem] text-white group-hover:text-azimut-red transition-colors duration-300 line-clamp-2">
+                  <h3 className="mb-2 font-sora text-[1.05rem] text-slate-300 dark:text-slate-200 group-hover:text-azimut-red transition-colors duration-300 line-clamp-2">
                     {item.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-slate-900 dark:text-slate-200 mb-3 group-hover:text-slate-100 transition-colors duration-300 line-clamp-3">
+                  <p className="text-sm leading-relaxed mb-3 text-slate-500 dark:text-slate-400 group-hover:text-slate-300 transition-colors duration-300 line-clamp-3">
                     {item.summary || item.shortTitle}
                   </p>
                   <div className="flex flex-wrap items-center justify-between gap-2 mt-3">
                     {item.tags && item.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2 text-[0.68rem] text-slate-600 dark:text-slate-400">
+                      <div className="flex flex-wrap gap-2 text-[0.68rem] text-slate-600 dark:text-slate-500">
                         {((item?.tags && Array.isArray(item.tags)) ? item.tags : []).slice(0, 3).map((tag: string, idx: number) => (
                           <span 
                             key={idx} 
-                            className="rounded-full border border-white/10 px-2 py-0.5 transition-all duration-300 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:text-slate-900 dark:text-slate-300"
+                            className="rounded-full border border-white/10 px-2 py-0.5 transition-all duration-300 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:text-azimut-red"
                           >
                             {tag}
                           </span>
@@ -582,7 +609,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                       </div>
                     )}
                     {item.year && (
-                      <span className="text-xs text-slate-600 dark:text-slate-500 font-medium">
+                      <span className="text-xs font-medium text-slate-600 dark:text-slate-500">
                         {item.year}
                       </span>
                     )}
@@ -595,7 +622,8 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                       trackInteraction('project_view', item.slug)
                       trackProjectInteraction(item.slug, 'CLICK')
                     }}
-                    className="mt-3 inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-4 py-2 font-sora text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-slate-900 dark:text-white hover:bg-azimut-red/20 transition-all w-full justify-center"
+                    className="mt-3 inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-4 py-2 font-sora text-[0.7rem] font-semibold uppercase tracking-[0.1em] hover:bg-azimut-red/20 transition-all w-full justify-center"
+                    style={{ color: 'var(--theme-text)' }}
                   >
                     {lang === 'pt' ? 'Ver Projeto' : lang === 'es' ? 'Ver Proyecto' : lang === 'fr' ? 'Voir' : 'View'}
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

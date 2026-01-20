@@ -660,6 +660,20 @@ html[data-theme="light"] .input-adaptive:-webkit-autofill:active {
 /* ═══════════════════════════════════════════════════════════════
    ANIMAÇÃO SHAKE PARA ERROS (Premium UX)
    ═══════════════════════════════════════════════════════════════ */
+
+/* Inputs gerais - placeholder com contraste correto */
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder,
+[data-theme="light"] select::placeholder {
+  color: #334155 !important; /* Slate-700 - ESCURO para máximo contraste */
+}
+
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
@@ -917,7 +931,8 @@ html[data-theme="light"] .text-zinc-900:not(.card-adaptive *):not(.card-dark-ada
 
 /* Exceção: Pills no tema claro têm estilo próprio */
 [data-theme="light"] .pill-adaptive {
-  color: #8b1f2f !important;
+  color: #8b1f2f !important; /* Texto VERMELHO ESCURO ✅ */
+  background: rgba(211, 206, 195, 0.5) !important; /* Fundo BEGE */
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -975,9 +990,9 @@ html[data-theme="light"] .text-zinc-900:not(.card-adaptive *):not(.card-dark-ada
 /* Pills tema claro - CORES AZIMUT COM CONTRASTE */
 html[data-theme="light"] span.pill-adaptive,
 html[data-theme="light"] .pill-adaptive {
-  border-color: rgba(201, 35, 55, 0.3) !important; /* Vermelho Azimut */
-  color: #8b1f2f !important; /* Vermelho escuro (contraste alto) */
-  background: rgba(201, 35, 55, 0.12) !important; /* Fundo vermelho suave */
+  border-color: rgba(201, 35, 55, 0.5) !important; /* Borda vermelha MAIS FORTE */
+  color: #8b1f2f !important; /* Texto VERMELHO ESCURO ✅ */
+  background: rgba(211, 206, 195, 0.5) !important; /* Fundo BEGE (não vermelho!) */
   font-weight: 600 !important; /* Semibold */
 }
 
@@ -1646,15 +1661,16 @@ body::after {
 
 /* Pills/Tags adaptativas */
 .pill-adaptive {
-  border-color: rgba(255, 255, 255, 0.2);
-  color: #f1f5f9; /* slate-100 */
-  background: transparent;
+  border-color: rgba(201, 35, 55, 0.7); /* Borda VERMELHA mais forte */
+  background: rgba(30, 41, 59, 0.95); /* Fundo SLATE-800 mais sólido */
+  color: #ff4d5e; /* Texto VERMELHO CLARO */
+  font-weight: 600;
 }
 
 [data-theme="light"] .pill-adaptive {
-  border-color: rgba(201, 35, 55, 0.3) !important; /* Vermelho Azimut */
-  color: #8b1f2f !important; /* Vermelho escuro (contraste alto) */
-  background: rgba(201, 35, 55, 0.12) !important; /* Fundo vermelho suave */
+  border-color: rgba(201, 35, 55, 0.4) !important; /* Vermelho Azimut */
+  color: #0f172a !important; /* Slate-900 - PRETO AZULADO (máximo contraste) */
+  background: rgba(201, 35, 55, 0.08) !important; /* Fundo vermelho MUITO suave */
 }
 
 /* Texto adaptativo - garante legibilidade */
@@ -3033,17 +3049,19 @@ select.dropdown-azimut::-ms-expand {
 
 /* REMOVIDA A REGRA DUPLICADA E CONFLITANTE */
 
-/* Pills/badges adaptativos */
+/* Pills/badges adaptativos - BASE (tema escuro) */
 .pill-adaptive {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.05);
-  color: #e2e8f0;
+  border: 1px solid rgba(201, 35, 55, 0.7) !important; /* Borda VERMELHA mais forte */
+  background: rgba(30, 41, 59, 0.95) !important; /* Fundo SLATE-800 mais sólido */
+  color: #ff4d5e !important; /* Texto VERMELHO CLARO (contraste com fundo escuro) */
+  font-weight: 600 !important;
 }
 
 [data-theme="light"] .pill-adaptive {
-  border: 1px solid rgba(160, 26, 42, 0.6); /* Borda vermelha escura (não rosa!) */
-  background: rgba(160, 26, 42, 0.1); /* Fundo vermelho escuro sutil */
-  color: #1a1a1a; /* Texto escuro para contraste */
+  border: 1px solid rgba(201, 35, 55, 0.5) !important; /* Borda vermelha MAIS FORTE */
+  background: rgba(211, 206, 195, 0.5) !important; /* Fundo BEGE (não vermelho!) */
+  color: #8b1f2f !important; /* Texto VERMELHO ESCURO ✅ */
+  font-weight: 600 !important; /* Semibold para melhor leitura */
 }
 
 /* Badges vermelhos sempre com texto creme da logo (elegante + contraste) */

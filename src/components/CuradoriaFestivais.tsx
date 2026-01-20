@@ -98,25 +98,25 @@ const CuradoriaFestivais: React.FC<CuradoriaFestivaisProps> = ({ lang }) => {
             <div className="flex items-start gap-4 mb-4">
               <div className="text-4xl">{festival.icon}</div>
               <div className="flex-1">
-                <div className="mb-2 inline-block rounded-full border border-azimut-red/30 bg-azimut-red/10 px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.2em]" style={{ color: '#d3cec3' }}>
+                <div className="mb-2 inline-block rounded-full border border-azimut-red/50 bg-azimut-red/15 px-3 py-1.5 font-sora text-[0.68rem] uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text)' }}>
                   {locale(festival.role)}
                 </div>
-                <h3 className="mb-1 font-sora text-xl text-white">
+                <h3 className="mb-1 font-sora text-xl" style={{ color: 'var(--theme-text)' }}>
                   {locale(festival.name)}
                 </h3>
-                <p className="text-sm text-slate-400">
+                <p className="text-sm text-slate-600 dark:text-slate-300">
                   {locale(festival.period)}
                 </p>
               </div>
             </div>
             
-            <p className="text-sm leading-relaxed text-slate-200 mb-4">
+            <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
               {locale(festival.description)}
             </p>
 
             <ul className="space-y-2">
               {festival.highlights.map((highlight, hIdx) => (
-                <li key={hIdx} className="flex items-start gap-2 text-xs text-slate-300">
+                <li key={hIdx} className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
                   <span className="mt-1 w-1.5 h-1.5 rounded-full bg-azimut-red shrink-0"></span>
                   <span>{locale(highlight)}</span>
                 </li>
@@ -137,7 +137,7 @@ const CuradoriaFestivais: React.FC<CuradoriaFestivaisProps> = ({ lang }) => {
             ? 'Curation Officielle: Une Responsabilité que Nous Honorons'
             : 'Official Curation: A Responsibility We Honor'}
         </p>
-        <p className="text-sm text-slate-300 mb-3">
+        <p className="text-sm mb-3" style={{ color: 'var(--theme-text-secondary)' }}>
           {lang === 'pt' 
             ? 'Desde 2017, temos a honra de ser os curadores oficiais da seção VR/IA do Festival de Cinema de Gramado. São 8+ anos selecionando e apresentando as melhores obras imersivas do mundo, uma responsabilidade que levamos a sério.'
             : lang === 'es'
@@ -146,7 +146,7 @@ const CuradoriaFestivais: React.FC<CuradoriaFestivaisProps> = ({ lang }) => {
             ? 'Depuis 2017, nous avons l\'honneur d\'être les curateurs officiels de la section VR/IA du Festival de Cinéma de Gramado. Ce sont 8+ ans de sélection et présentation des meilleures œuvres immersives au monde, une responsabilité que nous prenons au sérieux.'
             : 'Since 2017, we have had the honor of being the official curators of the VR/AI section at Gramado Film Festival. 8+ years selecting and presenting the world\'s best immersive works, a responsibility we take seriously.'}
         </p>
-        <p className="text-xs text-slate-400 italic">
+        <p className="text-xs italic" style={{ color: 'var(--theme-text-muted)' }}>
           {lang === 'pt' 
             ? 'Não encontramos outro estúdio no Brasil com curadoria oficial em festival internacional de cinema.'
             : lang === 'es'
