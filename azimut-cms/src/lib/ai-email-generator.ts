@@ -37,35 +37,35 @@ function generateSmallTalk(data: LeadData): string {
   // Base de conhecimento para small talk (expandível)
   const locationContext: Record<string, Record<string, string>> = {
     pt: {
-      'São Paulo': 'Legal ver interesse de São Paulo! A cidade tem uma cena cultural incrível.',
-      'Rio de Janeiro': 'Que bom receber contato do Rio! A cidade é inspiradora para projetos imersivos.',
-      'Brasília': 'Interessante vir de Brasília! Trabalhamos com várias instituições governamentais.',
-      'Porto Alegre': 'Ótimo saber de interesse do Sul! Região tem projetos culturais muito interessantes.',
-      'Curitiba': 'Legal o contato de Curitiba! Cidade com forte presença cultural.',
-      'Gramado': 'Gramado! Cidade que conhecemos bem, inclusive fazemos curadoria lá.',
-      'Lisboa': 'Que bom receber contato de Portugal! Temos alguns projetos em Lisboa.',
-      'Porto': 'Legal o interesse do Porto! Cidade com cena cultural incrível.',
-      'default': city ? `Interessante o contato de ${city}!` : ''
+      'São Paulo': '🌆 Legal ver interesse de São Paulo! A cidade tem uma cena cultural incrível.',
+      'Rio de Janeiro': '🏖️ Que bom receber contato do Rio! A cidade é inspiradora para projetos imersivos.',
+      'Brasília': '🏛️ Interessante vir de Brasília! Trabalhamos com várias instituições governamentais.',
+      'Porto Alegre': '🎭 Ótimo saber de interesse do Sul! Região tem projetos culturais muito interessantes.',
+      'Curitiba': '🌳 Legal o contato de Curitiba! Cidade com forte presença cultural.',
+      'Gramado': '🎬 Gramado! Cidade que conhecemos bem, inclusive fazemos curadoria lá.',
+      'Lisboa': '🇵🇹 Que bom receber contato de Portugal! Temos alguns projetos em Lisboa.',
+      'Porto': '🍷 Legal o interesse do Porto! Cidade com cena cultural incrível.',
+      'default': city ? `🌐 Interessante o contato de ${city}!` : ''
     },
     en: {
-      'Vancouver': 'Great to hear from Vancouver! We work with VFS and VanArts there.',
-      'Toronto': 'Nice to connect with Toronto! Canada has amazing creative scene.',
-      'Montreal': 'Montreal! Beautiful city with great cultural projects.',
-      'New York': 'Great to hear from NY! The immersive scene there is incredible.',
-      'Los Angeles': 'LA! Perfect place for immersive experiences.',
-      'London': 'Nice to connect with London! Amazing creative industry there.',
-      'default': city ? `Great to hear from ${city}!` : ''
+      'Vancouver': '🏔️ Great to hear from Vancouver! We work with VFS and VanArts there.',
+      'Toronto': '🍁 Nice to connect with Toronto! Canada has amazing creative scene.',
+      'Montreal': '🎨 Montreal! Beautiful city with great cultural projects.',
+      'New York': '🗽 Great to hear from NY! The immersive scene there is incredible.',
+      'Los Angeles': '🎬 LA! Perfect place for immersive experiences.',
+      'London': '🎭 Nice to connect with London! Amazing creative industry there.',
+      'default': city ? `🌐 Great to hear from ${city}!` : ''
     },
     es: {
-      'Buenos Aires': '¡Qué bueno recibir contacto de Buenos Aires! Ciudad con escena cultural increíble.',
-      'Madrid': 'Madrid! Tenemos algunos proyectos en España.',
-      'Barcelona': '¡Barcelona! Ciudad inspiradora para proyectos inmersivos.',
-      'default': city ? `¡Interesante el contacto de ${city}!` : ''
+      'Buenos Aires': '🎭 ¡Qué bueno recibir contacto de Buenos Aires! Ciudad con escena cultural increíble.',
+      'Madrid': '🇪🇸 Madrid! Tenemos algunos proyectos en España.',
+      'Barcelona': '🏛️ ¡Barcelona! Ciudad inspiradora para proyectos inmersivos.',
+      'default': city ? `🌐 ¡Interesante el contacto de ${city}!` : ''
     },
     fr: {
-      'Paris': 'Super de recevoir un contact de Paris! Ville inspirante.',
-      'Lyon': 'Lyon! Belle ville avec une scène culturelle intéressante.',
-      'default': city ? `Intéressant le contact de ${city}!` : ''
+      'Paris': '🗼 Super de recevoir un contact de Paris! Ville inspirante.',
+      'Lyon': '🎨 Lyon! Belle ville avec une scène culturelle intéressante.',
+      'default': city ? `🌐 Intéressant le contact de ${city}!` : ''
     }
   }
 
@@ -101,7 +101,7 @@ export async function generatePersonalizedEmail(data: LeadData): Promise<string>
   // Gerar small talk personalizado
   const smallTalk = generateSmallTalk(data)
 
-  const prompt = `You are Ranz Enberger, Creative & Technology Director at Azimut (VR/Cinema/Immersive Experiences company).
+  const prompt = `You are Ranz Enberger, Creative & Technology Director at Azimut — a studio specializing in immersive, interactive, and cinematic experiences (VR 360°, museums, installations, films).
 
 LEAD CONTEXT:
 - Name: ${data.name}
@@ -109,28 +109,31 @@ LEAD CONTEXT:
 - Company: ${data.company || 'Not specified'}
 - Interest: ${data.interest || data.project || 'Immersive projects'}
 - Budget: ${data.budget || 'Not specified'}
+- Pages visited: ${data.pagesVisited?.join(', ') || 'Homepage'}
 - LANGUAGE: ${data.lang.toUpperCase()} ← IMPORTANT!
 
 ${smallTalk ? `SMALL TALK TO USE: "${smallTalk}" (incorporate naturally in the 2nd sentence)\n` : ''}
 TASK:
-Write a SIMPLE, FRIENDLY reply email.
+Write a CREATIVE, FRIENDLY, and slightly CINEMATIC reply email that feels like Azimut's brand.
 
 CRITICAL RULES:
 1. **WRITE IN ${data.lang.toUpperCase()}** (${data.lang === 'pt' ? 'Portuguese' : data.lang === 'en' ? 'English' : data.lang === 'fr' ? 'French' : 'Spanish'})
-2. Use PLAIN TEXT (no HTML, no emojis, no bold)
+2. Use PLAIN TEXT with subtle emojis (max 2-3: 🎬 🌐 ✨ 🎯 💡)
 3. Be BRIEF (max 120 words)
-4. Sound HUMAN and WARM, not like a marketing bot
-5. ${smallTalk ? 'Include the small talk naturally in 2nd sentence' : 'Skip small talk if no location'}
-6. Mention 1 similar case (ex: Olympic Museum)
-7. Propose SIMPLE next step (call/meeting)
-8. Sign as "${config.signature}"
+4. Sound CREATIVE and WARM, like an artist-technologist, not a salesperson
+5. Mention you noticed they explored the site/specific pages
+6. ${smallTalk ? 'Include the small talk naturally' : 'Skip small talk if no location'}
+7. Reference 1 similar immersive project (ex: Olympic Museum VR tour, interactive installations)
+8. Use words like "immersive," "interactive," "cinematic" naturally
+9. Propose SIMPLE next step (call/meeting)
+10. Sign as "${config.signature}"
 
-TONE: Friendly colleague, not salesperson. Empathetic, curious about their project.
+TONE: Creative colleague who loves talking about immersive storytelling. Empathetic, curious, slightly poetic but not cheesy.
 
-START with: "${config.greeting} [FirstName],"
-END with: "\n${config.closing},\n${config.signature}\nCreative & Technology Director\nAzimut\n\nWhatsApp: +55 21 99999-9999\nSite: azimutimmersive.com"
+START with: "${config.greeting} [FirstName], 🎬"
+END with: "\n${config.closing},\n${config.signature}\nCreative & Technology Director\nAzimut — Immersive Experiences\n\nWhatsApp: +55 21 99999-9999\nazimutimmersive.com"
 
-FORMAT: Plain text email (like you're texting a colleague).`
+FORMAT: Plain text with subtle emojis (like a creative texting a colleague).`
 
   try {
     const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY
@@ -177,73 +180,73 @@ function generateFallbackEmail(data: LeadData): string {
   const smallTalk = generateSmallTalk(data)
   
   const templates = {
-    pt: `Olá ${firstName},
+    pt: `Olá ${firstName}, 🎬
 
-Obrigado pelo contato!${smallTalk ? ` ${smallTalk}` : ''} Vi que você se interessou por ${data.interest || 'nossos projetos'}.
+Obrigado por explorar nosso site!${smallTalk ? ` ${smallTalk}` : ''} Vi que você se interessou por ${data.interest || 'experiências imersivas'}.
 
-Trabalhamos em projetos como o Museu Olímpico do Rio (tour virtual 360° + instalações interativas) e ficamos curiosos para entender melhor sua visão.${data.budget ? `\n\nCom o orçamento que você mencionou, podemos criar algo especial.` : ''}
+Aqui na Azimut, criamos projetos como o Museu Olímpico do Rio (tour virtual 360° + instalações interativas que transportam visitantes para outro mundo). Ficamos curiosos para entender sua visão e como podemos transformá-la em algo imersivo e cinematográfico. ✨${data.budget ? `\n\nCom o orçamento que você mencionou, dá para criar algo realmente especial.` : ''}
 
-Que tal conversarmos? Posso te mostrar casos práticos e discutir viabilidade.
+Que tal uma conversa? Posso te mostrar casos práticos e discutir viabilidade. 💡
 
 Abraço,
 
 Ranz Enberger
 Creative & Technology Director
-Azimut
+Azimut — Immersive Experiences
 
 WhatsApp: +55 21 99999-9999
-Site: azimutimmersive.com`,
+azimutimmersive.com`,
 
-    en: `Hello ${firstName},
+    en: `Hello ${firstName}, 🎬
 
-Thank you for reaching out!${smallTalk ? ` ${smallTalk}` : ''} I saw you're interested in ${data.interest || 'our projects'}.
+Thank you for exploring our site!${smallTalk ? ` ${smallTalk}` : ''} I saw you're interested in ${data.interest || 'immersive experiences'}.
 
-We work on projects like Rio Olympic Museum (360° virtual tour + interactive installations) and we're curious to better understand your vision.${data.budget ? `\n\nWith the budget you mentioned, we can create something special.` : ''}
+At Azimut, we create projects like Rio Olympic Museum (360° virtual tour + interactive installations that transport visitors to another world). We're curious to understand your vision and how we can transform it into something immersive and cinematic. ✨${data.budget ? `\n\nWith the budget you mentioned, we can create something truly special.` : ''}
 
-How about we talk? I can show you practical cases and discuss feasibility.
+How about a chat? I can show you practical cases and discuss feasibility. 💡
 
 Best regards,
 
 Ranz Enberger
 Creative & Technology Director
-Azimut
+Azimut — Immersive Experiences
 
 WhatsApp: +55 21 99999-9999
-Site: azimutimmersive.com`,
+azimutimmersive.com`,
 
-    fr: `Bonjour ${firstName},
+    fr: `Bonjour ${firstName}, 🎬
 
-Merci pour votre contact!${smallTalk ? ` ${smallTalk}` : ''} J'ai vu que vous vous intéressez à ${data.interest || 'nos projets'}.
+Merci d'avoir exploré notre site!${smallTalk ? ` ${smallTalk}` : ''} J'ai vu que vous vous intéressez à ${data.interest || 'expériences immersives'}.
 
-Nous travaillons sur des projets comme le Musée Olympique de Rio (tour virtuel 360° + installations interactives) et nous sommes curieux de mieux comprendre votre vision.${data.budget ? `\n\nAvec le budget que vous avez mentionné, nous pouvons créer quelque chose de spécial.` : ''}
+Chez Azimut, nous créons des projets comme le Musée Olympique de Rio (tour virtuel 360° + installations interactives qui transportent les visiteurs dans un autre monde). Nous sommes curieux de comprendre votre vision et comment nous pouvons la transformer en quelque chose d'immersif et cinématographique. ✨${data.budget ? `\n\nAvec le budget que vous avez mentionné, nous pouvons créer quelque chose de vraiment spécial.` : ''}
 
-Et si nous parlions? Je peux vous montrer des cas pratiques et discuter de la faisabilité.
+Et si nous parlions? Je peux vous montrer des cas pratiques et discuter de la faisabilité. 💡
 
 Cordialement,
 
 Ranz Enberger
 Creative & Technology Director
-Azimut
+Azimut — Immersive Experiences
 
 WhatsApp: +55 21 99999-9999
-Site: azimutimmersive.com`,
+azimutimmersive.com`,
 
-    es: `Hola ${firstName},
+    es: `Hola ${firstName}, 🎬
 
-¡Gracias por contactarnos!${smallTalk ? ` ${smallTalk}` : ''} Vi que te interesas por ${data.interest || 'nuestros proyectos'}.
+¡Gracias por explorar nuestro sitio!${smallTalk ? ` ${smallTalk}` : ''} Vi que te interesas por ${data.interest || 'experiencias inmersivas'}.
 
-Trabajamos en proyectos como el Museo Olímpico de Río (tour virtual 360° + instalaciones interactivas) y tenemos curiosidad por entender mejor tu visión.${data.budget ? `\n\nCon el presupuesto que mencionaste, podemos crear algo especial.` : ''}
+En Azimut, creamos proyectos como el Museo Olímpico de Río (tour virtual 360° + instalaciones interactivas que transportan a los visitantes a otro mundo). Tenemos curiosidad por entender tu visión y cómo podemos transformarla en algo inmersivo y cinematográfico. ✨${data.budget ? `\n\nCon el presupuesto que mencionaste, podemos crear algo realmente especial.` : ''}
 
-¿Qué tal si hablamos? Puedo mostrarte casos prácticos y discutir viabilidad.
+¿Qué tal si hablamos? Puedo mostrarte casos prácticos y discutir viabilidad. 💡
 
 Saludos,
 
 Ranz Enberger
 Creative & Technology Director
-Azimut
+Azimut — Immersive Experiences
 
 WhatsApp: +55 21 99999-9999
-Site: azimutimmersive.com`
+azimutimmersive.com`
   }
 
   return templates[data.lang as keyof typeof templates] || templates.en
