@@ -24,12 +24,12 @@ VALUES (
   'Workshops em eventos, Rio2C, palestras e curadorias em tecnologia e novas mídias.',
   'Workshops at events, Rio2C, lectures and curatorships in technology and new media.',
   'Talleres en eventos, Rio2C, conferencias y curadurías en tecnología y nuevos medios.',
-  'Ateliers lors d\'événements, Rio2C, conférences et curations en technologie et nouveaux médias.',
+  'Ateliers lors d''événements, Rio2C, conférences et curations en technologie et nouveaux médias.',
   '🎤', false, 170,
   ARRAY['Rio2C', 'Workshops em eventos', 'Palestras', 'Curadorias'],
   ARRAY['Rio2C', 'Workshops at events', 'Lectures', 'Curatorships'],
   ARRAY['Rio2C', 'Talleres en eventos', 'Conferencias', 'Curadurías'],
-  ARRAY['Rio2C', 'Ateliers lors d\'événements', 'Conférences', 'Curations']
+  ARRAY['Rio2C', 'Ateliers lors d''événements', 'Conférences', 'Curations']
 )
 ON CONFLICT DO NOTHING;
 
@@ -166,7 +166,7 @@ VALUES (
   'Direção Geral de Tecnologia, Direção Audiovisual e Design. Fase de execução e montagem com gestão de inúmeros fornecedores: games, simuladores, programadores, compatibilidade de arte, cenografia, motion, edição, pós-produção e interatividade.',
   'General Technology Direction, Audiovisual Direction and Design. Execution and assembly phase with management of numerous suppliers: games, simulators, programmers, art compatibility, scenography, motion, editing, post-production and interactivity.',
   'Dirección General de Tecnología, Dirección Audiovisual y Diseño. Fase de ejecución y montaje con gestión de numerosos proveedores: juegos, simuladores, programadores, compatibilidad de arte, escenografía, motion, edición, postproducción e interactividad.',
-  'Direction Générale de Technologie, Direction Audiovisuelle et Design. Phase d\'exécution et montage avec gestion de nombreux fournisseurs: jeux, simulateurs, programmeurs, compatibilité artistique, scénographie, motion, montage, post-production et interactivité.',
+  'Direction Générale de Technologie, Direction Audiovisuelle et Design. Phase d''exécution et montage avec gestion de nombreux fournisseurs: jeux, simulateurs, programmeurs, compatibilité artistique, scénographie, motion, montage, post-production et interactivité.',
   '🏛️', true, 180,
   ARRAY['Direção Geral de Tecnologia (Ranz)', 'Direção Audiovisual (Alberto)', 'Liderança Equipe Arte: Design/UI/Motion/Grafismo/Sinalização (Anick)', 'Gestão múltiplos fornecedores', 'Execução e montagem'],
   ARRAY['General Technology Direction (Ranz)', 'Audiovisual Direction (Alberto)', 'Art Team Leadership: Design/UI/Motion/Graphics/Signage (Anick)', 'Multiple supplier management', 'Execution and assembly'],
@@ -187,7 +187,7 @@ SET
   "descriptionPt" = 'Direção Geral de Tecnologia, Direção Audiovisual e Design. Fase de execução e montagem com gestão de inúmeros fornecedores: games, simuladores, programadores, compatibilidade de arte, cenografia, motion, edição, pós-produção e interatividade.',
   "descriptionEn" = 'General Technology Direction, Audiovisual Direction and Design. Execution and assembly phase with management of numerous suppliers: games, simulators, programmers, art compatibility, scenography, motion, editing, post-production and interactivity.',
   "descriptionEs" = 'Dirección General de Tecnología, Dirección Audiovisual y Diseño. Fase de ejecución y montaje con gestión de numerosos proveedores: juegos, simuladores, programadores, compatibilidad de arte, escenografía, motion, edición, postproducción e interactividad.',
-  "descriptionFr" = 'Direction Générale de Technologie, Direction Audiovisuelle et Design. Phase d\'exécution et montage avec gestion de nombreux fournisseurs: jeux, simulateurs, programmeurs, compatibilité artistique, scénographie, motion, montage, post-production et interactivité.',
+  "descriptionFr" = 'Direction Générale de Technologie, Direction Audiovisuelle et Design. Phase d''exécution et montage avec gestion de nombreux fournisseurs: jeux, simulateurs, programmeurs, compatibilité artistique, scénographie, motion, montage, post-production et interactivité.',
   "bulletsPt" = ARRAY['Direção Geral de Tecnologia (Ranz)', 'Direção Audiovisual (Alberto)', 'Liderança Equipe Arte: Design/UI/Motion/Grafismo/Sinalização (Anick)', 'Gestão múltiplos fornecedores', 'Execução e montagem'],
   "bulletsEn" = ARRAY['General Technology Direction (Ranz)', 'Audiovisual Direction (Alberto)', 'Art Team Leadership: Design/UI/Motion/Graphics/Signage (Anick)', 'Multiple supplier management', 'Execution and assembly'],
   "bulletsEs" = ARRAY['Dirección General de Tecnología (Ranz)', 'Dirección Audiovisual (Alberto)', 'Liderazgo Equipo Arte: Diseño/UI/Motion/Gráficos/Señalización (Anick)', 'Gestión múltiples proveedores', 'Ejecución y montaje'],
