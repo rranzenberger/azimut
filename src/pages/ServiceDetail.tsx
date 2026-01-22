@@ -13,6 +13,7 @@ import ServiceHero from '../components/ServiceHero'
 import ServiceGallery from '../components/ServiceGallery'
 import { getServiceGalleryPlaceholders } from '../utils/servicePlaceholders'
 import StarBackground from '../components/StarBackground'
+import { logger } from '@/utils/logger'
 
 interface ServiceDetailProps {
   lang: Lang
@@ -306,9 +307,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
         }
       } catch (error) {
         // Erro ao buscar imagens (não crítico, silencioso em produção)
-        if (process.env.NODE_ENV === 'development') {
-          console.warn('Erro ao buscar imagens do backoffice:', error)
-        }
+        logger.warn('Erro ao buscar imagens do backoffice:', error)
         // Fallback para placeholders
         setGalleryImages(getServiceGalleryPlaceholders(slug, title, 6))
       }

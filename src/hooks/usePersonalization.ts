@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getSessionId } from '../utils/analytics'
+import { logger } from '@/utils/logger'
 
 /**
  * 🎯 HOOK DE PERSONALIZAÇÃO - Busca dados da IA DeepSeek
@@ -71,7 +72,7 @@ export function usePersonalization(): PersonalizationData | null {
           conversionScore: result.conversionScore || 0
         })
       } catch (error) {
-        console.warn('Erro ao buscar personalização:', error)
+        logger.warn('Erro ao buscar personalização:', error)
         setData(null)
       } finally {
         setLoading(false)

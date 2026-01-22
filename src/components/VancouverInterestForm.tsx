@@ -4,6 +4,7 @@ import { type Lang } from '../i18n'
 import ApiService from '../services/api'
 import CanadaMapleLeaf from './CanadaMapleLeaf'
 import { useFormTracking } from '../hooks/useFormTracking'
+import { logger } from '@/utils/logger'
 
 interface VancouverInterestFormProps {
   lang: Lang
@@ -101,7 +102,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
         
         setFormData(prev => ({ ...prev, countryCode: detectedCode }))
       } catch (error) {
-        console.warn('Could not detect country:', error)
+        logger.warn('Could not detect country:', error)
       }
     }
 
@@ -430,7 +431,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
           })
         })
       } catch (emailErr) {
-        console.warn('Email notification failed:', emailErr)
+        logger.warn('Email notification failed:', emailErr)
         // Não bloqueia o sucesso do formulário
       }
       
@@ -462,7 +463,10 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
       // Scroll to top to show success message
       window.scrollTo({ top: 0, behavior: 'smooth' })
     } catch (err: any) {
-      console.error('Error submitting Vancouver lead:', err)
+      logger.error(err instanceof Error ? err : new Error(String(err)), { 
+        action: 'submitVancouverLead',
+        formType: 'vancouver_interest'
+      })
       setError(err.message || 'Erro ao enviar formulário')
     } finally {
       setLoading(false)

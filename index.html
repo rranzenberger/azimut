@@ -43,7 +43,7 @@
     
     <!-- Preload de recursos críticos -->
     <link rel="preload" href="/logo-azimut-star.svg" as="image" type="image/svg+xml" />
-    <link rel="preload" href="/azimut-star-32.png" as="image" />
+    <!-- Favicon PNG não precisa de preload - navegador carrega automaticamente -->
     
     <!-- Preload de fontes críticas (melhor LCP) -->
     <link rel="preload" href="/fonts/HandelGothic-Regular.ttf" as="font" type="font/ttf" crossorigin />
@@ -62,6 +62,9 @@
     <!-- Manifest PWA -->
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#c92337" />
+    <!-- Novo padrão (recomendado) -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- Deprecated: mantido para compatibilidade com iOS antigo -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     

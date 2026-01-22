@@ -8,7 +8,7 @@
 // - Não massante, envolvente
 // ════════════════════════════════════════════════════════════
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import LangLink from '../components/LangLink'
@@ -20,6 +20,7 @@ interface StudioCredentialsProps {
 
 const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
   const [activeFilter, setActiveFilter] = useState<string>('all')
+  const [yearsOfInnovation, setYearsOfInnovation] = useState<number>(46) // Fallback padrão
 
   const content = {
     pt: {
@@ -538,6 +539,46 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
 
   const t = content[lang]
 
+  // Calcular anos de inovação dinamicamente a partir da timeline
+  useEffect(() => {
+    const calculateYears = async () => {
+      try {
+        const apiUrl = import.meta.env.VITE_BACKOFFICE_URL || import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azmt.com.br'
+        const response = await fetch(`${apiUrl}/api/public/history?lang=${lang}`)
+        
+        if (response.ok) {
+          const data = await response.json()
+          if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+            const oldestYear = Math.min(...data.data.map((item: any) => item.year))
+            const currentYear = new Date().getFullYear()
+            const calculatedYears = currentYear - oldestYear
+            // Usar o maior entre o calculado e 46 (para não diminuir se houver dados antigos)
+            setYearsOfInnovation(Math.max(calculatedYears, 46))
+          }
+        }
+      } catch (err) {
+        // Manter fallback 46 em caso de erro
+        console.warn('[StudioCredentials] Não foi possível calcular anos dinamicamente, usando fallback:', err)
+      }
+    }
+    
+    calculateYears()
+  }, [lang])
+
+  // Atualizar conteúdo com número dinâmico
+  const dynamicContent = {
+    ...t,
+    subtitle: t.subtitle.replace('46', yearsOfInnovation.toString()),
+    hero: {
+      ...t.hero,
+      bigNumber: yearsOfInnovation.toString(),
+    },
+    timeline: {
+      ...t.timeline,
+      subtitle: t.timeline.subtitle.replace('46', yearsOfInnovation.toString()),
+    }
+  }
+
   return (
     <>
       <SEO 
@@ -578,15 +619,15 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
                 </span>
                 
                 <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-                  {t.title}
+                  {dynamicContent.title}
                 </h1>
                 
                 <p className="text-xl md:text-2xl text-white/70 mb-8 leading-relaxed">
-                  {t.subtitle}
+                  {dynamicContent.subtitle}
                 </p>
 
                 <p className="text-lg text-white/60 leading-relaxed">
-                  {t.hero.description}
+                  {dynamicContent.hero.description}
                 </p>
               </div>
 
@@ -594,10 +635,10 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
               <div className="relative">
                 <div className="relative z-10 bg-gradient-to-br from-azimut-red/20 to-purple-500/20 backdrop-blur-sm border border-azimut-red/30 rounded-3xl p-12 text-center">
                   <div className="text-9xl md:text-[12rem] font-bold text-transparent bg-clip-text bg-gradient-to-br from-azimut-red via-orange-500 to-yellow-500 leading-none mb-4">
-                    {t.hero.bigNumber}
+                    {dynamicContent.hero.bigNumber}
                   </div>
                   <div className="text-2xl md:text-3xl font-bold text-white uppercase tracking-wider">
-                    {t.hero.bigNumberLabel}
+                    {dynamicContent.hero.bigNumberLabel}
                   </div>
                 </div>
                 {/* Glow effect */}
@@ -735,22 +776,26 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* TIMELINE COMPLETA SECTION */}
-        <section className="py-20">
+        {/* TIMELINE COMPLETA SECTION - NOSSA HISTÓRIA */}
+        <section className="py-20 bg-gradient-to-b from-transparent via-slate-900/20 to-transparent">
           <div className="container-padding max-w-7xl mx-auto">
             <div className="text-center mb-12">
+              <span className="section-eyebrow mb-4">
+                <span>📅</span>
+                {lang === 'pt' ? 'Nossa História' : lang === 'en' ? 'Our History' : lang === 'es' ? 'Nuestra Historia' : 'Notre Histoire'}
+              </span>
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                {t.timeline.title}
+                {dynamicContent.timeline.title}
               </h2>
               <p className="text-xl text-white/60 max-w-3xl mx-auto mb-8">
-                {t.timeline.subtitle}
+                {dynamicContent.timeline.subtitle}
               </p>
               <div className="w-24 h-1 bg-gradient-to-r from-transparent via-azimut-red to-transparent mx-auto" />
             </div>
 
             {/* Filtros */}
             <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
-              {Object.entries(t.timeline.filters).map(([key, label]) => (
+              {Object.entries(dynamicContent.timeline.filters).map(([key, label]) => (
                 <button
                   key={key}
                   onClick={() => setActiveFilter(key)}
@@ -766,12 +811,14 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
             </div>
 
             {/* Timeline Component */}
-            <CompanyTimeline
-              lang={lang}
-              type={activeFilter === 'all' ? undefined : activeFilter}
-              layout="vertical"
-              className="max-w-5xl mx-auto"
-            />
+            <div className="relative">
+              <CompanyTimeline
+                lang={lang}
+                type={activeFilter === 'all' ? undefined : activeFilter}
+                layout="vertical"
+                className="max-w-5xl mx-auto"
+              />
+            </div>
           </div>
         </section>
 
@@ -779,10 +826,10 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
         <section className="py-20 bg-gradient-to-b from-transparent to-slate-900/50">
           <div className="container-padding max-w-4xl mx-auto text-center">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              {t.cta.title}
+              {dynamicContent.cta.title}
             </h2>
             <p className="text-xl text-white/60 mb-12">
-              {t.cta.subtitle}
+              {dynamicContent.cta.subtitle}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
@@ -790,7 +837,7 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
                 to="/contact"
                 className="group inline-flex items-center gap-3 px-10 py-5 rounded-xl bg-gradient-to-r from-azimut-red to-orange-600 text-white font-bold uppercase tracking-wider hover:shadow-2xl hover:shadow-azimut-red/50 transition-all transform hover:scale-105"
               >
-                {t.cta.primaryButton}
+                {dynamicContent.cta.primaryButton}
                 <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
               </LangLink>
               
@@ -799,7 +846,7 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
                 className="group inline-flex items-center gap-3 px-10 py-5 rounded-xl border-2 border-white/20 text-white hover:bg-white hover:text-black transition-all font-bold uppercase tracking-wider"
               >
                 <span className="text-xl group-hover:-translate-x-1 transition-transform">←</span>
-                {t.cta.secondaryButton}
+                {dynamicContent.cta.secondaryButton}
               </LangLink>
             </div>
           </div>

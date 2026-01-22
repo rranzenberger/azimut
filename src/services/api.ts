@@ -3,6 +3,8 @@
  * Handles all communication between site and CMS/backoffice
  */
 
+import { logger } from '@/utils/logger'
+
 // Detectar ambiente
 const isDevelopment = import.meta.env.DEV
 const isProduction = import.meta.env.PROD
@@ -97,12 +99,12 @@ export class ApiService {
     try {
       // Verificar se API_URL está configurada
       if (!API_URL || API_URL === 'undefined' || API_URL.includes('undefined')) {
-        if (isDevelopment) {
-          console.warn('⚠️ VITE_API_URL não configurada')
-          console.warn('💡 Dica: Configure VITE_API_URL no arquivo .env ou use o email direto: contact@azmt.com.br')
-        }
+        logger.warn('VITE_API_URL não configurada')
+        logger.info('Dica: Configure VITE_API_URL no arquivo .env ou use o email direto: contact@azmt.com.br')
         throw new Error('API não configurada')
       }
+      
+      logger.api.request(`${API_URL}/api/leads`, 'POST', { hasData: !!data })
       
       // Criar AbortController para timeout
       const controller = new AbortController()
@@ -119,6 +121,8 @@ export class ApiService {
       })
 
       clearTimeout(timeoutId)
+
+      logger.api.response(`${API_URL}/api/leads`, response.status)
 
       if (!response.ok) {
         let errorMessage = 'Erro ao enviar formulário'
@@ -140,7 +144,7 @@ export class ApiService {
 
       return await response.json()
     } catch (error: unknown) {
-      console.error('❌ Error submitting lead:', error)
+      logger.api.error(`${API_URL}/api/leads`, error as Error, { action: 'submitLead' })
       
       // Mensagens de erro mais específicas
       const err = error as Error & { name?: string; message?: string }
@@ -180,13 +184,13 @@ export class ApiService {
       })
 
       if (!response.ok) {
-        if (isDevelopment) console.warn('⚠️ AI suggestions not available')
+        logger.warn('AI suggestions not available')
         return null
       }
 
       return await response.json()
     } catch (error) {
-      if (isDevelopment) console.warn('⚠️ AI suggestions failed (non-critical):', error)
+      logger.warn('AI suggestions failed (non-critical):', error)
       return null // Fail silently
     }
   }
@@ -244,9 +248,11 @@ export class ApiService {
   static async submitVancouverLead(data: VancouverLeadData & Record<string, unknown>) {
     try {
       if (!API_URL || API_URL === 'undefined' || API_URL.includes('undefined')) {
-        if (isDevelopment) console.warn('⚠️ VITE_API_URL não configurada')
+        logger.warn('VITE_API_URL não configurada')
         throw new Error('API não configurada')
       }
+      
+      logger.api.request(`${API_URL}/api/leads/vancouver`, 'POST', { hasData: !!data })
       
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 10000)
@@ -263,6 +269,8 @@ export class ApiService {
 
       clearTimeout(timeoutId)
 
+      logger.api.response(`${API_URL}/api/leads/vancouver`, response.status)
+
       if (!response.ok) {
         let errorMessage = 'Erro ao enviar interesse Vancouver'
         
@@ -278,7 +286,7 @@ export class ApiService {
 
       return await response.json()
     } catch (error: unknown) {
-      console.error('❌ Error submitting Vancouver lead:', error)
+      logger.api.error(`${API_URL}/api/leads/vancouver`, error as Error, { action: 'submitVancouverLead' })
       const err = error as Error & { name?: string; message?: string }
       
       if (err.name === 'AbortError' || err.name === 'TimeoutError') {
@@ -299,9 +307,11 @@ export class ApiService {
   static async submitQuizVancouver(data: QuizVancouverData) {
     try {
       if (!API_URL || API_URL === 'undefined' || API_URL.includes('undefined')) {
-        if (isDevelopment) console.warn('⚠️ VITE_API_URL não configurada')
+        logger.warn('VITE_API_URL não configurada')
         throw new Error('API não configurada')
       }
+      
+      logger.api.request(`${API_URL}/api/quiz/vancouver`, 'POST', { hasData: !!data })
       
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 10000)
@@ -318,6 +328,8 @@ export class ApiService {
 
       clearTimeout(timeoutId)
 
+      logger.api.response(`${API_URL}/api/quiz/vancouver`, response.status)
+
       if (!response.ok) {
         let errorMessage = 'Erro ao salvar Quiz Vancouver'
         
@@ -333,7 +345,7 @@ export class ApiService {
 
       return await response.json()
     } catch (error: unknown) {
-      console.error('❌ Error submitting Quiz Vancouver:', error)
+      logger.api.error(`${API_URL}/api/quiz/vancouver`, error as Error, { action: 'submitQuizVancouver' })
       const err = error as Error & { name?: string; message?: string }
       
       if (err.name === 'AbortError' || err.name === 'TimeoutError') {
@@ -354,9 +366,11 @@ export class ApiService {
   static async submitCourseRecommendation(data: CourseRecommendationData) {
     try {
       if (!API_URL || API_URL === 'undefined' || API_URL.includes('undefined')) {
-        if (isDevelopment) console.warn('⚠️ VITE_API_URL não configurada')
+        logger.warn('VITE_API_URL não configurada')
         throw new Error('API não configurada')
       }
+      
+      logger.api.request(`${API_URL}/api/quiz/course-recommender`, 'POST', { hasData: !!data })
       
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 10000)
@@ -373,6 +387,8 @@ export class ApiService {
 
       clearTimeout(timeoutId)
 
+      logger.api.response(`${API_URL}/api/quiz/course-recommender`, response.status)
+
       if (!response.ok) {
         let errorMessage = 'Erro ao salvar Recomendação de Curso'
         
@@ -388,7 +404,7 @@ export class ApiService {
 
       return await response.json()
     } catch (error: unknown) {
-      console.error('❌ Error submitting Course Recommendation:', error)
+      logger.api.error(`${API_URL}/api/quiz/course-recommender`, error as Error, { action: 'submitCourseRecommendation' })
       const err = error as Error & { name?: string; message?: string }
       
       if (err.name === 'AbortError' || err.name === 'TimeoutError') {

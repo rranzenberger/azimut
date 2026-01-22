@@ -3,6 +3,7 @@
 // ════════════════════════════════════════════════════════════
 
 import ApiService from '../../services/api'
+import { logger } from '@/utils/logger'
 
 export async function POST(request: Request) {
   try {
@@ -35,7 +36,9 @@ export async function POST(request: Request) {
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     )
   } catch (error) {
-    console.error('Lead capture error:', error)
+    logger.api.error('/api/leads/capture', error as Error, { 
+      action: 'POST /api/leads/capture'
+    })
     
     return new Response(
       JSON.stringify({ error: 'Failed to capture lead' }),

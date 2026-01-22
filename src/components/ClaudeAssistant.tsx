@@ -11,6 +11,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { type Lang } from '../i18n'
 import { useUserProfileDetection, getUserInsights, trackInteraction } from '../hooks/useUserProfileDetection'
+import { logger } from '@/utils/logger'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -223,7 +224,10 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
         })
       }
     } catch (error) {
-      console.error('Error sending message:', error)
+      logger.error(error instanceof Error ? error : new Error(String(error)), { 
+        action: 'sendMessage',
+        component: 'ClaudeAssistant'
+      })
       setMessages(prev => [...prev, {
         role: 'assistant',
         content: lang === 'pt' 

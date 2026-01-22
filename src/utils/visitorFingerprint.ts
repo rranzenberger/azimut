@@ -4,6 +4,8 @@
 // Gera hash único baseado em características do navegador/dispositivo
 // Permite rastrear mesmo visitante mesmo sem login/cookie
 
+import { logger } from '@/utils/logger'
+
 /**
  * Gera fingerprint único do visitante
  * Combina: userAgent + timezone + language + screen resolution + platform
@@ -71,7 +73,7 @@ export async function generateSecureFingerprint(): Promise<string> {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 32);
   } catch (error) {
-    console.warn('Crypto API failed, using simple hash:', error);
+    logger.warn('Crypto API failed, using simple hash:', error);
     return generateVisitorFingerprint();
   }
 }

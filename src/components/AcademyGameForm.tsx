@@ -8,6 +8,7 @@
 import React, { useState } from 'react'
 import { type Lang } from '../i18n'
 import ApiService from '../services/api'
+import { logger } from '@/utils/logger'
 
 interface AcademyGameFormProps {
   lang: Lang
@@ -438,7 +439,10 @@ Preferência de contato: ${formData.contactPreference ? t.steps[4].options[formD
 
       setSuccess(true)
     } catch (err: any) {
-      console.error('Form submission error:', err)
+      logger.error(err instanceof Error ? err : new Error(String(err)), { 
+        action: 'submitAcademyGameForm',
+        formType: 'academy_game'
+      })
       setError(err.message || t.error)
     } finally {
       setLoading(false)

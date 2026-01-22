@@ -1,0 +1,56 @@
+{
+  "name": "Teste Mínimo - Lead Intelligence",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "teste-lead",
+        "httpMethod": "POST",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-teste",
+      "name": "Webhook Teste",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "teste-lead"
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.item.json;"
+      },
+      "id": "code-teste",
+      "name": "Code Teste",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { success: true, data: $json } }}"
+      },
+      "id": "respond-teste",
+      "name": "Responder Teste",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [650, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Teste": {
+      "main": [[{"node": "Code Teste", "type": "main", "index": 0}]]
+    },
+    "Code Teste": {
+      "main": [[{"node": "Responder Teste", "type": "main", "index": 0}]]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-01-20T12:00:00.000Z",
+  "versionId": "1"
+}

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { logger } from '@/utils/logger';
 
 const API_URL = import.meta.env.VITE_CMS_API_URL || 'http://localhost:3001/api';
 
@@ -93,7 +94,10 @@ export default function Chatbot({ lang = 'pt' }: ChatbotProps) {
 
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
-      console.error('Chatbot error:', error);
+      logger.error(error instanceof Error ? error : new Error(String(error)), { 
+        action: 'chatbot',
+        component: 'Chatbot'
+      });
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',

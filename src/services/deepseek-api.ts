@@ -6,6 +6,7 @@
 // ════════════════════════════════════════════════════════════
 
 import { generateFullContext } from './azimut-context'
+import { logger } from '@/utils/logger'
 
 interface DeepSeekRequest {
   message: string
@@ -239,7 +240,10 @@ export async function callDeepSeek(request: DeepSeekRequest): Promise<DeepSeekRe
       shouldUpgradeToClaude: shouldUpgrade
     }
   } catch (error) {
-    console.error('DeepSeek API error:', error)
+    logger.api.error('/api/chat/deepseek', error as Error, { 
+      action: 'chatWithDeepSeek',
+      lang: request.lang 
+    })
     
     // Fallback: retornar resposta simples
     const fallbackResponses: Record<string, string> = {

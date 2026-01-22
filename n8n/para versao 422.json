@@ -1,0 +1,646 @@
+{
+  "name": "Captação Passiva - Lead Intelligence",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "lead-intelligence",
+        "httpMethod": "POST",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-trigger",
+      "name": "Receber Lead",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "lead-intelligence"
+    },
+    {
+      "parameters": {
+        "mode": "rules",
+        "value": "={{$json.formType}}",
+        "rules": {
+          "rules": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "formType-contact",
+                    "leftValue": "={{$json.formType}}",
+                    "rightValue": "contact_form",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "contact_form"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "formType-vancouver",
+                    "leftValue": "={{$json.formType}}",
+                    "rightValue": "vancouver",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "vancouver"
+            }
+          ]
+        }
+      },
+      "id": "switch-formulario",
+      "name": "Identificar Formulário",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id, name, email, phone, \"createdAt\", \"leadIntelligence\"->>'classification' as classification, \"leadIntelligence\"->>'riskScore' as risk_score FROM \"Lead\" WHERE email = $1 OR phone = $2 ORDER BY \"createdAt\" DESC LIMIT 1;",
+        "additionalFields": {
+          "queryParameters": "={{[$json.email, $json.phone]}}"
+        }
+      },
+      "id": "postgres-verificar",
+      "name": "Verificar Lead Anterior",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2,
+      "position": [650, 300],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-credentials",
+          "name": "PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pegar dados do lead anterior\nconst previousLead = $('Verificar Lead Anterior').item.json;\nconst currentLead = $input.item.json;\n\n// Se não encontrou lead anterior, é novo\nif (!previousLead || !previousLead.id) {\n  return {\n    isNewLead: true,\n    decision: 'CONTINUE',\n    skipInvestigation: false\n  };\n}\n\n// Se já foi classificado como SCAM antes, rejeitar\nif (previousLead.classification === 'SCAMMER') {\n  return {\n    isNewLead: false,\n    previousLeadId: previousLead.id,\n    decision: 'REJECT',\n    reason: 'Previously flagged as scammer',\n    skipInvestigation: true\n  };\n}\n\n// Se já foi LEGITIMATE, pode ser follow-up\nif (previousLead.classification === 'LEGITIMATE') {\n  return {\n    isNewLead: false,\n    previousLeadId: previousLead.id,\n    decision: 'FOLLOW_UP',\n    skipInvestigation: false\n  };\n}\n\n// Outros casos, continuar\nreturn {\n  isNewLead: false,\n  previousLeadId: previousLead.id,\n  decision: 'CONTINUE',\n  skipInvestigation: false\n};"
+      },
+      "id": "code-decisao",
+      "name": "Decisão Lead Existente",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "skip-investigation",
+              "leftValue": "={{$json.skipInvestigation}}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "false"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "if-continuar",
+      "name": "Continuar Investigação?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1050, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://ipapi.co/{{$json.ip}}/json/",
+        "authentication": "none"
+      },
+      "id": "http-ip",
+      "name": "Validar IP",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1250, 200]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.abuseipdb.com/api/v2/check",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Key",
+              "value": "={{$env.ABUSEIPDB_API_KEY}}"
+            }
+          ]
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "ipAddress",
+              "value": "={{$json.ip}}"
+            },
+            {
+              "name": "maxAgeInDays",
+              "value": "90"
+            },
+            {
+              "name": "verbose",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "id": "http-blacklist",
+      "name": "Verificar Blacklist IP",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1450, 200]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.hunter.io/v2/email-verifier",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.HUNTER_API_KEY}}"
+            }
+          ]
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "email",
+              "value": "={{$json.email}}"
+            }
+          ]
+        }
+      },
+      "id": "http-email",
+      "name": "Validar Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1250, 400]
+    },
+    {
+      "parameters": {
+        "url": "=https://nubela.co/proxycurl/api/v2/linkedin",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.PROXYCURL_API_KEY}}"
+            }
+          ]
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{$json.linkedin_url || ''}}"
+            }
+          ]
+        },
+        "options": {
+          "continueOnFail": true
+        }
+      },
+      "id": "http-linkedin",
+      "name": "Buscar LinkedIn",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1450, 400]
+    },
+    {
+      "parameters": {
+        "url": "=https://serpapi.com/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.SERPAPI_KEY}}"
+            }
+          ]
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{$json.name}} {{$json.company}} {{$json.email}}"
+            },
+            {
+              "name": "num",
+              "value": "10"
+            },
+            {
+              "name": "hl",
+              "value": "pt"
+            }
+          ]
+        },
+        "options": {
+          "continueOnFail": true
+        }
+      },
+      "id": "http-google",
+      "name": "Google Search",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1650, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $input.item.json.description || $input.item.json.message || $input.item.json.comments || '';\n\nconst ptWords = ['quero', 'gostaria', 'preciso', 'interesse', 'projeto', 'obrigado', 'contato'];\nconst enWords = ['want', 'would', 'need', 'interest', 'project', 'thank', 'contact'];\nconst esWords = ['quiero', 'necesito', 'interés', 'proyecto', 'gracias', 'contacto'];\n\nconst ptCount = ptWords.filter(w => text.toLowerCase().includes(w)).length;\nconst enCount = enWords.filter(w => text.toLowerCase().includes(w)).length;\nconst esCount = esWords.filter(w => text.toLowerCase().includes(w)).length;\n\nlet detectedLanguage = 'pt';\nif (enCount > ptCount && enCount > esCount) detectedLanguage = 'en';\nelse if (esCount > ptCount && esCount > enCount) detectedLanguage = 'es';\nelse if (ptCount > 0) detectedLanguage = 'pt';\n\nreturn {\n  detectedLanguage: detectedLanguage,\n  textLength: text.length,\n  confidence: Math.max(ptCount, enCount, esCount) / Math.max(1, ptWords.length)\n};"
+      },
+      "id": "code-idioma",
+      "name": "Detectar Idioma",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1850, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.deepseek.com/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.DEEPSEEK_API_KEY}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": []
+        },
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"deepseek-chat\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are an expert at analyzing sales leads. Return ONLY valid JSON, no markdown, no code blocks.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Analyze this lead and return JSON with: classification (LEGITIMATE|SUSPECT|SCAMMER|COMPETITOR), riskScore (0-100), persona (student|company|government|editor|museum|other), interest (course|video|co-production|grants|exhibition|other), temperature (HOT|WARM|COLD), isStudent, isCompany, isGovernment, wantsCourse, wantsVideo, wantsCoProduction, wantsGrants, redFlags (array), positiveSignals (array). Lead: {{JSON.stringify($json)}}. IP: {{JSON.stringify($('Validar IP').json)}}. Email: {{JSON.stringify($('Validar Email').json)}}. Blacklist: {{JSON.stringify($('Verificar Blacklist IP').json)}}. LinkedIn: {{JSON.stringify($('Buscar LinkedIn').json)}}. Google: {{JSON.stringify($('Google Search').json)}}. Return ONLY JSON.\"\n    }\n  ],\n  \"temperature\": 0.3,\n  \"max_tokens\": 1000\n}"
+      },
+      "id": "http-deepseek",
+      "name": "Analisar com DeepSeek",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [2050, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const deepseekResponse = $input.item.json;\nlet content = deepseekResponse.choices[0].message.content;\ncontent = content.replace(/```json\\n?/g, '').replace(/```\\n?/g, '').trim();\nconst analysis = JSON.parse(content);\nreturn {\n  classification: analysis.classification,\n  riskScore: analysis.riskScore,\n  persona: analysis.persona,\n  interest: analysis.interest,\n  temperature: analysis.temperature,\n  isStudent: analysis.isStudent,\n  isCompany: analysis.isCompany,\n  isGovernment: analysis.isGovernment,\n  wantsCourse: analysis.wantsCourse,\n  wantsVideo: analysis.wantsVideo,\n  wantsCoProduction: analysis.wantsCoProduction,\n  wantsGrants: analysis.wantsGrants,\n  redFlags: analysis.redFlags || [],\n  positiveSignals: analysis.positiveSignals || []\n};"
+      },
+      "id": "code-processar-deepseek",
+      "name": "Processar DeepSeek",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2250, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "is-legitimate",
+              "leftValue": "={{$json.classification}}",
+              "rightValue": "LEGITIMATE",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "if-legitimo",
+      "name": "É Legítimo?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2450, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "={{$env.CLAUDE_API_KEY}}"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": []
+        },
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-20250514\",\n  \"max_tokens\": 200,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Generate personalized small talk in {{$('Detectar Idioma').json.detectedLanguage}} for this lead. Location: {{$('Validar IP').json.city}}, {{$('Validar IP').json.country_name}}. Company: {{$json.company}}. Persona: {{$('Processar DeepSeek').json.persona}}. Interest: {{$('Processar DeepSeek').json.interest}}. 2-3 sentences, 1-2 emojis max (🎬 🌐 ✨). Return JSON: {smallTalk: \\\"text\\\"}\"\n    }\n  ]\n}"
+      },
+      "id": "http-smalltalk",
+      "name": "Gerar Small Talk",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [2650, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "const claudeResponse = $input.item.json;\nconst content = claudeResponse.content[0].text;\nlet cleanContent = content.replace(/```json\\n?/g, '').replace(/```\\n?/g, '').trim();\nconst smallTalk = JSON.parse(cleanContent);\nreturn { smallTalk: smallTalk.smallTalk };"
+      },
+      "id": "code-smalltalk",
+      "name": "Processar Small Talk",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2850, 200]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "={{$env.CLAUDE_API_KEY}}"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": []
+        },
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-20250514\",\n  \"max_tokens\": 500,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Create personalized email in {{$('Detectar Idioma').json.detectedLanguage}} for this lead. Name: {{$json.name}}. Company: {{$json.company}}. Interest: {{$('Processar DeepSeek').json.interest}}. Persona: {{$('Processar DeepSeek').json.persona}}. Small Talk: {{$('Processar Small Talk').json.smallTalk}}. Form: {{$json.formType}}. Project: {{$json.projectType}}. Budget: {{$json.budget}}. Description: {{$json.description}}. Tone: Friendly, creative, cinematic (2-3 emojis: 🎬 🌐 ✨). Structure: 1) Subject, 2) Greeting + small talk, 3) Brief Azimut intro, 4) Address their need, 5) Soft CTA, 6) Signature. Max 150 words. Return JSON: {subject: \\\"...\\\", body: \\\"...\\\"}\"\n    }\n  ]\n}"
+      },
+      "id": "http-email-claude",
+      "name": "Gerar Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [2650, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "const claudeResponse = $input.item.json;\nconst content = claudeResponse.content[0].text;\nlet cleanContent = content.replace(/```json\\n?/g, '').replace(/```\\n?/g, '').trim();\nconst email = JSON.parse(cleanContent);\nreturn { subject: email.subject, body: email.body };"
+      },
+      "id": "code-email",
+      "name": "Processar Email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2850, 400]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.resend.com/emails",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.RESEND_API_KEY}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": []
+        },
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"from\": \"Ranz <ranz@azmt.com.br>\",\n  \"to\": [\"{{$json.email}}\"],\n  \"subject\": \"{{$('Processar Email').json.subject}}\",\n  \"text\": \"{{$('Processar Email').json.body}}\",\n  \"reply_to\": \"ranz@azmt.com.br\"\n}"
+      },
+      "id": "http-resend",
+      "name": "Enviar Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [3050, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "has-phone",
+              "leftValue": "={{$json.phone}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "if-whatsapp",
+      "name": "Tem WhatsApp?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [3250, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const lead = $json;\nconst ipCheck = $('Validar IP').item.json || {};\nconst emailCheck = $('Validar Email').item.json || {};\nconst blacklist = $('Verificar Blacklist IP').item.json || {};\nconst linkedin = $('Buscar LinkedIn').item.json || {};\nconst google = $('Google Search').item.json || {};\nconst analysis = $('Processar DeepSeek').item.json;\nconst language = $('Detectar Idioma').item.json;\n\nconst leadIntelligence = {\n  classification: analysis.classification,\n  riskScore: analysis.riskScore,\n  persona: analysis.persona,\n  interest: analysis.interest,\n  temperature: analysis.temperature,\n  isStudent: analysis.isStudent,\n  isCompany: analysis.isCompany,\n  isGovernment: analysis.isGovernment,\n  wantsCourse: analysis.wantsCourse,\n  wantsVideo: analysis.wantsVideo,\n  wantsCoProduction: analysis.wantsCoProduction,\n  wantsGrants: analysis.wantsGrants,\n  redFlags: analysis.redFlags || [],\n  positiveSignals: analysis.positiveSignals || [],\n  realData: {\n    trustedEmail: emailCheck.data && emailCheck.data.result === 'deliverable',\n    phoneValid: !!lead.phone,\n    addressVerified: false\n  },\n  verifications: {\n    ipCheck: {\n      type: ipCheck.org || 'unknown',\n      vpn: ipCheck.vpn || false,\n      proxy: ipCheck.proxy || false,\n      city: ipCheck.city || 'unknown',\n      country: ipCheck.country_name || 'unknown'\n    },\n    emailCheck: {\n      valid: emailCheck.data && emailCheck.data.result === 'deliverable',\n      disposable: emailCheck.data && emailCheck.data.disposable || false,\n      score: emailCheck.data && emailCheck.data.score || 0\n    },\n    blacklisted: blacklist.data && (blacklist.data.abuseConfidenceScore || 0) > 75\n  },\n  enrichment: {\n    linkedin: linkedin,\n    googleResults: google.organic_results || [],\n    socialMedia: {}\n  },\n  behavior: {\n    detectedLanguage: language.detectedLanguage,\n    textLength: language.textLength\n  },\n  decision: {\n    action: analysis.classification === 'LEGITIMATE' ? 'SEND_EMAIL' : 'REJECT',\n    reason: (analysis.positiveSignals || []).join(', '),\n    emailSent: analysis.classification === 'LEGITIMATE',\n    whatsappSent: !!lead.phone && analysis.classification === 'LEGITIMATE',\n    sentAt: new Date().toISOString()\n  },\n  investigationHistory: [\n    {\n      timestamp: new Date().toISOString(),\n      action: 'Full investigation completed',\n      results: `Classification: ${analysis.classification}, Risk: ${analysis.riskScore}`\n    }\n  ]\n};\n\nreturn {\n  leadIntelligence: leadIntelligence,\n  leadId: lead.leadId\n};"
+      },
+      "id": "code-preparar-dados",
+      "name": "Preparar leadIntelligence",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3450, 300]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE \"Lead\" SET \"leadIntelligence\" = $1::jsonb WHERE id = $2;",
+        "additionalFields": {
+          "queryParameters": "=[{{JSON.stringify($json.leadIntelligence)}}, {{$json.leadId}}]"
+        }
+      },
+      "id": "postgres-salvar",
+      "name": "Salvar leadIntelligence",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2,
+      "position": [3650, 300],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-credentials",
+          "name": "PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { success: true, leadId: $json.leadId, classification: $('Processar DeepSeek').json.classification } }}"
+      },
+      "id": "webhook-response",
+      "name": "Responder Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [3850, 300]
+    }
+  ],
+  "connections": {
+    "Receber Lead": {
+      "main": [[{"node": "Identificar Formulário", "type": "main", "index": 0}]]
+    },
+    "Identificar Formulário": {
+      "main": [[{"node": "Verificar Lead Anterior", "type": "main", "index": 0}]]
+    },
+    "Verificar Lead Anterior": {
+      "main": [[{"node": "Decisão Lead Existente", "type": "main", "index": 0}]]
+    },
+    "Decisão Lead Existente": {
+      "main": [[{"node": "Continuar Investigação?", "type": "main", "index": 0}]]
+    },
+    "Continuar Investigação?": {
+      "main": [
+        [
+          {"node": "Validar IP", "type": "main", "index": 0},
+          {"node": "Validar Email", "type": "main", "index": 0}
+        ]
+      ]
+    },
+    "Validar IP": {
+      "main": [[{"node": "Verificar Blacklist IP", "type": "main", "index": 0}]]
+    },
+    "Verificar Blacklist IP": {
+      "main": [[{"node": "Google Search", "type": "main", "index": 0}]]
+    },
+    "Validar Email": {
+      "main": [[{"node": "Buscar LinkedIn", "type": "main", "index": 0}]]
+    },
+    "Buscar LinkedIn": {
+      "main": [[{"node": "Google Search", "type": "main", "index": 0}]]
+    },
+    "Google Search": {
+      "main": [[{"node": "Detectar Idioma", "type": "main", "index": 0}]]
+    },
+    "Detectar Idioma": {
+      "main": [[{"node": "Analisar com DeepSeek", "type": "main", "index": 0}]]
+    },
+    "Analisar com DeepSeek": {
+      "main": [[{"node": "Processar DeepSeek", "type": "main", "index": 0}]]
+    },
+    "Processar DeepSeek": {
+      "main": [[{"node": "É Legítimo?", "type": "main", "index": 0}]]
+    },
+    "É Legítimo?": {
+      "main": [
+        [
+          {"node": "Gerar Small Talk", "type": "main", "index": 0},
+          {"node": "Gerar Email", "type": "main", "index": 0}
+        ]
+      ]
+    },
+    "Gerar Small Talk": {
+      "main": [[{"node": "Processar Small Talk", "type": "main", "index": 0}]]
+    },
+    "Processar Small Talk": {
+      "main": [[{"node": "Gerar Email", "type": "main", "index": 0}]]
+    },
+    "Gerar Email": {
+      "main": [[{"node": "Processar Email", "type": "main", "index": 0}]]
+    },
+    "Processar Email": {
+      "main": [[{"node": "Enviar Email", "type": "main", "index": 0}]]
+    },
+    "Enviar Email": {
+      "main": [[{"node": "Tem WhatsApp?", "type": "main", "index": 0}]]
+    },
+    "Tem WhatsApp?": {
+      "main": [[{"node": "Preparar leadIntelligence", "type": "main", "index": 0}]]
+    },
+    "Preparar leadIntelligence": {
+      "main": [[{"node": "Salvar leadIntelligence", "type": "main", "index": 0}]]
+    },
+    "Salvar leadIntelligence": {
+      "main": [[{"node": "Responder Webhook", "type": "main", "index": 0}]]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-01-20T12:00:00.000Z",
+  "versionId": "1"
+}

@@ -14,6 +14,7 @@ import StarBackground from '../components/StarBackground'
 import OptimizedImage from '../components/OptimizedImage'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { useTheme } from '../contexts/ThemeContext'
+import { logger } from '@/utils/logger'
 
 interface HomeProps {
   lang: Lang
@@ -158,7 +159,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
       }
     } catch (error) {
       // IntersectionObserver pode não estar disponível em alguns navegadores antigos
-      console.warn('IntersectionObserver não disponível:', error)
+      logger.warn('IntersectionObserver não disponível:', error)
     }
 
     return () => {

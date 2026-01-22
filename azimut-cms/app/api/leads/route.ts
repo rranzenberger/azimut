@@ -124,6 +124,52 @@ export async function POST(request: Request) {
     })
 
     // ═══════════════════════════════════════════════════════════
+    // 🕵️ INVESTIGAÇÃO AUTOMÁTICA N8N (Lead Intelligence)
+    // ═══════════════════════════════════════════════════════════
+    try {
+      const N8N_WEBHOOK_URL = process.env.N8N_LEAD_INTELLIGENCE_WEBHOOK || 
+        'https://n8n-production-dce3.up.railway.app/webhook/lead-intelligence';
+
+      // Extrair IP do request
+      const forwardedFor = request.headers.get('x-forwarded-for');
+      const realIp = request.headers.get('x-real-ip');
+      const ip = forwardedFor?.split(',')[0]?.trim() || realIp || 'unknown';
+
+      // Chamar N8N para investigação completa (não aguarda resposta)
+      fetch(N8N_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          leadId: lead.id,
+          name: data.name,
+          email: data.email,
+          phone: data.phone || null,
+          company: data.company || null,
+          position: data.position || null,
+          formType: 'contact_form',
+          projectType: data.projectType || null,
+          budget: data.budget || null,
+          timeline: data.timeline || null,
+          description: data.description || null,
+          organizationType: data.organizationType || null,
+          interestInGrants: data.interestInGrants || false,
+          country: data.country || null,
+          city: data.city || null,
+          ip: ip,
+          userAgent: request.headers.get('user-agent') || 'unknown',
+          sourceUrl: request.headers.get('referer') || null,
+          lang: data.lang || 'pt'
+        })
+      }).catch(err => {
+        // Log mas não interrompe o fluxo
+        console.warn('N8N webhook failed (non-critical):', err)
+      })
+    } catch (n8nError) {
+      // N8N falhou mas não é crítico
+      console.warn('Failed to call N8N webhook:', n8nError)
+    }
+
+    // ═══════════════════════════════════════════════════════════
     // 📧 ENVIAR EMAILS AUTOMÁTICOS
     // ═══════════════════════════════════════════════════════════
     try {

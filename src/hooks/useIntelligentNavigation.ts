@@ -5,6 +5,7 @@
 // ════════════════════════════════════════════════════════════
 
 import { useState, useEffect } from 'react'
+import { logger } from '@/utils/logger'
 
 export type UserProfile = 
   | 'student'      // 18-25, busca Vancouver/Courses
@@ -134,7 +135,7 @@ export const useIntelligentNavigation = () => {
             reverseGeocode(position.coords.latitude, position.coords.longitude)
           },
           (error) => {
-            console.warn('Geolocation denied', error)
+            logger.warn('Geolocation denied', error)
             fallbackIPLocation()
           }
         )
@@ -142,7 +143,10 @@ export const useIntelligentNavigation = () => {
         fallbackIPLocation()
       }
     } catch (error) {
-      console.error('Location detection error:', error)
+      logger.error(error instanceof Error ? error : new Error(String(error)), { 
+        action: 'detectLocation',
+        hook: 'useIntelligentNavigation'
+      })
     }
   }
 
@@ -161,7 +165,10 @@ export const useIntelligentNavigation = () => {
         }
       }))
     } catch (error) {
-      console.error('IP location error:', error)
+      logger.error(error instanceof Error ? error : new Error(String(error)), { 
+        action: 'fallbackIPLocation',
+        hook: 'useIntelligentNavigation'
+      })
     }
   }
 

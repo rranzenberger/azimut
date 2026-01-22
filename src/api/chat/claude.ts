@@ -3,6 +3,7 @@
 // ════════════════════════════════════════════════════════════
 
 import { routeToAI, logAIUsage } from '../../services/ai-router'
+import { logger } from '@/utils/logger'
 
 export async function POST(request: Request) {
   try {
@@ -57,7 +58,9 @@ export async function POST(request: Request) {
       }
     )
   } catch (error) {
-    console.error('Chat API error:', error)
+    logger.api.error('/api/chat/claude', error as Error, { 
+      action: 'POST /api/chat/claude'
+    })
     
     return new Response(
       JSON.stringify({ 

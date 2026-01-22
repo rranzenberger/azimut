@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import type { Lang } from '../i18n'
 import ApiService from '../services/api'
 import { useFormTracking } from '../hooks/useFormTracking'
+import { logger } from '@/utils/logger'
 
 // Componente SelectField removido - agora usamos <select> nativo com classe dropdown-azimut
 
@@ -256,7 +257,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         
         setFormData(prev => ({ ...prev, countryCode: detectedCode }))
       } catch (error) {
-        console.warn('Could not detect country:', error)
+        logger.warn('Could not detect country:', error)
         // Mantém +55 como padrão se falhar
       }
     }
@@ -687,7 +688,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
           })
         })
       } catch (emailError) {
-        console.warn('Email notification failed (non-critical):', emailError)
+        logger.warn('Email notification failed (non-critical):', emailError)
       }
 
       setSuccess(true)
@@ -717,7 +718,10 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         acceptContact: false
       })
     } catch (err: any) {
-      console.error('Error submitting form:', err)
+      logger.error(err instanceof Error ? err : new Error(String(err)), { 
+        action: 'submitForm',
+        formType: 'contact_main'
+      })
       // Limpar erros de campo (erro de servidor é diferente)
       setFieldErrors({})
       
@@ -793,7 +797,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         setAiSuggestions(suggestions)
       }
     } catch (err) {
-      console.warn('Sugestões IA não disponíveis')
+      logger.warn('Sugestões IA não disponíveis')
     } finally {
       setLoadingSuggestions(false)
     }

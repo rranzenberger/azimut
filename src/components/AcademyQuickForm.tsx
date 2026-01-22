@@ -10,6 +10,7 @@ import { type Lang } from '../i18n'
 import ApiService from '../services/api'
 import CanadaMapleLeaf from './CanadaMapleLeaf'
 import { useFormTracking } from '../hooks/useFormTracking'
+import { logger } from '@/utils/logger'
 
 // SelectField Component - Customizado (igual SmartContactForm)
 interface SelectFieldProps {
@@ -191,7 +192,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         const quiz = JSON.parse(quizData)
         autoFilled.interest = `Interessado em ${quiz.bestSchool} - ${quiz.area || 'Animação/VFX'}. Score: ${quiz.score}/100.`
       } catch (e) {
-        console.warn('Erro ao parsear Quiz data')
+        logger.warn('Erro ao parsear Quiz data')
       }
     }
 
@@ -203,7 +204,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
           autoFilled.interest = `Interessado em ${topCourse.title}. Match: ${topCourse.match}%.`
         }
       } catch (e) {
-        console.warn('Erro ao parsear Recommendation data')
+        logger.warn('Erro ao parsear Recommendation data')
       }
     }
 
@@ -617,7 +618,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
             })
           })
         } catch (newsletterError) {
-          console.warn('Newsletter subscription failed (non-critical):', newsletterError)
+          logger.warn('Newsletter subscription failed (non-critical):', newsletterError)
         }
       }
 
@@ -643,7 +644,10 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
         wantsNewsletter: false
       })
     } catch (err: any) {
-      console.error('Form submission error:', err)
+      logger.error(err instanceof Error ? err : new Error(String(err)), { 
+        action: 'submitAcademyQuickForm',
+        formType: 'academy_quick'
+      })
       setError(err.message || 'Erro ao enviar')
     } finally {
       setLoading(false)

@@ -3,6 +3,7 @@
 // ════════════════════════════════════════════════════════════
 
 import { generateFullContext } from './azimut-context'
+import { logger } from '@/utils/logger'
 
 interface ClaudeRequest {
   message: string
@@ -397,7 +398,10 @@ export async function callClaude(request: ClaudeRequest): Promise<ClaudeResponse
       intent: detectIntent(assistantResponse)
     }
   } catch (error) {
-    console.error('Claude API error:', error)
+    logger.api.error('/api/chat/claude', error as Error, { 
+      action: 'chatWithClaude',
+      lang: request.lang 
+    })
     
     // Fallback response
     const fallbackResponses: Record<string, string> = {

@@ -19,6 +19,7 @@ import GoogleSearchConsoleVerification from './GoogleSearchConsoleVerification'
 import { type UserProfile } from './BudgetWizard'
 import { trackCTA, trackLanguageChange } from '../utils/analytics'
 import { useUserTracking } from '../hooks/useUserTracking'
+import { logger } from '@/utils/logger'
 // throttle removido - usando requestAnimationFrame diretamente
 
 // ═══════════════════════════════════════════════════════════════
@@ -1422,7 +1423,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       throw new Error(data.error || 'Erro ao inscrever')
                     }
                   } catch (error) {
-                    console.warn('[Newsletter] API error, using fallback:', error)
+                    logger.warn('[Newsletter] API error, using fallback:', error)
                     // Fallback gracioso
                     emailInput.value = ''
                     emailInput.placeholder = lang === 'pt' ? '✅ Obrigado!' : lang === 'es' ? '✅ ¡Gracias!' : '✅ Thank you!'

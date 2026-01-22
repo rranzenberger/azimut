@@ -3,6 +3,7 @@ import { type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { trackPageView } from '../utils/analytics'
 import StarBackground from '../components/StarBackground'
+import { logger } from '@/utils/logger'
 
 // Lazy load do formulário para evitar erro de renderização
 const SmartContactForm = React.lazy(() => import('../components/SmartContactForm'))
@@ -102,7 +103,7 @@ const Contact: React.FC<ContactProps> = ({ lang }) => {
       const cleanup = trackPageView('contact')
       return cleanup
     } catch (error) {
-      console.warn('Tracking error:', error)
+      logger.warn('Tracking error:', error)
       return () => {}
     }
   }, [])
