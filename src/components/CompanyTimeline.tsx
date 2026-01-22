@@ -10,7 +10,7 @@
 // - Layout: Ano fixo à esquerda + Conteúdo à direita
 // ════════════════════════════════════════════════════════════
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo, useCallback, useRef } from 'react'
 import { Lang } from '../i18n'
 
 interface CompanyHistoryItem {
@@ -51,7 +51,7 @@ const FALLBACK_HISTORY: Record<Lang, CompanyHistoryItem[]> = {
     { id: '6', year: 2004, yearEnd: 2018, period: '2004-2018', type: 'milestone', title: 'Azimut Escola de Animação', description: 'Primeira escola de animação CG Autodesk na América Latina.', bullets: ['Cursos profissionalizantes 1-2 anos', 'CAD, 3ds Max, After Effects, Flame', 'Formamos centenas de profissionais', 'Filiais em Rio, Belém, Florianópolis'], icon: '🎓', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '7', year: 2005, yearEnd: null, period: '2005', type: 'award', title: 'Digital Designer - Pessoa do Ano', description: 'Pessoa do ano em computação gráfica no Brasil - MAC Niterói.', bullets: [], icon: '🏆', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '8', year: 2005, yearEnd: 2007, period: '2005-2007', type: 'project', title: 'Taikodom - Maior Game Brasileiro', description: 'Direção de arte do maior projeto de game desenvolvido no Brasil - MMORPG espacial.', bullets: [], icon: '🎮', logoUrl: null, externalLink: null, isFeatured: true },
-    { id: '9', year: 2015, yearEnd: 2017, period: '2015-2017', type: 'project', title: 'Museu Olímpico do Rio', description: 'Direção Geral de Tecnologia para o Museu Olímpico do Rio de Janeiro - Olimpíadas 2016.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '9', year: 2023, yearEnd: 2025, period: '2023-2025', type: 'project', title: 'Museu Olímpico do Rio', description: 'Direção Geral de Tecnologia para o Museu Olímpico do Rio de Janeiro - pós Olimpíadas 2016.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '10', year: 2017, yearEnd: null, period: '2017', type: 'milestone', title: 'Vancouver, Canadá', description: 'Expansão internacional com operações em Vancouver, British Columbia.', bullets: [], icon: '🍁', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '11', year: 2017, yearEnd: 2025, period: '2017-2025', type: 'partnership', title: 'Festival de Gramado - Curadoria VR', description: 'Curadoria oficial de Realidade Virtual do Festival de Cinema de Gramado por 8 anos consecutivos - único no Brasil.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '12', year: 2018, yearEnd: null, period: '2018', type: 'partnership', title: 'XRBR - Membro Fundador', description: 'Membro fundador da Associação Brasileira de Realidade Estendida.', bullets: [], icon: '🏆', logoUrl: null, externalLink: null, isFeatured: false },
@@ -65,7 +65,7 @@ const FALLBACK_HISTORY: Record<Lang, CompanyHistoryItem[]> = {
     { id: '6', year: 2004, yearEnd: 2018, period: '2004-2018', type: 'milestone', title: 'Azimut Animation School', description: 'First CG animation school Autodesk in Latin America.', bullets: ['Professional courses 1-2 years', 'CAD, 3ds Max, After Effects, Flame', 'Trained hundreds of professionals', 'Branches in Rio, Belém, Florianópolis'], icon: '🎓', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '7', year: 2005, yearEnd: null, period: '2005', type: 'award', title: 'Digital Designer - Person of the Year', description: 'Person of the year in computer graphics in Brazil - MAC Niterói.', bullets: [], icon: '🏆', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '8', year: 2005, yearEnd: 2007, period: '2005-2007', type: 'project', title: 'Taikodom - Largest Brazilian Game', description: 'Art direction of the largest game project developed in Brazil - space MMORPG.', bullets: [], icon: '🎮', logoUrl: null, externalLink: null, isFeatured: true },
-    { id: '9', year: 2015, yearEnd: 2017, period: '2015-2017', type: 'project', title: 'Olympic Museum of Rio', description: 'General Technology Director for the Olympic Museum of Rio de Janeiro - 2016 Olympics.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '9', year: 2023, yearEnd: 2025, period: '2023-2025', type: 'project', title: 'Olympic Museum of Rio', description: 'General Technology Director for the Olympic Museum of Rio de Janeiro - post 2016 Olympics.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '10', year: 2017, yearEnd: null, period: '2017', type: 'milestone', title: 'Vancouver, Canada', description: 'International expansion with operations in Vancouver, British Columbia.', bullets: [], icon: '🍁', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '11', year: 2017, yearEnd: 2025, period: '2017-2025', type: 'partnership', title: 'Gramado Festival - VR Curatorship', description: 'Official Virtual Reality curatorship of Gramado Film Festival for 8 consecutive years - unique in Brazil.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '12', year: 2018, yearEnd: null, period: '2018', type: 'partnership', title: 'XRBR - Founding Member', description: 'Founding member of Brazilian Extended Reality Association.', bullets: [], icon: '🏆', logoUrl: null, externalLink: null, isFeatured: false },
@@ -75,7 +75,7 @@ const FALLBACK_HISTORY: Record<Lang, CompanyHistoryItem[]> = {
     { id: '2', year: 2000, yearEnd: 2018, period: '2000-2018', type: 'partnership', title: 'AZMT - Centro de Capacitación Autodesk', description: 'AZMT Computación y Producciones Cinematográficas (nombre comercial Azimut) se convierte en Centro de Capacitación Autodesk oficial en América del Sur por 18 años.', bullets: ['Centro de Capacitación Autodesk Oficial', 'Demo Artist Autodesk Discreet', 'Application Engineer América del Sur', 'Único Flame Trainer certificado en Brasil'], icon: '🎓', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '3', year: 1998, yearEnd: null, period: '1998', type: 'milestone', title: 'AZMT Computación y Producciones Cinematográficas', description: 'Fundación oficial de la empresa con enfoque en producciones cinematográficas.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '4', year: 2005, yearEnd: 2007, period: '2005-2007', type: 'project', title: 'Taikodom - Mayor Juego Brasileño', description: 'Dirección de arte del mayor proyecto de juego desarrollado en Brasil.', bullets: [], icon: '🎮', logoUrl: null, externalLink: null, isFeatured: true },
-    { id: '5', year: 2015, yearEnd: 2017, period: '2015-2017', type: 'project', title: 'Museo Olímpico de Río', description: 'Dirección General de Tecnología para el Museo Olímpico de Río de Janeiro.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '5', year: 2023, yearEnd: 2025, period: '2023-2025', type: 'project', title: 'Museo Olímpico de Río', description: 'Dirección General de Tecnología para el Museo Olímpico de Río de Janeiro - post Olimpíadas 2016.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '6', year: 2017, yearEnd: 2025, period: '2017-2025', type: 'partnership', title: 'Festival de Gramado - Curaduría VR', description: 'Curaduría oficial de Realidad Virtual del Festival de Cine de Gramado por 8 años consecutivos.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
   ],
   fr: [
@@ -83,12 +83,12 @@ const FALLBACK_HISTORY: Record<Lang, CompanyHistoryItem[]> = {
     { id: '2', year: 2000, yearEnd: 2018, period: '2000-2018', type: 'partnership', title: 'AZMT - Centre de Formation Autodesk', description: 'AZMT Informatique et Productions Cinématographiques (nom commercial Azimut) devient Centre de Formation Autodesk officiel en Amérique du Sud pendant 18 ans.', bullets: ['Centre de Formation Autodesk Officiel', 'Demo Artist Autodesk Discreet', 'Application Engineer Amérique du Sud', 'Seul Flame Trainer certifié au Brésil'], icon: '🎓', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '3', year: 1998, yearEnd: null, period: '1998', type: 'milestone', title: 'AZMT Informatique et Productions Cinématographiques', description: 'Fondation officielle de l\'entreprise axée sur les productions cinématographiques.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '4', year: 2005, yearEnd: 2007, period: '2005-2007', type: 'project', title: 'Taikodom - Plus Grand Jeu Brésilien', description: 'Direction artistique du plus grand projet de jeu développé au Brésil.', bullets: [], icon: '🎮', logoUrl: null, externalLink: null, isFeatured: true },
-    { id: '5', year: 2015, yearEnd: 2017, period: '2015-2017', type: 'project', title: 'Musée Olympique de Rio', description: 'Direction Générale de la Technologie pour le Musée Olympique de Rio de Janeiro.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '5', year: 2023, yearEnd: 2025, period: '2023-2025', type: 'project', title: 'Musée Olympique de Rio', description: 'Direction Générale de la Technologie pour le Musée Olympique de Rio de Janeiro - post Jeux 2016.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '6', year: 2017, yearEnd: 2025, period: '2017-2025', type: 'partnership', title: 'Festival de Gramado - Curation VR', description: 'Curation officielle de Réalité Virtuelle du Festival de Cinéma de Gramado pendant 8 années consécutives.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
   ],
 }
 
-export const CompanyTimeline: React.FC<CompanyTimelineProps> = ({
+export const CompanyTimeline: React.FC<CompanyTimelineProps> = React.memo(({
   lang,
   type,
   featured,
@@ -101,13 +101,12 @@ export const CompanyTimeline: React.FC<CompanyTimelineProps> = ({
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [usingFallback, setUsingFallback] = useState(false)
+  
+  // Ref para AbortController (cancelar requisições anteriores)
+  const abortControllerRef = useRef<AbortController | null>(null)
 
-  useEffect(() => {
-    fetchHistory()
-  }, [lang, type, featured, yearStart, yearEnd])
-
-  // Função para aplicar filtros nos dados (API ou fallback)
-  const applyFilters = (data: CompanyHistoryItem[]): CompanyHistoryItem[] => {
+  // Função para aplicar filtros nos dados (API ou fallback) - MEMOIZADA
+  const applyFilters = useCallback((data: CompanyHistoryItem[]): CompanyHistoryItem[] => {
     let filtered = [...data]
     
     // Filtrar por tipo
@@ -129,10 +128,10 @@ export const CompanyTimeline: React.FC<CompanyTimelineProps> = ({
     }
     
     return filtered
-  }
+  }, [type, featured, yearStart, yearEnd])
 
-  // Função para usar dados de fallback
-  const useFallbackData = () => {
+  // Função para usar dados de fallback - MEMOIZADA
+  const useFallbackData = useCallback(() => {
     console.log('[CompanyTimeline] Using FALLBACK data for lang:', lang)
     const fallbackData = FALLBACK_HISTORY[lang] || FALLBACK_HISTORY.pt
     const filteredData = applyFilters(fallbackData)
@@ -140,9 +139,17 @@ export const CompanyTimeline: React.FC<CompanyTimelineProps> = ({
     setUsingFallback(true)
     setError(null)
     setLoading(false)
-  }
+  }, [lang, applyFilters])
 
-  const fetchHistory = async () => {
+  const fetchHistory = useCallback(async () => {
+    // Cancelar requisição anterior se ainda estiver pendente
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort()
+    }
+    
+    // Criar novo AbortController para esta requisição
+    const abortController = new AbortController()
+    abortControllerRef.current = abortController
     try {
       setLoading(true)
       setError(null)
@@ -166,6 +173,7 @@ export const CompanyTimeline: React.FC<CompanyTimelineProps> = ({
       
       const response = await fetch(url, {
         headers: { 'Accept': 'application/json' },
+        signal: abortController.signal // Adicionar signal para cancelamento
       })
       
       // Se API retornar erro (404, 500, etc), usar fallback
@@ -196,13 +204,39 @@ export const CompanyTimeline: React.FC<CompanyTimelineProps> = ({
         useFallbackData()
       }
     } catch (err) {
+      // Se foi cancelado (AbortError), não fazer nada
+      if (err instanceof Error && err.name === 'AbortError') {
+        console.log('[CompanyTimeline] Request aborted')
+        return
+      }
+      
       // Erro de rede ou outro - usar fallback
       console.warn('[CompanyTimeline] Network error - Using fallback data:', err)
       useFallbackData()
     } finally {
-      setLoading(false)
+      // Só atualizar loading se não foi cancelado
+      if (!abortController.signal.aborted) {
+        setLoading(false)
+      }
     }
-  }
+  }, [lang, type, featured, yearStart, yearEnd, applyFilters, useFallbackData])
+
+  // Effect com cleanup para cancelar requisições
+  useEffect(() => {
+    fetchHistory()
+    
+    // Cleanup: cancelar requisição quando componente desmonta ou props mudam
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort()
+      }
+    }
+  }, [fetchHistory])
+
+  // Memoizar dados filtrados para evitar re-filtragem desnecessária
+  const filteredHistory = useMemo(() => {
+    return applyFilters(history)
+  }, [history, applyFilters])
 
   // Função removida - não usamos mais AnimatedTimeline, sempre lista completa
 
@@ -249,7 +283,7 @@ export const CompanyTimeline: React.FC<CompanyTimelineProps> = ({
   }
 
   // Empty state
-  if (history.length === 0) {
+  if (filteredHistory.length === 0) {
     return (
       <div className="card-adaptive rounded-xl p-8 text-center">
         <div className="text-6xl mb-4">📭</div>
@@ -274,22 +308,22 @@ export const CompanyTimeline: React.FC<CompanyTimelineProps> = ({
       {/* Estatísticas */}
       <div className="mb-8 text-center">
         <p className="text-white/60 text-lg mb-4">
-          <span className="font-bold text-azimut-red">{history.length}</span>{' '}
+          <span className="font-bold text-azimut-red">{filteredHistory.length}</span>{' '}
           {lang === 'pt' ? 'eventos históricos' : lang === 'en' ? 'historical events' : lang === 'es' ? 'eventos históricos' : 'événements historiques'}
           {' • '}
-          <span className="font-mono">{history[0]?.year}</span> - <span className="font-mono">{history[history.length - 1]?.year}</span>
+          <span className="font-mono">{filteredHistory[0]?.year}</span> - <span className="font-mono">{filteredHistory[filteredHistory.length - 1]?.year}</span>
         </p>
       </div>
 
       {/* Lista Sequencial Completa - Sempre Visível */}
       <div className="space-y-4">
-        {history.map((item, index) => (
+        {filteredHistory.map((item, index) => (
           <div
             key={item.id}
             className="relative flex gap-4 md:gap-6 group"
           >
             {/* Linha conectora vertical (exceto último item) */}
-            {index < history.length - 1 && (
+            {index < filteredHistory.length - 1 && (
               <div className="absolute left-5 md:left-6 top-14 bottom-0 w-0.5 bg-gradient-to-b from-azimut-red/60 via-azimut-red/40 to-transparent" />
             )}
 
@@ -382,6 +416,9 @@ export const CompanyTimeline: React.FC<CompanyTimelineProps> = ({
       </div>
     </div>
   )
-}
+})
+
+// Adicionar displayName para debugging
+CompanyTimeline.displayName = 'CompanyTimeline'
 
 export default CompanyTimeline
