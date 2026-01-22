@@ -787,10 +787,10 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
                 {dynamicContent.timeline.title}
               </h2>
-              <p className="text-xl text-white/60 max-w-3xl mx-auto mb-8">
+              <p className="text-xl text-white/60 max-w-3xl mx-auto mb-4">
                 {dynamicContent.timeline.subtitle}
               </p>
-              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-azimut-red to-transparent mx-auto" />
+              <div className="w-full max-w-md h-0.5 bg-gradient-to-r from-transparent via-azimut-red to-transparent mx-auto" />
             </div>
 
             {/* Filtros */}
