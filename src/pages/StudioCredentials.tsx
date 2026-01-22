@@ -20,17 +20,17 @@ interface StudioCredentialsProps {
 
 const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
   const [activeFilter, setActiveFilter] = useState<string>('all')
-  const [yearsOfInnovation, setYearsOfInnovation] = useState<number>(46) // Fallback padrão
+  const [yearsOfInnovation, setYearsOfInnovation] = useState<number>(30) // Fallback padrão (2026 - 1996 = 30)
 
   const content = {
     pt: {
       title: 'Nossa História',
-      subtitle: '46 anos transformando ideias em experiências imersivas',
+      subtitle: '30 anos transformando ideias em experiências imersivas',
       eyebrow: 'CREDIBILIDADE',
       hero: {
-        bigNumber: '46',
+        bigNumber: '30',
         bigNumberLabel: 'anos de inovação',
-        description: 'Da computação gráfica pioneira nos anos 80 às experiências imersivas com IA em 2026. Somos referência em animação 3D, realidade virtual e projetos audiovisuais de alto impacto.'
+        description: 'Desde 1996, do ArchiCAD às experiências imersivas com IA em 2026. Somos referência em animação 3D, realidade virtual e projetos audiovisuais de alto impacto.'
       },
       stats: [
         { number: '30+', label: 'Eventos Históricos', icon: '📅' },
@@ -135,7 +135,7 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
       },
       timeline: {
         title: 'Linha do Tempo Completa',
-        subtitle: 'Explore 46 anos de história, inovação e pioneirismo',
+        subtitle: 'Explore 30 anos de história, inovação e pioneirismo',
         filters: {
           all: 'Todos',
           milestone: 'Marcos',
@@ -153,10 +153,10 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
     },
     en: {
       title: 'Our History',
-      subtitle: '46 years transforming ideas into immersive experiences',
+      subtitle: '30 years transforming ideas into immersive experiences',
       eyebrow: 'CREDIBILITY',
       hero: {
-        bigNumber: '46',
+        bigNumber: '30',
         bigNumberLabel: 'years of innovation',
         description: 'From pioneering computer graphics in the 80s to immersive AI experiences in 2026. We are a reference in 3D animation, virtual reality and high-impact audiovisual projects.'
       },
@@ -263,7 +263,7 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
       },
       timeline: {
         title: 'Complete Timeline',
-        subtitle: 'Explore 46 years of history, innovation and pioneering',
+        subtitle: 'Explore 30 years of history, innovation and pioneering',
         filters: {
           all: 'All',
           milestone: 'Milestones',
@@ -281,10 +281,10 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
     },
     es: {
       title: 'Nuestra Historia',
-      subtitle: '46 años transformando ideas en experiencias inmersivas',
+      subtitle: '30 años transformando ideas en experiencias inmersivas',
       eyebrow: 'CREDIBILIDAD',
       hero: {
-        bigNumber: '46',
+        bigNumber: '30',
         bigNumberLabel: 'años de innovación',
         description: 'Desde la computación gráfica pionera en los 80 hasta experiencias inmersivas con IA en 2026. Somos referencia en animación 3D, realidad virtual y proyectos audiovisuales de alto impacto.'
       },
@@ -391,7 +391,7 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
       },
       timeline: {
         title: 'Línea de Tiempo Completa',
-        subtitle: 'Explora 46 años de historia, innovación y pionerismo',
+        subtitle: 'Explora 30 años de historia, innovación y pionerismo',
         filters: {
           all: 'Todos',
           milestone: 'Hitos',
@@ -409,10 +409,10 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
     },
     fr: {
       title: 'Notre Histoire',
-      subtitle: '46 ans à transformer des idées en expériences immersives',
+      subtitle: '30 ans à transformer des idées en expériences immersives',
       eyebrow: 'CRÉDIBILITÉ',
       hero: {
-        bigNumber: '46',
+        bigNumber: '30',
         bigNumberLabel: 'ans d\'innovation',
         description: 'De l\'infographie pionnière des années 80 aux expériences immersives avec IA en 2026. Nous sommes une référence en animation 3D, réalité virtuelle et projets audiovisuels à fort impact.'
       },
@@ -519,7 +519,7 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
       },
       timeline: {
         title: 'Chronologie Complète',
-        subtitle: 'Explorez 46 ans d\'histoire, d\'innovation et de pionnier',
+        subtitle: 'Explorez 30 ans d\'histoire, d\'innovation et de pionnier',
         filters: {
           all: 'Tous',
           milestone: 'Jalons',
@@ -552,12 +552,12 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
             const oldestYear = Math.min(...data.data.map((item: any) => item.year))
             const currentYear = new Date().getFullYear()
             const calculatedYears = currentYear - oldestYear
-            // Usar o maior entre o calculado e 46 (para não diminuir se houver dados antigos)
-            setYearsOfInnovation(Math.max(calculatedYears, 46))
+            // Usar o calculado diretamente (história começa em 1996)
+            setYearsOfInnovation(calculatedYears)
           }
         }
       } catch (err) {
-        // Manter fallback 46 em caso de erro
+        // Manter fallback 30 em caso de erro (2026 - 1996 = 30)
         console.warn('[StudioCredentials] Não foi possível calcular anos dinamicamente, usando fallback:', err)
       }
     }
@@ -568,14 +568,14 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
   // Atualizar conteúdo com número dinâmico
   const dynamicContent = {
     ...t,
-    subtitle: t.subtitle.replace('46', yearsOfInnovation.toString()),
+    subtitle: t.subtitle.replace('30', yearsOfInnovation.toString()),
     hero: {
       ...t.hero,
       bigNumber: yearsOfInnovation.toString(),
     },
     timeline: {
       ...t.timeline,
-      subtitle: t.timeline.subtitle.replace('46', yearsOfInnovation.toString()),
+      subtitle: t.timeline.subtitle.replace('30', yearsOfInnovation.toString()),
     }
   }
 
@@ -787,10 +787,10 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
                 {dynamicContent.timeline.title}
               </h2>
-              <p className="text-xl text-white/60 max-w-3xl mx-auto mb-4">
+              <p className="text-xl text-white/60 max-w-3xl mx-auto mb-6">
                 {dynamicContent.timeline.subtitle}
               </p>
-              <div className="w-full max-w-md h-0.5 bg-gradient-to-r from-transparent via-azimut-red to-transparent mx-auto" />
+              <div className="w-full max-w-xl h-0.5 bg-gradient-to-r from-transparent via-azimut-red to-transparent mx-auto mb-8" />
             </div>
 
             {/* Filtros */}
