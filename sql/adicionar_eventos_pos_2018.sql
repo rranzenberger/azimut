@@ -4,10 +4,10 @@
 -- Execute no Neon SQL Editor: https://console.neon.tech
 -- ═══════════════════════════════════════════════════════════════
 
--- 1. Verificar se Museu Olímpico já existe
+-- 1. Verificar se Rio Museu Olímpico já existe
 SELECT id, year, "yearEnd", "titlePt" 
 FROM "CompanyHistory" 
-WHERE "titlePt" LIKE '%Museu Ol%' OR "titleEn" LIKE '%Olympic Museum%';
+WHERE "titlePt" LIKE '%Museu Ol%' OR "titleEn" LIKE '%Olympic Museum%' OR "titlePt" LIKE '%Rio Museu%';
 
 -- 2. Adicionar evento: Workshops, Palestras e Curadorias (2018-2026)
 INSERT INTO "CompanyHistory" (
@@ -81,36 +81,48 @@ VALUES (
 )
 ON CONFLICT DO NOTHING;
 
--- 5. Verificar/Atualizar Museu Olímpico (2023-2025)
+-- 5. Verificar/Atualizar Rio Museu Olímpico (2023-2025)
 -- Se já existe, atualizar; se não, inserir
 INSERT INTO "CompanyHistory" (
   "year", "yearEnd", "type", "titlePt", "titleEn", "titleEs", "titleFr",
   "descriptionPt", "descriptionEn", "descriptionEs", "descriptionFr",
-  "icon", "isFeatured", "displayOrder"
+  "icon", "isFeatured", "displayOrder", "bulletsPt", "bulletsEn", "bulletsEs", "bulletsFr"
 )
 VALUES (
   2023, 2025, 'project',
-  'Museu Olímpico do Rio',
-  'Olympic Museum of Rio',
-  'Museo Olímpico de Río',
-  'Musée Olympique de Rio',
-  'Direção Geral de Tecnologia para o Museu Olímpico do Rio de Janeiro - pós Olimpíadas 2016.',
-  'General Technology Director for the Olympic Museum of Rio de Janeiro - post 2016 Olympics.',
-  'Dirección General de Tecnología para el Museo Olímpico de Río de Janeiro - post Olimpíadas 2016.',
-  'Direction Générale de la Technologie pour le Musée Olympique de Rio de Janeiro - post Jeux 2016.',
-  '🏛️', true, 180
+  'Rio Museu Olímpico - Direção Geral',
+  'Rio Olympic Museum - General Direction',
+  'Rio Museo Olímpico - Dirección General',
+  'Rio Musée Olympique - Direction Générale',
+  'Direção Geral de Tecnologia, Direção Audiovisual e Design. Fase de execução e montagem com gestão de inúmeros fornecedores: games, simuladores, programadores, compatibilidade de arte, cenografia, motion, edição, pós-produção e interatividade.',
+  'General Technology Direction, Audiovisual Direction and Design. Execution and assembly phase with management of numerous suppliers: games, simulators, programmers, art compatibility, scenography, motion, editing, post-production and interactivity.',
+  'Dirección General de Tecnología, Dirección Audiovisual y Diseño. Fase de ejecución y montaje con gestión de numerosos proveedores: juegos, simuladores, programadores, compatibilidad de arte, escenografía, motion, edición, postproducción e interactividad.',
+  'Direction Générale de Technologie, Direction Audiovisuelle et Design. Phase d\'exécution et montage avec gestion de nombreux fournisseurs: jeux, simulateurs, programmeurs, compatibilité artistique, scénographie, motion, montage, post-production et interactivité.',
+  '🏛️', true, 180,
+  ARRAY['Direção Geral de Tecnologia (Ranz)', 'Direção Audiovisual (Alberto)', 'Liderança Equipe Arte: Design/UI/Motion/Grafismo/Sinalização (Anick)', 'Gestão múltiplos fornecedores', 'Execução e montagem'],
+  ARRAY['General Technology Direction (Ranz)', 'Audiovisual Direction (Alberto)', 'Art Team Leadership: Design/UI/Motion/Graphics/Signage (Anick)', 'Multiple supplier management', 'Execution and assembly'],
+  ARRAY['Dirección General de Tecnología (Ranz)', 'Dirección Audiovisual (Alberto)', 'Liderazgo Equipo Arte: Diseño/UI/Motion/Gráficos/Señalización (Anick)', 'Gestión múltiples proveedores', 'Ejecución y montaje'],
+  ARRAY['Direction Générale de Technologie (Ranz)', 'Direction Audiovisuelle (Alberto)', 'Leadership Équipe Art: Design/UI/Motion/Graphisme/Signalisation (Anick)', 'Gestion multiples fournisseurs', 'Exécution et montage']
 )
 ON CONFLICT DO NOTHING;
 
--- 6. Se Museu Olímpico já existe com ano errado, atualizar
+-- 6. Se Rio Museu Olímpico já existe com ano errado, atualizar
 UPDATE "CompanyHistory"
 SET 
   year = 2023,
   "yearEnd" = 2025,
-  "descriptionPt" = 'Direção Geral de Tecnologia para o Museu Olímpico do Rio de Janeiro - pós Olimpíadas 2016.',
-  "descriptionEn" = 'General Technology Director for the Olympic Museum of Rio de Janeiro - post 2016 Olympics.',
-  "descriptionEs" = 'Dirección General de Tecnología para el Museo Olímpico de Río de Janeiro - post Olimpíadas 2016.',
-  "descriptionFr" = 'Direction Générale de la Technologie pour le Musée Olympique de Rio de Janeiro - post Jeux 2016.'
+  "titlePt" = 'Rio Museu Olímpico - Direção Geral',
+  "titleEn" = 'Rio Olympic Museum - General Direction',
+  "titleEs" = 'Rio Museo Olímpico - Dirección General',
+  "titleFr" = 'Rio Musée Olympique - Direction Générale',
+  "descriptionPt" = 'Direção Geral de Tecnologia, Direção Audiovisual e Design. Fase de execução e montagem com gestão de inúmeros fornecedores: games, simuladores, programadores, compatibilidade de arte, cenografia, motion, edição, pós-produção e interatividade.',
+  "descriptionEn" = 'General Technology Direction, Audiovisual Direction and Design. Execution and assembly phase with management of numerous suppliers: games, simulators, programmers, art compatibility, scenography, motion, editing, post-production and interactivity.',
+  "descriptionEs" = 'Dirección General de Tecnología, Dirección Audiovisual y Diseño. Fase de ejecución y montaje con gestión de numerosos proveedores: juegos, simuladores, programadores, compatibilidad de arte, escenografía, motion, edición, postproducción e interactividad.',
+  "descriptionFr" = 'Direction Générale de Technologie, Direction Audiovisuelle et Design. Phase d\'exécution et montage avec gestion de nombreux fournisseurs: jeux, simulateurs, programmeurs, compatibilité artistique, scénographie, motion, montage, post-production et interactivité.',
+  "bulletsPt" = ARRAY['Direção Geral de Tecnologia (Ranz)', 'Direção Audiovisual (Alberto)', 'Liderança Equipe Arte: Design/UI/Motion/Grafismo/Sinalização (Anick)', 'Gestão múltiplos fornecedores', 'Execução e montagem'],
+  "bulletsEn" = ARRAY['General Technology Direction (Ranz)', 'Audiovisual Direction (Alberto)', 'Art Team Leadership: Design/UI/Motion/Graphics/Signage (Anick)', 'Multiple supplier management', 'Execution and assembly'],
+  "bulletsEs" = ARRAY['Dirección General de Tecnología (Ranz)', 'Dirección Audiovisual (Alberto)', 'Liderazgo Equipo Arte: Diseño/UI/Motion/Gráficos/Señalización (Anick)', 'Gestión múltiples proveedores', 'Ejecución y montaje'],
+  "bulletsFr" = ARRAY['Direction Générale de Technologie (Ranz)', 'Direction Audiovisuelle (Alberto)', 'Leadership Équipe Art: Design/UI/Motion/Graphisme/Signalisation (Anick)', 'Gestion multiples fournisseurs', 'Exécution et montage']
 WHERE ("titlePt" LIKE '%Museu Ol%' OR "titleEn" LIKE '%Olympic Museum%')
   AND (year != 2023 OR "yearEnd" != 2025);
 
@@ -124,6 +136,6 @@ ORDER BY year, "displayOrder";
 -- PRONTO! Eventos adicionados:
 -- - 2018-2026: Workshops, Palestras e Curadorias (Rio2C)
 -- - 2019-2026: Motion Design para Exposições Imersivas (YDreams)
--- - 2023-2025: Museu Olímpico do Rio
+-- - 2023-2025: Rio Museu Olímpico - Direção Geral (Ranz/Alberto/Anick)
 -- - 2024-2026: Arte Generativa IA e Tecnologias Imersivas
 -- ═══════════════════════════════════════════════════════════════
