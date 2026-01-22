@@ -51,10 +51,13 @@ const FALLBACK_HISTORY: Record<Lang, CompanyHistoryItem[]> = {
     { id: '6', year: 2004, yearEnd: 2018, period: '2004-2018', type: 'milestone', title: 'Azimut Escola de Animação', description: 'Primeira escola de animação CG Autodesk na América Latina.', bullets: ['Cursos profissionalizantes 1-2 anos', 'CAD, 3ds Max, After Effects, Flame', 'Formamos centenas de profissionais', 'Filiais em Rio, Belém, Florianópolis'], icon: '🎓', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '7', year: 2005, yearEnd: null, period: '2005', type: 'award', title: 'Digital Designer - Pessoa do Ano', description: 'Pessoa do ano em computação gráfica no Brasil - MAC Niterói.', bullets: [], icon: '🏆', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '8', year: 2005, yearEnd: 2007, period: '2005-2007', type: 'project', title: 'Taikodom - Maior Game Brasileiro', description: 'Direção de arte do maior projeto de game desenvolvido no Brasil - MMORPG espacial.', bullets: [], icon: '🎮', logoUrl: null, externalLink: null, isFeatured: true },
-    { id: '9', year: 2023, yearEnd: 2025, period: '2023-2025', type: 'project', title: 'Museu Olímpico do Rio', description: 'Direção Geral de Tecnologia para o Museu Olímpico do Rio de Janeiro - pós Olimpíadas 2016.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '10', year: 2017, yearEnd: null, period: '2017', type: 'milestone', title: 'Vancouver, Canadá', description: 'Expansão internacional com operações em Vancouver, British Columbia.', bullets: [], icon: '🍁', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '11', year: 2017, yearEnd: 2025, period: '2017-2025', type: 'partnership', title: 'Festival de Gramado - Curadoria VR', description: 'Curadoria oficial de Realidade Virtual do Festival de Cinema de Gramado por 8 anos consecutivos - único no Brasil.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '12', year: 2018, yearEnd: null, period: '2018', type: 'partnership', title: 'XRBR - Membro Fundador', description: 'Membro fundador da Associação Brasileira de Realidade Estendida.', bullets: [], icon: '🏆', logoUrl: null, externalLink: null, isFeatured: false },
+    { id: '13', year: 2018, yearEnd: 2026, period: '2018-2026', type: 'milestone', title: 'Workshops, Palestras e Curadorias', description: 'Workshops em eventos, Rio2C, palestras e curadorias em tecnologia e novas mídias.', bullets: ['Rio2C', 'Workshops em eventos', 'Palestras', 'Curadorias'], icon: '🎤', logoUrl: null, externalLink: null, isFeatured: false },
+    { id: '14', year: 2019, yearEnd: 2026, period: '2019-2026', type: 'project', title: 'Motion Design para Exposições Imersivas', description: 'Motion design e conteúdo audiovisual para exposições imersivas. Parcerias: YDreams e outras produtoras.', bullets: ['Motion Design', 'Exposições Imersivas', 'Parcerias: YDreams e outras produtoras'], icon: '✨', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '15', year: 2023, yearEnd: 2025, period: '2023-2025', type: 'project', title: 'Museu Olímpico do Rio', description: 'Direção Geral de Tecnologia para o Museu Olímpico do Rio de Janeiro - pós Olimpíadas 2016.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '16', year: 2024, yearEnd: 2026, period: '2024-2026', type: 'milestone', title: 'Arte Generativa IA e Tecnologias Imersivas', description: 'Arte generativa com IA, motion design, VR/AR, interatividades e color mapping para experiências imersivas.', bullets: ['Arte Generativa IA', 'Motion Design', 'VR/AR', 'Interatividades', 'Color Mapping'], icon: '🤖', logoUrl: null, externalLink: null, isFeatured: true },
   ],
   en: [
     { id: '1', year: 1996, yearEnd: null, period: '1996', type: 'milestone', title: 'ArchiCAD Brasil - Computer Graphics', description: 'Start of activities with ArchiCAD, computer graphics, CAD and virtual models.', bullets: [], icon: '🏗️', logoUrl: null, externalLink: null, isFeatured: true },
@@ -65,10 +68,13 @@ const FALLBACK_HISTORY: Record<Lang, CompanyHistoryItem[]> = {
     { id: '6', year: 2004, yearEnd: 2018, period: '2004-2018', type: 'milestone', title: 'Azimut Animation School', description: 'First CG animation school Autodesk in Latin America.', bullets: ['Professional courses 1-2 years', 'CAD, 3ds Max, After Effects, Flame', 'Trained hundreds of professionals', 'Branches in Rio, Belém, Florianópolis'], icon: '🎓', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '7', year: 2005, yearEnd: null, period: '2005', type: 'award', title: 'Digital Designer - Person of the Year', description: 'Person of the year in computer graphics in Brazil - MAC Niterói.', bullets: [], icon: '🏆', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '8', year: 2005, yearEnd: 2007, period: '2005-2007', type: 'project', title: 'Taikodom - Largest Brazilian Game', description: 'Art direction of the largest game project developed in Brazil - space MMORPG.', bullets: [], icon: '🎮', logoUrl: null, externalLink: null, isFeatured: true },
-    { id: '9', year: 2023, yearEnd: 2025, period: '2023-2025', type: 'project', title: 'Olympic Museum of Rio', description: 'General Technology Director for the Olympic Museum of Rio de Janeiro - post 2016 Olympics.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '10', year: 2017, yearEnd: null, period: '2017', type: 'milestone', title: 'Vancouver, Canada', description: 'International expansion with operations in Vancouver, British Columbia.', bullets: [], icon: '🍁', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '11', year: 2017, yearEnd: 2025, period: '2017-2025', type: 'partnership', title: 'Gramado Festival - VR Curatorship', description: 'Official Virtual Reality curatorship of Gramado Film Festival for 8 consecutive years - unique in Brazil.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '12', year: 2018, yearEnd: null, period: '2018', type: 'partnership', title: 'XRBR - Founding Member', description: 'Founding member of Brazilian Extended Reality Association.', bullets: [], icon: '🏆', logoUrl: null, externalLink: null, isFeatured: false },
+    { id: '13', year: 2018, yearEnd: 2026, period: '2018-2026', type: 'milestone', title: 'Workshops, Lectures and Curatorships', description: 'Workshops at events, Rio2C, lectures and curatorships in technology and new media.', bullets: ['Rio2C', 'Workshops at events', 'Lectures', 'Curatorships'], icon: '🎤', logoUrl: null, externalLink: null, isFeatured: false },
+    { id: '14', year: 2019, yearEnd: 2026, period: '2019-2026', type: 'project', title: 'Motion Design for Immersive Exhibitions', description: 'Motion design and audiovisual content for immersive exhibitions. Partnerships: YDreams and other producers.', bullets: ['Motion Design', 'Immersive Exhibitions', 'Partnerships: YDreams and other producers'], icon: '✨', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '15', year: 2023, yearEnd: 2025, period: '2023-2025', type: 'project', title: 'Olympic Museum of Rio', description: 'General Technology Director for the Olympic Museum of Rio de Janeiro - post 2016 Olympics.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '16', year: 2024, yearEnd: 2026, period: '2024-2026', type: 'milestone', title: 'Generative AI Art and Immersive Technologies', description: 'Generative AI art, motion design, VR/AR, interactivities and color mapping for immersive experiences.', bullets: ['Generative AI Art', 'Motion Design', 'VR/AR', 'Interactivities', 'Color Mapping'], icon: '🤖', logoUrl: null, externalLink: null, isFeatured: true },
   ],
   es: [
     { id: '1', year: 1996, yearEnd: null, period: '1996', type: 'milestone', title: 'ArchiCAD Brasil - Computación Gráfica', description: 'Inicio de actividades con ArchiCAD, computación gráfica, CAD y maquetas virtuales.', bullets: [], icon: '🏗️', logoUrl: null, externalLink: null, isFeatured: true },
@@ -77,6 +83,10 @@ const FALLBACK_HISTORY: Record<Lang, CompanyHistoryItem[]> = {
     { id: '4', year: 2005, yearEnd: 2007, period: '2005-2007', type: 'project', title: 'Taikodom - Mayor Juego Brasileño', description: 'Dirección de arte del mayor proyecto de juego desarrollado en Brasil.', bullets: [], icon: '🎮', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '5', year: 2023, yearEnd: 2025, period: '2023-2025', type: 'project', title: 'Museo Olímpico de Río', description: 'Dirección General de Tecnología para el Museo Olímpico de Río de Janeiro - post Olimpíadas 2016.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '6', year: 2017, yearEnd: 2025, period: '2017-2025', type: 'partnership', title: 'Festival de Gramado - Curaduría VR', description: 'Curaduría oficial de Realidad Virtual del Festival de Cine de Gramado por 8 años consecutivos.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '7', year: 2018, yearEnd: 2026, period: '2018-2026', type: 'milestone', title: 'Talleres, Conferencias y Curadurías', description: 'Talleres en eventos, Rio2C, conferencias y curadurías en tecnología y nuevos medios.', bullets: ['Rio2C', 'Talleres en eventos', 'Conferencias', 'Curadurías'], icon: '🎤', logoUrl: null, externalLink: null, isFeatured: false },
+    { id: '8', year: 2019, yearEnd: 2026, period: '2019-2026', type: 'project', title: 'Motion Design para Exposiciones Inmersivas', description: 'Motion design y contenido audiovisual para exposiciones inmersivas. Asociaciones: YDreams y otras productoras.', bullets: ['Motion Design', 'Exposiciones Inmersivas', 'Asociaciones: YDreams y otras productoras'], icon: '✨', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '9', year: 2023, yearEnd: 2025, period: '2023-2025', type: 'project', title: 'Museo Olímpico de Río', description: 'Dirección General de Tecnología para el Museo Olímpico de Río de Janeiro - post Olimpíadas 2016.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '10', year: 2024, yearEnd: 2026, period: '2024-2026', type: 'milestone', title: 'Arte Generativa IA y Tecnologías Inmersivas', description: 'Arte generativa con IA, motion design, VR/AR, interactividades y color mapping para experiencias inmersivas.', bullets: ['Arte Generativa IA', 'Motion Design', 'VR/AR', 'Interactividades', 'Color Mapping'], icon: '🤖', logoUrl: null, externalLink: null, isFeatured: true },
   ],
   fr: [
     { id: '1', year: 1996, yearEnd: null, period: '1996', type: 'milestone', title: 'ArchiCAD Brasil - Infographie', description: 'Début des activités avec ArchiCAD, infographie, CAD et maquettes virtuelles.', bullets: [], icon: '🏗️', logoUrl: null, externalLink: null, isFeatured: true },
@@ -85,6 +95,10 @@ const FALLBACK_HISTORY: Record<Lang, CompanyHistoryItem[]> = {
     { id: '4', year: 2005, yearEnd: 2007, period: '2005-2007', type: 'project', title: 'Taikodom - Plus Grand Jeu Brésilien', description: 'Direction artistique du plus grand projet de jeu développé au Brésil.', bullets: [], icon: '🎮', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '5', year: 2023, yearEnd: 2025, period: '2023-2025', type: 'project', title: 'Musée Olympique de Rio', description: 'Direction Générale de la Technologie pour le Musée Olympique de Rio de Janeiro - post Jeux 2016.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '6', year: 2017, yearEnd: 2025, period: '2017-2025', type: 'partnership', title: 'Festival de Gramado - Curation VR', description: 'Curation officielle de Réalité Virtuelle du Festival de Cinéma de Gramado pendant 8 années consécutives.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '7', year: 2018, yearEnd: 2026, period: '2018-2026', type: 'milestone', title: 'Ateliers, Conférences et Curations', description: 'Ateliers lors d\'événements, Rio2C, conférences et curations en technologie et nouveaux médias.', bullets: ['Rio2C', 'Ateliers lors d\'événements', 'Conférences', 'Curations'], icon: '🎤', logoUrl: null, externalLink: null, isFeatured: false },
+    { id: '8', year: 2019, yearEnd: 2026, period: '2019-2026', type: 'project', title: 'Motion Design pour Expositions Immersives', description: 'Motion design et contenu audiovisuel pour expositions immersives. Partenariats: YDreams et autres producteurs.', bullets: ['Motion Design', 'Expositions Immersives', 'Partenariats: YDreams et autres producteurs'], icon: '✨', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '9', year: 2023, yearEnd: 2025, period: '2023-2025', type: 'project', title: 'Musée Olympique de Rio', description: 'Direction Générale de la Technologie pour le Musée Olympique de Rio de Janeiro - post Jeux 2016.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '10', year: 2024, yearEnd: 2026, period: '2024-2026', type: 'milestone', title: 'Art Générative IA et Technologies Immersives', description: 'Art générative avec IA, motion design, VR/AR, interactivités et color mapping pour expériences immersives.', bullets: ['Art Générative IA', 'Motion Design', 'VR/AR', 'Interactivités', 'Color Mapping'], icon: '🤖', logoUrl: null, externalLink: null, isFeatured: true },
   ],
 }
 
@@ -233,9 +247,21 @@ export const CompanyTimeline: React.FC<CompanyTimelineProps> = React.memo(({
     }
   }, [fetchHistory])
 
-  // Memoizar dados filtrados para evitar re-filtragem desnecessária
+  // Memoizar dados filtrados e ordenados por ano (cronológico)
   const filteredHistory = useMemo(() => {
-    return applyFilters(history)
+    const filtered = applyFilters(history)
+    // Ordenar por ano (crescente) - mais antigo primeiro
+    return filtered.sort((a, b) => {
+      // Se ambos têm yearEnd, ordenar por yearEnd também
+      if (a.yearEnd && b.yearEnd) {
+        if (a.year !== b.year) {
+          return a.year - b.year
+        }
+        return a.yearEnd - b.yearEnd
+      }
+      // Ordenar por year (ano inicial)
+      return a.year - b.year
+    })
   }, [history, applyFilters])
 
   // Função removida - não usamos mais AnimatedTimeline, sempre lista completa
