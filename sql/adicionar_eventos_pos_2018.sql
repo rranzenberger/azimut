@@ -57,7 +57,76 @@ VALUES (
 )
 ON CONFLICT DO NOTHING;
 
--- 4. Adicionar evento: Arte Generativa IA e Tecnologias Imersivas (2024-2026)
+-- 4. Adicionar parcerias: YDreams e UFRJ (2018-2026)
+INSERT INTO "CompanyHistory" (
+  "year", "yearEnd", "type", "titlePt", "titleEn", "titleEs", "titleFr",
+  "descriptionPt", "descriptionEn", "descriptionEs", "descriptionFr",
+  "icon", "isFeatured", "displayOrder", "bulletsPt", "bulletsEn", "bulletsEs", "bulletsFr"
+)
+VALUES 
+-- YDreams
+(
+  2018, 2026, 'partnership',
+  'YDreams',
+  'YDreams',
+  'YDreams',
+  'YDreams',
+  'Parceria estratégica em projetos de experiências imersivas, motion design e conteúdo audiovisual.',
+  'Strategic partnership in immersive experiences, motion design and audiovisual content projects.',
+  'Asociación estratégica en proyectos de experiencias inmersivas, motion design y contenido audiovisual.',
+  'Partenariat stratégique dans des projets d''expériences immersives, motion design et contenu audiovisuel.',
+  '🤝', true, 165,
+  ARRAY['Experiências Imersivas', 'Motion Design', 'Conteúdo Audiovisual'],
+  ARRAY['Immersive Experiences', 'Motion Design', 'Audiovisual Content'],
+  ARRAY['Experiencias Inmersivas', 'Motion Design', 'Contenido Audiovisual'],
+  ARRAY['Expériences Immersives', 'Motion Design', 'Contenu Audiovisuel']
+),
+-- UFRJ
+(
+  2018, 2026, 'partnership',
+  'Escola de Comunicação UFRJ (Pesquisadores)',
+  'School of Communication UFRJ (Researchers)',
+  'Escuela de Comunicación UFRJ (Investigadores)',
+  'École de Communication UFRJ (Chercheurs)',
+  'Parceria acadêmica com pesquisadores da Escola de Comunicação da UFRJ em projetos de pesquisa e desenvolvimento.',
+  'Academic partnership with researchers from UFRJ School of Communication in research and development projects.',
+  'Asociación académica con investigadores de la Escuela de Comunicación de la UFRJ en proyectos de investigación y desarrollo.',
+  'Partenariat académique avec des chercheurs de l''École de Communication de l''UFRJ dans des projets de recherche et développement.',
+  '🎓', true, 166,
+  ARRAY['Pesquisadores', 'Projetos de Pesquisa', 'Desenvolvimento'],
+  ARRAY['Researchers', 'Research Projects', 'Development'],
+  ARRAY['Investigadores', 'Proyectos de Investigación', 'Desarrollo'],
+  ARRAY['Chercheurs', 'Projets de Recherche', 'Développement']
+)
+ON CONFLICT DO NOTHING;
+
+-- 5. Adicionar marcos (milestones) - Exemplos para você completar no backoffice
+INSERT INTO "CompanyHistory" (
+  "year", "yearEnd", "type", "titlePt", "titleEn", "titleEs", "titleFr",
+  "descriptionPt", "descriptionEn", "descriptionEs", "descriptionFr",
+  "icon", "isFeatured", "displayOrder", "bulletsPt", "bulletsEn", "bulletsEs", "bulletsFr"
+)
+VALUES 
+-- Exemplo de marco - você pode editar/adicionar mais no backoffice
+(
+  2020, null, 'milestone',
+  'Marco Exemplo - Editar no Backoffice',
+  'Example Milestone - Edit in Backoffice',
+  'Hito Ejemplo - Editar en Backoffice',
+  'Jalon Exemple - Modifier dans Backoffice',
+  'Este é um exemplo de marco. Você pode editar este texto ou criar novos marcos no backoffice.',
+  'This is an example milestone. You can edit this text or create new milestones in the backoffice.',
+  'Este es un ejemplo de hito. Puedes editar este texto o crear nuevos hitos en el backoffice.',
+  'Ceci est un exemple de jalon. Vous pouvez modifier ce texte ou créer de nouveaux jalons dans le backoffice.',
+  '📍', false, 190,
+  ARRAY['Exemplo', 'Editar no backoffice'],
+  ARRAY['Example', 'Edit in backoffice'],
+  ARRAY['Ejemplo', 'Editar en backoffice'],
+  ARRAY['Exemple', 'Modifier dans backoffice']
+)
+ON CONFLICT DO NOTHING;
+
+-- 6. Adicionar evento: Arte Generativa IA e Tecnologias Imersivas (2024-2026)
 INSERT INTO "CompanyHistory" (
   "year", "yearEnd", "type", "titlePt", "titleEn", "titleEs", "titleFr",
   "descriptionPt", "descriptionEn", "descriptionEs", "descriptionFr",
@@ -81,7 +150,7 @@ VALUES (
 )
 ON CONFLICT DO NOTHING;
 
--- 5. Verificar/Atualizar Rio Museu Olímpico (2023-2025)
+-- 7. Verificar/Atualizar Rio Museu Olímpico (2023-2025)
 -- Se já existe, atualizar; se não, inserir
 INSERT INTO "CompanyHistory" (
   "year", "yearEnd", "type", "titlePt", "titleEn", "titleEs", "titleFr",
@@ -106,7 +175,7 @@ VALUES (
 )
 ON CONFLICT DO NOTHING;
 
--- 6. Se Rio Museu Olímpico já existe com ano errado, atualizar
+-- 8. Se Rio Museu Olímpico já existe com ano errado, atualizar
 UPDATE "CompanyHistory"
 SET 
   year = 2023,
@@ -126,7 +195,7 @@ SET
 WHERE ("titlePt" LIKE '%Museu Ol%' OR "titleEn" LIKE '%Olympic Museum%')
   AND (year != 2023 OR "yearEnd" != 2025);
 
--- 7. Verificar resultado final
+-- 9. Verificar resultado final
 SELECT year, "yearEnd", "titlePt", type, "isFeatured"
 FROM "CompanyHistory"
 WHERE year >= 2018
@@ -134,8 +203,21 @@ ORDER BY year, "displayOrder";
 
 -- ═══════════════════════════════════════════════════════════════
 -- PRONTO! Eventos adicionados:
--- - 2018-2026: Workshops, Palestras e Curadorias (Rio2C)
--- - 2019-2026: Motion Design para Exposições Imersivas (YDreams)
--- - 2023-2025: Rio Museu Olímpico - Direção Geral (Ranz/Alberto/Anick)
--- - 2024-2026: Arte Generativa IA e Tecnologias Imersivas
+-- - 2018-2026: Workshops, Palestras e Curadorias (Rio2C) [Marco]
+-- - 2018-2026: YDreams (Parceria)
+-- - 2018-2026: Escola de Comunicação UFRJ (Pesquisadores) [Parceria]
+-- - 2019-2026: Motion Design para Exposições Imersivas (YDreams) [Projeto]
+-- - 2020: Marco Exemplo - Editar no Backoffice [Marco - exemplo]
+-- - 2023-2025: Rio Museu Olímpico - Direção Geral (Ranz/Alberto/Anick) [Projeto]
+-- - 2024-2026: Arte Generativa IA e Tecnologias Imersivas [Marco]
+-- 
+-- ✅ TODOS OS TIPOS SUPORTADOS NO BACKOFFICE:
+-- - Marcos (milestone) - Ex: Expansões, inaugurações, conquistas
+-- - Parcerias (partnership) - Ex: YDreams, UFRJ, Autodesk
+-- - Projetos (project) - Ex: Museu Olímpico, Taikodom
+-- - Prêmios (award) - Ex: Digital Designer, Training Specialist
+-- - Localizações (location) - Ex: Vancouver, Rio
+-- - Outros (other) - Qualquer outro tipo
+-- 
+-- 💡 DICA: Acesse /admin/history para adicionar/editar qualquer tipo de evento!
 -- ═══════════════════════════════════════════════════════════════

@@ -112,6 +112,7 @@ export default async function AdminLayout({
           <AdminLink href="/admin/newsletter" label="📨 Inscritos" />
           <AdminLink href="/admin/n8n-workflow" label="🤖 Automação n8n" />
           <AdminLink href="/admin/services" label="⚡ Serviços" />
+          <AdminLink href="/admin/history" label="📅 Timeline & Histórico" />
           <AdminLink href="/admin/settings" label="⚙️ Configurações" />
         </nav>
 
