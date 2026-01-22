@@ -53,10 +53,10 @@ export function HistoryEditForm({ history }: { history?: any }) {
 
     try {
       // Converter bullets de string para array
-      const bulletsPt = formData.bulletsPt ? formData.bulletsPt.split('\n').filter(s => s.trim()) : [];
-      const bulletsEn = formData.bulletsEn ? formData.bulletsEn.split('\n').filter(s => s.trim()) : [];
-      const bulletsEs = formData.bulletsEs ? formData.bulletsEs.split('\n').filter(s => s.trim()) : [];
-      const bulletsFr = formData.bulletsFr ? formData.bulletsFr.split('\n').filter(s => s.trim()) : [];
+      const bulletsPt = formData.bulletsPt ? formData.bulletsPt.split('\n').filter((s: string) => s.trim()) : [];
+      const bulletsEn = formData.bulletsEn ? formData.bulletsEn.split('\n').filter((s: string) => s.trim()) : [];
+      const bulletsEs = formData.bulletsEs ? formData.bulletsEs.split('\n').filter((s: string) => s.trim()) : [];
+      const bulletsFr = formData.bulletsFr ? formData.bulletsFr.split('\n').filter((s: string) => s.trim()) : [];
 
       const payload = {
         ...formData,
