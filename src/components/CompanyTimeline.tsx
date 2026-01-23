@@ -13,6 +13,32 @@
 import React, { useEffect, useState, useMemo, useCallback, useRef } from 'react'
 import { Lang } from '../i18n'
 
+// Hook para detectar tema
+const useIsDarkTheme = () => {
+  const [isDark, setIsDark] = useState(true)
+  
+  useEffect(() => {
+    const checkTheme = () => {
+      const html = document.documentElement
+      const theme = html.getAttribute('data-theme')
+      setIsDark(theme === 'dark')
+    }
+    
+    checkTheme()
+    const observer = new MutationObserver(checkTheme)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+    
+    window.addEventListener('themechange', checkTheme)
+    
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('themechange', checkTheme)
+    }
+  }, [])
+  
+  return isDark
+}
+
 // ════════════════════════════════════════════════════════════
 // CHECKPOINT: Backup criado em CompanyTimeline.tsx.bak
 // Para restaurar: copie CompanyTimeline.tsx.bak para CompanyTimeline.tsx
@@ -51,12 +77,14 @@ const FALLBACK_HISTORY: Record<Lang, CompanyHistoryItem[]> = {
     { id: '1', year: 1996, yearEnd: null, period: '1996', type: 'milestone', title: 'ArchiCAD Brasil - Computação Gráfica', description: 'Início das atividades com ArchiCAD, computação gráfica, CAD e maquetes virtuais.', bullets: [], icon: '🏗️', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '2', year: 2000, yearEnd: 2018, period: '2000-2018', type: 'partnership', title: 'AZMT - Centro de Treinamento Autodesk', description: 'AZMT Computação e Produções Cinematográficas (nome fantasia Azimut) torna-se Centro de Treinamento Autodesk oficial na América do Sul por 18 anos.', bullets: ['Centro de Treinamento Autodesk Oficial', 'Demo Artist Autodesk Discreet', 'Application Engineer América do Sul', 'Único Flame Trainer certificado no Brasil'], icon: '🎓', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '3', year: 1998, yearEnd: null, period: '1998', type: 'milestone', title: 'AZMT Computação e Produções Cinematográficas', description: 'Fundação oficial da empresa com foco em produções cinematográficas.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
-    { id: '4', year: 1999, yearEnd: null, period: '1999', type: 'partnership', title: 'Discreet (Montreal, Canada)', description: 'Parceria com Discreet (adquirida pela Autodesk em 1999) - empresa canadense sediada em Montreal.', bullets: [], icon: '🇨🇦', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '4', year: 1999, yearEnd: null, period: '1999', type: 'partnership', title: 'Discreet (Montreal, Canada)', description: 'Parceria com Discreet (adquirida pela Autodesk em 1999) - empresa canadense sediada em Montreal.', bullets: [], icon: '/Maple-Leaf-Canada.png', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '5', year: 2002, yearEnd: null, period: '2002', type: 'award', title: '1 de 15 no mundo - Training Specialist', description: 'Training Specialist Discreet Montreal - elite mundial de especialistas certificados.', bullets: [], icon: '🌟', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '6', year: 2004, yearEnd: 2018, period: '2004-2018', type: 'milestone', title: 'Azimut Escola de Animação', description: 'Primeira escola de animação CG Autodesk na América Latina.', bullets: ['Cursos profissionalizantes 1-2 anos', 'CAD, 3ds Max, After Effects, Flame', 'Formamos centenas de profissionais', 'Filiais em Rio, Belém, Florianópolis'], icon: '🎓', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '7', year: 2005, yearEnd: null, period: '2005', type: 'award', title: 'Digital Designer - Pessoa do Ano', description: 'Pessoa do ano em computação gráfica no Brasil - MAC Niterói.', bullets: [], icon: '🏆', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '8', year: 2005, yearEnd: 2007, period: '2005-2007', type: 'project', title: 'Taikodom - Maior Game Brasileiro', description: 'Direção de arte do maior projeto de game desenvolvido no Brasil - MMORPG espacial.', bullets: [], icon: '🎮', logoUrl: null, externalLink: null, isFeatured: true },
-    { id: '10', year: 2017, yearEnd: null, period: '2017', type: 'milestone', title: 'Vancouver, Canadá', description: 'Expansão internacional com operações em Vancouver, British Columbia.', bullets: [], icon: '🍁', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '10', year: 2014, yearEnd: null, period: '2014', type: 'partnership', title: 'Vanarts - CA Agente Educacional', description: 'Parceria como agente educacional da Vanarts (Vancouver Institute of Media Arts) no Canadá.', bullets: [], icon: '/vanarts.png', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '10b', year: 2017, yearEnd: null, period: '2017', type: 'milestone', title: 'Vancouver, Canadá', description: 'Expansão internacional com operações em Vancouver, British Columbia.', bullets: [], icon: '/Maple-Leaf-Canada.png', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '10c', year: 2018, yearEnd: null, period: '2018', type: 'partnership', title: 'VFS Vancouver Film School - Agente Educacional', description: 'Parceria como agente educacional da VFS (Vancouver Film School), uma das principais escolas de cinema e mídia do mundo.', bullets: [], icon: '/vfs.png', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '11', year: 2017, yearEnd: 2025, period: '2017-2025', type: 'partnership', title: 'Festival de Gramado - Curadoria VR', description: 'Curadoria oficial de Realidade Virtual do Festival de Cinema de Gramado por 8 anos consecutivos - único no Brasil.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '12', year: 2018, yearEnd: null, period: '2018', type: 'partnership', title: 'XRBR - Membro Fundador', description: 'Membro fundador da Associação Brasileira de Realidade Estendida.', bullets: [], icon: '🏆', logoUrl: null, externalLink: null, isFeatured: false },
     { id: '17', year: 2018, yearEnd: 2026, period: '2018-2026', type: 'partnership', title: 'YDreams', description: 'Parceria estratégica em projetos de experiências imersivas, motion design e conteúdo audiovisual.', bullets: ['Experiências Imersivas', 'Motion Design', 'Conteúdo Audiovisual'], icon: '🤝', logoUrl: null, externalLink: null, isFeatured: true },
@@ -70,12 +98,14 @@ const FALLBACK_HISTORY: Record<Lang, CompanyHistoryItem[]> = {
     { id: '1', year: 1996, yearEnd: null, period: '1996', type: 'milestone', title: 'ArchiCAD Brasil - Computer Graphics', description: 'Start of activities with ArchiCAD, computer graphics, CAD and virtual models.', bullets: [], icon: '🏗️', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '2', year: 2000, yearEnd: 2018, period: '2000-2018', type: 'partnership', title: 'AZMT - Autodesk Training Center', description: 'AZMT Computing and Cinematographic Productions (trade name Azimut) becomes official Autodesk Training Center in South America for 18 years.', bullets: ['Official Autodesk Training Center', 'Demo Artist Autodesk Discreet', 'Application Engineer South America', 'Only certified Flame Trainer in Brazil'], icon: '🎓', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '3', year: 1998, yearEnd: null, period: '1998', type: 'milestone', title: 'AZMT Computing and Cinematographic Productions', description: 'Official company foundation focused on cinematographic productions.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
-    { id: '4', year: 1999, yearEnd: null, period: '1999', type: 'partnership', title: 'Discreet (Montreal, Canada)', description: 'Partnership with Discreet (acquired by Autodesk in 1999) - Canadian company based in Montreal.', bullets: [], icon: '🇨🇦', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '4', year: 1999, yearEnd: null, period: '1999', type: 'partnership', title: 'Discreet (Montreal, Canada)', description: 'Partnership with Discreet (acquired by Autodesk in 1999) - Canadian company based in Montreal.', bullets: [], icon: '/Maple-Leaf-Canada.png', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '5', year: 2002, yearEnd: null, period: '2002', type: 'award', title: '1 of 15 worldwide - Training Specialist', description: 'Discreet Montreal Training Specialist - global elite of certified specialists.', bullets: [], icon: '🌟', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '6', year: 2004, yearEnd: 2018, period: '2004-2018', type: 'milestone', title: 'Azimut Animation School', description: 'First CG animation school Autodesk in Latin America.', bullets: ['Professional courses 1-2 years', 'CAD, 3ds Max, After Effects, Flame', 'Trained hundreds of professionals', 'Branches in Rio, Belém, Florianópolis'], icon: '🎓', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '7', year: 2005, yearEnd: null, period: '2005', type: 'award', title: 'Digital Designer - Person of the Year', description: 'Person of the year in computer graphics in Brazil - MAC Niterói.', bullets: [], icon: '🏆', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '8', year: 2005, yearEnd: 2007, period: '2005-2007', type: 'project', title: 'Taikodom - Largest Brazilian Game', description: 'Art direction of the largest game project developed in Brazil - space MMORPG.', bullets: [], icon: '🎮', logoUrl: null, externalLink: null, isFeatured: true },
-    { id: '10', year: 2017, yearEnd: null, period: '2017', type: 'milestone', title: 'Vancouver, Canada', description: 'International expansion with operations in Vancouver, British Columbia.', bullets: [], icon: '🍁', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '10', year: 2014, yearEnd: null, period: '2014', type: 'partnership', title: 'Vanarts - CA Educational Agent', description: 'Partnership as educational agent for Vanarts (Vancouver Institute of Media Arts) in Canada.', bullets: [], icon: '/vanarts.png', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '10b', year: 2017, yearEnd: null, period: '2017', type: 'milestone', title: 'Vancouver, Canada', description: 'International expansion with operations in Vancouver, British Columbia.', bullets: [], icon: '/Maple-Leaf-Canada.png', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '10c', year: 2018, yearEnd: null, period: '2018', type: 'partnership', title: 'VFS Vancouver Film School - Educational Agent', description: 'Partnership as educational agent for VFS (Vancouver Film School), one of the world\'s leading film and media schools.', bullets: [], icon: '/vfs.png', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '11', year: 2017, yearEnd: 2025, period: '2017-2025', type: 'partnership', title: 'Gramado Festival - VR Curatorship', description: 'Official Virtual Reality curatorship of Gramado Film Festival for 8 consecutive years - unique in Brazil.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '12', year: 2018, yearEnd: null, period: '2018', type: 'partnership', title: 'XRBR - Founding Member', description: 'Founding member of Brazilian Extended Reality Association.', bullets: [], icon: '🏆', logoUrl: null, externalLink: null, isFeatured: false },
     { id: '17', year: 2018, yearEnd: 2026, period: '2018-2026', type: 'partnership', title: 'YDreams', description: 'Strategic partnership in immersive experiences, motion design and audiovisual content projects.', bullets: ['Immersive Experiences', 'Motion Design', 'Audiovisual Content'], icon: '🤝', logoUrl: null, externalLink: null, isFeatured: true },
@@ -90,7 +120,9 @@ const FALLBACK_HISTORY: Record<Lang, CompanyHistoryItem[]> = {
     { id: '2', year: 2000, yearEnd: 2018, period: '2000-2018', type: 'partnership', title: 'AZMT - Centro de Capacitación Autodesk', description: 'AZMT Computación y Producciones Cinematográficas (nombre comercial Azimut) se convierte en Centro de Capacitación Autodesk oficial en América del Sur por 18 años.', bullets: ['Centro de Capacitación Autodesk Oficial', 'Demo Artist Autodesk Discreet', 'Application Engineer América del Sur', 'Único Flame Trainer certificado en Brasil'], icon: '🎓', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '3', year: 1998, yearEnd: null, period: '1998', type: 'milestone', title: 'AZMT Computación y Producciones Cinematográficas', description: 'Fundación oficial de la empresa con enfoque en producciones cinematográficas.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '4', year: 2005, yearEnd: 2007, period: '2005-2007', type: 'project', title: 'Taikodom - Mayor Juego Brasileño', description: 'Dirección de arte del mayor proyecto de juego desarrollado en Brasil.', bullets: [], icon: '🎮', logoUrl: null, externalLink: null, isFeatured: true },
-    { id: '5', year: 2023, yearEnd: 2025, period: '2023-2025', type: 'project', title: 'Museo Olímpico de Río', description: 'Dirección General de Tecnología para el Museo Olímpico de Río de Janeiro - post Olimpíadas 2016.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '10', year: 2014, yearEnd: null, period: '2014', type: 'partnership', title: 'Vanarts - CA Agente Educacional', description: 'Asociación como agente educacional de Vanarts (Vancouver Institute of Media Arts) en Canadá.', bullets: [], icon: '/vanarts.png', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '10b', year: 2017, yearEnd: null, period: '2017', type: 'milestone', title: 'Vancouver, Canadá', description: 'Expansión internacional con operaciones en Vancouver, British Columbia.', bullets: [], icon: '/Maple-Leaf-Canada.png', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '10c', year: 2018, yearEnd: null, period: '2018', type: 'partnership', title: 'VFS Vancouver Film School - Agente Educacional', description: 'Asociación como agente educacional de VFS (Vancouver Film School), una de las principales escuelas de cine y medios del mundo.', bullets: [], icon: '/vfs.png', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '6', year: 2017, yearEnd: 2025, period: '2017-2025', type: 'partnership', title: 'Festival de Gramado - Curaduría VR', description: 'Curaduría oficial de Realidad Virtual del Festival de Cine de Gramado por 8 años consecutivos.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '7', year: 2018, yearEnd: 2026, period: '2018-2026', type: 'milestone', title: 'Talleres, Conferencias y Curadurías', description: 'Talleres en eventos, Rio2C, conferencias y curadurías en tecnología y nuevos medios.', bullets: ['Rio2C', 'Talleres en eventos', 'Conferencias', 'Curadurías'], icon: '🎤', logoUrl: null, externalLink: null, isFeatured: false },
     { id: '11', year: 2018, yearEnd: 2026, period: '2018-2026', type: 'partnership', title: 'YDreams', description: 'Asociación estratégica en proyectos de experiencias inmersivas, motion design y contenido audiovisual.', bullets: ['Experiencias Inmersivas', 'Motion Design', 'Contenido Audiovisual'], icon: '🤝', logoUrl: null, externalLink: null, isFeatured: true },
@@ -104,7 +136,9 @@ const FALLBACK_HISTORY: Record<Lang, CompanyHistoryItem[]> = {
     { id: '2', year: 2000, yearEnd: 2018, period: '2000-2018', type: 'partnership', title: 'AZMT - Centre de Formation Autodesk', description: 'AZMT Informatique et Productions Cinématographiques (nom commercial Azimut) devient Centre de Formation Autodesk officiel en Amérique du Sud pendant 18 ans.', bullets: ['Centre de Formation Autodesk Officiel', 'Demo Artist Autodesk Discreet', 'Application Engineer Amérique du Sud', 'Seul Flame Trainer certifié au Brésil'], icon: '🎓', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '3', year: 1998, yearEnd: null, period: '1998', type: 'milestone', title: 'AZMT Informatique et Productions Cinématographiques', description: 'Fondation officielle de l\'entreprise axée sur les productions cinématographiques.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '4', year: 2005, yearEnd: 2007, period: '2005-2007', type: 'project', title: 'Taikodom - Plus Grand Jeu Brésilien', description: 'Direction artistique du plus grand projet de jeu développé au Brésil.', bullets: [], icon: '🎮', logoUrl: null, externalLink: null, isFeatured: true },
-    { id: '5', year: 2023, yearEnd: 2025, period: '2023-2025', type: 'project', title: 'Musée Olympique de Rio', description: 'Direction Générale de la Technologie pour le Musée Olympique de Rio de Janeiro - post Jeux 2016.', bullets: [], icon: '🏛️', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '10', year: 2014, yearEnd: null, period: '2014', type: 'partnership', title: 'Vanarts - CA Agent Éducatif', description: 'Partenariat en tant qu\'agent éducatif pour Vanarts (Vancouver Institute of Media Arts) au Canada.', bullets: [], icon: '/vanarts.png', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '10b', year: 2017, yearEnd: null, period: '2017', type: 'milestone', title: 'Vancouver, Canada', description: 'Expansion internationale avec opérations à Vancouver, Colombie-Britannique.', bullets: [], icon: '/Maple-Leaf-Canada.png', logoUrl: null, externalLink: null, isFeatured: true },
+    { id: '10c', year: 2018, yearEnd: null, period: '2018', type: 'partnership', title: 'VFS Vancouver Film School - Agent Éducatif', description: 'Partenariat en tant qu\'agent éducatif pour VFS (Vancouver Film School), l\'une des principales écoles de cinéma et médias au monde.', bullets: [], icon: '/vfs.png', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '6', year: 2017, yearEnd: 2025, period: '2017-2025', type: 'partnership', title: 'Festival de Gramado - Curation VR', description: 'Curation officielle de Réalité Virtuelle du Festival de Cinéma de Gramado pendant 8 années consécutives.', bullets: [], icon: '🎬', logoUrl: null, externalLink: null, isFeatured: true },
     { id: '7', year: 2018, yearEnd: 2026, period: '2018-2026', type: 'milestone', title: 'Ateliers, Conférences et Curations', description: 'Ateliers lors d\'événements, Rio2C, conférences et curations en technologie et nouveaux médias.', bullets: ['Rio2C', 'Ateliers lors d\'événements', 'Conférences', 'Curations'], icon: '🎤', logoUrl: null, externalLink: null, isFeatured: false },
     { id: '11', year: 2018, yearEnd: 2026, period: '2018-2026', type: 'partnership', title: 'YDreams', description: 'Partenariat stratégique dans des projets d\'expériences immersives, motion design et contenu audiovisuel.', bullets: ['Expériences Immersives', 'Motion Design', 'Contenu Audiovisuel'], icon: '🤝', logoUrl: null, externalLink: null, isFeatured: true },
@@ -128,6 +162,9 @@ export const CompanyTimeline: React.FC<CompanyTimelineProps> = React.memo(({
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [usingFallback, setUsingFallback] = useState(false)
+  
+  // Detectar tema (dark/light)
+  const isDark = useIsDarkTheme()
   
   // Ref para AbortController (cancelar requisições anteriores)
   const abortControllerRef = useRef<AbortController | null>(null)
@@ -410,18 +447,37 @@ export const CompanyTimeline: React.FC<CompanyTimelineProps> = React.memo(({
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
-            {/* Linha conectora vertical (exceto último item) - MAIS LARGA */}
+            {/* Linha conectora vertical (exceto último item) - MAIS À ESQUERDA */}
             {index < filteredHistory.length - 1 && (
-              <div className="absolute left-5 md:left-6 top-14 bottom-0 w-1 bg-gradient-to-b from-azimut-red/70 via-azimut-red/50 to-azimut-red/20" />
+              <div className="absolute left-3 md:left-4 top-14 bottom-0 w-1 bg-gradient-to-b from-azimut-red/70 via-azimut-red/50 to-azimut-red/20" />
             )}
 
-            {/* Coluna do Ano (fixa) - ÍCONES MAIORES */}
-            <div className="flex-shrink-0 w-16 md:w-20 text-center">
+            {/* Coluna do Ano (fixa) - ÍCONES MAIORES, MAIS À ESQUERDA */}
+            <div className="flex-shrink-0 w-12 md:w-16 text-center">
               <div className="sticky top-4">
-                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-azimut-red via-azimut-red/90 to-orange-500 flex items-center justify-center text-white text-xl md:text-2xl font-bold shadow-xl shadow-azimut-red/40 group-hover:scale-110 group-hover:shadow-2xl group-hover:shadow-azimut-red/60 transition-all duration-300 mx-auto mb-3 ring-2 ring-azimut-red/20 group-hover:ring-azimut-red/40">
-                  {item.icon || '📌'}
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-azimut-red via-azimut-red/90 to-orange-500 flex items-center justify-center text-white text-xl md:text-2xl font-bold shadow-xl shadow-azimut-red/40 group-hover:scale-110 group-hover:shadow-2xl group-hover:shadow-azimut-red/60 transition-all duration-300 mx-auto mb-3 ring-2 ring-azimut-red/20 group-hover:ring-azimut-red/40 overflow-hidden">
+                  {item.icon && (item.icon.startsWith('/') || item.icon.startsWith('http')) ? (
+                    <img 
+                      src={item.icon} 
+                      alt={item.title}
+                      className={`object-contain ${
+                        item.icon.includes('vfs') || item.icon.includes('Maple-Leaf')
+                          ? 'w-2/5 h-2/5' 
+                          : item.icon.includes('vanarts')
+                          ? 'w-3/5 h-3/5'
+                          : 'w-full h-full p-2'
+                      }`}
+                    />
+                  ) : (
+                    item.icon || '📌'
+                  )}
                 </div>
-                <div className="text-xs md:text-sm font-mono font-bold text-azimut-red bg-white/10 rounded-lg px-2.5 py-1.5 border border-azimut-red/20">
+                {/* Badge de período MOVIDO PARA DIREITA - ADAPTA AO TEMA - TEXTO CLARO EM AMBOS */}
+                <div className={`text-xs md:text-sm font-mono font-bold text-white rounded-lg px-2.5 py-1 border ml-auto mr-0 w-16 md:w-20 text-center ${
+                  isDark 
+                    ? 'bg-black/40 backdrop-blur-sm border-azimut-red/30' 
+                    : 'bg-azimut-red/80 backdrop-blur-sm border-azimut-red shadow-md shadow-azimut-red/40'
+                }`}>
                   {item.period}
                 </div>
               </div>
