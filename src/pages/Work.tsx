@@ -16,6 +16,7 @@ import CuradoriaFestivais from '../components/CuradoriaFestivais'
 import StarBackground from '../components/StarBackground'
 import OptimizedImage from '../components/OptimizedImage'
 import { useTheme } from '../contexts/ThemeContext'
+import { PageNavigationCTAs } from '../components/PageNavigationCTAs'
 
 interface WorkProps {
   lang: Lang
@@ -968,6 +969,21 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
             </div>
           </section>
         </div>
+
+        {/* CTAs de Navegação */}
+        <PageNavigationCTAs
+          lang={lang}
+          primary={{
+            label: lang === 'pt' ? 'Conhecer Estúdio' : lang === 'es' ? 'Conocer Estudio' : lang === 'fr' ? 'Découvrir Studio' : 'Meet Studio',
+            href: '/studio',
+            icon: '🏛️'
+          }}
+          secondary={{
+            label: lang === 'pt' ? 'Ver Soluções' : lang === 'es' ? 'Ver Soluciones' : lang === 'fr' ? 'Voir Solutions' : 'View Solutions',
+            href: '/what',
+            icon: '✨'
+          }}
+        />
       </main>
     </>
   )

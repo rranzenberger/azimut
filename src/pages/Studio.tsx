@@ -5,6 +5,7 @@ import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
 import InternalNavigation from '../components/InternalNavigation'
 import StarBackground from '../components/StarBackground'
+import { PageNavigationCTAs } from '../components/PageNavigationCTAs'
 
 interface StudioProps {
   lang: Lang
@@ -628,6 +629,21 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
             </LangLink>
           </div>
         </div>
+
+        {/* CTAs de Navegação */}
+        <PageNavigationCTAs
+          lang={lang}
+          primary={{
+            label: lang === 'pt' ? 'Iniciar Projeto' : lang === 'es' ? 'Iniciar Proyecto' : lang === 'fr' ? 'Démarrer Projet' : 'Start Project',
+            href: '/contact',
+            icon: '🚀'
+          }}
+          secondary={{
+            label: lang === 'pt' ? 'Ver Projetos' : lang === 'es' ? 'Ver Proyectos' : lang === 'fr' ? 'Voir Projets' : 'View Projects',
+            href: '/work',
+            icon: '🎬'
+          }}
+        />
       </main>
     </>
   )

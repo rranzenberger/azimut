@@ -8,6 +8,7 @@ import InternalNavigation from '../components/InternalNavigation'
 import { servicesData, getServiceTitle, getServiceShortDesc } from '../data/servicesData'
 import StarBackground from '../components/StarBackground'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
+import { PageNavigationCTAs } from '../components/PageNavigationCTAs'
 
 // ═══════════════════════════════════════════════════════════════
 // FUNÇÃO: Destacar palavras-chave com DUAS cores harmônicas
@@ -404,6 +405,21 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
             </LangLink>
           </div>
         </section>
+
+        {/* CTAs de Navegação */}
+        <PageNavigationCTAs
+          lang={lang}
+          primary={{
+            label: lang === 'pt' ? 'Ver Projetos' : lang === 'es' ? 'Ver Proyectos' : lang === 'fr' ? 'Voir Projets' : 'View Projects',
+            href: '/work',
+            icon: '🎬'
+          }}
+          secondary={{
+            label: lang === 'pt' ? 'Conhecer Estúdio' : lang === 'es' ? 'Conocer Estudio' : lang === 'fr' ? 'Découvrir Studio' : 'Meet Studio',
+            href: '/studio',
+            icon: '🏛️'
+          }}
+        />
       </main>
     </>
   )

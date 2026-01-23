@@ -15,6 +15,7 @@ import OptimizedImage from '../components/OptimizedImage'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { useTheme } from '../contexts/ThemeContext'
 import { logger } from '@/utils/logger'
+import { PageNavigationCTAs } from '../components/PageNavigationCTAs'
 
 interface HomeProps {
   lang: Lang
@@ -1376,6 +1377,21 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             </div>
           </div>
         </section>
+
+        {/* CTAs de Navegação - Adicionado no final, não modifica nada existente */}
+        <PageNavigationCTAs
+          lang={lang}
+          primary={{
+            label: lang === 'pt' ? 'Ver Projetos' : lang === 'es' ? 'Ver Proyectos' : lang === 'fr' ? 'Voir Projets' : 'View Projects',
+            href: '/work',
+            icon: '🎬'
+          }}
+          secondary={{
+            label: lang === 'pt' ? 'Ver Soluções' : lang === 'es' ? 'Ver Soluciones' : lang === 'fr' ? 'Voir Solutions' : 'View Solutions',
+            href: '/what',
+            icon: '✨'
+          }}
+        />
 
       </main>
     </>
