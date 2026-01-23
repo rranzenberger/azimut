@@ -98,22 +98,37 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     setSelectedTag(tag)
     setSelectedType(type)
     
-    // Scroll para área de filtros quando um filtro é aplicado
+    // Scroll para área de PROJETOS quando um filtro é aplicado (não para filtros)
     if (tag || type) {
       setTimeout(() => {
-        const filtersElement = document.getElementById('filters-section')
-        if (filtersElement) {
+        // Tentar scrollar para a seção de projetos filtrados
+        const projectsElement = document.getElementById('projects-grid')
+        if (projectsElement) {
           const headerHeight = 80
           const navHeight = 60
-          const elementTop = filtersElement.getBoundingClientRect().top + window.scrollY
-          const targetScroll = elementTop - headerHeight - navHeight - 20
+          const elementTop = projectsElement.getBoundingClientRect().top + window.scrollY
+          const targetScroll = elementTop - headerHeight - navHeight - 40
           
           window.scrollTo({ 
             top: targetScroll > 0 ? targetScroll : 0, 
             behavior: 'smooth' 
           })
+        } else {
+          // Fallback: scrollar para contador de resultados (logo antes dos projetos)
+          const resultsElement = document.getElementById('results-counter')
+          if (resultsElement) {
+            const headerHeight = 80
+            const navHeight = 60
+            const elementTop = resultsElement.getBoundingClientRect().top + window.scrollY
+            const targetScroll = elementTop - headerHeight - navHeight - 20
+            
+            window.scrollTo({ 
+              top: targetScroll > 0 ? targetScroll : 0, 
+              behavior: 'smooth' 
+            })
+          }
         }
-      }, 100)
+      }, 150) // Aumentar delay para garantir que o DOM foi atualizado
     }
   }, [location.search])
   
@@ -435,7 +450,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
 
             {/* ═══════════════════════════════════════════════════════════════
                 DESTAQUE: CUADORIA GRAMADO (ÚNICO NO BRASIL)
+                Ocultar quando há filtros ativos para não confundir o usuário
                 ═══════════════════════════════════════════════════════════ */}
+            {!hasActiveFilters && (
             <div className="mb-8 rounded-2xl border-2 border-azimut-red/60 bg-gradient-to-br from-azimut-red/15 via-azimut-red/5 to-transparent p-6 backdrop-blur-sm">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0 text-4xl">🎪</div>
@@ -468,6 +485,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 </div>
               </div>
             </div>
+            )}
 
             {/* Categorias Principais - Pills Visuais */}
             <div className="mb-6">
@@ -662,6 +680,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           {/* Featured Project - Full Width - SEMPRE MOSTRA, mesmo sem dados */}
           {cases.length > 0 && (
               <article
+                id={cases.length === 1 ? 'projects-grid' : undefined}
                 className={`mb-8 overflow-hidden rounded-3xl border card-adaptive shadow-[0_32px_80px_rgba(0,0,0,0.6)] cursor-pointer ${
                   theme === 'dark' ? 'border-white/10' : 'border-slate-300/30'
                 }`}
@@ -778,7 +797,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
 
           {/* Other Projects Grid */}
           {cases.length > 1 && (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
+            <div id="projects-grid" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
               {cases.slice(1).map((item: WorkProject, index: number) => (
               <article
                 key={item.slug}
