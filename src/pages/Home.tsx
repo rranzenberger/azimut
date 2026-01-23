@@ -950,7 +950,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-azimut-red/10 via-slate-900 to-slate-950 flex items-center justify-center">
                         <div className="text-center p-6">
-                          <h3 className="font-handel text-3xl uppercase tracking-[0.12em] text-white">{mainFeatured.title}</h3>
+                          <h3 className={`font-handel text-3xl uppercase tracking-[0.12em] ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{mainFeatured.title}</h3>
                         </div>
                       </div>
                     )}
@@ -966,11 +966,11 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         </div>
                       )}
                       {(mainFeatured.city || mainFeatured.country) && (
-                        <p className="text-xs text-slate-400 flex items-center gap-1">📍 {[mainFeatured.city, mainFeatured.country].filter(Boolean).join(', ')}</p>
+                        <p className={`text-xs flex items-center gap-1 ${theme === 'dark' ? 'text-slate-400' : 'text-on-dark-tertiary'}`}>📍 {[mainFeatured.city, mainFeatured.country].filter(Boolean).join(', ')}</p>
                       )}
                     </div>
-                    <h3 className="font-handel text-xl md:text-2xl uppercase tracking-[0.08em] text-white mt-3 mb-2">{mainFeatured.title}</h3>
-                    <p className="text-slate-300 text-sm leading-relaxed mb-4">{mainFeatured.summary || mainFeatured.shortTitle}</p>
+                    <h3 className={`font-handel text-xl md:text-2xl uppercase tracking-[0.08em] mt-3 mb-2 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{mainFeatured.title}</h3>
+                    <p className={`text-sm leading-relaxed mb-4 ${theme === 'dark' ? 'text-slate-300' : 'text-on-dark-secondary'}`}>{mainFeatured.summary || mainFeatured.shortTitle}</p>
                     <div className="flex flex-wrap gap-2">
                       <Link to={`/work/${mainFeatured.slug}`} className="inline-flex items-center justify-center rounded-lg bg-azimut-red px-4 py-2 font-sora text-xs uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/90">
                         {lang === 'pt' ? 'Ver Projeto' : lang === 'es' ? 'Ver Proyecto' : 'View Project'}
@@ -1020,19 +1020,19 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     )}
                     
                     <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
-                      <h3 className="mb-2 font-handel text-xl md:text-2xl uppercase tracking-wide !text-white group-hover:!text-azimut-red transition-colors duration-300 line-clamp-2">{project.title}</h3>
+                      <h3 className={`mb-2 font-handel text-xl md:text-2xl uppercase tracking-wide group-hover:!text-azimut-red transition-colors duration-300 line-clamp-2 ${theme === 'dark' ? '!text-white' : '!text-on-dark-primary'}`}>{project.title}</h3>
                       {(project.city || project.country) && (
-                        <p className="text-xs !text-white/70 mb-3">📍 {[project.city, project.country].filter(Boolean).join(', ')}</p>
+                        <p className={`text-xs mb-3 ${theme === 'dark' ? '!text-white/70' : '!text-on-dark-tertiary'}`}>📍 {[project.city, project.country].filter(Boolean).join(', ')}</p>
                       )}
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         {project.tags && project.tags.length > 0 && (
                           <div className="flex flex-wrap gap-2 text-[0.68rem]">
                             {project.tags.slice(0, 2).map((tag: string, idx: number) => (
-                              <span key={idx} className="rounded-full border border-white/20 bg-black/40 backdrop-blur px-2.5 py-1 !text-white/80">{tag}</span>
+                              <span key={idx} className={`rounded-full border border-white/20 bg-black/40 backdrop-blur px-2.5 py-1 ${theme === 'dark' ? '!text-white/80' : '!text-on-dark-tertiary'}`}>{tag}</span>
                             ))}
                           </div>
                         )}
-                        {project.year && <span className="text-xs !text-white/60 font-medium bg-black/40 backdrop-blur px-2.5 py-1 rounded-full">{project.year}</span>}
+                        {project.year && <span className={`text-xs font-medium bg-black/40 backdrop-blur px-2.5 py-1 rounded-full ${theme === 'dark' ? '!text-white/60' : '!text-on-dark-tertiary'}`}>{project.year}</span>}
                       </div>
                     </div>
                     <div className="absolute inset-0 border-2 border-azimut-red rounded-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none"></div>

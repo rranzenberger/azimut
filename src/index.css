@@ -1216,6 +1216,12 @@ html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"] *
   /* HOVER/FOCUS STATES - Tema Claro */
   --theme-hover-bg: rgba(0, 0, 0, 0.04);
   --theme-focus-ring: 0 0 0 2px rgba(201, 35, 55, 0.2);
+  
+  /* TEXTO BEGE PARA FUNDOS ESCUROS - Tema Claro */
+  --text-on-dark-primary: #f5f1e8;      /* Títulos grandes - máximo contraste */
+  --text-on-dark-secondary: #e8e5df;     /* Descrições - contraste alto */
+  --text-on-dark-tertiary: #d3cec3;     /* Metadados - contraste médio */
+  --text-on-dark-muted: #c9c4b8;        /* Textos secundários */
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -3138,6 +3144,30 @@ select.dropdown-azimut::-ms-expand {
 /* Texto em fundo claro (tema claro) - MUTED */
 .text-theme-light-muted {
   color: var(--theme-text-muted, #1e3a5f) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TEXTO BEGE PARA FUNDOS ESCUROS - Tema Claro (Contraste Premium)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Texto bege em fundos escuros (tema claro) - PRINCIPAL (Títulos) */
+[data-theme="light"] .text-on-dark-primary {
+  color: var(--text-on-dark-primary, #f5f1e8) !important;
+}
+
+/* Texto bege em fundos escuros (tema claro) - SECUNDÁRIO (Descrições) */
+[data-theme="light"] .text-on-dark-secondary {
+  color: var(--text-on-dark-secondary, #e8e5df) !important;
+}
+
+/* Texto bege em fundos escuros (tema claro) - TERCIÁRIO (Metadados) */
+[data-theme="light"] .text-on-dark-tertiary {
+  color: var(--text-on-dark-tertiary, #d3cec3) !important;
+}
+
+/* Texto bege em fundos escuros (tema claro) - MUTED (Textos secundários) */
+[data-theme="light"] .text-on-dark-muted {
+  color: var(--text-on-dark-muted, #c9c4b8) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════
