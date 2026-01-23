@@ -704,7 +704,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
         </div>
 
-        {/* Vídeo Fullscreen */}
+        {/* Linha vermelha ACIMA do vídeo - Full width */}
+        <div className="w-full h-[3px] bg-gradient-to-r from-transparent via-azimut-red to-transparent" />
+
+        {/* Vídeo Fullscreen - Total largura lateral (de fora a fora) */}
         <section ref={demoreelRef} className="relative h-screen w-full overflow-hidden">
           {(() => {
             // ✅ VÍDEO DEMOREEL AZIMUT 2026 (Upscale Topaz) - PRIORIDADE 1
@@ -753,6 +756,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             )
           })()}
         </section>
+
+        {/* Linha vermelha ABAIXO do vídeo - Full width */}
+        <div className="w-full h-[3px] bg-gradient-to-r from-transparent via-azimut-red to-transparent" />
 
         {/* ══════════════════════════════════════════════════════════════════
             CREDIBILIDADE VISUAL - Timeline + Logos Placeholder
