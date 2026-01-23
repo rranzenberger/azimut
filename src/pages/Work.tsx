@@ -15,6 +15,7 @@ import CredibilidadeEditais from '../components/CredibilidadeEditais'
 import CuradoriaFestivais from '../components/CuradoriaFestivais'
 import StarBackground from '../components/StarBackground'
 import OptimizedImage from '../components/OptimizedImage'
+import { useTheme } from '../contexts/ThemeContext'
 
 interface WorkProps {
   lang: Lang
@@ -63,6 +64,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   const navigate = useNavigate()
   const location = useLocation()
   const seo = seoData.work[lang]
+  const { theme } = useTheme()
   
   // Animação automática de seções
   useScrollAnimation()
@@ -422,7 +424,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 placeholder={lang === 'pt' ? '🔍 Buscar projetos...' : lang === 'es' ? '🔍 Buscar proyectos...' : lang === 'fr' ? '🔍 Rechercher...' : '🔍 Search projects...'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full max-w-md rounded-xl border border-white/20 bg-subtle px-5 py-3.5 text-sm focus:border-azimut-red/60 focus:outline-none focus:ring-2 focus:ring-azimut-red/30 transition-all"
+                className={`w-full max-w-md rounded-xl border bg-subtle px-5 py-3.5 text-sm focus:border-azimut-red/60 focus:outline-none focus:ring-2 focus:ring-azimut-red/30 transition-all ${
+                  theme === 'dark' ? 'border-white/20' : 'border-slate-300/40'
+                }`}
                 style={{ 
                   color: 'var(--theme-text)',
                 }}
@@ -499,7 +503,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                     className={`group relative rounded-xl border px-4 py-2.5 font-sora text-xs font-semibold uppercase tracking-[0.1em] transition-all duration-300 ${
                       selectedCategory.includes(cat.id)
                         ? 'border-azimut-red/60 bg-gradient-to-br from-azimut-red/30 to-azimut-red/10 text-azimut-red shadow-lg shadow-azimut-red/20'
-                        : 'border-white/20 bg-subtle text-slate-400 hover:border-white/40 hover:text-slate-300'
+                        : theme === 'dark' 
+                          ? 'border-white/20 bg-subtle text-slate-400 hover:border-white/40 hover:text-slate-300'
+                          : 'border-slate-300/40 bg-white/60 text-slate-700 hover:border-slate-400/60 hover:text-slate-900'
                     }`}
                   >
                     {cat.label}
@@ -539,7 +545,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                     className={`rounded-xl border px-4 py-2.5 font-sora text-xs font-semibold uppercase tracking-[0.1em] transition-all duration-300 ${
                       selectedWorkType.includes(type.id)
                         ? 'border-azimut-red/60 bg-gradient-to-br from-azimut-red/30 to-azimut-red/10 text-azimut-red shadow-lg shadow-azimut-red/20'
-                        : 'border-white/20 bg-subtle text-slate-400 hover:border-white/40 hover:text-slate-300'
+                        : theme === 'dark' 
+                          ? 'border-white/20 bg-subtle text-slate-400 hover:border-white/40 hover:text-slate-300'
+                          : 'border-slate-300/40 bg-white/60 text-slate-700 hover:border-slate-400/60 hover:text-slate-900'
                     }`}
                   >
                     {type.label}
@@ -567,7 +575,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                     className={`rounded-xl border px-4 py-2.5 font-sora text-xs font-semibold uppercase tracking-[0.1em] transition-all duration-300 ${
                       selectedTechnologies.includes(tech)
                         ? 'border-azimut-red/60 bg-gradient-to-br from-azimut-red/30 to-azimut-red/10 text-azimut-red shadow-lg shadow-azimut-red/20'
-                        : 'border-white/20 bg-subtle text-slate-400 hover:border-white/40 hover:text-slate-300'
+                        : theme === 'dark' 
+                          ? 'border-white/20 bg-subtle text-slate-400 hover:border-white/40 hover:text-slate-300'
+                          : 'border-slate-300/40 bg-white/60 text-slate-700 hover:border-slate-400/60 hover:text-slate-900'
                     }`}
                   >
                     {tech}
@@ -583,7 +593,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 <select
                   value={selectedYear || ''}
                   onChange={(e) => setSelectedYear(e.target.value ? parseInt(e.target.value) : null)}
-                  className="rounded-xl border border-white/20 bg-subtle px-4 py-2.5 text-sm focus:border-azimut-red/60 focus:outline-none focus:ring-2 focus:ring-azimut-red/30 transition-all"
+                  className={`rounded-xl border bg-subtle px-4 py-2.5 text-sm focus:border-azimut-red/60 focus:outline-none focus:ring-2 focus:ring-azimut-red/30 transition-all ${
+                    theme === 'dark' ? 'border-white/20' : 'border-slate-300/40'
+                  }`}
                   style={{ 
                     appearance: 'none', 
                     backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`, 
@@ -650,7 +662,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           {/* Featured Project - Full Width - SEMPRE MOSTRA, mesmo sem dados */}
           {cases.length > 0 && (
               <article
-                className="mb-8 overflow-hidden rounded-3xl border border-white/10 card-adaptive shadow-[0_32px_80px_rgba(0,0,0,0.6)] cursor-pointer"
+                className={`mb-8 overflow-hidden rounded-3xl border card-adaptive shadow-[0_32px_80px_rgba(0,0,0,0.6)] cursor-pointer ${
+                  theme === 'dark' ? 'border-white/10' : 'border-slate-300/30'
+                }`}
                 onClick={() => {
                   trackInteraction('project_view', cases[0].slug)
                   trackProjectInteraction(cases[0].slug, 'CLICK')
@@ -768,7 +782,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               {cases.slice(1).map((item: WorkProject, index: number) => (
               <article
                 key={item.slug}
-                className="group rounded-2xl border border-white/10 card-adaptive overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(var(--theme-accent-red-rgb),0.3)]"
+                className={`group rounded-2xl border card-adaptive overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(var(--theme-accent-red-rgb),0.3)] ${
+                  theme === 'dark' ? 'border-white/10' : 'border-slate-300/30'
+                }`}
                 style={{
                   animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
                 }}
@@ -796,7 +812,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                     /* Placeholder quando não há imagem */
                     <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-800/60 to-slate-950 transition-all duration-300 group-hover:from-azimut-red/20 group-hover:to-slate-950">
                       <div className="text-center p-4">
-                        <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-subtle backdrop-blur transition-transform duration-300 group-hover:scale-110 group-hover:border-azimut-red/50">
+                        <div className={`mb-2 inline-flex h-12 w-12 items-center justify-center rounded-full border bg-subtle backdrop-blur transition-transform duration-300 group-hover:scale-110 group-hover:border-azimut-red/50 ${
+                          theme === 'dark' ? 'border-white/20' : 'border-slate-300/40'
+                        }`}>
                           <svg className="h-6 w-6 text-slate-600 dark:text-slate-400 group-hover:text-azimut-red transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
@@ -819,7 +837,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                         {((item?.tags && Array.isArray(item.tags)) ? item.tags : []).slice(0, 3).map((tag: string, idx: number) => (
                           <span 
                             key={idx} 
-                            className="rounded-full border border-white/10 px-2 py-0.5 transition-all duration-300 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:text-azimut-red"
+                            className={`rounded-full border px-2 py-0.5 transition-all duration-300 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:text-azimut-red ${
+                              theme === 'dark' ? 'border-white/10' : 'border-slate-300/30'
+                            }`}
                           >
                             {tag}
                           </span>
