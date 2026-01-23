@@ -150,11 +150,9 @@ const OptimizedImage: React.FC<OptimizedImageProps> = memo(({
         </picture>
       )}
 
-      {/* Mensagem de erro */}
+      {/* Placeholder silencioso em caso de erro (sem mensagem visível) */}
       {error && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-800 text-white text-sm">
-          ⚠️ Erro ao carregar imagem
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-900 to-black" />
       )}
     </div>
   )
