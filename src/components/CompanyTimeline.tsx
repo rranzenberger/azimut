@@ -13,6 +13,11 @@
 import React, { useEffect, useState, useMemo, useCallback, useRef } from 'react'
 import { Lang } from '../i18n'
 
+// ════════════════════════════════════════════════════════════
+// CHECKPOINT: Backup criado em CompanyTimeline.tsx.bak
+// Para restaurar: copie CompanyTimeline.tsx.bak para CompanyTimeline.tsx
+// ════════════════════════════════════════════════════════════
+
 interface CompanyHistoryItem {
   id: string
   year: number
@@ -126,6 +131,10 @@ export const CompanyTimeline: React.FC<CompanyTimelineProps> = React.memo(({
   
   // Ref para AbortController (cancelar requisições anteriores)
   const abortControllerRef = useRef<AbortController | null>(null)
+  
+  // Refs para animações de scroll (fade-in)
+  const itemRefs = useRef<Map<string, HTMLDivElement>>(new Map())
+  const [visibleItems, setVisibleItems] = useState<Set<string>>(new Set())
 
   // Função para aplicar filtros nos dados (API ou fallback) - MEMOIZADA
   const applyFilters = useCallback((data: CompanyHistoryItem[]): CompanyHistoryItem[] => {
@@ -272,21 +281,58 @@ export const CompanyTimeline: React.FC<CompanyTimelineProps> = React.memo(({
     })
   }, [history, applyFilters])
 
+  // Effect para animações de scroll (IntersectionObserver) - DEPOIS de filteredHistory
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const itemId = entry.target.getAttribute('data-item-id')
+            if (itemId) {
+              setVisibleItems((prev) => new Set([...prev, itemId]))
+            }
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    )
+
+    itemRefs.current.forEach((element) => {
+      if (element) observer.observe(element)
+    })
+
+    return () => {
+      itemRefs.current.forEach((element) => {
+        if (element) observer.unobserve(element)
+      })
+    }
+  }, [filteredHistory])
+
   // Função removida - não usamos mais AnimatedTimeline, sempre lista completa
 
-  // Loading state
+  // Loading state - Skeleton Shimmer
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-20">
-        <div className="text-center">
-          <div className="inline-block w-12 h-12 border-4 border-azimut-red border-t-transparent rounded-full animate-spin mb-4" />
-          <p className="text-white/60">
-            {lang === 'pt' ? 'Carregando timeline...' : 
-             lang === 'en' ? 'Loading timeline...' : 
-             lang === 'es' ? 'Cargando timeline...' : 
-             'Chargement timeline...'}
-          </p>
-        </div>
+      <div className="space-y-4 py-8">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="relative flex gap-4 md:gap-6">
+            {/* Skeleton: Ícone */}
+            <div className="flex-shrink-0 w-16 md:w-20">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-r from-white/10 via-white/5 to-white/10 animate-pulse mx-auto mb-2" />
+              <div className="h-6 bg-gradient-to-r from-white/10 via-white/5 to-white/10 animate-pulse rounded" />
+            </div>
+            {/* Skeleton: Card */}
+            <div className="flex-1">
+              <div className="card-adaptive rounded-xl p-4 md:p-6">
+                <div className="space-y-3">
+                  <div className="h-6 bg-gradient-to-r from-white/10 via-white/5 to-white/10 rounded animate-pulse" />
+                  <div className="h-4 bg-gradient-to-r from-white/10 via-white/5 to-white/10 rounded animate-pulse w-3/4" />
+                  <div className="h-4 bg-gradient-to-r from-white/10 via-white/5 to-white/10 rounded animate-pulse w-2/3" />
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     )
   }
@@ -351,31 +397,39 @@ export const CompanyTimeline: React.FC<CompanyTimelineProps> = React.memo(({
 
       {/* Lista Sequencial Completa - Sempre Visível */}
       <div className="space-y-4">
-        {filteredHistory.map((item, index) => (
+        {filteredHistory.map((item, index) => {
+          const isVisible = visibleItems.has(item.id)
+          return (
           <div
             key={item.id}
-            className="relative flex gap-4 md:gap-6 group"
+            ref={(el) => {
+              if (el) itemRefs.current.set(item.id, el)
+            }}
+            data-item-id={item.id}
+            className={`relative flex gap-4 md:gap-6 group transition-all duration-700 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
           >
-            {/* Linha conectora vertical (exceto último item) */}
+            {/* Linha conectora vertical (exceto último item) - MAIS LARGA */}
             {index < filteredHistory.length - 1 && (
-              <div className="absolute left-5 md:left-6 top-14 bottom-0 w-0.5 bg-gradient-to-b from-azimut-red/60 via-azimut-red/40 to-transparent" />
+              <div className="absolute left-5 md:left-6 top-14 bottom-0 w-1 bg-gradient-to-b from-azimut-red/70 via-azimut-red/50 to-azimut-red/20" />
             )}
 
-            {/* Coluna do Ano (fixa) */}
+            {/* Coluna do Ano (fixa) - ÍCONES MAIORES */}
             <div className="flex-shrink-0 w-16 md:w-20 text-center">
               <div className="sticky top-4">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-azimut-red to-orange-500 flex items-center justify-center text-white text-sm md:text-lg font-bold shadow-lg shadow-azimut-red/30 group-hover:scale-110 transition-transform mx-auto mb-2">
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-azimut-red via-azimut-red/90 to-orange-500 flex items-center justify-center text-white text-xl md:text-2xl font-bold shadow-xl shadow-azimut-red/40 group-hover:scale-110 group-hover:shadow-2xl group-hover:shadow-azimut-red/60 transition-all duration-300 mx-auto mb-3 ring-2 ring-azimut-red/20 group-hover:ring-azimut-red/40">
                   {item.icon || '📌'}
                 </div>
-                <div className="text-xs md:text-sm font-mono font-bold text-azimut-red bg-white/5 rounded px-2 py-1">
+                <div className="text-xs md:text-sm font-mono font-bold text-azimut-red bg-white/10 rounded-lg px-2.5 py-1.5 border border-azimut-red/20">
                   {item.period}
                 </div>
               </div>
             </div>
 
-            {/* Conteúdo do evento (expansível) */}
+            {/* Conteúdo do evento (expansível) - HOVER PREMIUM */}
             <div className="flex-1 pb-6">
-              <div className="card-adaptive rounded-xl p-4 md:p-6 hover:border-azimut-red/50 transition-all group-hover:shadow-lg group-hover:shadow-azimut-red/20">
+              <div className="card-adaptive rounded-xl p-4 md:p-6 hover:border-azimut-red/50 transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-azimut-red/30 group-hover:-translate-y-1 group-hover:scale-[1.01] relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-azimut-red/0 before:via-azimut-red/5 before:to-azimut-red/0 before:opacity-0 group-hover:before:opacity-100 before:transition-opacity before:duration-500">
                 {/* Header com título e badge */}
                 <div className="flex items-start justify-between mb-3 flex-wrap gap-2">
                   <div className="flex-1">
@@ -446,7 +500,8 @@ export const CompanyTimeline: React.FC<CompanyTimelineProps> = React.memo(({
               </div>
             </div>
           </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )
