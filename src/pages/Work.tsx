@@ -16,6 +16,7 @@ import CuradoriaFestivais from '../components/CuradoriaFestivais'
 import StarBackground from '../components/StarBackground'
 import OptimizedImage from '../components/OptimizedImage'
 import { useTheme } from '../contexts/ThemeContext'
+import { MAIN_CATEGORIES, SECONDARY_FILTERS, getCategoryFilters, getCategoryLabel } from '../utils/categoryMapping'
 import { PageNavigationCTAs } from '../components/PageNavigationCTAs'
 
 interface WorkProps {
@@ -79,6 +80,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null)
   const [selectedYear, setSelectedYear] = useState<number | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
+  
+  // Estado para filtros colapsáveis
+  const [showSecondaryFilters, setShowSecondaryFilters] = useState(false)
   
   // Filtros legados (mantidos para compatibilidade)
   const [selectedTag, setSelectedTag] = useState<string | null>(() => {
@@ -382,27 +386,57 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         >
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3">
             <nav className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
-              {[
-                { id: 'all', label: lang === 'pt' ? 'Todos os Projetos' : 'All Projects', href: '/work', icon: '✦' },
-                { id: 'museum', label: lang === 'pt' ? 'Museus & Cultura' : 'Museums & Culture', href: '/work?type=museum', icon: '🏛️' },
-                { id: 'festival', label: lang === 'pt' ? 'Festivais' : 'Festivals', href: '/work?type=festival', icon: '🎪' },
-                { id: 'brand', label: lang === 'pt' ? 'Marcas & Eventos' : 'Brands & Events', href: '/work?type=brand', icon: '🎯' },
-                { id: 'vr-xr', label: 'VR & XR', href: '/work?type=vr-xr', icon: '🥽' }
-              ].map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    if (item.href.startsWith('/')) {
-                      navigate(item.href.startsWith('/') ? `/${lang}${item.href}` : item.href)
-                    }
-                  }}
-                  className="flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide hover:text-azimut-red transition-colors"
-                  style={{ color: 'var(--theme-text-secondary)' }}
-                >
-                  <span>{item.icon}</span>
-                  <span>{item.label}</span>
-                </button>
-              ))}
+              {/* Todos os Projetos */}
+              <button
+                onClick={() => {
+                  clearFilters()
+                  navigate(`/${lang}/work`)
+                }}
+                className={`flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide transition-colors ${
+                  !hasActiveFilters
+                    ? 'text-azimut-red border-b-2 border-azimut-red'
+                    : 'text-slate-400 hover:text-azimut-red'
+                }`}
+              >
+                <span>✦</span>
+                <span>{lang === 'pt' ? 'Todos' : 'All'}</span>
+              </button>
+              
+              {/* 6 Categorias Principais */}
+              {MAIN_CATEGORIES.map((category) => {
+                const filters = getCategoryFilters(category.id)
+                const isActive = filters.projectCategory?.some(cat => selectedCategory.includes(cat)) || 
+                                (filters.type && selectedType === filters.type)
+                
+                return (
+                  <button
+                    key={category.id}
+                    onClick={() => {
+                      // Limpar outros filtros primeiro
+                      clearFilters()
+                      
+                      // Aplicar filtros da categoria
+                      if (filters.projectCategory) {
+                        setSelectedCategory(filters.projectCategory)
+                      }
+                      if (filters.type) {
+                        setSelectedType(filters.type)
+                        navigate(`/${lang}/work?type=${filters.type}`)
+                      } else {
+                        navigate(`/${lang}/work`)
+                      }
+                    }}
+                    className={`flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide transition-colors ${
+                      isActive
+                        ? 'text-azimut-red border-b-2 border-azimut-red'
+                        : 'text-slate-400 hover:text-azimut-red'
+                    }`}
+                  >
+                    <span>{category.icon}</span>
+                    <span>{category.label[lang]}</span>
+                  </button>
+                )
+              })}
             </nav>
           </div>
         </div>
@@ -433,20 +467,45 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               🎯 FILTROS VISUAIS PREMIUM - Portfolio 2026
               ═══════════════════════════════════════════════════════════ */}
           <div id="filters-section" className="mb-12">
-            {/* Busca */}
+            {/* Busca - Destacada no topo */}
             <div className="mb-6">
-              <input
-                type="text"
-                placeholder={lang === 'pt' ? '🔍 Buscar projetos...' : lang === 'es' ? '🔍 Buscar proyectos...' : lang === 'fr' ? '🔍 Rechercher...' : '🔍 Search projects...'}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className={`w-full max-w-md rounded-xl border bg-subtle px-5 py-3.5 text-sm focus:border-azimut-red/60 focus:outline-none focus:ring-2 focus:ring-azimut-red/30 transition-all ${
-                  theme === 'dark' ? 'border-white/20' : 'border-slate-300/40'
-                }`}
+              <div className="relative max-w-md">
+                <input
+                  type="text"
+                  placeholder={lang === 'pt' ? '🔍 Buscar projetos...' : lang === 'es' ? '🔍 Buscar proyectos...' : lang === 'fr' ? '🔍 Rechercher...' : '🔍 Search projects...'}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className={`w-full rounded-xl border-2 bg-subtle px-5 py-4 text-sm font-medium focus:border-azimut-red focus:outline-none focus:ring-2 focus:ring-azimut-red/30 transition-all ${
+                    theme === 'dark' ? 'border-white/30' : 'border-slate-400/60'
+                  }`}
+                  style={{ 
+                    color: 'var(--theme-text)',
+                  }}
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-azimut-red transition-colors"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+            </div>
+            
+            {/* Botão para mostrar/ocultar filtros secundários */}
+            <div className="mb-4">
+              <button
+                onClick={() => setShowSecondaryFilters(!showSecondaryFilters)}
+                className="flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-sora font-medium uppercase tracking-wide transition-all hover:border-azimut-red/60"
                 style={{ 
-                  color: 'var(--theme-text)',
+                  color: 'var(--theme-text-secondary)',
+                  borderColor: theme === 'dark' ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)'
                 }}
-              />
+              >
+                <span>{showSecondaryFilters ? '▼' : '▶'}</span>
+                <span>{lang === 'pt' ? 'Filtros Avançados' : lang === 'es' ? 'Filtros Avanzados' : lang === 'fr' ? 'Filtres Avancés' : 'Advanced Filters'}</span>
+              </button>
             </div>
 
             {/* ═══════════════════════════════════════════════════════════════
@@ -488,172 +547,128 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
             </div>
             )}
 
-            {/* Categorias Principais - Pills Visuais */}
-            <div className="mb-6">
-              <label className="mb-3 block font-sora text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-                {lang === 'pt' ? 'Categorias' : lang === 'es' ? 'Categorías' : lang === 'fr' ? 'Catégories' : 'Categories'}
-              </label>
-              <div className="flex flex-wrap gap-3">
-                {[
-                  { id: 'curadoria', label: lang === 'pt' ? '🎪 Curadoria & Festivais' : '🎪 Curation & Festivals', color: 'from-azimut-red/30 to-azimut-red/10' },
-                  { id: 'vr-360', label: '🥽 VR & 360°', color: 'from-blue-500/30 to-blue-500/10' },
-                  { id: 'museum', label: lang === 'pt' ? '🏛️ Museus & Exposições' : '🏛️ Museums & Exhibitions', color: 'from-purple-500/30 to-purple-500/10' },
-                  { id: 'education', label: lang === 'pt' ? '🎓 Educação' : '🎓 Education', color: 'from-green-500/30 to-green-500/10' },
-                  { id: 'motion', label: '🎬 Motion Graphics', color: 'from-orange-500/30 to-orange-500/10' },
-                  { id: 'games', label: '🎮 Games', color: 'from-pink-500/30 to-pink-500/10' },
-                  { id: 'corporate', label: lang === 'pt' ? '💼 Corporativo' : '💼 Corporate', color: 'from-slate-500/30 to-slate-500/10' },
-                  { id: 'festival', label: '🎭 Festival', color: 'from-yellow-500/30 to-yellow-500/10' },
-                  { id: 'animacao', label: lang === 'pt' ? '🎨 Animação' : '🎨 Animation', color: 'from-cyan-500/30 to-cyan-500/10' },
-                  { id: 'personagens-3d', label: lang === 'pt' ? '👤 Personagens 3D' : '👤 3D Characters', color: 'from-indigo-500/30 to-indigo-500/10' },
-                  { id: 'projetos-3d', label: lang === 'pt' ? '🎯 Projetos 3D' : '🎯 3D Projects', color: 'from-violet-500/30 to-violet-500/10' },
-                  { id: 'ambientes-virtuais', label: lang === 'pt' ? '🌐 Ambientes Virtuais' : '🌐 Virtual Environments', color: 'from-teal-500/30 to-teal-500/10' },
-                  { id: 'maquete-virtual', label: lang === 'pt' ? '🏗️ Maquete Virtual' : '🏗️ Virtual Mockup', color: 'from-emerald-500/30 to-emerald-500/10' },
-                  { id: 'renders-3d', label: lang === 'pt' ? '✨ Renders 3D' : '✨ 3D Renders', color: 'from-rose-500/30 to-rose-500/10' },
-                ].map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => {
-                      if (selectedCategory.includes(cat.id)) {
-                        setSelectedCategory(selectedCategory.filter(c => c !== cat.id))
-                      } else {
-                        setSelectedCategory([...selectedCategory, cat.id])
-                      }
-                    }}
-                    className={`group relative rounded-xl border px-4 py-2.5 font-sora text-xs font-semibold uppercase tracking-[0.1em] transition-all duration-300 ${
-                      selectedCategory.includes(cat.id)
-                        ? 'border-azimut-red/60 bg-gradient-to-br from-azimut-red/30 to-azimut-red/10 text-azimut-red shadow-lg shadow-azimut-red/20'
-                        : theme === 'dark' 
-                          ? 'border-white/20 bg-subtle text-slate-400 hover:border-white/40 hover:text-slate-300'
-                          : 'border-slate-300/40 bg-white/60 text-slate-700 hover:border-slate-400/60 hover:text-slate-900'
-                    }`}
-                  >
-                    {cat.label}
-                    {selectedCategory.includes(cat.id) && (
-                      <span className="ml-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-azimut-red text-[10px]">✓</span>
-                    )}
-                  </button>
-                ))}
+            {/* Filtros Secundários Colapsáveis */}
+            {showSecondaryFilters && (
+              <div className="mb-6 space-y-6 rounded-xl border p-6" style={{ 
+                borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.5)'
+              }}>
+                {/* Tipo de Trabalho */}
+                <div>
+                  <label className="mb-3 block font-sora text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                    {lang === 'pt' ? 'Tipo de Trabalho' : lang === 'es' ? 'Tipo de Trabajo' : lang === 'fr' ? 'Type de Travail' : 'Work Type'}
+                  </label>
+                  <div className="flex flex-wrap gap-3">
+                    {SECONDARY_FILTERS.find(f => f.type === 'workType')?.options.map((option) => (
+                      <button
+                        key={option.value}
+                        onClick={() => {
+                          if (selectedWorkType.includes(option.value)) {
+                            setSelectedWorkType(selectedWorkType.filter(t => t !== option.value))
+                          } else {
+                            setSelectedWorkType([...selectedWorkType, option.value])
+                          }
+                        }}
+                        className={`rounded-xl border px-4 py-2.5 font-sora text-xs font-semibold uppercase tracking-[0.1em] transition-all duration-300 ${
+                          selectedWorkType.includes(option.value)
+                            ? 'border-azimut-red/60 bg-gradient-to-br from-azimut-red/30 to-azimut-red/10 text-azimut-red shadow-lg shadow-azimut-red/20'
+                            : theme === 'dark' 
+                              ? 'border-white/20 bg-subtle text-slate-400 hover:border-white/40 hover:text-slate-300'
+                              : 'border-slate-300/40 bg-white/60 text-slate-700 hover:border-slate-400/60 hover:text-slate-900'
+                        }`}
+                      >
+                        {option.label[lang]}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tecnologias */}
+                <div>
+                  <label className="mb-3 block font-sora text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                    {lang === 'pt' ? 'Tecnologias' : lang === 'es' ? 'Tecnologías' : lang === 'fr' ? 'Technologies' : 'Technologies'}
+                  </label>
+                  <div className="flex flex-wrap gap-3">
+                    {SECONDARY_FILTERS.find(f => f.type === 'technologies')?.options.map((option) => (
+                      <button
+                        key={option.value}
+                        onClick={() => {
+                          if (selectedTechnologies.includes(option.value)) {
+                            setSelectedTechnologies(selectedTechnologies.filter(t => t !== option.value))
+                          } else {
+                            setSelectedTechnologies([...selectedTechnologies, option.value])
+                          }
+                        }}
+                        className={`rounded-xl border px-4 py-2.5 font-sora text-xs font-semibold uppercase tracking-[0.1em] transition-all duration-300 ${
+                          selectedTechnologies.includes(option.value)
+                            ? 'border-azimut-red/60 bg-gradient-to-br from-azimut-red/30 to-azimut-red/10 text-azimut-red shadow-lg shadow-azimut-red/20'
+                            : theme === 'dark' 
+                              ? 'border-white/20 bg-subtle text-slate-400 hover:border-white/40 hover:text-slate-300'
+                              : 'border-slate-300/40 bg-white/60 text-slate-700 hover:border-slate-400/60 hover:text-slate-900'
+                        }`}
+                      >
+                        {option.label[lang]}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Indústria */}
+                <div>
+                  <label className="mb-3 block font-sora text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                    {lang === 'pt' ? 'Indústria' : lang === 'es' ? 'Industria' : lang === 'fr' ? 'Industrie' : 'Industry'}
+                  </label>
+                  <div className="flex flex-wrap gap-3">
+                    {SECONDARY_FILTERS.find(f => f.type === 'industry')?.options.map((option) => (
+                      <button
+                        key={option.value}
+                        onClick={() => {
+                          setSelectedIndustry(selectedIndustry === option.value ? null : option.value)
+                        }}
+                        className={`rounded-xl border px-4 py-2.5 font-sora text-xs font-semibold uppercase tracking-[0.1em] transition-all duration-300 ${
+                          selectedIndustry === option.value
+                            ? 'border-azimut-red/60 bg-gradient-to-br from-azimut-red/30 to-azimut-red/10 text-azimut-red shadow-lg shadow-azimut-red/20'
+                            : theme === 'dark' 
+                              ? 'border-white/20 bg-subtle text-slate-400 hover:border-white/40 hover:text-slate-300'
+                              : 'border-slate-300/40 bg-white/60 text-slate-700 hover:border-slate-400/60 hover:text-slate-900'
+                        }`}
+                      >
+                        {option.label[lang]}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Ano */}
+                {allYears.length > 0 && (
+                  <div>
+                    <label className="mb-3 block font-sora text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                      {lang === 'pt' ? 'Ano' : lang === 'es' ? 'Año' : lang === 'fr' ? 'Année' : 'Year'}
+                    </label>
+                    <select
+                      value={selectedYear || ''}
+                      onChange={(e) => setSelectedYear(e.target.value ? parseInt(e.target.value) : null)}
+                      className={`w-full max-w-xs rounded-xl border bg-subtle px-4 py-2.5 text-sm focus:border-azimut-red/60 focus:outline-none focus:ring-2 focus:ring-azimut-red/30 transition-all ${
+                        theme === 'dark' ? 'border-white/20' : 'border-slate-300/40'
+                      }`}
+                      style={{ 
+                        appearance: 'none', 
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`, 
+                        backgroundRepeat: 'no-repeat', 
+                        backgroundPosition: 'right 12px center', 
+                        paddingRight: '32px',
+                        color: 'var(--theme-text)'
+                      }}
+                    >
+                      <option value="">{lang === 'pt' ? '📅 Todos os anos' : lang === 'es' ? '📅 Todos los años' : lang === 'fr' ? '📅 Toutes les années' : '📅 All years'}</option>
+                      {allYears.map(year => (
+                        <option key={year} value={year}>{year}</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
               </div>
-            </div>
-
-            {/* Tipo de Trabalho - Pills Visuais */}
-            <div className="mb-6">
-              <label className="mb-3 block font-sora text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-                {lang === 'pt' ? 'Tipo de Trabalho' : lang === 'es' ? 'Tipo de Trabajo' : lang === 'fr' ? 'Type de Travail' : 'Work Type'}
-              </label>
-              <div className="flex flex-wrap gap-3">
-                {[
-                  { id: 'filme', label: '🎬 Filme' },
-                  { id: 'exposicao', label: lang === 'pt' ? '🖼️ Exposição' : '🖼️ Exhibition' },
-                  { id: 'curso', label: lang === 'pt' ? '📚 Curso' : '📚 Course' },
-                  { id: 'palestra', label: lang === 'pt' ? '🎤 Palestra' : '🎤 Lecture' },
-                  { id: 'workshop', label: '🔧 Workshop' },
-                  { id: 'instalacao', label: lang === 'pt' ? '⚡ Instalação' : '⚡ Installation' },
-                  { id: 'making-of', label: '🎥 Making-of' },
-                  { id: 'evento', label: lang === 'pt' ? '🎉 Evento' : '🎉 Event' },
-                ].map((type) => (
-                  <button
-                    key={type.id}
-                    onClick={() => {
-                      if (selectedWorkType.includes(type.id)) {
-                        setSelectedWorkType(selectedWorkType.filter(t => t !== type.id))
-                      } else {
-                        setSelectedWorkType([...selectedWorkType, type.id])
-                      }
-                    }}
-                    className={`rounded-xl border px-4 py-2.5 font-sora text-xs font-semibold uppercase tracking-[0.1em] transition-all duration-300 ${
-                      selectedWorkType.includes(type.id)
-                        ? 'border-azimut-red/60 bg-gradient-to-br from-azimut-red/30 to-azimut-red/10 text-azimut-red shadow-lg shadow-azimut-red/20'
-                        : theme === 'dark' 
-                          ? 'border-white/20 bg-subtle text-slate-400 hover:border-white/40 hover:text-slate-300'
-                          : 'border-slate-300/40 bg-white/60 text-slate-700 hover:border-slate-400/60 hover:text-slate-900'
-                    }`}
-                  >
-                    {type.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Tecnologias - Pills Visuais */}
-            <div className="mb-6">
-              <label className="mb-3 block font-sora text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-                {lang === 'pt' ? 'Tecnologias' : lang === 'es' ? 'Tecnologías' : lang === 'fr' ? 'Technologies' : 'Technologies'}
-              </label>
-              <div className="flex flex-wrap gap-3">
-                {['VR', '360', 'IA', '3D', 'Motion Graphics', 'Interactive', 'AR', 'XR', 'Animation', '3D Characters', '3D Renders', 'Virtual Environments', 'Virtual Mockup', 'Renders 3D'].map((tech) => (
-                  <button
-                    key={tech}
-                    onClick={() => {
-                      if (selectedTechnologies.includes(tech)) {
-                        setSelectedTechnologies(selectedTechnologies.filter(t => t !== tech))
-                      } else {
-                        setSelectedTechnologies([...selectedTechnologies, tech])
-                      }
-                    }}
-                    className={`rounded-xl border px-4 py-2.5 font-sora text-xs font-semibold uppercase tracking-[0.1em] transition-all duration-300 ${
-                      selectedTechnologies.includes(tech)
-                        ? 'border-azimut-red/60 bg-gradient-to-br from-azimut-red/30 to-azimut-red/10 text-azimut-red shadow-lg shadow-azimut-red/20'
-                        : theme === 'dark' 
-                          ? 'border-white/20 bg-subtle text-slate-400 hover:border-white/40 hover:text-slate-300'
-                          : 'border-slate-300/40 bg-white/60 text-slate-700 hover:border-slate-400/60 hover:text-slate-900'
-                    }`}
-                  >
-                    {tech}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Filtros Adicionais (Ano, Indústria) */}
-            <div className="mb-4 flex flex-wrap gap-4">
-              {/* Filtro por Ano */}
-              {allYears.length > 0 && (
-                <select
-                  value={selectedYear || ''}
-                  onChange={(e) => setSelectedYear(e.target.value ? parseInt(e.target.value) : null)}
-                  className={`rounded-xl border bg-subtle px-4 py-2.5 text-sm focus:border-azimut-red/60 focus:outline-none focus:ring-2 focus:ring-azimut-red/30 transition-all ${
-                    theme === 'dark' ? 'border-white/20' : 'border-slate-300/40'
-                  }`}
-                  style={{ 
-                    appearance: 'none', 
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`, 
-                    backgroundRepeat: 'no-repeat', 
-                    backgroundPosition: 'right 12px center', 
-                    paddingRight: '32px',
-                    color: 'var(--theme-text)'
-                  }}
-                >
-                  <option value="">{lang === 'pt' ? '📅 Todos os anos' : lang === 'es' ? '📅 Todos los años' : lang === 'fr' ? '📅 Toutes les années' : '📅 All years'}</option>
-                  {allYears.map(year => (
-                    <option key={year} value={year}>{year}</option>
-                  ))}
-                </select>
-              )}
-
-              {/* Filtro por Indústria */}
-              <select
-                value={selectedIndustry || ''}
-                onChange={(e) => setSelectedIndustry(e.target.value || null)}
-                className="rounded-xl border border-white/20 bg-subtle px-4 py-2.5 text-sm focus:border-azimut-red/60 focus:outline-none focus:ring-2 focus:ring-azimut-red/30 transition-all"
-                style={{ 
-                  appearance: 'none', 
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`, 
-                  backgroundRepeat: 'no-repeat', 
-                  backgroundPosition: 'right 12px center', 
-                  paddingRight: '32px',
-                  color: 'var(--theme-text)'
-                }}
-              >
-                <option value="">{lang === 'pt' ? '🏢 Todos os setores' : lang === 'es' ? '🏢 Todos los sectores' : lang === 'fr' ? '🏢 Tous les secteurs' : '🏢 All industries'}</option>
-                <option value="cultural">{lang === 'pt' ? 'Cultural' : 'Cultural'}</option>
-                <option value="entertainment">{lang === 'pt' ? 'Entretenimento' : 'Entertainment'}</option>
-                <option value="education">{lang === 'pt' ? 'Educação' : 'Education'}</option>
-                <option value="corporate">{lang === 'pt' ? 'Corporativo' : 'Corporate'}</option>
-                <option value="government">{lang === 'pt' ? 'Governo' : 'Government'}</option>
-                <option value="research">{lang === 'pt' ? 'Pesquisa' : 'Research'}</option>
-              </select>
-            </div>
+            )}
             
             {/* Limpar filtros */}
             {hasActiveFilters && (
