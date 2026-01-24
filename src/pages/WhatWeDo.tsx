@@ -8,7 +8,8 @@ import InternalNavigation from '../components/InternalNavigation'
 import { servicesData, getServiceTitle, getServiceShortDesc } from '../data/servicesData'
 import StarBackground from '../components/StarBackground'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
-import { PageNavigationCTAs } from '../components/PageNavigationCTAs'
+import { PageFooterNavigation } from '../components/PageFooterNavigation'
+import { useTheme } from '../contexts/ThemeContext'
 
 // ═══════════════════════════════════════════════════════════════
 // FUNÇÃO: Destacar palavras-chave com DUAS cores harmônicas
@@ -130,6 +131,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   const seo = seoData.what[lang]
   const location = useLocation()
   const navigate = useNavigate()
+  const { theme } = useTheme()
   
   // Animação automática de seções
   useScrollAnimation()
@@ -272,9 +274,15 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
               {t(lang, 'navWhat')}
             </h1>
             <p className="max-w-3xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)', fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
-              {lang === 'pt' 
-                ? 'Criamos experiências imersivas, interativas e cinematográficas de ponta a ponta. Da concepção à execução, integramos arte, tecnologia e narrativa para conectar pessoas, histórias e espaços.'
-                : 'We create end-to-end immersive, interactive and cinematic experiences. From conception to execution, we integrate art, technology and narrative to connect people, stories and spaces.'}
+              {lang === 'pt' ? (
+                <>Criamos experiências imersivas, interativas e cinematográficas de ponta a ponta. Da concepção à execução, integramos arte, tecnologia e narrativa para conectar pessoas, histórias e espaços. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Veja nossos projetos</LangLink> ou <LangLink to="/studio" className="text-azimut-red hover:text-azimut-red/80 underline">conheça nosso estúdio</LangLink>.</>
+              ) : lang === 'es' ? (
+                <>Creamos experiencias inmersivas, interactivas y cinematográficas de extremo a extremo. Desde la concepción hasta la ejecución, integramos arte, tecnología y narrativa para conectar personas, historias y espacios. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Ver nuestros proyectos</LangLink> o <LangLink to="/studio" className="text-azimut-red hover:text-azimut-red/80 underline">conocer nuestro estudio</LangLink>.</>
+              ) : lang === 'fr' ? (
+                <>Nous créons des expériences immersives, interactives et cinématographiques de bout en bout. De la conception à l'exécution, nous intégrons l'art, la technologie et la narration pour connecter les personnes, les histoires et les espaces. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Voir nos projets</LangLink> ou <LangLink to="/studio" className="text-azimut-red hover:text-azimut-red/80 underline">découvrir notre studio</LangLink>.</>
+              ) : (
+                <>We create end-to-end immersive, interactive and cinematic experiences. From conception to execution, we integrate art, technology and narrative to connect people, stories and spaces. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">View our projects</LangLink> or <LangLink to="/studio" className="text-azimut-red hover:text-azimut-red/80 underline">meet our studio</LangLink>.</>
+              )}
             </p>
           </div>
         </div>
@@ -288,11 +296,9 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                 <LangLink 
                   key={service.id}
                   to={`/what/${service.slug}`}
-                  className="group relative rounded-xl cursor-pointer transition-all duration-400 hover:z-50 z-10"
+                  className="group relative rounded-xl cursor-pointer transition-all duration-400 hover:z-50 z-10 card-adaptive"
                   style={{
                     animation: `fadeInUp 0.5s ease-out ${index * 0.04}s both`,
-                    background: 'linear-gradient(165deg, rgba(20, 24, 38, 0.98) 0%, rgba(12, 15, 24, 0.99) 100%)',
-                    border: '1px solid rgba(255,255,255,0.05)',
                     boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
                     marginTop: '20px',
                     transform: 'translateY(0)',
@@ -344,18 +350,17 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                       </div>
                     )}
                     
-                    {/* Título - FORÇA BRUTA: cor inline para garantir branco */}
+                    {/* Título */}
                     <h3 
-                      className="mb-3 font-sora text-[0.88rem] font-semibold uppercase tracking-[0.03em] transition-colors duration-300 line-clamp-2 leading-snug"
-                      style={{ color: 'rgba(255, 255, 255, 0.9)' }}
+                      className={`mb-3 font-sora text-[0.88rem] font-semibold uppercase tracking-[0.03em] transition-colors duration-300 line-clamp-2 leading-snug ${theme === 'dark' ? 'text-white/90' : 'text-on-dark-primary'}`}
                     >
                       {getServiceTitle(service, lang)}
                     </h3>
                     
-                    {/* Descrição - FORÇA BRUTA: cor inline para garantir legibilidade */}
+                    {/* Descrição */}
                     <p 
-                      className="text-[0.82rem] leading-[1.75] transition-colors duration-300 flex-grow line-clamp-3"
-                      style={{ color: '#9a9590', fontWeight: 400 }}
+                      className={`text-[0.82rem] leading-[1.75] transition-colors duration-300 flex-grow line-clamp-3 ${theme === 'dark' ? 'text-[#9a9590]' : 'text-on-dark-secondary'}`}
+                      style={{ fontWeight: 400 }}
                     >
                       {(() => {
                         const desc = getServiceShortDesc(service, lang)
@@ -388,36 +393,26 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="relative py-16 text-center">
-          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
-            <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-wide mb-6 text-theme-light-main">
-              {lang === 'pt' ? 'Vamos criar algo incrível juntos?' : lang === 'es' ? '¿Vamos a crear algo increíble juntos?' : lang === 'fr' ? 'Créons quelque chose d\'incroyable ensemble?' : 'Let\'s create something incredible together?'}
-            </h2>
-            <p className="text-lg max-w-2xl mx-auto mb-8" style={{ color: 'var(--theme-text-secondary)' }}>
-              {lang === 'pt' ? 'Entre em contato para discutir seu projeto e descobrir como podemos transformar sua visão em realidade.' : lang === 'es' ? 'Contáctenos para discutir su proyecto y descubrir cómo podemos transformar su visión en realidad.' : lang === 'fr' ? 'Contactez-nous pour discuter de votre projet et découvrir comment nous pouvons transformer votre vision en réalité.' : 'Get in touch to discuss your project and discover how we can transform your vision into reality.'}
-            </p>
-            <LangLink 
-              to="/contact" 
-              className="inline-block bg-azimut-red text-white font-sora font-semibold px-8 py-4 rounded-full hover:bg-azimut-red/80 transition-colors duration-300"
-            >
-              {lang === 'pt' ? 'Iniciar um Projeto' : lang === 'es' ? 'Iniciar un Proyecto' : lang === 'fr' ? 'Démarrer un Projet' : 'Start a Project'}
-            </LangLink>
-          </div>
-        </section>
-
-        {/* CTAs de Navegação */}
-        <PageNavigationCTAs
+        {/* Navegação Final - Curada e Organizada */}
+        <PageFooterNavigation
           lang={lang}
-          primary={{
-            label: lang === 'pt' ? 'Ver Projetos' : lang === 'es' ? 'Ver Proyectos' : lang === 'fr' ? 'Voir Projets' : 'View Projects',
-            href: '/work',
-            icon: '🎬'
+          mainCta={{
+            title: lang === 'pt' ? 'Vamos criar algo incrível juntos?' : lang === 'es' ? '¿Vamos a crear algo increíble juntos?' : lang === 'fr' ? 'Créons quelque chose d\'incroyable ensemble?' : 'Let\'s create something incredible together?',
+            description: lang === 'pt' ? 'Entre em contato para discutir seu projeto e descobrir como podemos transformar sua visão em realidade.' : lang === 'es' ? 'Contáctenos para discutir su proyecto y descubrir cómo podemos transformar su visión en realidad.' : lang === 'fr' ? 'Contactez-nous pour discuter de votre projet et découvrir comment nous pouvons transformer votre vision en réalité.' : 'Get in touch to discuss your project and discover how we can transform your vision into reality.',
+            buttonText: lang === 'pt' ? 'Iniciar um Projeto' : lang === 'es' ? 'Iniciar un Proyecto' : lang === 'fr' ? 'Démarrer un Projet' : 'Start a Project',
+            buttonHref: '/contact'
           }}
-          secondary={{
-            label: lang === 'pt' ? 'Conhecer Estúdio' : lang === 'es' ? 'Conocer Estudio' : lang === 'fr' ? 'Découvrir Studio' : 'Meet Studio',
-            href: '/studio',
-            icon: '🏛️'
+          navigation={{
+            previous: {
+              label: lang === 'pt' ? 'Conhecer Estúdio' : lang === 'es' ? 'Conocer Estudio' : lang === 'fr' ? 'Découvrir Studio' : 'Meet Studio',
+              href: '/studio',
+              icon: '🏛️'
+            },
+            next: {
+              label: lang === 'pt' ? 'Ver Projetos' : lang === 'es' ? 'Ver Proyectos' : lang === 'fr' ? 'Voir Projets' : 'View Projects',
+              href: '/work',
+              icon: '🎬'
+            }
           }}
         />
       </main>

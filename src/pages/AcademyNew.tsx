@@ -14,6 +14,8 @@ import StarBackground from '../components/StarBackground'
 import InternalNavigation from '../components/InternalNavigation'
 import CanadaMapleLeaf from '../components/CanadaMapleLeaf'
 import { CourseSchema } from '../components/StructuredData'
+import { useTheme } from '../contexts/ThemeContext'
+import { PageFooterNavigation } from '../components/PageFooterNavigation'
 
 interface AcademyProps {
   lang: Lang
@@ -65,6 +67,7 @@ interface AcademyContent {
 const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
   // REMOVIDO: useUserTracking já é chamado no Layout.tsx
   // useUserTracking()
+  const { theme } = useTheme()
 
   // ═══════════════════════════════════════════════════════════
   // CONTEÚDO POR IDIOMA
@@ -409,15 +412,88 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
           {/* Background Image/Video (PLACEHOLDER) */}
           <div className="absolute inset-0 z-0">
             <div 
-              className="absolute inset-0 bg-gradient-to-br from-slate-900 via-black to-slate-900"
+              className="absolute inset-0"
               style={{
                 backgroundImage: 'url(https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1600&q=80)',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                backgroundBlendMode: 'overlay'
+                filter: theme === 'dark' ? 'brightness(0.85) contrast(1.1)' : 'brightness(1.15) contrast(0.95) saturate(0.9)'
               }}
             >
-              <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black" />
+              {/* ═══════════════════════════════════════════════════════════
+                  CURADORIA DE ARTE - Overlays Cinematográficos Premium
+                  ═══════════════════════════════════════════════════════ */}
+              
+              {/* Tema Escuro: Overlay mais sutil - revela mais a imagem */}
+              {theme === 'dark' && (
+                <>
+                  {/* Camada 1: Gradiente vertical suave (menos agressivo) */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/65" />
+                  
+                  {/* Camada 2: Vinheta radial cinematográfica (foco no centro) */}
+                  <div 
+                    className="absolute inset-0"
+                    style={{
+                      background: `radial-gradient(
+                        ellipse 140% 120% at 50% 45%,
+                        transparent 0%,
+                        transparent 35%,
+                        rgba(0, 0, 0, 0.2) 60%,
+                        rgba(0, 0, 0, 0.5) 85%,
+                        rgba(0, 0, 0, 0.75) 100%
+                      )`
+                    }}
+                  />
+                  
+                  {/* Camada 3: Gradiente horizontal sutil (profundidade) */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/30" />
+                  
+                  {/* Camada 4: Filtro de cor cinematográfico (tom quente sutil) */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-azimut-red/5 via-transparent to-transparent" />
+                </>
+              )}
+              
+              {/* Tema Claro: Overlay equilibrado - não muito claro, mantém atmosfera */}
+              {theme === 'light' && (
+                <>
+                  {/* Camada 1: Overlay bege suave (clareia mas preserva imagem) */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-[#f5f1e8]/40 via-[#e8e5df]/35 to-[#d3cec3]/45" />
+                  
+                  {/* Camada 2: Vinheta artística - cria foco central (como galeria) */}
+                  <div 
+                    className="absolute inset-0"
+                    style={{
+                      background: `radial-gradient(
+                        ellipse 150% 130% at 50% 50%,
+                        transparent 0%,
+                        transparent 45%,
+                        rgba(30, 28, 26, 0.25) 70%,
+                        rgba(20, 18, 16, 0.45) 85%,
+                        rgba(10, 8, 6, 0.65) 100%
+                      )`
+                    }}
+                  />
+                  
+                  {/* Camada 3: Gradiente vertical para profundidade */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#1e1c1a]/30" />
+                  
+                  {/* Camada 4: Filtro de cor quente sutil (atmosfera premium) */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-900/10 via-transparent to-slate-900/15" />
+                  
+                  {/* Camada 5: Contraste adicional nas bordas (vinheta reforçada) */}
+                  <div 
+                    className="absolute inset-0"
+                    style={{
+                      background: `radial-gradient(
+                        circle at 50% 50%,
+                        transparent 30%,
+                        rgba(0, 0, 0, 0.1) 60%,
+                        rgba(0, 0, 0, 0.3) 100%
+                      )`
+                    }}
+                  />
+                </>
+              )}
             </div>
           </div>
 
@@ -429,21 +505,62 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
               </span>
             </div>
 
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-handel uppercase tracking-wider mb-8 leading-none animate-fade-in-up" style={{ color: 'var(--theme-text)' }}>
+            {/* Título - Curadoria de Arte: Tipografia Premium */}
+            <h1 
+              className="text-6xl md:text-8xl lg:text-9xl font-handel uppercase tracking-wider mb-8 leading-none animate-fade-in-up"
+              style={{ 
+                color: theme === 'dark' ? '#ffffff' : '#f5f1e8',
+                textShadow: theme === 'dark' 
+                  ? '0 4px 12px rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 0, 0, 0.3)'
+                  : '0 3px 10px rgba(0, 0, 0, 0.6), 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 0, 0, 0.4)',
+                letterSpacing: '0.08em',
+                fontWeight: 400
+              }}
+            >
               {t.hero.title}
             </h1>
 
-            <p className="text-2xl md:text-4xl mb-6 font-light animate-fade-in-up animation-delay-100" style={{ color: 'var(--theme-text-secondary)' }}>
+            {/* Subtítulo - Hierarquia Visual Refinada */}
+            <p 
+              className="text-2xl md:text-4xl mb-6 font-light animate-fade-in-up animation-delay-100"
+              style={{ 
+                color: theme === 'dark' ? '#f0ece5' : '#e8e5df',
+                textShadow: theme === 'dark'
+                  ? '0 2px 8px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.3)'
+                  : '0 2px 6px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 0, 0, 0.3)',
+                letterSpacing: '0.04em',
+                lineHeight: '1.3'
+              }}
+            >
               {t.hero.subtitle}
             </p>
 
-            <p className="text-lg md:text-xl mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200" style={{ color: 'var(--theme-text-muted)' }}>
+            {/* Descrição - Legibilidade Premium com Contraste Otimizado */}
+            <p 
+              className="text-lg md:text-xl mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200"
+              style={{ 
+                color: theme === 'dark' ? '#e2e8f0' : '#d3cec3',
+                textShadow: theme === 'dark'
+                  ? '0 1px 4px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.4)'
+                  : '0 2px 5px rgba(0, 0, 0, 0.6), 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 0, 0, 0.4)',
+                letterSpacing: '0.02em',
+                lineHeight: '1.7'
+              }}
+            >
               {t.hero.description}
             </p>
 
-            {/* Scroll Indicator */}
+            {/* Scroll Indicator - Adaptativo por tema */}
             <div className="animate-bounce mt-16">
-              <svg className="w-8 h-8 mx-auto text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg 
+                className="w-8 h-8 mx-auto" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                style={{ 
+                  color: theme === 'dark' ? 'rgba(255, 255, 255, 0.4)' : 'rgba(245, 241, 232, 0.6)'
+                }}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
               </svg>
             </div>
@@ -570,7 +687,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
         <section className="py-20 bg-gradient-to-b from-transparent via-azimut-red/5 to-transparent">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-6xl font-handel uppercase tracking-wider mb-4" style={{ color: 'var(--theme-text)' }}>
+              <h2 className={`text-4xl md:text-6xl font-handel uppercase tracking-wider mb-4 ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>
                 {t.statsSection.title}
               </h2>
             </div>
@@ -584,7 +701,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
                   <div className="text-5xl md:text-6xl font-handel text-azimut-red mb-3">
                     {stat.value}
                   </div>
-                  <div className="text-sm md:text-base uppercase tracking-wider" style={{ color: 'var(--theme-text-secondary)' }}>
+                  <div className={`text-sm md:text-base uppercase tracking-wider ${theme === 'dark' ? 'text-slate-300' : 'text-on-dark-secondary'}`}>
                     {stat.label}
                   </div>
                 </div>
@@ -596,10 +713,10 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
         {/* ═══════════════════════════════════════════════════════════
             CREDIBILITY SECTION
             ═══════════════════════════════════════════════════════ */}
-        <section className="py-20">
+        <section className="py-20 pb-12">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-5xl font-handel uppercase tracking-wider mb-4" style={{ color: 'var(--theme-text)' }}>
+              <h2 className={`text-3xl md:text-5xl font-handel uppercase tracking-wider mb-4 ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>
                 {t.credibility.title}
               </h2>
             </div>
@@ -613,7 +730,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
                   <div className="text-2xl flex-shrink-0">
                     {item.split(' ')[0]}
                   </div>
-                  <p className="leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                  <p className={`leading-relaxed ${theme === 'dark' ? 'text-slate-300' : 'text-on-dark-secondary'}`}>
                     {item.substring(item.indexOf(' ') + 1)}
                   </p>
                 </div>
@@ -622,29 +739,29 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* ═══════════════════════════════════════════════════════════
-            CTA SECTION
-            ═══════════════════════════════════════════════════════ */}
-        <section className="py-24 bg-gradient-to-b from-transparent to-black">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-4xl md:text-6xl font-handel uppercase tracking-wider mb-6" style={{ color: 'var(--theme-text)' }}>
-              {t.cta.title}
-            </h2>
-            <p className="text-xl md:text-2xl mb-10" style={{ color: 'var(--theme-text-secondary)' }}>
-              {t.cta.subtitle}
-            </p>
-
-            <Link
-              to={`/${lang}/contact`}
-              className="inline-flex items-center gap-3 px-10 py-5 bg-azimut-red hover:bg-azimut-red/90 text-white text-lg font-bold uppercase tracking-wider rounded-full transition-all hover:scale-105 hover:shadow-2xl hover:shadow-azimut-red/50"
-            >
-              {t.cta.button}
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
-          </div>
-        </section>
+        {/* Navegação Final - Curada e Organizada (dentro de card, gap reduzido) */}
+        <PageFooterNavigation
+          lang={lang}
+          compact={true}
+          mainCta={{
+            title: t.cta.title,
+            description: t.cta.subtitle,
+            buttonText: t.cta.button,
+            buttonHref: `/contact`
+          }}
+          navigation={{
+            previous: {
+              label: lang === 'pt' ? 'Conhecer Estúdio' : lang === 'es' ? 'Conocer Estudio' : lang === 'fr' ? 'Découvrir Studio' : 'Meet Studio',
+              href: '/studio',
+              icon: '🏛️'
+            },
+            next: {
+              label: lang === 'pt' ? 'Ver Cursos' : lang === 'es' ? 'Ver Cursos' : lang === 'fr' ? 'Voir Cours' : 'View Courses',
+              href: '/what/educacao-treinamento',
+              icon: '🎓'
+            }
+          }}
+        />
       </div>
     </>
   )

@@ -68,19 +68,15 @@ const OptimizedImage: React.FC<OptimizedImageProps> = memo(({
     }
   }, [priority])
 
-  // Converter para WebP/AVIF se possível
+  // Converter para WebP/AVIF se possível (apenas se o arquivo existir)
+  // Por enquanto, usar sempre a imagem original para evitar erros 404
   const getOptimizedSrc = (originalSrc: string, format: 'webp' | 'avif' | 'original' = 'webp') => {
-    if (format === 'original') return originalSrc
-    
-    const ext = originalSrc.split('.').pop()?.toLowerCase()
-    if (ext === 'jpg' || ext === 'jpeg' || ext === 'png') {
-      return originalSrc.replace(/\.(jpg|jpeg|png)$/i, `.${format}`)
-    }
+    // Retornar original para evitar tentar carregar formatos que não existem
     return originalSrc
   }
 
-  const webpSrc = getOptimizedSrc(src, 'webp')
-  const avifSrc = getOptimizedSrc(src, 'avif')
+  const webpSrc = src // Usar original por enquanto
+  const avifSrc = src // Usar original por enquanto
 
   const handleLoad = () => {
     setIsLoaded(true)

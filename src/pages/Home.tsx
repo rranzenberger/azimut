@@ -15,7 +15,8 @@ import OptimizedImage from '../components/OptimizedImage'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { useTheme } from '../contexts/ThemeContext'
 import { logger } from '@/utils/logger'
-import { PageNavigationCTAs } from '../components/PageNavigationCTAs'
+import { PageFooterNavigation } from '../components/PageFooterNavigation'
+import LangLink from '../components/LangLink'
 
 interface HomeProps {
   lang: Lang
@@ -246,8 +247,16 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* margin-top negativo compensa o padding do Layout */}
         {/* ════════════════════════════════════════════════════════════════ */}
         <section 
-          className="relative flex flex-col lg:flex-row lg:items-start overflow-x-hidden overflow-y-auto film-grain py-4 sm:py-6 md:py-8"
-          style={{ marginTop: '-80px', paddingTop: '100px', minHeight: 'auto' }}
+          className="relative flex flex-col lg:flex-row lg:items-start overflow-y-auto film-grain py-4 sm:py-6 md:py-8"
+          style={{ 
+            marginTop: '-80px', 
+            paddingTop: '100px', 
+            minHeight: 'auto',
+            isolation: 'isolate', // Isola contexto de stacking
+            transform: 'translateZ(0)', // Force GPU layer
+            willChange: 'auto',
+            overflowX: 'clip' // Melhor que hidden para evitar linhas
+          }}
         >
           {/* Background: Imagem do Backoffice (heroBackgroundImage) ou Featured Project */}
           {/* APENAS NO TEMA ESCURO - Tema claro usa gradiente bege sem imagem */}
@@ -281,10 +290,20 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               ═══════════════════════════════════════════════════════════ */}
           
           {/* 🌙 TEMA ESCURO - Gradientes AZUL/PRETO */}
-          <div className="hero-gradient-dark" style={{ zIndex: -1 }} />
+          <div className="hero-gradient-dark" style={{ 
+            zIndex: -1,
+            transform: 'translateZ(0)', // Force GPU layer
+            willChange: 'auto',
+            backfaceVisibility: 'hidden' // Previne flickering
+          }} />
           
           {/* ☀️ TEMA CLARO - Gradiente MARROM/BEGE */}
-          <div className="hero-gradient-light" style={{ zIndex: -1 }} />
+          <div className="hero-gradient-light" style={{ 
+            zIndex: -1,
+            transform: 'translateZ(0)', // Force GPU layer
+            willChange: 'auto',
+            backfaceVisibility: 'hidden' // Previne flickering
+          }} />
           
           {/* MOBILE ONLY: Fundo sólido SEM gradientes */}
           <div 
@@ -300,7 +319,11 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               ══════════════════════════════════════════════════════════════ */}
           
           {/* DESKTOP: Container único com TODAS as seções - ESPAÇAMENTO COMPACTO */}
-          <div className="relative z-10 hidden lg:block px-4 sm:px-6 lg:px-8 mx-auto max-w-[1600px] w-full space-y-3">
+          <div className="relative z-10 hidden lg:block px-4 sm:px-6 lg:px-8 mx-auto max-w-[1600px] w-full space-y-3" style={{
+            isolation: 'isolate',
+            transform: 'translateZ(0)', // Force GPU layer
+            willChange: 'auto'
+          }}>
             
             {/* LINHA 1: Hero - Texto + Logo Lado a Lado */}
             {/* Grid ajustado: mais espaço para texto, logo mais à esquerda */}
@@ -313,19 +336,23 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   src="/estela6-clara.svg"
                   alt="" 
                   className="w-4 h-4"
+                  style={{
+                    filter: theme === 'light' ? 'brightness(0) saturate(100%) invert(15%) sepia(10%) saturate(2000%) hue-rotate(340deg) brightness(0.9) contrast(1.2)' : 'none'
+                  }}
                 />
                 <span className="text-azimut-red font-semibold">AZIMUT</span>
-                <span className="text-white/40">•</span>
-                <span className="text-[0.7rem] azimut-since-year">SINCE 1996</span>
+                <span style={{ color: theme === 'dark' ? 'rgba(255, 255, 255, 0.4)' : 'rgba(30, 28, 26, 0.4)' }}>•</span>
+                <span className={`text-[0.7rem] ${theme === 'dark' ? 'azimut-since-year' : ''}`} style={{ color: theme === 'dark' ? undefined : '#475569' }}>SINCE 1996</span>
               </div>
                 
                 {/* Título em 3 LINHAS - MULTILÍNGUE */}
-                {/* ESCURO: branco | CLARO: branco (fundo marrom escuro) */}
+                {/* ESCURO: branco | CLARO: escuro elegante */}
                 <h1 className="font-handel uppercase animate-fade-in-up opacity-0 hero-title" style={{ 
                   fontSize: 'clamp(3rem, 5.5vw, 5.8rem)',
                   lineHeight: '1.1',
                   letterSpacing: '0.08em',
-                  animationDelay: '0.2s'
+                  animationDelay: '0.2s',
+                  color: theme === 'dark' ? '#ffffff' : '#0f172a'
                 }}>
                   {(() => {
                     const words = heroSlogan.split(' ');
@@ -366,14 +393,32 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 </h1>
                   
                 {/* Subtítulo COMPACTO */}
-                <p className="max-w-xl text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0 hero-subtitle" style={{ animationDelay: '0.3s' }}>
+                <p className="max-w-xl text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0 hero-subtitle" style={{ 
+                  animationDelay: '0.3s',
+                  color: theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : '#475569'
+                }}>
                   {heroSubtitle.split('.')[0]}.
                 </p>
               </div>
               
               {/* Coluna Direita: Logo 3D Animada (movida para esquerda) */}
-              <div className="flex justify-start" style={{ alignItems: 'flex-start', zIndex: 10, position: 'relative', marginLeft: '-140px', isolation: 'isolate' }}>
-                <div className="w-full max-w-[600px] aspect-square -mt-28" style={{ zIndex: 10, position: 'relative', isolation: 'isolate' }}>
+              <div className="flex justify-start" style={{ 
+                alignItems: 'flex-start', 
+                zIndex: 10, 
+                position: 'relative', 
+                marginLeft: '-140px', 
+                isolation: 'isolate',
+                transform: 'translateZ(0)', // Force GPU layer
+                willChange: 'transform'
+              }}>
+                <div className="w-full max-w-[600px] aspect-square -mt-28" style={{ 
+                  zIndex: 10, 
+                  position: 'relative', 
+                  isolation: 'isolate',
+                  transform: 'translateZ(0)', // Force GPU layer
+                  willChange: 'transform',
+                  contain: 'layout style paint' // Otimização de renderização
+                }}>
                   <AnimatedLogo />
                 </div>
               </div>
@@ -382,61 +427,171 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             {/* LINHA 2: 5 Cards Horizontais (SUBIDOS - SEM GAP VAZIO) */}
             <div className="grid grid-cols-5 gap-4 -mt-24">
               {/* Cinema & AV */}
-              <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 rounded-xl hover:border-azimut-red transition-all duration-300 group flex flex-row items-center gap-2 p-3`} style={{ background: theme === 'dark' ? 'rgba(26, 31, 46, 0.85)' : 'rgba(255, 255, 255, 0.9)' }}>
+              <div className={`glass-panel backdrop-blur-xl rounded-xl transition-all duration-300 group flex flex-row items-center gap-2 p-3 hover:scale-[1.02]`} style={{ 
+                background: theme === 'dark' 
+                  ? 'rgba(26, 31, 46, 0.85)' 
+                  : 'rgba(255, 255, 255, 0.6)',
+                border: theme === 'dark' 
+                  ? '1px solid rgba(201, 35, 55, 0.3)' 
+                  : '1px solid rgba(0, 0, 0, 0.08)',
+                boxShadow: theme === 'light' ? '0 2px 8px rgba(0, 0, 0, 0.06)' : 'none'
+              }}
+              onMouseEnter={(e) => {
+                if (theme === 'light') {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.75)'
+                  e.currentTarget.style.borderColor = 'rgba(201, 35, 55, 0.3)'
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(201, 35, 55, 0.15)'
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (theme === 'light') {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.6)'
+                  e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.08)'
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)'
+                }
+              }}>
                 <span className="block text-3xl flex-shrink-0">🎬</span>
                 <div className="flex-1 min-w-0">
-                  <span className={`block text-xs font-bold group-hover:text-azimut-red transition-colors leading-tight break-words ${theme === 'dark' ? 'text-slate-100' : 'text-[#1e1c1a]'}`}>
+                  <span className={`block text-xs font-bold group-hover:text-azimut-red transition-colors leading-tight break-words ${theme === 'dark' ? 'text-slate-100' : 'text-[#0f172a]'}`}>
                     {lang === 'pt' ? 'Cinema & AV' : lang === 'es' ? 'Cine & AV' : lang === 'fr' ? 'Cinéma & AV' : 'Cinema & AV'}
                   </span>
-                  <span className={`block text-[0.55rem] uppercase tracking-wide mt-0.5 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                  <span className={`block text-[0.55rem] uppercase tracking-wide mt-0.5 ${theme === 'dark' ? 'text-slate-400' : 'text-[#334155]'}`}>
                     {lang === 'pt' ? 'Audiovisual' : lang === 'es' ? 'Audiovisual' : lang === 'fr' ? 'Audiovisuel' : 'Audiovisual'}
                   </span>
                 </div>
               </div>
 
               {/* XR/VR/AR */}
-              <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 rounded-xl hover:border-azimut-red transition-all duration-300 group flex flex-row items-center gap-2 p-3`} style={{ background: theme === 'dark' ? 'rgba(26, 31, 46, 0.85)' : 'rgba(255, 255, 255, 0.9)' }}>
+              <div className={`glass-panel backdrop-blur-xl rounded-xl transition-all duration-300 group flex flex-row items-center gap-2 p-3 hover:scale-[1.02]`} style={{ 
+                background: theme === 'dark' 
+                  ? 'rgba(26, 31, 46, 0.85)' 
+                  : 'rgba(255, 255, 255, 0.6)',
+                border: theme === 'dark' 
+                  ? '1px solid rgba(201, 35, 55, 0.3)' 
+                  : '1px solid rgba(0, 0, 0, 0.08)',
+                boxShadow: theme === 'light' ? '0 2px 8px rgba(0, 0, 0, 0.06)' : 'none'
+              }}
+              onMouseEnter={(e) => {
+                if (theme === 'light') {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.75)'
+                  e.currentTarget.style.borderColor = 'rgba(201, 35, 55, 0.3)'
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(201, 35, 55, 0.15)'
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (theme === 'light') {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.6)'
+                  e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.08)'
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)'
+                }
+              }}>
                 <span className="block text-3xl flex-shrink-0">🥽</span>
                 <div className="flex-1 min-w-0">
-                  <span className={`block text-xs font-bold group-hover:text-azimut-red transition-colors leading-tight break-words ${theme === 'dark' ? 'text-slate-100' : 'text-[#1e1c1a]'}`}>XR/VR/AR</span>
-                  <span className={`block text-[0.55rem] uppercase tracking-wide mt-0.5 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                  <span className={`block text-xs font-bold group-hover:text-azimut-red transition-colors leading-tight break-words ${theme === 'dark' ? 'text-slate-100' : 'text-[#0f172a]'}`}>XR/VR/AR</span>
+                  <span className={`block text-[0.55rem] uppercase tracking-wide mt-0.5 ${theme === 'dark' ? 'text-slate-400' : 'text-[#334155]'}`}>
                     {lang === 'pt' ? 'Imersivo' : lang === 'es' ? 'Inmersivo' : lang === 'fr' ? 'Immersif' : 'Immersive'}
                   </span>
                 </div>
               </div>
 
               {/* Exposições & Museus */}
-              <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 rounded-xl hover:border-azimut-red transition-all duration-300 group flex flex-row items-center gap-2 p-3`} style={{ background: theme === 'dark' ? 'rgba(26, 31, 46, 0.85)' : 'rgba(255, 255, 255, 0.9)' }}>
+              <div className={`glass-panel backdrop-blur-xl rounded-xl transition-all duration-300 group flex flex-row items-center gap-2 p-3 hover:scale-[1.02]`} style={{ 
+                background: theme === 'dark' 
+                  ? 'rgba(26, 31, 46, 0.85)' 
+                  : 'rgba(255, 255, 255, 0.6)',
+                border: theme === 'dark' 
+                  ? '1px solid rgba(201, 35, 55, 0.3)' 
+                  : '1px solid rgba(0, 0, 0, 0.08)',
+                boxShadow: theme === 'light' ? '0 2px 8px rgba(0, 0, 0, 0.06)' : 'none'
+              }}
+              onMouseEnter={(e) => {
+                if (theme === 'light') {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.75)'
+                  e.currentTarget.style.borderColor = 'rgba(201, 35, 55, 0.3)'
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(201, 35, 55, 0.15)'
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (theme === 'light') {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.6)'
+                  e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.08)'
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)'
+                }
+              }}>
                 <span className="block text-3xl flex-shrink-0">🏛️</span>
                 <div className="flex-1 min-w-0">
-                  <span className={`block text-xs font-bold group-hover:text-azimut-red transition-colors leading-tight break-words ${theme === 'dark' ? 'text-slate-100' : 'text-[#1e1c1a]'}`}>
+                  <span className={`block text-xs font-bold group-hover:text-azimut-red transition-colors leading-tight break-words ${theme === 'dark' ? 'text-slate-100' : 'text-[#0f172a]'}`}>
                     {lang === 'pt' ? 'Exposições' : lang === 'es' ? 'Exposiciones' : lang === 'fr' ? 'Expositions' : 'Exhibitions'}
                   </span>
-                  <span className={`block text-[0.55rem] uppercase tracking-wide mt-0.5 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                  <span className={`block text-[0.55rem] uppercase tracking-wide mt-0.5 ${theme === 'dark' ? 'text-slate-400' : 'text-[#334155]'}`}>
                     {lang === 'pt' ? '& Museus' : lang === 'es' ? '& Museos' : lang === 'fr' ? '& Musées' : '& Museums'}
                   </span>
                 </div>
               </div>
 
               {/* IA & Tech */}
-              <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 rounded-xl hover:border-azimut-red transition-all duration-300 group flex flex-row items-center gap-2 p-3`} style={{ background: theme === 'dark' ? 'rgba(26, 31, 46, 0.85)' : 'rgba(255, 255, 255, 0.9)' }}>
+              <div className={`glass-panel backdrop-blur-xl rounded-xl transition-all duration-300 group flex flex-row items-center gap-2 p-3 hover:scale-[1.02]`} style={{ 
+                background: theme === 'dark' 
+                  ? 'rgba(26, 31, 46, 0.85)' 
+                  : 'rgba(255, 255, 255, 0.6)',
+                border: theme === 'dark' 
+                  ? '1px solid rgba(201, 35, 55, 0.3)' 
+                  : '1px solid rgba(0, 0, 0, 0.08)',
+                boxShadow: theme === 'light' ? '0 2px 8px rgba(0, 0, 0, 0.06)' : 'none'
+              }}
+              onMouseEnter={(e) => {
+                if (theme === 'light') {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.75)'
+                  e.currentTarget.style.borderColor = 'rgba(201, 35, 55, 0.3)'
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(201, 35, 55, 0.15)'
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (theme === 'light') {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.6)'
+                  e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.08)'
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)'
+                }
+              }}>
                 <span className="block text-3xl flex-shrink-0">🧠</span>
                 <div className="flex-1 min-w-0">
-                  <span className={`block text-xs font-bold group-hover:text-azimut-red transition-colors leading-tight break-words ${theme === 'dark' ? 'text-slate-100' : 'text-[#1e1c1a]'}`}>IA & Tech</span>
-                  <span className={`block text-[0.55rem] uppercase tracking-wide mt-0.5 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                  <span className={`block text-xs font-bold group-hover:text-azimut-red transition-colors leading-tight break-words ${theme === 'dark' ? 'text-slate-100' : 'text-[#0f172a]'}`}>IA & Tech</span>
+                  <span className={`block text-[0.55rem] uppercase tracking-wide mt-0.5 ${theme === 'dark' ? 'text-slate-400' : 'text-[#334155]'}`}>
                     {lang === 'pt' ? 'Interativo' : lang === 'es' ? 'Interactivo' : lang === 'fr' ? 'Interactif' : 'Interactive'}
                   </span>
                 </div>
               </div>
 
               {/* Educação */}
-              <div className={`glass-panel backdrop-blur-xl border border-azimut-red/30 rounded-xl hover:border-azimut-red transition-all duration-300 group flex flex-row items-center gap-2 p-3`} style={{ background: theme === 'dark' ? 'rgba(26, 31, 46, 0.85)' : 'rgba(255, 255, 255, 0.9)' }}>
+              <div className={`glass-panel backdrop-blur-xl rounded-xl transition-all duration-300 group flex flex-row items-center gap-2 p-3 hover:scale-[1.02]`} style={{ 
+                background: theme === 'dark' 
+                  ? 'rgba(26, 31, 46, 0.85)' 
+                  : 'rgba(255, 255, 255, 0.6)',
+                border: theme === 'dark' 
+                  ? '1px solid rgba(201, 35, 55, 0.3)' 
+                  : '1px solid rgba(0, 0, 0, 0.08)',
+                boxShadow: theme === 'light' ? '0 2px 8px rgba(0, 0, 0, 0.06)' : 'none'
+              }}
+              onMouseEnter={(e) => {
+                if (theme === 'light') {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.75)'
+                  e.currentTarget.style.borderColor = 'rgba(201, 35, 55, 0.3)'
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(201, 35, 55, 0.15)'
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (theme === 'light') {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.6)'
+                  e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.08)'
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)'
+                }
+              }}>
                 <span className="block text-3xl flex-shrink-0">🎓</span>
                 <div className="flex-1 min-w-0">
-                  <span className={`block text-xs font-bold group-hover:text-azimut-red transition-colors leading-tight break-words ${theme === 'dark' ? 'text-slate-100' : 'text-[#1e1c1a]'}`}>
+                  <span className={`block text-xs font-bold group-hover:text-azimut-red transition-colors leading-tight break-words ${theme === 'dark' ? 'text-slate-100' : 'text-[#0f172a]'}`}>
                     {lang === 'pt' ? 'Educação' : lang === 'es' ? 'Educación' : lang === 'fr' ? 'Éducation' : 'Education'}
                   </span>
-                  <span className={`block text-[0.55rem] uppercase tracking-wide mt-0.5 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                  <span className={`block text-[0.55rem] uppercase tracking-wide mt-0.5 ${theme === 'dark' ? 'text-slate-400' : 'text-[#334155]'}`}>
                     {lang === 'pt' ? 'Academia' : lang === 'es' ? 'Academia' : lang === 'fr' ? 'Académie' : 'Academy'}
                   </span>
                 </div>
@@ -446,27 +601,90 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             {/* LINHA 3: 3 Cards de Credibilidade VERMELHOS */}
             <div className="grid grid-cols-3 gap-4 mt-6">
               {/* Rio Museu Olímpico */}
-              <div className="card-red-adaptive p-4 rounded-lg group">
-                <span className="block text-sm font-semibold card-red-title break-words">Rio Museum</span>
-                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 leading-tight card-red-subtitle">
+              <div className="p-4 rounded-lg group transition-all duration-300 hover:scale-[1.02]" style={{
+                background: theme === 'dark' 
+                  ? 'rgba(201, 35, 55, 0.15)' 
+                  : 'linear-gradient(180deg, #2a2825 0%, #1e1c1a 100%)',
+                border: theme === 'dark' 
+                  ? '1px solid rgba(201, 35, 55, 0.5)' 
+                  : '1px solid rgba(201, 35, 55, 0.4)',
+                backdropFilter: 'blur(16px)',
+                boxShadow: theme === 'light' ? '0 4px 16px rgba(0, 0, 0, 0.2)' : 'none'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = theme === 'dark' ? '#c92337' : 'rgba(201, 35, 55, 0.6)'
+                e.currentTarget.style.boxShadow = theme === 'light' ? '0 6px 20px rgba(201, 35, 55, 0.3)' : '0 4px 12px rgba(201, 35, 55, 0.3)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = theme === 'dark' ? 'rgba(201, 35, 55, 0.5)' : 'rgba(201, 35, 55, 0.4)'
+                e.currentTarget.style.boxShadow = theme === 'light' ? '0 4px 16px rgba(0, 0, 0, 0.2)' : 'none'
+              }}>
+                <span className="block text-sm font-semibold break-words transition-colors duration-300" style={{ 
+                  color: theme === 'dark' ? '#ffffff' : '#d3cec3' 
+                }}>Rio Museum</span>
+                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 leading-tight" style={{ 
+                  color: theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(211, 206, 195, 0.8)' 
+                }}>
                   {lang === 'pt' ? 'Direção Geral · Tecnologia · Arte Audiovisual' : lang === 'es' ? 'Dirección General · Tecnología · Arte Audiovisual' : lang === 'fr' ? 'Direction Générale · Technologie · Art Audiovisuel' : 'General Direction · Technology · Audiovisual Art'}
                 </span>
               </div>
 
               {/* Gramado VR */}
-              <div className="card-red-adaptive p-4 rounded-lg group">
-                <span className="block text-sm font-semibold card-red-title break-words">
+              <div className="p-4 rounded-lg group transition-all duration-300 hover:scale-[1.02]" style={{
+                background: theme === 'dark' 
+                  ? 'rgba(201, 35, 55, 0.15)' 
+                  : 'linear-gradient(180deg, #2a2825 0%, #1e1c1a 100%)',
+                border: theme === 'dark' 
+                  ? '1px solid rgba(201, 35, 55, 0.5)' 
+                  : '1px solid rgba(201, 35, 55, 0.4)',
+                backdropFilter: 'blur(16px)',
+                boxShadow: theme === 'light' ? '0 4px 16px rgba(0, 0, 0, 0.2)' : 'none'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = theme === 'dark' ? '#c92337' : 'rgba(201, 35, 55, 0.6)'
+                e.currentTarget.style.boxShadow = theme === 'light' ? '0 6px 20px rgba(201, 35, 55, 0.3)' : '0 4px 12px rgba(201, 35, 55, 0.3)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = theme === 'dark' ? 'rgba(201, 35, 55, 0.5)' : 'rgba(201, 35, 55, 0.4)'
+                e.currentTarget.style.boxShadow = theme === 'light' ? '0 4px 16px rgba(0, 0, 0, 0.2)' : 'none'
+              }}>
+                <span className="block text-sm font-semibold break-words transition-colors duration-300" style={{ 
+                  color: theme === 'dark' ? '#ffffff' : '#d3cec3' 
+                }}>
                   {lang === 'pt' ? 'Festival de Gramado' : lang === 'es' ? 'Festival de Gramado' : lang === 'fr' ? 'Festival de Gramado' : 'Gramado Festival'}
                 </span>
-                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 card-red-subtitle">
+                <span className="block text-[0.55rem] uppercase tracking-wider mt-1" style={{ 
+                  color: theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(211, 206, 195, 0.8)' 
+                }}>
                   {lang === 'pt' ? 'VR desde 2017' : lang === 'es' ? 'VR desde 2017' : lang === 'fr' ? 'VR depuis 2017' : 'VR since 2017'}
                 </span>
               </div>
 
               {/* BR ↔ CA */}
-              <div className="card-red-adaptive p-4 rounded-lg group">
-                <span className="block text-sm font-semibold card-red-title break-words">Brasil ↔ Canadá</span>
-                <span className="block text-[0.55rem] uppercase tracking-wider mt-1 card-red-subtitle">
+              <div className="p-4 rounded-lg group transition-all duration-300 hover:scale-[1.02]" style={{
+                background: theme === 'dark' 
+                  ? 'rgba(201, 35, 55, 0.15)' 
+                  : 'linear-gradient(180deg, #2a2825 0%, #1e1c1a 100%)',
+                border: theme === 'dark' 
+                  ? '1px solid rgba(201, 35, 55, 0.5)' 
+                  : '1px solid rgba(201, 35, 55, 0.4)',
+                backdropFilter: 'blur(16px)',
+                boxShadow: theme === 'light' ? '0 4px 16px rgba(0, 0, 0, 0.2)' : 'none'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = theme === 'dark' ? '#c92337' : 'rgba(201, 35, 55, 0.6)'
+                e.currentTarget.style.boxShadow = theme === 'light' ? '0 6px 20px rgba(201, 35, 55, 0.3)' : '0 4px 12px rgba(201, 35, 55, 0.3)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = theme === 'dark' ? 'rgba(201, 35, 55, 0.5)' : 'rgba(201, 35, 55, 0.4)'
+                e.currentTarget.style.boxShadow = theme === 'light' ? '0 4px 16px rgba(0, 0, 0, 0.2)' : 'none'
+              }}>
+                <span className="block text-sm font-semibold break-words transition-colors duration-300" style={{ 
+                  color: theme === 'dark' ? '#ffffff' : '#d3cec3' 
+                }}>Brasil ↔ Canadá</span>
+                <span className="block text-[0.55rem] uppercase tracking-wider mt-1" style={{ 
+                  color: theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(211, 206, 195, 0.8)' 
+                }}>
                   {lang === 'pt' ? 'Binacional' : lang === 'es' ? 'Binacional' : lang === 'fr' ? 'Binational' : 'Binational'}
                 </span>
               </div>
@@ -641,7 +859,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   <span className="text-lg">🎬</span>
                   <div>
                     <span className={`block text-[0.65rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Cinema & AV</span>
-                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>AUDIOVISUAL</span>
+                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-[#334155]'}`}>AUDIOVISUAL</span>
                   </div>
                 </div>
                 
@@ -652,7 +870,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   <span className="text-lg">🥽</span>
                   <div>
                     <span className={`block text-[0.65rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>XR/VR/AR</span>
-                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>IMERSIVO</span>
+                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-[#334155]'}`}>IMERSIVO</span>
                   </div>
                 </div>
                 
@@ -663,7 +881,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   <span className="text-lg">🏛️</span>
                   <div>
                     <span className={`block text-[0.65rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Exposições</span>
-                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>& MUSEUS</span>
+                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-[#334155]'}`}>& MUSEUS</span>
                   </div>
                 </div>
                 
@@ -674,7 +892,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   <span className="text-lg">🎓</span>
                   <div>
                     <span className={`block text-[0.65rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Educação</span>
-                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>ACADEMIA</span>
+                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-[#334155]'}`}>ACADEMIA</span>
                   </div>
                 </div>
               </div>
@@ -922,7 +1140,15 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 {lang === 'pt' ? 'Projetos em Destaque' : lang === 'es' ? 'Proyectos Destacados' : lang === 'fr' ? 'Projets en Vedette' : 'Featured Projects'}
               </h2>
               <p className={`text-sm md:text-base ${theme === 'dark' ? 'text-slate-300' : 'text-slate-700'}`}>
-                {lang === 'pt' ? 'Uma seleção dos nossos trabalhos mais emblemáticos' : lang === 'es' ? 'Una selección de nuestros trabajos más emblemáticos' : 'A selection of our most iconic work'}
+                {lang === 'pt' ? (
+                  <>Uma seleção dos nossos trabalhos mais emblemáticos. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Veja nosso portfólio completo</LangLink> ou <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">conheça nossas soluções</LangLink>.</>
+                ) : lang === 'es' ? (
+                  <>Una selección de nuestros trabajos más emblemáticos. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Ver nuestro portafolio completo</LangLink> o <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">conocer nuestras soluciones</LangLink>.</>
+                ) : lang === 'fr' ? (
+                  <>Une sélection de nos travaux les plus emblématiques. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Voir notre portfolio complet</LangLink> ou <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">découvrir nos solutions</LangLink>.</>
+                ) : (
+                  <>A selection of our most iconic work. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">View our full portfolio</LangLink> or <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">explore our solutions</LangLink>.</>
+                )}
               </p>
             </div>
 
@@ -933,23 +1159,38 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               const hasVideo = mainFeatured?.heroImage?.type === 'VIDEO' && mainFeatured?.heroImage?.original
               
               return (
-                <div className="mb-8 relative overflow-hidden rounded-2xl shadow-[0_32px_80px_rgba(0,0,0,0.7)] bg-gradient-to-br from-slate-900 to-slate-950 border border-white/10">
-                  <div className="relative aspect-video w-full overflow-hidden">
+                <div 
+                  className="mb-8 relative overflow-hidden rounded-2xl shadow-[0_32px_80px_rgba(0,0,0,0.7)] border border-white/10"
+                  style={{ 
+                    background: theme === 'dark' 
+                      ? 'linear-gradient(to bottom right, #0f172a, #020617)' 
+                      : 'linear-gradient(to bottom right, #1e1c1a, #2a2825)',
+                    borderRadius: '1rem'
+                  }}
+                >
+                  <div className="relative aspect-video w-full overflow-hidden rounded-t-2xl">
                     {hasVideo ? (
                       <VideoPlayer
                         videoUrl={mainFeatured.heroImage.original}
                         thumbnailUrl={mainFeatured.heroImage.thumbnail || mainFeatured.heroImage.large}
                         alt={mainFeatured.heroImage?.alt || mainFeatured.title}
-                        className="w-full h-full"
+                        className="w-full h-full rounded-t-2xl"
                       />
                     ) : mainFeatured?.heroImage?.large || mainFeatured?.heroImage?.medium ? (
                       <img
                         src={mainFeatured.heroImage?.large || mainFeatured.heroImage?.medium}
                         alt={mainFeatured.title}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover rounded-t-2xl"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-azimut-red/10 via-slate-900 to-slate-950 flex items-center justify-center">
+                      <div 
+                        className="w-full h-full flex items-center justify-center rounded-t-2xl"
+                        style={{
+                          background: theme === 'dark'
+                            ? 'linear-gradient(to bottom right, rgba(201, 35, 55, 0.1), #0f172a, #020617)'
+                            : 'linear-gradient(to bottom right, rgba(201, 35, 55, 0.1), #1e1c1a, #2a2825)'
+                        }}
+                      >
                         <div className="text-center p-6">
                           <h3 className={`font-handel text-3xl uppercase tracking-[0.12em] ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{mainFeatured.title}</h3>
                         </div>
@@ -957,7 +1198,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     )}
                   </div>
                   
-                  <div className="p-4 md:p-6">
+                  <div className="p-4 md:p-6 rounded-b-2xl">
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       {mainFeatured.tags && mainFeatured.tags.length > 0 && (
                         <div className="flex flex-wrap gap-2">
@@ -967,16 +1208,40 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         </div>
                       )}
                       {(mainFeatured.city || mainFeatured.country) && (
-                        <p className={`text-xs flex items-center gap-1 ${theme === 'dark' ? 'text-slate-400' : 'text-on-dark-tertiary'}`}>📍 {[mainFeatured.city, mainFeatured.country].filter(Boolean).join(', ')}</p>
+                        <p 
+                          className="text-xs flex items-center gap-1"
+                          style={{ 
+                            color: theme === 'dark' ? '#94a3b8' : '#d3cec3',
+                            textShadow: theme === 'light' ? '0 1px 3px rgba(0, 0, 0, 0.5)' : 'none'
+                          }}
+                        >
+                          📍 {[mainFeatured.city, mainFeatured.country].filter(Boolean).join(', ')}
+                        </p>
                       )}
                     </div>
-                    <h3 className={`font-handel text-xl md:text-2xl uppercase tracking-[0.08em] mt-3 mb-2 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{mainFeatured.title}</h3>
-                    <p className={`text-sm leading-relaxed mb-4 ${theme === 'dark' ? 'text-slate-300' : 'text-on-dark-secondary'}`}>{mainFeatured.summary || mainFeatured.shortTitle}</p>
+                    <h3 
+                      className="font-handel text-xl md:text-2xl uppercase tracking-[0.08em] mt-3 mb-2"
+                      style={{ 
+                        color: theme === 'dark' ? '#ffffff' : '#f5f1e8',
+                        textShadow: theme === 'light' ? '0 2px 8px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.3)' : '0 2px 4px rgba(0, 0, 0, 0.2)'
+                      }}
+                    >
+                      {mainFeatured.title}
+                    </h3>
+                    <p 
+                      className="text-sm leading-relaxed mb-4"
+                      style={{ 
+                        color: theme === 'dark' ? '#cbd5e1' : '#e8e5df',
+                        textShadow: theme === 'light' ? '0 1px 4px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3)' : '0 1px 2px rgba(0, 0, 0, 0.2)'
+                      }}
+                    >
+                      {mainFeatured.summary || mainFeatured.shortTitle}
+                    </p>
                     <div className="flex flex-wrap gap-2">
                       <Link to={`/work/${mainFeatured.slug}`} className="inline-flex items-center justify-center rounded-lg bg-azimut-red px-4 py-2 font-sora text-xs uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/90">
                         {lang === 'pt' ? 'Ver Projeto' : lang === 'es' ? 'Ver Proyecto' : 'View Project'}
                       </Link>
-                      <Link to="/contact?interest=similar" className="inline-flex items-center justify-center rounded-lg border border-azimut-red px-4 py-2 font-sora text-xs uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/10">
+                      <Link to="/contact?interest=similar" className="inline-flex items-center justify-center rounded-lg border border-azimut-red px-4 py-2 font-sora text-xs uppercase tracking-[0.1em] transition-all duration-300 hover:bg-azimut-red/10" style={{ color: theme === 'dark' ? '#ffffff' : '#f5f1e8' }}>
                         {lang === 'pt' ? 'Projeto Similar' : lang === 'es' ? 'Proyecto Similar' : 'Similar Project'}
                       </Link>
                     </div>
@@ -1000,18 +1265,22 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   >
                     {hasVideo ? (
                       <>
-                        <div className="absolute inset-0">
+                        <div className="absolute inset-0 overflow-hidden rounded-2xl">
                           <VideoPlayer videoUrl={project.heroImage.original} thumbnailUrl={project.heroImage.thumbnail || imageUrl} alt={project.title} className="w-full h-full object-cover" />
                         </div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30 rounded-2xl"></div>
                       </>
                     ) : imageUrl ? (
                       <>
-                        <img src={imageUrl} alt={project.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="eager" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30"></div>
+                        <img src={imageUrl} alt={project.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 rounded-2xl" loading="eager" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30 rounded-2xl"></div>
                       </>
                     ) : (
-                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-black via-slate-900 to-black">
+                      <div className="absolute inset-0 flex items-center justify-center rounded-2xl" style={{ 
+                        background: theme === 'dark' 
+                          ? 'linear-gradient(to bottom right, #000000, #0f172a, #000000)' 
+                          : 'linear-gradient(to bottom right, #1e1c1a, #2a2825, #1e1c1a)' 
+                      }}>
                         <div className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-azimut-red/30 bg-azimut-red/10 backdrop-blur">
                           <svg className="h-6 w-6 text-azimut-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -1021,22 +1290,60 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     )}
                     
                     <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
-                      <h3 className={`mb-2 font-handel text-xl md:text-2xl uppercase tracking-wide group-hover:!text-azimut-red transition-colors duration-300 line-clamp-2 ${theme === 'dark' ? '!text-white' : '!text-on-dark-primary'}`}>{project.title}</h3>
+                      <h3 
+                        className="mb-2 font-handel text-xl md:text-2xl uppercase tracking-wide group-hover:!text-azimut-red transition-colors duration-300 line-clamp-2"
+                        style={{ 
+                          color: theme === 'dark' ? '#ffffff' : '#f5f1e8',
+                          textShadow: theme === 'light' ? '0 2px 8px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.3)' : '0 2px 4px rgba(0, 0, 0, 0.2)'
+                        }}
+                      >
+                        {project.title}
+                      </h3>
                       {(project.city || project.country) && (
-                        <p className={`text-xs mb-3 ${theme === 'dark' ? '!text-white/70' : '!text-on-dark-tertiary'}`}>📍 {[project.city, project.country].filter(Boolean).join(', ')}</p>
+                        <p 
+                          className="text-xs mb-3 flex items-center gap-1"
+                          style={{ 
+                            color: theme === 'dark' ? 'rgba(255, 255, 255, 0.7)' : '#e8e5df',
+                            textShadow: theme === 'light' ? '0 1px 4px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3)' : '0 1px 2px rgba(0, 0, 0, 0.2)'
+                          }}
+                        >
+                          📍 {[project.city, project.country].filter(Boolean).join(', ')}
+                        </p>
                       )}
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         {project.tags && project.tags.length > 0 && (
                           <div className="flex flex-wrap gap-2 text-[0.68rem]">
                             {project.tags.slice(0, 2).map((tag: string, idx: number) => (
-                              <span key={idx} className={`rounded-full border border-white/20 bg-black/40 backdrop-blur px-2.5 py-1 ${theme === 'dark' ? '!text-white/80' : '!text-on-dark-tertiary'}`}>{tag}</span>
+                              <span 
+                                key={idx} 
+                                className="rounded-full border bg-black/50 backdrop-blur px-2.5 py-1"
+                                style={{ 
+                                  borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.4)',
+                                  color: theme === 'dark' ? 'rgba(255, 255, 255, 0.9)' : '#f5f1e8',
+                                  textShadow: theme === 'light' ? '0 1px 3px rgba(0, 0, 0, 0.5)' : 'none',
+                                  backgroundColor: theme === 'light' ? 'rgba(0, 0, 0, 0.6)' : 'rgba(0, 0, 0, 0.5)'
+                                }}
+                              >
+                                {tag}
+                              </span>
                             ))}
                           </div>
                         )}
-                        {project.year && <span className={`text-xs font-medium bg-black/40 backdrop-blur px-2.5 py-1 rounded-full ${theme === 'dark' ? '!text-white/60' : '!text-on-dark-tertiary'}`}>{project.year}</span>}
+                        {project.year && (
+                          <span 
+                            className="text-xs font-medium backdrop-blur px-2.5 py-1 rounded-full"
+                            style={{ 
+                              color: theme === 'dark' ? 'rgba(255, 255, 255, 0.7)' : '#d3cec3',
+                              textShadow: theme === 'light' ? '0 1px 3px rgba(0, 0, 0, 0.5)' : 'none',
+                              backgroundColor: theme === 'light' ? 'rgba(0, 0, 0, 0.6)' : 'rgba(0, 0, 0, 0.5)'
+                            }}
+                          >
+                            {project.year}
+                          </span>
+                        )}
                       </div>
                     </div>
-                    <div className="absolute inset-0 border-2 border-azimut-red rounded-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none"></div>
+                    <div className="absolute inset-0 border-2 border-azimut-red opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none rounded-2xl"></div>
                   </article>
                 )
               })}
@@ -1090,7 +1397,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     ).filter(Boolean).map((pillar: string, index: number) => (
                       <span 
                         key={index}
-                        className="rounded-full border-2 border-white/40 px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] text-white/90 transition-all duration-300 hover:border-white hover:bg-white/10 hover:scale-105"
+                        className={`rounded-full border-2 border-white/40 px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-white hover:bg-white/10 hover:scale-105 ${theme === 'dark' ? 'text-white/90' : 'text-on-dark-primary'}`}
                       >
                         {pillar}
                       </span>
@@ -1105,11 +1412,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               
               {/* Card Direito - Tags VERTICAIS (2/5) */}
               <div 
-                className="lg:col-span-2 glass-panel backdrop-blur-xl card-dark-fixed relative rounded-2xl sm:rounded-3xl p-6 md:p-8 shadow-[0_24px_60px_rgba(0,0,0,0.6)] hover:shadow-[0_32px_80px_rgba(201,35,55,0.3)] transition-all duration-500 hover:scale-[1.02] flex flex-col justify-center" 
-                style={{ 
-                  background: 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)'
-                }}
+                className="lg:col-span-2 glass-panel backdrop-blur-xl card-dark-fixed relative rounded-2xl sm:rounded-3xl p-6 md:p-8 shadow-[0_24px_60px_rgba(0,0,0,0.6)] hover:shadow-[0_32px_80px_rgba(201,35,55,0.3)] transition-all duration-500 hover:scale-[1.02] flex flex-col justify-center"
               >
                 <h3 className="mb-5 font-sora text-sm uppercase tracking-[0.24em]" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>
                   {lang === 'pt' ? 'Especialidades' : lang === 'es' ? 'Especialidades' : lang === 'fr' ? 'Spécialités' : 'Expertise'}
@@ -1139,7 +1442,15 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 {lang === 'pt' ? 'O que criamos' : lang === 'es' ? 'Qué creamos' : lang === 'fr' ? 'Ce que nous créons' : 'What we create'}
               </h2>
               <p className={`${theme === 'dark' ? 'text-slate-300' : 'text-slate-700'} max-w-2xl mx-auto text-lg`}>
-                {lang === 'pt' ? 'Soluções completas para transformar ideias em experiências memoráveis' : lang === 'es' ? 'Soluciones completas para transformar ideas en experiencias memorables' : lang === 'fr' ? 'Solutions complètes pour transformer les idées en expériences mémorables' : 'Complete solutions to transform ideas into memorable experiences'}
+                {lang === 'pt' ? (
+                  <>Soluções completas para transformar ideias em experiências memoráveis. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Veja exemplos reais</LangLink> ou <LangLink to="/studio" className="text-azimut-red hover:text-azimut-red/80 underline">conheça nosso estúdio</LangLink>.</>
+                ) : lang === 'es' ? (
+                  <>Soluciones completas para transformar ideas en experiencias memorables. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Ver ejemplos reales</LangLink> o <LangLink to="/studio" className="text-azimut-red hover:text-azimut-red/80 underline">conocer nuestro estudio</LangLink>.</>
+                ) : lang === 'fr' ? (
+                  <>Solutions complètes pour transformer les idées en expériences mémorables. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Voir des exemples réels</LangLink> ou <LangLink to="/studio" className="text-azimut-red hover:text-azimut-red/80 underline">découvrir notre studio</LangLink>.</>
+                ) : (
+                  <>Complete solutions to transform ideas into memorable experiences. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">See real examples</LangLink> or <LangLink to="/studio" className="text-azimut-red hover:text-azimut-red/80 underline">meet our studio</LangLink>.</>
+                )}
               </p>
             </div>
             
@@ -1165,10 +1476,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       </div>
                     )}
                     
-                    <h3 className="mb-3 font-handel text-lg md:text-xl uppercase tracking-wide text-white group-hover:text-azimut-red transition-colors duration-300 line-clamp-2 leading-tight">
+                    <h3 className={`mb-3 font-handel text-lg md:text-xl uppercase tracking-wide group-hover:text-azimut-red transition-colors duration-300 line-clamp-2 leading-tight ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
                       {service.title}
                     </h3>
-                    <p className="text-sm md:text-base leading-relaxed text-theme-card-text-secondary group-hover:text-theme-card-text transition-colors duration-300">
+                    <p className={`text-sm md:text-base leading-relaxed transition-colors duration-300 ${theme === 'dark' ? 'text-theme-card-text-secondary group-hover:text-theme-card-text' : 'text-on-dark-secondary group-hover:text-on-dark-primary'}`}>
                       {service.description}
                     </p>
                     
@@ -1241,10 +1552,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       </div>
                     )}
                     
-                    <h3 className="mb-3 font-handel text-lg md:text-xl uppercase tracking-wide text-white group-hover:text-azimut-red transition-colors duration-300 relative z-10 line-clamp-2 leading-tight">
+                    <h3 className={`mb-3 font-handel text-lg md:text-xl uppercase tracking-wide group-hover:text-azimut-red transition-colors duration-300 relative z-10 line-clamp-2 leading-tight ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
                       {service.title}
                     </h3>
-                    <p className="text-sm md:text-base leading-relaxed text-theme-card-text-secondary group-hover:text-theme-card-text transition-colors duration-300 relative z-10">
+                    <p className={`text-sm md:text-base leading-relaxed transition-colors duration-300 relative z-10 ${theme === 'dark' ? 'text-theme-card-text-secondary group-hover:text-theme-card-text' : 'text-on-dark-secondary group-hover:text-on-dark-primary'}`}>
                       {service.description}
                     </p>
                     
@@ -1275,121 +1586,26 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* ═══════════════════════════════════════════════════════════
-            CTA PREMIUM FULLSCREEN - START A PROJECT
-            Inspiração: Apple, Tesla, Sites Premium 2026
-            Glow animado + Destaque vermelho Azimut
-        ═══════════════════════════════════════════════════════════ */}
-        <section className={`relative py-20 md:py-32 overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-b from-transparent via-black/60 to-black/90' : 'bg-[#c9c4b9]'}`}>
-          {/* Background Pattern */}
-          <div className="absolute inset-0 opacity-5">
-            <div className="absolute inset-0" style={{
-              backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(201, 35, 55, 0.3) 1px, transparent 0)',
-              backgroundSize: '40px 40px'
-            }} />
-          </div>
-
-          <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
-            {/* Título com animação */}
-            <h2 
-              className={`font-handel text-4xl md:text-5xl lg:text-6xl uppercase tracking-[0.08em] mb-6 ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}
-              style={{
-                animation: 'fadeInUp 0.8s ease-out both',
-                textShadow: theme === 'dark' ? '0 0 40px rgba(201, 35, 55, 0.3)' : 'none'
-              }}
-            >
-              {lang === 'pt' ? "Vamos criar algo incrível juntos?" : 
-               lang === 'es' ? "¿Vamos a crear algo increíble juntos?" : 
-               lang === 'fr' ? "Créons quelque chose d'incroyable ensemble?" : 
-               "Let's create something incredible together?"}
-            </h2>
-
-            {/* Subtítulo */}
-            <p 
-              className={`text-lg md:text-xl ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} max-w-3xl mx-auto mb-12`}
-              style={{
-                animation: 'fadeInUp 0.8s ease-out 0.2s both'
-              }}
-            >
-              {lang === 'pt' ? "Entre em contato para discutir seu projeto e descobrir como podemos transformar sua visão em realidade." :
-               lang === 'es' ? "Contáctanos para discutir tu proyecto y descubrir cómo podemos transformar tu visión en realidad." :
-               lang === 'fr' ? "Contactez-nous pour discuter de votre projet et découvrir comment nous pouvons transformer votre vision en réalité." :
-               "Get in touch to discuss your project and discover how we can transform your vision into reality."}
-            </p>
-
-            {/* CTA Button com GLOW ANIMADO */}
-            <div 
-              className="inline-block"
-              style={{
-                animation: 'fadeInUp 0.8s ease-out 0.4s both'
-              }}
-            >
-              <Link
-                to="/contact"
-                className="group relative inline-flex items-center justify-center gap-3 rounded-full bg-azimut-red px-10 py-5 font-handel text-base md:text-lg uppercase tracking-[0.15em] text-white overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_60px_rgba(201,35,55,0.8)]"
-                style={{
-                  boxShadow: '0 0 40px rgba(201, 35, 55, 0.4), 0 0 80px rgba(201, 35, 55, 0.2)',
-                  animation: 'glow-pulse 3s ease-in-out infinite'
-                }}
-              >
-                {/* Glow interno animado */}
-                <div 
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                  style={{
-                    animation: 'shine 3s ease-in-out infinite'
-                  }}
-                />
-                
-                {/* Texto */}
-                <span className="relative z-10">
-                  {lang === 'pt' ? 'Iniciar um Projeto' :
-                   lang === 'es' ? 'Iniciar un Proyecto' :
-                   lang === 'fr' ? 'Démarrer un Projet' :
-                   'Start a Project'}
-                </span>
-                
-                {/* Ícone com animação */}
-                <svg 
-                  className="relative z-10 w-6 h-6 transition-transform group-hover:translate-x-2" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-
-                {/* Ripple effect no hover */}
-                <span className="absolute inset-0 rounded-full border-2 border-white/30 opacity-0 group-hover:opacity-100 group-hover:scale-125 transition-all duration-700" />
-              </Link>
-
-              {/* Texto pequeno abaixo */}
-              <p 
-                className={`mt-6 text-sm ${theme === 'dark' ? 'text-slate-500' : 'text-slate-600'}`}
-                style={{
-                  animation: 'fadeInUp 0.8s ease-out 0.6s both'
-                }}
-              >
-                {lang === 'pt' ? '✨ Resposta em até 24 horas' :
-                 lang === 'es' ? '✨ Respuesta en hasta 24 horas' :
-                 lang === 'fr' ? '✨ Réponse sous 24 heures' :
-                 '✨ Response within 24 hours'}
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* CTAs de Navegação - Adicionado no final, não modifica nada existente */}
-        <PageNavigationCTAs
+        {/* Navegação Final - Curada e Organizada */}
+        <PageFooterNavigation
           lang={lang}
-          primary={{
-            label: lang === 'pt' ? 'Ver Projetos' : lang === 'es' ? 'Ver Proyectos' : lang === 'fr' ? 'Voir Projets' : 'View Projects',
-            href: '/work',
-            icon: '🎬'
+          mainCta={{
+            title: lang === 'pt' ? 'Vamos criar algo incrível juntos?' : lang === 'es' ? '¿Vamos a crear algo increíble juntos?' : lang === 'fr' ? 'Créons quelque chose d\'incroyable ensemble?' : 'Let\'s create something incredible together?',
+            description: lang === 'pt' ? 'Entre em contato para discutir seu projeto e descobrir como podemos transformar sua visão em realidade.' : lang === 'es' ? 'Contáctanos para discutir tu proyecto y descubrir cómo podemos transformar tu visión en realidad.' : lang === 'fr' ? 'Contactez-nous pour discuter de votre projet et découvrir comment nous pouvons transformer votre vision en réalité.' : 'Get in touch to discuss your project and discover how we can transform your vision into reality.',
+            buttonText: lang === 'pt' ? 'Iniciar um Projeto' : lang === 'es' ? 'Iniciar un Proyecto' : lang === 'fr' ? 'Démarrer un Projet' : 'Start a Project',
+            buttonHref: '/contact'
           }}
-          secondary={{
-            label: lang === 'pt' ? 'Ver Soluções' : lang === 'es' ? 'Ver Soluciones' : lang === 'fr' ? 'Voir Solutions' : 'View Solutions',
-            href: '/what',
-            icon: '✨'
+          navigation={{
+            previous: {
+              label: lang === 'pt' ? 'Ver Projetos' : lang === 'es' ? 'Ver Proyectos' : lang === 'fr' ? 'Voir Projets' : 'View Projects',
+              href: '/work',
+              icon: '🎬'
+            },
+            next: {
+              label: lang === 'pt' ? 'Ver Soluções' : lang === 'es' ? 'Ver Soluciones' : lang === 'fr' ? 'Voir Solutions' : 'View Solutions',
+              href: '/what',
+              icon: '✨'
+            }
           }}
         />
 

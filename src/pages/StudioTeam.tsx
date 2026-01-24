@@ -344,22 +344,29 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                       overflow: 'hidden'
                     }}
                   >
-                    <OptimizedImage
-                      src={member.photo}
-                      alt={member.name}
+                    <div 
                       className="w-full h-full"
-                      objectFit="cover"
                       style={member.name.includes('Alberto') ? {
-                        objectPosition: 'center 35%',
-                        transform: 'scale(1.25)',
+                        transform: 'scale(1.08)',
                         transformOrigin: 'center center'
                       } : member.name.includes('Ranz') ? {
-                        objectPosition: 'center 30%',
-                        transform: 'scale(1.2)',
-                        transformOrigin: 'center center'
-                      } : {
-                        objectPosition: 'center center'
-                      }}
+                        transform: 'scale(1.05)',
+                        transformOrigin: 'center top'
+                      } : {}}
+                    >
+                      <OptimizedImage
+                        src={member.photo}
+                        alt={member.name}
+                        className="w-full h-full"
+                        objectFit="cover"
+                        priority={true}
+                        style={member.name.includes('Alberto') ? {
+                          objectPosition: 'center 28%'
+                        } : member.name.includes('Ranz') ? {
+                          objectPosition: 'center 10%'
+                        } : {
+                          objectPosition: 'center center'
+                        }}
                       onError={(e) => {
                         // Tratamento de erro silencioso - não quebrar renderização
                         try {
@@ -375,7 +382,8 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                           // Erro tratado silenciosamente
                         }
                       }}
-                    />
+                      />
+                    </div>
                   </div>
 
                   {/* Conteúdo - Espaçamento otimizado */}

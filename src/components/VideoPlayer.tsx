@@ -129,11 +129,12 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
     if (!isPlaying && !autoplay && thumbnail) {
       return (
-        <div className={`relative aspect-video cursor-pointer group ${className}`} onClick={handlePlay}>
+        <div className={`relative aspect-video cursor-pointer group overflow-hidden ${className}`} onClick={handlePlay} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
           <img 
             src={thumbnail} 
             alt={alt || 'Video thumbnail'} 
             className="w-full h-full object-cover"
+            style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}
             onError={(e) => {
               // Fallback para thumbnail de qualidade menor
               const target = e.currentTarget
@@ -143,7 +144,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
             }}
           />
           {/* Play button overlay */}
-          <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
+          <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors" style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
             <div className="w-20 h-20 rounded-full bg-azimut-red/90 flex items-center justify-center transform group-hover:scale-110 transition-transform shadow-lg">
               <svg className="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z"/>
@@ -155,13 +156,14 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     }
 
     return (
-      <div className={`relative aspect-video ${className}`}>
+      <div className={`relative aspect-video overflow-hidden ${className}`} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
         <iframe
           src={embedUrl}
           title={alt || 'YouTube Video'}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           className="w-full h-full"
+          style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}
         />
       </div>
     )
@@ -173,14 +175,15 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
     if (!isPlaying && !autoplay && thumbnail) {
       return (
-        <div className={`relative aspect-video cursor-pointer group ${className}`} onClick={handlePlay}>
+        <div className={`relative aspect-video cursor-pointer group overflow-hidden ${className}`} onClick={handlePlay} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
           <img 
             src={thumbnail} 
             alt={alt || 'Video thumbnail'} 
             className="w-full h-full object-cover"
+            style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}
           />
           {/* Play button overlay */}
-          <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
+          <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors" style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
             <div className="w-20 h-20 rounded-full bg-azimut-red/90 flex items-center justify-center transform group-hover:scale-110 transition-transform shadow-lg">
               <svg className="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z"/>
@@ -192,13 +195,14 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     }
 
     return (
-      <div className={`relative aspect-video ${className}`}>
+      <div className={`relative aspect-video overflow-hidden ${className}`} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
         <iframe
           src={embedUrl}
           title={alt || 'Vimeo Video'}
           allow="autoplay; fullscreen; picture-in-picture"
           allowFullScreen
           className="w-full h-full"
+          style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}
         />
       </div>
     )

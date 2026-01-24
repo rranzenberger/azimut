@@ -674,6 +674,21 @@ select::placeholder {
   color: #334155 !important; /* Slate-700 - ESCURO para máximo contraste */
 }
 
+/* Footer newsletter: contraste máximo — texto e placeholder branco puro, fundo levemente mais claro */
+.footer-newsletter-email {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+.footer-newsletter-email::placeholder,
+.footer-newsletter-email::-webkit-input-placeholder {
+  color: #ffffff !important;
+  opacity: 1;
+}
+.footer-newsletter-email:focus {
+  background: rgba(255, 255, 255, 0.16) !important;
+}
+
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
@@ -1769,34 +1784,80 @@ html {
    ═══════════════════════════════════════════════════════════════ */
 
 /* Base - Tema Escuro (padrão) */
+/* Tech Pills - Radial centro → bordas (contraste alto para ser bem visível) */
 .tech-pill {
-  background: linear-gradient(135deg, rgba(201, 35, 55, 0.15) 0%, rgba(201, 35, 55, 0.08) 100%);
+  position: relative;
+  /* Radial único: centro claro → bordas escuras (3 paradas = transição óbvia) */
+  background: radial-gradient(
+    ellipse 100% 100% at 50% 50%,
+    rgb(70, 82, 110) 0%,
+    rgb(32, 38, 55) 50%,
+    rgb(10, 12, 20) 100%
+  );
+  background-color: rgb(20, 24, 35); /* fallback se gradient falhar */
   color: #ffffff;
   border: 1px solid rgba(201, 35, 55, 0.4);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(201, 35, 55, 0.1);
+  backdrop-filter: blur(12px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 600;
+  overflow: hidden;
 }
 
 .tech-pill:hover {
-  background: linear-gradient(135deg, #c92337 0%, #e84858 100%);
+  background: radial-gradient(
+    ellipse 100% 100% at 50% 50%,
+    rgb(230, 65, 85) 0%,
+    rgb(185, 32, 52) 50%,
+    rgb(110, 18, 32) 100%
+  );
+  background-color: rgb(160, 28, 48);
   color: #ffffff;
-  border-color: #c92337;
-  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.4);
+  border-color: rgba(201, 35, 55, 0.85);
+  box-shadow:
+    0 12px 40px rgba(201, 35, 55, 0.5),
+    0 0 32px rgba(232, 72, 88, 0.35);
+  transform: translateY(-2px) scale(1.03);
 }
 
-/* Tema Claro - Estilo Outline Premium */
-[data-theme="light"] .tech-pill {
-  background: rgba(201, 35, 55, 0.08);
-  color: #8b1a2a; /* Vermelho escuro para contraste */
-  border: 2px solid rgba(201, 35, 55, 0.5);
-  box-shadow: 0 2px 8px rgba(201, 35, 55, 0.1);
+/* Tema Claro - radial centro → bordas (contraste alto) */
+[data-theme="light"] .tech-pill,
+html[data-theme="light"] .tech-pill {
+  background: radial-gradient(
+    ellipse 100% 100% at 50% 50%,
+    rgb(88, 80, 68) 0%,
+    rgb(52, 46, 40) 50%,
+    rgb(24, 20, 16) 100%
+  );
+  background-color: rgb(38, 34, 28);
+  color: #f5f1e8;
+  border: 1px solid rgba(201, 35, 55, 0.45);
+  box-shadow:
+    0 4px 18px rgba(0, 0, 0, 0.2),
+    0 0 24px rgba(201, 35, 55, 0.1);
+  backdrop-filter: blur(12px);
   font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
-[data-theme="light"] .tech-pill:hover {
-  background: #c92337;
+[data-theme="light"] .tech-pill:hover,
+html[data-theme="light"] .tech-pill:hover {
+  background: radial-gradient(
+    ellipse 100% 100% at 50% 50%,
+    rgb(240, 80, 98) 0%,
+    rgb(200, 38, 56) 50%,
+    rgb(120, 20, 34) 100%
+  );
+  background-color: rgb(165, 30, 46);
   color: #ffffff;
-  border-color: #c92337;
-  box-shadow: 0 8px 24px rgba(201, 35, 55, 0.35);
+  border-color: rgba(201, 35, 55, 0.85);
+  box-shadow:
+    0 12px 42px rgba(201, 35, 55, 0.5),
+    0 0 36px rgba(232, 72, 88, 0.35);
+  transform: translateY(-2px) scale(1.03);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -2104,22 +2165,22 @@ html {
    CARDS DA EQUIPE - Background Sólido + Texto Claro (SEMPRE)
    ═══════════════════════════════════════════════════════════════ */
 
-/* Card da equipe - FUNDO SÓLIDO ESCURO (ambos os temas) */
+/* Card da equipe - FUNDO MARROM ESCURO (padronizado com outros cards) */
 .team-card {
-  background: linear-gradient(165deg, #141826 0%, #0c0f18 100%) !important;
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%) !important;
 }
 
 [data-theme="light"] .team-card {
-  background: linear-gradient(165deg, #1a1f2e 0%, #0f1320 100%) !important;
+  background: linear-gradient(180deg, #2a2825 0%, #1e1c1a 100%) !important;
 }
 
-/* Conteúdo do card - FUNDO SÓLIDO ESCURO */
+/* Conteúdo do card - FUNDO AZUL ESCURO (slate-900) */
 .team-card-content {
-  background: linear-gradient(180deg, #0c0f18 0%, #080a10 100%) !important;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
 }
 
 [data-theme="light"] .team-card-content {
-  background: linear-gradient(180deg, #0f1320 0%, #0a0d16 100%) !important;
+  background: linear-gradient(180deg, #1e1c1a 0%, #1a1815 100%) !important;
 }
 
 /* TEXTO DOS CARDS DA EQUIPE - SEMPRE CLARO (ambos os temas) */
@@ -4905,6 +4966,9 @@ p .keyword-highlight,
       linear-gradient(to right, rgb(2, 6, 23), rgb(15, 23, 42) 60%, transparent),
       linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7));
     pointer-events: none;
+    transform: translateZ(0); /* Force GPU layer */
+    will-change: auto;
+    backfaceVisibility: hidden; /* Previne flickering */
   }
 }
 
@@ -4918,23 +4982,22 @@ p .keyword-highlight,
     display: block;
     position: absolute;
     inset: 0;
-    /* Bege até 2%, transição rápida até 7%, marrom escuro no centro */
+    /* Gradiente suavizado - sem transições abruptas */
     background: linear-gradient(90deg, 
       #d3cec3 0%,
-      #b5a896 1%,
-      #8a7560 2%,
-      #5a4a3a 3.5%,
-      #3a3025 5%,
-      #1e1a16 7%,
-      #1e1a16 68%,
-      #2a2318 75%,
-      #4a3d30 82%,
-      #7a6555 88%,
-      #a89885 93%,
-      #c5b8a8 97%,
-      #d3cec3 100%
+      #c5b8a8 15%,
+      #a89885 30%,
+      #8a7560 45%,
+      #5a4a3a 60%,
+      #3a3025 70%,
+      #2a2318 80%,
+      #1e1a16 90%,
+      #1e1a16 100%
     );
     pointer-events: none;
+    transform: translateZ(0); /* Force GPU layer */
+    will-change: auto;
+    backfaceVisibility: hidden; /* Previne flickering */
   }
 }
 
@@ -4969,7 +5032,7 @@ p .keyword-highlight,
 }
 
 [data-theme="light"] .hero-title {
-  color: white !important;
+  color: #0f172a !important; /* Preto escuro para máximo contraste no tema claro */
 }
 
 [data-theme="dark"] .hero-subtitle {
@@ -4977,7 +5040,7 @@ p .keyword-highlight,
 }
 
 [data-theme="light"] .hero-subtitle {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: #475569 !important; /* Slate-600 para contraste adequado no tema claro */
 }
 
 /* ⭐ AZIMUT SINCE - Cores específicas */
@@ -4986,6 +5049,70 @@ p .keyword-highlight,
 }
 
 [data-theme="light"] .azimut-since-year {
-  color: rgba(255, 255, 255, 0.6) !important;
+  color: #64748b !important; /* Slate-500 para contraste adequado no tema claro */
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   CARDS DE CURADORIA - PREVENÇÃO DE OVERFLOW
+   ═══════════════════════════════════════════════════════════════ */
+/* Garantir que cards de curadoria não transbordem */
+section .grid article.card-adaptive {
+  overflow: hidden !important;
+  max-width: 100% !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
+
+/* Títulos longos quebram corretamente */
+section .grid article.card-adaptive h3 {
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  max-width: 100% !important;
+}
+
+/* Badges não transbordem */
+section .grid article.card-adaptive .rounded-full {
+  max-width: 100% !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  display: inline-block !important;
+}
+
+/* Listas sempre contidas */
+section .grid article.card-adaptive ul {
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+section .grid article.card-adaptive ul li {
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  max-width: 100% !important;
+}
+
+/* Mobile: ajustes adicionais */
+@media (max-width: 768px) {
+  section .grid article.card-adaptive {
+    padding: 1rem !important;
+  }
+  
+  section .grid article.card-adaptive h3 {
+    font-size: 0.875rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  section .grid article.card-adaptive .rounded-full {
+    font-size: 0.5rem !important;
+    padding: 0.25rem 0.5rem !important;
+  }
+  
+  section .grid article.card-adaptive p {
+    font-size: 0.75rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  section .grid article.card-adaptive ul li {
+    font-size: 0.7rem !important;
+  }
+}

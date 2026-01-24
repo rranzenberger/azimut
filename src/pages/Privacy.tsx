@@ -9,6 +9,7 @@ interface PrivacyProps {
 
 const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
   const starRef = useRef<HTMLDivElement>(null)
+  const { theme } = useTheme()
 
   useEffect(() => {
     const star = starRef.current
@@ -639,8 +640,8 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
                       item.icon
                     )}
                   </div>
-                  <h3 className="text-sm md:text-lg font-bold text-white mb-1">{item.title}</h3>
-                  <p className="text-xs md:text-sm text-theme-text-secondary">{item.desc}</p>
+                  <h3 className={`text-sm md:text-lg font-bold mb-1 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{item.title}</h3>
+                  <p className={`text-xs md:text-sm ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-on-dark-secondary'}`}>{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -674,7 +675,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
                   {section.highlight && (
                     <div className="pl-0 md:pl-16 mb-6">
                       <div className="p-4 rounded-lg bg-azimut-red/10 border-l-4 border-azimut-red">
-                        <p className="text-sm font-semibold text-white">{section.highlight}</p>
+                        <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>{section.highlight}</p>
                       </div>
                     </div>
                   )}
@@ -683,7 +684,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
                     <div className="pl-0 md:pl-16 space-y-6">
                       {section.items.map((item, j) => (
                         <div key={j}>
-                          <h4 className="text-lg font-semibold text-white mb-3">{item.subtitle}</h4>
+                          <h4 className={`text-lg font-semibold mb-3 ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>{item.subtitle}</h4>
                           <ul className="space-y-2">
                             {item.list.map((li, k) => (
                               <li key={k} className="flex items-start gap-2 text-theme-text-secondary">
@@ -702,8 +703,8 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
                       {section.grid.map((card, j) => (
                         <div key={j} className="p-4 rounded-lg bg-slate-900/50 border border-azimut-red/20">
                           <div className="text-2xl md:text-3xl mb-2">{card.icon}</div>
-                          <h4 className="font-semibold text-white mb-2 text-sm md:text-base">{card.title}</h4>
-                          <p className="text-xs md:text-sm text-theme-text-secondary">{card.desc}</p>
+                          <h4 className={`font-semibold mb-2 text-sm md:text-base ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{card.title}</h4>
+                          <p className={`text-xs md:text-sm ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-on-dark-secondary'}`}>{card.desc}</p>
                         </div>
                       ))}
                     </div>
@@ -715,8 +716,8 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
                         <div key={j} className="flex items-start gap-3 p-4 rounded-lg bg-slate-900/30 hover:bg-slate-900/50 transition-colors">
                           <span className="text-2xl">{right.icon}</span>
                           <div>
-                            <h4 className="font-semibold text-white mb-1">{right.title}</h4>
-                            <p className="text-sm text-theme-text-secondary">{right.desc}</p>
+                            <h4 className={`font-semibold mb-1 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{right.title}</h4>
+                            <p className={`text-sm ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-on-dark-secondary'}`}>{right.desc}</p>
                           </div>
                         </div>
                       ))}
@@ -726,7 +727,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
                   {section.cta && (
                     <div className="pl-0 md:pl-16">
                       <div className="p-4 rounded-lg bg-azimut-red/10 border border-azimut-red/30 text-center">
-                        <p className="text-white font-semibold">{section.cta}</p>
+                        <p className={`font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>{section.cta}</p>
                       </div>
                     </div>
                   )}

@@ -9,6 +9,8 @@ import { type Lang } from '../i18n'
 import { useUserTracking } from '../hooks/useUserTracking'
 import CourseRecommender from '../components/CourseRecommender'
 import AcademyQuickForm from '../components/AcademyQuickForm'
+import { useTheme } from '../contexts/ThemeContext'
+import { PageFooterNavigation } from '../components/PageFooterNavigation'
 
 interface AcademyCoursesProps {
   lang: Lang
@@ -18,6 +20,7 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
   // REMOVIDO: useUserTracking já é chamado no Layout.tsx
   // useUserTracking()
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
+  const { theme } = useTheme()
 
   const content: Record<Lang, any> = {
     pt: {
@@ -436,7 +439,63 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
           className="relative min-h-[60vh] flex items-center justify-center overflow-hidden"
           style={{ marginTop: '-80px', paddingTop: '80px' }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-black to-slate-900 opacity-90" />
+          {/* Background com Curadoria de Arte Premium */}
+          <div className="absolute inset-0">
+            {/* Tema Escuro: Overlay cinematográfico balanceado */}
+            {theme === 'dark' && (
+              <>
+                <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/65" />
+                <div 
+                  className="absolute inset-0"
+                  style={{
+                    background: `radial-gradient(
+                      ellipse 140% 120% at 50% 45%,
+                      transparent 0%,
+                      transparent 35%,
+                      rgba(0, 0, 0, 0.2) 60%,
+                      rgba(0, 0, 0, 0.5) 85%,
+                      rgba(0, 0, 0, 0.75) 100%
+                    )`
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/30" />
+                <div className="absolute inset-0 bg-gradient-to-br from-azimut-red/5 via-transparent to-transparent" />
+              </>
+            )}
+            
+            {/* Tema Claro: Overlay equilibrado com vinheta artística */}
+            {theme === 'light' && (
+              <>
+                <div className="absolute inset-0 bg-gradient-to-b from-[#f5f1e8]/40 via-[#e8e5df]/35 to-[#d3cec3]/45" />
+                <div 
+                  className="absolute inset-0"
+                  style={{
+                    background: `radial-gradient(
+                      ellipse 150% 130% at 50% 50%,
+                      transparent 0%,
+                      transparent 45%,
+                      rgba(30, 28, 26, 0.25) 70%,
+                      rgba(20, 18, 16, 0.45) 85%,
+                      rgba(10, 8, 6, 0.65) 100%
+                    )`
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#1e1c1a]/30" />
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-900/10 via-transparent to-slate-900/15" />
+                <div 
+                  className="absolute inset-0"
+                  style={{
+                    background: `radial-gradient(
+                      circle at 50% 50%,
+                      transparent 30%,
+                      rgba(0, 0, 0, 0.1) 60%,
+                      rgba(0, 0, 0, 0.3) 100%
+                    )`
+                  }}
+                />
+              </>
+            )}
+          </div>
           
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
             <div className="inline-block px-6 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-6">
@@ -445,15 +504,46 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
               </span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-handel uppercase tracking-wider text-white mb-6">
+            {/* Título - Curadoria de Arte Premium */}
+            <h1 
+              className="text-5xl md:text-7xl font-handel uppercase tracking-wider mb-6"
+              style={{ 
+                color: theme === 'dark' ? '#ffffff' : '#f5f1e8',
+                textShadow: theme === 'dark'
+                  ? '0 4px 12px rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.4)'
+                  : '0 3px 10px rgba(0, 0, 0, 0.6), 0 6px 20px rgba(0, 0, 0, 0.5)',
+                letterSpacing: '0.08em'
+              }}
+            >
               {t.hero.title}
             </h1>
 
-            <p className="text-xl md:text-2xl text-white/90 mb-4">
+            {/* Subtítulo - Hierarquia Visual */}
+            <p 
+              className="text-xl md:text-2xl mb-4"
+              style={{ 
+                color: theme === 'dark' ? '#f0ece5' : '#e8e5df',
+                textShadow: theme === 'dark'
+                  ? '0 2px 8px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.3)'
+                  : '0 2px 6px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.4)',
+                letterSpacing: '0.04em'
+              }}
+            >
               {t.hero.subtitle}
             </p>
 
-            <p className="text-lg text-white/70 max-w-3xl mx-auto">
+            {/* Descrição - Legibilidade Otimizada */}
+            <p 
+              className="text-lg max-w-3xl mx-auto"
+              style={{ 
+                color: theme === 'dark' ? '#e2e8f0' : '#d3cec3',
+                textShadow: theme === 'dark'
+                  ? '0 1px 4px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.4)'
+                  : '0 2px 5px rgba(0, 0, 0, 0.6), 0 4px 10px rgba(0, 0, 0, 0.5)',
+                letterSpacing: '0.02em',
+                lineHeight: '1.7'
+              }}
+            >
               {t.hero.description}
             </p>
           </div>
@@ -524,7 +614,7 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
                       {course.tags.map((tag: string) => (
                         <span 
                           key={tag}
-                          className="px-2 py-1 bg-white/5 text-white/60 text-xs rounded"
+                          className={`px-2 py-1 bg-white/5 text-xs rounded ${theme === 'dark' ? 'text-white/60' : 'text-on-dark-tertiary'}`}
                         >
                           {tag}
                         </span>
@@ -550,12 +640,12 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
         </section>
 
         {/* GALLERY PLACEHOLDER */}
-        <section className="py-20 bg-gradient-to-b from-transparent via-azimut-red/5 to-transparent">
+        <section className="py-20 pb-12 bg-gradient-to-b from-transparent via-azimut-red/5 to-transparent">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+            <h2 className={`text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4 ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>
               {t.gallery.title}
             </h2>
-            <p className="text-xl text-white/70 mb-12">
+            <p className={`text-xl mb-12 ${theme === 'dark' ? 'text-white/70' : 'text-slate-700'}`}>
               {t.gallery.subtitle}
             </p>
 
@@ -571,7 +661,7 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
               ))}
             </div>
 
-            <p className="mt-8 text-white/40 text-sm">
+            <p className={`mt-8 text-sm ${theme === 'dark' ? 'text-white/40' : 'text-on-dark-muted'}`}>
               📸 PLACEHOLDER: Backoffice → /admin/academy/gallery
             </p>
           </div>
@@ -586,7 +676,7 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
                   🤖 Recomendação IA
                 </span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+              <h2 className={`text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
                 {lang === 'pt' ? 'Qual curso é ideal para você?' : 'Which course is ideal for you?'}
               </h2>
               <p className="text-xl text-white/70">
@@ -599,7 +689,7 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
         </section>
 
         {/* Quick Form */}
-        <section className="py-24 bg-gradient-to-b from-black to-[#0a0e18]">
+        <section className="py-20 bg-gradient-to-b from-black to-[#0a0e18]">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <AcademyQuickForm 
               lang={lang} 
@@ -607,6 +697,30 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
             />
           </div>
         </section>
+
+        {/* Navegação Final - Curada e Organizada (dentro de card, gap reduzido) */}
+        <PageFooterNavigation
+          lang={lang}
+          compact={true}
+          mainCta={{
+            title: t.cta.title,
+            description: t.cta.subtitle,
+            buttonText: t.cta.button,
+            buttonHref: `/contact`
+          }}
+          navigation={{
+            previous: {
+              label: lang === 'pt' ? 'Conhecer Estúdio' : lang === 'es' ? 'Conocer Estudio' : lang === 'fr' ? 'Découvrir Studio' : 'Meet Studio',
+              href: '/studio',
+              icon: '🏛️'
+            },
+            next: {
+              label: lang === 'pt' ? 'Ver Cursos' : lang === 'es' ? 'Ver Cursos' : lang === 'fr' ? 'Voir Cours' : 'View Courses',
+              href: '/what/educacao-treinamento',
+              icon: '🎓'
+            }
+          }}
+        />
       </div>
     </>
   )

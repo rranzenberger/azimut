@@ -1134,10 +1134,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     })
                     emailInput.value = ''
                     emailInput.placeholder = '✅ Inscrito!'
-                    setTimeout(() => { emailInput.placeholder = 'seu@email.com' }, 3000)
+                    setTimeout(() => { emailInput.placeholder = lang === 'en' ? 'your@email.com' : lang === 'es' ? 'tu@email.com' : 'seu@email.com' }, 3000)
                   } catch { 
                     emailInput.placeholder = '✅ Obrigado!'
-                    setTimeout(() => { emailInput.placeholder = 'seu@email.com' }, 3000)
+                    setTimeout(() => { emailInput.placeholder = lang === 'en' ? 'your@email.com' : lang === 'es' ? 'tu@email.com' : 'seu@email.com' }, 3000)
                   }
                   if (submitBtn) submitBtn.disabled = false
                 }}
@@ -1145,9 +1145,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               >
                 <input
                   type="email"
-                  placeholder="seu@email.com"
+                  placeholder={lang === 'en' ? 'your@email.com' : lang === 'es' ? 'tu@email.com' : 'seu@email.com'}
                   required
-                  className="flex-1 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-[0.75rem] text-white placeholder-slate-500 focus:outline-none focus:border-azimut-red/50"
+                  className="footer-newsletter-email flex-1 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-[0.75rem] focus:outline-none focus:border-azimut-red/50"
                 />
                 <button
                   type="submit"
@@ -1443,15 +1443,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               >
                 <input
                   type="email"
-                  placeholder={lang === 'en' ? 'seu@email.com' : lang === 'es' ? 'tu@email.com' : 'seu@email.com'}
+                  placeholder={lang === 'en' ? 'your@email.com' : lang === 'es' ? 'tu@email.com' : 'seu@email.com'}
                   required
-                  className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 placeholder-slate-500 text-[0.7rem] sm:text-[0.75rem] focus:outline-none focus:border-azimut-red/50 focus:bg-white/8 transition-colors"
-                  style={{ 
-                    color: theme === 'dark' ? '#8a8a8a' : '#ffffff',
-                    height: '44px',
-                    width: '100%',
-                    boxSizing: 'border-box'
-                  }}
+                  className="footer-newsletter-email w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-[0.7rem] sm:text-[0.75rem] focus:outline-none focus:border-azimut-red/50 focus:bg-white/8 transition-colors"
+                  style={{ height: '44px', width: '100%', boxSizing: 'border-box' }}
                 />
                 <button
                   type="submit"

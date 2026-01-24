@@ -17,7 +17,8 @@ import StarBackground from '../components/StarBackground'
 import OptimizedImage from '../components/OptimizedImage'
 import { useTheme } from '../contexts/ThemeContext'
 import { MAIN_CATEGORIES, SECONDARY_FILTERS, getCategoryFilters, getCategoryLabel } from '../utils/categoryMapping'
-import { PageNavigationCTAs } from '../components/PageNavigationCTAs'
+import { PageFooterNavigation } from '../components/PageFooterNavigation'
+import LangLink from '../components/LangLink'
 
 interface WorkProps {
   lang: Lang
@@ -458,9 +459,15 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               {t(lang, 'navWork')}
             </h1>
             <p className="max-w-3xl leading-relaxed text-slate-400 dark:text-slate-300" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
-              {lang === 'pt' 
-                ? 'Projetos que transformam espaços, marcas e experiências. De museus olímpicos a curadoria de festivais internacionais, cada trabalho é uma oportunidade de criar narrativas imersivas que conectam pessoas e histórias de forma única.'
-                : 'Projects that transform spaces, brands and experiences. From Olympic museums to international festival curation, each work is an opportunity to create immersive narratives that uniquely connect people and stories.'}
+              {lang === 'pt' ? (
+                <>Projetos que transformam espaços, marcas e experiências. De museus olímpicos a curadoria de festivais internacionais, cada trabalho é uma oportunidade de criar narrativas imersivas que conectam pessoas e histórias de forma única. <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">Conheça nossas soluções</LangLink> ou <LangLink to="/contact" className="text-azimut-red hover:text-azimut-red/80 underline">inicie seu projeto</LangLink>.</>
+              ) : lang === 'es' ? (
+                <>Proyectos que transforman espacios, marcas y experiencias. Desde museos olímpicos hasta curaduría de festivales internacionales, cada trabajo es una oportunidad de crear narrativas inmersivas que conectan personas e historias de forma única. <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">Conoce nuestras soluciones</LangLink> o <LangLink to="/contact" className="text-azimut-red hover:text-azimut-red/80 underline">inicia tu proyecto</LangLink>.</>
+              ) : lang === 'fr' ? (
+                <>Des projets qui transforment les espaces, les marques et les expériences. Des musées olympiques à la curation de festivals internationaux, chaque travail est une opportunité de créer des narrations immersives qui connectent les personnes et les histoires de manière unique. <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">Découvrez nos solutions</LangLink> ou <LangLink to="/contact" className="text-azimut-red hover:text-azimut-red/80 underline">lancez votre projet</LangLink>.</>
+              ) : (
+                <>Projects that transform spaces, brands and experiences. From Olympic museums to international festival curation, each work is an opportunity to create immersive narratives that uniquely connect people and stories. <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">Explore our solutions</LangLink> or <LangLink to="/contact" className="text-azimut-red hover:text-azimut-red/80 underline">start your project</LangLink>.</>
+              )}
             </p>
           </div>
           {/* ═══════════════════════════════════════════════════════════════
@@ -746,14 +753,32 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
 
                 {/* Content */}
                 <div className="p-6 md:p-8 overflow-hidden">
-                  <h2 className="mb-3 font-handel text-3xl uppercase tracking-[0.12em] line-clamp-2 text-white">
+                  <h2 
+                    className="mb-3 font-handel text-3xl uppercase tracking-[0.12em] line-clamp-2"
+                    style={{ 
+                      color: theme === 'dark' ? '#ffffff' : '#f5f1e8',
+                      textShadow: theme === 'light' ? '0 2px 8px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.3)' : '0 2px 4px rgba(0, 0, 0, 0.2)'
+                    }}
+                  >
                     {cases[0].title}
                   </h2>
-                  <p className="mb-4 text-base leading-relaxed line-clamp-4 text-slate-400 dark:text-slate-300">
+                  <p 
+                    className="mb-4 text-base leading-relaxed line-clamp-4"
+                    style={{ 
+                      color: theme === 'dark' ? '#cbd5e1' : '#e8e5df',
+                      textShadow: theme === 'light' ? '0 1px 4px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3)' : '0 1px 2px rgba(0, 0, 0, 0.2)'
+                    }}
+                  >
                     {cases[0].summary || cases[0].shortTitle}
                   </p>
                   {(cases[0].city || cases[0].country) && (
-                    <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
+                    <p 
+                      className="mb-4 text-sm"
+                      style={{ 
+                        color: theme === 'dark' ? '#94a3b8' : '#d3cec3',
+                        textShadow: theme === 'light' ? '0 1px 3px rgba(0, 0, 0, 0.5)' : 'none'
+                      }}
+                    >
                       📍 {[cases[0].city, cases[0].country].filter(Boolean).join(', ')}
                     </p>
                   )}
@@ -860,21 +885,36 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 </div>
 
                 <div className="p-4 relative z-10 overflow-hidden">
-                  <h3 className="mb-2 font-sora text-[1.05rem] text-slate-300 dark:text-slate-200 group-hover:text-azimut-red transition-colors duration-300 line-clamp-2">
+                  <h3 
+                    className="mb-2 font-sora text-[1.05rem] group-hover:text-azimut-red transition-colors duration-300 line-clamp-2"
+                    style={{ 
+                      color: theme === 'dark' ? '#cbd5e1' : '#f5f1e8',
+                      textShadow: theme === 'light' ? '0 1px 4px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3)' : '0 1px 2px rgba(0, 0, 0, 0.2)'
+                    }}
+                  >
                     {item.title}
                   </h3>
-                  <p className="text-sm leading-relaxed mb-3 text-slate-500 dark:text-slate-400 group-hover:text-slate-300 transition-colors duration-300 line-clamp-3">
+                  <p 
+                    className="text-sm leading-relaxed mb-3 group-hover:text-slate-300 transition-colors duration-300 line-clamp-3"
+                    style={{ 
+                      color: theme === 'dark' ? '#94a3b8' : '#e8e5df',
+                      textShadow: theme === 'light' ? '0 1px 3px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4)' : '0 1px 2px rgba(0, 0, 0, 0.3)'
+                    }}
+                  >
                     {item.summary || item.shortTitle}
                   </p>
                   <div className="flex flex-wrap items-center justify-between gap-2 mt-3">
                     {item.tags && item.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2 text-[0.68rem] text-slate-600 dark:text-slate-500">
+                      <div className="flex flex-wrap gap-2 text-[0.68rem]">
                         {((item?.tags && Array.isArray(item.tags)) ? item.tags : []).slice(0, 3).map((tag: string, idx: number) => (
                           <span 
                             key={idx} 
-                            className={`rounded-full border px-2 py-0.5 transition-all duration-300 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:text-azimut-red ${
-                              theme === 'dark' ? 'border-white/10' : 'border-slate-300/30'
-                            }`}
+                            className="rounded-full border px-2 py-0.5 transition-all duration-300 group-hover:border-azimut-red/50 group-hover:bg-azimut-red/10 group-hover:text-azimut-red"
+                            style={{ 
+                              borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.4)',
+                              color: theme === 'dark' ? '#94a3b8' : '#f5f1e8',
+                              textShadow: theme === 'light' ? '0 1px 3px rgba(0, 0, 0, 0.5)' : 'none'
+                            }}
                           >
                             {tag}
                           </span>
@@ -882,7 +922,13 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                       </div>
                     )}
                     {item.year && (
-                      <span className="text-xs font-medium text-slate-600 dark:text-slate-500">
+                      <span 
+                        className="text-xs font-medium"
+                        style={{ 
+                          color: theme === 'dark' ? '#94a3b8' : '#d3cec3',
+                          textShadow: theme === 'light' ? '0 1px 3px rgba(0, 0, 0, 0.5)' : 'none'
+                        }}
+                      >
                         {item.year}
                       </span>
                     )}
@@ -951,52 +997,41 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               <OportunidadesAtivas lang={lang} limit={10} />
             </div>
 
-            {/* CTA Final */}
-            <div className="mt-12 rounded-2xl border border-azimut-red/60 bg-azimut-red/10 p-8 text-center">
-              <h3 className="mb-4 font-handel text-2xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
-                {lang === 'pt' 
-                  ? 'Queremos Revisar Seu Projeto/Edital'
-                  : lang === 'es'
-                  ? 'Queremos Revisar Tu Proyecto/Edital'
-                  : lang === 'fr'
-                  ? 'Nous Voulons Examiner Votre Projet/Financement'
-                  : 'We Want to Review Your Project/Grant'}
-              </h3>
-              <p className="mb-6 text-lg" style={{ color: 'var(--theme-text-secondary)' }}>
-                {lang === 'pt' 
-                  ? 'Tem um projeto em mente? Vamos conversar sobre como podemos trabalhar juntos.'
-                  : lang === 'es'
-                  ? '¿Tienes un proyecto en mente? Hablemos sobre cómo podemos trabajar juntos.'
-                  : lang === 'fr'
-                  ? 'Vous avez un projet en tête? Parlons de la façon dont nous pouvons travailler ensemble.'
-                  : 'Have a project in mind? Let\'s talk about how we can work together.'}
-              </p>
-              <a 
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-xl border border-azimut-red/80 bg-azimut-red/20 px-8 py-4 font-sora text-sm font-semibold uppercase tracking-[0.14em] transition-all hover:bg-azimut-red/30 hover:shadow-[0_0_30px_rgba(var(--theme-accent-red-rgb),0.4)] text-slate-900 dark:text-white"
-                style={{ color: 'var(--theme-text)' }}
-              >
-                {lang === 'pt' ? 'Iniciar Conversa' : lang === 'es' ? 'Iniciar Conversación' : lang === 'fr' ? 'Démarrer la Conversation' : 'Start Conversation'}
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
-            </div>
           </section>
         </div>
 
-        {/* CTAs de Navegação */}
-        <PageNavigationCTAs
+        {/* Navegação Final - Curada e Organizada */}
+        <PageFooterNavigation
           lang={lang}
-          primary={{
-            label: lang === 'pt' ? 'Conhecer Estúdio' : lang === 'es' ? 'Conocer Estudio' : lang === 'fr' ? 'Découvrir Studio' : 'Meet Studio',
-            href: '/studio',
-            icon: '🏛️'
+          mainCta={{
+            title: lang === 'pt' 
+              ? 'Queremos Revisar Seu Projeto/Edital'
+              : lang === 'es'
+              ? 'Queremos Revisar Tu Proyecto/Edital'
+              : lang === 'fr'
+              ? 'Nous Voulons Examiner Votre Projet/Financement'
+              : 'We Want to Review Your Project/Grant',
+            description: lang === 'pt' 
+              ? 'Tem um projeto em mente? Vamos conversar sobre como podemos trabalhar juntos.'
+              : lang === 'es'
+              ? '¿Tienes un proyecto en mente? Hablemos sobre cómo podemos trabajar juntos.'
+              : lang === 'fr'
+              ? 'Vous avez un projet en tête? Parlons de la façon dont nous pouvons travailler ensemble.'
+              : 'Have a project in mind? Let\'s talk about how we can work together.',
+            buttonText: lang === 'pt' ? 'Iniciar Conversa' : lang === 'es' ? 'Iniciar Conversación' : lang === 'fr' ? 'Démarrer la Conversation' : 'Start Conversation',
+            buttonHref: '/contact'
           }}
-          secondary={{
-            label: lang === 'pt' ? 'Ver Soluções' : lang === 'es' ? 'Ver Soluciones' : lang === 'fr' ? 'Voir Solutions' : 'View Solutions',
-            href: '/what',
-            icon: '✨'
+          navigation={{
+            previous: {
+              label: lang === 'pt' ? 'Conhecer Estúdio' : lang === 'es' ? 'Conocer Estudio' : lang === 'fr' ? 'Découvrir Studio' : 'Meet Studio',
+              href: '/studio',
+              icon: '🏛️'
+            },
+            next: {
+              label: lang === 'pt' ? 'Ver Soluções' : lang === 'es' ? 'Ver Soluciones' : lang === 'fr' ? 'Voir Solutions' : 'View Solutions',
+              href: '/what',
+              icon: '✨'
+            }
           }}
         />
       </main>

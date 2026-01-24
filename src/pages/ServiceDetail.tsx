@@ -14,6 +14,8 @@ import ServiceGallery from '../components/ServiceGallery'
 import { getServiceGalleryPlaceholders } from '../utils/servicePlaceholders'
 import StarBackground from '../components/StarBackground'
 import { logger } from '@/utils/logger'
+import { PageFooterNavigation } from '../components/PageFooterNavigation'
+import { useTheme } from '../contexts/ThemeContext'
 
 interface ServiceDetailProps {
   lang: Lang
@@ -21,6 +23,7 @@ interface ServiceDetailProps {
 
 const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
   const { slug } = useParams<{ slug: string }>()
+  const { theme } = useTheme()
   // REMOVIDO: useUserTracking já é chamado no Layout.tsx
   // const { trackInteraction } = useUserTracking()
   const trackInteraction = (type: string, target: string) => {} // Dummy
@@ -506,17 +509,43 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
                 return (
                   <div
                     key={index}
-                    className={`relative rounded-2xl bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/40 hover:shadow-[0_20px_60px_rgba(201,35,55,0.2)] transition-all group ${
+                    className={`relative rounded-2xl border transition-all group backdrop-blur-sm ${
                       isTopRow ? 'p-8' : 'p-5'
                     }`}
+                    style={{
+                      background: theme === 'dark' 
+                        ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.5) 100%)'
+                        : 'linear-gradient(135deg, rgba(30, 28, 26, 0.7) 0%, rgba(26, 24, 21, 0.5) 100%)',
+                      borderColor: theme === 'dark' ? 'rgba(201, 35, 55, 0.3)' : 'rgba(201, 35, 55, 0.3)',
+                      boxShadow: theme === 'dark' 
+                        ? '0 4px 16px rgba(0, 0, 0, 0.2)'
+                        : '0 4px 16px rgba(0, 0, 0, 0.1)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = '#c92337'
+                      e.currentTarget.style.boxShadow = theme === 'dark' 
+                        ? '0 12px 40px rgba(201, 35, 55, 0.3)'
+                        : '0 12px 40px rgba(201, 35, 55, 0.2)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = theme === 'dark' ? 'rgba(201, 35, 55, 0.3)' : 'rgba(201, 35, 55, 0.3)'
+                      e.currentTarget.style.boxShadow = theme === 'dark' 
+                        ? '0 4px 16px rgba(0, 0, 0, 0.2)'
+                        : '0 4px 16px rgba(0, 0, 0, 0.1)'
+                    }}
                   >
                     {/* Ícone decorativo de fundo - mais sutil */}
                     <div className="absolute -top-3 -left-3 text-4xl opacity-8 group-hover:opacity-15 transition-opacity">
                       {service.icon}
                     </div>
-                    <p className={`leading-relaxed text-theme-text-secondary relative z-10 ${
-                      isTopRow ? 'text-lg' : 'text-sm'
-                    }`}>
+                    <p 
+                      className={`leading-relaxed relative z-10 ${
+                        isTopRow ? 'text-lg' : 'text-sm'
+                      }`}
+                      style={{
+                        color: theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : '#f5f1e8'
+                      }}
+                    >
                       {paragraph}
                     </p>
                   </div>
@@ -541,15 +570,51 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
               {deliverables.map((item, index) => (
                 <div
                   key={index}
-                  className="relative group p-4 rounded-xl bg-gradient-to-br from-slate-900/60 to-slate-900/40 border border-azimut-red/20 hover:border-azimut-red/50 hover:shadow-[0_20px_60px_rgba(201,35,55,0.2)] transition-all overflow-hidden"
+                  className="relative group p-4 rounded-xl border transition-all overflow-hidden backdrop-blur-sm"
+                  style={{
+                    background: theme === 'dark' 
+                      ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.5) 100%)'
+                      : 'linear-gradient(135deg, rgba(30, 28, 26, 0.7) 0%, rgba(26, 24, 21, 0.5) 100%)',
+                    borderColor: theme === 'dark' ? 'rgba(201, 35, 55, 0.3)' : 'rgba(201, 35, 55, 0.3)',
+                    boxShadow: theme === 'dark' 
+                      ? '0 4px 16px rgba(0, 0, 0, 0.2)'
+                      : '0 4px 16px rgba(0, 0, 0, 0.1)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = '#c92337'
+                    e.currentTarget.style.boxShadow = theme === 'dark' 
+                      ? '0 12px 40px rgba(201, 35, 55, 0.3)'
+                      : '0 12px 40px rgba(201, 35, 55, 0.2)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = theme === 'dark' ? 'rgba(201, 35, 55, 0.3)' : 'rgba(201, 35, 55, 0.3)'
+                    e.currentTarget.style.boxShadow = theme === 'dark' 
+                      ? '0 4px 16px rgba(0, 0, 0, 0.2)'
+                      : '0 4px 16px rgba(0, 0, 0, 0.1)'
+                  }}
                 >
                   {/* Número de fundo - opacidade aumentada para destaque */}
-                  <div className="absolute -top-2 -right-2 text-6xl font-bold text-azimut-red/25 font-handel group-hover:text-azimut-red/40 transition-colors">
+                  <div 
+                    className="absolute -top-2 -right-2 text-6xl font-bold font-handel transition-colors"
+                    style={{
+                      color: theme === 'dark' ? 'rgba(201, 35, 55, 0.25)' : 'rgba(201, 35, 55, 0.15)'
+                    }}
+                  >
                     {index + 1}
                   </div>
                   <div className="relative z-10 flex items-start gap-3">
-                    <span className="text-azimut-red text-xl font-bold mt-0.5 group-hover:scale-110 transition-transform flex-shrink-0">✓</span>
-                    <span className="text-theme-text-secondary group-hover:text-theme-text transition-colors leading-relaxed text-sm flex-1 line-clamp-1">{item}</span>
+                    <span 
+                      className="text-xl font-bold mt-0.5 group-hover:scale-110 transition-transform flex-shrink-0"
+                      style={{
+                        color: '#c92337'
+                      }}
+                    >✓</span>
+                    <span 
+                      className="leading-relaxed text-sm flex-1 line-clamp-1 transition-colors"
+                      style={{
+                        color: theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : '#f5f1e8'
+                      }}
+                    >{item}</span>
                   </div>
                 </div>
               ))}
@@ -571,21 +636,57 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
               {process.map((step, index) => (
-                <div 
-                  key={index} 
-                  className="relative p-4 rounded-2xl bg-gradient-to-br from-slate-900/80 to-slate-900/65 border border-azimut-red/20 hover:border-azimut-red/50 hover:shadow-[0_20px_60px_rgba(201,35,55,0.2)] transition-all group overflow-hidden"
+                <div
+                  key={index}
+                  className="relative p-4 rounded-2xl border transition-all group overflow-hidden backdrop-blur-sm"
+                  style={{
+                    background: theme === 'dark' 
+                      ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.7) 100%)'
+                      : 'linear-gradient(135deg, rgba(30, 28, 26, 0.9) 0%, rgba(26, 24, 21, 0.7) 100%)',
+                    borderColor: theme === 'dark' ? 'rgba(201, 35, 55, 0.3)' : 'rgba(201, 35, 55, 0.3)',
+                    boxShadow: theme === 'dark' 
+                      ? '0 8px 32px rgba(0, 0, 0, 0.3)'
+                      : '0 8px 32px rgba(0, 0, 0, 0.15)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = '#c92337'
+                    e.currentTarget.style.boxShadow = theme === 'dark' 
+                      ? '0 20px 60px rgba(201, 35, 55, 0.3)'
+                      : '0 12px 40px rgba(201, 35, 55, 0.25)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = theme === 'dark' ? 'rgba(201, 35, 55, 0.3)' : 'rgba(201, 35, 55, 0.3)'
+                    e.currentTarget.style.boxShadow = theme === 'dark' 
+                      ? '0 8px 32px rgba(0, 0, 0, 0.3)'
+                      : '0 8px 32px rgba(0, 0, 0, 0.15)'
+                  }}
                 >
                   {/* Número de fundo - opacidade aumentada para destaque premium */}
-                  <div className="absolute -top-3 -right-3 text-7xl font-bold text-azimut-red/30 font-handel group-hover:text-azimut-red/45 transition-colors">
+                  <div 
+                    className="absolute -top-3 -right-3 text-7xl font-bold font-handel transition-colors"
+                    style={{
+                      color: theme === 'dark' ? 'rgba(201, 35, 55, 0.3)' : 'rgba(201, 35, 55, 0.15)'
+                    }}
+                  >
                     {index + 1}
                   </div>
                   
                   {/* Conteúdo */}
                   <div className="relative z-10">
-                    <div className="text-azimut-red text-2xl font-bold mb-2 font-handel">
+                    <div 
+                      className="text-2xl font-bold mb-2 font-handel"
+                      style={{
+                        color: '#c92337'
+                      }}
+                    >
                       {String(index + 1).padStart(2, '0')}
                     </div>
-                    <div className="text-theme-card-text leading-relaxed text-sm">
+                    <div 
+                      className="leading-relaxed text-sm"
+                      style={{
+                        color: theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : '#f5f1e8'
+                      }}
+                    >
                       {step}
                     </div>
                   </div>
@@ -621,7 +722,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
                 {service.technologies.map((tech, index) => (
                   <span
                     key={index}
-                    className="tech-pill group relative px-6 py-3 rounded-full text-sm font-semibold transition-all cursor-default hover:scale-105"
+                    className="tech-pill group relative px-6 py-3 rounded-full text-sm font-semibold transition-all cursor-default"
                   >
                     {tech}
                   </span>
@@ -643,7 +744,22 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
               <h2 className="section-title">
                 {lang === 'pt' ? 'Conheça nossa Academy' : lang === 'es' ? 'Conoce nuestra Academia' : lang === 'fr' ? 'Découvrez notre Académie' : 'Discover our Academy'}
               </h2>
-              <div className="relative p-12 rounded-lg text-center overflow-hidden bg-gradient-to-br from-slate-900/70 to-slate-900/50 border border-azimut-red/30 hover:border-azimut-red/50 transition-all group">
+              <div 
+                className="relative p-12 rounded-lg text-center overflow-hidden border transition-all group"
+                style={{
+                  background: theme === 'dark' 
+                    ? 'linear-gradient(to bottom right, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.5))'
+                    : 'linear-gradient(to bottom right, rgba(255, 255, 255, 0.95), rgba(245, 241, 232, 0.9))',
+                  borderColor: theme === 'dark' ? 'rgba(201, 35, 55, 0.3)' : 'rgba(201, 35, 55, 0.3)',
+                  boxShadow: theme === 'light' ? '0 4px 16px rgba(0, 0, 0, 0.08)' : 'none'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = theme === 'dark' ? 'rgba(201, 35, 55, 0.5)' : 'rgba(201, 35, 55, 0.5)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = theme === 'dark' ? 'rgba(201, 35, 55, 0.3)' : 'rgba(201, 35, 55, 0.3)'
+                }}
+              >
                 {/* Padrão de fundo */}
                 <div className="absolute inset-0 opacity-5">
                   <div className="absolute top-0 left-0 w-full h-full" style={{
@@ -653,7 +769,12 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
                 </div>
                 
                 <div className="relative z-10">
-                  <p className="text-lg text-theme-card-text mb-8 max-w-2xl mx-auto leading-relaxed">
+                  <p 
+                    className="text-lg mb-8 max-w-2xl mx-auto leading-relaxed"
+                    style={{
+                      color: theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : '#f5f1e8'
+                    }}
+                  >
                     {lang === 'pt' 
                       ? 'Explore nossos programas completos de educação: cursos profissionalizantes, workshops, treinamentos corporativos e oportunidades internacionais em Vancouver.'
                       : lang === 'es'
@@ -688,7 +809,22 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
               <h2 className="section-title">
                 {lang === 'pt' ? 'Capacitação para empresas' : lang === 'es' ? 'Capacitación para empresas' : lang === 'fr' ? 'Formation pour entreprises' : 'Corporate training'}
               </h2>
-              <div className="relative p-12 rounded-lg text-center overflow-hidden bg-gradient-to-br from-slate-900/70 to-slate-900/50 border border-azimut-red/30 hover:border-azimut-red/50 transition-all group">
+              <div 
+                className="relative p-12 rounded-lg text-center overflow-hidden border transition-all group"
+                style={{
+                  background: theme === 'dark' 
+                    ? 'linear-gradient(to bottom right, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.5))'
+                    : 'linear-gradient(to bottom right, rgba(255, 255, 255, 0.95), rgba(245, 241, 232, 0.9))',
+                  borderColor: theme === 'dark' ? 'rgba(201, 35, 55, 0.3)' : 'rgba(201, 35, 55, 0.3)',
+                  boxShadow: theme === 'light' ? '0 4px 16px rgba(0, 0, 0, 0.08)' : 'none'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = theme === 'dark' ? 'rgba(201, 35, 55, 0.5)' : 'rgba(201, 35, 55, 0.5)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = theme === 'dark' ? 'rgba(201, 35, 55, 0.3)' : 'rgba(201, 35, 55, 0.3)'
+                }}
+              >
                 {/* Padrão de fundo */}
                 <div className="absolute inset-0 opacity-5">
                   <div className="absolute top-0 left-0 w-full h-full" style={{
@@ -745,13 +881,44 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
                       key={related.slug}
                       to={`/what/${related.slug}`}
                       onClick={() => trackInteraction('service_related_click', { from: slug, to: related.slug })}
-                      className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-slate-900/60 to-slate-900/40 border border-azimut-red/20 hover:border-azimut-red/50 transition-all p-6 hover:scale-[1.02]"
+                      className="group relative overflow-hidden rounded-xl border transition-all p-6 hover:scale-[1.02] backdrop-blur-sm"
+                      style={{
+                        background: theme === 'dark' 
+                          ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.5) 100%)'
+                          : 'linear-gradient(135deg, rgba(30, 28, 26, 0.7) 0%, rgba(26, 24, 21, 0.5) 100%)',
+                        borderColor: theme === 'dark' ? 'rgba(201, 35, 55, 0.3)' : 'rgba(201, 35, 55, 0.3)',
+                        boxShadow: theme === 'dark' 
+                          ? '0 4px 16px rgba(0, 0, 0, 0.2)'
+                          : '0 4px 16px rgba(0, 0, 0, 0.1)'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = '#c92337'
+                        e.currentTarget.style.boxShadow = theme === 'dark' 
+                          ? '0 12px 40px rgba(201, 35, 55, 0.3)'
+                          : '0 12px 40px rgba(201, 35, 55, 0.2)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = theme === 'dark' ? 'rgba(201, 35, 55, 0.3)' : 'rgba(201, 35, 55, 0.3)'
+                        e.currentTarget.style.boxShadow = theme === 'dark' 
+                          ? '0 4px 16px rgba(0, 0, 0, 0.2)'
+                          : '0 4px 16px rgba(0, 0, 0, 0.1)'
+                      }}
                     >
                       <div className="text-3xl mb-3">{related.icon}</div>
-                      <h3 className="font-handel text-lg uppercase tracking-wide mb-2 text-theme-card-text group-hover:text-azimut-red transition-colors">
+                      <h3 
+                        className="font-handel text-lg uppercase tracking-wide mb-2 group-hover:text-azimut-red transition-colors"
+                        style={{
+                          color: theme === 'dark' ? '#ffffff' : '#f5f1e8'
+                        }}
+                      >
                         {relatedTitle}
                       </h3>
-                      <p className="text-sm text-theme-card-text-secondary line-clamp-3">
+                      <p 
+                        className="text-sm line-clamp-3"
+                        style={{
+                          color: theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(245, 241, 232, 0.8)'
+                        }}
+                      >
                         {relatedShortDesc}
                       </p>
                       <span className="absolute bottom-4 right-4 text-azimut-red text-xl opacity-0 group-hover:opacity-100 transition-opacity">→</span>
@@ -775,7 +942,18 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
               <h2 className="section-title">
                 {t.relatedProjects}
               </h2>
-              <div className="relative p-12 rounded-lg text-center overflow-hidden bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20">
+              <div 
+                className="relative p-12 rounded-lg text-center overflow-hidden border backdrop-blur-sm"
+                style={{
+                  background: theme === 'dark' 
+                    ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.5) 100%)'
+                    : 'linear-gradient(135deg, rgba(30, 28, 26, 0.7) 0%, rgba(26, 24, 21, 0.5) 100%)',
+                  borderColor: theme === 'dark' ? 'rgba(201, 35, 55, 0.3)' : 'rgba(201, 35, 55, 0.3)',
+                  boxShadow: theme === 'dark' 
+                    ? '0 4px 16px rgba(0, 0, 0, 0.2)'
+                    : '0 4px 16px rgba(0, 0, 0, 0.1)'
+                }}
+              >
                 {/* Padrão de fundo */}
                 <div className="absolute inset-0 opacity-5">
                   <div className="absolute top-0 left-0 w-full h-full" style={{
@@ -785,7 +963,12 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
                 </div>
                 
                 <div className="relative z-10">
-                  <p className="text-lg text-theme-card-text mb-8 opacity-70">
+                  <p 
+                    className="text-lg mb-8 opacity-70"
+                    style={{
+                      color: theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : '#f5f1e8'
+                    }}
+                  >
                     {lang === 'pt' && 'Projetos filtrados por categoria serão exibidos aqui em breve.'}
                     {lang === 'en' && 'Filtered projects by category will be displayed here soon.'}
                     {lang === 'fr' && 'Les projets filtrés par catégorie seront affichés ici prochainement.'}
@@ -821,13 +1004,44 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
                 {getServiceFAQs(slug, lang).map((faq, index) => (
                   <details
                     key={index}
-                    className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-slate-900/60 to-slate-900/40 border border-azimut-red/20 hover:border-azimut-red/50 transition-all"
+                    className="group relative overflow-hidden rounded-xl border transition-all backdrop-blur-sm"
+                    style={{
+                      background: theme === 'dark' 
+                        ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.5) 100%)'
+                        : 'linear-gradient(135deg, rgba(30, 28, 26, 0.7) 0%, rgba(26, 24, 21, 0.5) 100%)',
+                      borderColor: theme === 'dark' ? 'rgba(201, 35, 55, 0.3)' : 'rgba(201, 35, 55, 0.3)',
+                      boxShadow: theme === 'dark' 
+                        ? '0 4px 16px rgba(0, 0, 0, 0.2)'
+                        : '0 4px 16px rgba(0, 0, 0, 0.1)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = '#c92337'
+                      e.currentTarget.style.boxShadow = theme === 'dark' 
+                        ? '0 12px 40px rgba(201, 35, 55, 0.3)'
+                        : '0 12px 40px rgba(201, 35, 55, 0.2)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = theme === 'dark' ? 'rgba(201, 35, 55, 0.3)' : 'rgba(201, 35, 55, 0.3)'
+                      e.currentTarget.style.boxShadow = theme === 'dark' 
+                        ? '0 4px 16px rgba(0, 0, 0, 0.2)'
+                        : '0 4px 16px rgba(0, 0, 0, 0.1)'
+                    }}
                   >
-                    <summary className="cursor-pointer p-6 font-sora text-base font-semibold text-theme-card-text hover:text-azimut-red transition-colors flex items-center justify-between list-none">
+                    <summary 
+                      className="cursor-pointer p-6 font-sora text-base font-semibold hover:text-azimut-red transition-colors flex items-center justify-between list-none"
+                      style={{
+                        color: theme === 'dark' ? '#ffffff' : '#f5f1e8'
+                      }}
+                    >
                       <span className="pr-4">{faq.question}</span>
                       <span className="text-azimut-red text-xl font-bold transition-transform group-open:rotate-180 flex-shrink-0">▼</span>
                     </summary>
-                    <div className="px-6 pb-6 pt-0 text-theme-card-text-secondary leading-relaxed">
+                    <div 
+                      className="px-6 pb-6 pt-0 leading-relaxed"
+                      style={{
+                        color: theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(245, 241, 232, 0.8)'
+                      }}
+                    >
                       <p className="text-sm md:text-base">{faq.answer}</p>
                     </div>
                   </details>
@@ -836,37 +1050,23 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
             </section>
           )}
 
-          {/* CTAs Finais - Seção Premium (como WhatWeDo) */}
-          <section className="py-16 text-center">
-            <div className="mx-auto max-w-4xl">
-              <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-wide mb-6 text-theme-light-main">
-                {lang === 'pt' ? 'Vamos criar algo incrível juntos?' : lang === 'es' ? '¿Vamos a crear algo increíble juntos?' : lang === 'fr' ? 'Créons quelque chose d\'incroyable ensemble?' : 'Let\'s create something incredible together?'}
-              </h2>
-              <p className="text-lg max-w-2xl mx-auto mb-10 text-theme-text-secondary">
-                {lang === 'pt' ? 'Entre em contato para discutir seu projeto e descobrir como podemos transformar sua visão em realidade.' : lang === 'es' ? 'Contáctenos para discutir su proyecto y descubrir cómo podemos transformar su visión en realidad.' : lang === 'fr' ? 'Contactez-nous pour discuter de votre projet et découvrir comment nous pouvons transformer votre vision en réalité.' : 'Get in touch to discuss your project and discover how we can transform your vision into reality.'}
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-6 items-center justify-center">
-                <LangLink
-                  to="/contact"
-                  onClick={() => trackInteraction('cta_start_project', { source: 'service_detail', service: slug })}
-                  className="group relative inline-flex items-center gap-3 px-10 py-5 rounded-lg bg-azimut-red text-white font-sora text-base font-bold uppercase tracking-[0.1em] transition-all shadow-2xl hover:shadow-azimut-red/50 overflow-hidden"
-                >
-                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
-                  <span className="relative z-10">{t.startProject}</span>
-                  <span className="relative z-10 text-xl group-hover:translate-x-1 transition-transform">→</span>
-                </LangLink>
-                
-                <LangLink
-                  to="/what"
-                  className="inline-flex items-center gap-3 px-10 py-5 rounded-lg border-2 border-theme-text-secondary text-theme-text font-sora text-base font-bold uppercase tracking-[0.1em] hover:border-azimut-red hover:text-azimut-red transition-all"
-                >
-                  <span className="text-xl">←</span>
-                  <span>{t.backToServices}</span>
-                </LangLink>
-              </div>
-            </div>
-          </section>
+          {/* Navegação Final - Padronizada com fundo bege no tema claro */}
+          <PageFooterNavigation
+            lang={lang}
+            mainCta={{
+              title: lang === 'pt' ? 'Vamos criar algo incrível juntos?' : lang === 'es' ? '¿Vamos a crear algo increíble juntos?' : lang === 'fr' ? 'Créons quelque chose d\'incroyable ensemble?' : 'Let\'s create something incredible together?',
+              description: lang === 'pt' ? 'Entre em contato para discutir seu projeto e descobrir como podemos transformar sua visão em realidade.' : lang === 'es' ? 'Contáctenos para discutir su proyecto y descubrir cómo podemos transformar su visión en realidad.' : lang === 'fr' ? 'Contactez-nous pour discuter de votre projet et découvrir comment nous pouvons transformer votre vision en réalité.' : 'Get in touch to discuss your project and discover how we can transform your vision into reality.',
+              buttonText: t.startProject,
+              buttonHref: '/contact'
+            }}
+            navigation={{
+              previous: {
+                label: t.backToServices,
+                href: '/what',
+                icon: '←'
+              }
+            }}
+          />
         </div>
       </main>
     </>

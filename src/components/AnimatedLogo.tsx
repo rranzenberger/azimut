@@ -56,12 +56,16 @@ export const AnimatedLogo: React.FC = () => {
       style={{ 
         opacity: opacity, 
         transition: 'opacity 2s ease-in-out', // Fade de 2s (igual desktop)
-        mixBlendMode: 'lighten', // Preto vira transparente, cores ficam visíveis (melhor que screen)
+        mixBlendMode: 'normal', // Removido blend mode para evitar artefatos
         filter: 'drop-shadow(0 0 20px rgba(201, 35, 55, 0.6)) drop-shadow(0 0 40px rgba(201, 35, 55, 0.4)) drop-shadow(0 0 80px rgba(201, 35, 55, 0.2))',
         zIndex: 10,
         position: 'relative',
         isolation: 'isolate',
-        willChange: 'opacity'
+        willChange: 'opacity',
+        transform: 'translateZ(0)', // Force GPU acceleration
+        backfaceVisibility: 'hidden', // Previne flickering
+        imageRendering: 'auto', // Renderização suave
+        WebkitBackfaceVisibility: 'hidden' // Safari
       }}
     >
       {/* WebM VP9 720p com chroma key (otimizado para 720px uso real) */}

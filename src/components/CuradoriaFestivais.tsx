@@ -89,36 +89,77 @@ const CuradoriaFestivais: React.FC<CuradoriaFestivaisProps> = ({ lang }) => {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {festivais.map((festival, idx) => (
           <article
             key={idx}
-            className="group rounded-2xl border border-white/10 card-adaptive p-6 md:p-8 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)]"
+            className="group rounded-2xl border border-white/10 card-adaptive p-6 md:p-8 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col"
+            style={{ minHeight: 'fit-content' }}
           >
-            <div className="flex items-start gap-4 mb-4">
-              <div className="text-4xl">{festival.icon}</div>
-              <div className="flex-1">
-                <div className="mb-2 inline-block rounded-full border border-azimut-red/50 bg-azimut-red/15 px-3 py-1.5 font-sora text-[0.68rem] uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text)' }}>
+            {/* Header com ícone e badge */}
+            <div className="flex items-start gap-4 mb-4 flex-shrink-0">
+              <div className="text-3xl md:text-4xl flex-shrink-0">{festival.icon}</div>
+              <div className="flex-1 min-w-0 overflow-hidden">
+                <div 
+                  className="mb-2 inline-block rounded-full border border-azimut-red/50 bg-azimut-red/15 px-2 md:px-3 py-1 md:py-1.5 font-sora text-[0.6rem] md:text-[0.68rem] uppercase tracking-[0.2em]" 
+                  style={{ 
+                    color: 'var(--theme-text)',
+                    wordBreak: 'break-word',
+                    overflowWrap: 'break-word',
+                    maxWidth: '100%'
+                  }}
+                >
                   {locale(festival.role)}
                 </div>
-                <h3 className="mb-1 font-sora text-xl" style={{ color: 'var(--theme-text)' }}>
+                <h3 
+                  className="mb-1 font-sora text-base md:text-lg lg:text-xl leading-tight" 
+                  style={{ 
+                    color: 'var(--theme-text)',
+                    wordBreak: 'break-word',
+                    overflowWrap: 'break-word',
+                    hyphens: 'auto'
+                  }}
+                >
                   {locale(festival.name)}
                 </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-300">
+                <p className="text-xs md:text-sm text-slate-600 dark:text-slate-300 mt-1">
                   {locale(festival.period)}
                 </p>
               </div>
             </div>
             
-            <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            {/* Descrição - com controle de overflow */}
+            <p 
+              className="text-xs md:text-sm leading-relaxed mb-4 flex-shrink-0" 
+              style={{ 
+                color: 'var(--theme-text-secondary)',
+                wordBreak: 'break-word',
+                overflowWrap: 'break-word'
+              }}
+            >
               {locale(festival.description)}
             </p>
 
-            <ul className="space-y-2">
+            {/* Lista de highlights - sempre contida */}
+            <ul className="space-y-2 flex-shrink-0">
               {festival.highlights.map((highlight, hIdx) => (
-                <li key={hIdx} className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
-                  <span className="mt-1 w-1.5 h-1.5 rounded-full bg-azimut-red shrink-0"></span>
-                  <span>{locale(highlight)}</span>
+                <li 
+                  key={hIdx} 
+                  className="flex items-start gap-2 text-xs leading-relaxed"
+                  style={{ 
+                    color: 'var(--theme-text-muted)'
+                  }}
+                >
+                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-azimut-red shrink-0 flex-shrink-0"></span>
+                  <span 
+                    className="break-words"
+                    style={{
+                      wordBreak: 'break-word',
+                      overflowWrap: 'break-word'
+                    }}
+                  >
+                    {locale(highlight)}
+                  </span>
                 </li>
               ))}
             </ul>

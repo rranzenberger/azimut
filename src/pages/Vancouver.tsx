@@ -17,6 +17,7 @@ import HeroImage from '../components/HeroImageCarousel'
 import { useTimeBasedImage } from '../hooks/useTimeBasedImage'
 import { useBackofficeContent } from '../hooks/useBackofficeContent'
 import { usePageSEO } from '../hooks/usePageSEO'
+import { useTheme } from '../contexts/ThemeContext'
 
 interface VancouverProps {
   lang: Lang
@@ -25,6 +26,7 @@ interface VancouverProps {
 const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
   // REMOVIDO: useUserTracking já é chamado no Layout.tsx
   // useUserTracking();
+  const { theme } = useTheme()
   
   // Sistema inteligente de imagens baseado na hora LOCAL do usuário
   const { image, vancouverTime } = useTimeBasedImage()
@@ -741,10 +743,10 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   className="p-6 card-adaptive rounded-xl border border-white/10 hover:border-azimut-red/50 transition-all duration-300 overflow-hidden"
                 >
                   <div className="text-5xl mb-4 flex-shrink-0">{item.icon}</div>
-                  <h3 className="text-xl font-semibold text-white mb-3 line-clamp-2">
+                  <h3 className={`text-xl font-semibold mb-3 line-clamp-2 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
                     {item.title}
                   </h3>
-                  <p className="text-white/70 leading-relaxed line-clamp-4">
+                  <p className={`leading-relaxed line-clamp-4 ${theme === 'dark' ? 'text-white/70' : 'text-on-dark-secondary'}`}>
                     {item.description}
                   </p>
                 </div>
