@@ -1011,8 +1011,14 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           position: 'relative'
         }}
       >
-        {/* 🆕 UX PREMIUM - Breadcrumbs visuais (OPCIONAL - pode remover se não funcionar) */}
-        {location.pathname !== `/${lang}` && location.pathname !== '/' && (
+        {/* 🆕 UX PREMIUM - Breadcrumbs visuais 
+            EXCEÇÕES: Páginas com submenu interno (academy, studio, work, what) têm seu próprio breadcrumb */}
+        {location.pathname !== `/${lang}` && 
+         location.pathname !== '/' && 
+         !location.pathname.includes('/academy') &&
+         !location.pathname.includes('/studio') &&
+         !location.pathname.includes('/work') &&
+         !location.pathname.includes('/what') && (
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
             <Breadcrumbs lang={lang} theme={theme} />
           </div>
