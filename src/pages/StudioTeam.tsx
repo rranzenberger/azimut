@@ -338,10 +338,12 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                 <div className="flex flex-col md:flex-row">
                   {/* Foto - Cover que preenche toda área, focando no rosto */}
                   <div 
-                    className="team-photo relative shrink-0 w-full md:w-[400px] lg:w-[420px] xl:w-[450px] overflow-hidden"
+                    className="team-photo relative shrink-0 w-full md:w-[380px] lg:w-[400px] xl:w-[420px] overflow-hidden"
                     style={{
                       background: 'linear-gradient(145deg, #0a0f1a 0%, #0f172a 40%, #1a1f2e 100%)',
-                      height: '520px', // Altura fixa para consistência
+                      aspectRatio: '3/4', // Proporção retrato para fotos de pessoas
+                      minHeight: '450px',
+                      maxHeight: '550px',
                     }}
                   >
                     <img
@@ -352,7 +354,12 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                       className="w-full h-full"
                       style={{
                         objectFit: 'cover',
-                        objectPosition: member.slug === 'ranz' ? 'center 15%' : member.slug === 'anick' ? 'center 20%' : 'center 25%',
+                        // Ajuste fino para cada foto específica
+                        objectPosition: member.slug === 'ranz' 
+                          ? 'center top' // Ranz: foto de palestra, mostrar do topo
+                          : member.slug === 'anick' 
+                            ? 'center 10%' // Anick: foto de rosto, centralizar no rosto
+                            : 'center 5%', // Alberto: foto com VR, mostrar do topo
                       }}
                       onError={(e) => {
                         const img = e.currentTarget
