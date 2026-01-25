@@ -336,52 +336,37 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                 className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500 scroll-mt-28"
               >
                 <div className="flex flex-col md:flex-row">
-                  {/* Foto - Larguras iguais para todos, enquadramento otimizado */}
+                  {/* Foto - Container escuro fixo, imagem ocupa 100% */}
                   <div 
-                    className="team-photo relative shrink-0 overflow-hidden w-full md:w-[450px] lg:w-[500px] xl:w-[550px] aspect-[3/4]"
+                    className="team-photo relative shrink-0 w-full md:w-[380px] lg:w-[400px] xl:w-[420px]"
                     style={{
-                      background: 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)',
-                      overflow: 'hidden',
-                      minHeight: '400px' // Travar altura mínima para não aparecer espaço vazio
+                      backgroundColor: '#0a0f1a',
+                      background: 'linear-gradient(180deg, #0a0f1a 0%, #0f172a 100%)',
+                      aspectRatio: '3/4',
+                      overflow: 'hidden'
                     }}
                   >
-                    <div 
-                      className="w-full h-full absolute inset-0"
-                      style={member.name.includes('Alberto') ? {
-                        transform: 'scale(1.08)',
-                        transformOrigin: 'center center'
-                      } : member.name.includes('Ranz') ? {
-                        transform: 'scale(1.05)',
-                        transformOrigin: 'center top'
-                      } : {}}
-                    >
-                      <OptimizedImage
-                        src={member.photo}
-                        alt={member.name}
-                        className="w-full h-full absolute inset-0"
-                        objectFit="cover"
-                        priority={true}
-                        style={member.name.includes('Alberto') ? {
-                          objectPosition: 'center 28%'
-                        } : member.name.includes('Ranz') ? {
-                          objectPosition: 'center 10%'
-                        } : {
-                          objectPosition: 'center center'
-                        }}
-                        onError={(e) => {
-                          // Se imagem falhar, manter fundo degradê (não mostrar espaço vazio)
-                          try {
-                            const img = e.currentTarget as HTMLImageElement
-                            if (img) {
-                              img.style.display = 'none'
-                              // O container já tem fundo degradê, então não precisa fazer nada
-                            }
-                          } catch (error) {
-                            // Silencioso - não quebrar renderização
-                          }
-                        }}
-                      />
-                    </div>
+                    <img
+                      src={member.photo}
+                      alt={member.name}
+                      loading="eager"
+                      decoding="async"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: member.name.includes('Alberto') 
+                          ? 'center 20%' 
+                          : member.name.includes('Ranz') 
+                            ? 'center 12%' 
+                            : 'center 25%',
+                        display: 'block'
+                      }}
+                      onError={(e) => {
+                        const img = e.currentTarget
+                        img.style.opacity = '0'
+                      }}
+                    />
                   </div>
 
                   {/* Conteúdo - Espaçamento otimizado */}
