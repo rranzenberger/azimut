@@ -334,9 +334,9 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                 className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500 scroll-mt-28"
               >
                 <div className="flex flex-col md:flex-row">
-                  {/* Foto - Cover com posicionamento correto para cada membro */}
+                  {/* Foto - Área maior, proporção 3:4 para mostrar bem o rosto */}
                   <div 
-                    className="team-photo relative shrink-0 w-full md:w-[280px] lg:w-[300px] xl:w-[320px] overflow-hidden"
+                    className="team-photo relative shrink-0 w-full md:w-[320px] lg:w-[360px] xl:w-[400px] overflow-hidden"
                     style={{
                       background: 'linear-gradient(145deg, #0a0f1a 0%, #0f172a 40%, #1a1f2e 100%)',
                       aspectRatio: '3/4',
@@ -349,7 +349,11 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                       decoding="async"
                       className="absolute inset-0 w-full h-full object-cover"
                       style={{
-                        objectPosition: member.name.includes('Alberto') ? 'center 20%' : 'center 15%',
+                        objectPosition: member.name.includes('Alberto') 
+                          ? 'center 25%' 
+                          : member.name.includes('Anick') 
+                            ? 'center 20%' 
+                            : 'center 30%',
                       }}
                       onError={(e) => {
                         const img = e.currentTarget
@@ -358,9 +362,9 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                     />
                   </div>
 
-                  {/* Conteúdo - Degradê sutil na área do currículo */}
+                  {/* Conteúdo - Área de texto mais compacta */}
                   <div 
-                    className="team-content-area flex-1 p-6 md:p-8 max-w-2xl flex flex-col justify-start pt-4 md:pt-6"
+                    className="team-content-area flex-1 p-5 md:p-6 max-w-xl flex flex-col justify-start pt-4 md:pt-5"
                   >
                     {/* Linha decorativa vermelha */}
                     <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-azimut-red via-azimut-red/50 to-transparent"></div>
