@@ -410,7 +410,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
             top: '52px'
           }}
         >
-          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3 flex justify-center">
+          <div className="mx-auto max-w-7xl w-full sm:px-4 min-[768px]:px-6 py-3 flex justify-center">
             <InternalNavigation
               items={[
                 { id: 'courses', label: lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses', href: '/academy/courses', icon: '📚' },

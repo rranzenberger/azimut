@@ -384,7 +384,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
             top: '52px'
           }}
         >
-          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3 flex justify-center">
+          <div className="mx-auto max-w-7xl w-full sm:px-4 min-[768px]:px-6 py-3 flex justify-center">
             <nav className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
               {/* Todos os Projetos */}
               <button

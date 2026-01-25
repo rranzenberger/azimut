@@ -76,7 +76,7 @@ const AcademySubNav: React.FC<AcademySubNavProps> = ({ lang, currentPage }) => {
         top: '52px'
       }}
     >
-      <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3 flex justify-center">
+      <div className="mx-auto max-w-7xl w-full sm:px-4 min-[768px]:px-6 py-3 flex justify-center">
         <nav className="flex flex-wrap justify-center gap-1 sm:gap-2">
           {navItems.map((item) => {
             const isActive = currentPage === item.id
