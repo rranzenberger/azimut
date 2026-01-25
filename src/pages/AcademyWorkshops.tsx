@@ -9,6 +9,7 @@ import { type Lang } from '../i18n'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { useTheme } from '../contexts/ThemeContext'
 import { PageFooterNavigation } from '../components/PageFooterNavigation'
+import AcademySubNav from '../components/AcademySubNav'
 
 interface AcademyWorkshopsProps {
   lang: Lang
@@ -17,6 +18,7 @@ interface AcademyWorkshopsProps {
 const AcademyWorkshops: React.FC<AcademyWorkshopsProps> = ({ lang }) => {
   // REMOVIDO: useUserTracking já é chamado no Layout.tsx
   // useUserTracking()
+  const { theme } = useTheme()
 
   const content: Record<Lang, any> = {
     pt: {
@@ -377,6 +379,9 @@ const AcademyWorkshops: React.FC<AcademyWorkshopsProps> = ({ lang }) => {
         <title>{t.meta.title}</title>
         <meta name="description" content={t.meta.description} />
       </Helmet>
+
+      {/* Menu Secundário Academy */}
+      <AcademySubNav lang={lang} currentPage="workshops" />
 
       <div className="min-h-screen bg-theme-primary">
         {/* HERO - GRUDADO NO MENU (margin-top negativo compensa padding do main) */}

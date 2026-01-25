@@ -9,6 +9,7 @@ import { type Lang } from '../i18n'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { useTheme } from '../contexts/ThemeContext'
 import { PageFooterNavigation } from '../components/PageFooterNavigation'
+import AcademySubNav from '../components/AcademySubNav'
 
 interface AcademyCorporateProps {
   lang: Lang
@@ -546,6 +547,9 @@ const AcademyCorporate: React.FC<AcademyCorporateProps> = ({ lang }) => {
         <title>{t.meta.title}</title>
         <meta name="description" content={t.meta.description} />
       </Helmet>
+
+      {/* Menu Secundário Academy */}
+      <AcademySubNav lang={lang} currentPage="corporate" />
 
       <div className="min-h-screen bg-theme-primary">
         {/* HERO - GRUDADO NO MENU (margin-top negativo compensa padding do main) */}

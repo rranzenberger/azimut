@@ -18,6 +18,7 @@ import { useTimeBasedImage } from '../hooks/useTimeBasedImage'
 import { useBackofficeContent } from '../hooks/useBackofficeContent'
 import { usePageSEO } from '../hooks/usePageSEO'
 import { useTheme } from '../contexts/ThemeContext'
+import AcademySubNav from '../components/AcademySubNav'
 
 interface VancouverProps {
   lang: Lang
@@ -419,6 +420,9 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
       />
       <VancouverPageSchema lang={lang} />
       <VancouverFAQSchema lang={lang} faqs={t.faqs} />
+
+      {/* Menu Secundário Academy */}
+      <AcademySubNav lang={lang} currentPage="vancouver" />
 
       <div className="min-h-screen vancouver-page" style={{ marginTop: '-80px' }}>
         {/* Hero Section - FALLBACK: cor de fundo caso imagem não carregue */}

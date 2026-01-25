@@ -11,6 +11,7 @@ import CourseRecommender from '../components/CourseRecommender'
 import AcademyQuickForm from '../components/AcademyQuickForm'
 import { useTheme } from '../contexts/ThemeContext'
 import { PageFooterNavigation } from '../components/PageFooterNavigation'
+import AcademySubNav from '../components/AcademySubNav'
 
 interface AcademyCoursesProps {
   lang: Lang
@@ -432,6 +433,9 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
         <title>{t.meta.title}</title>
         <meta name="description" content={t.meta.description} />
       </Helmet>
+
+      {/* Menu Secundário Academy */}
+      <AcademySubNav lang={lang} currentPage="courses" />
 
       <div className="min-h-screen bg-theme-primary">
         {/* HERO - GRUDADO NO MENU (margin-top negativo compensa padding do main) */}
