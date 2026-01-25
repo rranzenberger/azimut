@@ -402,7 +402,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
         background: 'var(--theme-bg-primary)'
       }}>
         {/* ═══════════════════════════════════════════════════════════
-            NAVEGAÇÃO INTERNA - FIXO colado no header (como WhatWeDo)
+            NAVEGAÇÃO INTERNA - FIXO colado no header (PADRONIZADO com WhatWeDo/Studio)
             ═══════════════════════════════════════════════════════════ */}
         <div 
           className="fixed left-0 right-0 z-40 backdrop-blur-xl submenu-nav"
@@ -410,28 +410,29 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
             top: '52px'
           }}
         >
-          <div className="mx-auto max-w-7xl w-full grid grid-cols-[auto_1fr_auto] items-center gap-0.5 sm:gap-1 sm:px-4 sm:gap-2 min-[768px]:px-6 min-[768px]:gap-3 md:gap-4 lg:gap-5 xl:gap-6 py-3">
-            <div className="col-start-2 flex justify-center">
-              <InternalNavigation
-                items={[
-                  { id: 'courses', label: lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses', href: '/academy/courses', icon: '📚' },
-                  { id: 'vancouver', label: 'Vancouver', href: '/academy/vancouver', icon: '🇨🇦' },
-                  { id: 'workshops', label: 'Workshops', href: '/academy/workshops', icon: '🎬' },
-                  { id: 'corporate', label: lang === 'pt' ? 'Corporativo' : lang === 'es' ? 'Corporativo' : lang === 'fr' ? 'Entreprise' : 'Corporate', href: '/academy/corporate', icon: '🏢' }
-                ]}
-                lang={lang}
-              />
-            </div>
+          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3 flex justify-center">
+            <InternalNavigation
+              items={[
+                { id: 'courses', label: lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses', href: '/academy/courses', icon: '📚' },
+                { id: 'vancouver', label: 'Vancouver', href: '/academy/vancouver', icon: '🇨🇦' },
+                { id: 'workshops', label: 'Workshops', href: '/academy/workshops', icon: '🎬' },
+                { id: 'corporate', label: lang === 'pt' ? 'Corporativo' : lang === 'es' ? 'Corporativo' : lang === 'fr' ? 'Entreprise' : 'Corporate', href: '/academy/corporate', icon: '🏢' }
+              ]}
+              lang={lang}
+            />
           </div>
         </div>
 
+        {/* Espaçador para compensar header + submenu fixos (PADRONIZADO) */}
+        <div style={{ height: '48px' }} />
+
         {/* ═══════════════════════════════════════════════════════════
-            HERO SECTION - Video Background (junto do menu, sem espaçador)
+            HERO SECTION - Video Background
             ═══════════════════════════════════════════════════════════
             📹 PLACEHOLDER: Vídeo institucional Academy
             Backoffice: /admin/academy/settings → "Hero Video URL"
             ═══════════════════════════════════════════════════════ */}
-        <section className="relative min-h-[45vh] flex items-center justify-center overflow-hidden" style={{ marginTop: '48px' }}>
+        <section className="relative min-h-[45vh] flex items-center justify-center overflow-hidden">
           {/* Background Image/Video (PLACEHOLDER) */}
           <div className="absolute inset-0 z-0">
             <div 

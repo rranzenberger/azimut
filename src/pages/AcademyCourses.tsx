@@ -438,7 +438,10 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
       <AcademySubNav lang={lang} currentPage="courses" />
 
       <div className="min-h-screen bg-theme-primary">
-        {/* HERO - GRUDADO NO MENU (margin-top negativo compensa padding do main) */}
+        {/* Espaçador para compensar header + submenu fixos (PADRONIZADO) */}
+        <div style={{ height: '48px' }} />
+        
+        {/* HERO - Compacto */}
         <section 
           className="relative min-h-[45vh] flex items-center justify-center overflow-hidden"
         >

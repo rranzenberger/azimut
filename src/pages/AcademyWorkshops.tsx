@@ -384,7 +384,10 @@ const AcademyWorkshops: React.FC<AcademyWorkshopsProps> = ({ lang }) => {
       <AcademySubNav lang={lang} currentPage="workshops" />
 
       <div className="min-h-screen bg-theme-primary">
-        {/* HERO - Compacto, sem margin negativo */}
+        {/* Espaçador para compensar header + submenu fixos (PADRONIZADO) */}
+        <div style={{ height: '48px' }} />
+        
+        {/* HERO - Compacto */}
         <section 
           className="relative min-h-[45vh] flex items-center justify-center overflow-hidden"
         >
