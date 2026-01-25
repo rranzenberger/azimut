@@ -440,8 +440,7 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
       <div className="min-h-screen bg-theme-primary">
         {/* HERO - GRUDADO NO MENU (margin-top negativo compensa padding do main) */}
         <section 
-          className="relative min-h-[60vh] flex items-center justify-center overflow-hidden"
-          style={{ marginTop: '-80px', paddingTop: '80px' }}
+          className="relative min-h-[45vh] flex items-center justify-center overflow-hidden"
         >
           {/* Background com Curadoria de Arte Premium */}
           <div className="absolute inset-0">

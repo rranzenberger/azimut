@@ -424,7 +424,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
       {/* Menu Secundário Academy */}
       <AcademySubNav lang={lang} currentPage="vancouver" />
 
-      <div className="min-h-screen vancouver-page" style={{ marginTop: '-80px' }}>
+      <div className="min-h-screen vancouver-page">
         {/* Hero Section - FALLBACK: cor de fundo caso imagem não carregue */}
         <section 
           className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-20"

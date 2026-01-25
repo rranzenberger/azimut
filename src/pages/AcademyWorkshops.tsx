@@ -384,10 +384,9 @@ const AcademyWorkshops: React.FC<AcademyWorkshopsProps> = ({ lang }) => {
       <AcademySubNav lang={lang} currentPage="workshops" />
 
       <div className="min-h-screen bg-theme-primary">
-        {/* HERO - GRUDADO NO MENU (margin-top negativo compensa padding do main) */}
+        {/* HERO - Compacto, sem margin negativo */}
         <section 
-          className="relative min-h-[60vh] flex items-center justify-center overflow-hidden"
-          style={{ marginTop: '-80px', paddingTop: '80px' }}
+          className="relative min-h-[45vh] flex items-center justify-center overflow-hidden"
         >
           {/* Background com Curadoria de Arte Premium */}
           <div className="absolute inset-0">
