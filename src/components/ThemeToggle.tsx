@@ -28,7 +28,7 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({ theme, onToggle }) => {
           className="absolute top-[2px] w-[16px] h-[16px] rounded-full transition-all duration-400 flex items-center justify-center"
           style={{ 
             left: theme === 'dark' ? '3px' : '21px',
-            background: theme === 'dark' ? '#c92337' : '#ffffff',
+            background: theme === 'dark' ? '#c92337' : '#f5f1e8',
             boxShadow: theme === 'dark' 
               ? '0 0 8px rgba(201, 35, 55, 0.5)' 
               : '0 2px 4px rgba(0, 0, 0, 0.2)'

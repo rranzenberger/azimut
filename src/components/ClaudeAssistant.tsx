@@ -257,23 +257,35 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
           
           {/* Notification badge */}
           {!hasGreeted && (
-            <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse" />
+            <span 
+              className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 animate-pulse" 
+              style={{ borderColor: theme === 'light' ? '#f5f1e8' : '#ffffff' }}
+            />
           )}
 
-          {/* Tooltip */}
-          <div className="absolute right-full mr-3 px-4 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+          {/* Tooltip - Adaptativo ao tema */}
+          <div 
+            className={`absolute right-full mr-3 px-4 py-2 text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap ${
+              theme === 'dark' 
+                ? 'bg-gray-900 text-white' 
+                : 'bg-[#1e1c1a] text-[#f5f1e8]'
+            }`}
+          >
             {t.subtitle}
           </div>
         </button>
       )}
 
-      {/* Chat Window */}
+      {/* Chat Window - Premium: fundo distinto do site (escuro=slate, claro=bege suave) */}
       {isOpen && (
-        <div className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[51] w-[calc(100vw-2rem)] sm:w-[380px] max-w-[380px] h-[50vh] sm:h-[500px] max-h-[500px] rounded-2xl shadow-2xl flex flex-col overflow-hidden border animate-fade-in ${
-          theme === 'dark' 
-            ? 'bg-slate-900/95 border-white/10' 
-            : 'bg-white border-[#c9c4b9] shadow-lg'
-        }`}>
+        <div 
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[51] w-[calc(100vw-2rem)] sm:w-[380px] max-w-[380px] h-[50vh] sm:h-[500px] max-h-[500px] rounded-2xl shadow-2xl flex flex-col overflow-hidden border animate-fade-in shadow-lg"
+          style={{
+            backgroundColor: theme === 'dark' ? '#1e293b' : '#ece8e0', // Azul slate-800 (como estava antes)
+            borderColor: theme === 'dark' ? 'rgba(255,255,255,0.08)' : '#d4cfc4',
+            borderWidth: '1px'
+          }}
+        >
           {/* Header */}
           <div className="bg-gradient-to-r from-azimut-red to-red-700 p-3 flex items-center justify-between">
             <div className="flex items-center gap-2.5 min-w-0">
@@ -307,23 +319,33 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
                   className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                     msg.role === 'user'
                       ? 'bg-azimut-red text-white'
-                      : theme === 'dark' 
-                        ? 'bg-white/10 text-white' 
-                        : 'bg-slate-100 text-slate-900 border border-slate-200'
+                      : theme === 'dark'
+                        ? 'text-white'
+                        : 'text-[#1e1c1a] border'
                   }`}
+                  style={msg.role === 'user' ? undefined : theme === 'dark' 
+                    ? { background: 'rgba(255,255,255,0.14)', border: 'none' } // Como estava antes
+                    : { background: '#fefcf8', borderColor: '#e2ddd4' } // Mais claro no tema claro
+                  }
                 >
                   <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                   <div className="flex items-center justify-between mt-2 gap-2">
-                    <span className={`text-xs ${theme === 'dark' ? 'text-white/60' : 'text-slate-500'}`}>
+                    <span className={`text-xs ${theme === 'dark' ? 'text-white/65' : 'text-slate-500'}`}>
                       {msg.timestamp.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })}
                     </span>
-                    {/* FASE 2: Badge de IA 🎯 */}
+                    {/* FASE 2: Badge de IA 🎯 - Adaptativo ao tema */}
                     {msg.role === 'assistant' && msg.aiModel && (
-                      <span className={`text-[10px] px-2 py-0.5 rounded-full ${
-                        msg.aiModel === 'claude' 
-                          ? 'bg-purple-500/20 text-purple-300 border border-purple-400/30' 
-                          : 'bg-blue-500/20 text-blue-300 border border-blue-400/30'
-                      }`}>
+                      <span 
+                        className={`text-[10px] px-2 py-0.5 rounded-full ${
+                          msg.aiModel === 'claude' 
+                            ? theme === 'dark'
+                              ? 'bg-purple-500/20 text-purple-300 border border-purple-400/30'
+                              : 'bg-purple-100 text-purple-700 border border-purple-300'
+                            : theme === 'dark'
+                              ? 'bg-blue-500/20 text-blue-300 border border-blue-400/30'
+                              : 'bg-blue-100 text-blue-700 border border-blue-300'
+                        }`}
+                      >
                         {msg.aiModel === 'claude' ? '🧠 Claude' : '⚡ DeepSeek'}
                       </span>
                     )}
@@ -334,7 +356,13 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
 
             {isLoading && (
               <div className="flex justify-start">
-                <div className={`rounded-2xl px-4 py-3 ${theme === 'dark' ? 'bg-white/10' : 'bg-slate-100 border border-slate-200'}`}>
+                <div 
+                  className={`rounded-2xl px-4 py-3 ${theme === 'dark' ? '' : 'border'}`}
+                  style={theme === 'dark' 
+                    ? { background: 'rgba(255,255,255,0.10)' } // Como estava antes
+                    : { background: '#fefcf8', borderColor: '#e2ddd4' } // Mais claro no tema claro
+                  }
+                >
                   <div className="flex gap-2">
                     <span className={`w-2 h-2 rounded-full animate-bounce ${theme === 'dark' ? 'bg-white/60' : 'bg-azimut-red'}`} style={{ animationDelay: '0ms' }} />
                     <span className={`w-2 h-2 rounded-full animate-bounce ${theme === 'dark' ? 'bg-white/60' : 'bg-azimut-red'}`} style={{ animationDelay: '150ms' }} />
@@ -344,21 +372,41 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
               </div>
             )}
 
-            {/* Quick Actions (show on first message) */}
+            {/* Quick Actions (show on first message) - Pills mais claras que o fundo */}
             {messages.length === 1 && (
               <div className="space-y-2">
-                <p className={`text-xs text-center mb-2 font-medium ${theme === 'dark' ? 'text-white/70' : 'text-slate-700'}`}>
+                <p className={`text-xs text-center mb-2 font-medium ${theme === 'dark' ? 'text-white/75' : 'text-slate-700'}`}>
                   {lang === 'pt' ? 'Ou escolha uma opção:' : 'Or choose an option:'}
                 </p>
                 {t.examples.map((example: string, i: number) => (
                   <button
                     key={i}
                     onClick={() => handleQuickAction(example)}
-                    className={`w-full text-left px-4 py-3 rounded-xl text-sm transition-colors font-medium ${
-                      theme === 'dark'
-                        ? 'bg-white/5 hover:bg-white/10 text-white'
-                        : 'bg-slate-50 hover:bg-slate-100 text-slate-900 border border-slate-200 hover:border-azimut-red/40'
+                    className={`w-full text-left px-4 py-3 rounded-xl text-sm transition-all duration-200 font-medium ${
+                      theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'
                     }`}
+                    style={theme === 'dark' 
+                      ? { background: 'rgba(255,255,255,0.13)', border: '1px solid rgba(255,255,255,0.1)' } // Como estava antes
+                      : { background: '#fefcf8', border: '1px solid #e2ddd4' } // Mais claro no tema claro
+                    }
+                    onMouseEnter={(e) => {
+                      if (theme === 'dark') {
+                        e.currentTarget.style.background = 'rgba(255,255,255,0.2)'
+                        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)'
+                      } else {
+                        e.currentTarget.style.background = '#fefcf8'
+                        e.currentTarget.style.borderColor = 'rgba(201,35,55,0.35)'
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (theme === 'dark') {
+                        e.currentTarget.style.background = 'rgba(255,255,255,0.13)'
+                        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
+                      } else {
+                        e.currentTarget.style.background = '#fefcf8'
+                        e.currentTarget.style.borderColor = '#e2ddd4'
+                      }
+                    }}
                   >
                     {example}
                   </button>
@@ -369,13 +417,14 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input */}
+          {/* Input - área mais clara que o fundo (premium) */}
           <form
             onSubmit={(e) => {
               e.preventDefault()
               sendMessage(input)
             }}
-            className={`p-4 border-t ${theme === 'dark' ? 'border-white/10' : 'border-[#c9c4b9]'}`}
+            className="p-4 border-t"
+            style={{ borderColor: theme === 'dark' ? 'rgba(255,255,255,0.08)' : '#d4cfc4' }}
           >
             <div className="flex gap-2">
               <input
@@ -383,11 +432,11 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder={t.placeholder}
-                className={`flex-1 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-azimut-red ${
-                  theme === 'dark'
-                    ? 'bg-white/10 text-white placeholder-white/40'
-                    : 'bg-white text-[#1e1c1a] placeholder-slate-400 border border-[#c9c4b9]'
-                }`}
+                className={`flex-1 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-azimut-red focus:ring-offset-0 ${theme === 'dark' ? 'placeholder-white/50' : 'placeholder-slate-500'}`}
+                style={theme === 'dark' 
+                  ? { background: 'rgba(255,255,255,0.14)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' } // Como estava antes
+                  : { background: '#fefcf8', color: '#1e1c1a', border: '1px solid #e2ddd4' } // Mais claro no tema claro
+                }
                 disabled={isLoading}
               />
               <button
@@ -403,7 +452,7 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
 
           {/* Powered by */}
           <div className="px-4 py-2 text-center">
-            <p className={`text-xs ${theme === 'dark' ? 'text-white/40' : 'text-slate-400'}`}>
+            <p className={`text-xs ${theme === 'dark' ? 'text-white/45' : 'text-slate-500'}`}>
               Powered by Claude AI • Azimut
             </p>
           </div>

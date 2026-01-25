@@ -543,7 +543,14 @@ html[data-theme="light"] .bg-slate-50,
 html[data-theme="light"] .bg-slate-100,
 html[data-theme="light"] .bg-gray-50,
 html[data-theme="light"] .bg-gray-100 {
-  background-color: #f5f1e8 !important; /* Bege Azimut */
+  background-color: #f5f1e8 !important; /* Bege claro - nunca branco puro */
+}
+
+[data-theme="light"] .bg-white\/80,
+[data-theme="light"] .bg-white\/90,
+html[data-theme="light"] .bg-white\/80,
+html[data-theme="light"] .bg-white\/90 {
+  background-color: rgba(245, 241, 232, 0.92) !important; /* Bege claro */
 }
 
 /* Bordas - Melhorar visibilidade no tema claro */
@@ -687,6 +694,103 @@ select::placeholder {
 }
 .footer-newsletter-email:focus {
   background: rgba(255, 255, 255, 0.16) !important;
+}
+
+/* Título "Especialidades/Expertise": premium, com glow sutil */
+.expertise-block-title,
+.card-dark-fixed .expertise-block-title,
+html[data-theme="light"] .card-dark-fixed .expertise-block-title,
+html[data-theme="dark"] .card-dark-fixed .expertise-block-title {
+  color: #f8f4ee !important;
+  -webkit-text-fill-color: #f8f4ee !important;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-align: center;
+  text-shadow: 
+    0 2px 8px rgba(0,0,0,0.7),
+    0 0 20px rgba(248, 244, 238, 0.1);
+}
+
+/* Cards Retrato + Especialidades: degradê PREMIUM - azul acinzentado sofisticado, diferenciado */
+.studio-snapshot-card,
+.expertise-card-premium {
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(201, 35, 55, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(201, 35, 55, 0.04) 0%, transparent 50%),
+    linear-gradient(165deg, #1a1f2c 0%, #242938 40%, #1e2330 70%, #171b26 100%) !important;
+  border: 1px solid rgba(201, 35, 55, 0.25) !important;
+  box-shadow: 
+    0 0 0 1px rgba(201, 35, 55, 0.15), 
+    0 20px 60px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.06) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.expertise-card-premium {
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(201, 35, 55, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(201, 35, 55, 0.04) 0%, transparent 50%),
+    linear-gradient(170deg, #1c2130 0%, #262b3a 40%, #202536 70%, #181c28 100%) !important;
+}
+
+/* Topo dos cards = IGUAL aos cards de soluções + glow premium */
+.studio-snapshot-card .red-line-top,
+.expertise-card-premium .red-line-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(90deg, #c92337 0%, #ff4757 25%, #e84858 50%, #ff4757 75%, #c92337 100%) !important;
+  opacity: 0.9;
+  box-shadow: 
+    0 0 15px rgba(201, 35, 55, 0.6),
+    0 0 30px rgba(255, 71, 87, 0.3),
+    0 2px 0 rgba(255,255,255,0.1);
+}
+
+/* Linha vermelha ABAIXO do título Especialidades (premium, mais sutil e elegante) */
+.red-line-below-title {
+  width: 100%;
+  max-width: 180px;
+  margin: 0 auto;
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(201, 35, 55, 0.2) 20%, #c92337 40%, #ff4757 50%, #c92337 60%, rgba(201, 35, 55, 0.2) 80%, transparent 100%);
+  box-shadow: 
+    0 0 8px rgba(201, 35, 55, 0.4), 
+    0 0 16px rgba(255, 71, 87, 0.15),
+    0 1px 0 rgba(255,255,255,0.1);
+}
+
+/* Home tema claro: variação de tons por seção (curadoria premium, não tudo igual) */
+html[data-theme="light"] .home-assista-light {
+  background: linear-gradient(180deg, #e5e1d9 0%, #ddd9d0 50%, #d8d3c8 100%);
+}
+html[data-theme="light"] .home-projetos-light {
+  background: linear-gradient(180deg, #dcd7cd 0%, #d6d1c6 50%, #d0cbc0 100%);
+}
+/* Sobre tema claro: degradê mais marcado, quente (bege/cinza), sem azul */
+html[data-theme="light"] .home-sobre-light {
+  background: linear-gradient(180deg, #ebe7df 0%, #e2ded5 25%, #dcd7ce 50%, #d6d1c7 75%, #d0cbc1 100%);
+}
+html[data-theme="light"] .home-solucoes-light {
+  background: linear-gradient(180deg, #d8d3c8 0%, #d3cec3 50%, #cec9be 100%);
+}
+
+/* Home tema escuro: degradês slate frios por seção. NUNCA marrom (só R < G < B). */
+html[data-theme="dark"] .home-assista-dark {
+  background: linear-gradient(180deg, #0e1218 0%, #0a0e14 50%, #060a0e 100%);
+}
+html[data-theme="dark"] .home-projetos-dark {
+  background: linear-gradient(180deg, rgba(12,16,22,0.7) 0%, rgba(8,12,18,0.85) 50%, rgba(6,10,16,0.95) 100%);
+}
+html[data-theme="dark"] .home-sobre-dark {
+  background: linear-gradient(180deg, rgba(10,14,20,0.5) 0%, rgba(14,18,26,0.4) 40%, rgba(8,12,18,0.6) 100%);
+}
+html[data-theme="dark"] .home-solucoes-dark {
+  background: linear-gradient(180deg, rgba(8,12,18,0.5) 0%, rgba(16,20,28,0.2) 50%, rgba(6,10,16,0.6) 100%);
 }
 
 @keyframes shake {
@@ -1030,13 +1134,23 @@ html[data-theme="dark"] .pill-adaptive {
 /* SOLUÇÃO: Detectar cards com classes conhecidas (.card-dark-fixed, .card-dark-alt-adaptive)
    e FORÇAR que var(--theme-text) e var(--theme-text-secondary) sejam sempre CLAROS */
 
-/* 1. Cards com .card-dark-fixed (Pilares, etc.) */
+/* 1. Cards com .card-dark-fixed (Pilares, etc.) - EXCETO expertise-subtitle */
 html[data-theme="light"] .card-dark-fixed,
-html[data-theme="light"] .card-dark-fixed * {
+html[data-theme="light"] .card-dark-fixed *:not(.expertise-subtitle) {
   --theme-text: #ffffff !important;
   --theme-text-secondary: #f0ece5 !important;
   --theme-card-text: #ffffff !important;
   color: #ffffff !important;
+}
+
+/* Exceção: Texto "EXPÉRIENCE" deve ser creme dourado suave, não branco */
+html[data-theme="light"] .expertise-card-premium .expertise-subtitle,
+html[data-theme="light"] .expertise-card-premium p.expertise-subtitle,
+html[data-theme="light"] .card-dark-fixed .expertise-subtitle {
+  color: #e8d5b5 !important;
+  --theme-text: #e8d5b5 !important;
+  -webkit-text-fill-color: #e8d5b5 !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 html[data-theme="dark"] .card-dark-fixed,
@@ -3106,16 +3220,68 @@ select.dropdown-azimut::-ms-expand {
 .card-dark-fixed {
   border-radius: 1rem;
   border: 1px solid rgba(201, 35, 55, 0.3);
-  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
+  background: linear-gradient(135deg, #1e293b 0%, #1e40af 100%); /* Azul slate para blue-800 (mais azul, menos marrom) */
   transition: all 0.3s ease;
   color: var(--theme-card-text, #f5f3ef); /* Texto claro para legibilidade */
 }
 
 [data-theme="light"] .card-dark-fixed {
-  /* Mantém fundo marrom escuro no tema claro */
-  border: 1px solid rgba(42, 40, 37, 0.3);
-  background: linear-gradient(180deg, #2a2825 0%, #1e1c1a 100%);
-  color: #d3cec3; /* Texto creme para contraste no fundo escuro */
+  /* Fundo marrom café médio premium no tema claro (neutro, sofisticado) */
+  border: 1px solid rgba(201, 35, 55, 0.3) !important;
+  border-radius: 1rem !important;
+  background: linear-gradient(145deg, #4a443e 0%, #3d3731 40%, #38322c 70%, #433d37 100%) !important;
+  color: #f5f1e8 !important;
+}
+
+[data-theme="light"] .studio-snapshot-card,
+[data-theme="light"] .expertise-card-premium {
+  /* SUPER PREMIUM: Degradê diagonal elegante - marrom café médio, sofisticado */
+  background: 
+    radial-gradient(ellipse 600px 400px at 10% 10%, rgba(255, 255, 255, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 500px 350px at 90% 90%, rgba(0, 0, 0, 0.15) 0%, transparent 60%),
+    linear-gradient(145deg, 
+      #4a443e 0%, 
+      #433d37 12%, 
+      #3d3731 25%, 
+      #38322c 38%, 
+      #342e28 50%, 
+      #38322c 62%, 
+      #3d3731 75%, 
+      #433d37 88%, 
+      #4a443e 100%) !important;
+  border: 1px solid rgba(201, 35, 55, 0.3) !important;
+  border-radius: 1rem !important;
+  color: #f5f1e8 !important;
+  box-shadow: 
+    0 8px 32px rgba(0,0,0,0.18),
+    0 24px 64px rgba(0,0,0,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    inset 0 -1px 0 rgba(0,0,0,0.15) !important;
+}
+
+[data-theme="light"] .expertise-block-title {
+  color: #f5f1e8 !important;
+  -webkit-text-fill-color: #f5f1e8 !important;
+  text-shadow: 0 0 20px rgba(245, 241, 232, 0.2);
+  font-weight: 700;
+}
+
+/* Texto "EXPÉRIENCE" no tema claro - cor creme dourado suave (especificidade máxima) */
+html[data-theme="light"] .expertise-card-premium .expertise-subtitle,
+html[data-theme="light"] .expertise-card-premium p.expertise-subtitle,
+html[data-theme="light"] .card-dark-fixed.expertise-card-premium .expertise-subtitle,
+html[data-theme="light"] .card-dark-fixed.expertise-card-premium p.expertise-subtitle,
+[data-theme="light"] .expertise-card-premium .expertise-subtitle,
+[data-theme="light"] .expertise-card-premium p.expertise-subtitle {
+  color: #e8d5b5 !important;
+  --theme-text: #e8d5b5 !important;
+  -webkit-text-fill-color: #e8d5b5 !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+[data-theme="light"] .studio-snapshot-card .red-line-top,
+[data-theme="light"] .expertise-card-premium .red-line-top {
+  border-radius: 1rem 1rem 0 0;
 }
 
 /* REMOVIDA A REGRA DUPLICADA E CONFLITANTE */

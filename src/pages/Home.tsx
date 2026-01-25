@@ -853,9 +853,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               {/* Grid 2x2 para os 4 cards */}
               <div className="grid grid-cols-2 gap-2 w-full">
                 {/* Cinema & AV */}
-                <div className={`flex items-center gap-1.5 p-2.5 rounded-lg border border-azimut-red/30 ${
-                  theme === 'dark' ? 'bg-black/60' : 'bg-white/80'
-                }`}>
+                <div className={`flex items-center gap-1.5 p-2.5 rounded-lg border border-azimut-red/30 ${theme === 'dark' ? 'bg-black/60' : ''}`} style={theme === 'light' ? { background: 'rgba(245, 241, 232, 0.92)' } : undefined}>
                   <span className="text-lg">🎬</span>
                   <div>
                     <span className={`block text-[0.65rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Cinema & AV</span>
@@ -864,9 +862,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 </div>
                 
                 {/* XR/VR/AR */}
-                <div className={`flex items-center gap-1.5 p-2.5 rounded-lg border border-azimut-red/30 ${
-                  theme === 'dark' ? 'bg-black/60' : 'bg-white/80'
-                }`}>
+                <div className={`flex items-center gap-1.5 p-2.5 rounded-lg border border-azimut-red/30 ${theme === 'dark' ? 'bg-black/60' : ''}`} style={theme === 'light' ? { background: 'rgba(245, 241, 232, 0.92)' } : undefined}>
                   <span className="text-lg">🥽</span>
                   <div>
                     <span className={`block text-[0.65rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>XR/VR/AR</span>
@@ -875,9 +871,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 </div>
                 
                 {/* Exposições */}
-                <div className={`flex items-center gap-1.5 p-2.5 rounded-lg border border-azimut-red/30 ${
-                  theme === 'dark' ? 'bg-black/60' : 'bg-white/80'
-                }`}>
+                <div className={`flex items-center gap-1.5 p-2.5 rounded-lg border border-azimut-red/30 ${theme === 'dark' ? 'bg-black/60' : ''}`} style={theme === 'light' ? { background: 'rgba(245, 241, 232, 0.92)' } : undefined}>
                   <span className="text-lg">🏛️</span>
                   <div>
                     <span className={`block text-[0.65rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Exposições</span>
@@ -886,9 +880,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 </div>
                 
                 {/* Educação */}
-                <div className={`flex items-center gap-1.5 p-2.5 rounded-lg border border-azimut-red/30 ${
-                  theme === 'dark' ? 'bg-black/60' : 'bg-white/80'
-                }`}>
+                <div className={`flex items-center gap-1.5 p-2.5 rounded-lg border border-azimut-red/30 ${theme === 'dark' ? 'bg-black/60' : ''}`} style={theme === 'light' ? { background: 'rgba(245, 241, 232, 0.92)' } : undefined}>
                   <span className="text-lg">🎓</span>
                   <div>
                     <span className={`block text-[0.65rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Educação</span>
@@ -907,9 +899,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         
         {/* Título da Seção - ACIMA do vídeo */}
         <div className={`relative py-12 md:py-16 ${
-          theme === 'dark' 
-            ? 'bg-gradient-to-b from-slate-950 to-black' 
-            : 'bg-[#d3cec3]'
+          theme === 'dark' ? 'home-assista-dark' : 'home-assista-light'
         }`}>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
             <h2 className={`font-handel text-xl md:text-2xl lg:text-3xl uppercase tracking-[0.15em] font-bold mb-5 animate-fade-in-up ${theme === 'dark' ? 'text-white/90' : 'text-[#1e1a16]/90'}`}>
@@ -989,14 +979,14 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               <h3 className={`font-sora text-xs uppercase tracking-[0.24em] mb-3 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
                 {lang === 'pt' ? 'TECNOLOGIA CRIATIVA' : lang === 'es' ? 'TECNOLOGÍA CREATIVA' : lang === 'fr' ? 'TECHNOLOGIE CRÉATIVE' : 'CREATIVE TECHNOLOGY'}
               </h3>
-              <p className="text-sm md:text-base max-w-3xl mx-auto leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+              <p className="text-sm md:text-base max-w-3xl mx-auto leading-[1.7]" style={{ color: 'var(--theme-text-secondary)' }}>
                 {lang === 'pt' 
-                  ? 'Criamos experiências imersivas, interativas e cinematográficas para cultura, marcas e cidades. Da curadoria e consultoria em festivais à direção técnica de museus, navegamos entre cinema, design, engenharia, educação e pesquisa — buscando formatos que sejam ao mesmo tempo precisos e poéticos.' 
+                  ? 'Criamos experiências sensoriais e narrativas para espaços culturais, marcas e eventos. Da curadoria em festivais à direção técnica de instituições, navegamos entre narrativa, tecnologia e formação — formatos que unem precisão e poética. Os blocos abaixo resumem escopo, locais e especialidades.' 
                   : lang === 'es' 
-                  ? 'Creamos experiencias inmersivas, interactivas y cinematográficas para cultura, marcas y ciudades. De la curaduría y consultoría en festivales a la dirección técnica de museos, navegamos entre cine, diseño, ingeniería, educación e investigación — buscando formatos que sean al mismo tiempo precisos y poéticos.'
+                  ? 'Creamos experiencias sensoriales y narrativas para espacios culturales, marcas y eventos. De la curaduría en festivales a la dirección técnica de instituciones, navegamos entre narrativa, tecnología y formación — formatos que unen precisión y poética. Los bloques abajo presentan ámbito, ubicaciones y especialidades.'
                   : lang === 'fr'
-                  ? 'Nous créons des expériences immersives, interactives et cinématographiques pour la culture, les marques et les villes. De la curation et du conseil en festivals à la direction technique de musées, nous naviguons entre cinéma, design, ingénierie, éducation et recherche — cherchant des formats à la fois précis et poétiques.'
-                  : 'We create immersive, interactive and cinematic experiences for culture, brands and cities. From curation and consulting in festivals to museum technical direction, we navigate between cinema, design, engineering, education and research — seeking formats that are both precise and poetic.'}
+                  ? 'Nous créons des expériences sensorielles et narratives pour espaces culturels, marques et événements. De la curation en festivals à la direction technique d\'institutions, nous naviguons entre récit, technologie et formation — formats précis et poétiques. Les blocs ci‑dessous résument périmètre, lieux et spécialités.'
+                  : 'We create sensory, narrative-driven experiences for cultural spaces, brands and events. From festival curation to institutional technical direction, we work across narrative, technology and training — formats that unite precision and poetry. The blocks below outline scope, locations and expertise.'}
               </p>
             </div>
             
@@ -1132,14 +1122,14 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* ════════════════════════════════════════════════════════════════ */}
         {/* PROJETOS EM DESTAQUE - 1 Card Grande + 3 Cards Pequenos */}
         {/* ════════════════════════════════════════════════════════════════ */}
-        <section className={`py-12 md:py-16 ${theme === 'dark' ? 'bg-gradient-to-b from-transparent to-black/40' : 'bg-[#d3cec3]'}`}>
+        <section className={`py-12 md:py-16 ${theme === 'dark' ? 'home-projetos-dark' : 'home-projetos-light'}`}>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             {/* Título */}
             <div className="mb-10 text-center">
               <h2 className="font-handel text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.12em] mb-3 text-theme-light-main">
                 {lang === 'pt' ? 'Projetos em Destaque' : lang === 'es' ? 'Proyectos Destacados' : lang === 'fr' ? 'Projets en Vedette' : 'Featured Projects'}
               </h2>
-              <p className={`text-sm md:text-base ${theme === 'dark' ? 'text-slate-300' : 'text-slate-700'}`}>
+              <p className={`text-sm md:text-base leading-[1.65] max-w-3xl mx-auto ${theme === 'dark' ? 'text-slate-300' : 'text-slate-700'}`}>
                 {lang === 'pt' ? (
                   <>Uma seleção dos nossos trabalhos mais emblemáticos. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Veja nosso portfólio completo</LangLink> ou <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">conheça nossas soluções</LangLink>.</>
                 ) : lang === 'es' ? (
@@ -1364,84 +1354,208 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* SOBRE - Layout Assimétrico Premium (60/40) */}
-        <section className="py-10 md:py-12">
+        {/* SOBRE - Layout Assimétrico Premium (60/40). Retrato + Especialidades. Altura aumentada, linha vermelha, pills mais largas. */}
+        <section className={`py-10 md:py-12 ${theme === 'dark' ? 'home-sobre-dark' : 'home-sobre-light'}`}>
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-stretch">
-              {/* Texto Esquerdo - MAIS LARGO (3/5) */}
-              <div className="lg:col-span-3 glass-panel card-adaptive rounded-2xl overflow-hidden border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.35)] group relative">
-                {/* PLACEHOLDER: Imagem de fundo sutil */}
-                <div className="absolute inset-0 opacity-10 group-hover:opacity-15 transition-opacity duration-500">
+              {/* Card Esquerdo - Retrato. Min-height, linha vermelha, 4 pills mais largas e próximas. */}
+              <div className="lg:col-span-3 glass-panel card-adaptive card-dark-fixed studio-snapshot-card rounded-2xl overflow-hidden group relative min-h-[300px] md:min-h-[340px]">
+                <div className="red-line-top" aria-hidden="true" />
+                <div className="absolute inset-0 opacity-10 group-hover:opacity-15 transition-opacity duration-500 pointer-events-none">
                   <div className="absolute inset-0 bg-gradient-to-br from-azimut-red/20 via-transparent to-transparent" />
                   <div className="absolute bottom-4 right-4 text-8xl opacity-20">🎬</div>
                 </div>
-                
-                {/* Conteúdo */}
                 <div className="relative z-10 p-6 md:p-8 h-full flex flex-col">
-                  <h2 className="mb-4 font-handel text-3xl md:text-4xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-card-text)' }}>
+                  <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-card-text)' }}>
                     {t(lang, 'cardTitle')}
                   </h2>
-                  <p className="mb-6 text-base md:text-lg leading-relaxed flex-grow" style={{ color: 'var(--theme-card-text-secondary)' }}>
+                  <p className="mb-6 text-base md:text-lg leading-[1.65] flex-grow" style={{ color: 'var(--theme-card-text-secondary)' }}>
                     {t(lang, 'cardBody')}
                   </p>
-                  
-                  {/* Pillars - Estilo OUTLINE BRANCO no card escuro */}
-                  <div className="flex flex-wrap gap-3 mb-6">
-                    {(Array.isArray(cmsContent?.page?.pillars) && cmsContent.page.pillars.length > 0
-                      ? cmsContent.page.pillars 
-                      : [
-                          lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture',
-                          lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events',
-                          lang === 'pt' ? 'Educação & Pesquisa' : lang === 'es' ? 'Educación & Investigación' : lang === 'fr' ? 'Éducation & Recherche' : 'Education & Research'
-                        ]
-                    ).filter(Boolean).map((pillar: string, index: number) => (
+                  {/* 4 pills atravessado: bordas vermelhas (não cinza), hover mais vermelho */}
+                  <div className="flex flex-col gap-y-2.5 mb-6">
+                    <div className="flex gap-x-2 items-center flex-wrap">
                       <span 
-                        key={index}
-                        className={`rounded-full border-2 border-white/40 px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.18em] transition-all duration-300 hover:border-white hover:bg-white/10 hover:scale-105 ${theme === 'dark' ? 'text-white/90' : 'text-on-dark-primary'}`}
+                        className="rounded-full px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.14em] w-fit max-w-[10rem] shrink-0 text-center transition-all duration-300 text-white/95"
+                        style={{
+                          border: '1.5px solid rgba(201,35,55,0.45)',
+                          background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(201,35,55,0.04) 100%)',
+                          backdropFilter: 'blur(12px)',
+                          WebkitBackdropFilter: 'blur(12px)',
+                          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 8px rgba(0,0,0,0.1)'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = 'rgba(201,35,55,0.8)'
+                          e.currentTarget.style.background = 'linear-gradient(135deg, rgba(201,35,55,0.18) 0%, rgba(255,255,255,0.06) 100%)'
+                          e.currentTarget.style.transform = 'scale(1.05)'
+                          e.currentTarget.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.15), 0 4px 16px rgba(201,35,55,0.3)'
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = 'rgba(201,35,55,0.45)'
+                          e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(201,35,55,0.04) 100%)'
+                          e.currentTarget.style.transform = 'scale(1)'
+                          e.currentTarget.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 8px rgba(0,0,0,0.1)'
+                        }}
                       >
-                        {pillar}
+                        {t(lang, 'pill1')}
                       </span>
-                    ))}
+                      <span 
+                        className="rounded-full px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.14em] flex-1 min-w-0 text-center transition-all duration-300 text-white/95 whitespace-normal"
+                        style={{
+                          border: '1.5px solid rgba(201,35,55,0.45)',
+                          background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(201,35,55,0.04) 100%)',
+                          backdropFilter: 'blur(12px)',
+                          WebkitBackdropFilter: 'blur(12px)',
+                          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 8px rgba(0,0,0,0.1)'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = 'rgba(201,35,55,0.8)'
+                          e.currentTarget.style.background = 'linear-gradient(135deg, rgba(201,35,55,0.18) 0%, rgba(255,255,255,0.06) 100%)'
+                          e.currentTarget.style.transform = 'scale(1.05)'
+                          e.currentTarget.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.15), 0 4px 16px rgba(201,35,55,0.3)'
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = 'rgba(201,35,55,0.45)'
+                          e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(201,35,55,0.04) 100%)'
+                          e.currentTarget.style.transform = 'scale(1)'
+                          e.currentTarget.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 8px rgba(0,0,0,0.1)'
+                        }}
+                      >
+                        {t(lang, 'pill2')}
+                      </span>
+                    </div>
+                    <div className="flex gap-x-2 items-center flex-wrap">
+                      <span 
+                        className="rounded-full px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.14em] flex-1 min-w-0 text-center transition-all duration-300 text-white/95 whitespace-normal"
+                        style={{
+                          border: '1.5px solid rgba(201,35,55,0.45)',
+                          background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(201,35,55,0.04) 100%)',
+                          backdropFilter: 'blur(12px)',
+                          WebkitBackdropFilter: 'blur(12px)',
+                          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 8px rgba(0,0,0,0.1)'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = 'rgba(201,35,55,0.8)'
+                          e.currentTarget.style.background = 'linear-gradient(135deg, rgba(201,35,55,0.18) 0%, rgba(255,255,255,0.06) 100%)'
+                          e.currentTarget.style.transform = 'scale(1.05)'
+                          e.currentTarget.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.15), 0 4px 16px rgba(201,35,55,0.3)'
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = 'rgba(201,35,55,0.45)'
+                          e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(201,35,55,0.04) 100%)'
+                          e.currentTarget.style.transform = 'scale(1)'
+                          e.currentTarget.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 8px rgba(0,0,0,0.1)'
+                        }}
+                      >
+                        {t(lang, 'pill3')}
+                      </span>
+                      <span 
+                        className="rounded-full px-4 py-2 font-sora text-[0.75rem] sm:text-[0.8rem] uppercase tracking-[0.14em] w-fit max-w-[10rem] shrink-0 text-center transition-all duration-300 text-white/95"
+                        style={{
+                          border: '1.5px solid rgba(201,35,55,0.45)',
+                          background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(201,35,55,0.04) 100%)',
+                          backdropFilter: 'blur(12px)',
+                          WebkitBackdropFilter: 'blur(12px)',
+                          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 8px rgba(0,0,0,0.1)'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = 'rgba(201,35,55,0.8)'
+                          e.currentTarget.style.background = 'linear-gradient(135deg, rgba(201,35,55,0.18) 0%, rgba(255,255,255,0.06) 100%)'
+                          e.currentTarget.style.transform = 'scale(1.05)'
+                          e.currentTarget.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.15), 0 4px 16px rgba(201,35,55,0.3)'
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = 'rgba(201,35,55,0.45)'
+                          e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(201,35,55,0.04) 100%)'
+                          e.currentTarget.style.transform = 'scale(1)'
+                          e.currentTarget.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 8px rgba(0,0,0,0.1)'
+                        }}
+                      >
+                        {t(lang, 'pillar4')}
+                      </span>
+                    </div>
                   </div>
-                  
                   <p className="text-sm" style={{ color: 'var(--theme-card-text-secondary)' }}>
                     📍 {t(lang, 'cities')}
                   </p>
                 </div>
               </div>
-              
-              {/* Card Direito - Tags VERTICAIS (2/5) */}
-              <div 
-                className="lg:col-span-2 glass-panel backdrop-blur-xl card-dark-fixed relative rounded-2xl sm:rounded-3xl p-6 md:p-8 shadow-[0_24px_60px_rgba(0,0,0,0.6)] hover:shadow-[0_32px_80px_rgba(201,35,55,0.3)] transition-all duration-500 hover:scale-[1.02] flex flex-col justify-center"
-              >
-                <h3 className="mb-5 font-sora text-sm uppercase tracking-[0.24em]" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>
-                  {lang === 'pt' ? 'Especialidades' : lang === 'es' ? 'Especialidades' : lang === 'fr' ? 'Spécialités' : 'Expertise'}
-                </h3>
-                {/* Tags em COLUNA - uma abaixo da outra */}
-                <div className="flex flex-col gap-3">
-                  <span className="rounded-xl border-2 border-white/30 px-5 py-3 font-sora text-[0.8rem] uppercase tracking-[0.15em] text-white text-center hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-[1.02]">
-                    {t(lang, 'tag1')}
-                  </span>
-                  <span className="rounded-xl border-2 border-white/30 px-5 py-3 font-sora text-[0.8rem] uppercase tracking-[0.15em] text-white text-center hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-[1.02]">
-                    {t(lang, 'tag2')}
-                  </span>
-                  <span className="rounded-xl border-2 border-white/30 px-5 py-3 font-sora text-[0.8rem] uppercase tracking-[0.15em] text-white text-center hover:border-azimut-red hover:bg-azimut-red/15 transition-all duration-300 hover:scale-[1.02]">
-                    {t(lang, 'tag3')}
-                  </span>
+
+              {/* Card Direito - Especialidades. Subtítulo Experience, bordas pills vermelhas. */}
+              <div className="lg:col-span-2 glass-panel backdrop-blur-xl card-dark-fixed expertise-card-premium relative rounded-2xl sm:rounded-3xl p-6 md:p-8 flex flex-col justify-start overflow-hidden min-h-[300px] md:min-h-[340px]">
+                <div className="red-line-top" aria-hidden="true" />
+                {/* Wrapper para título + linha com mesma largura */}
+                <div className="flex flex-col items-center mt-2 mb-4">
+                  <h3 className="expertise-block-title font-sora uppercase tracking-[0.2em] text-center" style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>
+                    {lang === 'pt' ? 'Especialidades' : lang === 'es' ? 'Especialidades' : lang === 'fr' ? 'Spécialités' : 'Expertise'}
+                  </h3>
+                  <p 
+                    className="uppercase tracking-[0.2em] text-center expertise-subtitle" 
+                    style={{ 
+                      fontSize: '0.65rem', 
+                      marginBottom: '1rem', 
+                      fontWeight: theme === 'dark' ? 400 : 600,
+                      opacity: theme === 'dark' ? 0.8 : 1,
+                      letterSpacing: '0.25em'
+                    }}
+                  >
+                    {t(lang, 'expertiseSubtitle')}
+                  </p>
+                  {/* Linha vermelha com glow - largura igual ao título */}
+                  <div 
+                    aria-hidden="true" 
+                    style={{
+                      width: lang === 'pt' || lang === 'es' ? '260px' : lang === 'fr' ? '220px' : '180px',
+                      height: '2px',
+                      borderRadius: '1px',
+                      background: 'linear-gradient(90deg, transparent 0%, rgba(201, 35, 55, 0.3) 15%, #c92337 35%, #ff4757 50%, #c92337 65%, rgba(201, 35, 55, 0.3) 85%, transparent 100%)',
+                      boxShadow: '0 0 10px rgba(201, 35, 55, 0.5), 0 0 20px rgba(255, 71, 87, 0.2)'
+                    }}
+                  />
+                </div>
+                <div className="flex flex-col gap-2.5">
+                  {['tag1', 'tag2', 'tag4', 'tag5', 'tag6', 'tag7'].map((key) => (
+                    <span 
+                      key={key} 
+                      className="rounded-xl px-5 py-2.5 font-sora text-[0.8rem] sm:text-[0.85rem] uppercase tracking-[0.12em] text-center transition-all duration-300 hover:bg-azimut-red/10"
+                      style={{
+                        color: theme === 'dark' ? 'rgba(255,255,255,0.95)' : '#f5f1e8',
+                        border: theme === 'dark' ? '1.5px solid rgba(201,35,55,0.45)' : '1.5px solid rgba(201,35,55,0.5)',
+                        background: theme === 'dark' 
+                          ? 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(201,35,55,0.04) 100%)' 
+                          : 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(201,35,55,0.06) 100%)',
+                        fontWeight: theme === 'dark' ? 400 : 500
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = 'rgba(201,35,55,0.75)'
+                        e.currentTarget.style.background = theme === 'dark'
+                          ? 'linear-gradient(135deg, rgba(201,35,55,0.12) 0%, rgba(255,255,255,0.05) 100%)'
+                          : 'linear-gradient(135deg, rgba(201,35,55,0.15) 0%, rgba(255,255,255,0.1) 100%)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = theme === 'dark' ? 'rgba(201,35,55,0.45)' : 'rgba(201,35,55,0.5)'
+                        e.currentTarget.style.background = theme === 'dark'
+                          ? 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(201,35,55,0.04) 100%)'
+                          : 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(201,35,55,0.06) 100%)'
+                      }}
+                    >
+                      {t(lang, key)}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Nossas Soluções - Grid Visual COMPACTO */}
-        <section className={`py-10 md:py-12 ${theme === 'dark' ? 'bg-gradient-to-b from-transparent via-white/5 to-transparent' : 'bg-[#d8d3c8]'}`}>
+        {/* Nossas Soluções - Grid Visual COMPACTO. Tema claro: degradê sutil (evitar marrom massante). */}
+        <section className={`py-10 md:py-12 ${theme === 'dark' ? 'home-solucoes-dark' : 'home-solucoes-light'}`}>
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="mb-10 text-center">
               <h2 className="font-handel text-3xl md:text-4xl uppercase tracking-[0.12em] mb-4 text-theme-light-main">
                 {lang === 'pt' ? 'O que criamos' : lang === 'es' ? 'Qué creamos' : lang === 'fr' ? 'Ce que nous créons' : 'What we create'}
               </h2>
-              <p className={`${theme === 'dark' ? 'text-slate-300' : 'text-slate-700'} max-w-2xl mx-auto text-lg`}>
+              <p className={`${theme === 'dark' ? 'text-slate-300' : 'text-slate-700'} max-w-2xl mx-auto text-lg leading-[1.65]`}>
                 {lang === 'pt' ? (
                   <>Soluções completas para transformar ideias em experiências memoráveis. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Veja exemplos reais</LangLink> ou <LangLink to="/studio" className="text-azimut-red hover:text-azimut-red/80 underline">conheça nosso estúdio</LangLink>.</>
                 ) : lang === 'es' ? (
