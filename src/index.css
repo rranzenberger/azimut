@@ -2404,27 +2404,6 @@ html[data-theme="light"] .tech-pill:hover {
   background: linear-gradient(135deg, #0a0f1a 0%, #151a28 100%);
 }
 
-/* Área de conteúdo/currículo da equipe - Degradê sutil */
-/* Tema ESCURO: Degradê azul marinho sutil */
-.team-content-area {
-  background: linear-gradient(135deg, 
-    rgba(15, 23, 42, 0.6) 0%, 
-    rgba(26, 31, 46, 0.4) 50%, 
-    rgba(30, 41, 59, 0.3) 100%
-  );
-  border-radius: 0 1rem 1rem 0;
-}
-
-/* Tema CLARO: Degradê marrom/café sutil */
-[data-theme="light"] .team-content-area,
-html[data-theme="light"] .team-content-area {
-  background: linear-gradient(135deg, 
-    rgba(74, 68, 62, 0.5) 0%, 
-    rgba(90, 83, 75, 0.35) 50%, 
-    rgba(61, 55, 49, 0.4) 100%
-  );
-}
-
 /* Nome do membro da equipe - SEMPRE BRANCO e 2 LINHAS */
 /* Nome do membro da equipe - SEMPRE 2 LINHAS para nomes longos */
 .team-member-name {
