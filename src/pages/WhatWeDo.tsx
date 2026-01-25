@@ -122,7 +122,7 @@ interface WhatWeDoProps {
   lang: Lang
 }
 
-type FilterCategory = 'all' | 'culture' | 'brands' | 'production' | 'technology'
+type FilterCategory = 'all' | 'culture' | 'brands' | 'production' | 'technology' | 'education'
 
 const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   // REMOVIDO: useUserTracking já é chamado no Layout.tsx
@@ -141,7 +141,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search)
       const filter = params.get('filter')
-      if (filter && ['culture', 'brands', 'production', 'technology'].includes(filter)) {
+      if (filter && ['culture', 'brands', 'production', 'technology', 'education'].includes(filter)) {
         return filter as FilterCategory
       }
     }
@@ -152,7 +152,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const filter = params.get('filter')
-    if (filter && ['culture', 'brands', 'production', 'technology'].includes(filter)) {
+    if (filter && ['culture', 'brands', 'production', 'technology', 'education'].includes(filter)) {
       setActiveFilter(filter as FilterCategory)
     } else {
       setActiveFilter('all')
@@ -166,11 +166,11 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   const serviceCategoryMap: Record<string, FilterCategory> = {
     'museus-exposicoes': 'culture',
     'festivais-curadoria-eventos': 'culture',
-    'educacao-treinamento': 'culture',
     'teatro-espetaculos-imersivos': 'culture',
+    'educacao-treinamento': 'education',
     'branded-experiences-ativacoes': 'brands',
     'realidade-virtual-vr': 'brands',
-    'xr-interatividade': 'brands',
+    'xr-interatividade-web3': 'brands',
     'cenografia-design-espacial': 'brands',
     'cinema-audiovisual': 'production',
     'pos-producao-vfx': 'production',
@@ -192,7 +192,8 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
     { id: 'culture', labelPt: 'Cultura', labelEn: 'Culture', labelFr: 'Culture', labelEs: 'Cultura' },
     { id: 'brands', labelPt: 'Marcas', labelEn: 'Brands', labelFr: 'Marques', labelEs: 'Marcas' },
     { id: 'production', labelPt: 'Produção', labelEn: 'Production', labelFr: 'Production', labelEs: 'Producción' },
-    { id: 'technology', labelPt: 'Tecnologia', labelEn: 'Technology', labelFr: 'Technologie', labelEs: 'Tecnología' }
+    { id: 'technology', labelPt: 'Tecnologia', labelEn: 'Technology', labelFr: 'Technologie', labelEs: 'Tecnología' },
+    { id: 'education', labelPt: 'Educação', labelEn: 'Education', labelFr: 'Éducation', labelEs: 'Educación' }
   ]
 
   const getFilterLabel = (filter: typeof filters[0]) => {
@@ -202,6 +203,15 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
       case 'fr': return filter.labelFr
       case 'es': return filter.labelEs
     }
+  }
+
+  const filterIcons: Record<FilterCategory, string> = {
+    all: '✦',
+    culture: '🎭',
+    brands: '🎯',
+    production: '🎬',
+    technology: '🚀',
+    education: '🎓'
   }
 
   return (
@@ -233,26 +243,28 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
         >
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3">
             <nav className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
-              {[
-                { id: 'all', label: lang === 'pt' ? 'Todas' : 'All', href: '/what', icon: '✦' },
-                { id: 'culture', label: lang === 'pt' ? 'Cultura' : 'Culture', href: '/what?filter=culture', icon: '🎭' },
-                { id: 'brands', label: lang === 'pt' ? 'Marcas' : 'Brands', href: '/what?filter=brands', icon: '🎯' },
-                { id: 'production', label: lang === 'pt' ? 'Produção' : 'Production', href: '/what?filter=production', icon: '🎬' },
-                { id: 'technology', label: lang === 'pt' ? 'Tecnologia' : 'Technology', href: '/what?filter=technology', icon: '🚀' }
-              ].map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    const fullPath = `/${lang}${item.href}`
-                    navigate(fullPath)
-                  }}
-                  className="flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide hover:text-azimut-red transition-colors"
-                  style={{ color: 'var(--theme-text-secondary)' }}
-                >
-                  <span>{item.icon}</span>
-                  <span>{item.label}</span>
-                </button>
-              ))}
+              {filters.map((filter) => {
+                const href = filter.id === 'all' ? '/what' : `/what?filter=${filter.id}`
+                const isActive = activeFilter === filter.id
+                return (
+                  <button
+                    key={filter.id}
+                    onClick={() => {
+                      const fullPath = `/${lang}${href}`
+                      navigate(fullPath)
+                    }}
+                    className={`flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide transition-colors ${
+                      isActive
+                        ? 'bg-white/10 text-azimut-red'
+                        : 'hover:text-azimut-red'
+                    }`}
+                    style={!isActive ? { color: 'var(--theme-text-secondary)' } : undefined}
+                  >
+                    <span>{filterIcons[filter.id]}</span>
+                    <span>{getFilterLabel(filter)}</span>
+                  </button>
+                )
+              })}
             </nav>
           </div>
         </div>
