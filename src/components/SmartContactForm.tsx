@@ -4,6 +4,8 @@ import type { Lang } from '../i18n'
 import ApiService from '../services/api'
 import { useFormTracking } from '../hooks/useFormTracking'
 import { logger } from '@/utils/logger'
+// 🆕 UX PREMIUM - Validação em tempo real (OPCIONAL - pode remover se não funcionar)
+import { validateField, checkHoneypot, canSubmit } from '../utils/formValidation'
 
 // Componente SelectField removido - agora usamos <select> nativo com classe dropdown-azimut
 
@@ -216,7 +218,8 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
     country: '',
     city: '',
     acceptContact: false,
-    wantsNewsletter: false // 🆕 Checkbox newsletter
+    wantsNewsletter: false, // 🆕 Checkbox newsletter
+    website: '' // 🆕 UX PREMIUM - Honeypot anti-spam (campo oculto)
   })
 
   // Detectar geolocalização e configurar código de país AUTOMATICAMENTE
@@ -542,8 +545,50 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
     }
   }, [error])
 
+  // 🆕 UX PREMIUM - Validação em tempo real (OPCIONAL)
+  const handleFieldBlur = (fieldName: string, value: string, fieldType?: 'email' | 'phone' | 'text' | 'textarea') => {
+    const error = validateField({ 
+      name: fieldName, 
+      value, 
+      required: fieldName === 'name' || fieldName === 'company' || fieldName === 'email',
+      type: fieldType || (fieldName === 'email' ? 'email' : fieldName === 'phone' ? 'phone' : 'text')
+    }, lang)
+    
+    if (error) {
+      setFieldErrors(prev => ({ ...prev, [fieldName]: error }))
+    } else {
+      setFieldErrors(prev => {
+        const newErrors = { ...prev }
+        delete newErrors[fieldName]
+        return newErrors
+      })
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    // 🆕 UX PREMIUM - Rate limiting (prevenir spam)
+    if (!canSubmit()) {
+      setError(lang === 'pt' ? 'Aguarde alguns segundos antes de enviar novamente' : 
+               lang === 'es' ? 'Espere unos segundos antes de enviar de nuevo' :
+               lang === 'fr' ? 'Attendez quelques secondes avant de renvoyer' :
+               'Please wait a few seconds before submitting again')
+      return
+    }
+    
+    // 🆕 UX PREMIUM - Honeypot anti-spam
+    if (!checkHoneypot(formData.website)) {
+      // É spam - não enviar mas simular sucesso
+      setLoading(true)
+      setTimeout(() => {
+        setLoading(false)
+        setSuccess(true)
+        setTimeout(() => navigate(`/${lang}/thank-you`), 2000)
+      }, 1000)
+      return
+    }
+    
     setLoading(true)
     setError('')
 
@@ -1058,6 +1103,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
+                  onBlur={(e) => handleFieldBlur('name', e.target.value, 'text')}
                   required
                   className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal ${
                     fieldErrors.name 
@@ -1074,6 +1120,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  onBlur={(e) => handleFieldBlur('email', e.target.value, 'email')}
                   className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal ${
                     fieldErrors.email 
                       ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50' 
@@ -1158,6 +1205,11 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       const formatted = formatPhoneWithAreaCode(e.target.value, formData.countryCode)
                       setFormData(prev => ({ ...prev, phone: formatted }))
                     }}
+                    onBlur={(e) => {
+                      if (e.target.value.trim()) {
+                        handleFieldBlur('phone', e.target.value, 'phone')
+                      }
+                    }}
                     className="input-adaptive"
                     style={{ 
                       flex: '1 1 auto',
@@ -1205,6 +1257,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   name="company"
                   value={formData.company}
                   onChange={handleChange}
+                  onBlur={(e) => handleFieldBlur('company', e.target.value, 'text')}
                   required
                   className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal ${
                     fieldErrors.company 
@@ -1578,6 +1631,25 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
               ))}
             </div>
           </div>
+          
+          {/* 🆕 UX PREMIUM - Honeypot anti-spam (OPCIONAL - campo oculto) */}
+          <input
+            type="text"
+            name="website"
+            value={formData.website}
+            onChange={handleChange}
+            style={{ 
+              position: 'absolute',
+              left: '-9999px',
+              opacity: 0,
+              pointerEvents: 'none',
+              tabIndex: -1,
+              autocomplete: 'off'
+            }}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+          />
       </form>
     </div>
   )

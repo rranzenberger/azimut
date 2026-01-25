@@ -316,6 +316,50 @@ model CompanyHistory {
   @@index([displayOrder])
 }
 
+model TeamMembers {
+  id            String   @id @default(uuid())
+  slug          String   @unique
+  name          String
+  rolePt        String
+  roleEn        String
+  roleEs        String?
+  roleFr        String?
+  credentialPt  String?
+  credentialEn  String?
+  credentialEs  String?
+  credentialFr  String?
+  bioPt         String?
+  bioEn         String?
+  bioEs         String?
+  bioFr         String?
+  photoUrl      String?
+  photoMediaId  String?
+  displayOrder  Int      @default(0)
+  isPublished  Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isPublished])
+  @@index([displayOrder])
+}
+
+model Credentials {
+  id          String   @id @default(uuid())
+  order       Int      @default(0)
+  icon        String?
+  textPt      String
+  textEn      String
+  textEs      String?
+  textFr      String?
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([order])
+  @@index([isPublished])
+}
+
 model ProjectMedia {
   id        String   @id @default(uuid())
   projectId String
