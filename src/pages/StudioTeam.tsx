@@ -336,15 +336,14 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                 className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500 scroll-mt-28"
               >
                 <div className="flex flex-col md:flex-row">
-                  {/* Foto - Posicionamento otimizado para foco no rosto, sem cortes */}
+                  {/* Foto - Altura flexível para evitar cortes, foco no rosto */}
                   <div 
                     className="team-photo relative shrink-0 overflow-hidden w-full md:w-[450px] lg:w-[500px] xl:w-[550px]"
                     style={{
                       background: 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)',
                       overflow: 'hidden',
-                      minHeight: '500px', // Altura maior para evitar cortes
-                      maxHeight: '650px',
-                      aspectRatio: '3/4'
+                      minHeight: '600px', // Altura maior para mostrar mais da foto
+                      height: 'auto' // Altura automática baseada na imagem
                     }}
                   >
                     <OptimizedImage
@@ -354,27 +353,29 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                       objectFit="cover"
                       priority={true}
                       style={member.name.includes('Alberto') ? {
-                        objectPosition: 'center 20%', // Foco no rosto, sem cortar
+                        objectPosition: 'center 15%', // Foco no rosto, mostra mais da foto
                         width: '100%',
-                        height: '100%'
+                        height: '100%',
+                        minHeight: '600px'
                       } : member.name.includes('Ranz') ? {
-                        objectPosition: 'center 12%', // Foco no rosto e gesto
+                        objectPosition: 'center 8%', // Foco no rosto e gesto completo
                         width: '100%',
-                        height: '100%'
+                        height: '100%',
+                        minHeight: '600px'
                       } : {
-                        objectPosition: 'center 25%', // Anick - foco no rosto
+                        objectPosition: 'center 20%', // Anick - foco no rosto
                         width: '100%',
-                        height: '100%'
+                        height: '100%',
+                        minHeight: '600px'
                       }}
                       onError={(e) => {
-                        // Se imagem falhar, manter fundo degradê (não mostrar espaço vazio)
                         try {
                           const img = e.currentTarget as HTMLImageElement
                           if (img) {
                             img.style.display = 'none'
                           }
                         } catch (error) {
-                          // Silencioso - não quebrar renderização
+                          // Silencioso
                         }
                       }}
                     />
