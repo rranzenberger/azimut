@@ -255,10 +255,9 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                     }}
                     className={`flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide transition-colors ${
                       isActive
-                        ? 'bg-white/10 text-azimut-red'
-                        : 'hover:text-azimut-red'
+                        ? 'text-azimut-red border-b-2 border-azimut-red'
+                        : 'text-slate-400 hover:text-azimut-red'
                     }`}
-                    style={!isActive ? { color: 'var(--theme-text-secondary)' } : undefined}
                   >
                     <span>{filterIcons[filter.id]}</span>
                     <span>{getFilterLabel(filter)}</span>

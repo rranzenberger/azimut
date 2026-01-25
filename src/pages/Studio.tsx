@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -17,6 +17,32 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
   // useUserTracking()
   // Estrela FIXA (sem parallax) - Padronizada com WhatWeDo e Work
   const { theme } = useTheme()
+  
+  // 🆕 Detecção de scroll para destacar seção ativa no menu
+  const [activeSection, setActiveSection] = useState<string>('overview')
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['overview', 'unique', 'team', 'credentials']
+      const scrollPosition = window.scrollY + 200 // Offset para compensar header
+      
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i])
+        if (section) {
+          const sectionTop = section.offsetTop
+          if (scrollPosition >= sectionTop) {
+            setActiveSection(sections[i])
+            break
+          }
+        }
+      }
+    }
+    
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll() // Verificar posição inicial
+    
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const content = {
     pt: {
@@ -319,23 +345,30 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                 { id: 'unique', label: lang === 'pt' ? 'Diferenciais' : 'What Makes Us Unique', icon: '💡' },
                 { id: 'team', label: lang === 'pt' ? 'Equipe' : 'Team', icon: '👥' },
                 { id: 'credentials', label: lang === 'pt' ? 'Credenciais' : 'Credentials', icon: '🏆' }
-              ].map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    const el = document.getElementById(item.id)
-                    if (el) {
-                      const top = el.getBoundingClientRect().top + window.scrollY - 120
-                      window.scrollTo({ top, behavior: 'smooth' })
-                    }
-                  }}
-                  className="flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide hover:text-azimut-red transition-colors"
-                  style={{ color: 'var(--theme-text-secondary)' }}
-                >
-                  <span>{item.icon}</span>
-                  <span>{item.label}</span>
-                </button>
-              ))}
+              ].map((item) => {
+                const isActive = activeSection === item.id
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      const el = document.getElementById(item.id)
+                      if (el) {
+                        const top = el.getBoundingClientRect().top + window.scrollY - 120
+                        window.scrollTo({ top, behavior: 'smooth' })
+                        setActiveSection(item.id) // Atualizar imediatamente ao clicar
+                      }
+                    }}
+                    className={`flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide transition-colors ${
+                      isActive
+                        ? 'text-azimut-red border-b-2 border-azimut-red'
+                        : 'text-slate-400 hover:text-azimut-red'
+                    }`}
+                  >
+                    <span>{item.icon}</span>
+                    <span>{item.label}</span>
+                  </button>
+                )
+              })}
             </nav>
           </div>
         </div>

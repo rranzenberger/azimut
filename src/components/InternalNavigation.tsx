@@ -140,8 +140,6 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
     >
       {items.map((item) => {
         const isActive = activeId === item.id
-        const isHovered = hoveredId === item.id
-        const shouldShowLine = isActive || isHovered
         
         return (
           <button
@@ -154,13 +152,10 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
               transition-all duration-300 ease-out
               whitespace-nowrap
               focus:outline-none focus:ring-2 focus:ring-azimut-red focus:ring-offset-2 focus:ring-offset-transparent
+              ${isActive ? 'text-azimut-red border-b-2 border-azimut-red' : 'text-slate-400'}
             `}
             style={{
-              color: isActive 
-                ? 'var(--theme-accent-red)'
-                : 'var(--theme-text-secondary)',
-              backgroundColor: 'transparent',
-              opacity: isActive ? 1 : 0.6
+              backgroundColor: 'transparent'
             }}
             onMouseEnter={(e) => {
               setHoveredId(item.id)
@@ -189,16 +184,7 @@ const InternalNavigation: React.FC<InternalNavigationProps> = ({
               </span>
             )}
             
-            <span className="relative">
-              {item.label}
-              {shouldShowLine && (
-                <span 
-                  className="absolute -bottom-1 left-0 right-0 h-[2px] bg-azimut-red"
-                  style={{ opacity: isActive ? 0.8 : 0.4 }}
-                  aria-hidden="true"
-                />
-              )}
-            </span>
+            <span>{item.label}</span>
           </button>
         )
       })}
