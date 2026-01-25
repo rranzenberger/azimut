@@ -410,16 +410,18 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
             top: '52px'
           }}
         >
-          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3 flex justify-center">
-            <InternalNavigation
-              items={[
-                { id: 'courses', label: lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses', href: '/academy/courses', icon: '📚' },
-                { id: 'vancouver', label: 'Vancouver', href: '/academy/vancouver', icon: '🇨🇦' },
-                { id: 'workshops', label: 'Workshops', href: '/academy/workshops', icon: '🎬' },
-                { id: 'corporate', label: lang === 'pt' ? 'Corporativo' : lang === 'es' ? 'Corporativo' : lang === 'fr' ? 'Entreprise' : 'Corporate', href: '/academy/corporate', icon: '🏢' }
-              ]}
-              lang={lang}
-            />
+          <div className="mx-auto max-w-7xl w-full grid grid-cols-[auto_1fr_auto] items-center gap-0.5 sm:gap-1 sm:px-4 sm:gap-2 min-[768px]:px-6 min-[768px]:gap-3 md:gap-4 lg:gap-5 xl:gap-6 py-3">
+            <div className="col-start-2 flex justify-center">
+              <InternalNavigation
+                items={[
+                  { id: 'courses', label: lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses', href: '/academy/courses', icon: '📚' },
+                  { id: 'vancouver', label: 'Vancouver', href: '/academy/vancouver', icon: '🇨🇦' },
+                  { id: 'workshops', label: 'Workshops', href: '/academy/workshops', icon: '🎬' },
+                  { id: 'corporate', label: lang === 'pt' ? 'Corporativo' : lang === 'es' ? 'Corporativo' : lang === 'fr' ? 'Entreprise' : 'Corporate', href: '/academy/corporate', icon: '🏢' }
+                ]}
+                lang={lang}
+              />
+            </div>
           </div>
         </div>
 
