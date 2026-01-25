@@ -13,6 +13,7 @@ import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import LangLink from '../components/LangLink'
 import CompanyTimeline from '../components/CompanyTimeline'
+import StudioSubNav from '../components/StudioSubNav'
 
 interface StudioCredentialsProps {
   lang: Lang
@@ -588,7 +589,13 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
         path="/studio/credibilidade"
       />
       
+      {/* Menu Secundário Studio - PADRONIZADO */}
+      <StudioSubNav lang={lang} currentPage="credentials" />
+      
       <main className="relative">
+        {/* Espaçador para compensar header + submenu fixos (PADRONIZADO) */}
+        <div style={{ height: '48px' }} />
+        
         {/* Star Background - FIXA */}
         <div 
           className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-30"
@@ -598,17 +605,8 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
         </div>
 
         {/* HERO SECTION - IMPACTANTE */}
-        <section className="relative py-20 md:py-32 overflow-hidden">
+        <section className="relative py-12 md:py-20 overflow-hidden">
           <div className="container-padding max-w-7xl mx-auto">
-            {/* Breadcrumbs */}
-            <nav className="mb-8 flex items-center gap-2 text-sm text-theme-text-secondary">
-              <LangLink to="/" className="hover:text-azimut-red transition-colors">Home</LangLink>
-              <span>›</span>
-              <LangLink to="/studio" className="hover:text-azimut-red transition-colors">Studio</LangLink>
-              <span>›</span>
-              <span className="text-azimut-red font-medium">{t.title}</span>
-            </nav>
-
             {/* Hero Content */}
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left: Text */}

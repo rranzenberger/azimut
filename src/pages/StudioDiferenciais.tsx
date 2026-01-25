@@ -3,6 +3,7 @@ import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
+import StudioSubNav from '../components/StudioSubNav'
 
 interface StudioDiferenciaisProps {
   lang: Lang
@@ -375,7 +376,13 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
         path="/studio/diferenciais"
       />
       
-      <main className="relative py-16 md:py-20">
+      {/* Menu Secundário Studio - PADRONIZADO */}
+      <StudioSubNav lang={lang} currentPage="diferenciais" />
+      
+      <main className="relative">
+        {/* Espaçador para compensar header + submenu fixos (PADRONIZADO) */}
+        <div style={{ height: '48px' }} />
+        
         {/* Star Background - FIXA (FUNDO - atrás de tudo) */}
         <div 
           className="pointer-events-none fixed top-20 -right-28 h-[520px] w-[520px] md:top-24 md:-right-40 md:h-[680px] md:w-[680px] opacity-50"
@@ -384,16 +391,7 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" loading="lazy" />
         </div>
 
-        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
-          {/* Breadcrumbs */}
-          <nav className="mb-8 flex items-center gap-2 text-sm text-theme-text-secondary">
-            <LangLink to="/" className="hover:text-azimut-red transition-colors">Home</LangLink>
-            <span>›</span>
-            <LangLink to="/studio" className="hover:text-azimut-red transition-colors">Studio</LangLink>
-            <span>›</span>
-            <span className="text-azimut-red font-medium">{text.title}</span>
-          </nav>
-
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-8">
           {/* Hero */}
           <div className="mb-16">
             {/* Eyebrow com emoji */}
