@@ -336,56 +336,54 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                 className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500 scroll-mt-28"
               >
                 <div className="flex flex-col md:flex-row">
-                  {/* Foto - Larguras iguais para todos, enquadramento otimizado */}
+                  {/* Foto - Posicionamento otimizado para foco no rosto, sem cortes */}
                   <div 
-                    className="team-photo relative shrink-0 overflow-hidden w-full md:w-[450px] lg:w-[500px] xl:w-[550px] aspect-[3/4]"
+                    className="team-photo relative shrink-0 overflow-hidden w-full md:w-[450px] lg:w-[500px] xl:w-[550px]"
                     style={{
                       background: 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)',
                       overflow: 'hidden',
-                      minHeight: '400px' // Travar altura mínima para não aparecer espaço vazio
+                      minHeight: '500px', // Altura maior para evitar cortes
+                      maxHeight: '650px',
+                      aspectRatio: '3/4'
                     }}
                   >
-                    <div 
-                      className="w-full h-full absolute inset-0"
+                    <OptimizedImage
+                      src={member.photo}
+                      alt={member.name}
+                      className="w-full h-full"
+                      objectFit="cover"
+                      priority={true}
                       style={member.name.includes('Alberto') ? {
-                        transform: 'scale(1.08)',
-                        transformOrigin: 'center center'
+                        objectPosition: 'center 20%', // Foco no rosto, sem cortar
+                        width: '100%',
+                        height: '100%'
                       } : member.name.includes('Ranz') ? {
-                        transform: 'scale(1.05)',
-                        transformOrigin: 'center top'
-                      } : {}}
-                    >
-                      <OptimizedImage
-                        src={member.photo}
-                        alt={member.name}
-                        className="w-full h-full absolute inset-0"
-                        objectFit="cover"
-                        priority={true}
-                        style={member.name.includes('Alberto') ? {
-                          objectPosition: 'center 28%'
-                        } : member.name.includes('Ranz') ? {
-                          objectPosition: 'center 10%'
-                        } : {
-                          objectPosition: 'center center'
-                        }}
-                        onError={(e) => {
-                          // Se imagem falhar, manter fundo degradê (não mostrar espaço vazio)
-                          try {
-                            const img = e.currentTarget as HTMLImageElement
-                            if (img) {
-                              img.style.display = 'none'
-                              // O container já tem fundo degradê, então não precisa fazer nada
-                            }
-                          } catch (error) {
-                            // Silencioso - não quebrar renderização
+                        objectPosition: 'center 12%', // Foco no rosto e gesto
+                        width: '100%',
+                        height: '100%'
+                      } : {
+                        objectPosition: 'center 25%', // Anick - foco no rosto
+                        width: '100%',
+                        height: '100%'
+                      }}
+                      onError={(e) => {
+                        // Se imagem falhar, manter fundo degradê (não mostrar espaço vazio)
+                        try {
+                          const img = e.currentTarget as HTMLImageElement
+                          if (img) {
+                            img.style.display = 'none'
                           }
-                        }}
-                      />
-                    </div>
+                        } catch (error) {
+                          // Silencioso - não quebrar renderização
+                        }
+                      }}
+                    />
                   </div>
 
-                  {/* Conteúdo - Espaçamento otimizado */}
-                  <div className="flex-1 p-6 md:p-8 max-w-2xl flex flex-col justify-start pt-4 md:pt-6">
+                  {/* Conteúdo - Degradê sutil na área do currículo */}
+                  <div 
+                    className="team-content-area flex-1 p-6 md:p-8 max-w-2xl flex flex-col justify-start pt-4 md:pt-6"
+                  >
                     {/* Linha decorativa vermelha */}
                     <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-azimut-red via-azimut-red/50 to-transparent"></div>
                     
