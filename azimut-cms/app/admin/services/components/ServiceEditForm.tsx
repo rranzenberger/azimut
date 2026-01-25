@@ -252,14 +252,36 @@ export function ServiceEditForm({ service }: { service: any }) {
         </div>
 
         <div style={{ display: 'grid', gap: 8 }}>
+          <label style={{ fontSize: 14, fontWeight: 600 }}>Descrição ES</label>
+          <textarea
+            value={formData.descriptionEs}
+            onChange={(e) => setFormData({ ...formData, descriptionEs: e.target.value })}
+            style={{ ...inputStyle, minHeight: 100, resize: 'vertical' }}
+          />
+        </div>
+
+        <div style={{ display: 'grid', gap: 8 }}>
+          <label style={{ fontSize: 14, fontWeight: 600 }}>Descrição FR</label>
+          <textarea
+            value={formData.descriptionFr}
+            onChange={(e) => setFormData({ ...formData, descriptionFr: e.target.value })}
+            style={{ ...inputStyle, minHeight: 100, resize: 'vertical' }}
+          />
+        </div>
+
+        <div style={{ display: 'grid', gap: 8 }}>
           <label style={{ fontSize: 14, fontWeight: 600 }}>Ícone (Emoji)</label>
           <input
             type="text"
             value={formData.icon}
             onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
             style={inputStyle}
-            maxLength={2}
+            placeholder="🏛️"
+            maxLength={10}
           />
+          <small style={{ color: '#9f9bb0', fontSize: 12 }}>
+            Use emojis ou ícones Unicode. Ex: 🏛️ 🎭 🗺️ ⚙️ 📚 🤖 (suporta até 10 caracteres)
+          </small>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
