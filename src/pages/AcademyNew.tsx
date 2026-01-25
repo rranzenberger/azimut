@@ -399,16 +399,41 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
       />
 
       <div className="min-h-screen" style={{ 
-        background: 'var(--theme-bg-primary)',
-        marginTop: '-80px' 
+        background: 'var(--theme-bg-primary)'
       }}>
+        {/* ═══════════════════════════════════════════════════════════
+            NAVEGAÇÃO INTERNA - FIXO colado no header (como WhatWeDo)
+            ═══════════════════════════════════════════════════════════ */}
+        <div 
+          className="fixed left-0 right-0 z-40 backdrop-blur-xl submenu-nav"
+          style={{
+            top: '52px',
+            borderBottom: '2px solid rgba(201, 35, 55, 0.5)'
+          }}
+        >
+          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3">
+            <InternalNavigation
+              items={[
+                { id: 'all', label: lang === 'pt' ? 'Visão Geral' : lang === 'es' ? 'Visión General' : lang === 'fr' ? 'Aperçu' : 'Overview', href: '/academy', icon: '🎓' },
+                { id: 'vancouver', label: 'Vancouver', href: '/academy/vancouver', icon: '🇨🇦' },
+                { id: 'courses', label: lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses', href: '/academy/courses', icon: '📚' },
+                { id: 'workshops', label: 'Workshops', href: '/academy/workshops', icon: '🎬' },
+                { id: 'corporate', label: lang === 'pt' ? 'Corporativo' : lang === 'es' ? 'Corporativo' : lang === 'fr' ? 'Entreprise' : 'Corporate', href: '/academy/corporate', icon: '🏢' }
+              ]}
+              lang={lang}
+            />
+          </div>
+        </div>
+
+        {/* Espaçador para compensar header + submenu fixos */}
+        <div style={{ height: '48px' }} />
         {/* ═══════════════════════════════════════════════════════════
             HERO SECTION - Video Background
             ═══════════════════════════════════════════════════════════
             📹 PLACEHOLDER: Vídeo institucional Academy
             Backoffice: /admin/academy/settings → "Hero Video URL"
             ═══════════════════════════════════════════════════════ */}
-        <section className="relative min-h-[75vh] flex items-center justify-center overflow-hidden pt-20">
+        <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           {/* Background Image/Video (PLACEHOLDER) */}
           <div className="absolute inset-0 z-0">
             <div 
@@ -576,34 +601,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
           zIndex={-10}
         />
 
-        {/* ═══════════════════════════════════════════════════════════
-            NAVEGAÇÃO INTERNA - Sticky colado no header principal
-            ═══════════════════════════════════════════════════════ */}
-        <div 
-          className="sticky z-40 backdrop-blur-xl"
-          style={{
-            top: '80px',
-            backgroundColor: 'var(--theme-bg-sticky)',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
-            borderTop: '1px solid rgba(201, 35, 55, 0.3)',
-            borderBottom: '1px solid rgba(201, 35, 55, 0.3)',
-            marginTop: '-80px',
-            paddingTop: '80px'
-          }}
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <InternalNavigation
-              items={[
-                { id: 'all', label: lang === 'pt' ? 'Visão Geral' : lang === 'es' ? 'Visión General' : lang === 'fr' ? 'Aperçu' : 'Overview', href: '/academy', icon: '🎓' },
-                { id: 'vancouver', label: 'Vancouver', href: '/academy/vancouver', icon: '🇨🇦' },
-                { id: 'courses', label: lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses', href: '/academy/courses', icon: '📚' },
-                { id: 'workshops', label: 'Workshops', href: '/academy/workshops', icon: '🎬' },
-                { id: 'corporate', label: lang === 'pt' ? 'Corporativo' : lang === 'es' ? 'Corporativo' : lang === 'fr' ? 'Entreprise' : 'Corporate', href: '/academy/corporate', icon: '🏢' }
-              ]}
-              lang={lang}
-            />
-          </div>
-        </div>
+        {/* Navegação interna movida para o topo - ver div fixed acima */}
 
         {/* ═══════════════════════════════════════════════════════════
             PROGRAMS GRID - 4 Programas Premium

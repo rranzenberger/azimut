@@ -154,8 +154,6 @@ export default function Blog({ lang }: BlogProps) {
     });
   };
 
-  const isDark = theme === 'dark';
-
   return (
     <div className="min-h-screen bg-theme-bg">
       {/* Hero Section - Compacto como outras páginas */}
