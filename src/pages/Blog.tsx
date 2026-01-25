@@ -43,7 +43,6 @@ const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffic
 
 export default function Blog({ lang }: BlogProps) {
   const language = lang;
-  const theme = 'dark'; // TODO: receber via props se necessário
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -158,9 +157,9 @@ export default function Blog({ lang }: BlogProps) {
   const isDark = theme === 'dark';
 
   return (
-    <div className={`min-h-screen ${isDark ? 'bg-[#050814]' : 'bg-[#d3cec3]'}`}>
-      {/* Hero Section */}
-      <section className="relative py-20 md:py-32 overflow-hidden">
+    <div className="min-h-screen bg-theme-bg">
+      {/* Hero Section - Compacto como outras páginas */}
+      <section className="relative py-12 md:py-16 overflow-hidden">
         {/* Background Star */}
         <img
           src="/logo-azimut-star.svg"
@@ -170,13 +169,10 @@ export default function Blog({ lang }: BlogProps) {
 
         <div className="container mx-auto px-4 md:px-8 relative z-10">
           <div className="max-w-3xl">
-            <h1 
-              className={`text-5xl md:text-7xl font-bold mb-6 ${isDark ? 'text-white' : 'text-[#0f172a]'}`}
-              style={{ fontFamily: 'HandelGothic, sans-serif' }}
-            >
+            <h1 className="section-title">
               {t.title}
             </h1>
-            <p className={`text-xl md:text-2xl ${isDark ? 'text-[#d3cec3]' : 'text-[#1e3a5f]'}`}>
+            <p className="body-large">
               {t.subtitle}
             </p>
           </div>
@@ -185,16 +181,14 @@ export default function Blog({ lang }: BlogProps) {
 
       {/* Categories Filter */}
       {categories.length > 0 && (
-        <section className="container mx-auto px-4 md:px-8 mb-12">
+        <section className="container mx-auto px-4 md:px-8 mb-8">
           <div className="flex flex-wrap gap-3">
             <button
               onClick={() => setSelectedCategory('')}
               className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
                 selectedCategory === ''
-                  ? 'bg-[#c92337] text-white'
-                  : isDark
-                    ? 'bg-white/5 text-white/70 hover:bg-white/10'
-                    : 'bg-black/5 text-black/70 hover:bg-black/10'
+                  ? 'bg-azimut-red text-white'
+                  : 'bg-theme-card text-theme-text-secondary hover:bg-theme-card-hover'
               }`}
             >
               {t.allCategories}
@@ -206,9 +200,7 @@ export default function Blog({ lang }: BlogProps) {
                 className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
                   selectedCategory === cat.slug
                     ? 'text-white'
-                    : isDark
-                      ? 'bg-white/5 text-white/70 hover:bg-white/10'
-                      : 'bg-black/5 text-black/70 hover:bg-black/10'
+                    : 'bg-theme-card text-theme-text-secondary hover:bg-theme-card-hover'
                 }`}
                 style={{
                   backgroundColor: selectedCategory === cat.slug ? cat.color : undefined,
@@ -223,39 +215,35 @@ export default function Blog({ lang }: BlogProps) {
       )}
 
       {/* Posts Grid */}
-      <section className="container mx-auto px-4 md:px-8 pb-20">
+      <section className="container mx-auto px-4 md:px-8 pb-16">
         {loading && posts.length === 0 ? (
-          <div className="text-center py-20">
-            <div className={`animate-pulse ${isDark ? 'text-white/50' : 'text-black/50'}`}>
+          <div className="text-center py-12">
+            <div className="animate-pulse text-theme-text-secondary">
               Carregando...
             </div>
           </div>
         ) : posts.length === 0 ? (
-          <div className="text-center py-20">
-            <span className="text-6xl mb-4 block">📝</span>
-            <h3 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-[#0f172a]'}`}>
+          <div className="text-center py-12 card-dark-fixed rounded-2xl p-8">
+            <span className="text-5xl mb-4 block">📝</span>
+            <h3 className="text-xl font-bold mb-2 text-theme-text">
               {t.noPosts}
             </h3>
-            <p className={isDark ? 'text-white/60' : 'text-black/60'}>{t.noPostsDesc}</p>
+            <p className="text-theme-text-secondary">{t.noPostsDesc}</p>
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {posts.map((post, index) => (
                 <Link
                   key={post.id}
                   to={`/blog/${post.slug}`}
-                  className={`group block rounded-2xl overflow-hidden transition-all duration-500 ${
-                    isDark
-                      ? 'bg-gradient-to-br from-[#0a0f1a] to-[#1a1f2e] hover:shadow-2xl hover:shadow-[#c92337]/10'
-                      : 'bg-white hover:shadow-2xl hover:shadow-black/10'
-                  } ${post.featured ? 'ring-2 ring-[#c92337]/50' : ''}`}
+                  className={`group block rounded-2xl overflow-hidden transition-all duration-500 card-dark-fixed hover:shadow-2xl hover:shadow-azimut-red/10 ${post.featured ? 'ring-2 ring-azimut-red/50' : ''}`}
                   style={{
                     animationDelay: `${index * 100}ms`,
                   }}
                 >
                   {/* Image */}
-                  <div className="relative aspect-[16/10] overflow-hidden">
+                  <div className="relative aspect-[16/10] overflow-hidden bg-theme-card">
                     {post.coverImage ? (
                       <img
                         src={post.coverImage}
@@ -263,20 +251,18 @@ export default function Blog({ lang }: BlogProps) {
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       />
                     ) : (
-                      <div className={`w-full h-full flex items-center justify-center text-6xl ${
-                        isDark ? 'bg-white/5' : 'bg-black/5'
-                      }`}>
+                      <div className="w-full h-full flex items-center justify-center text-5xl bg-theme-card">
                         📄
                       </div>
                     )}
                     {post.featured && (
-                      <span className="absolute top-4 left-4 px-3 py-1 bg-[#c92337] text-white text-xs font-bold rounded-full">
+                      <span className="absolute top-3 left-3 px-3 py-1 bg-azimut-red text-white text-xs font-bold rounded-full">
                         ⭐ Destaque
                       </span>
                     )}
                     {post.category && (
                       <span
-                        className="absolute top-4 right-4 px-3 py-1 text-white text-xs font-bold rounded-full"
+                        className="absolute top-3 right-3 px-3 py-1 text-white text-xs font-bold rounded-full"
                         style={{ backgroundColor: post.category.color }}
                       >
                         {post.category.name}
@@ -285,22 +271,16 @@ export default function Blog({ lang }: BlogProps) {
                   </div>
 
                   {/* Content */}
-                  <div className="p-6">
-                    <h2 className={`text-xl font-bold mb-3 line-clamp-2 group-hover:text-[#c92337] transition-colors ${
-                      isDark ? 'text-white' : 'text-[#0f172a]'
-                    }`}>
+                  <div className="p-5">
+                    <h2 className="text-lg font-bold mb-2 line-clamp-2 group-hover:text-azimut-red transition-colors text-theme-text">
                       {post.title}
                     </h2>
-                    <p className={`text-sm mb-4 line-clamp-3 ${
-                      isDark ? 'text-white/60' : 'text-black/60'
-                    }`}>
+                    <p className="text-sm mb-4 line-clamp-3 text-theme-text-secondary">
                       {post.excerpt}
                     </p>
 
                     {/* Meta */}
-                    <div className={`flex items-center justify-between text-xs ${
-                      isDark ? 'text-white/40' : 'text-black/40'
-                    }`}>
+                    <div className="flex items-center justify-between text-xs text-theme-text-muted">
                       <div className="flex items-center gap-3">
                         <span>📅 {formatDate(post.publishedAt)}</span>
                         {post.readingTime && (
@@ -316,11 +296,11 @@ export default function Blog({ lang }: BlogProps) {
 
             {/* Load More */}
             {hasMore && (
-              <div className="text-center mt-12">
+              <div className="text-center mt-10">
                 <button
                   onClick={() => fetchPosts(offset)}
                   disabled={loading}
-                  className="px-8 py-4 bg-[#c92337] text-white font-semibold rounded-full hover:bg-[#a51d2d] transition-all duration-300 disabled:opacity-50"
+                  className="px-8 py-3 bg-azimut-red text-white font-semibold rounded-full hover:bg-azimut-red/90 transition-all duration-300 disabled:opacity-50"
                 >
                   {loading ? '...' : t.loadMore}
                 </button>

@@ -336,16 +336,12 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                 className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500 scroll-mt-28"
               >
                 <div className="flex flex-col md:flex-row">
-                  {/* Foto - SEM CORTES, contain com fundo degradê */}
+                  {/* Foto - Cover que preenche toda área, focando no rosto */}
                   <div 
-                    className="team-photo relative shrink-0 w-full md:w-[400px] lg:w-[420px] xl:w-[450px]"
+                    className="team-photo relative shrink-0 w-full md:w-[400px] lg:w-[420px] xl:w-[450px] overflow-hidden"
                     style={{
                       background: 'linear-gradient(145deg, #0a0f1a 0%, #0f172a 40%, #1a1f2e 100%)',
-                      height: '500px', // Altura fixa para consistência
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      padding: '10px' // Espaço para não cortar bordas
+                      height: '520px', // Altura fixa para consistência
                     }}
                   >
                     <img
@@ -353,14 +349,10 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                       alt={member.name}
                       loading="eager"
                       decoding="async"
+                      className="w-full h-full"
                       style={{
-                        maxWidth: '100%',
-                        maxHeight: '100%',
-                        width: 'auto',
-                        height: 'auto',
-                        objectFit: 'contain',
-                        objectPosition: 'center center',
-                        display: 'block'
+                        objectFit: 'cover',
+                        objectPosition: member.slug === 'ranz' ? 'center 15%' : member.slug === 'anick' ? 'center 20%' : 'center 25%',
                       }}
                       onError={(e) => {
                         const img = e.currentTarget
