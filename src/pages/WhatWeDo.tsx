@@ -237,11 +237,10 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
         <div 
           className="fixed left-0 right-0 z-40 backdrop-blur-xl submenu-nav"
           style={{
-            top: '52px',
-            borderBottom: '2px solid rgba(201, 35, 55, 0.5)'
+            top: '52px'
           }}
         >
-          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3">
+          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3 flex justify-center">
             <nav className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
               {filters.map((filter) => {
                 const href = filter.id === 'all' ? '/what' : `/what?filter=${filter.id}`

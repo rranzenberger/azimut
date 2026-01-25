@@ -407,11 +407,10 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
         <div 
           className="fixed left-0 right-0 z-40 backdrop-blur-xl submenu-nav"
           style={{
-            top: '52px',
-            borderBottom: '2px solid rgba(201, 35, 55, 0.5)'
+            top: '52px'
           }}
         >
-          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3">
+          <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3 flex justify-center">
             <InternalNavigation
               items={[
                 { id: 'courses', label: lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses', href: '/academy/courses', icon: '📚' },
@@ -424,15 +423,13 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
           </div>
         </div>
 
-        {/* Espaçador para compensar header + submenu fixos */}
-        <div style={{ height: '48px' }} />
         {/* ═══════════════════════════════════════════════════════════
-            HERO SECTION - Video Background
+            HERO SECTION - Video Background (junto do menu, sem espaçador)
             ═══════════════════════════════════════════════════════════
             📹 PLACEHOLDER: Vídeo institucional Academy
             Backoffice: /admin/academy/settings → "Hero Video URL"
             ═══════════════════════════════════════════════════════ */}
-        <section className="relative min-h-[45vh] flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-[45vh] flex items-center justify-center overflow-hidden" style={{ marginTop: '48px' }}>
           {/* Background Image/Video (PLACEHOLDER) */}
           <div className="absolute inset-0 z-0">
             <div 

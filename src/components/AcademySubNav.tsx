@@ -73,8 +73,7 @@ const AcademySubNav: React.FC<AcademySubNavProps> = ({ lang, currentPage }) => {
     <div 
       className="fixed left-0 right-0 z-40 backdrop-blur-xl submenu-nav"
       style={{
-        top: '52px',
-        borderBottom: '2px solid rgba(201, 35, 55, 0.5)'
+        top: '52px'
       }}
     >
       <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3">
