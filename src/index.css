@@ -2401,15 +2401,7 @@ html[data-theme="light"] .tech-pill:hover {
   position: relative;
   overflow: hidden;
   border-radius: 10px;
-  background: linear-gradient(180deg, #0a0f1a 0%, #0f172a 100%) !important;
-  background-color: #0a0f1a !important;
-}
-
-/* FORÇAR fundo escuro no tema claro também - NUNCA mostrar marrom/bege */
-[data-theme="light"] .team-photo,
-html[data-theme="light"] .team-photo {
-  background: linear-gradient(180deg, #0a0f1a 0%, #0f172a 100%) !important;
-  background-color: #0a0f1a !important;
+  background: linear-gradient(135deg, #0a0f1a 0%, #151a28 100%);
 }
 
 /* Nome do membro da equipe - SEMPRE BRANCO e 2 LINHAS */
