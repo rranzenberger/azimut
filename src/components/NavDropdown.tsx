@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import type { Lang } from '../i18n'
 import LangLink from './LangLink'
 import { useLanguageRoute } from '../hooks/useLanguageRoute'
@@ -36,6 +36,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
   const dropdownRef = useRef<HTMLDivElement>(null)
   const closeTimeoutRef = useRef<number | null>(null)
   const location = useLocation()
+  const navigate = useNavigate()
   const { getLangPath } = useLanguageRoute()
 
   // Fechar dropdown se clicar fora
@@ -69,9 +70,17 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
     }
   }, [])
 
-  // 🆕 Handler para fechar dropdown ao clicar nos itens
-  const handleDropdownItemClick = () => {
+  // 🆕 Handler para fechar dropdown e navegar ao clicar nos itens
+  const handleDropdownItemClick = (e: React.MouseEvent, href: string) => {
+    e.preventDefault() // Prevenir navegação padrão do Link
     setIsOpen(false)
+    
+    // Construir path com idioma
+    const hasLangPrefix = /^\/(pt|en|fr|es)(\/|$)/.test(href)
+    const fullPath = hasLangPrefix ? href : `/${lang}${href.startsWith('/') ? href : '/' + href}`
+    
+    // Navegar programaticamente para garantir que funciona com query params
+    navigate(fullPath)
   }
 
   // Verificar se algum item está ativo
@@ -222,7 +231,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
                       ? '#c92337'
                       : 'var(--theme-text)'
                   }}
-                  onClick={handleDropdownItemClick}
+                  onClick={(e) => handleDropdownItemClick(e, item.href)}
                   onMouseEnter={(e) => {
                     if (!isItemActive) {
                       e.currentTarget.style.backgroundColor = 'rgba(201, 35, 55, 0.1)'
