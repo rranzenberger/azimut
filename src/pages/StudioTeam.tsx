@@ -338,37 +338,33 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                 <div className="flex flex-col md:flex-row">
                   {/* Foto - SEM CORTES, contain com fundo degradê */}
                   <div 
-                    className="team-photo relative shrink-0 overflow-hidden w-full md:w-[400px] lg:w-[420px] xl:w-[450px]"
+                    className="team-photo relative shrink-0 w-full md:w-[400px] lg:w-[420px] xl:w-[450px]"
                     style={{
                       background: 'linear-gradient(145deg, #0a0f1a 0%, #0f172a 40%, #1a1f2e 100%)',
-                      overflow: 'hidden',
                       height: '500px', // Altura fixa para consistência
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center'
+                      justifyContent: 'center',
+                      padding: '10px' // Espaço para não cortar bordas
                     }}
                   >
-                    <OptimizedImage
+                    <img
                       src={member.photo}
                       alt={member.name}
-                      className="w-full h-full"
-                      objectFit="contain"
-                      priority={true}
+                      loading="eager"
+                      decoding="async"
                       style={{
-                        width: '100%',
-                        height: '100%',
+                        maxWidth: '100%',
+                        maxHeight: '100%',
+                        width: 'auto',
+                        height: 'auto',
                         objectFit: 'contain',
-                        objectPosition: 'center center'
+                        objectPosition: 'center center',
+                        display: 'block'
                       }}
                       onError={(e) => {
-                        try {
-                          const img = e.currentTarget as HTMLImageElement
-                          if (img) {
-                            img.style.display = 'none'
-                          }
-                        } catch (error) {
-                          // Silencioso
-                        }
+                        const img = e.currentTarget
+                        img.style.display = 'none'
                       }}
                     />
                   </div>
@@ -383,7 +379,7 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                     {/* Nome GRANDE - 2 LINHAS: Nome branco + Sobrenome vermelho */}
                     <h3 className="team-member-name mb-4 font-handel uppercase tracking-[0.04em] leading-[1.0]" style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)' }}>
                       <span className="text-white block">{member.name.split(' ')[0]}</span>
-                      <span className="text-azimut-red block">{member.name.split(' ').slice(1).join(' ')}</span>
+                      <span className="block" style={{ color: '#c92337' }}>{member.name.split(' ').slice(1).join(' ')}</span>
                     </h3>
                     
                     {/* Role - CINZA CLARO para não competir com sobrenome vermelho */}
