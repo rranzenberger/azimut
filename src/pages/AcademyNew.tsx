@@ -414,8 +414,8 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-3">
             <InternalNavigation
               items={[
-                { id: 'vancouver', label: 'Vancouver', href: '/academy/vancouver', icon: '🇨🇦' },
                 { id: 'courses', label: lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses', href: '/academy/courses', icon: '📚' },
+                { id: 'vancouver', label: 'Vancouver', href: '/academy/vancouver', icon: '🇨🇦' },
                 { id: 'workshops', label: 'Workshops', href: '/academy/workshops', icon: '🎬' },
                 { id: 'corporate', label: lang === 'pt' ? 'Corporativo' : lang === 'es' ? 'Corporativo' : lang === 'fr' ? 'Entreprise' : 'Corporate', href: '/academy/corporate', icon: '🏢' }
               ]}

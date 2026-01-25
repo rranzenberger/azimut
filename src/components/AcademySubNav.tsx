@@ -17,19 +17,8 @@ interface AcademySubNavProps {
 const AcademySubNav: React.FC<AcademySubNavProps> = ({ lang, currentPage }) => {
   const navigate = useNavigate()
 
-  // Itens do menu com traduções
+  // Itens do menu com traduções (mesma ordem do dropdown)
   const navItems = [
-    {
-      id: 'vancouver',
-      icon: '🇨🇦',
-      href: '/academy/vancouver',
-      labels: {
-        pt: 'Vancouver',
-        en: 'Vancouver',
-        es: 'Vancouver',
-        fr: 'Vancouver'
-      }
-    },
     {
       id: 'courses',
       icon: '📚',
@@ -39,6 +28,17 @@ const AcademySubNav: React.FC<AcademySubNavProps> = ({ lang, currentPage }) => {
         en: 'Courses',
         es: 'Cursos',
         fr: 'Cours'
+      }
+    },
+    {
+      id: 'vancouver',
+      icon: '🇨🇦',
+      href: '/academy/vancouver',
+      labels: {
+        pt: 'Vancouver',
+        en: 'Vancouver',
+        es: 'Vancouver',
+        fr: 'Vancouver'
       }
     },
     {
