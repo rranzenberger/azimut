@@ -3220,17 +3220,17 @@ select.dropdown-azimut::-ms-expand {
 .card-dark-fixed {
   border-radius: 1rem;
   border: 1px solid rgba(201, 35, 55, 0.3);
-  /* Degradê suave: azul marinho escuro → azul médio (cinematográfico, não saturado) */
-  background: linear-gradient(145deg, #0f172a 0%, #1e293b 40%, #1e3a5f 70%, #1e40af 100%);
+  /* Fundo azul marinho escuro clássico - cinematográfico */
+  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%);
   transition: all 0.3s ease;
   color: var(--theme-card-text, #f5f3ef); /* Texto claro para legibilidade */
 }
 
 [data-theme="light"] .card-dark-fixed {
-  /* Degradê suave premium: azul marinho escuro → azul médio (igual tema escuro, consistência visual) */
+  /* Mesmo fundo escuro no tema claro - consistência */
   border: 1px solid rgba(201, 35, 55, 0.3) !important;
   border-radius: 1rem !important;
-  background: linear-gradient(145deg, #0f172a 0%, #1e293b 40%, #1e3a5f 70%, #1e40af 100%) !important;
+  background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%) !important;
   color: #f5f1e8 !important;
 }
 
