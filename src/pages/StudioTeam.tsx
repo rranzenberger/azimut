@@ -334,13 +334,12 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                 className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500 scroll-mt-28"
               >
                 <div className="flex flex-col md:flex-row">
-                  {/* Foto - Contain para mostrar foto completa sem cortar */}
+                  {/* Foto - Cover com posicionamento correto para cada membro */}
                   <div 
-                    className="team-photo relative shrink-0 w-full md:w-[380px] lg:w-[400px] xl:w-[420px] overflow-hidden flex items-start justify-center"
+                    className="team-photo relative shrink-0 w-full md:w-[280px] lg:w-[300px] xl:w-[320px] overflow-hidden"
                     style={{
                       background: 'linear-gradient(145deg, #0a0f1a 0%, #0f172a 40%, #1a1f2e 100%)',
-                      minHeight: '450px',
-                      maxHeight: '550px',
+                      aspectRatio: '3/4',
                     }}
                   >
                     <img
@@ -348,11 +347,9 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                       alt={member.name}
                       loading="eager"
                       decoding="async"
-                      className="w-full h-auto"
+                      className="absolute inset-0 w-full h-full object-cover"
                       style={{
-                        objectFit: 'contain',
-                        objectPosition: 'top center',
-                        maxHeight: '100%',
+                        objectPosition: member.name.includes('Alberto') ? 'center 20%' : 'center 15%',
                       }}
                       onError={(e) => {
                         const img = e.currentTarget
