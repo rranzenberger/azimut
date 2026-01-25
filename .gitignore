@@ -59,25 +59,12 @@ azimut-cms/.env.local
 *backup*/
 azimut-backups/
 
-# Scripts temporários
-*.ps1
-*.sh
+# Scripts temporários (mantém apenas os essenciais)
+# *.ps1
+# *.sh
 
-# Documentação temporária
-docs/
-ANALISE_*.md
-STATUS_*.md
-DEPLOY_*.md
-SOLUCAO_*.md
-DIAGNOSTICO_*.md
-PROBLEMA_*.md
-COMANDOS_*.md
-VARIAVEIS_*.md
-CONFIGURAR_*.md
-RODAR_*.md
-VERIFICAR_*.md
-ADICIONAR_*.md
-REMOVER_*.md
+# Documentação organizada (não ignorar - está organizada em docs/)
+# docs/
 
 
 

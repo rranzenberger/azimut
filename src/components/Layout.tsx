@@ -12,6 +12,9 @@ import DevToolsButton from './DevToolsButton'
 import ClaudeAssistant from './ClaudeAssistant'
 // Breadcrumbs removido - cada página tem seu próprio breadcrumb
 import ScrollToTopButton from './ScrollToTopButton'
+// 🆕 UX PREMIUM - Componentes opcionais (podem ser removidos se não funcionar)
+import Breadcrumbs from './Breadcrumbs'
+import SearchModal from './SearchModal'
 import SEOGlobal from './SEOGlobal' // SEO Global Schemas
 import SchemaOrganization from './SchemaOrganization'
 import SchemaBreadcrumbList from './SchemaBreadcrumbList'
@@ -74,6 +77,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [hoveredRoute, setHoveredRoute] = useState<string | null>(null)
   const [isWizardOpen, setIsWizardOpen] = useState(false)
+  
+  // 🆕 UX PREMIUM - Sistema de busca (opcional, pode remover se não funcionar)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
   
   // 🆕 Detectar scroll para compactar header
   const [isScrolled, setIsScrolled] = useState(false)
@@ -534,6 +540,34 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             {/* Separador visual */}
             <div className="hidden h-4 w-px min-[768px]:block shrink-0" style={{ backgroundColor: 'var(--theme-border)', flexShrink: 0, alignSelf: 'center', marginLeft: '2px', marginRight: '4px' }}></div>
             
+            {/* 🆕 UX PREMIUM - Botão de busca (OPCIONAL - pode remover se não funcionar) */}
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="hidden min-[768px]:flex items-center justify-center p-2 rounded-lg transition-all duration-200 touch-manipulation shrink-0"
+              style={{ 
+                width: '36px', 
+                height: '36px',
+                color: theme === 'light' ? '#f5f5f5' : 'var(--theme-text-secondary)',
+                marginRight: '2px'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = theme === 'light' ? '#ff5a6e' : '#c92337'
+                e.currentTarget.style.background = theme === 'dark' ? 'rgba(201, 35, 55, 0.1)' : 'rgba(255, 90, 110, 0.1)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = theme === 'light' ? '#f5f5f5' : 'var(--theme-text-secondary)'
+                e.currentTarget.style.background = 'transparent'
+              }}
+              aria-label={lang === 'en' ? 'Search' : lang === 'es' ? 'Buscar' : lang === 'fr' ? 'Rechercher' : 'Buscar'}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </button>
+            
+            {/* Separador visual (se busca estiver ativo) */}
+            <div className="hidden h-4 w-px min-[768px]:block shrink-0" style={{ backgroundColor: 'var(--theme-border)', flexShrink: 0, alignSelf: 'center', marginLeft: '2px', marginRight: '4px' }}></div>
+            
             {/* Idiomas - ALINHAMENTO PERFEITO */}
             <div className="hidden min-[768px]:flex shrink-0" style={{ alignItems: 'center', height: '100%', display: 'flex', gap: '0', marginLeft: '2px' }}>
               {/* Grupo Canadá - EN e FR - ULTRA COMPACTO */}
@@ -977,6 +1011,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           position: 'relative'
         }}
       >
+        {/* 🆕 UX PREMIUM - Breadcrumbs visuais (OPCIONAL - pode remover se não funcionar) */}
+        {location.pathname !== `/${lang}` && location.pathname !== '/' && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+            <Breadcrumbs lang={lang} theme={theme} />
+          </div>
+        )}
         {children}
       </main>
 
@@ -1746,6 +1786,14 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
 
       {/* 🔧 Dev Tools Button - Remover antes do deploy final */}
       <DevToolsButton />
+
+      {/* 🆕 UX PREMIUM - Sistema de busca (OPCIONAL - pode remover se não funcionar) */}
+      <SearchModal 
+        isOpen={isSearchOpen} 
+        onClose={() => setIsSearchOpen(false)} 
+        lang={lang}
+        theme={theme}
+      />
     </div>
   )
 }

@@ -2369,13 +2369,15 @@ html[data-theme="light"] .tech-pill:hover {
 /* Sobrenome vermelho - ambos os temas */
 .team-member-name .text-azimut-red,
 .team-card .text-azimut-red,
-.team-card-content .text-azimut-red {
+.team-card-content .text-azimut-red,
+.card-dark-fixed .team-member-name span:last-child {
   color: #c92337 !important;
 }
 
 [data-theme="light"] .team-member-name .text-azimut-red,
 [data-theme="light"] .team-card .text-azimut-red,
-[data-theme="light"] .team-card-content .text-azimut-red {
+[data-theme="light"] .team-card-content .text-azimut-red,
+[data-theme="light"] .card-dark-fixed .team-member-name span:last-child {
   color: #c92337 !important;
 }
 

@@ -11,7 +11,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: 1753,
+    port: 5173,
     host: true, // Permite acesso da rede local (0.0.0.0)
     // Ou use '0.0.0.0' explicitamente
     // host: '0.0.0.0',

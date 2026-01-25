@@ -17,6 +17,9 @@ import { useTheme } from '../contexts/ThemeContext'
 import { logger } from '@/utils/logger'
 import { PageFooterNavigation } from '../components/PageFooterNavigation'
 import LangLink from '../components/LangLink'
+// 🆕 UX PREMIUM - Loading Skeleton (OPCIONAL - pode remover se não funcionar)
+import LoadingSkeleton from '../components/LoadingSkeleton'
+import { useLoadingSkeleton } from '../hooks/useLoadingSkeleton'
 
 interface HomeProps {
   lang: Lang
@@ -72,6 +75,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     shouldShowEditais,
     loading: personalizationLoading,
   } = usePersonalizedContent()
+  
+  // 🆕 UX PREMIUM - Loading Skeleton (OPCIONAL - pode remover se não funcionar)
+  const { showSkeleton } = useLoadingSkeleton(cmsLoading || personalizationLoading, {
+    delay: 300, // Mostrar skeleton apenas se loading > 300ms
+    minDuration: 500 // Manter skeleton por pelo menos 500ms
+  })
   
   // ESTRATÉGIA CORRIGIDA: i18n.ts → Personalizado → Backoffice
   // Priorizar i18n.ts (sempre correto por idioma) sobre backoffice (que pode estar desatualizado)
@@ -222,6 +231,18 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         type="website"
       />
       <main className="relative film-grain">
+        {/* 🆕 UX PREMIUM - Loading Skeleton (OPCIONAL - pode remover se não funcionar) */}
+        {showSkeleton && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ 
+            background: theme === 'dark' ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(8px)'
+          }}>
+            <div className="max-w-4xl w-full px-4">
+              <LoadingSkeleton type="card" lines={5} theme={theme} />
+            </div>
+          </div>
+        )}
+
         {/* Estrela de fundo - HOME: Ambos os temas (DESKTOP ONLY) */}
         <div 
           className="hidden lg:block pointer-events-none fixed top-[120px] -right-28 md:-right-40 h-[520px] w-[520px] md:h-[680px] md:w-[680px]"
