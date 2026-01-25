@@ -6,9 +6,8 @@
 // ════════════════════════════════════════════════════════════
 
 import React from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { type Lang } from '../i18n'
-import { useTheme } from '../contexts/ThemeContext'
 
 interface AcademySubNavProps {
   lang: Lang
@@ -17,8 +16,6 @@ interface AcademySubNavProps {
 
 const AcademySubNav: React.FC<AcademySubNavProps> = ({ lang, currentPage }) => {
   const navigate = useNavigate()
-  const location = useLocation()
-  const { theme } = useTheme()
 
   // Itens do menu com traduções
   const navItems = [
