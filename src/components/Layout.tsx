@@ -318,8 +318,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           {!isMobile && (
           <nav 
             ref={navRef}
-            className="flex items-center justify-center font-sora text-[0.48rem] font-medium uppercase tracking-[0.06em] min-[768px]:gap-2.5 min-[768px]:text-[0.48rem] md:gap-3 md:text-[0.52rem] lg:text-[0.58rem] lg:gap-3.5 xl:gap-4 xl:text-[0.62rem]" 
-            style={{ color: 'var(--theme-text-secondary)', overflow: 'visible', alignItems: 'center', flexWrap: 'nowrap' }}
+            className="flex items-center justify-end font-sora text-[0.48rem] font-medium uppercase tracking-[0.06em] min-[768px]:gap-2.5 min-[768px]:text-[0.48rem] md:gap-3 md:text-[0.52rem] lg:text-[0.58rem] lg:gap-3.5 xl:gap-4 xl:text-[0.62rem]" 
+            style={{ color: 'var(--theme-text-secondary)', overflow: 'visible', alignItems: 'center', flexWrap: 'nowrap', paddingRight: '20px' }}
           >
             <LangLink to="/" 
               className="nav-link-glow relative whitespace-nowrap touch-manipulation shrink-0 transition-colors duration-200 font-sora font-semibold"
@@ -478,14 +478,14 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   description: lang === 'pt' ? 'Aprendizado prático' : lang === 'es' ? 'Aprendizaje práctico' : lang === 'fr' ? 'Apprentissage pratique' : 'Hands-on learning'
                 },
                 {
-                  label: lang === 'pt' ? '🇨🇦 Vancouver (VFS/VanArts)' : lang === 'es' ? '🇨🇦 Vancouver (VFS/VanArts)' : lang === 'fr' ? '🇨🇦 Vancouver (VFS/VanArts)' : '🇨🇦 Vancouver (VFS/VanArts)',
-                  href: '/academy/vancouver',
-                  description: lang === 'pt' ? 'Estudar cinema/VFX no Canadá' : lang === 'es' ? 'Estudiar cine/VFX en Canadá' : lang === 'fr' ? 'Étudier cinéma/VFX au Canada' : 'Study film/VFX in Canada'
-                },
-                {
                   label: lang === 'pt' ? 'Treinamento Corporativo' : lang === 'es' ? 'Entrenamiento Corporativo' : lang === 'fr' ? 'Formation d\'Entreprise' : 'Corporate Training',
                   href: '/academy/corporate',
                   description: lang === 'pt' ? 'Programas personalizados' : lang === 'es' ? 'Programas personalizados' : lang === 'fr' ? 'Programmes personnalisés' : 'Tailored programs'
+                },
+                {
+                  label: lang === 'pt' ? '🇨🇦 Vancouver (VFS/VanArts)' : lang === 'es' ? '🇨🇦 Vancouver (VFS/VanArts)' : lang === 'fr' ? '🇨🇦 Vancouver (VFS/VanArts)' : '🇨🇦 Vancouver (VFS/VanArts)',
+                  href: '/academy/vancouver',
+                  description: lang === 'pt' ? 'Estudar cinema/VFX no Canadá' : lang === 'es' ? 'Estudiar cine/VFX en Canadá' : lang === 'fr' ? 'Étudier cinéma/VFX au Canada' : 'Study film/VFX in Canada'
                 }
               ]}
               lang={lang}

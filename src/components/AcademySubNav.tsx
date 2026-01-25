@@ -17,7 +17,7 @@ interface AcademySubNavProps {
 const AcademySubNav: React.FC<AcademySubNavProps> = ({ lang, currentPage }) => {
   const navigate = useNavigate()
 
-  // Itens do menu com traduções (mesma ordem do dropdown)
+  // Itens do menu com traduções (Courses, Workshops, Corporate, Vancouver por último)
   const navItems = [
     {
       id: 'courses',
@@ -28,17 +28,6 @@ const AcademySubNav: React.FC<AcademySubNavProps> = ({ lang, currentPage }) => {
         en: 'Courses',
         es: 'Cursos',
         fr: 'Cours'
-      }
-    },
-    {
-      id: 'vancouver',
-      icon: '🇨🇦',
-      href: '/academy/vancouver',
-      labels: {
-        pt: 'Vancouver',
-        en: 'Vancouver',
-        es: 'Vancouver',
-        fr: 'Vancouver'
       }
     },
     {
@@ -61,6 +50,17 @@ const AcademySubNav: React.FC<AcademySubNavProps> = ({ lang, currentPage }) => {
         en: 'Corporate',
         es: 'Corporativo',
         fr: 'Corporatif'
+      }
+    },
+    {
+      id: 'vancouver',
+      icon: '🇨🇦',
+      href: '/academy/vancouver',
+      labels: {
+        pt: 'Vancouver',
+        en: 'Vancouver',
+        es: 'Vancouver',
+        fr: 'Vancouver'
       }
     }
   ]

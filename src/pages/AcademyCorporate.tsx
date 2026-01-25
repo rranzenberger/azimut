@@ -10,6 +10,7 @@ import { useUserTracking } from '../hooks/useUserTracking'
 import { useTheme } from '../contexts/ThemeContext'
 import { PageFooterNavigation } from '../components/PageFooterNavigation'
 import AcademySubNav from '../components/AcademySubNav'
+import { useBackofficeContent } from '../hooks/useBackofficeContent'
 
 interface AcademyCorporateProps {
   lang: Lang
@@ -19,6 +20,9 @@ const AcademyCorporate: React.FC<AcademyCorporateProps> = ({ lang }) => {
   // REMOVIDO: useUserTracking já é chamado no Layout.tsx
   // useUserTracking()
   const { theme } = useTheme()
+  
+  // Backoffice content com fallback para conteúdo hardcoded
+  const { page: backofficePage } = useBackofficeContent('academy-corporate', lang)
 
   const content: Record<Lang, any> = {
     pt: {
@@ -551,112 +555,190 @@ const AcademyCorporate: React.FC<AcademyCorporateProps> = ({ lang }) => {
       {/* Menu Secundário Academy */}
       <AcademySubNav lang={lang} currentPage="corporate" />
 
-      <div className="min-h-screen bg-theme-primary">
-        {/* Espaçador para compensar header + submenu fixos (PADRONIZADO) */}
-        <div style={{ height: '48px' }} />
-        
-        {/* HERO - Compacto */}
+      <div className="min-h-screen">
+        {/* ═══════════════════════════════════════════════════════════════
+            HERO PREMIUM - Contraste melhorado + Imagem visível + Badge azul
+            ═══════════════════════════════════════════════════════════ */}
         <section 
-          className="relative min-h-[45vh] flex items-center justify-center overflow-hidden"
+          className="relative min-h-[28vh] flex items-end justify-center overflow-hidden pt-16 pb-8"
+          style={{
+            backgroundColor: theme === 'dark' ? '#0a1628' : '#1a1815'
+          }}
         >
-          {/* Background com Curadoria de Arte Premium */}
-          <div className="absolute inset-0">
-            {/* Tema Escuro: Overlay cinematográfico balanceado */}
-            {theme === 'dark' && (
-              <>
-                <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/65" />
-                <div 
-                  className="absolute inset-0"
-                  style={{
-                    background: `radial-gradient(
-                      ellipse 140% 120% at 50% 45%,
-                      transparent 0%,
-                      transparent 35%,
-                      rgba(0, 0, 0, 0.2) 60%,
-                      rgba(0, 0, 0, 0.5) 85%,
-                      rgba(0, 0, 0, 0.75) 100%
-                    )`
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/30" />
-                <div className="absolute inset-0 bg-gradient-to-br from-azimut-red/5 via-transparent to-transparent" />
-              </>
-            )}
-            
-            {/* Tema Claro: Overlay equilibrado com vinheta artística */}
-            {theme === 'light' && (
-              <>
-                <div className="absolute inset-0 bg-gradient-to-b from-[#f5f1e8]/40 via-[#e8e5df]/35 to-[#d3cec3]/45" />
-                <div 
-                  className="absolute inset-0"
-                  style={{
-                    background: `radial-gradient(
-                      ellipse 150% 130% at 50% 50%,
-                      transparent 0%,
-                      transparent 45%,
-                      rgba(30, 28, 26, 0.25) 70%,
-                      rgba(20, 18, 16, 0.45) 85%,
-                      rgba(10, 8, 6, 0.65) 100%
-                    )`
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#1e1c1a]/30" />
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-900/10 via-transparent to-slate-900/15" />
-                <div 
-                  className="absolute inset-0"
-                  style={{
-                    background: `radial-gradient(
-                      circle at 50% 50%,
-                      transparent 30%,
-                      rgba(0, 0, 0, 0.1) 60%,
-                      rgba(0, 0, 0, 0.3) 100%
-                    )`
-                  }}
-                />
-              </>
-            )}
+          {/* Imagem de fundo - Ambiente Corporativo (alta qualidade + Ken Burns zoom) */}
+          <div 
+            className="absolute inset-0 z-0"
+            style={{
+              backgroundImage: 'url(https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=90)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center 35%',
+              opacity: theme === 'dark' ? 0.5 : 0.4,
+              animation: 'kenBurnsOnce 8s ease-out forwards'
+            }}
+          />
+          {/* Overlay cinematográfico leve */}
+          <div className="absolute inset-0 z-[0] hero-cinematic-overlay" style={{ opacity: 0.5 }} />
+
+          {/* Overlay gradiente premium */}
+          <div 
+            className="absolute inset-0 z-[1]"
+            style={{
+              background: theme === 'dark'
+                ? `linear-gradient(
+                    180deg, 
+                    rgba(10, 22, 40, 0.7) 0%, 
+                    rgba(10, 22, 40, 0.5) 30%,
+                    rgba(10, 22, 40, 0.6) 70%,
+                    rgba(5, 8, 20, 0.95) 100%
+                  )`
+                : `linear-gradient(
+                    180deg, 
+                    rgba(26, 24, 21, 0.75) 0%, 
+                    rgba(26, 24, 21, 0.5) 30%,
+                    rgba(26, 24, 21, 0.65) 70%,
+                    rgba(26, 24, 21, 0.95) 100%
+                  )`
+            }}
+          />
+
+          {/* Vinheta lateral */}
+          <div 
+            className="absolute inset-0 z-[2]"
+            style={{
+              background: 'radial-gradient(ellipse 80% 100% at 50% 50%, transparent 40%, rgba(0,0,0,0.4) 100%)'
+            }}
+          />
+
+          {/* Mesh Gradient - Vermelho Azimut */}
+          <div className="absolute inset-0 overflow-hidden z-[3]">
+            <div 
+              className="absolute rounded-full blur-3xl"
+              style={{
+                width: '50%',
+                height: '100%',
+                top: '-30%',
+                right: '-15%',
+                background: 'radial-gradient(circle, rgba(201, 35, 55, 0.12) 0%, transparent 60%)',
+                opacity: 0.8
+              }}
+            />
           </div>
+
+          {/* Linhas decorativas vermelhas */}
+          <div 
+            className="absolute top-0 left-0 right-0 h-[1px] z-[4]"
+            style={{
+              background: 'linear-gradient(90deg, transparent 0%, rgba(201, 35, 55, 0.3) 20%, rgba(201, 35, 55, 0.6) 50%, rgba(201, 35, 55, 0.3) 80%, transparent 100%)'
+            }}
+          />
           
-          <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
-            <div className="inline-block px-6 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-6">
-              <span className="text-azimut-red text-sm font-semibold uppercase tracking-wider">
-                {t.hero.badge}
-              </span>
+          {/* Conteúdo */}
+          <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+              {/* Lado esquerdo */}
+              <div className="flex-1">
+                {/* Badge - Estilo Vancouver (azul navy escuro no dark / vermelho no claro) */}
+                <div 
+                  className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-4 backdrop-blur-md"
+                  style={{
+                    background: theme === 'dark'
+                      ? 'rgba(30, 41, 59, 0.88)'
+                      : 'rgba(201, 35, 55, 0.9)',
+                    border: theme === 'dark'
+                      ? '1px solid rgba(255, 255, 255, 0.18)'
+                      : '1px solid rgba(201, 35, 55, 0.95)',
+                    boxShadow: theme === 'dark'
+                      ? '0 4px 20px rgba(0, 0, 0, 0.4)'
+                      : '0 4px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(201, 35, 55, 0.2)'
+                  }}
+                >
+                  <span className="text-white text-xs font-semibold uppercase tracking-[0.15em]" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+                    {t.hero.badge}
+                  </span>
+                </div>
+
+                {/* Título em 2 linhas com palavra em vermelho (igual Home) */}
+                <h1 
+                  className="text-4xl md:text-5xl lg:text-6xl font-handel uppercase tracking-wide mb-3"
+                  style={{ 
+                    color: '#ffffff',
+                    textShadow: '0 2px 30px rgba(0, 0, 0, 0.7), 0 4px 60px rgba(0,0,0,0.5)',
+                    letterSpacing: '0.05em',
+                    lineHeight: '1.15'
+                  }}
+                >
+                  {lang === 'pt' && (
+                    <>
+                      SOLUÇÕES<br />
+                      <span className="text-azimut-red">B2B</span>
+                    </>
+                  )}
+                  {lang === 'en' && (
+                    <>
+                      B2B<br />
+                      <span className="text-azimut-red">SOLUTIONS</span>
+                    </>
+                  )}
+                  {lang === 'es' && (
+                    <>
+                      SOLUCIONES<br />
+                      <span className="text-azimut-red">B2B</span>
+                    </>
+                  )}
+                  {lang === 'fr' && (
+                    <>
+                      SOLUTIONS<br />
+                      <span className="text-azimut-red">B2B</span>
+                    </>
+                  )}
+                </h1>
+
+                {/* Subtítulo */}
+                <p 
+                  className="text-lg md:text-xl font-light"
+                  style={{ 
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    letterSpacing: '0.03em',
+                    textShadow: '0 2px 15px rgba(0, 0, 0, 0.5)'
+                  }}
+                >
+                  {t.hero.subtitle}
+                </p>
+              </div>
+
+              {/* Lado direito */}
+              <div className="md:max-w-sm md:text-right">
+                <p 
+                  className="text-sm md:text-base leading-relaxed"
+                  style={{ 
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    letterSpacing: '0.01em',
+                    textShadow: '0 1px 8px rgba(0,0,0,0.4)'
+                  }}
+                >
+                  {t.hero.description}
+                </p>
+              </div>
             </div>
-
-            {/* Título - Cores adaptativas por tema */}
-            <h1 
-              className="text-5xl md:text-7xl font-handel uppercase tracking-wider mb-6"
-              style={{ 
-                color: theme === 'dark' ? '#ffffff' : '#f5f1e8',
-                textShadow: theme === 'light' ? '0 2px 8px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.3)' : '0 2px 4px rgba(0, 0, 0, 0.2)'
-              }}
-            >
-              {t.hero.title}
-            </h1>
-
-            {/* Subtítulo - Cores adaptativas por tema */}
-            <p 
-              className="text-xl md:text-2xl mb-4"
-              style={{ 
-                color: theme === 'dark' ? 'rgba(255, 255, 255, 0.9)' : '#e8e5df',
-                textShadow: theme === 'light' ? '0 1px 4px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3)' : '0 1px 2px rgba(0, 0, 0, 0.2)'
-              }}
-            >
-              {t.hero.subtitle}
-            </p>
-
-            {/* Descrição - Cores adaptativas por tema */}
-            <p 
-              className="text-lg max-w-3xl mx-auto"
-              style={{ 
-                color: theme === 'dark' ? 'rgba(255, 255, 255, 0.7)' : '#d3cec3',
-                textShadow: theme === 'light' ? '0 1px 3px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4)' : '0 1px 2px rgba(0, 0, 0, 0.3)'
-              }}
-            >
-              {t.hero.description}
-            </p>
           </div>
+
+          {/* Gradient fade inferior */}
+          <div 
+            className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none z-[5]"
+            style={{
+              background: theme === 'dark'
+                ? 'linear-gradient(to top, #050814 0%, rgba(5,8,20,0.8) 40%, transparent 100%)'
+                : 'linear-gradient(to top, #1a1815 0%, rgba(26,24,21,0.8) 40%, transparent 100%)'
+            }}
+          />
+          
+          {/* Linha vermelha inferior */}
+          <div 
+            className="absolute bottom-0 left-0 right-0 h-[2px] z-[6]"
+            style={{
+              background: 'linear-gradient(90deg, transparent 0%, rgba(201, 35, 55, 0.4) 20%, rgba(201, 35, 55, 0.8) 50%, rgba(201, 35, 55, 0.4) 80%, transparent 100%)'
+            }}
+          />
         </section>
 
         {/* CLIENTS (Logos) */}
