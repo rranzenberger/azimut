@@ -146,9 +146,9 @@ const OptimizedImage: React.FC<OptimizedImageProps> = memo(({
         </picture>
       )}
 
-      {/* Placeholder silencioso em caso de erro (sem mensagem visível) */}
+      {/* Placeholder silencioso em caso de erro - mantém fundo degradê do container pai */}
       {error && (
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-900 to-black" />
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-900 to-black opacity-50" />
       )}
     </div>
   )

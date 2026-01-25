@@ -340,12 +340,13 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                   <div 
                     className="team-photo relative shrink-0 overflow-hidden w-full md:w-[450px] lg:w-[500px] xl:w-[550px] aspect-[3/4]"
                     style={{
-                      background: '#0a0f1a',
-                      overflow: 'hidden'
+                      background: 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)',
+                      overflow: 'hidden',
+                      minHeight: '400px' // Travar altura mínima para não aparecer espaço vazio
                     }}
                   >
                     <div 
-                      className="w-full h-full"
+                      className="w-full h-full absolute inset-0"
                       style={member.name.includes('Alberto') ? {
                         transform: 'scale(1.08)',
                         transformOrigin: 'center center'
@@ -357,7 +358,7 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                       <OptimizedImage
                         src={member.photo}
                         alt={member.name}
-                        className="w-full h-full"
+                        className="w-full h-full absolute inset-0"
                         objectFit="cover"
                         priority={true}
                         style={member.name.includes('Alberto') ? {
@@ -367,21 +368,18 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                         } : {
                           objectPosition: 'center center'
                         }}
-                      onError={(e) => {
-                        // Tratamento de erro silencioso - não quebrar renderização
-                        try {
-                          const img = e.currentTarget as HTMLImageElement
-                          if (img && img.parentElement) {
-                            const container = img.parentElement.parentElement
-                            if (container) {
-                              container.style.background = 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)'
+                        onError={(e) => {
+                          // Se imagem falhar, manter fundo degradê (não mostrar espaço vazio)
+                          try {
+                            const img = e.currentTarget as HTMLImageElement
+                            if (img) {
+                              img.style.display = 'none'
+                              // O container já tem fundo degradê, então não precisa fazer nada
                             }
+                          } catch (error) {
+                            // Silencioso - não quebrar renderização
                           }
-                        } catch (error) {
-                          // Silencioso - não quebrar renderização
-                          // Erro tratado silenciosamente
-                        }
-                      }}
+                        }}
                       />
                     </div>
                   </div>
