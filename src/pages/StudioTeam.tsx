@@ -384,8 +384,10 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                     </div>
                   </div>
 
-                  {/* Conteúdo - Espaçamento otimizado */}
-                  <div className="flex-1 p-6 md:p-8 max-w-2xl flex flex-col justify-start pt-4 md:pt-6">
+                  {/* Conteúdo - Degradê sutil na área do currículo */}
+                  <div 
+                    className="team-content-area flex-1 p-6 md:p-8 max-w-2xl flex flex-col justify-start pt-4 md:pt-6"
+                  >
                     {/* Linha decorativa vermelha */}
                     <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-azimut-red via-azimut-red/50 to-transparent"></div>
                     
