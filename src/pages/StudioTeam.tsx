@@ -334,56 +334,42 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                 className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500 scroll-mt-28"
               >
                 <div className="flex flex-col md:flex-row">
-                  {/* Foto - Larguras iguais para todos, enquadramento otimizado */}
+                  {/* Foto - img direto como filho de .team-photo para CSS grayscale funcionar */}
                   <div 
-                    className="team-photo relative shrink-0 overflow-hidden w-full md:w-[450px] lg:w-[500px] xl:w-[550px] aspect-[3/4]"
-                    style={{
-                      background: '#0a0f1a',
-                      overflow: 'hidden'
-                    }}
+                    className="team-photo relative shrink-0 overflow-hidden w-full md:w-[420px] lg:w-[480px] xl:w-[520px] aspect-[3/4]"
+                    style={{ background: '#0a0f1a' }}
                   >
-                    <div 
-                      className="w-full h-full"
-                      style={member.name.includes('Alberto') ? {
-                        transform: 'scale(1.08)',
-                        transformOrigin: 'center center'
-                      } : member.name.includes('Ranz') ? {
-                        transform: 'scale(1.05)',
-                        transformOrigin: 'center top'
-                      } : {}}
-                    >
-                      <OptimizedImage
-                        src={member.photo}
-                        alt={member.name}
-                        className="w-full h-full"
-                        objectFit="cover"
-                        priority={true}
-                        style={member.name.includes('Alberto') ? {
-                          objectPosition: 'center 28%'
-                        } : member.name.includes('Ranz') ? {
-                          objectPosition: 'center 10%'
-                        } : {
-                          objectPosition: 'center center'
-                        }}
-                        onError={(e) => {
-                          try {
-                            const img = e.currentTarget as HTMLImageElement
-                            if (img && img.parentElement) {
-                              const container = img.parentElement.parentElement
-                              if (container) {
-                                container.style.background = 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)'
-                              }
-                            }
-                          } catch (error) {
-                            // Silencioso
-                          }
-                        }}
-                      />
-                    </div>
+                    <img
+                      src={member.photo}
+                      alt={member.name}
+                      loading="eager"
+                      decoding="async"
+                      className="w-full h-full object-cover"
+                      style={{
+                        transform: member.name.includes('Alberto') 
+                          ? 'scale(1.25)' 
+                          : member.name.includes('Ranz') 
+                            ? 'scale(1.20)' 
+                            : 'scale(1.0)',
+                        transformOrigin: member.name.includes('Alberto') 
+                          ? 'center 35%' 
+                          : member.name.includes('Ranz') 
+                            ? 'center 25%' 
+                            : 'center center',
+                        objectPosition: member.name.includes('Alberto') 
+                          ? 'center 30%' 
+                          : member.name.includes('Ranz') 
+                            ? 'center 15%' 
+                            : 'center center',
+                      }}
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none'
+                      }}
+                    />
                   </div>
 
-                  {/* Conteúdo - Espaçamento otimizado */}
-                  <div className="flex-1 p-6 md:p-8 max-w-2xl flex flex-col justify-start pt-4 md:pt-6">
+                  {/* Conteúdo - Área de texto mais compacta */}
+                  <div className="flex-1 p-5 md:p-6 max-w-lg flex flex-col justify-start pt-4 md:pt-5">
                     {/* Linha decorativa vermelha */}
                     <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-azimut-red via-azimut-red/50 to-transparent"></div>
                     
