@@ -2396,13 +2396,22 @@ html[data-theme="light"] .tech-pill:hover {
   color: #c92337 !important;
 }
 
-/* Tratamento de foto da equipe - Duotone Cinematográfico */
+/* Tratamento de foto da equipe - Fundo degradê premium */
 .team-photo {
   position: relative;
   overflow: hidden;
   border-radius: 10px;
-  background: linear-gradient(135deg, #0a0f1a 0%, #151a28 100%);
-  min-height: 600px; /* Altura mínima para evitar cortes */
+  /* Degradê cinematográfico azul escuro - funciona com object-fit: contain */
+  background: linear-gradient(145deg, #0a0f1a 0%, #0f172a 40%, #1a1f2e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tema CLARO: Fundo marrom/café para fotos da equipe */
+[data-theme="light"] .team-photo,
+html[data-theme="light"] .team-photo {
+  background: linear-gradient(145deg, #3d3731 0%, #4a443e 40%, #5a534b 100%);
 }
 
 /* Área de conteúdo/currículo da equipe - Degradê sutil */

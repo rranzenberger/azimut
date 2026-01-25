@@ -336,37 +336,29 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                 className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500 scroll-mt-28"
               >
                 <div className="flex flex-col md:flex-row">
-                  {/* Foto - Altura flexível para evitar cortes, foco no rosto */}
+                  {/* Foto - SEM CORTES, contain com fundo degradê */}
                   <div 
-                    className="team-photo relative shrink-0 overflow-hidden w-full md:w-[450px] lg:w-[500px] xl:w-[550px]"
+                    className="team-photo relative shrink-0 overflow-hidden w-full md:w-[400px] lg:w-[420px] xl:w-[450px]"
                     style={{
-                      background: 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)',
+                      background: 'linear-gradient(145deg, #0a0f1a 0%, #0f172a 40%, #1a1f2e 100%)',
                       overflow: 'hidden',
-                      minHeight: '600px', // Altura maior para mostrar mais da foto
-                      height: 'auto' // Altura automática baseada na imagem
+                      height: '500px', // Altura fixa para consistência
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
                     }}
                   >
                     <OptimizedImage
                       src={member.photo}
                       alt={member.name}
                       className="w-full h-full"
-                      objectFit="cover"
+                      objectFit="contain"
                       priority={true}
-                      style={member.name.includes('Alberto') ? {
-                        objectPosition: 'center 15%', // Foco no rosto, mostra mais da foto
+                      style={{
                         width: '100%',
                         height: '100%',
-                        minHeight: '600px'
-                      } : member.name.includes('Ranz') ? {
-                        objectPosition: 'center 8%', // Foco no rosto e gesto completo
-                        width: '100%',
-                        height: '100%',
-                        minHeight: '600px'
-                      } : {
-                        objectPosition: 'center 20%', // Anick - foco no rosto
-                        width: '100%',
-                        height: '100%',
-                        minHeight: '600px'
+                        objectFit: 'contain',
+                        objectPosition: 'center center'
                       }}
                       onError={(e) => {
                         try {
