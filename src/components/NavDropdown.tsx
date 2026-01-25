@@ -56,10 +56,10 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
     }
   }, [isOpen])
 
-  // Fechar dropdown quando a rota mudar
+  // Fechar dropdown quando a rota mudar (pathname ou query params)
   useEffect(() => {
     setIsOpen(false)
-  }, [location.pathname])
+  }, [location.pathname, location.search])
 
   // Limpar timeout ao desmontar
   useEffect(() => {
