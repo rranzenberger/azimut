@@ -678,14 +678,14 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
                       video.currentTime = 0;
                     }}
                     onPause={(e) => {
-                      // Quando pausar, volta para o início e mostra thumbnail após 3 minutos parado
+                      // Quando pausar, volta para o início e mostra thumbnail após 45s parado
                       const video = e.currentTarget;
                       setTimeout(() => {
                         if (video.paused && !video.ended) {
                           video.currentTime = 0;
                           video.load();
                         }
-                      }, 180000); // 3 minutos = 180000ms
+                      }, 45000); // 45 segundos = 45000ms
                     }}
                     onEnded={(e) => {
                       // Quando o vídeo terminar, volta para o início e mostra o poster/thumbnail
