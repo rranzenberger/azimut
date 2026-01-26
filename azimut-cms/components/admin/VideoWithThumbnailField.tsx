@@ -325,33 +325,6 @@ export default function VideoWithThumbnailField({
           </div>
         </div>
 
-        {/* Preview do Vídeo */}
-        {videoPreview && (
-          <div style={{ 
-            marginTop: 16, 
-            padding: 12, 
-            borderRadius: 8, 
-            background: 'rgba(46, 204, 113, 0.1)',
-            border: '1px solid rgba(46, 204, 113, 0.3)'
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-              <span style={{ fontSize: 12, color: '#86efac' }}>✅ Vídeo selecionado</span>
-              <button
-                type="button"
-                onClick={() => { setVideoPreview(null); onVideoChange(''); onVideoUrlChange(''); }}
-                style={{ padding: '4px 8px', borderRadius: 4, background: 'rgba(239,68,68,0.8)', color: '#fff', border: 'none', cursor: 'pointer', fontSize: 11 }}
-              >
-                ✕ Remover
-              </button>
-            </div>
-            <video 
-              src={videoPreview} 
-              controls 
-              poster={thumbPreview || undefined}
-              style={{ width: '100%', maxHeight: 200, borderRadius: 6, background: '#000' }}
-            />
-          </div>
-        )}
       </div>
 
       {/* ═══════════════════════════════════════════════════════════
@@ -423,48 +396,55 @@ export default function VideoWithThumbnailField({
               disabled={!!thumbnailValue}
             />
           </div>
+        </div>
+      )}
 
+      {/* ═══════════════════════════════════════════════════════════
+          PREVIEWS LADO A LADO (Thumbnail + Vídeo)
+      ═══════════════════════════════════════════════════════════ */}
+      {(videoPreview || thumbPreview) && (
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+          gap: 20,
+          marginTop: 8
+        }}>
           {/* Preview do Thumbnail */}
-          <div style={{ marginTop: 16 }}>
-            <h4 style={{ margin: '0 0 8px', fontSize: 13, fontWeight: 500, color: '#c0bccf' }}>
-              Preview do Thumbnail:
-            </h4>
+          <div style={{ 
+            padding: 16, 
+            borderRadius: 12, 
+            background: 'rgba(147, 51, 234, 0.08)',
+            border: '1px solid rgba(147, 51, 234, 0.3)'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+              <h4 style={{ margin: 0, fontSize: 14, fontWeight: 600, color: '#a78bfa' }}>
+                🖼️ Preview do Thumbnail
+              </h4>
+              {thumbPreview && (
+                <button
+                  type="button"
+                  onClick={() => { setThumbPreview(null); onThumbnailChange(''); onThumbnailUrlChange(''); }}
+                  style={{ padding: '4px 10px', borderRadius: 4, background: 'rgba(239,68,68,0.8)', color: '#fff', border: 'none', cursor: 'pointer', fontSize: 11 }}
+                >
+                  ✕ Remover
+                </button>
+              )}
+            </div>
             <div style={{ 
               aspectRatio: '16/9', 
-              maxWidth: 300,
+              width: '100%',
               borderRadius: 8, 
               overflow: 'hidden',
-              background: 'rgba(0,0,0,0.3)',
+              background: 'rgba(0,0,0,0.5)',
               border: '2px solid rgba(147, 51, 234, 0.4)',
-              position: 'relative'
             }}>
               {thumbPreview ? (
-                <>
-                  <img 
-                    src={thumbPreview}
-                    alt="Thumbnail preview"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    onError={(e) => { (e.target as HTMLImageElement).src = '/og-image.png' }}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => { setThumbPreview(null); onThumbnailChange(''); onThumbnailUrlChange(''); }}
-                    style={{ 
-                      position: 'absolute', 
-                      top: 8, 
-                      right: 8, 
-                      padding: '4px 8px', 
-                      borderRadius: 4, 
-                      background: 'rgba(239,68,68,0.9)', 
-                      color: '#fff', 
-                      border: 'none', 
-                      cursor: 'pointer', 
-                      fontSize: 11 
-                    }}
-                  >
-                    ✕
-                  </button>
-                </>
+                <img 
+                  src={thumbPreview}
+                  alt="Thumbnail preview"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  onError={(e) => { (e.target as HTMLImageElement).src = '/og-image.png' }}
+                />
               ) : (
                 <div style={{ 
                   width: '100%', 
@@ -475,7 +455,59 @@ export default function VideoWithThumbnailField({
                   color: '#8f8ba2',
                   fontSize: 12
                 }}>
-                  ⚠️ Nenhum thumbnail selecionado
+                  ⚠️ Sem thumbnail
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Preview do Vídeo Completo */}
+          <div style={{ 
+            padding: 16, 
+            borderRadius: 12, 
+            background: 'rgba(46, 204, 113, 0.08)',
+            border: '1px solid rgba(46, 204, 113, 0.3)'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+              <h4 style={{ margin: 0, fontSize: 14, fontWeight: 600, color: '#86efac' }}>
+                📺 Preview do Vídeo
+              </h4>
+              {videoPreview && (
+                <button
+                  type="button"
+                  onClick={() => { setVideoPreview(null); onVideoChange(''); onVideoUrlChange(''); }}
+                  style={{ padding: '4px 10px', borderRadius: 4, background: 'rgba(239,68,68,0.8)', color: '#fff', border: 'none', cursor: 'pointer', fontSize: 11 }}
+                >
+                  ✕ Remover
+                </button>
+              )}
+            </div>
+            <div style={{ 
+              aspectRatio: '16/9', 
+              width: '100%',
+              borderRadius: 8, 
+              overflow: 'hidden',
+              background: '#000',
+              border: '2px solid rgba(46, 204, 113, 0.4)',
+            }}>
+              {videoPreview ? (
+                <video 
+                  src={videoPreview} 
+                  controls 
+                  poster={thumbPreview || undefined}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              ) : (
+                <div style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  color: '#8f8ba2',
+                  fontSize: 12
+                }}>
+                  ⚠️ Sem vídeo
                 </div>
               )}
             </div>
