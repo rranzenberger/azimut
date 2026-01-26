@@ -665,9 +665,8 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
                 <div className="relative rounded-2xl overflow-hidden border-2 border-azimut-red/30 shadow-2xl max-w-4xl mx-auto">
                   <video 
                     controls 
-                    className="w-full aspect-video bg-black"
-                    poster="/og-image.png"
-                    preload="metadata"
+                    className="w-full aspect-video bg-slate-900"
+                    preload="auto"
                   >
                     <source src="/ChrisMilk.mp4" type="video/mp4" />
                     {lang === 'pt' ? 'Seu navegador não suporta vídeo HTML5.' : 'Your browser does not support HTML5 video.'}
