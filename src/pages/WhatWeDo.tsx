@@ -6,6 +6,7 @@ import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
 import InternalNavigation from '../components/InternalNavigation'
 import { servicesData, getServiceTitle, getServiceShortDesc } from '../data/servicesData'
+import { useBackofficeServices } from '../hooks/useBackofficeService'
 import StarBackground from '../components/StarBackground'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { PageFooterNavigation } from '../components/PageFooterNavigation'
@@ -136,6 +137,9 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   // Animação automática de seções
   useScrollAnimation()
   
+  // 🆕 BUSCAR SERVIÇOS DO BACKOFFICE (com fallback para dados locais)
+  const { services: backofficeServices, loading: loadingServices } = useBackofficeServices(lang)
+  
   // Ler filtro da URL (?filter=culture)
   const [activeFilter, setActiveFilter] = useState<FilterCategory>(() => {
     if (typeof window !== 'undefined') {
@@ -162,7 +166,40 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [location.search])
   
-  // Mapeamento de categorias para cada serviço
+  // Mapeamento de segments do backoffice para FilterCategory
+  // education, training → 'education'
+  // culture, museum, festival, theater → 'culture'
+  // branding, activation, vr, xr, ar → 'brands'
+  // cinema, audiovisual, vfx, animation, games → 'production'
+  // ai, technology, consulting, strategy, architecture → 'technology'
+  const getServiceCategory = (segments: string[]): FilterCategory => {
+    if (!segments || segments.length === 0) return 'technology' // default
+    
+    // Educação tem prioridade (card educação e consultoria)
+    if (segments.some(s => ['education', 'training', 'workshop', 'course', 'academy'].includes(s))) {
+      return 'education'
+    }
+    
+    // Cultura
+    if (segments.some(s => ['culture', 'museum', 'exhibition', 'festival', 'curation', 'theater', 'live-show'].includes(s))) {
+      return 'culture'
+    }
+    
+    // Marcas/Ativações
+    if (segments.some(s => ['branding', 'activation', 'vr', 'xr', 'ar', 'immersive', 'interactive', 'web3', 'scenography'].includes(s))) {
+      return 'brands'
+    }
+    
+    // Produção
+    if (segments.some(s => ['cinema', 'audiovisual', 'production', 'vfx', 'animation', '3d', '2d', 'motion', 'compositing', 'games'].includes(s))) {
+      return 'production'
+    }
+    
+    // Tecnologia (default)
+    return 'technology'
+  }
+  
+  // Mapeamento legado de categorias para dados locais (fallback)
   const serviceCategoryMap: Record<string, FilterCategory> = {
     'museus-exposicoes': 'culture',
     'festivais-curadoria-eventos': 'culture',
@@ -179,13 +216,24 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
     'arquitetura-virtual-bim': 'technology',
     'direcao-arte-criativa': 'technology',
     'ia-criativa': 'technology',
-    'consultoria-estrategia': 'technology'
+    'inteligencia-artificial': 'technology',
+    'consultoria-estrategia': 'education' // ← ATUALIZADO: agora aparece em educação
   }
+  
+  // 🆕 USAR DADOS DO BACKOFFICE (se disponíveis) ou FALLBACK para dados locais
+  const servicesSource = backofficeServices.length > 0 ? backofficeServices : servicesData
   
   // Filtrar serviços com base no filtro ativo
   const filteredServices = activeFilter === 'all' 
-    ? servicesData 
-    : servicesData.filter(service => serviceCategoryMap[service.slug] === activeFilter)
+    ? servicesSource 
+    : servicesSource.filter(service => {
+        // Se vier do backoffice, usar segments
+        if ('segments' in service && service.segments) {
+          return getServiceCategory(service.segments) === activeFilter
+        }
+        // Se for dado local, usar mapeamento legado
+        return serviceCategoryMap[service.slug] === activeFilter
+      })
 
   const filters: Array<{ id: FilterCategory; labelPt: string; labelEn: string; labelFr: string; labelEs: string }> = [
     { id: 'all', labelPt: 'Todas', labelEn: 'All', labelFr: 'Tous', labelEs: 'Todas' },
@@ -364,7 +412,8 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                     <h3 
                       className={`mb-3 font-sora text-[0.88rem] font-semibold uppercase tracking-[0.03em] transition-colors duration-300 line-clamp-2 leading-snug ${theme === 'dark' ? 'text-white/90' : 'text-on-dark-primary'}`}
                     >
-                      {getServiceTitle(service, lang)}
+                      {/* 🆕 Usar dados do backoffice (se disponível) ou fallback para dados locais */}
+                      {'title' in service ? service.title : getServiceTitle(service, lang)}
                     </h3>
                     
                     {/* Descrição */}
@@ -373,7 +422,8 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                       style={{ fontWeight: 400 }}
                     >
                       {(() => {
-                        const desc = getServiceShortDesc(service, lang)
+                        // 🆕 Usar dados do backoffice (se disponível) ou fallback para dados locais
+                        const desc = 'description' in service ? service.description : getServiceShortDesc(service, lang)
                         const highlighted = highlightKeywords(desc || '', lang)
                         return highlighted
                       })()}
