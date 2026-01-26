@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { FieldEditorWithMetadata } from '@/src/components/admin/FieldEditorWithMetadata';
 import MediaUploadField from '@/components/admin/MediaUploadField';
-// Force rebuild: 2026-01-17-v1
+import VideoWithThumbnailField from '@/components/admin/VideoWithThumbnailField';
+// Force rebuild: 2026-01-26-v2
 
 interface Section {
   id: string;
@@ -1218,154 +1219,30 @@ export default function EditPagePage() {
             </h2>
             <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
               Vídeo da seção de Filosofia (Empatia) - TED Talk Chris Milk "A Máquina de Empatia".
-              <br />
-              📌 <strong>Recomendado:</strong> MP4, máximo 25MB, formato 16:9.
             </p>
 
-            {/* ═══════════════════════════════════════════════════════════
-                VÍDEO DA FILOSOFIA
-            ═══════════════════════════════════════════════════════════ */}
-            <div style={{ padding: 20, borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', marginBottom: 20 }}>
-              <h3 style={{ margin: '0 0 20px', fontSize: 16, fontWeight: 600, color: '#e8e6f2' }}>
-                🎬 Vídeo da Filosofia
-              </h3>
-
-              {/* MediaUploadField - Upload + Biblioteca (Vídeos) */}
-              <MediaUploadField
-                label="Vídeo Filosofia (Chris Milk)"
-                value={formData.demoreelVideoId}
-                onChange={(mediaId) => setFormData({ ...formData, demoreelVideoId: mediaId })}
-                mediaType="video"
-                specs={{
-                  maxSizeMB: 25,
-                  description: 'Vídeo TED Talk Chris Milk - A Máquina de Empatia (MP4, máx 25MB)'
-                }}
-                existingMedia={allMedia}
-              />
-
-              {/* URL Manual (fallback) */}
-              <div style={{ marginTop: 20 }}>
-                <label style={{ display: 'block', marginBottom: 8, fontSize: 13, fontWeight: 500, color: '#8f8ba2' }}>
-                  📍 OU usar URL externa (YouTube/Vimeo/Local)
-                </label>
-                <input
-                  type="url"
-                  value={formData.demoreelVideoUrl}
-                  onChange={(e) => setFormData({ ...formData, demoreelVideoUrl: e.target.value })}
-                  placeholder="https://www.youtube.com/watch?v=... ou /ChrisMilk.mp4"
-                  style={inputStyle}
-                  disabled={!!formData.demoreelVideoId}
-                />
-                <div style={{ marginTop: 6, fontSize: 12, color: formData.demoreelVideoId ? '#8f8ba2' : '#7dd3fc' }}>
-                  {formData.demoreelVideoId 
-                    ? '🔒 Desabilitado (vídeo selecionado acima tem prioridade)'
-                    : '🌐 Cole a URL do vídeo (YouTube/Vimeo) ou caminho local (/ChrisMilk.mp4)'
-                  }
-                </div>
-              </div>
-            </div>
-
-            {/* ═══════════════════════════════════════════════════════════
-                THUMBNAIL DO VÍDEO
-            ═══════════════════════════════════════════════════════════ */}
-            <div style={{ padding: 20, borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', marginBottom: 20 }}>
-              <h3 style={{ margin: '0 0 20px', fontSize: 16, fontWeight: 600, color: '#e8e6f2' }}>
-                🖼️ Thumbnail do Vídeo (Capa)
-              </h3>
-              <p style={{ margin: '0 0 16px', color: '#8f8ba2', fontSize: 12 }}>
-                Imagem que aparece antes de dar play no vídeo. Recomendado: 1920x1080 (16:9).
-              </p>
-
-              {/* MediaUploadField - Upload + Biblioteca (Imagens) */}
-              <MediaUploadField
-                label="Thumbnail do Vídeo"
-                value={formData.heroBackgroundImageId}
-                onChange={(mediaId) => setFormData({ ...formData, heroBackgroundImageId: mediaId })}
-                mediaType="image"
-                specs={{
-                  width: 1920,
-                  height: 1080,
-                  maxSizeMB: 2,
-                  description: 'Imagem de capa do vídeo (frame do Chris Milk no palco)'
-                }}
-                existingMedia={allMedia}
-              />
-
-              {/* URL Manual (fallback) */}
-              <div style={{ marginTop: 20 }}>
-                <label style={{ display: 'block', marginBottom: 8, fontSize: 13, fontWeight: 500, color: '#8f8ba2' }}>
-                  📍 OU usar URL externa/local
-                </label>
-                <input
-                  type="url"
-                  value={formData.heroBackgroundImageUrl}
-                  onChange={(e) => setFormData({ ...formData, heroBackgroundImageUrl: e.target.value })}
-                  placeholder="/chris-milk-thumbnail.png"
-                  style={inputStyle}
-                  disabled={!!formData.heroBackgroundImageId}
-                />
-                <div style={{ marginTop: 6, fontSize: 12, color: formData.heroBackgroundImageId ? '#8f8ba2' : '#7dd3fc' }}>
-                  {formData.heroBackgroundImageId 
-                    ? '🔒 Desabilitado (imagem selecionada acima tem prioridade)'
-                    : '🌐 Cole a URL ou caminho local (ex: /chris-milk-thumbnail.png)'
-                  }
-                </div>
-              </div>
-
-              {/* Preview do Thumbnail */}
-              <div style={{ marginTop: 20 }}>
-                <h4 style={{ margin: '0 0 12px', fontSize: 13, fontWeight: 600, color: '#c0bccf' }}>
-                  Preview do Thumbnail:
-                </h4>
-                <div style={{ 
-                  aspectRatio: '16/9', 
-                  maxWidth: 300,
-                  borderRadius: 8, 
-                  overflow: 'hidden',
-                  background: 'rgba(0,0,0,0.3)',
-                  border: '1px solid rgba(255,255,255,0.1)'
-                }}>
-                  <img 
-                    src={formData.heroBackgroundImageUrl || '/chris-milk-thumbnail.png'}
-                    alt="Thumbnail preview"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    onError={(e) => { (e.target as HTMLImageElement).src = '/og-image.png' }}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Preview do vídeo completo */}
-            <div style={{ padding: 16, borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <h4 style={{ margin: '0 0 12px', fontSize: 14, fontWeight: 600, color: '#c0bccf' }}>
-                📺 Preview do Vídeo Completo
-              </h4>
-              <div style={{ 
-                aspectRatio: '16/9', 
-                maxWidth: 500,
-                borderRadius: 8, 
-                overflow: 'hidden',
-                background: 'rgba(0,0,0,0.3)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                {formData.demoreelVideoUrl || formData.demoreelVideoId ? (
-                  <video 
-                    controls 
-                    style={{ width: '100%', height: '100%' }}
-                    poster={formData.heroBackgroundImageUrl || '/chris-milk-thumbnail.png'}
-                  >
-                    <source src={formData.demoreelVideoUrl || '/ChrisMilk.mp4'} type="video/mp4" />
-                  </video>
-                ) : (
-                  <span style={{ color: '#6b6680', fontSize: 13 }}>Nenhum vídeo selecionado</span>
-                )}
-              </div>
-            </div>
+            <VideoWithThumbnailField
+              label="Vídeo Filosofia (Chris Milk)"
+              videoValue={formData.demoreelVideoId}
+              videoUrl={formData.demoreelVideoUrl}
+              onVideoChange={(mediaId) => setFormData({ ...formData, demoreelVideoId: mediaId })}
+              onVideoUrlChange={(url) => setFormData({ ...formData, demoreelVideoUrl: url })}
+              thumbnailValue={formData.heroBackgroundImageId}
+              thumbnailUrl={formData.heroBackgroundImageUrl}
+              onThumbnailChange={(mediaId) => setFormData({ ...formData, heroBackgroundImageId: mediaId })}
+              onThumbnailUrlChange={(url) => setFormData({ ...formData, heroBackgroundImageUrl: url })}
+              specs={{
+                videoMaxSizeMB: 25,
+                thumbWidth: 1920,
+                thumbHeight: 1080,
+                thumbMaxSizeMB: 2,
+                description: 'TED Talk Chris Milk - A Máquina de Empatia'
+              }}
+              existingMedia={allMedia}
+            />
 
             {/* Link rápido para Mídias */}
-            <div style={{ marginTop: 24, padding: 12, borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+            <div style={{ padding: 12, borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
               <p style={{ margin: 0, fontSize: 13, color: '#c0bccf' }}>
                 💡 <strong>Não vê suas mídias aqui?</strong>{' '}
                 <a
@@ -1636,6 +1513,93 @@ export default function EditPagePage() {
             translating={translating?.startsWith('seoDesc-') || false}
           />
         </section>
+
+        {/* ═══════════════════════════════════════════════════════════
+            MÍDIA DA PÁGINA (Universal) - Exceto Studio que tem seção própria
+        ═══════════════════════════════════════════════════════════ */}
+        {slug !== 'studio' && slug !== 'studio/diferenciais' && (
+          <section
+            style={{
+              padding: 28,
+              borderRadius: 12,
+              border: '1px solid rgba(56, 189, 248, 0.3)',
+              background: 'rgba(56, 189, 248, 0.08)',
+            }}
+          >
+            <h2 style={{ margin: '0 0 16px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
+              📸 Mídia da Página
+            </h2>
+            <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
+              Adicione vídeo com thumbnail ou imagem de destaque para esta página.
+            </p>
+
+            {/* Vídeo com Thumbnail (Opcional) */}
+            <VideoWithThumbnailField
+              label="Vídeo da Página (Opcional)"
+              videoValue={formData.demoreelVideoId}
+              videoUrl={formData.demoreelVideoUrl}
+              onVideoChange={(mediaId) => setFormData({ ...formData, demoreelVideoId: mediaId })}
+              onVideoUrlChange={(url) => setFormData({ ...formData, demoreelVideoUrl: url })}
+              thumbnailValue={formData.heroBackgroundImageId}
+              thumbnailUrl={formData.heroBackgroundImageUrl}
+              onThumbnailChange={(mediaId) => setFormData({ ...formData, heroBackgroundImageId: mediaId })}
+              onThumbnailUrlChange={(url) => setFormData({ ...formData, heroBackgroundImageUrl: url })}
+              specs={{
+                videoMaxSizeMB: 25,
+                thumbWidth: 1920,
+                thumbHeight: 1080,
+                thumbMaxSizeMB: 2,
+                description: 'Vídeo de destaque da página'
+              }}
+              existingMedia={allMedia}
+            />
+
+            {/* Imagem de Destaque (se não tiver vídeo) */}
+            {!formData.demoreelVideoId && !formData.demoreelVideoUrl && (
+              <div style={{ 
+                padding: 20, 
+                borderRadius: 12, 
+                background: 'rgba(255,255,255,0.03)', 
+                border: '1px solid rgba(255,255,255,0.08)',
+                marginTop: 20 
+              }}>
+                <h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 600, color: '#e8e6f2' }}>
+                  🖼️ OU Imagem de Destaque (Hero)
+                </h3>
+                <p style={{ margin: '0 0 12px', fontSize: 12, color: '#8f8ba2' }}>
+                  Se não tiver vídeo, pode adicionar uma imagem de fundo para o hero.
+                </p>
+                <MediaUploadField
+                  label="Imagem de Destaque"
+                  value={formData.heroBackgroundImageId}
+                  onChange={(mediaId) => setFormData({ ...formData, heroBackgroundImageId: mediaId })}
+                  mediaType="image"
+                  specs={{
+                    width: 1920,
+                    height: 1080,
+                    maxSizeMB: 5,
+                    description: 'Imagem de fundo do hero (1920x1080)'
+                  }}
+                  existingMedia={allMedia}
+                />
+              </div>
+            )}
+
+            {/* Link rápido para Mídias */}
+            <div style={{ marginTop: 20, padding: 12, borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <p style={{ margin: 0, fontSize: 13, color: '#c0bccf' }}>
+                💡 <strong>Não vê suas mídias aqui?</strong>{' '}
+                <a
+                  href="/admin/media"
+                  target="_blank"
+                  style={{ color: '#7dd3fc', textDecoration: 'underline' }}
+                >
+                  Envie primeiro em "Mídias" →
+                </a>
+              </p>
+            </div>
+          </section>
+        )}
 
         {/* Seções - Placeholder */}
         {page?.sections && page.sections.length > 0 && (
