@@ -525,9 +525,41 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                 </div>
               </div>
 
+              {/* ═══════════════════════════════════════════════════════════
+                  VÍDEO CHRIS MILK - A Máquina de Empatia
+                  ═══════════════════════════════════════════════════════════ */}
+              <div className="mt-8 mb-6">
+                <div className="text-center mb-4">
+                  <h4 className={`text-lg font-handel uppercase tracking-wide ${theme === 'dark' ? 'text-azimut-red' : 'text-azimut-red'}`}>
+                    {lang === 'pt' ? 'A Máquina de Empatia' : lang === 'es' ? 'La Máquina de Empatía' : lang === 'fr' ? 'La Machine à Empathie' : 'The Empathy Machine'}
+                  </h4>
+                  <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-on-dark-tertiary'}`}>
+                    Chris Milk • TED Talk 2015
+                  </p>
+                </div>
+                <div 
+                  className="relative rounded-xl overflow-hidden border border-azimut-red/30 shadow-lg max-w-2xl mx-auto"
+                  style={{
+                    background: theme === 'dark' 
+                      ? 'rgba(15, 23, 42, 0.5)'
+                      : 'rgba(26, 24, 21, 0.5)'
+                  }}
+                >
+                  <video 
+                    controls 
+                    className="w-full aspect-video"
+                    poster="/og-image.png"
+                    preload="metadata"
+                  >
+                    <source src="/ChrisMilk.mp4" type="video/mp4" />
+                    {lang === 'pt' ? 'Seu navegador não suporta vídeo HTML5.' : 'Your browser does not support HTML5 video.'}
+                  </video>
+                </div>
+              </div>
+
               {/* Citação Chris Milk - The Ultimate Empathy Machine */}
               <div 
-                className="mt-8 p-6 rounded-2xl border-l-4 border-azimut-red"
+                className="p-6 rounded-2xl border-l-4 border-azimut-red"
                 style={{
                   background: theme === 'dark' 
                     ? 'linear-gradient(135deg, rgba(201, 35, 55, 0.1) 0%, rgba(15, 23, 42, 0.3) 100%)'
