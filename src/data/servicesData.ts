@@ -972,29 +972,29 @@ export const servicesData: Service[] = [
     titleEn: 'Consulting & Strategy',
     titleFr: 'Conseil & Stratégie',
     titleEs: 'Consultoría & Estrategia',
-    shortDescPt: 'Acompanhamos projetos desde a concepção até a execução. Nossa experiência em captação de recursos (editais nacionais e internacionais) e estratégia de IA permite que clientes realizem projetos que de outra forma não conseguiriam.',
-    shortDescEn: 'We accompany projects from conception to execution. Our experience in resource acquisition (national and international grants) and AI strategy allows clients to realize projects they couldn\'t otherwise achieve.',
-    shortDescFr: 'Nous accompagnons les projets de la conception à l\'exécution. Notre expérience en acquisition de ressources (subventions nationales et internationales) et stratégie IA permet aux clients de réaliser des projets qu\'ils ne pourraient autrement atteindre.',
-    shortDescEs: 'Acompañamos proyectos desde la concepción hasta la ejecución. Nuestra experiencia en captación de recursos (convocatorias nacionales e internacionales) y estrategia de IA permite que clientes realicen proyectos que de otra forma no conseguirían.',
+    shortDescPt: 'Acompanhamos projetos desde a concepção até a execução. Nossa experiência em captação de recursos (editais nacionais e internacionais), estratégia de IA e treinamento corporativo permite que clientes realizem projetos inovadores e capacitem suas equipes.',
+    shortDescEn: 'We accompany projects from conception to execution. Our experience in resource acquisition (national and international grants), AI strategy and corporate training allows clients to realize innovative projects and train their teams.',
+    shortDescFr: 'Nous accompagnons les projets de la conception à l\'exécution. Notre expérience en acquisition de ressources (subventions nationales et internationales), stratégie IA et formation d\'entreprise permet aux clients de réaliser des projets innovants et former leurs équipes.',
+    shortDescEs: 'Acompañamos proyectos desde la concepción hasta la ejecución. Nuestra experiencia en captación de recursos (convocatorias nacionales e internacionales), estrategia de IA y capacitación corporativa permite que clientes realicen proyectos innovadores y capaciten sus equipos.',
     longDescPt: [
       'Oferecemos consultoria estratégica completa para projetos culturais, tecnológicos e audiovisuais. Nossa expertise inclui captação de recursos via editais (Ancine, Lei Rouanet, editais internacionais).',
       'Desenvolvemos estratégias de integração tecnológica, ajudando instituições a adotar IA, XR e outras tecnologias de forma inteligente e alinhada com seus objetivos.',
-      'Atuamos como consultores, coordenadores de projeto ou parceiros estratégicos, adaptando nosso modelo de trabalho às necessidades de cada cliente.'
+      'Atuamos como consultores, coordenadores de projeto ou parceiros estratégicos. Além disso, oferecemos treinamentos corporativos personalizados para capacitar equipes em tecnologias imersivas e audiovisuais.'
     ],
     longDescEn: [
       'We offer complete strategic consulting for cultural, technological and audiovisual projects. Our expertise includes resource acquisition through grants (Ancine, Lei Rouanet, international calls).',
       'We develop technology integration strategies, helping institutions adopt AI, XR and other technologies intelligently and aligned with their objectives.',
-      'We act as consultants, project coordinators or strategic partners, adapting our working model to each client\'s needs.'
+      'We act as consultants, project coordinators or strategic partners. Additionally, we offer customized corporate training to qualify teams in immersive and audiovisual technologies.'
     ],
     longDescFr: [
       'Nous offrons du conseil stratégique complet pour projets culturels, technologiques et audiovisuels. Notre expertise inclut l\'acquisition de ressources via subventions (Ancine, Lei Rouanet, appels internationaux).',
       'Nous développons des stratégies d\'intégration technologique, aidant les institutions à adopter l\'IA, XR et autres technologies de manière intelligente et alignée avec leurs objectifs.',
-      'Nous agissons comme consultants, coordinateurs de projet ou partenaires stratégiques, adaptant notre modèle de travail aux besoins de chaque client.'
+      'Nous agissons comme consultants, coordinateurs de projet ou partenaires stratégiques. De plus, nous offrons des formations d\'entreprise personnalisées pour qualifier les équipes en technologies immersives et audiovisuelles.'
     ],
     longDescEs: [
       'Ofrecemos consultoría estratégica completa para proyectos culturales, tecnológicos y audiovisuales. Nuestra expertise incluye captación de recursos vía convocatorias (Ancine, Lei Rouanet, convocatorias internacionales).',
       'Desarrollamos estrategias de integración tecnológica, ayudando instituciones a adoptar IA, XR y otras tecnologías de forma inteligente y alineada con sus objetivos.',
-      'Actuamos como consultores, coordinadores de proyecto o partners estratégicos, adaptando nuestro modelo de trabajo a las necesidades de cada cliente.'
+      'Actuamos como consultores, coordinadores de proyecto o partners estratégicos. Además, ofrecemos capacitación corporativa personalizada para capacitar equipos en tecnologías inmersivas y audiovisuales.'
     ],
     deliverablesPt: [
       'Análise de viabilidade',
@@ -1069,7 +1069,7 @@ export const servicesData: Service[] = [
       'Rendición de cuentas'
     ],
     technologies: ['Notion', 'Miro', 'FigJam', 'Google Workspace', 'Asana', 'Monday.com', 'ClickUp', 'Trello', 'Jira', 'Slack', 'Zoom', 'Mural', 'OKR Tools', 'Power BI', 'Tableau', 'Airtable'],
-    projectCategories: ['consulting', 'strategy', 'funding', 'management']
+    projectCategories: ['consulting', 'strategy', 'funding', 'management', 'education', 'training', 'corporate']
   },
   // ========== NOVOS SERVIÇOS ==========
   {
