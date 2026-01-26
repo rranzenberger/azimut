@@ -424,129 +424,139 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
         </div>
 
         {/* ═══════════════════════════════════════════════════════════
-            HERO SECTION - Video Background (altura reduzida, premium)
+            HERO SECTION - Video Background PREMIUM (altura maior, revela rostos)
             ═══════════════════════════════════════════════════════════
             📹 PLACEHOLDER: Vídeo institucional Academy
             Backoffice: /admin/academy/settings → "Hero Video URL"
             ═══════════════════════════════════════════════════════ */}
-        <section className="relative min-h-[35vh] flex items-center justify-center overflow-hidden pt-0 pb-8">
-          {/* Background Image/Video (PLACEHOLDER) */}
+        <section className="relative min-h-[55vh] md:min-h-[65vh] flex items-end justify-center overflow-hidden pt-0 pb-0">
+          {/* Background Image/Video (PLACEHOLDER) - posicionamento ajustado para mostrar rostos */}
           <div className="absolute inset-0 z-0">
             <div 
               className="absolute inset-0"
               style={{
                 backgroundImage: 'url(https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1600&q=80)',
                 backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                filter: theme === 'dark' ? 'brightness(0.85) contrast(1.1)' : 'brightness(1.15) contrast(0.95) saturate(0.9)'
+                backgroundPosition: 'center 30%',
+                filter: theme === 'dark' ? 'brightness(0.9) contrast(1.15)' : 'brightness(1.1) contrast(1.05) saturate(0.95)'
               }}
             >
               {/* ═══════════════════════════════════════════════════════════
-                  CURADORIA DE ARTE - Overlays Cinematográficos Premium
+                  CURADORIA DE ARTE - Overlays Premium com degradê de leitura
                   ═══════════════════════════════════════════════════════ */}
               
-              {/* Tema Escuro: Overlay mais sutil - revela mais a imagem */}
+              {/* Tema Escuro: Degradê azul leve para melhor leitura */}
               {theme === 'dark' && (
                 <>
-                  {/* Camada 1: Gradiente vertical suave (menos agressivo) */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/65" />
+                  {/* Camada 1: Revela a imagem no topo (rostos visíveis) */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70" />
                   
-                  {/* Camada 2: Vinheta radial cinematográfica (foco no centro) */}
+                  {/* Camada 2: Degradê azul sutil (identidade Academy no escuro) */}
                   <div 
                     className="absolute inset-0"
                     style={{
-                      background: `radial-gradient(
-                        ellipse 140% 120% at 50% 45%,
-                        transparent 0%,
-                        transparent 35%,
-                        rgba(0, 0, 0, 0.2) 60%,
-                        rgba(0, 0, 0, 0.5) 85%,
-                        rgba(0, 0, 0, 0.75) 100%
+                      background: `linear-gradient(
+                        to bottom,
+                        rgba(37, 99, 235, 0.08) 0%,
+                        rgba(59, 130, 246, 0.12) 40%,
+                        rgba(30, 58, 138, 0.20) 100%
                       )`
                     }}
                   />
                   
-                  {/* Camada 3: Gradiente horizontal sutil (profundidade) */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/30" />
+                  {/* Camada 3: Vinheta lateral para profundidade */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30" />
                   
-                  {/* Camada 4: Filtro de cor cinematográfico (tom quente sutil) */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-azimut-red/5 via-transparent to-transparent" />
+                  {/* Camada 4: Área de leitura (degradê escuro embaixo) */}
+                  <div 
+                    className="absolute inset-0"
+                    style={{
+                      background: `linear-gradient(
+                        to top,
+                        rgba(0, 0, 0, 0.85) 0%,
+                        rgba(0, 0, 0, 0.50) 30%,
+                        transparent 55%
+                      )`
+                    }}
+                  />
                 </>
               )}
               
-              {/* Tema Claro: Overlay equilibrado - não muito claro, mantém atmosfera */}
+              {/* Tema Claro: Degradê marrom para melhor leitura (não muito claro) */}
               {theme === 'light' && (
                 <>
-                  {/* Camada 1: Overlay bege suave (clareia mas preserva imagem) */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-[#f5f1e8]/40 via-[#e8e5df]/35 to-[#d3cec3]/45" />
+                  {/* Camada 1: Base mais escura que antes - melhor contraste */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#8b7355]/10 to-[#5c4a3a]/35" />
                   
-                  {/* Camada 2: Vinheta artística - cria foco central (como galeria) */}
+                  {/* Camada 2: Degradê marrom quente para leitura (bottom-up) */}
                   <div 
                     className="absolute inset-0"
                     style={{
-                      background: `radial-gradient(
-                        ellipse 150% 130% at 50% 50%,
+                      background: `linear-gradient(
+                        to top,
+                        rgba(92, 74, 58, 0.70) 0%,
+                        rgba(115, 89, 68, 0.50) 25%,
+                        rgba(139, 115, 85, 0.30) 40%,
+                        transparent 60%
+                      )`
+                    }}
+                  />
+                  
+                  {/* Camada 3: Overlay marrom adicional no texto */}
+                  <div 
+                    className="absolute inset-0"
+                    style={{
+                      background: `linear-gradient(
+                        to bottom,
                         transparent 0%,
-                        transparent 45%,
-                        rgba(30, 28, 26, 0.25) 70%,
-                        rgba(20, 18, 16, 0.45) 85%,
-                        rgba(10, 8, 6, 0.65) 100%
+                        transparent 50%,
+                        rgba(62, 47, 35, 0.40) 80%,
+                        rgba(42, 32, 24, 0.60) 100%
                       )`
                     }}
                   />
                   
-                  {/* Camada 3: Gradiente vertical para profundidade */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#1e1c1a]/30" />
-                  
-                  {/* Camada 4: Filtro de cor quente sutil (atmosfera premium) */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-900/10 via-transparent to-slate-900/15" />
-                  
-                  {/* Camada 5: Contraste adicional nas bordas (vinheta reforçada) */}
-                  <div 
-                    className="absolute inset-0"
-                    style={{
-                      background: `radial-gradient(
-                        circle at 50% 50%,
-                        transparent 30%,
-                        rgba(0, 0, 0, 0.1) 60%,
-                        rgba(0, 0, 0, 0.3) 100%
-                      )`
-                    }}
-                  />
+                  {/* Camada 4: Vinheta lateral */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#3e2f23]/25 via-transparent to-[#3e2f23]/25" />
                 </>
               )}
             </div>
           </div>
 
-          {/* Content - Layout mais compacto e premium */}
-          <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-10">
+          {/* Content - Posicionado embaixo para mostrar rostos acima */}
+          <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center pb-12 pt-32">
             {/* Badge Glassmorphism - Azul no escuro, Vermelho no claro */}
             <div 
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-5 backdrop-blur-md animate-fade-in"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-4 backdrop-blur-md animate-fade-in"
               style={theme === 'dark' ? {
-                background: 'rgba(59, 130, 246, 0.15)',
-                border: '1px solid rgba(59, 130, 246, 0.3)',
-                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
+                background: 'rgba(59, 130, 246, 0.20)',
+                border: '1px solid rgba(59, 130, 246, 0.4)',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
               } : {
-                background: 'rgba(201, 35, 55, 0.15)',
-                border: '1px solid rgba(201, 35, 55, 0.3)',
-                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
+                background: 'rgba(201, 35, 55, 0.20)',
+                border: '1px solid rgba(201, 35, 55, 0.4)',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15)'
               }}
             >
               <span 
                 className="text-xs font-semibold uppercase tracking-[0.15em]"
-                style={{ color: theme === 'dark' ? '#3b82f6' : '#c92337' }}
+                style={{ 
+                  color: theme === 'dark' ? '#60a5fa' : '#e84858',
+                  textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)'
+                }}
               >
                 {t.hero.badge}
               </span>
             </div>
 
-            {/* Título - Curadoria de Arte: Tipografia Premium */}
+            {/* Título - Tipografia Premium com melhor contraste */}
             <h1 
-              className="text-5xl md:text-7xl lg:text-8xl font-handel uppercase tracking-wider mb-5 leading-none animate-fade-in-up"
+              className="text-4xl md:text-6xl lg:text-7xl font-handel uppercase tracking-wider mb-3 leading-none animate-fade-in-up"
               style={{ 
                 color: '#ffffff',
-                textShadow: '0 4px 20px rgba(0, 0, 0, 0.5), 0 8px 30px rgba(0, 0, 0, 0.4)',
+                textShadow: theme === 'dark' 
+                  ? '0 3px 15px rgba(0, 0, 0, 0.7), 0 6px 25px rgba(0, 0, 0, 0.5)'
+                  : '0 4px 20px rgba(0, 0, 0, 0.8), 0 8px 35px rgba(0, 0, 0, 0.6)',
                 letterSpacing: '0.06em',
                 fontWeight: 400
               }}
@@ -554,24 +564,29 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
               {t.hero.title}
             </h1>
 
-            {/* Subtítulo - Hierarquia Visual Refinada */}
+            {/* Subtítulo - Legibilidade melhorada */}
             <p 
-              className="text-xl md:text-2xl mb-4 font-light animate-fade-in-up animation-delay-100"
+              className="text-lg md:text-xl mb-3 font-light animate-fade-in-up animation-delay-100"
               style={{ 
-                color: 'rgba(255, 255, 255, 0.85)',
-                textShadow: '0 2px 10px rgba(0, 0, 0, 0.4)',
-                letterSpacing: '0.03em',
-                lineHeight: '1.3'
+                color: 'rgba(255, 255, 255, 0.95)',
+                textShadow: theme === 'dark'
+                  ? '0 2px 8px rgba(0, 0, 0, 0.6)'
+                  : '0 3px 12px rgba(0, 0, 0, 0.7), 0 5px 20px rgba(0, 0, 0, 0.5)',
+                letterSpacing: '0.02em',
+                lineHeight: '1.4'
               }}
             >
               {t.hero.subtitle}
             </p>
 
-            {/* Descrição - Legibilidade Premium */}
+            {/* Descrição - Contraste premium */}
             <p 
-              className="text-base md:text-lg max-w-3xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200"
+              className="text-sm md:text-base max-w-3xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200"
               style={{ 
-                color: 'rgba(255, 255, 255, 0.65)',
+                color: 'rgba(255, 255, 255, 0.85)',
+                textShadow: theme === 'dark'
+                  ? '0 2px 6px rgba(0, 0, 0, 0.5)'
+                  : '0 2px 10px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 0, 0, 0.4)',
                 letterSpacing: '0.01em',
                 lineHeight: '1.6'
               }}
@@ -580,6 +595,17 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
             </p>
           </div>
         </section>
+
+        {/* Linha vermelha com bordas transparentes (igual páginas internas) */}
+        <div className="relative w-full h-1 overflow-hidden">
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(90deg, transparent 0%, #c92337 5%, #ff4757 25%, #e84858 50%, #ff4757 75%, #c92337 95%, transparent 100%)',
+              opacity: 0.9
+            }}
+          />
+        </div>
         
         {/* Estrela de fundo - detecta tema automaticamente */}
         {/* Posição: header + submenu + folga visual = 160px */}
