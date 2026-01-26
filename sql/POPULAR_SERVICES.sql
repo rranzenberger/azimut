@@ -196,7 +196,7 @@ VALUES (
   'Integração de IA generativa em projetos audiovisuais e criativos. Otimizamos pipelines de produção, criamos conteúdo assistido por IA e desenvolvemos estratégias de adoção tecnológica.',
   'Integration of generative AI in audiovisual and creative projects. We optimize production pipelines, create AI-assisted content and develop technology adoption strategies.',
   'Integración de IA generativa en proyectos audiovisuales y creativos. Optimizamos pipelines de producción, creamos contenido asistido por IA y desarrollamos estrategias de adopción tecnológica.',
-  'Intégration de l\'IA générative dans projets audiovisuels et créatifs. Nous optimisons pipelines de production, créons contenu assisté par IA et développons stratégies d\'adoption technologique.',
+  'Intégration de l''IA générative dans projets audiovisuels et créatifs. Nous optimisons pipelines de production, créons contenu assisté par IA et développons stratégies d''adoption technologique.',
   '🤖',
   ARRAY['ai', 'generative', 'technology', 'innovation', 'automation'],
   NOW(),
