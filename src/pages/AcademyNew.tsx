@@ -423,16 +423,13 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
           </div>
         </div>
 
-        {/* Espaçador para compensar header + submenu fixos (PADRONIZADO) */}
-        <div style={{ height: '48px' }} />
-
         {/* ═══════════════════════════════════════════════════════════
-            HERO SECTION - Video Background
+            HERO SECTION - Video Background (altura reduzida, premium)
             ═══════════════════════════════════════════════════════════
             📹 PLACEHOLDER: Vídeo institucional Academy
             Backoffice: /admin/academy/settings → "Hero Video URL"
             ═══════════════════════════════════════════════════════ */}
-        <section className="relative min-h-[45vh] flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-[35vh] flex items-center justify-center overflow-hidden pt-0 pb-8">
           {/* Background Image/Video (PLACEHOLDER) */}
           <div className="absolute inset-0 z-0">
             <div 
@@ -521,23 +518,36 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
             </div>
           </div>
 
-          {/* Content */}
-          <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
-            <div className="inline-block px-6 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-8 animate-fade-in">
-              <span className="text-azimut-red text-sm font-semibold uppercase tracking-wider">
+          {/* Content - Layout mais compacto e premium */}
+          <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-10">
+            {/* Badge Glassmorphism - Azul no escuro, Vermelho no claro */}
+            <div 
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-5 backdrop-blur-md animate-fade-in"
+              style={theme === 'dark' ? {
+                background: 'rgba(59, 130, 246, 0.15)',
+                border: '1px solid rgba(59, 130, 246, 0.3)',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
+              } : {
+                background: 'rgba(201, 35, 55, 0.15)',
+                border: '1px solid rgba(201, 35, 55, 0.3)',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
+              }}
+            >
+              <span 
+                className="text-xs font-semibold uppercase tracking-[0.15em]"
+                style={{ color: theme === 'dark' ? '#3b82f6' : '#c92337' }}
+              >
                 {t.hero.badge}
               </span>
             </div>
 
             {/* Título - Curadoria de Arte: Tipografia Premium */}
             <h1 
-              className="text-6xl md:text-8xl lg:text-9xl font-handel uppercase tracking-wider mb-8 leading-none animate-fade-in-up"
+              className="text-5xl md:text-7xl lg:text-8xl font-handel uppercase tracking-wider mb-5 leading-none animate-fade-in-up"
               style={{ 
-                color: theme === 'dark' ? '#ffffff' : '#f5f1e8',
-                textShadow: theme === 'dark' 
-                  ? '0 4px 12px rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 0, 0, 0.3)'
-                  : '0 3px 10px rgba(0, 0, 0, 0.6), 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 0, 0, 0.4)',
-                letterSpacing: '0.08em',
+                color: '#ffffff',
+                textShadow: '0 4px 20px rgba(0, 0, 0, 0.5), 0 8px 30px rgba(0, 0, 0, 0.4)',
+                letterSpacing: '0.06em',
                 fontWeight: 400
               }}
             >
@@ -546,48 +556,28 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
 
             {/* Subtítulo - Hierarquia Visual Refinada */}
             <p 
-              className="text-2xl md:text-4xl mb-6 font-light animate-fade-in-up animation-delay-100"
+              className="text-xl md:text-2xl mb-4 font-light animate-fade-in-up animation-delay-100"
               style={{ 
-                color: theme === 'dark' ? '#f0ece5' : '#e8e5df',
-                textShadow: theme === 'dark'
-                  ? '0 2px 8px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.3)'
-                  : '0 2px 6px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 0, 0, 0.3)',
-                letterSpacing: '0.04em',
+                color: 'rgba(255, 255, 255, 0.85)',
+                textShadow: '0 2px 10px rgba(0, 0, 0, 0.4)',
+                letterSpacing: '0.03em',
                 lineHeight: '1.3'
               }}
             >
               {t.hero.subtitle}
             </p>
 
-            {/* Descrição - Legibilidade Premium com Contraste Otimizado */}
+            {/* Descrição - Legibilidade Premium */}
             <p 
-              className="text-lg md:text-xl mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200"
+              className="text-base md:text-lg max-w-3xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200"
               style={{ 
-                color: theme === 'dark' ? '#e2e8f0' : '#d3cec3',
-                textShadow: theme === 'dark'
-                  ? '0 1px 4px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.4)'
-                  : '0 2px 5px rgba(0, 0, 0, 0.6), 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 0, 0, 0.4)',
-                letterSpacing: '0.02em',
-                lineHeight: '1.7'
+                color: 'rgba(255, 255, 255, 0.65)',
+                letterSpacing: '0.01em',
+                lineHeight: '1.6'
               }}
             >
               {t.hero.description}
             </p>
-
-            {/* Scroll Indicator - Adaptativo por tema */}
-            <div className="animate-bounce mt-16">
-              <svg 
-                className="w-8 h-8 mx-auto" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-                style={{ 
-                  color: theme === 'dark' ? 'rgba(255, 255, 255, 0.4)' : 'rgba(245, 241, 232, 0.6)'
-                }}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
-            </div>
           </div>
         </section>
         
