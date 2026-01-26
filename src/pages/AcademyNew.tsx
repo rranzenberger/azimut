@@ -482,56 +482,101 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
                 </>
               )}
               
-              {/* Tema Claro: Degradê marrom equilibrado (versão anterior que estava boa) */}
+              {/* Tema Claro: LUXURY PREMIUM - Tons neutros quentes (charcoal/slate/beige) + granulação */}
               {theme === 'light' && (
                 <>
-                  {/* Camada 1: Base marrom suave */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-[#8b7355]/10 via-[#6d5a45]/20 to-[#5c4a3a]/35" />
+                  {/* Camada 1: Base CHARCOAL/SLATE (neutro premium - não rosa) */}
+                  <div 
+                    className="absolute inset-0"
+                    style={{
+                      background: `linear-gradient(
+                        to bottom,
+                        transparent 0%,
+                        transparent 20%,
+                        rgba(72, 66, 60, 0.10) 40%,
+                        rgba(58, 52, 46, 0.25) 55%,
+                        rgba(42, 38, 34, 0.50) 70%,
+                        rgba(28, 25, 22, 0.80) 85%,
+                        rgba(18, 16, 14, 0.95) 100%
+                      )`
+                    }}
+                  />
                   
-                  {/* Camada 2: Degradê marrom para leitura (bottom-up, VERSÃO ANTERIOR) */}
+                  {/* Camada 2: Base MUITO ESCURA (charcoal profundo) */}
                   <div 
                     className="absolute inset-0"
                     style={{
                       background: `linear-gradient(
                         to top,
-                        rgba(92, 74, 58, 0.70) 0%,
-                        rgba(115, 89, 68, 0.50) 25%,
-                        rgba(139, 115, 85, 0.30) 40%,
-                        transparent 60%
+                        rgba(12, 11, 10, 0.98) 0%,
+                        rgba(22, 20, 18, 0.92) 15%,
+                        rgba(42, 38, 34, 0.70) 35%,
+                        rgba(72, 66, 60, 0.40) 55%,
+                        rgba(105, 95, 85, 0.18) 70%,
+                        transparent 85%
                       )`
                     }}
                   />
                   
-                  {/* Camada 3: Área de leitura central suave */}
+                  {/* Camada 3: VINHETA CINEMATOGRÁFICA - Escurecimento nas bordas */}
+                  <div 
+                    className="absolute inset-0 bg-gradient-to-r from-[#18120e]/45 via-transparent to-[#18120e]/45"
+                  />
+                  
+                  {/* Camada 4: Vinheta radial (foco no centro) */}
                   <div 
                     className="absolute inset-0"
                     style={{
                       background: `radial-gradient(
-                        ellipse 120% 100% at 50% 55%,
-                        rgba(42, 32, 24, 0.45) 0%,
-                        rgba(62, 47, 35, 0.25) 45%,
-                        transparent 80%
+                        ellipse 110% 90% at 50% 50%,
+                        transparent 0%,
+                        transparent 45%,
+                        rgba(18, 16, 14, 0.22) 70%,
+                        rgba(14, 12, 10, 0.45) 85%,
+                        rgba(10, 9, 8, 0.65) 100%
                       )`
                     }}
                   />
                   
-                  {/* Camada 4: Vinheta lateral suave */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#3e2f23]/20 via-transparent to-[#3e2f23]/20" />
+                  {/* Camada 5: Warmth sutil (bege/taupe - não rosa) */}
+                  <div 
+                    className="absolute inset-0"
+                    style={{
+                      background: `linear-gradient(
+                        to bottom,
+                        transparent 0%,
+                        transparent 35%,
+                        rgba(120, 105, 90, 0.06) 55%,
+                        rgba(95, 82, 70, 0.08) 70%,
+                        transparent 85%
+                      )`
+                    }}
+                  />
+                  
+                  {/* Camada 6: GRANULAÇÃO CINEMATOGRÁFICA (film grain) */}
+                  <div 
+                    className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+                      backgroundRepeat: 'repeat',
+                      backgroundSize: '200px 200px'
+                    }}
+                  />
                 </>
               )}
             </div>
           </div>
 
-          {/* Content - Espaçamento PREMIUM (pílula acima, título meio, texto abaixo) */}
+          {/* Content - Pílula posição original, textos mais abaixo */}
           <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="pt-8 pb-20 md:pt-12 md:pb-24">
-              {/* Badge Premium - Mais acima */}
+            <div className="pt-16 pb-12 md:pt-20 md:pb-16">
+              {/* Badge Premium - Posição original (não grudado no menu) */}
               <div 
                 className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-8 backdrop-blur-md animate-fade-in"
                 style={theme === 'dark' ? {
-                  background: 'rgba(59, 130, 246, 0.28)',
-                  border: '1px solid rgba(59, 130, 246, 0.50)',
-                  boxShadow: '0 4px 24px rgba(0, 0, 0, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.15)'
+                  background: 'rgba(23, 37, 84, 0.55)',
+                  border: '1px solid rgba(30, 58, 138, 0.70)',
+                  boxShadow: '0 4px 24px rgba(0, 0, 0, 0.50), inset 0 1px 0 rgba(255, 255, 255, 0.20)'
                 } : {
                   background: 'rgba(201, 35, 55, 0.50)',
                   border: '1px solid rgba(201, 35, 55, 0.70)',
@@ -564,9 +609,12 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
                 {t.hero.title}
               </h1>
 
-              {/* Subtítulo - Espaçamento */}
+              {/* Espaçador para baixar os textos */}
+              <div className="h-8 md:h-12" />
+
+              {/* Subtítulo - Mais abaixo */}
               <p 
-                className="text-xl md:text-2xl mb-4 font-light animate-fade-in-up animation-delay-100"
+                className="text-xl md:text-2xl mb-5 font-light animate-fade-in-up animation-delay-100"
                 style={{ 
                   color: '#ffffff',
                   textShadow: theme === 'dark'
@@ -625,8 +673,39 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
             🖼️ PLACEHOLDER: Imagens dos programas
             Backoffice: /admin/academy/programs → cada programa tem imagem
             ═══════════════════════════════════════════════════════ */}
-        <section className="py-12 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-12 relative overflow-hidden">
+          {/* Background com granulação (não muito branco) */}
+          <div className="absolute inset-0 -z-10">
+            {/* Cor de fundo - escuro no dark, bege escurecido no claro */}
+            <div 
+              className="absolute inset-0"
+              style={{
+                backgroundColor: theme === 'dark' ? '#0a0908' : '#e8e0d5'
+              }}
+            />
+            
+            {/* Overlay sutil para escurecer mais (site claro) */}
+            {theme === 'light' && (
+              <div 
+                className="absolute inset-0"
+                style={{
+                  background: 'linear-gradient(to bottom, rgba(42, 38, 34, 0.08) 0%, rgba(28, 25, 22, 0.12) 100%)'
+                }}
+              />
+            )}
+            
+            {/* Granulação cinematográfica */}
+            <div 
+              className="absolute inset-0 opacity-[0.08] mix-blend-overlay pointer-events-none"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+                backgroundRepeat: 'repeat',
+                backgroundSize: '200px 200px'
+              }}
+            />
+          </div>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
               {t.sections.map((section: AcademySection, idx: number) => (
                 <Link
