@@ -298,9 +298,23 @@ export default function MediaPage() {
                   background: 'rgba(255,255,255,0.03)',
                   border: '1px solid rgba(255,255,255,0.08)'
                 }}>
-                  <p style={{ margin: 0, fontSize: 12, color: '#86efac' }}>
+                  <p style={{ margin: '0 0 12px', fontSize: 12, color: '#86efac' }}>
                     ✓ Thumbnail selecionado: {thumbnailFile.name} ({(thumbnailFile.size / 1024 / 1024).toFixed(2)}MB)
                   </p>
+                  {/* PREVIEW DO THUMBNAIL */}
+                  <div style={{ 
+                    aspectRatio: '16/9', 
+                    maxWidth: 300, 
+                    borderRadius: 8, 
+                    overflow: 'hidden',
+                    border: '2px solid rgba(147, 51, 234, 0.5)'
+                  }}>
+                    <img 
+                      src={URL.createObjectURL(thumbnailFile)} 
+                      alt="Preview thumbnail"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  </div>
                 </div>
               )}
 
@@ -316,6 +330,70 @@ export default function MediaPage() {
                   </p>
                 </div>
               )}
+            </div>
+          )}
+
+          {/* ═══════════════════════════════════════════
+              PREVIEW DO VÍDEO (aparece quando arquivo selecionado)
+              ═══════════════════════════════════════════ */}
+          {file && type === 'VIDEO' && (
+            <div style={{ 
+              padding: 16, 
+              borderRadius: 12, 
+              border: '1px solid rgba(46, 204, 113, 0.3)',
+              background: 'rgba(46, 204, 113, 0.08)'
+            }}>
+              <h4 style={{ margin: '0 0 12px', fontSize: 14, fontWeight: 600, color: '#86efac' }}>
+                📺 Preview do Vídeo
+              </h4>
+              <p style={{ margin: '0 0 12px', fontSize: 12, color: '#c0bccf' }}>
+                Arquivo: {file.name} ({(file.size / 1024 / 1024).toFixed(2)}MB)
+              </p>
+              <div style={{ 
+                aspectRatio: '16/9', 
+                maxWidth: 400, 
+                borderRadius: 8, 
+                overflow: 'hidden',
+                background: '#000',
+                border: '2px solid rgba(46, 204, 113, 0.5)'
+              }}>
+                <video 
+                  controls 
+                  style={{ width: '100%', height: '100%' }}
+                  poster={thumbnailFile ? URL.createObjectURL(thumbnailFile) : undefined}
+                >
+                  <source src={URL.createObjectURL(file)} type={file.type || 'video/mp4'} />
+                </video>
+              </div>
+            </div>
+          )}
+
+          {/* PREVIEW DA IMAGEM (quando tipo = IMAGE) */}
+          {file && type === 'IMAGE' && (
+            <div style={{ 
+              padding: 16, 
+              borderRadius: 12, 
+              border: '1px solid rgba(56, 189, 248, 0.3)',
+              background: 'rgba(56, 189, 248, 0.08)'
+            }}>
+              <h4 style={{ margin: '0 0 12px', fontSize: 14, fontWeight: 600, color: '#7dd3fc' }}>
+                🖼️ Preview da Imagem
+              </h4>
+              <p style={{ margin: '0 0 12px', fontSize: 12, color: '#c0bccf' }}>
+                Arquivo: {file.name} ({(file.size / 1024 / 1024).toFixed(2)}MB)
+              </p>
+              <div style={{ 
+                maxWidth: 400, 
+                borderRadius: 8, 
+                overflow: 'hidden',
+                border: '2px solid rgba(56, 189, 248, 0.5)'
+              }}>
+                <img 
+                  src={URL.createObjectURL(file)} 
+                  alt="Preview"
+                  style={{ width: '100%', height: 'auto' }}
+                />
+              </div>
             </div>
           )}
 
