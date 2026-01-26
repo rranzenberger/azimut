@@ -668,6 +668,9 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
                     className="w-full aspect-video bg-slate-900"
                     poster="/chris-milk-thumbnail.png"
                     preload="metadata"
+                    controlsList="nodownload noplaybackrate"
+                    disablePictureInPicture
+                    onContextMenu={(e) => e.preventDefault()}
                     onEnded={(e) => {
                       // Quando o vídeo terminar, volta para o início e mostra o poster/thumbnail
                       const video = e.currentTarget;
