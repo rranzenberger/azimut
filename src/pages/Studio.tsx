@@ -526,11 +526,11 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               </div>
 
               {/* ═══════════════════════════════════════════════════════════
-                  VÍDEO CHRIS MILK - A Máquina de Empatia
+                  VÍDEO CHRIS MILK - A Máquina de Empatia (LARGURA TOTAL)
                   ═══════════════════════════════════════════════════════════ */}
               <div className="mt-8 mb-6">
                 <div className="text-center mb-4">
-                  <h4 className={`text-lg font-handel uppercase tracking-wide ${theme === 'dark' ? 'text-azimut-red' : 'text-azimut-red'}`}>
+                  <h4 className={`text-xl font-handel uppercase tracking-wide ${theme === 'dark' ? 'text-azimut-red' : 'text-azimut-red'}`}>
                     {lang === 'pt' ? 'A Máquina de Empatia' : lang === 'es' ? 'La Máquina de Empatía' : lang === 'fr' ? 'La Machine à Empathie' : 'The Empathy Machine'}
                   </h4>
                   <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-on-dark-tertiary'}`}>
@@ -538,7 +538,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   </p>
                 </div>
                 <div 
-                  className="relative rounded-xl overflow-hidden border border-azimut-red/30 shadow-lg max-w-2xl mx-auto"
+                  className="relative rounded-2xl overflow-hidden border-2 border-azimut-red/30 shadow-2xl w-full"
                   style={{
                     background: theme === 'dark' 
                       ? 'rgba(15, 23, 42, 0.5)'
