@@ -1,10 +1,8 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
-import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
-import OptimizedImage from '../components/OptimizedImage'
 import StudioSubNav from '../components/StudioSubNav'
 
 interface StudioTeamProps {
@@ -12,35 +10,20 @@ interface StudioTeamProps {
 }
 
 const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
-  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
-  // useUserTracking()
   const location = useLocation()
   
   // Scroll para o membro específico quando a página carrega com hash
-  // ROBUSTO: try/catch para evitar quebrar a página
   useEffect(() => {
-    try {
-      const hash = location.hash.replace('#', '')
-      if (hash) {
-        // Pequeno delay para garantir que o DOM está renderizado
-        const timeoutId = setTimeout(() => {
-          try {
-            const element = document.getElementById(`member-${hash}`)
-            if (element) {
-              const top = element.getBoundingClientRect().top + window.scrollY - 100
-              window.scrollTo({ top, behavior: 'smooth' })
-            }
-          } catch (scrollError) {
-            // Silencioso - não quebrar a página se scroll falhar
-            console.warn('Erro no scroll:', scrollError)
-          }
-        }, 150) // Delay aumentado para maior estabilidade
-        
-        return () => clearTimeout(timeoutId)
-      }
-    } catch (error) {
-      // Silencioso - não quebrar a página
-      console.warn('Erro ao processar hash:', error)
+    const hash = location.hash.replace('#', '')
+    if (hash) {
+      // Pequeno delay para garantir que o DOM está renderizado
+      setTimeout(() => {
+        const element = document.getElementById(`member-${hash}`)
+        if (element) {
+          const top = element.getBoundingClientRect().top + window.scrollY - 100
+          window.scrollTo({ top, behavior: 'smooth' })
+        }
+      }, 100)
     }
   }, [location.hash])
 
@@ -284,17 +267,17 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
   return (
     <>
       <SEO 
-        locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
+        lang={lang}
         title={`${text.title} - Studio - Azimut`}
         description={text.subtitle}
-        url="/studio/equipe"
+        path="/studio/equipe"
       />
       
       {/* Menu Secundário Studio - PADRONIZADO */}
       <StudioSubNav lang={lang} currentPage="equipe" />
       
       <main className="relative">
-        {/* Espaçador para compensar header + submenu fixos (PADRONIZADO) */}
+        {/* Espaçador para compensar header + submenu fixos */}
         <div style={{ height: '48px' }} />
         
         {/* Star Background - FIXA (FUNDO - atrás de tudo) */}
@@ -306,6 +289,15 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
         </div>
 
         <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-8">
+          {/* Breadcrumbs */}
+          <nav className="mb-8 flex items-center gap-2 text-sm text-theme-text-secondary">
+            <LangLink to="/" className="hover:text-azimut-red transition-colors">Home</LangLink>
+            <span>›</span>
+            <LangLink to="/studio" className="hover:text-azimut-red transition-colors">Studio</LangLink>
+            <span>›</span>
+            <span className="text-azimut-red font-medium">{text.title}</span>
+          </nav>
+
           {/* Hero */}
           <div className="mb-12">
             {/* Eyebrow com emoji */}
@@ -334,49 +326,61 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
                 className="card-dark-fixed group relative rounded-2xl overflow-hidden transition-all duration-500 scroll-mt-28"
               >
                 <div className="flex flex-col md:flex-row">
-                  {/* Foto - img direto como filho de .team-photo para CSS grayscale funcionar */}
+                  {/* Foto - Larguras iguais para todos, enquadramento otimizado */}
                   <div 
-                    className="team-photo relative shrink-0 overflow-hidden w-full md:w-[420px] lg:w-[480px] xl:w-[520px] aspect-[3/4]"
-                    style={{ background: '#0a0f1a' }}
+                    className="team-photo relative shrink-0 overflow-hidden w-full md:w-[450px] lg:w-[500px] xl:w-[550px] aspect-[3/4]"
+                    style={{
+                      background: '#0a0f1a',
+                      overflow: 'hidden'
+                    }}
                   >
-                    <img
+                    <img 
                       src={member.photo}
                       alt={member.name}
-                      loading="eager"
-                      decoding="async"
-                      className="w-full h-full object-cover"
-                      style={{
-                        transform: member.name.includes('Alberto') 
-                          ? 'scale(1.25)' 
-                          : member.name.includes('Ranz') 
-                            ? 'scale(1.20)' 
-                            : 'scale(1.0)',
-                        transformOrigin: member.name.includes('Alberto') 
-                          ? 'center 35%' 
-                          : member.name.includes('Ranz') 
-                            ? 'center 25%' 
-                            : 'center center',
-                        objectPosition: member.name.includes('Alberto') 
-                          ? 'center 30%' 
-                          : member.name.includes('Ranz') 
-                            ? 'center 15%' 
-                            : 'center center',
+                      className="w-full h-full"
+                      style={member.name.includes('Alberto') ? {
+                        objectFit: 'cover',
+                        objectPosition: 'center 35%',
+                        width: '100%',
+                        height: '100%',
+                        display: 'block',
+                        transform: 'scale(1.25)',
+                        transformOrigin: 'center center'
+                      } : member.name.includes('Ranz') ? {
+                        objectFit: 'cover',
+                        objectPosition: 'center 30%',
+                        width: '100%',
+                        height: '100%',
+                        display: 'block',
+                        transform: 'scale(1.2)',
+                        transformOrigin: 'center center'
+                      } : {
+                        objectFit: 'cover',
+                        objectPosition: 'center center',
+                        width: '100%',
+                        height: '100%',
+                        display: 'block'
                       }}
                       onError={(e) => {
-                        e.currentTarget.style.display = 'none'
+                        const parent = e.currentTarget.parentElement
+                        if (parent) {
+                          parent.style.background = 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)'
+                        }
+                        e.currentTarget.src = '/logo-azimut-star.svg'
+                        e.currentTarget.className = 'absolute bottom-4 right-4 w-12 h-12 object-contain opacity-20'
                       }}
                     />
                   </div>
 
-                  {/* Conteúdo - Área de texto mais compacta */}
-                  <div className="flex-1 p-5 md:p-6 max-w-lg flex flex-col justify-start pt-4 md:pt-5">
+                  {/* Conteúdo - Espaçamento otimizado */}
+                  <div className="flex-1 p-6 md:p-8 max-w-2xl flex flex-col justify-start pt-4 md:pt-6">
                     {/* Linha decorativa vermelha */}
                     <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-azimut-red via-azimut-red/50 to-transparent"></div>
                     
                     {/* Nome GRANDE - 2 LINHAS: Nome branco + Sobrenome vermelho */}
-                    <h3 className="team-member-name mb-4 font-handel uppercase tracking-[0.04em] leading-[1.0]" style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)' }}>
+                    <h3 className="mb-4 font-handel uppercase tracking-[0.04em] leading-[1.0]" style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)' }}>
                       <span className="text-white block">{member.name.split(' ')[0]}</span>
-                      <span className="block" style={{ color: '#c92337' }}>{member.name.split(' ').slice(1).join(' ')}</span>
+                      <span className="text-azimut-red block">{member.name.split(' ').slice(1).join(' ')}</span>
                     </h3>
                     
                     {/* Role - CINZA CLARO para não competir com sobrenome vermelho */}
