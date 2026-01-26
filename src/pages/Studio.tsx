@@ -525,13 +525,36 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                 </div>
               </div>
 
-              {/* Citação Carl Rogers */}
+              {/* Citação Chris Milk - The Ultimate Empathy Machine */}
               <div 
                 className="mt-8 p-6 rounded-2xl border-l-4 border-azimut-red"
                 style={{
                   background: theme === 'dark' 
                     ? 'linear-gradient(135deg, rgba(201, 35, 55, 0.1) 0%, rgba(15, 23, 42, 0.3) 100%)'
                     : 'linear-gradient(135deg, rgba(201, 35, 55, 0.15) 0%, rgba(26, 24, 21, 0.4) 100%)'
+                }}
+              >
+                <p className={`text-lg italic leading-relaxed ${theme === 'dark' ? 'text-slate-200' : 'text-on-dark-primary'}`}>
+                  {lang === 'pt' 
+                    ? '"Não é uma máquina de filme. Não é uma máquina de TV. É uma máquina de empatia. Você pode ver como é ser outra pessoa."'
+                    : lang === 'es'
+                    ? '"No es una máquina de cine. No es una máquina de televisión. Es una máquina de empatía. Puedes ver cómo es ser otra persona."'
+                    : lang === 'fr'
+                    ? '"Ce n\'est pas une machine à films. Ce n\'est pas une machine à télévision. C\'est une machine à empathie. Vous pouvez voir ce que c\'est d\'être quelqu\'un d\'autre."'
+                    : '"It\'s not a film machine. It\'s not a TV machine. It\'s an empathy machine. You can see what it\'s like to be someone else."'}
+                </p>
+                <p className={`text-sm mt-3 font-semibold ${theme === 'dark' ? 'text-azimut-red' : 'text-azimut-red'}`}>
+                  — Chris Milk, TED Talk "How Virtual Reality Can Create the Ultimate Empathy Machine" (2015)
+                </p>
+              </div>
+
+              {/* Citação Carl Rogers */}
+              <div 
+                className="mt-4 p-6 rounded-2xl border-l-4 border-slate-500"
+                style={{
+                  background: theme === 'dark' 
+                    ? 'linear-gradient(135deg, rgba(71, 85, 105, 0.2) 0%, rgba(15, 23, 42, 0.3) 100%)'
+                    : 'linear-gradient(135deg, rgba(71, 85, 105, 0.25) 0%, rgba(26, 24, 21, 0.4) 100%)'
                 }}
               >
                 <p className={`text-lg italic leading-relaxed ${theme === 'dark' ? 'text-slate-200' : 'text-on-dark-primary'}`}>
@@ -543,8 +566,8 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                     ? '"Avoir de l\'empathie, c\'est voir le monde à travers les yeux de l\'autre, pas voir son propre monde reflété dans ses yeux."'
                     : '"To have empathy is to see the world through the other\'s eyes, not to see your world reflected in their eyes."'}
                 </p>
-                <p className={`text-sm mt-3 font-semibold ${theme === 'dark' ? 'text-azimut-red' : 'text-azimut-red'}`}>
-                  — Carl Rogers
+                <p className={`text-sm mt-3 font-semibold ${theme === 'dark' ? 'text-slate-400' : 'text-on-dark-tertiary'}`}>
+                  — Carl Rogers, Psicólogo Humanista
                 </p>
               </div>
             </div>
