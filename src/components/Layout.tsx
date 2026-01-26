@@ -81,6 +81,24 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   // 🆕 UX PREMIUM - Sistema de busca (opcional, pode remover se não funcionar)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   
+  // 🆕 Atalho de teclado Ctrl+K / Cmd+K para busca
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ctrl+K (Windows/Linux) ou Cmd+K (Mac)
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault()
+        setIsSearchOpen(true)
+      }
+      // ESC para fechar
+      if (e.key === 'Escape' && isSearchOpen) {
+        setIsSearchOpen(false)
+      }
+    }
+    
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isSearchOpen])
+  
   // 🆕 Detectar scroll para compactar header
   const [isScrolled, setIsScrolled] = useState(false)
   
@@ -318,8 +336,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           {!isMobile && (
           <nav 
             ref={navRef}
-            className="flex items-center justify-end font-sora text-[0.48rem] font-medium uppercase tracking-[0.06em] min-[768px]:gap-2.5 min-[768px]:text-[0.48rem] md:gap-3 md:text-[0.52rem] lg:text-[0.58rem] lg:gap-3.5 xl:gap-4 xl:text-[0.62rem]" 
-            style={{ color: 'var(--theme-text-secondary)', overflow: 'visible', alignItems: 'center', flexWrap: 'nowrap', paddingRight: '20px' }}
+            className="flex items-center justify-center font-sora text-[0.48rem] font-medium uppercase tracking-[0.06em] min-[768px]:gap-2.5 min-[768px]:text-[0.48rem] md:gap-3 md:text-[0.52rem] lg:text-[0.58rem] lg:gap-3.5 xl:gap-4 xl:text-[0.62rem]" 
+            style={{ color: 'var(--theme-text-secondary)', overflow: 'visible', alignItems: 'center', flexWrap: 'nowrap' }}
           >
             <LangLink to="/" 
               className="nav-link-glow relative whitespace-nowrap touch-manipulation shrink-0 transition-colors duration-200 font-sora font-semibold"
@@ -540,28 +558,36 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             {/* Separador visual */}
             <div className="hidden h-4 w-px min-[768px]:block shrink-0" style={{ backgroundColor: 'var(--theme-border)', flexShrink: 0, alignSelf: 'center', marginLeft: '2px', marginRight: '4px' }}></div>
             
-            {/* 🆕 UX PREMIUM - Botão de busca (OPCIONAL - pode remover se não funcionar) */}
+            {/* 🆕 UX PREMIUM - Botão de busca VISÍVEL (Desktop + Mobile) */}
             <button
-              onClick={() => setIsSearchOpen(true)}
-              className="hidden min-[768px]:flex items-center justify-center p-2 rounded-lg transition-all duration-200 touch-manipulation shrink-0"
+              onClick={() => {
+                setIsSearchOpen(true)
+                trackInteraction('search_open', 'header_search_button')
+              }}
+              className="flex items-center justify-center p-2 rounded-lg transition-all duration-200 touch-manipulation shrink-0"
               style={{ 
                 width: '36px', 
                 height: '36px',
+                minWidth: '36px',
                 color: theme === 'light' ? '#f5f5f5' : 'var(--theme-text-secondary)',
-                marginRight: '2px'
+                marginRight: '2px',
+                position: 'relative'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.color = theme === 'light' ? '#ff5a6e' : '#c92337'
-                e.currentTarget.style.background = theme === 'dark' ? 'rgba(201, 35, 55, 0.1)' : 'rgba(255, 90, 110, 0.1)'
+                e.currentTarget.style.background = theme === 'dark' ? 'rgba(201, 35, 55, 0.15)' : 'rgba(255, 90, 110, 0.15)'
+                e.currentTarget.style.transform = 'scale(1.05)'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.color = theme === 'light' ? '#f5f5f5' : 'var(--theme-text-secondary)'
                 e.currentTarget.style.background = 'transparent'
+                e.currentTarget.style.transform = 'scale(1)'
               }}
               aria-label={lang === 'en' ? 'Search' : lang === 'es' ? 'Buscar' : lang === 'fr' ? 'Rechercher' : 'Buscar'}
+              title={lang === 'en' ? 'Search (Ctrl+K)' : lang === 'es' ? 'Buscar (Ctrl+K)' : lang === 'fr' ? 'Rechercher (Ctrl+K)' : 'Buscar (Ctrl+K)'}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </button>
             
@@ -1082,6 +1108,20 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 <h4 className="font-sora text-[0.6rem] font-semibold uppercase tracking-wider text-white mb-1">
                   {lang === 'en' ? 'Navigate' : lang === 'fr' ? 'Navigation' : lang === 'es' ? 'Navegar' : 'Navegação'}
                 </h4>
+                {/* Botão de Busca Mobile */}
+                <button
+                  onClick={() => {
+                    setIsSearchOpen(true)
+                    setIsMobileMenuOpen(false)
+                    trackInteraction('search_open', 'mobile_menu_search')
+                  }}
+                  className="flex items-center gap-2 text-[0.7rem] text-slate-400 hover:text-azimut-red transition-colors mb-1"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  <span>{lang === 'en' ? 'Search' : lang === 'es' ? 'Buscar' : lang === 'fr' ? 'Rechercher' : 'Buscar'}</span>
+                </button>
                 <LangLink to="/" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navHome')}</LangLink>
                 <LangLink to="/what" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navWhat')}</LangLink>
                 <LangLink to="/work" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navWork')}</LangLink>
