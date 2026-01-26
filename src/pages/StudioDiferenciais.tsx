@@ -663,10 +663,20 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
                   </p>
                 </div>
                 <div className="relative rounded-2xl overflow-hidden border-2 border-azimut-red/30 shadow-2xl max-w-4xl mx-auto">
+                  {/* Vídeo multilíngue - usa vídeo do idioma atual ou fallback para PT */}
                   <video 
                     controls 
                     className="w-full aspect-video bg-slate-900"
-                    poster="/chris-milk-thumbnail.png"
+                    poster={(() => {
+                      // Thumbnail por idioma com fallback para PT
+                      const thumbs: Record<string, string> = {
+                        pt: '/chris-milk-thumbnail.png',
+                        en: '/chris-milk-thumbnail-en.png',
+                        es: '/chris-milk-thumbnail-es.png',
+                        fr: '/chris-milk-thumbnail-fr.png'
+                      };
+                      return thumbs[lang] || thumbs.pt;
+                    })()}
                     preload="metadata"
                     controlsList="nodownload noplaybackrate"
                     disablePictureInPicture
@@ -677,7 +687,28 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
                       video.currentTime = 0;
                       video.load(); // Recarrega para mostrar o poster novamente
                     }}
+                    onError={(e) => {
+                      // Se o vídeo do idioma não existir, carrega o PT
+                      const video = e.currentTarget;
+                      if (!video.src.includes('ChrisMilk.mp4')) {
+                        video.src = '/ChrisMilk.mp4';
+                      }
+                    }}
                   >
+                    {/* Vídeo por idioma com fallback para PT */}
+                    <source 
+                      src={(() => {
+                        const videos: Record<string, string> = {
+                          pt: '/ChrisMilk.mp4',
+                          en: '/ChrisMilk-en.mp4',
+                          es: '/ChrisMilk-es.mp4',
+                          fr: '/ChrisMilk-fr.mp4'
+                        };
+                        return videos[lang] || videos.pt;
+                      })()} 
+                      type="video/mp4" 
+                    />
+                    {/* Fallback para português se o vídeo do idioma não existir */}
                     <source src="/ChrisMilk.mp4" type="video/mp4" />
                     {lang === 'pt' ? 'Seu navegador não suporta vídeo HTML5.' : 'Your browser does not support HTML5 video.'}
                   </video>

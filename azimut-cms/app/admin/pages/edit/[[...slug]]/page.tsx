@@ -5,7 +5,8 @@ import { useRouter, useParams } from 'next/navigation';
 import { FieldEditorWithMetadata } from '@/src/components/admin/FieldEditorWithMetadata';
 import MediaUploadField from '@/components/admin/MediaUploadField';
 import VideoWithThumbnailField from '@/components/admin/VideoWithThumbnailField';
-// Force rebuild: 2026-01-26-v2
+import MultiLangVideoField from '@/components/admin/MultiLangVideoField';
+// Force rebuild: 2026-01-26-v3
 
 interface Section {
   id: string;
@@ -374,6 +375,15 @@ export default function EditPagePage() {
     heroBackgroundImageUrl: '',
     demoreelVideoId: '',
     demoreelVideoUrl: '',
+    // Vídeos Multilíngues
+    videoPt: '',
+    videoEn: '',
+    videoEs: '',
+    videoFr: '',
+    thumbPt: '',
+    thumbEn: '',
+    thumbEs: '',
+    thumbFr: '',
     status: 'PUBLISHED',
   });
 
@@ -1215,30 +1225,36 @@ export default function EditPagePage() {
             }}
           >
             <h2 style={{ margin: '0 0 16px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
-              💡 Mídia de Filosofia (Vídeo Chris Milk)
+              💡 Mídia de Filosofia - Vídeos Multilíngues
             </h2>
             <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
-              Vídeo da seção de Filosofia (Empatia) - TED Talk Chris Milk "A Máquina de Empatia".
+              Configure vídeos diferentes para cada idioma. Se não tiver vídeo em um idioma, usa o Português automaticamente.
             </p>
 
-            <VideoWithThumbnailField
+            <MultiLangVideoField
               label="Vídeo Filosofia (Chris Milk)"
-              videoValue={formData.demoreelVideoId}
-              videoUrl={formData.demoreelVideoUrl}
-              onVideoChange={(mediaId) => setFormData({ ...formData, demoreelVideoId: mediaId })}
-              onVideoUrlChange={(url) => setFormData({ ...formData, demoreelVideoUrl: url })}
-              thumbnailValue={formData.heroBackgroundImageId}
-              thumbnailUrl={formData.heroBackgroundImageUrl}
-              onThumbnailChange={(mediaId) => setFormData({ ...formData, heroBackgroundImageId: mediaId })}
-              onThumbnailUrlChange={(url) => setFormData({ ...formData, heroBackgroundImageUrl: url })}
+              videoPt={formData.videoPt}
+              videoEn={formData.videoEn}
+              videoEs={formData.videoEs}
+              videoFr={formData.videoFr}
+              thumbPt={formData.thumbPt}
+              thumbEn={formData.thumbEn}
+              thumbEs={formData.thumbEs}
+              thumbFr={formData.thumbFr}
+              onVideoPtChange={(url) => setFormData({ ...formData, videoPt: url })}
+              onVideoEnChange={(url) => setFormData({ ...formData, videoEn: url })}
+              onVideoEsChange={(url) => setFormData({ ...formData, videoEs: url })}
+              onVideoFrChange={(url) => setFormData({ ...formData, videoFr: url })}
+              onThumbPtChange={(url) => setFormData({ ...formData, thumbPt: url })}
+              onThumbEnChange={(url) => setFormData({ ...formData, thumbEn: url })}
+              onThumbEsChange={(url) => setFormData({ ...formData, thumbEs: url })}
+              onThumbFrChange={(url) => setFormData({ ...formData, thumbFr: url })}
               specs={{
                 videoMaxSizeMB: 25,
                 thumbWidth: 1920,
                 thumbHeight: 1080,
-                thumbMaxSizeMB: 2,
                 description: 'TED Talk Chris Milk - A Máquina de Empatia'
               }}
-              existingMedia={allMedia}
             />
 
             {/* Link rápido para Mídias */}
