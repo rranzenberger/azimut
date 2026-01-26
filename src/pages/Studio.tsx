@@ -554,6 +554,22 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                     controlsList="nodownload noplaybackrate"
                     disablePictureInPicture
                     onContextMenu={(e) => e.preventDefault()}
+                    onLoadedMetadata={(e) => {
+                      // Garante que o thumbnail aparece quando a página carrega
+                      const video = e.currentTarget;
+                      video.currentTime = 0;
+                    }}
+                    onPause={(e) => {
+                      // Quando pausar, volta para o início e mostra thumbnail
+                      const video = e.currentTarget;
+                      // Timeout para não interferir quando o usuário apenas pausa temporariamente
+                      setTimeout(() => {
+                        if (video.paused && !video.ended) {
+                          video.currentTime = 0;
+                          video.load();
+                        }
+                      }, 180000); // 3 minutos = 180000ms
+                    }}
                     onEnded={(e) => {
                       // Quando o vídeo terminar, volta para o início e mostra o poster/thumbnail
                       const video = e.currentTarget;
