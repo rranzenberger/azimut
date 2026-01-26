@@ -231,7 +231,11 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
         if ('segments' in service && service.segments) {
           return getServiceCategory(service.segments) === activeFilter
         }
-        // Se for dado local, usar mapeamento legado
+        // Se for dado local, verificar projectCategories
+        if ('projectCategories' in service && service.projectCategories) {
+          return getServiceCategory(service.projectCategories) === activeFilter
+        }
+        // Fallback: usar mapeamento legado
         return serviceCategoryMap[service.slug] === activeFilter
       })
 
