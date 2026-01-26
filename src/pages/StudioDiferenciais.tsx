@@ -650,6 +650,42 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
                 {text.philosophy.conclusion}
               </p>
 
+              {/* ═══════════════════════════════════════════════════════════
+                  VÍDEO CHRIS MILK - The Ultimate Empathy Machine
+                  ═══════════════════════════════════════════════════════════ */}
+              <div className="mb-10">
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-handel uppercase text-azimut-red mb-2">
+                    {lang === 'pt' ? 'A Máquina de Empatia' : lang === 'es' ? 'La Máquina de Empatía' : lang === 'fr' ? 'La Machine à Empathie' : 'The Empathy Machine'}
+                  </h3>
+                  <p className="text-white/60">
+                    Chris Milk • TED Talk 2015
+                  </p>
+                </div>
+                <div className="relative rounded-2xl overflow-hidden border-2 border-azimut-red/30 shadow-2xl max-w-4xl mx-auto">
+                  <video 
+                    controls 
+                    className="w-full aspect-video bg-black"
+                    poster="/og-image.png"
+                    preload="metadata"
+                  >
+                    <source src="/ChrisMilk.mp4" type="video/mp4" />
+                    {lang === 'pt' ? 'Seu navegador não suporta vídeo HTML5.' : 'Your browser does not support HTML5 video.'}
+                  </video>
+                  {/* Overlay gradient no topo */}
+                  <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-black/50 to-transparent pointer-events-none" />
+                </div>
+                <p className="text-center text-white/50 text-sm mt-4 max-w-2xl mx-auto">
+                  {lang === 'pt' 
+                    ? '"VR é uma máquina de empatia - a capacidade de colocar alguém literalmente dentro da experiência de outra pessoa."'
+                    : lang === 'es'
+                    ? '"VR es una máquina de empatía - la capacidad de colocar a alguien literalmente dentro de la experiencia de otra persona."'
+                    : lang === 'fr'
+                    ? '"VR est une machine à empathie - la capacité de placer quelqu\'un littéralement à l\'intérieur de l\'expérience d\'une autre personne."'
+                    : '"VR is an empathy machine - the ability to literally place someone inside another person\'s experience."'}
+                </p>
+              </div>
+
               {/* Citações */}
               <div className="grid md:grid-cols-2 gap-6">
                 {/* Chris Milk */}
