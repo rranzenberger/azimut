@@ -14,6 +14,20 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
   // useUserTracking()
   // Estrela FIXA (sem parallax) - Padronizada com Studio principal
 
+  // Ref para o vídeo Chris Milk
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  // 🆕 Monitora mudança de idioma - para o vídeo e volta para thumbnail
+  useEffect(() => {
+    const video = videoRef.current
+    if (video && !video.paused) {
+      // Se o vídeo estiver tocando quando o idioma mudar
+      video.pause()
+      video.currentTime = 0
+      video.load() // Recarrega para mostrar o thumbnail
+    }
+  }, [lang])
+
   const content = {
     pt: {
       title: 'O Que Nos Torna Únicos',
@@ -665,6 +679,7 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
                 <div className="relative rounded-2xl overflow-hidden border-2 border-azimut-red/30 shadow-2xl max-w-4xl mx-auto">
                   {/* Vídeo multilíngue - usa vídeo do idioma atual ou fallback para PT */}
                   <video 
+                    ref={videoRef}
                     controls 
                     className="w-full aspect-video bg-slate-900"
                     poster="/chris-milk-thumbnail.jpg"

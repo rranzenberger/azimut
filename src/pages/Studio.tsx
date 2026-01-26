@@ -21,6 +21,9 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
   // 🆕 Detecção de scroll para destacar seção ativa no menu
   const [activeSection, setActiveSection] = useState<string>('overview')
   
+  // Ref para o vídeo Chris Milk
+  const videoRef = useRef<HTMLVideoElement>(null)
+  
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['overview', 'unique', 'team', 'credentials']
@@ -43,6 +46,17 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
     
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // 🆕 Monitora mudança de idioma - para o vídeo e volta para thumbnail
+  useEffect(() => {
+    const video = videoRef.current
+    if (video && !video.paused) {
+      // Se o vídeo estiver tocando quando o idioma mudar
+      video.pause()
+      video.currentTime = 0
+      video.load() // Recarrega para mostrar o thumbnail
+    }
+  }, [lang])
 
   const content = {
     pt: {
@@ -547,6 +561,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                 >
                   {/* Vídeo multilíngue - usa vídeo do idioma atual ou fallback para PT */}
                   <video 
+                    ref={videoRef}
                     controls 
                     className="w-full aspect-video bg-slate-900"
                     poster="/chris-milk-thumbnail.jpg"
