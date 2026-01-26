@@ -100,7 +100,29 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
           title: 'Modelo de Cocriação',
           body: 'Desenvolvemos projetos em rede, com artistas, marcas, estúdios e instituições públicas/privadas, usando metodologias ágeis e colaborativas.'
         }
-      ]
+      ],
+      philosophy: {
+        title: 'Nossa Filosofia',
+        subtitle: 'Empatia vs Simpatia',
+        intro: 'Não somos uma empresa formal do século passado. Somos descontraídos, alegres, simpáticos. Somos muito bons no que fazemos — e não escondemos isso — mas nossa confiança nunca vira arrogância.',
+        empathy: {
+          title: 'EMPATIA (Em + Pathos)',
+          meaning: 'Em = dentro | Pathos = sentimento',
+          description: 'Sentir DENTRO do outro. Entrar na experiência.',
+          example: '"Aquele frio na barriga de criar algo que vai tocar milhares de pessoas..."'
+        },
+        sympathy: {
+          title: 'SIMPATIA (Sym + Pathos)',
+          meaning: 'Sym = junto, com | Pathos = sentimento',
+          description: 'Sentir COM o outro (ao lado). Observar de fora.',
+          example: '"Entendo que deve ser difícil pra você"'
+        },
+        conclusion: 'Nós não observamos de fora. Entramos. Sentimos. E a partir daí, ajudamos.',
+        chrisMilk: '"Não é uma máquina de filme. Não é uma máquina de TV. É uma máquina de empatia."',
+        chrisMilkSource: '— Chris Milk, TED Talk 2015',
+        carlRogers: '"Ter empatia é ver o mundo pelos olhos do outro, não ver o seu mundo refletido nos olhos dele."',
+        carlRogersSource: '— Carl Rogers, Psicólogo Humanista'
+      }
     },
     fr: {
       title: 'Ce Qui Nous Rend Uniques',
@@ -187,7 +209,29 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
           title: 'Modèle de Co-création',
           body: 'Nous développons des projets en réseau avec méthodologies agiles et collaboratives.'
         }
-      ]
+      ],
+      philosophy: {
+        title: 'Notre Philosophie',
+        subtitle: 'Empathie vs Sympathie',
+        intro: 'Nous ne sommes pas une entreprise formelle du siècle dernier. Nous sommes décontractés, joyeux, sympathiques. Nous excellons dans ce que nous faisons — et ne le cachons pas — mais notre confiance ne devient jamais arrogance.',
+        empathy: {
+          title: 'EMPATHIE (Em + Pathos)',
+          meaning: 'Em = dedans | Pathos = sentiment',
+          description: 'Ressentir DE L\'INTÉRIEUR de l\'autre. Entrer dans l\'expérience.',
+          example: '"Ce nœud à l\'estomac de créer quelque chose qui touchera des milliers..."'
+        },
+        sympathy: {
+          title: 'SYMPATHIE (Sym + Pathos)',
+          meaning: 'Sym = ensemble, avec | Pathos = sentiment',
+          description: 'Ressentir AVEC l\'autre (à côté). Observer de l\'extérieur.',
+          example: '"Je comprends que ça doit être difficile pour toi"'
+        },
+        conclusion: 'Nous n\'observons pas de l\'extérieur. Nous entrons. Ressentons. Et de là, aidons.',
+        chrisMilk: '"Ce n\'est pas une machine à films. Ce n\'est pas une machine à télévision. C\'est une machine à empathie."',
+        chrisMilkSource: '— Chris Milk, TED Talk 2015',
+        carlRogers: '"Avoir de l\'empathie, c\'est voir le monde à travers les yeux de l\'autre, pas voir son propre monde reflété dans ses yeux."',
+        carlRogersSource: '— Carl Rogers, Psychologue Humaniste'
+      }
     },
     es: {
       title: 'Lo Que Nos Hace Únicos',
@@ -274,7 +318,29 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
           title: 'Modelo de Co-creación',
           body: 'Desarrollamos proyectos en red con metodologías ágiles y colaborativas.'
         }
-      ]
+      ],
+      philosophy: {
+        title: 'Nuestra Filosofía',
+        subtitle: 'Empatía vs Simpatía',
+        intro: 'No somos una empresa formal del siglo pasado. Somos relajados, alegres, simpáticos. Somos muy buenos en lo que hacemos — y no lo escondemos — pero nuestra confianza nunca se vuelve arrogancia.',
+        empathy: {
+          title: 'EMPATÍA (Em + Pathos)',
+          meaning: 'Em = dentro | Pathos = sentimiento',
+          description: 'Sentir DENTRO del otro. Entrar en la experiencia.',
+          example: '"Ese nudo en el estómago de crear algo que tocará miles de personas..."'
+        },
+        sympathy: {
+          title: 'SIMPATÍA (Sym + Pathos)',
+          meaning: 'Sym = junto, con | Pathos = sentimiento',
+          description: 'Sentir CON el otro (al lado). Observar desde afuera.',
+          example: '"Entiendo que debe ser difícil para ti"'
+        },
+        conclusion: 'No observamos desde afuera. Entramos. Sentimos. Y a partir de ahí, ayudamos.',
+        chrisMilk: '"No es una máquina de cine. No es una máquina de televisión. Es una máquina de empatía."',
+        chrisMilkSource: '— Chris Milk, TED Talk 2015',
+        carlRogers: '"Tener empatía es ver el mundo a través de los ojos del otro, no ver tu mundo reflejado en sus ojos."',
+        carlRogersSource: '— Carl Rogers, Psicólogo Humanista'
+      }
     },
     en: {
       title: 'What Makes Us Unique',
@@ -361,7 +427,29 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
           title: 'Co-creation Model',
           body: 'We develop projects in network, with artists, brands, studios and public/private institutions, using agile and collaborative methodologies.'
         }
-      ]
+      ],
+      philosophy: {
+        title: 'Our Philosophy',
+        subtitle: 'Empathy vs Sympathy',
+        intro: 'We\'re not a formal company from the last century. We\'re relaxed, joyful, friendly. We\'re damn good at what we do — and we don\'t hide it — but our confidence never becomes arrogance.',
+        empathy: {
+          title: 'EMPATHY (Em + Pathos)',
+          meaning: 'Em = inside | Pathos = feeling',
+          description: 'Feel FROM WITHIN the other. Enter the experience.',
+          example: '"That butterflies-in-stomach feeling of creating something that will touch thousands..."'
+        },
+        sympathy: {
+          title: 'SYMPATHY (Sym + Pathos)',
+          meaning: 'Sym = together, with | Pathos = feeling',
+          description: 'Feel WITH the other (alongside). Observe from outside.',
+          example: '"I understand it must be difficult for you"'
+        },
+        conclusion: 'We don\'t observe from outside. We enter. Feel. And from there, we help.',
+        chrisMilk: '"It\'s not a film machine. It\'s not a TV machine. It\'s an empathy machine."',
+        chrisMilkSource: '— Chris Milk, TED Talk 2015',
+        carlRogers: '"To have empathy is to see the world through the other\'s eyes, not to see your world reflected in their eyes."',
+        carlRogersSource: '— Carl Rogers, Humanist Psychologist'
+      }
     }
   }
 
@@ -510,6 +598,72 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
                   <p className="text-sm text-theme-text-secondary leading-relaxed">{pillar.body}</p>
                 </div>
               ))}
+            </div>
+          </section>
+
+          {/* ═══════════════════════════════════════════════════════════
+              FILOSOFIA - Empatia vs Simpatia (Chris Milk + Carl Rogers)
+              ═══════════════════════════════════════════════════════════ */}
+          <section className="mb-20">
+            <div className="p-10 rounded-2xl bg-gradient-to-br from-slate-900/80 to-slate-800/60 border-2 border-azimut-red/30 shadow-2xl">
+              {/* Header */}
+              <div className="text-center mb-10">
+                <span className="text-6xl mb-4 block">💫</span>
+                <h2 className="text-3xl md:text-4xl font-handel uppercase text-azimut-red mb-3">
+                  {text.philosophy.title}
+                </h2>
+                <p className="text-xl text-white/80 font-sora">
+                  {text.philosophy.subtitle}
+                </p>
+              </div>
+
+              {/* Intro */}
+              <p className="text-lg text-center text-white/90 leading-relaxed max-w-3xl mx-auto mb-10">
+                {text.philosophy.intro}
+              </p>
+
+              {/* Empatia vs Simpatia Grid */}
+              <div className="grid md:grid-cols-2 gap-8 mb-10">
+                {/* EMPATIA - Destacada */}
+                <div className="p-6 rounded-xl bg-azimut-red/20 border-2 border-azimut-red">
+                  <h3 className="text-xl font-bold text-azimut-red mb-2">{text.philosophy.empathy.title}</h3>
+                  <p className="text-sm text-white/60 mb-3 font-mono">{text.philosophy.empathy.meaning}</p>
+                  <p className="text-white mb-4">{text.philosophy.empathy.description}</p>
+                  <p className="text-white/80 italic text-lg border-l-4 border-azimut-red pl-4">
+                    {text.philosophy.empathy.example}
+                  </p>
+                </div>
+
+                {/* SIMPATIA - Mais suave */}
+                <div className="p-6 rounded-xl bg-slate-700/30 border border-slate-600">
+                  <h3 className="text-xl font-bold text-slate-400 mb-2">{text.philosophy.sympathy.title}</h3>
+                  <p className="text-sm text-slate-500 mb-3 font-mono">{text.philosophy.sympathy.meaning}</p>
+                  <p className="text-slate-300 mb-4">{text.philosophy.sympathy.description}</p>
+                  <p className="text-slate-400 italic text-lg border-l-4 border-slate-600 pl-4">
+                    {text.philosophy.sympathy.example}
+                  </p>
+                </div>
+              </div>
+
+              {/* Conclusão */}
+              <p className="text-2xl text-center text-white font-bold mb-10">
+                {text.philosophy.conclusion}
+              </p>
+
+              {/* Citações */}
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Chris Milk */}
+                <div className="p-6 rounded-xl bg-azimut-red/10 border-l-4 border-azimut-red">
+                  <p className="text-lg italic text-white/90 mb-3">{text.philosophy.chrisMilk}</p>
+                  <p className="text-sm text-azimut-red font-semibold">{text.philosophy.chrisMilkSource}</p>
+                </div>
+
+                {/* Carl Rogers */}
+                <div className="p-6 rounded-xl bg-slate-700/30 border-l-4 border-slate-500">
+                  <p className="text-lg italic text-white/80 mb-3">{text.philosophy.carlRogers}</p>
+                  <p className="text-sm text-slate-400 font-semibold">{text.philosophy.carlRogersSource}</p>
+                </div>
+              </div>
             </div>
           </section>
 
