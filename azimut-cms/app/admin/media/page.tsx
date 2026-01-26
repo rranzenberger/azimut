@@ -74,9 +74,11 @@ const SERVICES = [
 
 export default function MediaPage() {
   const [file, setFile] = useState<File | null>(null);
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null); // NOVO: Thumbnail para vídeos
   const [type, setType] = useState<'IMAGE' | 'VIDEO'>('IMAGE');
   const [altPt, setAltPt] = useState('');
   const [altEn, setAltEn] = useState('');
+  const [thumbnailAltPt, setThumbnailAltPt] = useState(''); // NOVO: Alt do thumbnail
   const [pageSlug, setPageSlug] = useState('');
   const [sectionSlug, setSectionSlug] = useState('');
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
@@ -84,6 +86,7 @@ export default function MediaPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<UploadResult | null>(null);
+  const [thumbnailResult, setThumbnailResult] = useState<UploadResult | null>(null); // NOVO: Resultado do thumbnail
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -123,7 +126,10 @@ export default function MediaPage() {
     }
 
     setLoading(true);
+    setThumbnailResult(null);
+    
     try {
+      // 1. Upload do arquivo principal (vídeo ou imagem)
       const res = await fetch('/api/admin/media', {
         method: 'POST',
         body: form,
@@ -131,9 +137,37 @@ export default function MediaPage() {
       const data = await res.json();
       if (!res.ok) {
         setError(data.error || 'Falha no upload');
+        return;
+      }
+      setResult(data.media);
+
+      // 2. Se for vídeo E tiver thumbnail, fazer upload do thumbnail também
+      if (type === 'VIDEO' && thumbnailFile) {
+        const thumbForm = new FormData();
+        thumbForm.append('file', thumbnailFile);
+        thumbForm.append('type', 'IMAGE');
+        thumbForm.append('altPt', thumbnailAltPt || `Thumbnail: ${altPt}`);
+        thumbForm.append('altEn', `Thumbnail: ${altEn}`);
+        if (pageSlug) thumbForm.append('pageSlug', pageSlug);
+        thumbForm.append('sectionSlug', sectionSlug ? `${sectionSlug}-thumbnail` : 'video-thumbnail');
+        thumbForm.append('imageType', 'video-poster');
+
+        const thumbRes = await fetch('/api/admin/media', {
+          method: 'POST',
+          body: thumbForm,
+        });
+        const thumbData = await thumbRes.json();
+        if (thumbRes.ok) {
+          setThumbnailResult(thumbData.media);
+          setMsg('Vídeo e thumbnail enviados com sucesso! 🎬🖼️');
+        } else {
+          setMsg('Vídeo enviado, mas erro no thumbnail.');
+        }
       } else {
-        setResult(data.media);
-        setMsg('Mídia enviada com sucesso.');
+        setMsg(type === 'VIDEO' 
+          ? 'Vídeo enviado (sem thumbnail).' 
+          : 'Mídia enviada com sucesso.'
+        );
       }
     } catch (err) {
       setError('Erro de rede no upload.');
@@ -201,7 +235,9 @@ export default function MediaPage() {
           </div>
 
           <div style={{ display: 'grid', gap: 10, width: '100%', boxSizing: 'border-box' }}>
-            <label style={{ fontSize: 15, fontWeight: 600 }}>Arquivo (máx. 12MB)</label>
+            <label style={{ fontSize: 15, fontWeight: 600 }}>
+              {type === 'VIDEO' ? '🎬 Arquivo de Vídeo' : '🖼️ Arquivo de Imagem'} (máx. {type === 'VIDEO' ? MAX_VIDEO_MB : MAX_IMAGE_MB}MB)
+            </label>
             <input
               type="file"
               accept={type === 'IMAGE' ? 'image/*' : 'video/*'}
@@ -209,6 +245,79 @@ export default function MediaPage() {
               style={{ color: '#fff', width: '100%', boxSizing: 'border-box' }}
             />
           </div>
+
+          {/* ═══════════════════════════════════════════
+              THUMBNAIL DO VÍDEO (aparece só quando tipo = VIDEO)
+              ═══════════════════════════════════════════ */}
+          {type === 'VIDEO' && (
+            <div style={{ 
+              display: 'grid', 
+              gap: 16, 
+              width: '100%', 
+              boxSizing: 'border-box',
+              padding: 16,
+              borderRadius: 12,
+              border: '1px solid rgba(147, 51, 234, 0.3)',
+              background: 'rgba(147, 51, 234, 0.08)'
+            }}>
+              <div>
+                <label style={{ fontSize: 15, fontWeight: 600, color: '#a78bfa' }}>
+                  🖼️ Thumbnail do Vídeo (Capa) - Recomendado!
+                </label>
+                <p style={{ margin: '6px 0 12px', color: '#8f8ba2', fontSize: 12 }}>
+                  Imagem que aparece antes de dar play. Recomendado: 1920x1080 (16:9), máx 2MB.
+                </p>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setThumbnailFile(e.target.files?.[0] || null)}
+                  style={{ color: '#fff', width: '100%', boxSizing: 'border-box' }}
+                />
+              </div>
+
+              {thumbnailFile && (
+                <div>
+                  <label style={{ fontSize: 13, fontWeight: 500, color: '#c0bccf' }}>
+                    Alt do Thumbnail (PT)
+                  </label>
+                  <input
+                    type="text"
+                    value={thumbnailAltPt}
+                    onChange={(e) => setThumbnailAltPt(e.target.value)}
+                    maxLength={MAX_ALT}
+                    style={{ ...inputStyle, width: '100%', boxSizing: 'border-box', marginTop: 6 }}
+                    placeholder="Ex: Chris Milk no palco do TED Talk"
+                  />
+                </div>
+              )}
+
+              {thumbnailFile && (
+                <div style={{ 
+                  padding: 12, 
+                  borderRadius: 8, 
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.08)'
+                }}>
+                  <p style={{ margin: 0, fontSize: 12, color: '#86efac' }}>
+                    ✓ Thumbnail selecionado: {thumbnailFile.name} ({(thumbnailFile.size / 1024 / 1024).toFixed(2)}MB)
+                  </p>
+                </div>
+              )}
+
+              {!thumbnailFile && (
+                <div style={{ 
+                  padding: 12, 
+                  borderRadius: 8, 
+                  background: 'rgba(251, 191, 36, 0.1)',
+                  border: '1px solid rgba(251, 191, 36, 0.3)'
+                }}>
+                  <p style={{ margin: 0, fontSize: 12, color: '#fbbf24' }}>
+                    ⚠️ Sem thumbnail, o vídeo mostrará o primeiro frame ou uma tela preta.
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
 
           <div style={{ display: 'grid', gap: 10, width: '100%', boxSizing: 'border-box' }}>
             <label style={{ fontSize: 15, fontWeight: 600 }}>
@@ -426,11 +535,13 @@ export default function MediaPage() {
               marginTop: 16,
               padding: 14,
               borderRadius: 10,
-              border: '1px solid rgba(255,255,255,0.08)',
-              background: 'rgba(255,255,255,0.02)',
+              border: '1px solid rgba(46, 204, 113, 0.3)',
+              background: 'rgba(46, 204, 113, 0.08)',
             }}
           >
-            <h3 style={{ margin: '0 0 8px' }}>Resultado</h3>
+            <h3 style={{ margin: '0 0 8px', color: '#86efac' }}>
+              {result.type === 'VIDEO' ? '🎬 Vídeo Enviado' : '🖼️ Imagem Enviada'}
+            </h3>
             <div style={{ fontSize: 14, lineHeight: 1.5, color: '#c0bccf' }}>
               <div>ID: {result.id}</div>
               <div>Tipo: {result.type}</div>
@@ -442,6 +553,35 @@ export default function MediaPage() {
                 <div>Tamanho: {(result.sizeBytes / (1024 * 1024)).toFixed(2)} MB</div>
               ) : null}
               {result.format ? <div>Formato: {result.format}</div> : null}
+            </div>
+          </div>
+        )}
+
+        {/* Resultado do Thumbnail (quando vídeo) */}
+        {thumbnailResult && (
+          <div
+            style={{
+              marginTop: 12,
+              padding: 14,
+              borderRadius: 10,
+              border: '1px solid rgba(147, 51, 234, 0.3)',
+              background: 'rgba(147, 51, 234, 0.08)',
+            }}
+          >
+            <h3 style={{ margin: '0 0 8px', color: '#a78bfa' }}>🖼️ Thumbnail Enviado</h3>
+            <div style={{ fontSize: 14, lineHeight: 1.5, color: '#c0bccf' }}>
+              <div>ID: {thumbnailResult.id}</div>
+              <div>URL: <a href={thumbnailResult.originalUrl} style={{ color: '#a78bfa' }}>{thumbnailResult.originalUrl}</a></div>
+              {thumbnailResult.width && thumbnailResult.height ? (
+                <div>Dimensões: {thumbnailResult.width} x {thumbnailResult.height}</div>
+              ) : null}
+            </div>
+            <div style={{ marginTop: 12, borderRadius: 8, overflow: 'hidden', maxWidth: 300 }}>
+              <img 
+                src={thumbnailResult.originalUrl} 
+                alt="Thumbnail preview"
+                style={{ width: '100%', height: 'auto' }}
+              />
             </div>
           </div>
         )}
