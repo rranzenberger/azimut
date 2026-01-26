@@ -375,12 +375,12 @@ export default function EditPagePage() {
     heroBackgroundImageUrl: '',
     demoreelVideoId: '',
     demoreelVideoUrl: '',
-    // Vídeos Multilíngues
-    videoPt: '',
+    // Vídeos Multilíngues (valores padrão para Chris Milk)
+    videoPt: '/ChrisMilk.mp4',
     videoEn: '',
     videoEs: '',
     videoFr: '',
-    thumbPt: '',
+    thumbPt: '/chris-milk-thumbnail.png',
     thumbEn: '',
     thumbEs: '',
     thumbFr: '',
