@@ -1222,7 +1222,10 @@ export default function EditPagePage() {
               📌 <strong>Recomendado:</strong> MP4, máximo 25MB, formato 16:9.
             </p>
 
-            <div style={{ padding: 20, borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+            {/* ═══════════════════════════════════════════════════════════
+                VÍDEO DA FILOSOFIA
+            ═══════════════════════════════════════════════════════════ */}
+            <div style={{ padding: 20, borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', marginBottom: 20 }}>
               <h3 style={{ margin: '0 0 20px', fontSize: 16, fontWeight: 600, color: '#e8e6f2' }}>
                 🎬 Vídeo da Filosofia
               </h3>
@@ -1262,14 +1265,84 @@ export default function EditPagePage() {
               </div>
             </div>
 
-            {/* Preview do vídeo atual */}
-            <div style={{ marginTop: 24, padding: 16, borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+            {/* ═══════════════════════════════════════════════════════════
+                THUMBNAIL DO VÍDEO
+            ═══════════════════════════════════════════════════════════ */}
+            <div style={{ padding: 20, borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', marginBottom: 20 }}>
+              <h3 style={{ margin: '0 0 20px', fontSize: 16, fontWeight: 600, color: '#e8e6f2' }}>
+                🖼️ Thumbnail do Vídeo (Capa)
+              </h3>
+              <p style={{ margin: '0 0 16px', color: '#8f8ba2', fontSize: 12 }}>
+                Imagem que aparece antes de dar play no vídeo. Recomendado: 1920x1080 (16:9).
+              </p>
+
+              {/* MediaUploadField - Upload + Biblioteca (Imagens) */}
+              <MediaUploadField
+                label="Thumbnail do Vídeo"
+                value={formData.heroBackgroundImageId}
+                onChange={(mediaId) => setFormData({ ...formData, heroBackgroundImageId: mediaId })}
+                mediaType="image"
+                specs={{
+                  width: 1920,
+                  height: 1080,
+                  maxSizeMB: 2,
+                  description: 'Imagem de capa do vídeo (frame do Chris Milk no palco)'
+                }}
+                existingMedia={allMedia}
+              />
+
+              {/* URL Manual (fallback) */}
+              <div style={{ marginTop: 20 }}>
+                <label style={{ display: 'block', marginBottom: 8, fontSize: 13, fontWeight: 500, color: '#8f8ba2' }}>
+                  📍 OU usar URL externa/local
+                </label>
+                <input
+                  type="url"
+                  value={formData.heroBackgroundImageUrl}
+                  onChange={(e) => setFormData({ ...formData, heroBackgroundImageUrl: e.target.value })}
+                  placeholder="/chris-milk-thumbnail.png"
+                  style={inputStyle}
+                  disabled={!!formData.heroBackgroundImageId}
+                />
+                <div style={{ marginTop: 6, fontSize: 12, color: formData.heroBackgroundImageId ? '#8f8ba2' : '#7dd3fc' }}>
+                  {formData.heroBackgroundImageId 
+                    ? '🔒 Desabilitado (imagem selecionada acima tem prioridade)'
+                    : '🌐 Cole a URL ou caminho local (ex: /chris-milk-thumbnail.png)'
+                  }
+                </div>
+              </div>
+
+              {/* Preview do Thumbnail */}
+              <div style={{ marginTop: 20 }}>
+                <h4 style={{ margin: '0 0 12px', fontSize: 13, fontWeight: 600, color: '#c0bccf' }}>
+                  Preview do Thumbnail:
+                </h4>
+                <div style={{ 
+                  aspectRatio: '16/9', 
+                  maxWidth: 300,
+                  borderRadius: 8, 
+                  overflow: 'hidden',
+                  background: 'rgba(0,0,0,0.3)',
+                  border: '1px solid rgba(255,255,255,0.1)'
+                }}>
+                  <img 
+                    src={formData.heroBackgroundImageUrl || '/chris-milk-thumbnail.png'}
+                    alt="Thumbnail preview"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    onError={(e) => { (e.target as HTMLImageElement).src = '/og-image.png' }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Preview do vídeo completo */}
+            <div style={{ padding: 16, borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
               <h4 style={{ margin: '0 0 12px', fontSize: 14, fontWeight: 600, color: '#c0bccf' }}>
-                📺 Preview do Vídeo Atual
+                📺 Preview do Vídeo Completo
               </h4>
               <div style={{ 
                 aspectRatio: '16/9', 
-                maxWidth: 400,
+                maxWidth: 500,
                 borderRadius: 8, 
                 overflow: 'hidden',
                 background: 'rgba(0,0,0,0.3)',
@@ -1281,7 +1354,7 @@ export default function EditPagePage() {
                   <video 
                     controls 
                     style={{ width: '100%', height: '100%' }}
-                    poster="/og-image.png"
+                    poster={formData.heroBackgroundImageUrl || '/chris-milk-thumbnail.png'}
                   >
                     <source src={formData.demoreelVideoUrl || '/ChrisMilk.mp4'} type="video/mp4" />
                   </video>
