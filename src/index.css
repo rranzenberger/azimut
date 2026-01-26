@@ -180,13 +180,13 @@ body {
 .submenu-nav {
   /* Tema escuro: azul marinho escuro (#0a0e18) */
   background-color: rgba(10, 14, 24, 0.98);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  /* Removido box-shadow para eliminar a "tarja" visual abaixo do menu */
 }
 
 [data-theme="light"] .submenu-nav {
   /* Tema claro: bege claro (#d3cec3) */
   background-color: rgba(211, 206, 195, 0.98);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  /* Removido box-shadow para eliminar a "tarja" visual abaixo do menu */
 }
 
 /* Animação desabilitada - estava causando sobreposição horizontal */
@@ -835,6 +835,19 @@ html[data-theme="dark"] .card-dark-adaptive p,
 [class*="text-red-"] {
   font-weight: 600 !important; /* Semi-bold para destaque */
   letter-spacing: 0.02em;
+}
+
+/* FORÇAR COR VERMELHA AZIMUT - Sobrepõe qualquer regra de cor branca */
+.text-azimut-red,
+.card-dark-fixed .text-azimut-red,
+.card-dark-adaptive .text-azimut-red,
+.card-adaptive .text-azimut-red,
+html[data-theme="dark"] .text-azimut-red,
+html[data-theme="light"] .text-azimut-red,
+html[data-theme="dark"] .card-dark-fixed .text-azimut-red,
+html[data-theme="light"] .card-dark-fixed .text-azimut-red {
+  color: #c92337 !important;
+  -webkit-text-fill-color: #c92337 !important;
 }
 
 /* Títulos sempre brancos no tema escuro */
