@@ -359,7 +359,7 @@ export async function callClaude(request: ClaudeRequest): Promise<ClaudeResponse
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': import.meta.env.VITE_CLAUDE_API_KEY || '',
+        'x-api-key': import.meta.env.VITE_CLAUDE_API_KEY || import.meta.env.VITE_ANTHROPIC_API_KEY || '',
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({

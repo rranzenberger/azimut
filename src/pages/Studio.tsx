@@ -433,6 +433,121 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                 </div>
               </div>
             </div>
+
+            {/* ═══════════════════════════════════════════════════════════
+                MISSÃO, VISÃO E VALORES - Filosofia de Empatia
+                ═══════════════════════════════════════════════════════════ */}
+            <div className="mb-16">
+              <h3 className="text-lg font-bold mb-8 text-azimut-red uppercase tracking-wider flex items-center gap-2">
+                <span>💫</span>
+                {lang === 'pt' ? 'Nossa Filosofia' : lang === 'es' ? 'Nuestra Filosofía' : lang === 'fr' ? 'Notre Philosophie' : 'Our Philosophy'}
+              </h3>
+              
+              <div className="grid md:grid-cols-3 gap-6">
+                {/* MISSÃO */}
+                <div 
+                  className="p-6 rounded-2xl border border-azimut-red/20"
+                  style={{
+                    background: theme === 'dark' 
+                      ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(15, 23, 42, 0.3) 100%)'
+                      : 'linear-gradient(135deg, rgba(30, 28, 26, 0.8) 0%, rgba(26, 24, 21, 0.6) 100%)'
+                  }}
+                >
+                  <div className="text-3xl mb-3">🎯</div>
+                  <h4 className={`text-lg font-bold mb-3 uppercase tracking-wide ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+                    {lang === 'pt' ? 'Missão' : lang === 'es' ? 'Misión' : lang === 'fr' ? 'Mission' : 'Mission'}
+                  </h4>
+                  <p className={`text-sm leading-relaxed ${theme === 'dark' ? 'text-slate-300' : 'text-on-dark-secondary'}`}>
+                    {lang === 'pt' 
+                      ? 'Sentir DENTRO do que nossos parceiros sentem. Não observamos de fora — entramos, sentimos, e a partir daí, criamos experiências que transformam.'
+                      : lang === 'es'
+                      ? 'Sentir DENTRO de lo que nuestros socios sienten. No observamos desde afuera — entramos, sentimos, y a partir de ahí, creamos experiencias que transforman.'
+                      : lang === 'fr'
+                      ? 'Ressentir DE L\'INTÉRIEUR ce que nos partenaires ressentent. Nous n\'observons pas de l\'extérieur — nous entrons, ressentons, et à partir de là, créons des expériences qui transforment.'
+                      : 'Feel FROM WITHIN what our partners feel. We don\'t observe from outside — we enter, feel, and from there, create experiences that transform.'}
+                  </p>
+                </div>
+
+                {/* VISÃO */}
+                <div 
+                  className="p-6 rounded-2xl border border-azimut-red/20"
+                  style={{
+                    background: theme === 'dark' 
+                      ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(15, 23, 42, 0.3) 100%)'
+                      : 'linear-gradient(135deg, rgba(30, 28, 26, 0.8) 0%, rgba(26, 24, 21, 0.6) 100%)'
+                  }}
+                >
+                  <div className="text-3xl mb-3">🔭</div>
+                  <h4 className={`text-lg font-bold mb-3 uppercase tracking-wide ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+                    {lang === 'pt' ? 'Visão' : lang === 'es' ? 'Visión' : lang === 'fr' ? 'Vision' : 'Vision'}
+                  </h4>
+                  <p className={`text-sm leading-relaxed ${theme === 'dark' ? 'text-slate-300' : 'text-on-dark-secondary'}`}>
+                    {lang === 'pt' 
+                      ? 'Ser a máquina de empatia que conecta tecnologia e emoção. Criar experiências onde as pessoas não apenas veem — elas VIVEM.'
+                      : lang === 'es'
+                      ? 'Ser la máquina de empatía que conecta tecnología y emoción. Crear experiencias donde las personas no solo ven — VIVEN.'
+                      : lang === 'fr'
+                      ? 'Être la machine d\'empathie qui connecte technologie et émotion. Créer des expériences où les gens ne font pas que voir — ils VIVENT.'
+                      : 'Be the empathy machine that connects technology and emotion. Create experiences where people don\'t just watch — they LIVE.'}
+                  </p>
+                  <p className={`text-xs mt-3 italic ${theme === 'dark' ? 'text-slate-400' : 'text-on-dark-tertiary'}`}>
+                    — Chris Milk, TED Vancouver 2015
+                  </p>
+                </div>
+
+                {/* VALORES */}
+                <div 
+                  className="p-6 rounded-2xl border border-azimut-red/20"
+                  style={{
+                    background: theme === 'dark' 
+                      ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(15, 23, 42, 0.3) 100%)'
+                      : 'linear-gradient(135deg, rgba(30, 28, 26, 0.8) 0%, rgba(26, 24, 21, 0.6) 100%)'
+                  }}
+                >
+                  <div className="text-3xl mb-3">💎</div>
+                  <h4 className={`text-lg font-bold mb-3 uppercase tracking-wide ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+                    {lang === 'pt' ? 'Valores' : lang === 'es' ? 'Valores' : lang === 'fr' ? 'Valeurs' : 'Values'}
+                  </h4>
+                  <ul className={`text-sm space-y-2 ${theme === 'dark' ? 'text-slate-300' : 'text-on-dark-secondary'}`}>
+                    <li className="flex items-start gap-2">
+                      <span className="text-azimut-red">✦</span>
+                      <span>{lang === 'pt' ? 'Empatia: Sentir DENTRO, não apenas COM' : lang === 'es' ? 'Empatía: Sentir DENTRO, no solo CON' : lang === 'fr' ? 'Empathie: Ressentir DE L\'INTÉRIEUR, pas juste AVEC' : 'Empathy: Feel FROM WITHIN, not just WITH'}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-azimut-red">✦</span>
+                      <span>{lang === 'pt' ? 'Autenticidade: Descontraídos, confiantes, genuínos' : lang === 'es' ? 'Autenticidad: Relajados, confiados, genuinos' : lang === 'fr' ? 'Authenticité: Décontractés, confiants, authentiques' : 'Authenticity: Relaxed, confident, genuine'}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-azimut-red">✦</span>
+                      <span>{lang === 'pt' ? 'Presença: "Tô aqui", "Do teu lado", "Junto"' : lang === 'es' ? 'Presencia: "Estoy aquí", "A tu lado", "Juntos"' : lang === 'fr' ? 'Présence: "Je suis là", "À tes côtés", "Ensemble"' : 'Presence: "I\'m here", "By your side", "Together"'}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Citação Carl Rogers */}
+              <div 
+                className="mt-8 p-6 rounded-2xl border-l-4 border-azimut-red"
+                style={{
+                  background: theme === 'dark' 
+                    ? 'linear-gradient(135deg, rgba(201, 35, 55, 0.1) 0%, rgba(15, 23, 42, 0.3) 100%)'
+                    : 'linear-gradient(135deg, rgba(201, 35, 55, 0.15) 0%, rgba(26, 24, 21, 0.4) 100%)'
+                }}
+              >
+                <p className={`text-lg italic leading-relaxed ${theme === 'dark' ? 'text-slate-200' : 'text-on-dark-primary'}`}>
+                  {lang === 'pt' 
+                    ? '"Ter empatia é ver o mundo pelos olhos do outro, não ver o seu mundo refletido nos olhos dele."'
+                    : lang === 'es'
+                    ? '"Tener empatía es ver el mundo a través de los ojos del otro, no ver tu mundo reflejado en sus ojos."'
+                    : lang === 'fr'
+                    ? '"Avoir de l\'empathie, c\'est voir le monde à travers les yeux de l\'autre, pas voir son propre monde reflété dans ses yeux."'
+                    : '"To have empathy is to see the world through the other\'s eyes, not to see your world reflected in their eyes."'}
+                </p>
+                <p className={`text-sm mt-3 font-semibold ${theme === 'dark' ? 'text-azimut-red' : 'text-azimut-red'}`}>
+                  — Carl Rogers
+                </p>
+              </div>
+            </div>
           </section>
 
           {/* Diferenciais (What Makes Us Unique) */}
