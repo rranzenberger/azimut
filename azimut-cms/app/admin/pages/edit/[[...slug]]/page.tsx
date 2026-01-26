@@ -1201,6 +1201,112 @@ export default function EditPagePage() {
           </section>
         )}
 
+        {/* ═══════════════════════════════════════════════════════════
+            MÍDIA DE FILOSOFIA - Páginas Studio e Diferenciais
+        ═══════════════════════════════════════════════════════════ */}
+        {(slug === 'studio' || slug === 'studio/diferenciais') && (
+          <section
+            style={{
+              padding: 28,
+              borderRadius: 12,
+              border: '1px solid rgba(147, 51, 234, 0.3)',
+              background: 'rgba(147, 51, 234, 0.08)',
+            }}
+          >
+            <h2 style={{ margin: '0 0 16px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
+              💡 Mídia de Filosofia (Vídeo Chris Milk)
+            </h2>
+            <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
+              Vídeo da seção de Filosofia (Empatia) - TED Talk Chris Milk "A Máquina de Empatia".
+              <br />
+              📌 <strong>Recomendado:</strong> MP4, máximo 25MB, formato 16:9.
+            </p>
+
+            <div style={{ padding: 20, borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <h3 style={{ margin: '0 0 20px', fontSize: 16, fontWeight: 600, color: '#e8e6f2' }}>
+                🎬 Vídeo da Filosofia
+              </h3>
+
+              {/* MediaUploadField - Upload + Biblioteca (Vídeos) */}
+              <MediaUploadField
+                label="Vídeo Filosofia (Chris Milk)"
+                value={formData.demoreelVideoId}
+                onChange={(mediaId) => setFormData({ ...formData, demoreelVideoId: mediaId })}
+                mediaType="video"
+                specs={{
+                  maxSizeMB: 25,
+                  description: 'Vídeo TED Talk Chris Milk - A Máquina de Empatia (MP4, máx 25MB)'
+                }}
+                existingMedia={allMedia}
+              />
+
+              {/* URL Manual (fallback) */}
+              <div style={{ marginTop: 20 }}>
+                <label style={{ display: 'block', marginBottom: 8, fontSize: 13, fontWeight: 500, color: '#8f8ba2' }}>
+                  📍 OU usar URL externa (YouTube/Vimeo/Local)
+                </label>
+                <input
+                  type="url"
+                  value={formData.demoreelVideoUrl}
+                  onChange={(e) => setFormData({ ...formData, demoreelVideoUrl: e.target.value })}
+                  placeholder="https://www.youtube.com/watch?v=... ou /ChrisMilk.mp4"
+                  style={inputStyle}
+                  disabled={!!formData.demoreelVideoId}
+                />
+                <div style={{ marginTop: 6, fontSize: 12, color: formData.demoreelVideoId ? '#8f8ba2' : '#7dd3fc' }}>
+                  {formData.demoreelVideoId 
+                    ? '🔒 Desabilitado (vídeo selecionado acima tem prioridade)'
+                    : '🌐 Cole a URL do vídeo (YouTube/Vimeo) ou caminho local (/ChrisMilk.mp4)'
+                  }
+                </div>
+              </div>
+            </div>
+
+            {/* Preview do vídeo atual */}
+            <div style={{ marginTop: 24, padding: 16, borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <h4 style={{ margin: '0 0 12px', fontSize: 14, fontWeight: 600, color: '#c0bccf' }}>
+                📺 Preview do Vídeo Atual
+              </h4>
+              <div style={{ 
+                aspectRatio: '16/9', 
+                maxWidth: 400,
+                borderRadius: 8, 
+                overflow: 'hidden',
+                background: 'rgba(0,0,0,0.3)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                {formData.demoreelVideoUrl || formData.demoreelVideoId ? (
+                  <video 
+                    controls 
+                    style={{ width: '100%', height: '100%' }}
+                    poster="/og-image.png"
+                  >
+                    <source src={formData.demoreelVideoUrl || '/ChrisMilk.mp4'} type="video/mp4" />
+                  </video>
+                ) : (
+                  <span style={{ color: '#6b6680', fontSize: 13 }}>Nenhum vídeo selecionado</span>
+                )}
+              </div>
+            </div>
+
+            {/* Link rápido para Mídias */}
+            <div style={{ marginTop: 24, padding: 12, borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <p style={{ margin: 0, fontSize: 13, color: '#c0bccf' }}>
+                💡 <strong>Não vê suas mídias aqui?</strong>{' '}
+                <a
+                  href="/admin/media"
+                  target="_blank"
+                  style={{ color: '#a78bfa', textDecoration: 'underline' }}
+                >
+                  Envie primeiro em "Mídias" →
+                </a>
+              </p>
+            </div>
+          </section>
+        )}
+
         {/* Pillars - Apenas para home */}
         {slug === 'home' && (
           <section
