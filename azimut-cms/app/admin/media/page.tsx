@@ -16,7 +16,43 @@ const MAX_IMAGE_MB = 8;
 const MAX_VIDEO_MB = 25;
 const MAX_ALT = 160;
 
-// Lista de serviços para o dropdown
+// Lista de páginas para o dropdown
+const PAGES = [
+  // ═══════════════════════════════════════════════════════════════
+  // PÁGINAS PRINCIPAIS
+  // ═══════════════════════════════════════════════════════════════
+  { slug: 'home', label: '🏠 Home' },
+  { slug: 'studio', label: '🎬 Studio (Sobre Nós)' },
+  { slug: 'studio/diferenciais', label: '⭐ Studio - Diferenciais' },
+  { slug: 'studio/timeline', label: '📅 Studio - Timeline' },
+  { slug: 'studio/clientes', label: '🤝 Studio - Clientes' },
+  { slug: 'studio/equipe', label: '👥 Studio - Equipe' },
+  { slug: 'projects', label: '🎯 Projetos' },
+  { slug: 'contact', label: '📧 Contato' },
+  { slug: 'academy', label: '🎓 Academy' },
+  
+  // ═══════════════════════════════════════════════════════════════
+  // SERVIÇOS (what/)
+  // ═══════════════════════════════════════════════════════════════
+  { slug: 'what/cinema-audiovisual', label: '🎥 Cinema & Audiovisual' },
+  { slug: 'what/pos-producao-vfx', label: '✨ Pós-Produção & VFX' },
+  { slug: 'what/animacao-2d-3d', label: '🎨 Animação 2D/3D' },
+  { slug: 'what/xr-interatividade-web3', label: '🥽 XR, Interatividade & Web3' },
+  { slug: 'what/cenografia-design-espacial', label: '🏛️ Cenografia & Design Espacial' },
+  { slug: 'what/games-interativos', label: '🎮 Games Interativos' },
+  { slug: 'what/ia-criativa', label: '🤖 IA Criativa' },
+  { slug: 'what/direcao-arte-criativa', label: '🎭 Direção de Arte Criativa' },
+  { slug: 'what/consultoria-estrategia', label: '💼 Consultoria & Estratégia' },
+  { slug: 'what/teatro-espetaculos-imersivos', label: '🎪 Teatro & Espetáculos Imersivos' },
+  { slug: 'what/branded-experiences-ativacoes', label: '🎉 Branded Experiences & Ativações' },
+  { slug: 'what/museus-exposicoes', label: '🏛️ Museus & Exposições' },
+  { slug: 'what/festivais-curadoria-eventos', label: '🎭 Festivais, Curadoria & Eventos' },
+  { slug: 'what/educacao-treinamento', label: '📚 Educação & Treinamento' },
+  { slug: 'what/realidade-virtual-vr', label: '🕶️ Realidade Virtual (VR)' },
+  { slug: 'what/arquitetura-virtual-bim', label: '🏗️ Arquitetura Virtual & BIM' },
+]
+
+// Lista de serviços para tags (múltipla escolha)
 const SERVICES = [
   { slug: 'cinema-audiovisual', label: 'Cinema & Audiovisual' },
   { slug: 'pos-producao-vfx', label: 'Pós-Produção & VFX' },
@@ -226,11 +262,20 @@ export default function MediaPage() {
                   style={{ ...inputStyle, width: '100%', boxSizing: 'border-box' }}
                 >
                   <option value="">Selecione uma página...</option>
-                  {SERVICES.map((service) => (
-                    <option key={service.slug} value={`what/${service.slug}`}>
-                      {service.label}
-                    </option>
-                  ))}
+                  <optgroup label="📍 Páginas Principais">
+                    {PAGES.filter(p => !p.slug.startsWith('what/')).map((page) => (
+                      <option key={page.slug} value={page.slug}>
+                        {page.label}
+                      </option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="🎯 Serviços">
+                    {PAGES.filter(p => p.slug.startsWith('what/')).map((page) => (
+                      <option key={page.slug} value={page.slug}>
+                        {page.label}
+                      </option>
+                    ))}
+                  </optgroup>
                 </select>
               </div>
 
@@ -245,8 +290,16 @@ export default function MediaPage() {
                   style={{ ...inputStyle, width: '100%', boxSizing: 'border-box' }}
                 >
                   <option value="">Selecione...</option>
-                  <option value="hero">Hero (Banner principal)</option>
-                  <option value="gallery">Galeria de imagens</option>
+                  <option value="hero">🎬 Hero (Banner principal)</option>
+                  <option value="gallery">🖼️ Galeria de imagens</option>
+                  <option value="philosophy">💡 Filosofia (Missão/Visão/Valores)</option>
+                  <option value="team">👥 Equipe</option>
+                  <option value="timeline">📅 Timeline</option>
+                  <option value="testimonials">💬 Depoimentos</option>
+                  <option value="clients">🤝 Clientes</option>
+                  <option value="projects">🎯 Projetos em destaque</option>
+                  <option value="cta">📢 Call to Action</option>
+                  <option value="about">ℹ️ Sobre</option>
                 </select>
               </div>
 
