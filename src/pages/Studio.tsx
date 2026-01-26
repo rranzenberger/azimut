@@ -550,6 +550,12 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                     className="w-full aspect-video bg-slate-900"
                     poster="/chris-milk-thumbnail.png"
                     preload="metadata"
+                    onEnded={(e) => {
+                      // Quando o vídeo terminar, volta para o início e mostra o poster/thumbnail
+                      const video = e.currentTarget;
+                      video.currentTime = 0;
+                      video.load(); // Recarrega para mostrar o poster novamente
+                    }}
                   >
                     <source src="/ChrisMilk.mp4" type="video/mp4" />
                     {lang === 'pt' ? 'Seu navegador não suporta vídeo HTML5.' : 'Your browser does not support HTML5 video.'}
