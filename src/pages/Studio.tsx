@@ -564,7 +564,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                     ref={videoRef}
                     controls 
                     className="w-full aspect-video bg-slate-900"
-                    poster="/chris-milk-thumbnail.jpg"
+                    poster="/chris-milk-ted.jpg"
                     preload="metadata"
                     controlsList="nodownload noplaybackrate"
                     disablePictureInPicture
