@@ -380,10 +380,10 @@ export default function EditPagePage() {
     videoEn: '',
     videoEs: '',
     videoFr: '',
-    thumbPt: '/chris-milk-thumbnail.png',
-    thumbEn: '',
-    thumbEs: '',
-    thumbFr: '',
+    thumbPt: '/chris-milk-thumbnail.jpg',
+    thumbEn: '/chris-milk-thumbnail.jpg',
+    thumbEs: '/chris-milk-thumbnail.jpg',
+    thumbFr: '/chris-milk-thumbnail.jpg',
     status: 'PUBLISHED',
   });
 

@@ -667,16 +667,7 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
                   <video 
                     controls 
                     className="w-full aspect-video bg-slate-900"
-                    poster={(() => {
-                      // Thumbnail por idioma com fallback para PT
-                      const thumbs: Record<string, string> = {
-                        pt: '/chris-milk-thumbnail.png',
-                        en: '/chris-milk-thumbnail-en.png',
-                        es: '/chris-milk-thumbnail-es.png',
-                        fr: '/chris-milk-thumbnail-fr.png'
-                      };
-                      return thumbs[lang] || thumbs.pt;
-                    })()}
+                    poster="/chris-milk-thumbnail.jpg"
                     preload="metadata"
                     controlsList="nodownload noplaybackrate"
                     disablePictureInPicture
