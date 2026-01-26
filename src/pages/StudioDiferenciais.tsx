@@ -722,8 +722,8 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
                         const videos: Record<string, string> = {
                           pt: '/ChrisMilk.mp4',
                           en: '/ChrisMilk-en.mp4',
-                          es: '/ChrisMilk-es.mp4',
-                          fr: '/ChrisMilk-fr.mp4'
+                          es: '/ChrisMilk-es.mp4'
+                          // fr usa fallback PT (ChrisMilk-fr.mp4 tem logo indesejada)
                         };
                         return videos[lang] || videos.pt;
                       })()} 
