@@ -1,28 +1,95 @@
 import { onCLS, onINP, onLCP, onFCP, onTTFB, type Metric } from 'web-vitals'
+import { logger } from './logger'
 
-// Função para enviar métricas para analytics (pode ser customizada)
+// Função para enviar métricas para analytics
 function sendToAnalytics(metric: Metric) {
-  // Em produção, enviar para seu analytics (Google Analytics, Plausible, etc.)
-  const body = JSON.stringify(metric)
-  
+  try {
+    // 1. Enviar para Google Analytics 4 (se configurado)
+    if (import.meta.env.PROD && typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', metric.name, {
+        value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+        event_category: 'Web Vitals',
+        event_label: metric.id,
+        non_interaction: true,
+        // Custom dimensions
+        metric_id: metric.id,
+        metric_name: metric.name,
+        metric_value: metric.value,
+        metric_delta: metric.delta,
+        metric_rating: metric.rating,
+      })
+    }
 
-  // Enviar para analytics em produção
-  if (import.meta.env.PROD && 'sendBeacon' in navigator) {
-    // Exemplo: navigator.sendBeacon('/analytics', body)
-    // Ou integrar com Plausible/GA4/PostHog
+    // 2. Enviar para sistema interno de analytics (se disponível)
+    if (import.meta.env.PROD && 'sendBeacon' in navigator) {
+      const apiUrl = import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azmt.com.br'
+      const body = JSON.stringify({
+        event: 'web_vital',
+        data: {
+          name: metric.name,
+          value: metric.value,
+          delta: metric.delta,
+          rating: metric.rating,
+          id: metric.id,
+          navigationType: metric.navigationType,
+          timestamp: Date.now(),
+        },
+      })
+
+      // Usar sendBeacon para não bloquear navegação
+      navigator.sendBeacon(`${apiUrl}/api/track`, body)
+    }
+
+    // 3. Log em desenvolvimento
+    if (import.meta.env.DEV) {
+      logger.info(`[Web Vitals] ${metric.name}:`, {
+        value: metric.value,
+        rating: metric.rating,
+        delta: metric.delta,
+      })
+    }
+  } catch (error) {
+    // ⚠️ NUNCA quebrar se Web Vitals falhar
+    logger.error(error, { context: 'Web Vitals tracking failed' })
   }
 }
 
 // Inicializar tracking de Core Web Vitals
 export function initWebVitals() {
   try {
-    onCLS(sendToAnalytics)  // Cumulative Layout Shift
-    onINP(sendToAnalytics)  // Interaction to Next Paint (substitui FID)
-    onLCP(sendToAnalytics)  // Largest Contentful Paint
-    onFCP(sendToAnalytics)  // First Contentful Paint
-    onTTFB(sendToAnalytics) // Time to First Byte
+    // ⚠️ Cada métrica em try/catch próprio - se uma falhar, outras continuam
+    try {
+      onCLS(sendToAnalytics)  // Cumulative Layout Shift
+    } catch (err) {
+      logger.error(err, { context: 'Web Vitals: CLS initialization failed' })
+    }
+
+    try {
+      onINP(sendToAnalytics)  // Interaction to Next Paint (substitui FID)
+    } catch (err) {
+      logger.error(err, { context: 'Web Vitals: INP initialization failed' })
+    }
+
+    try {
+      onLCP(sendToAnalytics)  // Largest Contentful Paint
+    } catch (err) {
+      logger.error(err, { context: 'Web Vitals: LCP initialization failed' })
+    }
+
+    try {
+      onFCP(sendToAnalytics)  // First Contentful Paint
+    } catch (err) {
+      logger.error(err, { context: 'Web Vitals: FCP initialization failed' })
+    }
+
+    try {
+      onTTFB(sendToAnalytics) // Time to First Byte
+    } catch (err) {
+      logger.error(err, { context: 'Web Vitals: TTFB initialization failed' })
+    }
   } catch (err) {
-    console.error('[Web Vitals] Error initializing:', err)
+    // ⚠️ NUNCA quebrar se Web Vitals falhar completamente
+    logger.error(err, { context: 'Web Vitals: Complete initialization failed' })
   }
 }
 
