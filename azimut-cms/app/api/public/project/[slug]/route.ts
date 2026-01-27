@@ -99,6 +99,18 @@ export async function GET(
         label: lang === 'pt' ? project.ctaLabelPt : project.ctaLabelEn,
         url: project.ctaUrl,
       },
+      // 🔍 SEO - Campos otimizados pela IA
+      seo: {
+        title: lang === 'pt' ? project.seoTitlePt :
+               lang === 'en' ? project.seoTitleEn :
+               lang === 'es' ? project.seoTitleEs :
+               project.seoTitleFr,
+        description: lang === 'pt' ? project.seoDescPt :
+                     lang === 'en' ? project.seoDescEn :
+                     lang === 'es' ? project.seoDescEs :
+                     project.seoDescFr,
+        keywords: project.seoKeywords || [],
+      },
       gallery: project.gallery?.map((pm: any) => ({
         id: pm.media.id,
         type: pm.media.type,

@@ -1,0 +1,598 @@
+/**
+ * Componente de "Degustação" - Preview Interativo
+ * Mostra o que podemos fazer pelo cliente de forma empolgante
+ * Foco: VR, NFT, Web3, Experiências Imersivas
+ */
+
+import { useState, useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import { type Lang } from '../i18n'
+import { WalletConnect } from './WalletConnect'
+
+interface PreviewOption {
+  id: string
+  title: string
+  description: string
+  icon: string
+  category: 'vr' | 'nft' | 'web3' | 'immersive' | 'marketing'
+  features: string[]
+  examples: string[]
+  cta: string
+}
+
+const previewOptions: PreviewOption[] = [
+  {
+    id: 'vr-experience',
+    title: 'Experiência VR Imersiva',
+    description: 'Crie mundos virtuais que seus clientes nunca esquecerão',
+    icon: '🥽',
+    category: 'vr',
+    features: [
+      'Tour virtual 360° do seu projeto',
+      'Interatividade em tempo real',
+      'Multiplayer para equipes',
+      'Integração com dispositivos VR',
+      'Analytics de engajamento',
+    ],
+    examples: [
+      'Museu virtual interativo',
+      'Showroom de produtos em VR',
+      'Treinamento imersivo',
+      'Evento virtual com avatares',
+    ],
+    cta: 'Quero minha experiência VR',
+  },
+  {
+    id: 'nft-collection',
+    title: 'Coleção NFT Personalizada',
+    description: 'NFTs únicos como certificados, badges, recompensas',
+    icon: '🎨',
+    category: 'nft',
+    features: [
+      'Design personalizado exclusivo',
+      'Mint automático na Polygon',
+      'Carteira digital integrada',
+      'Marketplace próprio',
+      'Gamificação com NFTs',
+    ],
+    examples: [
+      'Certificados digitais de curso',
+      'Badges de conquistas',
+      'Acesso VIP a eventos',
+      'Recompensas por engajamento',
+    ],
+    cta: 'Quero minha coleção NFT',
+  },
+  {
+    id: 'web3-integration',
+    title: 'Integração Web3 Completa',
+    description: 'Blockchain, wallets, tokens e economia digital',
+    icon: '⛓️',
+    category: 'web3',
+    features: [
+      'Wallet Connect (MetaMask)',
+      'Tokens personalizados',
+      'Smart contracts Solidity',
+      'Economia digital',
+      'Pagamentos em crypto',
+    ],
+    examples: [
+      'Sistema de recompensas com tokens',
+      'Marketplace descentralizado',
+      'Governança com DAO',
+      'Loyalty program blockchain',
+    ],
+    cta: 'Quero integração Web3',
+  },
+  {
+    id: 'immersive-marketing',
+    title: 'Marketing Imersivo',
+    description: 'Campanhas que envolvem e convertem',
+    icon: '🚀',
+    category: 'marketing',
+    features: [
+      'Experiências interativas',
+      'Gamificação avançada',
+      'Realidade aumentada (AR)',
+      'Projeção mapping',
+      'Analytics em tempo real',
+    ],
+    examples: [
+      'Campanha AR para lançamento',
+      'Game show interativo',
+      'Instalação imersiva em evento',
+      'Experiência viral nas redes',
+    ],
+    cta: 'Quero marketing imersivo',
+  },
+  {
+    id: 'full-package',
+    title: 'Pacote Completo VR + NFT + Web3',
+    description: 'Tudo integrado: experiência imersiva com economia digital',
+    icon: '🎯',
+    category: 'immersive',
+    features: [
+      'Experiência VR completa',
+      'Coleção NFT personalizada',
+      'Integração Web3 total',
+      'Marketing imersivo',
+      'Analytics completo',
+    ],
+    examples: [
+      'Museu VR com NFTs de arte',
+      'Evento com economia digital',
+      'Plataforma completa imersiva',
+      'Ecossistema Web3 completo',
+    ],
+    cta: 'Quero o pacote completo',
+  },
+]
+
+interface ExperiencePreviewProps {
+  lang: Lang
+}
+
+export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
+  const [selected, setSelected] = useState<string | null>(null)
+  const [showDetails, setShowDetails] = useState(false)
+  const [connectedWallet, setConnectedWallet] = useState<{ address: string; chainId: number; balance?: string } | null>(null)
+
+  const selectedOption = previewOptions.find(o => o.id === selected)
+
+  function formatAddress(address: string) {
+    return `${address.slice(0, 6)}...${address.slice(-4)}`
+  }
+
+  function getChainName(chainId: number) {
+    const chains: Record<number, string> = {
+      1: 'Ethereum',
+      137: 'Polygon',
+      56: 'BSC',
+      42161: 'Arbitrum',
+      10: 'Optimism',
+    }
+    return chains[chainId] || `Chain ${chainId}`
+  }
+
+  return (
+    <div style={{
+      padding: '60px 20px',
+      background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)',
+      minHeight: '100vh',
+      position: 'relative',
+    }}>
+      {/* Indicador Fixo de Carteira Conectada (Topo) */}
+      {connectedWallet && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.95) 0%, rgba(16, 185, 129, 0.95) 100%)',
+          backdropFilter: 'blur(10px)',
+          borderBottom: '2px solid rgba(34, 197, 94, 0.5)',
+          padding: '12px 20px',
+          boxShadow: '0 4px 20px rgba(34, 197, 94, 0.3)',
+        }}>
+          <div style={{
+            maxWidth: 1200,
+            margin: '0 auto',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: 16,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{
+                width: 10,
+                height: 10,
+                borderRadius: '50%',
+                background: '#fff',
+                boxShadow: '0 0 10px rgba(255, 255, 255, 0.8)',
+                animation: 'pulse 2s ease-in-out infinite',
+              }} />
+              <div style={{ fontSize: 14, fontWeight: 600, color: '#fff' }}>
+                ✅ Carteira Conectada
+              </div>
+              <div style={{
+                padding: '4px 12px',
+                borderRadius: 6,
+                background: 'rgba(255, 255, 255, 0.2)',
+                fontSize: 12,
+                fontWeight: 600,
+                color: '#fff',
+                fontFamily: 'monospace',
+              }}>
+                {formatAddress(connectedWallet.address)}
+              </div>
+              <div style={{
+                padding: '4px 10px',
+                borderRadius: 6,
+                background: 'rgba(255, 255, 255, 0.15)',
+                fontSize: 11,
+                color: '#fff',
+                fontWeight: 500,
+              }}>
+                ⛓️ {getChainName(connectedWallet.chainId)}
+              </div>
+              {connectedWallet.balance && (
+                <div style={{
+                  padding: '4px 10px',
+                  borderRadius: 6,
+                  background: 'rgba(255, 255, 255, 0.15)',
+                  fontSize: 11,
+                  color: '#fff',
+                  fontWeight: 500,
+                }}>
+                  💰 {connectedWallet.balance} {connectedWallet.chainId === 137 ? 'MATIC' : 'ETH'}
+                </div>
+              )}
+            </div>
+            <a
+              href={connectedWallet.chainId === 137 
+                ? `https://polygonscan.com/address/${connectedWallet.address}`
+                : `https://etherscan.io/address/${connectedWallet.address}`
+              }
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                padding: '6px 14px',
+                borderRadius: 6,
+                background: 'rgba(255, 255, 255, 0.2)',
+                color: '#fff',
+                fontSize: 12,
+                fontWeight: 600,
+                textDecoration: 'none',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'
+              }}
+            >
+              Ver no Explorer →
+            </a>
+          </div>
+          <style>{`
+            @keyframes pulse {
+              0%, 100% { opacity: 0.8; transform: scale(1); }
+              50% { opacity: 1; transform: scale(1.1); }
+            }
+          `}</style>
+        </div>
+      )}
+
+      <div style={{ maxWidth: 1200, margin: '0 auto', paddingTop: connectedWallet ? '60px' : '0' }}>
+        {/* Header */}
+        <div style={{ textAlign: 'center', marginBottom: 60 }}>
+          <h1 style={{
+            fontSize: 48,
+            fontWeight: 700,
+            color: '#fff',
+            marginBottom: 16,
+            background: 'linear-gradient(135deg, #86efac 0%, #3b82f6 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}>
+            🎁 Degustação: O Que Podemos Fazer Por Você
+          </h1>
+          <p style={{ fontSize: 20, color: '#c0bccf', marginBottom: 8 }}>
+            Experimente o futuro: VR, NFT, Web3 e Experiências Imersivas
+          </p>
+          <p style={{ fontSize: 16, color: '#8f8ba2' }}>
+            Veja o que é possível e se empolgue com as possibilidades
+          </p>
+        </div>
+
+        {/* Cards de Opções */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: 24,
+          marginBottom: 40,
+        }}>
+          {previewOptions.map((option) => (
+            <div
+              key={option.id}
+              onClick={() => {
+                setSelected(option.id)
+                setShowDetails(true)
+              }}
+              style={{
+                padding: 32,
+                borderRadius: 16,
+                background: selected === option.id
+                  ? 'linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%)'
+                  : 'rgba(0,0,0,0.4)',
+                border: `2px solid ${
+                  selected === option.id
+                    ? 'rgba(34, 197, 94, 0.5)'
+                    : 'rgba(255,255,255,0.1)'
+                }`,
+                cursor: 'pointer',
+                transition: 'all 0.3s',
+                position: 'relative',
+                overflow: 'hidden',
+              }}
+              onMouseEnter={(e) => {
+                if (selected !== option.id) {
+                  e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.5)'
+                  e.currentTarget.style.transform = 'translateY(-4px)'
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (selected !== option.id) {
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
+                  e.currentTarget.style.transform = 'translateY(0)'
+                }
+              }}
+            >
+              <div style={{ fontSize: 48, marginBottom: 16 }}>{option.icon}</div>
+              <h3 style={{
+                fontSize: 24,
+                fontWeight: 700,
+                color: '#fff',
+                marginBottom: 12,
+              }}>
+                {option.title}
+              </h3>
+              <p style={{
+                fontSize: 14,
+                color: '#c0bccf',
+                lineHeight: 1.6,
+                marginBottom: 20,
+              }}>
+                {option.description}
+              </p>
+              <div style={{
+                padding: '12px 20px',
+                borderRadius: 8,
+                background: selected === option.id
+                  ? 'rgba(34, 197, 94, 0.3)'
+                  : 'rgba(139, 92, 246, 0.2)',
+                color: selected === option.id ? '#86efac' : '#c4b5fd',
+                fontSize: 14,
+                fontWeight: 600,
+                textAlign: 'center',
+              }}>
+                {selected === option.id ? '✓ Selecionado' : 'Ver Detalhes →'}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Detalhes Expandidos */}
+        {showDetails && selectedOption && (
+          <div style={{
+            padding: 40,
+            borderRadius: 20,
+            background: 'rgba(0,0,0,0.6)',
+            border: '2px solid rgba(139, 92, 246, 0.5)',
+            marginBottom: 40,
+            animation: 'fadeIn 0.3s',
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16 }}>
+                  <span style={{ fontSize: 64 }}>{selectedOption.icon}</span>
+                  <div>
+                    <h2 style={{
+                      fontSize: 32,
+                      fontWeight: 700,
+                      color: '#fff',
+                      marginBottom: 8,
+                    }}>
+                      {selectedOption.title}
+                    </h2>
+                    <p style={{ fontSize: 18, color: '#c0bccf' }}>
+                      {selectedOption.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowDetails(false)}
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: 8,
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  background: 'rgba(255,255,255,0.05)',
+                  color: '#fff',
+                  fontSize: 14,
+                  cursor: 'pointer',
+                }}
+              >
+                ✕ Fechar
+              </button>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, marginBottom: 32 }}>
+              <div>
+                <h3 style={{
+                  fontSize: 20,
+                  fontWeight: 600,
+                  color: '#86efac',
+                  marginBottom: 16,
+                }}>
+                  ✨ O Que Você Ganha:
+                </h3>
+                <ul style={{ margin: 0, paddingLeft: 20, color: '#c0bccf', fontSize: 16, lineHeight: 2 }}>
+                  {selectedOption.features.map((feature, idx) => (
+                    <li key={idx}>{feature}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3 style={{
+                  fontSize: 20,
+                  fontWeight: 600,
+                  color: '#93c5fd',
+                  marginBottom: 16,
+                }}>
+                  🎯 Exemplos Reais:
+                </h3>
+                <ul style={{ margin: 0, paddingLeft: 20, color: '#c0bccf', fontSize: 16, lineHeight: 2 }}>
+                  {selectedOption.examples.map((example, idx) => (
+                    <li key={idx}>{example}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div style={{
+              padding: 24,
+              borderRadius: 12,
+              background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%)',
+              border: '1px solid rgba(34, 197, 94, 0.5)',
+              textAlign: 'center',
+            }}>
+              <h3 style={{
+                fontSize: 24,
+                fontWeight: 700,
+                color: '#fff',
+                marginBottom: 16,
+              }}>
+                🚀 Pronto para Transformar Sua Ideia em Realidade?
+              </h3>
+              <p style={{
+                fontSize: 16,
+                color: '#c0bccf',
+                marginBottom: 24,
+              }}>
+                Esta é apenas uma prévia. Imagine o que podemos criar juntos!
+              </p>
+              <a
+                href={`/${lang}/contact?interest=${selectedOption.id}`}
+                style={{
+                  display: 'inline-block',
+                  padding: '16px 32px',
+                  borderRadius: 12,
+                  background: 'linear-gradient(135deg, #22c55e 0%, #3b82f6 100%)',
+                  color: '#fff',
+                  fontSize: 18,
+                  fontWeight: 700,
+                  textDecoration: 'none',
+                  boxShadow: '0 4px 20px rgba(34, 197, 94, 0.4)',
+                  transition: 'all 0.3s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.05)'
+                  e.currentTarget.style.boxShadow = '0 6px 30px rgba(34, 197, 94, 0.6)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)'
+                  e.currentTarget.style.boxShadow = '0 4px 20px rgba(34, 197, 94, 0.4)'
+                }}
+              >
+                {selectedOption.cta} →
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* Conexão de Carteira */}
+        <div style={{ 
+          marginBottom: 40,
+          position: 'sticky',
+          top: connectedWallet ? '60px' : '20px',
+          zIndex: 100,
+        }}>
+          <WalletConnect
+            lang={lang}
+            onConnect={(wallet) => {
+              console.log('Carteira conectada:', wallet)
+              setConnectedWallet(wallet)
+              // Salvar conexão via API
+              const backofficeUrl = import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azmt.com.br'
+              fetch(`${backofficeUrl}/api/web3/wallet/connect`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  address: wallet.address,
+                  chainId: wallet.chainId,
+                }),
+              }).catch(console.error)
+            }}
+            onDisconnect={() => {
+              console.log('Carteira desconectada')
+              setConnectedWallet(null)
+            }}
+          />
+        </div>
+
+        {/* Call to Action Final */}
+        <div style={{
+          padding: 40,
+          borderRadius: 20,
+          background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%)',
+          border: '2px solid rgba(139, 92, 246, 0.5)',
+          textAlign: 'center',
+        }}>
+          <h2 style={{
+            fontSize: 36,
+            fontWeight: 700,
+            color: '#fff',
+            marginBottom: 16,
+          }}>
+            💎 Somos Únicos no Mercado
+          </h2>
+          <p style={{
+            fontSize: 18,
+            color: '#c0bccf',
+            marginBottom: 24,
+            lineHeight: 1.8,
+          }}>
+            Combinamos <strong style={{ color: '#86efac' }}>VR imersivo</strong>,{' '}
+            <strong style={{ color: '#c4b5fd' }}>NFTs personalizados</strong>,{' '}
+            <strong style={{ color: '#fde047' }}>Web3 integrado</strong> e{' '}
+            <strong style={{ color: '#fca5a5' }}>marketing que converte</strong>.
+            <br />
+            <strong style={{ color: '#fff' }}>Somos empáticos, simpáticos e parceiros para cooperação e coprodução.</strong>
+          </p>
+          <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <a
+              href={`/${lang}/contact?interest=vr-nft-web3`}
+              style={{
+                padding: '16px 32px',
+                borderRadius: 12,
+                background: 'rgba(34, 197, 94, 0.2)',
+                border: '2px solid rgba(34, 197, 94, 0.5)',
+                color: '#86efac',
+                fontSize: 16,
+                fontWeight: 600,
+                textDecoration: 'none',
+              }}
+            >
+              🎯 Quero Fechar Negócio
+            </a>
+            <a
+              href={`/${lang}/work`}
+              style={{
+                padding: '16px 32px',
+                borderRadius: 12,
+                background: 'rgba(59, 130, 246, 0.2)',
+                border: '2px solid rgba(59, 130, 246, 0.5)',
+                color: '#93c5fd',
+                fontSize: 16,
+                fontWeight: 600,
+                textDecoration: 'none',
+              }}
+            >
+              👀 Ver Projetos Reais
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+    </div>
+  )
+}

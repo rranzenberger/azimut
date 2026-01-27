@@ -56,17 +56,48 @@ IMPORTANTE:
 
 Retorne APENAS JSON válido, sem markdown, sem explicações adicionais.`
 
-    // Chamar Claude
-    const message = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
-      max_tokens: 4000,
-      messages: [
-        {
-          role: 'user',
-          content: prompt,
-        },
-      ],
-    })
+    // Chamar Claude - tentar modelos disponíveis
+    const models = [
+      'claude-3-5-sonnet-20241022',
+      'claude-3-5-sonnet-20240620', 
+      'claude-3-opus-20240229',
+      'claude-3-sonnet-20240229',
+      'claude-3-haiku-20240307'
+    ]
+    
+    let message
+    let lastError
+    
+    for (const model of models) {
+      try {
+        message = await anthropic.messages.create({
+          model: model,
+          max_tokens: 4000,
+          messages: [
+            {
+              role: 'user',
+              content: prompt,
+            },
+          ],
+        })
+        
+        // Se chegou aqui, funcionou!
+        break
+      } catch (error: any) {
+        lastError = error
+        const errorMsg = error.message || JSON.stringify(error)
+        // Se não for erro de modelo não encontrado, parar
+        if (!errorMsg.includes('not_found') && !errorMsg.includes('404')) {
+          throw error
+        }
+        // Caso contrário, tentar próximo modelo
+        continue
+      }
+    }
+    
+    if (!message) {
+      throw lastError || new Error('Nenhum modelo disponível')
+    }
 
     // Extrair resposta
     const responseText =

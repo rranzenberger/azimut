@@ -129,8 +129,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
     )
   }
 
-  const seoTitle = `${project.title} | ${seoData.work[lang].title}`
-  const seoDescription = project.description || project.summary || seoData.work[lang].description
+  // Usar campos SEO otimizados pela IA se disponíveis, senão usar fallback
+  const seoTitle = project.seo?.title || `${project.title} | ${seoData.work[lang].title}`
+  const seoDescription = project.seo?.description || project.description || project.summary || seoData.work[lang].description
+  const seoKeywords = project.seo?.keywords?.join(', ') || seoData.work[lang].keywords
 
   // Detectar se tem vídeo no heroImage
   const hasVideo = project.heroImage?.original && (
@@ -155,11 +157,13 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
   return (
     <>
       <SEO
-        lang={lang}
         title={seoTitle}
         description={seoDescription}
-        path={`/${lang}/work/${project.slug}`}
+        keywords={seoKeywords}
+        url={`/${lang}/work/${project.slug}`}
+        locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
         image={project.heroImage?.large || project.heroImage?.original}
+        type="article"
       />
       
       {/* Schema.org: Project/CreativeWork */}

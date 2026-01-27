@@ -144,6 +144,17 @@ model Project {
   descriptionFr String?
   descriptionPt String?
   
+  // 🔍 SEO - Otimização para Buscadores
+  seoTitlePt      String?
+  seoTitleEn      String?
+  seoTitleEs      String?
+  seoTitleFr      String?
+  seoDescPt       String?
+  seoDescEn       String?
+  seoDescEs       String?
+  seoDescFr       String?
+  seoKeywords     String[]          // Keywords para SEO
+  
   // 🔍 Monitoramento Automático de Conteúdo
   monitorEnabled        Boolean           @default(false)
   monitorKeywords       String[]          // Keywords para busca automática

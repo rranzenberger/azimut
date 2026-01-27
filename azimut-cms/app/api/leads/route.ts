@@ -95,6 +95,49 @@ export async function POST(request: Request) {
     const priority = determinePriority(leadScore)
     const estimatedValue = estimateValue(data.budget)
 
+    // ═══════════════════════════════════════════════════════════
+    // 🧠 ANÁLISE INTELIGENTE COM IA (Claude/DeepSeek)
+    // ═══════════════════════════════════════════════════════════
+    let aiAnalysis = null
+    try {
+      const analyzeResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3001'}/api/ai/analyze-lead`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            company: data.company,
+            position: data.position,
+            projectType: data.projectType,
+            budget: data.budget,
+            timeline: data.timeline,
+            description: data.description,
+            source: request.headers.get('referer') || 'website',
+            country: data.country,
+            city: data.city,
+          }),
+        }
+      )
+
+      if (analyzeResponse.ok) {
+        const analysisData = await analyzeResponse.json()
+        aiAnalysis = analysisData.analysis
+        
+        // Usar análise da IA se disponível (mais precisa)
+        if (aiAnalysis) {
+          leadScore = aiAnalysis.leadScore || leadScore
+          priority = aiAnalysis.priority || priority
+          estimatedValue = aiAnalysis.estimatedValue || estimatedValue
+        }
+      }
+    } catch (aiError) {
+      console.warn('Análise IA falhou (não crítico):', aiError)
+      // Continuar com score calculado manualmente
+    }
+
     // Criar lead no banco
     const lead = await prisma.lead.create({
       data: {
@@ -109,9 +152,9 @@ export async function POST(request: Request) {
         timeline: data.timeline || null,
         description: data.description || null,
         status: 'NEW',
-        priority,
+        priority: priority as any,
         leadScore,
-        organizationType: data.organizationType || null,
+        organizationType: aiAnalysis?.organizationType || data.organizationType || null,
         estimatedValue,
         interestInGrants: data.interestInGrants || false,
         country: data.country || null,
@@ -119,7 +162,22 @@ export async function POST(request: Request) {
         sourceUrl: request.headers.get('referer') || null,
         utmSource: null, // TODO: Extract from URL
         utmMedium: null,
-        utmCampaign: null
+        utmCampaign: null,
+        // 🧠 Salvar análise completa da IA
+        leadIntelligence: aiAnalysis ? {
+          score: aiAnalysis.leadScore,
+          priority: aiAnalysis.priority,
+          visitorType: aiAnalysis.visitorType,
+          organizationType: aiAnalysis.organizationType,
+          estimatedValue: aiAnalysis.estimatedValue,
+          likelihood: aiAnalysis.likelihood,
+          insights: aiAnalysis.insights || [],
+          recommendedActions: aiAnalysis.recommendedActions || [],
+          riskFactors: aiAnalysis.riskFactors || [],
+          nextBestAction: aiAnalysis.nextBestAction,
+          analyzedAt: aiAnalysis.analyzedAt,
+          aiProvider: aiAnalysis.aiProvider,
+        } : null,
       }
     })
 

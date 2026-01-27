@@ -182,6 +182,36 @@ export default async function LeadsPage({
           </p>
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <Link
+            href="/admin/leads/dashboard"
+            style={{
+              padding: '8px 16px',
+              borderRadius: 8,
+              border: '1px solid rgba(59, 130, 246, 0.5)',
+              background: 'rgba(59, 130, 246, 0.2)',
+              color: '#93c5fd',
+              fontSize: 14,
+              fontWeight: 600,
+              textDecoration: 'none',
+            }}
+          >
+            🎯 Dashboard IA
+          </Link>
+          <Link
+            href="/admin/tools"
+            style={{
+              padding: '8px 16px',
+              borderRadius: 8,
+              border: '1px solid rgba(34, 197, 94, 0.5)',
+              background: 'rgba(34, 197, 94, 0.2)',
+              color: '#86efac',
+              fontSize: 14,
+              fontWeight: 600,
+              textDecoration: 'none',
+            }}
+          >
+            🛠️ Ferramentas
+          </Link>
           <CleanupTestDataButton />
           <div
             style={{

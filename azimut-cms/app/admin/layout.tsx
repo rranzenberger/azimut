@@ -109,6 +109,13 @@ export default async function AdminLayout({
           <AdminLink href="/admin/site-pages" label="📄 Páginas" />
           <AdminLink href="/admin/media" label="🖼️ Mídias" />
           <AdminLink href="/admin/leads" label="👥 Leads" />
+          <AdminLink href="/admin/leads/dashboard" label="🎯 Dashboard Leads IA" />
+          <AdminLink href="/admin/tools" label="🛠️ Ferramentas" />
+          <AdminLink href="/admin/roadmap" label="🗺️ Roadmap" />
+          <AdminLink href="/admin/marketing/preview" label="🎁 Marketing Preview" />
+          <AdminLink href="/admin/web3/setup-wallet" label="🔐 Configurar Carteira" />
+          <AdminLink href="/admin/web3/wallet-status" label="💰 Carteira Web3" />
+          <AdminLink href="/admin/web3/student-rewards" label="🎓 Recompensas Estudantes" />
           <AdminLink href="/admin/newsletter" label="📨 Inscritos" />
           <AdminLink href="/admin/n8n-workflow" label="🤖 Automação n8n" />
           <AdminLink href="/admin/services" label="⚡ Serviços" />

@@ -67,6 +67,16 @@ export default function EditProjectPage() {
     externalLinks: '',
     partnerLogos: '',
     beforeAfterImages: '',
+    // 🔍 SEO - Campos otimizados pela IA
+    seoTitlePt: '',
+    seoTitleEn: '',
+    seoTitleEs: '',
+    seoTitleFr: '',
+    seoDescPt: '',
+    seoDescEn: '',
+    seoDescEs: '',
+    seoDescFr: '',
+    seoKeywords: [] as string[],
   });
 
   useEffect(() => {
@@ -100,6 +110,16 @@ export default function EditProjectPage() {
           descriptionEn: project.descriptionEn || '',
           descriptionEs: project.descriptionEs || '',
           descriptionFr: project.descriptionFr || '',
+          // 🔍 SEO
+          seoTitlePt: project.seoTitlePt || '',
+          seoTitleEn: project.seoTitleEn || '',
+          seoTitleEs: project.seoTitleEs || '',
+          seoTitleFr: project.seoTitleFr || '',
+          seoDescPt: project.seoDescPt || '',
+          seoDescEn: project.seoDescEn || '',
+          seoDescEs: project.seoDescEs || '',
+          seoDescFr: project.seoDescFr || '',
+          seoKeywords: project.seoKeywords || [],
           city: project.city || '',
           stateProvince: project.stateProvince || '',
           country: project.country || '',
@@ -170,6 +190,8 @@ export default function EditProjectPage() {
         partnerLogos: formData.partnerLogos
           ? formData.partnerLogos.split(',').map((url) => url.trim()).filter(Boolean)
           : [],
+        // 🔍 SEO - Garantir que keywords seja array
+        seoKeywords: Array.isArray(formData.seoKeywords) ? formData.seoKeywords : [],
       };
 
       const res = await fetch(`/api/admin/projects/${id}`, {
@@ -376,6 +398,106 @@ export default function EditProjectPage() {
               style={{ ...inputStyle, resize: 'vertical' }}
               placeholder="Description complète en français"
             />
+          </div>
+        </div>
+
+        {/* ═══════════════════════════════════════════════════════════════ */}
+        {/* 🔍 SEO - Campos Otimizados pela IA */}
+        {/* ═══════════════════════════════════════════════════════════════ */}
+        <div
+          style={{
+            marginTop: 24,
+            padding: '20px',
+            borderRadius: 10,
+            border: '1px solid rgba(34, 197, 94, 0.3)',
+            background: 'rgba(34, 197, 94, 0.08)',
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+            <h3 style={{ margin: 0, fontSize: 16, color: '#86efac', fontWeight: 600 }}>
+              🔍 SEO - Otimização para Buscadores
+            </h3>
+            <button
+              type="button"
+              onClick={async () => {
+                if (!confirm('Deseja otimizar o SEO deste projeto com IA? Isso pode levar alguns segundos.')) return
+                try {
+                  const res = await fetch(`/api/admin/projects/${id}/optimize-seo`, { method: 'POST' })
+                  const data = await res.json()
+                  if (res.ok) {
+                    alert('SEO otimizado com sucesso! Recarregue a página para ver os resultados.')
+                    window.location.reload()
+                  } else {
+                    alert(`Erro: ${data.error || 'Falha ao otimizar'}`)
+                  }
+                } catch (err) {
+                  alert('Erro ao otimizar SEO')
+                }
+              }}
+              style={{
+                padding: '8px 16px',
+                borderRadius: 6,
+                border: '1px solid rgba(34, 197, 94, 0.5)',
+                background: 'rgba(34, 197, 94, 0.2)',
+                color: '#86efac',
+                fontSize: 13,
+                fontWeight: 600,
+                cursor: 'pointer',
+              }}
+            >
+              🤖 Otimizar com IA
+            </button>
+          </div>
+
+          <div style={{ display: 'grid', gap: 16 }}>
+            {/* SEO Português */}
+            <div style={{ display: 'grid', gap: 12 }}>
+              <h4 style={{ margin: 0, fontSize: 14, color: '#86efac', fontWeight: 600 }}>🇧🇷 Português</h4>
+              <div style={{ display: 'grid', gap: 8 }}>
+                <label style={{ fontSize: 13, fontWeight: 600 }}>Meta Title (50-60 caracteres)</label>
+                <input
+                  type="text"
+                  value={formData.seoTitlePt}
+                  onChange={(e) => setFormData({ ...formData, seoTitlePt: e.target.value })}
+                  style={inputStyle}
+                  placeholder="Título otimizado para SEO"
+                  maxLength={60}
+                />
+                <small style={{ color: '#8f8ba2', fontSize: 11 }}>
+                  {formData.seoTitlePt.length}/60 caracteres
+                </small>
+              </div>
+              <div style={{ display: 'grid', gap: 8 }}>
+                <label style={{ fontSize: 13, fontWeight: 600 }}>Meta Description (150-160 caracteres)</label>
+                <textarea
+                  value={formData.seoDescPt}
+                  onChange={(e) => setFormData({ ...formData, seoDescPt: e.target.value })}
+                  rows={3}
+                  style={{ ...inputStyle, resize: 'vertical' }}
+                  placeholder="Descrição otimizada para SEO"
+                  maxLength={160}
+                />
+                <small style={{ color: '#8f8ba2', fontSize: 11 }}>
+                  {formData.seoDescPt.length}/160 caracteres
+                </small>
+              </div>
+              <div style={{ display: 'grid', gap: 8 }}>
+                <label style={{ fontSize: 13, fontWeight: 600 }}>Keywords (separadas por vírgula)</label>
+                <input
+                  type="text"
+                  value={formData.seoKeywords.join(', ')}
+                  onChange={(e) => setFormData({ 
+                    ...formData, 
+                    seoKeywords: e.target.value.split(',').map(k => k.trim()).filter(k => k) 
+                  })}
+                  style={inputStyle}
+                  placeholder="keyword1, keyword2, keyword3"
+                />
+                <small style={{ color: '#8f8ba2', fontSize: 11 }}>
+                  {formData.seoKeywords.length} keywords
+                </small>
+              </div>
+            </div>
           </div>
         </div>
 

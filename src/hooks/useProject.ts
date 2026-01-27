@@ -49,6 +49,12 @@ interface ProjectData {
     label?: string;
     url?: string;
   };
+  // 🔍 SEO - Campos otimizados pela IA
+  seo?: {
+    title?: string;
+    description?: string;
+    keywords?: string[];
+  };
 }
 
 interface UseProjectResult {

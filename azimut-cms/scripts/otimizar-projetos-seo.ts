@@ -9,20 +9,33 @@ try {
   const { resolve } = require('path')
   const { existsSync } = require('fs')
   
-  // Tentar carregar .env.local primeiro (tem prioridade)
-  const envLocalPath = resolve(__dirname, '../.env.local')
-  if (existsSync(envLocalPath)) {
-    config({ path: envLocalPath })
+  // Tentar múltiplos caminhos possíveis
+  const possiblePaths = [
+    resolve(__dirname, '../.env.local'), // .env.local tem prioridade
+    resolve(__dirname, '../.env'),       // .env na pasta azimut-cms
+    resolve(process.cwd(), '.env'),       // .env no diretório atual
+    resolve(process.cwd(), '../.env'),   // .env um nível acima
+  ]
+  
+  let loaded = false
+  for (const envPath of possiblePaths) {
+    if (existsSync(envPath)) {
+      const result = config({ path: envPath })
+      if (!result.error) {
+        console.log(`✅ Carregado .env de: ${envPath}`)
+        loaded = true
+        break
+      }
+    }
   }
   
-  // Depois carregar .env
-  const envPath = resolve(__dirname, '../.env')
-  if (existsSync(envPath)) {
-    config({ path: envPath })
+  if (!loaded) {
+    console.warn('⚠️  Nenhum arquivo .env encontrado, usando variáveis de ambiente do sistema')
   }
 } catch (e) {
   // Se dotenv não estiver instalado, continuar (pode estar no ambiente)
   console.warn('⚠️  dotenv não encontrado, usando variáveis de ambiente do sistema')
+  console.warn(`   Erro: ${e}`)
 }
 
 import { prisma } from '../src/lib/prisma'
@@ -30,13 +43,21 @@ import Anthropic from '@anthropic-ai/sdk'
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY
 
-if (!ANTHROPIC_API_KEY) {
+// Debug: mostrar se a chave foi carregada (sem mostrar o valor completo)
+if (ANTHROPIC_API_KEY) {
+  console.log(`✅ ANTHROPIC_API_KEY encontrada: ${ANTHROPIC_API_KEY.substring(0, 15)}...`)
+} else {
   console.error('❌ ERRO: ANTHROPIC_API_KEY não encontrada!')
   console.error('')
   console.error('📋 Como configurar:')
   console.error('   1. Crie um arquivo .env na pasta azimut-cms')
   console.error('   2. Adicione: ANTHROPIC_API_KEY=sua-chave-aqui')
   console.error('   3. Ou configure no Vercel (Settings → Environment Variables)')
+  console.error('')
+  console.error('🔍 Debug:')
+  console.error(`   Diretório atual: ${process.cwd()}`)
+  console.error(`   __dirname: ${__dirname}`)
+  console.error(`   Variáveis de ambiente disponíveis: ${Object.keys(process.env).filter(k => k.includes('ANTHROPIC') || k.includes('API')).join(', ') || 'nenhuma'}`)
   console.error('')
   process.exit(1)
 }
@@ -89,16 +110,49 @@ IMPORTANTE:
 
 Retorne APENAS JSON válido, sem markdown, sem explicações adicionais.`
 
-    const message = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
-      max_tokens: 4000,
-      messages: [
-        {
-          role: 'user',
-          content: prompt,
-        },
-      ],
-    })
+    // Tentar modelos disponíveis (mais recente primeiro)
+    // Removidos modelos deprecados: claude-3-opus-20240229, claude-3-sonnet-20240229
+    const models = [
+      'claude-3-5-sonnet-20241022',
+      'claude-3-5-sonnet-20240620',
+      'claude-3-5-haiku-20241022', // Modelo mais recente do Haiku
+      'claude-3-haiku-20240307'    // Fallback para Haiku antigo
+    ]
+    
+    let message
+    let lastError
+    
+    for (const model of models) {
+      try {
+        console.log(`    Tentando modelo: ${model}`)
+        message = await anthropic.messages.create({
+          model: model,
+          max_tokens: 4000,
+          messages: [
+            {
+              role: 'user',
+              content: prompt,
+            },
+          ],
+        })
+        
+        // Se chegou aqui, funcionou!
+        break
+      } catch (error: any) {
+        lastError = error
+        const errorMsg = error.message || JSON.stringify(error)
+        // Se não for erro de modelo não encontrado, parar
+        if (!errorMsg.includes('not_found') && !errorMsg.includes('404')) {
+          throw error
+        }
+        // Caso contrário, tentar próximo modelo
+        continue
+      }
+    }
+    
+    if (!message) {
+      throw lastError || new Error('Nenhum modelo disponível')
+    }
 
     // Extrair resposta
     const responseText =
@@ -126,17 +180,45 @@ Retorne APENAS JSON válido, sem markdown, sem explicações adicionais.`
     const errorMsg = error.message || JSON.stringify(error)
     console.error(`  ❌ Erro ao otimizar ${project.slug} (${lang}):`, errorMsg)
     
-    // Se for erro de autenticação, mostrar ajuda
-    if (errorMsg.includes('authentication') || errorMsg.includes('api-key') || errorMsg.includes('401')) {
-      console.error(`     ⚠️  Erro de autenticação! Verifique se ANTHROPIC_API_KEY está correta.`)
+    // Se for erro de autenticação, mostrar ajuda detalhada
+    if (errorMsg.includes('authentication') || errorMsg.includes('api-key') || errorMsg.includes('401') || errorMsg.includes('invalid x-api-key')) {
+      console.error(`     ⚠️  ERRO DE AUTENTICAÇÃO!`)
+      console.error(`     🔑 Chave carregada: ${ANTHROPIC_API_KEY ? `${ANTHROPIC_API_KEY.substring(0, 15)}...` : 'NÃO ENCONTRADA'}`)
+      console.error(`     💡 Verifique:`)
+      console.error(`        1. Se a chave está correta no arquivo .env`)
+      console.error(`        2. Se o arquivo .env está na pasta azimut-cms`)
+      console.error(`        3. Se a chave não expirou ou foi revogada`)
+      console.error(`        4. Tente obter uma nova chave em: https://console.anthropic.com/`)
     }
     
-    return null
+    return { error: errorMsg }
   }
 }
 
 async function main() {
   console.log('🚀 Iniciando otimização de projetos com IA...\n')
+  
+  // Verificar argumentos
+  const args = process.argv.slice(2)
+  const processAll = args.includes('--all') || args.includes('-a')
+  const skipOptimized = args.includes('--skip-optimized') || args.includes('-s')
+  const languages = args.includes('--multi-lang') || args.includes('-m') ? ['pt', 'en', 'es', 'fr'] : ['pt']
+  
+  if (processAll) {
+    console.log('📋 Modo: Processar TODOS os projetos')
+  } else {
+    console.log('📋 Modo: Processar 10 projetos por vez')
+  }
+  
+  if (skipOptimized) {
+    console.log('⏭️  Pulando projetos já otimizados')
+  }
+  
+  if (languages.length > 1) {
+    console.log(`🌍 Idiomas: ${languages.join(', ')}`)
+  } else {
+    console.log(`🌍 Idioma: ${languages[0]}`)
+  }
   
   console.log(`🔑 API Key configurada: ${ANTHROPIC_API_KEY ? '✅ Sim' : '❌ Não'}`)
   if (ANTHROPIC_API_KEY) {
@@ -144,11 +226,28 @@ async function main() {
   }
   console.log('')
 
+  // Verificar argumentos da linha de comando
+  const args = process.argv.slice(2)
+  const processAll = args.includes('--all') || args.includes('-a')
+  const skipOptimized = args.includes('--skip-optimized') || args.includes('-s')
+  const limit = processAll ? 1000 : 10 // Processar todos ou limitar a 10
+  
+  // Construir where clause
+  const whereClause: any = {
+    status: 'PUBLISHED',
+  }
+  
+  // Se skipOptimized, pular projetos que já têm SEO
+  if (skipOptimized) {
+    whereClause.OR = [
+      { seoTitlePt: null },
+      { seoDescPt: null },
+    ]
+  }
+
   // Buscar projetos publicados
   const projects = await prisma.project.findMany({
-    where: {
-      status: 'PUBLISHED',
-    },
+    where: whereClause,
     select: {
       id: true,
       slug: true,
@@ -161,8 +260,13 @@ async function main() {
       summaryEn: true,
       summaryEs: true,
       summaryFr: true,
+      seoTitlePt: true, // Incluir para verificar se já está otimizado
+      seoDescPt: true,
     },
-    take: 10, // Limitar a 10 projetos por vez para não exceder limites da API
+    take: limit,
+    orderBy: {
+      createdAt: 'desc', // Processar mais recentes primeiro
+    },
   })
 
   console.log(`📊 Encontrados ${projects.length} projetos para otimizar\n`)
@@ -176,34 +280,84 @@ async function main() {
   for (const project of projects) {
     console.log(`\n📝 Otimizando: ${project.title} (${project.slug})`)
     
-    // Otimizar para português (prioridade)
-    const analisePt = await otimizarProjeto(project, 'pt')
+    // Verificar se já está otimizado (se não estiver pulando)
+    if (!skipOptimized && project.seoTitlePt && project.seoDescPt) {
+      console.log(`  ⏭️  Já otimizado, pulando...`)
+      continue
+    }
     
-    if (analisePt && !analisePt.error) {
-      console.log(`  ✅ PT: ${analisePt.keywords?.length || 0} keywords sugeridas`)
-      console.log(`     Meta Title: ${analisePt.metaTitle?.substring(0, 60)}...`)
-      console.log(`     Meta Description: ${analisePt.metaDescription?.substring(0, 80)}...`)
+    // Otimizar para cada idioma solicitado
+    const updateData: any = {}
+    
+    for (const lang of languages) {
+      const analise = await otimizarProjeto(project, lang as 'pt' | 'en' | 'es' | 'fr')
       
-      resultados.otimizados++
-    } else if (analisePt?.error) {
-      console.log(`  ⚠️  Erro ao processar resposta da IA`)
-      resultados.erros++
-    } else {
-      resultados.semDescricao++
+      if (analise && !analise.error) {
+        console.log(`  ✅ ${lang.toUpperCase()}: ${analise.keywords?.length || 0} keywords sugeridas`)
+        console.log(`     Meta Title: ${analise.metaTitle?.substring(0, 60)}...`)
+        console.log(`     Meta Description: ${analise.metaDescription?.substring(0, 80)}...`)
+        
+        // Preparar dados para atualização
+        if (lang === 'pt') {
+          updateData.seoTitlePt = analise.metaTitle || null
+          updateData.seoDescPt = analise.metaDescription || null
+          updateData.seoKeywords = analise.keywords || []
+        } else if (lang === 'en') {
+          updateData.seoTitleEn = analise.metaTitle || null
+          updateData.seoDescEn = analise.metaDescription || null
+        } else if (lang === 'es') {
+          updateData.seoTitleEs = analise.metaTitle || null
+          updateData.seoDescEs = analise.metaDescription || null
+        } else if (lang === 'fr') {
+          updateData.seoTitleFr = analise.metaTitle || null
+          updateData.seoDescFr = analise.metaDescription || null
+        }
+        
+        resultados.otimizados++
+      } else if (analise?.error) {
+        console.log(`  ⚠️  Erro ao processar ${lang.toUpperCase()}: ${analise.error}`)
+        resultados.erros++
+      } else {
+        console.log(`  ⚠️  Sem descrição suficiente para ${lang.toUpperCase()}`)
+        resultados.semDescricao++
+      }
+      
+      // Aguardar entre idiomas
+      await new Promise(resolve => setTimeout(resolve, 500))
+    }
+    
+    // Salvar no banco de dados (apenas se houver dados para salvar)
+    if (Object.keys(updateData).length > 0) {
+      try {
+        await prisma.project.update({
+          where: { id: project.id },
+          data: updateData,
+        })
+        console.log(`     💾 Salvo no banco de dados`)
+      } catch (dbError: any) {
+        console.log(`     ⚠️  Erro ao salvar: ${dbError.message}`)
+        resultados.erros++
+      }
     }
 
-    // Aguardar 1 segundo entre requisições para não sobrecarregar a API
+    // Aguardar 1 segundo entre projetos para não sobrecarregar a API
     await new Promise(resolve => setTimeout(resolve, 1000))
   }
 
   console.log('\n' + '='.repeat(50))
   console.log('📊 RESUMO:')
-  console.log(`  ✅ Otimizados: ${resultados.otimizados}`)
+  console.log(`  ✅ Otimizados e salvos: ${resultados.otimizados}`)
   console.log(`  ⚠️  Sem descrição: ${resultados.semDescricao}`)
   console.log(`  ❌ Erros: ${resultados.erros}`)
   console.log('='.repeat(50))
-  console.log('\n💡 DICA: As sugestões estão sendo exibidas acima.')
-  console.log('   Para salvar no banco, modifique este script.\n')
+  console.log('\n✅ SUCESSO! Todas as otimizações foram salvas automaticamente no banco de dados.')
+  console.log(`   Idiomas processados: ${languages.join(', ')}`)
+  console.log('   Campos atualizados: seoTitle*, seoDesc*, seoKeywords')
+  console.log('   Você pode verificar no backoffice ou executar novamente para atualizar.\n')
+  console.log('💡 Dicas:')
+  console.log('   - Use --all ou -a para processar todos os projetos')
+  console.log('   - Use --skip-optimized ou -s para pular projetos já otimizados')
+  console.log('   - Use --multi-lang ou -m para otimizar todos os idiomas\n')
 }
 
 main()

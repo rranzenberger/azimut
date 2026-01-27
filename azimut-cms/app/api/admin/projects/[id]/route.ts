@@ -110,6 +110,16 @@ export async function PUT(
       externalLinks,
       partnerLogos,
       beforeAfterImages,
+      // 🔍 SEO - Campos otimizados pela IA
+      seoTitlePt,
+      seoTitleEn,
+      seoTitleEs,
+      seoTitleFr,
+      seoDescPt,
+      seoDescEn,
+      seoDescEs,
+      seoDescFr,
+      seoKeywords,
     } = body;
 
     // Verificar se projeto existe
@@ -186,6 +196,18 @@ export async function PUT(
           ? (Array.isArray(partnerLogos) ? partnerLogos : [])
           : (existing.partnerLogos || []),
         beforeAfterImages: beforeAfterImages !== undefined ? beforeAfterImages : existing.beforeAfterImages,
+        // 🔍 SEO - Campos otimizados pela IA
+        seoTitlePt: seoTitlePt !== undefined ? seoTitlePt : existing.seoTitlePt,
+        seoTitleEn: seoTitleEn !== undefined ? seoTitleEn : existing.seoTitleEn,
+        seoTitleEs: seoTitleEs !== undefined ? seoTitleEs : existing.seoTitleEs,
+        seoTitleFr: seoTitleFr !== undefined ? seoTitleFr : existing.seoTitleFr,
+        seoDescPt: seoDescPt !== undefined ? seoDescPt : existing.seoDescPt,
+        seoDescEn: seoDescEn !== undefined ? seoDescEn : existing.seoDescEn,
+        seoDescEs: seoDescEs !== undefined ? seoDescEs : existing.seoDescEs,
+        seoDescFr: seoDescFr !== undefined ? seoDescFr : existing.seoDescFr,
+        seoKeywords: seoKeywords !== undefined 
+          ? (Array.isArray(seoKeywords) ? seoKeywords : [])
+          : (existing.seoKeywords || []),
       },
       include: {
         heroImage: true,
