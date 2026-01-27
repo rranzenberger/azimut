@@ -27,6 +27,7 @@ import { PageFooterNavigation } from '../components/PageFooterNavigation'
 import LangLink from '../components/LangLink'
 import LoadingSkeleton from '../components/LoadingSkeleton'
 import { useLoadingSkeleton } from '../hooks/useLoadingSkeleton'
+import { ItemListSchema, ProjectSchema } from '../components/StructuredData'
 
 interface WorkProps {
   lang: Lang
@@ -482,6 +483,28 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     return seo.image || 'https://azmt.com.br/og-work.png'
   }, [cases, seo.image])
 
+  // Schema.org: ItemList para lista de projetos (SEO)
+  const projectListSchema = useMemo(() => {
+    if (cases.length === 0) return null
+    
+    return {
+      name: lang === 'pt' 
+        ? 'Portfolio de Projetos Azimut' 
+        : lang === 'es'
+        ? 'Portafolio de Proyectos Azimut'
+        : lang === 'fr'
+        ? 'Portfolio de Projets Azimut'
+        : 'Azimut Project Portfolio',
+      description: seo.description,
+      items: cases.slice(0, 20).map((project: WorkProject, index: number) => ({
+        name: project.title,
+        url: `https://azmt.com.br/${lang}/work/${project.slug}`,
+        image: getProjectImageUrl(project, 'medium'),
+        position: index + 1
+      }))
+    }
+  }, [cases, lang, seo.description])
+
   return (
     <>
       <SEO 
@@ -493,6 +516,16 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         url={seo.url}
         type="website"
       />
+      
+      {/* Schema.org: ItemList para SEO */}
+      {projectListSchema && (
+        <ItemListSchema
+          name={projectListSchema.name}
+          description={projectListSchema.description}
+          items={projectListSchema.items}
+          lang={lang}
+        />
+      )}
       
       {/* 🧪 TESTE: Banner de Teste - Apenas em desenvolvimento */}
       {import.meta.env.DEV && <BannerTest />}
