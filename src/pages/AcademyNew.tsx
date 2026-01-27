@@ -414,9 +414,9 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
             <InternalNavigation
               items={[
                 { id: 'courses', label: lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses', href: '/academy/courses', icon: '📚' },
-                { id: 'vancouver', label: 'Vancouver', href: '/academy/vancouver', icon: '🇨🇦' },
                 { id: 'workshops', label: 'Workshops', href: '/academy/workshops', icon: '🎬' },
-                { id: 'corporate', label: lang === 'pt' ? 'Corporativo' : lang === 'es' ? 'Corporativo' : lang === 'fr' ? 'Entreprise' : 'Corporate', href: '/academy/corporate', icon: '🏢' }
+                { id: 'corporate', label: lang === 'pt' ? 'Corporativo' : lang === 'es' ? 'Corporativo' : lang === 'fr' ? 'Entreprise' : 'Corporate', href: '/academy/corporate', icon: '🏢' },
+                { id: 'vancouver', label: 'Vancouver', href: '/academy/vancouver', icon: '🇨🇦' }
               ]}
               lang={lang}
             />
@@ -567,10 +567,10 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
             </div>
           </div>
 
-          {/* Content - Pílula posição original, textos mais abaixo */}
-          <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          {/* Content - Pílula alinhada à esquerda, textos centralizados */}
+          <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="pt-16 pb-12 md:pt-20 md:pb-16">
-              {/* Badge Premium - Posição original (não grudado no menu) */}
+              {/* Badge Premium - Alinhado à esquerda (padronizado com páginas internas) */}
               <div 
                 className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-8 backdrop-blur-md animate-fade-in"
                 style={theme === 'dark' ? {
@@ -596,7 +596,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
 
               {/* Título - Centro */}
               <h1 
-                className="text-5xl md:text-7xl lg:text-8xl font-handel uppercase tracking-wider mb-6 leading-none animate-fade-in-up"
+                className="text-center text-5xl md:text-7xl lg:text-8xl font-handel uppercase tracking-wider mb-6 leading-none animate-fade-in-up"
                 style={{ 
                   color: '#ffffff',
                   textShadow: theme === 'dark' 
@@ -614,7 +614,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
 
               {/* Subtítulo - Mais abaixo */}
               <p 
-                className="text-xl md:text-2xl mb-5 font-light animate-fade-in-up animation-delay-100"
+                className="text-center text-xl md:text-2xl mb-5 font-light animate-fade-in-up animation-delay-100"
                 style={{ 
                   color: '#ffffff',
                   textShadow: theme === 'dark'
@@ -629,7 +629,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
 
               {/* Descrição - Mais abaixo */}
               <p 
-                className="text-base md:text-lg max-w-3xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200"
+                className="text-center text-base md:text-lg max-w-3xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200"
                 style={{ 
                   color: '#ffffff',
                   textShadow: theme === 'dark'
