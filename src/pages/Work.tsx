@@ -14,8 +14,6 @@ import { usePersonalizedContent } from '../hooks/usePersonalizedContent'
 import { useIntentionDetection } from '../hooks/useIntentionDetection'
 import { useBehaviorTracking } from '../hooks/useBehaviorTracking'
 import DynamicSuggestionBanner from '../components/DynamicSuggestionBanner'
-import IntentionDebugPanel from '../components/IntentionDebugPanel'
-import BannerTest from '../components/BannerTest'
 import OportunidadesAtivas from '../components/OportunidadesAtivas'
 import CredibilidadeEditais from '../components/CredibilidadeEditais'
 import CuradoriaFestivais from '../components/CuradoriaFestivais'
@@ -425,9 +423,6 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         type="website"
       />
       
-      {/* 🧪 TESTE: Banner de Teste - Apenas em desenvolvimento */}
-      {import.meta.env.DEV && <BannerTest />}
-      
       {/* 🆕 FASE 2: Banner de Sugestão Dinâmica */}
       <DynamicSuggestionBanner 
         lang={lang} 
@@ -435,9 +430,6 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         minConfidence={0.3}
         autoHideDelay={20000}
       />
-      
-      {/* 🐛 DEBUG: Painel de Debug (remover em produção) */}
-      <IntentionDebugPanel />
       
       <main className="relative pb-24 film-grain">
         {/* Star background - FIXA (FUNDO - atrás de tudo) */}
