@@ -82,6 +82,29 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   // Animação automática de seções
   useScrollAnimation()
   
+  // ═══════════════════════════════════════════════════════════════
+  // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
+  // ═══════════════════════════════════════════════════════════════
+  const [selectedCategory, setSelectedCategory] = useState<string[]>([])
+  const [selectedWorkType, setSelectedWorkType] = useState<string[]>([])
+  const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>([])
+  const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null)
+  const [selectedYear, setSelectedYear] = useState<number | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
+  
+  // Estado para filtros colapsáveis
+  const [showSecondaryFilters, setShowSecondaryFilters] = useState(false)
+  
+  // Filtros legados (mantidos para compatibilidade)
+  const [selectedTag, setSelectedTag] = useState<string | null>(() => {
+    const params = new URLSearchParams(window.location.search)
+    return params.get('tag')
+  })
+  const [selectedType, setSelectedType] = useState<string | null>(() => {
+    const params = new URLSearchParams(window.location.search)
+    return params.get('type')
+  })
+  
   // 🆕 FASE 2: Site Inteligente - Detecção de Intenção
   const { intention, loading: intentionLoading } = useIntentionDetection(lang)
   const { trackCategoryClick, trackProjectView } = useBehaviorTracking()
@@ -109,29 +132,6 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
       }
     }
   }, [intention?.recommendedCategory, intentionApplied, selectedCategory.length, selectedType])
-  
-  // ═══════════════════════════════════════════════════════════════
-  // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
-  // ═══════════════════════════════════════════════════════════════
-  const [selectedCategory, setSelectedCategory] = useState<string[]>([])
-  const [selectedWorkType, setSelectedWorkType] = useState<string[]>([])
-  const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>([])
-  const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null)
-  const [selectedYear, setSelectedYear] = useState<number | null>(null)
-  const [searchQuery, setSearchQuery] = useState('')
-  
-  // Estado para filtros colapsáveis
-  const [showSecondaryFilters, setShowSecondaryFilters] = useState(false)
-  
-  // Filtros legados (mantidos para compatibilidade)
-  const [selectedTag, setSelectedTag] = useState<string | null>(() => {
-    const params = new URLSearchParams(window.location.search)
-    return params.get('tag')
-  })
-  const [selectedType, setSelectedType] = useState<string | null>(() => {
-    const params = new URLSearchParams(window.location.search)
-    return params.get('type')
-  })
 
   // Atualizar filtros quando a URL mudar (navegação via dropdown)
   useEffect(() => {
