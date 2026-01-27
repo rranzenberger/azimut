@@ -43,6 +43,10 @@ const nextConfig = {
         source: '/rss.xml',
         destination: '/api/feed/rss',
       },
+      {
+        source: '/robots.txt',
+        destination: '/api/robots',
+      },
     ];
   },
   

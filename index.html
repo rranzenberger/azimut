@@ -27,31 +27,51 @@
     <meta name="twitter:card" content="summary_large_image" />
     
     <!-- ═══════════════════════════════════════════════════════════
-        GOOGLE SEARCH CONSOLE VERIFICATION
+        VERIFICAÇÃO MULTI-BUSCADORES
         ═══════════════════════════════════════════════════════════ -->
+    
+    <!-- GOOGLE SEARCH CONSOLE -->
     <!-- 
-      ⚠️ INSTRUÇÕES PASSO A PASSO:
-      
+      ⚠️ INSTRUÇÕES:
       1. Acesse: https://search.google.com/search-console
-      2. Clique em "Adicionar propriedade"
-      3. Digite: https://azmt.com.br
-      4. Escolha método: "Tag HTML"
-      5. Copie o código que aparece (ex: ABC123XYZ789...)
-      6. Cole abaixo substituindo "SEU_CODIGO_AQUI"
-      7. Salve, faça commit e push
-      8. Aguarde deploy (2-3 min)
-      9. Volte ao Search Console e clique em "Verificar"
-      
-      📖 Guia completo: docs/GUIA_PASSO_A_PASSO_GOOGLE_SEARCH_CONSOLE.md
+      2. Adicione propriedade: https://azmt.com.br
+      3. Escolha método: "Tag HTML"
+      4. Copie o código e substitua "SEU_CODIGO_GOOGLE_AQUI"
+      5. Salve, commit, push, aguarde deploy
+      6. Volte ao Search Console e clique em "Verificar"
     -->
-    <meta name="google-site-verification" content="SEU_CODIGO_AQUI" />
+    <meta name="google-site-verification" content="SEU_CODIGO_GOOGLE_AQUI" />
+    
+    <!-- BING WEBMASTER TOOLS -->
     <!-- 
-      ALTERNATIVA: Usar variável de ambiente no Vercel
-      Nome: VITE_GOOGLE_SEARCH_CONSOLE_VERIFICATION
-      Valor: (cole o código aqui)
-      Depois descomente a linha abaixo e remova a linha acima:
+      ⚠️ INSTRUÇÕES:
+      1. Acesse: https://www.bing.com/webmasters
+      2. Adicione site: https://azmt.com.br
+      3. Escolha método: "Meta tag"
+      4. Copie o código e substitua "SEU_CODIGO_BING_AQUI"
+      5. Salve, commit, push, aguarde deploy
+      6. Volte ao Bing Webmaster e clique em "Verify"
     -->
-    <!-- <meta name="google-site-verification" content={import.meta.env.VITE_GOOGLE_SEARCH_CONSOLE_VERIFICATION} /> -->
+    <meta name="msvalidate.01" content="SEU_CODIGO_BING_AQUI" />
+    
+    <!-- YANDEX WEBMASTER (Opcional - para mercado russo/europeu) -->
+    <!-- 
+      ⚠️ INSTRUÇÕES:
+      1. Acesse: https://webmaster.yandex.com
+      2. Adicione site: https://azmt.com.br
+      3. Escolha método: "Meta tag"
+      4. Copie o código e substitua "SEU_CODIGO_YANDEX_AQUI"
+      5. Salve, commit, push, aguarde deploy
+      6. Volte ao Yandex Webmaster e clique em "Verify"
+    -->
+    <!-- <meta name="yandex-verification" content="SEU_CODIGO_YANDEX_AQUI" /> -->
+    
+    <!-- 
+      ALTERNATIVA: Usar variáveis de ambiente no Vercel
+      Nome: VITE_GOOGLE_SEARCH_CONSOLE_VERIFICATION
+      Nome: VITE_BING_WEBMASTER_VERIFICATION
+      Nome: VITE_YANDEX_WEBMASTER_VERIFICATION
+    -->
     
     <!-- ═══════════════════════════════════════════════════════════
         PERFORMANCE OPTIMIZATIONS - Resource Hints
