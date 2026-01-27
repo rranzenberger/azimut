@@ -29,11 +29,22 @@
     <!-- ═══════════════════════════════════════════════════════════
         GOOGLE SEARCH CONSOLE VERIFICATION
         ═══════════════════════════════════════════════════════════ -->
-    <!-- TODO: Adicionar meta tag de verificação do Google Search Console -->
-    <!-- Quando configurar o Google Search Console, adicionar aqui: -->
-    <!-- <meta name="google-site-verification" content="ABC123XYZ..." /> -->
-    <!-- Guia completo: docs/SEO_GOOGLE_SEARCH_CONSOLE.md -->
-    <!-- Lembrete: LEMBRETE_SEO_MANUAL.md -->
+    <!-- 
+      INSTRUÇÕES:
+      1. Acesse: https://search.google.com/search-console
+      2. Adicione propriedade: https://azmt.com.br
+      3. Escolha método: "Tag HTML"
+      4. Copie o código (ex: ABC123XYZ...)
+      5. Cole abaixo substituindo "SEU_CODIGO_AQUI"
+    -->
+    <meta name="google-site-verification" content="SEU_CODIGO_AQUI" />
+    <!-- 
+      ALTERNATIVA: Usar variável de ambiente no Vercel
+      Nome: VITE_GOOGLE_SEARCH_CONSOLE_VERIFICATION
+      Valor: (cole o código aqui)
+      Depois descomente a linha abaixo e remova a linha acima:
+    -->
+    <!-- <meta name="google-site-verification" content={import.meta.env.VITE_GOOGLE_SEARCH_CONSOLE_VERIFICATION} /> -->
     
     <!-- ═══════════════════════════════════════════════════════════
         PERFORMANCE OPTIMIZATIONS - Resource Hints
