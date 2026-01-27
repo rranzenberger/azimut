@@ -240,7 +240,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
               {project.heroImage?.large || project.heroImage?.original ? (
                 <img
                   src={project.heroImage.large || project.heroImage.original}
-                  alt={project.heroImage.alt || project.title}
+                  alt={project.heroImage.alt || `${project.title}${project.summary ? ` - ${project.summary.substring(0, 100)}` : ''}${project.year ? ` (${project.year})` : ''} - Azimut`}
                   className="absolute inset-0 h-full w-full object-cover"
                 />
               ) : (
@@ -394,7 +394,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                         >
                           <img
                             src={media.medium || media.thumbnail || media.original}
-                            alt={media.alt || 'Jornal O Globo'}
+                            alt={media.alt || `${project.title} - Galeria de imagens${media.altPt ? `: ${media.altPt}` : ''} - Azimut`}
                             className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                             loading="lazy"
                           />
@@ -433,7 +433,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                         >
                           <img
                             src={media.medium || media.thumbnail || media.original}
-                            alt={media.alt || 'Instalação interativa'}
+                            alt={media.alt || `${project.title} - Galeria de imagens${media.altPt ? `: ${media.altPt}` : ''} - Azimut`}
                             className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                             loading="lazy"
                           />
@@ -469,7 +469,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                         >
                           <img
                             src={media.medium || media.thumbnail || media.original}
-                            alt={media.alt || 'Ginástica Artística'}
+                            alt={media.alt || `${project.title} - Galeria de imagens${media.altPt ? `: ${media.altPt}` : ''} - Azimut`}
                             className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                             loading="lazy"
                           />
@@ -640,7 +640,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                           {media.type === 'IMAGE' ? (
                             <img
                               src={media.medium || media.thumbnail || media.original}
-                              alt={media.alt || project.title}
+                              alt={media.alt || `${project.title} - Galeria de imagens${media.altPt ? `: ${media.altPt}` : ''} - Azimut`}
                               className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                               loading="lazy"
                             />
@@ -710,7 +710,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                       <div className="relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">
                         <img
                           src={related.heroImage.large || related.heroImage.medium}
-                          alt={related.heroImage.alt || related.title}
+                          alt={related.heroImage.alt || `${related.title}${related.summary ? ` - ${related.summary.substring(0, 80)}` : ''}${related.year ? ` (${related.year})` : ''} - Projeto relacionado - Azimut`}
                           className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none"></div>

@@ -76,7 +76,6 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   const { trackInteraction } = useUserTracking()
   const navigate = useNavigate()
   const location = useLocation()
-  const seo = seoData.work[lang]
   const { theme } = useTheme()
   
   // Animação automática de seções
@@ -266,6 +265,33 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     return defaultCases;
   }, [cmsContent?.highlightProjects, defaultCases, cmsLoading, cmsError])
   
+  // SEO dinâmico baseado nos projetos disponíveis
+  const baseSeo = seoData.work[lang]
+  const seo = useMemo(() => {
+    // Se temos projetos, enriquecer description
+    if (allCases.length > 0 && !cmsLoading) {
+      const projectsCount = allCases.length
+      const featuredTypes = new Set<string>()
+      allCases.slice(0, 10).forEach((p: WorkProject) => {
+        if (p.type) featuredTypes.add(p.type)
+        if (p.tags) p.tags.forEach((tag: string) => featuredTypes.add(tag))
+      })
+      const typesList = Array.from(featuredTypes).slice(0, 5).join(', ')
+      
+      return {
+        ...baseSeo,
+        description: lang === 'pt'
+          ? `${baseSeo.description} Explore ${projectsCount} projetos em ${typesList || 'VR, AR, exposições e experiências imersivas'}.`
+          : lang === 'es'
+          ? `${baseSeo.description} Explora ${projectsCount} proyectos en ${typesList || 'VR, AR, exposiciones y experiencias inmersivas'}.`
+          : lang === 'fr'
+          ? `${baseSeo.description} Explorez ${projectsCount} projets en ${typesList || 'VR, AR, expositions et expériences immersives'}.`
+          : `${baseSeo.description} Explore ${projectsCount} projects in ${typesList || 'VR, AR, exhibitions and immersive experiences'}.`
+      }
+    }
+    return baseSeo
+  }, [allCases.length, cmsLoading, lang, baseSeo])
+  
   // Filtrar projetos com filtros avançados
   const cases = useMemo(() => {
     if (!Array.isArray(allCases)) return []
@@ -386,6 +412,40 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     }
     return null
   }
+
+  // Helper: Gerar alt text descritivo para imagens de projetos
+  const getProjectImageAlt = (project: WorkProject): string => {
+    // Se já tem alt text do backoffice, usar
+    if (project.heroImage?.alt) {
+      return project.heroImage.alt
+    }
+    
+    // Construir alt text descritivo
+    const parts: string[] = [project.title]
+    
+    if (project.summary) {
+      const summaryShort = project.summary.length > 80 
+        ? project.summary.substring(0, 80) + '...'
+        : project.summary
+      parts.push(summaryShort)
+    }
+    
+    if (project.city || project.country) {
+      parts.push([project.city, project.country].filter(Boolean).join(', '))
+    }
+    
+    if (project.year) {
+      parts.push(`(${project.year})`)
+    }
+    
+    // Adicionar tags principais se disponíveis
+    if (project.tags && project.tags.length > 0) {
+      const mainTags = project.tags.slice(0, 2).join(', ')
+      parts.push(`Tags: ${mainTags}`)
+    }
+    
+    return `${parts.join(' - ')} | Azimut Portfolio`
+  }
   
   const hasActiveFilters = 
     selectedCategory.length > 0 ||
@@ -413,6 +473,15 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
 
   // Dados já vêm traduzidos do backoffice
 
+  // Imagem OG dinâmica: usar primeira imagem do primeiro projeto se disponível
+  const ogImage = useMemo(() => {
+    if (cases.length > 0 && cases[0]) {
+      const firstProjectImage = getProjectImageUrl(cases[0], 'large')
+      if (firstProjectImage) return firstProjectImage
+    }
+    return seo.image || 'https://azmt.com.br/og-work.png'
+  }, [cases, seo.image])
+
   return (
     <>
       <SEO 
@@ -420,7 +489,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         description={seo.description}
         keywords={seo.keywords}
         locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
-        image={seo.image}
+        image={ogImage}
         url={seo.url}
         type="website"
       />
@@ -825,7 +894,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                     <>
                       <img
                         src={getProjectImageUrl(cases[0], 'large')!}
-                        alt={cases[0].heroImage?.alt || cases[0].title}
+                        alt={getProjectImageAlt(cases[0])}
                         loading="lazy"
                         className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105"
                       />
@@ -979,7 +1048,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                     <>
                       <OptimizedImage
                         src={getProjectImageUrl(item, 'medium')!}
-                        alt={item.heroImage?.alt || item.title}
+                        alt={getProjectImageAlt(item)}
                         className="absolute inset-0 h-full w-full transition-transform duration-500 group-hover:scale-110"
                         objectFit="cover"
                       />
