@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/src/lib/prisma';
 import { verifyAuthToken } from '@/src/lib/auth';
 import sharp from 'sharp';
+import { put } from '@vercel/blob';
 
 export const runtime = 'nodejs';
 
@@ -70,7 +71,7 @@ async function processImage(buffer: Buffer, filename: string, contentType: strin
 
   // Original
   const origExt = metadata.format || 'jpg';
-  urls.original = await saveFileLocal(`${baseFolder}/original.${origExt}`, buffer);
+  urls.original = await saveFileLocal(`${baseFolder}/original.${origExt}`, buffer, contentType);
 
   // Variantes otimizadas
   const variants = [
@@ -86,7 +87,7 @@ async function processImage(buffer: Buffer, filename: string, contentType: strin
         .resize(v.width, null, { withoutEnlargement: true })
         .jpeg({ quality: v.quality, progressive: true })
         .toBuffer();
-      urls[v.name] = await saveFileLocal(`${baseFolder}/${v.name}.jpg`, jpegBuffer);
+      urls[v.name] = await saveFileLocal(`${baseFolder}/${v.name}.jpg`, jpegBuffer, 'image/jpeg');
     } catch (e) {
       console.error(`Erro ao criar variante ${v.name}:`, e);
     }
@@ -99,7 +100,7 @@ async function processImage(buffer: Buffer, filename: string, contentType: strin
       .resize(1600, null, { withoutEnlargement: true })
       .webp({ quality: 80 })
       .toBuffer();
-    urls.webp = await saveFileLocal(`${baseFolder}/large.webp`, webpBuffer);
+    urls.webp = await saveFileLocal(`${baseFolder}/large.webp`, webpBuffer, 'image/webp');
   } catch (e) {
     console.error('Erro ao criar WebP:', e);
   }
@@ -127,7 +128,7 @@ async function processImage(buffer: Buffer, filename: string, contentType: strin
 async function processVideo(buffer: Buffer, filename: string, contentType: string) {
   const baseName = filename.replace(/[^a-zA-Z0-9-_.]/g, '_');
   const relPath = `${UPLOAD_BASE}/videos/${Date.now()}-${baseName}`;
-  const publicUrl = await saveFileLocal(relPath, buffer);
+  const publicUrl = await saveFileLocal(relPath, buffer, contentType);
 
   const ext = filename.split('.').pop() || 'mp4';
 
@@ -143,11 +144,28 @@ async function processVideo(buffer: Buffer, filename: string, contentType: strin
   });
 }
 
-async function saveFileLocal(relPath: string, data: Buffer) {
+async function saveFileLocal(relPath: string, data: Buffer, contentType: string = 'application/octet-stream') {
+  // Tentar usar Vercel Blob primeiro (produção)
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    try {
+      const blob = await put(relPath, data, {
+        access: 'public',
+        contentType,
+      });
+      console.log('✅ Arquivo salvo no Vercel Blob:', blob.url);
+      return blob.url;
+    } catch (err) {
+      console.warn('⚠️ Erro ao usar Vercel Blob, usando storage local:', err);
+    }
+  }
+  
+  // Fallback: salvar localmente (desenvolvimento)
   const fs = await import('fs/promises');
   const path = await import('path');
   const fullPath = path.join(process.cwd(), 'public', relPath);
   await fs.mkdir(path.dirname(fullPath), { recursive: true });
   await fs.writeFile(fullPath, data);
-  return `/${relPath.replace(/\\/g, '/')}`;
+  const url = `/${relPath.replace(/\\/g, '/')}`;
+  console.log('✅ Arquivo salvo localmente:', url);
+  return url;
 }
