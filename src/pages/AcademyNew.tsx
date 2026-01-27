@@ -570,9 +570,9 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
           {/* Content - Pílula alinhada à esquerda, textos centralizados */}
           <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="pt-16 pb-12 md:pt-20 md:pb-16">
-              {/* Badge Premium - Alinhado à esquerda (padronizado com páginas internas) */}
+              {/* Badge Premium - Alinhado com lateral esquerda do título AZIMUT ACADEMY */}
               <div 
-                className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-8 backdrop-blur-md animate-fade-in"
+                className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-8 backdrop-blur-md animate-fade-in ml-[12%] md:ml-[15%] lg:ml-[18%]"
                 style={theme === 'dark' ? {
                   background: 'rgba(23, 37, 84, 0.55)',
                   border: '1px solid rgba(30, 58, 138, 0.70)',
