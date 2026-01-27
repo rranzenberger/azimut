@@ -74,7 +74,9 @@ export async function POST(request: NextRequest) {
     // Limpar cache antigo (manter últimos 100)
     if (analysisCache.size > 100) {
       const firstKey = analysisCache.keys().next().value
-      analysisCache.delete(firstKey)
+      if (firstKey) {
+        analysisCache.delete(firstKey)
+      }
     }
     
     return NextResponse.json(result)
