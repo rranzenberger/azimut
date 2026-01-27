@@ -1,5 +1,30 @@
 {
   "rewrites": [{ "source": "/(.*)", "destination": "/" }],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.azmt.com.br"
+        }
+      ],
+      "destination": "https://azmt.com.br/:1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-forwarded-proto",
+          "value": "http"
+        }
+      ],
+      "destination": "https://azmt.com.br/:1",
+      "permanent": true
+    }
+  ],
   "framework": "vite",
   "git": {
     "deploymentEnabled": {

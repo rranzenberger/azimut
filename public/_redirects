@@ -1,2 +1,8 @@
+# Redirects para SEO - HTTP → HTTPS e www → sem www
+http://www.azmt.com.br/*    https://azmt.com.br/:splat    301!
+http://azmt.com.br/*        https://azmt.com.br/:splat    301!
+https://www.azmt.com.br/*   https://azmt.com.br/:splat    301!
+
+# SPA Routing - todas as rotas para index.html
 /*    /index.html   200
 
