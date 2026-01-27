@@ -20,10 +20,50 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // Log error to console
-    console.error('[ErrorBoundary] Error caught:', error, {
-      componentStack: errorInfo.componentStack
-    })
+    // Log error to console (desenvolvimento)
+    if (import.meta.env.DEV) {
+      console.error('[ErrorBoundary] Error caught:', error, {
+        componentStack: errorInfo.componentStack
+      })
+    }
+
+    // ⚠️ Enviar para backoffice (não bloqueia renderização)
+    try {
+      const apiUrl = import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azmt.com.br'
+      
+      // Usar sendBeacon para não bloquear navegação
+      if ('sendBeacon' in navigator) {
+        const body = JSON.stringify({
+          error: error.message,
+          stack: error.stack,
+          url: window.location.href,
+          userAgent: navigator.userAgent,
+          timestamp: new Date().toISOString(),
+          componentStack: errorInfo.componentStack,
+        })
+
+        navigator.sendBeacon(`${apiUrl}/api/errors/report`, body)
+      } else {
+        // Fallback: fetch (não bloqueia se falhar)
+        fetch(`${apiUrl}/api/errors/report`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            error: error.message,
+            stack: error.stack,
+            url: window.location.href,
+            userAgent: navigator.userAgent,
+            timestamp: new Date().toISOString(),
+            componentStack: errorInfo.componentStack,
+          }),
+        }).catch(() => {
+          // Ignorar erros silenciosamente
+        })
+      }
+    } catch (reportError) {
+      // ⚠️ NUNCA quebrar se report falhar
+      console.warn('[ErrorBoundary] Erro ao reportar (ignorado):', reportError)
+    }
   }
 
   public render() {

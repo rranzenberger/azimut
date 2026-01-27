@@ -28,6 +28,24 @@ const nextConfig = {
   // Apenas extensões necessárias
   pageExtensions: ['ts', 'tsx'],
   
+  // Rewrites: Redirecionar URLs para APIs
+  async rewrites() {
+    return [
+      {
+        source: '/sitemap.xml',
+        destination: '/api/sitemap',
+      },
+      {
+        source: '/feed.xml',
+        destination: '/api/feed/rss',
+      },
+      {
+        source: '/rss.xml',
+        destination: '/api/feed/rss',
+      },
+    ];
+  },
+  
   // CORS para API pública E privada
   async headers() {
     return [
