@@ -91,9 +91,9 @@ export async function POST(request: Request) {
     const data = await request.json()
 
     // Calcular score e prioridade
-    const leadScore = calculateLeadScore(data)
-    const priority = determinePriority(leadScore)
-    const estimatedValue = estimateValue(data.budget)
+    let leadScore = calculateLeadScore(data)
+    let priority = determinePriority(leadScore)
+    let estimatedValue = estimateValue(data.budget)
 
     // ═══════════════════════════════════════════════════════════
     // 🧠 ANÁLISE INTELIGENTE COM IA (Claude/DeepSeek)
