@@ -205,10 +205,14 @@ export async function GET(request: NextRequest) {
       } : null,
       
       // Projetos priorizados por geo/comportamento
+      // Para página 'work': usar TODOS os projetos publicados (featuredProjects)
+      // Para outras páginas: usar recomendações ou destaques do mercado
       highlightProjects: (
-        recommendedProjects || 
-        market?.highlightProjects || 
-        featuredProjects
+        page === 'work' 
+          ? featuredProjects // Work: todos os projetos publicados
+          : (recommendedProjects || 
+             (market?.highlightProjects?.length ? market.highlightProjects : null) || 
+             featuredProjects)
       ).map(p => formatProject(p, lang)),
       
       services: services.map(s => ({

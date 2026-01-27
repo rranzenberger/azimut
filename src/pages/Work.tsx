@@ -72,9 +72,8 @@ interface WorkProject {
 }
 
 const Work: React.FC<WorkProps> = ({ lang }) => {
-  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
-  // const { trackInteraction } = useUserTracking()
-  const trackInteraction = (type: string, target: string) => {} // Dummy
+  // Tracking de interações
+  const { trackInteraction } = useUserTracking()
   const navigate = useNavigate()
   const location = useLocation()
   const seo = seoData.work[lang]
@@ -88,8 +87,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   const { trackCategoryClick, trackProjectView } = useBehaviorTracking()
   
   // Auto-aplicar filtro baseado em intenção detectada (apenas uma vez)
+  const [intentionApplied, setIntentionApplied] = useState(false)
   useEffect(() => {
-    if (intention?.recommendedCategory && !selectedCategory.length && !selectedType) {
+    if (intention?.recommendedCategory && !intentionApplied && !selectedCategory.length && !selectedType) {
       // Mapear categoria recomendada para filtros
       const categoryMap: Record<string, { category?: string[], type?: string }> = {
         'museus': { category: ['museum', 'museus', 'exposição'] },
@@ -105,9 +105,10 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         if (mapping.type) {
           setSelectedType(mapping.type)
         }
+        setIntentionApplied(true) // Marcar como aplicado
       }
     }
-  }, [intention?.recommendedCategory]) // Apenas quando intenção mudar
+  }, [intention?.recommendedCategory, intentionApplied, selectedCategory.length, selectedType])
   
   // ═══════════════════════════════════════════════════════════════
   // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
@@ -424,8 +425,8 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         type="website"
       />
       
-      {/* 🧪 TESTE: Banner de Teste (sempre visível) - REMOVER EM PRODUÇÃO */}
-      <BannerTest />
+      {/* 🧪 TESTE: Banner de Teste - Apenas em desenvolvimento */}
+      {import.meta.env.DEV && <BannerTest />}
       
       {/* 🆕 FASE 2: Banner de Sugestão Dinâmica */}
       <DynamicSuggestionBanner 

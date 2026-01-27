@@ -13,11 +13,10 @@ import { useState, useEffect, useRef } from 'react';
 const CMS_ENABLED = true;
 
 // URL do backoffice - tenta várias variáveis de ambiente
+// Prioridade: VITE_BACKOFFICE_URL > fallback produção
 const BACKOFFICE_URL = 
   import.meta.env.VITE_BACKOFFICE_URL || 
-  import.meta.env.VITE_API_URL || 
-  import.meta.env.VITE_CMS_API_URL?.replace('/api', '') ||
-  'https://azimut-backoffice-git-main-azimuts-projects-6435f869.vercel.app';
+  'https://backoffice.azmt.com.br';
 
 const API_URL = BACKOFFICE_URL.endsWith('/api') ? BACKOFFICE_URL : `${BACKOFFICE_URL}/api`;
 
