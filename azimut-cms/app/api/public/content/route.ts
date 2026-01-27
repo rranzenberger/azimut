@@ -68,19 +68,25 @@ export async function GET(request: NextRequest) {
       },
     });
     
-    // 3. Buscar projetos em destaque (se não houver highlightProjects)
+    // 3. Buscar projetos
+    // Para página 'work': buscar TODOS os projetos publicados
+    // Para outras páginas: apenas featured (destaque na home)
     let featuredProjects = await prisma.project.findMany({
       where: {
         status: 'PUBLISHED',
-        featured: true,
+        ...(page !== 'work' ? { featured: true } : {}),
       },
       include: {
         heroImage: true,
         tags: true,
         services: true,
       },
-      orderBy: { priorityHome: 'desc' },
-      take: 6,
+      orderBy: [
+        { priorityHome: 'desc' },
+        { year: 'desc' },
+        { title: 'asc' },
+      ],
+      ...(page !== 'work' ? { take: 6 } : {}), // Para work: sem limite
     });
 
     // 4. Personalização baseada em comportamento (se temos sessionId)
