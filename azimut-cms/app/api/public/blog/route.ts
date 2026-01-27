@@ -8,6 +8,21 @@ import { prisma } from '@/src/lib/prisma';
 
 export const runtime = 'nodejs';
 
+// CORS headers
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+// OPTIONS handler para CORS preflight
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: corsHeaders,
+  });
+}
+
 // GET - Listar posts publicados (público)
 export async function GET(request: NextRequest) {
   try {
@@ -139,9 +154,14 @@ export async function GET(request: NextRequest) {
       limit,
       offset,
       hasMore: offset + posts.length < total,
+    }, {
+      headers: corsHeaders,
     });
   } catch (error) {
     console.error('Public blog GET error:', error);
-    return NextResponse.json({ error: 'Erro ao listar posts' }, { status: 500 });
+    return NextResponse.json({ error: 'Erro ao listar posts' }, { 
+      status: 500,
+      headers: corsHeaders,
+    });
   }
 }

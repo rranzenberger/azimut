@@ -545,8 +545,36 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
     }
   }, [error])
 
-  // 🆕 UX PREMIUM - Validação em tempo real (OPCIONAL)
-  const handleFieldBlur = (fieldName: string, value: string, fieldType?: 'email' | 'phone' | 'text' | 'textarea') => {
+  // Validação no onChange (após primeira interação com o campo)
+  const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set())
+  
+  // Validação em tempo real (onBlur e onChange após primeira interação)
+  const validateFieldInRealTime = (fieldName: string, value: string, fieldType?: 'email' | 'phone' | 'text' | 'textarea') => {
+    // Validação especial para email/telefone (pelo menos um)
+    if (fieldName === 'email' || fieldName === 'phone') {
+      const hasEmail = fieldName === 'email' ? value.trim() : formData.email.trim()
+      const hasPhone = fieldName === 'phone' ? value.replace(/\D/g, '').length >= 8 : formData.phone.replace(/\D/g, '').length >= 8
+      
+      // Só valida se ambos estiverem vazios (depois que usuário interagiu)
+      if (!hasEmail && !hasPhone && (formData.email || formData.phone || value)) {
+        setFieldErrors(prev => ({ 
+          ...prev, 
+          email: lang === 'pt' ? 'Forneça pelo menos email OU telefone' : 
+                 lang === 'es' ? 'Proporcione al menos email O teléfono' : 
+                 lang === 'fr' ? 'Fournissez au moins email OU téléphone' : 
+                 'Provide at least email OR phone'
+        }))
+        return
+      } else {
+        // Remove erro se agora tem pelo menos um
+        setFieldErrors(prev => {
+          const newErrors = { ...prev }
+          delete newErrors.email
+          return newErrors
+        })
+      }
+    }
+    
     const error = validateField({ 
       name: fieldName, 
       value, 
@@ -563,6 +591,15 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
         return newErrors
       })
     }
+  }
+
+  // 🆕 UX PREMIUM - Validação em tempo real (melhorada)
+  const handleFieldBlur = (fieldName: string, value: string, fieldType?: 'email' | 'phone' | 'text' | 'textarea') => {
+    validateFieldInRealTime(fieldName, value, fieldType)
+  }
+
+  const handleFieldFocus = (fieldName: string) => {
+    setTouchedFields(prev => new Set(prev).add(fieldName))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -933,13 +970,17 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
     const { name, value, type } = e.target
     const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined
     
-    // Limpar erro do campo quando usuário começar a digitar
-    if (fieldErrors[name]) {
-      setFieldErrors(prev => {
-        const newErrors = { ...prev }
-        delete newErrors[name]
-        return newErrors
-      })
+    // Atualizar formData
+    if (checked !== undefined) {
+      setFormData(prev => ({ ...prev, [name]: checked }))
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }))
+    }
+    
+    // 🆕 UX PREMIUM - Validação em tempo real (se campo já foi tocado)
+    if (touchedFields.has(name) && type !== 'checkbox') {
+      const fieldType = name === 'email' ? 'email' : name === 'phone' ? 'phone' : 'text'
+      validateFieldInRealTime(name, value, fieldType)
     }
     
     // Limpar erro geral quando usuário começar a corrigir
@@ -1103,6 +1144,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
+                  onFocus={() => handleFieldFocus('name')}
                   onBlur={(e) => handleFieldBlur('name', e.target.value, 'text')}
                   required
                   className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal ${
@@ -1120,6 +1162,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  onFocus={() => handleFieldFocus('email')}
                   onBlur={(e) => handleFieldBlur('email', e.target.value, 'email')}
                   className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal ${
                     fieldErrors.email 
@@ -1201,9 +1244,14 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                     type="tel"
                     name="phone"
                     value={formData.phone}
+                    onFocus={() => handleFieldFocus('phone')}
                     onChange={(e) => {
                       const formatted = formatPhoneWithAreaCode(e.target.value, formData.countryCode)
                       setFormData(prev => ({ ...prev, phone: formatted }))
+                      // Validação em tempo real se campo já foi tocado
+                      if (touchedFields.has('phone')) {
+                        validateFieldInRealTime('phone', formatted, 'phone')
+                      }
                     }}
                     onBlur={(e) => {
                       if (e.target.value.trim()) {
@@ -1257,6 +1305,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   name="company"
                   value={formData.company}
                   onChange={handleChange}
+                  onFocus={() => handleFieldFocus('company')}
                   onBlur={(e) => handleFieldBlur('company', e.target.value, 'text')}
                   required
                   className={`relative z-10 input-adaptive w-full px-4 py-3.5 rounded-lg focus:ring-2 transition-all duration-300 group-hover:border-white/20 text-[15px] leading-normal ${

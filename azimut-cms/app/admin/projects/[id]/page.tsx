@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { GalleryManager } from '../components/GalleryManager';
+import UnifiedMediaUpload from '@/components/admin/UnifiedMediaUpload';
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
@@ -24,6 +25,7 @@ export default function EditProjectPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [gallery, setGallery] = useState<any[]>([]);
+  const [allMedia, setAllMedia] = useState<any[]>([]);
   const [formData, setFormData] = useState({
     title: '',
     shortTitle: '',
@@ -45,6 +47,10 @@ export default function EditProjectPage() {
     status: 'DRAFT',
     featured: false,
     priorityHome: 0,
+    hasDetailPage: false,
+    thumbnailUrl: '',
+    heroImageId: '',
+    heroImageUrl: '',
     // ═══════════════════════════════════════════════════════════════
     // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
     // ═══════════════════════════════════════════════════════════════
@@ -103,6 +109,10 @@ export default function EditProjectPage() {
           status: project.status || 'DRAFT',
           featured: project.featured || false,
           priorityHome: project.priorityHome || 0,
+          hasDetailPage: project.hasDetailPage || false,
+          thumbnailUrl: project.thumbnailUrl || '',
+          heroImageId: project.heroImageId || '',
+          heroImageUrl: project.heroImage?.originalUrl || '',
           // ═══════════════════════════════════════════════════════════════
           // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
           // ═══════════════════════════════════════════════════════════════
@@ -120,6 +130,18 @@ export default function EditProjectPage() {
           partnerLogos: Array.isArray(project.partnerLogos) ? project.partnerLogos.join(', ') : '',
           beforeAfterImages: project.beforeAfterImages ? JSON.stringify(project.beforeAfterImages, null, 2) : '',
         });
+        
+        // Carregar lista de mídias para o upload
+        try {
+          const mediaRes = await fetch('/api/admin/media?limit=100');
+          if (mediaRes.ok) {
+            const mediaData = await mediaRes.json();
+            setAllMedia(mediaData.media || []);
+          }
+        } catch (err) {
+          console.warn('Erro ao carregar mídias:', err);
+        }
+        
         setLoading(false);
       } catch (err) {
         setError('Erro de rede ao carregar projeto');
@@ -441,17 +463,69 @@ export default function EditProjectPage() {
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <input
-            type="checkbox"
-            id="featured"
-            checked={formData.featured}
-            onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-            style={{ width: 18, height: 18 }}
-          />
-          <label htmlFor="featured" style={{ fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>
-            Projeto em destaque
-          </label>
+        {/* ═══════════════════════════════════════════════════════════════ */}
+        {/* 🎛️ CONFIGURAÇÕES DE EXIBIÇÃO */}
+        {/* ═══════════════════════════════════════════════════════════════ */}
+        <div
+          style={{
+            marginTop: 16,
+            padding: '16px 20px',
+            borderRadius: 10,
+            border: '1px solid rgba(59, 130, 246, 0.3)',
+            background: 'rgba(59, 130, 246, 0.08)',
+          }}
+        >
+          <h3 style={{ margin: '0 0 16px 0', fontSize: 15, color: '#93c5fd' }}>
+            🎛️ Configurações de Exibição
+          </h3>
+          
+          <div style={{ display: 'grid', gap: 16 }}>
+            {/* Featured */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <input
+                type="checkbox"
+                id="featured"
+                checked={formData.featured}
+                onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
+                style={{ width: 18, height: 18 }}
+              />
+              <label htmlFor="featured" style={{ fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>
+                ⭐ Projeto em destaque (Featured)
+              </label>
+            </div>
+            
+            {/* Has Detail Page */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <input
+                type="checkbox"
+                id="hasDetailPage"
+                checked={formData.hasDetailPage}
+                onChange={(e) => setFormData({ ...formData, hasDetailPage: e.target.checked })}
+                style={{ width: 18, height: 18 }}
+              />
+              <label htmlFor="hasDetailPage" style={{ fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>
+                📄 Tem subpágina própria (Ver Detalhes)
+              </label>
+            </div>
+            <p style={{ margin: '-8px 0 0 26px', fontSize: 12, color: '#8f8ba2' }}>
+              Se ativado, mostra botão "Ver Detalhes" que leva para página completa do projeto.
+            </p>
+            
+            {/* Thumbnail URL alternativa */}
+            <div style={{ display: 'grid', gap: 8, marginTop: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>🖼️ URL do Thumbnail (alternativo)</label>
+              <input
+                type="url"
+                value={formData.thumbnailUrl}
+                onChange={(e) => setFormData({ ...formData, thumbnailUrl: e.target.value })}
+                style={inputStyle}
+                placeholder="https://exemplo.com/thumbnail.jpg (opcional - usa heroImage se vazio)"
+              />
+              <small style={{ color: '#8f8ba2', fontSize: 11 }}>
+                URL direta para thumbnail. Se vazio, usa a imagem principal (heroImage).
+              </small>
+            </div>
+          </div>
         </div>
 
         {/* ═══════════════════════════════════════════════════════════════ */}
@@ -767,8 +841,75 @@ export default function EditProjectPage() {
           </div>
         </div>
 
-        {/* Galeria de Mídias */}
-        <GalleryManager projectId={id} initialGallery={gallery} />
+        {/* ═══════════════════════════════════════════════════════════════ */}
+        {/* 🖼️ MÍDIA PRINCIPAL DO PROJETO */}
+        {/* ═══════════════════════════════════════════════════════════════ */}
+        <div
+          style={{
+            marginTop: 32,
+            padding: '20px 24px',
+            borderRadius: 12,
+            border: '1px solid rgba(147, 51, 234, 0.3)',
+            background: 'rgba(147, 51, 234, 0.08)',
+          }}
+        >
+          <h2 style={{ margin: '0 0 8px 0', fontSize: 18, color: '#fff' }}>
+            🖼️ Mídia Principal do Projeto
+          </h2>
+          <p style={{ margin: '0 0 20px 0', fontSize: 13, color: '#c0bccf' }}>
+            Defina a imagem principal (hero/thumbnail) e vídeo do projeto.
+            Estas mídias são exibidas na listagem e página de detalhes.
+          </p>
+          
+          <UnifiedMediaUpload
+            pageSlug={`project-${formData.slug || id}`}
+            sectionSlug="hero"
+            imageId={formData.heroImageId}
+            imageUrl={formData.thumbnailUrl || formData.heroImageUrl}
+            videoId=""
+            videoUrl={formData.videoUrl}
+            onImageChange={(mediaId, url) => {
+              setFormData({ 
+                ...formData, 
+                heroImageId: mediaId || '',
+                heroImageUrl: url || '',
+                thumbnailUrl: url || formData.thumbnailUrl
+              });
+            }}
+            onVideoChange={(mediaId, url) => {
+              setFormData({ 
+                ...formData, 
+                videoUrl: url || ''
+              });
+            }}
+            allowVideo={true}
+            allowExternalUrl={true}
+            imageSpecs={{
+              width: 1920,
+              height: 1080,
+              maxSizeMB: 5,
+              description: 'Imagem principal do projeto (hero/thumbnail)'
+            }}
+            videoSpecs={{
+              maxSizeMB: 50,
+              description: 'Vídeo principal do projeto'
+            }}
+            existingMedia={allMedia}
+            imageLabel="Imagem Principal (Hero/Thumbnail)"
+            videoLabel="Vídeo do Projeto (Opcional)"
+          />
+        </div>
+
+        {/* Galeria de Mídias (Adicional) */}
+        <div style={{ marginTop: 24 }}>
+          <h3 style={{ margin: '0 0 8px 0', fontSize: 16, color: '#fff' }}>
+            📸 Galeria de Mídias (Adicional)
+          </h3>
+          <p style={{ margin: '0 0 12px 0', fontSize: 12, color: '#8f8ba2' }}>
+            Adicione mais imagens e vídeos que aparecerão na página de detalhes do projeto.
+          </p>
+          <GalleryManager projectId={id} initialGallery={gallery} />
+        </div>
 
         <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
           <button

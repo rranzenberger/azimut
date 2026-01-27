@@ -574,6 +574,76 @@ export const ArticleSchema: React.FC<{
 }
 
 // ════════════════════════════════════════════════════════════
+// REVIEW/RATING SCHEMA - Para depoimentos e avaliações
+// ════════════════════════════════════════════════════════════
+export const ReviewRatingSchema: React.FC<{
+  itemName: string
+  itemType?: 'Product' | 'Service' | 'Organization' | 'CreativeWork'
+  ratingValue: number // 1-5
+  bestRating?: number
+  worstRating?: number
+  reviewCount?: number
+  reviews?: Array<{
+    author: string
+    datePublished: string
+    reviewBody: string
+    ratingValue: number
+  }>
+  lang?: string
+}> = ({
+  itemName,
+  itemType = 'CreativeWork',
+  ratingValue,
+  bestRating = 5,
+  worstRating = 1,
+  reviewCount,
+  reviews = [],
+  lang = 'pt'
+}) => {
+  const baseUrl = 'https://azmt.com.br'
+  
+  const schema: any = {
+    '@context': 'https://schema.org',
+    '@type': itemType,
+    name: itemName,
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue,
+      bestRating,
+      worstRating,
+      ...(reviewCount && { reviewCount })
+    }
+  }
+  
+  // Adicionar reviews individuais se fornecidos
+  if (reviews.length > 0) {
+    schema.review = reviews.map(review => ({
+      '@type': 'Review',
+      author: {
+        '@type': 'Person',
+        name: review.author
+      },
+      datePublished: review.datePublished,
+      reviewBody: review.reviewBody,
+      reviewRating: {
+        '@type': 'Rating',
+        ratingValue: review.ratingValue,
+        bestRating,
+        worstRating
+      }
+    }))
+  }
+  
+  return (
+    <Helmet>
+      <script type="application/ld+json">
+        {JSON.stringify(schema)}
+      </script>
+    </Helmet>
+  )
+}
+
+// ════════════════════════════════════════════════════════════
 // PROJECT SCHEMA - Para projetos do portfolio (Work)
 // ════════════════════════════════════════════════════════════
 export const ProjectSchema: React.FC<{

@@ -6,6 +6,7 @@ import { FieldEditorWithMetadata } from '@/src/components/admin/FieldEditorWithM
 import MediaUploadField from '@/components/admin/MediaUploadField';
 import VideoWithThumbnailField from '@/components/admin/VideoWithThumbnailField';
 import MultiLangVideoField from '@/components/admin/MultiLangVideoField';
+import UnifiedMediaUpload from '@/components/admin/UnifiedMediaUpload';
 // Force rebuild: 2026-01-26-v3
 
 interface Section {
@@ -1109,92 +1110,42 @@ export default function EditPagePage() {
             </p>
 
             {/* ═══════════════════════════════════════════════════════════
-                IMAGEM DE FUNDO DO HERO
+                UPLOAD UNIFICADO: IMAGEM + VÍDEO
+                Sistema simplificado - tudo em um lugar
             ═══════════════════════════════════════════════════════════ */}
-            <div style={{ marginBottom: 32, padding: 20, borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <h3 style={{ margin: '0 0 20px', fontSize: 16, fontWeight: 600, color: '#e8e6f2' }}>
-                🖼️ Imagem de Fundo do Hero
-              </h3>
-
-              {/* MediaUploadField - Upload + Biblioteca */}
-              <MediaUploadField
-                label="Imagem de Fundo"
-                value={formData.heroBackgroundImageId}
-                onChange={(mediaId) => setFormData({ ...formData, heroBackgroundImageId: mediaId })}
-                mediaType="image"
-                specs={{
-                  width: 1920,
-                  height: 1080,
-                  maxSizeMB: 5,
-                  description: 'Imagem de fundo do hero (recomendado: paisagem, alta resolução)'
-                }}
-                existingMedia={allMedia}
-              />
-
-              {/* URL Manual (fallback) */}
-              <div style={{ marginTop: 20 }}>
-                <label style={{ display: 'block', marginBottom: 8, fontSize: 13, fontWeight: 500, color: '#8f8ba2' }}>
-                  📍 OU usar URL externa (Unsplash, Cloudinary, etc)
-                </label>
-                <input
-                  type="url"
-                  value={formData.heroBackgroundImageUrl}
-                  onChange={(e) => setFormData({ ...formData, heroBackgroundImageUrl: e.target.value })}
-                  placeholder="https://images.unsplash.com/photo-..."
-                  style={inputStyle}
-                  disabled={!!formData.heroBackgroundImageId}
-                />
-                <div style={{ marginTop: 6, fontSize: 12, color: formData.heroBackgroundImageId ? '#8f8ba2' : '#7dd3fc' }}>
-                  {formData.heroBackgroundImageId 
-                    ? '🔒 Desabilitado (mídia selecionada acima tem prioridade)'
-                    : '🌐 Cole a URL da imagem externa (será usado apenas se nenhuma mídia for selecionada)'
-                  }
-                </div>
-              </div>
-            </div>
-
-            {/* ═══════════════════════════════════════════════════════════
-                VÍDEO DEMOREEL
-            ═══════════════════════════════════════════════════════════ */}
-            <div style={{ padding: 20, borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <h3 style={{ margin: '0 0 20px', fontSize: 16, fontWeight: 600, color: '#e8e6f2' }}>
-                🎥 Vídeo Demoreel Institucional
-              </h3>
-
-              {/* MediaUploadField - Upload + Biblioteca */}
-              <MediaUploadField
-                label="Vídeo Demoreel"
-                value={formData.demoreelVideoId}
-                onChange={(mediaId) => setFormData({ ...formData, demoreelVideoId: mediaId })}
-                mediaType="video"
-                specs={{
-                  maxSizeMB: 50,
-                  description: 'Vídeo institucional (MP4, WebM ou MOV)'
-                }}
-                existingMedia={allMedia}
-              />
-
-              {/* URL Manual (YouTube/Vimeo) */}
-              <div style={{ marginTop: 20 }}>
-                <label style={{ display: 'block', marginBottom: 8, fontSize: 13, fontWeight: 500, color: '#8f8ba2' }}>
-                  📍 OU usar URL externa (YouTube/Vimeo)
-                </label>
-                <input
-                  type="url"
-                  value={formData.demoreelVideoUrl}
-                  onChange={(e) => setFormData({ ...formData, demoreelVideoUrl: e.target.value })}
-                  placeholder="https://www.youtube.com/watch?v=... ou https://vimeo.com/..."
-                  style={inputStyle}
-                  disabled={!!formData.demoreelVideoId}
-                />
-                <div style={{ marginTop: 6, fontSize: 12, color: formData.demoreelVideoId ? '#8f8ba2' : '#7dd3fc' }}>
-                  {formData.demoreelVideoId 
-                    ? '🔒 Desabilitado (vídeo selecionado acima tem prioridade)'
-                    : '🌐 Cole a URL do YouTube ou Vimeo (será usado apenas se nenhum vídeo for selecionado)'
-                  }
-                </div>
-              </div>
-            </div>
+            <UnifiedMediaUpload
+              pageSlug={slug || 'page'}
+              sectionSlug="hero"
+              imageId={formData.heroBackgroundImageId}
+              imageUrl={formData.heroBackgroundImageUrl}
+              videoId={formData.demoreelVideoId}
+              videoUrl={formData.demoreelVideoUrl}
+              onImageChange={(mediaId, url) => setFormData({ 
+                ...formData, 
+                heroBackgroundImageId: mediaId || '',
+                heroBackgroundImageUrl: url || ''
+              })}
+              onVideoChange={(mediaId, url) => setFormData({ 
+                ...formData, 
+                demoreelVideoId: mediaId || '',
+                demoreelVideoUrl: url || ''
+              })}
+              allowVideo={true}
+              allowExternalUrl={true}
+              imageSpecs={{
+                width: 1920,
+                height: 1080,
+                maxSizeMB: 5,
+                description: 'Imagem de fundo do hero (recomendado: paisagem, alta resolução)'
+              }}
+              videoSpecs={{
+                maxSizeMB: 50,
+                description: 'Vídeo institucional (MP4, WebM ou MOV)'
+              }}
+              existingMedia={allMedia}
+              imageLabel="Imagem de Fundo do Hero"
+              videoLabel="Vídeo Demoreel Institucional"
+            />
 
             {/* Link rápido para Mídias */}
             <div style={{ marginTop: 24, padding: 12, borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>

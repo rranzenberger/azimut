@@ -4444,21 +4444,120 @@ video, iframe {
   display: inline !important;
 }
 
-/* Garantir que funciona mesmo dentro de elementos com text-slate-200 */
-.text-slate-200 .keyword-highlight,
-.text-slate-300 .keyword-highlight,
-.card-adaptive .keyword-highlight,
-p .keyword-highlight,
-[class*="text-slate"] .keyword-highlight {
-  color: #c92337 !important;
+/* 🔴 PRIMÁRIAS: Vermelho Azimut BOLD - destaque suave */
+.keyword-highlight-primary,
+span.keyword-highlight-primary {
+  color: #f08080 !important; /* Vermelho coral suave - menos intenso */
+  font-weight: 700 !important;
+  display: inline !important;
+  letter-spacing: 0.02em !important;
+  text-shadow: none !important; /* Sem text shadow para ficar mais suave */
+}
+
+/* 🟡 SECUNDÁRIAS: Amarelo/laranja bem claro BOLD - destaque elegante */
+.keyword-highlight-secondary,
+span.keyword-highlight-secondary {
+  color: #fce4d0 !important; /* Amarelo/laranja bem mais claro e suave */
   font-weight: 600 !important;
   display: inline !important;
 }
 
-/* Sobrescrever qualquer regra que possa estar interferindo */
-* .keyword-highlight {
-  color: #c92337 !important;
+/* Garantir que funciona mesmo dentro de elementos com text-slate-200 */
+.text-slate-200 .keyword-highlight-primary,
+.text-slate-300 .keyword-highlight-primary,
+.text-slate-200 .keyword-highlight-secondary,
+.text-slate-300 .keyword-highlight-secondary,
+.card-adaptive .keyword-highlight-primary,
+.card-adaptive .keyword-highlight-secondary,
+p .keyword-highlight-primary,
+p .keyword-highlight-secondary,
+[class*="text-slate"] .keyword-highlight-primary,
+[class*="text-slate"] .keyword-highlight-secondary,
+[class*="text-on-dark"] .keyword-highlight-primary,
+[class*="text-on-dark"] .keyword-highlight-secondary {
+  color: inherit !important;
+  font-weight: inherit !important;
+  display: inline !important;
+}
+
+/* Forçar cores mesmo dentro de cards com texto branco/cinza */
+.card-adaptive .keyword-highlight-primary,
+.card-adaptive p .keyword-highlight-primary,
+.card-adaptive span .keyword-highlight-primary,
+.card-adaptive .keyword-highlight-primary * {
+  color: #f08080 !important; /* Vermelho coral suave */
+  font-weight: 700 !important;
+}
+
+.card-adaptive .keyword-highlight-secondary,
+.card-adaptive p .keyword-highlight-secondary,
+.card-adaptive span .keyword-highlight-secondary,
+.card-adaptive .keyword-highlight-secondary * {
+  color: #fce4d0 !important; /* Amarelo/laranja bem mais claro e suave */
   font-weight: 600 !important;
+}
+
+/* Sobrescrever cores de texto do parágrafo para os destaques */
+.text-[#9a9590] .keyword-highlight-primary,
+.text-on-dark-secondary .keyword-highlight-primary,
+[class*="text-on-dark"] .keyword-highlight-primary {
+  color: #f08080 !important; /* Vermelho coral suave */
+  font-weight: 700 !important;
+}
+
+.text-[#9a9590] .keyword-highlight-secondary,
+.text-on-dark-secondary .keyword-highlight-secondary,
+[class*="text-on-dark"] .keyword-highlight-secondary {
+  color: #fce4d0 !important; /* Amarelo/laranja bem mais claro e suave */
+  font-weight: 600 !important;
+}
+
+/* Sobrescrever qualquer regra que possa estar interferindo - PRIORIDADE MÁXIMA */
+* .keyword-highlight-primary,
+.keyword-highlight-primary,
+span.keyword-highlight-primary {
+  color: #f08080 !important; /* Vermelho coral suave */
+  font-weight: 700 !important;
+}
+
+* .keyword-highlight-secondary,
+.keyword-highlight-secondary,
+span.keyword-highlight-secondary {
+  color: #fce4d0 !important; /* Amarelo/laranja bem mais claro e suave */
+  font-weight: 600 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VIEW DETAILS CTA - SOLUTIONS PAGE
+   Vermelho mais forte sempre visível
+   ═══════════════════════════════════════════════════════════════ */
+.view-details-cta {
+  color: #e63946 !important; /* Vermelho mais forte - sempre visível */
+  font-weight: 700 !important;
+}
+
+/* Garantir que funciona mesmo dentro de cards */
+.card-adaptive .view-details-cta,
+.card-adaptive span .view-details-cta,
+[class*="text-on-dark"] .view-details-cta {
+  color: #e63946 !important; /* Vermelho mais forte */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SETA CTA - SOLUTIONS PAGE
+   Seta branca que muda para vermelho no hover
+   Cápsula com borda vermelha mais forte
+   ═══════════════════════════════════════════════════════════════ */
+.arrow-cta {
+  color: #ffffff !important; /* Seta branca quando não selecionada */
+  transition: color 0.3s ease, border-color 0.3s ease !important;
+  border-width: 2px !important;
+  border-color: rgba(230, 57, 70, 0.5) !important; /* Borda vermelha mais forte */
+}
+
+.group:hover .arrow-cta {
+  color: #e63946 !important; /* Vermelho mais forte no hover, igual ao "VIEW DETAILS" */
+  border-color: rgba(230, 57, 70, 0.8) !important; /* Borda vermelha ainda mais forte no hover */
 }
 
 /* ═══════════════════════════════════════════════════════════════

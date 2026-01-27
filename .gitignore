@@ -76,3 +76,14 @@ azimut-backups/
 
 
 
+
+# Arquivos com secrets
+ADICIONAR_CLAUDE_KEY.md
+VARIAVEIS_COPIAR_COLAR.md
+docs/sql/VERIFICAR_VARIAVEIS.md
+VARIAVEIS_COPIAR_COLAR_FINAL.md
+docs/deploy/DEPLOY_DIRETO_API_KEYS_DEPOIS.md
+docs/deploy/DEPLOY_RAILWAY_PASSO_A_PASSO.md
+docs/deploy/
+*.md
+!README.md

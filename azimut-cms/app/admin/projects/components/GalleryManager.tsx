@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface Media {
   id: string;
@@ -32,9 +32,16 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
   const [availableMedia, setAvailableMedia] = useState<Media[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadingMedia, setLoadingMedia] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [showMediaSelector, setShowMediaSelector] = useState(false);
+  const [showUploader, setShowUploader] = useState(false);
   const [selectedMediaId, setSelectedMediaId] = useState<string>('');
+  const [urlInput, setUrlInput] = useState('');
+  const [urlType, setUrlType] = useState<'IMAGE' | 'VIDEO'>('IMAGE');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Carregar mídias disponíveis
   useEffect(() => {
@@ -57,6 +64,127 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
     }
     fetchMedia();
   }, [gallery]);
+
+  // Upload de arquivo
+  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setUploading(true);
+    setError(null);
+    setSuccess(null);
+    setUploadProgress(0);
+
+    const file = files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res = await fetch('/api/admin/media/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || 'Erro ao enviar arquivo');
+        setUploading(false);
+        return;
+      }
+
+      // Adicionar à galeria automaticamente
+      const addRes = await fetch(`/api/admin/projects/${projectId}/gallery`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mediaId: data.media.id }),
+      });
+
+      if (addRes.ok) {
+        // Atualizar galeria
+        const updatedRes = await fetch(`/api/admin/projects/${projectId}`);
+        if (updatedRes.ok) {
+          const updatedData = await updatedRes.json();
+          if (updatedData.project?.gallery) {
+            setGallery(updatedData.project.gallery);
+          }
+        }
+        setSuccess('Mídia enviada e adicionada à galeria!');
+      } else {
+        setError('Mídia enviada, mas erro ao adicionar à galeria');
+      }
+
+      setShowUploader(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    } catch (err) {
+      setError('Erro de rede ao enviar arquivo');
+    } finally {
+      setUploading(false);
+      setUploadProgress(0);
+    }
+  }
+
+  // Adicionar mídia por URL
+  async function handleAddByUrl() {
+    if (!urlInput.trim()) {
+      setError('Digite uma URL válida');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      // Criar mídia via URL
+      const createRes = await fetch('/api/admin/media', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: urlType,
+          originalUrl: urlInput.trim(),
+          altPt: `Mídia do projeto`,
+        }),
+      });
+
+      const createData = await createRes.json();
+
+      if (!createRes.ok) {
+        setError(createData.error || 'Erro ao criar mídia');
+        setLoading(false);
+        return;
+      }
+
+      // Adicionar à galeria
+      const addRes = await fetch(`/api/admin/projects/${projectId}/gallery`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mediaId: createData.media.id }),
+      });
+
+      if (addRes.ok) {
+        // Atualizar galeria
+        const updatedRes = await fetch(`/api/admin/projects/${projectId}`);
+        if (updatedRes.ok) {
+          const updatedData = await updatedRes.json();
+          if (updatedData.project?.gallery) {
+            setGallery(updatedData.project.gallery);
+          }
+        }
+        setSuccess('Mídia adicionada à galeria!');
+        setUrlInput('');
+        setShowUploader(false);
+      } else {
+        setError('Mídia criada, mas erro ao adicionar à galeria');
+      }
+    } catch (err) {
+      setError('Erro de rede');
+    } finally {
+      setLoading(false);
+    }
+  }
 
   // Adicionar mídia à galeria
   async function handleAddMedia() {
@@ -198,26 +326,46 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
 
   return (
     <div style={{ marginTop: 24 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 8 }}>
         <h3 style={{ margin: 0, fontSize: 18, fontWeight: 600 }}>Galeria de Mídias</h3>
-        <button
-          type="button"
-          onClick={() => setShowMediaSelector(!showMediaSelector)}
-          disabled={loading}
-          style={{
-            padding: '8px 16px',
-            borderRadius: 8,
-            border: '1px solid rgba(201,35,55,0.3)',
-            background: 'rgba(201,35,55,0.1)',
-            color: '#fca5a5',
-            fontSize: 13,
-            fontWeight: 600,
-            cursor: loading ? 'not-allowed' : 'pointer',
-            opacity: loading ? 0.6 : 1,
-          }}
-        >
-          {showMediaSelector ? 'Cancelar' : '+ Adicionar Mídia'}
-        </button>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          <button
+            type="button"
+            onClick={() => { setShowUploader(!showUploader); setShowMediaSelector(false); }}
+            disabled={loading || uploading}
+            style={{
+              padding: '8px 16px',
+              borderRadius: 8,
+              border: '1px solid rgba(46,204,113,0.3)',
+              background: showUploader ? 'rgba(46,204,113,0.2)' : 'rgba(46,204,113,0.1)',
+              color: '#6ee7b7',
+              fontSize: 13,
+              fontWeight: 600,
+              cursor: loading || uploading ? 'not-allowed' : 'pointer',
+              opacity: loading || uploading ? 0.6 : 1,
+            }}
+          >
+            📤 {showUploader ? 'Cancelar' : 'Enviar Novo'}
+          </button>
+          <button
+            type="button"
+            onClick={() => { setShowMediaSelector(!showMediaSelector); setShowUploader(false); }}
+            disabled={loading || uploading}
+            style={{
+              padding: '8px 16px',
+              borderRadius: 8,
+              border: '1px solid rgba(201,35,55,0.3)',
+              background: showMediaSelector ? 'rgba(201,35,55,0.2)' : 'rgba(201,35,55,0.1)',
+              color: '#fca5a5',
+              fontSize: 13,
+              fontWeight: 600,
+              cursor: loading || uploading ? 'not-allowed' : 'pointer',
+              opacity: loading || uploading ? 0.6 : 1,
+            }}
+          >
+            📂 {showMediaSelector ? 'Cancelar' : 'Escolher Existente'}
+          </button>
+        </div>
       </div>
 
       {error && (
@@ -236,7 +384,147 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
         </div>
       )}
 
-      {/* Seletor de mídia */}
+      {success && (
+        <div
+          style={{
+            padding: '10px 12px',
+            borderRadius: 8,
+            background: 'rgba(46,204,113,0.12)',
+            border: '1px solid rgba(46,204,113,0.35)',
+            color: '#6ee7b7',
+            marginBottom: 16,
+            fontSize: 13,
+          }}
+        >
+          ✓ {success}
+        </div>
+      )}
+
+      {/* Upload de mídia */}
+      {showUploader && (
+        <div
+          style={{
+            padding: 20,
+            borderRadius: 12,
+            border: '2px dashed rgba(46,204,113,0.4)',
+            background: 'rgba(46,204,113,0.05)',
+            marginBottom: 16,
+          }}
+        >
+          <h4 style={{ margin: '0 0 16px 0', fontSize: 15, fontWeight: 600, color: '#6ee7b7' }}>
+            📤 Enviar Nova Mídia
+          </h4>
+
+          {/* Upload de arquivo */}
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ fontSize: 14, fontWeight: 600, marginBottom: 8, display: 'block' }}>
+              1. Upload de Arquivo (Imagem ou Vídeo):
+            </label>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*,video/*"
+              onChange={handleFileUpload}
+              disabled={uploading}
+              style={{
+                width: '100%',
+                padding: '12px',
+                borderRadius: 8,
+                border: '1px solid rgba(255,255,255,0.12)',
+                background: 'rgba(255,255,255,0.04)',
+                color: '#fff',
+                fontSize: 14,
+                cursor: uploading ? 'not-allowed' : 'pointer',
+              }}
+            />
+            {uploading && (
+              <div style={{ marginTop: 8 }}>
+                <div style={{ height: 4, background: 'rgba(255,255,255,0.1)', borderRadius: 2, overflow: 'hidden' }}>
+                  <div
+                    style={{
+                      height: '100%',
+                      width: `${uploadProgress}%`,
+                      background: '#6ee7b7',
+                      transition: 'width 0.3s',
+                    }}
+                  />
+                </div>
+                <p style={{ margin: '4px 0 0', fontSize: 12, color: '#8f8ba2' }}>Enviando...</p>
+              </div>
+            )}
+          </div>
+
+          {/* OU separador */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+            <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.1)' }} />
+            <span style={{ fontSize: 12, color: '#8f8ba2' }}>OU</span>
+            <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.1)' }} />
+          </div>
+
+          {/* Adicionar por URL */}
+          <div>
+            <label style={{ fontSize: 14, fontWeight: 600, marginBottom: 8, display: 'block' }}>
+              2. Adicionar por URL (YouTube, Vimeo, Unsplash, etc):
+            </label>
+            <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+              <select
+                value={urlType}
+                onChange={(e) => setUrlType(e.target.value as 'IMAGE' | 'VIDEO')}
+                style={{
+                  padding: '10px 12px',
+                  borderRadius: 8,
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  background: 'rgba(255,255,255,0.04)',
+                  color: '#fff',
+                  fontSize: 14,
+                }}
+              >
+                <option value="IMAGE">🖼️ Imagem</option>
+                <option value="VIDEO">🎬 Vídeo</option>
+              </select>
+              <input
+                type="url"
+                value={urlInput}
+                onChange={(e) => setUrlInput(e.target.value)}
+                placeholder="https://..."
+                disabled={loading}
+                style={{
+                  flex: 1,
+                  padding: '10px 12px',
+                  borderRadius: 8,
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  background: 'rgba(255,255,255,0.04)',
+                  color: '#fff',
+                  fontSize: 14,
+                }}
+              />
+              <button
+                type="button"
+                onClick={handleAddByUrl}
+                disabled={loading || !urlInput.trim()}
+                style={{
+                  padding: '10px 16px',
+                  borderRadius: 8,
+                  border: 'none',
+                  background: loading || !urlInput.trim() ? '#666' : '#6ee7b7',
+                  color: loading || !urlInput.trim() ? '#999' : '#000',
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: loading || !urlInput.trim() ? 'not-allowed' : 'pointer',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                Adicionar
+              </button>
+            </div>
+            <p style={{ margin: 0, fontSize: 12, color: '#8f8ba2' }}>
+              💡 Cole URLs de imagens do Unsplash, Pexels, ou vídeos do YouTube/Vimeo.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Seletor de mídia existente */}
       {showMediaSelector && (
         <div
           style={{

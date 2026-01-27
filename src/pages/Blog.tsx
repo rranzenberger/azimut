@@ -141,6 +141,10 @@ export default function Blog({ lang }: BlogProps) {
       setOffset(currentOffset + (data.posts?.length || 0));
     } catch (error) {
       console.error('Error fetching posts:', error);
+      // Se houver erro, mostrar mensagem amigável
+      if (currentOffset === 0) {
+        setPosts([]);
+      }
     } finally {
       setLoading(false);
     }

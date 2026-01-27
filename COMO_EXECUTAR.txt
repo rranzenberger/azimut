@@ -1,0 +1,45 @@
+═══════════════════════════════════════════════════════════
+COMO EXECUTAR OS SCRIPTS - GUIA RAPIDO
+═══════════════════════════════════════════════════════════
+
+OPCAO 1: CLICAR DUAS VEZES (MAIS FACIL)
+─────────────────────────────────────────
+1. Abra o Explorador do Windows
+2. Vá até: C:\Users\ranz\Documents\azimut-site-vite-tailwind
+3. Clique DUAS VEZES no arquivo: COMMIT_MENU.bat
+4. Pronto! O script vai executar automaticamente
+
+OPCAO 2: NO POWERSHELL (COM .\ NA FRENTE)
+─────────────────────────────────────────
+1. Abra PowerShell
+2. Digite:
+   cd "C:\Users\ranz\Documents\azimut-site-vite-tailwind"
+   
+3. Execute o .bat:
+   .\COMMIT_MENU.bat
+   
+   OU execute o .ps1:
+   .\COMMIT_MENU.ps1
+
+OPCAO 3: COMANDOS MANUAIS (SE NADA FUNCIONAR)
+─────────────────────────────────────────
+No PowerShell, execute um por um:
+
+Remove-Item .git/index.lock -Force -ErrorAction SilentlyContinue
+
+git add src/pages/AcademyNew.tsx
+git add src/components/AcademySubNav.tsx
+git add src/pages/Studio.tsx
+git add src/pages/WhatWeDo.tsx
+git add src/pages/Work.tsx
+
+git commit -m "fix: Remove tarja vermelha submenu + centraliza menus secundarios"
+
+git push origin main
+
+═══════════════════════════════════════════════════════════
+IMPORTANTE:
+- Se der erro de lock, FECHE O CURSOR primeiro
+- No PowerShell, SEMPRE use .\ antes do nome do script
+- O arquivo .bat funciona melhor no Windows
+═══════════════════════════════════════════════════════════

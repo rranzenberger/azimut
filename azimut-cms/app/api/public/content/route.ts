@@ -260,6 +260,7 @@ export async function GET(request: NextRequest) {
 // Helper para formatar projeto
 function formatProject(project: any, lang: string) {
   return {
+    id: project.id,
     slug: project.slug,
     title: project.title,
     shortTitle: project.shortTitle,
@@ -293,6 +294,10 @@ function formatProject(project: any, lang: string) {
            : project.heroImage.altEn,
       format: project.heroImage.format, // 'YOUTUBE', 'VIMEO', etc
     } : null,
+    // 🆕 Thumbnail alternativo (quando não há heroImage)
+    thumbnailUrl: project.thumbnailUrl || null,
+    // 🆕 Se projeto tem subpágina própria
+    hasDetailPage: project.hasDetailPage || false,
     cta: {
       label: lang === 'pt' ? project.ctaLabelPt : project.ctaLabelEn,
       url: project.ctaUrl,

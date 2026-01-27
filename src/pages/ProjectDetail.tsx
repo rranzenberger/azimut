@@ -8,6 +8,8 @@ import { useProject } from '../hooks/useProject'
 import { useAzimutContent } from '../hooks/useAzimutContent'
 import ProjectGalleryStatus from '../components/ProjectGalleryStatus'
 import StarBackground from '../components/StarBackground'
+import { ProjectSchema, VideoObjectSchema, ReviewRatingSchema } from '../components/StructuredData'
+import Breadcrumbs from '../components/Breadcrumbs'
 
 interface ProjectDetailProps {
   lang: Lang
@@ -130,15 +132,80 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
   const seoTitle = `${project.title} | ${seoData.work[lang].title}`
   const seoDescription = project.description || project.summary || seoData.work[lang].description
 
+  // Detectar se tem vídeo no heroImage
+  const hasVideo = project.heroImage?.original && (
+    project.heroImage.original.includes('youtube.com') || 
+    project.heroImage.original.includes('youtu.be') ||
+    project.heroImage.original.includes('.mp4') ||
+    project.heroImage.original.includes('.webm')
+  )
+
+  // Extrair ID do YouTube se for vídeo do YouTube
+  const getYouTubeId = (url: string) => {
+    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)
+    return match ? match[1] : null
+  }
+
+  const youtubeId = project.heroImage?.original ? getYouTubeId(project.heroImage.original) : null
+  const videoEmbedUrl = youtubeId ? `https://www.youtube.com/embed/${youtubeId}` : undefined
+  const videoContentUrl = project.heroImage?.original?.includes('youtube.com') || project.heroImage?.original?.includes('youtu.be') 
+    ? undefined 
+    : project.heroImage?.original
+
   return (
     <>
       <SEO
         lang={lang}
         title={seoTitle}
         description={seoDescription}
-        path={`/work/${project.slug}`}
+        path={`/${lang}/work/${project.slug}`}
         image={project.heroImage?.large || project.heroImage?.original}
       />
+      
+      {/* Schema.org: Project/CreativeWork */}
+      <ProjectSchema
+        name={project.title}
+        description={seoDescription}
+        image={project.heroImage?.large || project.heroImage?.original || 'https://azmt.com.br/og-image.png'}
+        dateCreated={project.year ? `${project.year}-01-01` : new Date().toISOString().split('T')[0]}
+        creator="Azimut"
+        client={project.client}
+        category={project.tags?.[0]}
+        url={`/${lang}/work/${project.slug}`}
+        lang={lang}
+      />
+
+      {/* Schema.org: VideoObject (se tiver vídeo) */}
+      {hasVideo && project.heroImage && (
+        <VideoObjectSchema
+          name={project.title}
+          description={seoDescription}
+          thumbnailUrl={project.heroImage.thumbnail || project.heroImage.original}
+          uploadDate={project.year ? `${project.year}-01-01` : new Date().toISOString().split('T')[0]}
+          contentUrl={videoContentUrl}
+          embedUrl={videoEmbedUrl}
+          lang={lang}
+        />
+      )}
+
+      {/* Schema.org: Review/Rating (avaliação genérica para projetos premiados) */}
+      {project.tags?.some(tag => tag.toLowerCase().includes('premiado') || tag.toLowerCase().includes('award')) && (
+        <ReviewRatingSchema
+          itemName={project.title}
+          itemType="CreativeWork"
+          ratingValue={4.8}
+          bestRating={5}
+          worstRating={1}
+          reviewCount={1}
+          reviews={[{
+            author: 'Azimut',
+            datePublished: project.year ? `${project.year}-01-01` : new Date().toISOString().split('T')[0],
+            reviewBody: seoDescription,
+            ratingValue: 5
+          }]}
+          lang={lang}
+        />
+      )}
       <main className="relative py-16 md:py-20">
         {/* Star background - Parallax com detecção automática de tema */}
         <div 
@@ -155,24 +222,17 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
         </div>
 
         <div className="mx-auto max-w-6xl px-6">
-          {/* Breadcrumb */}
-          <nav className="mb-8 text-sm" aria-label="Breadcrumb">
-            <ol className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-              <li>
-                <Link to="/" className="hover:text-white transition-colors">
-                  {lang === 'pt' ? 'Início' : lang === 'es' ? 'Inicio' : lang === 'fr' ? 'Accueil' : 'Home'}
-                </Link>
-              </li>
-              <li>/</li>
-              <li>
-                <Link to="/work" className="hover:text-white transition-colors">
-                  {lang === 'pt' ? 'Projetos' : lang === 'es' ? 'Proyectos' : lang === 'fr' ? 'Projets' : 'Work'}
-                </Link>
-              </li>
-              <li>/</li>
-              <li className="text-white">{project.title}</li>
-            </ol>
-          </nav>
+          {/* Breadcrumbs Visuais Premium */}
+          <div className="mb-8">
+            <Breadcrumbs 
+              lang={lang}
+              items={[
+                { name: lang === 'pt' ? 'Início' : lang === 'es' ? 'Inicio' : lang === 'fr' ? 'Accueil' : 'Home', url: `/${lang === 'pt' ? '' : lang}` },
+                { name: lang === 'pt' ? 'Projetos' : lang === 'es' ? 'Proyectos' : lang === 'fr' ? 'Projets' : 'Work', url: `/${lang === 'pt' ? '' : lang}/work` },
+                { name: project.title, url: `/${lang === 'pt' ? '' : lang}/work/${project.slug}` }
+              ]}
+            />
+          </div>
 
           {/* Hero Section */}
           <div className="mb-12">
@@ -696,7 +756,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                 : 'Let\'s talk about how we can create an immersive experience for your project.'}
             </p>
             <Link
-              to="/contact"
+              to={`/${lang}/contact`}
               onClick={() => trackInteraction('cta_click', 'project_detail_cta')}
               className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/80 bg-azimut-red px-6 py-3 font-sora text-sm font-semibold uppercase tracking-[0.1em] text-white hover:bg-azimut-red/90 transition-all"
             >

@@ -10,6 +10,12 @@ import InternalNavigation from '../components/InternalNavigation'
 // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
 import { useAzimutContent } from '../hooks/useAzimutContent'
 import { usePersonalizedContent } from '../hooks/usePersonalizedContent'
+// 🆕 FASE 2: Site Inteligente - Detecção de Intenção
+import { useIntentionDetection } from '../hooks/useIntentionDetection'
+import { useBehaviorTracking } from '../hooks/useBehaviorTracking'
+import DynamicSuggestionBanner from '../components/DynamicSuggestionBanner'
+import IntentionDebugPanel from '../components/IntentionDebugPanel'
+import BannerTest from '../components/BannerTest'
 import OportunidadesAtivas from '../components/OportunidadesAtivas'
 import CredibilidadeEditais from '../components/CredibilidadeEditais'
 import CuradoriaFestivais from '../components/CuradoriaFestivais'
@@ -19,6 +25,8 @@ import { useTheme } from '../contexts/ThemeContext'
 import { MAIN_CATEGORIES, SECONDARY_FILTERS, getCategoryFilters, getCategoryLabel } from '../utils/categoryMapping'
 import { PageFooterNavigation } from '../components/PageFooterNavigation'
 import LangLink from '../components/LangLink'
+import LoadingSkeleton from '../components/LoadingSkeleton'
+import { useLoadingSkeleton } from '../hooks/useLoadingSkeleton'
 
 interface WorkProps {
   lang: Lang
@@ -41,7 +49,10 @@ interface WorkProject {
     thumbnail?: string
     medium?: string
     large?: string
+    alt?: string
   } | null
+  thumbnailUrl?: string  // URL alternativa para thumbnail (fallback quando heroImage não existe)
+  hasDetailPage?: boolean // Se true, mostra link para página de detalhes
   // ═══════════════════════════════════════════════════════════════
   // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
   // ═══════════════════════════════════════════════════════════════
@@ -71,6 +82,32 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   
   // Animação automática de seções
   useScrollAnimation()
+  
+  // 🆕 FASE 2: Site Inteligente - Detecção de Intenção
+  const { intention, loading: intentionLoading } = useIntentionDetection(lang)
+  const { trackCategoryClick, trackProjectView } = useBehaviorTracking()
+  
+  // Auto-aplicar filtro baseado em intenção detectada (apenas uma vez)
+  useEffect(() => {
+    if (intention?.recommendedCategory && !selectedCategory.length && !selectedType) {
+      // Mapear categoria recomendada para filtros
+      const categoryMap: Record<string, { category?: string[], type?: string }> = {
+        'museus': { category: ['museum', 'museus', 'exposição'] },
+        'vr': { category: ['vr-360', 'vr', 'ar', 'xr'] },
+        'cinema': { category: ['video', 'cinema', 'audiovisual'] }
+      }
+      
+      const mapping = categoryMap[intention.recommendedCategory]
+      if (mapping) {
+        if (mapping.category) {
+          setSelectedCategory(mapping.category)
+        }
+        if (mapping.type) {
+          setSelectedType(mapping.type)
+        }
+      }
+    }
+  }, [intention?.recommendedCategory]) // Apenas quando intenção mudar
   
   // ═══════════════════════════════════════════════════════════════
   // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
@@ -329,6 +366,17 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     setSearchQuery('')
   }
   
+  // Helper: Obter URL da imagem (prioriza heroImage, depois thumbnailUrl)
+  const getProjectImageUrl = (project: WorkProject, size: 'large' | 'medium' | 'thumbnail' = 'large'): string | null => {
+    if (project.heroImage) {
+      return project.heroImage[size] || project.heroImage.large || project.heroImage.medium || project.heroImage.original || null
+    }
+    if (project.thumbnailUrl) {
+      return project.thumbnailUrl
+    }
+    return null
+  }
+  
   const hasActiveFilters = 
     selectedCategory.length > 0 ||
     selectedWorkType.length > 0 ||
@@ -366,6 +414,21 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         url={seo.url}
         type="website"
       />
+      
+      {/* 🧪 TESTE: Banner de Teste (sempre visível) - REMOVER EM PRODUÇÃO */}
+      <BannerTest />
+      
+      {/* 🆕 FASE 2: Banner de Sugestão Dinâmica */}
+      <DynamicSuggestionBanner 
+        lang={lang} 
+        theme={theme}
+        minConfidence={0.3}
+        autoHideDelay={20000}
+      />
+      
+      {/* 🐛 DEBUG: Painel de Debug (remover em produção) */}
+      <IntentionDebugPanel />
+      
       <main className="relative pb-24 film-grain">
         {/* Star background - FIXA (FUNDO - atrás de tudo) */}
         {/* Posição: header + submenu + folga visual = 160px */}
@@ -408,10 +471,19 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 const isActive = filters.projectCategory?.some(cat => selectedCategory.includes(cat)) || 
                                 (filters.type && selectedType === filters.type)
                 
+                // 🆕 Destacar categoria baseada em intenção detectada
+                const isRecommended = intention?.recommendedCategory && 
+                  (category.id === 'museums-exhibitions' && intention.recommendedCategory === 'museus' ||
+                   category.id === 'vr-xr' && intention.recommendedCategory === 'vr' ||
+                   category.id === 'video-cinema' && intention.recommendedCategory === 'cinema')
+                
                 return (
                   <button
                     key={category.id}
                     onClick={() => {
+                      // Tracking de categoria clicada
+                      trackCategoryClick(category.id, 'menu')
+                      
                       // Limpar outros filtros primeiro
                       clearFilters()
                       
@@ -426,12 +498,26 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                         navigate(`/${lang}/work`)
                       }
                     }}
-                    className={`flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide transition-colors ${
+                    className={`flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide transition-all duration-200 ${
                       isActive
-                        ? 'text-azimut-red border-b-2 border-azimut-red'
-                        : 'text-slate-400 hover:text-azimut-red'
+                        ? 'text-azimut-red border-b-2 border-azimut-red scale-105'
+                        : isRecommended
+                        ? 'text-azimut-red/80 hover:text-azimut-red hover:scale-105 relative'
+                        : 'text-slate-400 hover:text-azimut-red hover:scale-105'
                     }`}
+                    style={{
+                      transform: isRecommended ? 'scale(1.05)' : undefined
+                    }}
                   >
+                    {isRecommended && (
+                      <span 
+                        className="absolute -top-1 -right-1 text-[0.6rem] animate-pulse"
+                        style={{ color: '#c92337' }}
+                        title={lang === 'pt' ? 'Recomendado para você' : lang === 'es' ? 'Recomendado para ti' : lang === 'fr' ? 'Recommandé pour vous' : 'Recommended for you'}
+                      >
+                        ⭐
+                      </span>
+                    )}
                     <span>{category.icon}</span>
                     <span>{category.label[lang]}</span>
                   </button>
@@ -706,21 +792,30 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 className={`mb-8 overflow-hidden rounded-3xl border card-adaptive shadow-[0_32px_80px_rgba(0,0,0,0.6)] cursor-pointer ${
                   theme === 'dark' ? 'border-white/10' : 'border-slate-300/30'
                 }`}
-                onClick={() => {
-                  trackInteraction('project_view', cases[0].slug)
-                  trackProjectInteraction(cases[0].slug, 'CLICK')
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  
+                  try {
+                    trackInteraction('project_view', cases[0].slug)
+                    trackProjectInteraction(cases[0].slug, 'CLICK')
+                  } catch (err) {
+                    console.warn('Tracking error:', err)
+                  }
+                  
+                  // Navegação
                   navigate(`/${lang}/work/${cases[0].slug}`)
                 }}
               >
               <div className="grid md:grid-cols-2">
-                {/* Image Area - BACKOFFICE: cases[0].heroImage */}
+                {/* Image Area - BACKOFFICE: cases[0].heroImage ou thumbnailUrl */}
                 <div className="relative aspect-video md:aspect-auto md:min-h-[400px] bg-gradient-to-br from-slate-800/80 to-slate-950 overflow-hidden group">
-                  {/* Renderizar imagem se disponível */}
-                  {cases[0].heroImage?.large ? (
+                  {/* Renderizar imagem se disponível (heroImage ou thumbnailUrl) */}
+                  {getProjectImageUrl(cases[0], 'large') ? (
                     <>
                       <img
-                        src={cases[0].heroImage.large}
-                        alt={cases[0].heroImage.alt || cases[0].title}
+                        src={getProjectImageUrl(cases[0], 'large')!}
+                        alt={cases[0].heroImage?.alt || cases[0].title}
                         loading="lazy"
                         className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105"
                       />
@@ -792,7 +887,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   )}
                   {/* CTA */}
                   <Link
-                    to={`/work/${cases[0].slug}`}
+                    to={`/${lang}/work/${cases[0].slug}`}
                     onClick={(e) => {
                       e.stopPropagation()
                       trackInteraction('project_view', cases[0].slug)
@@ -847,21 +942,34 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 style={{
                   animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
                 }}
-                onClick={() => {
-                  trackInteraction('project_view', item.slug)
-                  trackProjectInteraction(item.slug, 'CLICK')
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  
+                  // Tracking existente
+                  try {
+                    trackInteraction('project_view', item.slug)
+                    trackProjectInteraction(item.slug, 'CLICK')
+                    
+                    // 🆕 FASE 2: Tracking comportamental avançado
+                    trackProjectView(item.id || item.slug, item.slug)
+                  } catch (err) {
+                    console.warn('Tracking error:', err)
+                  }
+                  
+                  // Navegação
                   navigate(`/${lang}/work/${item.slug}`)
                 }}
                 onMouseEnter={() => trackProjectInteraction(item.slug, 'HOVER')}
               >
-                {/* Image - BACKOFFICE: item.heroImage */}
+                {/* Image - BACKOFFICE: item.heroImage ou thumbnailUrl */}
                 <div className="relative aspect-video bg-gradient-to-br from-slate-800/80 to-slate-950 overflow-hidden">
-                  {/* Renderizar imagem se disponível */}
-                  {item.heroImage?.medium || item.heroImage?.large ? (
+                  {/* Renderizar imagem se disponível (heroImage ou thumbnailUrl) */}
+                  {getProjectImageUrl(item, 'medium') ? (
                     <>
                       <OptimizedImage
-                        src={item.heroImage.large || item.heroImage.medium}
-                        alt={item.heroImage.alt || item.title}
+                        src={getProjectImageUrl(item, 'medium')!}
+                        alt={item.heroImage?.alt || item.title}
                         className="absolute inset-0 h-full w-full transition-transform duration-500 group-hover:scale-110"
                         objectFit="cover"
                       />
@@ -934,7 +1042,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   </div>
                   {/* CTA */}
                   <Link
-                    to={`/work/${item.slug}`}
+                    to={`/${lang}/work/${item.slug}`}
                     onClick={(e) => {
                       e.stopPropagation()
                       trackInteraction('project_view', item.slug)
@@ -1003,13 +1111,15 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         <PageFooterNavigation
           lang={lang}
           mainCta={{
-            title: lang === 'pt' 
-              ? 'Queremos Revisar Seu Projeto/Edital'
-              : lang === 'es'
-              ? 'Queremos Revisar Tu Proyecto/Edital'
-              : lang === 'fr'
-              ? 'Nous Voulons Examiner Votre Projet/Financement'
-              : 'We Want to Review Your Project/Grant',
+            title: intention?.personalizedCTA && intention.confidence > 0.7
+              ? intention.personalizedCTA
+              : (lang === 'pt' 
+                ? 'Queremos Revisar Seu Projeto/Edital'
+                : lang === 'es'
+                ? 'Queremos Revisar Tu Proyecto/Edital'
+                : lang === 'fr'
+                ? 'Nous Voulons Examiner Votre Projet/Financement'
+                : 'We Want to Review Your Project/Grant'),
             description: lang === 'pt' 
               ? 'Tem um projeto em mente? Vamos conversar sobre como podemos trabalhar juntos.'
               : lang === 'es'
@@ -1017,8 +1127,14 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               : lang === 'fr'
               ? 'Vous avez un projet en tête? Parlons de la façon dont nous pouvons travailler ensemble.'
               : 'Have a project in mind? Let\'s talk about how we can work together.',
-            buttonText: lang === 'pt' ? 'Iniciar Conversa' : lang === 'es' ? 'Iniciar Conversación' : lang === 'fr' ? 'Démarrer la Conversation' : 'Start Conversation',
-            buttonHref: '/contact'
+            buttonText: intention?.personalizedCTA && intention.confidence > 0.7
+              ? intention.personalizedCTA
+              : (lang === 'pt' ? 'Iniciar Conversa' : lang === 'es' ? 'Iniciar Conversación' : lang === 'fr' ? 'Démarrer la Conversation' : 'Start Conversation'),
+            buttonHref: intention?.suggestedAction === 'contact-form'
+              ? '/contact'
+              : intention?.suggestedAction
+              ? `/${intention.suggestedAction}`
+              : '/contact'
           }}
           navigation={{
             previous: {

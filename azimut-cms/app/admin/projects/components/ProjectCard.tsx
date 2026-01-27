@@ -21,6 +21,17 @@ export function ProjectCard({ project }: { project: any }) {
     ARCHIVED: 'Arquivado',
   };
 
+  // Determinar URL da imagem (heroImage > thumbnailUrl > placeholder)
+  const getImageUrl = () => {
+    if (project.heroImage?.originalUrl) return project.heroImage.originalUrl;
+    if (project.heroImage?.mediumUrl) return project.heroImage.mediumUrl;
+    if (project.heroImage?.thumbnailUrl) return project.heroImage.thumbnailUrl;
+    if (project.thumbnailUrl) return project.thumbnailUrl;
+    return null;
+  };
+
+  const imageUrl = getImageUrl();
+
   return (
     <Link
       href={`/admin/projects/${project.id}`}
@@ -47,18 +58,48 @@ export function ProjectCard({ project }: { project: any }) {
       }}
     >
       <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto', gap: 20, alignItems: 'start', width: '100%', boxSizing: 'border-box' }}>
-        {project.heroImage?.originalUrl && (
-          <img
-            src={project.heroImage.originalUrl}
-            alt={project.title}
-            style={{
-              width: 140,
-              height: 100,
-              objectFit: 'cover',
-              borderRadius: 12,
-            }}
-          />
-        )}
+        {/* Imagem do projeto - mostra heroImage, thumbnailUrl ou placeholder */}
+        <div
+          style={{
+            width: 140,
+            height: 100,
+            borderRadius: 12,
+            overflow: 'hidden',
+            background: imageUrl ? 'transparent' : 'linear-gradient(135deg, rgba(201,35,55,0.3), rgba(147,51,234,0.3))',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+          }}
+        >
+          {imageUrl ? (
+            <img
+              src={imageUrl}
+              alt={project.title}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+              onError={(e) => {
+                // Fallback se imagem não carregar
+                (e.target as HTMLImageElement).style.display = 'none';
+                (e.target as HTMLImageElement).parentElement!.style.background = 
+                  'linear-gradient(135deg, rgba(201,35,55,0.3), rgba(147,51,234,0.3))';
+              }}
+            />
+          ) : (
+            <span style={{ fontSize: 32 }}>
+              {project.projectCategory?.includes('games') ? '🎮' :
+               project.projectCategory?.includes('museum') ? '🏛️' :
+               project.projectCategory?.includes('vr-360') ? '🥽' :
+               project.projectCategory?.includes('animacao') ? '🎬' :
+               project.projectCategory?.includes('education') ? '📚' :
+               project.projectCategory?.includes('festival') ? '🎪' :
+               '📽️'}
+            </span>
+          )}
+        </div>
         <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 10 }}>
             <h3 style={{ margin: 0, fontSize: 20, fontWeight: 700, letterSpacing: '-0.3px' }}>{project.title}</h3>

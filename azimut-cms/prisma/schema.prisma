@@ -129,6 +129,8 @@ model Project {
   type          String?
   featured      Boolean              @default(false)
   priorityHome  Int                  @default(0)
+  hasDetailPage Boolean              @default(false) // Se true, projeto tem subpágina própria
+  thumbnailUrl  String?              // URL alternativa para thumbnail
   status        ProjectStatus        @default(DRAFT)
   ctaLabelPt    String?
   ctaLabelEn    String?

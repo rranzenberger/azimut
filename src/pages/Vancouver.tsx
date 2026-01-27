@@ -19,6 +19,7 @@ import { useBackofficeContent } from '../hooks/useBackofficeContent'
 import { usePageSEO } from '../hooks/usePageSEO'
 import { useTheme } from '../contexts/ThemeContext'
 import AcademySubNav from '../components/AcademySubNav'
+import VancouverContentExpanded from '../components/VancouverContentExpanded'
 
 interface VancouverProps {
   lang: Lang
@@ -1167,6 +1168,11 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
             </div>
             <VisualSchoolQuiz lang={lang} />
           </div>
+        </section>
+
+        {/* 🆕 FASE 3: Conteúdo Long-Form Expandido para SEO */}
+        <section className="py-20" style={{ background: 'var(--theme-bg-secondary)' }}>
+          <VancouverContentExpanded lang={lang} />
         </section>
 
         {/* FAQ - PERMANECE */}

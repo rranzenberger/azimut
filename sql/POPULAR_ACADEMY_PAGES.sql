@@ -246,8 +246,42 @@ SELECT
   "heroSloganPt" AS "Título PT",
   "heroSubtitlePt" AS "Subtítulo PT",
   LEFT("heroDescriptionDesktopPt", 50) || '...' AS "Descrição PT",
-  "heroBackgroundImageUrl" IS NOT NULL AS "Tem Imagem",
+  CASE 
+    WHEN "heroBackgroundImageId" IS NOT NULL THEN '✅ Upload'
+    WHEN "heroBackgroundImageUrl" IS NOT NULL THEN '🔗 URL Externa'
+    ELSE '❌ Sem imagem'
+  END AS "Imagem Status",
+  COALESCE("heroBackgroundImageUrl", 'Nenhuma URL') AS "URL da Imagem",
   "updatedAt"
 FROM "Page"
 WHERE slug IN ('academy-courses', 'academy-workshops', 'academy-corporate', 'vancouver')
 ORDER BY slug;
+
+
+-- ============================================================================
+-- REFERÊNCIA: IMAGENS USADAS (para download manual se necessário)
+-- ============================================================================
+-- 
+-- ACADEMY COURSES:
+-- https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1920&q=90
+-- (Pessoas colaborando em ambiente de trabalho/estudo)
+--
+-- ACADEMY WORKSHOPS:
+-- https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=1920&q=90
+-- (Evento/palestra com audiência)
+--
+-- ACADEMY CORPORATE:
+-- https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=90
+-- (Ambiente corporativo moderno)
+--
+-- ============================================================================
+-- PARA TROCAR AS IMAGENS NO BACKOFFICE:
+-- ============================================================================
+-- 1. Acesse: https://backoffice.azmt.com.br/admin/pages
+-- 2. Clique na página desejada (ex: academy-courses)
+-- 3. Na seção "Hero Media", você tem 2 opções:
+--    a) UPLOAD: Clique em "Imagem de Fundo" e faça upload
+--    b) URL: Cole uma URL no campo "URL externa"
+-- 4. Imagem uploaded tem PRIORIDADE sobre URL externa
+-- 5. Salve a página
+-- ============================================================================

@@ -64,6 +64,35 @@ export function useSearch(query: string, lang: Lang) {
         path: `/${lang}/contact`,
         category: lang === 'pt' ? 'Página' : lang === 'es' ? 'Página' : lang === 'fr' ? 'Page' : 'Page',
         keywords: ['contact', 'contacto', 'contato']
+      },
+      // Serviços e Especialidades
+      {
+        title: lang === 'pt' ? 'Curadoria de Arte' : lang === 'es' ? 'Curaduría de Arte' : lang === 'fr' ? 'Curation d\'Art' : 'Art Curation',
+        description: lang === 'pt' ? 'Curadoria e produção para museus, festivais e eventos culturais' : lang === 'es' ? 'Curaduría y producción para museos, festivales y eventos culturales' : lang === 'fr' ? 'Curation et production pour musées, festivals et événements culturels' : 'Curation and production for museums, festivals and cultural events',
+        path: `/${lang}/what`,
+        category: lang === 'pt' ? 'Serviço' : lang === 'es' ? 'Servicio' : lang === 'fr' ? 'Service' : 'Service',
+        keywords: ['curadoria', 'curaduría', 'curation', 'arte', 'art', 'museus', 'museos', 'museums', 'festivais', 'festivals', 'cultura', 'culture']
+      },
+      {
+        title: lang === 'pt' ? 'Museus & Exposições' : lang === 'es' ? 'Museos & Exposiciones' : lang === 'fr' ? 'Musées & Expositions' : 'Museums & Exhibitions',
+        description: lang === 'pt' ? 'Experiências imersivas para museus e espaços culturais' : lang === 'es' ? 'Experiencias inmersivas para museos y espacios culturales' : lang === 'fr' ? 'Expériences immersives pour musées et espaces culturels' : 'Immersive experiences for museums and cultural spaces',
+        path: `/${lang}/what/museus-exposicoes`,
+        category: lang === 'pt' ? 'Serviço' : lang === 'es' ? 'Servicio' : lang === 'fr' ? 'Service' : 'Service',
+        keywords: ['museus', 'museos', 'museums', 'exposições', 'exposiciones', 'exhibitions', 'cultura', 'culture', 'imersivo', 'immersive']
+      },
+      {
+        title: lang === 'pt' ? 'Realidade Virtual (VR)' : lang === 'es' ? 'Realidad Virtual (VR)' : lang === 'fr' ? 'Réalité Virtuelle (VR)' : 'Virtual Reality (VR)',
+        description: lang === 'pt' ? 'Experiências VR imersivas para museus, eventos e marcas' : lang === 'es' ? 'Experiencias VR inmersivas para museos, eventos y marcas' : lang === 'fr' ? 'Expériences VR immersives pour musées, événements et marques' : 'Immersive VR experiences for museums, events and brands',
+        path: `/${lang}/what/vr-virtual-reality`,
+        category: lang === 'pt' ? 'Serviço' : lang === 'es' ? 'Servicio' : lang === 'fr' ? 'Service' : 'Service',
+        keywords: ['vr', 'virtual reality', 'realidade virtual', 'realidad virtual', 'imersivo', 'immersive']
+      },
+      {
+        title: lang === 'pt' ? 'Cinema & Audiovisual' : lang === 'es' ? 'Cine & Audiovisual' : lang === 'fr' ? 'Cinéma & Audiovisuel' : 'Cinema & Audiovisual',
+        description: lang === 'pt' ? 'Produção cinematográfica e conteúdo audiovisual' : lang === 'es' ? 'Producción cinematográfica y contenido audiovisual' : lang === 'fr' ? 'Production cinématographique et contenu audiovisuel' : 'Film production and audiovisual content',
+        path: `/${lang}/what/cinema-audiovisual`,
+        category: lang === 'pt' ? 'Serviço' : lang === 'es' ? 'Servicio' : lang === 'fr' ? 'Service' : 'Service',
+        keywords: ['cinema', 'cine', 'audiovisual', 'filme', 'film', 'produção', 'producción', 'production']
       }
     ]
   }, [lang])

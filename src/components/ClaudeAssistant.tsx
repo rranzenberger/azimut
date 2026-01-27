@@ -11,6 +11,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { type Lang } from '../i18n'
 import { useUserProfileDetection, getUserInsights, trackInteraction } from '../hooks/useUserProfileDetection'
+// 🆕 FASE 2: Detecção de Intenção para personalizar assistente
+import { useIntentionDetection } from '../hooks/useIntentionDetection'
 import { logger } from '@/utils/logger'
 
 interface Message {
@@ -28,6 +30,8 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
   // ✅ FASE 2: Detecção automática de perfil! 🎯
   // REATIVADO - Sistema robusto implementado, não causa erro #310
   const userProfile = useUserProfileDetection(lang)
+  // 🆕 FASE 2: Detecção de Intenção para personalizar respostas
+  const { intention } = useIntentionDetection()
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
@@ -55,13 +59,52 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
     return () => observer.disconnect()
   }, [])
 
+  // 🆕 Personalizar saudação baseada em intenção detectada
+  const getPersonalizedGreeting = (): string => {
+    if (intention && intention.confidence > 0.7) {
+      if (intention.intention === 'interested_in_museums') {
+        return lang === 'pt' 
+          ? 'Olá! 👋 Vejo que você tem interesse em museus e exposições. Como posso ajudar com seu projeto cultural?'
+          : lang === 'en'
+          ? 'Hello! 👋 I see you\'re interested in museums and exhibitions. How can I help with your cultural project?'
+          : lang === 'es'
+          ? '¡Hola! 👋 Veo que tienes interés en museos y exposiciones. ¿Cómo puedo ayudar con tu proyecto cultural?'
+          : 'Bonjour! 👋 Je vois que vous vous intéressez aux musées et expositions. Comment puis-je vous aider avec votre projet culturel?'
+      } else if (intention.intention === 'interested_in_vr') {
+        return lang === 'pt'
+          ? 'Olá! 👋 Vejo que você tem interesse em VR e realidade virtual. Que tipo de experiência imersiva você busca?'
+          : lang === 'en'
+          ? 'Hello! 👋 I see you\'re interested in VR and virtual reality. What kind of immersive experience are you looking for?'
+          : lang === 'es'
+          ? '¡Hola! 👋 Veo que tienes interés en VR y realidad virtual. ¿Qué tipo de experiencia inmersiva buscas?'
+          : 'Bonjour! 👋 Je vois que vous vous intéressez à la VR et à la réalité virtuelle. Quel type d\'expérience immersive recherchez-vous?'
+      } else if (intention.intention === 'hot_lead') {
+        return lang === 'pt'
+          ? 'Olá! 👋 Vejo que você está explorando bastante nosso trabalho. Vamos conversar sobre seu projeto?'
+          : lang === 'en'
+          ? 'Hello! 👋 I see you\'ve been exploring our work. Shall we talk about your project?'
+          : lang === 'es'
+          ? '¡Hola! 👋 Veo que has estado explorando nuestro trabajo. ¿Hablemos de tu proyecto?'
+          : 'Bonjour! 👋 Je vois que vous avez exploré notre travail. Parlons de votre projet?'
+      }
+    }
+    // Saudação padrão
+    return lang === 'pt'
+      ? 'Olá! 👋 Sou o assistente virtual da Azimut. Como posso te ajudar hoje?'
+      : lang === 'en'
+      ? 'Hello! 👋 I\'m Azimut\'s virtual assistant. How can I help you today?'
+      : lang === 'es'
+      ? '¡Hola! 👋 Soy el asistente virtual de Azimut. ¿Cómo puedo ayudarte hoy?'
+      : 'Bonjour! 👋 Je suis l\'assistant virtuel d\'Azimut. Comment puis-je vous aider?'
+  }
+
   const content: Record<Lang, any> = {
     pt: {
       title: '💬 Assistente Azimut',
       subtitle: 'Estou aqui para ajudar!',
       placeholder: 'Digite sua mensagem...',
       send: '✓',
-      greeting: 'Olá! 👋 Sou o assistente virtual da Azimut. Como posso te ajudar hoje?',
+      greeting: getPersonalizedGreeting(),
       examples: [
         '💼 Quero criar um projeto',
         '🎓 Estudar em Vancouver',
@@ -74,7 +117,7 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
       subtitle: 'I\'m here to help!',
       placeholder: 'Type your message...',
       send: '✓',
-      greeting: 'Hello! 👋 I\'m Azimut\'s virtual assistant. How can I help you today?',
+      greeting: getPersonalizedGreeting(),
       examples: [
         '💼 Start a project',
         '🎓 Study in Vancouver',
@@ -87,7 +130,7 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
       subtitle: '¡Estoy aquí para ayudar!',
       placeholder: 'Escribe tu mensaje...',
       send: '✓',
-      greeting: '¡Hola! 👋 Soy el asistente virtual de Azimut. ¿Cómo puedo ayudarte hoy?',
+      greeting: getPersonalizedGreeting(),
       examples: [
         '💼 Crear un proyecto',
         '🎓 Estudiar en Vancouver',
@@ -194,7 +237,15 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
               interests: userProfile.interests,
               budget: userProfile.likelyBudget,
               conversionProb: userProfile.conversionProbability
-            }
+            },
+            // 🆕 FASE 2: Intenção detectada para personalizar respostas
+            detectedIntention: intention ? {
+              intention: intention.intention,
+              confidence: intention.confidence,
+              visitorType: intention.visitorType,
+              recommendedCategory: intention.recommendedCategory,
+              personalizedCTA: intention.personalizedCTA
+            } : null
           }
         })
       })

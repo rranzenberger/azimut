@@ -63,6 +63,40 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
     }
 
+    // Verificar se é JSON (criação por URL) ou FormData (upload de arquivo)
+    const contentType = req.headers.get('content-type') || '';
+    
+    if (contentType.includes('application/json')) {
+      // Criar mídia por URL
+      const body = await req.json();
+      const { type, originalUrl, altPt, altEn, pageSlug, sectionSlug, imageType, servicesTags } = body;
+
+      if (!originalUrl || !originalUrl.trim()) {
+        return NextResponse.json({ error: 'URL é obrigatória' }, { status: 400 });
+      }
+
+      const mediaType = type || 'IMAGE';
+
+      const mediaRecord = await prisma.media.create({
+        data: {
+          type: mediaType as 'IMAGE' | 'VIDEO',
+          originalUrl: originalUrl.trim(),
+          thumbnailUrl: originalUrl.trim(), // Para URLs externas, usa a mesma
+          mediumUrl: originalUrl.trim(),
+          largeUrl: originalUrl.trim(),
+          altPt: altPt || null,
+          altEn: altEn || null,
+          pageSlug: pageSlug || null,
+          sectionSlug: sectionSlug || null,
+          imageType: imageType || null,
+          servicesTags: servicesTags || [],
+        },
+      });
+
+      return NextResponse.json({ success: true, media: mediaRecord });
+    }
+
+    // Upload de arquivo via FormData
     const form = await req.formData();
     const file = form.get('file') as File | null;
     const type = (form.get('type') as string) || 'IMAGE';
@@ -95,7 +129,7 @@ export async function POST(req: NextRequest) {
 
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-    const contentType = file.type || 'application/octet-stream';
+    const contentTypeFile = file.type || 'application/octet-stream';
 
     let mediaRecord;
 
@@ -103,7 +137,7 @@ export async function POST(req: NextRequest) {
       mediaRecord = await processLocalImage({
         buffer,
         filename: file.name,
-        contentType,
+        contentType: contentTypeFile,
         altPt,
         altEn,
         pageSlug: pageSlug || undefined,
@@ -116,7 +150,7 @@ export async function POST(req: NextRequest) {
       mediaRecord = await processLocalVideo({
         buffer,
         filename: file.name,
-        contentType,
+        contentType: contentTypeFile,
         altPt,
         altEn,
         pageSlug: pageSlug || undefined,

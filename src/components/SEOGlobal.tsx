@@ -270,9 +270,85 @@ const SEOGlobal: React.FC<SEOGlobalProps> = ({ lang }) => {
         {JSON.stringify(navigationSchema)}
       </script>
       
-      {/* Local Business Schema */}
+      {/* Local Business Schema - Rio de Janeiro */}
       <script type="application/ld+json">
         {JSON.stringify(localBusinessSchema)}
+      </script>
+      
+      {/* Local Business Schema - Vancouver */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'ProfessionalService',
+          '@id': `${baseUrl}/#localbusiness-vancouver`,
+          name: 'Azimut - Vancouver Office',
+          image: `${baseUrl}/og-image.png`,
+          url: `${baseUrl}/academy/vancouver`,
+          telephone: '+1-604-999-9999',
+          email: 'vancouver@azimutimmersive.com',
+          priceRange: '$$$',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: '198 W Hastings St',
+            addressLocality: 'Vancouver',
+            addressRegion: 'BC',
+            postalCode: 'V6B 1H2',
+            addressCountry: 'CA'
+          },
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: 49.2827,
+            longitude: -123.1207
+          },
+          openingHoursSpecification: [{
+            '@type': 'OpeningHoursSpecification',
+            dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+            opens: '09:00',
+            closes: '18:00'
+          }],
+          areaServed: {
+            '@type': 'Country',
+            name: 'Canada'
+          }
+        })}
+      </script>
+      
+      {/* Local Business Schema - Florianópolis */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'ProfessionalService',
+          '@id': `${baseUrl}/#localbusiness-florianopolis`,
+          name: 'Azimut - Florianópolis Office',
+          image: `${baseUrl}/og-image.png`,
+          url: baseUrl,
+          telephone: '+55-48-99999-9999',
+          email: 'florianopolis@azimutimmersive.com',
+          priceRange: '$$$',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Av. Beira Mar Norte',
+            addressLocality: 'Florianópolis',
+            addressRegion: 'SC',
+            postalCode: '88015-700',
+            addressCountry: 'BR'
+          },
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: -27.5954,
+            longitude: -48.5480
+          },
+          openingHoursSpecification: [{
+            '@type': 'OpeningHoursSpecification',
+            dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+            opens: '09:00',
+            closes: '18:00'
+          }],
+          areaServed: {
+            '@type': 'Country',
+            name: 'Brazil'
+          }
+        })}
       </script>
     </Helmet>
   )

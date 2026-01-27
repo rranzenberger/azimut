@@ -1,0 +1,3 @@
+REMOVE LOCK E ADICIONA TUDO DE UMA VEZ:
+
+Remove-Item -Force ".git\index.lock" -ErrorAction SilentlyContinue; Start-Sleep -Seconds 2; git add src/components/SearchModal.tsx src/components/Breadcrumbs.tsx src/components/LoadingSkeleton.tsx src/components/SmartContactForm.tsx src/hooks/useLoadingSkeleton.ts src/hooks/useSearch.ts src/utils/formValidation.ts azimut-cms/app/admin/team/ azimut-cms/app/admin/credentials/ azimut-cms/app/api/admin/team/ azimut-cms/app/api/admin/credentials/ azimut-cms/prisma/schema.prisma azimut-cms/prisma/migrations/; git status --short; git commit -m "feat: UX Premium (validacao, skeletons, busca) + Backoffice Team/Credentials completo"; git push

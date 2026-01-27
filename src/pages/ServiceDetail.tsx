@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react'
 import { useParams, Navigate } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import { getServiceBySlug, getServiceTitle, getServiceShortDesc, getServiceLongDesc, getServiceDeliverables, getServiceProcess, servicesData } from '../data/servicesData'
+// 🆕 Buscar serviço do backoffice (para slugs que não existem localmente)
+import { useBackofficeService } from '../hooks/useBackofficeService'
 import { getServiceFAQs, hasServiceFAQs } from '../data/serviceFAQs'
 import LangLink from '../components/LangLink'
 import SEO from '../components/SEO'
@@ -16,6 +18,8 @@ import StarBackground from '../components/StarBackground'
 import { logger } from '@/utils/logger'
 import { PageFooterNavigation } from '../components/PageFooterNavigation'
 import { useTheme } from '../contexts/ThemeContext'
+// 🆕 FASE 2: Site Inteligente - Detecção de Intenção
+import DynamicSuggestionBanner from '../components/DynamicSuggestionBanner'
 
 interface ServiceDetailProps {
   lang: Lang
@@ -27,6 +31,10 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
   // REMOVIDO: useUserTracking já é chamado no Layout.tsx
   // const { trackInteraction } = useUserTracking()
   const trackInteraction = (type: string, target: string) => {} // Dummy
+  
+  // 🆕 Buscar serviço do backoffice (para slugs que não existem localmente)
+  const { service: backofficeService, loading: loadingBackoffice } = useBackofficeService(slug || '', lang)
+  
   const starRef = useRef<HTMLDivElement>(null)
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
 
@@ -135,9 +143,27 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
     return <Navigate to={`/${lang}/what`} replace />
   }
 
-  const service = getServiceBySlug(slug)
-
-  if (!service) {
+  // Buscar primeiro localmente, depois do backoffice
+  const localService = getServiceBySlug(slug)
+  const service = localService // Preferir dados locais (mais completos)
+  
+  // Se não encontrar localmente e ainda está carregando do backoffice, mostrar loading
+  if (!localService && loadingBackoffice) {
+    return (
+      <main className="relative py-16 md:py-20">
+        <div className="mx-auto max-w-6xl px-6 text-center">
+          <div className="animate-pulse">
+            <div className="h-8 w-64 bg-theme-text-secondary/20 rounded mx-auto mb-4"></div>
+            <div className="h-4 w-96 bg-theme-text-secondary/10 rounded mx-auto"></div>
+          </div>
+        </div>
+      </main>
+    )
+  }
+  
+  // Se não encontrar em nenhum lugar, mostrar erro
+  // MAS se tem backofficeService, usar os dados dele para exibir algo básico
+  if (!service && !backofficeService) {
     return (
       <main className="relative py-16 md:py-20">
         <div className="mx-auto max-w-6xl px-6 text-center">
@@ -162,6 +188,14 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
         </div>
       </main>
     )
+  }
+  
+  // Se não tem serviço local MAS tem do backoffice, redirecionar para /what
+  // porque os dados do backoffice são incompletos para renderizar a página
+  if (!service && backofficeService) {
+    // Serviço existe no backoffice mas não tem dados locais completos
+    // Redirecionar para a lista de serviços
+    return <Navigate to={`/${lang}/what`} replace />
   }
 
   const title = getServiceTitle(service, lang)
@@ -453,6 +487,14 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
       
       {/* Breadcrumb Schema para navegação (Google identifica estrutura) */}
       <StructuredData type="BreadcrumbList" data={breadcrumbSchema} />
+      
+      {/* 🆕 FASE 2: Banner de Sugestão Dinâmica */}
+      <DynamicSuggestionBanner 
+        lang={lang} 
+        theme={theme}
+        minConfidence={0.3}
+        autoHideDelay={15000}
+      />
       
       <main className="py-16 md:py-20" style={{ position: 'relative', zIndex: 1 }}>
         {/* Star background - FIXA (padronizada com páginas principais) */}

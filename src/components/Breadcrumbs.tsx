@@ -1,168 +1,176 @@
-// ════════════════════════════════════════════════════════════
-// BREADCRUMBS VISUAL - Componente Premium para Navegação
-// ════════════════════════════════════════════════════════════
-// Componente isolado - Schema já existe, só adiciona visual
-// ════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
+// BREADCRUMBS VISUAL - Componente Premium de Navegação
+// ═══════════════════════════════════════════════════════════════
+// Componente visual + Schema.org BreadcrumbList
+// ═══════════════════════════════════════════════════════════════
 
-import React from 'react'
-import { useLocation } from 'react-router-dom'
-import LangLink from './LangLink'
+import React, { useMemo } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
+import SchemaBreadcrumbList from './SchemaBreadcrumbList'
 
 interface BreadcrumbsProps {
-  lang: Lang
-  theme?: 'dark' | 'light'
+  items?: Array<{ name: string; url: string }>
+  lang?: Lang
   className?: string
 }
 
-const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ 
-  lang, 
-  theme = 'dark',
-  className = '' 
+const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
+  items,
+  lang = 'pt',
+  className = ''
 }) => {
   const location = useLocation()
-  
-  // Gerar breadcrumbs baseado na rota atual
-  const generateBreadcrumbs = () => {
-    const path = location.pathname
-    const segments = path.split('/').filter(Boolean)
-    
-    // Remover prefixo de idioma se existir
-    const langPrefixes = ['pt', 'en', 'es', 'fr']
-    if (segments.length > 0 && langPrefixes.includes(segments[0])) {
-      segments.shift()
+  const siteUrl = 'https://azmt.com.br'
+
+  // Gerar breadcrumbs automaticamente baseado na URL se não fornecidos
+  const breadcrumbs = useMemo(() => {
+    if (items && items.length > 0) {
+      return items
     }
+
+    const path = location.pathname
+    const pathParts = path.split('/').filter(Boolean)
     
-    const breadcrumbs: Array<{ label: string; path: string }> = [
-      { label: lang === 'pt' ? 'Início' : lang === 'es' ? 'Inicio' : lang === 'fr' ? 'Accueil' : 'Home', path: `/${lang}` }
+    // Remover idioma do início se presente
+    if (pathParts[0] && ['pt', 'en', 'es', 'fr'].includes(pathParts[0])) {
+      pathParts.shift()
+    }
+
+    const breadcrumbItems: Array<{ name: string; url: string }> = [
+      {
+        name: lang === 'pt' ? 'Início' : lang === 'en' ? 'Home' : lang === 'es' ? 'Inicio' : 'Accueil',
+        url: `/${lang === 'pt' ? '' : lang}`
+      }
     ]
-    
-    let currentPath = `/${lang}`
-    
-    segments.forEach((segment, index) => {
-      currentPath += `/${segment}`
+
+    // Mapear paths para nomes legíveis
+    const pathNames: Record<string, Record<string, string>> = {
+      work: {
+        pt: 'Projetos',
+        en: 'Work',
+        es: 'Proyectos',
+        fr: 'Projets'
+      },
+      what: {
+        pt: 'Serviços',
+        en: 'Services',
+        es: 'Servicios',
+        fr: 'Services'
+      },
+      studio: {
+        pt: 'Estúdio',
+        en: 'Studio',
+        es: 'Estudio',
+        fr: 'Studio'
+      },
+      academy: {
+        pt: 'Academy',
+        en: 'Academy',
+        es: 'Academy',
+        fr: 'Académie'
+      },
+      vancouver: {
+        pt: 'Vancouver',
+        en: 'Vancouver',
+        es: 'Vancouver',
+        fr: 'Vancouver'
+      },
+      contact: {
+        pt: 'Contato',
+        en: 'Contact',
+        es: 'Contacto',
+        fr: 'Contact'
+      },
+      blog: {
+        pt: 'Blog',
+        en: 'Blog',
+        es: 'Blog',
+        fr: 'Blog'
+      },
+      research: {
+        pt: 'Pesquisa',
+        en: 'Research',
+        es: 'Investigación',
+        fr: 'Recherche'
+      }
+    }
+
+    let currentPath = ''
+    pathParts.forEach((part, index) => {
+      currentPath += `/${part}`
+      const name = pathNames[part]?.[lang] || part.charAt(0).toUpperCase() + part.slice(1)
       
-      // Traduzir labels conhecidos
-      let label = segment
-        .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ')
-      
-      // Traduções específicas
-      const translations: Record<string, Record<Lang, string>> = {
-        'what': {
-          pt: 'Soluções',
-          en: 'Solutions',
-          es: 'Soluciones',
-          fr: 'Solutions'
-        },
-        'work': {
-          pt: 'Projetos',
-          en: 'Work',
-          es: 'Proyectos',
-          fr: 'Projets'
-        },
-        'studio': {
-          pt: 'Estúdio',
-          en: 'Studio',
-          es: 'Estudio',
-          fr: 'Studio'
-        },
-        'academy': {
-          pt: 'Academy',
-          en: 'Academy',
-          es: 'Academy',
-          fr: 'Academy'
-        },
-        'contact': {
-          pt: 'Contato',
-          en: 'Contact',
-          es: 'Contacto',
-          fr: 'Contact'
-        },
-        'blog': {
-          pt: 'Blog',
-          en: 'Blog',
-          es: 'Blog',
-          fr: 'Blog'
-        }
+      // Não adicionar o último item se for um slug (ex: /work/projeto-slug)
+      if (index === pathParts.length - 1 && pathParts.length > 1) {
+        // É provavelmente um slug, não adicionar ao breadcrumb
+        return
       }
       
-      if (translations[segment]) {
-        label = translations[segment][lang]
-      }
-      
-      breadcrumbs.push({ label, path: currentPath })
+      breadcrumbItems.push({
+        name,
+        url: `/${lang === 'pt' ? '' : lang}${currentPath}`
+      })
     })
-    
-    return breadcrumbs
-  }
-  
-  const breadcrumbs = generateBreadcrumbs()
-  
-  // Não mostrar breadcrumbs na home
+
+    return breadcrumbItems
+  }, [items, location.pathname, lang])
+
+  // Se só tem Home, não mostrar breadcrumbs
   if (breadcrumbs.length <= 1) {
-    return null
+    return (
+      <>
+        <SchemaBreadcrumbList items={breadcrumbs} lang={lang} />
+      </>
+    )
   }
-  
+
   return (
-    <nav 
-      className={`flex items-center gap-2 text-sm ${className}`}
-      aria-label="Breadcrumb"
-      style={{
-        color: theme === 'dark' ? '#94a3b8' : '#64748b',
-        padding: '0.75rem 0',
-        marginBottom: '1rem'
-      }}
-    >
-      {breadcrumbs.map((crumb, index) => {
-        const isLast = index === breadcrumbs.length - 1
-        
-        return (
-          <React.Fragment key={crumb.path}>
-            {isLast ? (
-              <span 
-                style={{
-                  color: theme === 'dark' ? '#cbd5e1' : '#1e293b',
-                  fontWeight: '500'
-                }}
-                aria-current="page"
-              >
-                {crumb.label}
-              </span>
-            ) : (
-              <>
-                <LangLink
-                  to={crumb.path}
-                  className="hover:opacity-80 transition-opacity"
-                  style={{
-                    color: theme === 'dark' ? '#94a3b8' : '#64748b',
-                    textDecoration: 'none'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = theme === 'dark' ? '#cbd5e1' : '#1e293b'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = theme === 'dark' ? '#94a3b8' : '#64748b'
-                  }}
-                >
-                  {crumb.label}
-                </LangLink>
-                <span 
-                  style={{
-                    color: theme === 'dark' ? 'rgba(148, 163, 184, 0.4)' : 'rgba(100, 116, 139, 0.4)',
-                    margin: '0 0.25rem'
-                  }}
-                  aria-hidden="true"
-                >
-                  /
-                </span>
-              </>
-            )}
-          </React.Fragment>
-        )
-      })}
-    </nav>
+    <>
+      {/* Schema.org BreadcrumbList */}
+      <SchemaBreadcrumbList items={breadcrumbs} lang={lang} />
+      
+      {/* Breadcrumbs Visuais */}
+      <nav 
+        className={`text-sm ${className}`}
+        aria-label="Breadcrumb"
+      >
+        <ol className="flex items-center gap-2 flex-wrap">
+          {breadcrumbs.map((item, index) => {
+            const isLast = index === breadcrumbs.length - 1
+            
+            return (
+              <li key={index} className="flex items-center gap-2">
+                {index > 0 && (
+                  <span 
+                    className="text-slate-500 dark:text-slate-400"
+                    aria-hidden="true"
+                  >
+                    /
+                  </span>
+                )}
+                {isLast ? (
+                  <span 
+                    className="text-slate-300 dark:text-slate-200 font-medium"
+                    aria-current="page"
+                  >
+                    {item.name}
+                  </span>
+                ) : (
+                  <Link
+                    to={item.url}
+                    className="text-slate-500 dark:text-slate-400 hover:text-azimut-red transition-colors duration-200"
+                  >
+                    {item.name}
+                  </Link>
+                )}
+              </li>
+            )
+          })}
+        </ol>
+      </nav>
+    </>
   )
 }
 

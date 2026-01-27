@@ -1,0 +1,40 @@
+═══════════════════════════════════════════════════════════
+SOLUCAO RAPIDA - COPIE E COLE NO POWERSHELL
+═══════════════════════════════════════════════════════════
+
+OPCAO 1: EXECUTAR O .BAT (MAIS FACIL)
+───────────────────────────────────────
+No PowerShell, digite EXATAMENTE assim:
+
+    .\COMMIT_MENU.bat
+
+(Note o ponto e barra na frente: .\ )
+
+
+OPCAO 2: EXECUTAR O DIAGNOSTICO PRIMEIRO
+───────────────────────────────────────
+No PowerShell, digite:
+
+    .\DIAGNOSTICO_GIT.ps1
+
+Isso vai mostrar o que esta errado.
+
+
+OPCAO 3: COMANDOS MANUAIS (COPIE TUDO DE UMA VEZ)
+──────────────────────────────────────────────────
+Cole tudo isso no PowerShell de uma vez:
+
+Remove-Item .git/index.lock -Force -ErrorAction SilentlyContinue; git add src/pages/AcademyNew.tsx src/components/AcademySubNav.tsx src/pages/Studio.tsx src/pages/WhatWeDo.tsx src/pages/Work.tsx; git commit -m "fix: Remove tarja vermelha submenu + centraliza menus secundarios"; git push origin main
+
+
+═══════════════════════════════════════════════════════════
+POR QUE PRECISA DO .\ ?
+═══════════════════════════════════════════════════════════
+
+PowerShell por seguranca NAO executa scripts do diretorio
+atual automaticamente. Voce precisa dizer explicitamente
+usando .\ (ponto-barra) que quer executar do diretorio atual.
+
+Isso e uma medida de seguranca do Windows.
+
+═══════════════════════════════════════════════════════════
