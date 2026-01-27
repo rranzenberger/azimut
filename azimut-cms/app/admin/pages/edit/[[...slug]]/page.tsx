@@ -448,6 +448,15 @@ export default function EditPagePage() {
           heroBackgroundImageUrl: data.heroBackgroundImageUrl || '',
           demoreelVideoId: data.demoreelVideoId || '',
           demoreelVideoUrl: data.demoreelVideoUrl || '',
+          // Vídeos Multilíngues
+          videoPt: data.videoPt || '/ChrisMilk.mp4',
+          videoEn: data.videoEn || '',
+          videoEs: data.videoEs || '',
+          videoFr: data.videoFr || '',
+          thumbPt: data.thumbPt || '/chris-milk-thumbnail.jpg',
+          thumbEn: data.thumbEn || '/chris-milk-thumbnail.jpg',
+          thumbEs: data.thumbEs || '/chris-milk-thumbnail.jpg',
+          thumbFr: data.thumbFr || '/chris-milk-thumbnail.jpg',
           status: data.status || 'PUBLISHED',
         });
 
