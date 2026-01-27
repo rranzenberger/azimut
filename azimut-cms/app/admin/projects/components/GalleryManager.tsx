@@ -19,6 +19,8 @@ interface GalleryItem {
   id: string;
   mediaId: string;
   order: number;
+  captionPt?: string | null;
+  captionEn?: string | null;
   media: Media;
 }
 
@@ -33,14 +35,14 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
   const [loading, setLoading] = useState(false);
   const [loadingMedia, setLoadingMedia] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [showMediaSelector, setShowMediaSelector] = useState(false);
-  const [showUploader, setShowUploader] = useState(false);
+  const [showAddPanel, setShowAddPanel] = useState(false);
   const [selectedMediaId, setSelectedMediaId] = useState<string>('');
   const [urlInput, setUrlInput] = useState('');
   const [urlType, setUrlType] = useState<'IMAGE' | 'VIDEO'>('IMAGE');
+  const [editingCaption, setEditingCaption] = useState<string | null>(null);
+  const [captionText, setCaptionText] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Carregar mídias disponíveis
@@ -51,7 +53,6 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
         const res = await fetch('/api/admin/media?limit=100');
         const data = await res.json();
         if (res.ok) {
-          // Filtrar mídias que já estão na galeria
           const galleryMediaIds = new Set(gallery.map(item => item.mediaId));
           const filtered = data.media.filter((m: Media) => !galleryMediaIds.has(m.id));
           setAvailableMedia(filtered);
@@ -73,7 +74,6 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
     setUploading(true);
     setError(null);
     setSuccess(null);
-    setUploadProgress(0);
 
     const file = files[0];
     const formData = new FormData();
@@ -101,7 +101,6 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
       });
 
       if (addRes.ok) {
-        // Atualizar galeria
         const updatedRes = await fetch(`/api/admin/projects/${projectId}`);
         if (updatedRes.ok) {
           const updatedData = await updatedRes.json();
@@ -109,12 +108,9 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
             setGallery(updatedData.project.gallery);
           }
         }
-        setSuccess('Mídia enviada e adicionada à galeria!');
-      } else {
-        setError('Mídia enviada, mas erro ao adicionar à galeria');
+        setSuccess('Mídia adicionada!');
       }
 
-      setShowUploader(false);
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
@@ -122,7 +118,6 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
       setError('Erro de rede ao enviar arquivo');
     } finally {
       setUploading(false);
-      setUploadProgress(0);
     }
   }
 
@@ -135,10 +130,8 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
 
     setLoading(true);
     setError(null);
-    setSuccess(null);
 
     try {
-      // Criar mídia via URL
       const createRes = await fetch('/api/admin/media', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -157,7 +150,6 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
         return;
       }
 
-      // Adicionar à galeria
       const addRes = await fetch(`/api/admin/projects/${projectId}/gallery`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -165,7 +157,6 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
       });
 
       if (addRes.ok) {
-        // Atualizar galeria
         const updatedRes = await fetch(`/api/admin/projects/${projectId}`);
         if (updatedRes.ok) {
           const updatedData = await updatedRes.json();
@@ -173,11 +164,8 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
             setGallery(updatedData.project.gallery);
           }
         }
-        setSuccess('Mídia adicionada à galeria!');
+        setSuccess('Mídia adicionada!');
         setUrlInput('');
-        setShowUploader(false);
-      } else {
-        setError('Mídia criada, mas erro ao adicionar à galeria');
       }
     } catch (err) {
       setError('Erro de rede');
@@ -186,8 +174,8 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
     }
   }
 
-  // Adicionar mídia à galeria
-  async function handleAddMedia() {
+  // Adicionar mídia existente
+  async function handleAddExisting() {
     if (!selectedMediaId) {
       setError('Selecione uma mídia');
       return;
@@ -203,535 +191,580 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
         body: JSON.stringify({ mediaId: selectedMediaId }),
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.error || 'Erro ao adicionar mídia');
-        setLoading(false);
-        return;
-      }
-
-      // Atualizar galeria - buscar galeria atualizada do servidor
-      const updatedRes = await fetch(`/api/admin/projects/${projectId}`);
-      if (updatedRes.ok) {
-        const updatedData = await updatedRes.json();
-        if (updatedData.project?.gallery) {
-          setGallery(updatedData.project.gallery);
-        } else {
-          // Fallback: adicionar manualmente
-          setGallery([...gallery, data.projectMedia]);
+      if (res.ok) {
+        const updatedRes = await fetch(`/api/admin/projects/${projectId}`);
+        if (updatedRes.ok) {
+          const updatedData = await updatedRes.json();
+          if (updatedData.project?.gallery) {
+            setGallery(updatedData.project.gallery);
+          }
         }
-      } else {
-        // Fallback: adicionar manualmente
-        setGallery([...gallery, data.projectMedia]);
+        setSelectedMediaId('');
+        setSuccess('Mídia adicionada!');
       }
-      setSelectedMediaId('');
-      setShowMediaSelector(false);
     } catch (err) {
-      setError('Erro de rede ao adicionar mídia');
+      setError('Erro de rede');
     } finally {
       setLoading(false);
     }
   }
 
-  // Remover mídia da galeria
-  async function handleRemoveMedia(mediaId: string) {
-    if (!confirm('Tem certeza que deseja remover esta mídia da galeria?')) {
-      return;
-    }
+  // Remover mídia
+  async function handleRemove(mediaId: string) {
+    if (!confirm('Remover esta mídia da galeria?')) return;
 
     setLoading(true);
-    setError(null);
-
     try {
       const res = await fetch(`/api/admin/projects/${projectId}/gallery?mediaId=${mediaId}`, {
         method: 'DELETE',
       });
 
-      if (!res.ok) {
-        const data = await res.json();
-        setError(data.error || 'Erro ao remover mídia');
-        setLoading(false);
-        return;
+      if (res.ok) {
+        setGallery(gallery.filter(item => item.mediaId !== mediaId));
+        setSuccess('Mídia removida!');
       }
-
-      // Atualizar galeria
-      setGallery(gallery.filter(item => item.mediaId !== mediaId));
     } catch (err) {
-      setError('Erro de rede ao remover mídia');
+      setError('Erro ao remover');
     } finally {
       setLoading(false);
     }
   }
 
-  // Mover mídia para cima
-  async function handleMoveUp(index: number) {
-    if (index === 0) return;
+  // Salvar legenda
+  async function handleSaveCaption(itemId: string) {
+    setLoading(true);
+    try {
+      // Por ora, salvar como altPt da mídia (ideal seria ter captionPt no ProjectMedia)
+      const item = gallery.find(g => g.id === itemId);
+      if (item) {
+        await fetch(`/api/admin/media/${item.mediaId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ altPt: captionText }),
+        });
+        
+        // Atualizar localmente
+        setGallery(gallery.map(g => 
+          g.id === itemId 
+            ? { ...g, media: { ...g.media, altPt: captionText } }
+            : g
+        ));
+        setSuccess('Legenda salva!');
+      }
+    } catch (err) {
+      setError('Erro ao salvar legenda');
+    } finally {
+      setLoading(false);
+      setEditingCaption(null);
+    }
+  }
+
+  // Mover mídia
+  async function handleMove(index: number, direction: 'up' | 'down') {
+    const newIndex = direction === 'up' ? index - 1 : index + 1;
+    if (newIndex < 0 || newIndex >= gallery.length) return;
 
     const newGallery = [...gallery];
-    [newGallery[index - 1], newGallery[index]] = [newGallery[index], newGallery[index - 1]];
+    [newGallery[index], newGallery[newIndex]] = [newGallery[newIndex], newGallery[index]];
 
-    // Atualizar ordem
     const mediaIds = newGallery.map(item => item.mediaId);
 
     setLoading(true);
     try {
-      const res = await fetch(`/api/admin/projects/${projectId}/gallery`, {
+      await fetch(`/api/admin/projects/${projectId}/gallery`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mediaIds }),
       });
-
-      if (res.ok) {
-        setGallery(newGallery);
-      } else {
-        setError('Erro ao reordenar');
-      }
+      setGallery(newGallery);
     } catch (err) {
-      setError('Erro de rede ao reordenar');
+      setError('Erro ao reordenar');
     } finally {
       setLoading(false);
     }
   }
 
-  // Mover mídia para baixo
-  async function handleMoveDown(index: number) {
-    if (index === gallery.length - 1) return;
-
-    const newGallery = [...gallery];
-    [newGallery[index], newGallery[index + 1]] = [newGallery[index + 1], newGallery[index]];
-
-    // Atualizar ordem
-    const mediaIds = newGallery.map(item => item.mediaId);
-
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/admin/projects/${projectId}/gallery`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mediaIds }),
-      });
-
-      if (res.ok) {
-        setGallery(newGallery);
-      } else {
-        setError('Erro ao reordenar');
-      }
-    } catch (err) {
-      setError('Erro de rede ao reordenar');
-    } finally {
-      setLoading(false);
-    }
-  }
+  const imageCount = gallery.filter(g => g.media.type === 'IMAGE').length;
+  const videoCount = gallery.filter(g => g.media.type === 'VIDEO').length;
 
   return (
-    <div style={{ marginTop: 24 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 8 }}>
-        <h3 style={{ margin: 0, fontSize: 18, fontWeight: 600 }}>Galeria de Mídias</h3>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          <button
-            type="button"
-            onClick={() => { setShowUploader(!showUploader); setShowMediaSelector(false); }}
-            disabled={loading || uploading}
-            style={{
-              padding: '8px 16px',
-              borderRadius: 8,
-              border: '1px solid rgba(46,204,113,0.3)',
-              background: showUploader ? 'rgba(46,204,113,0.2)' : 'rgba(46,204,113,0.1)',
-              color: '#6ee7b7',
-              fontSize: 13,
-              fontWeight: 600,
-              cursor: loading || uploading ? 'not-allowed' : 'pointer',
-              opacity: loading || uploading ? 0.6 : 1,
-            }}
-          >
-            📤 {showUploader ? 'Cancelar' : 'Enviar Novo'}
-          </button>
-          <button
-            type="button"
-            onClick={() => { setShowMediaSelector(!showMediaSelector); setShowUploader(false); }}
-            disabled={loading || uploading}
-            style={{
-              padding: '8px 16px',
-              borderRadius: 8,
-              border: '1px solid rgba(201,35,55,0.3)',
-              background: showMediaSelector ? 'rgba(201,35,55,0.2)' : 'rgba(201,35,55,0.1)',
-              color: '#fca5a5',
-              fontSize: 13,
-              fontWeight: 600,
-              cursor: loading || uploading ? 'not-allowed' : 'pointer',
-              opacity: loading || uploading ? 0.6 : 1,
-            }}
-          >
-            📂 {showMediaSelector ? 'Cancelar' : 'Escolher Existente'}
-          </button>
+    <div style={{ marginTop: 16 }}>
+      {/* Header com contador */}
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        marginBottom: 16,
+        flexWrap: 'wrap',
+        gap: 12
+      }}>
+        <div>
+          <h3 style={{ margin: 0, fontSize: 18, fontWeight: 600, color: '#fff' }}>
+            📸 Galeria de Mídias ({gallery.length})
+          </h3>
+          <p style={{ margin: '4px 0 0', fontSize: 13, color: '#8f8ba2' }}>
+            🖼️ {imageCount} imagens • 🎬 {videoCount} vídeos
+          </p>
         </div>
-      </div>
-
-      {error && (
-        <div
+        <button
+          type="button"
+          onClick={() => setShowAddPanel(!showAddPanel)}
+          disabled={loading || uploading}
           style={{
-            padding: '10px 12px',
+            padding: '10px 20px',
             borderRadius: 8,
-            background: 'rgba(201,35,55,0.12)',
-            border: '1px solid rgba(201,35,55,0.35)',
-            color: '#fca5a5',
-            marginBottom: 16,
-            fontSize: 13,
+            border: 'none',
+            background: showAddPanel ? '#666' : 'linear-gradient(135deg, #c92337 0%, #ff6b6b 100%)',
+            color: '#fff',
+            fontSize: 14,
+            fontWeight: 600,
+            cursor: 'pointer',
           }}
         >
-          {error}
+          {showAddPanel ? '✕ Fechar' : '+ Adicionar Mídia'}
+        </button>
+      </div>
+
+      {/* Mensagens */}
+      {error && (
+        <div style={{
+          padding: '10px 14px',
+          borderRadius: 8,
+          background: 'rgba(201,35,55,0.15)',
+          border: '1px solid rgba(201,35,55,0.4)',
+          color: '#fca5a5',
+          marginBottom: 16,
+          fontSize: 13,
+        }}>
+          ❌ {error}
         </div>
       )}
 
       {success && (
-        <div
-          style={{
-            padding: '10px 12px',
-            borderRadius: 8,
-            background: 'rgba(46,204,113,0.12)',
-            border: '1px solid rgba(46,204,113,0.35)',
-            color: '#6ee7b7',
-            marginBottom: 16,
-            fontSize: 13,
-          }}
-        >
+        <div style={{
+          padding: '10px 14px',
+          borderRadius: 8,
+          background: 'rgba(46,204,113,0.15)',
+          border: '1px solid rgba(46,204,113,0.4)',
+          color: '#6ee7b7',
+          marginBottom: 16,
+          fontSize: 13,
+        }}>
           ✓ {success}
         </div>
       )}
 
-      {/* Upload de mídia */}
-      {showUploader && (
-        <div
-          style={{
-            padding: 20,
-            borderRadius: 12,
-            border: '2px dashed rgba(46,204,113,0.4)',
-            background: 'rgba(46,204,113,0.05)',
-            marginBottom: 16,
-          }}
-        >
-          <h4 style={{ margin: '0 0 16px 0', fontSize: 15, fontWeight: 600, color: '#6ee7b7' }}>
-            📤 Enviar Nova Mídia
-          </h4>
-
-          {/* Upload de arquivo */}
-          <div style={{ marginBottom: 20 }}>
-            <label style={{ fontSize: 14, fontWeight: 600, marginBottom: 8, display: 'block' }}>
-              1. Upload de Arquivo (Imagem ou Vídeo):
-            </label>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*,video/*"
-              onChange={handleFileUpload}
-              disabled={uploading}
-              style={{
-                width: '100%',
-                padding: '12px',
-                borderRadius: 8,
-                border: '1px solid rgba(255,255,255,0.12)',
-                background: 'rgba(255,255,255,0.04)',
-                color: '#fff',
-                fontSize: 14,
-                cursor: uploading ? 'not-allowed' : 'pointer',
-              }}
-            />
-            {uploading && (
-              <div style={{ marginTop: 8 }}>
-                <div style={{ height: 4, background: 'rgba(255,255,255,0.1)', borderRadius: 2, overflow: 'hidden' }}>
-                  <div
-                    style={{
-                      height: '100%',
-                      width: `${uploadProgress}%`,
-                      background: '#6ee7b7',
-                      transition: 'width 0.3s',
-                    }}
-                  />
-                </div>
-                <p style={{ margin: '4px 0 0', fontSize: 12, color: '#8f8ba2' }}>Enviando...</p>
-              </div>
-            )}
-          </div>
-
-          {/* OU separador */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-            <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.1)' }} />
-            <span style={{ fontSize: 12, color: '#8f8ba2' }}>OU</span>
-            <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.1)' }} />
-          </div>
-
-          {/* Adicionar por URL */}
-          <div>
-            <label style={{ fontSize: 14, fontWeight: 600, marginBottom: 8, display: 'block' }}>
-              2. Adicionar por URL (YouTube, Vimeo, Unsplash, etc):
-            </label>
-            <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
-              <select
-                value={urlType}
-                onChange={(e) => setUrlType(e.target.value as 'IMAGE' | 'VIDEO')}
-                style={{
-                  padding: '10px 12px',
-                  borderRadius: 8,
-                  border: '1px solid rgba(255,255,255,0.12)',
-                  background: 'rgba(255,255,255,0.04)',
-                  color: '#fff',
-                  fontSize: 14,
-                }}
-              >
-                <option value="IMAGE">🖼️ Imagem</option>
-                <option value="VIDEO">🎬 Vídeo</option>
-              </select>
+      {/* Painel de adicionar */}
+      {showAddPanel && (
+        <div style={{
+          padding: 20,
+          borderRadius: 12,
+          border: '2px dashed rgba(201,35,55,0.4)',
+          background: 'rgba(201,35,55,0.05)',
+          marginBottom: 20,
+        }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
+            {/* Upload de arquivo */}
+            <div style={{ 
+              padding: 16, 
+              borderRadius: 10, 
+              background: 'rgba(255,255,255,0.03)',
+              border: '1px solid rgba(255,255,255,0.08)'
+            }}>
+              <h4 style={{ margin: '0 0 12px', fontSize: 14, fontWeight: 600, color: '#6ee7b7' }}>
+                📤 Upload de Arquivo
+              </h4>
               <input
-                type="url"
-                value={urlInput}
-                onChange={(e) => setUrlInput(e.target.value)}
-                placeholder="https://..."
-                disabled={loading}
+                ref={fileInputRef}
+                type="file"
+                accept="image/*,video/*"
+                onChange={handleFileUpload}
+                disabled={uploading}
                 style={{
-                  flex: 1,
-                  padding: '10px 12px',
-                  borderRadius: 8,
+                  width: '100%',
+                  padding: 10,
+                  borderRadius: 6,
                   border: '1px solid rgba(255,255,255,0.12)',
                   background: 'rgba(255,255,255,0.04)',
                   color: '#fff',
-                  fontSize: 14,
+                  fontSize: 13,
                 }}
               />
+              {uploading && <p style={{ margin: '8px 0 0', fontSize: 12, color: '#6ee7b7' }}>Enviando...</p>}
+            </div>
+
+            {/* URL externa */}
+            <div style={{ 
+              padding: 16, 
+              borderRadius: 10, 
+              background: 'rgba(255,255,255,0.03)',
+              border: '1px solid rgba(255,255,255,0.08)'
+            }}>
+              <h4 style={{ margin: '0 0 12px', fontSize: 14, fontWeight: 600, color: '#7dd3fc' }}>
+                🔗 URL Externa
+              </h4>
+              <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+                <select
+                  value={urlType}
+                  onChange={(e) => setUrlType(e.target.value as 'IMAGE' | 'VIDEO')}
+                  style={{
+                    padding: 8,
+                    borderRadius: 6,
+                    border: '1px solid rgba(255,255,255,0.12)',
+                    background: 'rgba(255,255,255,0.04)',
+                    color: '#fff',
+                    fontSize: 13,
+                  }}
+                >
+                  <option value="IMAGE">🖼️ Imagem</option>
+                  <option value="VIDEO">🎬 Vídeo</option>
+                </select>
+                <input
+                  type="url"
+                  value={urlInput}
+                  onChange={(e) => setUrlInput(e.target.value)}
+                  placeholder="https://..."
+                  style={{
+                    flex: 1,
+                    padding: 8,
+                    borderRadius: 6,
+                    border: '1px solid rgba(255,255,255,0.12)',
+                    background: 'rgba(255,255,255,0.04)',
+                    color: '#fff',
+                    fontSize: 13,
+                  }}
+                />
+              </div>
               <button
                 type="button"
                 onClick={handleAddByUrl}
                 disabled={loading || !urlInput.trim()}
                 style={{
-                  padding: '10px 16px',
-                  borderRadius: 8,
+                  width: '100%',
+                  padding: 8,
+                  borderRadius: 6,
                   border: 'none',
-                  background: loading || !urlInput.trim() ? '#666' : '#6ee7b7',
-                  color: loading || !urlInput.trim() ? '#999' : '#000',
+                  background: urlInput.trim() ? '#7dd3fc' : '#444',
+                  color: urlInput.trim() ? '#000' : '#888',
                   fontSize: 13,
                   fontWeight: 600,
-                  cursor: loading || !urlInput.trim() ? 'not-allowed' : 'pointer',
-                  whiteSpace: 'nowrap',
+                  cursor: urlInput.trim() ? 'pointer' : 'not-allowed',
                 }}
               >
-                Adicionar
+                Adicionar URL
               </button>
             </div>
-            <p style={{ margin: 0, fontSize: 12, color: '#8f8ba2' }}>
-              💡 Cole URLs de imagens do Unsplash, Pexels, ou vídeos do YouTube/Vimeo.
-            </p>
+
+            {/* Biblioteca existente */}
+            <div style={{ 
+              padding: 16, 
+              borderRadius: 10, 
+              background: 'rgba(255,255,255,0.03)',
+              border: '1px solid rgba(255,255,255,0.08)'
+            }}>
+              <h4 style={{ margin: '0 0 12px', fontSize: 14, fontWeight: 600, color: '#fbbf24' }}>
+                📂 Da Biblioteca
+              </h4>
+              {loadingMedia ? (
+                <p style={{ color: '#8f8ba2', fontSize: 12 }}>Carregando...</p>
+              ) : availableMedia.length === 0 ? (
+                <p style={{ color: '#8f8ba2', fontSize: 12 }}>Nenhuma mídia disponível</p>
+              ) : (
+                <>
+                  <select
+                    value={selectedMediaId}
+                    onChange={(e) => setSelectedMediaId(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: 8,
+                      borderRadius: 6,
+                      border: '1px solid rgba(255,255,255,0.12)',
+                      background: 'rgba(255,255,255,0.04)',
+                      color: '#fff',
+                      fontSize: 13,
+                      marginBottom: 8,
+                    }}
+                  >
+                    <option value="">Selecione...</option>
+                    {availableMedia.map((m) => (
+                      <option key={m.id} value={m.id}>
+                        {m.type === 'IMAGE' ? '🖼️' : '🎬'} {m.altPt || m.originalUrl.split('/').pop()?.slice(0, 30)}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    onClick={handleAddExisting}
+                    disabled={!selectedMediaId}
+                    style={{
+                      width: '100%',
+                      padding: 8,
+                      borderRadius: 6,
+                      border: 'none',
+                      background: selectedMediaId ? '#fbbf24' : '#444',
+                      color: selectedMediaId ? '#000' : '#888',
+                      fontSize: 13,
+                      fontWeight: 600,
+                      cursor: selectedMediaId ? 'pointer' : 'not-allowed',
+                    }}
+                  >
+                    Adicionar
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
       )}
 
-      {/* Seletor de mídia existente */}
-      {showMediaSelector && (
-        <div
-          style={{
-            padding: 16,
-            borderRadius: 12,
-            border: '1px solid rgba(255,255,255,0.08)',
-            background: 'rgba(255,255,255,0.03)',
-            marginBottom: 16,
-          }}
-        >
-          <label style={{ fontSize: 14, fontWeight: 600, marginBottom: 8, display: 'block' }}>
-            Selecione uma mídia para adicionar:
-          </label>
-          {loadingMedia ? (
-            <p style={{ color: '#8f8ba2', fontSize: 13 }}>Carregando mídias...</p>
-          ) : availableMedia.length === 0 ? (
-            <p style={{ color: '#8f8ba2', fontSize: 13 }}>
-              Nenhuma mídia disponível. <a href="/admin/media" style={{ color: '#7dd3fc' }}>Envie uma mídia primeiro</a>.
-            </p>
-          ) : (
-            <>
-              <select
-                value={selectedMediaId}
-                onChange={(e) => setSelectedMediaId(e.target.value)}
-                style={{
-                  width: '100%',
-                  height: 42,
-                  borderRadius: 8,
-                  border: '1px solid rgba(255,255,255,0.12)',
-                  background: 'rgba(255,255,255,0.04)',
-                  padding: '0 12px',
-                  color: '#fff',
-                  fontSize: 14,
-                  marginBottom: 12,
-                }}
-              >
-                <option value="">-- Selecione uma mídia --</option>
-                {availableMedia.map((media) => (
-                  <option key={media.id} value={media.id}>
-                    {media.type} - {media.altPt || media.altEn || media.originalUrl.split('/').pop()}
-                  </option>
-                ))}
-              </select>
-              <button
-                type="button"
-                onClick={handleAddMedia}
-                disabled={loading || !selectedMediaId}
-                style={{
-                  padding: '8px 16px',
-                  borderRadius: 8,
-                  border: 'none',
-                  background: loading || !selectedMediaId ? '#666' : '#c92337',
-                  color: '#fff',
-                  fontSize: 13,
-                  fontWeight: 600,
-                  cursor: loading || !selectedMediaId ? 'not-allowed' : 'pointer',
-                }}
-              >
-                {loading ? 'Adicionando...' : 'Adicionar à Galeria'}
-              </button>
-            </>
-          )}
-        </div>
-      )}
-
-      {/* Lista da galeria */}
+      {/* Grid de Mídias */}
       {gallery.length === 0 ? (
-        <div
-          style={{
-            padding: 40,
-            textAlign: 'center',
-            borderRadius: 12,
-            border: '1px solid rgba(255,255,255,0.08)',
-            background: 'rgba(255,255,255,0.03)',
-            color: '#8f8ba2',
-          }}
-        >
-          <p style={{ margin: 0, fontSize: 14 }}>Nenhuma mídia na galeria ainda.</p>
-          <p style={{ margin: '8px 0 0', fontSize: 13 }}>
-            Clique em "Adicionar Mídia" para começar.
+        <div style={{
+          padding: 60,
+          textAlign: 'center',
+          borderRadius: 12,
+          border: '2px dashed rgba(255,255,255,0.1)',
+          background: 'rgba(255,255,255,0.02)',
+        }}>
+          <div style={{ fontSize: 48, marginBottom: 16 }}>📷</div>
+          <p style={{ margin: 0, fontSize: 15, color: '#8f8ba2' }}>
+            Nenhuma mídia na galeria ainda
+          </p>
+          <p style={{ margin: '8px 0 0', fontSize: 13, color: '#666' }}>
+            Clique em "+ Adicionar Mídia" para começar
           </p>
         </div>
       ) : (
-        <div style={{ display: 'grid', gap: 12 }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+          gap: 16,
+        }}>
           {gallery.map((item, index) => (
             <div
               key={item.id}
               style={{
-                display: 'grid',
-                gridTemplateColumns: 'auto 1fr auto',
-                gap: 16,
-                padding: 16,
                 borderRadius: 12,
-                border: '1px solid rgba(255,255,255,0.08)',
+                border: '1px solid rgba(255,255,255,0.1)',
                 background: 'rgba(255,255,255,0.03)',
-                alignItems: 'center',
+                overflow: 'hidden',
+                position: 'relative',
               }}
             >
-              {/* Preview */}
-              <div style={{ position: 'relative', width: 120, height: 80, borderRadius: 8, overflow: 'hidden', background: '#1a1a1a' }}>
+              {/* Número de ordem */}
+              <div style={{
+                position: 'absolute',
+                top: 8,
+                left: 8,
+                width: 28,
+                height: 28,
+                borderRadius: '50%',
+                background: 'rgba(0,0,0,0.7)',
+                color: '#fff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 12,
+                fontWeight: 700,
+                zIndex: 2,
+              }}>
+                {index + 1}
+              </div>
+
+              {/* Badge de tipo */}
+              <div style={{
+                position: 'absolute',
+                top: 8,
+                right: 8,
+                padding: '4px 8px',
+                borderRadius: 6,
+                background: item.media.type === 'IMAGE' ? 'rgba(46,204,113,0.9)' : 'rgba(201,35,55,0.9)',
+                color: '#fff',
+                fontSize: 10,
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                zIndex: 2,
+              }}>
+                {item.media.type === 'IMAGE' ? '🖼️ IMG' : '🎬 VID'}
+              </div>
+
+              {/* Thumbnail */}
+              <div style={{
+                width: '100%',
+                height: 140,
+                background: '#111',
+                position: 'relative',
+              }}>
                 {item.media.type === 'IMAGE' ? (
                   <img
                     src={item.media.thumbnailUrl || item.media.mediumUrl || item.media.originalUrl}
-                    alt={item.media.altPt || item.media.altEn || ''}
+                    alt={item.media.altPt || ''}
                     style={{
                       width: '100%',
                       height: '100%',
                       objectFit: 'cover',
                     }}
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://via.placeholder.com/220x140/1a1a1a/666?text=Imagem';
+                    }}
                   />
                 ) : (
-                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <svg style={{ width: 32, height: 32, color: '#666' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                )}
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: 4,
-                    right: 4,
-                    padding: '2px 6px',
-                    borderRadius: 4,
-                    background: item.media.type === 'IMAGE' ? 'rgba(46,204,113,0.8)' : 'rgba(201,35,55,0.8)',
-                    color: '#fff',
-                    fontSize: 10,
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  {item.media.type}
-                </div>
-              </div>
-
-              {/* Info */}
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 4, color: '#fff' }}>
-                  {item.media.altPt || item.media.altEn || 'Sem descrição'}
-                </div>
-                <div style={{ fontSize: 12, color: '#8f8ba2', wordBreak: 'break-all' }}>
-                  {item.media.originalUrl}
-                </div>
-                {item.media.width && item.media.height && (
-                  <div style={{ fontSize: 12, color: '#8f8ba2', marginTop: 4 }}>
-                    {item.media.width} × {item.media.height}px
+                  <div style={{
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%)',
+                  }}>
+                    <div style={{ fontSize: 36, marginBottom: 4 }}>▶️</div>
+                    <span style={{ fontSize: 11, color: '#888' }}>
+                      {item.media.originalUrl.includes('youtube') ? 'YouTube' : 
+                       item.media.originalUrl.includes('vimeo') ? 'Vimeo' : 'Vídeo'}
+                    </span>
                   </div>
                 )}
               </div>
 
-              {/* Controles */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                <div style={{ display: 'flex', gap: 4 }}>
+              {/* Conteúdo do card */}
+              <div style={{ padding: 12 }}>
+                {/* Campo de legenda */}
+                {editingCaption === item.id ? (
+                  <div style={{ marginBottom: 10 }}>
+                    <textarea
+                      value={captionText}
+                      onChange={(e) => setCaptionText(e.target.value)}
+                      placeholder="Digite a legenda..."
+                      style={{
+                        width: '100%',
+                        minHeight: 60,
+                        padding: 8,
+                        borderRadius: 6,
+                        border: '1px solid rgba(201,35,55,0.5)',
+                        background: 'rgba(255,255,255,0.05)',
+                        color: '#fff',
+                        fontSize: 12,
+                        resize: 'vertical',
+                      }}
+                    />
+                    <div style={{ display: 'flex', gap: 6, marginTop: 6 }}>
+                      <button
+                        type="button"
+                        onClick={() => handleSaveCaption(item.id)}
+                        style={{
+                          flex: 1,
+                          padding: 6,
+                          borderRadius: 4,
+                          border: 'none',
+                          background: '#6ee7b7',
+                          color: '#000',
+                          fontSize: 11,
+                          fontWeight: 600,
+                          cursor: 'pointer',
+                        }}
+                      >
+                        ✓ Salvar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEditingCaption(null)}
+                        style={{
+                          flex: 1,
+                          padding: 6,
+                          borderRadius: 4,
+                          border: '1px solid rgba(255,255,255,0.2)',
+                          background: 'transparent',
+                          color: '#888',
+                          fontSize: 11,
+                          cursor: 'pointer',
+                        }}
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => {
+                      setEditingCaption(item.id);
+                      setCaptionText(item.media.altPt || '');
+                    }}
+                    style={{
+                      padding: 8,
+                      borderRadius: 6,
+                      background: 'rgba(255,255,255,0.04)',
+                      marginBottom: 10,
+                      cursor: 'pointer',
+                      minHeight: 40,
+                    }}
+                  >
+                    {item.media.altPt ? (
+                      <p style={{ margin: 0, fontSize: 12, color: '#ccc', lineHeight: 1.4 }}>
+                        {item.media.altPt}
+                      </p>
+                    ) : (
+                      <p style={{ margin: 0, fontSize: 12, color: '#666', fontStyle: 'italic' }}>
+                        📝 Clique para adicionar legenda...
+                      </p>
+                    )}
+                  </div>
+                )}
+
+                {/* Controles */}
+                <div style={{ display: 'flex', gap: 6 }}>
                   <button
                     type="button"
-                    onClick={() => handleMoveUp(index)}
-                    disabled={loading || index === 0}
+                    onClick={() => handleMove(index, 'up')}
+                    disabled={index === 0 || loading}
                     style={{
-                      padding: '6px 8px',
-                      borderRadius: 6,
+                      flex: 1,
+                      padding: 6,
+                      borderRadius: 4,
                       border: '1px solid rgba(255,255,255,0.12)',
-                      background: loading || index === 0 ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.04)',
-                      color: loading || index === 0 ? '#666' : '#fff',
-                      cursor: loading || index === 0 ? 'not-allowed' : 'pointer',
+                      background: index === 0 ? 'transparent' : 'rgba(255,255,255,0.05)',
+                      color: index === 0 ? '#444' : '#888',
                       fontSize: 12,
+                      cursor: index === 0 ? 'not-allowed' : 'pointer',
                     }}
-                    title="Mover para cima"
                   >
-                    ↑
+                    ← Mover
                   </button>
                   <button
                     type="button"
-                    onClick={() => handleMoveDown(index)}
-                    disabled={loading || index === gallery.length - 1}
+                    onClick={() => handleMove(index, 'down')}
+                    disabled={index === gallery.length - 1 || loading}
                     style={{
-                      padding: '6px 8px',
-                      borderRadius: 6,
+                      flex: 1,
+                      padding: 6,
+                      borderRadius: 4,
                       border: '1px solid rgba(255,255,255,0.12)',
-                      background: loading || index === gallery.length - 1 ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.04)',
-                      color: loading || index === gallery.length - 1 ? '#666' : '#fff',
-                      cursor: loading || index === gallery.length - 1 ? 'not-allowed' : 'pointer',
+                      background: index === gallery.length - 1 ? 'transparent' : 'rgba(255,255,255,0.05)',
+                      color: index === gallery.length - 1 ? '#444' : '#888',
                       fontSize: 12,
+                      cursor: index === gallery.length - 1 ? 'not-allowed' : 'pointer',
                     }}
-                    title="Mover para baixo"
                   >
-                    ↓
+                    Mover →
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleRemove(item.mediaId)}
+                    disabled={loading}
+                    style={{
+                      padding: '6px 10px',
+                      borderRadius: 4,
+                      border: 'none',
+                      background: 'rgba(201,35,55,0.2)',
+                      color: '#fca5a5',
+                      fontSize: 12,
+                      cursor: 'pointer',
+                    }}
+                    title="Remover"
+                  >
+                    🗑️
                   </button>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => handleRemoveMedia(item.mediaId)}
-                  disabled={loading}
-                  style={{
-                    padding: '6px 12px',
-                    borderRadius: 6,
-                    border: '1px solid rgba(201,35,55,0.3)',
-                    background: 'rgba(201,35,55,0.1)',
-                    color: '#fca5a5',
-                    fontSize: 12,
-                    fontWeight: 600,
-                    cursor: loading ? 'not-allowed' : 'pointer',
-                    opacity: loading ? 0.6 : 1,
-                  }}
-                >
-                  Remover
-                </button>
               </div>
             </div>
           ))}
@@ -739,11 +772,10 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
       )}
 
       {gallery.length > 0 && (
-        <p style={{ marginTop: 12, fontSize: 12, color: '#8f8ba2' }}>
-          💡 A ordem das mídias na galeria será exibida na página de detalhe do projeto.
+        <p style={{ marginTop: 16, fontSize: 12, color: '#666', textAlign: 'center' }}>
+          💡 Clique nas legendas para editar • Arraste os botões para reordenar
         </p>
       )}
     </div>
   );
 }
-
