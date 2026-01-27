@@ -567,47 +567,56 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
             </div>
           </div>
 
-          {/* Content - Pílula alinhada à esquerda, textos centralizados */}
+          {/* Content - Pílula e título no mesmo container para alinhamento perfeito */}
           <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="pt-16 pb-12 md:pt-20 md:pb-16">
-              {/* Badge Premium - Alinhado com lateral esquerda do título AZIMUT ACADEMY */}
-              <div 
-                className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-8 backdrop-blur-md animate-fade-in ml-[12%] md:ml-[15%] lg:ml-[18%]"
-                style={theme === 'dark' ? {
-                  background: 'rgba(23, 37, 84, 0.55)',
-                  border: '1px solid rgba(30, 58, 138, 0.70)',
-                  boxShadow: '0 4px 24px rgba(0, 0, 0, 0.50), inset 0 1px 0 rgba(255, 255, 255, 0.20)'
-                } : {
-                  background: 'rgba(201, 35, 55, 0.50)',
-                  border: '1px solid rgba(201, 35, 55, 0.70)',
-                  boxShadow: '0 4px 24px rgba(0, 0, 0, 0.50), inset 0 1px 0 rgba(255, 255, 255, 0.25)'
-                }}
-              >
-                <span 
-                  className="text-xs font-semibold uppercase tracking-[0.15em]"
-                  style={{ 
-                    color: '#ffffff',
-                    textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)'
-                  }}
-                >
-                  {t.hero.badge}
-                </span>
-              </div>
+              {/* Container centralizado para pílula + título */}
+              <div className="flex flex-col items-center">
+                {/* Container inline para alinhar pílula com início do título */}
+                <div className="inline-flex flex-col items-start">
+                  {/* Badge Premium - Alinhado com lateral esquerda do título */}
+                  <div 
+                    className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-6 backdrop-blur-md animate-fade-in"
+                    style={theme === 'dark' ? {
+                      background: 'rgba(23, 37, 84, 0.55)',
+                      border: '1px solid rgba(30, 58, 138, 0.70)',
+                      boxShadow: '0 4px 24px rgba(0, 0, 0, 0.50), inset 0 1px 0 rgba(255, 255, 255, 0.20)'
+                    } : {
+                      background: 'rgba(201, 35, 55, 0.50)',
+                      border: '1px solid rgba(201, 35, 55, 0.70)',
+                      boxShadow: '0 4px 24px rgba(0, 0, 0, 0.50), inset 0 1px 0 rgba(255, 255, 255, 0.25)'
+                    }}
+                  >
+                    <span 
+                      className="text-xs font-semibold uppercase tracking-[0.15em]"
+                      style={{ 
+                        color: '#ffffff',
+                        textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)'
+                      }}
+                    >
+                      {t.hero.badge}
+                    </span>
+                  </div>
 
-              {/* Título - Centro */}
-              <h1 
-                className="text-center text-5xl md:text-7xl lg:text-8xl font-handel uppercase tracking-wider mb-6 leading-none animate-fade-in-up"
-                style={{ 
-                  color: '#ffffff',
-                  textShadow: theme === 'dark' 
-                    ? '0 4px 18px rgba(0, 0, 0, 0.75), 0 8px 30px rgba(0, 0, 0, 0.55)'
-                    : '0 4px 24px rgba(0, 0, 0, 0.85), 0 8px 40px rgba(0, 0, 0, 0.65)',
-                  letterSpacing: '0.06em',
-                  fontWeight: 400
-                }}
-              >
-                {t.hero.title}
-              </h1>
+                  {/* Título - mesmo container da pílula para alinhamento */}
+                  <h1 
+                    className="text-5xl md:text-7xl lg:text-8xl font-handel uppercase tracking-wider leading-none animate-fade-in-up"
+                    style={{ 
+                      color: '#ffffff',
+                      textShadow: theme === 'dark' 
+                        ? '0 4px 18px rgba(0, 0, 0, 0.75), 0 8px 30px rgba(0, 0, 0, 0.55)'
+                        : '0 4px 24px rgba(0, 0, 0, 0.85), 0 8px 40px rgba(0, 0, 0, 0.65)',
+                      letterSpacing: '0.06em',
+                      fontWeight: 400
+                    }}
+                  >
+                    {t.hero.title}
+                  </h1>
+                </div>
+              </div>
+              
+              {/* Margem após título */}
+              <div className="h-2 md:h-4" />
 
               {/* Espaçador para baixar os textos */}
               <div className="h-8 md:h-12" />
