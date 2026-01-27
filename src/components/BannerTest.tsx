@@ -11,6 +11,11 @@ import { useTheme } from '../contexts/ThemeContext'
 const BannerTest: React.FC = () => {
   const { theme } = useTheme()
   
+  // Só mostrar em desenvolvimento
+  if (import.meta.env.PROD) {
+    return null
+  }
+  
   useEffect(() => {
     console.log('🧪 BannerTest montado e renderizando!')
   }, [])
