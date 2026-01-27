@@ -1,12 +1,45 @@
 /**
  * Script para Otimizar Projetos com IA
- * Usa a API /api/seo/analyze diretamente (sem fetch HTTP)
+ * Chama Claude diretamente (sem fazer fetch HTTP)
  */
+
+// Carregar variáveis de ambiente do arquivo .env
+try {
+  const { config } = require('dotenv')
+  const { resolve } = require('path')
+  const { existsSync } = require('fs')
+  
+  // Tentar carregar .env.local primeiro (tem prioridade)
+  const envLocalPath = resolve(__dirname, '../.env.local')
+  if (existsSync(envLocalPath)) {
+    config({ path: envLocalPath })
+  }
+  
+  // Depois carregar .env
+  const envPath = resolve(__dirname, '../.env')
+  if (existsSync(envPath)) {
+    config({ path: envPath })
+  }
+} catch (e) {
+  // Se dotenv não estiver instalado, continuar (pode estar no ambiente)
+  console.warn('⚠️  dotenv não encontrado, usando variáveis de ambiente do sistema')
+}
 
 import { prisma } from '../src/lib/prisma'
 import Anthropic from '@anthropic-ai/sdk'
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY
+
+if (!ANTHROPIC_API_KEY) {
+  console.error('❌ ERRO: ANTHROPIC_API_KEY não encontrada!')
+  console.error('')
+  console.error('📋 Como configurar:')
+  console.error('   1. Crie um arquivo .env na pasta azimut-cms')
+  console.error('   2. Adicione: ANTHROPIC_API_KEY=sua-chave-aqui')
+  console.error('   3. Ou configure no Vercel (Settings → Environment Variables)')
+  console.error('')
+  process.exit(1)
+}
 
 const anthropic = new Anthropic({
   apiKey: ANTHROPIC_API_KEY || '',
@@ -90,18 +123,26 @@ Retorne APENAS JSON válido, sem markdown, sem explicações adicionais.`
 
     return analysis
   } catch (error: any) {
-    console.error(`  ❌ Erro ao otimizar ${project.slug} (${lang}):`, error.message)
+    const errorMsg = error.message || JSON.stringify(error)
+    console.error(`  ❌ Erro ao otimizar ${project.slug} (${lang}):`, errorMsg)
+    
+    // Se for erro de autenticação, mostrar ajuda
+    if (errorMsg.includes('authentication') || errorMsg.includes('api-key') || errorMsg.includes('401')) {
+      console.error(`     ⚠️  Erro de autenticação! Verifique se ANTHROPIC_API_KEY está correta.`)
+    }
+    
     return null
   }
 }
 
 async function main() {
   console.log('🚀 Iniciando otimização de projetos com IA...\n')
-
-  if (!ANTHROPIC_API_KEY) {
-    console.error('❌ ANTHROPIC_API_KEY não configurada!')
-    process.exit(1)
+  
+  console.log(`🔑 API Key configurada: ${ANTHROPIC_API_KEY ? '✅ Sim' : '❌ Não'}`)
+  if (ANTHROPIC_API_KEY) {
+    console.log(`   (Chave: ${ANTHROPIC_API_KEY.substring(0, 10)}...)`)
   }
+  console.log('')
 
   // Buscar projetos publicados
   const projects = await prisma.project.findMany({
