@@ -12,8 +12,14 @@ import { useState, useEffect, useRef } from 'react';
 // Tracking de conteúdo do CMS ativado
 const CMS_ENABLED = true;
 
-const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br';
-const API_URL = `${BACKOFFICE_URL}/api`;
+// URL do backoffice - tenta várias variáveis de ambiente
+const BACKOFFICE_URL = 
+  import.meta.env.VITE_BACKOFFICE_URL || 
+  import.meta.env.VITE_API_URL || 
+  import.meta.env.VITE_CMS_API_URL?.replace('/api', '') ||
+  'https://azimut-backoffice-git-main-azimuts-projects-6435f869.vercel.app';
+
+const API_URL = BACKOFFICE_URL.endsWith('/api') ? BACKOFFICE_URL : `${BACKOFFICE_URL}/api`;
 
 interface ContentOptions {
   page?: string;
@@ -65,22 +71,29 @@ export function useAzimutContent(options: ContentOptions = {}): UseAzimutContent
       
       try {
         const lang = propLang || localStorage.getItem('azimut-lang') || 'pt';
+        const url = `${API_URL}/public/content?lang=${lang}&page=${page}`;
         
-        const response = await fetch(
-          `${API_URL}/public/content?lang=${lang}&page=${page}`,
-          {
-            signal: controller.signal,
-            headers: { 'Content-Type': 'application/json' },
-          }
-        );
+        console.log('[CMS] Buscando conteúdo:', url);
+        
+        const response = await fetch(url, {
+          signal: controller.signal,
+          headers: { 'Content-Type': 'application/json' },
+        });
         
         if (!isMounted.current) return;
         
+        console.log('[CMS] Response status:', response.status);
+        
         if (response.ok) {
           const data = await response.json();
+          console.log('[CMS] Dados recebidos:', {
+            page: data.page?.slug,
+            projectsCount: data.highlightProjects?.length || 0,
+            projects: data.highlightProjects?.map((p: any) => p.title).slice(0, 5)
+          });
           setContent(data);
         } else {
-          // Falha silenciosa - usar fallback
+          console.warn('[CMS] Resposta não-OK:', response.status, response.statusText);
           setContent(null);
         }
       } catch (err) {
@@ -89,8 +102,7 @@ export function useAzimutContent(options: ContentOptions = {}): UseAzimutContent
         
         if (!isMounted.current) return;
         
-        // Falha silenciosa - usar fallback
-        console.warn('[CMS] Usando conteúdo local');
+        console.error('[CMS] Erro ao buscar:', err);
         setContent(null);
       } finally {
         if (isMounted.current) {

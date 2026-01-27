@@ -250,11 +250,20 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   
   // MIGRAÇÃO GRADUAL: Backoffice → Estático (sempre funciona)
   const allCases = useMemo(() => {
+    console.log('[Work] CMS Content:', {
+      loading: cmsLoading,
+      error: cmsError,
+      hasProjects: !!cmsContent?.highlightProjects,
+      projectsCount: cmsContent?.highlightProjects?.length || 0,
+    });
+    
     if (cmsContent?.highlightProjects && Array.isArray(cmsContent.highlightProjects) && cmsContent.highlightProjects.length > 0) {
+      console.log('[Work] Usando projetos do CMS:', cmsContent.highlightProjects.length);
       return cmsContent.highlightProjects;
     }
+    console.log('[Work] Usando projetos fallback:', defaultCases.length);
     return defaultCases;
-  }, [cmsContent?.highlightProjects, defaultCases])
+  }, [cmsContent?.highlightProjects, defaultCases, cmsLoading, cmsError])
   
   // Filtrar projetos com filtros avançados
   const cases = useMemo(() => {
