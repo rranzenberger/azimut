@@ -1,12 +1,16 @@
 /**
  * Script para Otimizar Projetos com IA
- * Usa a API /api/seo/analyze para otimizar conteúdo de projetos
+ * Usa a API /api/seo/analyze diretamente (sem fetch HTTP)
  */
 
 import { prisma } from '../src/lib/prisma'
+import Anthropic from '@anthropic-ai/sdk'
 
-const API_URL = process.env.VITE_CMS_API_URL || 'https://backoffice.azmt.com.br'
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY
+
+const anthropic = new Anthropic({
+  apiKey: ANTHROPIC_API_KEY || '',
+})
 
 async function otimizarProjeto(project: any, lang: 'pt' | 'en' | 'es' | 'fr' = 'pt') {
   const descriptionField = `description${lang.charAt(0).toUpperCase() + lang.slice(1)}` as 'descriptionPt' | 'descriptionEn' | 'descriptionEs' | 'descriptionFr'
@@ -22,29 +26,69 @@ async function otimizarProjeto(project: any, lang: 'pt' | 'en' | 'es' | 'fr' = '
   const content = `${project.title}\n\n${description}`
   
   try {
-    const response = await fetch(`${API_URL}/api/seo/analyze`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        content,
-        type: 'project',
-        targetSearchEngines: ['google', 'bing'],
-      }),
+    // Chamar Claude diretamente (sem fazer fetch HTTP)
+    const prompt = `Você é um especialista em SEO para múltiplos buscadores: google, bing.
+
+Analise o seguinte conteúdo e forneça recomendações de otimização:
+
+CONTEÚDO:
+${content}
+
+TIPO: project
+
+Forneça uma análise JSON com:
+1. keywords: Array de 10-15 palavras-chave principais relevantes
+2. metaTitle: Título otimizado (50-60 caracteres)
+3. metaDescription: Descrição otimizada (150-160 caracteres)
+4. headings: Sugestões de H1, H2, H3 otimizados
+5. altTexts: Sugestões de alt texts descritivos para imagens
+6. schemaOrg: Tipos de Schema.org recomendados (array)
+7. improvements: Array de melhorias específicas
+8. competitorAnalysis: Sugestões baseadas em melhores práticas
+9. searchEngines: Otimizações específicas para cada buscador mencionado
+
+IMPORTANTE:
+- Otimize para google, bing
+- Considere diferenças entre buscadores
+- Foque em palavras-chave relevantes e naturais
+- Priorize experiência do usuário
+- Sugira Schema.org apropriado
+
+Retorne APENAS JSON válido, sem markdown, sem explicações adicionais.`
+
+    const message = await anthropic.messages.create({
+      model: 'claude-3-5-sonnet-20241022',
+      max_tokens: 4000,
+      messages: [
+        {
+          role: 'user',
+          content: prompt,
+        },
+      ],
     })
 
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+    // Extrair resposta
+    const responseText =
+      message.content[0].type === 'text'
+        ? message.content[0].text
+        : JSON.stringify(message.content[0])
+
+    // Tentar parsear JSON
+    let analysis
+    try {
+      const cleaned = responseText
+        .replace(/```json\n?/g, '')
+        .replace(/```\n?/g, '')
+        .trim()
+      analysis = JSON.parse(cleaned)
+    } catch (parseError) {
+      analysis = {
+        raw: responseText,
+        error: 'Resposta não é JSON válido',
+      }
     }
 
-    const data = await response.json()
-    
-    if (!data.success || !data.analysis) {
-      throw new Error('Resposta inválida da API')
-    }
-
-    return data.analysis
+    return analysis
   } catch (error: any) {
     console.error(`  ❌ Erro ao otimizar ${project.slug} (${lang}):`, error.message)
     return null
@@ -94,15 +138,15 @@ async function main() {
     // Otimizar para português (prioridade)
     const analisePt = await otimizarProjeto(project, 'pt')
     
-    if (analisePt) {
+    if (analisePt && !analisePt.error) {
       console.log(`  ✅ PT: ${analisePt.keywords?.length || 0} keywords sugeridas`)
       console.log(`     Meta Title: ${analisePt.metaTitle?.substring(0, 60)}...`)
       console.log(`     Meta Description: ${analisePt.metaDescription?.substring(0, 80)}...`)
       
-      // Aqui você pode salvar as sugestões no banco se quiser
-      // Por enquanto, apenas exibimos
-      
       resultados.otimizados++
+    } else if (analisePt?.error) {
+      console.log(`  ⚠️  Erro ao processar resposta da IA`)
+      resultados.erros++
     } else {
       resultados.semDescricao++
     }
