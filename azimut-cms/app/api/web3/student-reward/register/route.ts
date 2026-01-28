@@ -137,8 +137,8 @@ export async function POST(request: NextRequest) {
           projectValue: parseFloat(projectValue),
           rewardAmount: rewardAmount ? parseFloat(rewardAmount) : null,
           description,
-          txHash,
-          contractAddress: STUDENT_REWARD_CONTRACT.toLowerCase(),
+          txHash: txHash || null,
+          contractAddress: STUDENT_REWARD_CONTRACT!.toLowerCase(),
           status: 'REGISTERED',
         },
       })

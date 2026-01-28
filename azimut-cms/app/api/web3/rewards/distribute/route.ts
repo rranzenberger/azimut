@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
     try {
       // Conectar à blockchain
       const provider = new ethers.JsonRpcProvider(RPC_URL)
-      const wallet = new ethers.Wallet(COMPANY_WALLET_PRIVATE_KEY, provider)
+      const wallet = new ethers.Wallet(COMPANY_WALLET_PRIVATE_KEY!, provider)
       
       // Verificar saldo antes de enviar (para evitar falhas)
       const balance = await provider.getBalance(COMPANY_WALLET_ADDRESS)
@@ -167,23 +167,24 @@ export async function POST(request: NextRequest) {
       error = txError.message || 'Erro ao distribuir recompensa'
       
       // Registrar erro no banco
-      try {
-        const { prisma } = await import('@/src/lib/prisma')
-        await prisma.reward.create({
-          data: {
-            toAddress: toAddress.toLowerCase(),
-            fromAddress: COMPANY_WALLET_ADDRESS.toLowerCase(),
-            rewardType,
-            amount: amount ? parseFloat(amount) : null,
-            nftId: nftId || null,
-            txHash: null,
-            status: 'FAILED',
-            description: `Erro: ${error}`,
-          },
-        })
-      } catch (dbError) {
-        // Ignorar erro de banco
-      }
+      // TODO: Criar modelo Reward no Prisma schema
+      // try {
+      //   const { prisma } = await import('@/src/lib/prisma')
+      //   await (prisma as any).reward.create({
+      //     data: {
+      //       toAddress: toAddress.toLowerCase(),
+      //       fromAddress: COMPANY_WALLET_ADDRESS.toLowerCase(),
+      //       rewardType,
+      //       amount: amount ? parseFloat(amount) : null,
+      //       nftId: nftId || null,
+      //       txHash: null,
+      //       status: 'FAILED',
+      //       description: `Erro: ${error}`,
+      //     },
+      //   })
+      // } catch (dbError) {
+      //   // Ignorar erro de banco
+      // }
 
       return NextResponse.json(
         {
