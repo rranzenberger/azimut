@@ -39,24 +39,25 @@ export async function POST(request: NextRequest) {
     }
 
     // Registrar pagamento no banco
-    try {
-      const { prisma } = await import('@/src/lib/prisma')
-      
-      await prisma.payment.create({
-        data: {
-          fromAddress: fromAddress.toLowerCase(),
-          toAddress: COMPANY_WALLET_ADDRESS.toLowerCase(),
-          amount: parseFloat(amount),
-          currency,
-          txHash: txHash || null,
-          status: txHash ? 'CONFIRMED' : 'PENDING',
-          description: description || `Pagamento de ${amount} ${currency}`,
-        },
-      })
-    } catch (dbError: any) {
-      // Se tabela Payment não existir, continuar mesmo assim
-      console.warn('[Payment] Tabela não existe, continuando...', dbError.message)
-    }
+    // TODO: Criar modelo Payment no Prisma schema
+    // try {
+    //   const { prisma } = await import('@/src/lib/prisma')
+    //   
+    //   await (prisma as any).payment.create({
+    //     data: {
+    //       fromAddress: fromAddress.toLowerCase(),
+    //       toAddress: COMPANY_WALLET_ADDRESS.toLowerCase(),
+    //       amount: parseFloat(amount),
+    //       currency,
+    //       txHash: txHash || null,
+    //       status: txHash ? 'CONFIRMED' : 'PENDING',
+    //       description: description || `Pagamento de ${amount} ${currency}`,
+    //     },
+    //   })
+    // } catch (dbError: any) {
+    //   // Se tabela Payment não existir, continuar mesmo assim
+    //   console.warn('[Payment] Tabela não existe, continuando...', dbError.message)
+    // }
 
     return NextResponse.json({
       success: true,

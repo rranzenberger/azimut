@@ -164,20 +164,22 @@ export async function POST(request: Request) {
         utmMedium: null,
         utmCampaign: null,
         // 🧠 Salvar análise completa da IA
-        leadIntelligence: aiAnalysis ? {
-          score: aiAnalysis.leadScore,
-          priority: aiAnalysis.priority,
-          visitorType: aiAnalysis.visitorType,
-          organizationType: aiAnalysis.organizationType,
-          estimatedValue: aiAnalysis.estimatedValue,
-          likelihood: aiAnalysis.likelihood,
-          insights: aiAnalysis.insights || [],
-          recommendedActions: aiAnalysis.recommendedActions || [],
-          riskFactors: aiAnalysis.riskFactors || [],
-          nextBestAction: aiAnalysis.nextBestAction,
-          analyzedAt: aiAnalysis.analyzedAt,
-          aiProvider: aiAnalysis.aiProvider,
-        } : null,
+        ...(aiAnalysis ? {
+          leadIntelligence: {
+            score: aiAnalysis.leadScore,
+            priority: aiAnalysis.priority,
+            visitorType: aiAnalysis.visitorType,
+            organizationType: aiAnalysis.organizationType,
+            estimatedValue: aiAnalysis.estimatedValue,
+            likelihood: aiAnalysis.likelihood,
+            insights: aiAnalysis.insights || [],
+            recommendedActions: aiAnalysis.recommendedActions || [],
+            riskFactors: aiAnalysis.riskFactors || [],
+            nextBestAction: aiAnalysis.nextBestAction,
+            analyzedAt: aiAnalysis.analyzedAt,
+            aiProvider: aiAnalysis.aiProvider,
+          }
+        } : {}),
       }
     })
 

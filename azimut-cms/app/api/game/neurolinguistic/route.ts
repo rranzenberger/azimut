@@ -264,39 +264,48 @@ export async function POST(request: NextRequest) {
         const { prisma } = await import('@/src/lib/prisma')
         
         // Criar ou atualizar lead
-        await prisma.lead.upsert({
+        const existingLead = await prisma.lead.findFirst({
           where: { email: body.email },
-          update: {
-            leadScore: basicAnalysis.score,
-            priority: basicAnalysis.priority as any,
-            leadIntelligence: {
-              gameScore: basicAnalysis.score,
-              classification: basicAnalysis.classification,
-              intention: basicAnalysis.intention,
-              patterns: basicAnalysis.patterns,
-              insights: basicAnalysis.insights,
-              aiAnalysis: aiAnalysis,
-              nftType: nftType,
-            } as any,
-          },
-          create: {
-            name: body.name || 'Usuário do Game',
-            email: body.email,
-            leadType: 'GAME_NEUROLINGUISTIC',
-            status: 'NEW',
-            priority: basicAnalysis.priority as any,
-            leadScore: basicAnalysis.score,
-            leadIntelligence: {
-              gameScore: basicAnalysis.score,
-              classification: basicAnalysis.classification,
-              intention: basicAnalysis.intention,
-              patterns: basicAnalysis.patterns,
-              insights: basicAnalysis.insights,
-              aiAnalysis: aiAnalysis,
-              nftType: nftType,
-            } as any,
-          },
         })
+        
+        if (existingLead) {
+          await prisma.lead.update({
+            where: { id: existingLead.id },
+            data: {
+              leadScore: basicAnalysis.score,
+              priority: basicAnalysis.priority as any,
+              leadIntelligence: {
+                gameScore: basicAnalysis.score,
+                classification: basicAnalysis.classification,
+                intention: basicAnalysis.intention,
+                patterns: basicAnalysis.patterns,
+                insights: basicAnalysis.insights,
+                aiAnalysis: aiAnalysis,
+                nftType: nftType,
+              } as any,
+            },
+          })
+        } else {
+          await prisma.lead.create({
+            data: {
+              name: body.name || 'Usuário do Game',
+              email: body.email,
+              leadType: 'CONTACT_FORM',
+              status: 'NEW',
+              priority: basicAnalysis.priority as any,
+              leadScore: basicAnalysis.score,
+              leadIntelligence: {
+                gameScore: basicAnalysis.score,
+                classification: basicAnalysis.classification,
+                intention: basicAnalysis.intention,
+                patterns: basicAnalysis.patterns,
+                insights: basicAnalysis.insights,
+                aiAnalysis: aiAnalysis,
+                nftType: nftType,
+              } as any,
+            },
+          })
+        }
       } catch (dbError) {
         console.error('Erro ao salvar no banco:', dbError)
         // Não falhar se banco der erro

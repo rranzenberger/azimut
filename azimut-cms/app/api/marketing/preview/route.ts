@@ -129,7 +129,7 @@ export async function POST(request: NextRequest) {
             name: name || 'Interessado em Preview',
             email: email,
             company: company || null,
-            leadType: 'PREVIEW_INTEREST',
+            leadType: 'CONTACT_FORM',
             status: 'NEW',
             priority: 'HIGH',
             leadScore: 70, // Lead quente (interessado em preview)

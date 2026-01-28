@@ -9,6 +9,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { verifyAuthToken } from '@/src/lib/auth'
 import { prisma } from '@/src/lib/prisma'
+import { Prisma } from '@prisma/client'
 
 export async function POST(request: NextRequest) {
   try {
@@ -24,16 +25,21 @@ export async function POST(request: NextRequest) {
     const { limit = 50 } = await request.json().catch(() => ({ limit: 50 }))
 
     // Buscar leads sem análise ou com análise antiga
-    const leads = await prisma.lead.findMany({
+    // Nota: Prisma não suporta filtro direto por null em campos Json, então buscamos todos e filtramos
+    const allLeads = await prisma.lead.findMany({
       where: {
         OR: [
-          { leadIntelligence: null },
           { leadScore: 0 },
         ],
       },
-      take: limit,
+      take: limit * 2, // Buscar mais para compensar filtro manual
       orderBy: { createdAt: 'desc' },
     })
+    
+    // Filtrar leads sem leadIntelligence manualmente
+    const leads = allLeads.filter(lead => 
+      !lead.leadIntelligence || lead.leadScore === 0
+    ).slice(0, limit)
 
     console.log(`📊 Analisando ${leads.length} leads com IA...`)
 

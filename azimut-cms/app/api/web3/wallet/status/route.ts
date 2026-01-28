@@ -45,12 +45,14 @@ export async function GET(request: NextRequest) {
         },
       })
 
-      totalPaymentsReceived = await prisma.payment.count({
-        where: {
-          toAddress: COMPANY_WALLET_ADDRESS.toLowerCase(),
-          status: 'CONFIRMED',
-        },
-      })
+      // TODO: Criar modelo Payment no Prisma schema
+      totalPaymentsReceived = 0 // Temporário até criar modelo Payment
+      // totalPaymentsReceived = await (prisma as any).payment.count({
+      //   where: {
+      //     toAddress: COMPANY_WALLET_ADDRESS.toLowerCase(),
+      //     status: 'CONFIRMED',
+      //   },
+      // })
     } catch (dbError) {
       // Ignorar se tabelas não existirem
       console.warn('[Wallet Status] Tabelas não existem ainda')

@@ -533,7 +533,7 @@ export default function Web3StrategyPage() {
                 <div style={{ fontSize: 12, color: '#8f8ba2', padding: 12, borderRadius: 6, background: 'rgba(0,0,0,0.2)' }}>
                   <strong>⚠️ Outras opções analisadas:</strong>
                   <ul style={{ margin: '8px 0 0 0', paddingLeft: 20 }}>
-                    <li>Rust: Score 3.15/5 - Muito complexo, só vale se escala >50k NFTs</li>
+                    <li>Rust: Score 3.15/5 - Muito complexo, só vale se escala &gt;50k NFTs</li>
                     <li>Vyper: Score 3.65/5 - Ecossistema muito pequeno</li>
                   </ul>
                 </div>
