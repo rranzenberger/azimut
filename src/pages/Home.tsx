@@ -1270,11 +1270,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </p>
             </div>
 
-            {/* 🎁 Banner Degustação Web3 - MOVIDO PARA O TOPO */}
-            <div className="mb-12">
+            {/* 🎁 Banner Degustação Web3 - MOVIDO PARA O TOPO - SEMPRE VISÍVEL */}
+            <div className="mb-12" style={{ display: 'block', visibility: 'visible', opacity: 1 }}>
               <Link
                 to={`/${lang}/experience-preview`}
                 className="block group"
+                style={{ display: 'block', textDecoration: 'none' }}
               >
                 <div 
                   className="relative overflow-hidden rounded-2xl p-8 md:p-12 transition-all duration-300 hover:scale-[1.02]"
@@ -1551,13 +1552,14 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         </section>
 
         {/* ════════════════════════════════════════════════════════════════ */}
-        {/* TARJA WEB3/NFT - ÁREA ESPECÍFICA DESTACADA */}
+        {/* TARJA WEB3/NFT - ÁREA ESPECÍFICA DESTACADA - SEMPRE VISÍVEL */}
         {/* ════════════════════════════════════════════════════════════════ */}
-        <section className="relative py-8 md:py-12 overflow-hidden">
+        <section className="relative py-8 md:py-12 overflow-hidden" style={{ display: 'block', visibility: 'visible', opacity: 1 }}>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Link
               to={`/${lang}/experience-preview`}
               className="block group"
+              style={{ display: 'block', textDecoration: 'none' }}
             >
               <div 
                 className="relative overflow-hidden rounded-2xl p-6 md:p-10 transition-all duration-300 hover:scale-[1.01]"
