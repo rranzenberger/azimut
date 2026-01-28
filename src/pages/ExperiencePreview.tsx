@@ -6,6 +6,7 @@
 import { ExperiencePreview } from '../components/ExperiencePreview'
 import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
+import ErrorBoundary from '../components/ErrorBoundary'
 
 interface ExperiencePreviewPageProps {
   lang: Lang
@@ -22,7 +23,9 @@ export default function ExperiencePreviewPage({ lang }: ExperiencePreviewPagePro
         locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
         type="website"
       />
-      <ExperiencePreview lang={lang} />
+      <ErrorBoundary>
+        <ExperiencePreview lang={lang} />
+      </ErrorBoundary>
     </>
   )
 }
