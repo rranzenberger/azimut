@@ -76,11 +76,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     loading: personalizationLoading,
   } = usePersonalizedContent()
   
-  // 🆕 UX PREMIUM - Loading Skeleton (OPCIONAL - pode remover se não funcionar)
-  const { showSkeleton } = useLoadingSkeleton(cmsLoading || personalizationLoading, {
-    delay: 300, // Mostrar skeleton apenas se loading > 300ms
-    minDuration: 500 // Manter skeleton por pelo menos 500ms
-  })
+  // 🆕 UX PREMIUM - Loading Skeleton (DESABILITADO TEMPORARIAMENTE)
+  // ⚠️ CORRIGIDO: Desabilitado para evitar tarja azul de loading infinito
+  // const { showSkeleton } = useLoadingSkeleton(cmsLoading || personalizationLoading, {
+  //   delay: 300,
+  //   minDuration: 500
+  // })
+  const showSkeleton = false // ⚠️ DESABILITADO - site carrega direto sem skeleton
   
   // ESTRATÉGIA CORRIGIDA: i18n.ts → Personalizado → Backoffice
   // Priorizar i18n.ts (sempre correto por idioma) sobre backoffice (que pode estar desatualizado)
@@ -318,17 +320,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         type="website"
       />
       <main className="relative film-grain">
-        {/* 🆕 UX PREMIUM - Loading Skeleton (OPCIONAL - pode remover se não funcionar) */}
-        {showSkeleton && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ 
-            background: theme === 'dark' ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)',
-            backdropFilter: 'blur(8px)'
-          }}>
-            <div className="max-w-4xl w-full px-4">
-              <LoadingSkeleton type="card" lines={5} theme={theme} />
-            </div>
-          </div>
-        )}
+        {/* 🆕 UX PREMIUM - Loading Skeleton (DESABILITADO) */}
+        {/* ⚠️ DESABILITADO: Skeleton estava causando tarja azul de loading infinito */}
+        {/* Site agora carrega direto sem skeleton para melhor performance */}
 
         {/* Estrela de fundo - HOME: Ambos os temas (DESKTOP ONLY) */}
         <div 

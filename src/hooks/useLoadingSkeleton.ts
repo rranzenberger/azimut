@@ -20,15 +20,24 @@ export function useLoadingSkeleton(
   const { delay = 200, minDuration = 500 } = options
   const [showSkeleton, setShowSkeleton] = useState(false)
   const [startTime] = useState(Date.now())
+  const MAX_LOADING_TIME = 10000 // 10 segundos máximo - segurança
 
   useEffect(() => {
+    // ⚠️ SEGURANÇA: Timeout máximo para evitar skeleton infinito
+    const maxTimeout = setTimeout(() => {
+      setShowSkeleton(false)
+    }, MAX_LOADING_TIME)
+
     if (isLoading) {
       // Delay antes de mostrar skeleton (evita flash rápido)
       const timer = setTimeout(() => {
         setShowSkeleton(true)
       }, delay)
 
-      return () => clearTimeout(timer)
+      return () => {
+        clearTimeout(timer)
+        clearTimeout(maxTimeout)
+      }
     } else {
       // Garantir duração mínima (melhor UX)
       const elapsed = Date.now() - startTime
@@ -38,7 +47,10 @@ export function useLoadingSkeleton(
         setShowSkeleton(false)
       }, remaining)
 
-      return () => clearTimeout(timer)
+      return () => {
+        clearTimeout(timer)
+        clearTimeout(maxTimeout)
+      }
     }
   }, [isLoading, delay, minDuration, startTime])
 

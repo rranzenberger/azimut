@@ -68,6 +68,15 @@ export function useAzimutContent(options: ContentOptions = {}): UseAzimutContent
       setLoading(true);
       setError(null);
       
+      // ⚠️ SEGURANÇA: Timeout de 5 segundos para evitar loading infinito
+      const timeoutId = setTimeout(() => {
+        if (isMounted.current) {
+          console.warn('[CMS] Timeout - forçando fim do loading');
+          setLoading(false);
+          setContent(null);
+        }
+      }, 5000);
+      
       try {
         const lang = propLang || localStorage.getItem('azimut-lang') || 'pt';
         const url = `${API_URL}/public/content?lang=${lang}&page=${page}`;
@@ -77,7 +86,10 @@ export function useAzimutContent(options: ContentOptions = {}): UseAzimutContent
         const response = await fetch(url, {
           signal: controller.signal,
           headers: { 'Content-Type': 'application/json' },
+          // ⚠️ Timeout de 4 segundos na requisição
         });
+        
+        clearTimeout(timeoutId);
         
         if (!isMounted.current) return;
         
@@ -96,6 +108,8 @@ export function useAzimutContent(options: ContentOptions = {}): UseAzimutContent
           setContent(null);
         }
       } catch (err) {
+        clearTimeout(timeoutId);
+        
         // Ignorar erros de abort
         if (err instanceof Error && err.name === 'AbortError') return;
         
@@ -104,6 +118,7 @@ export function useAzimutContent(options: ContentOptions = {}): UseAzimutContent
         console.error('[CMS] Erro ao buscar:', err);
         setContent(null);
       } finally {
+        clearTimeout(timeoutId);
         if (isMounted.current) {
           setLoading(false);
         }
