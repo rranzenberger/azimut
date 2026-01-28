@@ -203,6 +203,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
     if (path === '/studio') return 'studio'
     if (path === '/academy') return 'academy'
     if (path === '/blog' || path.startsWith('/blog/')) return 'blog'
+    if (path === '/experience-preview') return 'work' // Marca como ativo no menu "Projetos"
     if (path === '/contact') return null // Contact não é um item do menu principal
     return null // Não retorna 'home' por padrão para evitar linha fixa
   }
@@ -438,6 +439,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   label: lang === 'pt' ? 'VR & XR' : lang === 'es' ? 'VR & XR' : lang === 'fr' ? 'VR & XR' : 'VR & XR',
                   href: '/work?tag=vr',
                   description: lang === 'pt' ? 'Experiências imersivas' : lang === 'es' ? 'Experiencias inmersivas' : lang === 'fr' ? 'Expériences immersives' : 'Immersive experiences'
+                },
+                {
+                  label: lang === 'pt' ? '🎁 Degustação Web3' : lang === 'es' ? '🎁 Degustación Web3' : lang === 'fr' ? '🎁 Dégustation Web3' : '🎁 Web3 Preview',
+                  href: '/experience-preview',
+                  description: lang === 'pt' ? 'VR, NFT, Web3 e Experiências Imersivas' : lang === 'es' ? 'VR, NFT, Web3 y Experiencias Inmersivas' : lang === 'fr' ? 'VR, NFT, Web3 et Expériences Immersives' : 'VR, NFT, Web3 and Immersive Experiences'
                 }
               ]}
               lang={lang}
