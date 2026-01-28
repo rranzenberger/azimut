@@ -2,18 +2,18 @@
   "rewrites": [{ "source": "/(.*)", "destination": "/" }],
   "redirects": [
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "has": [
         {
           "type": "host",
           "value": "www.azmt.com.br"
         }
       ],
-      "destination": "https://azmt.com.br/:1",
+      "destination": "https://azmt.com.br/:path*",
       "permanent": true
     },
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "has": [
         {
           "type": "header",
@@ -21,7 +21,7 @@
           "value": "http"
         }
       ],
-      "destination": "https://azmt.com.br/:1",
+      "destination": "https://azmt.com.br/:path*",
       "permanent": true
     }
   ],
