@@ -1082,13 +1082,17 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             <div 
               className="relative overflow-hidden rounded-2xl p-8 md:p-12 transition-all duration-300"
               style={{
-                // AMBOS OS TEMAS: Fundo escuro/roxo para manter consistência visual
-                // O card Web3 sempre tem visual "tech/premium" independente do tema
-                background: 'linear-gradient(135deg, rgba(30, 27, 75, 0.95) 0%, rgba(49, 46, 129, 0.92) 30%, rgba(30, 58, 138, 0.88) 60%, rgba(20, 83, 45, 0.85) 100%)',
-                border: '2px solid rgba(139, 92, 246, 0.5)',
+                // TEMA ESCURO: Gradiente roxo/tech
+                // TEMA CLARO: Gradiente warm/terroso com toque roxo sutil que harmoniza com bege do site
+                background: theme === 'dark'
+                  ? 'linear-gradient(135deg, rgba(30, 27, 75, 0.95) 0%, rgba(49, 46, 129, 0.92) 30%, rgba(30, 58, 138, 0.88) 60%, rgba(20, 83, 45, 0.85) 100%)'
+                  : 'linear-gradient(135deg, rgba(75, 55, 95, 0.92) 0%, rgba(85, 65, 90, 0.88) 30%, rgba(70, 55, 75, 0.85) 60%, rgba(55, 50, 65, 0.9) 100%)',
+                border: theme === 'dark'
+                  ? '2px solid rgba(139, 92, 246, 0.5)'
+                  : '2px solid rgba(139, 92, 180, 0.4)',
                 boxShadow: theme === 'dark'
                   ? '0 8px 40px rgba(139, 92, 246, 0.25), 0 0 0 1px rgba(59, 130, 246, 0.15)'
-                  : '0 8px 40px rgba(139, 92, 246, 0.2), 0 4px 20px rgba(0, 0, 0, 0.15)',
+                  : '0 8px 32px rgba(100, 70, 120, 0.25), 0 4px 16px rgba(0, 0, 0, 0.1)',
               }}
             >
               {/* Efeitos de brilho animados nos cantos */}
