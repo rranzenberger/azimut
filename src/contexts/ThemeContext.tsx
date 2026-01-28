@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { isPWAInstalled } from '../utils/pwa'
 
 type Theme = 'dark' | 'light'
 
@@ -14,7 +15,6 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(() => {
     if (typeof window !== 'undefined') {
-      const isMobile = window.innerWidth < 768
       const savedTheme = localStorage.getItem('azimut-theme') as Theme | null
       const userHasPreference = localStorage.getItem('azimut-theme-manual') === 'true'
       
@@ -23,9 +23,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         return savedTheme
       }
       
-      // Caso contrário, tema padrão baseado no dispositivo
-      // 📱 Mobile: light | 💻 Desktop: dark
-      return isMobile ? 'light' : 'dark'
+      // Caso contrário, tema padrão baseado no tipo de acesso:
+      // 🌐 Web (navegador): light | 📱 PWA instalado: dark
+      const isPWA = isPWAInstalled()
+      return isPWA ? 'dark' : 'light'
     }
     return 'dark'
   })

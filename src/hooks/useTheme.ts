@@ -1,22 +1,23 @@
 import { useState, useEffect } from 'react'
+import { isPWAInstalled } from '../utils/pwa'
 
 type Theme = 'dark' | 'light'
 
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window !== 'undefined') {
-      const isMobile = window.innerWidth < 768
       const savedTheme = localStorage.getItem('azimut-theme') as Theme | null
       const userHasPreference = localStorage.getItem('azimut-theme-manual') === 'true'
       
-      // Se usuário trocou manualmente, SEMPRE respeitar a escolha dele (mobile ou desktop)
+      // Se usuário trocou manualmente, SEMPRE respeitar a escolha dele
       if (userHasPreference && savedTheme && ['dark', 'light'].includes(savedTheme)) {
         return savedTheme
       }
       
-      // Caso contrário, usar tema padrão baseado no dispositivo
-      // 📱 Mobile: light (mais legível) | 💻 Desktop: dark (cinematográfico)
-      return isMobile ? 'light' : 'dark'
+      // Caso contrário, tema padrão baseado no tipo de acesso:
+      // 🌐 Web (navegador): light | 📱 PWA instalado: dark
+      const isPWA = isPWAInstalled()
+      return isPWA ? 'dark' : 'light'
     }
     return 'dark'
   })

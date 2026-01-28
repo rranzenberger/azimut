@@ -161,14 +161,14 @@ export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
       minHeight: '100vh',
       position: 'relative',
     }}>
-      {/* Indicador Fixo de Carteira Conectada (Topo) */}
+      {/* Indicador Fixo de Carteira Conectada - ABAIXO DO HEADER */}
       {connectedWallet && (
         <div style={{
           position: 'fixed',
-          top: 0,
+          top: '80px', // Abaixo do header (header tem ~80px de altura)
           left: 0,
           right: 0,
-          zIndex: 1000,
+          zIndex: 40, // Abaixo do header (header tem z-50)
           background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.95) 0%, rgba(16, 185, 129, 0.95) 100%)',
           backdropFilter: 'blur(10px)',
           borderBottom: '2px solid rgba(34, 197, 94, 0.5)',
@@ -265,34 +265,46 @@ export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
         </div>
       )}
 
-      <div style={{ maxWidth: 1200, margin: '0 auto', paddingTop: connectedWallet ? '60px' : '0' }}>
-        {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: 60 }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', paddingTop: connectedWallet ? '140px' : '80px' }}>
+        {/* Header - MELHORADO */}
+        <div style={{ textAlign: 'center', marginBottom: 80 }}>
           <h1 style={{
-            fontSize: 48,
+            fontSize: 'clamp(32px, 5vw, 56px)',
             fontWeight: 700,
             color: '#fff',
-            marginBottom: 16,
-            background: 'linear-gradient(135deg, #86efac 0%, #3b82f6 100%)',
+            marginBottom: 20,
+            background: 'linear-gradient(135deg, #86efac 0%, #3b82f6 50%, #a855f7 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
+            lineHeight: '1.2',
+            letterSpacing: '-0.02em',
           }}>
             🎁 Degustação: O Que Podemos Fazer Por Você
           </h1>
-          <p style={{ fontSize: 20, color: '#c0bccf', marginBottom: 8 }}>
+          <p style={{ 
+            fontSize: 'clamp(18px, 2.5vw, 24px)', 
+            color: '#c0bccf', 
+            marginBottom: 12,
+            fontWeight: 500,
+            lineHeight: '1.5',
+          }}>
             Experimente o futuro: VR, NFT, Web3 e Experiências Imersivas
           </p>
-          <p style={{ fontSize: 16, color: '#8f8ba2' }}>
+          <p style={{ 
+            fontSize: 'clamp(14px, 1.8vw, 18px)', 
+            color: '#8f8ba2',
+            lineHeight: '1.6',
+          }}>
             Veja o que é possível e se empolgue com as possibilidades
           </p>
         </div>
 
-        {/* Cards de Opções */}
+        {/* Cards de Opções - MELHOR ESPAÇAMENTO E LAYOUT */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: 24,
-          marginBottom: 40,
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gap: 28,
+          marginBottom: 60,
         }}>
           {previewOptions.map((option) => (
             <div
@@ -493,13 +505,38 @@ export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
           </div>
         )}
 
-        {/* Conexão de Carteira */}
+        {/* Seção de Conexão de Carteira - DESTACADA E BEM POSICIONADA */}
         <div style={{ 
-          marginBottom: 40,
-          position: 'sticky',
-          top: connectedWallet ? '60px' : '20px',
-          zIndex: 100,
+          marginTop: 80,
+          marginBottom: 60,
+          padding: '40px',
+          borderRadius: '20px',
+          background: 'rgba(0, 0, 0, 0.3)',
+          border: '2px solid rgba(139, 92, 246, 0.3)',
         }}>
+          <div style={{
+            textAlign: 'center',
+            marginBottom: 32,
+          }}>
+            <h2 style={{
+              fontSize: 'clamp(24px, 3vw, 32px)',
+              fontWeight: 700,
+              color: '#fff',
+              marginBottom: 12,
+              background: 'linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}>
+              🔗 Conecte Sua Carteira Web3
+            </h2>
+            <p style={{
+              fontSize: 'clamp(14px, 1.8vw, 18px)',
+              color: '#c0bccf',
+              lineHeight: '1.6',
+            }}>
+              Conecte sua carteira para desbloquear NFTs exclusivos, tokens e recompensas especiais
+            </p>
+          </div>
           <WalletConnect
             lang={lang}
             onConnect={(wallet) => {

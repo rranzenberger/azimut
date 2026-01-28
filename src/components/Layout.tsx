@@ -126,10 +126,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   }, [])
   
   // 🆕 DETECÇÃO DINÂMICA DE MOBILE/DESKTOP
-  // SOLUÇÃO DEFINITIVA: Mobile = < 900px (SEMPRE hamburger) - Evita truncamento em tablets
+  // CORRIGIDO: Breakpoint aumentado para 1360px - hamburger aparece ANTES dos elementos sobreporem
+  // Evita menus "trepados" e garante que BLOG e toggle não sobreponham
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window !== 'undefined') {
-      return window.innerWidth < 900  // Mobile DEFINITIVO: < 900px
+      return window.innerWidth < 1360  // Mobile: < 1360px (aumentado para evitar sobreposição)
     }
     return false
   })
@@ -139,8 +140,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
     const checkMobile = () => {
       const windowWidth = window.innerWidth
       
-      // REGRA ÚNICA E DEFINITIVA: < 900px = MOBILE (hamburger)
-      const newIsMobile = windowWidth < 900
+      // REGRA: < 1360px = MOBILE (hamburger) - Evita sobreposição de elementos
+      const newIsMobile = windowWidth < 1360
       setIsMobile(newIsMobile)
     }
     
@@ -280,11 +281,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             }}
           ></div>
           {/* ═══════════════════════════════════════════════════════════════
-              🔒 LOGO - height: 52px, alinhada à esquerda (AUMENTADA AO MÁXIMO!)
+              🔒 LOGO + IDIOMAS - Reorganizado: Logo à esquerda, idiomas logo após
               ═══════════════════════════════════════════════════════════ */}
-          {/* Logo topo - GRANDE - ALINHADA À ESQUERDA */}
+          {/* Container Logo + Idiomas (ESQUERDA) - ESPAÇAMENTO MELHORADO */}
           <div
-            className="shrink-0 transition-opacity hover:opacity-90 touch-manipulation"
+            className="shrink-0 flex items-center"
             style={{ 
               display: 'flex', 
               alignItems: 'center', 
@@ -292,53 +293,178 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               flexShrink: 0,
               gridColumn: '1',
               width: 'auto',
-              padding: '0'
+              padding: '0',
+              gap: '0' // Gap controlado manualmente para mais controle
             }}
           >
-            <LangLink 
-              to="/" 
-              onClick={() => setIsMobileMenuOpen(false)}
-              style={{ display: 'block' }}
-            >
-              {/* MOBILE: Logo básica (pequena) */}
-              {isMobile && (
-                <img
-                  src="/logobasicaa.png"
-                  alt="Azimut"
-                  className="transition-all duration-300"
-                  style={{ 
-                    height: isScrolled ? '42px' : '48px',
-                    width: 'auto',
-                    display: 'block',
-                    transition: 'height 0.3s ease'
-                  }}
-                  loading="eager"
-                />
-              )}
-              {/* DESKTOP: Logo com nome completo */}
-              {!isMobile && (
-                <img
-                  src="/logo-topo-site.svg"
-                  alt="Azimut – Immersive • Interactive • Cinematic Experiences"
-                  className="transition-all duration-300"
-                  style={{ 
-                    height: isScrolled ? '42px' : '52px',
-                    width: 'auto',
-                    display: 'block',
-                    transition: 'height 0.3s ease'
-                  }}
-                  loading="eager"
-                />
-              )}
-            </LangLink>
+            {/* Logo - ESPAÇAMENTO COMPACTO */}
+            <div className="transition-opacity hover:opacity-90 touch-manipulation" style={{ marginRight: '16px' }}>
+              <LangLink 
+                to="/" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                style={{ display: 'block' }}
+              >
+                {/* MOBILE: Logo básica (MAIOR para melhor visibilidade) */}
+                {isMobile && (
+                  <img
+                    src="/logobasicaa.png"
+                    alt="Azimut"
+                    className="transition-all duration-300"
+                    style={{ 
+                      height: isScrolled ? '38px' : '44px', // Logo maior no mobile
+                      width: 'auto',
+                      display: 'block',
+                      transition: 'height 0.3s ease'
+                    }}
+                    loading="eager"
+                  />
+                )}
+                {/* DESKTOP: Logo com nome completo - MAIOR */}
+                {!isMobile && (
+                  <img
+                    src="/logo-topo-site.svg"
+                    alt="Azimut – Immersive • Interactive • Cinematic Experiences"
+                    className="transition-all duration-300"
+                    style={{ 
+                      height: isScrolled ? '46px' : '56px', // Logo MAIOR
+                      width: 'auto',
+                      display: 'block',
+                      transition: 'height 0.3s ease'
+                    }}
+                    loading="eager"
+                  />
+                )}
+              </LangLink>
+            </div>
+
+            {/* Idiomas - MOVIDOS PARA PERTO DA LOGO (ESQUERDA) - DESKTOP - COMPACTO */}
+            {!isMobile && (
+              <div className="flex items-center shrink-0" style={{ alignItems: 'center', height: '100%', display: 'flex', gap: '0' }}>
+                {/* Separador visual (pílula/linha) - COMPACTO */}
+                <div className="h-5 w-px shrink-0" style={{ backgroundColor: 'var(--theme-border)', flexShrink: 0, alignSelf: 'center', marginRight: '10px', opacity: 0.4, borderRadius: '1px' }}></div>
+                
+                {/* Grupo Canadá - EN e FR */}
+                <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '1px' }}>
+                  <img src="/flag-ca.svg" alt="Canada" className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
+                  <button
+                    onClick={() => {
+                      trackLanguageChange(lang, 'en')
+                      changeLang('en')
+                    }}
+                    className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
+                    style={{ 
+                      color: lang === 'en' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'), 
+                      opacity: 1,
+                      minWidth: '20px',
+                      height: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '0',
+                      lineHeight: '1',
+                      margin: '0',
+                      fontSize: '0.6rem',
+                      letterSpacing: '0.02em'
+                    }}
+                  >
+                    EN
+                  </button>
+                  <span className="shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', lineHeight: '1', fontSize: '0.5rem', transform: 'translateY(-1px)', color: '#c92337' }}>●</span>
+                  <button
+                    onClick={() => {
+                      trackLanguageChange(lang, 'fr')
+                      changeLang('fr')
+                    }}
+                    className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
+                    style={{ 
+                      color: lang === 'fr' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'), 
+                      opacity: 1,
+                      minWidth: '20px',
+                      height: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '0',
+                      lineHeight: '1',
+                      margin: '0',
+                      fontSize: '0.6rem',
+                      letterSpacing: '0.02em'
+                    }}
+                  >
+                    FR
+                  </button>
+                </span>
+                {/* Separador entre grupos */}
+                <span className="opacity-40 shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', marginLeft: '5px', marginRight: '9px', lineHeight: '1', fontSize: '0.55rem' }}>|</span>
+                {/* Grupo Brasil - PT e ES */}
+                <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '1px' }}>
+                  <img src="/flag-br.svg" alt="Brasil" className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
+                  <button
+                    onClick={() => {
+                      trackLanguageChange(lang, 'pt')
+                      changeLang('pt')
+                    }}
+                    className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
+                    style={{ 
+                      color: lang === 'pt' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'), 
+                      opacity: 1,
+                      minWidth: '20px',
+                      height: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '0',
+                      lineHeight: '1',
+                      margin: '0',
+                      fontSize: '0.6rem',
+                      letterSpacing: '0.02em'
+                    }}
+                  >
+                    PT
+                  </button>
+                  <span className="shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', lineHeight: '1', fontSize: '0.5rem', transform: 'translateY(-1px)', color: '#c92337' }}>●</span>
+                  <button
+                    onClick={() => {
+                      trackLanguageChange(lang, 'es')
+                      changeLang('es')
+                    }}
+                    className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
+                    style={{ 
+                      color: lang === 'es' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'), 
+                      opacity: 1,
+                      minWidth: '20px',
+                      height: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '0',
+                      lineHeight: '1',
+                      margin: '0',
+                      fontSize: '0.6rem',
+                      letterSpacing: '0.02em'
+                    }}
+                  >
+                    ES
+                  </button>
+                </span>
+              </div>
+            )}
           </div>
 
-          {/* Nav desktop - CENTRALIZADO ABSOLUTAMENTE no header inteiro */}
+          {/* Nav desktop - NO FLUXO NORMAL (não absoluto) - evita sobreposição */}
           {!isMobile && (
           <nav 
             ref={navRef}
-            className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center font-sora text-[0.48rem] font-medium uppercase tracking-[0.06em] min-[768px]:gap-2.5 min-[768px]:text-[0.48rem] md:gap-3 md:text-[0.52rem] lg:text-[0.58rem] lg:gap-3.5 xl:gap-4 xl:text-[0.62rem]" 
-            style={{ color: 'var(--theme-text-secondary)', overflow: 'visible', alignItems: 'center', flexWrap: 'nowrap' }}
+            className="flex items-center justify-center font-sora text-[0.52rem] font-medium uppercase tracking-[0.03em] gap-1 md:gap-1.5 lg:gap-2 xl:gap-2.5 xl:text-[0.55rem]" 
+            style={{ 
+              color: 'var(--theme-text-secondary)', 
+              overflow: 'visible', 
+              alignItems: 'center', 
+              flexWrap: 'nowrap',
+              gridColumn: '2', // Ocupa a coluna central do grid
+              justifySelf: 'center',
+              marginLeft: '20px' // Espaço para não trepar com idiomas
+            }}
           >
             <LangLink to="/" 
               className="nav-link-glow relative whitespace-nowrap touch-manipulation shrink-0 transition-colors duration-200 font-sora font-semibold"
@@ -348,7 +474,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 minHeight: '44px', 
                 display: 'flex', 
                 alignItems: 'center', 
-                padding: '0 6px', 
+                padding: '0 4px', // Padding reduzido
                 position: 'relative',
                 color: activeRoute === 'home' 
                   ? (theme === 'light' ? '#ff5a6e' : '#c92337') // Light: vermelho vibrante! Dark: vermelho original
@@ -441,7 +567,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   description: lang === 'pt' ? 'Experiências imersivas' : lang === 'es' ? 'Experiencias inmersivas' : lang === 'fr' ? 'Expériences immersives' : 'Immersive experiences'
                 },
                 {
-                  label: lang === 'pt' ? '🎁 Degustação Web3' : lang === 'es' ? '🎁 Degustación Web3' : lang === 'fr' ? '🎁 Dégustation Web3' : '🎁 Web3 Preview',
+                  label: lang === 'pt' ? '🌐 Degustação Web3' : lang === 'es' ? '🌐 Degustación Web3' : lang === 'fr' ? '🌐 Dégustation Web3' : '🌐 Web3 Preview',
                   href: '/experience-preview',
                   description: lang === 'pt' ? 'VR, NFT, Web3 e Experiências Imersivas' : lang === 'es' ? 'VR, NFT, Web3 y Experiencias Inmersivas' : lang === 'fr' ? 'VR, NFT, Web3 et Expériences Immersives' : 'VR, NFT, Web3 and Immersive Experiences'
                 }
@@ -528,7 +654,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 minHeight: '44px', 
                 display: 'flex', 
                 alignItems: 'center', 
-                padding: '0 6px', 
+                padding: '0 4px', // Padding reduzido
+                marginRight: '0', // Sem margem extra
                 position: 'relative',
                 color: activeRoute === 'blog' 
                   ? (theme === 'light' ? '#ff5a6e' : '#c92337') // Light: vermelho vibrante! Dark: vermelho original
@@ -551,20 +678,38 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           )}
 
           {/* ═══════════════════════════════════════════════════════════════
-              🔒 SELETOR DE IDIOMAS - NÃO MODIFICAR
-              Ultra compacto, bolinhas alinhadas, separador centralizado
+              CONTAINER DIREITO - Tema, Busca, CTA e WEB3 - COMPACTO
               ═══════════════════════════════════════════════════════════ */}
-          {/* CONTAINER FIXO - Tema, Idiomas e CTA - ALINHADO À DIREITA - AGLOMERADO */}
-          <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 shrink-0" style={{ flexShrink: 0, justifySelf: 'end', alignItems: 'center', height: '100%', marginLeft: 'auto', minWidth: 0, maxWidth: '100%', overflow: 'visible', paddingRight: '0' }}>
+          {/* CONTAINER FIXO - Tema, Busca, CTA e WEB3 - COMPACTO */}
+          <div className="flex items-center shrink-0" style={{ 
+            flexShrink: 0, 
+            justifySelf: 'end', 
+            alignItems: 'center', 
+            justifyContent: 'flex-end',
+            height: '100%', 
+            marginLeft: 'auto', 
+            minWidth: 0, 
+            maxWidth: '100%', 
+            overflow: 'visible', 
+            paddingRight: '0',
+            gap: '10px', // Gap reduzido para compactar
+            display: 'flex',
+            flexDirection: 'row' // Garantir lado a lado
+          }}>
             {/* Toggle de tema - ALINHADO */}
-            <div className="touch-manipulation shrink-0" style={{ width: '36px', minWidth: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginRight: '2px' }}>
+            <div className="touch-manipulation shrink-0" style={{ 
+              width: '36px', 
+              minWidth: '36px', 
+              height: '36px', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              flexShrink: 0 
+            }}>
               <ThemeToggle theme={theme} onToggle={toggleTheme} />
             </div>
             
-            {/* Separador visual */}
-            <div className="hidden h-4 w-px min-[768px]:block shrink-0" style={{ backgroundColor: 'var(--theme-border)', flexShrink: 0, alignSelf: 'center', marginLeft: '2px', marginRight: '4px' }}></div>
-            
-            {/* 🆕 UX PREMIUM - Botão de busca VISÍVEL (Desktop + Mobile) */}
+            {/* Botão de busca - COMPACTO */}
             <button
               onClick={() => {
                 setIsSearchOpen(true)
@@ -575,9 +720,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 width: '36px', 
                 height: '36px',
                 minWidth: '36px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
                 color: theme === 'light' ? '#f5f5f5' : 'var(--theme-text-secondary)',
-                marginRight: '2px',
-                position: 'relative'
+                position: 'relative',
+                margin: '0'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.color = theme === 'light' ? '#ff5a6e' : '#c92337'
@@ -597,121 +745,18 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               </svg>
             </button>
             
-            {/* Separador visual (se busca estiver ativo) */}
-            <div className="hidden h-4 w-px min-[768px]:block shrink-0" style={{ backgroundColor: 'var(--theme-border)', flexShrink: 0, alignSelf: 'center', marginLeft: '2px', marginRight: '4px' }}></div>
-            
-            {/* Idiomas - ALINHAMENTO PERFEITO */}
-            <div className="hidden min-[768px]:flex shrink-0" style={{ alignItems: 'center', height: '100%', display: 'flex', gap: '0', marginLeft: '2px' }}>
-              {/* Grupo Canadá - EN e FR - ULTRA COMPACTO */}
-              <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '1px' }}>
-                <img src="/flag-ca.svg" alt="Canada" className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
-                <button
-                  onClick={() => {
-                    trackLanguageChange(lang, 'en')
-                    changeLang('en')
-                  }}
-                  className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
-                  style={{ 
-                    color: lang === 'en' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
-                    opacity: lang === 'en' ? 1 : 0.7,
-                    minWidth: '20px',
-                    height: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '0',
-                    lineHeight: '1',
-                    margin: '0',
-                    fontSize: '0.6rem',
-                    letterSpacing: '0.02em'
-                  }}
-                >
-                  EN
-                </button>
-                <span className="opacity-70 shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', lineHeight: '1', fontSize: '0.65rem', transform: 'translateY(-2px)' }}>●</span>
-                <button
-                  onClick={() => {
-                    trackLanguageChange(lang, 'fr')
-                    changeLang('fr')
-                  }}
-                  className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
-                  style={{ 
-                    color: lang === 'fr' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
-                    opacity: lang === 'fr' ? 1 : 0.7,
-                    minWidth: '20px',
-                    height: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '0',
-                    lineHeight: '1',
-                    margin: '0',
-                    fontSize: '0.6rem',
-                    letterSpacing: '0.02em'
-                  }}
-                >
-                  FR
-                </button>
-              </span>
-              {/* Separador entre grupos - AJUSTADO 2PX ESQUERDA */}
-              <span className="hidden md:inline opacity-40 shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', marginLeft: '5px', marginRight: '9px', lineHeight: '1', fontSize: '0.55rem' }}>|</span>
-              {/* Grupo Brasil - PT e ES - ULTRA COMPACTO */}
-              <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '1px' }}>
-                <img src="/flag-br.svg" alt="Brasil" className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
-                <button
-                  onClick={() => {
-                    trackLanguageChange(lang, 'pt')
-                    changeLang('pt')
-                  }}
-                  className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
-                  style={{ 
-                    color: lang === 'pt' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
-                    opacity: lang === 'pt' ? 1 : 0.7,
-                    minWidth: '20px',
-                    height: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '0',
-                    lineHeight: '1',
-                    margin: '0',
-                    fontSize: '0.6rem',
-                    letterSpacing: '0.02em'
-                  }}
-                >
-                  PT
-                </button>
-                <span className="opacity-70 shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', lineHeight: '1', fontSize: '0.65rem', transform: 'translateY(-2px)' }}>●</span>
-                <button
-                  onClick={() => {
-                    trackLanguageChange(lang, 'es')
-                    changeLang('es')
-                  }}
-                  className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
-                  style={{ 
-                    color: lang === 'es' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
-                    opacity: lang === 'es' ? 1 : 0.7,
-                    minWidth: '20px',
-                    height: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '0',
-                    lineHeight: '1',
-                    margin: '0',
-                    fontSize: '0.6rem',
-                    letterSpacing: '0.02em'
-                  }}
-                >
-                  ES
-                </button>
-              </span>
-            </div>
-
-            {/* Botões CTA - DESKTOP: Sempre visível em telas >= 640px */}
+            {/* Botões CTA - DESKTOP: COMPACTO */}
                 {!isMobile && (
-                <div className="flex items-center gap-2 shrink-0">
-                  {/* Botão CTA Principal - Desktop/Tablet: Texto completo */}
+                <div className="flex items-center shrink-0" style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  gap: '10px', // Gap reduzido
+                  height: '100%',
+                  alignSelf: 'center',
+                  flexDirection: 'row'
+                }}>
+                  {/* Botão CTA Principal - Desktop/Tablet: Texto compacto */}
                   <LangLink to="/contact"
                     onClick={() => {
                       trackCTA('header', 'Start Project')
@@ -719,79 +764,98 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     }}
                     className="rounded-lg text-center font-sora font-bold uppercase inline-flex flex-col items-center justify-center transition-all duration-300 shrink-0 cursor-pointer hover:scale-105 hover:shadow-[0_4px_12px_rgba(201,35,55,0.3)]"
                     style={{ 
-                      color: theme === 'light' ? '#d3cec3' : 'var(--theme-text-secondary)',
+                      color: theme === 'light' ? '#f5f5f5' : 'var(--theme-text-secondary)',
                       background: theme === 'dark' 
                         ? 'rgba(201, 35, 55, 0.12)' 
-                        : 'rgba(201, 35, 55, 0.08)',
+                        : 'rgba(201, 35, 55, 0.15)',
                       border: '1px solid rgba(201, 35, 55, 0.7)',
                       boxShadow: theme === 'dark' 
                         ? '0 2px 8px rgba(201, 35, 55, 0.2)' 
                         : '0 2px 8px rgba(201, 35, 55, 0.15)',
-                      minWidth: '110px',
-                      width: '110px',
-                      maxWidth: '110px',
-                      height: '40px',
-                      minHeight: '40px',
-                      padding: '8px 10px',
-                      alignSelf: 'center',
+                      minWidth: '95px',
+                      width: '95px',
+                      maxWidth: '95px',
+                      height: '38px',
+                      minHeight: '38px',
+                      padding: '6px 8px',
                       flexShrink: 0,
-                      fontSize: '0.65rem',
-                      lineHeight: '1.3',
-                      letterSpacing: '0.05em',
-                      gap: '2px'
+                      fontSize: '0.6rem',
+                      lineHeight: '1.2',
+                      letterSpacing: '0.04em',
+                      gap: '1px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
                     }}
                   >
                     <span className="block whitespace-nowrap" style={{ fontSize: 'inherit', fontWeight: '700' }}>{getCtaLines(lang)[0]}</span>
                     <span className="block whitespace-nowrap" style={{ fontSize: 'inherit', fontWeight: '700' }}>{getCtaLines(lang)[1]}</span>
                   </LangLink>
 
-                  {/* Botão Web3 - Degustação - SEMPRE VISÍVEL NO DESKTOP */}
+                  {/* Botão Web3 - ÍCONE GRANDE E TEXTO LADO A LADO */}
                   <LangLink 
                     to={`/${lang}/experience-preview`}
                     onClick={() => {
                       trackCTA('header', 'Web3 Preview')
                       trackInteraction('cta_click', 'header_web3_preview')
                     }}
+                    className="group flex flex-row items-center justify-center"
                     style={{ 
-                      display: 'flex !important', // Forçar display
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '4px',
-                      color: '#ffffff !important',
-                      background: 'rgba(139, 92, 246, 0.25) !important',
-                      border: '1px solid rgba(139, 92, 246, 0.8) !important',
-                      boxShadow: '0 2px 8px rgba(139, 92, 246, 0.4) !important',
-                      borderRadius: '8px',
+                      gap: '6px',
+                      color: '#ffffff', // SEMPRE branco (fundo é roxo escuro)
+                      background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.6) 0%, rgba(59, 130, 246, 0.5) 50%, rgba(34, 197, 94, 0.4) 100%)',
+                      border: '2px solid rgba(139, 92, 246, 0.9)',
+                      boxShadow: '0 3px 12px rgba(139, 92, 246, 0.5)',
+                      borderRadius: '10px',
                       minWidth: '90px',
-                      width: '90px',
-                      maxWidth: '90px',
-                      height: '40px',
-                      minHeight: '40px',
-                      padding: '8px 10px',
+                      width: 'auto',
+                      height: '38px',
+                      minHeight: '38px',
+                      maxHeight: '38px',
+                      padding: '6px 12px',
                       flexShrink: 0,
-                      fontSize: '0.6rem',
-                      lineHeight: '1.2',
-                      letterSpacing: '0.05em',
-                      fontWeight: '700',
-                      textTransform: 'uppercase',
                       cursor: 'pointer',
-                      transition: 'all 0.3s',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                       textDecoration: 'none',
-                      visibility: 'visible !important',
-                      opacity: '1 !important',
-                      zIndex: 1000
+                      zIndex: 1000,
+                      position: 'relative',
+                      overflow: 'hidden',
+                      margin: '0',
+                      alignSelf: 'center'
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'scale(1.05)'
-                      e.currentTarget.style.boxShadow = '0 4px 12px rgba(139, 92, 246, 0.5)'
+                      e.currentTarget.style.boxShadow = '0 5px 20px rgba(139, 92, 246, 0.6)'
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.transform = 'scale(1)'
-                      e.currentTarget.style.boxShadow = '0 2px 8px rgba(139, 92, 246, 0.4)'
+                      e.currentTarget.style.boxShadow = '0 3px 12px rgba(139, 92, 246, 0.5)'
                     }}
                   >
-                    <span style={{ fontSize: '1.2rem', display: 'inline-block' }}>🎁</span>
-                    <span style={{ fontSize: '0.55rem', fontWeight: '700', whiteSpace: 'nowrap' }}>
+                    {/* Ícone SVG Web3 - GRANDE */}
+                    <img 
+                      src="/web-3-black-icon.svg" 
+                      alt="" 
+                      style={{ 
+                        width: '26px', 
+                        height: '26px', 
+                        position: 'relative', 
+                        zIndex: 1,
+                        filter: 'brightness(0) invert(1)', // SEMPRE branco
+                        flexShrink: 0
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.7rem',
+                      fontWeight: '800', 
+                      whiteSpace: 'nowrap', 
+                      position: 'relative', 
+                      zIndex: 1, 
+                      letterSpacing: '0.08em',
+                      lineHeight: '1',
+                      color: '#ffffff', // SEMPRE branco
+                      textTransform: 'uppercase'
+                    }}>
                       WEB3
                     </span>
                   </LangLink>
@@ -806,59 +870,82 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       trackCTA('header', 'Start Project Mobile')
                       trackInteraction('cta_click', 'header_start_project_mobile')
                     }}
-                    className="inline-flex items-center justify-center rounded-lg text-center font-sora font-bold transition-all duration-300 shrink-0 cursor-pointer hover:scale-105 hover:shadow-[0_4px_12px_rgba(201,35,55,0.3)] touch-manipulation"
+                    className="flex items-center justify-center rounded-lg font-sora font-bold transition-all duration-300 shrink-0 cursor-pointer hover:scale-105 hover:shadow-[0_4px_12px_rgba(201,35,55,0.3)] touch-manipulation"
                     style={{ 
-                      color: theme === 'light' ? '#d3cec3' : 'var(--theme-text-secondary)',
+                      color: '#f5f5f5',
                       background: theme === 'dark' 
-                        ? 'rgba(201, 35, 55, 0.12)' 
-                        : 'rgba(201, 35, 55, 0.08)',
-                    border: '1px solid rgba(201, 35, 55, 0.7)',
-                    boxShadow: theme === 'dark' 
-                      ? '0 2px 8px rgba(201, 35, 55, 0.2)' 
-                      : '0 2px 8px rgba(201, 35, 55, 0.15)',
-                    minWidth: '36px',
-                    width: '36px',
-                    height: '36px',
-                    padding: '0',
-                    alignSelf: 'center',
-                    flexShrink: 0,
-                    fontSize: '1.4rem',
-                    lineHeight: '1',
-                  }}
-                >
-                  +
-                </LangLink>
+                        ? 'rgba(201, 35, 55, 0.15)' 
+                        : 'rgba(201, 35, 55, 0.12)',
+                      border: '2px solid rgba(201, 35, 55, 0.7)',
+                      boxShadow: '0 2px 8px rgba(201, 35, 55, 0.2)',
+                      minWidth: '42px',
+                      width: '42px',
+                      height: '42px',
+                      padding: '0',
+                      flexShrink: 0
+                    }}
+                  >
+                    <span style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      width: '100%', 
+                      height: '100%',
+                      fontSize: '1.8rem',
+                      fontWeight: '300',
+                      lineHeight: '1',
+                      marginTop: '-2px' // Ajuste fino para centralização visual
+                    }}>+</span>
+                  </LangLink>
                 <LangLink 
                   to={`/${lang}/experience-preview`}
                   onClick={() => {
                     trackCTA('header', 'Web3 Preview Mobile')
                     trackInteraction('cta_click', 'header_web3_preview_mobile')
                   }}
+                  className="group flex items-center justify-center"
                   style={{ 
-                    display: 'flex !important', // Forçar display
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#ffffff !important',
-                    background: 'rgba(139, 92, 246, 0.3) !important',
-                    border: '1px solid rgba(139, 92, 246, 0.8) !important',
-                    boxShadow: '0 2px 8px rgba(139, 92, 246, 0.4) !important',
-                    borderRadius: '8px',
-                    minWidth: '36px',
-                    width: '36px',
-                    height: '36px',
+                    color: '#ffffff', // SEMPRE branco
+                    background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.6) 0%, rgba(59, 130, 246, 0.5) 50%, rgba(34, 197, 94, 0.4) 100%)',
+                    border: '2px solid rgba(139, 92, 246, 0.9)',
+                    boxShadow: '0 3px 12px rgba(139, 92, 246, 0.5)',
+                    borderRadius: '10px',
+                    minWidth: '42px',
+                    width: '42px',
+                    height: '42px',
                     padding: '0',
                     flexShrink: 0,
-                    fontSize: '1.2rem',
-                    lineHeight: '1',
                     cursor: 'pointer',
                     textDecoration: 'none',
-                    visibility: 'visible !important',
-                    opacity: '1 !important',
-                    zIndex: 1000
+                    zIndex: 1000,
+                    position: 'relative',
+                    overflow: 'hidden',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.1)'
+                    e.currentTarget.style.boxShadow = '0 4px 16px rgba(139, 92, 246, 0.6)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)'
+                    e.currentTarget.style.boxShadow = '0 3px 12px rgba(139, 92, 246, 0.5)'
                   }}
                   aria-label="Web3 Preview"
                 >
-                  🎁
+                  {/* Ícone SVG Web3 Mobile - GRANDE e BRANCO */}
+                  <img 
+                    src="/web-3-black-icon.svg" 
+                    alt="Web3" 
+                    style={{ 
+                      width: '28px', 
+                      height: '28px', 
+                      display: 'block', 
+                      position: 'relative', 
+                      zIndex: 1,
+                      filter: 'brightness(0) invert(1)', // SEMPRE branco
+                      transition: 'all 0.3s ease'
+                    }}
+                  />
                 </LangLink>
                 </div>
                 )}

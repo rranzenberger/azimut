@@ -523,6 +523,8 @@ export function WalletConnect({ lang, onConnect, onDisconnect }: WalletConnectPr
           </a>
         </div>
       )}
+      </div>
     </div>
   )
 }
+
