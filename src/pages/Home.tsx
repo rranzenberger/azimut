@@ -1084,13 +1084,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               style={{
                 background: theme === 'dark'
                   ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.18) 0%, rgba(59, 130, 246, 0.14) 30%, rgba(34, 197, 94, 0.12) 60%, rgba(236, 72, 153, 0.1) 100%)'
-                  : 'linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(59, 130, 246, 0.12) 30%, rgba(34, 197, 94, 0.1) 60%, rgba(236, 72, 153, 0.08) 100%)',
+                  : 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 243, 255, 0.98) 30%, rgba(240, 253, 250, 0.95) 60%, rgba(253, 242, 248, 0.92) 100%)',
                 border: theme === 'dark'
                   ? '2px solid rgba(139, 92, 246, 0.5)'
-                  : '2px solid rgba(139, 92, 246, 0.4)',
+                  : '2px solid rgba(139, 92, 246, 0.35)',
                 boxShadow: theme === 'dark'
                   ? '0 8px 40px rgba(139, 92, 246, 0.25), 0 0 0 1px rgba(59, 130, 246, 0.15)'
-                  : '0 8px 40px rgba(139, 92, 246, 0.2), 0 0 0 1px rgba(59, 130, 246, 0.1)',
+                  : '0 8px 40px rgba(139, 92, 246, 0.15), 0 4px 20px rgba(0, 0, 0, 0.08)',
               }}
             >
               {/* Efeitos de brilho animados nos cantos */}
@@ -1194,17 +1194,26 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       : 'From campaigns and expo booths to cultural and educational projects, we craft immersive experiences that stop people in their tracks, increase dwell time, and spark real engagement—where technology meets storytelling, from concept to delivery.'}
                   </p>
                   
-                  {/* Linha de prova/credibilidade - pequena */}
+                  {/* Linha de prova/credibilidade - com destaque */}
                   <p 
-                    className="text-xs md:text-sm"
+                    className="text-xs md:text-sm font-medium inline-flex items-center gap-2 px-3 py-1.5 rounded-full"
                     style={{ 
-                      color: theme === 'dark' ? 'rgba(255, 255, 255, 0.5)' : '#94a3b8'
+                      background: theme === 'dark' 
+                        ? 'rgba(139, 92, 246, 0.15)' 
+                        : 'rgba(139, 92, 246, 0.1)',
+                      color: theme === 'dark' ? 'rgba(167, 139, 250, 1)' : '#7c3aed',
+                      border: theme === 'dark' 
+                        ? '1px solid rgba(139, 92, 246, 0.3)' 
+                        : '1px solid rgba(139, 92, 246, 0.25)',
                     }}
                   >
-                    {lang === 'pt' ? '🌎 Brasil–Canadá • museus, festivais e ativações de marca' 
-                      : lang === 'es' ? '🌎 Brasil–Canadá • museos, festivales y activaciones de marca'
-                      : lang === 'fr' ? '🌎 Brésil–Canada • musées, festivals et activations de marque'
-                      : '🌎 Brazil–Canada • museums, festivals & brand activations'}
+                    <span>🌎</span>
+                    <span>
+                      {lang === 'pt' ? 'Brasil–Canadá • museus, festivais e ativações de marca' 
+                        : lang === 'es' ? 'Brasil–Canadá • museos, festivales y activaciones de marca'
+                        : lang === 'fr' ? 'Brésil–Canada • musées, festivals et activations de marque'
+                        : 'Brazil–Canada • museums, festivals & brand activations'}
+                    </span>
                   </p>
                 </div>
 
@@ -1245,23 +1254,38 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
                     </Link>
-                    {/* Microcopy de segurança Web3 */}
-                    <p 
-                      className="text-[0.65rem] mt-2 text-center"
+                    {/* Microcopy de segurança Web3 - COM DESTAQUE */}
+                    <div 
+                      className="mt-3 px-4 py-2 rounded-lg text-center"
                       style={{ 
-                        color: theme === 'dark' ? 'rgba(255, 255, 255, 0.45)' : '#94a3b8'
+                        background: theme === 'dark' 
+                          ? 'rgba(34, 197, 94, 0.15)' 
+                          : 'rgba(34, 197, 94, 0.12)',
+                        border: theme === 'dark' 
+                          ? '1px solid rgba(34, 197, 94, 0.4)' 
+                          : '1px solid rgba(34, 197, 94, 0.35)',
                       }}
                     >
-                      {lang === 'pt' ? '🔒 Somente leitura • sem custo • sem acesso aos seus fundos' 
-                        : lang === 'es' ? '🔒 Solo lectura • sin costo • sin acceso a tus fondos'
-                        : lang === 'fr' ? '🔒 Lecture seule • sans frais • sans accès à vos fonds'
-                        : '🔒 Read-only • no cost • no access to your funds'}
-                    </p>
+                      <p 
+                        className="text-xs font-medium flex items-center justify-center gap-2"
+                        style={{ 
+                          color: theme === 'dark' ? '#4ade80' : '#16a34a'
+                        }}
+                      >
+                        <span>🔒</span>
+                        <span>
+                          {lang === 'pt' ? 'Somente leitura • sem custo • sem acesso aos seus fundos' 
+                            : lang === 'es' ? 'Solo lectura • sin costo • sin acceso a tus fondos'
+                            : lang === 'fr' ? 'Lecture seule • sans frais • sans accès à vos fonds'
+                            : 'Read-only • no cost • no access to your funds'}
+                        </span>
+                      </p>
+                    </div>
                   </div>
                   
-                  {/* CTA Secundário - Ver Cases/Portfolio */}
+                  {/* CTA Secundário - Ver Cases Imersivos (específico para VR/AR/Web3) */}
                   <Link
-                    to={`/${lang}/work`}
+                    to={`/${lang}/work?filter=immersive`}
                     className="group/btn2 inline-flex items-center justify-center gap-3 px-7 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105"
                     style={{
                       background: 'linear-gradient(135deg, #c92337 0%, #a01d2d 100%)',
@@ -1273,26 +1297,26 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     }}
                   >
                     <span>
-                      {lang === 'pt' ? 'Ver Nosso Portfólio' : lang === 'es' ? 'Ver Nuestro Portafolio' : lang === 'fr' ? 'Voir Notre Portfolio' : 'Explore Our Work'}
+                      {lang === 'pt' ? 'Ver Cases Imersivos' : lang === 'es' ? 'Ver Cases Inmersivos' : lang === 'fr' ? 'Voir les Cases Immersifs' : 'See Immersive Cases'}
                     </span>
                     <svg className="w-5 h-5 transition-transform group-hover/btn2:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
                   </Link>
                   
-                  {/* Link terciário discreto - Soluções */}
+                  {/* Link terciário - Específico para soluções VR/AR/Web3 */}
                   <Link
-                    to={`/${lang}/what`}
+                    to={`/${lang}/what#immersive`}
                     className="group/btn3 inline-flex items-center justify-center gap-2 transition-all duration-300 hover:gap-3 mt-1"
                     style={{
-                      color: theme === 'dark' ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.55)',
+                      color: theme === 'dark' ? 'rgba(167, 139, 250, 0.9)' : '#7c3aed',
                       fontSize: '0.9rem',
                       textDecoration: 'none',
-                      fontWeight: '500',
+                      fontWeight: '600',
                     }}
                   >
                     <span style={{ borderBottom: '1px solid currentColor' }}>
-                      {lang === 'pt' ? 'Ver todas as soluções' : lang === 'es' ? 'Ver todas las soluciones' : lang === 'fr' ? 'Voir toutes les solutions' : 'View all solutions'}
+                      {lang === 'pt' ? 'Soluções VR / AR / Web3' : lang === 'es' ? 'Soluciones VR / AR / Web3' : lang === 'fr' ? 'Solutions VR / AR / Web3' : 'VR / AR / Web3 Solutions'}
                     </span>
                     <svg className="w-4 h-4 transition-transform group-hover/btn3:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
