@@ -1079,25 +1079,30 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* ════════════════════════════════════════════════════════════════ */}
         <section className="relative py-10 md:py-14 overflow-hidden">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            {/* Wrapper com borda gradiente (usando padding + background) */}
             <div 
-              className="relative overflow-hidden rounded-2xl p-8 md:p-12 transition-all duration-300"
+              className="relative rounded-2xl p-[2px] transition-all duration-300"
               style={{
-                // TEMA ESCURO: Gradiente roxo/tech original (REVERTIDO)
-                // TEMA CLARO: Glassmorphism premium com borda gradiente sutil
+                // Borda gradiente via background do wrapper
                 background: theme === 'dark'
-                  ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.18) 0%, rgba(59, 130, 246, 0.14) 30%, rgba(34, 197, 94, 0.12) 60%, rgba(236, 72, 153, 0.1) 100%)'
-                  : 'linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(250, 245, 255, 0.6) 50%, rgba(245, 250, 255, 0.65) 100%)',
-                backdropFilter: theme === 'light' ? 'blur(12px) saturate(150%)' : 'none',
-                WebkitBackdropFilter: theme === 'light' ? 'blur(12px) saturate(150%)' : 'none',
-                border: theme === 'dark'
-                  ? '2px solid rgba(139, 92, 246, 0.5)'
-                  : '2px solid transparent',
-                borderImage: theme === 'light' 
-                  ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.4) 0%, rgba(201, 35, 55, 0.3) 50%, rgba(59, 130, 246, 0.35) 100%) 1'
-                  : 'none',
+                  ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.7) 0%, rgba(59, 130, 246, 0.5) 25%, rgba(34, 197, 94, 0.5) 50%, rgba(236, 72, 153, 0.5) 75%, rgba(139, 92, 246, 0.7) 100%)'
+                  : 'linear-gradient(135deg, rgba(139, 92, 246, 0.5) 0%, rgba(201, 35, 55, 0.4) 25%, rgba(59, 130, 246, 0.45) 50%, rgba(34, 197, 94, 0.4) 75%, rgba(139, 92, 246, 0.5) 100%)',
                 boxShadow: theme === 'dark'
-                  ? '0 8px 40px rgba(139, 92, 246, 0.25), 0 0 0 1px rgba(59, 130, 246, 0.15)'
-                  : '0 8px 32px rgba(139, 92, 246, 0.12), 0 4px 16px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+                  ? '0 8px 40px rgba(139, 92, 246, 0.3), 0 0 60px rgba(139, 92, 246, 0.15)'
+                  : '0 8px 32px rgba(139, 92, 246, 0.2), 0 0 40px rgba(139, 92, 246, 0.1)',
+              }}
+            >
+            {/* Card interno com fundo sólido */}
+            <div 
+              className="relative overflow-hidden rounded-[14px] p-8 md:p-12 transition-all duration-300"
+              style={{
+                // TEMA ESCURO: Gradiente roxo/tech premium
+                // TEMA CLARO: Glassmorphism elegante
+                background: theme === 'dark'
+                  ? 'linear-gradient(135deg, rgba(15, 12, 41, 0.95) 0%, rgba(25, 22, 55, 0.92) 30%, rgba(20, 28, 50, 0.9) 60%, rgba(15, 25, 35, 0.95) 100%)'
+                  : 'linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(252, 250, 255, 0.8) 50%, rgba(250, 252, 255, 0.85) 100%)',
+                backdropFilter: theme === 'light' ? 'blur(16px) saturate(180%)' : 'none',
+                WebkitBackdropFilter: theme === 'light' ? 'blur(16px) saturate(180%)' : 'none',
               }}
             >
               {/* Efeitos de brilho animados nos cantos */}
@@ -1324,6 +1329,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 </div>
               </div>
             </div>
+            </div> {/* Fecha wrapper da borda gradiente */}
           </div>
         </section>
 

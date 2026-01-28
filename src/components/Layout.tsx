@@ -125,42 +125,49 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
   
-  // 🆕 DETECÇÃO DINÂMICA DE MOBILE/DESKTOP
-  // OTIMIZADO: Breakpoint reduzido para 1100px - usa melhor o espaço disponível
-  // Menu compacto permite funcionar em telas menores antes de virar hamburger
-  const [isMobile, setIsMobile] = useState(() => {
+  // 🆕 DETECÇÃO DINÂMICA - 4 ESTADOS DE RESPONSIVIDADE
+  // Estado 1: >1400px = Menu completo com logo grande
+  // Estado 2: 1100-1400px = Menu completo compacto com logo-nome
+  // Estado 3: 800-1100px = Hamburger + logo-nome + idiomas
+  // Estado 4: <800px = Hamburger + logo mínima (sem idiomas)
+  
+  const [headerState, setHeaderState] = useState<'full' | 'compact' | 'hamburger-langs' | 'hamburger-minimal'>(() => {
     if (typeof window !== 'undefined') {
-      return window.innerWidth < 1100  // Mobile: < 1100px (otimizado para aproveitar espaço)
+      const w = window.innerWidth
+      if (w >= 1400) return 'full'
+      if (w >= 1100) return 'compact'
+      if (w >= 800) return 'hamburger-langs'
+      return 'hamburger-minimal'
     }
-    return false
+    return 'full'
   })
   
-  // Estado para controlar tamanho da logo (compacta em telas intermediárias)
-  const [isCompactMode, setIsCompactMode] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return window.innerWidth >= 1100 && window.innerWidth < 1400
-    }
-    return false
-  })
+  // Compatibilidade com código existente
+  const isMobile = headerState === 'hamburger-langs' || headerState === 'hamburger-minimal'
+  const isCompactMode = headerState === 'compact'
+  const showLanguagesInHeader = headerState !== 'hamburger-minimal'
   
-  // Detectar mobile/desktop com breakpoint FIXO
+  // Detectar estado do header baseado na largura
   React.useEffect(() => {
-    const checkMobile = () => {
-      const windowWidth = window.innerWidth
+    const checkHeaderState = () => {
+      const w = window.innerWidth
       
-      // REGRA: < 1100px = MOBILE (hamburger)
-      const newIsMobile = windowWidth < 1100
-      setIsMobile(newIsMobile)
-      
-      // Modo compacto: 1100px - 1400px (logo menor, espaçamentos menores)
-      setIsCompactMode(windowWidth >= 1100 && windowWidth < 1400)
+      if (w >= 1400) {
+        setHeaderState('full')
+      } else if (w >= 1100) {
+        setHeaderState('compact')
+      } else if (w >= 800) {
+        setHeaderState('hamburger-langs')
+      } else {
+        setHeaderState('hamburger-minimal')
+      }
     }
     
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
+    checkHeaderState()
+    window.addEventListener('resize', checkHeaderState)
     
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])  // Não depende de 'lang' - breakpoint fixo
+    return () => window.removeEventListener('resize', checkHeaderState)
+  }, [])
   
   // Fechar menu mobile ao mudar para desktop
   React.useEffect(() => {
@@ -308,21 +315,21 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               gap: '0' // Gap controlado manualmente para mais controle
             }}
           >
-            {/* Logo - ESPAÇAMENTO COMPACTO */}
-            <div className="transition-opacity hover:opacity-90 touch-manipulation" style={{ marginRight: isCompactMode ? '10px' : '16px' }}>
+            {/* Logo - 4 ESTADOS RESPONSIVOS */}
+            <div className="transition-opacity hover:opacity-90 touch-manipulation" style={{ marginRight: showLanguagesInHeader ? '12px' : '0' }}>
               <LangLink 
                 to="/" 
                 onClick={() => setIsMobileMenuOpen(false)}
                 style={{ display: 'block' }}
               >
-                {/* MOBILE: Logo básica (MAIOR para melhor visibilidade) */}
-                {isMobile && (
+                {/* ESTADO 1: full (>1400px) - Logo completa grande */}
+                {headerState === 'full' && (
                   <img
-                    src="/logobasicaa.png"
-                    alt="Azimut"
+                    src="/logo-topo-site.svg"
+                    alt="Azimut – Immersive • Interactive • Cinematic Experiences"
                     className="transition-all duration-300"
                     style={{ 
-                      height: isScrolled ? '38px' : '44px', // Logo maior no mobile
+                      height: isScrolled ? '46px' : '56px',
                       width: 'auto',
                       display: 'block',
                       transition: 'height 0.3s ease'
@@ -330,16 +337,44 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     loading="eager"
                   />
                 )}
-                {/* DESKTOP: Logo com nome completo - Tamanho adaptativo */}
-                {!isMobile && (
+                {/* ESTADO 2: compact (1100-1400px) - Logo com nome menor */}
+                {headerState === 'compact' && (
                   <img
-                    src={isCompactMode ? "/logobasicaa.png" : "/logo-topo-site.svg"}
-                    alt="Azimut – Immersive • Interactive • Cinematic Experiences"
+                    src="/logo-nome.svg"
+                    alt="Azimut"
                     className="transition-all duration-300"
                     style={{ 
-                      height: isScrolled 
-                        ? (isCompactMode ? '36px' : '46px') 
-                        : (isCompactMode ? '42px' : '56px'), // Logo menor em modo compacto
+                      height: isScrolled ? '36px' : '42px',
+                      width: 'auto',
+                      display: 'block',
+                      transition: 'height 0.3s ease'
+                    }}
+                    loading="eager"
+                  />
+                )}
+                {/* ESTADO 3: hamburger-langs (800-1100px) - Logo com nome + idiomas */}
+                {headerState === 'hamburger-langs' && (
+                  <img
+                    src="/logo-nome.svg"
+                    alt="Azimut"
+                    className="transition-all duration-300"
+                    style={{ 
+                      height: isScrolled ? '34px' : '40px',
+                      width: 'auto',
+                      display: 'block',
+                      transition: 'height 0.3s ease'
+                    }}
+                    loading="eager"
+                  />
+                )}
+                {/* ESTADO 4: hamburger-minimal (<800px) - Só logo mínima */}
+                {headerState === 'hamburger-minimal' && (
+                  <img
+                    src="/logobasicaa.png"
+                    alt="Azimut"
+                    className="transition-all duration-300"
+                    style={{ 
+                      height: isScrolled ? '36px' : '42px',
                       width: 'auto',
                       display: 'block',
                       transition: 'height 0.3s ease'
@@ -350,8 +385,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               </LangLink>
             </div>
 
-            {/* Idiomas - MOVIDOS PARA PERTO DA LOGO (ESQUERDA) - DESKTOP - COMPACTO */}
-            {!isMobile && (
+            {/* Idiomas - Aparecem em: full, compact, hamburger-langs (NÃO em hamburger-minimal) */}
+            {showLanguagesInHeader && (
               <div className="flex items-center shrink-0" style={{ alignItems: 'center', height: '100%', display: 'flex', gap: '0' }}>
                 {/* Separador visual (pílula/linha) - COMPACTO */}
                 <div className="h-5 w-px shrink-0" style={{ backgroundColor: 'var(--theme-border)', flexShrink: 0, alignSelf: 'center', marginRight: '10px', opacity: 0.4, borderRadius: '1px' }}></div>
