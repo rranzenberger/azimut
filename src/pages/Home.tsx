@@ -1082,17 +1082,22 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             <div 
               className="relative overflow-hidden rounded-2xl p-8 md:p-12 transition-all duration-300"
               style={{
-                // TEMA ESCURO: Gradiente roxo/tech (mantém visual Web3)
-                // TEMA CLARO: Usa paleta do site - bege escurecido + vermelho Azimut sutil
+                // TEMA ESCURO: Gradiente roxo/tech original (REVERTIDO)
+                // TEMA CLARO: Glassmorphism premium com borda gradiente sutil
                 background: theme === 'dark'
-                  ? 'linear-gradient(135deg, rgba(30, 27, 75, 0.95) 0%, rgba(49, 46, 129, 0.92) 30%, rgba(30, 58, 138, 0.88) 60%, rgba(20, 83, 45, 0.85) 100%)'
-                  : 'linear-gradient(135deg, rgba(180, 170, 155, 0.95) 0%, rgba(200, 190, 175, 0.92) 50%, rgba(190, 180, 165, 0.95) 100%)',
+                  ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.18) 0%, rgba(59, 130, 246, 0.14) 30%, rgba(34, 197, 94, 0.12) 60%, rgba(236, 72, 153, 0.1) 100%)'
+                  : 'linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(250, 245, 255, 0.6) 50%, rgba(245, 250, 255, 0.65) 100%)',
+                backdropFilter: theme === 'light' ? 'blur(12px) saturate(150%)' : 'none',
+                WebkitBackdropFilter: theme === 'light' ? 'blur(12px) saturate(150%)' : 'none',
                 border: theme === 'dark'
                   ? '2px solid rgba(139, 92, 246, 0.5)'
-                  : '2px solid rgba(201, 35, 55, 0.25)',
+                  : '2px solid transparent',
+                borderImage: theme === 'light' 
+                  ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.4) 0%, rgba(201, 35, 55, 0.3) 50%, rgba(59, 130, 246, 0.35) 100%) 1'
+                  : 'none',
                 boxShadow: theme === 'dark'
                   ? '0 8px 40px rgba(139, 92, 246, 0.25), 0 0 0 1px rgba(59, 130, 246, 0.15)'
-                  : '0 6px 24px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5)',
+                  : '0 8px 32px rgba(139, 92, 246, 0.12), 0 4px 16px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
               }}
             >
               {/* Efeitos de brilho animados nos cantos */}
