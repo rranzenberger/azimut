@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       'event ProjectRegistered(uint256 indexed projectId, address indexed student, uint256 value, uint256 rewardAmount)',
     ]
 
-    const contract = new ethers.Contract(STUDENT_REWARD_CONTRACT, contractABI, wallet)
+    const contract = new ethers.Contract(STUDENT_REWARD_CONTRACT!, contractABI, wallet)
 
     let txHash: string | null = null
     let projectId: number | null = null
@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
             'function getNFTByProject(uint256 _projectId) view returns (uint256)',
             'function tokenURI(uint256 tokenId) view returns (string)',
           ]
-          const nftContract = new ethers.Contract(NFT_CONTRACT_ADDRESS, nftABI, provider)
+          const nftContract = new ethers.Contract(NFT_CONTRACT_ADDRESS!, nftABI, provider)
           const nftId = await nftContract.getNFTByProject(projectId)
           if (nftId && nftId > 0) {
             nftTokenId = nftId.toString()
@@ -128,23 +128,24 @@ export async function POST(request: NextRequest) {
     }
 
     // Registrar no banco
-    try {
-      const { prisma } = await import('@/src/lib/prisma')
-      
-      await prisma.studentProject.create({
-        data: {
-          studentAddress: studentAddress.toLowerCase(),
-          projectValue: parseFloat(projectValue),
-          rewardAmount: rewardAmount ? parseFloat(rewardAmount) : null,
-          description,
-          txHash: txHash || null,
-          contractAddress: STUDENT_REWARD_CONTRACT!.toLowerCase(),
-          status: 'REGISTERED',
-        },
-      })
-    } catch (dbError: any) {
-      console.warn('[Student Reward] Tabela não existe, continuando...', dbError.message)
-    }
+    // TODO: Criar modelo StudentProject no Prisma schema
+    // try {
+    //   const { prisma } = await import('@/src/lib/prisma')
+    //   
+    //   await (prisma as any).studentProject.create({
+    //     data: {
+    //       studentAddress: studentAddress.toLowerCase(),
+    //       projectValue: parseFloat(projectValue),
+    //       rewardAmount: rewardAmount ? parseFloat(rewardAmount) : null,
+    //       description,
+    //       txHash: txHash || null,
+    //       contractAddress: STUDENT_REWARD_CONTRACT!.toLowerCase(),
+    //       status: 'REGISTERED',
+    //     },
+    //   })
+    // } catch (dbError: any) {
+    //   console.warn('[Student Reward] Tabela não existe, continuando...', dbError.message)
+    // }
 
     return NextResponse.json({
       success: true,
