@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
-import { isPWAInstalled } from '../utils/pwa'
 
 type Theme = 'dark' | 'light'
 
@@ -12,6 +11,12 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
+// Detectar se é mobile (tela pequena)
+function isMobileDevice(): boolean {
+  if (typeof window === 'undefined') return false
+  return window.innerWidth < 768 // Mobile: < 768px
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(() => {
     if (typeof window !== 'undefined') {
@@ -23,10 +28,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         return savedTheme
       }
       
-      // Caso contrário, tema padrão baseado no tipo de acesso:
-      // 🌐 Web (navegador): light | 📱 PWA instalado: dark
-      const isPWA = isPWAInstalled()
-      return isPWA ? 'dark' : 'light'
+      // Caso contrário, tema padrão baseado no dispositivo:
+      // 🖥️ Desktop (>= 768px): dark | 📱 Mobile (< 768px): light
+      const isMobile = isMobileDevice()
+      return isMobile ? 'light' : 'dark'
     }
     return 'dark'
   })
