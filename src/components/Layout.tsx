@@ -126,23 +126,34 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   }, [])
   
   // 🆕 DETECÇÃO DINÂMICA DE MOBILE/DESKTOP
-  // CORRIGIDO: Breakpoint aumentado para 1360px - hamburger aparece ANTES dos elementos sobreporem
-  // Evita menus "trepados" e garante que BLOG e toggle não sobreponham
+  // OTIMIZADO: Breakpoint reduzido para 1100px - usa melhor o espaço disponível
+  // Menu compacto permite funcionar em telas menores antes de virar hamburger
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window !== 'undefined') {
-      return window.innerWidth < 1360  // Mobile: < 1360px (aumentado para evitar sobreposição)
+      return window.innerWidth < 1100  // Mobile: < 1100px (otimizado para aproveitar espaço)
     }
     return false
   })
   
-  // Detectar mobile/desktop com breakpoint FIXO (não calcular espaço)
+  // Estado para controlar tamanho da logo (compacta em telas intermediárias)
+  const [isCompactMode, setIsCompactMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth >= 1100 && window.innerWidth < 1400
+    }
+    return false
+  })
+  
+  // Detectar mobile/desktop com breakpoint FIXO
   React.useEffect(() => {
     const checkMobile = () => {
       const windowWidth = window.innerWidth
       
-      // REGRA: < 1360px = MOBILE (hamburger) - Evita sobreposição de elementos
-      const newIsMobile = windowWidth < 1360
+      // REGRA: < 1100px = MOBILE (hamburger)
+      const newIsMobile = windowWidth < 1100
       setIsMobile(newIsMobile)
+      
+      // Modo compacto: 1100px - 1400px (logo menor, espaçamentos menores)
+      setIsCompactMode(windowWidth >= 1100 && windowWidth < 1400)
     }
     
     checkMobile()
@@ -298,7 +309,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             }}
           >
             {/* Logo - ESPAÇAMENTO COMPACTO */}
-            <div className="transition-opacity hover:opacity-90 touch-manipulation" style={{ marginRight: '16px' }}>
+            <div className="transition-opacity hover:opacity-90 touch-manipulation" style={{ marginRight: isCompactMode ? '10px' : '16px' }}>
               <LangLink 
                 to="/" 
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -319,14 +330,16 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     loading="eager"
                   />
                 )}
-                {/* DESKTOP: Logo com nome completo - MAIOR */}
+                {/* DESKTOP: Logo com nome completo - Tamanho adaptativo */}
                 {!isMobile && (
                   <img
-                    src="/logo-topo-site.svg"
+                    src={isCompactMode ? "/logobasicaa.png" : "/logo-topo-site.svg"}
                     alt="Azimut – Immersive • Interactive • Cinematic Experiences"
                     className="transition-all duration-300"
                     style={{ 
-                      height: isScrolled ? '46px' : '56px', // Logo MAIOR
+                      height: isScrolled 
+                        ? (isCompactMode ? '36px' : '46px') 
+                        : (isCompactMode ? '42px' : '56px'), // Logo menor em modo compacto
                       width: 'auto',
                       display: 'block',
                       transition: 'height 0.3s ease'
@@ -455,7 +468,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           {!isMobile && (
           <nav 
             ref={navRef}
-            className="flex items-center justify-center font-sora text-[0.52rem] font-medium uppercase tracking-[0.03em] gap-1 md:gap-1.5 lg:gap-2 xl:gap-2.5 xl:text-[0.55rem]" 
+            className="flex items-center justify-center font-sora font-medium uppercase" 
             style={{ 
               color: 'var(--theme-text-secondary)', 
               overflow: 'visible', 
@@ -463,7 +476,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               flexWrap: 'nowrap',
               gridColumn: '2', // Ocupa a coluna central do grid
               justifySelf: 'center',
-              marginLeft: '20px' // Espaço para não trepar com idiomas
+              marginLeft: isCompactMode ? '8px' : '20px', // Menos margem em modo compacto
+              gap: isCompactMode ? '2px' : '8px', // Gap menor em modo compacto
+              fontSize: isCompactMode ? '0.48rem' : '0.52rem',
+              letterSpacing: isCompactMode ? '0.02em' : '0.03em'
             }}
           >
             <LangLink to="/" 
@@ -692,7 +708,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             maxWidth: '100%', 
             overflow: 'visible', 
             paddingRight: '0',
-            gap: '10px', // Gap reduzido para compactar
+            gap: isCompactMode ? '6px' : '10px', // Gap ainda menor em modo compacto
             display: 'flex',
             flexDirection: 'row' // Garantir lado a lado
           }}>
@@ -751,7 +767,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   display: 'flex', 
                   alignItems: 'center', 
                   justifyContent: 'center',
-                  gap: '10px', // Gap reduzido
+                  gap: isCompactMode ? '6px' : '10px', // Gap ainda menor em modo compacto
                   height: '100%',
                   alignSelf: 'center',
                   flexDirection: 'row'
@@ -772,14 +788,14 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       boxShadow: theme === 'dark' 
                         ? '0 2px 8px rgba(201, 35, 55, 0.2)' 
                         : '0 2px 8px rgba(201, 35, 55, 0.15)',
-                      minWidth: '95px',
-                      width: '95px',
-                      maxWidth: '95px',
-                      height: '38px',
-                      minHeight: '38px',
-                      padding: '6px 8px',
+                      minWidth: isCompactMode ? '80px' : '95px',
+                      width: isCompactMode ? '80px' : '95px',
+                      maxWidth: isCompactMode ? '80px' : '95px',
+                      height: isCompactMode ? '34px' : '38px',
+                      minHeight: isCompactMode ? '34px' : '38px',
+                      padding: isCompactMode ? '4px 6px' : '6px 8px',
                       flexShrink: 0,
-                      fontSize: '0.6rem',
+                      fontSize: isCompactMode ? '0.5rem' : '0.6rem',
                       lineHeight: '1.2',
                       letterSpacing: '0.04em',
                       gap: '1px',
@@ -801,18 +817,18 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     }}
                     className="group flex flex-row items-center justify-center"
                     style={{ 
-                      gap: '6px',
+                      gap: isCompactMode ? '4px' : '6px',
                       color: '#ffffff', // SEMPRE branco (fundo é roxo escuro)
                       background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.6) 0%, rgba(59, 130, 246, 0.5) 50%, rgba(34, 197, 94, 0.4) 100%)',
                       border: '2px solid rgba(139, 92, 246, 0.9)',
                       boxShadow: '0 3px 12px rgba(139, 92, 246, 0.5)',
                       borderRadius: '10px',
-                      minWidth: '90px',
+                      minWidth: isCompactMode ? '75px' : '90px',
                       width: 'auto',
-                      height: '38px',
-                      minHeight: '38px',
-                      maxHeight: '38px',
-                      padding: '6px 12px',
+                      height: isCompactMode ? '34px' : '38px',
+                      minHeight: isCompactMode ? '34px' : '38px',
+                      maxHeight: isCompactMode ? '34px' : '38px',
+                      padding: isCompactMode ? '4px 8px' : '6px 12px',
                       flexShrink: 0,
                       cursor: 'pointer',
                       transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
