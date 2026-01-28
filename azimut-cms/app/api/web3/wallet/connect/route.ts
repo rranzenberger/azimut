@@ -33,47 +33,59 @@ export async function POST(request: NextRequest) {
     }
 
     // Salvar conexão de carteira (opcional: associar com usuário/lead)
-    try {
-      const { prisma } = await import('@/src/lib/prisma')
-      
-      // Buscar ou criar registro de carteira
-      const wallet = await prisma.wallet.upsert({
-        where: { address: address.toLowerCase() },
-        update: {
-          chainId,
-          lastConnectedAt: new Date(),
-        },
-        create: {
-          address: address.toLowerCase(),
-          chainId,
-          lastConnectedAt: new Date(),
-        },
-      })
-
-      return NextResponse.json({
-        success: true,
-        wallet: {
-          address: wallet.address,
-          chainId: wallet.chainId,
-          connected: true,
-        },
-        message: 'Carteira conectada com sucesso',
-      })
-    } catch (dbError: any) {
-      // Se tabela Wallet não existir, apenas retornar sucesso
-      if (dbError.code === 'P2021' || dbError.message?.includes('does not exist')) {
-        return NextResponse.json({
-          success: true,
-          wallet: {
-            address: address.toLowerCase(),
-            chainId,
-            connected: true,
-          },
-          message: 'Carteira conectada (registro não salvo - tabela não existe)',
-        })
-      }
-      throw dbError
-    }
+    // TODO: Criar modelo Wallet no Prisma schema
+    // try {
+    //   const { prisma } = await import('@/src/lib/prisma')
+    //   
+    //   // Buscar ou criar registro de carteira
+    //   const wallet = await (prisma as any).wallet.upsert({
+    //     where: { address: address.toLowerCase() },
+    //     update: {
+    //       chainId,
+    //       lastConnectedAt: new Date(),
+    //     },
+    //     create: {
+    //       address: address.toLowerCase(),
+    //       chainId,
+    //       lastConnectedAt: new Date(),
+    //     },
+    //   })
+    //
+    //   return NextResponse.json({
+    //     success: true,
+    //     wallet: {
+    //       address: wallet.address,
+    //       chainId: wallet.chainId,
+    //       connected: true,
+    //     },
+    //     message: 'Carteira conectada com sucesso',
+    //   })
+    // } catch (dbError: any) {
+    //   // Se tabela Wallet não existir, apenas retornar sucesso
+    //   if (dbError.code === 'P2021' || dbError.message?.includes('does not exist')) {
+    //     return NextResponse.json({
+    //       success: true,
+    //       wallet: {
+    //         address: address.toLowerCase(),
+    //         chainId,
+    //         connected: true,
+    //       },
+    //       message: 'Carteira conectada (registro não salvo - tabela não existe)',
+    //     })
+    //   }
+    //   throw dbError
+    // }
+    
+    // Retornar sucesso sem salvar no banco (tabela Wallet não existe ainda)
+    return NextResponse.json({
+      success: true,
+      wallet: {
+        address: address.toLowerCase(),
+        chainId,
+        connected: true,
+      },
+      message: 'Carteira conectada (registro não salvo - tabela Wallet não existe)',
+    })
   } catch (error: any) {
     console.error('[Wallet Connect] Erro:', error)
     return NextResponse.json(

@@ -140,10 +140,20 @@ export async function POST(request: NextRequest) {
       }
 
       // Obter estimativa de gas usado (para relatório)
-      const receipt = await provider.getTransactionReceipt(txHash)
-      const gasUsed = receipt?.gasUsed || null
-      const gasPrice = receipt?.gasPrice || null
-      const totalCost = gasUsed && gasPrice ? ethers.formatEther(gasUsed * gasPrice) : null
+      let gasUsed = null
+      let gasPrice = null
+      let totalCost = null
+      
+      if (txHash) {
+        try {
+          const receipt = await provider.getTransactionReceipt(txHash)
+          gasUsed = receipt?.gasUsed || null
+          gasPrice = receipt?.gasPrice || null
+          totalCost = gasUsed && gasPrice ? ethers.formatEther(gasUsed * gasPrice) : null
+        } catch (receiptError) {
+          console.warn('[Reward] Erro ao obter receipt:', receiptError)
+        }
+      }
 
       return NextResponse.json({
         success: true,
