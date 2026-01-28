@@ -21,23 +21,42 @@ function sendToAnalytics(metric: Metric) {
     }
 
     // 2. Enviar para sistema interno de analytics (se disponível)
+    // ⚠️ Silencioso - não quebrar se API não aceitar
     if (import.meta.env.PROD && 'sendBeacon' in navigator) {
-      const apiUrl = import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azmt.com.br'
-      const body = JSON.stringify({
-        event: 'web_vital',
-        data: {
-          name: metric.name,
-          value: metric.value,
-          delta: metric.delta,
-          rating: metric.rating,
-          id: metric.id,
-          navigationType: metric.navigationType,
-          timestamp: Date.now(),
-        },
-      })
+      try {
+        const apiUrl = import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azmt.com.br'
+        // Remover /api duplicado se existir
+        const cleanUrl = apiUrl.replace(/\/api\/api\//, '/api/').replace(/\/api$/, '')
+        const body = JSON.stringify({
+          event: 'web_vital',
+          data: {
+            name: metric.name,
+            value: metric.value,
+            delta: metric.delta,
+            rating: metric.rating,
+            id: metric.id,
+            navigationType: metric.navigationType,
+            timestamp: Date.now(),
+          },
+        })
 
-      // Usar sendBeacon para não bloquear navegação
-      navigator.sendBeacon(`${apiUrl}/api/track`, body)
+        // Usar sendBeacon para não bloquear navegação
+        const sent = navigator.sendBeacon(`${cleanUrl}/api/track`, body)
+        if (!sent) {
+          // Se sendBeacon falhar, tentar fetch (mas não bloquear)
+          fetch(`${cleanUrl}/api/track`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body,
+            keepalive: true,
+          }).catch(() => {
+            // Silencioso - tracking é opcional
+          })
+        }
+      } catch (err) {
+        // Silencioso - não quebrar se tracking falhar
+        logger.warn('Web Vitals tracking failed (non-critical)', err)
+      }
     }
 
     // 3. Log em desenvolvimento

@@ -505,16 +505,24 @@ export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
             onConnect={(wallet) => {
               console.log('Carteira conectada:', wallet)
               setConnectedWallet(wallet)
-              // Salvar conexão via API
-              const backofficeUrl = import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azmt.com.br'
-              fetch(`${backofficeUrl}/api/web3/wallet/connect`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  address: wallet.address,
-                  chainId: wallet.chainId,
-                }),
-              }).catch(console.error)
+              // Salvar conexão via API (opcional - não bloqueia se falhar)
+              try {
+                const backofficeUrl = import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azmt.com.br'
+                fetch(`${backofficeUrl}/api/web3/wallet/connect`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    address: wallet.address,
+                    chainId: wallet.chainId,
+                  }),
+                }).catch((err) => {
+                  // Silencioso - não quebrar experiência se API falhar
+                  console.warn('Erro ao salvar conexão de carteira (não crítico):', err)
+                })
+              } catch (err) {
+                // Silencioso - não quebrar experiência
+                console.warn('Erro ao conectar carteira (não crítico):', err)
+              }
             }}
             onDisconnect={() => {
               console.log('Carteira desconectada')

@@ -708,55 +708,93 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               </span>
             </div>
 
-            {/* Botão CTA - ULTRA COMPACTO: Otimizado para ganhar espaço */}
-                {/* Botão CTA - Desktop/Tablet (≥640px): Texto completo */}
-                <LangLink to="/contact"
-                  onClick={() => {
-                    trackCTA('header', 'Start Project')
-                    trackInteraction('cta_click', 'header_start_project')
-                  }}
-                  className="hidden rounded-lg text-center font-sora font-bold uppercase min-[640px]:inline-flex min-[640px]:flex-col min-[640px]:items-center min-[640px]:justify-center transition-all duration-300 shrink-0 cursor-pointer hover:scale-105 hover:shadow-[0_4px_12px_rgba(201,35,55,0.3)]"
-                  style={{ 
-                    color: theme === 'light' ? '#d3cec3' : 'var(--theme-text-secondary)', // Texto CLARO no tema claro!
-                    background: theme === 'dark' 
-                      ? 'rgba(201, 35, 55, 0.12)' 
-                      : 'rgba(201, 35, 55, 0.08)',
-                    border: '1px solid rgba(201, 35, 55, 0.7)', // Borda mais fina
-                    boxShadow: theme === 'dark' 
-                      ? '0 2px 8px rgba(201, 35, 55, 0.2)' 
-                      : '0 2px 8px rgba(201, 35, 55, 0.15)',
-                    minWidth: '110px', // Reduzido de 130px
-                    width: '110px',
-                    maxWidth: '110px',
-                    height: '40px', // Reduzido de 48px
-                    minHeight: '40px',
-                    padding: '8px 10px', // Reduzido
-                    alignSelf: 'center',
-                    flexShrink: 0,
-                    fontSize: '0.65rem', // Reduzido de 0.7rem
-                    lineHeight: '1.3',
-                    letterSpacing: '0.05em',
-                    marginLeft: '8px',
-                    gap: '2px'
-                  }}
-                >
-                  <span className="block whitespace-nowrap" style={{ fontSize: 'inherit', fontWeight: '700' }}>{getCtaLines(lang)[0]}</span>
-                  <span className="block whitespace-nowrap" style={{ fontSize: 'inherit', fontWeight: '700' }}>{getCtaLines(lang)[1]}</span>
-                </LangLink>
+            {/* Botões CTA - ULTRA COMPACTO: Otimizado para ganhar espaço */}
+                <div className="hidden min-[640px]:flex items-center gap-2 shrink-0">
+                  {/* Botão CTA Principal - Desktop/Tablet (≥640px): Texto completo */}
+                  <LangLink to="/contact"
+                    onClick={() => {
+                      trackCTA('header', 'Start Project')
+                      trackInteraction('cta_click', 'header_start_project')
+                    }}
+                    className="rounded-lg text-center font-sora font-bold uppercase inline-flex flex-col items-center justify-center transition-all duration-300 shrink-0 cursor-pointer hover:scale-105 hover:shadow-[0_4px_12px_rgba(201,35,55,0.3)]"
+                    style={{ 
+                      color: theme === 'light' ? '#d3cec3' : 'var(--theme-text-secondary)', // Texto CLARO no tema claro!
+                      background: theme === 'dark' 
+                        ? 'rgba(201, 35, 55, 0.12)' 
+                        : 'rgba(201, 35, 55, 0.08)',
+                      border: '1px solid rgba(201, 35, 55, 0.7)', // Borda mais fina
+                      boxShadow: theme === 'dark' 
+                        ? '0 2px 8px rgba(201, 35, 55, 0.2)' 
+                        : '0 2px 8px rgba(201, 35, 55, 0.15)',
+                      minWidth: '110px', // Reduzido de 130px
+                      width: '110px',
+                      maxWidth: '110px',
+                      height: '40px', // Reduzido de 48px
+                      minHeight: '40px',
+                      padding: '8px 10px', // Reduzido
+                      alignSelf: 'center',
+                      flexShrink: 0,
+                      fontSize: '0.65rem', // Reduzido de 0.7rem
+                      lineHeight: '1.3',
+                      letterSpacing: '0.05em',
+                      gap: '2px'
+                    }}
+                  >
+                    <span className="block whitespace-nowrap" style={{ fontSize: 'inherit', fontWeight: '700' }}>{getCtaLines(lang)[0]}</span>
+                    <span className="block whitespace-nowrap" style={{ fontSize: 'inherit', fontWeight: '700' }}>{getCtaLines(lang)[1]}</span>
+                  </LangLink>
 
-                {/* Botão CTA - Mobile (<640px): Ícone "+" compacto */}
+                  {/* Botão Web3 - Degustação */}
+                  <LangLink to="/experience-preview"
+                    onClick={() => {
+                      trackCTA('header', 'Web3 Preview')
+                      trackInteraction('cta_click', 'header_web3_preview')
+                    }}
+                    className="rounded-lg text-center font-sora font-bold uppercase inline-flex items-center justify-center transition-all duration-300 shrink-0 cursor-pointer hover:scale-105 hover:shadow-[0_4px_12px_rgba(139,92,246,0.3)]"
+                    style={{ 
+                      color: theme === 'light' ? '#d3cec3' : '#fff',
+                      background: theme === 'dark' 
+                        ? 'rgba(139, 92, 246, 0.15)' 
+                        : 'rgba(139, 92, 246, 0.1)',
+                      border: '1px solid rgba(139, 92, 246, 0.6)',
+                      boxShadow: theme === 'dark' 
+                        ? '0 2px 8px rgba(139, 92, 246, 0.25)' 
+                        : '0 2px 8px rgba(139, 92, 246, 0.2)',
+                      minWidth: '90px',
+                      width: '90px',
+                      maxWidth: '90px',
+                      height: '40px',
+                      minHeight: '40px',
+                      padding: '8px 10px',
+                      alignSelf: 'center',
+                      flexShrink: 0,
+                      fontSize: '0.6rem',
+                      lineHeight: '1.2',
+                      letterSpacing: '0.05em',
+                      gap: '4px'
+                    }}
+                  >
+                    <span className="text-lg">🎁</span>
+                    <span className="block whitespace-nowrap" style={{ fontSize: '0.55rem', fontWeight: '700' }}>
+                      {lang === 'pt' ? 'WEB3' : lang === 'es' ? 'WEB3' : lang === 'fr' ? 'WEB3' : 'WEB3'}
+                    </span>
+                  </LangLink>
+                </div>
+
+                {/* Botões CTA - Mobile (<640px): Ícones compactos */}
                 {isMobile && (
-                <LangLink to="/contact"
-                  onClick={() => {
-                    trackCTA('header', 'Start Project Mobile')
-                    trackInteraction('cta_click', 'header_start_project_mobile')
-                  }}
-                  className="inline-flex items-center justify-center rounded-lg text-center font-sora font-bold transition-all duration-300 shrink-0 cursor-pointer hover:scale-105 hover:shadow-[0_4px_12px_rgba(201,35,55,0.3)] touch-manipulation"
-                  style={{ 
-                    color: theme === 'light' ? '#d3cec3' : 'var(--theme-text-secondary)',
-                    background: theme === 'dark' 
-                      ? 'rgba(201, 35, 55, 0.12)' 
-                      : 'rgba(201, 35, 55, 0.08)',
+                <div className="flex items-center gap-2">
+                  <LangLink to="/contact"
+                    onClick={() => {
+                      trackCTA('header', 'Start Project Mobile')
+                      trackInteraction('cta_click', 'header_start_project_mobile')
+                    }}
+                    className="inline-flex items-center justify-center rounded-lg text-center font-sora font-bold transition-all duration-300 shrink-0 cursor-pointer hover:scale-105 hover:shadow-[0_4px_12px_rgba(201,35,55,0.3)] touch-manipulation"
+                    style={{ 
+                      color: theme === 'light' ? '#d3cec3' : 'var(--theme-text-secondary)',
+                      background: theme === 'dark' 
+                        ? 'rgba(201, 35, 55, 0.12)' 
+                        : 'rgba(201, 35, 55, 0.08)',
                     border: '1px solid rgba(201, 35, 55, 0.7)',
                     boxShadow: theme === 'dark' 
                       ? '0 2px 8px rgba(201, 35, 55, 0.2)' 
@@ -769,12 +807,68 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     flexShrink: 0,
                     fontSize: '1.4rem',
                     lineHeight: '1',
+                  }}
+                >
+                  +
+                </LangLink>
+                <LangLink to="/experience-preview"
+                  onClick={() => {
+                    trackCTA('header', 'Web3 Preview Mobile')
+                    trackInteraction('cta_click', 'header_web3_preview_mobile')
+                  }}
+                  className="inline-flex items-center justify-center rounded-lg text-center font-sora font-bold transition-all duration-300 shrink-0 cursor-pointer hover:scale-105 hover:shadow-[0_4px_12px_rgba(139,92,246,0.3)] touch-manipulation"
+                  style={{ 
+                    color: theme === 'light' ? '#d3cec3' : '#fff',
+                    background: theme === 'dark' 
+                      ? 'rgba(139, 92, 246, 0.15)' 
+                      : 'rgba(139, 92, 246, 0.1)',
+                    border: '1px solid rgba(139, 92, 246, 0.6)',
+                    boxShadow: theme === 'dark' 
+                      ? '0 2px 8px rgba(139, 92, 246, 0.25)' 
+                      : '0 2px 8px rgba(139, 92, 246, 0.2)',
+                    minWidth: '36px',
+                    width: '36px',
+                    height: '36px',
+                    padding: '0',
+                    alignSelf: 'center',
+                    flexShrink: 0,
+                    fontSize: '1.2rem',
+                    lineHeight: '1',
                     marginLeft: '6px'
                   }}
                   aria-label="Start a Project"
                 >
                   <span style={{ fontWeight: '400' }}>+</span>
                 </LangLink>
+                <LangLink to="/experience-preview"
+                  onClick={() => {
+                    trackCTA('header', 'Web3 Preview Mobile')
+                    trackInteraction('cta_click', 'header_web3_preview_mobile')
+                  }}
+                  className="inline-flex items-center justify-center rounded-lg text-center font-sora font-bold transition-all duration-300 shrink-0 cursor-pointer hover:scale-105 hover:shadow-[0_4px_12px_rgba(139,92,246,0.3)] touch-manipulation"
+                  style={{ 
+                    color: theme === 'light' ? '#d3cec3' : '#fff',
+                    background: theme === 'dark' 
+                      ? 'rgba(139, 92, 246, 0.15)' 
+                      : 'rgba(139, 92, 246, 0.1)',
+                    border: '1px solid rgba(139, 92, 246, 0.6)',
+                    boxShadow: theme === 'dark' 
+                      ? '0 2px 8px rgba(139, 92, 246, 0.25)' 
+                      : '0 2px 8px rgba(139, 92, 246, 0.2)',
+                    minWidth: '36px',
+                    width: '36px',
+                    height: '36px',
+                    padding: '0',
+                    alignSelf: 'center',
+                    flexShrink: 0,
+                    fontSize: '1.2rem',
+                    lineHeight: '1',
+                  }}
+                  aria-label="Web3 Preview"
+                >
+                  🎁
+                </LangLink>
+                </div>
                 )}
 
             {/* Botão Hambúrguer - Aparece APENAS em mobile (< 640px) */}

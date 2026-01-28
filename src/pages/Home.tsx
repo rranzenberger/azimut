@@ -507,6 +507,19 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 }}>
                   {heroSubtitle.split('.')[0]}.
                 </p>
+                
+                {/* CTA Principal - INICIAR UM PROJETO */}
+                <div className="mt-6 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s' }}>
+                  <Link
+                    to={`/${lang}/contact`}
+                    className="inline-flex items-center gap-3 bg-azimut-red hover:bg-azimut-red/90 text-white font-sora font-bold uppercase tracking-wider px-8 py-4 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_20px_50px_rgba(201,35,55,0.4)] text-sm md:text-base"
+                  >
+                    <span>{lang === 'pt' ? 'Iniciar um Projeto' : lang === 'es' ? 'Iniciar un Proyecto' : lang === 'fr' ? 'Démarrer un Projet' : 'Start a Project'}</span>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
+                </div>
               </div>
               
               {/* Coluna Direita: Logo 3D Animada (movida para esquerda) */}
@@ -878,6 +891,19 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 <p className={`text-[0.75rem] sm:text-[0.85rem] leading-relaxed animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/90' : 'text-[#4a4543]'}`} style={{ animationDelay: '0.15s' }}>
                   {heroSubtitle.split('.')[0]}.
                 </p>
+                
+                {/* CTA Principal - INICIAR UM PROJETO (Mobile) */}
+                <div className="mt-4 animate-fade-in-up opacity-0" style={{ animationDelay: '0.2s' }}>
+                  <Link
+                    to={`/${lang}/contact`}
+                    className="inline-flex items-center gap-2 bg-azimut-red hover:bg-azimut-red/90 text-white font-sora font-bold uppercase tracking-wider px-6 py-3 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_20px_50px_rgba(201,35,55,0.4)] text-xs sm:text-sm"
+                  >
+                    <span>{lang === 'pt' ? 'Iniciar um Projeto' : lang === 'es' ? 'Iniciar un Proyecto' : lang === 'fr' ? 'Démarrer un Projet' : 'Start a Project'}</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
+                </div>
               </div>
             </div>
             
@@ -1250,6 +1276,74 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </p>
             </div>
 
+            {/* 🎁 Banner Degustação Web3 - MOVIDO PARA O TOPO */}
+            <div className="mb-12">
+              <Link
+                to={`/${lang}/experience-preview`}
+                className="block group"
+              >
+                <div 
+                  className="relative overflow-hidden rounded-2xl p-8 md:p-12 transition-all duration-300 hover:scale-[1.02]"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.15) 50%, rgba(34, 197, 94, 0.1) 100%)',
+                    border: '2px solid rgba(139, 92, 246, 0.4)',
+                    boxShadow: '0 8px 32px rgba(139, 92, 246, 0.2)',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.6)'
+                    e.currentTarget.style.boxShadow = '0 12px 48px rgba(139, 92, 246, 0.3)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.4)'
+                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(139, 92, 246, 0.2)'
+                  }}
+                >
+                  <div className="relative z-10 text-center">
+                    <div className="inline-flex items-center gap-3 mb-4">
+                      <span className="text-4xl">🎁</span>
+                      <h3 
+                        className="text-2xl md:text-3xl font-bold"
+                        style={{
+                          background: 'linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #22c55e 100%)',
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                        }}
+                      >
+                        {lang === 'pt' ? 'Degustação: VR, NFT e Web3' : lang === 'es' ? 'Degustación: VR, NFT y Web3' : lang === 'fr' ? 'Dégustation: VR, NFT et Web3' : 'Preview: VR, NFT and Web3'}
+                      </h3>
+                    </div>
+                    <p className="text-lg md:text-xl mb-6" style={{ color: theme === 'dark' ? 'rgba(255, 255, 255, 0.9)' : '#1e293b' }}>
+                      {lang === 'pt' 
+                        ? 'Experimente o futuro: experiências VR imersivas, coleções NFT personalizadas e integração Web3 completa'
+                        : lang === 'es'
+                        ? 'Experimenta el futuro: experiencias VR inmersivas, colecciones NFT personalizadas e integración Web3 completa'
+                        : lang === 'fr'
+                        ? 'Goûtez à l\'avenir: expériences VR immersives, collections NFT personnalisées et intégration Web3 complète'
+                        : 'Experience the future: immersive VR experiences, personalized NFT collections and complete Web3 integration'}
+                    </p>
+                    <div className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-300 group-hover:gap-4" style={{
+                      background: 'linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%)',
+                      color: '#fff',
+                      boxShadow: '0 4px 20px rgba(139, 92, 246, 0.4)',
+                    }}>
+                      <span>{lang === 'pt' ? 'Explorar Experiências' : lang === 'es' ? 'Explorar Experiencias' : lang === 'fr' ? 'Explorer les Expériences' : 'Explore Experiences'}</span>
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </div>
+                  </div>
+                  {/* Efeito de brilho animado */}
+                  <div 
+                    className="absolute -top-20 -right-20 w-40 h-40 rounded-full opacity-30"
+                    style={{
+                      background: 'radial-gradient(circle, rgba(139, 92, 246, 0.6) 0%, transparent 70%)',
+                      animation: 'pulse 3s ease-in-out infinite',
+                    }}
+                  />
+                </div>
+              </Link>
+            </div>
+
             {/* PROJETO PRINCIPAL - Card Grande (Rio Museu Olímpico) */}
             {(() => {
               // ✅ IMPLEMENTADO: Usa projetos recomendados ou fallback estático
@@ -1459,74 +1553,112 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 </svg>
               </Link>
             </div>
+          </div>
+        </section>
 
-            {/* 🎁 Banner Degustação Web3 */}
-            <div className="mt-16 mb-8">
-              <Link
-                to={`/${lang}/experience-preview`}
-                className="block group"
+        {/* ════════════════════════════════════════════════════════════════ */}
+        {/* TARJA WEB3/NFT - ÁREA ESPECÍFICA DESTACADA */}
+        {/* ════════════════════════════════════════════════════════════════ */}
+        <section className="relative py-8 md:py-12 overflow-hidden">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <Link
+              to={`/${lang}/experience-preview`}
+              className="block group"
+            >
+              <div 
+                className="relative overflow-hidden rounded-2xl p-6 md:p-10 transition-all duration-300 hover:scale-[1.01]"
+                style={{
+                  background: theme === 'dark'
+                    ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(59, 130, 246, 0.12) 30%, rgba(34, 197, 94, 0.1) 60%, rgba(236, 72, 153, 0.08) 100%)'
+                    : 'linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(59, 130, 246, 0.1) 30%, rgba(34, 197, 94, 0.08) 60%, rgba(236, 72, 153, 0.06) 100%)',
+                  border: theme === 'dark'
+                    ? '2px solid rgba(139, 92, 246, 0.4)'
+                    : '2px solid rgba(139, 92, 246, 0.3)',
+                  boxShadow: theme === 'dark'
+                    ? '0 8px 32px rgba(139, 92, 246, 0.2), 0 0 0 1px rgba(59, 130, 246, 0.1)'
+                    : '0 8px 32px rgba(139, 92, 246, 0.15), 0 0 0 1px rgba(59, 130, 246, 0.08)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = theme === 'dark' ? 'rgba(139, 92, 246, 0.7)' : 'rgba(139, 92, 246, 0.5)'
+                  e.currentTarget.style.boxShadow = theme === 'dark'
+                    ? '0 12px 48px rgba(139, 92, 246, 0.35), 0 0 0 1px rgba(59, 130, 246, 0.2)'
+                    : '0 12px 48px rgba(139, 92, 246, 0.25), 0 0 0 1px rgba(59, 130, 246, 0.15)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = theme === 'dark' ? 'rgba(139, 92, 246, 0.4)' : 'rgba(139, 92, 246, 0.3)'
+                  e.currentTarget.style.boxShadow = theme === 'dark'
+                    ? '0 8px 32px rgba(139, 92, 246, 0.2), 0 0 0 1px rgba(59, 130, 246, 0.1)'
+                    : '0 8px 32px rgba(139, 92, 246, 0.15), 0 0 0 1px rgba(59, 130, 246, 0.08)'
+                }}
               >
+                {/* Efeito de brilho animado */}
                 <div 
-                  className="relative overflow-hidden rounded-2xl p-8 md:p-12 transition-all duration-300 hover:scale-[1.02]"
+                  className="absolute -top-20 -right-20 w-40 h-40 rounded-full opacity-20"
                   style={{
-                    background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.15) 50%, rgba(34, 197, 94, 0.1) 100%)',
-                    border: '2px solid rgba(139, 92, 246, 0.4)',
-                    boxShadow: '0 8px 32px rgba(139, 92, 246, 0.2)',
+                    background: 'radial-gradient(circle, rgba(139, 92, 246, 0.6) 0%, transparent 70%)',
+                    animation: 'pulse 3s ease-in-out infinite',
                   }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.6)'
-                    e.currentTarget.style.boxShadow = '0 12px 48px rgba(139, 92, 246, 0.3)'
+                />
+                <div 
+                  className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full opacity-20"
+                  style={{
+                    background: 'radial-gradient(circle, rgba(34, 197, 94, 0.5) 0%, transparent 70%)',
+                    animation: 'pulse 3s ease-in-out infinite',
+                    animationDelay: '1.5s',
                   }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.4)'
-                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(139, 92, 246, 0.2)'
-                  }}
-                >
-                  <div className="relative z-10 text-center">
-                    <div className="inline-flex items-center gap-3 mb-4">
-                      <span className="text-4xl">🎁</span>
+                />
+
+                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                  {/* Conteúdo Esquerdo */}
+                  <div className="flex-1 text-center md:text-left">
+                    <div className="inline-flex items-center gap-3 mb-3">
+                      <span className="text-3xl md:text-4xl">🎁</span>
                       <h3 
-                        className="text-2xl md:text-3xl font-bold"
+                        className="text-xl md:text-2xl lg:text-3xl font-bold font-handel uppercase"
                         style={{
-                          background: 'linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #22c55e 100%)',
+                          background: 'linear-gradient(135deg, #8b5cf6 0%, #3b82f6 30%, #22c55e 60%, #ec4899 100%)',
                           WebkitBackgroundClip: 'text',
                           WebkitTextFillColor: 'transparent',
+                          backgroundClip: 'text',
                         }}
                       >
                         {lang === 'pt' ? 'Degustação: VR, NFT e Web3' : lang === 'es' ? 'Degustación: VR, NFT y Web3' : lang === 'fr' ? 'Dégustation: VR, NFT et Web3' : 'Preview: VR, NFT and Web3'}
                       </h3>
                     </div>
-                    <p className="text-lg md:text-xl mb-6" style={{ color: theme === 'dark' ? 'rgba(255, 255, 255, 0.9)' : '#1e293b' }}>
+                    <p 
+                      className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto md:mx-0"
+                      style={{ 
+                        color: theme === 'dark' ? 'rgba(255, 255, 255, 0.85)' : '#1e293b'
+                      }}
+                    >
                       {lang === 'pt' 
-                        ? 'Experimente o futuro: experiências VR imersivas, coleções NFT personalizadas e integração Web3 completa'
+                        ? 'Experimente o futuro: experiências VR imersivas, coleções NFT personalizadas e integração Web3 completa. Veja o que podemos criar juntos!'
                         : lang === 'es'
-                        ? 'Experimenta el futuro: experiencias VR inmersivas, colecciones NFT personalizadas e integración Web3 completa'
+                        ? 'Experimenta el futuro: experiencias VR inmersivas, colecciones NFT personalizadas e integración Web3 completa. ¡Ve lo que podemos crear juntos!'
                         : lang === 'fr'
-                        ? 'Goûtez à l\'avenir: expériences VR immersives, collections NFT personnalisées et intégration Web3 complète'
-                        : 'Experience the future: immersive VR experiences, personalized NFT collections and complete Web3 integration'}
+                        ? 'Goûtez à l\'avenir: expériences VR immersives, collections NFT personnalisées et intégration Web3 complète. Voyez ce que nous pouvons créer ensemble!'
+                        : 'Experience the future: immersive VR experiences, personalized NFT collections and complete Web3 integration. See what we can create together!'}
                     </p>
+                  </div>
+
+                  {/* Botão CTA Direito */}
+                  <div className="flex-shrink-0">
                     <div className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-300 group-hover:gap-4" style={{
-                      background: 'linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%)',
+                      background: 'linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #22c55e 100%)',
                       color: '#fff',
                       boxShadow: '0 4px 20px rgba(139, 92, 246, 0.4)',
                     }}>
-                      <span>{lang === 'pt' ? 'Explorar Experiências' : lang === 'es' ? 'Explorar Experiencias' : lang === 'fr' ? 'Explorer les Expériences' : 'Explore Experiences'}</span>
+                      <span className="text-sm md:text-base">
+                        {lang === 'pt' ? 'Explorar Experiências' : lang === 'es' ? 'Explorar Experiencias' : lang === 'fr' ? 'Explorer les Expériences' : 'Explore Experiences'}
+                      </span>
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
                     </div>
                   </div>
-                  {/* Efeito de brilho animado */}
-                  <div 
-                    className="absolute -top-20 -right-20 w-40 h-40 rounded-full opacity-30"
-                    style={{
-                      background: 'radial-gradient(circle, rgba(139, 92, 246, 0.6) 0%, transparent 70%)',
-                      animation: 'pulse 3s ease-in-out infinite',
-                    }}
-                  />
                 </div>
-              </Link>
-            </div>
+              </div>
+            </Link>
           </div>
         </section>
 
