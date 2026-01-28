@@ -122,18 +122,19 @@ export async function POST(request: NextRequest) {
       try {
         const { prisma } = await import('@/src/lib/prisma')
         
-        await prisma.reward.create({
-          data: {
-            toAddress: toAddress.toLowerCase(),
-            fromAddress: COMPANY_WALLET_ADDRESS.toLowerCase(),
-            rewardType,
-            amount: amount ? parseFloat(amount) : null,
-            nftId: nftId || null,
-            txHash,
-            status: txHash ? 'SENT' : 'PENDING',
-            description: description || `Recompensa: ${rewardType}`,
-          },
-        })
+        // TODO: Criar modelo Reward no Prisma schema
+        // await (prisma as any).reward.create({
+        //   data: {
+        //     toAddress: toAddress.toLowerCase(),
+        //     fromAddress: COMPANY_WALLET_ADDRESS.toLowerCase(),
+        //     rewardType,
+        //     amount: amount ? parseFloat(amount) : null,
+        //     nftId: nftId || null,
+        //     txHash,
+        //     status: txHash ? 'SENT' : 'PENDING',
+        //     description: description || `Recompensa: ${rewardType}`,
+        //   },
+        // })
       } catch (dbError: any) {
         console.warn('[Reward] Tabela não existe, continuando...', dbError.message)
       }

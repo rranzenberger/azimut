@@ -38,12 +38,14 @@ export async function GET(request: NextRequest) {
     try {
       const { prisma } = await import('@/src/lib/prisma')
       
-      totalRewardsSent = await prisma.reward.count({
-        where: {
-          fromAddress: COMPANY_WALLET_ADDRESS.toLowerCase(),
-          status: 'SENT',
-        },
-      })
+      // TODO: Criar modelo Reward no Prisma schema
+      totalRewardsSent = 0 // Temporário até criar modelo Reward
+      // totalRewardsSent = await (prisma as any).reward.count({
+      //   where: {
+      //     fromAddress: COMPANY_WALLET_ADDRESS.toLowerCase(),
+      //     status: 'SENT',
+      //   },
+      // })
 
       // TODO: Criar modelo Payment no Prisma schema
       totalPaymentsReceived = 0 // Temporário até criar modelo Payment
