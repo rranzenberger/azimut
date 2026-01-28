@@ -1082,15 +1082,13 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             <div 
               className="relative overflow-hidden rounded-2xl p-8 md:p-12 transition-all duration-300"
               style={{
-                background: theme === 'dark'
-                  ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.18) 0%, rgba(59, 130, 246, 0.14) 30%, rgba(34, 197, 94, 0.12) 60%, rgba(236, 72, 153, 0.1) 100%)'
-                  : 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 243, 255, 0.98) 30%, rgba(240, 253, 250, 0.95) 60%, rgba(253, 242, 248, 0.92) 100%)',
-                border: theme === 'dark'
-                  ? '2px solid rgba(139, 92, 246, 0.5)'
-                  : '2px solid rgba(139, 92, 246, 0.35)',
+                // AMBOS OS TEMAS: Fundo escuro/roxo para manter consistência visual
+                // O card Web3 sempre tem visual "tech/premium" independente do tema
+                background: 'linear-gradient(135deg, rgba(30, 27, 75, 0.95) 0%, rgba(49, 46, 129, 0.92) 30%, rgba(30, 58, 138, 0.88) 60%, rgba(20, 83, 45, 0.85) 100%)',
+                border: '2px solid rgba(139, 92, 246, 0.5)',
                 boxShadow: theme === 'dark'
                   ? '0 8px 40px rgba(139, 92, 246, 0.25), 0 0 0 1px rgba(59, 130, 246, 0.15)'
-                  : '0 8px 40px rgba(139, 92, 246, 0.15), 0 4px 20px rgba(0, 0, 0, 0.08)',
+                  : '0 8px 40px rgba(139, 92, 246, 0.2), 0 4px 20px rgba(0, 0, 0, 0.15)',
               }}
             >
               {/* Efeitos de brilho animados nos cantos */}
@@ -1156,7 +1154,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   <p 
                     className="text-xl md:text-2xl font-bold mb-4 tracking-wide"
                     style={{ 
-                      color: theme === 'dark' ? 'rgba(139, 92, 246, 1)' : '#7c3aed'
+                      color: 'rgba(167, 139, 250, 1)' // Roxo claro sempre (fundo escuro)
                     }}
                   >
                     {lang === 'pt' ? 'VR • AR • Web3 • Colecionáveis (NFTs)' 
@@ -1169,7 +1167,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   <p 
                     className="text-lg md:text-xl font-semibold mb-3"
                     style={{ 
-                      color: theme === 'dark' ? 'rgba(255, 255, 255, 0.95)' : '#1e293b'
+                      color: 'rgba(255, 255, 255, 0.95)' // Branco sempre (fundo escuro)
                     }}
                   >
                     {lang === 'pt' ? 'Tem um projeto? A gente desenha e produz com você.' 
@@ -1182,7 +1180,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   <p 
                     className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto md:mx-0 mb-3"
                     style={{ 
-                      color: theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : '#475569'
+                      color: 'rgba(255, 255, 255, 0.8)' // Branco suave sempre (fundo escuro)
                     }}
                   >
                     {lang === 'pt' 
@@ -1198,13 +1196,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   <p 
                     className="text-xs md:text-sm font-medium inline-flex items-center gap-2 px-3 py-1.5 rounded-full"
                     style={{ 
-                      background: theme === 'dark' 
-                        ? 'rgba(139, 92, 246, 0.15)' 
-                        : 'rgba(139, 92, 246, 0.1)',
-                      color: theme === 'dark' ? 'rgba(167, 139, 250, 1)' : '#7c3aed',
-                      border: theme === 'dark' 
-                        ? '1px solid rgba(139, 92, 246, 0.3)' 
-                        : '1px solid rgba(139, 92, 246, 0.25)',
+                      background: 'rgba(139, 92, 246, 0.2)',
+                      color: 'rgba(196, 181, 253, 1)', // Roxo claro (fundo escuro)
+                      border: '1px solid rgba(139, 92, 246, 0.4)',
                     }}
                   >
                     <span>🌎</span>
@@ -1258,18 +1252,14 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     <div 
                       className="mt-3 px-4 py-2 rounded-lg text-center"
                       style={{ 
-                        background: theme === 'dark' 
-                          ? 'rgba(34, 197, 94, 0.15)' 
-                          : 'rgba(34, 197, 94, 0.12)',
-                        border: theme === 'dark' 
-                          ? '1px solid rgba(34, 197, 94, 0.4)' 
-                          : '1px solid rgba(34, 197, 94, 0.35)',
+                        background: 'rgba(34, 197, 94, 0.2)',
+                        border: '1px solid rgba(34, 197, 94, 0.5)',
                       }}
                     >
                       <p 
                         className="text-xs font-medium flex items-center justify-center gap-2"
                         style={{ 
-                          color: theme === 'dark' ? '#4ade80' : '#16a34a'
+                          color: '#4ade80' // Verde claro sempre (fundo escuro)
                         }}
                       >
                         <span>🔒</span>
@@ -1309,7 +1299,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     to={`/${lang}/what#immersive`}
                     className="group/btn3 inline-flex items-center justify-center gap-2 transition-all duration-300 hover:gap-3 mt-1"
                     style={{
-                      color: theme === 'dark' ? 'rgba(167, 139, 250, 0.9)' : '#7c3aed',
+                      color: 'rgba(196, 181, 253, 0.9)', // Roxo claro sempre (fundo escuro)
                       fontSize: '0.9rem',
                       textDecoration: 'none',
                       fontWeight: '600',
