@@ -1152,84 +1152,114 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     </div>
                   </div>
                   
-                  {/* Subtítulo com tecnologias - MAIOR */}
+                  {/* Subtítulo com tecnologias - MAIOR e mais amigável */}
                   <p 
                     className="text-xl md:text-2xl font-bold mb-4 tracking-wide"
                     style={{ 
                       color: theme === 'dark' ? 'rgba(139, 92, 246, 1)' : '#7c3aed'
                     }}
                   >
-                    VR • AR • NFT • Web3
+                    {lang === 'pt' ? 'VR • AR • Web3 • Colecionáveis (NFTs)' 
+                      : lang === 'es' ? 'VR • AR • Web3 • Coleccionables (NFTs)'
+                      : lang === 'fr' ? 'VR • AR • Web3 • Collectibles (NFTs)'
+                      : 'VR • AR • Web3 • Digital Collectibles (NFTs)'}
                   </p>
                   
-                  {/* Frase empática impactante */}
+                  {/* Frase empática impactante - tom parceiro */}
                   <p 
                     className="text-lg md:text-xl font-semibold mb-3"
                     style={{ 
                       color: theme === 'dark' ? 'rgba(255, 255, 255, 0.95)' : '#1e293b'
                     }}
                   >
-                    {lang === 'pt' ? 'Tem um projeto? Podemos transformá-lo juntos.' 
-                      : lang === 'es' ? '¿Tienes un proyecto? Podemos transformarlo juntos.'
-                      : lang === 'fr' ? 'Vous avez un projet? Transformons-le ensemble.'
-                      : 'Have a project? Let\'s transform it together.'}
+                    {lang === 'pt' ? 'Tem um projeto? A gente desenha e produz com você.' 
+                      : lang === 'es' ? '¿Tienes un proyecto? Lo diseñamos y producimos contigo.'
+                      : lang === 'fr' ? 'Vous avez un projet? On le conçoit et produit avec vous.'
+                      : 'Have a project? Let\'s build it together.'}
                   </p>
                   
-                  {/* Descrição empática e inovadora */}
+                  {/* Descrição premium com benefícios claros */}
                   <p 
-                    className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto md:mx-0"
+                    className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto md:mx-0 mb-3"
                     style={{ 
                       color: theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : '#475569'
                     }}
                   >
                     {lang === 'pt' 
-                      ? 'Marketing, publicidade, evento, estande ou projeto cultural — criamos experiências que emocionam, engajam e viralizam. Conte sua história de um jeito que as pessoas vão lembrar e compartilhar.'
+                      ? 'De campanhas e estandes a projetos culturais e educação: criamos experiências imersivas que param o público, aumentam tempo de permanência e viram conversa — com tecnologia + storytelling, do conceito à entrega.'
                       : lang === 'es'
-                      ? 'Marketing, publicidad, evento, stand o proyecto cultural — creamos experiencias que emocionan, enganchan y viralizan. Cuenta tu historia de una manera que la gente recordará y compartirá.'
+                      ? 'De campañas y stands a proyectos culturales y educación: creamos experiencias inmersivas que detienen al público, aumentan el tiempo de permanencia y generan conversación — con tecnología + storytelling, del concepto a la entrega.'
                       : lang === 'fr'
-                      ? 'Marketing, publicité, événement, stand ou projet culturel — nous créons des expériences qui émeuvent, engagent et deviennent virales. Racontez votre histoire d\'une manière mémorable et partageable.'
-                      : 'Marketing, advertising, event, booth or cultural project — we create experiences that move, engage and go viral. Tell your story in a way people will remember and share.'}
+                      ? 'Des campagnes et stands aux projets culturels et éducatifs: nous créons des expériences immersives qui captent le public, augmentent le temps de présence et créent la conversation — technologie + storytelling, du concept à la livraison.'
+                      : 'From campaigns and expo booths to cultural and educational projects, we craft immersive experiences that stop people in their tracks, increase dwell time, and spark real engagement—where technology meets storytelling, from concept to delivery.'}
+                  </p>
+                  
+                  {/* Linha de prova/credibilidade - pequena */}
+                  <p 
+                    className="text-xs md:text-sm"
+                    style={{ 
+                      color: theme === 'dark' ? 'rgba(255, 255, 255, 0.5)' : '#94a3b8'
+                    }}
+                  >
+                    {lang === 'pt' ? '🌎 Brasil–Canadá • museus, festivais e ativações de marca' 
+                      : lang === 'es' ? '🌎 Brasil–Canadá • museos, festivales y activaciones de marca'
+                      : lang === 'fr' ? '🌎 Brésil–Canada • musées, festivals et activations de marque'
+                      : '🌎 Brazil–Canada • museums, festivals & brand activations'}
                   </p>
                 </div>
 
                 {/* CTAs - Direita - Empilhados */}
-                <div className="flex flex-col gap-4 flex-shrink-0">
-                  {/* CTA Principal - Experimentar */}
-                  <Link
-                    to={`/${lang}/experience-preview`}
-                    className="group/btn inline-flex items-center justify-center gap-3 px-7 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 hover:gap-4"
-                    style={{
-                      background: 'linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #22c55e 100%)',
-                      color: '#fff',
-                      boxShadow: '0 6px 30px rgba(139, 92, 246, 0.5)',
-                      fontSize: '1rem',
-                      letterSpacing: '0.02em',
-                      textDecoration: 'none',
-                    }}
-                  >
-                    <span>
-                      {lang === 'pt' ? 'Quero Experimentar' : lang === 'es' ? 'Quiero Probar' : lang === 'fr' ? 'Je Veux Essayer' : 'I Want to Try'}
-                    </span>
-                    <div 
-                      className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden"
-                      style={{ 
-                        background: 'rgba(255, 255, 255, 0.95)',
-                        border: '2px solid rgba(255, 255, 255, 1)',
-                        boxShadow: '0 0 15px rgba(255, 255, 255, 0.5), 0 0 30px rgba(139, 92, 246, 0.3)'
+                <div className="flex flex-col gap-3 flex-shrink-0">
+                  {/* CTA Principal - Experimentar Demo */}
+                  <div className="flex flex-col items-center">
+                    <Link
+                      to={`/${lang}/experience-preview`}
+                      className="group/btn inline-flex items-center justify-center gap-3 px-7 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 hover:gap-4 w-full"
+                      style={{
+                        background: 'linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #22c55e 100%)',
+                        color: '#fff',
+                        boxShadow: '0 6px 30px rgba(139, 92, 246, 0.5)',
+                        fontSize: '1rem',
+                        letterSpacing: '0.02em',
+                        textDecoration: 'none',
                       }}
                     >
-                      <img
-                        src="/web-3-icon.svg"
-                        alt="Web3"
-                        className="w-7 h-7"
-                      />
-                    </div>
-                    <svg className="w-5 h-5 transition-transform group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </Link>
+                      <span>
+                        {lang === 'pt' ? 'Experimentar Demo' : lang === 'es' ? 'Probar Demo' : lang === 'fr' ? 'Essayer la Démo' : 'Try the Demo'}
+                      </span>
+                      <div 
+                        className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden"
+                        style={{ 
+                          background: 'rgba(255, 255, 255, 0.95)',
+                          border: '2px solid rgba(255, 255, 255, 1)',
+                          boxShadow: '0 0 15px rgba(255, 255, 255, 0.5), 0 0 30px rgba(139, 92, 246, 0.3)'
+                        }}
+                      >
+                        <img
+                          src="/web-3-icon.svg"
+                          alt="Web3"
+                          className="w-7 h-7"
+                        />
+                      </div>
+                      <svg className="w-5 h-5 transition-transform group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </Link>
+                    {/* Microcopy de segurança Web3 */}
+                    <p 
+                      className="text-[0.65rem] mt-2 text-center"
+                      style={{ 
+                        color: theme === 'dark' ? 'rgba(255, 255, 255, 0.45)' : '#94a3b8'
+                      }}
+                    >
+                      {lang === 'pt' ? '🔒 Somente leitura • sem custo • sem acesso aos seus fundos' 
+                        : lang === 'es' ? '🔒 Solo lectura • sin costo • sin acceso a tus fondos'
+                        : lang === 'fr' ? '🔒 Lecture seule • sans frais • sans accès à vos fonds'
+                        : '🔒 Read-only • no cost • no access to your funds'}
+                    </p>
+                  </div>
                   
-                  {/* CTA Secundário - Ver Cases */}
+                  {/* CTA Secundário - Ver Cases/Portfolio */}
                   <Link
                     to={`/${lang}/work`}
                     className="group/btn2 inline-flex items-center justify-center gap-3 px-7 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105"
@@ -1243,28 +1273,28 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     }}
                   >
                     <span>
-                      {lang === 'pt' ? 'Ver o que já criamos' : lang === 'es' ? 'Ver lo que ya creamos' : lang === 'fr' ? 'Voir ce que nous avons créé' : 'See what we\'ve created'}
+                      {lang === 'pt' ? 'Ver Nosso Portfólio' : lang === 'es' ? 'Ver Nuestro Portafolio' : lang === 'fr' ? 'Voir Notre Portfolio' : 'Explore Our Work'}
                     </span>
                     <svg className="w-5 h-5 transition-transform group-hover/btn2:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
                   </Link>
                   
-                  {/* Link terciário - Soluções */}
+                  {/* Link terciário discreto - Soluções */}
                   <Link
                     to={`/${lang}/what`}
-                    className="group/btn3 inline-flex items-center justify-center gap-2 transition-all duration-300 hover:gap-3"
+                    className="group/btn3 inline-flex items-center justify-center gap-2 transition-all duration-300 hover:gap-3 mt-1"
                     style={{
-                      color: theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.7)',
-                      fontSize: '1rem',
+                      color: theme === 'dark' ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.55)',
+                      fontSize: '0.9rem',
                       textDecoration: 'none',
                       fontWeight: '500',
                     }}
                   >
                     <span style={{ borderBottom: '1px solid currentColor' }}>
-                      {lang === 'pt' ? 'Conhecer todas as soluções' : lang === 'es' ? 'Conocer todas las soluciones' : lang === 'fr' ? 'Découvrir toutes les solutions' : 'Discover all solutions'}
+                      {lang === 'pt' ? 'Ver todas as soluções' : lang === 'es' ? 'Ver todas las soluciones' : lang === 'fr' ? 'Voir toutes les solutions' : 'View all solutions'}
                     </span>
-                    <svg className="w-5 h-5 transition-transform group-hover/btn3:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 transition-transform group-hover/btn3:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </Link>
