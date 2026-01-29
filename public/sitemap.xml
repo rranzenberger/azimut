@@ -292,6 +292,51 @@
   </url>
 
   <!-- ═══════════════════════════════════════════════════════════
+       BLOG
+       ═══════════════════════════════════════════════════════════ -->
+  <url>
+    <loc>https://azmt.com.br/pt/blog</loc>
+    <lastmod>2026-01-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/blog" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/blog" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/blog" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/blog" />
+  </url>
+  <url>
+    <loc>https://azmt.com.br/en/blog</loc>
+    <lastmod>2026-01-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/blog" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/blog" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://azmt.com.br/en/blog" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/blog" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/blog" />
+  </url>
+  <url>
+    <loc>https://azmt.com.br/es/blog</loc>
+    <lastmod>2026-01-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/blog" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/blog" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/blog" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/blog" />
+  </url>
+  <url>
+    <loc>https://azmt.com.br/fr/blog</loc>
+    <lastmod>2026-01-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://azmt.com.br/pt/blog" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://azmt.com.br/en/blog" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://azmt.com.br/es/blog" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://azmt.com.br/fr/blog" />
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════
        CONTACT & LEGAL
        ═══════════════════════════════════════════════════════════ -->
   <url>

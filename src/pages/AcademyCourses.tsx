@@ -4,8 +4,8 @@
 
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
+import SEO from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import CourseRecommender from '../components/CourseRecommender'
 import AcademyQuickForm from '../components/AcademyQuickForm'
@@ -433,11 +433,13 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
 
   return (
     <>
-      <Helmet>
-        <title>{t.meta.title}</title>
-        <meta name="description" content={t.meta.description} />
-      </Helmet>
-
+      <SEO
+        title={t.meta.title}
+        description={t.meta.description}
+        url={`/${lang}/academy/courses`}
+        locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
+        keywords="cursos Azimut Academy, VR, 360, IA generativa, motion design, produção audiovisual, game design"
+      />
       {/* Menu Secundário Academy */}
       <AcademySubNav lang={lang} currentPage="courses" />
 

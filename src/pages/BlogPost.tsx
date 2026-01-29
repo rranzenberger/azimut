@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { type Lang } from '../i18n';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import SEO from '../components/SEO';
 
 interface BlogPostProps {
   lang: Lang;
@@ -122,11 +123,6 @@ export default function BlogPost({ lang }: BlogPostProps) {
       const data = await res.json();
       setPost(data.post);
       setRelated(data.related || []);
-
-      // Update page title
-      if (data.post?.seoTitle) {
-        document.title = data.post.seoTitle;
-      }
     } catch (err) {
       console.error('Error fetching post:', err);
       setError('error');
@@ -182,6 +178,16 @@ export default function BlogPost({ lang }: BlogPostProps) {
 
   return (
     <div className={`min-h-screen ${isDark ? 'bg-[#050814]' : 'bg-[#d3cec3]'}`}>
+      <SEO
+        title={post.seoTitle || post.title}
+        description={post.seoDesc || post.excerpt || ''}
+        url={`/${lang}/blog/${slug ?? ''}`}
+        type="article"
+        author={post.author?.name || 'Azimut'}
+        image={post.coverImage || undefined}
+        publishedTime={post.publishedAt}
+        locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
+      />
       {/* Hero with Cover Image */}
       <section className="relative">
         {post.coverImage && (

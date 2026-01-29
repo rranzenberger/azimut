@@ -7,8 +7,8 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
+import SEO from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import StarBackground from '../components/StarBackground'
 import InternalNavigation from '../components/InternalNavigation'
@@ -375,11 +375,13 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
 
   return (
     <>
-      <Helmet>
-        <title>{t.meta.title}</title>
-        <meta name="description" content={t.meta.description} />
-      </Helmet>
-      
+      <SEO
+        title={t.meta.title}
+        description={t.meta.description}
+        url={`/${lang}/academy`}
+        locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
+        keywords="Azimut Academy, cursos, workshops, Vancouver, VFS, VanArts, VR, AR, animação, VFX, game design, treinamento corporativo"
+      />
       {/* Course Schema para SEO */}
       <CourseSchema
         name={lang === 'pt' ? 'Azimut Academy - Cursos Profissionais' : lang === 'en' ? 'Azimut Academy - Professional Courses' : lang === 'es' ? 'Azimut Academy - Cursos Profesionales' : 'Azimut Academy - Cours Professionnels'}

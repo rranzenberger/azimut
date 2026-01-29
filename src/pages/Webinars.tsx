@@ -6,8 +6,8 @@
 // ════════════════════════════════════════════════════════════
 
 import React, { useState } from 'react'
-import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
+import SEO from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import CanadaMapleLeaf from '../components/CanadaMapleLeaf'
 
@@ -207,11 +207,13 @@ const Webinars: React.FC<WebinarsProps> = ({ lang }) => {
 
   return (
     <>
-      <Helmet>
-        <title>{t.meta.title}</title>
-        <meta name="description" content={t.meta.description} />
-      </Helmet>
-
+      <SEO
+        title={t.meta.title}
+        description={t.meta.description}
+        url={`/${lang}/webinars`}
+        locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
+        keywords="webinars Azimut Academy, Vancouver, VR, IA, info sessions, workshops online"
+      />
       <div className="min-h-screen">
         {/* Hero */}
         <section className="relative py-20 md:py-32 bg-gradient-to-b from-black to-[#0a0e18] overflow-hidden">

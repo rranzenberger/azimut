@@ -5,7 +5,7 @@ import { ThemeProvider, useTheme } from './contexts/ThemeContext'
 import BrowserCompatibility from './components/BrowserCompatibility'
 import ScrollToTop from './components/ScrollToTop'
 import LoadingSkeleton from './components/LoadingSkeleton'
-import { OrganizationSchema, LocalBusinessSchema } from './components/StructuredData'
+import { LocalBusinessSchema } from './components/StructuredData'
 import InstallPrompt from './components/InstallPrompt'
 import PlausibleScript from './components/PlausibleScript'
 import AppLayout from './components/AppLayout'
@@ -281,8 +281,7 @@ const App: React.FC = () => {
           <BrowserRouter>
             <ScrollToTop />
             <GoogleAnalytics />
-            {/* Structured Data para SEO - Organization + LocalBusiness */}
-            <OrganizationSchema lang={lang} />
+            {/* Structured Data para SEO - LocalBusiness (Organization via SEOGlobal no Layout) */}
             <LocalBusinessSchema />
             {/* Analytics - Plausible */}
             <PlausibleScript />
@@ -473,8 +472,7 @@ const App: React.FC = () => {
         <BrowserRouter>
           <ScrollToTop />
           <GoogleAnalytics />
-          {/* Structured Data para SEO - Organization + LocalBusiness */}
-          <OrganizationSchema lang={lang} />
+          {/* Structured Data para SEO - LocalBusiness (Organization via SEOGlobal no Layout) */}
           <LocalBusinessSchema />
           {/* Analytics - Plausible */}
           <PlausibleScript />

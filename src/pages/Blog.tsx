@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { type Lang } from '../i18n';
+import SEO from '../components/SEO';
 
 interface BlogProps {
   lang: Lang;
@@ -54,6 +55,8 @@ export default function Blog({ lang }: BlogProps) {
     pt: {
       title: 'Blog',
       subtitle: 'Insights, tendências e novidades do mundo da tecnologia criativa',
+      metaTitle: 'Blog | Azimut – Insights e tendências em tecnologia criativa',
+      metaDesc: 'Insights, tendências e novidades do mundo da tecnologia criativa. VR, AR, IA, produção audiovisual e experiências imersivas.',
       allCategories: 'Todas',
       readMore: 'Ler mais',
       minRead: 'min de leitura',
@@ -65,6 +68,8 @@ export default function Blog({ lang }: BlogProps) {
     en: {
       title: 'Blog',
       subtitle: 'Insights, trends and news from the creative technology world',
+      metaTitle: 'Blog | Azimut – Insights and trends in creative technology',
+      metaDesc: 'Insights, trends and news from the creative technology world. VR, AR, AI, audiovisual production and immersive experiences.',
       allCategories: 'All',
       readMore: 'Read more',
       minRead: 'min read',
@@ -76,6 +81,8 @@ export default function Blog({ lang }: BlogProps) {
     es: {
       title: 'Blog',
       subtitle: 'Insights, tendencias y novedades del mundo de la tecnología creativa',
+      metaTitle: 'Blog | Azimut – Insights y tendencias en tecnología creativa',
+      metaDesc: 'Insights, tendencias y novedades del mundo de la tecnología creativa. VR, AR, IA, producción audiovisual y experiencias inmersivas.',
       allCategories: 'Todas',
       readMore: 'Leer más',
       minRead: 'min de lectura',
@@ -87,6 +94,8 @@ export default function Blog({ lang }: BlogProps) {
     fr: {
       title: 'Blog',
       subtitle: 'Insights, tendances et actualités du monde de la technologie créative',
+      metaTitle: 'Blog | Azimut – Insights et tendances en technologie créative',
+      metaDesc: 'Insights, tendances et actualités du monde de la technologie créative. VR, AR, IA, production audiovisuelle et expériences immersives.',
       allCategories: 'Toutes',
       readMore: 'Lire plus',
       minRead: 'min de lecture',
@@ -160,6 +169,13 @@ export default function Blog({ lang }: BlogProps) {
 
   return (
     <div className="min-h-screen bg-theme-bg">
+      <SEO
+        title={(t as any).metaTitle || 'Blog | Azimut'}
+        description={(t as any).metaDesc || t.subtitle}
+        url={`/${lang}/blog`}
+        locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
+        keywords="blog Azimut, VR, AR, IA, tecnologia criativa, experiências imersivas, produção audiovisual"
+      />
       {/* Hero Section - Compacto como outras páginas */}
       <section className="relative py-12 md:py-16 overflow-hidden">
         {/* Background Star */}

@@ -4,8 +4,8 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
 import { type Lang } from '../i18n'
+import SEO from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import { useTheme } from '../contexts/ThemeContext'
 import { PageFooterNavigation } from '../components/PageFooterNavigation'
@@ -379,11 +379,13 @@ const AcademyWorkshops: React.FC<AcademyWorkshopsProps> = ({ lang }) => {
 
   return (
     <>
-      <Helmet>
-        <title>{t.meta.title}</title>
-        <meta name="description" content={t.meta.description} />
-      </Helmet>
-
+      <SEO
+        title={t.meta.title}
+        description={t.meta.description}
+        url={`/${lang}/academy/workshops`}
+        locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
+        keywords="workshops Azimut Academy, palestras, mini cursos, festivais, Rio2C, formação"
+      />
       {/* Menu Secundário Academy */}
       <AcademySubNav lang={lang} currentPage="workshops" />
 

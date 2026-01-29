@@ -16,7 +16,6 @@ import ScrollToTopButton from './ScrollToTopButton'
 import Breadcrumbs from './Breadcrumbs'
 import SearchModal from './SearchModal'
 import SEOGlobal from './SEOGlobal' // SEO Global Schemas
-import SchemaOrganization from './SchemaOrganization'
 import SchemaBreadcrumbList from './SchemaBreadcrumbList'
 import GoogleSearchConsoleVerification from './GoogleSearchConsoleVerification'
 import { type UserProfile } from './BudgetWizard'
@@ -2050,8 +2049,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         </div>
       </footer>
 
-      {/* Schema.org - Organization e BreadcrumbList */}
-      <SchemaOrganization />
+      {/* Schema.org - BreadcrumbList (Organization via SEOGlobal) */}
       <SchemaBreadcrumbList lang={lang} />
       
       {/* Google Search Console Verification */}
