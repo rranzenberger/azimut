@@ -87,3 +87,4 @@ docs/deploy/DEPLOY_RAILWAY_PASSO_A_PASSO.md
 docs/deploy/
 *.md
 !README.md
+!docs/VERIFICAR_DEPLOY_VERCEL.md
