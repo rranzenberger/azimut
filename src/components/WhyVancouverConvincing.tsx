@@ -749,15 +749,10 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
                     </span>
                     {/* Bandeira */}
                     <span className="text-2xl">{countryFlags[city.code] || '🌍'}</span>
-                    {/* Nome e código */}
-                    <div>
-                      <h4 className="text-lg font-bold text-white">
-                        {city.name}
-                      </h4>
-                      <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                        {city.code}
-                      </span>
-                    </div>
+                    {/* Nome da cidade */}
+                    <h4 className="text-lg font-bold text-white">
+                      {city.name}
+                    </h4>
                   </div>
                   <div className="text-right">
                     <div 
