@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import LangLink from '../components/LangLink'
+import { useTheme } from '../contexts/ThemeContext'
 
 interface TermsProps {
   lang: Lang
@@ -9,6 +10,7 @@ interface TermsProps {
 
 const Terms: React.FC<TermsProps> = ({ lang }) => {
   const starRef = useRef<HTMLDivElement>(null)
+  const { theme } = useTheme()
 
   useEffect(() => {
     const star = starRef.current
@@ -413,6 +415,8 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
   }
 
   const text = content[lang] || content.pt
+  const quickLinksTitle = lang === 'fr' ? 'Navigation rapide' : lang === 'es' ? 'Navegación rápida' : lang === 'en' ? 'Quick navigation' : 'Navegação rápida'
+  const quickLinksItems = text.sections?.map((s, i) => ({ id: `section-${i}`, text: s.title, icon: s.icon })) ?? []
 
   return (
     <>
@@ -433,145 +437,198 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" loading="lazy" />
         </div>
 
-        <div className="mx-auto max-w-6xl px-6">
-          {/* Hero */}
-          <div className="mb-16 text-center">
-            <h1 className="mb-4 font-handel text-5xl md:text-6xl font-bold uppercase text-theme-text">
-              {text.title}
-            </h1>
-            <p className="text-xl text-theme-text-secondary max-w-3xl mx-auto">
-              {text.subtitle}
-            </p>
-            <p className="text-sm text-theme-text-secondary/60 mt-4">
-              {text.lastUpdate}
-            </p>
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          {/* Hero — gradiente sutil, mesma paleta do Privacy */}
+          <div className="relative mb-12 md:mb-16 text-center rounded-2xl overflow-hidden bg-gradient-to-b from-azimut-red/5 via-transparent to-transparent border border-azimut-red/10 py-10 md:py-14 px-6">
+            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(201,35,55,0.08),transparent)]" aria-hidden />
+            <div className="relative">
+              <h1 className="mb-4 font-handel text-4xl sm:text-5xl md:text-6xl font-bold uppercase text-theme-text">
+                {text.title}
+              </h1>
+              <p className="text-lg md:text-xl text-theme-text-secondary max-w-3xl mx-auto">
+                {text.subtitle}
+              </p>
+              <p className="text-sm text-theme-text-secondary/60 mt-4">
+                {text.lastUpdate}
+              </p>
+            </div>
           </div>
 
-          {/* Highlights */}
+          {/* Highlights — cards com gradiente */}
           {text.highlights && (
-            <div className="grid md:grid-cols-3 gap-6 mb-16">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-12 md:mb-16">
               {text.highlights.map((item, i) => (
-                <div key={i} className="text-center p-6 rounded-lg bg-slate-900/30 border border-azimut-red/20">
-                  <div className="text-4xl mb-3">{item.icon}</div>
-                  <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
-                  <p className="text-sm text-theme-text-secondary">{item.desc}</p>
+                <div key={i} className="text-center p-4 md:p-6 rounded-xl bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] dark:to-transparent border border-azimut-red/20 hover:border-azimut-red/40 hover:from-azimut-red/5 transition-all duration-300">
+                  <div className="text-3xl sm:text-4xl mb-2 md:mb-3">{item.icon}</div>
+                  <h3 className={`text-sm md:text-base font-bold mb-0.5 md:mb-1 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{item.title}</h3>
+                  <p className={`text-xs md:text-sm ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-on-dark-secondary'}`}>{item.desc}</p>
                 </div>
               ))}
             </div>
           )}
 
-          {/* Sections */}
-          <div className="max-w-4xl mx-auto space-y-12">
-            {text.sections && text.sections.map((section, i) => (
-              <section key={i} className="relative">
-                <div className="flex items-start gap-4 mb-6">
-                  <span className="text-4xl">{section.icon}</span>
-                  <h2 className="font-handel text-2xl md:text-3xl font-bold text-theme-text">
-                    {section.title}
-                  </h2>
-                </div>
+          {/* Mobile: navegação rápida horizontal */}
+          {quickLinksItems.length > 0 && (
+            <div className="lg:hidden mb-8 -mx-4 sm:mx-0 overflow-x-auto pb-2" style={{ scrollbarWidth: 'thin' }}>
+              <nav className="flex gap-2 px-4 sm:px-0 min-w-max sm:flex-wrap sm:min-w-0" aria-label="Navegação rápida">
+                {quickLinksItems.map((item, i) => (
+                  <a
+                    key={i}
+                    href={`#${item.id}`}
+                    className="flex-shrink-0 flex items-center gap-2 px-3 py-2.5 rounded-lg bg-white/5 border border-azimut-red/20 text-theme-text-secondary hover:text-azimut-red hover:border-azimut-red/40 text-sm font-medium transition-colors"
+                  >
+                    <span>{item.icon}</span>
+                    <span className="line-clamp-1 max-w-[140px]">{item.text}</span>
+                  </a>
+                ))}
+              </nav>
+            </div>
+          )}
 
-                {section.type === 'simple' && (
-                  <div className="pl-0 md:pl-16 space-y-4">
-                    <p className="text-base md:text-lg leading-relaxed text-theme-text-secondary">
-                      {section.content}
-                    </p>
-                    {section.highlight && (
-                      <div className="p-4 rounded-lg bg-azimut-red/10 border-l-4 border-azimut-red">
-                        <p className="text-sm font-semibold text-white">{section.highlight}</p>
-                      </div>
-                    )}
-                    {section.flags && (
-                      <div className="text-center p-4 rounded-lg bg-slate-900/30 border border-azimut-red/20">
-                        <p className="text-lg font-semibold text-white">{section.flags}</p>
-                      </div>
-                    )}
+          {/* Layout 2 colunas: conteúdo + sidebar */}
+          <div className="grid lg:grid-cols-[1fr,280px] gap-10 lg:gap-12">
+            {/* Conteúdo principal */}
+            <div className="space-y-12 min-w-0">
+              {text.sections && text.sections.map((section, i) => (
+                <section key={i} id={`section-${i}`} className="scroll-mt-24">
+                  <div className="flex items-start gap-4 mb-6">
+                    <span className="text-3xl sm:text-4xl flex-shrink-0">{section.icon}</span>
+                    <h2 className="font-handel text-xl sm:text-2xl md:text-3xl font-bold text-theme-text">
+                      {section.title}
+                    </h2>
                   </div>
-                )}
 
-                {section.type === 'grid' && section.items && (
-                  <div className="pl-0 md:pl-16 grid md:grid-cols-2 gap-6">
-                    {section.items.map((item, j) => (
-                      <div key={j} className="p-6 rounded-lg bg-slate-900/30 border border-azimut-red/20">
-                        <div className="flex items-center gap-2 mb-4">
-                          <span className="text-2xl">{item.icon}</span>
-                          <h4 className="text-lg font-bold text-white">{item.title}</h4>
+                  {section.type === 'simple' && (
+                    <div className="pl-0 md:pl-14 space-y-4">
+                      <p className="text-base md:text-lg leading-relaxed text-theme-text-secondary">
+                        {section.content}
+                      </p>
+                      {section.highlight && (
+                        <div className="p-4 rounded-xl bg-gradient-to-r from-azimut-red/10 to-transparent border-l-4 border-azimut-red">
+                          <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>{section.highlight}</p>
                         </div>
-                        <ul className="space-y-2">
-                          {item.list.map((li, k) => (
-                            <li key={k} className="flex items-start gap-2 text-sm text-theme-text-secondary">
-                              <span className="text-azimut-red mt-0.5">•</span>
-                              <span>{li}</span>
-                            </li>
+                      )}
+                      {section.flags && (
+                        <div className="text-center p-4 rounded-xl bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20">
+                          <p className={`text-base md:text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{section.flags}</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {section.type === 'grid' && section.items && (
+                    <div className="pl-0 md:pl-14 grid sm:grid-cols-2 gap-4 md:gap-6">
+                      {section.items.map((item, j) => (
+                        <div key={j} className="p-5 md:p-6 rounded-xl bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20 hover:border-azimut-red/30 transition-colors">
+                          <div className="flex items-center gap-2 mb-4">
+                            <span className="text-2xl">{item.icon}</span>
+                            <h4 className={`text-base md:text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{item.title}</h4>
+                          </div>
+                          <ul className="space-y-2">
+                            {item.list.map((li, k) => (
+                              <li key={k} className="flex items-start gap-2 text-sm text-theme-text-secondary">
+                                <span className="text-azimut-red mt-0.5">•</span>
+                                <span>{li}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {section.type === 'cards' && section.cards && (
+                    <div className="pl-0 md:pl-14 grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+                      {section.cards.map((card, j) => (
+                        <div key={j} className="p-4 rounded-xl bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20 hover:border-azimut-red/30 transition-colors text-center">
+                          <div className="text-2xl md:text-3xl mb-2">{card.icon}</div>
+                          <h4 className={`font-semibold mb-2 text-sm md:text-base ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{card.title}</h4>
+                          <p className="text-xs md:text-sm text-theme-text-secondary">{card.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {section.type === 'contact' && section.contact && (
+                    <div className="pl-0 md:pl-14">
+                      <div className="p-6 rounded-2xl bg-gradient-to-br from-azimut-red/10 to-azimut-red/5 border border-azimut-red/30">
+                        <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                          <div>
+                            <p className="text-sm text-theme-text-secondary mb-1">📧 {lang === 'fr' ? 'Courriel Général' : lang === 'es' ? 'Email General' : lang === 'en' ? 'General Email' : 'Email Geral'}</p>
+                            <a 
+                              href={`mailto:${section.contact.email}`}
+                              className={`text-lg font-bold ${theme === 'dark' ? 'text-white hover:text-azimut-red' : 'text-on-dark-primary hover:text-azimut-red'} transition-colors`}
+                            >
+                              {section.contact.email}
+                            </a>
+                          </div>
+                          <div>
+                            <p className="text-sm text-theme-text-secondary mb-1">⚖️ {lang === 'fr' ? 'Questions Juridiques' : lang === 'es' ? 'Consultas Legales' : lang === 'en' ? 'Legal Inquiries' : 'Questões Jurídicas'}</p>
+                            <a 
+                              href={`mailto:${section.contact.legal}`}
+                              className={`text-lg font-bold ${theme === 'dark' ? 'text-white hover:text-azimut-red' : 'text-on-dark-primary hover:text-azimut-red'} transition-colors`}
+                            >
+                              {section.contact.legal}
+                            </a>
+                          </div>
+                        </div>
+                        <div className="flex flex-wrap gap-4 pt-4 border-t border-azimut-red/20">
+                          {section.contact.locations.map((loc, j) => (
+                            <span key={j} className="text-sm text-theme-text-secondary">
+                              {loc}
+                            </span>
                           ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {section.type === 'cards' && section.cards && (
-                  <div className="pl-0 md:pl-16 grid grid-cols-2 md:grid-cols-3 gap-4">
-                    {section.cards.map((card, j) => (
-                      <div key={j} className="p-4 rounded-lg bg-slate-900/50 border border-azimut-red/20 text-center">
-                        <div className="text-2xl md:text-3xl mb-2">{card.icon}</div>
-                        <h4 className="font-semibold text-white mb-2 text-sm md:text-base">{card.title}</h4>
-                        <p className="text-xs md:text-sm text-theme-text-secondary">{card.desc}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {section.type === 'contact' && section.contact && (
-                  <div className="pl-0 md:pl-16">
-                    <div className="p-6 rounded-lg bg-gradient-to-br from-azimut-red/10 to-slate-900/50 border border-azimut-red/30">
-                      <div className="grid md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                          <p className="text-sm text-theme-text-secondary mb-1">📧 {lang === 'fr' ? 'Courriel Général' : lang === 'es' ? 'Email General' : lang === 'en' ? 'General Email' : 'Email Geral'}</p>
-                          <a 
-                            href={`mailto:${section.contact.email}`}
-                            className="text-lg font-bold text-white hover:text-azimut-red transition-colors"
-                          >
-                            {section.contact.email}
-                          </a>
                         </div>
-                        <div>
-                          <p className="text-sm text-theme-text-secondary mb-1">⚖️ {lang === 'fr' ? 'Questions Juridiques' : lang === 'es' ? 'Consultas Legales' : lang === 'en' ? 'Legal Inquiries' : 'Questões Jurídicas'}</p>
-                          <a 
-                            href={`mailto:${section.contact.legal}`}
-                            className="text-lg font-bold text-white hover:text-azimut-red transition-colors"
-                          >
-                            {section.contact.legal}
-                          </a>
-                        </div>
-                      </div>
-                      <div className="flex flex-wrap gap-4 pt-4 border-t border-white/10">
-                        {section.contact.locations.map((loc, j) => (
-                          <span key={j} className="text-sm text-theme-text-secondary">
-                            {loc}
-                          </span>
-                        ))}
                       </div>
                     </div>
-                  </div>
-                )}
-              </section>
-            ))}
+                  )}
+                </section>
+              ))}
+            </div>
+
+            {/* Sidebar — Quick Links (desktop) */}
+            <aside className="hidden lg:block">
+              <div className="sticky top-24 p-6 rounded-2xl bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20 border-l-4 border-l-azimut-red/60 backdrop-blur-sm">
+                <h3 className="text-sm font-bold text-theme-text mb-4 uppercase tracking-wider">
+                  {quickLinksTitle}
+                </h3>
+                <nav className="space-y-1 max-h-[60vh] overflow-y-auto" aria-label="Navegação rápida">
+                  {quickLinksItems.map((item, i) => (
+                    <a
+                      key={i}
+                      href={`#${item.id}`}
+                      className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm text-theme-text-secondary hover:text-azimut-red hover:bg-azimut-red/10 transition-all"
+                    >
+                      <span>{item.icon}</span>
+                      <span className="line-clamp-2">{item.text}</span>
+                    </a>
+                  ))}
+                </nav>
+                <div className="mt-8 pt-6 border-t border-azimut-red/20">
+                  <LangLink
+                    to="/contact"
+                    className="block text-center px-4 py-3 rounded-xl bg-azimut-red text-white text-sm font-semibold hover:bg-azimut-red/90 transition-all"
+                  >
+                    {lang === 'fr' ? '📧 Contactez-nous' : lang === 'es' ? '📧 Contáctenos' : lang === 'en' ? '📧 Contact Us' : '📧 Fale Conosco'}
+                  </LangLink>
+                </div>
+              </div>
+            </aside>
           </div>
 
-          {/* CTA */}
-          <div className="mt-16 text-center">
+          {/* CTA (mobile) */}
+          <div className="mt-12 lg:mt-16 text-center">
             <LangLink
               to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-azimut-red text-white font-sora font-semibold uppercase tracking-wider hover:bg-azimut-red/90 transition-all shadow-lg"
+              className="inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-4 rounded-xl bg-azimut-red text-white font-sora font-semibold uppercase tracking-wider hover:bg-azimut-red/90 transition-all shadow-lg"
             >
               {lang === 'fr' ? 'Des Questions?' : lang === 'es' ? '¿Preguntas?' : lang === 'en' ? 'Questions?' : 'Dúvidas?'} → {lang === 'fr' ? 'Contactez-nous' : lang === 'es' ? 'Contáctenos' : lang === 'en' ? 'Contact Us' : 'Fale Conosco'}
             </LangLink>
           </div>
 
           {/* Footer */}
-          <footer className="mt-16 pt-8 border-t border-white/10 text-center">
-            <p className="text-sm text-gray-500">
+          <footer className="mt-16 pt-8 border-t border-azimut-red/20 text-center">
+            <p className="text-sm text-theme-text-secondary/70">
               {lang === 'fr' ? '© 2026 Azimut. Tous droits réservés.' : 
                lang === 'es' ? '© 2026 Azimut. Todos los derechos reservados.' :
                lang === 'en' ? '© 2026 Azimut. All rights reserved.' :

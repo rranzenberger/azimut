@@ -26,7 +26,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
   
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['overview', 'unique', 'team', 'credentials']
+      const sections = ['overview', 'timeline', 'unique', 'team', 'credentials']
       const scrollPosition = window.scrollY + 200 // Offset para compensar header
       
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -355,6 +355,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
             <nav className="flex flex-wrap gap-1 sm:gap-2">
               {[
                 { id: 'overview', label: lang === 'pt' ? 'Visão Geral' : 'Overview', icon: '✦' },
+                { id: 'timeline', label: lang === 'pt' ? 'Timeline' : 'Timeline', icon: '📅' },
                 { id: 'unique', label: lang === 'pt' ? 'Diferenciais' : 'What Makes Us Unique', icon: '💡' },
                 { id: 'team', label: lang === 'pt' ? 'Equipe' : 'Team', icon: '👥' },
                 { id: 'credentials', label: lang === 'pt' ? 'Credenciais' : 'Credentials', icon: '🏆' }
@@ -392,19 +393,30 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         {/* Conteúdo - DENTRO do container */}
         <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
           
-          {/* Hero Section */}
-          <div className="pt-6 md:pt-8 mb-8">
-            <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
-              <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
-                {lang === 'pt' ? 'NOSSO ESTÚDIO' : lang === 'es' ? 'NUESTRO ESTUDIO' : lang === 'fr' ? 'NOTRE STUDIO' : 'OUR STUDIO'}
-              </span>
+          {/* Hero Section — cinematográfico: gradiente + área para vídeo de fundo opcional */}
+          <div className="relative pt-6 md:pt-8 mb-8 rounded-2xl overflow-hidden">
+            <div 
+              className="absolute inset-0 pointer-events-none rounded-2xl"
+              style={{
+                background: theme === 'dark'
+                  ? 'radial-gradient(ellipse 100% 80% at 50% 0%, rgba(201,35,55,0.12) 0%, transparent 50%), linear-gradient(180deg, transparent 0%, var(--theme-bg) 100%)'
+                  : 'radial-gradient(ellipse 100% 80% at 50% 0%, rgba(201,35,55,0.08) 0%, transparent 50%), linear-gradient(180deg, transparent 0%, var(--theme-bg) 100%)'
+              }}
+              aria-hidden
+            />
+            <div className="relative py-6 md:py-8">
+              <div className="mb-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
+                <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
+                  {lang === 'pt' ? 'NOSSO ESTÚDIO' : lang === 'es' ? 'NUESTRO ESTUDIO' : lang === 'fr' ? 'NOTRE STUDIO' : 'OUR STUDIO'}
+                </span>
+              </div>
+              <h1 className="mb-4 font-handel uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)', fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1' }}>
+                {text.title}
+              </h1>
+              <p className="max-w-3xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)', fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
+                {text.subtitle}
+              </p>
             </div>
-            <h1 className="mb-4 font-handel uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)', fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: '1.1' }}>
-              {text.title}
-            </h1>
-            <p className="max-w-3xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)', fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
-              {text.subtitle}
-            </p>
           </div>
 
           {/* Sobre (Overview) */}
@@ -433,18 +445,26 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               )}
             </p>
 
-            {/* Visual Hero Image - Placeholder for backoffice image */}
-            <div className="relative rounded-2xl overflow-hidden mb-12" style={{ height: '400px' }}>
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-900/50 to-slate-900/30 backdrop-blur-sm flex items-center justify-center border border-azimut-red/20">
-                <div className="text-center p-8">
-                  <div className="text-6xl mb-4">🎬</div>
-                  <p className={`font-sora text-xl uppercase tracking-wider ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
-                    {lang === 'pt' ? 'Studio Azimut' : lang === 'es' ? 'Estudio Azimut' : lang === 'fr' ? 'Studio Azimut' : 'Azimut Studio'}
-                  </p>
-                  <p className={`text-sm mt-2 ${theme === 'dark' ? 'text-slate-400' : 'text-on-dark-tertiary'}`}>
-                    {lang === 'pt' ? 'Imersivo • Interativo • Cinematográfico' : lang === 'es' ? 'Inmersivo • Interactivo • Cinematográfico' : lang === 'fr' ? 'Immersif • Interactif • Cinématographique' : 'Immersive • Interactive • Cinematic'}
-                  </p>
-                </div>
+            {/* Bloco visual cinematográfico — suporte a vídeo de fundo (showreel); gradiente se não houver vídeo */}
+            <div className="relative rounded-2xl overflow-hidden mb-12 border border-azimut-red/20 shadow-2xl" style={{ minHeight: '340px' }}>
+              <div 
+                className="absolute inset-0 rounded-2xl"
+                style={{
+                  background: theme === 'dark'
+                    ? 'linear-gradient(145deg, #1a1f2c 0%, #242938 40%, #1e2330 70%, #171b26 100%)'
+                    : 'linear-gradient(145deg, rgba(30,28,26,0.95) 0%, rgba(26,24,21,0.9) 100%)'
+                }}
+              />
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(201,35,55,0.08),transparent)] rounded-2xl pointer-events-none" aria-hidden />
+              <div className="relative flex flex-col items-center justify-center min-h-[340px] p-8 md:p-12 text-center">
+                <div className="w-16 h-1 rounded-full bg-gradient-to-r from-transparent via-azimut-red to-transparent mb-6" aria-hidden />
+                <div className="text-5xl md:text-6xl mb-4">🎬</div>
+                <p className={`font-sora text-lg md:text-xl uppercase tracking-wider ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+                  {lang === 'pt' ? 'Studio Azimut' : lang === 'es' ? 'Estudio Azimut' : lang === 'fr' ? 'Studio Azimut' : 'Azimut Studio'}
+                </p>
+                <p className={`text-sm mt-2 ${theme === 'dark' ? 'text-slate-400' : 'text-on-dark-tertiary'}`}>
+                  {lang === 'pt' ? 'Imersivo • Interativo • Cinematográfico' : lang === 'es' ? 'Inmersivo • Interactivo • Cinematográfico' : lang === 'fr' ? 'Immersif • Interactif • Cinématographique' : 'Immersive • Interactive • Cinematic'}
+                </p>
               </div>
             </div>
 
@@ -666,6 +686,49 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
             </div>
           </section>
 
+          {/* Timeline — Nossa História (cinematográfico) */}
+          <section id="timeline" className="section-container scroll-mt-32">
+            <span className="section-eyebrow">
+              <span>📅</span>
+              {lang === 'pt' ? 'Nossa História' : lang === 'es' ? 'Nuestra Historia' : lang === 'fr' ? 'Notre Histoire' : 'Our Story'}
+            </span>
+            <h2 className="section-title mb-10 md:mb-12">
+              {lang === 'pt' ? 'Linha do Tempo' : lang === 'es' ? 'Línea de Tiempo' : lang === 'fr' ? 'Chronologie' : 'Timeline'}
+            </h2>
+            <div className="relative">
+              {/* Linha vertical central */}
+              <div 
+                className="absolute left-4 md:left-6 top-0 bottom-0 w-px rounded-full"
+                style={{ background: 'linear-gradient(180deg, transparent, rgba(201,35,55,0.4) 20%, rgba(201,35,55,0.6) 50%, rgba(201,35,55,0.4) 80%, transparent)' }}
+                aria-hidden
+              />
+              <ul className="space-y-8 md:space-y-10">
+                {[
+                  { year: '1990s', label: lang === 'pt' ? 'Pioneiros 3D e audiovisual' : lang === 'es' ? 'Pioneros 3D y audiovisual' : lang === 'fr' ? 'Pionniers 3D et audiovisuel' : '3D & audiovisual pioneers' },
+                  { year: '2017', label: lang === 'pt' ? 'Curadoria VR no Festival de Gramado' : lang === 'es' ? 'Curaduría VR en Festival de Gramado' : lang === 'fr' ? 'Curation VR au Festival de Gramado' : 'VR Curatorship at Gramado Festival' },
+                  { year: 'XRBR', label: lang === 'pt' ? 'Membros fundadores da Associação XRBR' : lang === 'es' ? 'Miembros fundadores de la Asociación XRBR' : lang === 'fr' ? 'Membres fondateurs de l\'Association XRBR' : 'Founding members of XRBR Association' },
+                  { year: 'Rio Museu', label: lang === 'pt' ? 'Direção Geral e Arte no Rio Museu Olímpico' : lang === 'es' ? 'Dirección General y Arte en Rio Museo Olímpico' : lang === 'fr' ? 'Direction Générale et Art au Musée Olympique de Rio' : 'General Direction & Art at Rio Olympic Museum' },
+                  { year: 'Hoje', label: lang === 'pt' ? 'Brasil ↔ Canadá • Vancouver, BC' : lang === 'es' ? 'Brasil ↔ Canadá • Vancouver, BC' : lang === 'fr' ? 'Brésil ↔ Canada • Vancouver, BC' : 'Brazil ↔ Canada • Vancouver, BC' }
+                ].map((item, i) => (
+                  <li key={i} className="relative flex gap-6 md:gap-8 items-start pl-14 md:pl-16">
+                    <span 
+                      className="absolute left-0 w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-azimut-red/60 flex items-center justify-center text-[0.65rem] md:text-xs font-bold shrink-0"
+                      style={{
+                        background: theme === 'dark' ? 'rgba(15,23,42,0.9)' : 'rgba(26,24,21,0.9)',
+                        color: 'var(--theme-text)'
+                      }}
+                    >
+                      {item.year.length <= 5 ? item.year : item.year.slice(0, 3)}
+                    </span>
+                    <p className={`text-base md:text-lg leading-relaxed pt-0.5 ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-on-dark-secondary'}`}>
+                      {item.label}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
           {/* Diferenciais (What Makes Us Unique) */}
           <section id="unique" className="section-container scroll-mt-32">
             <div className="section-header">
@@ -856,16 +919,17 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               {text.team.members.map((member, i) => (
                 <div
                   key={i}
-                  className="team-card group relative rounded-2xl overflow-hidden border-2 border-azimut-red/20 hover:border-azimut-red/60 transition-all duration-500 cursor-pointer"
+                  className="team-card group relative rounded-2xl overflow-hidden border border-azimut-red/20 hover:border-azimut-red/50 transition-all duration-500 cursor-pointer bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.04] dark:to-transparent"
                 >
-                  {/* FOTO REAL com Duotone Cinematográfico - FORMATO HORIZONTAL - CLICÁVEL */}
+                  <div className="red-line-top absolute top-0 left-0 right-0 h-1 rounded-t-2xl bg-gradient-to-r from-transparent via-azimut-red to-transparent opacity-80 z-10" aria-hidden />
+                  {/* FOTO REAL — galeria cinematográfica, hover scale */}
                   <LangLink to={`/studio/equipe#${member.slug}`} className="block">
                     <div className="team-photo relative overflow-hidden aspect-[4/3] w-full">
                       <img 
                         src={member.photo}
                         alt={member.name}
                         loading="lazy"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         style={{ 
                           objectPosition: member.name.includes('Alberto') ? 'center 35%' : 'center center',
                           transform: member.name.includes('Alberto') ? 'scale(1.2)' : 'scale(1)',
@@ -989,29 +1053,29 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                 </svg>
               </LangLink>
             </div>
+            {/* Prêmios / Credenciais — cards premium com linha vermelha e gradiente */}
             <div className="grid md:grid-cols-2 gap-4">
               {text.credentials.items.map((item, i) => {
-                // Suporta tanto string (PT/EN) quanto objeto (ES/FR)
                 const isString = typeof item === 'string'
                 const icon = isString ? item.substring(0, 2) : item.icon || '🏆'
-                const text = isString ? item.substring(3) : item.desc || item.title || ''
-                
+                const lineText = isString ? item.substring(3) : item.desc || item.title || ''
                 return (
                   <div 
                     key={i} 
-                    className="flex items-center gap-3 p-6 rounded-xl border border-azimut-red/10 transition-all group"
+                    className="relative flex items-center gap-3 p-6 rounded-xl border border-azimut-red/20 hover:border-azimut-red/40 transition-all group overflow-hidden"
                     style={{
                       background: theme === 'dark' 
-                        ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.2) 100%)'
-                        : 'linear-gradient(135deg, rgba(30, 28, 26, 0.65) 0%, rgba(26, 24, 21, 0.5) 100%)'
+                        ? 'linear-gradient(135deg, rgba(26,31,44,0.8) 0%, rgba(22,27,38,0.6) 100%)'
+                        : 'linear-gradient(135deg, rgba(30,28,26,0.9) 0%, rgba(26,24,21,0.7) 100%)'
                     }}
                   >
+                    <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-azimut-red/60 to-transparent opacity-80" aria-hidden />
                     <span className="text-3xl shrink-0 group-hover:scale-110 transition-transform" style={{ filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))' }}>{icon}</span>
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       {!isString && item.title && (
                         <h4 className={`font-bold mb-1 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{item.title}</h4>
                       )}
-                      <span className={`leading-relaxed ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-on-dark-secondary'}`} style={{ whiteSpace: 'pre-line' }}>{text}</span>
+                      <span className={`leading-relaxed text-sm md:text-base ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-on-dark-secondary'}`} style={{ whiteSpace: 'pre-line' }}>{lineText}</span>
                       {!isString && item.year && (
                         <div className="text-xs text-azimut-red mt-2 font-semibold">{item.year}</div>
                       )}

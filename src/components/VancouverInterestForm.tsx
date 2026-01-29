@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { type Lang } from '../i18n'
+import { t, type Lang } from '../i18n'
 import ApiService from '../services/api'
 import CanadaMapleLeaf from './CanadaMapleLeaf'
 import { useFormTracking } from '../hooks/useFormTracking'
@@ -168,142 +168,84 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
     return numbers
   }
 
-  const labels = {
-    pt: {
-      name: 'Nome completo',
-      email: 'Email',
-      whatsapp: 'WhatsApp',
-      age: 'Idade',
-      city: 'Cidade/País',
-      currentSituation: 'Situação atual',
-      situations: [
-        { value: '', label: 'Selecione...' },
-        { value: 'ensino-medio-cursando', label: 'Ensino Médio (cursando)' },
-        { value: 'ensino-medio-completo', label: 'Ensino Médio (completo)' },
-        { value: 'graduacao-cursando', label: 'Graduação (cursando)' },
-        { value: 'graduacao-completo', label: 'Graduação (completo)' },
-        { value: 'outro', label: 'Outro' }
-      ],
-      targetSchool: 'Qual escola te interessa?',
-      schools: [
-        { value: '', label: 'Selecione...' },
-        { value: 'vfs', label: 'VFS (Vancouver Film School)' },
-        { value: 'vanarts', label: 'VanArts' },
-        { value: 'nao-sei', label: 'Ainda não sei' }
-      ],
-      areaInterest: 'Área de interesse',
-      areas: [
-        { value: '', label: 'Selecione...' },
-        { value: '3d-animation-vfx', label: '3D Animation & VFX' },
-        { value: 'game-design', label: 'Game Design/Art' },
-        { value: 'film-production', label: 'Film Production' },
-        { value: 'acting', label: 'Acting' },
-        { value: 'digital-design', label: 'Digital Design' },
-        { value: 'sound-design', label: 'Sound Design' },
-        { value: 'programming', label: 'Programming' },
-        { value: 'outro', label: 'Outro' }
-      ],
-      intakeYear: 'Quando pretende ir?',
-      intakes: [
-        { value: '', label: 'Selecione...' },
-        { value: '2026', label: '2026' },
-        { value: '2027', label: '2027' },
-        { value: '2028', label: '2028 ou depois' },
-        { value: 'nao-sei', label: 'Ainda não sei' }
-      ],
-      englishLevel: 'Nível de inglês',
-      englishLevels: [
-        { value: '', label: 'Selecione...' },
-        { value: 'iniciante', label: 'Iniciante' },
-        { value: 'intermediario', label: 'Intermediário' },
-        { value: 'avancado', label: 'Avançado' },
-        { value: 'fluente', label: 'Fluente' }
-      ],
-      hasPortfolio: 'Já tem portfolio?',
-      portfolioOptions: [
-        { value: '', label: 'Selecione...' },
-        { value: 'sim-completo', label: 'Sim, completo' },
-        { value: 'sim-precisa-melhorar', label: 'Sim, mas precisa melhorar' },
-        { value: 'comecando', label: 'Começando agora' },
-        { value: 'nao-tenho', label: 'Não tenho' }
-      ],
-      budgetRange: 'Orçamento disponível (total)',
-      budgetRanges: [
-        { value: '', label: 'Selecione...' },
-        { value: 'ate-100k', label: 'Até R$ 100k' },
-        { value: '100k-200k', label: 'R$ 100k - 200k' },
-        { value: '200k-300k', label: 'R$ 200k - 300k' },
-        { value: 'acima-300k', label: 'Acima R$ 300k' },
-        { value: 'bolsa', label: 'Preciso de bolsa/financiamento' }
-      ],
-      fundingSource: 'Fonte de recursos',
-      fundingSources: [
-        { value: '', label: 'Selecione...' },
-        { value: 'familia', label: 'Família' },
-        { value: 'economia-propria', label: 'Economia própria' },
-        { value: 'financiamento', label: 'Financiamento' },
-        { value: 'bolsa', label: 'Bolsa' },
-        { value: 'combinacao', label: 'Combinação' }
-      ],
-      howHeard: 'Como soube sobre a Azimut?',
-      howHeardOptions: [
-        { value: '', label: 'Selecione...' },
-        { value: 'webinar', label: 'Webinar' },
-        { value: 'palestra-escola', label: 'Palestra na escola' },
-        { value: 'feira', label: 'Feira educacional' },
-        { value: 'redes-sociais', label: 'Redes sociais' },
-        { value: 'indicacao', label: 'Indicação' },
-        { value: 'google', label: 'Google' },
-        { value: 'outro', label: 'Outro' }
-      ],
-      comments: 'Comentários/Dúvidas',
-      commentsPlaceholder: 'Conte-nos um pouco mais sobre seus objetivos...',
-      preferredContactLabel: 'Como prefere ser contatado?',
-      contactOptions: [
-        { value: 'email', label: '📧 Email' },
-        { value: 'whatsapp', label: '💬 WhatsApp' },
-        { value: 'call', label: '📞 Ligação' },
-        { value: 'any', label: '🤝 Qualquer um' }
-      ],
-      newsletter: 'Quero receber atualizações sobre Vancouver',
-      webinars: 'Quero participar dos próximos webinars',
-      submit: 'Enviar Interesse',
-      submitting: 'Enviando...',
-      successMessage: 'Obrigado! Recebemos seu interesse em Vancouver. Em breve entraremos em contato para agendar sua consulta gratuita.',
-      errorMessage: 'Ops! Algo deu errado. Por favor, tente novamente ou entre em contato diretamente:',
-      required: 'Campos obrigatórios'
-    },
-    en: {
-      // ... (copiar estrutura com traduções)
-      preferredContactLabel: 'How do you prefer to be contacted?',
-      contactOptions: [
-        { value: 'email', label: '📧 Email' },
-        { value: 'whatsapp', label: '💬 WhatsApp' },
-        { value: 'call', label: '📞 Call' },
-        { value: 'any', label: '🤝 Any' }
-      ]
-    },
-    es: {
-      preferredContactLabel: 'Cómo prefiere ser contactado?',
-      contactOptions: [
-        { value: 'email', label: '📧 Email' },
-        { value: 'whatsapp', label: '💬 WhatsApp' },
-        { value: 'call', label: '📞 Llamada' },
-        { value: 'any', label: '🤝 Cualquiera' }
-      ]
-    },
-    fr: {
-      preferredContactLabel: 'Comment préférez-vous être contacté?',
-      contactOptions: [
-        { value: 'email', label: '📧 Email' },
-        { value: 'whatsapp', label: '💬 WhatsApp' },
-        { value: 'call', label: '📞 Appel' },
-        { value: 'any', label: '🤝 N\'importe' }
-      ]
-    }
-  }
-
-  const t = labels[lang] || labels.pt
+  const situations = [
+    { value: '', label: t(lang, 'formVanSituationSelect') },
+    { value: 'ensino-medio-cursando', label: t(lang, 'formVanSituationHighSchool') },
+    { value: 'ensino-medio-completo', label: t(lang, 'formVanSituationHighSchoolDone') },
+    { value: 'graduacao-cursando', label: t(lang, 'formVanSituationUniversity') },
+    { value: 'graduacao-completo', label: t(lang, 'formVanSituationUniversityDone') },
+    { value: 'outro', label: t(lang, 'formVanSituationOther') }
+  ]
+  const schools = [
+    { value: '', label: t(lang, 'formVanSituationSelect') },
+    { value: 'vfs', label: t(lang, 'formVanSchoolVfs') },
+    { value: 'vanarts', label: t(lang, 'formVanSchoolVanarts') },
+    { value: 'nao-sei', label: t(lang, 'formVanSchoolUndecided') }
+  ]
+  const areas = [
+    { value: '', label: t(lang, 'formVanSituationSelect') },
+    { value: '3d-animation-vfx', label: t(lang, 'formVanArea3d') },
+    { value: 'game-design', label: t(lang, 'formVanAreaGame') },
+    { value: 'film-production', label: t(lang, 'formVanAreaFilm') },
+    { value: 'acting', label: t(lang, 'formVanAreaActing') },
+    { value: 'digital-design', label: t(lang, 'formVanAreaDigital') },
+    { value: 'sound-design', label: t(lang, 'formVanAreaSound') },
+    { value: 'programming', label: t(lang, 'formVanAreaProgramming') },
+    { value: 'outro', label: t(lang, 'formVanAreaOther') }
+  ]
+  const intakes = [
+    { value: '', label: t(lang, 'formVanSituationSelect') },
+    { value: '2026', label: t(lang, 'formVanIntake2026') },
+    { value: '2027', label: t(lang, 'formVanIntake2027') },
+    { value: '2028', label: t(lang, 'formVanIntake2028') },
+    { value: 'nao-sei', label: t(lang, 'formVanIntakeUndecided') }
+  ]
+  const englishLevels = [
+    { value: '', label: t(lang, 'formVanSituationSelect') },
+    { value: 'iniciante', label: t(lang, 'formVanEnglishBeginner') },
+    { value: 'intermediario', label: t(lang, 'formVanEnglishIntermediate') },
+    { value: 'avancado', label: t(lang, 'formVanEnglishAdvanced') },
+    { value: 'fluente', label: t(lang, 'formVanEnglishFluent') }
+  ]
+  const portfolioOptions = [
+    { value: '', label: t(lang, 'formVanSituationSelect') },
+    { value: 'sim-completo', label: t(lang, 'formVanPortfolioYes') },
+    { value: 'sim-precisa-melhorar', label: t(lang, 'formVanPortfolioImprove') },
+    { value: 'comecando', label: t(lang, 'formVanPortfolioStarting') },
+    { value: 'nao-tenho', label: t(lang, 'formVanPortfolioNo') }
+  ]
+  const budgetRanges = [
+    { value: '', label: t(lang, 'formVanSituationSelect') },
+    { value: 'ate-100k', label: t(lang, 'formVanBudget100') },
+    { value: '100k-200k', label: t(lang, 'formVanBudget200') },
+    { value: '200k-300k', label: t(lang, 'formVanBudget300') },
+    { value: 'acima-300k', label: t(lang, 'formVanBudget300Plus') },
+    { value: 'bolsa', label: t(lang, 'formVanBudgetScholarship') }
+  ]
+  const fundingSources = [
+    { value: '', label: t(lang, 'formVanSituationSelect') },
+    { value: 'familia', label: t(lang, 'formVanFundingFamily') },
+    { value: 'economia-propria', label: t(lang, 'formVanFundingOwn') },
+    { value: 'financiamento', label: t(lang, 'formVanFundingLoan') },
+    { value: 'bolsa', label: t(lang, 'formVanFundingScholarship') },
+    { value: 'combinacao', label: t(lang, 'formVanFundingCombo') }
+  ]
+  const howHeardOptions = [
+    { value: '', label: t(lang, 'formVanSituationSelect') },
+    { value: 'webinar', label: t(lang, 'formVanHowWebinar') },
+    { value: 'palestra-escola', label: t(lang, 'formVanHowSchool') },
+    { value: 'feira', label: t(lang, 'formVanHowFair') },
+    { value: 'redes-sociais', label: t(lang, 'formVanHowSocial') },
+    { value: 'indicacao', label: t(lang, 'formVanHowReferral') },
+    { value: 'google', label: t(lang, 'formVanHowGoogle') },
+    { value: 'outro', label: t(lang, 'formVanHowOther') }
+  ]
+  const contactOptions = [
+    { value: 'email', label: t(lang, 'formVanContactEmail') },
+    { value: 'whatsapp', label: t(lang, 'formVanContactWhatsapp') },
+    { value: 'call', label: t(lang, 'formVanContactCall') },
+    { value: 'any', label: t(lang, 'formVanContactAny') }
+  ]
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -320,67 +262,39 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
 
     // Validação suave - só essenciais
     if (!formData.name || !formData.name.trim()) {
-      setError(lang === 'pt' ? 'Por favor, preencha seu nome.' : 
-               lang === 'es' ? 'Por favor, complete su nombre.' :
-               lang === 'fr' ? 'Veuillez remplir votre nom.' :
-               'Please fill in your name.')
+      setError(t(lang, 'formFillName'))
       setLoading(false)
       return
     }
 
-    // 🆕 VALIDAÇÃO CRUZADA INTELIGENTE baseada em preferência de contato
     const hasEmail = formData.email && formData.email.trim()
     const hasPhone = formData.whatsapp && formData.whatsapp.replace(/\D/g, '').length >= 8
 
-    // Se pediu contato por EMAIL mas não forneceu email
     if ((formData.preferredContact === 'email') && !hasEmail) {
-      setError(lang === 'pt' ? 'Você solicitou contato por email, mas não forneceu seu email. Por favor, preencha o email ou mude a preferência de contato.' : 
-               lang === 'en' ? 'You requested email contact, but didn\'t provide your email. Please fill in email or change contact preference.' :
-               lang === 'es' ? 'Solicitaste contacto por correo, pero no proporcionaste tu email. Por favor, completa el email o cambia la preferencia.' :
-               'Vous avez demandé un contact par email, mais n\'avez pas fourni votre email.')
+      setError(t(lang, 'formEmailRequestedNoEmail'))
       setLoading(false)
       return
     }
-
-    // Se pediu contato por WHATSAPP/CALL mas não forneceu telefone
     if ((formData.preferredContact === 'whatsapp' || formData.preferredContact === 'call') && !hasPhone) {
-      setError(lang === 'pt' ? 'Você solicitou contato por telefone/WhatsApp, mas não forneceu seu número. Por favor, preencha o telefone ou mude a preferência de contato.' : 
-               lang === 'en' ? 'You requested phone/WhatsApp contact, but didn\'t provide your number. Please fill in phone or change preference.' :
-               lang === 'es' ? 'Solicitaste contacto por teléfono/WhatsApp, pero no proporcionaste tu número. Por favor, completa el teléfono.' :
-               'Vous avez demandé un contact par téléphone, mais n\'avez pas fourni votre numéro.')
+      setError(t(lang, 'formPhoneRequestedNoPhoneWhatsApp'))
       setLoading(false)
       return
     }
-
-    // Se marcou "Any" (qualquer), precisa de pelo menos um
     if (formData.preferredContact === 'any' && !hasEmail && !hasPhone) {
-      setError(lang === 'pt' ? 'Por favor, forneça pelo menos email OU telefone.' : 
-               lang === 'es' ? 'Por favor, proporcione al menos email O teléfono.' :
-               lang === 'fr' ? 'Veuillez fournir au moins email OU téléphone.' :
-               'Please provide at least email OR phone.')
+      setError(t(lang, 'formEmailOrPhoneRequired'))
       setLoading(false)
       return
     }
-
-    // Validar formato de email se fornecido
     if (hasEmail) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       if (!emailRegex.test(formData.email)) {
-        setError(lang === 'pt' ? 'Por favor, forneça um email válido (exemplo: seu@email.com).' : 
-                 lang === 'es' ? 'Por favor, proporcione un correo electrónico válido (ejemplo: su@correo.com).' :
-                 lang === 'fr' ? 'Veuillez fournir un email valide (exemple: votre@email.com).' :
-                 'Please provide a valid email (example: your@email.com).')
+        setError(t(lang, 'formInvalidEmailExample'))
         setLoading(false)
         return
       }
     }
-
-    // Validar telefone se fornecido
     if (formData.whatsapp && formData.whatsapp.replace(/\D/g, '').length > 0 && formData.whatsapp.replace(/\D/g, '').length < 8) {
-      setError(lang === 'pt' ? 'O número de telefone parece incompleto. Por favor, verifique.' : 
-               lang === 'es' ? 'El número de teléfono parece incompleto. Por favor, verifique.' :
-               lang === 'fr' ? 'Le numéro de téléphone semble incomplet. Veuillez vérifier.' :
-               'The phone number seems incomplete. Please check.')
+      setError(t(lang, 'formPhoneIncompleteCheck'))
       setLoading(false)
       return
     }
@@ -483,7 +397,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
       <div className="p-8 card-adaptive rounded-2xl border border-white/10">
         {error && (
           <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
-            <p className="text-red-400 text-sm mb-2">{t.errorMessage}</p>
+            <p className="text-red-400 text-sm mb-2">{t(lang, 'formVanErrorMessage')}</p>
             <div className="flex flex-col gap-2 text-sm text-red-300">
               <a href="mailto:contact@azimutimmersive.com" className="hover:text-red-200">
                 📧 contact@azimutimmersive.com
@@ -516,7 +430,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
           <div className="grid md:grid-cols-2 gap-4">
             <div>
             <label className="label-adaptive">
-              {t.email} *
+              {t(lang, 'formVanEmail')} *
             </label>
               <input
                 type="email"
@@ -529,7 +443,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
 
             <div>
             <label className="label-adaptive">
-              {t.whatsapp} *
+              {t(lang, 'formVanWhatsapp')} *
             </label>
               <div className="flex gap-2" style={{ alignItems: 'center', flexWrap: 'nowrap' }}>
                 {/* Dropdown ou Input customizado - LARGURA 130px */}
@@ -622,7 +536,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                 />
               </div>
               <p className="mt-1.5 text-xs text-white/50">
-                💡 Código detectado automaticamente
+                {t(lang, 'formVanCodeDetected')}
               </p>
             </div>
           </div>
@@ -630,7 +544,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label className="label-adaptive">
-                {t.age} *
+                {t(lang, 'formVanAge')} *
               </label>
               <input
                 type="number"
@@ -660,7 +574,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
 
           <div>
             <label className="label-adaptive">
-              {t.currentSituation} *
+              {t(lang, 'formVanCurrentSituation')} *
             </label>
             <select
               name="currentSituation"
@@ -668,7 +582,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               onChange={handleChange}
               className="dropdown-azimut w-full"
             >
-              {t.situations.map(option => (
+              {situations.map(option => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -701,7 +615,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
 
           <div>
             <label className="label-adaptive">
-              {t.areaInterest} *
+              {t(lang, 'formVanAreaInterest')} *
             </label>
             <select
               name="areaInterest"
@@ -709,7 +623,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               onChange={handleChange}
               className="dropdown-azimut w-full"
             >
-              {t.areas.map(option => (
+              {areas.map(option => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -738,7 +652,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
 
             <div>
               <label className="label-adaptive">
-                {t.englishLevel} *
+                {t(lang, 'formVanEnglishLevel')} *
               </label>
               <select
                 name="englishLevel"
@@ -746,7 +660,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
                 onChange={handleChange}
                 className="dropdown-azimut w-full"
               >
-                {t.englishLevels.map(option => (
+                {englishLevels.map(option => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
@@ -757,7 +671,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
 
           <div>
             <label className="label-adaptive">
-              {t.hasPortfolio} *
+              {t(lang, 'formVanHasPortfolio')} *
             </label>
             <select
               name="hasPortfolio"
@@ -765,7 +679,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               onChange={handleChange}
               className="dropdown-azimut w-full"
             >
-              {t.portfolioOptions.map(option => (
+              {portfolioOptions.map(option => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -776,11 +690,11 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
 
         {/* Financial */}
         <div className="space-y-4 mb-6">
-          <h3 className="text-xl font-semibold text-white mb-4">Financeiro</h3>
+          <h3 className="text-xl font-semibold text-white mb-4">{t(lang, 'formVanSectionFinancial')}</h3>
 
           <div>
             <label className="label-adaptive">
-              {t.budgetRange} *
+              {t(lang, 'formVanBudgetRange')} *
             </label>
             <select
               name="budgetRange"
@@ -788,7 +702,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               onChange={handleChange}
               className="dropdown-azimut w-full"
             >
-              {t.budgetRanges.map(option => (
+              {budgetRanges.map(option => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -819,7 +733,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
         <div className="space-y-4 mb-6">
           <div>
             <label className="label-adaptive">
-              {t.howHeard} *
+              {t(lang, 'formVanHowHeard')} *
             </label>
             <select
               name="howHeard"
@@ -827,7 +741,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               onChange={handleChange}
               className="dropdown-azimut w-full"
             >
-              {t.howHeardOptions.map(option => (
+              {howHeardOptions.map(option => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -837,14 +751,14 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
 
           <div>
             <label className="label-adaptive">
-              {t.comments}
+              {t(lang, 'formVanComments')}
             </label>
             <textarea
               name="comments"
               rows={4}
               value={formData.comments}
               onChange={handleChange}
-              placeholder={t.commentsPlaceholder}
+              placeholder={t(lang, 'formVanCommentsPlaceholder')}
               className="input-adaptive w-full"
               style={{ minHeight: '120px' }}
             />
@@ -854,7 +768,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
         {/* Preferência de Contato */}
         <div className="mb-6">
           <label className="label-adaptive">
-            {t.preferredContactLabel || 'Como prefere ser contatado?'} *
+            {t(lang, 'formVanPreferredContact')} *
           </label>
           <select
             name="preferredContact"
@@ -862,12 +776,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
             onChange={handleChange}
             className="dropdown-azimut w-full"
           >
-            {(t.contactOptions || [
-              { value: 'email', label: '📧 Email' },
-              { value: 'whatsapp', label: '💬 WhatsApp' },
-              { value: 'call', label: '📞 Ligação' },
-              { value: 'any', label: '🤝 Qualquer um' }
-            ]).map(option => (
+            {contactOptions.map(option => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
@@ -885,7 +794,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               onChange={(e) => setFormData({ ...formData, wantsNewsletter: e.target.checked })}
               className="mt-1 border-white/30 text-azimut-red focus:ring-2 focus:ring-azimut-red bg-white/10 rounded"
             />
-            <span className="text-sm text-white/80">{t.newsletter}</span>
+            <span className="text-sm text-white/80">{t(lang, 'formVanNewsletter')}</span>
           </label>
 
           <label className="flex items-start gap-3 cursor-pointer">
@@ -893,7 +802,7 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
               type="checkbox"
               className="mt-1 border-white/30 text-azimut-red focus:ring-2 focus:ring-azimut-red bg-white/10 rounded"
             />
-            <span className="text-sm text-white/80">{t.webinars}</span>
+            <span className="text-sm text-white/80">{t(lang, 'formVanWebinars')}</span>
           </label>
         </div>
 
@@ -903,11 +812,11 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
           disabled={loading}
           className="w-full px-8 py-4 bg-azimut-red hover:bg-azimut-red/90 disabled:bg-azimut-red/50 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-azimut-red/50 disabled:cursor-not-allowed"
         >
-          {loading ? t.submitting : t.submit}
+          {loading ? t(lang, 'formVanSubmitting') : t(lang, 'formVanSubmit')}
         </button>
 
         <p className="text-xs text-white/50 text-center mt-4">
-          * {t.required}
+          * {t(lang, 'formVanRequired')}
         </p>
       </div>
     </form>

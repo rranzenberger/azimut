@@ -715,70 +715,95 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
           </div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
+            <div className="grid md:grid-cols-2 gap-6 lg:gap-10">
               {t.sections.map((section: AcademySection, idx: number) => (
                 <Link
                   key={section.id}
                   to={`/${lang}${section.link}`}
-                  className="group relative card-adaptive rounded-2xl overflow-hidden border border-white/10 hover:border-azimut-red/50 transition-all duration-700 hover:shadow-2xl hover:shadow-azimut-red/20 hover:-translate-y-3"
+                  className="group relative card-adaptive rounded-2xl overflow-hidden border border-azimut-red/20 hover:border-azimut-red/50 transition-all duration-500 hover:shadow-xl hover:shadow-azimut-red/15 hover:-translate-y-2 bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.04] dark:to-transparent"
                   style={{
                     animationDelay: `${idx * 100}ms`
                   }}
                 >
-                  {/* Image/Video Thumbnail */}
-                  <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-slate-800 to-black">
-                    {/* Ícone decorativo - Imagens do backoffice serão adicionadas quando disponíveis */}
+                  {/* Linha vermelha premium no topo do card */}
+                  <div className="absolute top-0 left-0 right-0 h-1 rounded-t-2xl bg-gradient-to-r from-transparent via-azimut-red to-transparent opacity-90 z-10" aria-hidden />
+                  {/* Image/Video Thumbnail — área para imagem ou vídeo */}
+                  <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-slate-800/90 to-slate-900">
+                    <div 
+                      className="absolute inset-0 opacity-40 group-hover:opacity-30 transition-opacity"
+                      style={{
+                        background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(201,35,55,0.15) 0%, transparent 60%)'
+                      }}
+                      aria-hidden
+                    />
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-9xl opacity-20 group-hover:scale-110 transition-transform duration-700">
+                      <span className="text-8xl md:text-9xl opacity-25 group-hover:scale-110 transition-transform duration-500" aria-hidden>
                         {section.icon}
                       </span>
                     </div>
-                    
-                    {/* Overlay gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
-                    
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent group-hover:from-black/80 transition-opacity" />
                     {/* Badge */}
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 bg-azimut-red/90 text-white text-xs font-bold uppercase tracking-wider rounded-full">
+                    <div className="absolute top-4 left-4 z-10">
+                      <span className="px-3 py-1.5 bg-azimut-red/90 text-white text-xs font-bold uppercase tracking-wider rounded-full border border-white/20">
                         {section.badge}
                       </span>
                     </div>
+                    {/* Indicador de vídeo (opcional) — para cards que tiverem vídeo no backoffice */}
+                    <div className="absolute bottom-4 right-4 w-12 h-12 rounded-full bg-black/50 flex items-center justify-center border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden>
+                      <span className="text-2xl">▶</span>
+                    </div>
                   </div>
 
-                  {/* Content */}
-                  <div className="p-8">
-                    <div className="flex items-center gap-4 mb-4">
-                      <span className="text-5xl">{section.icon}</span>
-                      <h3 className="text-3xl font-handel uppercase tracking-wider group-hover:text-azimut-red transition-colors" style={{ color: 'var(--theme-text)' }}>
+                  {/* Content — texto e CTA */}
+                  <div className="p-6 md:p-8">
+                    <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
+                      <span className="text-4xl md:text-5xl flex-shrink-0">{section.icon}</span>
+                      <h3 className="text-2xl md:text-3xl font-handel uppercase tracking-wider group-hover:text-azimut-red transition-colors" style={{ color: 'var(--theme-text)' }}>
                         {section.title}
                       </h3>
                     </div>
 
-                    <p className="text-lg leading-relaxed mb-6" style={{ color: 'var(--theme-text-secondary)' }}>
+                    <p className="text-base md:text-lg leading-relaxed mb-4 md:mb-6" style={{ color: 'var(--theme-text-secondary)' }}>
                       {section.description}
                     </p>
 
-                    {/* Highlight (se existir) */}
+                    {/* Highlight (ex.: Vancouver comissão) */}
                     {section.highlight && (
-                      <div className="inline-block px-4 py-2 bg-green-500/10 border border-green-500/30 rounded-lg mb-6">
-                        <p className="text-green-400 text-sm font-semibold">
+                      <div className="inline-block px-4 py-2 rounded-xl bg-azimut-red/10 border border-azimut-red/30 mb-4 md:mb-6">
+                        <p className="text-azimut-red text-sm font-semibold">
                           💰 {section.highlight}
                         </p>
                       </div>
                     )}
 
-                    {/* CTA Arrow */}
+                    {/* CTA */}
                     <div className="flex items-center gap-2 text-azimut-red font-semibold group-hover:gap-4 transition-all">
                       <span className="uppercase tracking-wider text-sm">
                         {lang === 'pt' ? 'Saiba Mais' : lang === 'en' ? 'Learn More' : lang === 'es' ? 'Saber Más' : 'En Savoir Plus'}
                       </span>
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
                     </div>
                   </div>
                 </Link>
               ))}
+            </div>
+
+            {/* Depoimento — bloco único premium (paleta do site) */}
+            <div className="mt-12 md:mt-16 max-w-3xl mx-auto">
+              <div className="relative p-6 md:p-8 rounded-2xl border border-azimut-red/20 bg-gradient-to-br from-azimut-red/5 to-transparent dark:from-azimut-red/10 dark:to-transparent">
+                <div className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl bg-gradient-to-r from-transparent via-azimut-red/60 to-transparent opacity-80" aria-hidden />
+                <p className={`text-lg md:text-xl leading-relaxed italic mb-4 ${theme === 'dark' ? 'text-slate-200' : 'text-on-dark-primary'}`}>
+                  {lang === 'pt' && '"A Azimut Academy une prática de mercado e método. Saí pronto para atuar em projetos imersivos."'}
+                  {lang === 'en' && '"Azimut Academy combines real-world practice and method. I left ready to work on immersive projects."'}
+                  {lang === 'es' && '"Azimut Academy une práctica de mercado y método. Salí listo para actuar en proyectos inmersivos."'}
+                  {lang === 'fr' && '"Azimut Academy allie pratique du marché et méthode. J\'en suis sorti prêt à travailler sur des projets immersifs."'}
+                </p>
+                <p className="text-sm font-semibold text-azimut-red">
+                  — {lang === 'pt' ? 'Ex-aluno' : lang === 'en' ? 'Alumni' : lang === 'es' ? 'Exalumno' : 'Ancien élève'}, Azimut Academy
+                </p>
+              </div>
             </div>
           </div>
         </section>

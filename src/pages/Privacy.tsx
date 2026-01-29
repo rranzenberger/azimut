@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import LangLink from '../components/LangLink'
+import { useTheme } from '../contexts/ThemeContext'
 
 interface PrivacyProps {
   lang: Lang
@@ -611,39 +612,60 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" loading="lazy" />
         </div>
 
-        <div className="mx-auto max-w-6xl px-6">
-          {/* Hero */}
-          <div className="mb-16 text-center">
-            <div className="mb-4 inline-block rounded-full bg-azimut-red/10 px-4 py-2 text-sm font-semibold text-azimut-red border border-azimut-red/30">
-              {text.badge}
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          {/* Hero — gradiente sutil, paleta do site */}
+          <div className="relative mb-12 md:mb-16 text-center rounded-2xl overflow-hidden bg-gradient-to-b from-azimut-red/5 via-transparent to-transparent border border-azimut-red/10 py-10 md:py-14 px-6">
+            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(201,35,55,0.08),transparent)]" aria-hidden />
+            <div className="relative">
+              <div className="mb-4 inline-block rounded-full bg-azimut-red/10 px-4 py-2 text-sm font-semibold text-azimut-red border border-azimut-red/30">
+                {text.badge}
+              </div>
+              <h1 className="mb-4 font-handel text-4xl sm:text-5xl md:text-6xl font-bold uppercase text-theme-text">
+                {text.title}
+              </h1>
+              <p className="text-lg md:text-xl text-theme-text-secondary max-w-3xl mx-auto">
+                {text.subtitle}
+              </p>
+              <p className="text-sm text-theme-text-secondary/60 mt-4">
+                {text.lastUpdate}
+              </p>
             </div>
-            <h1 className="mb-4 font-handel text-5xl md:text-6xl font-bold uppercase text-theme-text">
-              {text.title}
-            </h1>
-            <p className="text-xl text-theme-text-secondary max-w-3xl mx-auto">
-              {text.subtitle}
-            </p>
-            <p className="text-sm text-theme-text-secondary/60 mt-4">
-              {text.lastUpdate}
-            </p>
           </div>
 
-          {/* Highlights */}
+          {/* Highlights — cards com gradiente leve */}
           {text.highlights && (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-12 md:mb-16">
               {text.highlights.map((item, i) => (
-                <div key={i} className="text-center p-4 md:p-6 rounded-lg bg-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/40 transition-colors">
-                  <div className="text-4xl md:text-5xl mb-3">
+                <div key={i} className="text-center p-4 md:p-6 rounded-xl bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] dark:to-transparent border border-azimut-red/20 hover:border-azimut-red/40 hover:from-azimut-red/5 transition-all duration-300">
+                  <div className="text-3xl sm:text-4xl md:text-5xl mb-2 md:mb-3">
                     {item.icon === 'maple-leaf' ? (
-                      <img src="/Maple-Leaf-Canada.png" alt="Canada" className="w-12 h-12 md:w-14 md:h-14 inline-block" />
+                      <img src="/Maple-Leaf-Canada.png" alt="Canada" className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 inline-block" />
                     ) : (
                       item.icon
                     )}
                   </div>
-                  <h3 className={`text-sm md:text-lg font-bold mb-1 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{item.title}</h3>
+                  <h3 className={`text-sm md:text-base font-bold mb-0.5 md:mb-1 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{item.title}</h3>
                   <p className={`text-xs md:text-sm ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-on-dark-secondary'}`}>{item.desc}</p>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* Mobile: navegação rápida horizontal */}
+          {text.quickLinks && (
+            <div className="lg:hidden mb-8 -mx-4 sm:mx-0 overflow-x-auto pb-2" style={{ scrollbarWidth: 'thin' }}>
+              <nav className="flex gap-2 px-4 sm:px-0 min-w-max sm:flex-wrap sm:min-w-0" aria-label="Navegação rápida">
+                {text.quickLinks.items.map((item, i) => (
+                  <a
+                    key={i}
+                    href={`#${item.id}`}
+                    className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white/5 border border-azimut-red/20 text-theme-text-secondary hover:text-azimut-red hover:border-azimut-red/40 text-sm font-medium transition-colors"
+                  >
+                    <span>{item.icon}</span>
+                    <span>{item.text}</span>
+                  </a>
+                ))}
+              </nav>
             </div>
           )}
 
@@ -674,7 +696,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
 
                   {section.highlight && (
                     <div className="pl-0 md:pl-16 mb-6">
-                      <div className="p-4 rounded-lg bg-azimut-red/10 border-l-4 border-azimut-red">
+                      <div className="p-4 rounded-xl bg-gradient-to-r from-azimut-red/10 to-transparent border-l-4 border-azimut-red">
                         <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>{section.highlight}</p>
                       </div>
                     </div>
@@ -699,9 +721,9 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
                   )}
 
                   {section.grid && (
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 pl-0 md:pl-16">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 pl-0 md:pl-16">
                       {section.grid.map((card, j) => (
-                        <div key={j} className="p-4 rounded-lg bg-slate-900/50 border border-azimut-red/20">
+                        <div key={j} className="p-4 rounded-xl bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20 hover:border-azimut-red/30 transition-colors">
                           <div className="text-2xl md:text-3xl mb-2">{card.icon}</div>
                           <h4 className={`font-semibold mb-2 text-sm md:text-base ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{card.title}</h4>
                           <p className={`text-xs md:text-sm ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-on-dark-secondary'}`}>{card.desc}</p>
@@ -711,12 +733,12 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
                   )}
 
                   {section.rights && (
-                    <div className="grid md:grid-cols-2 gap-4 pl-0 md:pl-16 mb-6">
+                    <div className="grid sm:grid-cols-2 gap-3 md:gap-4 pl-0 md:pl-16 mb-6">
                       {section.rights.map((right, j) => (
-                        <div key={j} className="flex items-start gap-3 p-4 rounded-lg bg-slate-900/30 hover:bg-slate-900/50 transition-colors">
-                          <span className="text-2xl">{right.icon}</span>
-                          <div>
-                            <h4 className={`font-semibold mb-1 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{right.title}</h4>
+                        <div key={j} className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/15 hover:border-azimut-red/30 transition-colors">
+                          <span className="text-2xl flex-shrink-0">{right.icon}</span>
+                          <div className="min-w-0">
+                            <h4 className={`font-semibold mb-1 text-sm md:text-base ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{right.title}</h4>
                             <p className={`text-sm ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-on-dark-secondary'}`}>{right.desc}</p>
                           </div>
                         </div>
@@ -726,23 +748,23 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
 
                   {section.cta && (
                     <div className="pl-0 md:pl-16">
-                      <div className="p-4 rounded-lg bg-azimut-red/10 border border-azimut-red/30 text-center">
-                        <p className={`font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>{section.cta}</p>
+                      <div className="p-4 rounded-xl bg-gradient-to-r from-azimut-red/10 to-azimut-red/5 border border-azimut-red/30 text-center">
+                        <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>{section.cta}</p>
                       </div>
                     </div>
                   )}
 
                   {section.contacts && (
-                    <div className="grid md:grid-cols-2 gap-4 pl-0 md:pl-16">
+                    <div className="grid sm:grid-cols-2 gap-3 md:gap-4 pl-0 md:pl-16">
                       {section.contacts.map((contact, j) => (
-                        <div key={j} className="p-4 rounded-lg bg-slate-900/30">
+                        <div key={j} className="p-4 rounded-xl bg-gradient-to-br from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/15">
                           <p className="text-sm text-theme-text-secondary mb-1">{contact.label}</p>
                           {contact.type === 'email' ? (
-                            <a href={`mailto:${contact.value}`} className="text-white hover:text-azimut-red transition-colors">
+                            <a href={`mailto:${contact.value}`} className={`font-medium ${theme === 'dark' ? 'text-white hover:text-azimut-red' : 'text-on-dark-primary hover:text-azimut-red'} transition-colors`}>
                               {contact.value}
                             </a>
                           ) : (
-                            <p className="text-white">{contact.value}</p>
+                            <p className={theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}>{contact.value}</p>
                           )}
                         </div>
                       ))}
@@ -752,19 +774,19 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
               ))}
             </div>
 
-            {/* Sidebar - Quick Links */}
+            {/* Sidebar — Quick Links (desktop): gradiente e borda */}
             {text.quickLinks && (
               <aside className="hidden lg:block">
-                <div className="sticky top-24 p-6 rounded-lg bg-slate-900/50 border border-azimut-red/20">
-                  <h3 className="text-sm font-bold text-white mb-4 uppercase tracking-wider">
+                <div className="sticky top-24 p-6 rounded-2xl bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20 border-l-4 border-l-azimut-red/60 backdrop-blur-sm">
+                  <h3 className="text-sm font-bold text-theme-text mb-4 uppercase tracking-wider">
                     {text.quickLinks.title}
                   </h3>
-                  <nav className="space-y-2">
+                  <nav className="space-y-1" aria-label="Navegação rápida">
                     {text.quickLinks.items.map((item, i) => (
                       <a
                         key={i}
                         href={`#${item.id}`}
-                        className="flex items-center gap-2 px-3 py-2 rounded text-sm text-theme-text-secondary hover:text-white hover:bg-azimut-red/10 transition-all"
+                        className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm text-theme-text-secondary hover:text-azimut-red hover:bg-azimut-red/10 transition-all"
                       >
                         <span>{item.icon}</span>
                         <span>{item.text}</span>
@@ -772,10 +794,10 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
                     ))}
                   </nav>
 
-                  <div className="mt-8 pt-6 border-t border-white/10">
+                  <div className="mt-8 pt-6 border-t border-azimut-red/20">
                     <LangLink
                       to="/contact"
-                      className="block text-center px-4 py-3 rounded-lg bg-azimut-red text-white text-sm font-semibold hover:bg-azimut-red/90 transition-all"
+                      className="block text-center px-4 py-3 rounded-xl bg-azimut-red text-white text-sm font-semibold hover:bg-azimut-red/90 transition-all"
                     >
                       {lang === 'fr' ? '📧 Questions?' : lang === 'es' ? '📧 ¿Preguntas?' : lang === 'en' ? '📧 Questions?' : '📧 Dúvidas?'}
                     </LangLink>

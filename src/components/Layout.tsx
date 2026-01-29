@@ -704,36 +704,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               label={t(lang, 'navWhat')}
               mainHref="/what"
               items={[
-                {
-                  label: lang === 'pt' ? 'Todas as Soluções' : lang === 'es' ? 'Todas las Soluciones' : lang === 'fr' ? 'Toutes les Solutions' : 'All Solutions',
-                  href: '/what',
-                  description: lang === 'pt' ? 'Visão geral completa (16)' : lang === 'es' ? 'Vista general completa (16)' : lang === 'fr' ? 'Vue d\'ensemble complète (16)' : 'Complete overview (16)'
-                },
-                {
-                  label: lang === 'pt' ? 'Cultura & Instituições' : lang === 'es' ? 'Cultura & Instituciones' : lang === 'fr' ? 'Culture & Institutions' : 'Culture & Institutions',
-                  href: '/what?filter=culture',
-                  description: lang === 'pt' ? 'Museus, festivais, curadoria, teatro' : lang === 'es' ? 'Museos, festivales, curaduría, teatro' : lang === 'fr' ? 'Musées, festivals, curation, théâtre' : 'Museums, festivals, curation, theatre'
-                },
-                {
-                  label: lang === 'pt' ? 'Marcas & Experiências' : lang === 'es' ? 'Marcas & Experiencias' : lang === 'fr' ? 'Marques & Expériences' : 'Brands & Experiences',
-                  href: '/what?filter=brands',
-                  description: lang === 'pt' ? 'Ativações, VR, branded content' : lang === 'es' ? 'Activaciones, VR, branded content' : lang === 'fr' ? 'Activations, VR, branded content' : 'Activations, VR, branded content'
-                },
-                {
-                  label: lang === 'pt' ? 'Produção Audiovisual' : lang === 'es' ? 'Producción Audiovisual' : lang === 'fr' ? 'Production Audiovisuelle' : 'Audiovisual Production',
-                  href: '/what?filter=production',
-                  description: lang === 'pt' ? 'Cinema, VFX, animação, games' : lang === 'es' ? 'Cine, VFX, animación, juegos' : lang === 'fr' ? 'Cinéma, VFX, animation, jeux' : 'Cinema, VFX, animation, games'
-                },
-                {
-                  label: lang === 'pt' ? 'Tecnologia & Estratégia' : lang === 'es' ? 'Tecnología & Estrategia' : lang === 'fr' ? 'Technologie & Stratégie' : 'Technology & Strategy',
-                  href: '/what?filter=technology',
-                  description: lang === 'pt' ? 'IA, arquitetura, consultoria' : lang === 'es' ? 'IA, arquitectura, consultoría' : lang === 'fr' ? 'IA, architecture, conseil' : 'AI, architecture, consulting'
-                },
-                {
-                  label: lang === 'pt' ? 'Educação & Formação' : lang === 'es' ? 'Educación & Formación' : lang === 'fr' ? 'Éducation & Formation' : 'Education & Training',
-                  href: '/what?filter=education',
-                  description: lang === 'pt' ? 'Formação, workshops, treinamento' : lang === 'es' ? 'Formación, talleres, capacitación' : lang === 'fr' ? 'Formation, ateliers, mentorat' : 'Training, workshops, mentorship'
-                }
+                { label: t(lang, 'navSolutionsAll'), href: '/what', description: t(lang, 'navSolutionsAllDesc') },
+                { label: t(lang, 'navSolutionsCulture'), href: '/what?filter=culture', description: t(lang, 'navSolutionsCultureDesc') },
+                { label: t(lang, 'navSolutionsBrands'), href: '/what?filter=brands', description: t(lang, 'navSolutionsBrandsDesc') },
+                { label: t(lang, 'navSolutionsAv'), href: '/what?filter=production', description: t(lang, 'navSolutionsAvDesc') },
+                { label: t(lang, 'navSolutionsTech'), href: '/what?filter=technology', description: t(lang, 'navSolutionsTechDesc') },
+                { label: t(lang, 'navSolutionsEdu'), href: '/what?filter=education', description: t(lang, 'navSolutionsEduDesc') }
               ]}
               lang={lang}
               theme={theme}
@@ -747,36 +723,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               label={t(lang, 'navWork')}
               mainHref="/work"
               items={[
-                {
-                  label: lang === 'pt' ? 'Todos os Projetos' : lang === 'es' ? 'Todos los Proyectos' : lang === 'fr' ? 'Tous les Projets' : 'All Projects',
-                  href: '/work',
-                  description: lang === 'pt' ? 'Portfólio completo' : lang === 'es' ? 'Portafolio completo' : lang === 'fr' ? 'Portfolio complet' : 'Complete portfolio'
-                },
-                {
-                  label: lang === 'pt' ? 'Museus & Cultura' : lang === 'es' ? 'Museos & Cultura' : lang === 'fr' ? 'Musées & Culture' : 'Museums & Culture',
-                  href: '/work?type=museum',
-                  description: lang === 'pt' ? 'Instalações culturais' : lang === 'es' ? 'Instalaciones culturales' : lang === 'fr' ? 'Installations culturelles' : 'Cultural installations'
-                },
-                {
-                  label: lang === 'pt' ? 'Festivais' : lang === 'es' ? 'Festivales' : lang === 'fr' ? 'Festivals' : 'Festivals',
-                  href: '/work?type=festival',
-                  description: lang === 'pt' ? 'Curadoria e produção' : lang === 'es' ? 'Curaduría y producción' : lang === 'fr' ? 'Curation et production' : 'Curation and production'
-                },
-                {
-                  label: lang === 'pt' ? 'Marcas & Eventos' : lang === 'es' ? 'Marcas & Eventos' : lang === 'fr' ? 'Marques & Événements' : 'Brands & Events',
-                  href: '/work?type=brand',
-                  description: lang === 'pt' ? 'Ativações de marca' : lang === 'es' ? 'Activaciones de marca' : lang === 'fr' ? 'Activations de marque' : 'Brand activations'
-                },
-                {
-                  label: lang === 'pt' ? 'VR & XR' : lang === 'es' ? 'VR & XR' : lang === 'fr' ? 'VR & XR' : 'VR & XR',
-                  href: '/work?tag=vr',
-                  description: lang === 'pt' ? 'Experiências imersivas' : lang === 'es' ? 'Experiencias inmersivas' : lang === 'fr' ? 'Expériences immersives' : 'Immersive experiences'
-                },
-                {
-                  label: lang === 'pt' ? '🌐 Degustação Web3' : lang === 'es' ? '🌐 Degustación Web3' : lang === 'fr' ? '🌐 Dégustation Web3' : '🌐 Web3 Preview',
-                  href: '/experience-preview',
-                  description: lang === 'pt' ? 'VR, NFT, Web3 e Experiências Imersivas' : lang === 'es' ? 'VR, NFT, Web3 y Experiencias Inmersivas' : lang === 'fr' ? 'VR, NFT, Web3 et Expériences Immersives' : 'VR, NFT, Web3 and Immersive Experiences'
-                }
+                { label: t(lang, 'navWorkAll'), href: '/work', description: t(lang, 'navWorkAllDesc') },
+                { label: t(lang, 'navWorkMuseums'), href: '/work?type=museum', description: t(lang, 'navWorkMuseumsDesc') },
+                { label: t(lang, 'navWorkFestivals'), href: '/work?type=festival', description: t(lang, 'navWorkFestivalsDesc') },
+                { label: t(lang, 'navWorkBrands'), href: '/work?type=brand', description: t(lang, 'navWorkBrandsDesc') },
+                { label: t(lang, 'navWorkVr'), href: '/work?tag=vr', description: t(lang, 'navWorkVrDesc') },
+                { label: t(lang, 'navWorkWeb3'), href: '/experience-preview', description: t(lang, 'navWorkWeb3Desc') }
               ]}
               lang={lang}
               theme={theme}
@@ -790,26 +742,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               label={t(lang, 'navStudio')}
               mainHref="/studio"
               items={[
-                {
-                  label: lang === 'pt' ? 'Studio & Team' : lang === 'es' ? 'Estudio & Equipo' : lang === 'fr' ? 'Studio & Équipe' : 'Studio & Team',
-                  href: '/studio',
-                  description: lang === 'pt' ? 'Visão geral completa' : lang === 'es' ? 'Vista general completa' : lang === 'fr' ? 'Vue d\'ensemble complète' : 'Complete overview'
-                },
-                {
-                  label: lang === 'pt' ? 'O Que Nos Torna Únicos' : lang === 'es' ? 'Lo Que Nos Hace Únicos' : lang === 'fr' ? 'Ce Qui Nous Rend Uniques' : 'What Makes Us Unique',
-                  href: '/studio/diferenciais',
-                  description: lang === 'pt' ? 'Nossa combinação especial' : lang === 'es' ? 'Nuestra combinación especial' : lang === 'fr' ? 'Notre combinaison spéciale' : 'Our special combination'
-                },
-                {
-                  label: lang === 'pt' ? 'Conheça a Equipe' : lang === 'es' ? 'Conoce el Equipo' : lang === 'fr' ? 'Rencontrez l\'Équipe' : 'Meet the Team',
-                  href: '/studio/equipe',
-                  description: lang === 'pt' ? 'Quem somos' : lang === 'es' ? 'Quiénes somos' : lang === 'fr' ? 'Qui nous sommes' : 'Who we are'
-                },
-                {
-                  label: lang === 'pt' ? 'Credenciais & Timeline' : lang === 'es' ? 'Credenciales & Timeline' : lang === 'fr' ? 'Références & Timeline' : 'Credentials & Timeline',
-                  href: '/studio/credibilidade',
-                  description: lang === 'pt' ? 'Nossa trajetória' : lang === 'es' ? 'Nuestro recorrido' : lang === 'fr' ? 'Notre parcours' : 'Our journey'
-                }
+                { label: t(lang, 'navStudioOverview'), href: '/studio', description: t(lang, 'navStudioOverviewDesc') },
+                { label: t(lang, 'navStudioUnique'), href: '/studio/diferenciais', description: t(lang, 'navStudioUniqueDesc') },
+                { label: t(lang, 'navStudioTeam'), href: '/studio/equipe', description: t(lang, 'navStudioTeamDesc') },
+                { label: t(lang, 'navStudioCredentials'), href: '/studio/credibilidade', description: t(lang, 'navStudioCredentialsDesc') }
               ]}
               lang={lang}
               theme={theme}
@@ -823,26 +759,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               label={t(lang, 'navAcademy')}
               mainHref="/academy"
               items={[
-                {
-                  label: lang === 'pt' ? 'Azimut Academy' : lang === 'es' ? 'Academia Azimut' : lang === 'fr' ? 'Académie Azimut' : 'Azimut Academy',
-                  href: '/academy',
-                  description: lang === 'pt' ? 'Visão geral completa' : lang === 'es' ? 'Vista general completa' : lang === 'fr' ? 'Vue d\'ensemble complète' : 'Complete overview'
-                },
-                {
-                  label: lang === 'pt' ? 'Cursos & Workshops' : lang === 'es' ? 'Cursos & Workshops' : lang === 'fr' ? 'Cours & Workshops' : 'Courses & Workshops',
-                  href: '/academy/courses',
-                  description: lang === 'pt' ? 'Aprendizado prático' : lang === 'es' ? 'Aprendizaje práctico' : lang === 'fr' ? 'Apprentissage pratique' : 'Hands-on learning'
-                },
-                {
-                  label: lang === 'pt' ? 'Treinamento Corporativo' : lang === 'es' ? 'Entrenamiento Corporativo' : lang === 'fr' ? 'Formation d\'Entreprise' : 'Corporate Training',
-                  href: '/academy/corporate',
-                  description: lang === 'pt' ? 'Programas personalizados' : lang === 'es' ? 'Programas personalizados' : lang === 'fr' ? 'Programmes personnalisés' : 'Tailored programs'
-                },
-                {
-                  label: lang === 'pt' ? '🇨🇦 Vancouver (VFS/VanArts)' : lang === 'es' ? '🇨🇦 Vancouver (VFS/VanArts)' : lang === 'fr' ? '🇨🇦 Vancouver (VFS/VanArts)' : '🇨🇦 Vancouver (VFS/VanArts)',
-                  href: '/academy/vancouver',
-                  description: lang === 'pt' ? 'Estudar cinema/VFX no Canadá' : lang === 'es' ? 'Estudiar cine/VFX en Canadá' : lang === 'fr' ? 'Étudier cinéma/VFX au Canada' : 'Study film/VFX in Canada'
-                }
+                { label: t(lang, 'navAcademyOverview'), href: '/academy', description: t(lang, 'navAcademyOverviewDesc') },
+                { label: t(lang, 'navAcademyCourses'), href: '/academy/courses', description: t(lang, 'navAcademyCoursesDesc') },
+                { label: t(lang, 'navAcademyCorporate'), href: '/academy/corporate', description: t(lang, 'navAcademyCorporateDesc') },
+                { label: t(lang, 'navAcademyVancouver'), href: '/academy/vancouver', description: t(lang, 'navAcademyVancouverDesc') }
               ]}
               lang={lang}
               theme={theme}
@@ -943,8 +863,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 e.currentTarget.style.background = 'transparent'
                 e.currentTarget.style.transform = 'scale(1)'
               }}
-              aria-label={lang === 'en' ? 'Search' : lang === 'es' ? 'Buscar' : lang === 'fr' ? 'Rechercher' : 'Buscar'}
-              title={lang === 'en' ? 'Search (Ctrl+K)' : lang === 'es' ? 'Buscar (Ctrl+K)' : lang === 'fr' ? 'Rechercher (Ctrl+K)' : 'Buscar (Ctrl+K)'}
+              aria-label={t(lang, 'navSearchLabel')}
+              title={t(lang, 'navSearchTitle')}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -994,8 +914,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       justifyContent: 'center'
                     }}
                   >
-                    <span className="block whitespace-nowrap" style={{ fontSize: 'inherit', fontWeight: '700' }}>{getCtaLines(lang)[0]}</span>
-                    <span className="block whitespace-nowrap" style={{ fontSize: 'inherit', fontWeight: '700' }}>{getCtaLines(lang)[1]}</span>
+                    <span className="block min-[360px]:whitespace-nowrap text-center" style={{ fontSize: 'inherit', fontWeight: '700' }}>{getCtaLines(lang)[0]}</span>
+                    <span className="block min-[360px]:whitespace-nowrap text-center" style={{ fontSize: 'inherit', fontWeight: '700' }}>{getCtaLines(lang)[1]}</span>
                   </LangLink>
 
                   {/* Botão Web3 - ÍCONE GRANDE E TEXTO LADO A LADO */}
@@ -1498,7 +1418,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             <div className="grid grid-cols-3 gap-2 mb-5 text-center">
               <nav className="flex flex-col gap-1">
                 <h4 className="font-sora font-bold uppercase tracking-tight text-white mb-0.5 text-[0.32rem] min-[350px]:text-[0.38rem]" style={{ lineHeight: '1', whiteSpace: 'nowrap' }}>
-                  <span className="hidden min-[350px]:inline">{lang === 'en' ? 'Navigate' : lang === 'fr' ? 'Navigation' : lang === 'es' ? 'Navegación' : 'Navegação'}</span>
+                  <span className="hidden min-[350px]:inline">{t(lang, 'navFooterNav')}</span>
                   <span className="inline min-[350px]:hidden">Nav</span>
                 </h4>
                 {/* Botão de Busca Mobile */}
@@ -1513,7 +1433,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
-                  <span>{lang === 'en' ? 'Search' : 'Buscar'}</span>
+                  <span>{t(lang, 'navSearchLabel')}</span>
                 </button>
                 <LangLink to="/" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navHome')}</LangLink>
                 <LangLink to="/what" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navWhat')}</LangLink>
@@ -1525,12 +1445,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               </nav>
               <nav className="flex flex-col gap-1">
                 <h4 className="font-sora font-bold uppercase tracking-tight text-white text-[0.32rem] min-[350px]:text-[0.38rem]" style={{ lineHeight: '1', marginBottom: '0.1rem', whiteSpace: 'nowrap' }}>
-                  <span className="hidden min-[350px]:inline">{lang === 'en' ? 'Education' : lang === 'fr' ? 'Éducation' : lang === 'es' ? 'Educación' : 'Educação'}</span>
+                  <span className="hidden min-[350px]:inline">{t(lang, 'navFooterEdu')}</span>
                   <span className="inline min-[350px]:hidden">Edu</span>
                 </h4>
                 <LangLink to="/academy" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navAcademy')}</LangLink>
                 <div className="flex flex-col gap-0.5">
-                  <LangLink to="/academy/courses" className="text-[0.55rem] text-slate-500 hover:text-azimut-red ml-2">└ {lang === 'pt' ? 'Cursos' : 'Courses'}</LangLink>
+                  <LangLink to="/academy/courses" className="text-[0.55rem] text-slate-500 hover:text-azimut-red ml-2">└ {t(lang, 'navFooterCourses')}</LangLink>
                   <LangLink to="/academy/workshops" className="text-[0.55rem] text-slate-500 hover:text-azimut-red ml-2">└ Workshops</LangLink>
                   <LangLink to="/academy/corporate" className="text-[0.55rem] text-slate-500 hover:text-azimut-red ml-2">└ Corporate</LangLink>
                   <LangLink to="/academy/vancouver" className="text-[0.55rem] text-slate-500 hover:text-azimut-red ml-2">└ Vancouver</LangLink>
@@ -1538,13 +1458,13 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               </nav>
               <nav className="flex flex-col gap-1">
                 <h4 className="font-sora font-bold uppercase tracking-tight text-white mb-0.5 text-[0.32rem] min-[350px]:text-[0.38rem]" style={{ lineHeight: '1', whiteSpace: 'nowrap' }}>
-                  <span className="hidden min-[350px]:inline">{lang === 'en' ? 'Get Started' : lang === 'fr' ? 'Commencer' : lang === 'es' ? 'Comenzar' : 'Começar'}</span>
+                  <span className="hidden min-[350px]:inline">{t(lang, 'navFooterStart')}</span>
                   <span className="inline min-[350px]:hidden">Start</span>
                 </h4>
                 <LangLink to="/what" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navWhat')}</LangLink>
-                <LangLink to="/contact" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{lang === 'pt' ? 'Contato' : 'Contact'}</LangLink>
+                <LangLink to="/contact" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navFooterContact')}</LangLink>
                 <LangLink to="/press" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navPress')}</LangLink>
-                <LangLink to="/work/review" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{lang === 'pt' ? 'Revisar' : 'Review'}</LangLink>
+                <LangLink to="/work/review" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navFooterReview')}</LangLink>
                 <LangLink to="/blog" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">Blog</LangLink>
               </nav>
             </div>
@@ -1590,7 +1510,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             {/* Contato Compacto - alinhado à newsletter (max-w-xs), email + WhatsApp full width */}
             <div className="text-center mb-5 max-w-xs mx-auto">
               <h4 className="font-sora text-[0.6rem] font-semibold uppercase tracking-wider text-white mb-2">
-                {lang === 'en' ? 'Contact' : lang === 'fr' ? 'Contact' : lang === 'es' ? 'Contacto' : 'Contato'}
+                {t(lang, 'navFooterContact')}
               </h4>
               <div className="flex flex-col gap-2 w-full">
                 <a 
@@ -1651,7 +1571,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             <div className="text-center mb-6">
               <h4 className="font-sora text-[0.6rem] font-semibold uppercase tracking-wider text-white mb-2">Newsletter</h4>
               <p className="text-[0.65rem] text-slate-500 mb-2">
-                {lang === 'pt' ? 'Receba novidades em primeira mão' : 'Get our latest updates'}
+                {t(lang, 'navGetUpdates')}
               </p>
               <form 
                 onSubmit={async (e) => {
@@ -1670,10 +1590,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     })
                     emailInput.value = ''
                     emailInput.placeholder = '✅ Inscrito!'
-                    setTimeout(() => { emailInput.placeholder = lang === 'en' ? 'your@email.com' : lang === 'es' ? 'tu@email.com' : 'seu@email.com' }, 3000)
+                    setTimeout(() => { emailInput.placeholder = t(lang, 'navNewsletterPlaceholder') }, 3000)
                   } catch { 
                     emailInput.placeholder = '✅ Obrigado!'
-                    setTimeout(() => { emailInput.placeholder = lang === 'en' ? 'your@email.com' : lang === 'es' ? 'tu@email.com' : 'seu@email.com' }, 3000)
+                    setTimeout(() => { emailInput.placeholder = t(lang, 'navNewsletterPlaceholder') }, 3000)
                   }
                   if (submitBtn) submitBtn.disabled = false
                 }}
@@ -1681,7 +1601,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               >
                 <input
                   type="email"
-                  placeholder={lang === 'en' ? 'your@email.com' : lang === 'es' ? 'tu@email.com' : 'seu@email.com'}
+                  placeholder={t(lang, 'navNewsletterPlaceholder')}
                   required
                   className="footer-newsletter-email flex-1 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-[0.75rem] focus:outline-none focus:border-azimut-red/50"
                 />
@@ -1690,7 +1610,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   className="px-4 py-2 rounded-lg text-[0.75rem] font-medium"
                   style={{ background: 'rgba(201, 35, 55, 0.2)', border: '1px solid rgba(201, 35, 55, 0.6)', color: '#ffffff' }}
                 >
-                  {lang === 'pt' ? 'Inscrever' : 'Subscribe'}
+                  {t(lang, 'navSubscribe')}
                 </button>
               </form>
             </div>
@@ -1701,9 +1621,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 {t(lang, 'footer').replace('{year}', String(new Date().getFullYear()))}
               </p>
               <div className="flex items-center justify-center gap-3 text-[0.6rem] text-slate-500">
-                <LangLink to="/privacy" className="hover:text-azimut-red">{lang === 'pt' ? 'Privacidade' : 'Privacy'}</LangLink>
+                <LangLink to="/privacy" className="hover:text-azimut-red">{t(lang, 'navPrivacy')}</LangLink>
                 <span className="opacity-50">•</span>
-                <LangLink to="/terms" className="hover:text-azimut-red">{lang === 'pt' ? 'Termos' : 'Terms'}</LangLink>
+                <LangLink to="/terms" className="hover:text-azimut-red">{t(lang, 'navTerms')}</LangLink>
               </div>
             </div>
           </div>
@@ -1769,7 +1689,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 {/* Coluna 1: Navegação Principal */}
                 <nav className="flex flex-col gap-1 sm:gap-1.5" style={{ justifyContent: 'flex-start' }}>
                   <h4 className="font-sora text-[0.6rem] sm:text-[0.68rem] font-semibold uppercase tracking-[0.12em] mb-1.5 sm:mb-2 text-white">
-                    {lang === 'en' ? 'Navigate' : lang === 'fr' ? 'Navigation' : lang === 'es' ? 'Navegar' : 'Navegação'}
+                    {t(lang, 'navFooterNav')}
                   </h4>
                   <LangLink to="/" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navHome')}</LangLink>
                   <LangLink to="/what" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navWhat')}</LangLink>
@@ -1789,11 +1709,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     {t(lang, 'navAcademy')}
                   </LangLink>
                   <div className="mt-0.5 flex flex-col gap-0.5" style={{ flexGrow: '1' }}>
-                    <LangLink to="/academy/courses" className="text-[0.6rem] sm:text-[0.65rem] transition-colors hover:text-[#8B2332] ml-2" style={{ color: '#94a3b8' }}>└ {lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses'}</LangLink>
+                    <LangLink to="/academy/courses" className="text-[0.6rem] sm:text-[0.65rem] transition-colors hover:text-[#8B2332] ml-2" style={{ color: '#94a3b8' }}>└ {t(lang, 'navFooterCourses')}</LangLink>
                     <LangLink to="/academy/workshops" className="text-[0.6rem] sm:text-[0.65rem] transition-colors hover:text-[#8B2332] ml-2" style={{ color: '#94a3b8' }}>└ Workshops</LangLink>
                     <LangLink to="/academy/corporate" className="text-[0.6rem] sm:text-[0.65rem] transition-colors hover:text-[#8B2332] ml-2" style={{ color: '#94a3b8' }}>└ Corporate</LangLink>
                     <LangLink to="/academy/vancouver" className="text-[0.6rem] sm:text-[0.65rem] transition-colors hover:text-[#8B2332] ml-2" style={{ color: '#94a3b8' }}>
-                      └ {lang === 'en' ? 'Study Vancouver' : lang === 'es' ? 'Estudiar Vancouver' : lang === 'fr' ? 'Étudier Vancouver' : 'Estude em Vancouver'}
+                      └ {t(lang, 'navFooterStudyVan')}
                     </LangLink>
                   </div>
                 </nav>
@@ -1801,20 +1721,20 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 {/* Coluna 3: Começar */}
                 <nav className="flex flex-col gap-1 sm:gap-1.5 h-full" style={{ justifyContent: 'flex-start', alignItems: 'flex-start' }}>
                   <h4 className="font-sora text-[0.6rem] sm:text-[0.68rem] font-semibold uppercase tracking-[0.12em] mb-1.5 sm:mb-2 text-white">
-                    {lang === 'en' ? 'Start' : lang === 'fr' ? 'Commencer' : lang === 'es' ? 'Comenzar' : 'Começar'}
+                    {t(lang, 'navFooterStart')}
                   </h4>
                   <div className="flex flex-col gap-1 sm:gap-1.5" style={{ flexGrow: '1' }}>
                     <LangLink to="/what" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                       {t(lang, 'navWhat')}
                     </LangLink>
                     <LangLink to="/contact" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
-                      {lang === 'pt' ? 'Contato' : lang === 'es' ? 'Contacto' : lang === 'fr' ? 'Contact' : 'Contact'}
+                      {t(lang, 'navFooterContact')}
                     </LangLink>
                     <LangLink to="/press" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                       {t(lang, 'navPress')}
                     </LangLink>
                     <LangLink to="/work/review" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
-                      {lang === 'pt' ? 'Revisar' : lang === 'es' ? 'Revisar' : lang === 'fr' ? 'Réviser' : 'Review'}
+                      {t(lang, 'navFooterReview')}
                     </LangLink>
                     <LangLink to="/blog" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                       Blog
@@ -1855,8 +1775,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     e.currentTarget.style.borderColor = 'rgba(201, 35, 55, 0.4)'
                   }}
                 >
-                  <span className="block whitespace-nowrap" style={{ fontSize: 'inherit' }}>{getCtaLines(lang)[0]}</span>
-                  <span className="block whitespace-nowrap" style={{ fontSize: 'inherit' }}>{getCtaLines(lang)[1]}</span>
+                  <span className="block min-[360px]:whitespace-nowrap text-center" style={{ fontSize: 'inherit' }}>{getCtaLines(lang)[0]}</span>
+                  <span className="block min-[360px]:whitespace-nowrap text-center" style={{ fontSize: 'inherit' }}>{getCtaLines(lang)[1]}</span>
                 </LangLink>
                 
                 {/* WhatsApp */}
@@ -1920,7 +1840,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               {/* NEWSLETTER - Texto e formulário JUNTOS */}
               <div style={{ flexGrow: '0', width: '100%', maxWidth: '100%' }}>
                 <h4 className="font-sora text-[0.72rem] sm:text-[0.78rem] font-semibold uppercase tracking-[0.15em] mb-2.5 sm:mb-3 text-white">
-                  {lang === 'en' ? 'Newsletter' : lang === 'es' ? 'Boletín' : 'Newsletter'}
+                  {t(lang, 'navNewsletter')}
                 </h4>
                 {/* Texto descritivo - JUNTO com o formulário */}
                 <p className="text-[0.78rem] sm:text-[0.82rem] mb-2.5" style={{ color: '#94a3b8', lineHeight: '1.4', maxWidth: '100%' }}>
@@ -1943,7 +1863,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   // Disable button during submit
                   if (submitBtn) {
                     submitBtn.disabled = true
-                    submitBtn.textContent = lang === 'pt' ? 'Enviando...' : lang === 'es' ? 'Enviando...' : 'Sending...'
+                    submitBtn.textContent = t(lang, 'navSending')
                   }
                   
                   try {
@@ -1959,10 +1879,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     if (data.success) {
                       // Success feedback
                       emailInput.value = ''
-                      emailInput.placeholder = lang === 'pt' ? '✅ Inscrito!' : lang === 'es' ? '✅ ¡Suscrito!' : '✅ Subscribed!'
+                      emailInput.placeholder = t(lang, 'navSubscribed')
                       emailInput.style.borderColor = 'rgba(34, 197, 94, 0.5)'
                       setTimeout(() => {
-                        emailInput.placeholder = lang === 'en' ? 'your@email.com' : lang === 'es' ? 'tu@email.com' : 'seu@email.com'
+                        emailInput.placeholder = t(lang, 'navNewsletterPlaceholder')
                         emailInput.style.borderColor = ''
                       }, 3000)
                     } else {
@@ -1972,15 +1892,15 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     logger.warn('[Newsletter] API error, using fallback:', error)
                     // Fallback gracioso
                     emailInput.value = ''
-                    emailInput.placeholder = lang === 'pt' ? '✅ Obrigado!' : lang === 'es' ? '✅ ¡Gracias!' : '✅ Thank you!'
+                    emailInput.placeholder = t(lang, 'navThanks')
                     setTimeout(() => {
-                      emailInput.placeholder = lang === 'en' ? 'your@email.com' : lang === 'es' ? 'tu@email.com' : 'seu@email.com'
+                      emailInput.placeholder = t(lang, 'navNewsletterPlaceholder')
                     }, 3000)
                   } finally {
                     // Re-enable button
                     if (submitBtn) {
                       submitBtn.disabled = false
-                      submitBtn.textContent = lang === 'en' ? 'Subscribe' : lang === 'es' ? 'Suscribir' : 'Inscrever'
+                      submitBtn.textContent = t(lang, 'navSubscribe')
                     }
                   }
                 }}
@@ -1989,7 +1909,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               >
                 <input
                   type="email"
-                  placeholder={lang === 'en' ? 'your@email.com' : lang === 'es' ? 'tu@email.com' : 'seu@email.com'}
+                  placeholder={t(lang, 'navNewsletterPlaceholder')}
                   required
                   className="footer-newsletter-email w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-[0.7rem] sm:text-[0.75rem] focus:outline-none focus:border-azimut-red/50 focus:bg-white/8 transition-colors"
                   style={{ height: '44px', width: '100%', boxSizing: 'border-box' }}
@@ -2024,7 +1944,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               {/* Entre em contato - título + email alinhado na base */}
               <div style={{ marginTop: 'auto', paddingTop: '0.75rem' }}>
                 <p className="text-[0.68rem] sm:text-[0.72rem] uppercase tracking-[0.1em] mb-1.5" style={{ color: '#64748b' }}>
-                  {lang === 'en' ? 'Get in touch' : lang === 'es' ? 'Contáctenos' : lang === 'fr' ? 'Contactez-nous' : 'Entre em contato'}
+                  {t(lang, 'navGetInTouch')}
                 </p>
                 <a 
                   href="mailto:contact@azimutimmersive.com" 
@@ -2071,9 +1991,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   © {new Date().getFullYear()} <span style={{ color: '#cbd5e1' }}>Azimut Projetos Audiovisuais Ltda.</span>
                   <span className="mx-2 opacity-50">·</span>
                   <span style={{ color: '#64748b' }}>
-                    {lang === 'en' ? 'Brazil' : lang === 'es' ? 'Brasil' : 'Brasil'} 
+                    {t(lang, 'navBrazil')} 
                     <span className="mx-1.5" style={{ color: '#8B2332' }}>↔</span> 
-                    {lang === 'en' ? 'Canada' : lang === 'es' ? 'Canadá' : lang === 'fr' ? 'Canada' : 'Canadá'}
+                    {t(lang, 'navCanada')}
                   </span>
                 </p>
               </div>
@@ -2099,7 +2019,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'
                   }}
                 >
-                  {lang === 'en' ? 'Privacy Policy' : lang === 'fr' ? 'Confidentialité' : lang === 'es' ? 'Privacidad' : 'Privacidade'}
+                  {t(lang, 'navPrivacyPolicy')}
                 </LangLink>
                 <span className="text-[0.7rem] opacity-30 mx-1">|</span>
                 <LangLink 
@@ -2121,7 +2041,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'
                   }}
                 >
-                  {lang === 'en' ? 'Terms of Use' : lang === 'fr' ? 'Conditions' : lang === 'es' ? 'Términos' : 'Termos de Uso'}
+                  {t(lang, 'navTermsOfUse')}
                 </LangLink>
               </div>
             </div>

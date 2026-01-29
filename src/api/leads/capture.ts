@@ -26,10 +26,7 @@ export async function POST(request: Request) {
       }
     })
 
-    // TODO: Enviar notificação Slack para leads quentes
-    // if (response.score && response.score > 70) {
-    //   await sendSlackNotification(...)
-    // }
+    // Notificação Slack para leads quentes pode ser adicionada aqui quando necessário.
 
     return new Response(
       JSON.stringify({ success: true, leadId: response.id }),

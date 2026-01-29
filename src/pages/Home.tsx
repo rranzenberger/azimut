@@ -77,12 +77,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   } = usePersonalizedContent()
   
   // 🆕 UX PREMIUM - Loading Skeleton (DESABILITADO TEMPORARIAMENTE)
-  // ⚠️ CORRIGIDO: Desabilitado para evitar tarja azul de loading infinito
-  // const { showSkeleton } = useLoadingSkeleton(cmsLoading || personalizationLoading, {
-  //   delay: 300,
-  //   minDuration: 500
-  // })
-  const showSkeleton = false // ⚠️ DESABILITADO - site carrega direto sem skeleton
+  // Skeleton desabilitado: site carrega direto sem tela de loading (evita tarja azul).
+  const showSkeleton = false
   
   // ESTRATÉGIA CORRIGIDA: i18n.ts → Personalizado → Backoffice
   // Priorizar i18n.ts (sempre correto por idioma) sobre backoffice (que pode estar desatualizado)
@@ -1241,8 +1237,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         textDecoration: 'none',
                       }}
                     >
-                      <span className="whitespace-nowrap">
-                        {lang === 'pt' ? 'Experimentar Demo' : lang === 'es' ? 'Probar Demo' : lang === 'fr' ? 'Essayer la Démo' : 'Try the Demo'}
+                      <span className="min-[320px]:whitespace-nowrap text-center">
+                        {t(lang, 'ctaTryDemo')}
                       </span>
                       <div 
                         className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0"
@@ -1278,10 +1274,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       >
                         <span>🔒</span>
                         <span className="text-center">
-                          {lang === 'pt' ? 'Somente leitura • sem custo • sem acesso aos seus fundos' 
-                            : lang === 'es' ? 'Solo lectura • sin costo • sin acceso a tus fondos'
-                            : lang === 'fr' ? 'Lecture seule • sans frais • sans accès à vos fonds'
-                            : 'Read-only • no cost • no access to your funds'}
+                          {t(lang, 'web3ReadOnly')}
                         </span>
                       </p>
                     </div>
@@ -1300,8 +1293,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       textDecoration: 'none',
                     }}
                   >
-                    <span className="whitespace-nowrap">
-                      {lang === 'pt' ? 'Ver Cases Imersivos' : lang === 'es' ? 'Ver Cases Inmersivos' : lang === 'fr' ? 'Voir les Cases Immersifs' : 'See Immersive Cases'}
+                    <span className="min-[320px]:whitespace-nowrap text-center">
+                      {t(lang, 'ctaSeeImmersiveCases')}
                     </span>
                     <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover/btn2:translate-x-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />

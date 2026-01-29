@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import type { Lang } from '../i18n'
+import { t, type Lang } from '../i18n'
 import ApiService from '../services/api'
 import { useFormTracking } from '../hooks/useFormTracking'
 import { logger } from '@/utils/logger'
@@ -66,15 +66,9 @@ function getCurrencyForLang(lang: Lang): 'BRL' | 'USD' | 'CAD' {
 
 // Função para obter ranges de budget baseado na moeda
 function getBudgetRanges(currency: 'BRL' | 'USD' | 'CAD', lang: Lang) {
-  const selectLabel = lang === 'pt' ? 'Selecione...' : lang === 'es' ? 'Seleccione...' : lang === 'fr' ? 'Sélectionnez...' : 'Select...'
-  const grantLabel = lang === 'pt' ? '💰 Preciso aplicar para grant/edital' : 
-                     lang === 'es' ? '💰 Necesito solicitar subvención/edital' : 
-                     lang === 'fr' ? '💰 Besoin de demander une subvention/appel' : 
-                     '💰 Need to apply for grant/funding'
-  const undefinedLabel = lang === 'pt' ? 'Ainda não defini' : 
-                         lang === 'es' ? 'Aún no definido' : 
-                         lang === 'fr' ? 'Pas encore défini' : 
-                         'Not defined yet'
+  const selectLabel = t(lang, 'formSelect')
+  const grantLabel = t(lang, 'formGrantOption')
+  const undefinedLabel = t(lang, 'formNotDefined')
 
   if (currency === 'BRL') {
     return {
@@ -512,15 +506,15 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
     }
   }
 
-  const t = labels[lang] || labels.en
+  const formLabels = labels[lang] || labels.en
   
   // Determinar moeda baseada no idioma/localização
   const currency = getCurrencyForLang(lang)
   const budgetRanges = getBudgetRanges(currency, lang)
   
-  // Atualizar t.budgetRanges com os ranges corretos para a moeda
+  // Atualizar formLabels.budgetRanges com os ranges corretos para a moeda
   const tWithCurrency = {
-    ...t,
+    ...formLabels,
     budgetRanges
   }
 
@@ -607,10 +601,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
     
     // 🆕 UX PREMIUM - Rate limiting (prevenir spam)
     if (!canSubmit()) {
-      setError(lang === 'pt' ? 'Aguarde alguns segundos antes de enviar novamente' : 
-               lang === 'es' ? 'Espere unos segundos antes de enviar de nuevo' :
-               lang === 'fr' ? 'Attendez quelques secondes avant de renvoyer' :
-               'Please wait a few seconds before submitting again')
+      setError(t(lang, 'formWaitBeforeResend'))
       return
     }
     
@@ -633,7 +624,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
     const errors: Record<string, string> = {}
     
     if (!formData.name.trim()) {
-      errors.name = lang === 'pt' ? 'Nome é obrigatório' : lang === 'es' ? 'Nombre es obligatorio' : lang === 'fr' ? 'Le nom est requis' : 'Name is required'
+      errors.name = t(lang, 'formNameRequired')
     }
     
     // Validar se tem PELO MENOS email OU telefone
@@ -641,44 +632,44 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
     const hasPhone = formData.phone && formData.phone.replace(/\D/g, '').length >= 8
 
     if (!hasEmail && !hasPhone) {
-      errors.email = lang === 'pt' ? 'Forneça pelo menos email OU telefone' : lang === 'es' ? 'Proporcione al menos email O teléfono' : lang === 'fr' ? 'Fournissez au moins email OU téléphone' : 'Provide at least email OR phone'
+      errors.email = t(lang, 'formEmailOrPhoneRequired')
     } else {
       // Se tem email, validar formato
       if (hasEmail) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         if (!emailRegex.test(formData.email)) {
-          errors.email = lang === 'pt' ? 'Email inválido' : lang === 'es' ? 'Email inválido' : lang === 'fr' ? 'Email invalide' : 'Invalid email'
+          errors.email = t(lang, 'formInvalidEmail')
         }
       }
       
       // Se tem telefone, validar se está completo
       if (formData.phone && formData.phone.replace(/\D/g, '').length > 0 && formData.phone.replace(/\D/g, '').length < 8) {
-        errors.phone = lang === 'pt' ? 'Telefone incompleto (mínimo 8 dígitos)' : lang === 'es' ? 'Teléfono incompleto (mínimo 8 dígitos)' : lang === 'fr' ? 'Téléphone incomplet (minimum 8 chiffres)' : 'Phone incomplete (minimum 8 digits)'
+        errors.phone = t(lang, 'formPhoneIncomplete')
       }
     }
     
     if (!formData.company.trim()) {
-      errors.company = lang === 'pt' ? 'Nome da organização é obrigatório' : lang === 'es' ? 'Nombre de la organización es obligatorio' : lang === 'fr' ? 'Le nom de l\'organisation est requis' : 'Organization name is required'
+      errors.company = t(lang, 'formCompanyRequired')
     }
     
     if (!formData.organizationType) {
-      errors.organizationType = lang === 'pt' ? 'Selecione o tipo de organização' : lang === 'es' ? 'Seleccione el tipo de organización' : lang === 'fr' ? 'Sélectionnez le type d\'organisation' : 'Select organization type'
+      errors.organizationType = t(lang, 'formOrgTypeRequired')
     }
     
     if (!formData.projectType) {
-      errors.projectType = lang === 'pt' ? 'Selecione o tipo de projeto' : lang === 'es' ? 'Seleccione el tipo de proyecto' : lang === 'fr' ? 'Sélectionnez le type de projet' : 'Select project type'
+      errors.projectType = t(lang, 'formProjectTypeRequired')
     }
     
     if (!formData.budget) {
-      errors.budget = lang === 'pt' ? 'Selecione o budget disponível' : lang === 'es' ? 'Seleccione el presupuesto disponible' : lang === 'fr' ? 'Sélectionnez le budget disponible' : 'Select available budget'
+      errors.budget = t(lang, 'formBudgetRequired')
     }
     
     if (!formData.timeline) {
-      errors.timeline = lang === 'pt' ? 'Selecione o prazo necessário' : lang === 'es' ? 'Seleccione el plazo necesario' : lang === 'fr' ? 'Sélectionnez le délai nécessaire' : 'Select timeline'
+      errors.timeline = t(lang, 'formTimelineRequired')
     }
     
     if (!formData.acceptContact) {
-      errors.acceptContact = lang === 'pt' ? 'É necessário aceitar receber contato' : lang === 'es' ? 'Es necesario aceptar recibir contacto' : lang === 'fr' ? 'Vous devez accepter de recevoir des contacts' : 'You must accept to be contacted'
+      errors.acceptContact = t(lang, 'formAcceptContactRequired')
     }
 
     if (Object.keys(errors).length > 0) {
@@ -741,7 +732,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       // 🆕 Se marcou newsletter, criar NewsletterSubscriber
       if (formData.wantsNewsletter && formData.email) {
         try {
-          const backofficeUrl = import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azmt.com.br'
+          const backofficeUrl = import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azimut.com.br'
           await fetch(`${backofficeUrl}/api/public/newsletter`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -759,7 +750,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
       // Enviar notificação por email
       try {
-        await fetch(`${import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azmt.com.br'}/api/notify-form`, {
+        await fetch(`${import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azimut.com.br'}/api/notify-form`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -813,12 +804,12 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       // Traduzir mensagens comuns
       if (!errorMsg || errorMsg.includes('Failed to fetch') || errorMsg.includes('NetworkError') || errorMsg.includes('fetch')) {
         errorMsg = lang === 'pt' 
-          ? 'Não foi possível conectar ao servidor no momento. Por favor, entre em contato diretamente por email: contact@azmt.com.br ou WhatsApp: +55 (48) 99970-1301'
+          ? 'Não foi possível conectar ao servidor no momento. Por favor, entre em contato diretamente por email: contact@azimut.com.br ou WhatsApp: +55 (48) 99970-1301'
           : lang === 'es'
-          ? 'No se pudo conectar al servidor en este momento. Por favor, contáctenos directamente por email: contact@azmt.com.br o WhatsApp: +55 (48) 99970-1301'
+          ? 'No se pudo conectar al servidor en este momento. Por favor, contáctenos directamente por email: contact@azimut.com.br o WhatsApp: +55 (48) 99970-1301'
           : lang === 'fr'
-          ? 'Impossible de se connecter au serveur pour le moment. Veuillez nous contacter directement par email: contact@azmt.com.br ou WhatsApp: +55 (48) 99970-1301'
-          : 'Could not connect to server at this time. Please contact us directly via email: contact@azmt.com.br or WhatsApp: +55 (48) 99970-1301'
+          ? 'Impossible de se connecter au serveur pour le moment. Veuillez nous contacter directement par email: contact@azimut.com.br ou WhatsApp: +55 (48) 99970-1301'
+          : 'Could not connect to server at this time. Please contact us directly via email: contact@azimut.com.br or WhatsApp: +55 (48) 99970-1301'
       } else if (errorMsg.includes('timeout') || errorMsg.includes('Tempo') || errorMsg.includes('connection timeout')) {
         errorMsg = lang === 'pt'
           ? 'Tempo de conexão esgotado. Por favor, tente novamente.'
@@ -829,23 +820,23 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
           : 'Connection timeout. Please try again.'
       } else if (errorMsg.includes('API não configurada')) {
         errorMsg = lang === 'pt'
-          ? 'Sistema em manutenção. Por favor, entre em contato: contact@azmt.com.br'
+          ? 'Sistema em manutenção. Por favor, entre em contato: contact@azimut.com.br'
           : lang === 'es'
-          ? 'Sistema en mantenimiento. Por favor, contáctenos: contact@azmt.com.br'
+          ? 'Sistema en mantenimiento. Por favor, contáctenos: contact@azimut.com.br'
           : lang === 'fr'
-          ? 'Système en maintenance. Veuillez nous contacter: contact@azmt.com.br'
-          : 'System maintenance. Please contact: contact@azmt.com.br'
+          ? 'Système en maintenance. Veuillez nous contacter: contact@azimut.com.br'
+          : 'System maintenance. Please contact: contact@azimut.com.br'
       }
       
       // Se ainda não tiver mensagem, usar padrão
       if (!errorMsg) {
-        errorMsg = t.errorMessage || (lang === 'pt' 
-          ? 'Erro ao enviar. Por favor, tente novamente ou entre em contato: contact@azmt.com.br'
+        errorMsg = formLabels.errorMessage || (lang === 'pt' 
+          ? 'Erro ao enviar. Por favor, tente novamente ou entre em contato: contact@azimut.com.br'
           : lang === 'es'
-          ? 'Error al enviar. Por favor, intente nuevamente o contáctenos: contact@azmt.com.br'
+          ? 'Error al enviar. Por favor, intente nuevamente o contáctenos: contact@azimut.com.br'
           : lang === 'fr'
-          ? 'Erreur lors de l\'envoi. Veuillez réessayer ou nous contacter: contact@azmt.com.br'
-          : 'Error submitting. Please try again or contact: contact@azmt.com.br')
+          ? 'Erreur lors de l\'envoi. Veuillez réessayer ou nous contacter: contact@azimut.com.br'
+          : 'Error submitting. Please try again or contact: contact@azimut.com.br')
       }
       
       setError(errorMsg)
@@ -1047,17 +1038,17 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
               {/* Título */}
               <h2 className="font-handel text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.12em] mb-4 relative">
                 <span className="relative inline-block">
-                  {t.title}
+                  {formLabels.title}
                   {/* Glow sutil no título */}
                   <span className="absolute inset-0 opacity-20 blur-md pointer-events-none" style={{ color: '#c92337' }}>
-                    {t.title}
+                    {formLabels.title}
                   </span>
                 </span>
               </h2>
               
               {/* Subtítulo */}
               <p className="text-sm md:text-base opacity-75 max-w-xl mx-auto leading-relaxed">
-                {t.subtitle}
+                {formLabels.subtitle}
               </p>
 
               {/* Linha decorativa abaixo */}
@@ -1138,7 +1129,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
             {/* Personal Info - Grid 2 colunas */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              <PremiumField label={t.name} error={fieldErrors.name} required>
+              <PremiumField label={formLabels.name} error={fieldErrors.name} required>
                 <input
                   type="text"
                   name="name"
@@ -1156,7 +1147,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                 />
               </PremiumField>
 
-              <PremiumField label={t.email} error={fieldErrors.email}>
+              <PremiumField label={formLabels.email} error={fieldErrors.email}>
                 <input
                   type="email"
                   name="email"
@@ -1175,7 +1166,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4" style={{ marginTop: '1.5rem' }}>
-              <PremiumField label={t.phone}>
+              <PremiumField label={formLabels.phone}>
                 <div className="flex gap-2" style={{ alignItems: 'center', flexWrap: 'nowrap' }}>
                   {/* Dropdown nativo - igual ao Vancouver */}
                   {!customCodeMode ? (
@@ -1285,7 +1276,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                 </p>
               </PremiumField>
 
-              <PremiumField label={t.position}>
+              <PremiumField label={formLabels.position}>
                 <input
                   type="text"
                   name="position"
@@ -1299,7 +1290,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
             {/* Organization */}
             <div style={{ marginTop: '1.5rem' }}>
-              <PremiumField label={t.company} error={fieldErrors.company} required>
+              <PremiumField label={formLabels.company} error={fieldErrors.company} required>
                 <input
                   type="text"
                   name="company"
@@ -1319,7 +1310,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4" style={{ marginTop: '1.5rem' }}>
-              <PremiumField label={t.organizationType} error={fieldErrors.organizationType} required>
+              <PremiumField label={formLabels.organizationType} error={fieldErrors.organizationType} required>
                 <select
                   name="organizationType"
                   value={formData.organizationType}
@@ -1335,13 +1326,13 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   }}
                   className={`dropdown-azimut w-full ${fieldErrors.organizationType ? 'border-red-500/50' : ''}`}
                 >
-                  {Object.entries(t.orgTypes).map(([value, label]) => (
+                  {Object.entries(formLabels.orgTypes).map(([value, label]) => (
                     <option key={value} value={value}>{label}</option>
                   ))}
                 </select>
               </PremiumField>
 
-              <PremiumField label={t.projectType} error={fieldErrors.projectType} required>
+              <PremiumField label={formLabels.projectType} error={fieldErrors.projectType} required>
                 <select
                   name="projectType"
                   value={formData.projectType}
@@ -1357,7 +1348,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   }}
                   className={`dropdown-azimut w-full ${fieldErrors.projectType ? 'border-red-500/50' : ''}`}
                 >
-                  {Object.entries(t.projectTypes).map(([value, label]) => (
+                  {Object.entries(formLabels.projectTypes).map(([value, label]) => (
                     <option key={value} value={value}>{label}</option>
                   ))}
                 </select>
@@ -1365,7 +1356,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4" style={{ marginTop: '1.5rem' }}>
-              <PremiumField label={t.budget} error={fieldErrors.budget} required>
+              <PremiumField label={formLabels.budget} error={fieldErrors.budget} required>
                 <select
                   name="budget"
                   value={formData.budget}
@@ -1387,7 +1378,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                 </select>
               </PremiumField>
 
-              <PremiumField label={t.timeline} error={fieldErrors.timeline} required>
+              <PremiumField label={formLabels.timeline} error={fieldErrors.timeline} required>
                 <select
                   name="timeline"
                   value={formData.timeline}
@@ -1403,7 +1394,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   }}
                   className={`dropdown-azimut w-full ${fieldErrors.timeline ? 'border-red-500/50' : ''}`}
                 >
-                  {Object.entries(t.timelines).map(([value, label]) => (
+                  {Object.entries(formLabels.timelines).map(([value, label]) => (
                     <option key={value} value={value}>{label}</option>
                   ))}
                 </select>
@@ -1412,7 +1403,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
             {/* Location */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4" style={{ marginTop: '1.5rem' }}>
-              <PremiumField label={t.country}>
+              <PremiumField label={formLabels.country}>
                 <input
                   type="text"
                   name="country"
@@ -1423,7 +1414,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                 />
               </PremiumField>
 
-              <PremiumField label={t.city}>
+              <PremiumField label={formLabels.city}>
                 <input
                   type="text"
                   name="city"
@@ -1437,7 +1428,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
             {/* Description */}
             <div style={{ marginTop: '1.5rem' }}>
-              <PremiumField label={t.description}>
+              <PremiumField label={formLabels.description}>
                 <textarea
                   name="description"
                   value={formData.description}
@@ -1463,7 +1454,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   className="mt-1 w-5 h-5 rounded border-white/30 text-azimut-red focus:ring-2 focus:ring-azimut-red bg-white/10 transition-all group-hover:border-azimut-red/50 [data-theme='light']:border-slate-300 [data-theme='light']:bg-white"
                 />
                 <span className="text-sm text-white/85 [data-theme='light']:text-slate-700 group-hover:text-white transition-colors">
-                  {t.interestInGrants}
+                  {formLabels.interestInGrants}
                 </span>
               </label>
 
@@ -1486,7 +1477,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                     ? 'text-red-400' 
                     : 'text-white/85 [data-theme="light"]:text-slate-700 group-hover:text-white'
                 }`}>
-                  <span>{t.acceptContact.replace(/\s*\*$/, '')}</span> <span className="text-red-400 flex-shrink-0">*</span>
+                  <span>{formLabels.acceptContact.replace(/\s*\*$/, '')}</span> <span className="text-red-400 flex-shrink-0">*</span>
                 </span>
                 </label>
                 {fieldErrors.acceptContact && (
@@ -1543,7 +1534,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-red-300 [data-theme='light']:text-red-700 mb-1">
-                      {t.errorTitle}
+                      {formLabels.errorTitle}
                     </p>
                     <p className="text-sm text-red-200/90 [data-theme='light']:text-red-600 leading-relaxed whitespace-pre-line">
                       {error}
@@ -1562,10 +1553,10 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                         </p>
                         <div className="flex flex-col gap-1.5 text-xs">
                           <a 
-                            href="mailto:contact@azmt.com.br" 
+                            href="mailto:contact@azimut.com.br" 
                             className="text-red-300 hover:text-red-200 underline [data-theme='light']:text-red-600 [data-theme='light']:hover:text-red-700"
                           >
-                            📧 contact@azmt.com.br
+                            📧 contact@azimut.com.br
                           </a>
                           <a 
                             href="https://wa.me/5548999701301" 
@@ -1622,7 +1613,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    {t.submitting}
+                    {formLabels.submitting}
                   </>
                 ) : error ? (
                   <>
@@ -1636,7 +1627,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
                   </>
                 ) : (
                   <>
-                    {t.submit}
+                    {formLabels.submit}
                     <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
@@ -1661,7 +1652,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
             {/* Guarantees - Premium */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-8 border-t border-white/10 mt-8">
-              {Object.values(t.guarantees).map((guarantee, idx) => (
+              {Object.values(formLabels.guarantees).map((guarantee, idx) => (
                 <div 
                   key={idx} 
                   className="flex items-start gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5 hover:border-azimut-red/20 transition-all duration-300 group"

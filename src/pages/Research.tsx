@@ -1,19 +1,18 @@
 import React, { useRef, useEffect } from 'react'
 import { type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
-import { useUserTracking } from '../hooks/useUserTracking'
 import { useBackofficeContent } from '../hooks/useBackofficeContent'
 import LangLink from '../components/LangLink'
+import { useTheme } from '../contexts/ThemeContext'
 
 interface ResearchProps {
   lang: Lang
 }
 
 const Research: React.FC<ResearchProps> = ({ lang }) => {
-  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
-  // useUserTracking()
   const seo = seoData.research[lang]
   const starRef = useRef<HTMLDivElement>(null)
+  const { theme } = useTheme()
   
   // Parallax effect
   useEffect(() => {
@@ -113,38 +112,41 @@ const Research: React.FC<ResearchProps> = ({ lang }) => {
           <img src="/logo-azimut-star.svg" alt="" className="h-full w-full object-contain" loading="lazy" />
         </div>
 
-        <div className="mx-auto max-w-6xl px-6">
-          {/* Hero */}
-          <div className="mb-16">
-            <div className="mb-4 inline-block px-4 py-2 rounded-full bg-azimut-red/10 border border-azimut-red/30 text-sm font-semibold text-azimut-red uppercase tracking-wider">
-              🔬 Research & Development
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          {/* Hero — gradiente sutil, paleta do site */}
+          <div className="relative mb-12 md:mb-16 text-center md:text-left rounded-2xl overflow-hidden bg-gradient-to-b from-azimut-red/5 via-transparent to-transparent border border-azimut-red/10 py-10 md:py-12 px-6">
+            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(201,35,55,0.08),transparent)]" aria-hidden />
+            <div className="relative">
+              <div className="mb-4 inline-block px-4 py-2 rounded-full bg-azimut-red/10 border border-azimut-red/30 text-sm font-semibold text-azimut-red uppercase tracking-wider">
+                🔬 Research & Development
+              </div>
+              <h1 className="mb-4 font-handel text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase text-theme-text">
+                {text.title}
+              </h1>
+              <p className="text-lg md:text-xl text-theme-text-secondary max-w-4xl leading-relaxed">
+                {text.subtitle}
+              </p>
             </div>
-            <h1 className="mb-4 font-handel text-5xl md:text-6xl lg:text-7xl font-bold uppercase text-theme-text">
-              {text.title}
-            </h1>
-            <p className="text-xl md:text-2xl text-theme-text-secondary max-w-4xl leading-relaxed">
-              {text.subtitle}
-            </p>
           </div>
 
-          {/* Research Areas - Grid Visual */}
-          <section className="mb-20">
-            <h2 className="mb-10 font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
+          {/* Research Areas — grid visual com paleta do site (azimut-red, gradientes sutis) */}
+          <section className="mb-16 md:mb-20">
+            <h2 className="mb-8 md:mb-10 font-handel text-2xl md:text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
               <span className="text-azimut-red">⚗️</span>
               {lang === 'pt' ? 'Áreas de Pesquisa' : 'Research Areas'}
             </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {text.areas.map((area, i) => (
                 <div 
                   key={i}
-                  className={`group relative p-6 rounded-lg bg-gradient-to-br ${area.color} border border-${area.border} hover:border-azimut-red/50 transition-all overflow-hidden`}
+                  className="group relative p-5 md:p-6 rounded-xl bg-gradient-to-br from-white/5 to-transparent dark:from-white/[0.06] dark:to-transparent border border-azimut-red/20 hover:border-azimut-red/40 hover:from-azimut-red/10 transition-all overflow-hidden"
                 >
-                  <div className="absolute -right-4 -bottom-4 text-8xl opacity-10 group-hover:opacity-20 transition-opacity">
+                  <div className="absolute -right-4 -bottom-4 text-7xl md:text-8xl opacity-10 group-hover:opacity-15 transition-opacity pointer-events-none" aria-hidden>
                     {area.icon}
                   </div>
                   <div className="relative z-10">
-                    <div className="text-5xl mb-4">{area.icon}</div>
-                    <h3 className="text-xl font-bold text-white mb-3">{area.title}</h3>
+                    <div className="text-4xl md:text-5xl mb-3">{area.icon}</div>
+                    <h3 className={`text-lg md:text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{area.title}</h3>
                     <p className="text-sm text-theme-text-secondary leading-relaxed">{area.desc}</p>
                   </div>
                 </div>
@@ -152,45 +154,64 @@ const Research: React.FC<ResearchProps> = ({ lang }) => {
             </div>
           </section>
 
-          {/* Research Projects Timeline */}
-          <section className="mb-20">
-            <h2 className="mb-10 font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
+          {/* Research Projects — grid de cards (visual) */}
+          <section className="mb-16 md:mb-20">
+            <h2 className="mb-8 md:mb-10 font-handel text-2xl md:text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
               <span className="text-azimut-red">📊</span>
               {text.projects.title}
             </h2>
-            <div className="space-y-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {text.projects.items.map((project, i) => (
                 <div 
                   key={i}
-                  className="relative pl-12 pb-8 border-l-2 border-azimut-red/30 last:border-0"
+                  className="relative p-6 rounded-xl bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20 hover:border-azimut-red/40 transition-all overflow-hidden"
                 >
-                  <div className="absolute -left-3 top-0 w-6 h-6 rounded-full bg-azimut-red border-4 border-slate-900"></div>
-                  <div className="mb-2 inline-block px-3 py-1 rounded-full bg-azimut-red/20 text-xs font-bold text-azimut-red">
+                  <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-azimut-red/60 to-transparent opacity-80" aria-hidden />
+                  <div className="mb-3 inline-block px-3 py-1.5 rounded-lg bg-azimut-red/15 border border-azimut-red/30 text-xs font-bold text-azimut-red">
                     {project.year}
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
-                  <p className="text-theme-text-secondary">{project.desc}</p>
+                  <h3 className={`text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{project.title}</h3>
+                  <p className="text-sm text-theme-text-secondary leading-relaxed">{project.desc}</p>
                 </div>
               ))}
             </div>
           </section>
 
-          {/* Publications */}
-          <section className="mb-20">
-            <h2 className="mb-10 font-handel text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
+          {/* Publications — grid visual com placeholders (imagens/cards) */}
+          <section className="mb-16 md:mb-20">
+            <h2 className="mb-8 md:mb-10 font-handel text-2xl md:text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
               <span className="text-azimut-red">📚</span>
               {text.publications}
             </h2>
-            <div className="p-12 rounded-lg bg-slate-900/30 border border-azimut-red/20 text-center">
-              <p className="text-lg text-theme-text-secondary mb-6">
-                {lang === 'pt' && 'Papers, artigos e apresentações em congressos serão listados aqui.'}
-                {lang === 'en' && 'Papers, articles and conference presentations will be listed here.'}
-              </p>
-              <div className="text-6xl mb-4">📄</div>
-              <p className="text-sm text-theme-text-secondary/60">
-                {lang === 'pt' ? 'Em breve' : 'Coming soon'}
-              </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
+                <div 
+                  key={i}
+                  className="rounded-xl overflow-hidden border border-azimut-red/20 bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] hover:border-azimut-red/40 transition-all"
+                >
+                  <div 
+                    className="aspect-[4/3] flex items-center justify-center border-b border-azimut-red/10"
+                    style={{
+                      background: theme === 'dark' ? 'linear-gradient(145deg, rgba(26,31,44,0.6) 0%, rgba(22,27,38,0.4) 100%)' : 'linear-gradient(145deg, rgba(30,28,26,0.4) 0%, rgba(26,24,21,0.3) 100%)'
+                    }}
+                  >
+                    <span className="text-5xl opacity-40" aria-hidden>📄</span>
+                  </div>
+                  <div className="p-4 md:p-5 text-center">
+                    <p className={`text-sm font-semibold mb-1 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+                      {lang === 'pt' ? 'Publicação' : 'Publication'} {i}
+                    </p>
+                    <p className="text-xs text-theme-text-secondary/80">
+                      {lang === 'pt' ? 'Em breve' : 'Coming soon'}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
+            <p className="mt-6 text-center text-sm text-theme-text-secondary max-w-2xl mx-auto">
+              {lang === 'pt' && 'Papers, artigos e apresentações em congressos serão listados aqui.'}
+              {lang === 'en' && 'Papers, articles and conference presentations will be listed here.'}
+            </p>
           </section>
 
           {/* CTA */}

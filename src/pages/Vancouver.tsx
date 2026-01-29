@@ -1,5 +1,5 @@
 import React from 'react'
-import { type Lang } from '../i18n'
+import { t, type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import { VancouverPageSchema, VancouverFAQSchema } from '../components/StructuredData'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -460,7 +460,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 }}
               >
                 <span className="text-sm font-semibold uppercase tracking-wider inline-flex items-center gap-1.5" style={{ color: '#ffffff', textShadow: '0 1px 3px rgba(0, 0, 0, 0.5)' }}>
-                  <CanadaMapleLeaf size="md" /> {lang === 'pt' ? 'Agenciamento Educacional' : lang === 'es' ? 'Agenciamiento Educacional' : lang === 'fr' ? 'Agence Éducative' : 'Educational Agency'}
+                  <CanadaMapleLeaf size="md" /> {t(lang, 'vancouverEducationalAgency')}
                 </span>
               </div>
               
@@ -473,10 +473,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   </span>
                   <span className="hidden sm:inline">-</span>
                   <span className="text-[0.65rem] sm:text-sm opacity-90">
-                    {lang === 'pt' ? 'Um dos locais mais belos e seguros do mundo' 
-                    : lang === 'es' ? 'Uno de los lugares más bellos y seguros' 
-                    : lang === 'fr' ? 'L\'un des endroits les plus beaux et sûrs' 
-                    : 'One of the most beautiful and safest places'}
+                    {t(lang, 'vancouverOneOfMostBeautiful')}
                   </span>
                 </span>
               </div>
@@ -485,7 +482,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
             <h1 className="text-5xl md:text-7xl font-handel uppercase tracking-wider text-white dark:text-white mb-6 leading-tight flex flex-col items-center gap-2" style={{ color: '#ffffff', textShadow: '0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4)' }}>
               <span>{t.title}</span>
               <span className="inline-flex items-center gap-2" style={{ alignItems: 'center', lineHeight: '1' }}>
-                {lang === 'pt' ? 'CANADÁ' : lang === 'es' ? 'CANADÁ' : lang === 'fr' ? 'CANADA' : 'CANADA'} <CanadaMapleLeaf size="match-text" />
+                {t(lang, 'vancouverCanada')} <CanadaMapleLeaf size="match-text" />
               </span>
             </h1>
 
@@ -521,17 +518,17 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 href="#form"
                 className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold rounded-lg transition-all duration-300 border border-white/20"
               >
-                {lang === 'pt' ? 'Consulta Gratuita' : lang === 'es' ? 'Consulta Gratuita' : lang === 'fr' ? 'Consultation Gratuite' : 'Free Consultation'}
+                {t(lang, 'vancouverConsultationFree')}
               </a>
             </div>
 
             {/* Stats */}
             <div className="mt-10 mb-16 grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { value: '90%+', label: lang === 'pt' ? 'Empregabilidade' : lang === 'es' ? 'Empleabilidad' : lang === 'fr' ? 'Employabilité' : 'Employability' },
-                { value: lang === 'pt' ? '1 ano' : lang === 'es' ? '1 año' : lang === 'fr' ? '1 an' : '1 year', label: lang === 'pt' ? 'Duração' : lang === 'es' ? 'Duración' : lang === 'fr' ? 'Durée' : 'Duration' },
-                { value: '40k+', label: lang === 'pt' ? 'Vagas em Mídia' : lang === 'es' ? 'Vacantes Medios' : lang === 'fr' ? 'Postes Médias' : 'Media Jobs' },
-                { value: '🇨🇦', label: lang === 'pt' ? 'Possibilidade PR' : lang === 'es' ? 'Posibilidad PR' : lang === 'fr' ? 'Possibilité PR' : 'PR Possibility' }
+                { value: '90%+', label: t(lang, 'vancouverEmployability') },
+                { value: t(lang, 'vancouverOneYear'), label: t(lang, 'vancouverDuration') },
+                { value: '40k+', label: t(lang, 'vancouverMediaJobs') },
+                { value: '🇨🇦', label: t(lang, 'vancouverPRPossibility') }
               ].map((stat, i) => (
                 <div key={i} className="text-center">
                   <div className="text-3xl md:text-4xl font-bold text-azimut-red mb-1">
@@ -557,7 +554,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         <section className="py-12 border-y border-white/5 dark:border-white/5 company-logos" style={{ background: 'var(--theme-bg-secondary)' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-center text-sm text-theme-light-secondary uppercase tracking-[0.3em] mb-8">
-              {lang === 'pt' ? '🎬 Nossos alunos trabalham em' : lang === 'es' ? '🎬 Nuestros alumnos trabajan en' : lang === 'fr' ? '🎬 Nos étudiants travaillent chez' : '🎬 Our students work at'}
+              {t(lang, 'vancouverOurStudentsWorkAt')}
             </p>
             <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
               {/* Logos estilizados com texto */}
@@ -591,7 +588,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 <div className="flex items-center gap-4">
                   <span className="text-5xl md:text-6xl">🌍</span>
                   <h3 className="text-2xl md:text-3xl font-bold text-white">
-                    {lang === 'pt' ? 'Alunos do Mundo Todo' : lang === 'es' ? 'Estudiantes de Todo el Mundo' : lang === 'fr' ? 'Étudiants du Monde Entier' : 'Students from Around the World'}
+                    {t(lang, 'vancouverStudentsFromAroundWorld')}
                   </h3>
                 </div>
                 <div className="flex flex-wrap justify-center gap-3 md:gap-4 text-3xl md:text-4xl">
@@ -609,7 +606,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   <span className="international-flag" title="Japão">🇯🇵</span>
                 </div>
                 <p className="text-white/80 text-base md:text-lg max-w-2xl">
-                  {lang === 'pt' ? 'Agente oficial credenciado para VFS e VanArts em Vancouver' : lang === 'es' ? 'Agente oficial acreditado para VFS y VanArts en Vancouver' : lang === 'fr' ? 'Agent officiel accrédité pour VFS et VanArts à Vancouver' : 'Official accredited agent for VFS and VanArts in Vancouver'}
+                  {t(lang, 'vancouverOfficialAgent')}
                 </p>
               </div>
             </div>
@@ -645,8 +642,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   <tr style={{ background: 'rgba(201, 35, 55, 0.15)' }}>
                     <th className="text-left p-2 sm:p-4 font-semibold uppercase text-[10px] sm:text-sm whitespace-nowrap" style={{ color: 'var(--theme-text-secondary)' }}></th>
                     <th className="p-2 sm:p-4 font-semibold text-xs sm:text-lg whitespace-nowrap" style={{ color: 'var(--theme-text)' }}>
-                      <span className="hidden sm:inline">{lang === 'pt' ? 'Univ. Tradicional' : lang === 'es' ? 'Univ. Tradicional' : lang === 'fr' ? 'Univ. Traditionnelle' : 'Traditional Univ.'}</span>
-                      <span className="sm:hidden">{lang === 'pt' ? 'Univ.' : lang === 'es' ? 'Univ.' : lang === 'fr' ? 'Univ.' : 'Univ.'}<br/><span className="text-[9px] opacity-70">Tradicional</span></span>
+                      <span className="hidden sm:inline">{t(lang, 'vancouverTraditionalUniv')}</span>
+                      <span className="sm:hidden">Univ.<br/><span className="text-[9px] opacity-70">{t(lang, 'vancouverTraditionalShort')}</span></span>
                     </th>
                     <th className="p-2 sm:p-4 text-azimut-red font-semibold text-xs sm:text-lg whitespace-nowrap">
                       <span className="inline-flex items-center gap-1 sm:gap-1.5" style={{ alignItems: 'center', lineHeight: '1' }}>
@@ -663,43 +660,43 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 <tbody className="text-center">
                   <tr style={{ borderBottom: '1px solid var(--theme-border)' }}>
                     <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base whitespace-nowrap" style={{ color: 'var(--theme-text-secondary)' }}>
-                      <span className="hidden sm:inline">{lang === 'pt' ? 'Custo Total (aprox.)' : lang === 'es' ? 'Costo Total (aprox.)' : lang === 'fr' ? 'Coût Total (approx.)' : 'Total Cost (approx.)'}</span>
-                      <span className="sm:hidden">{lang === 'pt' ? 'Custo Total' : lang === 'es' ? 'Costo' : lang === 'fr' ? 'Coût' : 'Cost'}<br/><span className="text-[8px] opacity-70">(aprox.)</span></span>
+                      <span className="hidden sm:inline">{t(lang, 'vancouverTotalCost')}</span>
+                      <span className="sm:hidden">{t(lang, 'vancouverTotalCostShort')}<br/><span className="text-[8px] opacity-70">{t(lang, 'vancouverAprox')}</span></span>
                     </td>
                     <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>US$ 40-80k</td>
                     <td className="p-2 sm:p-4 text-emerald-600 font-bold text-sm sm:text-xl">US$ 35k ✅</td>
                     <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>US$ 55k</td>
                   </tr>
                   <tr style={{ borderBottom: '1px solid var(--theme-border)' }}>
-                    <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base" style={{ color: 'var(--theme-text-secondary)' }}>{lang === 'pt' ? 'Duração' : lang === 'es' ? 'Duración' : lang === 'fr' ? 'Durée' : 'Duration'}</td>
-                    <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>{lang === 'pt' ? '4 anos' : lang === 'es' ? '4 años' : lang === 'fr' ? '4 ans' : '4 years'}</td>
-                    <td className="p-2 sm:p-4 text-emerald-600 font-bold text-xs sm:text-base">{lang === 'pt' ? '1 ano' : lang === 'es' ? '1 año' : lang === 'fr' ? '1 an' : '1 year'} ✅</td>
-                    <td className="p-2 sm:p-4 text-emerald-600 text-[11px] sm:text-base">{lang === 'pt' ? '1 ano' : lang === 'es' ? '1 año' : lang === 'fr' ? '1 an' : '1 year'} ✅</td>
+                    <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base" style={{ color: 'var(--theme-text-secondary)' }}>{t(lang, 'vancouverDuration')}</td>
+                    <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>{t(lang, 'vancouverFourYears')}</td>
+                    <td className="p-2 sm:p-4 text-emerald-600 font-bold text-xs sm:text-base">{t(lang, 'vancouverOneYear')} ✅</td>
+                    <td className="p-2 sm:p-4 text-emerald-600 text-[11px] sm:text-base">{t(lang, 'vancouverOneYear')} ✅</td>
                   </tr>
                   <tr style={{ borderBottom: '1px solid var(--theme-border)' }}>
-                    <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base" style={{ color: 'var(--theme-text-secondary)' }}>{lang === 'pt' ? 'Empregabilidade' : lang === 'es' ? 'Empleabilidad' : lang === 'fr' ? 'Employabilité' : 'Employability'}</td>
+                    <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base" style={{ color: 'var(--theme-text-secondary)' }}>{t(lang, 'vancouverEmployability')}</td>
                     <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>50-60%</td>
                     <td className="p-2 sm:p-4 text-emerald-600 font-bold text-xs sm:text-base">90%+ ✅</td>
                     <td className="p-2 sm:p-4 text-emerald-600 text-[11px] sm:text-base">92% ✅</td>
                   </tr>
                   <tr style={{ borderBottom: '1px solid var(--theme-border)' }}>
                     <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base" style={{ color: 'var(--theme-text-secondary)' }}>
-                      <span className="hidden sm:inline">{lang === 'pt' ? 'Salário Inicial' : lang === 'es' ? 'Salario Inicial' : lang === 'fr' ? 'Salaire Initial' : 'Starting Salary'}</span>
-                      <span className="sm:hidden">{lang === 'pt' ? 'Salário' : lang === 'es' ? 'Salario' : lang === 'fr' ? 'Salaire' : 'Salary'}</span>
+                      <span className="hidden sm:inline">{t(lang, 'vancouverStartingSalary')}</span>
+                      <span className="sm:hidden">{t(lang, 'vancouverSalary')}</span>
                     </td>
-                    <td className="p-2 sm:p-4 text-[10px] sm:text-base" style={{ color: 'var(--theme-text)' }}>{lang === 'pt' ? 'US$ 2-4k/mês' : lang === 'es' ? 'US$ 2-4k/mes' : lang === 'fr' ? 'US$ 2-4k/mois' : 'US$ 2-4k/mo'}</td>
+                    <td className="p-2 sm:p-4 text-[10px] sm:text-base" style={{ color: 'var(--theme-text)' }}>{t(lang, 'vancouverUsd2_4k')}</td>
                     <td className="p-2 sm:p-4 text-emerald-600 font-bold text-[10px] sm:text-base">
-                      <span className="hidden sm:inline">{lang === 'pt' ? 'CAD $3.5-5k/mês' : lang === 'es' ? 'CAD $3.5-5k/mes' : lang === 'fr' ? 'CAD $3,5-5k/mois' : 'CAD $3.5-5k/mo'}</span>
+                      <span className="hidden sm:inline">{t(lang, 'vancouverCad35_5k')}</span>
                       <span className="sm:hidden">$3.5-5k/m</span> ✅
                     </td>
                     <td className="p-2 sm:p-4 text-emerald-600 text-[10px] sm:text-base">
-                      <span className="hidden sm:inline">{lang === 'pt' ? 'CAD $4-6k/mês' : lang === 'es' ? 'CAD $4-6k/mes' : lang === 'fr' ? 'CAD $4-6k/mois' : 'CAD $4-6k/mo'}</span>
+                      <span className="hidden sm:inline">{t(lang, 'vancouverCad4_6k')}</span>
                       <span className="sm:hidden">$4-6k/m</span> ✅
                     </td>
                   </tr>
                   <tr style={{ borderBottom: '1px solid var(--theme-border)' }}>
-                    <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base" style={{ color: 'var(--theme-text-secondary)' }}>{lang === 'pt' ? 'Mercado' : lang === 'es' ? 'Mercado' : lang === 'fr' ? 'Marché' : 'Market'}</td>
-                    <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>{lang === 'pt' ? 'Regional' : lang === 'es' ? 'Regional' : lang === 'fr' ? 'Régional' : 'Regional'}</td>
+                    <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base" style={{ color: 'var(--theme-text-secondary)' }}>{t(lang, 'vancouverMarket')}</td>
+                    <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>{t(lang, 'vancouverRegional')}</td>
                     <td className="p-2 sm:p-4 text-emerald-600 font-bold text-xs sm:text-base">Global ✅</td>
                     <td className="p-2 sm:p-4 text-emerald-600 text-[11px] sm:text-base">Global ✅</td>
                   </tr>
@@ -711,18 +708,18 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   </tr>
                   <tr>
                     <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base" style={{ color: 'var(--theme-text-secondary)' }}>
-                      <span className="hidden sm:inline">{lang === 'pt' ? 'Possibilidade PR' : lang === 'es' ? 'Posibilidad PR' : lang === 'fr' ? 'Possibilité PR' : 'PR Possibility'}</span>
+                      <span className="hidden sm:inline">{t(lang, 'vancouverPRPossibility')}</span>
                       <span className="sm:hidden">PR</span>
                     </td>
-                    <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>{lang === 'pt' ? 'Não' : lang === 'es' ? 'No' : lang === 'fr' ? 'Non' : 'No'}</td>
+                    <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>{t(lang, 'vancouverNo')}</td>
                     <td className="p-2 sm:p-4 text-emerald-600 font-bold text-xs sm:text-base">
                       <span className="inline-flex items-center gap-1" style={{ alignItems: 'center', lineHeight: '1' }}>
-                        {lang === 'pt' ? 'Sim' : lang === 'es' ? 'Sí' : lang === 'fr' ? 'Oui' : 'Yes'} <CanadaMapleLeaf size="match-text" /> ✅
+                        {t(lang, 'vancouverYes')} <CanadaMapleLeaf size="match-text" /> ✅
                       </span>
                     </td>
                     <td className="p-2 sm:p-4 text-emerald-600 text-[11px] sm:text-base">
                       <span className="inline-flex items-center gap-1" style={{ alignItems: 'center', lineHeight: '1' }}>
-                        {lang === 'pt' ? 'Sim' : lang === 'es' ? 'Sí' : lang === 'fr' ? 'Oui' : 'Yes'} <CanadaMapleLeaf size="match-text" /> ✅
+                        {t(lang, 'vancouverYes')} <CanadaMapleLeaf size="match-text" /> ✅
                       </span>
                     </td>
                   </tr>
@@ -772,14 +769,14 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
             <div className="text-center mb-16">
               <div className="inline-block px-6 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-6">
                 <span className="text-azimut-red text-sm font-semibold uppercase tracking-wider">
-                  🏫 {lang === 'pt' ? 'Escolas Parceiras Oficiais' : lang === 'es' ? 'Escuelas Socias Oficiales' : lang === 'fr' ? 'Écoles Partenaires Officielles' : 'Official Partner Schools'}
+                  🏫 {t(lang, 'vancouverOfficialPartnerSchools')}
                 </span>
               </div>
               <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
                 {t.schoolsTitle}
               </h2>
               <p className="section-subtitle-vancouver max-w-2xl mx-auto">
-                {lang === 'pt' ? 'As melhores escolas de mídia e entretenimento da América do Norte' : lang === 'es' ? 'Las mejores escuelas de medios y entretenimiento de Norteamérica' : lang === 'fr' ? 'Les meilleures écoles de médias et divertissement d\'Amérique du Nord' : 'The best media and entertainment schools in North America'}
+                {t(lang, 'vancouverBestSchoolsNorthAmerica')}
               </p>
             </div>
 
@@ -834,18 +831,18 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
 
               {/* Quick Facts VFS */}
               <div className="mt-6 p-4 bg-azimut-red/10 border border-azimut-red/30 rounded-lg">
-                <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-3">📋 {lang === 'pt' ? 'Informações Práticas' : lang === 'es' ? 'Información Práctica' : lang === 'fr' ? 'Informations Pratiques' : 'Quick Facts'}</h4>
+                <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-3">📋 {t(lang, 'vancouverQuickFacts')}</h4>
                 <div className="grid md:grid-cols-3 gap-4 text-sm">
                   <div>
-                    <span className="text-white/60">{lang === 'pt' ? 'Próximas Turmas' : lang === 'es' ? 'Próximas Clases' : lang === 'fr' ? 'Prochains Cours' : 'Next Intakes'}:</span>
+                    <span className="text-white/60">{t(lang, 'vancouverNextIntakes')}:</span>
                     <div className="text-white font-medium">Jan, Mai, Set 2026</div>
                   </div>
                   <div>
-                    <span className="text-white/60">{lang === 'pt' ? 'Tuition (média)' : lang === 'es' ? 'Matrícula (media)' : lang === 'fr' ? 'Frais (moyenne)' : 'Tuition (avg)'}:</span>
+                    <span className="text-white/60">{t(lang, 'vancouverTuitionAvg')}:</span>
                     <div className="text-white font-medium">CAD $49,000 - $55,000</div>
                   </div>
                   <div>
-                    <span className="text-white/60">{lang === 'pt' ? 'Inglês Mínimo' : lang === 'es' ? 'Inglés Mínimo' : lang === 'fr' ? 'Anglais Minimum' : 'English Req.'}:</span>
+                    <span className="text-white/60">{t(lang, 'vancouverEnglishReq')}:</span>
                     <div className="text-white font-medium">IELTS 6.5 / TOEFL 80</div>
                   </div>
                 </div>
@@ -857,7 +854,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-azimut-red hover:text-azimut-red/80 transition-colors mt-4"
               >
-                {lang === 'pt' ? 'Ver site oficial da VFS' : lang === 'es' ? 'Ver sitio oficial de VFS' : lang === 'fr' ? 'Voir site officiel VFS' : 'Visit VFS official site'} →
+                {t(lang, 'vancouverVisitVFS')} →
               </a>
               </div>
             </div>
@@ -881,7 +878,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                         VanArts
                       </h3>
                       <div className="flex gap-2 mt-2">
-                        <span className="px-3 py-1 bg-purple-600/80 text-white text-xs font-bold rounded-full uppercase">{lang === 'pt' ? 'Melhor Custo-Benefício' : lang === 'es' ? 'Mejor Costo-Beneficio' : lang === 'fr' ? 'Meilleur Rapport Qualité-Prix' : 'Best Value'}</span>
+                        <span className="px-3 py-1 bg-purple-600/80 text-white text-xs font-bold rounded-full uppercase">{t(lang, 'vancouverBestValue')}</span>
                         <span className="px-3 py-1 bg-white/20 text-white text-xs font-bold rounded-full uppercase">Since 1995</span>
                       </div>
                     </div>
@@ -913,23 +910,23 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
 
               {/* Quick Facts VanArts */}
               <div className="mt-6 p-4 bg-azimut-red/10 border border-azimut-red/30 rounded-lg">
-                <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-3">📋 {lang === 'pt' ? 'Informações Práticas' : lang === 'es' ? 'Información Práctica' : lang === 'fr' ? 'Informations Pratiques' : 'Quick Facts'}</h4>
+                <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-3">📋 {t(lang, 'vancouverQuickFacts')}</h4>
                 <div className="grid md:grid-cols-3 gap-4 text-sm">
                   <div>
-                    <span className="text-white/60">{lang === 'pt' ? 'Próximas Turmas' : lang === 'es' ? 'Próximas Clases' : lang === 'fr' ? 'Prochains Cours' : 'Next Intakes'}:</span>
+                    <span className="text-white/60">{t(lang, 'vancouverNextIntakes')}:</span>
                     <div className="text-white font-medium">Fev, Mai, Set 2026</div>
                   </div>
                   <div>
-                    <span className="text-white/60">{lang === 'pt' ? 'Tuition (média)' : lang === 'es' ? 'Matrícula (media)' : lang === 'fr' ? 'Frais (moyenne)' : 'Tuition (avg)'}:</span>
+                    <span className="text-white/60">{t(lang, 'vancouverTuitionAvg')}:</span>
                     <div className="text-white font-medium">CAD $24,000 - $30,000</div>
                   </div>
                   <div>
-                    <span className="text-white/60">{lang === 'pt' ? 'Inglês Mínimo' : lang === 'es' ? 'Inglés Mínimo' : lang === 'fr' ? 'Anglais Minimum' : 'English Req.'}:</span>
+                    <span className="text-white/60">{t(lang, 'vancouverEnglishReq')}:</span>
                     <div className="text-white font-medium">IELTS 6.0 / TOEFL 68</div>
                   </div>
                 </div>
                 <p className="mt-3 text-xs text-white/50">
-                  💡 {lang === 'pt' ? 'VanArts é mais acessível financeiramente - ideal para quem quer qualidade com menor investimento!' : lang === 'es' ? '¡VanArts es más accesible financieramente - ideal para quien quiere calidad con menor inversión!' : lang === 'fr' ? 'VanArts est plus accessible financièrement - idéal pour qui veut la qualité avec moins d\'investissement!' : 'VanArts is more financially accessible - ideal for quality with lower investment!'}
+                  💡 {t(lang, 'vancouverVanArtsAccessible')}
                 </p>
               </div>
 
@@ -939,7 +936,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-azimut-red hover:text-azimut-red/80 transition-colors mt-4"
               >
-                {lang === 'pt' ? 'Ver site oficial da VanArts' : lang === 'es' ? 'Ver sitio oficial de VanArts' : lang === 'fr' ? 'Voir site officiel VanArts' : 'Visit VanArts official site'} →
+                {t(lang, 'vancouverVisitVanArts')} →
               </a>
 
               {/* VanArts Video */}
@@ -947,10 +944,10 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 <div className="mb-4">
                   <h4 className="text-xl font-semibold text-white mb-2 flex items-center gap-2">
                     <span className="text-2xl">🎬</span>
-                    {lang === 'pt' ? 'Conheça a VanArts por dentro' : lang === 'es' ? 'Conoce VanArts por dentro' : lang === 'fr' ? 'Découvrez VanArts de l\'intérieur' : 'Discover VanArts Inside'}
+                    {t(lang, 'vancouverDiscoverVanArtsInside')}
                   </h4>
                   <p className="text-white/70 text-sm">
-                    {lang === 'pt' ? 'Vídeo oficial da Vancouver Institute of Media Arts' : lang === 'es' ? 'Video oficial del Vancouver Institute of Media Arts' : lang === 'fr' ? 'Vidéo officielle du Vancouver Institute of Media Arts' : 'Official video from Vancouver Institute of Media Arts'}
+                    {t(lang, 'vancouverVideoVanArts')}
                   </p>
                 </div>
                 <VideoPlayerEnhanced
@@ -965,7 +962,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
             {/* Vancouver City Gallery */}
             <div className="mt-16">
               <h3 className="text-2xl font-handel uppercase text-white text-center mb-8">
-                📍 {lang === 'pt' ? 'Viva em Vancouver' : lang === 'es' ? 'Vive en Vancouver' : lang === 'fr' ? 'Vivez à Vancouver' : 'Live in Vancouver'}
+                📍 {t(lang, 'vancouverLiveInVancouver')}
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
@@ -996,14 +993,14 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
             <div className="text-center mb-16">
               <div className="inline-block px-6 py-2 bg-green-600/20 border border-green-600/40 rounded-full mb-6">
                 <span className="text-green-400 text-sm font-semibold uppercase tracking-wider">
-                  ✅ {lang === 'pt' ? 'Casos de Sucesso Reais' : lang === 'es' ? 'Casos de Éxito Reales' : lang === 'fr' ? 'Cas de Succès Réels' : 'Real Success Stories'}
+                  ✅ {t(lang, 'vancouverRealSuccessStories')}
                 </span>
               </div>
               <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
                 {t.testimonialsTitle}
               </h2>
               <p className="text-lg text-white/70 max-w-3xl mx-auto mb-8">
-                {lang === 'pt' ? 'Conheça a história de profissionais que transformaram suas carreiras estudando em Vancouver' : lang === 'es' ? 'Conoce la historia de profesionales que transformaron sus carreras estudiando en Vancouver' : lang === 'fr' ? 'Découvrez l\'histoire de professionnels qui ont transformé leur carrière en étudiant à Vancouver' : 'Meet professionals who transformed their careers studying in Vancouver'}
+                {t(lang, 'vancouverMeetProfessionals')}
               </p>
             </div>
 
@@ -1062,19 +1059,19 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
               <div className="p-6 bg-gradient-to-br from-azimut-red/20 to-azimut-red/5 rounded-xl border border-azimut-red/30 text-center">
                 <div className="text-4xl font-bold text-azimut-red mb-1">30+</div>
-                <div className="text-sm text-white/70">{lang === 'pt' ? 'Anos na Indústria' : lang === 'es' ? 'Años en la Industria' : lang === 'fr' ? 'Ans dans l\'Industrie' : 'Years in Industry'}</div>
+                <div className="text-sm text-white/70">{t(lang, 'vancouverYearsInIndustry')}</div>
               </div>
               <div className="p-6 bg-gradient-to-br from-azimut-red/20 to-azimut-red/5 rounded-xl border border-azimut-red/30 text-center">
                 <div className="text-4xl font-bold text-azimut-red mb-1">85%</div>
-                <div className="text-sm text-white/70">{lang === 'pt' ? 'Taxa de Aprovação' : lang === 'es' ? 'Tasa de Aprobación' : lang === 'fr' ? 'Taux d\'Approbation' : 'Approval Rate'}</div>
+                <div className="text-sm text-white/70">{t(lang, 'vancouverApprovalRate')}</div>
               </div>
               <div className="p-6 bg-gradient-to-br from-azimut-red/20 to-azimut-red/5 rounded-xl border border-azimut-red/30 text-center">
                 <div className="text-4xl font-bold text-azimut-red mb-1">100%</div>
-                <div className="text-sm text-white/70">{lang === 'pt' ? 'Gratuito' : lang === 'es' ? 'Gratuito' : lang === 'fr' ? 'Gratuit' : 'Free'}</div>
+                <div className="text-sm text-white/70">{t(lang, 'vancouverFree')}</div>
               </div>
               <div className="p-6 bg-gradient-to-br from-azimut-red/20 to-azimut-red/5 rounded-xl border border-azimut-red/30 text-center">
                 <div className="text-4xl font-bold text-azimut-red mb-1">🎯</div>
-                <div className="text-sm text-white/70">{lang === 'pt' ? 'Preparação Portfolio' : lang === 'es' ? 'Preparación Portfolio' : lang === 'fr' ? 'Préparation Portfolio' : 'Portfolio Prep'}</div>
+                <div className="text-sm text-white/70">{t(lang, 'vancouverPortfolioPrep')}</div>
               </div>
             </div>
 
@@ -1121,7 +1118,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 {lang === 'pt' ? 'Ferramentas Inteligentes' : 'Smart Tools'}
               </h2>
               <p className="text-xl text-white/70 max-w-3xl mx-auto">
-                {lang === 'pt' ? 'Use nossa IA para descobrir seu perfil e calcular custos' : 'Use our AI to discover your profile and calculate costs'}
+                {t(lang, 'vancouverUseOurAI')}
               </p>
             </div>
 
@@ -1130,10 +1127,10 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               <div>
                 <div className="mb-6 text-center">
                   <h3 className="text-2xl font-bold text-white mb-2">
-                    {lang === 'pt' ? 'Você está pronto?' : 'Are you ready?'}
+                    {t(lang, 'vancouverAreYouReady')}
                   </h3>
                   <p className="text-white/60">
-                    {lang === 'pt' ? 'Faça o quiz e descubra em 2 minutos' : 'Take the quiz and find out in 2 minutes'}
+                    {t(lang, 'vancouverTakeQuiz')}
                   </p>
                 </div>
                 <QuizVancouver lang={lang} />
@@ -1143,10 +1140,10 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               <div id="calculator">
                 <div className="mb-6 text-center">
                   <h3 className="text-2xl font-bold text-white mb-2">
-                    {lang === 'pt' ? 'Calcule seu investimento' : 'Calculate your investment'}
+                    {t(lang, 'vancouverCalculateInvestment')}
                   </h3>
                   <p className="text-white/60">
-                    {lang === 'pt' ? 'Veja quanto custa estudar em Vancouver' : 'See how much it costs to study in Vancouver'}
+                    {t(lang, 'vancouverSeeHowMuch')}
                   </p>
                 </div>
                 <AdvancedVancouverCalculator lang={lang} />
@@ -1160,10 +1157,10 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
-                {lang === 'pt' ? 'Qual escola é sua vibe?' : 'Which school is your vibe?'}
+                {t(lang, 'vancouverWhichSchool')}
               </h2>
               <p className="text-xl text-white/70">
-                {lang === 'pt' ? 'Descubra em 30 segundos! 🎮' : 'Find out in 30 seconds! 🎮'}
+                {t(lang, 'vancouverFindOut30sec')}
               </p>
             </div>
             <VisualSchoolQuiz lang={lang} />
