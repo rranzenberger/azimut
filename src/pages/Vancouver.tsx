@@ -551,9 +551,15 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* Alumni Work At - Logos Visuais */}
-        <section className="py-12 border-y border-white/5 dark:border-white/5 company-logos" style={{ background: 'var(--theme-bg-secondary)' }}>
+        <section 
+          className="py-12 border-y company-logos" 
+          style={{ 
+            background: theme === 'dark' ? 'var(--theme-bg-secondary)' : '#1a1815',
+            borderColor: theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.1)'
+          }}
+        >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="text-center text-sm text-theme-light-secondary uppercase tracking-[0.3em] mb-8">
+            <p className="text-center text-sm uppercase tracking-[0.3em] mb-8" style={{ color: 'rgba(255,255,255,0.6)' }}>
               {translate(lang, 'vancouverOurStudentsWorkAt')}
             </p>
             <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
@@ -570,10 +576,14 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               ].map((company, i) => (
                 <div 
                   key={i} 
-                  className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg border border-white/10 hover:border-azimut-red/50 hover:bg-white/10 transition-all duration-300 group"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-300 group"
+                  style={{
+                    background: 'rgba(255,255,255,0.08)',
+                    borderColor: 'rgba(255,255,255,0.15)'
+                  }}
                 >
                   <span className="text-2xl group-hover:scale-110 transition-transform">{company.emoji}</span>
-                  <span className="text-theme-light-secondary font-semibold group-hover:text-azimut-red transition-colors">{company.name}</span>
+                  <span className="font-semibold group-hover:text-azimut-red transition-colors" style={{ color: 'rgba(255,255,255,0.85)' }}>{company.name}</span>
                 </div>
               ))}
             </div>
@@ -581,13 +591,19 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* International Students Premium Card */}
-        <section className="py-12" style={{ background: 'var(--theme-bg)' }}>
+        <section className="py-12" style={{ background: theme === 'dark' ? 'var(--theme-bg)' : '#1a1815' }}>
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="international-card rounded-2xl p-8 md:p-12 text-center">
+            <div 
+              className="rounded-2xl p-8 md:p-12 text-center"
+              style={{
+                background: 'linear-gradient(135deg, rgba(201,35,55,0.15) 0%, rgba(201,35,55,0.05) 100%)',
+                border: '1px solid rgba(201,35,55,0.3)'
+              }}
+            >
               <div className="flex flex-col items-center gap-6">
                 <div className="flex items-center gap-4">
                   <span className="text-5xl md:text-6xl">🌍</span>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white">
+                  <h3 className="text-2xl md:text-3xl font-bold" style={{ color: '#ffffff' }}>
                     {translate(lang, 'vancouverStudentsFromAroundWorld')}
                   </h3>
                 </div>
@@ -605,7 +621,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   <span className="international-flag" title="Índia">🇮🇳</span>
                   <span className="international-flag" title="Japão">🇯🇵</span>
                 </div>
-                <p className="text-white/80 text-base md:text-lg max-w-2xl">
+                <p className="text-base md:text-lg max-w-2xl" style={{ color: 'rgba(255,255,255,0.8)' }}>
                   {translate(lang, 'vancouverOfficialAgent')}
                 </p>
               </div>
@@ -736,10 +752,10 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* Why Vancouver */}
-        <section className="py-20" style={{ background: 'var(--theme-bg)' }}>
+        <section className="py-20" style={{ background: theme === 'dark' ? 'var(--theme-bg)' : '#1a1815' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
+              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4" style={{ color: '#ffffff' }}>
                 {t.whyTitle}
               </h2>
             </div>
@@ -748,13 +764,17 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               {t.whyItems.map((item, i) => (
                 <div
                   key={i}
-                  className="p-6 card-adaptive rounded-xl border border-white/10 hover:border-azimut-red/50 transition-all duration-300 overflow-hidden"
+                  className="p-6 rounded-xl hover:border-azimut-red/50 transition-all duration-300 overflow-hidden"
+                  style={{
+                    background: 'rgba(255,255,255,0.05)',
+                    border: '1px solid rgba(255,255,255,0.1)'
+                  }}
                 >
                   <div className="text-5xl mb-4 flex-shrink-0">{item.icon}</div>
-                  <h3 className={`text-xl font-semibold mb-3 line-clamp-2 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+                  <h3 className="text-xl font-semibold mb-3 line-clamp-2" style={{ color: '#ffffff' }}>
                     {item.title}
                   </h3>
-                  <p className={`leading-relaxed line-clamp-4 ${theme === 'dark' ? 'text-white/70' : 'text-on-dark-secondary'}`}>
+                  <p className="leading-relaxed line-clamp-4" style={{ color: 'rgba(255,255,255,0.7)' }}>
                     {item.description}
                   </p>
                 </div>
@@ -988,18 +1008,24 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* Testimonials */}
-        <section className="py-20" style={{ background: 'var(--theme-bg)' }}>
+        <section className="py-20" style={{ background: theme === 'dark' ? 'var(--theme-bg)' : '#1a1815' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <div className="inline-block px-6 py-2 bg-green-600/20 border border-green-600/40 rounded-full mb-6">
-                <span className="text-green-400 text-sm font-semibold uppercase tracking-wider">
+              <div 
+                className="inline-block px-6 py-2 rounded-full mb-6"
+                style={{
+                  background: 'rgba(34, 197, 94, 0.25)',
+                  border: '1px solid rgba(34, 197, 94, 0.5)'
+                }}
+              >
+                <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: '#4ade80' }}>
                   ✅ {translate(lang, 'vancouverRealSuccessStories')}
                 </span>
               </div>
-              <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
+              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4" style={{ color: '#ffffff' }}>
                 {t.testimonialsTitle}
               </h2>
-              <p className="text-lg text-white/70 max-w-3xl mx-auto mb-8">
+              <p className="text-lg max-w-3xl mx-auto mb-8" style={{ color: 'rgba(255,255,255,0.7)' }}>
                 {translate(lang, 'vancouverMeetProfessionals')}
               </p>
             </div>
@@ -1022,19 +1048,23 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               {t.testimonials.map((testimonial, i) => (
                 <div
                   key={i}
-                  className="p-6 card-adaptive rounded-xl border border-white/10"
+                  className="p-6 rounded-xl"
+                  style={{
+                    background: 'rgba(255,255,255,0.05)',
+                    border: '1px solid rgba(255,255,255,0.1)'
+                  }}
                 >
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 rounded-full bg-azimut-red/20 flex items-center justify-center text-2xl">
+                    <div className="w-16 h-16 rounded-full bg-azimut-red/20 flex items-center justify-center text-2xl" style={{ color: '#ffffff' }}>
                       {testimonial.name.charAt(0)}
                     </div>
                     <div>
-                      <div className="font-semibold text-white">{testimonial.name}</div>
-                      <div className="text-sm text-white/70">{testimonial.role}</div>
+                      <div className="font-semibold" style={{ color: '#ffffff' }}>{testimonial.name}</div>
+                      <div className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>{testimonial.role}</div>
                       <div className="text-sm text-azimut-red">{testimonial.company}</div>
                     </div>
                   </div>
-                  <p className="text-white/80 italic leading-relaxed">
+                  <p className="italic leading-relaxed" style={{ color: 'rgba(255,255,255,0.8)' }}>
                     "{testimonial.quote}"
                   </p>
                 </div>
@@ -1044,34 +1074,34 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* How Azimut Helps */}
-        <section className="py-20" style={{ background: 'var(--theme-bg-secondary)' }}>
+        <section className="py-20" style={{ background: theme === 'dark' ? 'var(--theme-bg-secondary)' : '#0f0d0b' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
+              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4" style={{ color: '#ffffff' }}>
                 {t.azimutHelpTitle}
               </h2>
-              <p className="text-lg text-white/70 max-w-3xl mx-auto">
+              <p className="text-lg max-w-3xl mx-auto" style={{ color: 'rgba(255,255,255,0.7)' }}>
                 {t.azimutHelpDescription}
               </p>
             </div>
 
             {/* Azimut Stats - Prova Social */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-              <div className="p-6 bg-gradient-to-br from-azimut-red/20 to-azimut-red/5 rounded-xl border border-azimut-red/30 text-center">
+              <div className="p-6 rounded-xl text-center" style={{ background: 'linear-gradient(135deg, rgba(201,35,55,0.2) 0%, rgba(201,35,55,0.05) 100%)', border: '1px solid rgba(201,35,55,0.3)' }}>
                 <div className="text-4xl font-bold text-azimut-red mb-1">30+</div>
-                <div className="text-sm text-white/70">{translate(lang, 'vancouverYearsInIndustry')}</div>
+                <div className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>{translate(lang, 'vancouverYearsInIndustry')}</div>
               </div>
-              <div className="p-6 bg-gradient-to-br from-azimut-red/20 to-azimut-red/5 rounded-xl border border-azimut-red/30 text-center">
+              <div className="p-6 rounded-xl text-center" style={{ background: 'linear-gradient(135deg, rgba(201,35,55,0.2) 0%, rgba(201,35,55,0.05) 100%)', border: '1px solid rgba(201,35,55,0.3)' }}>
                 <div className="text-4xl font-bold text-azimut-red mb-1">85%</div>
-                <div className="text-sm text-white/70">{translate(lang, 'vancouverApprovalRate')}</div>
+                <div className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>{translate(lang, 'vancouverApprovalRate')}</div>
               </div>
-              <div className="p-6 bg-gradient-to-br from-azimut-red/20 to-azimut-red/5 rounded-xl border border-azimut-red/30 text-center">
+              <div className="p-6 rounded-xl text-center" style={{ background: 'linear-gradient(135deg, rgba(201,35,55,0.2) 0%, rgba(201,35,55,0.05) 100%)', border: '1px solid rgba(201,35,55,0.3)' }}>
                 <div className="text-4xl font-bold text-azimut-red mb-1">100%</div>
-                <div className="text-sm text-white/70">{translate(lang, 'vancouverFree')}</div>
+                <div className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>{translate(lang, 'vancouverFree')}</div>
               </div>
-              <div className="p-6 bg-gradient-to-br from-azimut-red/20 to-azimut-red/5 rounded-xl border border-azimut-red/30 text-center">
+              <div className="p-6 rounded-xl text-center" style={{ background: 'linear-gradient(135deg, rgba(201,35,55,0.2) 0%, rgba(201,35,55,0.05) 100%)', border: '1px solid rgba(201,35,55,0.3)' }}>
                 <div className="text-4xl font-bold text-azimut-red mb-1">🎯</div>
-                <div className="text-sm text-white/70">{translate(lang, 'vancouverPortfolioPrep')}</div>
+                <div className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>{translate(lang, 'vancouverPortfolioPrep')}</div>
               </div>
             </div>
 
@@ -1079,26 +1109,36 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               {t.azimutSteps.map((step, i) => (
                 <div
                   key={i}
-                  className="p-6 card-adaptive rounded-xl border border-white/10 hover:border-azimut-red/50 transition-all duration-300"
+                  className="p-6 rounded-xl hover:border-azimut-red/50 transition-all duration-300"
+                  style={{
+                    background: 'rgba(255,255,255,0.05)',
+                    border: '1px solid rgba(255,255,255,0.1)'
+                  }}
                 >
                   <div className="w-12 h-12 rounded-full bg-azimut-red/20 flex items-center justify-center text-2xl font-bold text-azimut-red mb-4">
                     {step.number}
                   </div>
-                  <h3 className="text-lg font-semibold text-white mb-3">
+                  <h3 className="text-lg font-semibold mb-3" style={{ color: '#ffffff' }}>
                     {step.title}
                   </h3>
-                  <p className="text-white/70 text-sm leading-relaxed">
+                  <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>
                     {step.description}
                   </p>
                 </div>
               ))}
             </div>
 
-            <div className="mt-12 p-6 bg-azimut-red/10 border border-azimut-red/30 rounded-lg text-center">
-              <p className="text-xl font-semibold text-white mb-2">
+            <div 
+              className="mt-12 p-6 rounded-lg text-center"
+              style={{
+                background: 'linear-gradient(135deg, rgba(201,35,55,0.25) 0%, rgba(201,35,55,0.15) 100%)',
+                border: '1px solid rgba(201,35,55,0.4)'
+              }}
+            >
+              <p className="text-xl font-semibold mb-2" style={{ color: '#ffffff' }}>
                 {t.azimutCost}
               </p>
-              <p className="text-white/70">
+              <p style={{ color: 'rgba(255,255,255,0.8)' }}>
                 {t.azimutCostNote}
               </p>
             </div>
@@ -1106,18 +1146,24 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* AI Tools */}
-        <section className="py-20" style={{ background: 'var(--theme-bg)' }}>
+        <section className="py-20" style={{ background: theme === 'dark' ? 'var(--theme-bg)' : '#1a1815' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <div className="inline-block px-6 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-6">
+              <div 
+                className="inline-block px-6 py-2 rounded-full mb-6"
+                style={{
+                  background: 'rgba(201,35,55,0.25)',
+                  border: '1px solid rgba(201,35,55,0.5)'
+                }}
+              >
                 <span className="text-azimut-red text-sm font-semibold uppercase">
                   🤖 IA Interativa
                 </span>
               </div>
-              <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
+              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4" style={{ color: '#ffffff' }}>
                 {lang === 'pt' ? 'Ferramentas Inteligentes' : 'Smart Tools'}
               </h2>
-              <p className="text-xl text-white/70 max-w-3xl mx-auto">
+              <p className="text-xl max-w-3xl mx-auto" style={{ color: 'rgba(255,255,255,0.7)' }}>
                 {translate(lang, 'vancouverUseOurAI')}
               </p>
             </div>
@@ -1126,10 +1172,10 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               {/* Quiz */}
               <div>
                 <div className="mb-6 text-center">
-                  <h3 className="text-2xl font-bold text-white mb-2">
+                  <h3 className="text-2xl font-bold mb-2" style={{ color: '#ffffff' }}>
                     {translate(lang, 'vancouverAreYouReady')}
                   </h3>
-                  <p className="text-white/60">
+                  <p style={{ color: 'rgba(255,255,255,0.6)' }}>
                     {translate(lang, 'vancouverTakeQuiz')}
                   </p>
                 </div>
@@ -1139,10 +1185,10 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               {/* Calculator */}
               <div id="calculator">
                 <div className="mb-6 text-center">
-                  <h3 className="text-2xl font-bold text-white mb-2">
+                  <h3 className="text-2xl font-bold mb-2" style={{ color: '#ffffff' }}>
                     {translate(lang, 'vancouverCalculateInvestment')}
                   </h3>
-                  <p className="text-white/60">
+                  <p style={{ color: 'rgba(255,255,255,0.6)' }}>
                     {translate(lang, 'vancouverSeeHowMuch')}
                   </p>
                 </div>
@@ -1153,13 +1199,13 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* Visual School Quiz - Ultra Interativo - MOVIDO PARA CIMA */}
-        <section className="py-20" style={{ background: 'var(--theme-bg-secondary)' }}>
+        <section className="py-20" style={{ background: theme === 'dark' ? 'var(--theme-bg-secondary)' : '#0f0d0b' }}>
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
+              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4" style={{ color: '#ffffff' }}>
                 {translate(lang, 'vancouverWhichSchool')}
               </h2>
-              <p className="text-xl text-white/70">
+              <p className="text-xl" style={{ color: 'rgba(255,255,255,0.7)' }}>
                 {translate(lang, 'vancouverFindOut30sec')}
               </p>
             </div>
@@ -1168,15 +1214,15 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* 🆕 FASE 3: Conteúdo Long-Form Expandido para SEO */}
-        <section className="py-20" style={{ background: 'var(--theme-bg-secondary)' }}>
+        <section className="py-20" style={{ background: theme === 'dark' ? 'var(--theme-bg-secondary)' : '#0f0d0b' }}>
           <VancouverContentExpanded lang={lang} />
         </section>
 
         {/* FAQ - PERMANECE */}
-        <section className="py-20" style={{ background: 'var(--theme-bg)' }}>
+        <section className="py-20" style={{ background: theme === 'dark' ? 'var(--theme-bg)' : '#1a1815' }}>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
+              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4" style={{ color: '#ffffff' }}>
                 {t.faqTitle}
               </h2>
             </div>
@@ -1185,9 +1231,13 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               {t.faqs.map((faq, i) => (
                 <details
                   key={i}
-                  className="group p-6 card-adaptive rounded-lg border border-white/10 hover:border-azimut-red/50 transition-all duration-300"
+                  className="group p-6 rounded-lg hover:border-azimut-red/50 transition-all duration-300"
+                  style={{
+                    background: 'rgba(255,255,255,0.05)',
+                    border: '1px solid rgba(255,255,255,0.1)'
+                  }}
                 >
-                  <summary className="cursor-pointer font-semibold text-white flex justify-between items-center">
+                  <summary className="cursor-pointer font-semibold flex justify-between items-center" style={{ color: '#ffffff' }}>
                     {faq.question}
                     <svg
                       className="w-5 h-5 transform group-open:rotate-180 transition-transform"
@@ -1198,7 +1248,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </summary>
-                  <p className="mt-4 text-white/70 leading-relaxed">
+                  <p className="mt-4 leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>
                     {faq.answer}
                   </p>
                 </details>
@@ -1208,7 +1258,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         </section>
 
         {/* Form Section */}
-        <section id="form" className="py-20" style={{ background: 'var(--theme-bg-secondary)' }}>
+        <section id="form" className="py-20" style={{ background: theme === 'dark' ? 'var(--theme-bg-secondary)' : '#0f0d0b' }}>
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <AcademyQuickForm 
               lang={lang} 

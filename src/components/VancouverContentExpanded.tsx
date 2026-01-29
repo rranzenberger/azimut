@@ -350,15 +350,15 @@ const VancouverContentExpanded: React.FC<VancouverContentExpandedProps> = ({ lan
     <div className="space-y-16 py-20">
       {/* Vancouver Hub Section */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-handel uppercase tracking-wider mb-8" style={{ color: 'var(--theme-text)' }}>
+        <h2 className="text-3xl md:text-4xl font-handel uppercase tracking-wider mb-8" style={{ color: '#ffffff' }}>
           {t.vancouverHub.title}
         </h2>
         {t.vancouverHub.sections.map((section, i) => (
           <div key={i} className="mb-8">
-            <h3 className="text-xl md:text-2xl font-semibold mb-4" style={{ color: 'var(--theme-text)' }}>
+            <h3 className="text-xl md:text-2xl font-semibold mb-4" style={{ color: '#ffffff' }}>
               {section.subtitle}
             </h3>
-            <p className="text-base md:text-lg leading-relaxed mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            <p className="text-base md:text-lg leading-relaxed mb-4" style={{ color: 'rgba(255,255,255,0.75)' }}>
               {section.text}
             </p>
           </div>
@@ -367,15 +367,15 @@ const VancouverContentExpanded: React.FC<VancouverContentExpandedProps> = ({ lan
 
       {/* VFS vs VanArts Section */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-handel uppercase tracking-wider mb-8" style={{ color: 'var(--theme-text)' }}>
+        <h2 className="text-3xl md:text-4xl font-handel uppercase tracking-wider mb-8" style={{ color: '#ffffff' }}>
           {t.vfsVsVanarts.title}
         </h2>
         {t.vfsVsVanarts.sections.map((section, i) => (
           <div key={i} className="mb-8">
-            <h3 className="text-xl md:text-2xl font-semibold mb-4" style={{ color: 'var(--theme-text)' }}>
+            <h3 className="text-xl md:text-2xl font-semibold mb-4" style={{ color: '#ffffff' }}>
               {section.subtitle}
             </h3>
-            <p className="text-base md:text-lg leading-relaxed mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            <p className="text-base md:text-lg leading-relaxed mb-4" style={{ color: 'rgba(255,255,255,0.75)' }}>
               {section.text}
             </p>
           </div>
@@ -384,15 +384,15 @@ const VancouverContentExpanded: React.FC<VancouverContentExpandedProps> = ({ lan
 
       {/* Processo Aplicação Section */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-handel uppercase tracking-wider mb-8" style={{ color: 'var(--theme-text)' }}>
+        <h2 className="text-3xl md:text-4xl font-handel uppercase tracking-wider mb-8" style={{ color: '#ffffff' }}>
           {t.processoAplicacao.title}
         </h2>
         {t.processoAplicacao.sections.map((section, i) => (
           <div key={i} className="mb-8">
-            <h3 className="text-xl md:text-2xl font-semibold mb-4" style={{ color: 'var(--theme-text)' }}>
+            <h3 className="text-xl md:text-2xl font-semibold mb-4" style={{ color: '#ffffff' }}>
               {section.subtitle}
             </h3>
-            <p className="text-base md:text-lg leading-relaxed mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            <p className="text-base md:text-lg leading-relaxed mb-4" style={{ color: 'rgba(255,255,255,0.75)' }}>
               {section.text}
             </p>
           </div>
@@ -401,15 +401,15 @@ const VancouverContentExpanded: React.FC<VancouverContentExpandedProps> = ({ lan
 
       {/* Custos Detalhados Section */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-handel uppercase tracking-wider mb-8" style={{ color: 'var(--theme-text)' }}>
+        <h2 className="text-3xl md:text-4xl font-handel uppercase tracking-wider mb-8" style={{ color: '#ffffff' }}>
           {t.custosDetalhados.title}
         </h2>
         {t.custosDetalhados.sections.map((section, i) => (
           <div key={i} className="mb-8">
-            <h3 className="text-xl md:text-2xl font-semibold mb-4" style={{ color: 'var(--theme-text)' }}>
+            <h3 className="text-xl md:text-2xl font-semibold mb-4" style={{ color: '#ffffff' }}>
               {section.subtitle}
             </h3>
-            <p className="text-base md:text-lg leading-relaxed mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            <p className="text-base md:text-lg leading-relaxed mb-4" style={{ color: 'rgba(255,255,255,0.75)' }}>
               {section.text}
             </p>
           </div>
@@ -418,15 +418,15 @@ const VancouverContentExpanded: React.FC<VancouverContentExpandedProps> = ({ lan
 
       {/* Empregabilidade Section */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-handel uppercase tracking-wider mb-8" style={{ color: 'var(--theme-text)' }}>
+        <h2 className="text-3xl md:text-4xl font-handel uppercase tracking-wider mb-8" style={{ color: '#ffffff' }}>
           {t.empregabilidade.title}
         </h2>
         {t.empregabilidade.sections.map((section, i) => (
           <div key={i} className="mb-8">
-            <h3 className="text-xl md:text-2xl font-semibold mb-4" style={{ color: 'var(--theme-text)' }}>
+            <h3 className="text-xl md:text-2xl font-semibold mb-4" style={{ color: '#ffffff' }}>
               {section.subtitle}
             </h3>
-            <p className="text-base md:text-lg leading-relaxed mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
+            <p className="text-base md:text-lg leading-relaxed mb-4" style={{ color: 'rgba(255,255,255,0.75)' }}>
               {section.text}
             </p>
           </div>
