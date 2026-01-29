@@ -743,20 +743,21 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-3">
-                    {/* Número da posição */}
-                    <span className="text-lg font-bold" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                      {i + 1}º
-                    </span>
-                    {/* Bandeira */}
-                    <span className="text-2xl">{countryFlags[city.code] || '🌍'}</span>
-                    {/* Nome da cidade */}
-                    <h4 className="text-lg font-bold text-white">
-                      {city.name}
-                    </h4>
+                    {/* Bandeira grande */}
+                    <span className="text-3xl">{countryFlags[city.code] || '🌍'}</span>
+                    {/* Nome e país */}
+                    <div>
+                      <h4 className="text-xl font-bold text-white">
+                        {city.name}
+                      </h4>
+                      <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                        {city.code === 'CA' ? 'Canada' : city.code === 'US' ? 'USA' : city.code === 'GB' ? 'UK' : city.code === 'BR' ? 'Brasil' : city.code}
+                      </span>
+                    </div>
                   </div>
                   <div className="text-right">
                     <div 
-                      className={`font-black ${isWinner ? 'text-3xl' : 'text-2xl'}`}
+                      className={`font-black ${isWinner ? 'text-4xl' : 'text-3xl'}`}
                       style={{ color: colorScheme.scoreColor }}
                     >
                       {city.total}
