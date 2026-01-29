@@ -1,5 +1,5 @@
 import React from 'react'
-import { t as i18n, type Lang } from '../i18n'
+import { t as translate, type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import { VancouverPageSchema, VancouverFAQSchema } from '../components/StructuredData'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -25,8 +25,8 @@ interface VancouverProps {
   lang: Lang
 }
 
-const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
-  // REMOVIDO: useUserTracking já é chamado no Layoutexts.tsx
+const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
+  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
   // useUserTracking();
   const { theme } = useTheme()
   
@@ -38,18 +38,18 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
   
   // Função para scroll suave até a calculadora com efeito de destaque
   const scrollToCalculator = () => {
-    const calculatorSection = documentexts.getElementById('calculator')
+    const calculatorSection = document.getElementById('calculator')
     if (calculatorSection) {
       // Scroll suave
       calculatorSection.scrollIntoView({ behavior: 'smooth', block: 'center' })
       
       // Adicionar efeito de destaque
       setTimeout(() => {
-        calculatorSection.classListexts.add('highlight-pulse')
+        calculatorSection.classList.add('highlight-pulse')
         
         // Remover efeito após 3 segundos
         setTimeout(() => {
-          calculatorSection.classListexts.remove('highlight-pulse')
+          calculatorSection.classList.remove('highlight-pulse')
         }, 3000)
       }, 800) // Aguarda o scroll terminar
     }
@@ -111,7 +111,7 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
       ],
 
       vanartsTab: 'VanArts',
-      vanartsDescription: 'Escola focada em Animation, VFX e Game Artexts. Mais acessível financeiramente, mantendo alta qualidade.',
+      vanartsDescription: 'Escola focada em Animation, VFX e Game Art. Mais acessível financeiramente, mantendo alta qualidade.',
       vanartsPrograms: [
         '2D/3D Character Animation',
         'Game Art & Design',
@@ -248,13 +248,13 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
       vfsPrograms: ['3D Animation & Visual Effects', 'Game Design', 'Film Production', 'Acting for Film & TV', 'Sound Design for Visual Media', 'Programming for Games, Web & Mobile', 'Digital Design', 'Writing for Film, TV & Games'],
       vfsStats: [{ label: 'Employability', value: '92%' }, { label: 'Graduates', value: '40,000+' }, { label: 'Industry Partners', value: '500+' }],
       vanartsTab: 'VanArts',
-      vanartsDescription: 'School focused on Animation, VFX and Game Artexts. More financially accessible, maintaining high quality.',
+      vanartsDescription: 'School focused on Animation, VFX and Game Art. More financially accessible, maintaining high quality.',
       vanartsPrograms: ['2D/3D Character Animation', 'Game Art & Design', 'Visual Effects for Film & TV', 'Acting for Film & Television', 'Professional Photography', 'Web Development & Digital Design'],
       vanartsStats: [{ label: 'Employability', value: '90%+' }, { label: 'Years of Operation', value: '29+' }, { label: 'Student Networking', value: 'Global' }],
       testimonialsTitle: 'Brazilians in Vancouver',
       testimonials: [
         { name: 'Carina Lotecki', role: 'CFX Artist', company: 'Walt Disney Animation Studios', photo: '/testimonials/carina.jpg', quote: 'Just 1 month after graduating from VFS, I got my first job at Cinesite, then Digital Domain. Today I work at Disney Vancouver on Moana 2!' },
-        { name: 'Samuel Rico', role: 'Crowds Supervising Animator', company: 'Sony Pictures Imageworks', photo: '/testimonials/samuel.jpg', quote: 'The year at VanArts was a dream come true. A lot of work, but totally worth itexts. Today I work at Sony Pictures in Vancouver!' },
+        { name: 'Samuel Rico', role: 'Crowds Supervising Animator', company: 'Sony Pictures Imageworks', photo: '/testimonials/samuel.jpg', quote: 'The year at VanArts was a dream come true. A lot of work, but totally worth it. Today I work at Sony Pictures in Vancouver!' },
         { name: 'Raja Ghosh', role: 'Sr. Environment Artist', company: 'Remedy Entertainment', photo: '/testimonials/raja.jpg', quote: 'I chose VanArts for the detailed curriculum and professional pipeline. Today I work at Remedy in Finland, delivered Control and Alan Wake 2!' }
       ],
       azimutHelpTitle: 'How Azimut Helps',
@@ -388,8 +388,8 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
       calculatorDescription: 'Simulez combien coûtera étudier à Vancouver (incluant frais de scolarité, logement, alimentation et vie).',
       faqTitle: 'Questions Fréquentes',
       faqs: [
-        { question: 'Ai-je besoin de parler anglais couramment?', answer: 'Intermédiaire à avancé est suffisantexts. VFS et VanArts exigent TOEFL ou IELTS. Azimut peut vous aider à vous préparer.' },
-        { question: 'Ai-je besoin d\'avoir un portfolio?', answer: 'Oui, mais il n\'a pas besoin d\'être completexts. Azimut offre un cours préparatoire pour construire un portfolio solide.' },
+        { question: 'Ai-je besoin de parler anglais couramment?', answer: 'Intermédiaire à avancé est suffisant. VFS et VanArts exigent TOEFL ou IELTS. Azimut peut vous aider à vous préparer.' },
+        { question: 'Ai-je besoin d\'avoir un portfolio?', answer: 'Oui, mais il n\'a pas besoin d\'être complet. Azimut offre un cours préparatoire pour construire un portfolio solide.' },
         { question: 'Combien de temps prend le processus?', answer: 'De 6 à 12 mois depuis la décision jusqu\'au début des cours. Préparation (2-4 mois) + Application (2-3 mois) + Visa (3-4 mois).' },
         { question: 'Puis-je travailler pendant mes études?', answer: 'Oui! Le permis d\'étude permet de travailler 20h/semaine pendant les cours et 40h/semaine pendant les vacances. Salaire minimum: CAD $17/h.' },
         { question: 'Et après la graduation?', answer: 'Vous recevez PGWP (Post-Graduation Work Permit) pour travailler légalement au Canada. Après 1 an d\'expérience, vous pouvez demander la résidence permanente (sous réserve des exigences et critères d\'éligibilité du gouvernement canadien).' },
@@ -403,7 +403,7 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
     }
   }
 
-  const texts = content[lang] || contentexts.pt
+  const t = content[lang] || content.pt
 
   // SEO otimizado com backoffice e keywords
   const seo = usePageSEO('vancouver', lang)
@@ -420,7 +420,7 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
         locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
       />
       <VancouverPageSchema lang={lang} />
-      <VancouverFAQSchema lang={lang} faqs={texts.faqs} />
+      <VancouverFAQSchema lang={lang} faqs={t.faqs} />
 
       {/* Menu Secundário Academy */}
       <AcademySubNav lang={lang} currentPage="vancouver" />
@@ -460,7 +460,7 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
                 }}
               >
                 <span className="text-sm font-semibold uppercase tracking-wider inline-flex items-center gap-1.5" style={{ color: '#ffffff', textShadow: '0 1px 3px rgba(0, 0, 0, 0.5)' }}>
-                  <CanadaMapleLeaf size="md" /> {i18n(lang, 'vancouverEducationalAgency')}
+                  <CanadaMapleLeaf size="md" /> {translate(lang, 'vancouverEducationalAgency')}
                 </span>
               </div>
               
@@ -473,21 +473,21 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
                   </span>
                   <span className="hidden sm:inline">-</span>
                   <span className="text-[0.65rem] sm:text-sm opacity-90">
-                    {i18n(lang, 'vancouverOneOfMostBeautiful')}
+                    {translate(lang, 'vancouverOneOfMostBeautiful')}
                   </span>
                 </span>
               </div>
             </div>
 
             <h1 className="text-5xl md:text-7xl font-handel uppercase tracking-wider text-white dark:text-white mb-6 leading-tight flex flex-col items-center gap-2" style={{ color: '#ffffff', textShadow: '0 2px 8px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4)' }}>
-              <span>{texts.title}</span>
+              <span>{t.title}</span>
               <span className="inline-flex items-center gap-2" style={{ alignItems: 'center', lineHeight: '1' }}>
-                {i18n(lang, 'vancouverCanada')} <CanadaMapleLeaf size="match-text" />
+                {translate(lang, 'vancouverCanada')} <CanadaMapleLeaf size="match-text" />
               </span>
             </h1>
 
             <p className="text-xl sm:text-2xl md:text-3xl text-white/95 mb-4 font-light" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}>
-              {texts.subtitle}
+              {t.subtitle}
             </p>
 
             {/* MOBILE: Texto curto e direto | DESKTOP: Texto completo */}
@@ -499,10 +499,10 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
               }}
             >
               <span className="block sm:hidden">
-                {backofficePage?.hero.descriptionMobile || texts.heroDescription}
+                {backofficePage?.hero.descriptionMobile || t.heroDescription}
               </span>
               <span className="hidden sm:block">
-                {backofficePage?.hero.descriptionDesktop || backofficePage?.hero.descriptionMobile || texts.heroDescriptionFull || texts.heroDescription}
+                {backofficePage?.hero.descriptionDesktop || backofficePage?.hero.descriptionMobile || t.heroDescriptionFull || t.heroDescription}
               </span>
             </p>
 
@@ -511,31 +511,31 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
                 onClick={scrollToCalculator}
                 className="px-8 py-4 bg-azimut-red hover:bg-azimut-red/90 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-azimut-red/50"
               >
-                {texts.ctaHero} →
+                {t.ctaHero} →
               </button>
               
               <a
                 href="#form"
                 className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold rounded-lg transition-all duration-300 border border-white/20"
               >
-                {i18n(lang, 'vancouverConsultationFree')}
+                {translate(lang, 'vancouverConsultationFree')}
               </a>
             </div>
 
             {/* Stats */}
             <div className="mt-10 mb-16 grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { value: '90%+', label: i18n(lang, 'vancouverEmployability') },
-                { value: i18n(lang, 'vancouverOneYear'), label: i18n(lang, 'vancouverDuration') },
-                { value: '40k+', label: i18n(lang, 'vancouverMediaJobs') },
-                { value: '🇨🇦', label: i18n(lang, 'vancouverPRPossibility') }
+                { value: '90%+', label: translate(lang, 'vancouverEmployability') },
+                { value: translate(lang, 'vancouverOneYear'), label: translate(lang, 'vancouverDuration') },
+                { value: '40k+', label: translate(lang, 'vancouverMediaJobs') },
+                { value: '🇨🇦', label: translate(lang, 'vancouverPRPossibility') }
               ].map((stat, i) => (
                 <div key={i} className="text-center">
                   <div className="text-3xl md:text-4xl font-bold text-azimut-red mb-1">
-                    {i === 3 ? <CanadaMapleLeaf size="lg" /> : statexts.value}
+                    {i === 3 ? <CanadaMapleLeaf size="lg" /> : stat.value}
                   </div>
                   <div className="text-sm text-white/60 uppercase tracking-wider">
-                    {statexts.label}
+                    {stat.label}
                   </div>
                 </div>
               ))}
@@ -554,7 +554,7 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
         <section className="py-12 border-y border-white/5 dark:border-white/5 company-logos" style={{ background: 'var(--theme-bg-secondary)' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-center text-sm text-theme-light-secondary uppercase tracking-[0.3em] mb-8">
-              {i18n(lang, 'vancouverOurStudentsWorkAt')}
+              {translate(lang, 'vancouverOurStudentsWorkAt')}
             </p>
             <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
               {/* Logos estilizados com texto */}
@@ -588,7 +588,7 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
                 <div className="flex items-center gap-4">
                   <span className="text-5xl md:text-6xl">🌍</span>
                   <h3 className="text-2xl md:text-3xl font-bold text-white">
-                    {i18n(lang, 'vancouverStudentsFromAroundWorld')}
+                    {translate(lang, 'vancouverStudentsFromAroundWorld')}
                   </h3>
                 </div>
                 <div className="flex flex-wrap justify-center gap-3 md:gap-4 text-3xl md:text-4xl">
@@ -606,7 +606,7 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
                   <span className="international-flag" title="Japão">🇯🇵</span>
                 </div>
                 <p className="text-white/80 text-base md:text-lg max-w-2xl">
-                  {i18n(lang, 'vancouverOfficialAgent')}
+                  {translate(lang, 'vancouverOfficialAgent')}
                 </p>
               </div>
             </div>
@@ -628,10 +628,10 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
-                {texts.compareTitle}
+                {t.compareTitle}
               </h2>
               <p className="text-lg max-w-3xl mx-auto" style={{ color: 'var(--theme-text-secondary)' }}>
-                {texts.compareDescription}
+                {t.compareDescription}
               </p>
             </div>
 
@@ -642,8 +642,8 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
                   <tr style={{ background: 'rgba(201, 35, 55, 0.15)' }}>
                     <th className="text-left p-2 sm:p-4 font-semibold uppercase text-[10px] sm:text-sm whitespace-nowrap" style={{ color: 'var(--theme-text-secondary)' }}></th>
                     <th className="p-2 sm:p-4 font-semibold text-xs sm:text-lg whitespace-nowrap" style={{ color: 'var(--theme-text)' }}>
-                      <span className="hidden sm:inline">{i18n(lang, 'vancouverTraditionalUniv')}</span>
-                      <span className="sm:hidden">Univ.<br/><span className="text-[9px] opacity-70">{i18n(lang, 'vancouverTraditionalShort')}</span></span>
+                      <span className="hidden sm:inline">{translate(lang, 'vancouverTraditionalUniv')}</span>
+                      <span className="sm:hidden">Univ.<br/><span className="text-[9px] opacity-70">{translate(lang, 'vancouverTraditionalShort')}</span></span>
                     </th>
                     <th className="p-2 sm:p-4 text-azimut-red font-semibold text-xs sm:text-lg whitespace-nowrap">
                       <span className="inline-flex items-center gap-1 sm:gap-1.5" style={{ alignItems: 'center', lineHeight: '1' }}>
@@ -660,43 +660,43 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
                 <tbody className="text-center">
                   <tr style={{ borderBottom: '1px solid var(--theme-border)' }}>
                     <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base whitespace-nowrap" style={{ color: 'var(--theme-text-secondary)' }}>
-                      <span className="hidden sm:inline">{i18n(lang, 'vancouverTotalCost')}</span>
-                      <span className="sm:hidden">{i18n(lang, 'vancouverTotalCostShort')}<br/><span className="text-[8px] opacity-70">{i18n(lang, 'vancouverAprox')}</span></span>
+                      <span className="hidden sm:inline">{translate(lang, 'vancouverTotalCost')}</span>
+                      <span className="sm:hidden">{translate(lang, 'vancouverTotalCostShort')}<br/><span className="text-[8px] opacity-70">{translate(lang, 'vancouverAprox')}</span></span>
                     </td>
                     <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>US$ 40-80k</td>
                     <td className="p-2 sm:p-4 text-emerald-600 font-bold text-sm sm:text-xl">US$ 35k ✅</td>
                     <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>US$ 55k</td>
                   </tr>
                   <tr style={{ borderBottom: '1px solid var(--theme-border)' }}>
-                    <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base" style={{ color: 'var(--theme-text-secondary)' }}>{i18n(lang, 'vancouverDuration')}</td>
-                    <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>{i18n(lang, 'vancouverFourYears')}</td>
-                    <td className="p-2 sm:p-4 text-emerald-600 font-bold text-xs sm:text-base">{i18n(lang, 'vancouverOneYear')} ✅</td>
-                    <td className="p-2 sm:p-4 text-emerald-600 text-[11px] sm:text-base">{i18n(lang, 'vancouverOneYear')} ✅</td>
+                    <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base" style={{ color: 'var(--theme-text-secondary)' }}>{translate(lang, 'vancouverDuration')}</td>
+                    <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>{translate(lang, 'vancouverFourYears')}</td>
+                    <td className="p-2 sm:p-4 text-emerald-600 font-bold text-xs sm:text-base">{translate(lang, 'vancouverOneYear')} ✅</td>
+                    <td className="p-2 sm:p-4 text-emerald-600 text-[11px] sm:text-base">{translate(lang, 'vancouverOneYear')} ✅</td>
                   </tr>
                   <tr style={{ borderBottom: '1px solid var(--theme-border)' }}>
-                    <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base" style={{ color: 'var(--theme-text-secondary)' }}>{i18n(lang, 'vancouverEmployability')}</td>
+                    <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base" style={{ color: 'var(--theme-text-secondary)' }}>{translate(lang, 'vancouverEmployability')}</td>
                     <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>50-60%</td>
                     <td className="p-2 sm:p-4 text-emerald-600 font-bold text-xs sm:text-base">90%+ ✅</td>
                     <td className="p-2 sm:p-4 text-emerald-600 text-[11px] sm:text-base">92% ✅</td>
                   </tr>
                   <tr style={{ borderBottom: '1px solid var(--theme-border)' }}>
                     <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base" style={{ color: 'var(--theme-text-secondary)' }}>
-                      <span className="hidden sm:inline">{i18n(lang, 'vancouverStartingSalary')}</span>
-                      <span className="sm:hidden">{i18n(lang, 'vancouverSalary')}</span>
+                      <span className="hidden sm:inline">{translate(lang, 'vancouverStartingSalary')}</span>
+                      <span className="sm:hidden">{translate(lang, 'vancouverSalary')}</span>
                     </td>
-                    <td className="p-2 sm:p-4 text-[10px] sm:text-base" style={{ color: 'var(--theme-text)' }}>{i18n(lang, 'vancouverUsd2_4k')}</td>
+                    <td className="p-2 sm:p-4 text-[10px] sm:text-base" style={{ color: 'var(--theme-text)' }}>{translate(lang, 'vancouverUsd2_4k')}</td>
                     <td className="p-2 sm:p-4 text-emerald-600 font-bold text-[10px] sm:text-base">
-                      <span className="hidden sm:inline">{i18n(lang, 'vancouverCad35_5k')}</span>
+                      <span className="hidden sm:inline">{translate(lang, 'vancouverCad35_5k')}</span>
                       <span className="sm:hidden">$3.5-5k/m</span> ✅
                     </td>
                     <td className="p-2 sm:p-4 text-emerald-600 text-[10px] sm:text-base">
-                      <span className="hidden sm:inline">{i18n(lang, 'vancouverCad4_6k')}</span>
+                      <span className="hidden sm:inline">{translate(lang, 'vancouverCad4_6k')}</span>
                       <span className="sm:hidden">$4-6k/m</span> ✅
                     </td>
                   </tr>
                   <tr style={{ borderBottom: '1px solid var(--theme-border)' }}>
-                    <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base" style={{ color: 'var(--theme-text-secondary)' }}>{i18n(lang, 'vancouverMarket')}</td>
-                    <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>{i18n(lang, 'vancouverRegional')}</td>
+                    <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base" style={{ color: 'var(--theme-text-secondary)' }}>{translate(lang, 'vancouverMarket')}</td>
+                    <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>{translate(lang, 'vancouverRegional')}</td>
                     <td className="p-2 sm:p-4 text-emerald-600 font-bold text-xs sm:text-base">Global ✅</td>
                     <td className="p-2 sm:p-4 text-emerald-600 text-[11px] sm:text-base">Global ✅</td>
                   </tr>
@@ -708,18 +708,18 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
                   </tr>
                   <tr>
                     <td className="text-left p-2 sm:p-4 font-medium text-[10px] sm:text-base" style={{ color: 'var(--theme-text-secondary)' }}>
-                      <span className="hidden sm:inline">{i18n(lang, 'vancouverPRPossibility')}</span>
+                      <span className="hidden sm:inline">{translate(lang, 'vancouverPRPossibility')}</span>
                       <span className="sm:hidden">PR</span>
                     </td>
-                    <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>{i18n(lang, 'vancouverNo')}</td>
+                    <td className="p-2 sm:p-4 text-[11px] sm:text-base" style={{ color: 'var(--theme-text)' }}>{translate(lang, 'vancouverNo')}</td>
                     <td className="p-2 sm:p-4 text-emerald-600 font-bold text-xs sm:text-base">
                       <span className="inline-flex items-center gap-1" style={{ alignItems: 'center', lineHeight: '1' }}>
-                        {i18n(lang, 'vancouverYes')} <CanadaMapleLeaf size="match-text" /> ✅
+                        {translate(lang, 'vancouverYes')} <CanadaMapleLeaf size="match-text" /> ✅
                       </span>
                     </td>
                     <td className="p-2 sm:p-4 text-emerald-600 text-[11px] sm:text-base">
                       <span className="inline-flex items-center gap-1" style={{ alignItems: 'center', lineHeight: '1' }}>
-                        {i18n(lang, 'vancouverYes')} <CanadaMapleLeaf size="match-text" /> ✅
+                        {translate(lang, 'vancouverYes')} <CanadaMapleLeaf size="match-text" /> ✅
                       </span>
                     </td>
                   </tr>
@@ -740,12 +740,12 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
-                {texts.whyTitle}
+                {t.whyTitle}
               </h2>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {texts.whyItems.map((item, i) => (
+              {t.whyItems.map((item, i) => (
                 <div
                   key={i}
                   className="p-6 card-adaptive rounded-xl border border-white/10 hover:border-azimut-red/50 transition-all duration-300 overflow-hidden"
@@ -769,14 +769,14 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
             <div className="text-center mb-16">
               <div className="inline-block px-6 py-2 bg-azimut-red/20 border border-azimut-red/40 rounded-full mb-6">
                 <span className="text-azimut-red text-sm font-semibold uppercase tracking-wider">
-                  🏫 {i18n(lang, 'vancouverOfficialPartnerSchools')}
+                  🏫 {translate(lang, 'vancouverOfficialPartnerSchools')}
                 </span>
               </div>
               <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
-                {texts.schoolsTitle}
+                {t.schoolsTitle}
               </h2>
               <p className="section-subtitle-vancouver max-w-2xl mx-auto">
-                {i18n(lang, 'vancouverBestSchoolsNorthAmerica')}
+                {translate(lang, 'vancouverBestSchoolsNorthAmerica')}
               </p>
             </div>
 
@@ -809,19 +809,19 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
               
               {/* VFS Content */}
               <div className="school-card-content p-8" style={{ background: 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)' }}>
-                <p className="text-white/70 mb-6">{texts.vfsDescription}</p>
+                <p className="text-white/70 mb-6">{t.vfsDescription}</p>
 
               <div className="grid md:grid-cols-3 gap-6 mb-6">
-                {texts.vfsStats.map((stat, i) => (
+                {t.vfsStats.map((stat, i) => (
                   <div key={i} className="p-4 bg-white/5 rounded-lg text-center">
-                    <div className="text-3xl font-bold text-azimut-red mb-1">{statexts.value}</div>
-                    <div className="text-sm text-white/60">{statexts.label}</div>
+                    <div className="text-3xl font-bold text-azimut-red mb-1">{stat.value}</div>
+                    <div className="text-sm text-white/60">{stat.label}</div>
                   </div>
                 ))}
               </div>
 
               <div className="grid md:grid-cols-2 gap-3 mb-6">
-                {texts.vfsPrograms.map((program, i) => (
+                {t.vfsPrograms.map((program, i) => (
                   <div key={i} className="flex items-center gap-2 text-white/80">
                     <span className="text-azimut-red">•</span>
                     {program}
@@ -831,18 +831,18 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
 
               {/* Quick Facts VFS */}
               <div className="mt-6 p-4 bg-azimut-red/10 border border-azimut-red/30 rounded-lg">
-                <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-3">📋 {i18n(lang, 'vancouverQuickFacts')}</h4>
+                <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-3">📋 {translate(lang, 'vancouverQuickFacts')}</h4>
                 <div className="grid md:grid-cols-3 gap-4 text-sm">
                   <div>
-                    <span className="text-white/60">{i18n(lang, 'vancouverNextIntakes')}:</span>
+                    <span className="text-white/60">{translate(lang, 'vancouverNextIntakes')}:</span>
                     <div className="text-white font-medium">Jan, Mai, Set 2026</div>
                   </div>
                   <div>
-                    <span className="text-white/60">{i18n(lang, 'vancouverTuitionAvg')}:</span>
+                    <span className="text-white/60">{translate(lang, 'vancouverTuitionAvg')}:</span>
                     <div className="text-white font-medium">CAD $49,000 - $55,000</div>
                   </div>
                   <div>
-                    <span className="text-white/60">{i18n(lang, 'vancouverEnglishReq')}:</span>
+                    <span className="text-white/60">{translate(lang, 'vancouverEnglishReq')}:</span>
                     <div className="text-white font-medium">IELTS 6.5 / TOEFL 80</div>
                   </div>
                 </div>
@@ -854,7 +854,7 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-azimut-red hover:text-azimut-red/80 transition-colors mt-4"
               >
-                {i18n(lang, 'vancouverVisitVFS')} →
+                {translate(lang, 'vancouverVisitVFS')} →
               </a>
               </div>
             </div>
@@ -878,7 +878,7 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
                         VanArts
                       </h3>
                       <div className="flex gap-2 mt-2">
-                        <span className="px-3 py-1 bg-purple-600/80 text-white text-xs font-bold rounded-full uppercase">{i18n(lang, 'vancouverBestValue')}</span>
+                        <span className="px-3 py-1 bg-purple-600/80 text-white text-xs font-bold rounded-full uppercase">{translate(lang, 'vancouverBestValue')}</span>
                         <span className="px-3 py-1 bg-white/20 text-white text-xs font-bold rounded-full uppercase">Since 1995</span>
                       </div>
                     </div>
@@ -888,19 +888,19 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
               
               {/* VanArts Content */}
               <div className="school-card-content p-8" style={{ background: 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)' }}>
-                <p className="text-white/70 mb-6">{texts.vanartsDescription}</p>
+                <p className="text-white/70 mb-6">{t.vanartsDescription}</p>
 
               <div className="grid md:grid-cols-3 gap-6 mb-6">
-                {texts.vanartsStats.map((stat, i) => (
+                {t.vanartsStats.map((stat, i) => (
                   <div key={i} className="p-4 bg-white/5 rounded-lg text-center">
-                    <div className="text-3xl font-bold text-azimut-red mb-1">{statexts.value}</div>
-                    <div className="text-sm text-white/60">{statexts.label}</div>
+                    <div className="text-3xl font-bold text-azimut-red mb-1">{stat.value}</div>
+                    <div className="text-sm text-white/60">{stat.label}</div>
                   </div>
                 ))}
               </div>
 
               <div className="grid md:grid-cols-2 gap-3 mb-6">
-                {texts.vanartsPrograms.map((program, i) => (
+                {t.vanartsPrograms.map((program, i) => (
                   <div key={i} className="flex items-center gap-2 text-white/80">
                     <span className="text-azimut-red">•</span>
                     {program}
@@ -910,23 +910,23 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
 
               {/* Quick Facts VanArts */}
               <div className="mt-6 p-4 bg-azimut-red/10 border border-azimut-red/30 rounded-lg">
-                <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-3">📋 {i18n(lang, 'vancouverQuickFacts')}</h4>
+                <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-3">📋 {translate(lang, 'vancouverQuickFacts')}</h4>
                 <div className="grid md:grid-cols-3 gap-4 text-sm">
                   <div>
-                    <span className="text-white/60">{i18n(lang, 'vancouverNextIntakes')}:</span>
+                    <span className="text-white/60">{translate(lang, 'vancouverNextIntakes')}:</span>
                     <div className="text-white font-medium">Fev, Mai, Set 2026</div>
                   </div>
                   <div>
-                    <span className="text-white/60">{i18n(lang, 'vancouverTuitionAvg')}:</span>
+                    <span className="text-white/60">{translate(lang, 'vancouverTuitionAvg')}:</span>
                     <div className="text-white font-medium">CAD $24,000 - $30,000</div>
                   </div>
                   <div>
-                    <span className="text-white/60">{i18n(lang, 'vancouverEnglishReq')}:</span>
+                    <span className="text-white/60">{translate(lang, 'vancouverEnglishReq')}:</span>
                     <div className="text-white font-medium">IELTS 6.0 / TOEFL 68</div>
                   </div>
                 </div>
                 <p className="mt-3 text-xs text-white/50">
-                  💡 {i18n(lang, 'vancouverVanArtsAccessible')}
+                  💡 {translate(lang, 'vancouverVanArtsAccessible')}
                 </p>
               </div>
 
@@ -936,7 +936,7 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-azimut-red hover:text-azimut-red/80 transition-colors mt-4"
               >
-                {i18n(lang, 'vancouverVisitVanArts')} →
+                {translate(lang, 'vancouverVisitVanArts')} →
               </a>
 
               {/* VanArts Video */}
@@ -944,10 +944,10 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
                 <div className="mb-4">
                   <h4 className="text-xl font-semibold text-white mb-2 flex items-center gap-2">
                     <span className="text-2xl">🎬</span>
-                    {i18n(lang, 'vancouverDiscoverVanArtsInside')}
+                    {translate(lang, 'vancouverDiscoverVanArtsInside')}
                   </h4>
                   <p className="text-white/70 text-sm">
-                    {i18n(lang, 'vancouverVideoVanArts')}
+                    {translate(lang, 'vancouverVideoVanArts')}
                   </p>
                 </div>
                 <VideoPlayerEnhanced
@@ -962,7 +962,7 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
             {/* Vancouver City Gallery */}
             <div className="mt-16">
               <h3 className="text-2xl font-handel uppercase text-white text-center mb-8">
-                📍 {i18n(lang, 'vancouverLiveInVancouver')}
+                📍 {translate(lang, 'vancouverLiveInVancouver')}
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
@@ -993,14 +993,14 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
             <div className="text-center mb-16">
               <div className="inline-block px-6 py-2 bg-green-600/20 border border-green-600/40 rounded-full mb-6">
                 <span className="text-green-400 text-sm font-semibold uppercase tracking-wider">
-                  ✅ {i18n(lang, 'vancouverRealSuccessStories')}
+                  ✅ {translate(lang, 'vancouverRealSuccessStories')}
                 </span>
               </div>
               <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
-                {texts.testimonialsTitle}
+                {t.testimonialsTitle}
               </h2>
               <p className="text-lg text-white/70 max-w-3xl mx-auto mb-8">
-                {i18n(lang, 'vancouverMeetProfessionals')}
+                {translate(lang, 'vancouverMeetProfessionals')}
               </p>
             </div>
 
@@ -1019,7 +1019,7 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
 
             {/* Depoimentos em texto */}
             <div className="grid md:grid-cols-3 gap-8">
-              {texts.testimonials.map((testimonial, i) => (
+              {t.testimonials.map((testimonial, i) => (
                 <div
                   key={i}
                   className="p-6 card-adaptive rounded-xl border border-white/10"
@@ -1048,10 +1048,10 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
-                {texts.azimutHelpTitle}
+                {t.azimutHelpTitle}
               </h2>
               <p className="text-lg text-white/70 max-w-3xl mx-auto">
-                {texts.azimutHelpDescription}
+                {t.azimutHelpDescription}
               </p>
             </div>
 
@@ -1059,24 +1059,24 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
               <div className="p-6 bg-gradient-to-br from-azimut-red/20 to-azimut-red/5 rounded-xl border border-azimut-red/30 text-center">
                 <div className="text-4xl font-bold text-azimut-red mb-1">30+</div>
-                <div className="text-sm text-white/70">{i18n(lang, 'vancouverYearsInIndustry')}</div>
+                <div className="text-sm text-white/70">{translate(lang, 'vancouverYearsInIndustry')}</div>
               </div>
               <div className="p-6 bg-gradient-to-br from-azimut-red/20 to-azimut-red/5 rounded-xl border border-azimut-red/30 text-center">
                 <div className="text-4xl font-bold text-azimut-red mb-1">85%</div>
-                <div className="text-sm text-white/70">{i18n(lang, 'vancouverApprovalRate')}</div>
+                <div className="text-sm text-white/70">{translate(lang, 'vancouverApprovalRate')}</div>
               </div>
               <div className="p-6 bg-gradient-to-br from-azimut-red/20 to-azimut-red/5 rounded-xl border border-azimut-red/30 text-center">
                 <div className="text-4xl font-bold text-azimut-red mb-1">100%</div>
-                <div className="text-sm text-white/70">{i18n(lang, 'vancouverFree')}</div>
+                <div className="text-sm text-white/70">{translate(lang, 'vancouverFree')}</div>
               </div>
               <div className="p-6 bg-gradient-to-br from-azimut-red/20 to-azimut-red/5 rounded-xl border border-azimut-red/30 text-center">
                 <div className="text-4xl font-bold text-azimut-red mb-1">🎯</div>
-                <div className="text-sm text-white/70">{i18n(lang, 'vancouverPortfolioPrep')}</div>
+                <div className="text-sm text-white/70">{translate(lang, 'vancouverPortfolioPrep')}</div>
               </div>
             </div>
 
             <div className="grid md:grid-cols-5 gap-6">
-              {texts.azimutSteps.map((step, i) => (
+              {t.azimutSteps.map((step, i) => (
                 <div
                   key={i}
                   className="p-6 card-adaptive rounded-xl border border-white/10 hover:border-azimut-red/50 transition-all duration-300"
@@ -1096,10 +1096,10 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
 
             <div className="mt-12 p-6 bg-azimut-red/10 border border-azimut-red/30 rounded-lg text-center">
               <p className="text-xl font-semibold text-white mb-2">
-                {texts.azimutCost}
+                {t.azimutCost}
               </p>
               <p className="text-white/70">
-                {texts.azimutCostNote}
+                {t.azimutCostNote}
               </p>
             </div>
           </div>
@@ -1118,7 +1118,7 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
                 {lang === 'pt' ? 'Ferramentas Inteligentes' : 'Smart Tools'}
               </h2>
               <p className="text-xl text-white/70 max-w-3xl mx-auto">
-                {i18n(lang, 'vancouverUseOurAI')}
+                {translate(lang, 'vancouverUseOurAI')}
               </p>
             </div>
 
@@ -1127,10 +1127,10 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
               <div>
                 <div className="mb-6 text-center">
                   <h3 className="text-2xl font-bold text-white mb-2">
-                    {i18n(lang, 'vancouverAreYouReady')}
+                    {translate(lang, 'vancouverAreYouReady')}
                   </h3>
                   <p className="text-white/60">
-                    {i18n(lang, 'vancouverTakeQuiz')}
+                    {translate(lang, 'vancouverTakeQuiz')}
                   </p>
                 </div>
                 <QuizVancouver lang={lang} />
@@ -1140,10 +1140,10 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
               <div id="calculator">
                 <div className="mb-6 text-center">
                   <h3 className="text-2xl font-bold text-white mb-2">
-                    {i18n(lang, 'vancouverCalculateInvestment')}
+                    {translate(lang, 'vancouverCalculateInvestment')}
                   </h3>
                   <p className="text-white/60">
-                    {i18n(lang, 'vancouverSeeHowMuch')}
+                    {translate(lang, 'vancouverSeeHowMuch')}
                   </p>
                 </div>
                 <AdvancedVancouverCalculator lang={lang} />
@@ -1157,10 +1157,10 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
-                {i18n(lang, 'vancouverWhichSchool')}
+                {translate(lang, 'vancouverWhichSchool')}
               </h2>
               <p className="text-xl text-white/70">
-                {i18n(lang, 'vancouverFindOut30sec')}
+                {translate(lang, 'vancouverFindOut30sec')}
               </p>
             </div>
             <VisualSchoolQuiz lang={lang} />
@@ -1177,12 +1177,12 @@ const Vancouver: Reactexts.FC<VancouverProps> = ({ lang }) => {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="section-title-vancouver text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4">
-                {texts.faqTitle}
+                {t.faqTitle}
               </h2>
             </div>
 
             <div className="space-y-4">
-              {texts.faqs.map((faq, i) => (
+              {t.faqs.map((faq, i) => (
                 <details
                   key={i}
                   className="group p-6 card-adaptive rounded-lg border border-white/10 hover:border-azimut-red/50 transition-all duration-300"
