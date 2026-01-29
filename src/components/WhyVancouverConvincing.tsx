@@ -31,6 +31,11 @@ interface VancouverCity {
   total: number
 }
 
+interface VancouverSource {
+  name: string
+  url: string
+}
+
 interface VancouverContent {
   hero: {
     title: string
@@ -42,7 +47,7 @@ interface VancouverContent {
     title: string
     subtitle: string
     description: string
-    source: string
+    sources: VancouverSource[]
     points: string
     winnerLabel: string
     officialRanking: string
@@ -161,7 +166,12 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         title: 'Índice de Qualidade de Vida',
         subtitle: 'Comparativo entre cidades para estudantes de mídia',
         description: 'Score baseado em: segurança, qualidade de vida, mercado de trabalho em mídia/VFX, custo-benefício e qualidade das escolas de cinema/animação.',
-        source: 'Fontes: Economist Safe Cities Index 2024, Mercer Quality of Living 2024, Glassdoor Salaries, QS World University Rankings',
+        sources: [
+          { name: 'Economist Safe Cities Index', url: 'https://safecities.economist.com/' },
+          { name: 'Mercer Quality of Living', url: 'https://www.mercer.com/insights/quality-of-living/' },
+          { name: 'Glassdoor Salaries', url: 'https://www.glassdoor.com/Salaries/' },
+          { name: 'QS World University Rankings', url: 'https://www.topuniversities.com/university-rankings' }
+        ],
         points: 'pontos',
         winnerLabel: 'Melhor escolha para estudantes de mídia',
         officialRanking: 'Ranking Oficial',
@@ -282,7 +292,12 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         title: 'Quality of Life Index',
         subtitle: 'Comparison between cities for media students',
         description: 'Score based on: safety, quality of life, media/VFX job market, cost-benefit and quality of film/animation schools.',
-        source: 'Sources: Economist Safe Cities Index 2024, Mercer Quality of Living 2024, Glassdoor Salaries, QS World University Rankings',
+        sources: [
+          { name: 'Economist Safe Cities Index', url: 'https://safecities.economist.com/' },
+          { name: 'Mercer Quality of Living', url: 'https://www.mercer.com/insights/quality-of-living/' },
+          { name: 'Glassdoor Salaries', url: 'https://www.glassdoor.com/Salaries/' },
+          { name: 'QS World University Rankings', url: 'https://www.topuniversities.com/university-rankings' }
+        ],
         points: 'points',
         winnerLabel: 'Best choice for media students',
         officialRanking: 'Official Ranking',
@@ -403,7 +418,12 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         title: 'Índice de Calidad de Vida',
         subtitle: 'Comparativo entre ciudades para estudiantes de medios',
         description: 'Puntuación basada en: seguridad, calidad de vida, mercado laboral en medios/VFX, costo-beneficio y calidad de escuelas de cine/animación.',
-        source: 'Fuentes: Economist Safe Cities Index 2024, Mercer Quality of Living 2024, Glassdoor Salaries, QS World University Rankings',
+        sources: [
+          { name: 'Economist Safe Cities Index', url: 'https://safecities.economist.com/' },
+          { name: 'Mercer Quality of Living', url: 'https://www.mercer.com/insights/quality-of-living/' },
+          { name: 'Glassdoor Salaries', url: 'https://www.glassdoor.com/Salaries/' },
+          { name: 'QS World University Rankings', url: 'https://www.topuniversities.com/university-rankings' }
+        ],
         points: 'puntos',
         winnerLabel: 'Mejor opción para estudiantes de medios',
         officialRanking: 'Ranking Oficial',
@@ -524,7 +544,12 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         title: 'Indice de Qualité de Vie',
         subtitle: 'Comparaison entre villes pour étudiants en médias',
         description: 'Score basé sur: sécurité, qualité de vie, marché du travail médias/VFX, rapport qualité-prix et qualité des écoles de cinéma/animation.',
-        source: 'Sources: Economist Safe Cities Index 2024, Mercer Quality of Living 2024, Glassdoor Salaries, QS World University Rankings',
+        sources: [
+          { name: 'Economist Safe Cities Index', url: 'https://safecities.economist.com/' },
+          { name: 'Mercer Quality of Living', url: 'https://www.mercer.com/insights/quality-of-living/' },
+          { name: 'Glassdoor Salaries', url: 'https://www.glassdoor.com/Salaries/' },
+          { name: 'QS World University Rankings', url: 'https://www.topuniversities.com/university-rankings' }
+        ],
         points: 'points',
         winnerLabel: 'Meilleur choix pour les étudiants en médias',
         officialRanking: 'Classement Officiel',
@@ -795,17 +820,44 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
           })}
         </div>
         
-        {/* Source - mais legível */}
-        <div className="mt-10 text-center px-4">
+        {/* Sources - com links clicáveis */}
+        <div className="mt-10 px-4">
           <div 
-            className="inline-block px-6 py-3 rounded-xl"
+            className="max-w-2xl mx-auto px-6 py-5 rounded-2xl"
             style={{ 
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.1)'
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%)',
+              border: '1px solid rgba(255,255,255,0.15)',
+              backdropFilter: 'blur(10px)'
             }}
           >
-            <p className="text-sm max-w-2xl mx-auto leading-relaxed" style={{ color: '#94a3b8' }}>
-              📊 {t.comparison.source}
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <span className="text-lg">📊</span>
+              <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: '#e2e8f0' }}>
+                {lang === 'pt' ? 'Fontes Verificadas' : lang === 'es' ? 'Fuentes Verificadas' : lang === 'fr' ? 'Sources Vérifiées' : 'Verified Sources'}
+              </span>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+              {t.comparison.sources?.map((source: { name: string; url: string }, idx: number) => (
+                <a
+                  key={idx}
+                  href={source.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium transition-all hover:scale-105"
+                  style={{ 
+                    color: '#60a5fa',
+                    textDecoration: 'none'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#93c5fd'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#60a5fa'}
+                >
+                  {source.name}
+                  <span className="ml-1 text-xs opacity-60">↗</span>
+                </a>
+              ))}
+            </div>
+            <p className="text-xs text-center mt-3" style={{ color: '#64748b' }}>
+              {lang === 'pt' ? 'Dados atualizados em 2024' : lang === 'es' ? 'Datos actualizados en 2024' : lang === 'fr' ? 'Données mises à jour en 2024' : 'Data updated in 2024'}
             </p>
           </div>
         </div>
