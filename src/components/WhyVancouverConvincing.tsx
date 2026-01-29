@@ -43,6 +43,9 @@ interface VancouverContent {
     subtitle: string
     description: string
     source: string
+    points: string
+    winnerLabel: string
+    officialRanking: string
     cities: VancouverCity[]
   }
   cta: {
@@ -159,6 +162,9 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         subtitle: 'Comparativo entre cidades para estudantes de mídia',
         description: 'Score baseado em: segurança, qualidade de vida, mercado de trabalho em mídia/VFX, custo-benefício e qualidade das escolas de cinema/animação.',
         source: 'Fontes: Economist Safe Cities Index 2024, Mercer Quality of Living 2024, Glassdoor Salaries, QS World University Rankings',
+        points: 'pontos',
+        winnerLabel: 'Melhor escolha para estudantes de mídia',
+        officialRanking: 'Ranking Oficial',
         cities: [
           { name: 'Vancouver', code: 'CA', total: 92 },
           { name: 'Toronto', code: 'CA', total: 78 },
@@ -277,6 +283,9 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         subtitle: 'Comparison between cities for media students',
         description: 'Score based on: safety, quality of life, media/VFX job market, cost-benefit and quality of film/animation schools.',
         source: 'Sources: Economist Safe Cities Index 2024, Mercer Quality of Living 2024, Glassdoor Salaries, QS World University Rankings',
+        points: 'points',
+        winnerLabel: 'Best choice for media students',
+        officialRanking: 'Official Ranking',
         cities: [
           { name: 'Vancouver', code: 'CA', total: 92 },
           { name: 'Toronto', code: 'CA', total: 78 },
@@ -395,6 +404,9 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         subtitle: 'Comparativo entre ciudades para estudiantes de medios',
         description: 'Puntuación basada en: seguridad, calidad de vida, mercado laboral en medios/VFX, costo-beneficio y calidad de escuelas de cine/animación.',
         source: 'Fuentes: Economist Safe Cities Index 2024, Mercer Quality of Living 2024, Glassdoor Salaries, QS World University Rankings',
+        points: 'puntos',
+        winnerLabel: 'Mejor opción para estudiantes de medios',
+        officialRanking: 'Ranking Oficial',
         cities: [
           { name: 'Vancouver', code: 'CA', total: 92 },
           { name: 'Toronto', code: 'CA', total: 78 },
@@ -513,6 +525,9 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         subtitle: 'Comparaison entre villes pour étudiants en médias',
         description: 'Score basé sur: sécurité, qualité de vie, marché du travail médias/VFX, rapport qualité-prix et qualité des écoles de cinéma/animation.',
         source: 'Sources: Economist Safe Cities Index 2024, Mercer Quality of Living 2024, Glassdoor Salaries, QS World University Rankings',
+        points: 'points',
+        winnerLabel: 'Meilleur choix pour les étudiants en médias',
+        officialRanking: 'Classement Officiel',
         cities: [
           { name: 'Vancouver', code: 'CA', total: 92 },
           { name: 'Toronto', code: 'CA', total: 78 },
@@ -604,72 +619,195 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         ))}
       </div>
 
-      {/* Comparison Chart */}
+      {/* Comparison Chart - Premium Art Direction */}
       <div 
         className="max-w-4xl mx-auto px-4 py-16 mb-20 rounded-3xl"
-        style={{ background: '#0f1419' }}
+        style={{ 
+          background: 'linear-gradient(180deg, #0a0c10 0%, #111827 50%, #0a0c10 100%)',
+          border: '1px solid rgba(255,255,255,0.08)'
+        }}
       >
-        <div className="text-center mb-10">
+        <div className="text-center mb-12">
+          <div 
+            className="inline-block px-4 py-1.5 rounded-full mb-4 text-xs font-semibold uppercase tracking-wider"
+            style={{ 
+              background: 'linear-gradient(135deg, rgba(34,197,94,0.2) 0%, rgba(16,185,129,0.1) 100%)',
+              border: '1px solid rgba(34,197,94,0.3)',
+              color: '#4ade80'
+            }}
+          >
+            {t.comparison.officialRanking}
+          </div>
           <h3 className="text-3xl md:text-4xl font-black mb-3 uppercase" style={{ color: '#ffffff' }}>
             {t.comparison.title}
           </h3>
-          <p className="text-lg mb-2" style={{ color: '#e2e8f0' }}>
+          <p className="text-lg mb-3 font-medium" style={{ color: '#f1f5f9' }}>
             {t.comparison.subtitle}
           </p>
-          <p className="text-sm max-w-2xl mx-auto" style={{ color: '#94a3b8' }}>
+          <p className="text-sm max-w-2xl mx-auto leading-relaxed" style={{ color: '#cbd5e1' }}>
             {t.comparison.description}
           </p>
         </div>
         
-        <div className="space-y-3 px-4">
+        <div className="space-y-4 px-4">
           {t.comparison.cities.map((city: VancouverCity, i: number) => {
-            // Cores diferentes para cada posição
+            // Design premium - Vancouver em destaque verde, outros em tons sofisticados
+            const isWinner = i === 0
             const cardStyles = [
-              { bg: 'linear-gradient(135deg, #166534 0%, #15803d 100%)', border: '#22c55e', barColor: '#4ade80', textColor: '#4ade80' }, // 1º - Verde (vencedor)
-              { bg: 'linear-gradient(135deg, #1e3a5f 0%, #1e40af 100%)', border: '#3b82f6', barColor: '#60a5fa', textColor: '#60a5fa' }, // 2º - Azul
-              { bg: 'linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%)', border: '#8b5cf6', barColor: '#a78bfa', textColor: '#a78bfa' }, // 3º - Roxo
-              { bg: 'linear-gradient(135deg, #78350f 0%, #92400e 100%)', border: '#f59e0b', barColor: '#fbbf24', textColor: '#fbbf24' }, // 4º - Âmbar
-              { bg: 'linear-gradient(135deg, #1f2937 0%, #374151 100%)', border: '#6b7280', barColor: '#9ca3af', textColor: '#9ca3af' }, // 5º - Cinza
-              { bg: 'linear-gradient(135deg, #1c1917 0%, #292524 100%)', border: '#57534e', barColor: '#78716c', textColor: '#a8a29e' }  // 6º - Stone
+              { // 1º Vancouver - Verde vibrante (destaque máximo)
+                bg: 'linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%)',
+                border: 'rgba(16,185,129,0.6)',
+                barBg: 'rgba(255,255,255,0.15)',
+                barColor: 'linear-gradient(90deg, #10b981 0%, #34d399 50%, #6ee7b7 100%)',
+                scoreColor: '#6ee7b7',
+                nameColor: '#ffffff',
+                badgeBg: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+                badgeText: '#1c1917',
+                shadow: '0 8px 32px rgba(16,185,129,0.3)'
+              },
+              { // 2º Toronto - Azul safira
+                bg: 'linear-gradient(135deg, #1e3a5f 0%, #1e40af 100%)',
+                border: 'rgba(59,130,246,0.4)',
+                barBg: 'rgba(255,255,255,0.12)',
+                barColor: 'linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%)',
+                scoreColor: '#93c5fd',
+                nameColor: '#f8fafc',
+                badgeBg: 'rgba(59,130,246,0.25)',
+                badgeText: '#93c5fd',
+                shadow: 'none'
+              },
+              { // 3º Londres - Roxo elegante
+                bg: 'linear-gradient(135deg, #3b0764 0%, #4c1d95 100%)',
+                border: 'rgba(139,92,246,0.4)',
+                barBg: 'rgba(255,255,255,0.12)',
+                barColor: 'linear-gradient(90deg, #8b5cf6 0%, #a78bfa 100%)',
+                scoreColor: '#c4b5fd',
+                nameColor: '#f8fafc',
+                badgeBg: 'rgba(139,92,246,0.25)',
+                badgeText: '#c4b5fd',
+                shadow: 'none'
+              },
+              { // 4º Los Angeles - Laranja sunset
+                bg: 'linear-gradient(135deg, #7c2d12 0%, #9a3412 100%)',
+                border: 'rgba(249,115,22,0.4)',
+                barBg: 'rgba(255,255,255,0.12)',
+                barColor: 'linear-gradient(90deg, #f97316 0%, #fb923c 100%)',
+                scoreColor: '#fdba74',
+                nameColor: '#f8fafc',
+                badgeBg: 'rgba(249,115,22,0.25)',
+                badgeText: '#fdba74',
+                shadow: 'none'
+              },
+              { // 5º São Paulo - Teal escuro
+                bg: 'linear-gradient(135deg, #134e4a 0%, #115e59 100%)',
+                border: 'rgba(20,184,166,0.4)',
+                barBg: 'rgba(255,255,255,0.12)',
+                barColor: 'linear-gradient(90deg, #14b8a6 0%, #2dd4bf 100%)',
+                scoreColor: '#5eead4',
+                nameColor: '#f8fafc',
+                badgeBg: 'rgba(20,184,166,0.25)',
+                badgeText: '#5eead4',
+                shadow: 'none'
+              },
+              { // 6º Rio - Rose/Coral
+                bg: 'linear-gradient(135deg, #831843 0%, #9f1239 100%)',
+                border: 'rgba(244,63,94,0.4)',
+                barBg: 'rgba(255,255,255,0.12)',
+                barColor: 'linear-gradient(90deg, #f43f5e 0%, #fb7185 100%)',
+                scoreColor: '#fda4af',
+                nameColor: '#f8fafc',
+                badgeBg: 'rgba(244,63,94,0.25)',
+                badgeText: '#fda4af',
+                shadow: 'none'
+              }
             ]
             const style = cardStyles[i] || cardStyles[5]
             
             return (
               <div 
                 key={i} 
-                className="rounded-xl p-5"
+                className={`rounded-2xl p-5 transition-all duration-300 ${isWinner ? 'transform scale-[1.02]' : 'hover:scale-[1.01]'}`}
                 style={{
                   background: style.bg,
-                  border: `1px solid ${style.border}40`
+                  border: `2px solid ${style.border}`,
+                  boxShadow: style.shadow
                 }}
               >
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="text-xl font-bold flex items-center gap-2" style={{ color: '#ffffff' }}>
-                    {city.name} <span className="text-sm font-normal uppercase" style={{ color: 'rgba(255,255,255,0.6)' }}>{city.code}</span>
-                  </h4>
-                  <div className="text-2xl font-black" style={{ color: style.textColor }}>
-                    {city.total}%
+                  <div className="flex items-center gap-3">
+                    {/* Badge de posição */}
+                    <div 
+                      className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm"
+                      style={{ 
+                        background: style.badgeBg,
+                        color: style.badgeText
+                      }}
+                    >
+                      {i + 1}º
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-bold" style={{ color: style.nameColor }}>
+                        {city.name}
+                      </h4>
+                      <span 
+                        className="text-xs font-medium uppercase tracking-wider"
+                        style={{ color: 'rgba(255,255,255,0.5)' }}
+                      >
+                        {city.code}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div 
+                      className={`font-black ${isWinner ? 'text-4xl' : 'text-2xl'}`}
+                      style={{ color: style.scoreColor }}
+                    >
+                      {city.total}
+                    </div>
+                    <span className="text-xs uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                      {t.comparison.points}
+                    </span>
                   </div>
                 </div>
-                <div className="h-3 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.1)' }}>
+                <div 
+                  className="h-3 rounded-full overflow-hidden"
+                  style={{ background: style.barBg }}
+                >
                   <div
                     className="h-full rounded-full transition-all duration-700"
                     style={{ 
                       width: `${city.total}%`,
-                      background: `linear-gradient(90deg, ${style.barColor} 0%, ${style.barColor}cc 100%)`
+                      background: style.barColor
                     }}
                   />
                 </div>
+                {isWinner && (
+                  <div 
+                    className="mt-3 flex items-center justify-center gap-2 text-sm font-semibold"
+                    style={{ color: '#86efac' }}
+                  >
+                    <CanadaMapleLeaf size={16} />
+                    <span>{t.comparison.winnerLabel}</span>
+                  </div>
+                )}
               </div>
             )
           })}
         </div>
         
-        {/* Source */}
-        <div className="mt-8 text-center px-4">
-          <p className="text-xs max-w-2xl mx-auto leading-relaxed" style={{ color: '#64748b' }}>
-            📊 {t.comparison.source}
-          </p>
+        {/* Source - mais legível */}
+        <div className="mt-10 text-center px-4">
+          <div 
+            className="inline-block px-6 py-3 rounded-xl"
+            style={{ 
+              background: 'rgba(255,255,255,0.05)',
+              border: '1px solid rgba(255,255,255,0.1)'
+            }}
+          >
+            <p className="text-sm max-w-2xl mx-auto leading-relaxed" style={{ color: '#94a3b8' }}>
+              📊 {t.comparison.source}
+            </p>
+          </div>
         </div>
       </div>
 
