@@ -7,7 +7,6 @@
 
 import React, { useState } from 'react'
 import { type Lang } from '../i18n'
-import CanadaMapleLeaf from './CanadaMapleLeaf'
 
 interface WhyVancouverConvincingProps {
   lang: Lang
@@ -701,18 +700,29 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
                 badgeText: '#93c5fd',
                 shadow: 'none'
               },
-              { // 3º Londres - Roxo elegante
-                bg: 'linear-gradient(135deg, #3b0764 0%, #4c1d95 100%)',
-                border: 'rgba(139,92,246,0.4)',
+              { // 3º Londres - Azul mais claro (ainda bom)
+                bg: 'linear-gradient(135deg, #164e63 0%, #155e75 100%)',
+                border: 'rgba(6,182,212,0.4)',
                 barBg: 'rgba(255,255,255,0.12)',
-                barColor: 'linear-gradient(90deg, #8b5cf6 0%, #a78bfa 100%)',
-                scoreColor: '#c4b5fd',
+                barColor: 'linear-gradient(90deg, #06b6d4 0%, #22d3ee 100%)',
+                scoreColor: '#67e8f9',
                 nameColor: '#f8fafc',
-                badgeBg: 'rgba(139,92,246,0.25)',
-                badgeText: '#c4b5fd',
+                badgeBg: 'rgba(6,182,212,0.25)',
+                badgeText: '#67e8f9',
                 shadow: 'none'
               },
-              { // 4º Los Angeles - Laranja sunset
+              { // 4º Los Angeles - Amarelo/Âmbar (médio)
+                bg: 'linear-gradient(135deg, #78350f 0%, #92400e 100%)',
+                border: 'rgba(245,158,11,0.4)',
+                barBg: 'rgba(255,255,255,0.12)',
+                barColor: 'linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%)',
+                scoreColor: '#fcd34d',
+                nameColor: '#f8fafc',
+                badgeBg: 'rgba(245,158,11,0.25)',
+                badgeText: '#fcd34d',
+                shadow: 'none'
+              },
+              { // 5º São Paulo - Laranja (abaixo da média)
                 bg: 'linear-gradient(135deg, #7c2d12 0%, #9a3412 100%)',
                 border: 'rgba(249,115,22,0.4)',
                 barBg: 'rgba(255,255,255,0.12)',
@@ -723,26 +733,15 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
                 badgeText: '#fdba74',
                 shadow: 'none'
               },
-              { // 5º São Paulo - Teal escuro
-                bg: 'linear-gradient(135deg, #134e4a 0%, #115e59 100%)',
-                border: 'rgba(20,184,166,0.4)',
+              { // 6º Rio - Vermelho (pior score)
+                bg: 'linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%)',
+                border: 'rgba(239,68,68,0.4)',
                 barBg: 'rgba(255,255,255,0.12)',
-                barColor: 'linear-gradient(90deg, #14b8a6 0%, #2dd4bf 100%)',
-                scoreColor: '#5eead4',
+                barColor: 'linear-gradient(90deg, #ef4444 0%, #f87171 100%)',
+                scoreColor: '#fca5a5',
                 nameColor: '#f8fafc',
-                badgeBg: 'rgba(20,184,166,0.25)',
-                badgeText: '#5eead4',
-                shadow: 'none'
-              },
-              { // 6º Rio - Rose/Coral
-                bg: 'linear-gradient(135deg, #831843 0%, #9f1239 100%)',
-                border: 'rgba(244,63,94,0.4)',
-                barBg: 'rgba(255,255,255,0.12)',
-                barColor: 'linear-gradient(90deg, #f43f5e 0%, #fb7185 100%)',
-                scoreColor: '#fda4af',
-                nameColor: '#f8fafc',
-                badgeBg: 'rgba(244,63,94,0.25)',
-                badgeText: '#fda4af',
+                badgeBg: 'rgba(239,68,68,0.25)',
+                badgeText: '#fca5a5',
                 shadow: 'none'
               }
             ]
@@ -811,7 +810,7 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
                     className="mt-3 flex items-center justify-center gap-2 text-sm font-semibold"
                     style={{ color: '#86efac' }}
                   >
-                    <CanadaMapleLeaf size={16} />
+                    <span>🏆</span>
                     <span>{t.comparison.winnerLabel}</span>
                   </div>
                 )}
@@ -820,30 +819,30 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
           })}
         </div>
         
-        {/* Sources - com links clicáveis */}
-        <div className="mt-10 px-4">
+        {/* Sources - centralizado, menor que os cards */}
+        <div className="mt-12 flex justify-center px-4">
           <div 
-            className="max-w-2xl mx-auto px-6 py-5 rounded-2xl"
+            className="px-8 py-6 rounded-2xl"
             style={{ 
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%)',
-              border: '1px solid rgba(255,255,255,0.15)',
-              backdropFilter: 'blur(10px)'
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              maxWidth: '600px'
             }}
           >
             <div className="flex items-center justify-center gap-2 mb-4">
-              <span className="text-lg">📊</span>
-              <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: '#e2e8f0' }}>
+              <span className="text-xl">📊</span>
+              <span className="text-base font-semibold uppercase tracking-wider" style={{ color: '#f1f5f9' }}>
                 {lang === 'pt' ? 'Fontes Verificadas' : lang === 'es' ? 'Fuentes Verificadas' : lang === 'fr' ? 'Sources Vérifiées' : 'Verified Sources'}
               </span>
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
               {t.comparison.sources?.map((source: { name: string; url: string }, idx: number) => (
                 <a
                   key={idx}
                   href={source.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm font-medium transition-all hover:scale-105"
+                  className="text-base font-medium transition-all hover:scale-105"
                   style={{ 
                     color: '#60a5fa',
                     textDecoration: 'none'
@@ -852,11 +851,11 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
                   onMouseLeave={(e) => e.currentTarget.style.color = '#60a5fa'}
                 >
                   {source.name}
-                  <span className="ml-1 text-xs opacity-60">↗</span>
+                  <span className="ml-1 text-sm opacity-60">↗</span>
                 </a>
               ))}
             </div>
-            <p className="text-xs text-center mt-3" style={{ color: '#64748b' }}>
+            <p className="text-sm text-center mt-4" style={{ color: '#94a3b8' }}>
               {lang === 'pt' ? 'Dados atualizados em 2024' : lang === 'es' ? 'Datos actualizados en 2024' : lang === 'fr' ? 'Données mises à jour en 2024' : 'Data updated in 2024'}
             </p>
           </div>
