@@ -613,11 +613,21 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
         </div>
 
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          {/* Hero — gradiente sutil, paleta do site */}
-          <div className="relative mb-12 md:mb-16 text-center rounded-2xl overflow-hidden bg-gradient-to-b from-azimut-red/5 via-transparent to-transparent border border-azimut-red/10 py-10 md:py-14 px-6">
-            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(201,35,55,0.08),transparent)]" aria-hidden />
+          {/* Hero — tema claro: neutro (sem vermelho sobre vermelho); tema escuro: gradiente sutil */}
+          <div className={`relative mb-12 md:mb-16 text-center rounded-2xl overflow-hidden py-10 md:py-14 px-6 ${
+            theme === 'light'
+              ? 'bg-gradient-to-b from-stone-100 to-transparent border border-stone-200'
+              : 'bg-gradient-to-b from-azimut-red/5 via-transparent to-transparent border border-azimut-red/10'
+          }`}>
+            {theme === 'dark' && (
+              <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(201,35,55,0.08),transparent)]" aria-hidden />
+            )}
             <div className="relative">
-              <div className="mb-4 inline-block rounded-full bg-azimut-red/10 px-4 py-2 text-sm font-semibold text-azimut-red border border-azimut-red/30">
+              <div className={`mb-4 inline-block rounded-full px-4 py-2 text-sm font-semibold border ${
+                theme === 'light'
+                  ? 'bg-white/90 text-slate-800 border-stone-300 shadow-sm'
+                  : 'bg-azimut-red/10 text-azimut-red border-azimut-red/30'
+              }`}>
                 {text.badge}
               </div>
               <h1 className="mb-4 font-handel text-4xl sm:text-5xl md:text-6xl font-bold uppercase text-theme-text">
@@ -632,11 +642,15 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
             </div>
           </div>
 
-          {/* Highlights — cards com gradiente leve */}
+          {/* Highlights — tema claro: fundo neutro (sem vermelho); tema escuro: gradiente leve */}
           {text.highlights && (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-12 md:mb-16">
               {text.highlights.map((item, i) => (
-                <div key={i} className="text-center p-4 md:p-6 rounded-xl bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] dark:to-transparent border border-azimut-red/20 hover:border-azimut-red/40 hover:from-azimut-red/5 transition-all duration-300">
+                <div key={i} className={`text-center p-4 md:p-6 rounded-xl border transition-all duration-300 ${
+                  theme === 'light'
+                    ? 'bg-white/95 border-stone-200 hover:border-stone-300 shadow-sm'
+                    : 'bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20 hover:border-azimut-red/40 hover:from-azimut-red/5'
+                }`}>
                   <div className="text-3xl sm:text-4xl md:text-5xl mb-2 md:mb-3">
                     {item.icon === 'maple-leaf' ? (
                       <img src="/Maple-Leaf-Canada.png" alt="Canada" className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 inline-block" />
@@ -644,8 +658,8 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
                       item.icon
                     )}
                   </div>
-                  <h3 className={`text-sm md:text-base font-bold mb-0.5 md:mb-1 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{item.title}</h3>
-                  <p className={`text-xs md:text-sm ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-on-dark-secondary'}`}>{item.desc}</p>
+                  <h3 className={`text-sm md:text-base font-bold mb-0.5 md:mb-1 ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>{item.title}</h3>
+                  <p className={`text-xs md:text-sm ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-slate-600'}`}>{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -659,7 +673,11 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
                   <a
                     key={i}
                     href={`#${item.id}`}
-                    className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white/5 border border-azimut-red/20 text-theme-text-secondary hover:text-azimut-red hover:border-azimut-red/40 text-sm font-medium transition-colors"
+                    className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                      theme === 'light'
+                        ? 'bg-white/90 border border-stone-200 text-slate-700 hover:border-azimut-red/50 hover:text-azimut-red'
+                        : 'bg-white/5 border border-azimut-red/20 text-theme-text-secondary hover:text-azimut-red hover:border-azimut-red/40'
+                    }`}
                   >
                     <span>{item.icon}</span>
                     <span>{item.text}</span>
@@ -696,8 +714,10 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
 
                   {section.highlight && (
                     <div className="pl-0 md:pl-16 mb-6">
-                      <div className="p-4 rounded-xl bg-gradient-to-r from-azimut-red/10 to-transparent border-l-4 border-azimut-red">
-                        <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>{section.highlight}</p>
+                      <div className={`p-4 rounded-xl border-l-4 border-azimut-red ${
+                        theme === 'light' ? 'bg-stone-50 text-slate-800' : 'bg-gradient-to-r from-azimut-red/10 to-transparent'
+                      }`}>
+                        <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>{section.highlight}</p>
                       </div>
                     </div>
                   )}
@@ -710,7 +730,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
                           <ul className="space-y-2">
                             {item.list.map((li, k) => (
                               <li key={k} className="flex items-start gap-2 text-theme-text-secondary">
-                                <span className="text-azimut-red mt-1">✓</span>
+                                <span className={`mt-1 flex-shrink-0 ${theme === 'light' ? 'text-slate-600' : 'text-azimut-red'}`}>✓</span>
                                 <span>{li}</span>
                               </li>
                             ))}
@@ -723,10 +743,14 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
                   {section.grid && (
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 pl-0 md:pl-16">
                       {section.grid.map((card, j) => (
-                        <div key={j} className="p-4 rounded-xl bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20 hover:border-azimut-red/30 transition-colors">
+                        <div key={j} className={`p-4 rounded-xl border transition-colors ${
+                          theme === 'light'
+                            ? 'bg-white/95 border-stone-200 hover:border-stone-300'
+                            : 'bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border-azimut-red/20 hover:border-azimut-red/30'
+                        }`}>
                           <div className="text-2xl md:text-3xl mb-2">{card.icon}</div>
-                          <h4 className={`font-semibold mb-2 text-sm md:text-base ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{card.title}</h4>
-                          <p className={`text-xs md:text-sm ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-on-dark-secondary'}`}>{card.desc}</p>
+                          <h4 className={`font-semibold mb-2 text-sm md:text-base ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>{card.title}</h4>
+                          <p className={`text-xs md:text-sm ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-slate-600'}`}>{card.desc}</p>
                         </div>
                       ))}
                     </div>
@@ -735,11 +759,15 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
                   {section.rights && (
                     <div className="grid sm:grid-cols-2 gap-3 md:gap-4 pl-0 md:pl-16 mb-6">
                       {section.rights.map((right, j) => (
-                        <div key={j} className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/15 hover:border-azimut-red/30 transition-colors">
+                        <div key={j} className={`flex items-start gap-3 p-4 rounded-xl border transition-colors ${
+                          theme === 'light'
+                            ? 'bg-white/95 border-stone-200 hover:border-stone-300'
+                            : 'bg-gradient-to-br from-white/5 to-transparent dark:from-white/[0.06] border-azimut-red/15 hover:border-azimut-red/30'
+                        }`}>
                           <span className="text-2xl flex-shrink-0">{right.icon}</span>
                           <div className="min-w-0">
-                            <h4 className={`font-semibold mb-1 text-sm md:text-base ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{right.title}</h4>
-                            <p className={`text-sm ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-on-dark-secondary'}`}>{right.desc}</p>
+                            <h4 className={`font-semibold mb-1 text-sm md:text-base ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>{right.title}</h4>
+                            <p className={`text-sm ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-slate-600'}`}>{right.desc}</p>
                           </div>
                         </div>
                       ))}
@@ -748,8 +776,10 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
 
                   {section.cta && (
                     <div className="pl-0 md:pl-16">
-                      <div className="p-4 rounded-xl bg-gradient-to-r from-azimut-red/10 to-azimut-red/5 border border-azimut-red/30 text-center">
-                        <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>{section.cta}</p>
+                      <div className={`p-4 rounded-xl border-l-4 border-azimut-red text-center ${
+                        theme === 'light' ? 'bg-stone-50 border border-stone-200' : 'bg-gradient-to-r from-azimut-red/10 to-azimut-red/5 border border-azimut-red/30'
+                      }`}>
+                        <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>{section.cta}</p>
                       </div>
                     </div>
                   )}
@@ -757,14 +787,16 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
                   {section.contacts && (
                     <div className="grid sm:grid-cols-2 gap-3 md:gap-4 pl-0 md:pl-16">
                       {section.contacts.map((contact, j) => (
-                        <div key={j} className="p-4 rounded-xl bg-gradient-to-br from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/15">
+                        <div key={j} className={`p-4 rounded-xl border ${
+                          theme === 'light' ? 'bg-white/95 border-stone-200' : 'bg-gradient-to-br from-white/5 to-transparent dark:from-white/[0.06] border-azimut-red/15'
+                        }`}>
                           <p className="text-sm text-theme-text-secondary mb-1">{contact.label}</p>
                           {contact.type === 'email' ? (
-                            <a href={`mailto:${contact.value}`} className={`font-medium ${theme === 'dark' ? 'text-white hover:text-azimut-red' : 'text-on-dark-primary hover:text-azimut-red'} transition-colors`}>
+                            <a href={`mailto:${contact.value}`} className={`font-medium transition-colors ${theme === 'dark' ? 'text-white hover:text-azimut-red' : 'text-slate-800 hover:text-azimut-red'}`}>
                               {contact.value}
                             </a>
                           ) : (
-                            <p className={theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}>{contact.value}</p>
+                            <p className={theme === 'dark' ? 'text-white' : 'text-slate-800'}>{contact.value}</p>
                           )}
                         </div>
                       ))}
@@ -774,10 +806,14 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
               ))}
             </div>
 
-            {/* Sidebar — Quick Links (desktop): gradiente e borda */}
+            {/* Sidebar — tema claro: fundo neutro, hover sem vermelho de fundo */}
             {text.quickLinks && (
               <aside className="hidden lg:block">
-                <div className="sticky top-24 p-6 rounded-2xl bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20 border-l-4 border-l-azimut-red/60 backdrop-blur-sm">
+                <div className={`sticky top-24 p-6 rounded-2xl backdrop-blur-sm ${
+                  theme === 'light'
+                    ? 'bg-white/95 border border-stone-200 border-l-4 border-l-azimut-red/50 shadow-sm'
+                    : 'bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20 border-l-4 border-l-azimut-red/60'
+                }`}>
                   <h3 className="text-sm font-bold text-theme-text mb-4 uppercase tracking-wider">
                     {text.quickLinks.title}
                   </h3>
@@ -786,7 +822,11 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
                       <a
                         key={i}
                         href={`#${item.id}`}
-                        className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm text-theme-text-secondary hover:text-azimut-red hover:bg-azimut-red/10 transition-all"
+                        className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm transition-all ${
+                          theme === 'light'
+                            ? 'text-slate-700 hover:bg-stone-100 hover:text-slate-900 border-l-2 border-l-transparent hover:border-l-azimut-red'
+                            : 'text-theme-text-secondary hover:text-azimut-red hover:bg-azimut-red/10'
+                        }`}
                       >
                         <span>{item.icon}</span>
                         <span>{item.text}</span>
@@ -794,7 +834,7 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
                     ))}
                   </nav>
 
-                  <div className="mt-8 pt-6 border-t border-azimut-red/20">
+                  <div className={`mt-8 pt-6 border-t ${theme === 'light' ? 'border-stone-200' : 'border-azimut-red/20'}`}>
                     <LangLink
                       to="/contact"
                       className="block text-center px-4 py-3 rounded-xl bg-azimut-red text-white text-sm font-semibold hover:bg-azimut-red/90 transition-all"
@@ -807,9 +847,24 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
             )}
           </div>
 
+          {/* Botão Voltar */}
+          <div className="mt-12 text-center">
+            <LangLink
+              to="/"
+              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                theme === 'light'
+                  ? 'text-slate-700 hover:text-slate-900 hover:bg-stone-100 border border-stone-200'
+                  : 'text-theme-text-secondary hover:text-white hover:bg-white/10 border border-white/20'
+              }`}
+            >
+              <span aria-hidden>←</span>
+              {lang === 'pt' ? 'Voltar' : lang === 'en' ? 'Back' : lang === 'es' ? 'Volver' : lang === 'fr' ? 'Retour' : 'Voltar'}
+            </LangLink>
+          </div>
+
           {/* Footer */}
-          <footer className="mt-16 pt-8 border-t border-white/10 text-center">
-            <p className="text-sm text-gray-500">
+          <footer className={`mt-8 pt-8 text-center ${theme === 'light' ? 'border-t border-stone-200' : 'border-t border-white/10'}`}>
+            <p className={`text-sm ${theme === 'light' ? 'text-slate-500' : 'text-gray-500'}`}>
               {lang === 'fr' ? '© 2026 Azimut. Tous droits réservés.' : 
                lang === 'es' ? '© 2026 Azimut. Todos los derechos reservados.' :
                lang === 'en' ? '© 2026 Azimut. All rights reserved.' :

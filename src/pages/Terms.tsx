@@ -438,9 +438,15 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
         </div>
 
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          {/* Hero — gradiente sutil, mesma paleta do Privacy */}
-          <div className="relative mb-12 md:mb-16 text-center rounded-2xl overflow-hidden bg-gradient-to-b from-azimut-red/5 via-transparent to-transparent border border-azimut-red/10 py-10 md:py-14 px-6">
-            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(201,35,55,0.08),transparent)]" aria-hidden />
+          {/* Hero — tema claro: neutro (sem vermelho); tema escuro: gradiente sutil */}
+          <div className={`relative mb-12 md:mb-16 text-center rounded-2xl overflow-hidden py-10 md:py-14 px-6 ${
+            theme === 'light'
+              ? 'bg-gradient-to-b from-stone-100 to-transparent border border-stone-200'
+              : 'bg-gradient-to-b from-azimut-red/5 via-transparent to-transparent border border-azimut-red/10'
+          }`}>
+            {theme === 'dark' && (
+              <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(201,35,55,0.08),transparent)]" aria-hidden />
+            )}
             <div className="relative">
               <h1 className="mb-4 font-handel text-4xl sm:text-5xl md:text-6xl font-bold uppercase text-theme-text">
                 {text.title}
@@ -454,14 +460,18 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
             </div>
           </div>
 
-          {/* Highlights — cards com gradiente */}
+          {/* Highlights — tema claro: fundo neutro */}
           {text.highlights && (
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-12 md:mb-16">
               {text.highlights.map((item, i) => (
-                <div key={i} className="text-center p-4 md:p-6 rounded-xl bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] dark:to-transparent border border-azimut-red/20 hover:border-azimut-red/40 hover:from-azimut-red/5 transition-all duration-300">
+                <div key={i} className={`text-center p-4 md:p-6 rounded-xl border transition-all duration-300 ${
+                  theme === 'light'
+                    ? 'bg-white/95 border-stone-200 hover:border-stone-300 shadow-sm'
+                    : 'bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20 hover:border-azimut-red/40 hover:from-azimut-red/5'
+                }`}>
                   <div className="text-3xl sm:text-4xl mb-2 md:mb-3">{item.icon}</div>
-                  <h3 className={`text-sm md:text-base font-bold mb-0.5 md:mb-1 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{item.title}</h3>
-                  <p className={`text-xs md:text-sm ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-on-dark-secondary'}`}>{item.desc}</p>
+                  <h3 className={`text-sm md:text-base font-bold mb-0.5 md:mb-1 ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>{item.title}</h3>
+                  <p className={`text-xs md:text-sm ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-slate-600'}`}>{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -475,7 +485,11 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
                   <a
                     key={i}
                     href={`#${item.id}`}
-                    className="flex-shrink-0 flex items-center gap-2 px-3 py-2.5 rounded-lg bg-white/5 border border-azimut-red/20 text-theme-text-secondary hover:text-azimut-red hover:border-azimut-red/40 text-sm font-medium transition-colors"
+                    className={`flex-shrink-0 flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                      theme === 'light'
+                        ? 'bg-white/90 border border-stone-200 text-slate-700 hover:border-azimut-red/50 hover:text-azimut-red'
+                        : 'bg-white/5 border border-azimut-red/20 text-theme-text-secondary hover:text-azimut-red hover:border-azimut-red/40'
+                    }`}
                   >
                     <span>{item.icon}</span>
                     <span className="line-clamp-1 max-w-[140px]">{item.text}</span>
@@ -504,13 +518,13 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
                         {section.content}
                       </p>
                       {section.highlight && (
-                        <div className="p-4 rounded-xl bg-gradient-to-r from-azimut-red/10 to-transparent border-l-4 border-azimut-red">
-                          <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>{section.highlight}</p>
+                        <div className={`p-4 rounded-xl border-l-4 border-azimut-red ${theme === 'light' ? 'bg-stone-50 text-slate-800' : 'bg-gradient-to-r from-azimut-red/10 to-transparent'}`}>
+                          <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>{section.highlight}</p>
                         </div>
                       )}
                       {section.flags && (
-                        <div className="text-center p-4 rounded-xl bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20">
-                          <p className={`text-base md:text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{section.flags}</p>
+                        <div className={`text-center p-4 rounded-xl border ${theme === 'light' ? 'bg-white/95 border-stone-200' : 'bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border-azimut-red/20'}`}>
+                          <p className={`text-base md:text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>{section.flags}</p>
                         </div>
                       )}
                     </div>
@@ -519,15 +533,17 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
                   {section.type === 'grid' && section.items && (
                     <div className="pl-0 md:pl-14 grid sm:grid-cols-2 gap-4 md:gap-6">
                       {section.items.map((item, j) => (
-                        <div key={j} className="p-5 md:p-6 rounded-xl bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20 hover:border-azimut-red/30 transition-colors">
+                        <div key={j} className={`p-5 md:p-6 rounded-xl border transition-colors ${
+                          theme === 'light' ? 'bg-white/95 border-stone-200 hover:border-stone-300' : 'bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20 hover:border-azimut-red/30'
+                        }`}>
                           <div className="flex items-center gap-2 mb-4">
                             <span className="text-2xl">{item.icon}</span>
-                            <h4 className={`text-base md:text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{item.title}</h4>
+                            <h4 className={`text-base md:text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>{item.title}</h4>
                           </div>
                           <ul className="space-y-2">
                             {item.list.map((li, k) => (
                               <li key={k} className="flex items-start gap-2 text-sm text-theme-text-secondary">
-                                <span className="text-azimut-red mt-0.5">•</span>
+                                <span className={`mt-0.5 flex-shrink-0 ${theme === 'light' ? 'text-slate-600' : 'text-azimut-red'}`}>•</span>
                                 <span>{li}</span>
                               </li>
                             ))}
@@ -540,10 +556,12 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
                   {section.type === 'cards' && section.cards && (
                     <div className="pl-0 md:pl-14 grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                       {section.cards.map((card, j) => (
-                        <div key={j} className="p-4 rounded-xl bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20 hover:border-azimut-red/30 transition-colors text-center">
+                        <div key={j} className={`p-4 rounded-xl border transition-colors text-center ${
+                          theme === 'light' ? 'bg-white/95 border-stone-200 hover:border-stone-300' : 'bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20 hover:border-azimut-red/30'
+                        }`}>
                           <div className="text-2xl md:text-3xl mb-2">{card.icon}</div>
-                          <h4 className={`font-semibold mb-2 text-sm md:text-base ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{card.title}</h4>
-                          <p className="text-xs md:text-sm text-theme-text-secondary">{card.desc}</p>
+                          <h4 className={`font-semibold mb-2 text-sm md:text-base ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>{card.title}</h4>
+                          <p className={`text-xs md:text-sm ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-slate-600'}`}>{card.desc}</p>
                         </div>
                       ))}
                     </div>
@@ -551,7 +569,9 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
 
                   {section.type === 'contact' && section.contact && (
                     <div className="pl-0 md:pl-14">
-                      <div className="p-6 rounded-2xl bg-gradient-to-br from-azimut-red/10 to-azimut-red/5 border border-azimut-red/30">
+                      <div className={`p-6 rounded-2xl border ${
+                        theme === 'light' ? 'bg-stone-50 border-stone-200' : 'bg-gradient-to-br from-azimut-red/10 to-azimut-red/5 border-azimut-red/30'
+                      }`}>
                         <div className="grid sm:grid-cols-2 gap-4 mb-4">
                           <div>
                             <p className="text-sm text-theme-text-secondary mb-1">📧 {lang === 'fr' ? 'Courriel Général' : lang === 'es' ? 'Email General' : lang === 'en' ? 'General Email' : 'Email Geral'}</p>
@@ -572,7 +592,7 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
                             </a>
                           </div>
                         </div>
-                        <div className="flex flex-wrap gap-4 pt-4 border-t border-azimut-red/20">
+                        <div className={`flex flex-wrap gap-4 pt-4 border-t ${theme === 'light' ? 'border-stone-200' : 'border-azimut-red/20'}`}>
                           {section.contact.locations.map((loc, j) => (
                             <span key={j} className="text-sm text-theme-text-secondary">
                               {loc}
@@ -586,9 +606,13 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
               ))}
             </div>
 
-            {/* Sidebar — Quick Links (desktop) */}
+            {/* Sidebar — tema claro: fundo neutro, hover sem vermelho de fundo */}
             <aside className="hidden lg:block">
-              <div className="sticky top-24 p-6 rounded-2xl bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20 border-l-4 border-l-azimut-red/60 backdrop-blur-sm">
+              <div className={`sticky top-24 p-6 rounded-2xl backdrop-blur-sm ${
+                theme === 'light'
+                  ? 'bg-white/95 border border-stone-200 border-l-4 border-l-azimut-red/50 shadow-sm'
+                  : 'bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] border border-azimut-red/20 border-l-4 border-l-azimut-red/60'
+              }`}>
                 <h3 className="text-sm font-bold text-theme-text mb-4 uppercase tracking-wider">
                   {quickLinksTitle}
                 </h3>
@@ -597,14 +621,18 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
                     <a
                       key={i}
                       href={`#${item.id}`}
-                      className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm text-theme-text-secondary hover:text-azimut-red hover:bg-azimut-red/10 transition-all"
+                      className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm transition-all ${
+                        theme === 'light'
+                          ? 'text-slate-700 hover:bg-stone-100 hover:text-slate-900'
+                          : 'text-theme-text-secondary hover:text-azimut-red hover:bg-azimut-red/10'
+                      }`}
                     >
                       <span>{item.icon}</span>
                       <span className="line-clamp-2">{item.text}</span>
                     </a>
                   ))}
                 </nav>
-                <div className="mt-8 pt-6 border-t border-azimut-red/20">
+                <div className={`mt-8 pt-6 border-t ${theme === 'light' ? 'border-stone-200' : 'border-azimut-red/20'}`}>
                   <LangLink
                     to="/contact"
                     className="block text-center px-4 py-3 rounded-xl bg-azimut-red text-white text-sm font-semibold hover:bg-azimut-red/90 transition-all"
@@ -626,9 +654,24 @@ const Terms: React.FC<TermsProps> = ({ lang }) => {
             </LangLink>
           </div>
 
+          {/* Botão Voltar */}
+          <div className="mt-12 text-center">
+            <LangLink
+              to="/"
+              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                theme === 'light'
+                  ? 'text-slate-700 hover:text-slate-900 hover:bg-stone-100 border border-stone-200'
+                  : 'text-theme-text-secondary hover:text-white hover:bg-white/10 border border-white/20'
+              }`}
+            >
+              <span aria-hidden>←</span>
+              {lang === 'pt' ? 'Voltar' : lang === 'en' ? 'Back' : lang === 'es' ? 'Volver' : lang === 'fr' ? 'Retour' : 'Voltar'}
+            </LangLink>
+          </div>
+
           {/* Footer */}
-          <footer className="mt-16 pt-8 border-t border-azimut-red/20 text-center">
-            <p className="text-sm text-theme-text-secondary/70">
+          <footer className={`mt-8 pt-8 text-center ${theme === 'light' ? 'border-t border-stone-200' : 'border-t border-azimut-red/20'}`}>
+            <p className={`text-sm ${theme === 'light' ? 'text-slate-500' : 'text-theme-text-secondary/70'}`}>
               {lang === 'fr' ? '© 2026 Azimut. Tous droits réservés.' : 
                lang === 'es' ? '© 2026 Azimut. Todos los derechos reservados.' :
                lang === 'en' ? '© 2026 Azimut. All rights reserved.' :

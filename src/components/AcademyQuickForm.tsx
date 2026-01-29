@@ -486,7 +486,7 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
           {/* Name */}
           <div>
             <label className="block text-sm font-semibold text-white/90 mb-2 uppercase tracking-wider">
-              {t.fields.name} *
+              {t(lang, 'formAcademyFieldName')} *
             </label>
             <input
               type="text"
@@ -494,28 +494,28 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="input-adaptive w-full"
               required
-              placeholder={t.placeholders.name}
+              placeholder={t(lang, 'formAcademyPlaceholderName')}
             />
           </div>
 
           {/* Email */}
           <div>
             <label className="block text-sm font-semibold text-white/90 mb-2 uppercase tracking-wider">
-              {t.fields.email} *
+              {t(lang, 'formAcademyFieldEmail')} *
             </label>
             <input
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="input-adaptive w-full"
-              placeholder={t.placeholders.email}
+              placeholder={t(lang, 'formAcademyPlaceholderEmail')}
             />
           </div>
 
           {/* Phone (Country Code + Number) */}
           <div>
             <label className="block text-sm font-semibold text-white/90 mb-2 uppercase tracking-wider">
-              {t.fields.phone}
+              {t(lang, 'formAcademyFieldPhone')}
             </label>
             <div className="flex gap-2" style={{ alignItems: 'stretch', flexWrap: 'nowrap' }}>
               {!customCodeMode ? (
