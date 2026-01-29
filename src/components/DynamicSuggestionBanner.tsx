@@ -29,32 +29,15 @@ const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
   
   // Mostrar banner quando intenção detectada
   useEffect(() => {
-    // Debug: Log para ver o que está acontecendo
-    if (intention) {
-      console.log('🎯 Intenção detectada:', {
-        intention: intention.intention,
-        confidence: intention.confidence,
-        minConfidence,
-        meetsThreshold: intention.confidence >= minConfidence,
-        isDismissed,
-        personalizedCTA: intention.personalizedCTA
-      })
-    }
-    
     if (intention && intention.confidence >= minConfidence && !isDismissed) {
-      console.log('✅ Banner será exibido!')
       setIsVisible(true)
       
       // Auto-hide após delay
       const timer = setTimeout(() => {
-        console.log('⏰ Banner auto-hide após', autoHideDelay, 'ms')
         setIsVisible(false)
       }, autoHideDelay)
       
       return () => clearTimeout(timer)
-    } else if (intention && intention.confidence < minConfidence) {
-      console.log('⚠️ Confiança baixa:', intention.confidence, '<', minConfidence)
-      setIsVisible(false)
     } else {
       setIsVisible(false)
     }
@@ -65,38 +48,11 @@ const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
     setIsDismissed(false)
   }, [intention?.intention])
   
-  // Debug: Log quando não renderiza
-  if (!intention) {
-    if (!loading) {
-      console.log('⚠️ Banner não renderiza: sem intenção detectada')
-    }
+  if (!intention || loading || !isVisible || intention.confidence < minConfidence) {
     return null
   }
-  
-  if (loading) {
-    console.log('⏳ Banner aguardando análise de intenção...')
-    return null
-  }
-  
-  if (!isVisible) {
-    console.log('👁️ Banner não visível (isVisible=false)')
-    return null
-  }
-  
-  if (intention.confidence < minConfidence) {
-    console.log('📊 Banner não renderiza: confiança', intention.confidence, '<', minConfidence)
-    return null
-  }
-  
-  console.log('🎨 Renderizando banner!', {
-    intention: intention.intention,
-    confidence: intention.confidence,
-    cta: intention.personalizedCTA
-  })
   
   const handleClick = () => {
-    console.log('🖱️ Banner clicado! Ação:', intention.suggestedAction, 'Intenção:', intention.intention)
-    
     // Rotas específicas por tipo de intenção
     const routes: Record<string, string> = {
       'interested_in_museums': `/${lang}/work`,
@@ -107,9 +63,6 @@ const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
     }
     
     const targetRoute = routes[intention.intention] || `/${lang}/work`
-    console.log('🚀 Navegando para:', targetRoute)
-    
-    // Forçar navegação
     navigate(targetRoute)
     setIsVisible(false)
   }

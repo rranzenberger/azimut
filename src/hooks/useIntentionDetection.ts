@@ -52,7 +52,6 @@ export function useIntentionDetection(lang?: string) {
     
     // Se está em página específica, detectar imediatamente (após 2s)
     if (isMuseumPage && behavior.timeOnPage >= 2) {
-      console.log('🎯 Detecção rápida: página de museus detectada!')
       const quickIntention: DetectedIntention = {
         intention: 'interested_in_museums',
         confidence: 0.75,
@@ -67,7 +66,6 @@ export function useIntentionDetection(lang?: string) {
     }
     
     if (isVRPage && behavior.timeOnPage >= 2) {
-      console.log('🎯 Detecção rápida: página de VR detectada!')
       const quickIntention: DetectedIntention = {
         intention: 'interested_in_vr',
         confidence: 0.75,
@@ -82,7 +80,6 @@ export function useIntentionDetection(lang?: string) {
     }
     
     if (isEducationPage && behavior.timeOnPage >= 2) {
-      console.log('🎯 Detecção rápida: página de educação/Vancouver detectada!')
       const quickIntention: DetectedIntention = {
         intention: 'interested_in_education',
         confidence: 0.75,
@@ -96,27 +93,14 @@ export function useIntentionDetection(lang?: string) {
       return
     }
     
-    // Debug: Log comportamento
-    console.log('🔍 useIntentionDetection - Comportamento:', {
-      timeOnPage: behavior.timeOnPage,
-      timeOnSite: behavior.timeOnSite,
-      pagesVisited: behavior.pagesVisited.length,
-      categoriesClicked: behavior.categoriesClicked.length,
-      projectsViewed: behavior.projectsViewed.length,
-      searchesPerformed: behavior.searchesPerformed.length
-    })
-    
     // Não analisar se tempo na página < 5s (para análise completa)
     if (behavior.timeOnPage < MIN_TIME_FOR_ANALYSIS) {
-      console.log('⏱️ Aguardando 5s na página...', behavior.timeOnPage, 's')
       return
     }
     
     // Não analisar muito frequentemente (mínimo 10s entre análises)
     const now = Date.now()
     if (now - lastAnalysisRef.current < ANALYSIS_INTERVAL) {
-      const remaining = Math.ceil((ANALYSIS_INTERVAL - (now - lastAnalysisRef.current)) / 1000)
-      console.log('⏳ Aguardando', remaining, 's antes da próxima análise...')
       return
     }
     
@@ -143,11 +127,9 @@ export function useIntentionDetection(lang?: string) {
     setError(null)
     lastAnalysisRef.current = now
     
-    console.log('🚀 Iniciando análise de intenção...')
     analyzeIntention(behavior, controller.signal)
       .then(result => {
         if (!controller.signal.aborted) {
-          console.log('✅ Intenção detectada:', result)
           setIntention(result)
           // Salvar no cache
           analysisCacheRef.current.set(behaviorHash, result)
