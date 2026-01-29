@@ -17,7 +17,6 @@ import Breadcrumbs from './Breadcrumbs'
 import SearchModal from './SearchModal'
 import SEOGlobal from './SEOGlobal' // SEO Global Schemas
 import SchemaBreadcrumbList from './SchemaBreadcrumbList'
-import GoogleSearchConsoleVerification from './GoogleSearchConsoleVerification'
 import { type UserProfile } from './BudgetWizard'
 import { trackCTA, trackLanguageChange } from '../utils/analytics'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -2051,9 +2050,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
 
       {/* Schema.org - BreadcrumbList (Organization via SEOGlobal) */}
       <SchemaBreadcrumbList lang={lang} />
-      
-      {/* Google Search Console Verification */}
-      <GoogleSearchConsoleVerification />
+
+      {/* GSC: meta google-site-verification injetada em build no index.html (vite.config) */}
 
       {/* Budget Wizard Modal */}
       <BudgetWizardModal

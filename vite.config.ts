@@ -1,10 +1,29 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
+import type { PluginOption } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
+/** Injeta meta google-site-verification no index.html em build (HTML bruto). GSC exige a tag no source. */
+function injectGscMeta(mode: string): PluginOption {
+  const env = loadEnv(mode, process.cwd(), '')
+  const code = process.env.VITE_GOOGLE_SEARCH_CONSOLE_VERIFICATION ?? env.VITE_GOOGLE_SEARCH_CONSOLE_VERIFICATION
+  const replacement = code
+    ? `<meta name="google-site-verification" content="${code}" />`
+    : '<!-- GSC: defina VITE_GOOGLE_SEARCH_CONSOLE_VERIFICATION no Vercel e redeploy -->'
+  return {
+    name: 'inject-gsc-meta',
+    transformIndexHtml: {
+      order: 'pre',
+      handler(html) {
+        return html.replace('<!-- GSC_META_INJECT -->', replacement)
+      },
+    },
+  }
+}
+
+export default defineConfig(({ mode }) => ({
+  plugins: [injectGscMeta(mode), react(), tailwindcss()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -90,4 +109,4 @@ export default defineConfig({
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
   },
-})
+}))
