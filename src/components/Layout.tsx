@@ -125,27 +125,41 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
   
-  // 🆕 DETECÇÃO DINÂMICA - 4 ESTADOS DE RESPONSIVIDADE
-  // Estado 1: >1400px = Menu completo com logo grande
-  // Estado 2: 1100-1400px = Menu completo compacto com logo-nome
-  // Estado 3: 800-1100px = Hamburger + logo-nome + idiomas
-  // Estado 4: <800px = Hamburger + logo mínima (sem idiomas)
+  // 🆕 DETECÇÃO DINÂMICA - 5 ESTADOS DE RESPONSIVIDADE
+  // Estado 1: >1400px = Menu desktop com estrela + texto completo + idiomas inline
+  // Estado 2: 1100-1400px = Menu desktop compacto com estrela + "azimut" + idiomas inline
+  // Estado 3: 800-1100px = Hamburger + estrela + "azimut" + idiomas inline
+  // Estado 4: 550-800px = Hamburger + estrela + "azimut" + ÍCONE idiomas
+  // Estado 5: <550px = Hamburger + só estrela + ÍCONE idiomas
   
-  const [headerState, setHeaderState] = useState<'full' | 'compact' | 'hamburger-langs' | 'hamburger-minimal'>(() => {
+  const [headerState, setHeaderState] = useState<'full' | 'compact' | 'hamburger-langs' | 'hamburger-compact' | 'hamburger-minimal'>(() => {
     if (typeof window !== 'undefined') {
       const w = window.innerWidth
       if (w >= 1400) return 'full'
       if (w >= 1100) return 'compact'
-      if (w >= 800) return 'hamburger-langs'
-      return 'hamburger-minimal'
+      if (w >= 900) return 'hamburger-langs' // idiomas inline só acima de 900px
+      if (w >= 450) return 'hamburger-compact' // estrela + azimut + ícone idiomas
+      return 'hamburger-minimal' // estrela + ícone idiomas
     }
     return 'full'
   })
   
+  // Estado do dropdown de idiomas (para mobile)
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false)
+  
   // Compatibilidade com código existente
-  const isMobile = headerState === 'hamburger-langs' || headerState === 'hamburger-minimal'
+  const isMobile = headerState === 'hamburger-langs' || headerState === 'hamburger-compact' || headerState === 'hamburger-minimal'
   const isCompactMode = headerState === 'compact'
-  const showLanguagesInHeader = headerState !== 'hamburger-minimal'
+  
+  // Mostrar idiomas inline (bandeiras + texto) ou como ícone?
+  const showLanguagesInline = headerState === 'full' || headerState === 'compact' || headerState === 'hamburger-langs'
+  const showLanguageIcon = headerState === 'hamburger-compact' || headerState === 'hamburger-minimal'
+  
+  // Mostrar texto ao lado da estrela?
+  const showLogoText = headerState === 'full' || headerState === 'compact' || headerState === 'hamburger-langs' || headerState === 'hamburger-compact'
+  
+  // Compatibilidade - sempre mostrar área de idiomas (inline ou ícone)
+  const showLanguagesInHeader = true
   
   // Detectar estado do header baseado na largura
   React.useEffect(() => {
@@ -156,8 +170,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         setHeaderState('full')
       } else if (w >= 1100) {
         setHeaderState('compact')
-      } else if (w >= 800) {
+      } else if (w >= 900) {
         setHeaderState('hamburger-langs')
+      } else if (w >= 450) {
+        setHeaderState('hamburger-compact')
       } else {
         setHeaderState('hamburger-minimal')
       }
@@ -315,78 +331,102 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               gap: '0' // Gap controlado manualmente para mais controle
             }}
           >
-            {/* Logo - 4 ESTADOS RESPONSIVOS */}
-            <div className="transition-opacity hover:opacity-90 touch-manipulation" style={{ marginRight: showLanguagesInHeader ? '12px' : '0' }}>
+            {/* Logo COMPOSTA: Estrela fixa + Texto ao lado */}
+            {/* 
+              Componentes separados:
+              - logo-estrela-meno.svg (81x84) - estrela com raios
+              - azimut-menu.svg (147x32) - texto "azimut"  
+              - azimut-interactive.svg (348x92) - texto completo
+              
+              A estrela NUNCA muda de posição, só o texto faz transição
+            */}
+            <div 
+              className="hover:opacity-90 touch-manipulation"
+              style={{ 
+                marginRight: showLanguagesInHeader ? '12px' : '0',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
               <LangLink 
                 to="/" 
                 onClick={() => setIsMobileMenuOpen(false)}
-                style={{ display: 'block' }}
+                style={{ 
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                }}
               >
-                {/* ESTADO 1: full (>1400px) - Logo completa grande */}
-                {headerState === 'full' && (
+                {/* LOGO MOBILE (hamburger-compact e hamburger-minimal) - estrela com nome embaixo */}
+                {(headerState === 'hamburger-compact' || headerState === 'hamburger-minimal') && (
                   <img
-                    src="/logo-topo-site.svg"
-                    alt="Azimut – Immersive • Interactive • Cinematic Experiences"
-                    className="transition-all duration-300"
+                    src={theme === 'dark' ? '/logo-mobile-escuro.svg' : '/logo-mobile-escuro.svg'}
+                    alt="Azimut"
                     style={{ 
-                      height: isScrolled ? '46px' : '56px',
+                      height: isScrolled ? '42px' : '50px',
                       width: 'auto',
                       display: 'block',
-                      transition: 'height 0.3s ease'
+                      transition: 'height 0.3s ease',
+                      flexShrink: 0,
                     }}
                     loading="eager"
                   />
                 )}
-                {/* ESTADO 2: compact (1100-1400px) - Logo com nome menor */}
-                {headerState === 'compact' && (
-                  <img
-                    src="/logo-nome.svg"
-                    alt="Azimut"
-                    className="transition-all duration-300"
-                    style={{ 
-                      height: isScrolled ? '36px' : '42px',
-                      width: 'auto',
-                      display: 'block',
-                      transition: 'height 0.3s ease'
-                    }}
-                    loading="eager"
-                  />
-                )}
-                {/* ESTADO 3: hamburger-langs (800-1100px) - Logo com nome + idiomas */}
-                {headerState === 'hamburger-langs' && (
-                  <img
-                    src="/logo-nome.svg"
-                    alt="Azimut"
-                    className="transition-all duration-300"
-                    style={{ 
-                      height: isScrolled ? '34px' : '40px',
-                      width: 'auto',
-                      display: 'block',
-                      transition: 'height 0.3s ease'
-                    }}
-                    loading="eager"
-                  />
-                )}
-                {/* ESTADO 4: hamburger-minimal (<800px) - Só logo mínima */}
-                {headerState === 'hamburger-minimal' && (
-                  <img
-                    src="/logobasicaa.png"
-                    alt="Azimut"
-                    className="transition-all duration-300"
-                    style={{ 
-                      height: isScrolled ? '36px' : '42px',
-                      width: 'auto',
-                      display: 'block',
-                      transition: 'height 0.3s ease'
-                    }}
-                    loading="eager"
-                  />
+                
+                {/* LOGO DESKTOP - estrela + texto ao lado */}
+                {(headerState === 'full' || headerState === 'compact' || headerState === 'hamburger-langs') && (
+                  <>
+                    {/* ESTRELA */}
+                    <img
+                      src="/SVG/logo-estrela-meno.svg"
+                      alt=""
+                      aria-hidden="true"
+                      style={{ 
+                        height: isScrolled ? '36px' : '42px',
+                        width: 'auto',
+                        display: 'block',
+                        transition: 'height 0.3s ease',
+                        flexShrink: 0,
+                      }}
+                      loading="eager"
+                    />
+                    
+                    {/* TEXTO COMPLETO (>1400px) - "azimut + IMMERSIVE • INTERACTIVE..." */}
+                    {headerState === 'full' && (
+                      <img
+                        src="/SVG/azimut-interactive.svg"
+                        alt="Azimut – Immersive • Interactive • Cinematic Experiences"
+                        style={{ 
+                          height: isScrolled ? '36px' : '42px',
+                          width: 'auto',
+                          display: 'block',
+                          transition: 'height 0.3s ease, opacity 0.3s ease',
+                        }}
+                        loading="eager"
+                      />
+                    )}
+                    
+                    {/* TEXTO MÉDIO - "azimut" */}
+                    {(headerState === 'compact' || headerState === 'hamburger-langs') && (
+                      <img
+                        src="/SVG/azimut-menu.svg"
+                        alt="Azimut"
+                        style={{ 
+                          height: isScrolled ? '20px' : '24px',
+                          width: 'auto',
+                          display: 'block',
+                          transition: 'height 0.3s ease, opacity 0.3s ease',
+                        }}
+                        loading="eager"
+                      />
+                    )}
+                  </>
                 )}
               </LangLink>
             </div>
 
-            {/* Idiomas - Aparecem em: full, compact, hamburger-langs (NÃO em hamburger-minimal) */}
-            {showLanguagesInHeader && (
+            {/* Idiomas INLINE - Aparecem em: full, compact, hamburger-langs */}
+            {showLanguagesInline && (
               <div className="flex items-center shrink-0" style={{ alignItems: 'center', height: '100%', display: 'flex', gap: '0' }}>
                 {/* Separador visual (pílula/linha) - COMPACTO */}
                 <div className="h-5 w-px shrink-0" style={{ backgroundColor: 'var(--theme-border)', flexShrink: 0, alignSelf: 'center', marginRight: '10px', opacity: 0.4, borderRadius: '1px' }}></div>
@@ -444,7 +484,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 </span>
                 {/* Separador entre grupos */}
                 <span className="opacity-40 shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', marginLeft: '5px', marginRight: '9px', lineHeight: '1', fontSize: '0.55rem' }}>|</span>
-                {/* Grupo Brasil - PT e ES */}
+                {/* PT - Brasil */}
                 <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '1px' }}>
                   <img src="/flag-br.svg" alt="Brasil" className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
                   <button
@@ -470,7 +510,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   >
                     PT
                   </button>
-                  <span className="shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', lineHeight: '1', fontSize: '0.5rem', transform: 'translateY(-1px)', color: '#c92337' }}>●</span>
+                </span>
+                {/* Separador */}
+                <span className="shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', lineHeight: '1', fontSize: '0.5rem', transform: 'translateY(-1px)', color: '#c92337', marginLeft: '4px', marginRight: '4px' }}>●</span>
+                {/* ES - Espanha */}
+                <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '1px' }}>
+                  <img src="/flag-es.svg" alt="España" className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
                   <button
                     onClick={() => {
                       trackLanguageChange(lang, 'es')
@@ -495,6 +540,116 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     ES
                   </button>
                 </span>
+              </div>
+            )}
+            
+            {/* ÍCONE DE IDIOMAS - Mobile (hamburger-compact e hamburger-minimal) */}
+            {showLanguageIcon && (
+              <div className="relative ml-0 min-[350px]:ml-1">
+                <button
+                  onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+                  className="flex items-center justify-center gap-0.5 rounded transition-all duration-200 touch-manipulation"
+                  style={{
+                    height: '26px',
+                    padding: '0 4px',
+                    background: 'transparent',
+                    border: '1px solid rgba(255, 255, 255, 0.5)',
+                  }}
+                  aria-label="Selecionar idioma"
+                >
+                  {/* Código do idioma apenas */}
+                  <span 
+                    className="font-sora font-semibold uppercase"
+                    style={{ 
+                      fontSize: '0.65rem', 
+                      color: '#fff',
+                      letterSpacing: '0.02em'
+                    }}
+                  >
+                    {lang.toUpperCase()}
+                  </span>
+                  {/* Setinha */}
+                  <svg 
+                    width="8" 
+                    height="8" 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    style={{ color: 'rgba(255,255,255,0.7)' }}
+                  >
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </button>
+                
+                {/* Dropdown de idiomas */}
+                {isLangDropdownOpen && (
+                  <>
+                    {/* Overlay para fechar */}
+                    <div 
+                      className="fixed inset-0 z-40"
+                      onClick={() => setIsLangDropdownOpen(false)}
+                    />
+                    <div 
+                      className="absolute top-full left-0 mt-1 rounded-lg shadow-xl z-50 overflow-hidden"
+                      style={{
+                        background: theme === 'dark' ? 'rgba(20, 20, 30, 0.98)' : 'rgba(255, 255, 255, 0.98)',
+                        border: `1px solid ${theme === 'dark' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.1)'}`,
+                        backdropFilter: 'blur(12px)',
+                        minWidth: '120px',
+                      }}
+                    >
+                      {/* EN */}
+                      <button
+                        onClick={() => { changeLang('en'); setIsLangDropdownOpen(false); }}
+                        className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors"
+                        style={{
+                          background: lang === 'en' ? (theme === 'dark' ? 'rgba(201, 35, 55, 0.2)' : 'rgba(201, 35, 55, 0.1)') : 'transparent',
+                          color: lang === 'en' ? '#c92337' : (theme === 'dark' ? '#fff' : '#333'),
+                        }}
+                      >
+                        <img src="/flag-ca.svg" alt="" style={{ height: '12px', borderRadius: '2px' }} />
+                        <span className="text-xs font-medium">English</span>
+                      </button>
+                      {/* FR */}
+                      <button
+                        onClick={() => { changeLang('fr'); setIsLangDropdownOpen(false); }}
+                        className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors"
+                        style={{
+                          background: lang === 'fr' ? (theme === 'dark' ? 'rgba(201, 35, 55, 0.2)' : 'rgba(201, 35, 55, 0.1)') : 'transparent',
+                          color: lang === 'fr' ? '#c92337' : (theme === 'dark' ? '#fff' : '#333'),
+                        }}
+                      >
+                        <img src="/flag-ca.svg" alt="" style={{ height: '12px', borderRadius: '2px' }} />
+                        <span className="text-xs font-medium">Français</span>
+                      </button>
+                      {/* PT */}
+                      <button
+                        onClick={() => { changeLang('pt'); setIsLangDropdownOpen(false); }}
+                        className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors"
+                        style={{
+                          background: lang === 'pt' ? (theme === 'dark' ? 'rgba(201, 35, 55, 0.2)' : 'rgba(201, 35, 55, 0.1)') : 'transparent',
+                          color: lang === 'pt' ? '#c92337' : (theme === 'dark' ? '#fff' : '#333'),
+                        }}
+                      >
+                        <img src="/flag-br.svg" alt="" style={{ height: '12px', borderRadius: '2px' }} />
+                        <span className="text-xs font-medium">Português</span>
+                      </button>
+                      {/* ES - bandeira da Espanha */}
+                      <button
+                        onClick={() => { changeLang('es'); setIsLangDropdownOpen(false); }}
+                        className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors"
+                        style={{
+                          background: lang === 'es' ? (theme === 'dark' ? 'rgba(201, 35, 55, 0.2)' : 'rgba(201, 35, 55, 0.1)') : 'transparent',
+                          color: lang === 'es' ? '#c92337' : (theme === 'dark' ? '#fff' : '#333'),
+                        }}
+                      >
+                        <img src="/flag-es.svg" alt="" style={{ height: '12px', borderRadius: '2px' }} />
+                        <span className="text-xs font-medium">Español</span>
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -748,14 +903,14 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             flexDirection: 'row' // Garantir lado a lado
           }}>
             {/* Toggle de tema - ALINHADO */}
-            <div className="touch-manipulation shrink-0" style={{ 
+            <div className="touch-manipulation shrink-0 ml-1 min-[350px]:ml-2" style={{ 
               width: '36px', 
               minWidth: '36px', 
               height: '36px', 
               display: 'flex', 
               alignItems: 'center', 
               justifyContent: 'center', 
-              flexShrink: 0 
+              flexShrink: 0
             }}>
               <ThemeToggle theme={theme} onToggle={toggleTheme} />
             </div>
@@ -1192,7 +1347,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   </span>
                   {/* Separador entre grupos com espaços proporcionais */}
                   <span className="opacity-50 mx-3.5 text-[0.8rem] font-normal flex items-center" style={{ lineHeight: '1' }}>|</span>
-                  {/* Grupo Brasil - PT e ES muito juntos */}
+                  {/* PT - Brasil */}
                   <span className="inline-flex items-center gap-0" style={{ alignItems: 'center' }}>
                     <img src="/flag-br.svg" alt="Brasil" className="h-3.5 w-auto rounded-[2px] opacity-90 mr-1" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
                     <button
@@ -1210,7 +1365,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     >
                       PT
                     </button>
-                    <span className="mx-[2px] opacity-70 text-[0.6rem] sm:text-[0.65rem] flex items-center" style={{ lineHeight: '1', display: 'inline-flex' }}>●</span>
+                  </span>
+                  {/* Separador */}
+                  <span className="mx-[2px] opacity-70 text-[0.6rem] sm:text-[0.65rem] flex items-center" style={{ lineHeight: '1', display: 'inline-flex', color: '#c92337' }}>●</span>
+                  {/* ES - Espanha */}
+                  <span className="inline-flex items-center gap-0" style={{ alignItems: 'center' }}>
+                    <img src="/flag-es.svg" alt="España" className="h-3.5 w-auto rounded-[2px] opacity-90 mr-1" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
                     <button
                       onClick={() => changeLang('es')}
                       className="transition-all duration-200 touch-manipulation"
@@ -1319,24 +1479,27 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 {t(lang, 'heroLead').split('–')[0].trim()}
               </p>
               {/* Cidades */}
-              <div className="flex items-center justify-center gap-2 mt-2.5 text-slate-500">
-                <div className="flex items-center gap-1">
-                  <img src="/flag-ca.svg" alt="Canada" className="h-3 w-auto rounded-[2px]" />
-                  <span className="text-[0.7rem]">Vancouver</span>
+              <div className="flex items-center justify-center gap-1.5 mt-2 text-slate-500 flex-wrap">
+                <div className="flex items-center gap-0.5">
+                  <img src="/flag-ca.svg" alt="Canada" style={{ height: '10px', width: 'auto' }} className="rounded-[1px]" />
+                  <span className="text-[0.55rem]">Vancouver</span>
                 </div>
-                <span className="text-[0.6rem] opacity-50">•</span>
-                <div className="flex items-center gap-1">
-                  <img src="/flag-br.svg" alt="Brasil" className="h-3 w-auto rounded-[2px]" />
-                  <span className="text-[0.7rem]">Rio • Floripa</span>
+                <span className="text-[0.5rem] opacity-50">•</span>
+                <div className="flex items-center gap-0.5">
+                  <img src="/flag-br.svg" alt="Brasil" style={{ height: '10px', width: 'auto' }} className="rounded-[1px]" />
+                  <span className="text-[0.6rem]">Rio</span>
+                  <span className="text-[0.5rem] opacity-40">·</span>
+                  <span className="text-[0.55rem]">Floripa</span>
                 </div>
               </div>
             </div>
             
             {/* Grid de Links 3 colunas */}
-            <div className="grid grid-cols-3 gap-4 mb-6 text-center">
-              <nav className="flex flex-col gap-1.5">
-                <h4 className="font-sora text-[0.6rem] font-semibold uppercase tracking-wider text-white mb-1">
-                  {lang === 'en' ? 'Navigate' : lang === 'fr' ? 'Navigation' : lang === 'es' ? 'Navegar' : 'Navegação'}
+            <div className="grid grid-cols-3 gap-2 mb-5 text-center">
+              <nav className="flex flex-col gap-1">
+                <h4 className="font-sora font-bold uppercase tracking-tight text-white mb-0.5 text-[0.32rem] min-[350px]:text-[0.38rem]" style={{ lineHeight: '1', whiteSpace: 'nowrap' }}>
+                  <span className="hidden min-[350px]:inline">{lang === 'en' ? 'Navigate' : lang === 'fr' ? 'Navigation' : lang === 'es' ? 'Navegación' : 'Navegação'}</span>
+                  <span className="inline min-[350px]:hidden">Nav</span>
                 </h4>
                 {/* Botão de Busca Mobile */}
                 <button
@@ -1345,51 +1508,43 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     setIsMobileMenuOpen(false)
                     trackInteraction('search_open', 'mobile_menu_search')
                   }}
-                  className="flex items-center gap-2 text-[0.7rem] text-slate-400 hover:text-azimut-red transition-colors mb-1"
+                  className="flex items-center justify-center gap-1 text-[0.6rem] text-slate-400 hover:text-azimut-red transition-colors"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
-                  <span>{lang === 'en' ? 'Search' : lang === 'es' ? 'Buscar' : lang === 'fr' ? 'Rechercher' : 'Buscar'}</span>
+                  <span>{lang === 'en' ? 'Search' : 'Buscar'}</span>
                 </button>
-                <LangLink to="/" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navHome')}</LangLink>
-                <LangLink to="/what" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navWhat')}</LangLink>
-                <LangLink to="/work" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navWork')}</LangLink>
-                <LangLink to="/studio" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navStudio')}</LangLink>
-                <LangLink to="/studio/equipe" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">
+                <LangLink to="/" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navHome')}</LangLink>
+                <LangLink to="/what" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navWhat')}</LangLink>
+                <LangLink to="/work" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navWork')}</LangLink>
+                <LangLink to="/studio" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navStudio')}</LangLink>
+                <LangLink to="/studio/equipe" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">
                   {lang === 'en' ? 'Team' : lang === 'fr' ? 'Équipe' : lang === 'es' ? 'Equipo' : 'Equipe'}
                 </LangLink>
               </nav>
-              <nav className="flex flex-col gap-1.5">
-                <h4 className="font-sora text-[0.6rem] font-semibold uppercase tracking-wider text-white" style={{ lineHeight: '1.2', marginBottom: '0.125rem' }}>
-                  {lang === 'en' ? 'Education & Research' : lang === 'fr' ? 'Éducation & Recherche' : lang === 'es' ? 'Educación & Investigación' : 'Educação & Pesquisa'}
+              <nav className="flex flex-col gap-1">
+                <h4 className="font-sora font-bold uppercase tracking-tight text-white text-[0.32rem] min-[350px]:text-[0.38rem]" style={{ lineHeight: '1', marginBottom: '0.1rem', whiteSpace: 'nowrap' }}>
+                  <span className="hidden min-[350px]:inline">{lang === 'en' ? 'Education' : lang === 'fr' ? 'Éducation' : lang === 'es' ? 'Educación' : 'Educação'}</span>
+                  <span className="inline min-[350px]:hidden">Edu</span>
                 </h4>
-                <LangLink to="/academy" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navAcademy')}</LangLink>
+                <LangLink to="/academy" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navAcademy')}</LangLink>
                 <div className="flex flex-col gap-0.5">
-                  <LangLink to="/academy/courses" className="text-[0.65rem] text-slate-500 hover:text-azimut-red ml-3">└─ {lang === 'pt' ? 'Cursos' : 'Courses'}</LangLink>
-                  <LangLink to="/academy/workshops" className="text-[0.65rem] text-slate-500 hover:text-azimut-red ml-3">└─ {lang === 'pt' ? 'Workshops' : lang === 'es' ? 'Talleres' : lang === 'fr' ? 'Ateliers' : 'Workshops'}</LangLink>
-                  <LangLink to="/academy/corporate" className="text-[0.65rem] text-slate-500 hover:text-azimut-red ml-3">└─ Corporate</LangLink>
-                  <LangLink to="/academy/vancouver" className="text-[0.65rem] text-slate-500 hover:text-azimut-red ml-3">
-                    <span>└─ {lang === 'en' 
-                      ? 'Study in' 
-                      : lang === 'es'
-                      ? 'Estudia en'
-                      : lang === 'fr'
-                      ? 'Étudiez à'
-                      : 'Estude em'}</span>
-                    <br />
-                    <span style={{ marginLeft: '1.5rem' }}>Vancouver</span>
-                  </LangLink>
+                  <LangLink to="/academy/courses" className="text-[0.55rem] text-slate-500 hover:text-azimut-red ml-2">└ {lang === 'pt' ? 'Cursos' : 'Courses'}</LangLink>
+                  <LangLink to="/academy/workshops" className="text-[0.55rem] text-slate-500 hover:text-azimut-red ml-2">└ Workshops</LangLink>
+                  <LangLink to="/academy/corporate" className="text-[0.55rem] text-slate-500 hover:text-azimut-red ml-2">└ Corporate</LangLink>
+                  <LangLink to="/academy/vancouver" className="text-[0.55rem] text-slate-500 hover:text-azimut-red ml-2">└ Vancouver</LangLink>
                 </div>
               </nav>
-              <nav className="flex flex-col gap-1.5">
-                <h4 className="font-sora text-[0.6rem] font-semibold uppercase tracking-wider text-white mb-1">
-                  {lang === 'en' ? 'Get Started' : lang === 'fr' ? 'Commencer' : lang === 'es' ? 'Comenzar' : 'Começar'}
+              <nav className="flex flex-col gap-1">
+                <h4 className="font-sora font-bold uppercase tracking-tight text-white mb-0.5 text-[0.32rem] min-[350px]:text-[0.38rem]" style={{ lineHeight: '1', whiteSpace: 'nowrap' }}>
+                  <span className="hidden min-[350px]:inline">{lang === 'en' ? 'Get Started' : lang === 'fr' ? 'Commencer' : lang === 'es' ? 'Comenzar' : 'Começar'}</span>
+                  <span className="inline min-[350px]:hidden">Start</span>
                 </h4>
-                <LangLink to="/what" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navWhat')}</LangLink>
-                <LangLink to="/contact" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">{lang === 'pt' ? 'Contato' : 'Contact'}</LangLink>
-                <LangLink to="/press" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navPress')}</LangLink>
-                <LangLink to="/work/review" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">{lang === 'pt' ? 'Revisar' : 'Review'}</LangLink>
+                <LangLink to="/what" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navWhat')}</LangLink>
+                <LangLink to="/contact" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{lang === 'pt' ? 'Contato' : 'Contact'}</LangLink>
+                <LangLink to="/press" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navPress')}</LangLink>
+                <LangLink to="/work/review" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{lang === 'pt' ? 'Revisar' : 'Review'}</LangLink>
                 <LangLink to="/blog" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">Blog</LangLink>
               </nav>
             </div>
@@ -1590,19 +1745,19 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               </p>
               
               {/* Cidades - Alinhadas com a largura da logo (260px) */}
-              <div className="flex items-center justify-between" style={{ color: '#64748b', marginTop: 'auto', paddingTop: '0.75rem', width: '100%', maxWidth: '260px' }}>
+              <div className="flex items-center justify-between flex-wrap gap-1" style={{ color: '#64748b', marginTop: 'auto', paddingTop: '0.75rem', width: '100%', maxWidth: '260px' }}>
                 {/* Canadá - Vancouver */}
-                <div className="flex items-center gap-1">
-                  <img src="/flag-ca.svg" alt="Canada" className="h-4 w-auto rounded-[2px] opacity-90" style={{ display: 'block', height: '16px', width: 'auto', maxHeight: '16px', maxWidth: '22px' }} />
-                  <span className="text-[0.78rem] sm:text-[0.8rem]">Vancouver</span>
+                <div className="flex items-center gap-0.5">
+                  <img src="/flag-ca.svg" alt="Canada" className="rounded-[2px] opacity-90" style={{ display: 'block', height: '12px', width: 'auto' }} />
+                  <span className="text-[0.65rem] sm:text-[0.7rem]">Vancouver</span>
                 </div>
-                <span className="opacity-40 text-[0.65rem] mx-1">•</span>
+                <span className="opacity-40 text-[0.5rem]">•</span>
                 {/* Brasil - Rio e Florianópolis juntos */}
-                <div className="flex items-center gap-1">
-                  <img src="/flag-br.svg" alt="Brasil" className="h-4 w-auto rounded-[2px] opacity-90" style={{ display: 'block', height: '16px', width: 'auto', maxHeight: '16px', maxWidth: '22px' }} />
-                  <span className="text-[0.78rem] sm:text-[0.8rem]">Rio</span>
-                  <span className="opacity-40 text-[0.65rem]">·</span>
-                  <span className="text-[0.72rem] sm:text-[0.75rem]">Florianópolis</span>
+                <div className="flex items-center gap-0.5">
+                  <img src="/flag-br.svg" alt="Brasil" className="rounded-[2px] opacity-90" style={{ display: 'block', height: '12px', width: 'auto' }} />
+                  <span className="text-[0.65rem] sm:text-[0.7rem]">Rio</span>
+                  <span className="opacity-40 text-[0.5rem]">·</span>
+                  <span className="text-[0.6rem] sm:text-[0.65rem]">Floripa</span>
                 </div>
               </div>
             </div>
@@ -1612,65 +1767,57 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               {/* Grid das 3 colunas de navegação */}
               <div className="grid grid-cols-3 gap-x-4 md:gap-x-5" style={{ flex: '1' }}>
                 {/* Coluna 1: Navegação Principal */}
-                <nav className="flex flex-col gap-1.5 sm:gap-1.5" style={{ justifyContent: 'flex-start' }}>
-                  <h4 className="font-sora text-[0.72rem] sm:text-[0.78rem] font-semibold uppercase tracking-[0.15em] mb-2 sm:mb-3 text-white">
+                <nav className="flex flex-col gap-1 sm:gap-1.5" style={{ justifyContent: 'flex-start' }}>
+                  <h4 className="font-sora text-[0.6rem] sm:text-[0.68rem] font-semibold uppercase tracking-[0.12em] mb-1.5 sm:mb-2 text-white">
                     {lang === 'en' ? 'Navigate' : lang === 'fr' ? 'Navigation' : lang === 'es' ? 'Navegar' : 'Navegação'}
                   </h4>
-                  <LangLink to="/" className="text-[0.78rem] sm:text-[0.82rem] md:text-[0.85rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navHome')}</LangLink>
-                  <LangLink to="/what" className="text-[0.78rem] sm:text-[0.82rem] md:text-[0.85rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navWhat')}</LangLink>
-                  <LangLink to="/work" className="text-[0.78rem] sm:text-[0.82rem] md:text-[0.85rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navWork')}</LangLink>
-                  <LangLink to="/studio" className="text-[0.78rem] sm:text-[0.82rem] md:text-[0.85rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navStudio')}</LangLink>
-                  <LangLink to="/studio/equipe" className="text-[0.78rem] sm:text-[0.82rem] md:text-[0.85rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
+                  <LangLink to="/" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navHome')}</LangLink>
+                  <LangLink to="/what" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navWhat')}</LangLink>
+                  <LangLink to="/work" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navWork')}</LangLink>
+                  <LangLink to="/studio" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navStudio')}</LangLink>
+                  <LangLink to="/studio/equipe" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                     {lang === 'en' ? 'Team' : lang === 'fr' ? 'Équipe' : lang === 'es' ? 'Equipo' : 'Equipe'}
                   </LangLink>
                 </nav>
 
                 {/* Coluna 2: Academy */}
-                <nav className="flex flex-col gap-1.5 sm:gap-1.5" style={{ justifyContent: 'flex-start' }}>
-                  <h4 className="font-sora text-[0.72rem] sm:text-[0.78rem] font-semibold uppercase tracking-[0.15em] text-white" style={{ lineHeight: '1.2', marginBottom: '0.25rem' }}>
-                    {lang === 'en' ? 'Education & Research' : lang === 'fr' ? 'Éducation & Recherche' : lang === 'es' ? 'Educación & Investigación' : 'Educação & Pesquisa'}
+                <nav className="flex flex-col gap-1 sm:gap-1.5" style={{ justifyContent: 'flex-start' }}>
+                  <h4 className="font-sora text-[0.6rem] sm:text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-white" style={{ lineHeight: '1.2', marginBottom: '0.2rem' }}>
+                    {lang === 'en' ? 'Education' : lang === 'fr' ? 'Éducation' : lang === 'es' ? 'Educación' : 'Educação'}
                   </h4>
-                  <LangLink to="/academy" className="text-[0.78rem] sm:text-[0.82rem] md:text-[0.85rem] transition-colors hover:text-[#8B2332] font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
+                  <LangLink to="/academy" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors hover:text-[#8B2332] font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                     {t(lang, 'navAcademy')}
                   </LangLink>
                   <div className="mt-0.5 flex flex-col gap-0.5" style={{ flexGrow: '1' }}>
-                    <LangLink to="/academy/courses" className="text-[0.72rem] sm:text-[0.75rem] transition-colors hover:text-[#8B2332] ml-3" style={{ color: '#94a3b8' }}>└─ {lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses'}</LangLink>
-                    <LangLink to="/academy/workshops" className="text-[0.72rem] sm:text-[0.75rem] transition-colors hover:text-[#8B2332] ml-3" style={{ color: '#94a3b8' }}>└─ {lang === 'pt' ? 'Workshops' : lang === 'es' ? 'Talleres' : lang === 'fr' ? 'Ateliers' : 'Workshops'}</LangLink>
-                    <LangLink to="/academy/corporate" className="text-[0.72rem] sm:text-[0.75rem] transition-colors hover:text-[#8B2332] ml-3" style={{ color: '#94a3b8' }}>└─ {lang === 'pt' ? 'Corporate' : lang === 'es' ? 'Corporativo' : lang === 'fr' ? 'Entreprise' : 'Corporate'}</LangLink>
-                    <LangLink to="/academy/vancouver" className="text-[0.72rem] sm:text-[0.75rem] transition-colors hover:text-[#8B2332] ml-3" style={{ color: '#94a3b8' }}>
-                      <span>└─ {lang === 'en' 
-                        ? 'Study in' 
-                        : lang === 'es'
-                        ? 'Estudia en'
-                        : lang === 'fr'
-                        ? 'Étudiez à'
-                        : 'Estude em'}</span>
-                      <br />
-                      <span style={{ marginLeft: '1.5rem' }}>Vancouver</span>
+                    <LangLink to="/academy/courses" className="text-[0.6rem] sm:text-[0.65rem] transition-colors hover:text-[#8B2332] ml-2" style={{ color: '#94a3b8' }}>└ {lang === 'pt' ? 'Cursos' : lang === 'es' ? 'Cursos' : lang === 'fr' ? 'Cours' : 'Courses'}</LangLink>
+                    <LangLink to="/academy/workshops" className="text-[0.6rem] sm:text-[0.65rem] transition-colors hover:text-[#8B2332] ml-2" style={{ color: '#94a3b8' }}>└ Workshops</LangLink>
+                    <LangLink to="/academy/corporate" className="text-[0.6rem] sm:text-[0.65rem] transition-colors hover:text-[#8B2332] ml-2" style={{ color: '#94a3b8' }}>└ Corporate</LangLink>
+                    <LangLink to="/academy/vancouver" className="text-[0.6rem] sm:text-[0.65rem] transition-colors hover:text-[#8B2332] ml-2" style={{ color: '#94a3b8' }}>
+                      └ {lang === 'en' ? 'Study Vancouver' : lang === 'es' ? 'Estudiar Vancouver' : lang === 'fr' ? 'Étudier Vancouver' : 'Estude em Vancouver'}
                     </LangLink>
                   </div>
                 </nav>
 
                 {/* Coluna 3: Começar */}
-                <nav className="flex flex-col gap-1.5 sm:gap-1.5 h-full" style={{ justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                  <h4 className="font-sora text-[0.72rem] sm:text-[0.78rem] font-semibold uppercase tracking-[0.15em] mb-2 sm:mb-3 text-white">
-                    {lang === 'en' ? 'Get Started' : lang === 'fr' ? 'Commencer' : lang === 'es' ? 'Comenzar' : 'Começar'}
+                <nav className="flex flex-col gap-1 sm:gap-1.5 h-full" style={{ justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                  <h4 className="font-sora text-[0.6rem] sm:text-[0.68rem] font-semibold uppercase tracking-[0.12em] mb-1.5 sm:mb-2 text-white">
+                    {lang === 'en' ? 'Start' : lang === 'fr' ? 'Commencer' : lang === 'es' ? 'Comenzar' : 'Começar'}
                   </h4>
-                  <div className="flex flex-col gap-1.5 sm:gap-1.5" style={{ flexGrow: '1' }}>
-                    <LangLink to="/what" className="text-[0.78rem] sm:text-[0.82rem] md:text-[0.85rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
+                  <div className="flex flex-col gap-1 sm:gap-1.5" style={{ flexGrow: '1' }}>
+                    <LangLink to="/what" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                       {t(lang, 'navWhat')}
                     </LangLink>
-                    <LangLink to="/contact" className="text-[0.78rem] sm:text-[0.82rem] md:text-[0.85rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
+                    <LangLink to="/contact" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                       {lang === 'pt' ? 'Contato' : lang === 'es' ? 'Contacto' : lang === 'fr' ? 'Contact' : 'Contact'}
                     </LangLink>
-                    <LangLink to="/press" className="text-[0.78rem] sm:text-[0.82rem] md:text-[0.85rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
+                    <LangLink to="/press" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                       {t(lang, 'navPress')}
                     </LangLink>
-                    <LangLink to="/work/review" className="text-[0.78rem] sm:text-[0.82rem] md:text-[0.85rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
-                      {lang === 'pt' ? 'Revisar Projeto' : lang === 'es' ? 'Revisar Proyecto' : lang === 'fr' ? 'Réviser le Projet' : 'Review Project'}
+                    <LangLink to="/work/review" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
+                      {lang === 'pt' ? 'Revisar' : lang === 'es' ? 'Revisar' : lang === 'fr' ? 'Réviser' : 'Review'}
                     </LangLink>
-                    <LangLink to="/blog" className="text-[0.78rem] sm:text-[0.82rem] md:text-[0.85rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
-                      {lang === 'pt' ? 'Blog' : lang === 'es' ? 'Blog' : lang === 'fr' ? 'Blog' : 'Blog'}
+                    <LangLink to="/blog" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
+                      Blog
                     </LangLink>
                   </div>
                 </nav>
@@ -1687,14 +1834,14 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 />
                 {/* CTA - alinhado com primeira coluna */}
                 <LangLink to="/contact" 
-                  className="flex flex-col items-center justify-center rounded-xl border px-4 text-[0.7rem] sm:text-[0.72rem] font-medium transition-all"
+                  className="flex flex-col items-center justify-center rounded-lg border px-2 sm:px-3 text-[0.55rem] sm:text-[0.6rem] font-medium transition-all"
                   style={{ 
                     color: '#ffffff',
                     borderColor: 'rgba(201, 35, 55, 0.4)',
                     backgroundColor: 'rgba(201, 35, 55, 0.12)',
                     textAlign: 'center',
                     lineHeight: '1.2',
-                    gap: '2px',
+                    gap: '1px',
                     width: '130px',
                     height: '42px',
                     flexShrink: 0
@@ -1717,7 +1864,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   href="https://wa.me/5521999999999?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20projetos%20da%20Azimut." 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-xl px-3 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                  className="flex items-center justify-center gap-1.5 rounded-lg px-2 sm:px-3 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
                   style={{ 
                     background: theme === 'dark' 
                       ? 'linear-gradient(135deg, rgba(37, 211, 102, 0.2) 0%, rgba(37, 211, 102, 0.1) 100%)' 
@@ -1743,13 +1890,13 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                   </svg>
-                  <span className="font-semibold text-[0.72rem]">WhatsApp</span>
+                  <span className="font-semibold text-[0.58rem] sm:text-[0.62rem]">WhatsApp</span>
                 </a>
                 
-                {/* Ícones Sociais - alinhados à direita, maiores */}
-                <div className="flex items-center" style={{ gap: '0.625rem' }}>
+                {/* Ícones Sociais - alinhados à direita */}
+                <div className="flex items-center" style={{ gap: '0.4rem' }}>
                   <a href="https://youtube.com/@azimutart" target="_blank" rel="noopener noreferrer" className="social-icon-footer transition-all duration-300 hover:scale-110" aria-label="YouTube" style={{ opacity: 0.7 }} onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#FF0000' }} onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#ffffff' }}>
-                    <svg fill="currentColor" viewBox="0 0 24 24" className="w-7 h-7" style={{ color: '#ffffff', transition: 'all 0.3s ease' }}><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5 sm:w-6 sm:h-6" style={{ color: '#ffffff', transition: 'all 0.3s ease' }}><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                   </a>
                   <a href="https://instagram.com/azimut.art" target="_blank" rel="noopener noreferrer" className="social-icon-footer transition-all duration-300 hover:scale-110" aria-label="Instagram" style={{ opacity: 0.7 }} onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#E4405F' }} onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; const svg = e.currentTarget.querySelector('svg'); if (svg) (svg as SVGElement).style.color = '#ffffff' }}>
                     <svg fill="currentColor" viewBox="0 0 24 24" className="w-7 h-7" style={{ color: '#ffffff', transition: 'all 0.3s ease' }}><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>

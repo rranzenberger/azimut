@@ -1078,10 +1078,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* Após vídeo = momento de maior engajamento do usuário */}
         {/* ════════════════════════════════════════════════════════════════ */}
         <section className="relative py-10 md:py-14 overflow-hidden">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl px-2 sm:px-4 md:px-6 lg:px-8">
             {/* Wrapper com borda gradiente (usando padding + background) */}
             <div 
-              className="relative rounded-2xl p-[2px] transition-all duration-300"
+              className="relative rounded-2xl p-[2px] transition-all duration-300 overflow-hidden"
               style={{
                 // Borda gradiente via background do wrapper
                 background: theme === 'dark'
@@ -1094,7 +1094,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             >
             {/* Card interno com fundo sólido */}
             <div 
-              className="relative overflow-hidden rounded-[14px] p-8 md:p-12 transition-all duration-300"
+              className="relative overflow-hidden rounded-[14px] p-4 sm:p-6 md:p-8 lg:p-12 transition-all duration-300"
               style={{
                 // TEMA ESCURO: Gradiente roxo/tech premium
                 // TEMA CLARO: Glassmorphism elegante
@@ -1130,14 +1130,14 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 }}
               />
 
-              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+              <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-4 sm:gap-6 lg:gap-8">
                 {/* Conteúdo Principal - Esquerda */}
-                <div className="flex-1 text-center md:text-left">
+                <div className="flex-1 text-center lg:text-left w-full overflow-hidden">
                   {/* Título com ícone */}
-                  <div className="inline-flex items-center gap-4 mb-3">
-                    <span className="text-4xl md:text-5xl">🎁</span>
+                  <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-3 mb-3">
+                    <span className="text-3xl sm:text-4xl md:text-5xl">🎁</span>
                     <h3 
-                      className="text-2xl md:text-3xl lg:text-4xl font-bold font-handel uppercase tracking-wide"
+                      className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-handel uppercase tracking-wide"
                       style={{
                         background: 'linear-gradient(135deg, #8b5cf6 0%, #3b82f6 30%, #22c55e 60%, #ec4899 100%)',
                         WebkitBackgroundClip: 'text',
@@ -1149,7 +1149,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     </h3>
                     {/* Logo Web3 colorida em destaque */}
                     <div 
-                      className="w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center"
+                      className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center flex-shrink-0"
                       style={{
                         background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.15) 100%)',
                         border: '2px solid rgba(139, 92, 246, 0.5)',
@@ -1159,14 +1159,14 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       <img
                         src="/web-3-icon.svg"
                         alt="Web3"
-                        className="w-10 h-10 md:w-11 md:h-11"
+                        className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10"
                       />
                     </div>
                   </div>
                   
-                  {/* Subtítulo com tecnologias - MAIOR e mais amigável */}
+                  {/* Subtítulo com tecnologias - responsivo */}
                   <p 
-                    className="text-xl md:text-2xl font-bold mb-4 tracking-wide"
+                    className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold mb-4 tracking-wide"
                     style={{ 
                       color: theme === 'dark' ? 'rgba(167, 139, 250, 1)' : '#7c3aed' // Roxo
                     }}
@@ -1174,12 +1174,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     {lang === 'pt' ? 'VR • AR • Web3 • Colecionáveis (NFTs)' 
                       : lang === 'es' ? 'VR • AR • Web3 • Coleccionables (NFTs)'
                       : lang === 'fr' ? 'VR • AR • Web3 • Collectibles (NFTs)'
-                      : 'VR • AR • Web3 • Digital Collectibles (NFTs)'}
+                      : 'VR • AR • Web3 • Collectibles (NFTs)'}
                   </p>
                   
                   {/* Frase empática impactante - tom parceiro */}
                   <p 
-                    className="text-lg md:text-xl font-semibold mb-3"
+                    className="text-base sm:text-lg md:text-xl font-semibold mb-3"
                     style={{ 
                       color: theme === 'dark' ? 'rgba(255, 255, 255, 0.95)' : '#1e293b'
                     }}
@@ -1192,7 +1192,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   
                   {/* Descrição premium com benefícios claros */}
                   <p 
-                    className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto md:mx-0 mb-3"
+                    className="text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0 mb-3"
                     style={{ 
                       color: theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : '#475569'
                     }}
@@ -1206,46 +1206,46 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       : 'From campaigns and expo booths to cultural and educational projects, we craft immersive experiences that stop people in their tracks, increase dwell time, and spark real engagement—where technology meets storytelling, from concept to delivery.'}
                   </p>
                   
-                  {/* Linha de prova/credibilidade - com destaque */}
+                  {/* Linha de prova/credibilidade */}
                   <p 
-                    className="text-xs md:text-sm font-medium inline-flex items-center gap-2 px-3 py-1.5 rounded-full"
+                    className="text-[0.65rem] sm:text-xs md:text-sm font-medium inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-full"
                     style={{ 
                       background: theme === 'dark' ? 'rgba(139, 92, 246, 0.2)' : 'rgba(201, 35, 55, 0.1)',
                       color: theme === 'dark' ? 'rgba(196, 181, 253, 1)' : '#c92337',
                       border: theme === 'dark' ? '1px solid rgba(139, 92, 246, 0.4)' : '1px solid rgba(201, 35, 55, 0.3)',
                     }}
                   >
-                    <span>🌎</span>
+                    <span>🎯</span>
                     <span>
-                      {lang === 'pt' ? 'Brasil–Canadá • museus, festivais e ativações de marca' 
-                        : lang === 'es' ? 'Brasil–Canadá • museos, festivales y activaciones de marca'
-                        : lang === 'fr' ? 'Brésil–Canada • musées, festivals et activations de marque'
-                        : 'Brazil–Canada • museums, festivals & brand activations'}
+                      {lang === 'pt' ? 'Museus, festivais e ativações de marca' 
+                        : lang === 'es' ? 'Museos, festivales y activaciones de marca'
+                        : lang === 'fr' ? 'Musées, festivals et activations de marque'
+                        : 'Museums, festivals & brand activations'}
                     </span>
                   </p>
                 </div>
 
                 {/* CTAs - Direita - Empilhados */}
-                <div className="flex flex-col gap-3 flex-shrink-0">
+                <div className="flex flex-col gap-3 flex-shrink-0 w-full lg:w-auto lg:min-w-[280px]">
                   {/* CTA Principal - Experimentar Demo */}
                   <div className="flex flex-col items-center">
                     <Link
                       to={`/${lang}/experience-preview`}
-                      className="group/btn inline-flex items-center justify-center gap-3 px-7 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 hover:gap-4 w-full"
+                      className="group/btn inline-flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 hover:gap-4 w-full"
                       style={{
                         background: 'linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #22c55e 100%)',
                         color: '#fff',
                         boxShadow: '0 6px 30px rgba(139, 92, 246, 0.5)',
-                        fontSize: '1rem',
+                        fontSize: '0.9rem',
                         letterSpacing: '0.02em',
                         textDecoration: 'none',
                       }}
                     >
-                      <span>
+                      <span className="whitespace-nowrap">
                         {lang === 'pt' ? 'Experimentar Demo' : lang === 'es' ? 'Probar Demo' : lang === 'fr' ? 'Essayer la Démo' : 'Try the Demo'}
                       </span>
                       <div 
-                        className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden"
+                        className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0"
                         style={{ 
                           background: 'rgba(255, 255, 255, 0.95)',
                           border: '2px solid rgba(255, 255, 255, 1)',
@@ -1255,29 +1255,29 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         <img
                           src="/web-3-icon.svg"
                           alt="Web3"
-                          className="w-7 h-7"
+                          className="w-5 h-5 sm:w-7 sm:h-7"
                         />
                       </div>
-                      <svg className="w-5 h-5 transition-transform group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover/btn:translate-x-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
                     </Link>
-                    {/* Microcopy de segurança Web3 - COM DESTAQUE */}
+                      {/* Microcopy de segurança Web3 - COM DESTAQUE */}
                     <div 
-                      className="mt-3 px-4 py-2 rounded-lg text-center"
+                      className="mt-2 sm:mt-3 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-center"
                       style={{ 
                         background: theme === 'dark' ? 'rgba(34, 197, 94, 0.2)' : 'rgba(34, 197, 94, 0.15)',
                         border: theme === 'dark' ? '1px solid rgba(34, 197, 94, 0.5)' : '1px solid rgba(34, 197, 94, 0.4)',
                       }}
                     >
                       <p 
-                        className="text-xs font-medium flex items-center justify-center gap-2"
+                        className="text-[0.65rem] sm:text-xs font-medium flex items-center justify-center gap-1.5 sm:gap-2"
                         style={{ 
                           color: theme === 'dark' ? '#4ade80' : '#16a34a'
                         }}
                       >
                         <span>🔒</span>
-                        <span>
+                        <span className="text-center">
                           {lang === 'pt' ? 'Somente leitura • sem custo • sem acesso aos seus fundos' 
                             : lang === 'es' ? 'Solo lectura • sin costo • sin acceso a tus fondos'
                             : lang === 'fr' ? 'Lecture seule • sans frais • sans accès à vos fonds'
@@ -1290,20 +1290,20 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   {/* CTA Secundário - Ver Cases Imersivos (específico para VR/AR/Web3) */}
                   <Link
                     to={`/${lang}/work?filter=immersive`}
-                    className="group/btn2 inline-flex items-center justify-center gap-3 px-7 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105"
+                    className="group/btn2 inline-flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 w-full"
                     style={{
                       background: 'linear-gradient(135deg, #c92337 0%, #a01d2d 100%)',
                       color: '#fff',
                       boxShadow: '0 4px 20px rgba(201, 35, 55, 0.4)',
-                      fontSize: '0.95rem',
+                      fontSize: '0.85rem',
                       letterSpacing: '0.02em',
                       textDecoration: 'none',
                     }}
                   >
-                    <span>
+                    <span className="whitespace-nowrap">
                       {lang === 'pt' ? 'Ver Cases Imersivos' : lang === 'es' ? 'Ver Cases Inmersivos' : lang === 'fr' ? 'Voir les Cases Immersifs' : 'See Immersive Cases'}
                     </span>
-                    <svg className="w-5 h-5 transition-transform group-hover/btn2:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover/btn2:translate-x-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
                   </Link>
