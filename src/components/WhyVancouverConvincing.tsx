@@ -162,10 +162,10 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         cities: [
           { name: 'Vancouver', code: 'CA', total: 92 },
           { name: 'Toronto', code: 'CA', total: 78 },
-          { name: 'Los Angeles', code: 'US', total: 69 },
           { name: 'Londres', code: 'GB', total: 74 },
-          { name: 'Rio de Janeiro', code: 'BR', total: 58 },
-          { name: 'São Paulo', code: 'BR', total: 62 }
+          { name: 'Los Angeles', code: 'US', total: 69 },
+          { name: 'São Paulo', code: 'BR', total: 62 },
+          { name: 'Rio de Janeiro', code: 'BR', total: 58 }
         ]
       },
       cta: {
@@ -280,10 +280,10 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         cities: [
           { name: 'Vancouver', code: 'CA', total: 92 },
           { name: 'Toronto', code: 'CA', total: 78 },
-          { name: 'Los Angeles', code: 'US', total: 69 },
           { name: 'London', code: 'GB', total: 74 },
-          { name: 'Rio de Janeiro', code: 'BR', total: 58 },
-          { name: 'São Paulo', code: 'BR', total: 62 }
+          { name: 'Los Angeles', code: 'US', total: 69 },
+          { name: 'São Paulo', code: 'BR', total: 62 },
+          { name: 'Rio de Janeiro', code: 'BR', total: 58 }
         ]
       },
       cta: {
@@ -398,10 +398,10 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         cities: [
           { name: 'Vancouver', code: 'CA', total: 92 },
           { name: 'Toronto', code: 'CA', total: 78 },
-          { name: 'Los Angeles', code: 'US', total: 69 },
           { name: 'Londres', code: 'GB', total: 74 },
-          { name: 'Río de Janeiro', code: 'BR', total: 58 },
-          { name: 'São Paulo', code: 'BR', total: 62 }
+          { name: 'Los Angeles', code: 'US', total: 69 },
+          { name: 'São Paulo', code: 'BR', total: 62 },
+          { name: 'Río de Janeiro', code: 'BR', total: 58 }
         ]
       },
       cta: {
@@ -516,10 +516,10 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         cities: [
           { name: 'Vancouver', code: 'CA', total: 92 },
           { name: 'Toronto', code: 'CA', total: 78 },
-          { name: 'Los Angeles', code: 'US', total: 69 },
           { name: 'Londres', code: 'GB', total: 74 },
-          { name: 'Rio de Janeiro', code: 'BR', total: 58 },
-          { name: 'São Paulo', code: 'BR', total: 62 }
+          { name: 'Los Angeles', code: 'US', total: 69 },
+          { name: 'São Paulo', code: 'BR', total: 62 },
+          { name: 'Rio de Janeiro', code: 'BR', total: 58 }
         ]
       },
       cta: {
@@ -605,52 +605,69 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
       </div>
 
       {/* Comparison Chart */}
-      <div className="max-w-4xl mx-auto px-4 mb-20">
+      <div 
+        className="max-w-4xl mx-auto px-4 py-16 mb-20 rounded-3xl"
+        style={{ background: '#0f1419' }}
+      >
         <div className="text-center mb-10">
-          <h3 className="text-3xl md:text-4xl font-black text-white mb-3 uppercase">
+          <h3 className="text-3xl md:text-4xl font-black mb-3 uppercase" style={{ color: '#ffffff' }}>
             {t.comparison.title}
           </h3>
-          <p className="text-lg text-white/80 mb-2">
+          <p className="text-lg mb-2" style={{ color: '#e2e8f0' }}>
             {t.comparison.subtitle}
           </p>
-          <p className="text-sm text-white/60 max-w-2xl mx-auto">
+          <p className="text-sm max-w-2xl mx-auto" style={{ color: '#94a3b8' }}>
             {t.comparison.description}
           </p>
         </div>
         
-        <div className="space-y-4">
-          {t.comparison.cities.map((city: VancouverCity, i: number) => (
-            <div 
-              key={i} 
-              className={`rounded-xl p-5 ${
-                i === 0 
-                  ? 'bg-gradient-to-r from-green-900/80 to-green-800/60 border border-green-500/50' 
-                  : 'bg-slate-800/80 border border-slate-700/50'
-              }`}
-            >
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="text-xl font-bold text-white flex items-center gap-2">
-                  {city.name} <span className="text-sm font-normal text-white/60 uppercase">{city.code}</span>
-                </h4>
-                <div className={`text-2xl font-black ${i === 0 ? 'text-green-400' : 'text-white'}`}>
-                  {city.total}%
+        <div className="space-y-3 px-4">
+          {t.comparison.cities.map((city: VancouverCity, i: number) => {
+            // Cores diferentes para cada posição
+            const cardStyles = [
+              { bg: 'linear-gradient(135deg, #166534 0%, #15803d 100%)', border: '#22c55e', barColor: '#4ade80', textColor: '#4ade80' }, // 1º - Verde (vencedor)
+              { bg: 'linear-gradient(135deg, #1e3a5f 0%, #1e40af 100%)', border: '#3b82f6', barColor: '#60a5fa', textColor: '#60a5fa' }, // 2º - Azul
+              { bg: 'linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%)', border: '#8b5cf6', barColor: '#a78bfa', textColor: '#a78bfa' }, // 3º - Roxo
+              { bg: 'linear-gradient(135deg, #78350f 0%, #92400e 100%)', border: '#f59e0b', barColor: '#fbbf24', textColor: '#fbbf24' }, // 4º - Âmbar
+              { bg: 'linear-gradient(135deg, #1f2937 0%, #374151 100%)', border: '#6b7280', barColor: '#9ca3af', textColor: '#9ca3af' }, // 5º - Cinza
+              { bg: 'linear-gradient(135deg, #1c1917 0%, #292524 100%)', border: '#57534e', barColor: '#78716c', textColor: '#a8a29e' }  // 6º - Stone
+            ]
+            const style = cardStyles[i] || cardStyles[5]
+            
+            return (
+              <div 
+                key={i} 
+                className="rounded-xl p-5"
+                style={{
+                  background: style.bg,
+                  border: `1px solid ${style.border}40`
+                }}
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="text-xl font-bold flex items-center gap-2" style={{ color: '#ffffff' }}>
+                    {city.name} <span className="text-sm font-normal uppercase" style={{ color: 'rgba(255,255,255,0.6)' }}>{city.code}</span>
+                  </h4>
+                  <div className="text-2xl font-black" style={{ color: style.textColor }}>
+                    {city.total}%
+                  </div>
+                </div>
+                <div className="h-3 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.1)' }}>
+                  <div
+                    className="h-full rounded-full transition-all duration-700"
+                    style={{ 
+                      width: `${city.total}%`,
+                      background: `linear-gradient(90deg, ${style.barColor} 0%, ${style.barColor}cc 100%)`
+                    }}
+                  />
                 </div>
               </div>
-              <div className="h-3 bg-white/10 rounded-full overflow-hidden">
-                <div
-                  className={`h-full rounded-full transition-all duration-700 ${
-                    i === 0 ? 'bg-gradient-to-r from-green-500 to-green-400' : 'bg-slate-500'
-                  }`}
-                  style={{ width: `${city.total}%` }}
-                />
-              </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
         
         {/* Source */}
-        <div className="mt-6 text-center">
-          <p className="text-xs text-white/40 max-w-2xl mx-auto leading-relaxed">
+        <div className="mt-8 text-center px-4">
+          <p className="text-xs max-w-2xl mx-auto leading-relaxed" style={{ color: '#64748b' }}>
             📊 {t.comparison.source}
           </p>
         </div>
