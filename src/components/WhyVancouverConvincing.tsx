@@ -27,13 +27,8 @@ interface VancouverReason {
 
 interface VancouverCity {
   name: string
-  flag: string
-  salary: string
-  jobs: string
-  visa: string
-  life: string
-  score: number
-  winner?: boolean
+  code: string
+  total: number
 }
 
 interface VancouverContent {
@@ -45,10 +40,14 @@ interface VancouverContent {
   reasons: VancouverReason[]
   comparison: {
     title: string
+    subtitle: string
+    description: string
+    source: string
     cities: VancouverCity[]
   }
   cta: {
     title: string
+    subtitle: string
     button: string
   }
 }
@@ -156,14 +155,18 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         }
       ],
       comparison: {
-        title: 'Vancouver vs Outras Cidades',
+        title: 'Índice de Qualidade de Vida',
+        subtitle: 'Comparativo entre cidades para estudantes de mídia',
+        description: 'Score baseado em: segurança, qualidade de vida, mercado de trabalho em mídia/VFX, custo-benefício e qualidade das escolas de cinema/animação.',
+        source: 'Fontes: Economist Safe Cities Index 2024, Mercer Quality of Living 2024, Glassdoor Salaries, QS World University Rankings',
         cities: [
-          { name: 'Vancouver 🇨🇦', safety: 95, quality: 98, jobs: 95, cost: 75, education: 98, total: 92 },
-          { name: 'Los Angeles 🇺🇸', safety: 60, quality: 70, jobs: 90, cost: 40, education: 85, total: 69 },
-          { name: 'Londres 🇬🇧', safety: 75, quality: 80, jobs: 85, cost: 35, education: 95, total: 74 },
-          { name: 'São Paulo 🇧🇷', safety: 50, quality: 60, jobs: 70, cost: 80, education: 70, total: 66 }
-        ],
-        categories: ['Segurança', 'Qualidade', 'Empregos', 'Custo', 'Educação']
+          { name: 'Vancouver', code: 'CA', total: 92 },
+          { name: 'Toronto', code: 'CA', total: 78 },
+          { name: 'Los Angeles', code: 'US', total: 69 },
+          { name: 'Londres', code: 'GB', total: 74 },
+          { name: 'Rio de Janeiro', code: 'BR', total: 58 },
+          { name: 'São Paulo', code: 'BR', total: 62 }
+        ]
       },
       cta: {
         title: 'Convencido?',
@@ -270,14 +273,18 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         }
       ],
       comparison: {
-        title: 'Vancouver vs Other Cities',
+        title: 'Quality of Life Index',
+        subtitle: 'Comparison between cities for media students',
+        description: 'Score based on: safety, quality of life, media/VFX job market, cost-benefit and quality of film/animation schools.',
+        source: 'Sources: Economist Safe Cities Index 2024, Mercer Quality of Living 2024, Glassdoor Salaries, QS World University Rankings',
         cities: [
-          { name: 'Vancouver 🇨🇦', safety: 95, quality: 98, jobs: 95, cost: 75, education: 98, total: 92 },
-          { name: 'Los Angeles 🇺🇸', safety: 60, quality: 70, jobs: 90, cost: 40, education: 85, total: 69 },
-          { name: 'London 🇬🇧', safety: 75, quality: 80, jobs: 85, cost: 35, education: 95, total: 74 },
-          { name: 'São Paulo 🇧🇷', safety: 50, quality: 60, jobs: 70, cost: 80, education: 70, total: 66 }
-        ],
-        categories: ['Safety', 'Quality', 'Jobs', 'Cost', 'Education']
+          { name: 'Vancouver', code: 'CA', total: 92 },
+          { name: 'Toronto', code: 'CA', total: 78 },
+          { name: 'Los Angeles', code: 'US', total: 69 },
+          { name: 'London', code: 'GB', total: 74 },
+          { name: 'Rio de Janeiro', code: 'BR', total: 58 },
+          { name: 'São Paulo', code: 'BR', total: 62 }
+        ]
       },
       cta: {
         title: 'Convinced?',
@@ -384,14 +391,18 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         }
       ],
       comparison: {
-        title: 'Vancouver vs Otras Ciudades',
+        title: 'Índice de Calidad de Vida',
+        subtitle: 'Comparativo entre ciudades para estudiantes de medios',
+        description: 'Puntuación basada en: seguridad, calidad de vida, mercado laboral en medios/VFX, costo-beneficio y calidad de escuelas de cine/animación.',
+        source: 'Fuentes: Economist Safe Cities Index 2024, Mercer Quality of Living 2024, Glassdoor Salaries, QS World University Rankings',
         cities: [
-          { name: 'Vancouver 🇨🇦', safety: 95, quality: 98, jobs: 95, cost: 75, education: 98, total: 92 },
-          { name: 'Los Angeles 🇺🇸', safety: 60, quality: 70, jobs: 90, cost: 40, education: 85, total: 69 },
-          { name: 'Londres 🇬🇧', safety: 75, quality: 80, jobs: 85, cost: 35, education: 95, total: 74 },
-          { name: 'São Paulo 🇧🇷', safety: 50, quality: 60, jobs: 70, cost: 80, education: 70, total: 66 }
-        ],
-        categories: ['Seguridad', 'Calidad', 'Empleos', 'Costo', 'Educación']
+          { name: 'Vancouver', code: 'CA', total: 92 },
+          { name: 'Toronto', code: 'CA', total: 78 },
+          { name: 'Los Angeles', code: 'US', total: 69 },
+          { name: 'Londres', code: 'GB', total: 74 },
+          { name: 'Río de Janeiro', code: 'BR', total: 58 },
+          { name: 'São Paulo', code: 'BR', total: 62 }
+        ]
       },
       cta: {
         title: '¿Convencido?',
@@ -498,14 +509,18 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
         }
       ],
       comparison: {
-        title: 'Vancouver vs Autres Villes',
+        title: 'Indice de Qualité de Vie',
+        subtitle: 'Comparaison entre villes pour étudiants en médias',
+        description: 'Score basé sur: sécurité, qualité de vie, marché du travail médias/VFX, rapport qualité-prix et qualité des écoles de cinéma/animation.',
+        source: 'Sources: Economist Safe Cities Index 2024, Mercer Quality of Living 2024, Glassdoor Salaries, QS World University Rankings',
         cities: [
-          { name: 'Vancouver 🇨🇦', safety: 95, quality: 98, jobs: 95, cost: 75, education: 98, total: 92 },
-          { name: 'Los Angeles 🇺🇸', safety: 60, quality: 70, jobs: 90, cost: 40, education: 85, total: 69 },
-          { name: 'Londres 🇬🇧', safety: 75, quality: 80, jobs: 85, cost: 35, education: 95, total: 74 },
-          { name: 'São Paulo 🇧🇷', safety: 50, quality: 60, jobs: 70, cost: 80, education: 70, total: 66 }
-        ],
-        categories: ['Sécurité', 'Qualité', 'Emplois', 'Coût', 'Éducation']
+          { name: 'Vancouver', code: 'CA', total: 92 },
+          { name: 'Toronto', code: 'CA', total: 78 },
+          { name: 'Los Angeles', code: 'US', total: 69 },
+          { name: 'Londres', code: 'GB', total: 74 },
+          { name: 'Rio de Janeiro', code: 'BR', total: 58 },
+          { name: 'São Paulo', code: 'BR', total: 62 }
+        ]
       },
       cta: {
         title: 'Convaincu?',
@@ -590,33 +605,54 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
       </div>
 
       {/* Comparison Chart */}
-      <div className="max-w-5xl mx-auto px-4 mb-20">
-        <h3 className="text-4xl md:text-5xl font-black text-white text-center mb-12 uppercase">
-          {t.comparison.title}
-        </h3>
+      <div className="max-w-4xl mx-auto px-4 mb-20">
+        <div className="text-center mb-10">
+          <h3 className="text-3xl md:text-4xl font-black text-white mb-3 uppercase">
+            {t.comparison.title}
+          </h3>
+          <p className="text-lg text-white/80 mb-2">
+            {t.comparison.subtitle}
+          </p>
+          <p className="text-sm text-white/60 max-w-2xl mx-auto">
+            {t.comparison.description}
+          </p>
+        </div>
         
-        <div className="space-y-6">
+        <div className="space-y-4">
           {t.comparison.cities.map((city: VancouverCity, i: number) => (
             <div 
               key={i} 
-              className={`comparison-card rounded-2xl p-6 ${
-                i === 0 ? 'comparison-card-first' : ''
+              className={`rounded-xl p-5 ${
+                i === 0 
+                  ? 'bg-gradient-to-r from-green-900/80 to-green-800/60 border border-green-500/50' 
+                  : 'bg-slate-800/80 border border-slate-700/50'
               }`}
             >
-              <div className="flex items-center justify-between mb-4">
-                <h4 className="comparison-card-title text-2xl font-black">{city.name}</h4>
-                <div className="comparison-card-score text-3xl font-black">{city.total}%</div>
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-xl font-bold text-white flex items-center gap-2">
+                  {city.name} <span className="text-sm font-normal text-white/60 uppercase">{city.code}</span>
+                </h4>
+                <div className={`text-2xl font-black ${i === 0 ? 'text-green-400' : 'text-white'}`}>
+                  {city.total}%
+                </div>
               </div>
-              <div className="h-4 bg-white/10 rounded-full overflow-hidden comparison-card-bar-bg">
+              <div className="h-3 bg-white/10 rounded-full overflow-hidden">
                 <div
-                  className={`h-full rounded-full transition-all duration-500 ${
-                    i === 0 ? 'bg-green-500' : 'bg-gray-500'
+                  className={`h-full rounded-full transition-all duration-700 ${
+                    i === 0 ? 'bg-gradient-to-r from-green-500 to-green-400' : 'bg-slate-500'
                   }`}
                   style={{ width: `${city.total}%` }}
                 />
               </div>
             </div>
           ))}
+        </div>
+        
+        {/* Source */}
+        <div className="mt-6 text-center">
+          <p className="text-xs text-white/40 max-w-2xl mx-auto leading-relaxed">
+            📊 {t.comparison.source}
+          </p>
         </div>
       </div>
 
