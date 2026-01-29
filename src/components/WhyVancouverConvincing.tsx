@@ -724,12 +724,20 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
               }
             }
             
-            // Bandeiras dos países
-            const countryFlags: Record<string, string> = {
-              'CA': '🇨🇦',
-              'US': '🇺🇸',
-              'GB': '🇬🇧',
-              'BR': '🇧🇷'
+            // Bandeiras dos países (SVG)
+            const countryFlagSrc: Record<string, string> = {
+              'CA': '/flag-ca.svg',
+              'US': '/flag-us.svg',
+              'GB': '/flag-gb.svg',
+              'BR': '/flag-br.svg'
+            }
+            
+            // Nomes dos países por extenso
+            const countryNames: Record<string, string> = {
+              'CA': 'Canada',
+              'US': 'USA',
+              'GB': 'United Kingdom',
+              'BR': 'Brasil'
             }
             
             return (
@@ -743,15 +751,19 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-3">
-                    {/* Bandeira grande */}
-                    <span className="text-3xl">{countryFlags[city.code] || '🌍'}</span>
+                    {/* Bandeira SVG */}
+                    <img 
+                      src={countryFlagSrc[city.code] || '/flag-br.svg'} 
+                      alt={countryNames[city.code] || city.code}
+                      className="w-10 h-7 rounded shadow-sm object-cover"
+                    />
                     {/* Nome e país */}
                     <div>
                       <h4 className="text-xl font-bold text-white">
                         {city.name}
                       </h4>
                       <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                        {city.code === 'CA' ? 'Canada' : city.code === 'US' ? 'USA' : city.code === 'GB' ? 'UK' : city.code === 'BR' ? 'Brasil' : city.code}
+                        {countryNames[city.code] || city.code}
                       </span>
                     </div>
                   </div>
