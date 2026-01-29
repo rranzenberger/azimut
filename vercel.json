@@ -24,6 +24,9 @@
       "permanent": true
     }
   ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
   "framework": "vite",
   "git": {
     "deploymentEnabled": {
