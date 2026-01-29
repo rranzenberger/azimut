@@ -673,118 +673,96 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
           </p>
         </div>
         
-        <div className="space-y-4 px-4">
+        <div className="space-y-3 px-4">
           {t.comparison.cities.map((city: VancouverCity, i: number) => {
-            // Design premium - Vancouver em destaque verde, outros em tons sofisticados
+            // Sistema de cores tipo semáforo baseado no score
+            // 90+ = Verde excelente, 75-89 = Verde bom, 65-74 = Amarelo médio, 55-64 = Laranja atenção, <55 = Vermelho ruim
+            const score = city.total
             const isWinner = i === 0
-            const cardStyles = [
-              { // 1º Vancouver - Verde vibrante (destaque máximo)
-                bg: 'linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%)',
-                border: 'rgba(16,185,129,0.6)',
-                barBg: 'rgba(255,255,255,0.15)',
-                barColor: 'linear-gradient(90deg, #10b981 0%, #34d399 50%, #6ee7b7 100%)',
-                scoreColor: '#6ee7b7',
-                nameColor: '#ffffff',
-                badgeBg: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
-                badgeText: '#1c1917',
-                shadow: '0 8px 32px rgba(16,185,129,0.3)'
-              },
-              { // 2º Toronto - Azul safira
-                bg: 'linear-gradient(135deg, #1e3a5f 0%, #1e40af 100%)',
-                border: 'rgba(59,130,246,0.4)',
-                barBg: 'rgba(255,255,255,0.12)',
-                barColor: 'linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%)',
-                scoreColor: '#93c5fd',
-                nameColor: '#f8fafc',
-                badgeBg: 'rgba(59,130,246,0.25)',
-                badgeText: '#93c5fd',
-                shadow: 'none'
-              },
-              { // 3º Londres - Azul mais claro (ainda bom)
-                bg: 'linear-gradient(135deg, #164e63 0%, #155e75 100%)',
-                border: 'rgba(6,182,212,0.4)',
-                barBg: 'rgba(255,255,255,0.12)',
-                barColor: 'linear-gradient(90deg, #06b6d4 0%, #22d3ee 100%)',
-                scoreColor: '#67e8f9',
-                nameColor: '#f8fafc',
-                badgeBg: 'rgba(6,182,212,0.25)',
-                badgeText: '#67e8f9',
-                shadow: 'none'
-              },
-              { // 4º Los Angeles - Amarelo/Âmbar (médio)
-                bg: 'linear-gradient(135deg, #78350f 0%, #92400e 100%)',
-                border: 'rgba(245,158,11,0.4)',
-                barBg: 'rgba(255,255,255,0.12)',
-                barColor: 'linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%)',
-                scoreColor: '#fcd34d',
-                nameColor: '#f8fafc',
-                badgeBg: 'rgba(245,158,11,0.25)',
-                badgeText: '#fcd34d',
-                shadow: 'none'
-              },
-              { // 5º São Paulo - Laranja (abaixo da média)
+            
+            // Determinar cor baseado no score (não na posição)
+            let colorScheme: { bg: string; border: string; barColor: string; scoreColor: string }
+            if (score >= 90) {
+              // Excelente - Verde vibrante
+              colorScheme = {
+                bg: 'linear-gradient(135deg, #064e3b 0%, #065f46 100%)',
+                border: 'rgba(16,185,129,0.5)',
+                barColor: 'linear-gradient(90deg, #10b981 0%, #34d399 100%)',
+                scoreColor: '#6ee7b7'
+              }
+            } else if (score >= 75) {
+              // Bom - Verde mais suave
+              colorScheme = {
+                bg: 'linear-gradient(135deg, #14532d 0%, #166534 100%)',
+                border: 'rgba(34,197,94,0.4)',
+                barColor: 'linear-gradient(90deg, #22c55e 0%, #4ade80 100%)',
+                scoreColor: '#86efac'
+              }
+            } else if (score >= 65) {
+              // Médio - Amarelo/Âmbar (atenção)
+              colorScheme = {
+                bg: 'linear-gradient(135deg, #713f12 0%, #854d0e 100%)',
+                border: 'rgba(234,179,8,0.4)',
+                barColor: 'linear-gradient(90deg, #eab308 0%, #facc15 100%)',
+                scoreColor: '#fde047'
+              }
+            } else if (score >= 55) {
+              // Abaixo da média - Laranja
+              colorScheme = {
                 bg: 'linear-gradient(135deg, #7c2d12 0%, #9a3412 100%)',
                 border: 'rgba(249,115,22,0.4)',
-                barBg: 'rgba(255,255,255,0.12)',
                 barColor: 'linear-gradient(90deg, #f97316 0%, #fb923c 100%)',
-                scoreColor: '#fdba74',
-                nameColor: '#f8fafc',
-                badgeBg: 'rgba(249,115,22,0.25)',
-                badgeText: '#fdba74',
-                shadow: 'none'
-              },
-              { // 6º Rio - Vermelho (pior score)
+                scoreColor: '#fdba74'
+              }
+            } else {
+              // Ruim - Vermelho (mas não agressivo)
+              colorScheme = {
                 bg: 'linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%)',
                 border: 'rgba(239,68,68,0.4)',
-                barBg: 'rgba(255,255,255,0.12)',
                 barColor: 'linear-gradient(90deg, #ef4444 0%, #f87171 100%)',
-                scoreColor: '#fca5a5',
-                nameColor: '#f8fafc',
-                badgeBg: 'rgba(239,68,68,0.25)',
-                badgeText: '#fca5a5',
-                shadow: 'none'
+                scoreColor: '#fca5a5'
               }
-            ]
-            const style = cardStyles[i] || cardStyles[5]
+            }
+            
+            // Bandeiras dos países
+            const countryFlags: Record<string, string> = {
+              'CA': '🇨🇦',
+              'US': '🇺🇸',
+              'GB': '🇬🇧',
+              'BR': '🇧🇷'
+            }
             
             return (
               <div 
                 key={i} 
-                className={`rounded-2xl p-5 transition-all duration-300 ${isWinner ? 'transform scale-[1.02]' : 'hover:scale-[1.01]'}`}
+                className={`rounded-xl p-4 transition-all duration-300 ${isWinner ? 'ring-2 ring-emerald-400/50' : ''}`}
                 style={{
-                  background: style.bg,
-                  border: `2px solid ${style.border}`,
-                  boxShadow: style.shadow
+                  background: colorScheme.bg,
+                  border: `1px solid ${colorScheme.border}`
                 }}
               >
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-3">
-                    {/* Badge de posição */}
-                    <div 
-                      className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm"
-                      style={{ 
-                        background: style.badgeBg,
-                        color: style.badgeText
-                      }}
-                    >
+                    {/* Número da posição */}
+                    <span className="text-lg font-bold" style={{ color: 'rgba(255,255,255,0.4)' }}>
                       {i + 1}º
-                    </div>
+                    </span>
+                    {/* Bandeira */}
+                    <span className="text-2xl">{countryFlags[city.code] || '🌍'}</span>
+                    {/* Nome e código */}
                     <div>
-                      <h4 className="text-xl font-bold" style={{ color: style.nameColor }}>
+                      <h4 className="text-lg font-bold text-white">
                         {city.name}
                       </h4>
-                      <span 
-                        className="text-xs font-medium uppercase tracking-wider"
-                        style={{ color: 'rgba(255,255,255,0.5)' }}
-                      >
+                      <span className="text-xs font-medium uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.5)' }}>
                         {city.code}
                       </span>
                     </div>
                   </div>
                   <div className="text-right">
                     <div 
-                      className={`font-black ${isWinner ? 'text-4xl' : 'text-2xl'}`}
-                      style={{ color: style.scoreColor }}
+                      className={`font-black ${isWinner ? 'text-3xl' : 'text-2xl'}`}
+                      style={{ color: colorScheme.scoreColor }}
                     >
                       {city.total}
                     </div>
@@ -794,24 +772,22 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
                   </div>
                 </div>
                 <div 
-                  className="h-3 rounded-full overflow-hidden"
-                  style={{ background: style.barBg }}
+                  className="h-2.5 rounded-full overflow-hidden"
+                  style={{ background: 'rgba(255,255,255,0.1)' }}
                 >
                   <div
                     className="h-full rounded-full transition-all duration-700"
                     style={{ 
                       width: `${city.total}%`,
-                      background: style.barColor
+                      background: colorScheme.barColor
                     }}
                   />
                 </div>
                 {isWinner && (
-                  <div 
-                    className="mt-3 flex items-center justify-center gap-2 text-sm font-semibold"
-                    style={{ color: '#86efac' }}
-                  >
-                    <span>🏆</span>
-                    <span>{t.comparison.winnerLabel}</span>
+                  <div className="mt-2 text-center">
+                    <span className="text-sm font-semibold" style={{ color: '#86efac' }}>
+                      🏆 {t.comparison.winnerLabel}
+                    </span>
                   </div>
                 )}
               </div>
@@ -819,30 +795,29 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
           })}
         </div>
         
-        {/* Sources - centralizado, menor que os cards */}
-        <div className="mt-12 flex justify-center px-4">
+        {/* Sources - mesma largura dos cards */}
+        <div className="mt-10 px-4">
           <div 
-            className="px-8 py-6 rounded-2xl"
+            className="px-6 py-5 rounded-xl"
             style={{ 
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              maxWidth: '600px'
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
+              border: '1px solid rgba(255,255,255,0.1)'
             }}
           >
             <div className="flex items-center justify-center gap-2 mb-4">
-              <span className="text-xl">📊</span>
-              <span className="text-base font-semibold uppercase tracking-wider" style={{ color: '#f1f5f9' }}>
+              <span className="text-2xl">📊</span>
+              <span className="text-lg font-bold uppercase tracking-wider" style={{ color: '#f1f5f9' }}>
                 {lang === 'pt' ? 'Fontes Verificadas' : lang === 'es' ? 'Fuentes Verificadas' : lang === 'fr' ? 'Sources Vérifiées' : 'Verified Sources'}
               </span>
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
               {t.comparison.sources?.map((source: { name: string; url: string }, idx: number) => (
                 <a
                   key={idx}
                   href={source.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-base font-medium transition-all hover:scale-105"
+                  className="text-base font-semibold transition-all hover:scale-105"
                   style={{ 
                     color: '#60a5fa',
                     textDecoration: 'none'
@@ -851,11 +826,11 @@ const WhyVancouverConvincing: React.FC<WhyVancouverConvincingProps> = ({ lang })
                   onMouseLeave={(e) => e.currentTarget.style.color = '#60a5fa'}
                 >
                   {source.name}
-                  <span className="ml-1 text-sm opacity-60">↗</span>
+                  <span className="ml-1 opacity-60">↗</span>
                 </a>
               ))}
             </div>
-            <p className="text-sm text-center mt-4" style={{ color: '#94a3b8' }}>
+            <p className="text-base text-center mt-4 font-medium" style={{ color: '#94a3b8' }}>
               {lang === 'pt' ? 'Dados atualizados em 2024' : lang === 'es' ? 'Datos actualizados en 2024' : lang === 'fr' ? 'Données mises à jour en 2024' : 'Data updated in 2024'}
             </p>
           </div>
