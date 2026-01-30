@@ -6,6 +6,7 @@ import { getServiceBySlug, getServiceTitle, getServiceShortDesc, getServiceLongD
 import { useBackofficeService } from '../hooks/useBackofficeService'
 import { getServiceFAQs, hasServiceFAQs } from '../data/serviceFAQs'
 import LangLink from '../components/LangLink'
+import Breadcrumbs from '../components/Breadcrumbs'
 import SEO from '../components/SEO'
 import StructuredData from '../components/StructuredData'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -435,32 +436,6 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
     }
   }
 
-  // Breadcrumb Schema para SEO (Google identifica navegação)
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: lang === 'pt' ? 'Home' : lang === 'en' ? 'Home' : lang === 'es' ? 'Inicio' : 'Accueil',
-        item: `https://azmt.com.br/${lang}`
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: lang === 'pt' ? 'Soluções' : lang === 'en' ? 'Solutions' : lang === 'es' ? 'Soluciones' : 'Solutions',
-        item: `https://azmt.com.br/${lang}/what`
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: title,
-        item: `https://azmt.com.br/${lang}/what/${slug}`
-      }
-    ]
-  }
-
   // Serviços relacionados para internal linking (Google identifica relacionamento)
   const relatedServices = servicesData
     .filter(s => s.slug !== slug && (
@@ -485,9 +460,6 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
       {/* Service Schema */}
       <StructuredData type="Service" data={serviceSchema} />
       
-      {/* Breadcrumb Schema para navegação (Google identifica estrutura) */}
-      <StructuredData type="BreadcrumbList" data={breadcrumbSchema} />
-      
       {/* 🆕 FASE 2: Banner de Sugestão Dinâmica */}
       <DynamicSuggestionBanner 
         lang={lang} 
@@ -506,17 +478,16 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
 
         <div className="mx-auto max-w-6xl px-6" style={{ position: 'relative', zIndex: 2 }}>
           {/* Breadcrumbs */}
-          <nav className="mb-8 flex items-center gap-2 text-sm font-sora text-theme-text-secondary">
-            <LangLink to="/" className="hover:text-azimut-red transition-colors">
-              Home
-            </LangLink>
-            <span className="opacity-50">›</span>
-            <LangLink to="/what" className="hover:text-azimut-red transition-colors">
-              {lang === 'pt' ? 'Soluções' : lang === 'fr' ? 'Solutions' : lang === 'es' ? 'Soluciones' : 'Solutions'}
-            </LangLink>
-            <span className="opacity-50">›</span>
-            <span className="font-medium text-azimut-red">{title}</span>
-          </nav>
+          <div className="mb-8">
+            <Breadcrumbs
+              lang={lang}
+              items={[
+                { name: lang === 'pt' ? 'Início' : lang === 'es' ? 'Inicio' : lang === 'fr' ? 'Accueil' : 'Home', url: `/${lang}` },
+                { name: lang === 'pt' ? 'Soluções' : lang === 'es' ? 'Soluciones' : lang === 'fr' ? 'Solutions' : 'Solutions', url: `/${lang}/what` },
+                { name: title, url: `/${lang}/what/${slug}` }
+              ]}
+            />
+          </div>
 
           {/* Hero Visual Premium */}
           <ServiceHero

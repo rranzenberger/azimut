@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import LangLink from '../components/LangLink'
+import Breadcrumbs from '../components/Breadcrumbs'
 import StudioSubNav from '../components/StudioSubNav'
 
 interface StudioTeamProps {
@@ -290,13 +291,16 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
 
         <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 py-8">
           {/* Breadcrumbs */}
-          <nav className="mb-8 flex items-center gap-2 text-sm text-theme-text-secondary">
-            <LangLink to="/" className="hover:text-azimut-red transition-colors">Home</LangLink>
-            <span>›</span>
-            <LangLink to="/studio" className="hover:text-azimut-red transition-colors">Studio</LangLink>
-            <span>›</span>
-            <span className="text-azimut-red font-medium">{text.title}</span>
-          </nav>
+          <div className="mb-8">
+            <Breadcrumbs
+              lang={lang}
+              items={[
+                { name: lang === 'pt' ? 'Início' : lang === 'es' ? 'Inicio' : lang === 'fr' ? 'Accueil' : 'Home', url: `/${lang}` },
+                { name: lang === 'pt' ? 'Estúdio' : lang === 'es' ? 'Estudio' : lang === 'fr' ? 'Studio' : 'Studio', url: `/${lang}/studio` },
+                { name: text.title, url: `/${lang}/studio/equipe` }
+              ]}
+            />
+          </div>
 
           {/* Hero */}
           <div className="mb-12">

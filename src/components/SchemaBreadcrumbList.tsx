@@ -107,7 +107,7 @@ const SchemaBreadcrumbList: React.FC<SchemaBreadcrumbListProps> = ({
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
-      item: item.url
+      item: item.url.startsWith('http') ? item.url : `${siteUrl}${item.url.startsWith('/') ? '' : '/'}${item.url}`
     }))
   }
 
