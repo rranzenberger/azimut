@@ -5,7 +5,7 @@
  */
 
 import { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import { WalletConnect } from './WalletConnect'
 
@@ -21,6 +21,27 @@ interface PreviewOption {
 }
 
 const previewOptions: PreviewOption[] = [
+  {
+    id: 'empathy-engine-game',
+    title: 'Jogue o Empathy Engine',
+    description: 'Jogo de cartas por brief: monte propostas (XR, audiovisual, eventos, Canadá) e veja o cliente reagir!',
+    icon: '🎮',
+    category: 'immersive',
+    features: [
+      'Cartas por tópico: XR/VR, Produção, Eventos, Canadá',
+      'Objetivos e surpresas por rodada',
+      'Combos que dão bônus',
+      'Veja como o cliente reage',
+      '4 fases de desafio',
+    ],
+    examples: [
+      'Monte uma proposta de XR',
+      'Crie um evento híbrido',
+      'Proponha curso no Canadá',
+      'Surpreenda o cliente com combos',
+    ],
+    cta: 'Jogar agora',
+  },
   {
     id: 'vr-experience',
     title: 'Experiência VR Imersiva',
@@ -133,6 +154,7 @@ interface ExperiencePreviewProps {
 }
 
 export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
+  const navigate = useNavigate()
   const [selected, setSelected] = useState<string | null>(null)
   const [showDetails, setShowDetails] = useState(false)
   const [connectedWallet, setConnectedWallet] = useState<{ address: string; chainId: number; balance?: string } | null>(null)
@@ -341,81 +363,51 @@ export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
           gap: 28,
           marginBottom: 60,
         }}>
-          {/* Card do jogo Empathy Engine - PRIMEIRO para ficar visível */}
-          <Link
-            to={`/${lang}/game`}
-            style={{
-              display: 'block',
-              padding: 32,
-              borderRadius: 16,
-              background: 'linear-gradient(135deg, rgba(139, 35, 50, 0.35) 0%, rgba(107, 26, 38, 0.4) 100%)',
-              border: '2px solid rgba(139, 35, 50, 0.6)',
-              cursor: 'pointer',
-              transition: 'all 0.3s',
-              textDecoration: 'none',
-              color: 'inherit',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(139, 35, 50, 0.9)'
-              e.currentTarget.style.transform = 'translateY(-4px)'
-              e.currentTarget.style.boxShadow = '0 12px 40px rgba(139, 35, 50, 0.3)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(139, 35, 50, 0.6)'
-              e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = 'none'
-            }}
-          >
-            <div style={{ fontSize: 48, marginBottom: 16 }}>🎮</div>
-            <h3 style={{ fontSize: 24, fontWeight: 700, color: '#fff', marginBottom: 12 }}>
-              {lang === 'pt' ? 'Jogue o Empathy Engine' : lang === 'en' ? 'Play Empathy Engine' : lang === 'es' ? 'Juega Empathy Engine' : 'Jouez à Empathy Engine'}
-            </h3>
-            <p style={{ fontSize: 14, color: '#c0bccf', lineHeight: 1.6, marginBottom: 20 }}>
-              {lang === 'pt' ? 'Jogo de cartas por brief: monte propostas (XR, audiovisual, eventos, Canadá) e veja o cliente reagir.' : lang === 'en' ? 'Card game by brief: build proposals (XR, audiovisual, events, Canada) and see the client react.' : lang === 'es' ? 'Juego de cartas por brief: arma propuestas (XR, audiovisual, eventos, Canadá) y mira la reacción del cliente.' : 'Jeu de cartes par brief : construisez des propositions (XR, audiovisuel, événements, Canada) et voyez le client réagir.'}
-            </p>
-            <div style={{
-              padding: '12px 20px',
-              borderRadius: 8,
-              background: 'rgba(139, 35, 50, 0.5)',
-              color: '#fff',
-              fontSize: 14,
-              fontWeight: 600,
-              textAlign: 'center',
-            }}>
-              {lang === 'pt' ? 'Jogar agora →' : lang === 'en' ? 'Play now →' : lang === 'es' ? 'Jugar ahora →' : 'Jouer maintenant →'}
-            </div>
-          </Link>
           {previewOptions.map((option) => (
             <div
               key={option.id}
               onClick={() => {
+                // Se for o jogo, navegar para /game
+                if (option.id === 'empathy-engine-game') {
+                  navigate(`/${lang}/game`)
+                  return
+                }
                 setSelected(option.id)
                 setShowDetails(true)
               }}
               style={{
                 padding: 32,
                 borderRadius: 16,
-                background: selected === option.id
-                  ? 'linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%)'
-                  : 'rgba(0,0,0,0.4)',
-                border: `2px solid ${
-                  selected === option.id
-                    ? 'rgba(34, 197, 94, 0.5)'
-                    : 'rgba(255,255,255,0.1)'
-                }`,
+                background: option.id === 'empathy-engine-game'
+                  ? 'linear-gradient(135deg, rgba(139, 35, 50, 0.4) 0%, rgba(107, 26, 38, 0.5) 100%)'
+                  : selected === option.id
+                    ? 'linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%)'
+                    : 'rgba(0,0,0,0.4)',
+                border: option.id === 'empathy-engine-game'
+                  ? '2px solid rgba(139, 35, 50, 0.7)'
+                  : `2px solid ${selected === option.id ? 'rgba(34, 197, 94, 0.5)' : 'rgba(255,255,255,0.1)'}`,
                 cursor: 'pointer',
                 transition: 'all 0.3s',
                 position: 'relative',
                 overflow: 'hidden',
+                boxShadow: option.id === 'empathy-engine-game' ? '0 8px 32px rgba(139, 35, 50, 0.3)' : 'none',
               }}
               onMouseEnter={(e) => {
-                if (selected !== option.id) {
+                if (option.id === 'empathy-engine-game') {
+                  e.currentTarget.style.borderColor = 'rgba(139, 35, 50, 1)'
+                  e.currentTarget.style.transform = 'translateY(-6px) scale(1.02)'
+                  e.currentTarget.style.boxShadow = '0 16px 48px rgba(139, 35, 50, 0.5)'
+                } else if (selected !== option.id) {
                   e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.5)'
                   e.currentTarget.style.transform = 'translateY(-4px)'
                 }
               }}
               onMouseLeave={(e) => {
-                if (selected !== option.id) {
+                if (option.id === 'empathy-engine-game') {
+                  e.currentTarget.style.borderColor = 'rgba(139, 35, 50, 0.7)'
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(139, 35, 50, 0.3)'
+                } else if (selected !== option.id) {
                   e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
                   e.currentTarget.style.transform = 'translateY(0)'
                 }
@@ -441,15 +433,19 @@ export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
               <div style={{
                 padding: '12px 20px',
                 borderRadius: 8,
-                background: selected === option.id
-                  ? 'rgba(34, 197, 94, 0.3)'
-                  : 'rgba(139, 92, 246, 0.2)',
-                color: selected === option.id ? '#86efac' : '#c4b5fd',
+                background: option.id === 'empathy-engine-game'
+                  ? 'rgba(139, 35, 50, 0.6)'
+                  : selected === option.id
+                    ? 'rgba(34, 197, 94, 0.3)'
+                    : 'rgba(139, 92, 246, 0.2)',
+                color: option.id === 'empathy-engine-game' ? '#fff' : selected === option.id ? '#86efac' : '#c4b5fd',
                 fontSize: 14,
                 fontWeight: 600,
                 textAlign: 'center',
               }}>
-                {selected === option.id ? '✓ Selecionado' : 'Ver Detalhes →'}
+                {option.id === 'empathy-engine-game'
+                  ? (lang === 'pt' ? '🎮 Jogar agora →' : lang === 'en' ? '🎮 Play now →' : lang === 'es' ? '🎮 Jugar ahora →' : '🎮 Jouer maintenant →')
+                  : selected === option.id ? '✓ Selecionado' : 'Ver Detalhes →'}
               </div>
             </div>
           ))}
