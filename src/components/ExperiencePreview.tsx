@@ -297,33 +297,41 @@ export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
           }}>
             Veja o que é possível e se empolgue com as possibilidades
           </p>
-          {/* CTA Jogo Empathy Engine */}
-          <Link
-            to={`/${lang}/game`}
-            style={{
-              display: 'inline-block',
-              marginTop: 24,
-              padding: '16px 32px',
-              borderRadius: 12,
-              background: 'linear-gradient(135deg, #8B2332 0%, #6b1a26 100%)',
-              color: '#fff',
-              fontSize: 'clamp(16px, 2vw, 18px)',
-              fontWeight: 700,
-              textDecoration: 'none',
-              boxShadow: '0 4px 20px rgba(139, 35, 50, 0.4)',
-              transition: 'transform 0.2s, box-shadow 0.2s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)'
-              e.currentTarget.style.boxShadow = '0 6px 24px rgba(139, 35, 50, 0.5)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = '0 4px 20px rgba(139, 35, 50, 0.4)'
-            }}
-          >
-            🎮 {lang === 'pt' ? 'Jogue o Empathy Engine' : lang === 'en' ? 'Play Empathy Engine' : lang === 'es' ? 'Juega Empathy Engine' : 'Jouez à Empathy Engine'}
-          </Link>
+          {/* CTA Jogo Empathy Engine - DESTAQUE */}
+          <div style={{ marginTop: 32, marginBottom: 40 }}>
+            <Link
+              to={`/${lang}/game`}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 12,
+                padding: '20px 40px',
+                borderRadius: 16,
+                background: 'linear-gradient(135deg, #8B2332 0%, #6b1a26 100%)',
+                color: '#fff',
+                fontSize: 'clamp(18px, 2.2vw, 22px)',
+                fontWeight: 700,
+                textDecoration: 'none',
+                boxShadow: '0 8px 32px rgba(139, 35, 50, 0.5)',
+                border: '2px solid rgba(255,255,255,0.2)',
+                transition: 'transform 0.2s, box-shadow 0.2s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'scale(1.03)'
+                e.currentTarget.style.boxShadow = '0 12px 40px rgba(139, 35, 50, 0.6)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1)'
+                e.currentTarget.style.boxShadow = '0 8px 32px rgba(139, 35, 50, 0.5)'
+              }}
+            >
+              <span style={{ fontSize: 28 }}>🎮</span>
+              {lang === 'pt' ? 'Jogue o Empathy Engine' : lang === 'en' ? 'Play Empathy Engine' : lang === 'es' ? 'Juega Empathy Engine' : 'Jouez à Empathy Engine'}
+            </Link>
+            <p style={{ marginTop: 12, fontSize: 14, color: '#9ca3af' }}>
+              {lang === 'pt' ? 'Jogo de cartas por brief: monte propostas e veja o cliente reagir.' : lang === 'en' ? 'Card game by brief: build proposals and see the client react.' : lang === 'es' ? 'Juego de cartas por brief: arma propuestas y mira la reacción del cliente.' : 'Jeu de cartes par brief : construisez des propositions et voyez le client réagir.'}
+            </p>
+          </div>
         </div>
 
         {/* Cards de Opções - MELHOR ESPAÇAMENTO E LAYOUT */}
@@ -333,6 +341,50 @@ export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
           gap: 28,
           marginBottom: 60,
         }}>
+          {/* Card do jogo Empathy Engine - PRIMEIRO para ficar visível */}
+          <Link
+            to={`/${lang}/game`}
+            style={{
+              display: 'block',
+              padding: 32,
+              borderRadius: 16,
+              background: 'linear-gradient(135deg, rgba(139, 35, 50, 0.35) 0%, rgba(107, 26, 38, 0.4) 100%)',
+              border: '2px solid rgba(139, 35, 50, 0.6)',
+              cursor: 'pointer',
+              transition: 'all 0.3s',
+              textDecoration: 'none',
+              color: 'inherit',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = 'rgba(139, 35, 50, 0.9)'
+              e.currentTarget.style.transform = 'translateY(-4px)'
+              e.currentTarget.style.boxShadow = '0 12px 40px rgba(139, 35, 50, 0.3)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = 'rgba(139, 35, 50, 0.6)'
+              e.currentTarget.style.transform = 'translateY(0)'
+              e.currentTarget.style.boxShadow = 'none'
+            }}
+          >
+            <div style={{ fontSize: 48, marginBottom: 16 }}>🎮</div>
+            <h3 style={{ fontSize: 24, fontWeight: 700, color: '#fff', marginBottom: 12 }}>
+              {lang === 'pt' ? 'Jogue o Empathy Engine' : lang === 'en' ? 'Play Empathy Engine' : lang === 'es' ? 'Juega Empathy Engine' : 'Jouez à Empathy Engine'}
+            </h3>
+            <p style={{ fontSize: 14, color: '#c0bccf', lineHeight: 1.6, marginBottom: 20 }}>
+              {lang === 'pt' ? 'Jogo de cartas por brief: monte propostas (XR, audiovisual, eventos, Canadá) e veja o cliente reagir.' : lang === 'en' ? 'Card game by brief: build proposals (XR, audiovisual, events, Canada) and see the client react.' : lang === 'es' ? 'Juego de cartas por brief: arma propuestas (XR, audiovisual, eventos, Canadá) y mira la reacción del cliente.' : 'Jeu de cartes par brief : construisez des propositions (XR, audiovisuel, événements, Canada) et voyez le client réagir.'}
+            </p>
+            <div style={{
+              padding: '12px 20px',
+              borderRadius: 8,
+              background: 'rgba(139, 35, 50, 0.5)',
+              color: '#fff',
+              fontSize: 14,
+              fontWeight: 600,
+              textAlign: 'center',
+            }}>
+              {lang === 'pt' ? 'Jogar agora →' : lang === 'en' ? 'Play now →' : lang === 'es' ? 'Jugar ahora →' : 'Jouer maintenant →'}
+            </div>
+          </Link>
           {previewOptions.map((option) => (
             <div
               key={option.id}
