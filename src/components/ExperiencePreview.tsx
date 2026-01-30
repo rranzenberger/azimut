@@ -288,71 +288,265 @@ export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
       )}
 
       <div style={{ maxWidth: 1200, margin: '0 auto', paddingTop: connectedWallet ? '140px' : '80px' }}>
-        {/* Header - MELHORADO */}
-        <div style={{ textAlign: 'center', marginBottom: 80 }}>
-          <h1 style={{
-            fontSize: 'clamp(32px, 5vw, 56px)',
-            fontWeight: 700,
-            color: '#fff',
-            marginBottom: 20,
-            background: 'linear-gradient(135deg, #86efac 0%, #3b82f6 50%, #a855f7 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            lineHeight: '1.2',
-            letterSpacing: '-0.02em',
+        {/* Hero Card Premium - Estilo Home */}
+        <div style={{
+          position: 'relative',
+          borderRadius: 24,
+          padding: 2,
+          marginBottom: 60,
+          background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.6) 0%, rgba(236, 72, 153, 0.4) 25%, rgba(59, 130, 246, 0.4) 50%, rgba(34, 197, 94, 0.3) 75%, rgba(168, 85, 247, 0.5) 100%)',
+          boxShadow: '0 0 60px rgba(168, 85, 247, 0.2), 0 0 100px rgba(236, 72, 153, 0.1)',
+        }}>
+          <div style={{
+            borderRadius: 22,
+            padding: 'clamp(32px, 5vw, 48px)',
+            background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.95) 50%, rgba(15, 23, 42, 0.98) 100%)',
+            backdropFilter: 'blur(20px)',
           }}>
-            🎁 Degustação: O Que Podemos Fazer Por Você
-          </h1>
-          <p style={{ 
-            fontSize: 'clamp(18px, 2.5vw, 24px)', 
-            color: '#c0bccf', 
-            marginBottom: 12,
-            fontWeight: 500,
-            lineHeight: '1.5',
-          }}>
-            Experimente o futuro: VR, NFT, Web3 e Experiências Imersivas
-          </p>
-          <p style={{ 
-            fontSize: 'clamp(14px, 1.8vw, 18px)', 
-            color: '#8f8ba2',
-            lineHeight: '1.6',
-          }}>
-            Veja o que é possível e se empolgue com as possibilidades
-          </p>
-          {/* CTA Jogo Empathy Engine - DESTAQUE */}
-          <div style={{ marginTop: 32, marginBottom: 40 }}>
-            <Link
-              to={`/${lang}/game`}
-              style={{
-                display: 'inline-flex',
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 24, alignItems: 'flex-start' }}>
+              {/* Ícone Premium + Título */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+                {/* Ícone de presente premium com gradiente */}
+                <div style={{
+                  width: 56,
+                  height: 56,
+                  borderRadius: 12,
+                  background: 'linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FFD700 100%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 8px 24px rgba(255, 107, 53, 0.4)',
+                  position: 'relative',
+                }}>
+                  {/* SVG de presente estilizado */}
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="8" width="18" height="13" rx="2" fill="white" fillOpacity="0.9"/>
+                    <rect x="2" y="6" width="20" height="4" rx="1" fill="white"/>
+                    <path d="M12 6V21" stroke="#FF6B35" strokeWidth="2"/>
+                    <path d="M12 6C12 6 9 3 7 3C5 3 4 4.5 4 6" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                    <path d="M12 6C12 6 15 3 17 3C19 3 20 4.5 20 6" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                    <circle cx="7" cy="3" r="1.5" fill="#FFD700"/>
+                    <circle cx="17" cy="3" r="1.5" fill="#FFD700"/>
+                  </svg>
+                </div>
+                
+                <h1 style={{
+                  fontSize: 'clamp(28px, 4vw, 42px)',
+                  fontWeight: 800,
+                  letterSpacing: '-0.02em',
+                  lineHeight: 1.1,
+                  margin: 0,
+                }}>
+                  <span style={{
+                    background: 'linear-gradient(135deg, #A855F7 0%, #EC4899 50%, #3B82F6 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}>
+                    IMMERSIVE
+                  </span>
+                  {' '}
+                  <span style={{
+                    background: 'linear-gradient(135deg, #22C55E 0%, #3B82F6 50%, #A855F7 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}>
+                    CURATION
+                  </span>
+                </h1>
+                
+                {/* Badge Web3 */}
+                <div style={{
+                  padding: '8px 16px',
+                  borderRadius: 20,
+                  background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%)',
+                  border: '1px solid rgba(59, 130, 246, 0.4)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                }}>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: '#93C5FD' }}>WEB3</span>
+                </div>
+              </div>
+
+              {/* Subtítulo com bullets */}
+              <p style={{
+                fontSize: 'clamp(16px, 2vw, 20px)',
+                color: '#A78BFA',
+                fontWeight: 500,
+                margin: 0,
+                display: 'flex',
                 alignItems: 'center',
-                gap: 12,
-                padding: '20px 40px',
-                borderRadius: 16,
-                background: 'linear-gradient(135deg, #8B2332 0%, #6b1a26 100%)',
-                color: '#fff',
-                fontSize: 'clamp(18px, 2.2vw, 22px)',
-                fontWeight: 700,
-                textDecoration: 'none',
-                boxShadow: '0 8px 32px rgba(139, 35, 50, 0.5)',
-                border: '2px solid rgba(255,255,255,0.2)',
-                transition: 'transform 0.2s, box-shadow 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.03)'
-                e.currentTarget.style.boxShadow = '0 12px 40px rgba(139, 35, 50, 0.6)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)'
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(139, 35, 50, 0.5)'
-              }}
-            >
-              <span style={{ fontSize: 28 }}>🎮</span>
-              {lang === 'pt' ? 'Jogue o Empathy Engine' : lang === 'en' ? 'Play Empathy Engine' : lang === 'es' ? 'Juega Empathy Engine' : 'Jouez à Empathy Engine'}
-            </Link>
-            <p style={{ marginTop: 12, fontSize: 14, color: '#9ca3af' }}>
-              {lang === 'pt' ? 'Jogo de cartas por brief: monte propostas e veja o cliente reagir.' : lang === 'en' ? 'Card game by brief: build proposals and see the client react.' : lang === 'es' ? 'Juego de cartas por brief: arma propuestas y mira la reacción del cliente.' : 'Jeu de cartes par brief : construisez des propositions et voyez le client réagir.'}
-            </p>
+                gap: 8,
+                flexWrap: 'wrap',
+              }}>
+                <span>VR</span>
+                <span style={{ color: '#6366F1' }}>•</span>
+                <span>AR</span>
+                <span style={{ color: '#6366F1' }}>•</span>
+                <span>Web3</span>
+                <span style={{ color: '#6366F1' }}>•</span>
+                <span style={{ color: '#F472B6' }}>Collectibles (NFTs)</span>
+              </p>
+
+              {/* Texto principal */}
+              <div style={{ maxWidth: 600 }}>
+                <h2 style={{
+                  fontSize: 'clamp(18px, 2.5vw, 24px)',
+                  fontWeight: 600,
+                  color: '#fff',
+                  margin: '0 0 12px 0',
+                }}>
+                  {lang === 'pt' ? 'Tem um projeto? Vamos construir juntos.' : lang === 'en' ? 'Have a project? Let\'s build it together.' : lang === 'es' ? '¿Tienes un proyecto? Construyámoslo juntos.' : 'Vous avez un projet? Construisons-le ensemble.'}
+                </h2>
+                <p style={{
+                  fontSize: 'clamp(14px, 1.5vw, 16px)',
+                  color: '#9CA3AF',
+                  lineHeight: 1.7,
+                  margin: 0,
+                }}>
+                  {lang === 'pt' 
+                    ? 'De campanhas e estandes de expo a projetos culturais e educacionais, criamos experiências imersivas que param as pessoas, aumentam o tempo de permanência e geram engajamento real—onde tecnologia encontra storytelling, do conceito à entrega.'
+                    : lang === 'en'
+                    ? 'From campaigns and expo booths to cultural and educational projects, we craft immersive experiences that stop people in their tracks, increase dwell time, and spark real engagement—where technology meets storytelling, from concept to delivery.'
+                    : lang === 'es'
+                    ? 'Desde campañas y stands de expo hasta proyectos culturales y educativos, creamos experiencias inmersivas que detienen a las personas, aumentan el tiempo de permanencia y generan engagement real.'
+                    : 'Des campagnes et stands d\'expo aux projets culturels et éducatifs, nous créons des expériences immersives qui arrêtent les gens, augmentent le temps de présence et suscitent un engagement réel.'}
+                </p>
+              </div>
+
+              {/* Tags de contexto */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                <span style={{
+                  padding: '6px 14px',
+                  borderRadius: 20,
+                  background: 'rgba(236, 72, 153, 0.15)',
+                  border: '1px solid rgba(236, 72, 153, 0.3)',
+                  fontSize: 13,
+                  color: '#F472B6',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                }}>
+                  <span>🏛️</span> {lang === 'pt' ? 'Museus, festivais & ativações de marca' : 'Museums, festivals & brand activations'}
+                </span>
+              </div>
+
+              {/* CTAs Premium */}
+              <div style={{ 
+                display: 'flex', 
+                gap: 16, 
+                flexWrap: 'wrap',
+                marginTop: 8,
+                width: '100%',
+              }}>
+                {/* CTA Principal - Jogo */}
+                <Link
+                  to={`/${lang}/game`}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 12,
+                    padding: '16px 28px',
+                    borderRadius: 12,
+                    background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+                    color: '#fff',
+                    fontSize: 16,
+                    fontWeight: 700,
+                    textDecoration: 'none',
+                    boxShadow: '0 8px 24px rgba(16, 185, 129, 0.4)',
+                    border: 'none',
+                    transition: 'all 0.3s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)'
+                    e.currentTarget.style.boxShadow = '0 12px 32px rgba(16, 185, 129, 0.5)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)'
+                    e.currentTarget.style.boxShadow = '0 8px 24px rgba(16, 185, 129, 0.4)'
+                  }}
+                >
+                  <span>🎮</span>
+                  <span>{lang === 'pt' ? 'Jogar Demo' : lang === 'en' ? 'Try the Demo' : lang === 'es' ? 'Probar Demo' : 'Essayer la Démo'}</span>
+                  <span>→</span>
+                </Link>
+
+                {/* Info badge */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  padding: '12px 20px',
+                  borderRadius: 10,
+                  background: 'rgba(251, 191, 36, 0.1)',
+                  border: '1px solid rgba(251, 191, 36, 0.3)',
+                }}>
+                  <span style={{ fontSize: 14 }}>🔒</span>
+                  <span style={{ fontSize: 13, color: '#FCD34D' }}>
+                    {lang === 'pt' ? 'Apenas leitura • sem custo • sem acesso aos seus fundos' : 'Read-only • no cost • no access to your funds'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Links secundários */}
+              <div style={{ 
+                display: 'flex', 
+                gap: 16, 
+                flexWrap: 'wrap',
+                alignItems: 'center',
+              }}>
+                <Link
+                  to={`/${lang}/work`}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    padding: '14px 24px',
+                    borderRadius: 10,
+                    background: 'linear-gradient(135deg, #DC2626 0%, #B91C1C 100%)',
+                    color: '#fff',
+                    fontSize: 15,
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                    boxShadow: '0 4px 16px rgba(220, 38, 38, 0.3)',
+                    transition: 'all 0.3s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)'
+                  }}
+                >
+                  {lang === 'pt' ? 'Ver Cases Imersivos' : 'See Immersive Cases'}
+                  <span>→</span>
+                </Link>
+
+                <Link
+                  to={`/${lang}/solutions`}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    padding: '14px 20px',
+                    color: '#9CA3AF',
+                    fontSize: 14,
+                    fontWeight: 500,
+                    textDecoration: 'none',
+                    transition: 'color 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#fff'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#9CA3AF'
+                  }}
+                >
+                  VR / AR / Web3 Solutions
+                  <span>›</span>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
 
