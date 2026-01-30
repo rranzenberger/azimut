@@ -53,44 +53,52 @@ export const PRIMARY_KEYWORDS = {
 // Long-tail keywords (menos competição, mais específicas)
 export const LONG_TAIL_KEYWORDS = {
   pt: [
+    'agente VFS Brasil',
+    'agente VanArts brasileiro',
+    'VFS ou VanArts qual escolher',
+    'quanto custa estudar VFX Vancouver',
     'como estudar cinema no Canadá',
     'melhor agente educacional VFS Vancouver',
     'curso VFX com certificação internacional',
-    'produtora VR para museus',
-    'experiências imersivas para eventos',
-    'realidade virtual para exposições culturais',
-    'produção audiovisual para marcas',
-    'estudar animação 3D Vancouver'
+    'estudar animação 3D Vancouver',
+    'bolsa de estudos VFS VanArts',
+    'trabalhar Canadá depois estudar VFX'
   ],
   en: [
+    'VFS agent Brazil',
+    'VanArts agent Brazilian',
+    'VFS vs VanArts which to choose',
+    'how much does it cost to study VFX Vancouver',
     'how to study film in Canada',
     'best education agent VFS Vancouver',
     'VFX course with international certification',
-    'VR production for museums',
-    'immersive experiences for events',
-    'virtual reality for cultural exhibitions',
-    'audiovisual production for brands',
-    'study 3D animation Vancouver'
+    'study 3D animation Vancouver',
+    'VFS VanArts scholarship',
+    'work Canada after studying VFX'
   ],
   es: [
+    'agente VFS Brasil',
+    'agente VanArts brasileño',
+    'VFS o VanArts cuál elegir',
+    'cuánto cuesta estudiar VFX Vancouver',
     'cómo estudiar cine en Canadá',
     'mejor agente educativo VFS Vancouver',
     'curso VFX con certificación internacional',
-    'producción VR para museos',
-    'experiencias inmersivas para eventos',
-    'realidad virtual para exposiciones culturales',
-    'producción audiovisual para marcas',
-    'estudiar animación 3D Vancouver'
+    'estudiar animación 3D Vancouver',
+    'bolsa VFS VanArts',
+    'trabajar Canadá después estudiar VFX'
   ],
   fr: [
+    'agent VFS Brésil',
+    'agent VanArts brésilien',
+    'VFS ou VanArts lequel choisir',
+    'combien coûte étudier VFX Vancouver',
     'comment étudier le cinéma au Canada',
     'meilleur agent éducatif VFS Vancouver',
     'cours VFX avec certification internationale',
-    'production VR pour musées',
-    'expériences immersives pour événements',
-    'réalité virtuelle pour expositions culturelles',
-    'production audiovisuelle pour marques',
-    'étudier animation 3D Vancouver'
+    'étudier animation 3D Vancouver',
+    'bourse VFS VanArts',
+    'travailler Canada après étudier VFX'
   ]
 }
 
@@ -163,10 +171,10 @@ export const PAGE_KEYWORDS: Record<string, Record<Lang, string[]>> = {
     fr: ['production audiovisuelle', 'VR', 'AR', 'réalité virtuelle', 'expériences immersives', 'VFX', 'animation', 'game design', 'Vancouver', 'VFS', 'VanArts']
   },
   vancouver: {
-    pt: ['estudar Vancouver', 'VFS', 'VanArts', 'Canadá', 'intercâmbio', 'cinema', 'VFX', 'animação', 'residência permanente'],
-    en: ['study Vancouver', 'VFS', 'VanArts', 'Canada', 'exchange', 'film', 'VFX', 'animation', 'permanent residence'],
-    es: ['estudiar Vancouver', 'VFS', 'VanArts', 'Canadá', 'intercambio', 'cine', 'VFX', 'animación', 'residencia permanente'],
-    fr: ['étudier Vancouver', 'VFS', 'VanArts', 'Canada', 'échange', 'cinéma', 'VFX', 'animation', 'résidence permanente']
+    pt: ['agente VFS Brasil', 'agente VanArts brasileiro', 'estudar Vancouver', 'VFS', 'VanArts', 'VFS ou VanArts qual escolher', 'quanto custa estudar VFX Vancouver', 'curso animação Canadá brasileiro', 'consultoria estudar Vancouver', 'Canadá', 'cinema', 'VFX', 'animação', 'game design', 'residência permanente'],
+    en: ['VFS agent Brazil', 'VanArts agent Brazilian', 'study Vancouver', 'VFS', 'VanArts', 'VFS vs VanArts which to choose', 'how much does it cost to study VFX Vancouver', 'animation course Canada Brazilian', 'consulting study Vancouver', 'Canada', 'film', 'VFX', 'animation', 'game design', 'permanent residence'],
+    es: ['agente VFS Brasil', 'agente VanArts brasileño', 'estudiar Vancouver', 'VFS', 'VanArts', 'VFS o VanArts cuál elegir', 'cuánto cuesta estudiar VFX Vancouver', 'curso animación Canadá brasileño', 'consultoría estudiar Vancouver', 'Canadá', 'cine', 'VFX', 'animación', 'game design', 'residencia permanente'],
+    fr: ['agent VFS Brésil', 'agent VanArts brésilien', 'étudier Vancouver', 'VFS', 'VanArts', 'VFS ou VanArts lequel choisir', 'combien coûte étudier VFX Vancouver', 'cours animation Canada brésilien', 'conseil étudier Vancouver', 'Canada', 'cinéma', 'VFX', 'animation', 'game design', 'résidence permanente']
   },
   work: {
     pt: ['portfolio', 'projetos VR', 'exposições imersivas', 'realidade virtual', 'casos de sucesso'],

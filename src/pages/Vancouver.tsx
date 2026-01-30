@@ -20,6 +20,7 @@ import { usePageSEO } from '../hooks/usePageSEO'
 import { useTheme } from '../contexts/ThemeContext'
 import AcademySubNav from '../components/AcademySubNav'
 import VancouverContentExpanded from '../components/VancouverContentExpanded'
+import VancouverVideoSchemas from '../components/VancouverVideoSchemas'
 
 interface VancouverProps {
   lang: Lang
@@ -421,6 +422,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
       />
       <VancouverPageSchema lang={lang} />
       <VancouverFAQSchema lang={lang} faqs={t.faqs} />
+      <VancouverVideoSchemas lang={lang} />
 
       {/* Menu Secundário Academy */}
       <AcademySubNav lang={lang} currentPage="vancouver" />
