@@ -39,37 +39,57 @@ export interface SplashScreenProps {
 
 export default function SplashScreen({ onStart, onExperiences, onAbout }: SplashScreenProps) {
   const handleBackToSite = () => {
-    // Detectar idioma da URL ou usar pt como padrão
     const urlParams = new URLSearchParams(window.location.search)
     const lang = urlParams.get('lang') || 'pt'
-    // Navegar para o site principal (sair do iframe)
     window.top?.location.assign(`/${lang}/experience-preview`)
   }
 
   return (
-    <div className="min-h-screen flex flex-col relative overflow-hidden"
+    <div 
+      className="min-h-screen flex flex-col relative overflow-hidden"
       style={{
-        background: 'linear-gradient(135deg, #0f1419 0%, #1a1f2e 50%, #0d1117 100%)',
+        background: `
+          radial-gradient(ellipse 100% 80% at 50% -20%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+          radial-gradient(ellipse 80% 60% at 80% 100%, rgba(201, 35, 55, 0.12) 0%, transparent 50%),
+          radial-gradient(ellipse 60% 40% at 10% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+          linear-gradient(180deg, #050508 0%, #0A0D12 30%, #0D1015 70%, #050508 100%)
+        `,
       }}
     >
-      {/* Efeito de borda gradiente como no card da home */}
-      <div className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'linear-gradient(135deg, rgba(139, 35, 50, 0.15) 0%, rgba(168, 85, 247, 0.1) 50%, rgba(59, 130, 246, 0.1) 100%)',
-        }}
-      />
+      {/* Partículas decorativas */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-2 h-2 rounded-full bg-purple-500/30 animate-pulse" />
+        <div className="absolute top-40 right-20 w-1.5 h-1.5 rounded-full bg-cyan-400/40 animate-pulse" style={{ animationDelay: '0.5s' }} />
+        <div className="absolute bottom-40 left-1/4 w-1 h-1 rounded-full bg-gold-main/50 animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/3 right-1/3 w-2 h-2 rounded-full bg-azimut-red/30 animate-pulse" style={{ animationDelay: '1.5s' }} />
+      </div>
       
-      {/* Header fixo com botão voltar */}
-      <header className="relative z-20 flex items-center justify-between px-4 md:px-8 py-4 border-b border-white/10"
-        style={{ background: 'rgba(15, 20, 25, 0.9)', backdropFilter: 'blur(12px)' }}
+      {/* Header fixo */}
+      <header 
+        className="relative z-20 flex items-center justify-between px-4 md:px-8 py-4"
+        style={{ 
+          background: 'rgba(5, 5, 8, 0.8)', 
+          backdropFilter: 'blur(20px) saturate(180%)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.04)',
+        }}
       >
         <button
           onClick={handleBackToSite}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300"
           style={{
-            background: 'rgba(255, 255, 255, 0.05)',
-            border: '1px solid rgba(255, 255, 255, 0.15)',
-            color: '#d3cec3',
+            background: 'rgba(255, 255, 255, 0.04)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            color: '#9CA3AF',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(168, 85, 247, 0.15)'
+            e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.4)'
+            e.currentTarget.style.color = '#C084FC'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)'
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)'
+            e.currentTarget.style.color = '#9CA3AF'
           }}
         >
           <span>←</span>
@@ -85,92 +105,122 @@ export default function SplashScreen({ onStart, onExperiences, onAbout }: Splash
       <main className="relative z-10 flex-1 flex flex-col items-center justify-center p-6 md:p-8">
         <div className="w-full max-w-2xl mx-auto text-center space-y-8">
           
-          {/* Título do jogo - estilo premium */}
-          <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm"
-              style={{
-                background: 'rgba(201, 35, 55, 0.15)',
-                border: '1px solid rgba(201, 35, 55, 0.3)',
-                color: '#E84858',
-              }}
-            >
-              <span>🎮</span>
-              <span className="font-medium">Jogo Interativo</span>
-            </div>
-            
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight"
-              style={{
-                background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF6B35 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textShadow: '0 0 60px rgba(255, 215, 0, 0.3)',
-              }}
-            >
-              EMPATHY ENGINE
-            </h1>
-            
-            <p className="text-lg md:text-xl font-body"
-              style={{ color: '#9ca3af' }}
-            >
-              Monte propostas criativas e veja o cliente reagir
-            </p>
-          </div>
-
-          {/* Card de informações - estilo glass premium */}
-          <div className="rounded-2xl p-6 md:p-8 text-left space-y-6"
+          {/* Badge */}
+          <div 
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium"
             style={{
-              background: 'linear-gradient(135deg, rgba(26, 31, 46, 0.8) 0%, rgba(15, 20, 25, 0.9) 100%)',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+              background: 'linear-gradient(135deg, rgba(201, 35, 55, 0.2) 0%, rgba(201, 35, 55, 0.08) 100%)',
+              border: '1px solid rgba(201, 35, 55, 0.35)',
+              color: '#E84858',
+              boxShadow: '0 0 30px rgba(201, 35, 55, 0.15)',
             }}
           >
-            {/* Tópicos disponíveis */}
+            <span style={{ fontSize: 18 }}>🎮</span>
+            <span>Jogo Interativo</span>
+          </div>
+          
+          {/* Título */}
+          <h1 
+            className="font-display text-5xl md:text-6xl lg:text-7xl font-black tracking-tight"
+            style={{
+              background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 40%, #FF6B35 70%, #C92337 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              filter: 'drop-shadow(0 0 40px rgba(255, 215, 0, 0.3))',
+            }}
+          >
+            EMPATHY ENGINE
+          </h1>
+          
+          <p 
+            className="text-lg md:text-xl font-body max-w-md mx-auto"
+            style={{ color: '#9CA3AF', lineHeight: 1.6 }}
+          >
+            Monte propostas criativas e veja o cliente reagir em tempo real
+          </p>
+
+          {/* Card de informações premium */}
+          <div 
+            className="rounded-2xl p-6 md:p-8 text-left space-y-6"
+            style={{
+              background: 'linear-gradient(145deg, rgba(20, 23, 31, 0.9) 0%, rgba(10, 13, 18, 0.95) 100%)',
+              border: '1px solid rgba(255, 255, 255, 0.06)',
+              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.04)',
+            }}
+          >
+            {/* Tópicos */}
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wider mb-3"
+              <h3 
+                className="text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2"
                 style={{ color: '#C92337' }}
               >
-                Tópicos Disponíveis
+                <span>📚</span> Tópicos Disponíveis
               </h3>
               <div className="flex flex-wrap gap-2">
-                {['🥽 XR/VR', '🎬 Audiovisual', '🎪 Eventos', '🏛️ Cultura', '🍁 Canadá'].map((topic) => (
-                  <span key={topic} className="px-3 py-1.5 rounded-lg text-sm"
+                {[
+                  { icon: '🥽', name: 'XR/VR', color: '#00F5FF' },
+                  { icon: '🎬', name: 'Audiovisual', color: '#A855F7' },
+                  { icon: '🎪', name: 'Eventos', color: '#F97316' },
+                  { icon: '🏛️', name: 'Cultura', color: '#3B82F6' },
+                  { icon: '🍁', name: 'Canadá', color: '#22C55E' },
+                ].map((topic) => (
+                  <span 
+                    key={topic.name} 
+                    className="px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2"
                     style={{
-                      background: 'rgba(255, 255, 255, 0.05)',
-                      border: '1px solid rgba(255, 255, 255, 0.1)',
-                      color: '#d3cec3',
+                      background: `${topic.color}10`,
+                      border: `1px solid ${topic.color}30`,
+                      color: topic.color,
                     }}
                   >
-                    {topic}
+                    <span>{topic.icon}</span>
+                    <span>{topic.name}</span>
                   </span>
                 ))}
               </div>
             </div>
 
+            {/* Divisor */}
+            <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)' }} />
+
             {/* Como jogar */}
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wider mb-3"
-                style={{ color: '#D4AF37' }}
+              <h3 
+                className="text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2"
+                style={{ color: '#FFD700' }}
               >
-                Como Jogar
+                <span>🎯</span> Como Jogar
               </h3>
-              <ul className="space-y-2 text-sm" style={{ color: '#9ca3af' }}>
-                <li className="flex items-start gap-2">
-                  <span style={{ color: '#22c55e' }}>1.</span>
-                  <span>Receba um <strong style={{ color: '#fff' }}>brief</strong> com tema e objetivo</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span style={{ color: '#22c55e' }}>2.</span>
-                  <span>Arraste <strong style={{ color: '#fff' }}>cartas</strong> para a zona de composição</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span style={{ color: '#22c55e' }}>3.</span>
-                  <span>Forme <strong style={{ color: '#D4AF37' }}>combos</strong> para ganhar bônus</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span style={{ color: '#22c55e' }}>4.</span>
-                  <span>Atinja a <strong style={{ color: '#A855F7' }}>meta de pontos</strong> antes do tempo</span>
-                </li>
-              </ul>
+              <div className="grid gap-3">
+                {[
+                  { num: '1', text: 'Receba um brief com tema e objetivo', highlight: 'brief', color: '#C92337' },
+                  { num: '2', text: 'Arraste cartas para a zona de composição', highlight: 'cartas', color: '#A855F7' },
+                  { num: '3', text: 'Forme combos para ganhar bônus', highlight: 'combos', color: '#FFD700' },
+                  { num: '4', text: 'Atinja a meta de pontos antes do tempo', highlight: 'meta de pontos', color: '#00F5FF' },
+                ].map((step) => (
+                  <div 
+                    key={step.num}
+                    className="flex items-center gap-3 p-3 rounded-lg"
+                    style={{ background: 'rgba(255, 255, 255, 0.02)' }}
+                  >
+                    <span 
+                      className="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold"
+                      style={{ 
+                        background: `${step.color}20`,
+                        color: step.color,
+                        border: `1px solid ${step.color}40`,
+                      }}
+                    >
+                      {step.num}
+                    </span>
+                    <span style={{ color: '#B8B4A8', fontSize: 14 }}>
+                      {step.text.split(step.highlight)[0]}
+                      <strong style={{ color: step.color }}>{step.highlight}</strong>
+                      {step.text.split(step.highlight)[1]}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -179,12 +229,19 @@ export default function SplashScreen({ onStart, onExperiences, onAbout }: Splash
             {onStart && (
               <button
                 onClick={onStart}
-                className="flex-1 flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-lg font-bold transition-all duration-300 hover:scale-[1.02]"
+                className="flex-1 flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-lg font-bold transition-all duration-300"
                 style={{
                   background: 'linear-gradient(135deg, #C92337 0%, #9B1B2A 100%)',
                   color: '#fff',
-                  boxShadow: '0 8px 32px rgba(201, 35, 55, 0.4)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 8px 32px rgba(201, 35, 55, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)'
+                  e.currentTarget.style.boxShadow = '0 12px 40px rgba(201, 35, 55, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.15)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(201, 35, 55, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1)'
                 }}
               >
                 <span>▶</span>
@@ -195,11 +252,21 @@ export default function SplashScreen({ onStart, onExperiences, onAbout }: Splash
             {onExperiences && (
               <button
                 onClick={onExperiences}
-                className="flex-1 flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 hover:scale-[1.02]"
+                className="flex-1 flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300"
                 style={{
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  color: '#d3cec3',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
+                  background: 'rgba(255, 255, 255, 0.04)',
+                  color: '#B8B4A8',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(255, 215, 0, 0.1)'
+                  e.currentTarget.style.borderColor = 'rgba(255, 215, 0, 0.3)'
+                  e.currentTarget.style.color = '#FFD700'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)'
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                  e.currentTarget.style.color = '#B8B4A8'
                 }}
               >
                 <span>🏆</span>
@@ -211,8 +278,10 @@ export default function SplashScreen({ onStart, onExperiences, onAbout }: Splash
           {onAbout && (
             <button
               onClick={onAbout}
-              className="text-sm transition-colors hover:underline"
-              style={{ color: '#6b7280' }}
+              className="text-sm transition-all duration-300"
+              style={{ color: '#6B7280' }}
+              onMouseEnter={(e) => e.currentTarget.style.color = '#A855F7'}
+              onMouseLeave={(e) => e.currentTarget.style.color = '#6B7280'}
             >
               Ver tutorial completo →
             </button>
@@ -221,8 +290,8 @@ export default function SplashScreen({ onStart, onExperiences, onAbout }: Splash
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 text-center py-4 border-t border-white/5">
-        <p className="text-xs" style={{ color: '#4b5563' }}>
+      <footer className="relative z-10 text-center py-4" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.03)' }}>
+        <p className="text-xs" style={{ color: '#4B5563' }}>
           © 2026 Azimut • Immersive Experiences
         </p>
       </footer>
