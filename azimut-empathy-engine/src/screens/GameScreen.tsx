@@ -137,11 +137,43 @@ export default function GameScreen({ onLeaderboard, onBack }: GameScreenProps) {
     )
   }
 
+  const handleBackToSite = () => {
+    // Sair do iframe e voltar ao site
+    window.top?.location.assign('/pt/experience-preview')
+  }
+
   return (
     <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-      <div className="min-h-screen bg-bg-darkest p-6">
-        <div className="max-w-4xl mx-auto space-y-8">
-          {onBack && <Button variant="ghost" size="sm" onClick={onBack}>← Voltar</Button>}
+      <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(180deg, #0f0f12 0%, #1a1a2e 100%)' }}>
+        {/* Header Premium */}
+        <header 
+          className="sticky top-0 z-50 flex items-center justify-between px-4 md:px-6 py-3 border-b border-white/10"
+          style={{ background: 'rgba(15, 15, 18, 0.95)', backdropFilter: 'blur(12px)' }}
+        >
+          <button
+            onClick={handleBackToSite}
+            className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-white/10"
+            style={{ color: '#d3cec3', border: '1px solid rgba(255,255,255,0.1)' }}
+          >
+            <span>←</span>
+            <span className="hidden sm:inline">Voltar ao Site</span>
+          </button>
+          
+          <div className="flex items-center gap-4">
+            {onBack && (
+              <button
+                onClick={onBack}
+                className="px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-white/10"
+                style={{ color: '#9ca3af' }}
+              >
+                Menu do Jogo
+              </button>
+            )}
+          </div>
+        </header>
+
+        <div className="flex-1 p-4 md:p-6 overflow-y-auto">
+        <div className="max-w-4xl mx-auto space-y-6">
 
           {currentBrief && currentTopic && (
             <section className="glass-card rounded-2xl border border-white/10 p-5 space-y-3" aria-labelledby="brief-title">
@@ -226,6 +258,7 @@ export default function GameScreen({ onLeaderboard, onBack }: GameScreenProps) {
               ))}
             </div>
           </section>
+        </div>
         </div>
       </div>
 

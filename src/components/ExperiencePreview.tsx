@@ -288,262 +288,205 @@ export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
       )}
 
       <div style={{ maxWidth: 1200, margin: '0 auto', paddingTop: connectedWallet ? '140px' : '80px' }}>
-        {/* Hero Card Premium - Estilo Home */}
+        {/* Hero Card Compacto - Estilo Home Banner */}
         <div style={{
           position: 'relative',
-          borderRadius: 24,
+          borderRadius: 20,
           padding: 2,
-          marginBottom: 60,
-          background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.6) 0%, rgba(236, 72, 153, 0.4) 25%, rgba(59, 130, 246, 0.4) 50%, rgba(34, 197, 94, 0.3) 75%, rgba(168, 85, 247, 0.5) 100%)',
-          boxShadow: '0 0 60px rgba(168, 85, 247, 0.2), 0 0 100px rgba(236, 72, 153, 0.1)',
+          marginBottom: 48,
+          background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.5) 0%, rgba(236, 72, 153, 0.3) 25%, rgba(59, 130, 246, 0.3) 50%, rgba(34, 197, 94, 0.2) 75%, rgba(168, 85, 247, 0.4) 100%)',
+          boxShadow: '0 0 40px rgba(168, 85, 247, 0.15)',
         }}>
           <div style={{
-            borderRadius: 22,
-            padding: 'clamp(32px, 5vw, 48px)',
-            background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.95) 50%, rgba(15, 23, 42, 0.98) 100%)',
-            backdropFilter: 'blur(20px)',
+            borderRadius: 18,
+            padding: 'clamp(24px, 4vw, 36px)',
+            background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.95) 100%)',
+            backdropFilter: 'blur(16px)',
           }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 24, alignItems: 'flex-start' }}>
-              {/* Ícone Premium + Título */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-                {/* Ícone de presente premium com gradiente */}
-                <div style={{
-                  width: 56,
-                  height: 56,
-                  borderRadius: 12,
-                  background: 'linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FFD700 100%)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 8px 24px rgba(255, 107, 53, 0.4)',
-                  position: 'relative',
-                }}>
-                  {/* SVG de presente estilizado */}
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="3" y="8" width="18" height="13" rx="2" fill="white" fillOpacity="0.9"/>
-                    <rect x="2" y="6" width="20" height="4" rx="1" fill="white"/>
-                    <path d="M12 6V21" stroke="#FF6B35" strokeWidth="2"/>
-                    <path d="M12 6C12 6 9 3 7 3C5 3 4 4.5 4 6" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-                    <path d="M12 6C12 6 15 3 17 3C19 3 20 4.5 20 6" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-                    <circle cx="7" cy="3" r="1.5" fill="#FFD700"/>
-                    <circle cx="17" cy="3" r="1.5" fill="#FFD700"/>
-                  </svg>
-                </div>
-                
-                <h1 style={{
-                  fontSize: 'clamp(28px, 4vw, 42px)',
-                  fontWeight: 800,
-                  letterSpacing: '-0.02em',
-                  lineHeight: 1.1,
-                  margin: 0,
-                }}>
-                  <span style={{
-                    background: 'linear-gradient(135deg, #A855F7 0%, #EC4899 50%, #3B82F6 100%)',
+            {/* Layout em 2 colunas no desktop */}
+            <div style={{ display: 'flex', flexDirection: 'row', gap: 32, alignItems: 'center', flexWrap: 'wrap' }}>
+              
+              {/* Coluna Esquerda - Conteúdo */}
+              <div style={{ flex: '1 1 400px', minWidth: 280 }}>
+                {/* Título com emoji e badge Web3 */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12, flexWrap: 'wrap' }}>
+                  <span style={{ fontSize: 'clamp(32px, 4vw, 44px)' }}>🎁</span>
+                  <h1 style={{
+                    fontSize: 'clamp(24px, 3.5vw, 36px)',
+                    fontWeight: 800,
+                    letterSpacing: '-0.01em',
+                    lineHeight: 1.1,
+                    margin: 0,
+                    background: 'linear-gradient(135deg, #8b5cf6 0%, #3b82f6 30%, #22c55e 60%, #ec4899 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
+                    fontFamily: '"Handel Gothic", "Syne", sans-serif',
+                    textTransform: 'uppercase',
                   }}>
-                    IMMERSIVE
-                  </span>
-                  {' '}
-                  <span style={{
-                    background: 'linear-gradient(135deg, #22C55E 0%, #3B82F6 50%, #A855F7 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
+                    {lang === 'pt' ? 'Curadoria Imersiva' : lang === 'en' ? 'Immersive Curation' : lang === 'es' ? 'Curaduría Inmersiva' : 'Curation Immersive'}
+                  </h1>
+                  {/* Badge Web3 com ícone SVG */}
+                  <div style={{
+                    width: 44,
+                    height: 44,
+                    borderRadius: 10,
+                    background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.15) 100%)',
+                    border: '2px solid rgba(139, 92, 246, 0.5)',
+                    boxShadow: '0 0 16px rgba(139, 92, 246, 0.3)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}>
-                    CURATION
-                  </span>
-                </h1>
-                
-                {/* Badge Web3 */}
-                <div style={{
-                  padding: '8px 16px',
-                  borderRadius: 20,
-                  background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%)',
-                  border: '1px solid rgba(59, 130, 246, 0.4)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 6,
-                }}>
-                  <span style={{ fontSize: 14, fontWeight: 600, color: '#93C5FD' }}>WEB3</span>
+                    <img src="/web-3-icon.svg" alt="Web3" style={{ width: 28, height: 28 }} />
+                  </div>
                 </div>
-              </div>
 
-              {/* Subtítulo com bullets */}
-              <p style={{
-                fontSize: 'clamp(16px, 2vw, 20px)',
-                color: '#A78BFA',
-                fontWeight: 500,
-                margin: 0,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 8,
-                flexWrap: 'wrap',
-              }}>
-                <span>VR</span>
-                <span style={{ color: '#6366F1' }}>•</span>
-                <span>AR</span>
-                <span style={{ color: '#6366F1' }}>•</span>
-                <span>Web3</span>
-                <span style={{ color: '#6366F1' }}>•</span>
-                <span style={{ color: '#F472B6' }}>Collectibles (NFTs)</span>
-              </p>
+                {/* Subtítulo com tecnologias */}
+                <p style={{
+                  fontSize: 'clamp(14px, 1.8vw, 18px)',
+                  color: '#A78BFA',
+                  fontWeight: 600,
+                  margin: '0 0 16px 0',
+                  letterSpacing: '0.02em',
+                }}>
+                  VR • AR • Web3 • {lang === 'pt' ? 'Colecionáveis (NFTs)' : 'Collectibles (NFTs)'}
+                </p>
 
-              {/* Texto principal */}
-              <div style={{ maxWidth: 600 }}>
+                {/* Texto curto */}
                 <h2 style={{
-                  fontSize: 'clamp(18px, 2.5vw, 24px)',
+                  fontSize: 'clamp(16px, 2vw, 20px)',
                   fontWeight: 600,
                   color: '#fff',
-                  margin: '0 0 12px 0',
+                  margin: '0 0 10px 0',
                 }}>
-                  {lang === 'pt' ? 'Tem um projeto? Vamos construir juntos.' : lang === 'en' ? 'Have a project? Let\'s build it together.' : lang === 'es' ? '¿Tienes un proyecto? Construyámoslo juntos.' : 'Vous avez un projet? Construisons-le ensemble.'}
+                  {lang === 'pt' ? 'Tem um projeto? Vamos construir juntos.' : lang === 'en' ? 'Have a project? Let\'s build it together.' : lang === 'es' ? '¿Tienes un proyecto?' : 'Vous avez un projet?'}
                 </h2>
                 <p style={{
-                  fontSize: 'clamp(14px, 1.5vw, 16px)',
+                  fontSize: 'clamp(13px, 1.4vw, 15px)',
                   color: '#9CA3AF',
-                  lineHeight: 1.7,
-                  margin: 0,
+                  lineHeight: 1.6,
+                  margin: '0 0 16px 0',
                 }}>
                   {lang === 'pt' 
-                    ? 'De campanhas e estandes de expo a projetos culturais e educacionais, criamos experiências imersivas que param as pessoas, aumentam o tempo de permanência e geram engajamento real—onde tecnologia encontra storytelling, do conceito à entrega.'
+                    ? 'Criamos experiências imersivas que param as pessoas—onde tecnologia encontra storytelling.'
                     : lang === 'en'
-                    ? 'From campaigns and expo booths to cultural and educational projects, we craft immersive experiences that stop people in their tracks, increase dwell time, and spark real engagement—where technology meets storytelling, from concept to delivery.'
+                    ? 'We craft immersive experiences that stop people in their tracks—where technology meets storytelling.'
                     : lang === 'es'
-                    ? 'Desde campañas y stands de expo hasta proyectos culturales y educativos, creamos experiencias inmersivas que detienen a las personas, aumentan el tiempo de permanencia y generan engagement real.'
-                    : 'Des campagnes et stands d\'expo aux projets culturels et éducatifs, nous créons des expériences immersives qui arrêtent les gens, augmentent le temps de présence et suscitent un engagement réel.'}
+                    ? 'Creamos experiencias inmersivas que detienen a las personas—donde tecnología encuentra storytelling.'
+                    : 'Nous créons des expériences immersives—où la technologie rencontre le storytelling.'}
                 </p>
-              </div>
 
-              {/* Tags de contexto */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                {/* Tag de contexto */}
                 <span style={{
-                  padding: '6px 14px',
-                  borderRadius: 20,
-                  background: 'rgba(236, 72, 153, 0.15)',
-                  border: '1px solid rgba(236, 72, 153, 0.3)',
-                  fontSize: 13,
-                  color: '#F472B6',
-                  display: 'flex',
+                  display: 'inline-flex',
                   alignItems: 'center',
                   gap: 6,
+                  padding: '6px 12px',
+                  borderRadius: 16,
+                  background: 'rgba(236, 72, 153, 0.12)',
+                  border: '1px solid rgba(236, 72, 153, 0.25)',
+                  fontSize: 12,
+                  color: '#F472B6',
                 }}>
-                  <span>🏛️</span> {lang === 'pt' ? 'Museus, festivais & ativações de marca' : 'Museums, festivals & brand activations'}
+                  🏛️ {lang === 'pt' ? 'Museus, festivais & ativações' : 'Museums, festivals & activations'}
                 </span>
               </div>
 
-              {/* CTAs Premium */}
-              <div style={{ 
-                display: 'flex', 
-                gap: 16, 
-                flexWrap: 'wrap',
-                marginTop: 8,
-                width: '100%',
-              }}>
-                {/* CTA Principal - Jogo */}
+              {/* Coluna Direita - CTAs */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'stretch', minWidth: 220 }}>
+                {/* CTA Principal - JOGAR AGORA */}
                 <Link
                   to={`/${lang}/game`}
                   style={{
-                    display: 'inline-flex',
+                    display: 'flex',
                     alignItems: 'center',
-                    gap: 12,
-                    padding: '16px 28px',
+                    justifyContent: 'center',
+                    gap: 10,
+                    padding: '14px 24px',
                     borderRadius: 12,
-                    background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+                    background: 'linear-gradient(135deg, #10B981 0%, #059669 50%, #047857 100%)',
                     color: '#fff',
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: 700,
                     textDecoration: 'none',
-                    boxShadow: '0 8px 24px rgba(16, 185, 129, 0.4)',
-                    border: 'none',
-                    transition: 'all 0.3s ease',
+                    boxShadow: '0 6px 20px rgba(16, 185, 129, 0.35)',
+                    transition: 'all 0.25s ease',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-2px)'
-                    e.currentTarget.style.boxShadow = '0 12px 32px rgba(16, 185, 129, 0.5)'
+                    e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)'
+                    e.currentTarget.style.boxShadow = '0 10px 28px rgba(16, 185, 129, 0.45)'
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)'
-                    e.currentTarget.style.boxShadow = '0 8px 24px rgba(16, 185, 129, 0.4)'
+                    e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(16, 185, 129, 0.35)'
                   }}
                 >
-                  <span>🎮</span>
-                  <span>{lang === 'pt' ? 'Jogar Demo' : lang === 'en' ? 'Try the Demo' : lang === 'es' ? 'Probar Demo' : 'Essayer la Démo'}</span>
+                  <span style={{ fontSize: 18 }}>🎮</span>
+                  <span>{lang === 'pt' ? 'Jogar Agora' : lang === 'en' ? 'Play Now' : lang === 'es' ? 'Jugar Ahora' : 'Jouer Maintenant'}</span>
                   <span>→</span>
                 </Link>
 
-                {/* Info badge */}
+                {/* Info badge compacto */}
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: 8,
-                  padding: '12px 20px',
-                  borderRadius: 10,
-                  background: 'rgba(251, 191, 36, 0.1)',
-                  border: '1px solid rgba(251, 191, 36, 0.3)',
+                  justifyContent: 'center',
+                  gap: 6,
+                  padding: '10px 16px',
+                  borderRadius: 8,
+                  background: 'rgba(251, 191, 36, 0.08)',
+                  border: '1px solid rgba(251, 191, 36, 0.2)',
                 }}>
-                  <span style={{ fontSize: 14 }}>🔒</span>
-                  <span style={{ fontSize: 13, color: '#FCD34D' }}>
-                    {lang === 'pt' ? 'Apenas leitura • sem custo • sem acesso aos seus fundos' : 'Read-only • no cost • no access to your funds'}
+                  <span style={{ fontSize: 12 }}>🔒</span>
+                  <span style={{ fontSize: 11, color: '#FCD34D' }}>
+                    {lang === 'pt' ? 'Grátis • sem cadastro' : 'Free • no signup'}
                   </span>
                 </div>
-              </div>
 
-              {/* Links secundários */}
-              <div style={{ 
-                display: 'flex', 
-                gap: 16, 
-                flexWrap: 'wrap',
-                alignItems: 'center',
-              }}>
+                {/* CTA Secundário - Ver Cases */}
                 <Link
                   to={`/${lang}/work`}
                   style={{
-                    display: 'inline-flex',
+                    display: 'flex',
                     alignItems: 'center',
+                    justifyContent: 'center',
                     gap: 8,
-                    padding: '14px 24px',
+                    padding: '12px 20px',
                     borderRadius: 10,
                     background: 'linear-gradient(135deg, #DC2626 0%, #B91C1C 100%)',
                     color: '#fff',
-                    fontSize: 15,
+                    fontSize: 14,
                     fontWeight: 600,
                     textDecoration: 'none',
-                    boxShadow: '0 4px 16px rgba(220, 38, 38, 0.3)',
-                    transition: 'all 0.3s ease',
+                    boxShadow: '0 4px 14px rgba(220, 38, 38, 0.25)',
+                    transition: 'all 0.25s ease',
                   }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-2px)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)'
-                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                 >
                   {lang === 'pt' ? 'Ver Cases Imersivos' : 'See Immersive Cases'}
                   <span>→</span>
                 </Link>
 
+                {/* Link Solutions */}
                 <Link
                   to={`/${lang}/solutions`}
                   style={{
-                    display: 'inline-flex',
+                    display: 'flex',
                     alignItems: 'center',
-                    gap: 6,
-                    padding: '14px 20px',
+                    justifyContent: 'center',
+                    gap: 4,
+                    padding: '8px 12px',
                     color: '#9CA3AF',
-                    fontSize: 14,
+                    fontSize: 13,
                     fontWeight: 500,
                     textDecoration: 'none',
                     transition: 'color 0.2s',
                   }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = '#fff'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = '#9CA3AF'
-                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#9CA3AF'}
                 >
-                  VR / AR / Web3 Solutions
-                  <span>›</span>
+                  VR / AR / Web3 Solutions ›
                 </Link>
               </div>
             </div>
