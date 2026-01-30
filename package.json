@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "vercel-build": "vite build"
+    "build:game": "cd azimut-empathy-engine && npm ci && npm run build",
+    "copy:game": "node scripts/copy-game.cjs",
+    "vercel-build": "npm run build:game && npm run copy:game && vite build"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",

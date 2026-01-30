@@ -92,6 +92,7 @@ const ThankYou = lazy(() => import('./pages/ThankYou'))
 const Blog = lazy(() => import('./pages/Blog'))
 const BlogPost = lazy(() => import('./pages/BlogPost'))
 const ExperiencePreview = lazy(() => import('./pages/ExperiencePreview'))
+const Game = lazy(() => import('./pages/Game'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 const App: React.FC = () => {
@@ -434,12 +435,19 @@ const App: React.FC = () => {
                     {(routeLang) => <ExperiencePreview lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
+                {/* Jogo Empathy Engine */}
+                <Route path="/:lang/game" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Game lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
                 
                 {/* Backwards compatibility: rotas SEM prefixo redirecionam */}
                 <Route path="/what" element={<Navigate to={`/${lang}/what`} replace />} />
                 <Route path="/work" element={<Navigate to={`/${lang}/work`} replace />} />
                 <Route path="/blog" element={<Navigate to={`/${lang}/blog`} replace />} />
                 <Route path="/experience-preview" element={<Navigate to={`/${lang}/experience-preview`} replace />} />
+                <Route path="/game" element={<Navigate to={`/${lang}/game`} replace />} />
                 <Route path="/studio" element={<Navigate to={`/${lang}/studio`} replace />} />
                 <Route path="/academy" element={<Navigate to={`/${lang}/academy`} replace />} />
                 <Route path="/academy/courses" element={<Navigate to={`/${lang}/academy/courses`} replace />} />
@@ -609,12 +617,19 @@ const App: React.FC = () => {
                     {(routeLang) => <ExperiencePreview lang={routeLang} />}
                   </LangRouteWrapper>
                 } />
+                {/* Jogo Empathy Engine */}
+                <Route path="/:lang/game" element={
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Game lang={routeLang} />}
+                  </LangRouteWrapper>
+                } />
                 
                 {/* Backwards compatibility: rotas SEM prefixo redirecionam */}
                 <Route path="/what" element={<Navigate to={`/${lang}/what`} replace />} />
                 <Route path="/work" element={<Navigate to={`/${lang}/work`} replace />} />
                 <Route path="/blog" element={<Navigate to={`/${lang}/blog`} replace />} />
                 <Route path="/experience-preview" element={<Navigate to={`/${lang}/experience-preview`} replace />} />
+                <Route path="/game" element={<Navigate to={`/${lang}/game`} replace />} />
                 <Route path="/studio" element={<Navigate to={`/${lang}/studio`} replace />} />
                 <Route path="/academy" element={<Navigate to={`/${lang}/academy`} replace />} />
                 <Route path="/academy/courses" element={<Navigate to={`/${lang}/academy/courses`} replace />} />

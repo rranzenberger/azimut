@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════
+   AZIMUT EMPATHY ENGINE — Direção de arte premium
+   Tipografia, paleta, profundidade, gradientes, glass
+   ═══════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* Cores — paleta oficial */
+  --color-azimut-red: #C92337;
+  --color-azimut-red-light: #E84858;
+  --color-azimut-red-dark: #9B1B2A;
+  --color-gold-main: #D4AF37;
+  --color-gold-light: #F4CF5D;
+  --color-gold-dark: #B8941F;
+  --color-purple-epic: #A855F7;
+  --color-purple-epic-light: #C084FC;
+  --color-purple-epic-dark: #7C3AED;
+  --color-bg-darkest: #0A0E18;
+  --color-bg-dark: #1A1F2E;
+  --color-bg-mid: #242938;
+  --color-bg-light: #2E3447;
+  /* Tipografia premium */
+  --font-display: "Syne", system-ui, sans-serif;
+  --font-body: "Sora", system-ui, sans-serif;
+  --font-data: "Orbitron", ui-monospace, monospace;
+}
+
+:root {
+  /* Glow / sombras premium */
+  --azimut-red-glow: rgba(201, 35, 55, 0.5);
+  --gold-glow: rgba(212, 175, 55, 0.45);
+  --purple-glow: rgba(168, 85, 247, 0.4);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-glow-red: 0 0 24px var(--azimut-red-glow);
+  --shadow-glow-gold: 0 0 24px var(--gold-glow);
+  --shadow-glow-purple: 0 0 20px var(--purple-glow);
+
+  /* Texto */
+  --text-primary: #FFFFFF;
+  --text-secondary: #D3CEC3;
+  --text-tertiary: #A8A29E;
+  --text-disabled: #6B7280;
+
+  /* Raridade */
+  --rarity-common: #94A3B8;
+  --rarity-rare: #F4CF5D;
+  --rarity-epic: #A855F7;
+  --rarity-legendary: #FF6B35;
+  --rarity-mythic: #00F5FF;
+
+  /* Gradientes premium */
+  --gradient-cta: linear-gradient(135deg, #C92337 0%, #9B1B2A 100%);
+  --gradient-gold: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+  --gradient-hero: radial-gradient(ellipse 120% 80% at 50% 0%, rgba(26, 31, 46, 0.95) 0%, #0A0E18 55%);
+  --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+
+  /* Espaçamento / ritmo */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+}
+
+/* Base — tipografia e corpo */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  background-color: var(--color-bg-darkest);
+  color: var(--text-primary);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hierarquia tipográfica */
+.font-display { font-family: var(--font-display); }
+.font-body { font-family: var(--font-body); }
+.font-data { font-family: var(--font-data); }
+
+*:focus-visible {
+  outline: 2px solid var(--color-azimut-red);
+  outline-offset: 2px;
+}
+
+/* Glass */
+.glass {
+  background: var(--gradient-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-card {
+  background: rgba(26, 31, 46, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-card);
+}
+
+/* Splash premium — fundo em camadas */
+.splash-bg {
+  background: var(--gradient-hero),
+    linear-gradient(180deg, rgba(201, 35, 55, 0.08) 0%, transparent 45%);
+  position: relative;
+  min-height: 100vh;
+}
+.splash-bg::before {
+  content: "★";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: min(38vw, 260px);
+  color: var(--color-azimut-red);
+  opacity: 0.07;
+  pointer-events: none;
+  font-family: var(--font-display);
+}
+
+/* Raios de sinergia */
+@keyframes combo-ray {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.65; }
+}
+.animate-combo-ray {
+  animation: combo-ray 2.5s ease-in-out infinite;
+}
+
+/* Alto contraste */
+[data-theme="high-contrast"] {
+  --color-bg-darkest: #000000;
+  --color-bg-dark: #0f0f0f;
+  --text-secondary: #FFFFFF;
+}
+
+/* Reduzir movimento (WCAG) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

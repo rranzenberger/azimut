@@ -297,6 +297,33 @@ export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
           }}>
             Veja o que é possível e se empolgue com as possibilidades
           </p>
+          {/* CTA Jogo Empathy Engine */}
+          <Link
+            to={`/${lang}/game`}
+            style={{
+              display: 'inline-block',
+              marginTop: 24,
+              padding: '16px 32px',
+              borderRadius: 12,
+              background: 'linear-gradient(135deg, #8B2332 0%, #6b1a26 100%)',
+              color: '#fff',
+              fontSize: 'clamp(16px, 2vw, 18px)',
+              fontWeight: 700,
+              textDecoration: 'none',
+              boxShadow: '0 4px 20px rgba(139, 35, 50, 0.4)',
+              transition: 'transform 0.2s, box-shadow 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)'
+              e.currentTarget.style.boxShadow = '0 6px 24px rgba(139, 35, 50, 0.5)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)'
+              e.currentTarget.style.boxShadow = '0 4px 20px rgba(139, 35, 50, 0.4)'
+            }}
+          >
+            🎮 {lang === 'pt' ? 'Jogue o Empathy Engine' : lang === 'en' ? 'Play Empathy Engine' : lang === 'es' ? 'Juega Empathy Engine' : 'Jouez à Empathy Engine'}
+          </Link>
         </div>
 
         {/* Cards de Opções - MELHOR ESPAÇAMENTO E LAYOUT */}

@@ -11,6 +11,8 @@ dist/
 build/
 .next/
 out/
+# Jogo Empathy Engine (build gerado em vercel-build)
+public/game/
 
 # Misc
 .DS_Store
@@ -88,3 +90,4 @@ docs/deploy/
 *.md
 !README.md
 !docs/VERIFICAR_DEPLOY_VERCEL.md
+.vercel
