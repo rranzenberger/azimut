@@ -63,7 +63,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🏔️',
             title: 'NATUREZA ÉPICA',
             text: 'Acorde no oceano, durma nas montanhas. Tudo no mesmo dia.',
-            video: 'https://www.youtube.com/watch?v=bJMYoj4hHqU',
+            video: 'https://www.youtube.com/watch?v=aK81n1sF7ds',
             gradient: 'from-emerald-500 via-teal-500 to-cyan-600',
             image: '🌲  🏔️  ⛷️  🏖️'
           },
@@ -71,7 +71,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🎭',
             title: 'CULTURA VIVA',
             text: 'Cada semana um festival diferente. Arte em cada esquina.',
-            video: 'https://www.youtube.com/watch?v=m6W5YSp6Q-0',
+            video: 'https://www.youtube.com/watch?v=OFOy_z2sJag',
             gradient: 'from-fuchsia-500 via-purple-500 to-violet-600',
             image: '🎨  🎭  🎪  🎸'
           },
@@ -79,7 +79,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🍜',
             title: 'GASTRONOMIA',
             text: 'Do sushi ao taco. Seu paladar vai viajar o mundo sem sair daqui.',
-            video: 'https://www.youtube.com/watch?v=ljLWjkWaLHY',
+            video: 'https://www.youtube.com/watch?v=BXC9j4oauQo',
             gradient: 'from-orange-500 via-amber-500 to-red-600',
             image: '🍣  🍜  🌮  🍕'
           },
@@ -87,7 +87,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🌈',
             title: 'DIVERSIDADE',
             text: '+100 nacionalidades. Você vai se sentir em casa, venha de onde vier.',
-            video: 'https://www.youtube.com/watch?v=m6W5YSp6Q-0',
+            video: 'https://www.youtube.com/watch?v=FWHN6qFf-tE',
             gradient: 'from-rose-500 via-pink-500 to-fuchsia-600',
             image: '🇨🇦  🇧🇷  🇮🇳  🇨🇳'
           },
@@ -95,7 +95,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🚴',
             title: 'VIDA ATIVA',
             text: 'Ski no inverno, surf no verão. Bike o ano inteiro. Escolha a aventura.',
-            video: 'https://www.youtube.com/watch?v=bJMYoj4hHqU',
+            video: 'https://www.youtube.com/watch?v=KuzwrKRacG8',
             gradient: 'from-sky-500 via-blue-500 to-indigo-600',
             image: '🚴  🏂  🏄  🧗'
           },
@@ -103,7 +103,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🌙',
             title: 'VIDA NOTURNA',
             text: 'Rooftops com vista, clubs premiados. A noite só acaba quando você quiser.',
-            video: 'https://www.youtube.com/watch?v=3vZ3bZDrCkI',
+            video: 'https://www.youtube.com/watch?v=1DR6AuPBMxU',
             gradient: 'from-violet-500 via-purple-600 to-indigo-700',
             image: '🍻  🎵  💃  🌃'
           }
@@ -210,7 +210,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🏔️',
             title: 'EPIC NATURE',
             text: 'Wake up by the ocean, sleep in the mountains. Same day.',
-            video: 'https://www.youtube.com/watch?v=bJMYoj4hHqU',
+            video: 'https://www.youtube.com/watch?v=aK81n1sF7ds',
             gradient: 'from-emerald-500 via-teal-500 to-cyan-600',
             image: '🌲  🏔️  ⛷️  🏖️'
           },
@@ -218,7 +218,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🎭',
             title: 'VIBRANT CULTURE',
             text: 'A new festival every week. Art on every corner.',
-            video: 'https://www.youtube.com/watch?v=m6W5YSp6Q-0',
+            video: 'https://www.youtube.com/watch?v=OFOy_z2sJag',
             gradient: 'from-fuchsia-500 via-purple-500 to-violet-600',
             image: '🎨  🎭  🎪  🎸'
           },
@@ -226,7 +226,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🍜',
             title: 'FOOD PARADISE',
             text: 'From sushi to tacos. Your taste buds will travel the world.',
-            video: 'https://www.youtube.com/watch?v=ljLWjkWaLHY',
+            video: 'https://www.youtube.com/watch?v=BXC9j4oauQo',
             gradient: 'from-orange-500 via-amber-500 to-red-600',
             image: '🍣  🍜  🌮  🍕'
           },
@@ -234,7 +234,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🌈',
             title: 'DIVERSITY',
             text: '+100 nationalities. You\'ll feel at home, wherever you\'re from.',
-            video: 'https://www.youtube.com/watch?v=m6W5YSp6Q-0',
+            video: 'https://www.youtube.com/watch?v=FWHN6qFf-tE',
             gradient: 'from-rose-500 via-pink-500 to-fuchsia-600',
             image: '🇨🇦  🇧🇷  🇮🇳  🇨🇳'
           },
@@ -242,7 +242,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🚴',
             title: 'ACTIVE LIFE',
             text: 'Ski in winter, surf in summer, bike all year. Pick your adventure.',
-            video: 'https://www.youtube.com/watch?v=bJMYoj4hHqU',
+            video: 'https://www.youtube.com/watch?v=KuzwrKRacG8',
             gradient: 'from-sky-500 via-blue-500 to-indigo-600',
             image: '🚴  🏂  🏄  🧗'
           },
@@ -250,7 +250,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🌙',
             title: 'NIGHTLIFE',
             text: 'Rooftops with views, award-winning clubs. The night ends when you say.',
-            video: 'https://www.youtube.com/watch?v=3vZ3bZDrCkI',
+            video: 'https://www.youtube.com/watch?v=1DR6AuPBMxU',
             gradient: 'from-violet-500 via-purple-600 to-indigo-700',
             image: '🍻  🎵  💃  🌃'
           }
@@ -357,7 +357,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🏔️',
             title: 'NATURALEZA ÉPICA',
             text: 'Despierta en el océano, duerme en las montañas. Todo en un día.',
-            video: 'https://www.youtube.com/watch?v=bJMYoj4hHqU',
+            video: 'https://www.youtube.com/watch?v=aK81n1sF7ds',
             gradient: 'from-emerald-500 via-teal-500 to-cyan-600',
             image: '🌲  🏔️  ⛷️  🏖️'
           },
@@ -365,7 +365,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🎭',
             title: 'CULTURA VIVA',
             text: 'Cada semana un festival diferente. Arte en cada esquina.',
-            video: 'https://www.youtube.com/watch?v=m6W5YSp6Q-0',
+            video: 'https://www.youtube.com/watch?v=OFOy_z2sJag',
             gradient: 'from-fuchsia-500 via-purple-500 to-violet-600',
             image: '🎨  🎭  🎪  🎸'
           },
@@ -373,7 +373,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🍜',
             title: 'GASTRONOMÍA',
             text: 'Del sushi al taco. Tu paladar viajará el mundo sin salir.',
-            video: 'https://www.youtube.com/watch?v=ljLWjkWaLHY',
+            video: 'https://www.youtube.com/watch?v=BXC9j4oauQo',
             gradient: 'from-orange-500 via-amber-500 to-red-600',
             image: '🍣  🍜  🌮  🍕'
           },
@@ -381,7 +381,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🌈',
             title: 'DIVERSIDAD',
             text: '+100 nacionalidades. Te sentirás en casa, vengas de donde vengas.',
-            video: 'https://www.youtube.com/watch?v=m6W5YSp6Q-0',
+            video: 'https://www.youtube.com/watch?v=FWHN6qFf-tE',
             gradient: 'from-rose-500 via-pink-500 to-fuchsia-600',
             image: '🇨🇦  🇧🇷  🇮🇳  🇨🇳'
           },
@@ -389,7 +389,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🚴',
             title: 'VIDA ACTIVA',
             text: 'Ski en invierno, surf en verano. Bici todo el año. Elige tu aventura.',
-            video: 'https://www.youtube.com/watch?v=bJMYoj4hHqU',
+            video: 'https://www.youtube.com/watch?v=KuzwrKRacG8',
             gradient: 'from-sky-500 via-blue-500 to-indigo-600',
             image: '🚴  🏂  🏄  🧗'
           },
@@ -397,7 +397,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🌙',
             title: 'VIDA NOCTURNA',
             text: 'Rooftops con vistas, clubs premiados. La noche termina cuando quieras.',
-            video: 'https://www.youtube.com/watch?v=3vZ3bZDrCkI',
+            video: 'https://www.youtube.com/watch?v=1DR6AuPBMxU',
             gradient: 'from-violet-500 via-purple-600 to-indigo-700',
             image: '🍻  🎵  💃  🌃'
           }
@@ -504,7 +504,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🏔️',
             title: 'NATURE ÉPIQUE',
             text: 'Réveillez-vous à l\'océan, dormez en montagne. Même journée.',
-            video: 'https://www.youtube.com/watch?v=bJMYoj4hHqU',
+            video: 'https://www.youtube.com/watch?v=aK81n1sF7ds',
             gradient: 'from-emerald-500 via-teal-500 to-cyan-600',
             image: '🌲  🏔️  ⛷️  🏖️'
           },
@@ -512,7 +512,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🎭',
             title: 'CULTURE VIVANTE',
             text: 'Un nouveau festival chaque semaine. L\'art à chaque coin de rue.',
-            video: 'https://www.youtube.com/watch?v=m6W5YSp6Q-0',
+            video: 'https://www.youtube.com/watch?v=OFOy_z2sJag',
             gradient: 'from-fuchsia-500 via-purple-500 to-violet-600',
             image: '🎨  🎭  🎪  🎸'
           },
@@ -520,7 +520,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🍜',
             title: 'GASTRONOMIE',
             text: 'Du sushi au taco. Vos papilles voyageront sans partir.',
-            video: 'https://www.youtube.com/watch?v=ljLWjkWaLHY',
+            video: 'https://www.youtube.com/watch?v=BXC9j4oauQo',
             gradient: 'from-orange-500 via-amber-500 to-red-600',
             image: '🍣  🍜  🌮  🍕'
           },
@@ -528,7 +528,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🌈',
             title: 'DIVERSITÉ',
             text: '+100 nationalités. Vous serez chez vous, d\'où que vous veniez.',
-            video: 'https://www.youtube.com/watch?v=m6W5YSp6Q-0',
+            video: 'https://www.youtube.com/watch?v=FWHN6qFf-tE',
             gradient: 'from-rose-500 via-pink-500 to-fuchsia-600',
             image: '🇨🇦  🇧🇷  🇮🇳  🇨🇳'
           },
@@ -536,7 +536,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🚴',
             title: 'VIE ACTIVE',
             text: 'Ski en hiver, surf en été. Vélo toute l\'année. Choisissez l\'aventure.',
-            video: 'https://www.youtube.com/watch?v=bJMYoj4hHqU',
+            video: 'https://www.youtube.com/watch?v=KuzwrKRacG8',
             gradient: 'from-sky-500 via-blue-500 to-indigo-600',
             image: '🚴  🏂  🏄  🧗'
           },
@@ -544,7 +544,7 @@ const VancouverMagazine: React.FC<VancouverMagazineProps> = ({ lang }) => {
             emoji: '🌙',
             title: 'VIE NOCTURNE',
             text: 'Rooftops avec vue, clubs primés. La nuit ne finit que quand vous le décidez.',
-            video: 'https://www.youtube.com/watch?v=3vZ3bZDrCkI',
+            video: 'https://www.youtube.com/watch?v=1DR6AuPBMxU',
             gradient: 'from-violet-500 via-purple-600 to-indigo-700',
             image: '🍻  🎵  💃  🌃'
           }
