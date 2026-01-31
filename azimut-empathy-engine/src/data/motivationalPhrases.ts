@@ -79,7 +79,7 @@ export const motivationalPhrases: MotivationalPhrase[] = [
   // ─── combo / goal_reached / phase_start ─────────────────────────────────────────
   { text: { pt: 'Combo ativado! A Azimut vibra com você!', en: 'Combo! You’re awesome!', fr: 'Combo ! T’assures !', es: '¡Combo! ¡Eres genial!' }, emoji: '🔥', situation: 'combo' },
   { text: { pt: 'Sinergia em ação! Azimut aprova.', en: 'Synergy in action! Azimut approves.', fr: 'Synergie en action ! Azimut approuve.', es: '¡Sinergia en acción! Azimut lo aprueba.' }, emoji: '👏', situation: 'combo' },
-  { text: { pt: 'Meta batida! Parabéns da Azimut!', en: 'Goal hit! Congrats from Azimut!', fr: 'Objectif atteint ! Bravo de la part d'\''Azimut !', es: '¡Meta cumplida! ¡Felicidades de Azimut!' }, emoji: '🎉', situation: 'goal_reached' },
+  { text: { pt: 'Meta batida! Parabéns da Azimut!', en: 'Goal hit! Congrats from Azimut!', fr: 'Objectif atteint ! Bravo de la part d\'Azimut !', es: '¡Meta cumplida! ¡Felicidades de Azimut!' }, emoji: '🎉', situation: 'goal_reached' },
   { text: { pt: 'Você arrasou! A Azimut comemora com você.', en: 'You crushed it! Azimut celebrates with you.', fr: 'T’as tout déchiré !', es: '¡Lo bordaste!' }, emoji: '🌟', situation: 'goal_reached' },
   { text: { pt: 'Nova fase! A Azimut vai com você. Vamos nessa.', en: 'New phase! Let’s go.', fr: 'Nouvelle phase ! C’est parti.', es: 'Nueva fase. Vamos.' }, emoji: '🚀', situation: 'phase_start' },
   { text: { pt: 'Pronto para o próximo desafio? A Azimut está com você.', en: 'Ready for the next challenge? Azimut is with you.', fr: 'Prêt pour le prochain défi ?', es: '¿Listo para el siguiente reto?' }, emoji: '💜', situation: 'phase_start' },
