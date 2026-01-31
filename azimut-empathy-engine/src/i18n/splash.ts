@@ -69,7 +69,7 @@ const splash: Record<Lang, SplashTranslations> = {
     fullTutorial: 'Tutorial completo',
     tipsAndTricks: 'Dicas e truques',
     achievementsAndSettings: 'Conquistas e Configurações',
-    footer: '© 2026 Azimut • Immersive Experiences',
+    footer: '© 2026 Azimut • Immersive Experiences • v2.1-31jan',
     topicXrVr: 'XR/AR/VR',
     topicAudiovisual: 'Audiovisual',
     topicEvents: 'Eventos',
