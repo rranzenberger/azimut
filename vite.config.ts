@@ -13,8 +13,14 @@ export default defineConfig({
   server: {
     port: 5173,
     host: true, // Permite acesso da rede local (0.0.0.0)
-    // Ou use '0.0.0.0' explicitamente
-    // host: '0.0.0.0',
+    // Em dev: /pt/game/, /en/game/, etc. são repassados ao jogo (porta 5174)
+    proxy: {
+      '^/(pt|en|es|fr)/game': {
+        target: 'http://localhost:5174',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/(pt|en|es|fr)\/game/, '') || '/',
+      },
+    },
   },
   build: {
     // Compatibilidade com navegadores mais antigos

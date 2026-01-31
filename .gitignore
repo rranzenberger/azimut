@@ -91,3 +91,5 @@ docs/deploy/
 !README.md
 !docs/VERIFICAR_DEPLOY_VERCEL.md
 .vercel
+.vercel
+.env*.local

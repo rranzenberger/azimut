@@ -1221,10 +1221,46 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   </p>
                 </div>
 
-                {/* CTAs - Direita - Empilhados */}
-                <div className="flex flex-col gap-3 flex-shrink-0 w-full lg:w-auto lg:min-w-[280px]">
-                  {/* CTA Principal - Experimentar Demo */}
-                  <div className="flex flex-col items-center">
+                {/* CTAs - Direita - Empilhados (todas as pílulas com mesma largura) */}
+                <div className="flex flex-col gap-3 flex-shrink-0 w-full lg:min-w-[320px] lg:max-w-[380px]">
+                  {/* CTA Destaque - Jogar EMPATHY ENGINE */}
+                  <Link
+                    to={`/${lang}/game`}
+                    className="group/play inline-flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-bold transition-all duration-300 hover:scale-[1.02] w-full flex-wrap"
+                    style={{
+                      background: theme === 'dark'
+                        ? 'linear-gradient(135deg, #059669 0%, #047857 50%, #065f46 100%)'
+                        : 'linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%)',
+                      color: '#fff',
+                      boxShadow: '0 6px 28px rgba(16, 185, 129, 0.45)',
+                      fontSize: '0.95rem',
+                      letterSpacing: '0.02em',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    <span className="text-xl sm:text-2xl" aria-hidden>🎮</span>
+                    <span className="uppercase tracking-wide whitespace-nowrap">
+                      {lang === 'pt' ? 'Jogar' : lang === 'es' ? 'Jugar' : lang === 'fr' ? 'Jouer' : 'Play'}
+                    </span>
+                    <img
+                      src="/empaty-engine.png"
+                      alt="Empathy Engine"
+                      className="h-5 sm:h-6 md:h-7 w-auto object-contain flex-shrink-0"
+                      style={{ maxWidth: 180 }}
+                    />
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover/play:translate-x-1 flex-shrink-0 ml-auto sm:ml-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
+                  <p className="text-[0.7rem] sm:text-xs text-center mt-1.5 opacity-90" style={{ color: theme === 'dark' ? 'rgba(255,255,255,0.75)' : '#64748b' }}>
+                    {t(lang, 'gameObjectives')}{' '}
+                    <LangLink to={`/${lang}/game`} className="font-semibold underline hover:no-underline" style={{ color: theme === 'dark' ? '#34d399' : '#059669' }}>
+                      {t(lang, 'gamePlayCta')} →
+                    </LangLink>
+                  </p>
+
+                  {/* CTA Secundário - Experimentar Demo Web3 */}
+                  <div className="flex flex-col items-stretch w-full gap-2">
                     <Link
                       to={`/${lang}/experience-preview`}
                       className="group/btn inline-flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105 hover:gap-4 w-full"
@@ -1260,7 +1296,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     </Link>
                       {/* Microcopy de segurança Web3 - COM DESTAQUE */}
                     <div 
-                      className="mt-2 sm:mt-3 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-center"
+                      className="mt-0 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-center w-full"
                       style={{ 
                         background: theme === 'dark' ? 'rgba(34, 197, 94, 0.2)' : 'rgba(34, 197, 94, 0.15)',
                         border: theme === 'dark' ? '1px solid rgba(34, 197, 94, 0.5)' : '1px solid rgba(34, 197, 94, 0.4)',
@@ -1304,7 +1340,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   {/* Link terciário - Específico para soluções VR/AR/Web3 */}
                   <Link
                     to={`/${lang}/what#immersive`}
-                    className="group/btn3 inline-flex items-center justify-center gap-2 transition-all duration-300 hover:gap-3 mt-1"
+                    className="group/btn3 inline-flex items-center justify-center gap-2 transition-all duration-300 hover:gap-3 mt-1 w-full"
                     style={{
                       color: theme === 'dark' ? 'rgba(196, 181, 253, 0.9)' : '#7c3aed',
                       fontSize: '0.9rem',

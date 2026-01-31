@@ -2,14 +2,18 @@ export interface Topic {
   id: string
   name: string
   shortDescription: string
+  icon: string  // NOVO: ícone do tópico
+  color: string // NOVO: cor do tópico
   elementIds: string[]
 }
 
 export const topics: Topic[] = [
   {
     id: 'xr-vr',
-    name: 'XR / VR',
-    shortDescription: 'Experiências imersivas: VR, AR, câmera 360, Unity, Unreal, metaverso.',
+    name: 'XR / AR / VR',
+    shortDescription: 'Experiências imersivas: VR, AR, XR, câmera 360, Unity, Unreal.',
+    icon: '🥽',
+    color: '#00F5FF',
     elementIds: [
       'vr-headset',
       'ar-glasses',
@@ -20,20 +24,33 @@ export const topics: Topic[] = [
       'tracking',
       'volumetric-capture',
       'spatial-audio',
-      'nft',
-      'blockchain',
-      'metaverse',
       'touchdesigner',
       'notch',
       'resolume',
       'webxr',
       'instalacao-interativa',
+      // Novos
+      'meta-quest',
+      'htc-vive',
+      'arkit',
+      'arcore',
+      'kinect',
+      'vuforia',
+      'max-msp',
+      'vvvv',
+      'openframeworks',
+      'arduino',
+      'raspberry-pi',
+      'lidar',
+      'photogrammetry',
     ],
   },
   {
     id: 'producao-audiovisual',
-    name: 'Produção audiovisual',
+    name: 'Produção Audiovisual',
     shortDescription: 'Pré-produção, roteiro, elenco, câmera, locação, edição, VFX, som.',
+    icon: '🎬',
+    color: '#A855F7',
     elementIds: [
       'camera',
       'light',
@@ -55,15 +72,37 @@ export const topics: Topic[] = [
       'rotoscopia',
       'blender',
       'maya',
+      '3ds-max',
       'toon-boom',
       'godot',
       'gamificacao',
+      // Novos
+      'runway-ml',
+      'da-vinci-resolve',
+      'nuke',
+      'after-effects',
+      'houdini',
+      'red-camera',
+      'blackmagic',
+      'virtual-production',
+      'sound-design',
+      'jogo-serio',
+      'premiere-pro',
+      'audition',
+      'pro-tools',
+      'reaper',
+      'storyboard',
+      'location-scout',
+      'frame-io',
+      'shotgrid',
     ],
   },
   {
     id: 'eventos-corporativos',
-    name: 'Eventos corporativos',
+    name: 'Eventos Corporativos',
     shortDescription: 'Palco, som, iluminação, transmissão ao vivo, cenografia, projeção.',
+    icon: '🎪',
+    color: '#F97316',
     elementIds: [
       'stage',
       'som-evento',
@@ -82,30 +121,66 @@ export const topics: Topic[] = [
       'painel-led',
       'projecao-mapeada',
       'tour-virtual',
+      // Novos
+      'dmx-artnet',
+      'ativacao-marca',
+      'experiencia-marca',
+      'marketing-experiencial',
+      'retail',
+      'spatial-audio',
+      'obs-studio',
+      'disguise',
+      'ableton',
+      'nfc',
+      'rfid',
+      'teradek',
+      'blackmagic-atem',
+      'qlab-audio',
     ],
   },
   {
     id: 'cultura-museus',
     name: 'Cultura & Museus',
-    shortDescription: 'Curadoria, exposição, museu, festival, teatro, espetáculo imersivo, projeção mapeada.',
+    shortDescription: 'Curadoria, exposição, acervo digital, acessibilidade, storytelling museal.',
+    icon: '🏛️',
+    color: '#3B82F6',
     elementIds: [
-      'curadoria',
+      // Dedicadas originais
       'exposicao',
       'acervo-digital',
-      'tour-virtual',
       'acessibilidade',
+      'espetaculo-imersivo',
+      // Novas dedicadas (8)
+      'storytelling-museal',
+      'cms-acervo',
+      'expografia',
+      'mediacao-cultural',
+      'totem-interativo',
+      'sensores',
+      'rouanet',
+      'pitch-deck',
+      'brand-kit',
+      'webapp',
+      'qr-code',
+      'audioguia',
+      // Compartilhadas (ponte)
+      'curadoria',
+      'tour-virtual',
       'festival',
       'teatro',
-      'espetaculo-imersivo',
       'qlab',
       'painel-led',
       'projecao-mapeada',
+      'vr-headset',
+      'ar-glasses',
     ],
   },
   {
     id: 'estudar-canada',
-    name: 'Estudar Canadá',
+    name: 'Estudar no Canadá',
     shortDescription: 'VFS, VanArts, Vancouver Academy, cursos animação/VFX/game, visto.',
+    icon: 'maple-leaf',
+    color: '#EB2D37', // Vermelho oficial Canadá (FIP — bandeira / maple leaf)
     elementIds: [
       'vancouver-academy',
       'vfs',
@@ -120,8 +195,348 @@ export const topics: Topic[] = [
       'treinamento-corporativo',
     ],
   },
+  // ═══════════════════════════════════════════════════════════════
+  // NOVO TÓPICO: Tecnologia & Consultoria
+  // ═══════════════════════════════════════════════════════════════
+  {
+    id: 'tecnologia-consultoria',
+    name: 'Tecnologia & Consultoria',
+    shortDescription: 'Design, IA generativa, arquitetura, estratégia, gestão de projetos.',
+    icon: '⚡',
+    color: '#FFD700',
+    elementIds: [
+      'figma',
+      'direcao-arte',
+      'identidade-visual',
+      'claude-chatgpt',
+      'midjourney',
+      'stable-diffusion',
+      'bim',
+      'revit',
+      'sketchup',
+      'twinmotion',
+      'consultoria',
+      'estrategia',
+      'gestao-projeto',
+      'notion',
+      'miro',
+      'ux-ui',
+      'planejamento-estrategico',
+      'dashboards',
+      'analytics',
+      'frame-io',
+      'shotgrid',
+      // Ponte com outros tópicos
+      'ai-sora',
+      'runway-ml',
+      'gamificacao',
+    ],
+  },
+  // ═══════════════════════════════════════════════════════════════
+  // NOVO TÓPICO: IA Generativa
+  // ═══════════════════════════════════════════════════════════════
+  {
+    id: 'ia-generativa',
+    name: 'IA Generativa',
+    shortDescription: 'Concept art, storyboard, vídeo com IA. Claude, Midjourney, Runway, Sora, ComfyUI.',
+    icon: '🤖',
+    color: '#10B981',
+    elementIds: [
+      'claude-chatgpt',
+      'midjourney',
+      'stable-diffusion',
+      'ai-sora',
+      'runway-ml',
+      'dall-e',
+      'gemini',
+      'pika-labs',
+      'comfyui',
+      'concept-art-ia',
+      'storyboard-ia',
+      'direcao-arte',
+      'figma',
+      'luma-ai',
+      'leonardo-ai',
+      'cursor-ai',
+      'perplexity',
+      'copilot',
+      'topaz-video',
+      'kandinsky',
+    ],
+  },
+  // ═══════════════════════════════════════════════════════════════
+  // NOVO TÓPICO: Web3
+  // ═══════════════════════════════════════════════════════════════
+  {
+    id: 'web3',
+    name: 'Web3',
+    shortDescription: 'NFT, blockchain, metaverso, smart contracts, tokens, DAO, wallet, IPFS.',
+    icon: '🌐',
+    color: '#F59E0B',
+    elementIds: [
+      'nft',
+      'blockchain',
+      'metaverse',
+      'smart-contract',
+      'token',
+      'dao',
+      'wallet',
+      'ipfs',
+      'solana',
+      'ethereum',
+      'polygon',
+      'chainlink',
+      'moralis',
+    ],
+  },
+  // ═══════════════════════════════════════════════════════════════
+  // Games & Interativos
+  // ═══════════════════════════════════════════════════════════════
+  {
+    id: 'games',
+    name: 'Games & Interativos',
+    shortDescription: 'Jogos sérios, gamificação, Godot, Unity, 3ds Max, narrativa interativa.',
+    icon: '🎮',
+    color: '#EC4899',
+    elementIds: [
+      'godot',
+      'gamificacao',
+      'jogo-serio',
+      'unity',
+      'unreal-engine',
+      '3ds-max',
+      'narrative-design',
+      'blender',
+      'instalacao-interativa',
+      'sensores',
+      'phaser',
+      'processing',
+      'playcanvas',
+      'construct',
+      'unreal-blueprint',
+    ],
+  },
+  // ═══════════════════════════════════════════════════════════════
+  // Cenografia & Design Espacial
+  // ═══════════════════════════════════════════════════════════════
+  {
+    id: 'cenografia',
+    name: 'Cenografia & Design Espacial',
+    shortDescription: 'Cenografia, projeção mapeada, LED, QLab, DMX, MadMapper.',
+    icon: '🏗️',
+    color: '#8B5CF6',
+    elementIds: [
+      'cenografia',
+      'projecao-evento',
+      'projecao-mapeada',
+      'painel-led',
+      'qlab',
+      'dmx-artnet',
+      'madmapper',
+      'resolume',
+      'notch',
+      'touchdesigner',
+      'iluminacao-evento',
+      'disguise',
+      'ableton',
+    ],
+  },
+  // ═══════════════════════════════════════════════════════════════
+  // Cenografia Virtual
+  // ═══════════════════════════════════════════════════════════════
+  {
+    id: 'cenografia-virtual',
+    name: 'Cenografia Virtual',
+    shortDescription: 'BIM, Revit, SketchUp, 3ds Max, Twinmotion, virtual production, cenários 3D.',
+    icon: '🖥️',
+    color: '#06B6D4',
+    elementIds: [
+      'bim',
+      'revit',
+      'sketchup',
+      '3ds-max',
+      'twinmotion',
+      'unreal-engine',
+      'virtual-production',
+      'blender',
+      'maya',
+      'rhino',
+      'v-ray',
+      'lumion',
+      'enscape',
+    ],
+  },
+  // ═══════════════════════════════════════════════════════════════
+  // Direção de Arte & Criativa
+  // ═══════════════════════════════════════════════════════════════
+  {
+    id: 'direcao-arte',
+    name: 'Direção de Arte & Criativa',
+    shortDescription: 'Direção de arte, identidade visual, Figma, brand kit, UX/UI.',
+    icon: '🎭',
+    color: '#F43F5E',
+    elementIds: [
+      'direcao-arte',
+      'identidade-visual',
+      'figma',
+      'brand-kit',
+      'pitch-deck',
+      'ux-ui',
+      'direcao',
+      'consultoria',
+      'procreate',
+      'affinity',
+      'frame-io',
+    ],
+  },
+  // ═══════════════════════════════════════════════════════════════
+  // Ativação de Marcas
+  // ═══════════════════════════════════════════════════════════════
+  {
+    id: 'ativacao-marcas',
+    name: 'Ativação de Marcas',
+    shortDescription: 'Ativação de marca, experiência de marca, retail, marketing experiencial.',
+    icon: '✨',
+    color: '#EAB308',
+    elementIds: [
+      'ativacao-marca',
+      'experiencia-marca',
+      'marketing-experiencial',
+      'retail',
+      'totem-interativo',
+      'sensores',
+      'projecao-mapeada',
+      'painel-led',
+      'nfc',
+      'rfid',
+    ],
+  },
+  // ═══════════════════════════════════════════════════════════════
+  // Motion Design (tópico próprio)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    id: 'motion-design',
+    name: 'Motion Design',
+    shortDescription: 'Motion design, After Effects, Cinema 4D, Toon Boom, keyframe, vídeo e gráficos em movimento.',
+    icon: '✨',
+    color: '#14B8A6',
+    elementIds: [
+      'motion-design',
+      'after-effects',
+      'cinema-4d',
+      'toon-boom',
+      'keyframe',
+      'premiere-pro',
+      'figma',
+      'sound-design',
+      'direcao-arte',
+      'runway-ml',
+      'ai-sora',
+      'concept-art-ia',
+      'motion-capture',
+      'typography-motion',
+      'lottie',
+    ],
+  },
+  // ═══════════════════════════════════════════════════════════════
+  // VFX & Compositing (separado de Motion Design)
+  // ═══════════════════════════════════════════════════════════════
+  {
+    id: 'motion-vfx',
+    name: 'VFX & Compositing',
+    shortDescription: 'VFX, compositing, Nuke, Houdini, rotoscopia, color grading, pipeline.',
+    icon: '🎞️',
+    color: '#0D9488',
+    elementIds: [
+      'vfx-compositing',
+      'nuke',
+      'houdini',
+      'rotoscopia',
+      'color-grading',
+      'da-vinci-resolve',
+      'blender',
+      'maya',
+      '3ds-max',
+      'zbrush',
+      'substance-painter',
+      'rigging',
+      'v-ray',
+      'fusion',
+      'matchmoving',
+      'particles-vfx',
+      'flame',
+      'arnold',
+      'redshift',
+      'octane',
+      'photogrammetry',
+      'corona-renderer',
+      'substance-designer',
+      'realflow',
+    ],
+  },
+  // ═══════════════════════════════════════════════════════════════
+  // Modelagem 3D
+  // ═══════════════════════════════════════════════════════════════
+  {
+    id: 'modelagem-3d',
+    name: 'Modelagem 3D',
+    shortDescription: 'Blender, Maya, 3ds Max, SketchUp, Revit, BIM, Twinmotion, Houdini.',
+    icon: '🧊',
+    color: '#6366F1',
+    elementIds: [
+      'blender',
+      'maya',
+      '3ds-max',
+      'sketchup',
+      'revit',
+      'bim',
+      'twinmotion',
+      'houdini',
+      'direcao-arte',
+      'corona-renderer',
+      'substance-designer',
+      'marvelous-designer',
+    ],
+  },
+  // ═══════════════════════════════════════════════════════════════
+  // Animação 2D/3D
+  // ═══════════════════════════════════════════════════════════════
+  {
+    id: 'animacao-2d-3d',
+    name: 'Animação 2D/3D',
+    shortDescription: 'Toon Boom, Blender, Maya, 3ds Max, After Effects, motion, rotoscopia, Runway, Sora.',
+    icon: '🎨',
+    color: '#A855F7',
+    elementIds: [
+      'toon-boom',
+      'blender',
+      'maya',
+      '3ds-max',
+      'after-effects',
+      'motion-design',
+      'rotoscopia',
+      'runway-ml',
+      'ai-sora',
+      'sound-design',
+      'direcao',
+      'zbrush',
+      'cinema-4d',
+      'rigging',
+      'keyframe',
+      'procreate',
+      'motion-capture',
+    ],
+  },
 ]
 
 export function getTopicById(id: string): Topic | undefined {
   return topics.find((t) => t.id === id)
+}
+
+export function getTopicColor(id: string): string {
+  return topics.find((t) => t.id === id)?.color || '#A855F7'
+}
+
+export function getTopicIcon(id: string): string {
+  return topics.find((t) => t.id === id)?.icon || '🎯'
 }

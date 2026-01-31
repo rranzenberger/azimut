@@ -163,8 +163,100 @@ const Webinars: React.FC<WebinarsProps> = ({ lang }) => {
         button: 'Send Suggestion'
       }
     },
-    es: content.pt, // TODO
-    fr: content.pt  // TODO
+    es: {
+      meta: {
+        title: 'Webinars Azimut Academy - Sesiones informativas y talleres online',
+        description: 'Participa en nuestros webinars gratuitos sobre Vancouver, VR, IA y producción audiovisual. Sesiones informativas, talleres y Q&A en vivo.'
+      },
+      hero: {
+        badge: '🎤 Webinars y sesiones informativas',
+        title: 'Aprende con expertos',
+        subtitle: 'Webinars gratuitos, Q&A en vivo y talleres online',
+        description: 'Participa en nuestras sesiones online sobre Vancouver, VR, IA generativa y producción audiovisual. Resuelve dudas directamente con nuestros consultores.'
+      },
+      upcoming: {
+        title: 'Próximos webinars',
+        subtitle: 'Inscríbete gratis',
+        cta: 'Inscribirse gratis'
+      },
+      recorded: {
+        title: 'Grabaciones disponibles',
+        subtitle: 'Mira cuando quieras',
+        cta: 'Ver ahora'
+      },
+      topics: {
+        title: 'Temas tratados',
+        list: [
+          { icon: '🇨🇦', title: 'Sesión informativa Vancouver', description: 'Todo sobre VFS y VanArts: programas, costos, visados, alojamiento, empleabilidad.' },
+          { icon: '🎓', title: 'Cómo aplicar a VFS/VanArts', description: 'Proceso de aplicación paso a paso, portfolio, requisitos, plazos.' },
+          { icon: '🥽', title: 'Producción VR y cine 360°', description: 'Taller online sobre creación de experiencias inmersivas.' },
+          { icon: '🤖', title: 'IA generativa para creación', description: 'Midjourney, Runway, ChatGPT aplicados a la producción audiovisual.' },
+          { icon: '💼', title: 'Carrera internacional', description: 'Cómo trabajar en el exterior, networking, portfolio internacional.' },
+          { icon: '🎨', title: 'Portfolio Review', description: 'Feedback en vivo sobre tu portfolio por profesionales del sector.' }
+        ]
+      },
+      register: {
+        title: 'Inscríbete a un webinar',
+        name: 'Nombre completo',
+        email: 'Correo electrónico',
+        phone: 'Teléfono (opcional)',
+        webinar: 'Webinar de interés',
+        submit: 'Confirmar inscripción',
+        success: '¡Inscripción confirmada! Recibirás un correo con el enlace de acceso.'
+      },
+      cta: {
+        title: '¿Quieres sugerir un tema?',
+        subtitle: 'Contáctanos y cuéntanos sobre qué te gustaría aprender',
+        button: 'Enviar sugerencia'
+      }
+    },
+    fr: {
+      meta: {
+        title: 'Webinars Azimut Academy - Sessions d\'info et ateliers en ligne',
+        description: 'Participez à nos webinars gratuits sur Vancouver, VR, IA et production audiovisuelle. Sessions d\'info, ateliers et Q&A en direct.'
+      },
+      hero: {
+        badge: '🎤 Webinars et sessions d\'info',
+        title: 'Apprenez avec des experts',
+        subtitle: 'Webinars gratuits, Q&A en direct et ateliers en ligne',
+        description: 'Participez à nos sessions en ligne sur Vancouver, VR, IA générative et production audiovisuelle. Posez vos questions directement à nos consultants.'
+      },
+      upcoming: {
+        title: 'Prochains webinars',
+        subtitle: 'Inscrivez-vous gratuitement',
+        cta: 'S\'inscrire gratuitement'
+      },
+      recorded: {
+        title: 'Enregistrements disponibles',
+        subtitle: 'Regardez quand vous voulez',
+        cta: 'Voir maintenant'
+      },
+      topics: {
+        title: 'Sujets abordés',
+        list: [
+          { icon: '🇨🇦', title: 'Session d\'info Vancouver', description: 'Tout sur VFS et VanArts : programmes, coûts, visas, logement, employabilité.' },
+          { icon: '🎓', title: 'Comment postuler à VFS/VanArts', description: 'Processus de candidature étape par étape, portfolio, exigences, délais.' },
+          { icon: '🥽', title: 'Production VR et cinéma 360°', description: 'Atelier en ligne sur la création d\'expériences immersives.' },
+          { icon: '🤖', title: 'IA générative pour la création', description: 'Midjourney, Runway, ChatGPT appliqués à la production audiovisuelle.' },
+          { icon: '💼', title: 'Carrière internationale', description: 'Comment travailler à l\'étranger, réseau, portfolio international.' },
+          { icon: '🎨', title: 'Portfolio Review', description: 'Retour en direct sur votre portfolio par des professionnels du secteur.' }
+        ]
+      },
+      register: {
+        title: 'Inscrivez-vous à un webinar',
+        name: 'Nom complet',
+        email: 'E-mail',
+        phone: 'Téléphone (optionnel)',
+        webinar: 'Webinar d\'intérêt',
+        submit: 'Confirmer l\'inscription',
+        success: 'Inscription confirmée ! Vous recevrez un e-mail avec le lien d\'accès.'
+      },
+      cta: {
+        title: 'Vous voulez suggérer un thème ?',
+        subtitle: 'Contactez-nous et dites-nous ce que vous aimeriez apprendre',
+        button: 'Envoyer une suggestion'
+      }
+    }
   }
 
   const t = content[lang] || content.pt

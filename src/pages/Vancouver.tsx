@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { t as translate, type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import { VancouverPageSchema, VancouverFAQSchema } from '../components/StructuredData'
@@ -549,6 +550,36 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
             <svg className="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
+          </div>
+        </section>
+
+        {/* Deixa Vancouver: aprenda artes audiovisuais, gráficas, game — VFS/VanArts + chamada ao jogo */}
+        <section
+          className="py-10 px-4 sm:px-6 lg:px-8"
+          style={{
+            background: theme === 'dark' ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(59, 130, 246, 0.08) 100%)' : 'linear-gradient(135deg, rgba(201, 35, 55, 0.08) 0%, rgba(139, 92, 246, 0.06) 100%)',
+            borderTop: '1px solid rgba(255,255,255,0.06)',
+            borderBottom: '1px solid rgba(255,255,255,0.06)',
+          }}
+        >
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-2xl sm:text-3xl font-handel uppercase tracking-wider mb-4" style={{ color: '#ffffff' }}>
+              {translate(lang, 'vancouverLearnHookTitle')}
+            </h2>
+            <p className="text-base sm:text-lg leading-relaxed mb-6" style={{ color: 'rgba(255,255,255,0.85)' }}>
+              {translate(lang, 'vancouverLearnHookBody')}
+            </p>
+            <Link
+              to={`/${lang}/game`}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02]"
+              style={{
+                background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                boxShadow: '0 4px 20px rgba(16, 185, 129, 0.4)',
+              }}
+            >
+              <span aria-hidden>🎮</span>
+              {translate(lang, 'vancouverLearnHookGameCta')} →
+            </Link>
           </div>
         </section>
 

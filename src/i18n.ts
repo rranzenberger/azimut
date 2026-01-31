@@ -22,6 +22,8 @@ export const translations: Dict = {
     ctaTryDemo: 'Try the Demo',
     ctaSeeImmersiveCases: 'See Immersive Cases',
     web3ReadOnly: 'Read-only • no cost • no access to your funds',
+    gameObjectives: 'Brand activation at your event: trade-fair stand, cultural center, product launch, promotional or in-house event, or exhibition. A kiosk with game, technology and audiovisual in one draws visitors to your stand and your site. Try it:',
+    gamePlayCta: 'Play Empathy Engine',
     commonTeam: 'Team',
     heroLead:
       'Immersive, interactive and cinematic experiences for culture, brands and hybrid spaces – operating between Brazil and Canada.',
@@ -304,6 +306,9 @@ export const translations: Dict = {
     vancouverSeeHowMuch: 'See how much it costs to study in Vancouver',
     vancouverWhichSchool: 'Which school is your vibe?',
     vancouverFindOut30sec: 'Find out in 30 seconds! 🎮',
+    vancouverLearnHookTitle: 'Learn audiovisual arts, graphic arts & game — best in the market',
+    vancouverLearnHookBody: 'VFS: Game Design (12‑month diploma), 3D Animation & VFX, Film Production, Sound Design, Writing for Film/TV/Games. VanArts: Game Art & Design (Unreal Academic Partner), 2D/3D Character Animation (#2 Canada, #3 worldwide), VFX for Film & TV. One year, 90%+ employability.',
+    vancouverLearnHookGameCta: 'Get a taste: play Empathy Engine',
   },
   fr: {
     // Hero Home
@@ -322,6 +327,8 @@ export const translations: Dict = {
     ctaTryDemo: 'Essayer la Démo',
     ctaSeeImmersiveCases: 'Voir les Cases Immersifs',
     web3ReadOnly: 'Lecture seule • sans frais • sans accès à vos fonds',
+    gameObjectives: 'Activation de marque à votre événement : stand en foire commerciale, centre culturel, lancement de produit, événement de promotion, interne ou exposition. Un kiosque avec game, technologie et audiovisuel intégrés attire les visiteurs sur votre stand et sur votre site. Essayez :',
+    gamePlayCta: 'Jouez à l\'Empathy Engine',
     commonTeam: 'Équipe',
     heroLead:
       'Expériences immersives, interactives et cinématographiques pour la culture, les marques et les espaces hybrides – entre le Brésil et le Canada.',
@@ -604,6 +611,9 @@ export const translations: Dict = {
     vancouverSeeHowMuch: 'Voyez combien coûte étudier à Vancouver',
     vancouverWhichSchool: 'Quelle école est votre vibe ?',
     vancouverFindOut30sec: 'Découvrez en 30 secondes ! 🎮',
+    vancouverLearnHookTitle: 'Apprenez les arts audiovisuels, les arts graphiques et le game — parmi les meilleurs du marché',
+    vancouverLearnHookBody: 'VFS : Game Design (diplôme 12 mois), 3D Animation & VFX, Film Production, Sound Design, Writing for Film/TV/Games. VanArts : Game Art & Design (partenaire Unreal), 2D/3D Character Animation (#2 Canada, #3 mondial), VFX pour le cinéma et la TV. Un an, 90 %+ d\'employabilité.',
+    vancouverLearnHookGameCta: 'Goûtez-y : jouez à l\'Empathy Engine',
   },
   pt: {
     // Hero Home
@@ -621,6 +631,8 @@ export const translations: Dict = {
     ctaTryDemo: 'Experimentar Demo',
     ctaSeeImmersiveCases: 'Ver Cases Imersivos',
     web3ReadOnly: 'Somente leitura • sem custo • sem acesso aos seus fundos',
+    gameObjectives: 'Ativação de marca no seu evento: estande em feira comercial, centro cultural, lançamento de produto, evento de divulgação, evento interno ou exposição. Quiosque com game, tecnologia e audiovisual integrados atraem visitantes ao seu estande e à sua página. Experimente:',
+    gamePlayCta: 'Jogue o Empathy Engine',
     commonTeam: 'Equipe',
     heroLead:
       'Experiências imersivas, interativas e cinematográficas para cultura, marcas e espaços híbridos – atuando entre Brasil e Canadá.',
@@ -903,6 +915,9 @@ export const translations: Dict = {
     vancouverSeeHowMuch: 'Veja quanto custa estudar em Vancouver',
     vancouverWhichSchool: 'Qual escola é sua vibe?',
     vancouverFindOut30sec: 'Descubra em 30 segundos! 🎮',
+    vancouverLearnHookTitle: 'Aprenda artes audiovisuais, artes gráficas e game no melhor do mercado',
+    vancouverLearnHookBody: 'VFS: Game Design (diploma 12 meses), 3D Animation & VFX, Film Production, Sound Design, Writing for Film/TV/Games. VanArts: Game Art & Design (parceiro Unreal), 2D/3D Character Animation (#2 Canadá, #3 mundo), VFX para cinema e TV. Um ano, 90%+ de empregabilidade.',
+    vancouverLearnHookGameCta: 'Sente o ritmo: jogue o Empathy Engine',
   },
   es: {
     // Hero Home
@@ -921,6 +936,8 @@ export const translations: Dict = {
     ctaTryDemo: 'Probar Demo',
     ctaSeeImmersiveCases: 'Ver Cases Inmersivos',
     web3ReadOnly: 'Solo lectura • sin costo • sin acceso a tus fondos',
+    gameObjectives: 'Activación de marca en tu evento: stand en feria comercial, centro cultural, lanzamiento de producto, evento de divulgación, evento interno o exposición. Quiosco con game, tecnología y audiovisual integrados atrae visitantes a tu stand y a tu web. Pruébalo:',
+    gamePlayCta: 'Juega el Empathy Engine',
     commonTeam: 'Equipo',
     heroLead:
       'Experiencias inmersivas, interactivas y cinematográficas para cultura, marcas y espacios híbridos – operando entre Brasil y Canadá.',
@@ -1203,6 +1220,9 @@ export const translations: Dict = {
     vancouverSeeHowMuch: 'Mira cuánto cuesta estudiar en Vancouver',
     vancouverWhichSchool: '¿Qué escuela es tu vibe?',
     vancouverFindOut30sec: '¡Descubre en 30 segundos! 🎮',
+    vancouverLearnHookTitle: 'Aprende artes audiovisuales, artes gráficas y game en lo mejor del mercado',
+    vancouverLearnHookBody: 'VFS: Game Design (diploma 12 meses), 3D Animation & VFX, Film Production, Sound Design, Writing for Film/TV/Games. VanArts: Game Art & Design (socio Unreal), 2D/3D Character Animation (#2 Canadá, #3 mundial), VFX para cine y TV. Un año, 90%+ empleabilidad.',
+    vancouverLearnHookGameCta: 'Prueba el ritmo: juega Empathy Engine',
   },
 }
 

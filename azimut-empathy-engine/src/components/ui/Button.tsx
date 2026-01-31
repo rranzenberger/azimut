@@ -2,7 +2,7 @@ import type { ButtonHTMLAttributes } from 'react'
 import { motion } from 'framer-motion'
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'ghost'
+  variant?: 'primary' | 'secondary' | 'ghost' | 'back'
   size?: 'sm' | 'md' | 'lg'
   fullWidth?: boolean
   loading?: boolean
@@ -17,6 +17,8 @@ const variants = {
     'bg-bg-mid/80 text-[var(--text-primary)] border border-white/15 backdrop-blur-sm hover:bg-bg-mid hover:border-white/25 hover:scale-[1.02] active:scale-[0.98]',
   ghost:
     'bg-transparent text-[var(--text-secondary)] border border-transparent hover:bg-white/5 hover:text-[var(--text-primary)] hover:border-white/10',
+  back:
+    'bg-white/[0.06] text-white border border-[rgba(201,35,55,0.6)] hover:bg-azimut-red/10 hover:border-azimut-red/70 hover:text-azimut-red',
 }
 const sizes = { sm: 'px-4 py-2 text-xs', md: 'px-6 py-3 text-sm', lg: 'px-8 py-4 text-base' }
 

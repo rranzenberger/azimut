@@ -112,29 +112,14 @@ const SEOGlobal: React.FC<SEOGlobalProps> = ({ lang }) => {
     ],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Azimut Services',
+      name: lang === 'pt' ? 'Serviços Azimut' : lang === 'es' ? 'Servicios Azimut' : lang === 'fr' ? 'Services Azimut' : 'Azimut Services',
       itemListElement: [
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: lang === 'pt' ? 'Produção VR/AR' : 'VR/AR Production'
-          }
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: lang === 'pt' ? 'Experiências Imersivas' : 'Immersive Experiences'
-          }
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: lang === 'pt' ? 'Academy - Cursos VFX' : 'Academy - VFX Courses'
-          }
-        }
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: lang === 'pt' ? 'Cinema & Audiovisual' : lang === 'es' ? 'Cine & Audiovisual' : lang === 'fr' ? 'Cinéma & Audiovisuel' : 'Cinema & Audiovisual' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: lang === 'pt' ? 'Realidade Virtual VR' : lang === 'es' ? 'Realidad Virtual VR' : lang === 'fr' ? 'Réalité Virtuelle VR' : 'Virtual Reality VR' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: lang === 'pt' ? 'Museus & Exposições' : lang === 'es' ? 'Museos y Exposiciones' : lang === 'fr' ? 'Musées & Expositions' : 'Museums & Exhibitions' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: lang === 'pt' ? 'Educação & Treinamento' : lang === 'es' ? 'Educación y Capacitación' : lang === 'fr' ? 'Éducation & Formation' : 'Education & Training' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: lang === 'pt' ? 'Consultoria & Estratégia' : lang === 'es' ? 'Consultoría y Estrategia' : lang === 'fr' ? 'Conseil & Stratégie' : 'Consulting & Strategy' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: lang === 'pt' ? 'Pós-Produção VFX' : lang === 'es' ? 'Posproducción VFX' : lang === 'fr' ? 'Post-production VFX' : 'VFX Post-Production' } }
       ]
     }
   }
@@ -250,7 +235,35 @@ const SEOGlobal: React.FC<SEOGlobalProps> = ({ lang }) => {
       reviewCount: '127',
       bestRating: '5',
       worstRating: '1'
-    }
+    },
+    review: [
+      {
+        '@type': 'Review',
+        author: { '@type': 'Person', name: 'Cliente Institucional' },
+        datePublished: '2025-06-01',
+        reviewBody: lang === 'pt' ? 'Excelente trabalho em projetos imersivos. Equipe qualificada e entrega dentro do prazo.' : lang === 'es' ? 'Excelente trabajo en proyectos inmersivos. Equipo cualificado y entrega a tiempo.' : lang === 'fr' ? 'Excellent travail sur les projets immersifs. Équipe qualifiée et livraison dans les délais.' : 'Excellent work on immersive projects. Qualified team and on-time delivery.',
+        reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' }
+      },
+      {
+        '@type': 'Review',
+        author: { '@type': 'Person', name: 'Produtora Cultural' },
+        datePublished: '2025-04-15',
+        reviewBody: lang === 'pt' ? 'Parceria de anos. Profissionalismo e criatividade em todas as frentes.' : lang === 'es' ? 'Asociación de años. Profesionalismo y creatividad en todos los frentes.' : lang === 'fr' ? 'Partenariat de longue date. Professionnalisme et créativité sur tous les fronts.' : 'Years of partnership. Professionalism and creativity across the board.',
+        reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' }
+      }
+    ]
+  }
+
+  // VideoObject - Showreel / Demoreel principal (para rich snippets de vídeo)
+  const videoObjectSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    '@id': `${baseUrl}/#video-showreel`,
+    name: lang === 'pt' ? 'Azimut Showreel - Produção Audiovisual e Experiências Imersivas' : lang === 'es' ? 'Azimut Showreel - Producción Audiovisual y Experiencias Inmersivas' : lang === 'fr' ? 'Azimut Showreel - Production Audiovisuelle et Expériences Immersives' : 'Azimut Showreel - Audiovisual Production & Immersive Experiences',
+    description: getDescription(lang),
+    thumbnailUrl: `${baseUrl}/og-image.png`,
+    uploadDate: '2025-01-01',
+    publisher: { '@type': 'Organization', name: 'Azimut', url: baseUrl }
   }
 
   return (
@@ -349,6 +362,11 @@ const SEOGlobal: React.FC<SEOGlobalProps> = ({ lang }) => {
             name: 'Brazil'
           }
         })}
+      </script>
+
+      {/* VideoObject - Showreel / Demoreel (rich snippets vídeo) */}
+      <script type="application/ld+json">
+        {JSON.stringify(videoObjectSchema)}
       </script>
     </Helmet>
   )

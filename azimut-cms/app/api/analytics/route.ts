@@ -199,6 +199,13 @@ export async function GET(request: Request) {
       }
     })
 
+    const gameInPipeline = await prisma.lead.count({
+      where: {
+        leadType: 'EMPATHY_ENGINE',
+        status: { in: ['NEW', 'CONTACTED', 'IN_PROGRESS'] }
+      }
+    })
+
     return NextResponse.json({
       kpis: {
         visitors: {
@@ -254,6 +261,10 @@ export async function GET(request: Request) {
         projects: {
           total: leadsByType.find(l => l.leadType === 'BUDGET_INQUIRY')?._count || 0,
           inPipeline: projectsInPipeline
+        },
+        game: {
+          total: leadsByType.find(l => l.leadType === 'EMPATHY_ENGINE')?._count || 0,
+          inPipeline: gameInPipeline
         }
       }
     })

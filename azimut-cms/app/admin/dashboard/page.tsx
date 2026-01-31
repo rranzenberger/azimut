@@ -59,6 +59,7 @@ interface AnalyticsData {
     vancouver: { total: number; inPipeline: number }
     courses: { total: number; inPipeline: number }
     projects: { total: number; inPipeline: number }
+    game?: { total: number; inPipeline: number }
   }
   comparison?: {
     previous: {
@@ -446,7 +447,26 @@ export default function DashboardPage() {
         <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
           🎯 Leads por Tipo (CRM Segmentado)
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Leads do Jogo */}
+          <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-3xl">🎮</span>
+              <a 
+                href="/admin/leads/game"
+                className="text-xs text-blue-600 hover:text-blue-800 font-semibold"
+              >
+                Ver todos →
+              </a>
+            </div>
+            <h3 className="text-sm font-semibold text-gray-700 mb-1">Leads do Jogo</h3>
+            <p className="text-3xl font-bold text-gray-900 mb-2">{leadsByType.game?.total ?? 0}</p>
+            <div className="flex items-center gap-2 text-sm">
+              <span className="text-gray-600">Em pipeline:</span>
+              <span className="font-semibold text-indigo-600">{leadsByType.game?.inPipeline ?? 0}</span>
+            </div>
+          </div>
+
           {/* Vancouver */}
           <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-3">

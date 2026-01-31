@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
     // Filtros
     const status = searchParams.get('status') as 'NEW' | 'IN_PROGRESS' | 'WON' | 'LOST' | null;
     const priority = searchParams.get('priority') as 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT' | null;
-    const leadType = searchParams.get('leadType') as 'CONTACT_FORM' | 'BUDGET_INQUIRY' | null;
+    const leadType = searchParams.get('leadType') as 'CONTACT_FORM' | 'BUDGET_INQUIRY' | 'VANCOUVER' | 'EMPATHY_ENGINE' | null;
     const dateFrom = searchParams.get('dateFrom');
     const dateTo = searchParams.get('dateTo');
     const search = searchParams.get('search'); // Busca em name, email, company

@@ -13,6 +13,8 @@ interface SEOProps {
   description?: string
   keywords?: string
   image?: string
+  /** Ícone da aba (favicon) — ex: /empaty-engine.png */
+  icon?: string
   url?: string
   type?: 'website' | 'article' | 'profile'
   author?: string
@@ -28,6 +30,7 @@ const SEO: React.FC<SEOProps> = ({
   description = 'Produtora pioneira em experiências imersivas, VR, AR e projetos culturais. Academy: Cursos de VFX, Animação, Game Design e preparação para VFS/VanArts Vancouver.',
   keywords = 'produtora audiovisual, VR, AR, realidade virtual, experiências imersivas, VFX, animação, game design, Vancouver, VFS, VanArts, cursos cinema, produção cultural',
   image = 'https://azmt.com.br/og-image.png',
+  icon,
   url = 'https://azmt.com.br',
   type = 'website',
   author = 'Azimut',
@@ -63,10 +66,13 @@ const SEO: React.FC<SEOProps> = ({
     })
   }
 
+  const iconHref = icon || null
+
   return (
     <Helmet>
       {/* Basic Meta Tags */}
       <title>{title}</title>
+      {iconHref && <link rel="icon" href={iconHref} type="image/png" />}
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
       <meta name="author" content={author} />

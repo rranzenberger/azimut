@@ -298,148 +298,199 @@ const App: React.FC = () => {
           <AppLayout key={theme} lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
             <Suspense 
               fallback={<LoadingSkeleton />}
-              // Error boundary para capturar erros no lazy loading
+              // Error boundary por rota: cada página tem seu próprio ErrorBoundary
             >
-              <ErrorBoundary>
-                <Routes>
+              <Routes>
                 {/* Redirect / para idioma detectado */}
                 <Route path="/" element={<LangRedirect />} />
-                
-                {/* Rotas COM prefixo de idioma (PREMIUM) */}
+
+                {/* Rotas COM prefixo de idioma (PREMIUM) — ErrorBoundary por rota */}
                 <Route path="/:lang" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Home lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Home">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Home lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/home" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Home lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Home">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Home lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/what" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <WhatWeDo lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="What We Do">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <WhatWeDo lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/what/:slug" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <ServiceDetail lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Service">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <ServiceDetail lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/work" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Work lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Work">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Work lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/work/:slug" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <ProjectDetail lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Project">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <ProjectDetail lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/studio" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Studio lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Studio">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Studio lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/studio/equipe" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <StudioTeam lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Studio Team">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <StudioTeam lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/studio/credibilidade" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <StudioCredentials lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Studio Credibility">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <StudioCredentials lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/studio/diferenciais" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <StudioDiferenciais lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Studio Diferenciais">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <StudioDiferenciais lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/academy" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <AcademyNew lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Academy">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <AcademyNew lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/academy/courses" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <AcademyCourses lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Academy Courses">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <AcademyCourses lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/academy/workshops" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <AcademyWorkshops lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Academy Workshops">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <AcademyWorkshops lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/academy/corporate" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <AcademyCorporate lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Academy Corporate">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <AcademyCorporate lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/academy/vancouver" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Vancouver lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Vancouver">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Vancouver lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/academy/research" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Research lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Research">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Research lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/contact" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Contact lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Contact">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Contact lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/press" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Press lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Press">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Press lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/privacy" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Privacy lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Privacy">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Privacy lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/terms" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Terms lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Terms">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Terms lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/thank-you" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <ThankYou lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Thank You">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <ThankYou lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/project/:slug" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <ProjectDetail lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Project">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <ProjectDetail lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
-                
+
                 {/* Blog */}
                 <Route path="/:lang/blog" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Blog lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Blog">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Blog lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/blog/:slug" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <BlogPost lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Blog Post">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <BlogPost lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
-                
+
                 {/* Preview/Degustação - Marketing VR/NFT/Web3 */}
                 <Route path="/:lang/experience-preview" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <ExperiencePreview lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Experience Preview">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <ExperiencePreview lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 {/* Jogo Empathy Engine */}
                 <Route path="/:lang/game" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Game lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Game">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Game lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 
                 {/* Backwards compatibility: rotas SEM prefixo redirecionam */}
@@ -462,12 +513,13 @@ const App: React.FC = () => {
                 
                 {/* Rota 404 - captura qualquer URL não encontrada */}
                 <Route path="*" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <NotFound lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Page">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <NotFound lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
               </Routes>
-              </ErrorBoundary>
             </Suspense>
           </AppLayout>
           
@@ -491,137 +543,194 @@ const App: React.FC = () => {
             <Routes>
               {/* Redirect / para idioma detectado */}
               <Route path="/" element={<LangRedirect />} />
-              
-              {/* Rotas COM prefixo de idioma (PREMIUM) */}
+
+              {/* Rotas COM prefixo de idioma (PREMIUM) — ErrorBoundary por rota */}
               <Route path="/:lang" element={
-                <LangRouteWrapper setLang={setLang}>
-                  {(routeLang) => <Home lang={routeLang} />}
-                </LangRouteWrapper>
+                <ErrorBoundary routeName="Home">
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Home lang={routeLang} />}
+                  </LangRouteWrapper>
+                </ErrorBoundary>
+              } />
+              <Route path="/:lang/home" element={
+                <ErrorBoundary routeName="Home">
+                  <LangRouteWrapper setLang={setLang}>
+                    {(routeLang) => <Home lang={routeLang} />}
+                  </LangRouteWrapper>
+                </ErrorBoundary>
               } />
               <Route path="/:lang/what" element={
-                <LangRouteWrapper setLang={setLang}>
-                  {(routeLang) => <WhatWeDo lang={routeLang} />}
-                </LangRouteWrapper>
-              } />
-              <Route path="/:lang/what/:slug" element={
-                <LangRouteWrapper setLang={setLang}>
-                  {(routeLang) => <ServiceDetail lang={routeLang} />}
-                </LangRouteWrapper>
-              } />
-                <Route path="/:lang/work" element={
+                <ErrorBoundary routeName="What We Do">
                   <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Work lang={routeLang} />}
+                    {(routeLang) => <WhatWeDo lang={routeLang} />}
                   </LangRouteWrapper>
+                </ErrorBoundary>
+              } />
+                <Route path="/:lang/what/:slug" element={
+                  <ErrorBoundary routeName="Service">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <ServiceDetail lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
+                } />
+                <Route path="/:lang/work" element={
+                  <ErrorBoundary routeName="Work">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Work lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/work/:slug" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <ProjectDetail lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Project">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <ProjectDetail lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/studio" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Studio lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Studio">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Studio lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/studio/equipe" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <StudioTeam lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Studio Team">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <StudioTeam lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/studio/credibilidade" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <StudioCredentials lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Studio Credibility">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <StudioCredentials lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/studio/diferenciais" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <StudioDiferenciais lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Studio Diferenciais">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <StudioDiferenciais lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/academy" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <AcademyNew lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Academy">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <AcademyNew lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/academy/courses" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <AcademyCourses lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Academy Courses">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <AcademyCourses lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/academy/workshops" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <AcademyWorkshops lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Academy Workshops">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <AcademyWorkshops lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/academy/corporate" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <AcademyCorporate lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Academy Corporate">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <AcademyCorporate lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/academy/vancouver" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Vancouver lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Vancouver">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Vancouver lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/academy/research" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Research lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Research">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Research lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/contact" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Contact lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Contact">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Contact lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/press" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Press lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Press">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Press lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/privacy" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Privacy lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Privacy">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Privacy lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/terms" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Terms lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Terms">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Terms lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/thank-you" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <ThankYou lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Thank You">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <ThankYou lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/project/:slug" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <ProjectDetail lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Project">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <ProjectDetail lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
-                
+
                 {/* Blog */}
                 <Route path="/:lang/blog" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Blog lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Blog">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Blog lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 <Route path="/:lang/blog/:slug" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <BlogPost lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Blog Post">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <BlogPost lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
-                
+
                 {/* Preview/Degustação - Marketing VR/NFT/Web3 */}
                 <Route path="/:lang/experience-preview" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <ExperiencePreview lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Experience Preview">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <ExperiencePreview lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 {/* Jogo Empathy Engine */}
                 <Route path="/:lang/game" element={
-                  <LangRouteWrapper setLang={setLang}>
-                    {(routeLang) => <Game lang={routeLang} />}
-                  </LangRouteWrapper>
+                  <ErrorBoundary routeName="Game">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Game lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
                 } />
                 
                 {/* Backwards compatibility: rotas SEM prefixo redirecionam */}

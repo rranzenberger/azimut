@@ -141,6 +141,7 @@ export function LeadsFilters({
           }}
         >
           <option value="">Todos os tipos</option>
+          <option value="EMPATHY_ENGINE">🎮 Empathy Engine (Jogo)</option>
           <option value="VANCOUVER">🍁 Vancouver (Estudar Fora)</option>
           <option value="CONTACT_FORM">📚 Cursos & Workshops</option>
           <option value="BUDGET_INQUIRY">🎬 Projetos Audiovisuais</option>

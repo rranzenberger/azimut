@@ -872,7 +872,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
           {/* Serviços Relacionados - INTERNAL LINKING para SEO */}
           {relatedServices.length > 0 && (
             <section 
-              ref={(el) => { sectionRefs.current[4] = el }}
+              ref={(el) => { sectionRefs.current[5] = el }}
               className="section-container opacity-0"
             >
               <span className="section-eyebrow">
@@ -945,7 +945,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
           {/* Projetos relacionados - Apenas para outros serviços */}
           {slug !== 'educacao-treinamento' && slug !== 'consultoria-estrategia' && (
             <section 
-              ref={(el) => { sectionRefs.current[5] = el }}
+              ref={(el) => { sectionRefs.current[6] = el }}
               className="section-container opacity-0"
             >
               <span className="section-eyebrow">
@@ -1002,7 +1002,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
           {/* FAQs - Perguntas Frequentes */}
           {hasServiceFAQs(slug) && (
             <section 
-              ref={(el) => { sectionRefs.current[5] = el }}
+              ref={(el) => { sectionRefs.current[7] = el }}
               className="section-container relative opacity-0"
             >
               <span className="section-eyebrow">

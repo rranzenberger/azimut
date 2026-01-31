@@ -22,8 +22,8 @@ const getEmailDestination = (formType: string): string => {
     return academy
   }
 
-  // Hot leads → leads@
-  if (formType.includes('hot')) {
+  // Hot leads e leads do jogo (Empathy Engine) → leads@
+  if (formType.includes('hot') || formType.includes('empathy_engine')) {
     return leads
   }
 
@@ -60,7 +60,8 @@ function generateSubject(data: any): string {
   
   // 4. ORIGEM DO FORMULÁRIO
   let formName = 'Form'
-  if (data.formType?.includes('contact')) formName = 'Contact_Form'
+  if (data.formType?.includes('empathy_engine')) formName = 'Lead_do_Jogo'
+  else if (data.formType?.includes('contact')) formName = 'Contact_Form'
   else if (data.formType?.includes('vancouver')) formName = 'Vancouver_Form'
   else if (data.formType?.includes('academy')) formName = 'Academy_Form'
   else if (data.formType?.includes('budget')) formName = 'Budget_Wizard'

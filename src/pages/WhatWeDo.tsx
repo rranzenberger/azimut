@@ -344,6 +344,15 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                 <>We create end-to-end immersive, interactive and cinematic experiences. From conception to execution, we integrate art, technology and narrative to connect people, stories and spaces. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">View our projects</LangLink> or <LangLink to="/studio" className="text-azimut-red hover:text-azimut-red/80 underline">meet our studio</LangLink>.</>
               )}
             </p>
+            {/* Ativação de marca no seu evento: estande, quiosque com game, tecnologia e audiovisual — link direto para o jogo */}
+            <div className="mt-6 p-4 rounded-xl border border-azimut-red/30 bg-azimut-red/5">
+              <p className="text-sm font-medium mb-2" style={{ color: 'var(--theme-text)' }}>
+                {lang === 'pt' ? 'Ativação de marca no seu evento: estande em feira comercial, centro cultural, lançamento de produto, evento de divulgação, interno ou exposição. Quiosque com game, tecnologia e audiovisual integrados atraem visitantes ao seu estande e à sua página. Provinha:' : lang === 'es' ? 'Activación de marca en tu evento: stand en feria comercial, centro cultural, lanzamiento de producto, evento de divulgación, interno o exposición. Quiosco con game, tecnología y audiovisual integrados atrae visitantes a tu stand y a tu web. Pruébalo:' : lang === 'fr' ? 'Activation de marque à votre événement : stand en foire commerciale, centre culturel, lancement de produit, événement de promotion, interne ou exposition. Kiosque avec game, technologie et audiovisuel intégrés — attire les visiteurs sur votre stand et votre site. Aperçu :' : 'Brand activation at your event: trade-fair stand, cultural center, product launch, promotional or in-house event, or exhibition. Kiosk with game, technology and audiovisual in one draws visitors to your stand and your site. Try it:'}{' '}
+                <LangLink to="/game" className="text-azimut-red hover:underline font-semibold">
+                  {lang === 'pt' ? 'Jogue o Empathy Engine' : lang === 'es' ? 'Juega el Empathy Engine' : lang === 'fr' ? 'Jouez à l\'Empathy Engine' : 'Play Empathy Engine'} →
+                </LangLink>
+              </p>
+            </div>
           </div>
         </div>
 

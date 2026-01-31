@@ -68,6 +68,7 @@ class ErrorBoundary extends Component<Props, State> {
 
   public render() {
     if (this.state.hasError) {
+      const routeLabel = this.props.routeName ? ` (${this.props.routeName})` : ''
       return (
         <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--theme-bg)' }}>
           <div className="text-center p-8">
@@ -75,21 +76,36 @@ class ErrorBoundary extends Component<Props, State> {
               Algo deu errado
             </h1>
             <p className="mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
-              Ocorreu um erro ao carregar a página.
+              Ocorreu um erro ao carregar a página{routeLabel}.
             </p>
-            <button
-              onClick={() => {
-                this.setState({ hasError: false, error: null })
-                window.location.href = '/'
-              }}
-              className="px-6 py-3 rounded"
-              style={{
-                background: '#c92337',
-                color: '#ffffff',
-              }}
-            >
-              Recarregar Página
-            </button>
+            <div className="flex flex-wrap gap-3 justify-center">
+              <button
+                onClick={() => {
+                  this.setState({ hasError: false, error: null })
+                  window.history.back()
+                }}
+                className="px-6 py-3 rounded border"
+                style={{
+                  borderColor: 'var(--theme-text-secondary)',
+                  color: 'var(--theme-text)',
+                }}
+              >
+                Voltar
+              </button>
+              <button
+                onClick={() => {
+                  this.setState({ hasError: false, error: null })
+                  window.location.href = '/'
+                }}
+                className="px-6 py-3 rounded"
+                style={{
+                  background: '#c92337',
+                  color: '#ffffff',
+                }}
+              >
+                Ir ao início
+              </button>
+            </div>
             {this.state.error && (
               <details className="mt-4 text-left">
                 <summary className="cursor-pointer" style={{ color: 'var(--theme-text-secondary)' }}>

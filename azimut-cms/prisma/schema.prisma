@@ -682,6 +682,7 @@ enum LeadType {
   CONTACT_FORM
   BUDGET_INQUIRY
   VANCOUVER
+  EMPATHY_ENGINE
 }
 
 enum LeadPriority {

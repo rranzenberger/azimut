@@ -53,7 +53,7 @@ export default async function LeadsPage({
       where.priority = priority;
     }
     
-    if (leadType && ['CONTACT_FORM', 'BUDGET_INQUIRY', 'VANCOUVER'].includes(leadType)) {
+    if (leadType && ['CONTACT_FORM', 'BUDGET_INQUIRY', 'VANCOUVER', 'EMPATHY_ENGINE'].includes(leadType)) {
       where.leadType = leadType;
     }
     
@@ -175,10 +175,12 @@ export default async function LeadsPage({
       >
         <div style={{ flex: 1, minWidth: 200 }}>
           <h1 style={{ margin: 0, fontSize: 32, marginBottom: 8, fontWeight: 700, letterSpacing: '-0.5px' }}>
-            Leads
+            {leadType === 'EMPATHY_ENGINE' ? 'Leads do Jogo' : 'Leads'}
           </h1>
           <p style={{ margin: 0, color: '#c0bccf', fontSize: 16 }}>
-            Gerencie todos os leads capturados do site.
+            {leadType === 'EMPATHY_ENGINE'
+              ? 'Leads capturados no Empathy Engine (origem empathy_engine).'
+              : 'Gerencie todos os leads capturados do site.'}
           </p>
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>

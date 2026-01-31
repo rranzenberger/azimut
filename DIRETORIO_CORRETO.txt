@@ -4,6 +4,9 @@ DIRETÓRIO CORRETO DO PROJETO
 
 C:\Users\ranz\Documents\azimut-site-vite-tailwind
 
+Repositório: origin = https://github.com/rranzenberger/azimut
+(Vercel: azimut = site+game na raiz | azimut-backoffice = azimut-cms/)
+
 ═══════════════════════════════════════════════════════════════
 SEMPRE VERIFICAR ANTES DE TRABALHAR:
 ═══════════════════════════════════════════════════════════════
@@ -12,6 +15,17 @@ SEMPRE VERIFICAR ANTES DE TRABALHAR:
    OU
 2. Verifique se existe: package.json na raiz
 3. Verifique se existe: src/ e public/ na raiz
+4. Repo correto: git remote -v → origin = rranzenberger/azimut
+
+═══════════════════════════════════════════════════════════════
+PASTAS POR PROJETO (Vercel):
+═══════════════════════════════════════════════════════════════
+
+Site + game  → raiz (src/, public/)     → projeto azimut
+Backoffice   → azimut-cms/             → projeto azimut-backoffice
+Jogo (fonte) → azimut-empathy-engine/  → entra no build do azimut
+
+Detalhes: docs\REPOSITORIO_E_PASTAS_VERCEL.md
 
 ═══════════════════════════════════════════════════════════════
 COMANDO RÁPIDO PARA NAVEGAR:

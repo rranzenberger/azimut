@@ -4,11 +4,12 @@ import { useSettingsStore } from './stores/settingsStore'
 import SplashScreen from './screens/SplashScreen'
 import GameScreen from './screens/GameScreen'
 import TutorialScreen from './screens/TutorialScreen'
+import TipsScreen from './screens/TipsScreen'
 import LeaderboardScreen from './screens/LeaderboardScreen'
 import SettingsScreen from './screens/SettingsScreen'
 import './index.css'
 
-export type AppView = 'splash' | 'game' | 'tutorial' | 'leaderboard' | 'settings'
+export type AppView = 'splash' | 'game' | 'tutorial' | 'tips' | 'leaderboard' | 'settings'
 
 const pageTransition = (reducedMotion: boolean) =>
   reducedMotion
@@ -32,12 +33,12 @@ function App() {
   }
 
   return (
-    <div className="relative min-h-screen bg-bg-darkest">
+    <div className="game-bg relative h-screen min-h-screen overflow-hidden">
       <AnimatePresence mode="wait">
         {view === 'splash' && (
         <motion.div
           key="splash"
-          className="absolute inset-0 min-h-screen"
+          className="absolute inset-0 h-screen overflow-hidden"
           initial={transition.initial}
           animate={transition.animate}
           exit={transition.exit}
@@ -47,6 +48,8 @@ function App() {
             onStart={() => setView('game')}
             onExperiences={() => goToLeaderboard('splash')}
             onAbout={() => setView('tutorial')}
+            onTips={() => setView('tips')}
+            onSettings={() => setView('settings')}
             onBack={undefined}
           />
         </motion.div>
@@ -55,7 +58,7 @@ function App() {
       {view === 'game' && (
         <motion.div
           key="game"
-          className="absolute inset-0 min-h-screen"
+          className="absolute inset-0 h-screen overflow-hidden"
           initial={transition.initial}
           animate={transition.animate}
           exit={transition.exit}
@@ -71,7 +74,7 @@ function App() {
       {view === 'tutorial' && (
         <motion.div
           key="tutorial"
-          className="absolute inset-0 min-h-screen"
+          className="absolute inset-0 h-screen overflow-hidden"
           initial={transition.initial}
           animate={transition.animate}
           exit={transition.exit}
@@ -81,6 +84,19 @@ function App() {
             onComplete={() => setView('game')}
             onBack={() => setView('splash')}
           />
+        </motion.div>
+      )}
+
+      {view === 'tips' && (
+        <motion.div
+          key="tips"
+          className="absolute inset-0 h-screen overflow-hidden"
+          initial={transition.initial}
+          animate={transition.animate}
+          exit={transition.exit}
+          transition={transition.transition}
+        >
+          <TipsScreen onBack={() => setView('splash')} />
         </motion.div>
       )}
 
@@ -100,7 +116,7 @@ function App() {
       {view === 'settings' && (
         <motion.div
           key="settings"
-          className="absolute inset-0 min-h-screen"
+          className="absolute inset-0 h-screen overflow-hidden"
           initial={transition.initial}
           animate={transition.animate}
           exit={transition.exit}

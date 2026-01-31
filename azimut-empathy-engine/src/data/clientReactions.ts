@@ -30,7 +30,7 @@ const FALLBACK = [
 ]
 
 export function getClientReaction(selectedIds: string[], topicId?: string | null): string {
-  if (selectedIds.length === 0) return 'Arraste elementos para a área e veja como o cliente reage.'
+  if (selectedIds.length === 0) return 'Adicione elementos à área e veja como o cliente reage.'
   const combos = getCombosForElements(selectedIds, topicId)
   if (combos.length > 0) {
     const top = combos.sort((a, b) => b.bonusPoints - a.bonusPoints)[0]

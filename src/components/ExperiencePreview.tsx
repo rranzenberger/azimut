@@ -24,15 +24,14 @@ const previewOptions: PreviewOption[] = [
   {
     id: 'empathy-engine-game',
     title: 'Jogue o Empathy Engine',
-    description: 'Jogo de cartas por brief: monte propostas (XR, audiovisual, eventos, Canadá) e veja o cliente reagir!',
+    description: 'Ativação de marca no seu evento: estande em feira comercial, centro cultural, lançamento de produto, evento de divulgação, interno ou exposição. Quiosque com game, tecnologia e audiovisual integrados atraem visitantes ao seu estande e à sua página. Jogo por brief: monte propostas (XR, audiovisual, eventos) e veja o cliente reagir.',
     icon: '🎮',
     category: 'immersive',
     features: [
-      'Cartas por tópico: XR/VR, Produção, Eventos, Canadá',
-      'Objetivos e surpresas por rodada',
-      'Combos que dão bônus',
-      'Veja como o cliente reage',
-      '4 fases de desafio',
+      'No seu evento: estande em feira comercial — game atrai visitantes ao stand',
+      'Centro cultural, lançamento, evento de divulgação ou exposição — quiosque com game',
+      'Tecnologia + audiovisual integrados; na sua página ou no seu evento',
+      'Jogo por brief: XR/VR, Produção, Eventos. 4 fases de desafio',
     ],
     examples: [
       'Monte uma proposta de XR',
@@ -40,7 +39,7 @@ const previewOptions: PreviewOption[] = [
       'Proponha curso no Canadá',
       'Surpreenda o cliente com combos',
     ],
-    cta: 'Jogar agora',
+    cta: 'Jogar',
   },
   {
     id: 'vr-experience',
@@ -422,7 +421,12 @@ export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
                   }}
                 >
                   <span style={{ fontSize: 18 }}>🎮</span>
-                  <span>{lang === 'pt' ? 'Jogar Agora' : lang === 'en' ? 'Play Now' : lang === 'es' ? 'Jugar Ahora' : 'Jouer Maintenant'}</span>
+                  <span>{lang === 'pt' ? 'Jogar' : lang === 'en' ? 'Play' : lang === 'es' ? 'Jugar' : 'Jouer'}</span>
+                  <img
+                    src="/empaty-engine.png"
+                    alt="Empathy Engine"
+                    style={{ height: 22, width: 'auto', maxWidth: 140, objectFit: 'contain' }}
+                  />
                   <span>→</span>
                 </Link>
 
@@ -504,7 +508,7 @@ export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
             <div
               key={option.id}
               onClick={() => {
-                // Se for o jogo, navegar para /game
+                // Se for o jogo, navegar para /{lang}/game
                 if (option.id === 'empathy-engine-game') {
                   navigate(`/${lang}/game`)
                   return
@@ -581,7 +585,7 @@ export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
                 textAlign: 'center',
               }}>
                 {option.id === 'empathy-engine-game'
-                  ? (lang === 'pt' ? '🎮 Jogar agora →' : lang === 'en' ? '🎮 Play now →' : lang === 'es' ? '🎮 Jugar ahora →' : '🎮 Jouer maintenant →')
+                  ? (lang === 'pt' ? '🎮 Jogar →' : lang === 'en' ? '🎮 Play →' : lang === 'es' ? '🎮 Jugar →' : '🎮 Jouer →')
                   : selected === option.id ? '✓ Selecionado' : 'Ver Detalhes →'}
               </div>
             </div>

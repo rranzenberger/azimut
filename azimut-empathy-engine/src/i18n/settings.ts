@@ -1,0 +1,33 @@
+import type { Lang } from './lang'
+
+export interface SettingsTranslations {
+  title: string
+  highContrast: string
+  reduceMotion: string
+  zenMode: string
+  challengeMode: string
+  soundLabel: string
+  achievementsTitle: string
+  achievementName: Record<string, string>
+  achievementDesc: Record<string, string>
+}
+
+const namesPt: Record<string, string> = { 'mestre-combos': 'Mestre dos Combos', 'velocista': 'Velocista', 'perfeccionista': 'Perfeccionista', 'multitopico': 'Multitópico', 'primeiro-combo': 'Primeiro Combo', 'fase-perfeita': 'Fase Perfeita', 'explorador': 'Explorador', 'curioso': 'Curioso', 'area-secreta': 'Área Secreta', 'quest-premium': 'Quest Premium', 'super-premium': 'Super Premium' }
+const descPt: Record<string, string> = { 'mestre-combos': 'Ative 10 combos diferentes em uma partida', 'velocista': 'Complete uma fase com mais de 10s restantes', 'perfeccionista': 'Atinja exatamente a meta (sem ultrapassar)', 'multitopico': 'Jogue as 4 fases com tópicos diferentes', 'primeiro-combo': 'Ative seu primeiro combo', 'fase-perfeita': 'Atinga a meta e ative pelo menos 1 combo na mesma fase', 'explorador': 'Easter egg: 7 toques no título durante o jogo', 'curioso': 'Easter egg: 5 toques no score na tela de resultado', 'area-secreta': 'Descobriu a área secreta na tela inicial', 'quest-premium': 'Completou pelo menos uma fase com quest premium (Rio Museu Olímpico etc.)', 'super-premium': 'Completou pelo menos uma fase com a quest super-premium (Rio Museu Olímpico — Experiência Completa)' }
+const namesEn: Record<string, string> = { 'mestre-combos': 'Combo Master', 'velocista': 'Speedster', 'perfeccionista': 'Perfectionist', 'multitopico': 'Multi-topic', 'primeiro-combo': 'First Combo', 'fase-perfeita': 'Perfect Phase', 'explorador': 'Explorer', 'curioso': 'Curious', 'area-secreta': 'Secret Area', 'quest-premium': 'Premium Quest', 'super-premium': 'Super Premium' }
+const descEn: Record<string, string> = { 'mestre-combos': 'Activate 10 different combos in one game', 'velocista': 'Complete a phase with more than 10s left', 'perfeccionista': 'Hit the target exactly (without going over)', 'multitopico': 'Play all 4 phases with different topics', 'primeiro-combo': 'Activate your first combo', 'fase-perfeita': 'Reach the target and activate at least 1 combo in the same phase', 'explorador': 'Easter egg: 7 taps on the title during the game', 'curioso': 'Easter egg: 5 taps on the score on the result screen', 'area-secreta': 'Discovered the secret area on the home screen', 'quest-premium': 'Completed at least one phase with a premium quest (Rio Olympic Museum etc.)', 'super-premium': 'Completed at least one phase with the super-premium quest (Rio Olympic Museum — Complete Experience)' }
+const namesEs: Record<string, string> = { 'mestre-combos': 'Maestro de Combos', 'velocista': 'Velocista', 'perfeccionista': 'Perfeccionista', 'multitopico': 'Multitema', 'primeiro-combo': 'Primer Combo', 'fase-perfeita': 'Fase Perfecta', 'explorador': 'Explorador', 'curioso': 'Curioso', 'area-secreta': 'Área secreta', 'quest-premium': 'Quest premium', 'super-premium': 'Super Premium' }
+const descEs: Record<string, string> = { 'mestre-combos': 'Activa 10 combos diferentes en una partida', 'velocista': 'Completa una fase con más de 10s restantes', 'perfeccionista': 'Alcanza exactamente la meta (sin pasarte)', 'multitopico': 'Juega las 4 fases con temas diferentes', 'primeiro-combo': 'Activa tu primer combo', 'fase-perfeita': 'Alcanza la meta y activa al menos 1 combo en la misma fase', 'explorador': 'Easter egg: 7 toques en el título durante el juego', 'curioso': 'Easter egg: 5 toques en la puntuación en la pantalla de resultado', 'area-secreta': 'Descubriste el área secreta en la pantalla inicial', 'quest-premium': 'Completaste al menos una fase con quest premium (Rio Museo Olímpico etc.)', 'super-premium': 'Completaste al menos una fase con la quest super-premium (Rio Museo Olímpico — Experiencia Completa)' }
+const namesFr: Record<string, string> = { 'mestre-combos': 'Maître des Combos', 'velocista': 'Vélociste', 'perfeccionista': 'Perfectionniste', 'multitopico': 'Multi-sujet', 'primeiro-combo': 'Premier Combo', 'fase-perfeita': 'Phase Parfaite', 'explorador': 'Explorateur', 'curioso': 'Curieux', 'area-secreta': 'Zone secrète', 'quest-premium': 'Quest premium', 'super-premium': 'Super Premium' }
+const descFr: Record<string, string> = { 'mestre-combos': 'Active 10 combos différents en une partie', 'velocista': 'Complète une phase avec plus de 10s restantes', 'perfeccionista': 'Atteins exactement la cible (sans dépasser)', 'multitopico': 'Joue les 4 phases avec des thèmes différents', 'primeiro-combo': 'Active ton premier combo', 'fase-perfeita': 'Atteins la cible et active au moins 1 combo dans la même phase', 'explorador': 'Easter egg : 7 taps sur le titre pendant le jeu', 'curioso': 'Easter egg : 5 taps sur le score à l\'écran de résultat', 'area-secreta': 'Tu as découvert la zone secrète sur l\'écran d\'accueil', 'quest-premium': 'Complété au moins une phase avec une quest premium (Rio Musée Olympique etc.)', 'super-premium': 'Complété au moins une phase avec la quest super-premium (Rio Musée Olympique — Expérience complète)' }
+
+const settings: Record<Lang, SettingsTranslations> = {
+  pt: { title: 'Configurações', highContrast: 'Alto contraste', reduceMotion: 'Reduzir movimento', zenMode: 'Modo Zen (sem timer)', challengeMode: 'Modo Desafio (todas as fases com surpresa)', soundLabel: 'Efeitos sonoros', achievementsTitle: 'Conquistas', achievementName: namesPt, achievementDesc: descPt },
+  en: { title: 'Settings', highContrast: 'High contrast', reduceMotion: 'Reduce motion', zenMode: 'Zen mode (no timer)', challengeMode: 'Challenge mode (all phases with surprise)', soundLabel: 'Sound effects', achievementsTitle: 'Achievements', achievementName: namesEn, achievementDesc: descEn },
+  es: { title: 'Configuración', highContrast: 'Alto contraste', reduceMotion: 'Reducir movimiento', zenMode: 'Modo Zen (sin temporizador)', challengeMode: 'Modo Desafío (todas las fases con sorpresa)', soundLabel: 'Efectos de sonido', achievementsTitle: 'Logros', achievementName: namesEs, achievementDesc: descEs },
+  fr: { title: 'Paramètres', highContrast: 'Contraste élevé', reduceMotion: 'Réduire les mouvements', zenMode: 'Mode Zen (sans minuteur)', challengeMode: 'Mode Défi (toutes les phases avec surprise)', soundLabel: 'Effets sonores', achievementsTitle: 'Succès', achievementName: namesFr, achievementDesc: descFr },
+}
+
+export function getSettingsTranslations(lang: Lang): SettingsTranslations {
+  return settings[lang] ?? settings.pt
+}
