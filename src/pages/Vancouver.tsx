@@ -604,7 +604,16 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 </p>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {['3D Animation & VFX', 'Game Design', 'Film Production', 'Programming', 'Sound Design', 'Digital Design', 'Acting', 'Concept Art', 'Classical Animation', 'Makeup Design', 'Writing', 'Short-Track'].map((course, i) => (
-                    <div key={i} className="text-sm px-3 py-2.5 rounded-lg text-center font-medium" style={{ background: 'rgba(201, 35, 55, 0.25)', color: '#ffffff', border: '1px solid rgba(201, 35, 55, 0.35)' }}>
+                    <div 
+                      key={i} 
+                      className="text-base px-3 py-2.5 rounded-lg text-center font-medium" 
+                      style={{ 
+                        background: course === 'Short-Track' ? 'rgba(201, 35, 55, 0.15)' : 'rgba(201, 35, 55, 0.25)', 
+                        color: '#ffffff', 
+                        border: course === 'Short-Track' ? '1px dashed rgba(201, 35, 55, 0.5)' : '1px solid rgba(201, 35, 55, 0.35)',
+                        fontStyle: course === 'Short-Track' ? 'italic' : 'normal'
+                      }}
+                    >
                       {course}
                     </div>
                   ))}
