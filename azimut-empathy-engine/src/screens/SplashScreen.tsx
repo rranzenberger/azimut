@@ -44,18 +44,27 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
   }
 
   const topics = [
+    // Linha 1 - Core Services
     { icon: '🥽', nameKey: 'topicXrVr' as const, color: '#00F5FF' },
     { icon: '🎬', nameKey: 'topicAudiovisual' as const, color: '#A855F7' },
     { icon: '🎪', nameKey: 'topicEvents' as const, color: '#F97316' },
     { icon: '🏛️', nameKey: 'topicCultureMuseums' as const, color: '#3B82F6' },
     { icon: MAPLE_LEAF_ICON, nameKey: 'topicStudyCanada' as const, color: '#be0320' },
     { icon: '⚡', nameKey: 'topicTechConsulting' as const, color: '#FFD700' },
+    // Linha 2 - Tech & Creative
     { icon: '🤖', nameKey: 'topicIaGenerativa' as const, color: '#10B981' },
     { icon: '🌐', nameKey: 'topicWeb3' as const, color: '#F59E0B' },
     { icon: '🎮', nameKey: 'topicGames' as const, color: '#EC4899' },
     { icon: '🏗️', nameKey: 'topicCenografia' as const, color: '#8B5CF6' },
-    { icon: '🎨', nameKey: 'topicAnimacao2d3d' as const, color: '#A855F7' },
+    { icon: '🎨', nameKey: 'topicAnimacao2d3d' as const, color: '#C084FC' },
     { icon: '✨', nameKey: 'topicMotionDesign' as const, color: '#14B8A6' },
+    // Linha 3 - Premium & Specialized
+    { icon: '📱', nameKey: 'topicApps' as const, color: '#06B6D4' },
+    { icon: '🎭', nameKey: 'topicPerformance' as const, color: '#F43F5E' },
+    { icon: '📊', nameKey: 'topicDataViz' as const, color: '#22C55E' },
+    { icon: '🔮', nameKey: 'topicFuturism' as const, color: '#8B5CF6' },
+    { icon: '🎯', nameKey: 'topicBranding' as const, color: '#EF4444' },
+    { icon: '🌟', nameKey: 'topicPremium' as const, color: '#FBBF24' },
   ] as const
 
   const backButton = (
@@ -182,34 +191,52 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
           {/* Card — conteúdo dentro do card; mobile com mais respiro */}
           <div className="card-glow-home rounded-lg sm:rounded-xl text-left mt-0 sm:mt-8 flex-shrink-0 w-full max-w-3xl overflow-visible sm:overflow-hidden">
             <div className="card-glow-home-inner rounded-lg sm:rounded-xl p-3 sm:p-6 md:p-8 space-y-3 sm:space-y-6 overflow-visible sm:overflow-hidden min-w-0">
-            {/* Tópicos — wrap no mobile (sem truncar); uma linha no desktop */}
-            <div className="min-w-0 overflow-visible">
+            {/* Tópicos — 18 quests em grid 6x3 */}
+            <div className="min-w-0">
               <h3 
-                className="text-[10px] sm:text-sm font-bold uppercase tracking-widest mb-1 sm:mb-3 flex items-center gap-1 sm:gap-2"
+                className="text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-2 sm:mb-3 flex items-center justify-between"
                 style={{ color: '#C92337' }}
               >
-                <span>📚</span> {t.topicsTitle}
+                <span className="flex items-center gap-1.5">
+                  <span>🎯</span> {t.topicsTitle}
+                  <span className="text-[8px] sm:text-[9px] font-normal px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(168, 85, 247, 0.2)', color: '#C084FC' }}>
+                    18 Quests
+                  </span>
+                </span>
+                <span className="text-[8px] sm:text-[10px] font-normal text-amber-400/80 flex items-center gap-1 animate-pulse">
+                  <span>🔮</span> +Área Secreta
+                </span>
               </h3>
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-1.5 sm:gap-2">
-                {topics.map((topic) => {
+              {/* Grid 6x3 no desktop, 3x6 no mobile */}
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-1 sm:gap-1.5">
+                {topics.map((topic, index) => {
                   const name = t[topic.nameKey]
                   const isEstudarCanada = topic.nameKey === 'topicStudyCanada'
+                  const isPremium = index >= 15 // Últimos 3 são "premium"
                   return (
-                    <span
+                    <div
                       key={topic.nameKey}
-                      className="inline-flex items-center justify-center gap-1 px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg text-[8px] sm:text-[10px] font-semibold text-center transition-all duration-200 hover:scale-105 cursor-default"
+                      className={`group flex flex-col items-center justify-center gap-0.5 p-1.5 sm:p-2 rounded-lg transition-all duration-200 hover:scale-105 cursor-default ${isPremium ? 'ring-1 ring-amber-500/30' : ''}`}
                       style={{
-                        background: isEstudarCanada 
-                          ? 'linear-gradient(135deg, rgba(190, 3, 32, 0.15), rgba(255, 255, 255, 0.08))' 
-                          : `linear-gradient(135deg, ${topic.color}15, ${topic.color}08)`,
-                        border: `1px solid ${topic.color}40`,
-                        color: topic.color,
-                        boxShadow: `0 2px 8px ${topic.color}15`,
+                        background: isPremium
+                          ? 'linear-gradient(135deg, rgba(251, 191, 36, 0.12), rgba(168, 85, 247, 0.08))'
+                          : isEstudarCanada 
+                            ? 'linear-gradient(135deg, rgba(190, 3, 32, 0.12), rgba(255, 255, 255, 0.04))' 
+                            : `linear-gradient(135deg, ${topic.color}10, transparent)`,
+                        border: `1px solid ${topic.color}25`,
                       }}
+                      title={name}
                     >
-                      <span className="flex-shrink-0"><TopicIcon icon={topic.icon} size={14} /></span>
-                      <span className="truncate">{name}</span>
-                    </span>
+                      <span style={{ color: topic.color }} className="text-sm sm:text-base">
+                        <TopicIcon icon={topic.icon} size={18} />
+                      </span>
+                      <span 
+                        className="text-[6px] sm:text-[7px] font-medium text-center leading-tight opacity-70 group-hover:opacity-100 truncate w-full"
+                        style={{ color: topic.color }}
+                      >
+                        {name.length > 12 ? name.split(' ')[0] : name}
+                      </span>
+                    </div>
                   )
                 })}
               </div>
@@ -312,98 +339,62 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
             </div>
           )}
 
-          {/* 4 pílulas: mobile = grid 2x2; desktop = 4 colunas numa linha (largura do card) */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2 w-full max-w-sm sm:max-w-3xl px-1">
+          {/* 4 botões em linha única - flex com wrap apenas no mobile pequeno */}
+          <div className="flex flex-wrap sm:flex-nowrap justify-center gap-2 w-full max-w-3xl px-1">
             {onExperiences && (
               <button
                 onClick={onExperiences}
-                className="flex items-center justify-center gap-1 sm:gap-2 px-3 py-2.5 sm:px-4 sm:py-2.5 rounded-full text-[11px] sm:text-sm font-semibold transition-all duration-300 min-w-0"
+                className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-[10px] sm:text-xs font-medium transition-all duration-200 hover:scale-105 whitespace-nowrap"
                 style={{
-                  background: 'rgba(255, 255, 255, 0.04)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  color: '#B8B4A8',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 215, 0, 0.1)'
-                  e.currentTarget.style.borderColor = 'rgba(255, 215, 0, 0.3)'
-                  e.currentTarget.style.color = '#FFD700'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)'
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
-                  e.currentTarget.style.color = '#B8B4A8'
+                  background: 'rgba(255, 215, 0, 0.08)',
+                  border: '1px solid rgba(255, 215, 0, 0.25)',
+                  color: '#FFD700',
                 }}
               >
                 <span>🏆</span>
-                <span>{t.viewRanking}</span>
+                <span>Ranking</span>
               </button>
             )}
             {onAbout && (
               <button
                 onClick={onAbout}
-                className="flex items-center justify-center gap-1 sm:gap-2 px-3 py-2.5 sm:px-4 sm:py-2.5 rounded-full text-[11px] sm:text-sm font-semibold transition-all duration-300 min-w-0"
+                className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-[10px] sm:text-xs font-medium transition-all duration-200 hover:scale-105 whitespace-nowrap"
                 style={{
-                  background: 'rgba(168, 85, 247, 0.12)',
-                  border: '1px solid rgba(168, 85, 247, 0.35)',
+                  background: 'rgba(168, 85, 247, 0.08)',
+                  border: '1px solid rgba(168, 85, 247, 0.25)',
                   color: '#C084FC',
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(168, 85, 247, 0.2)'
-                  e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.5)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(168, 85, 247, 0.12)'
-                  e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.35)'
-                }}
               >
-                <span aria-hidden>📖</span>
-                <span>{t.fullTutorial}</span>
+                <span>📖</span>
+                <span>Tutorial</span>
               </button>
             )}
             {onTips && (
               <button
                 onClick={onTips}
-                className="flex items-center justify-center gap-1 sm:gap-2 px-3 py-2.5 sm:px-4 sm:py-2.5 rounded-full text-[11px] sm:text-sm font-semibold transition-all duration-300 min-w-0"
+                className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-[10px] sm:text-xs font-medium transition-all duration-200 hover:scale-105 whitespace-nowrap"
                 style={{
-                  background: 'rgba(255, 193, 7, 0.1)',
-                  border: '1px solid rgba(255, 193, 7, 0.3)',
+                  background: 'rgba(255, 193, 7, 0.08)',
+                  border: '1px solid rgba(255, 193, 7, 0.25)',
                   color: '#FCD34D',
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 193, 7, 0.18)'
-                  e.currentTarget.style.borderColor = 'rgba(255, 193, 7, 0.45)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 193, 7, 0.1)'
-                  e.currentTarget.style.borderColor = 'rgba(255, 193, 7, 0.3)'
-                }}
               >
-                <span aria-hidden>💡</span>
-                <span>{t.tipsAndTricks}</span>
+                <span>💡</span>
+                <span>Dicas</span>
               </button>
             )}
             {onSettings && (
               <button
                 onClick={onSettings}
-                className="flex items-center justify-center gap-1 sm:gap-2 px-3 py-2.5 sm:px-4 sm:py-2.5 rounded-full text-[11px] sm:text-sm font-semibold transition-all duration-300 min-w-0"
+                className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-[10px] sm:text-xs font-medium transition-all duration-200 hover:scale-105 whitespace-nowrap"
                 style={{
                   background: 'rgba(255, 255, 255, 0.04)',
-                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  border: '1px solid rgba(255, 255, 255, 0.15)',
                   color: '#9CA3AF',
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(168, 85, 247, 0.1)'
-                  e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.3)'
-                  e.currentTarget.style.color = '#C084FC'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)'
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)'
-                  e.currentTarget.style.color = '#9CA3AF'
-                }}
               >
-                <span aria-hidden>⚙️</span>
-                <span>{t.achievementsAndSettings}</span>
+                <span>⚙️</span>
+                <span>Config</span>
               </button>
             )}
           </div>

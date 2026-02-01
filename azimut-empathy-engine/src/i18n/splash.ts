@@ -40,6 +40,13 @@ export interface SplashTranslations {
   topicMotionVfx: string
   topicModelagem3d: string
   topicAnimacao2d3d: string
+  // Novos tópicos (18 total)
+  topicApps: string
+  topicPerformance: string
+  topicDataViz: string
+  topicFuturism: string
+  topicBranding: string
+  topicPremium: string
   // Área secreta (premium)
   secretAreaTitle: string
   secretAreaUnlocked: string
@@ -87,6 +94,12 @@ const splash: Record<Lang, SplashTranslations> = {
     topicMotionVfx: 'VFX & Compositing',
     topicModelagem3d: 'Modelagem 3D',
     topicAnimacao2d3d: 'Animação 2D/3D',
+    topicApps: 'Apps & Mobile',
+    topicPerformance: 'Performance Art',
+    topicDataViz: 'Data Viz',
+    topicFuturism: 'Futurismo',
+    topicBranding: 'Branding',
+    topicPremium: 'Premium',
     secretAreaTitle: 'Área Secreta',
     secretAreaUnlocked: 'Você descobriu! Projetos premium da Azimut.',
     secretAreaProjects: 'Museu Olímpico, Festival de Gramado, exposições internacionais. Conheça nosso currículo, soluções e projetos.',
@@ -138,6 +151,12 @@ const splash: Record<Lang, SplashTranslations> = {
     topicMotionVfx: 'VFX & Compositing',
     topicModelagem3d: '3D Modeling',
     topicAnimacao2d3d: '2D/3D Animation',
+    topicApps: 'Apps & Mobile',
+    topicPerformance: 'Performance Art',
+    topicDataViz: 'Data Viz',
+    topicFuturism: 'Futurism',
+    topicBranding: 'Branding',
+    topicPremium: 'Premium',
     secretAreaTitle: 'Secret Area',
     secretAreaUnlocked: 'You found it! Azimut premium projects.',
     secretAreaProjects: 'Rio Olympic Museum, Gramado Film Festival, international exhibitions. See our curriculum, solutions and projects.',
@@ -190,6 +209,12 @@ const splash: Record<Lang, SplashTranslations> = {
     topicMotionVfx: 'VFX y Compositing',
     topicModelagem3d: 'Modelado 3D',
     topicAnimacao2d3d: 'Animación 2D/3D',
+    topicApps: 'Apps & Mobile',
+    topicPerformance: 'Performance Art',
+    topicDataViz: 'Data Viz',
+    topicFuturism: 'Futurismo',
+    topicBranding: 'Branding',
+    topicPremium: 'Premium',
     secretAreaTitle: 'Área secreta',
     secretAreaUnlocked: '¡Lo descubriste! Proyectos premium de Azimut.',
     secretAreaProjects: 'Rio Museo Olímpico, Festival de Gramado, exposiciones internacionales. Conoce nuestro currículo, soluciones y proyectos.',
@@ -242,6 +267,12 @@ const splash: Record<Lang, SplashTranslations> = {
     topicMotionVfx: 'VFX et Compositing',
     topicModelagem3d: 'Modélisation 3D',
     topicAnimacao2d3d: 'Animation 2D/3D',
+    topicApps: 'Apps & Mobile',
+    topicPerformance: 'Performance Art',
+    topicDataViz: 'Data Viz',
+    topicFuturism: 'Futurisme',
+    topicBranding: 'Branding',
+    topicPremium: 'Premium',
     secretAreaTitle: 'Zone secrète',
     secretAreaUnlocked: 'Tu as trouvé ! Projets premium Azimut.',
     secretAreaProjects: 'Rio Musée Olympique, Festival de Gramado, expositions internationales. Découvre notre curriculum, solutions et projets.',

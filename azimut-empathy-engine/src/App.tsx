@@ -7,6 +7,7 @@ import TutorialScreen from './screens/TutorialScreen'
 import TipsScreen from './screens/TipsScreen'
 import LeaderboardScreen from './screens/LeaderboardScreen'
 import SettingsScreen from './screens/SettingsScreen'
+import ParticlesBackground from './components/ParticlesBackground'
 import './index.css'
 
 export type AppView = 'splash' | 'game' | 'tutorial' | 'tips' | 'leaderboard' | 'settings'
@@ -34,6 +35,9 @@ function App() {
 
   return (
     <div className="game-bg relative h-screen min-h-screen overflow-hidden">
+      {/* Partículas animadas de fundo */}
+      <ParticlesBackground />
+      
       <AnimatePresence mode="wait">
         {view === 'splash' && (
         <motion.div
