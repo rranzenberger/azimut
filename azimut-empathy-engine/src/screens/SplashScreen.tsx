@@ -43,6 +43,7 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
     window.top?.location.assign(`/${lang}/experience-preview`)
   }
 
+  // 18 tópicos (17 reais + 1 premium) - grid 6x3
   const topics = [
     // Linha 1 - Core Services
     { icon: '🥽', nameKey: 'topicXrVr' as const, color: '#00F5FF' },
@@ -56,15 +57,15 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
     { icon: '🌐', nameKey: 'topicWeb3' as const, color: '#F59E0B' },
     { icon: '🎮', nameKey: 'topicGames' as const, color: '#EC4899' },
     { icon: '🏗️', nameKey: 'topicCenografia' as const, color: '#8B5CF6' },
-    { icon: '🎨', nameKey: 'topicAnimacao2d3d' as const, color: '#C084FC' },
-    { icon: '✨', nameKey: 'topicMotionDesign' as const, color: '#14B8A6' },
-    // Linha 3 - Premium & Specialized
-    { icon: '📱', nameKey: 'topicApps' as const, color: '#06B6D4' },
-    { icon: '🎭', nameKey: 'topicPerformance' as const, color: '#F43F5E' },
-    { icon: '📊', nameKey: 'topicDataViz' as const, color: '#22C55E' },
-    { icon: '🔮', nameKey: 'topicFuturism' as const, color: '#8B5CF6' },
-    { icon: '🎯', nameKey: 'topicBranding' as const, color: '#EF4444' },
-    { icon: '🌟', nameKey: 'topicPremium' as const, color: '#FBBF24' },
+    { icon: '🖥️', nameKey: 'topicCenografiaVirtual' as const, color: '#06B6D4' },
+    { icon: '🎭', nameKey: 'topicDirecaoArte' as const, color: '#F43F5E' },
+    // Linha 3 - Motion, VFX & Premium
+    { icon: '✨', nameKey: 'topicAtivacaoMarcas' as const, color: '#EAB308' },
+    { icon: '🎨', nameKey: 'topicMotionDesign' as const, color: '#14B8A6' },
+    { icon: '🎞️', nameKey: 'topicMotionVfx' as const, color: '#0D9488' },
+    { icon: '🧊', nameKey: 'topicModelagem3d' as const, color: '#6366F1' },
+    { icon: '🎨', nameKey: 'topicAnimacao2d3d' as const, color: '#A855F7' },
+    { icon: '🔮', nameKey: 'topicPremium' as const, color: '#FBBF24' },
   ] as const
 
   const backButton = (
@@ -188,20 +189,17 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
           {/* Card — conteúdo dentro do card; compacto para caber sem scroll */}
           <div className="card-glow-home rounded-lg sm:rounded-xl text-left mt-0 sm:mt-4 flex-shrink-0 w-full max-w-3xl overflow-hidden">
             <div className="card-glow-home-inner rounded-lg sm:rounded-xl p-2 sm:p-4 md:p-6 space-y-2 sm:space-y-4 overflow-hidden min-w-0">
-            {/* Tópicos — 18 quests em grid 6x3 */}
+            {/* 18 Tópicos em grid 6x3 */}
             <div className="min-w-0">
               <h3 
                 className="text-xs sm:text-sm font-bold uppercase tracking-wider mb-2 flex items-center justify-between"
                 style={{ color: '#C92337' }}
               >
                 <span className="flex items-center gap-2">
-                  <span>🎯</span> {t.topicsTitle}
-                  <span className="text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: 'rgba(168, 85, 247, 0.25)', color: '#C084FC' }}>
-                    18 Quests
-                  </span>
+                  <span>🎯</span> 18 Temas de Quest
                 </span>
                 <span className="text-xs sm:text-sm font-bold text-amber-400 flex items-center gap-1.5 animate-pulse">
-                  <span>🔮</span> +Desbloqueie!
+                  <span>🔮</span> +80 Cartas!
                 </span>
               </h3>
               {/* Grid 6x3 no desktop, 6x3 no mobile também */}
