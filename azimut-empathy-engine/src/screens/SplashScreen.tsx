@@ -197,7 +197,7 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
             EMPATHY ENGINE
           </h1>
           {/* Texto descritivo - mobile */}
-          <p className="text-sm font-body leading-relaxed text-center px-4 mb-2" style={{ color: '#E5E7EB' }}>
+          <p className="text-base font-body leading-relaxed text-center px-4 mb-3" style={{ color: '#F3F4F6' }}>
             {t.bullets}
             <button
               type="button"
@@ -205,20 +205,22 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
               className="inline cursor-pointer border-0 bg-transparent p-0 font-inherit underline decoration-dotted decoration-cyan-400/60 underline-offset-2 hover:decoration-cyan-300 transition-all rounded"
               style={{
                 color: '#00F5FF',
-                textShadow: '0 0 20px rgba(0, 245, 255, 0.35)',
+                textShadow: '0 0 20px rgba(0, 245, 255, 0.4)',
               }}
             >
               {t.bulletsSecret}
             </button>
           </p>
-          <p className="text-xs font-semibold text-amber-400 flex items-center justify-center gap-1.5">
-            <span>✨</span> Quest Premium + Surpresas <span>🎁</span>
+          <p className="text-sm font-bold text-amber-400 flex items-center justify-center gap-2 mb-2">
+            <span className="text-lg">✨</span> 
+            <span>Quest Premium + Surpresas</span> 
+            <span className="text-lg">🎁</span>
           </p>
         </div>
 
         {/* Desktop: Texto descritivo (nome do jogo está no header) */}
-        <div className="hidden sm:block text-center mb-4">
-          <p className="text-base md:text-lg font-body leading-relaxed text-center max-w-2xl mx-auto mb-2" style={{ color: '#E5E7EB' }}>
+        <div className="hidden sm:block text-center mb-6">
+          <p className="text-lg md:text-xl font-body leading-relaxed text-center max-w-2xl mx-auto mb-4" style={{ color: '#F3F4F6' }}>
             {t.bullets}
             <button
               type="button"
@@ -226,14 +228,16 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
               className="inline cursor-pointer border-0 bg-transparent p-0 font-inherit underline decoration-dotted decoration-cyan-400/60 underline-offset-2 hover:decoration-cyan-300 transition-all rounded"
               style={{
                 color: '#00F5FF',
-                textShadow: '0 0 20px rgba(0, 245, 255, 0.35)',
+                textShadow: '0 0 20px rgba(0, 245, 255, 0.4)',
               }}
             >
               {t.bulletsSecret}
             </button>
           </p>
-          <p className="text-sm font-semibold text-amber-400 flex items-center justify-center gap-2">
-            <span>✨</span> Quest Premium + Surpresas Desbloqueáveis <span>🎁</span>
+          <p className="text-base md:text-lg font-bold text-amber-400 flex items-center justify-center gap-3">
+            <span className="text-2xl">✨</span> 
+            <span>Quest Premium + Surpresas Desbloqueáveis</span> 
+            <span className="text-2xl">🎁</span>
           </p>
         </div>
 
@@ -245,18 +249,20 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
             {/* 18 Tópicos em grid 6x3 */}
             <div className="min-w-0">
               <h3 
-                className="text-xs sm:text-base font-bold uppercase tracking-wider mb-2 sm:mb-3 flex items-center justify-between"
+                className="text-sm sm:text-lg font-bold uppercase tracking-wider mb-3 sm:mb-4 flex items-center justify-between"
                 style={{ color: '#C92337' }}
               >
                 <span className="flex items-center gap-2">
-                  <span>🎯</span> 18 Temas de Quest
+                  <span className="text-base sm:text-xl">🎯</span> 
+                  <span>18 Temas de Quest</span>
                 </span>
-                <span className="text-xs sm:text-base font-bold text-amber-400 flex items-center gap-1.5 animate-pulse">
-                  <span>🔮</span> +80 Cartas!
+                <span className="text-sm sm:text-lg font-bold text-amber-400 flex items-center gap-2 animate-pulse">
+                  <span className="text-base sm:text-xl">🔮</span> 
+                  <span>+80 Cartas!</span>
                 </span>
               </h3>
               {/* Grid 6x3 - fontes maiores e mais legíveis */}
-              <div className="grid grid-cols-6 gap-2 sm:gap-3">
+              <div className="grid grid-cols-6 gap-2 sm:gap-4">
                 {topics.map((topic, index) => {
                   const name = t[topic.nameKey]
                   const isEstudarCanada = topic.nameKey === 'topicStudyCanada'
@@ -264,22 +270,22 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
                   return (
                     <div
                       key={topic.nameKey}
-                      className={`group flex flex-col items-center justify-center gap-1 p-2 sm:p-3 rounded-xl transition-all duration-200 hover:scale-105 cursor-default ${isPremium ? 'ring-1 ring-amber-500/50' : ''}`}
+                      className={`group flex flex-col items-center justify-center gap-1.5 p-2 sm:p-4 rounded-xl transition-all duration-200 hover:scale-105 cursor-default ${isPremium ? 'ring-1 ring-amber-500/50' : ''}`}
                       style={{
                         background: isPremium
                           ? 'linear-gradient(135deg, rgba(251, 191, 36, 0.18), rgba(168, 85, 247, 0.12))'
                           : isEstudarCanada 
                             ? 'linear-gradient(135deg, rgba(190, 3, 32, 0.15), rgba(255, 255, 255, 0.05))' 
                             : `linear-gradient(135deg, ${topic.color}15, ${topic.color}05)`,
-                        border: `1px solid ${topic.color}35`,
+                        border: `1px solid ${topic.color}40`,
                       }}
                       title={name}
                     >
-                      <span style={{ color: topic.color }} className="text-xl sm:text-2xl">
-                        <TopicIcon icon={topic.icon} size={26} />
+                      <span style={{ color: topic.color }} className="text-2xl sm:text-3xl">
+                        <TopicIcon icon={topic.icon} size={30} />
                       </span>
                       <span 
-                        className="text-[10px] sm:text-xs font-bold text-center leading-tight opacity-95 group-hover:opacity-100 truncate w-full"
+                        className="text-[11px] sm:text-sm font-bold text-center leading-tight opacity-95 group-hover:opacity-100 truncate w-full"
                         style={{ color: topic.color }}
                       >
                         {name.split(' ')[0]}
