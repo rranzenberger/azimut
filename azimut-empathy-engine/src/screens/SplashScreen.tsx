@@ -190,25 +190,25 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
               >
                 <span>📚</span> {t.topicsTitle}
               </h3>
-              <div className="flex flex-wrap gap-1 sm:gap-2 min-w-0 justify-center sm:justify-start">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-1.5 sm:gap-2">
                 {topics.map((topic) => {
                   const name = t[topic.nameKey]
                   const isEstudarCanada = topic.nameKey === 'topicStudyCanada'
-                  const bg = isEstudarCanada ? 'rgba(255, 255, 255, 0.12)' : `${topic.color}10`
-                  const border = isEstudarCanada ? '1px solid rgba(190, 3, 32, 0.28)' : `1px solid ${topic.color}30`
                   return (
                     <span
                       key={topic.nameKey}
-                      className="inline-flex items-center gap-1 flex-shrink-0 px-1.5 py-0.5 sm:px-2 sm:py-1.5 rounded-md text-[9px] sm:text-xs font-medium max-w-full"
+                      className="inline-flex items-center justify-center gap-1 px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg text-[8px] sm:text-[10px] font-semibold text-center transition-all duration-200 hover:scale-105 cursor-default"
                       style={{
-                        background: bg,
-                        border,
+                        background: isEstudarCanada 
+                          ? 'linear-gradient(135deg, rgba(190, 3, 32, 0.15), rgba(255, 255, 255, 0.08))' 
+                          : `linear-gradient(135deg, ${topic.color}15, ${topic.color}08)`,
+                        border: `1px solid ${topic.color}40`,
                         color: topic.color,
+                        boxShadow: `0 2px 8px ${topic.color}15`,
                       }}
                     >
-                      <span className="sm:hidden"><TopicIcon icon={topic.icon} size={14} /></span>
-                      <span className="hidden sm:inline"><TopicIcon icon={topic.icon} size={18} /></span>
-                      <span>{name}</span>
+                      <span className="flex-shrink-0"><TopicIcon icon={topic.icon} size={14} /></span>
+                      <span className="truncate">{name}</span>
                     </span>
                   )
                 })}
