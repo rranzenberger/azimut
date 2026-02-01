@@ -1382,7 +1382,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                     <div className="absolute bottom-3 left-3">
                       <span className="px-3 py-1 bg-azimut-red/80 text-white text-xs font-bold rounded-full">{item.label}</span>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
