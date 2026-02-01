@@ -150,7 +150,7 @@ const splash: Record<Lang, SplashTranslations> = {
     topicMotionDesign: 'Motion Design',
     topicMotionVfx: 'VFX & Compositing',
     topicModelagem3d: '3D Modeling',
-    topicAnimacao2d3d: '2D/3D Animation',
+    topicAnimacao2d3d: 'Animation 2D/3D',
     topicApps: 'Apps & Mobile',
     topicPerformance: 'Performance Art',
     topicDataViz: 'Data Viz',
