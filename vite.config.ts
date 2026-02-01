@@ -4,7 +4,10 @@ import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -47,31 +50,43 @@ export default defineConfig({
         chunkFileNames: 'assets/[name]-[hash:8].js', // Hash menor (8 chars)
         entryFileNames: 'assets/[name]-[hash:8].js',
         assetFileNames: 'assets/[name]-[hash:8].[ext]',
-        // Separar vendor chunks para melhor cache
+        // Separar vendor chunks para melhor cache e menor bundle
         manualChunks: (id) => {
-          // React core (separado para melhor cache)
-          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+          // React core (separado para melhor cache - ~40KB gzip)
+          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
             return 'react-vendor'
           }
-          // Router (separado)
+          // Router (separado - ~15KB gzip)
           if (id.includes('node_modules/react-router')) {
             return 'router-vendor'
           }
-          // UI libraries
-          if (id.includes('node_modules/framer-motion') || id.includes('node_modules/lucide-react')) {
-            return 'ui-vendor'
+          // Framer Motion (pesado - ~60KB gzip, lazy load)
+          if (id.includes('node_modules/framer-motion')) {
+            return 'framer-vendor'
+          }
+          // Three.js (muito pesado - ~150KB gzip, lazy load)
+          if (id.includes('node_modules/three') || id.includes('node_modules/@react-three')) {
+            return 'three-vendor'
+          }
+          // Icons (Lucide - ~10KB gzip)
+          if (id.includes('node_modules/lucide-react')) {
+            return 'icons-vendor'
           }
           // Analytics/tracking (lazy load)
           if (id.includes('analytics') || id.includes('tracking') || id.includes('plausible') || id.includes('gamification')) {
             return 'analytics-vendor'
           }
-          // Markdown/Blog (lazy load)
+          // Markdown/Blog (lazy load - ~30KB gzip)
           if (id.includes('react-markdown') || id.includes('remark') || id.includes('rehype')) {
             return 'markdown-vendor'
           }
-          // Forms (lazy load)
+          // Forms (lazy load - ~20KB gzip)
           if (id.includes('react-hook-form') || id.includes('zod') || id.includes('validator')) {
             return 'forms-vendor'
+          }
+          // Helmet (SEO - ~5KB)
+          if (id.includes('react-helmet')) {
+            return 'seo-vendor'
           }
           // Utils próprios (separar do vendor)
           if (id.includes('/utils/') && !id.includes('node_modules')) {
@@ -80,6 +95,20 @@ export default defineConfig({
           // Hooks próprios (separar do vendor)
           if (id.includes('/hooks/') && !id.includes('node_modules')) {
             return 'app-hooks'
+          }
+          // Páginas (separar cada página para lazy loading)
+          if (id.includes('/pages/') && !id.includes('node_modules')) {
+            const match = id.match(/\/pages\/([^/]+)\.(tsx|ts)/)
+            if (match) {
+              return `page-${match[1].toLowerCase()}`
+            }
+          }
+          // Componentes pesados
+          if (id.includes('/components/') && !id.includes('node_modules')) {
+            // Chatbot, VideoPlayer, GlobalSearch - separar
+            if (id.includes('Chatbot') || id.includes('VideoPlayer') || id.includes('GlobalSearch')) {
+              return 'heavy-components'
+            }
           }
           // Outros node_modules (vendor genérico)
           if (id.includes('node_modules')) {

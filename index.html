@@ -94,14 +94,8 @@
     <link rel="preload" href="/fonts/Inter-VariableFont.ttf" as="font" type="font/ttf" crossorigin />
     <link rel="preload" href="/fonts/Sora-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin />
     
-    <!-- Prefetch de rotas prováveis (melhor navegação) -->
-    <link rel="prefetch" href="/work" />
-    <link rel="prefetch" href="/what" />
-    <link rel="prefetch" href="/contact" />
-    <link rel="prefetch" href="/academy" />
-    <link rel="prefetch" href="/studio" />
-    <link rel="prefetch" href="/blog" />
-    <link rel="prefetch" href="/vancouver" />
+    <!-- Prefetch de rotas prováveis (melhor navegação) - removido para reduzir requests iniciais -->
+    <!-- Prefetch será feito dinamicamente via JavaScript após carregamento -->
     
     <!-- RSS Feed - Auto-discovery -->
     <link rel="alternate" type="application/rss+xml" title="Azimut - Projetos e Notícias" href="https://azmt.com.br/feed.xml" />
@@ -116,6 +110,79 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     
     <!-- Schema.org JSON-LD será injetado dinamicamente pelo React (SchemaOrganization.tsx) -->
+    
+    <!-- ═══════════════════════════════════════════════════════════
+        CRITICAL CSS INLINE - Melhor LCP/FCP
+        ═══════════════════════════════════════════════════════════ -->
+    <style>
+      /* Critical CSS - Above the fold styles for faster LCP */
+      :root {
+        --azimut-bg: #050814;
+        --azimut-red: #c92337;
+      }
+      
+      /* Prevent FOUC (Flash of Unstyled Content) */
+      html {
+        background-color: #050814;
+        color: #f1f5f9;
+      }
+      
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #050814;
+        color: #f1f5f9;
+        font-family: 'InterCustom', 'Inter', system-ui, -apple-system, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        min-height: 100vh;
+      }
+      
+      /* Loading skeleton placeholder */
+      #root:empty::before {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100vh;
+        background: linear-gradient(
+          90deg,
+          #050814 0%,
+          #0a0f1a 50%,
+          #050814 100%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+      }
+      
+      @keyframes shimmer {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+      
+      /* Hide content until React hydrates */
+      .loading-hidden {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      
+      /* Smooth appearance */
+      .loaded {
+        opacity: 1;
+      }
+      
+      /* Critical layout - prevent CLS */
+      .header-placeholder {
+        height: 80px;
+        width: 100%;
+      }
+      
+      /* Prefers reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        #root:empty::before {
+          animation: none;
+        }
+      }
+    </style>
   </head>
   <body class="bg-azimut-bg text-slate-100">
     <div id="root"></div>
