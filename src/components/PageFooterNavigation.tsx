@@ -195,6 +195,8 @@ export const PageFooterNavigation: React.FC<PageFooterNavigationProps> = ({
             </LangLink>
           )}
         </div>
+        {/* Versão para debug de deploy */}
+        <p className="mt-8 text-center text-[10px] text-white/20">site v2.1-31jan</p>
       </div>
     </section>
   )
