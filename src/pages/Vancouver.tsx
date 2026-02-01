@@ -566,7 +566,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
             {/* Título Principal */}
             <div className="text-center mb-14">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-handel uppercase tracking-wider mb-4" style={{ color: '#ffffff' }}>
-                {lang === 'pt' ? 'Escolas Parceiras + BCIT Pathway' : lang === 'es' ? 'Escuelas Asociadas + BCIT Pathway' : lang === 'fr' ? 'Écoles Partenaires + BCIT Pathway' : 'Partner Schools + BCIT Pathway'}
+                {lang === 'pt' ? 'Faculdades Parceiras + BCIT Pathway' : lang === 'es' ? 'Universidades Asociadas + BCIT Pathway' : lang === 'fr' ? 'Établissements Partenaires + BCIT Pathway' : 'Partner Colleges + BCIT Pathway'}
               </h2>
               <p className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto" style={{ color: 'rgba(255,255,255,0.75)' }}>
                 {lang === 'pt' ? 'Diplomas intensivos de 1 ano com pathway para Bachelor\'s Degree no BCIT' : 
@@ -584,19 +584,29 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 border: '1px solid rgba(201, 35, 55, 0.3)',
               }}
             >
-              {/* VFS Header - Logo vfs2.png com fundo vermelho */}
-              <div className="flex flex-wrap items-center gap-4 mb-6">
+              {/* VFS Header - Logo + Nome + Badges */}
+              <div className="flex flex-wrap items-center gap-4 mb-2">
                 <img 
                   src="/vfs2.png" 
                   alt="Vancouver Film School" 
                   className="rounded-xl"
                   style={{ width: '56px', height: '56px', objectFit: 'cover' }}
                 />
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-sm px-4 py-1.5 rounded-full font-bold" style={{ background: '#c92337', color: '#fff' }}>#1 Canada</span>
-                  <span className="text-sm px-4 py-1.5 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff' }}>92%+ employability</span>
-                  <span className="text-sm px-4 py-1.5 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff' }}>Since 1987</span>
+                <div>
+                  <p className="text-xs uppercase tracking-wider mb-1" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                    {lang === 'pt' ? 'Faculdade Parceira' : lang === 'es' ? 'Universidad Asociada' : lang === 'fr' ? 'Établissement Partenaire' : 'Partner College'}
+                  </p>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white">Vancouver Film School</h3>
                 </div>
+              </div>
+              <div className="flex flex-wrap items-center gap-2 mb-6 ml-0 sm:ml-[72px]">
+                <span className="text-base px-4 py-1.5 rounded-full font-bold" style={{ background: '#c92337', color: '#fff' }}>#1 Canada</span>
+                <span className="text-base px-4 py-1.5 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff' }}>
+                  92%+ {lang === 'pt' ? 'empregabilidade' : lang === 'es' ? 'empleabilidad' : lang === 'fr' ? 'employabilité' : 'employability'}
+                </span>
+                <span className="text-base px-4 py-1.5 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff' }}>
+                  {lang === 'pt' ? 'Desde 1987' : lang === 'es' ? 'Desde 1987' : lang === 'fr' ? 'Depuis 1987' : 'Since 1987'}
+                </span>
               </div>
 
               {/* VFS Cursos - Grid 4 por linha */}
@@ -610,13 +620,13 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                       key={i} 
                       className="text-base px-3 py-2.5 rounded-lg text-center font-medium" 
                       style={{ 
-                        background: course === 'Short-Track' ? 'rgba(201, 35, 55, 0.15)' : 'rgba(201, 35, 55, 0.25)', 
-                        color: '#ffffff', 
-                        border: course === 'Short-Track' ? '1px dashed rgba(201, 35, 55, 0.5)' : '1px solid rgba(201, 35, 55, 0.35)',
+                        background: course === 'Short-Track' ? 'rgba(100, 100, 150, 0.25)' : 'rgba(201, 35, 55, 0.25)', 
+                        color: course === 'Short-Track' ? 'rgba(200, 200, 255, 0.9)' : '#ffffff', 
+                        border: course === 'Short-Track' ? '1px dashed rgba(150, 150, 200, 0.5)' : '1px solid rgba(201, 35, 55, 0.35)',
                         fontStyle: course === 'Short-Track' ? 'italic' : 'normal'
                       }}
                     >
-                      {course}
+                      {course === 'Short-Track' ? '⚡ Short-Track' : course}
                     </div>
                   ))}
                 </div>
@@ -714,8 +724,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 border: '1px solid rgba(180, 50, 50, 0.25)',
               }}
             >
-              {/* VanArts Header - Logo pequena */}
-              <div className="flex flex-wrap items-center gap-4 mb-6">
+              {/* VanArts Header - Logo + Nome + Badges */}
+              <div className="flex flex-wrap items-center gap-4 mb-2">
                 <div 
                   className="flex items-center justify-center rounded-xl overflow-hidden"
                   style={{ background: '#ffffff', width: '56px', height: '56px' }}
@@ -726,17 +736,23 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                     style={{ height: '44px', width: 'auto', objectFit: 'contain' }}
                   />
                 </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-sm px-4 py-1.5 rounded-full font-bold" style={{ background: '#b43232', color: '#fff' }}>
-                    {lang === 'pt' ? 'Melhor Custo-Benefício' : lang === 'es' ? 'Mejor Valor' : lang === 'fr' ? 'Meilleur Rapport' : 'Best Value'}
-                  </span>
-                  <span className="text-sm px-4 py-1.5 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff' }}>
-                    90%+ {lang === 'pt' ? 'empregabilidade' : lang === 'es' ? 'empleabilidad' : lang === 'fr' ? 'employabilité' : 'employability'}
-                  </span>
-                  <span className="text-sm px-4 py-1.5 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff' }}>
-                    {lang === 'pt' ? 'Desde 1995' : lang === 'es' ? 'Desde 1995' : lang === 'fr' ? 'Depuis 1995' : 'Since 1995'}
-                  </span>
+                <div>
+                  <p className="text-xs uppercase tracking-wider mb-1" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                    {lang === 'pt' ? 'Faculdade Parceira' : lang === 'es' ? 'Universidad Asociada' : lang === 'fr' ? 'Établissement Partenaire' : 'Partner College'}
+                  </p>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white">Vancouver Institute of Media Arts</h3>
                 </div>
+              </div>
+              <div className="flex flex-wrap items-center gap-2 mb-6 ml-0 sm:ml-[72px]">
+                <span className="text-base px-4 py-1.5 rounded-full font-bold" style={{ background: '#b43232', color: '#fff' }}>
+                  {lang === 'pt' ? 'Melhor Custo-Benefício' : lang === 'es' ? 'Mejor Valor' : lang === 'fr' ? 'Meilleur Rapport' : 'Best Value'}
+                </span>
+                <span className="text-base px-4 py-1.5 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff' }}>
+                  90%+ {lang === 'pt' ? 'empregabilidade' : lang === 'es' ? 'empleabilidad' : lang === 'fr' ? 'employabilité' : 'employability'}
+                </span>
+                <span className="text-base px-4 py-1.5 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff' }}>
+                  {lang === 'pt' ? 'Desde 1995' : lang === 'es' ? 'Desde 1995' : lang === 'fr' ? 'Depuis 1995' : 'Since 1995'}
+                </span>
               </div>
 
               {/* VanArts Cursos - Grid 4 por linha */}
