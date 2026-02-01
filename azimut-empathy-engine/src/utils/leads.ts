@@ -3,7 +3,7 @@
  * POST para /api/leads/game com origem empathy_engine.
  */
 
-export type GameLeadType = 'save' | 'nft' | 'consulting'
+export type GameLeadType = 'save_nft' | 'consulting'
 
 function getLeadsApiBaseUrl(): string {
   const env = typeof import.meta !== 'undefined' && import.meta.env

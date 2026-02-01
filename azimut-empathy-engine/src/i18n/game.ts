@@ -62,8 +62,7 @@ export interface GameTranslations {
   submitButton: string
   menuLabel: string
   noWrongChoiceHint: string
-  leadModalSave: string
-  leadModalNft: string
+  leadModalSaveNft: string
   leadModalConsulting: string
   inputNameLabel: string
   inputNamePlaceholder: string
@@ -213,8 +212,7 @@ const game: Record<Lang, GameTranslations> = {
     submitButton: 'Submit',
     menuLabel: 'Menu',
     noWrongChoiceHint: 'There is no wrong choice. Each technology connects in its own way.',
-    leadModalSave: 'Save Progress',
-    leadModalNft: 'Receive NFT',
+    leadModalSaveNft: 'Save & Get NFT',
     leadModalConsulting: 'Free Consulting',
     inputNameLabel: 'Name',
     inputNamePlaceholder: 'Your name',
@@ -285,8 +283,7 @@ const game: Record<Lang, GameTranslations> = {
     submitButton: 'Enviar',
     menuLabel: 'Menú',
     noWrongChoiceHint: 'No hay elección equivocada. Cada tecnología conecta a su manera.',
-    leadModalSave: 'Guardar progreso',
-    leadModalNft: 'Recibir NFT',
+    leadModalSaveNft: 'Guardar & Recibir NFT',
     leadModalConsulting: 'Consultoría gratis',
     inputNameLabel: 'Nombre',
     inputNamePlaceholder: 'Tu nombre',
@@ -358,8 +355,7 @@ const game: Record<Lang, GameTranslations> = {
     submitButton: 'Envoyer',
     menuLabel: 'Menu',
     noWrongChoiceHint: 'Il n\'y a pas de mauvais choix. Chaque technologie connecte à sa façon.',
-    leadModalSave: 'Sauvegarder la progression',
-    leadModalNft: 'Recevoir NFT',
+    leadModalSaveNft: 'Sauvegarder & Recevoir NFT',
     leadModalConsulting: 'Consulting gratuit',
     inputNameLabel: 'Nom',
     inputNamePlaceholder: 'Ton nom',

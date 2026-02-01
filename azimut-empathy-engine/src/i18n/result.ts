@@ -15,10 +15,10 @@ export interface ResultTranslations {
   nearMissMessage: string
   secondChanceButton: string
   playAgain: string
-  saveProgress: string
-  receiveNFT: string
+  saveProgressNft: string
   freeConsulting: string
   leaderboard: string
+  backToHome: string
 }
 
 const result: Record<Lang, ResultTranslations> = {
@@ -34,10 +34,10 @@ const result: Record<Lang, ResultTranslations> = {
     nearMissMessage: 'Quase lá! Você perdeu por menos de 50 pts.',
     secondChanceButton: 'Segunda Chance (1x por dia)',
     playAgain: 'Jogar de novo',
-    saveProgress: 'Salvar Progresso',
-    receiveNFT: 'Receber NFT',
+    saveProgressNft: 'Salvar & Receber NFT',
     freeConsulting: 'Consultoria Grátis',
-    leaderboard: 'Leaderboard',
+    leaderboard: 'Ranking',
+    backToHome: 'Voltar ao Início',
     easterEggThanks: 'Obrigado por jogar! Você é curioso. ✨',
   },
   en: {
@@ -52,10 +52,10 @@ const result: Record<Lang, ResultTranslations> = {
     nearMissMessage: 'So close! You lost by less than 50 pts.',
     secondChanceButton: 'Second Chance (1x per day)',
     playAgain: 'Play again',
-    saveProgress: 'Save Progress',
-    receiveNFT: 'Receive NFT',
+    saveProgressNft: 'Save & Get NFT',
     freeConsulting: 'Free Consulting',
     leaderboard: 'Leaderboard',
+    backToHome: 'Back to Home',
     easterEggThanks: 'Thanks for playing! You\'re curious. ✨',
   },
   es: {
@@ -70,10 +70,10 @@ const result: Record<Lang, ResultTranslations> = {
     nearMissMessage: '¡Casi! Perdiste por menos de 50 pts.',
     secondChanceButton: 'Segunda oportunidad (1x al día)',
     playAgain: 'Jugar de nuevo',
-    saveProgress: 'Guardar progreso',
-    receiveNFT: 'Recibir NFT',
+    saveProgressNft: 'Guardar & Recibir NFT',
     freeConsulting: 'Consultoría gratis',
     leaderboard: 'Ranking',
+    backToHome: 'Volver al Inicio',
     easterEggThanks: '¡Gracias por jugar! Eres curioso. ✨',
   },
   fr: {
@@ -88,10 +88,10 @@ const result: Record<Lang, ResultTranslations> = {
     nearMissMessage: 'Presque ! Tu as perdu de moins de 50 pts.',
     secondChanceButton: 'Seconde chance (1x par jour)',
     playAgain: 'Rejouer',
-    saveProgress: 'Sauvegarder la progression',
-    receiveNFT: 'Recevoir NFT',
+    saveProgressNft: 'Sauvegarder & Recevoir NFT',
     freeConsulting: 'Consulting gratuit',
     leaderboard: 'Classement',
+    backToHome: 'Retour à l\'accueil',
     easterEggThanks: 'Merci d\'avoir joué ! Tu es curieux. ✨',
   },
 }

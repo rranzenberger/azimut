@@ -23,19 +23,19 @@ function markSecondChanceUsed(): void {
 }
 
 export interface ResultScreenProps {
-  onSaveProgress?: () => void
-  onReceiveNFT?: () => void
+  onSaveProgressNft?: () => void
   onConsultoria?: () => void
   onPlayAgain?: () => void
   onLeaderboard?: () => void
+  onBackToHome?: () => void
 }
 
 export default function ResultScreen({
-  onSaveProgress,
-  onReceiveNFT,
+  onSaveProgressNft,
   onConsultoria,
   onPlayAgain,
   onLeaderboard,
+  onBackToHome,
 }: ResultScreenProps) {
   const finalScore = useGameStore((s) => s.finalScore)
   const highScore = useGameStore((s) => s.highScore)
@@ -136,14 +136,9 @@ export default function ResultScreen({
             <Button variant="primary" size="lg" onClick={handlePlayAgain} fullWidth>
               {t.playAgain}
             </Button>
-            {onSaveProgress && (
-              <Button variant="secondary" size="md" onClick={onSaveProgress} fullWidth>
-                {t.saveProgress}
-              </Button>
-            )}
-            {onReceiveNFT && (
-              <Button variant="secondary" size="md" onClick={onReceiveNFT} fullWidth>
-                {t.receiveNFT}
+            {onSaveProgressNft && (
+              <Button variant="secondary" size="md" onClick={onSaveProgressNft} fullWidth>
+                {t.saveProgressNft}
               </Button>
             )}
             {onConsultoria && (
@@ -154,6 +149,11 @@ export default function ResultScreen({
             {onLeaderboard && (
               <Button variant="ghost" size="md" onClick={onLeaderboard} fullWidth>
                 {t.leaderboard}
+              </Button>
+            )}
+            {onBackToHome && (
+              <Button variant="ghost" size="md" onClick={onBackToHome} fullWidth>
+                {t.backToHome}
               </Button>
             )}
           </div>

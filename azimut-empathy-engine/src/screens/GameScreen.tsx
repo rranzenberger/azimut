@@ -332,14 +332,14 @@ export default function GameScreen({ onLeaderboard, onBack }: GameScreenProps) {
     return (
       <>
         <ResultScreen
-          onSaveProgress={() => setLeadModal('save')}
-          onReceiveNFT={() => setLeadModal('nft')}
+          onSaveProgressNft={() => setLeadModal('save')}
           onConsultoria={() => setLeadModal('consultoria')}
           onPlayAgain={() => { reset(); startGame() }}
           onLeaderboard={onLeaderboard}
+          onBackToHome={onBack}
         />
         {leadModal && (
-          <Modal isOpen={!!leadModal} onClose={() => setLeadModal(null)} title={leadModal === 'save' ? gameT.leadModalSave : leadModal === 'nft' ? gameT.leadModalNft : gameT.leadModalConsulting}>
+          <Modal isOpen={!!leadModal} onClose={() => setLeadModal(null)} title={leadModal === 'save' ? gameT.leadModalSaveNft : gameT.leadModalConsulting}>
             <div className="space-y-4">
               <Input label={gameT.inputNameLabel} value={leadName} onChange={(e) => setLeadName(e.target.value)} placeholder={gameT.inputNamePlaceholder} fullWidth />
               <Input label={gameT.inputEmailLabel} type="email" value={leadEmail} onChange={(e) => setLeadEmail(e.target.value)} placeholder={gameT.inputEmailPlaceholder} fullWidth />
@@ -347,8 +347,8 @@ export default function GameScreen({ onLeaderboard, onBack }: GameScreenProps) {
                 variant="primary"
                 fullWidth
                 onClick={async () => {
-                  const type = leadModal === 'nft' ? 'nft' as const : leadModal === 'consultoria' ? 'consulting' as const : 'save' as const
-                  trackGameEvent(leadModal === 'nft' ? 'lead_nft' : 'lead_save')
+                  const type = leadModal === 'consultoria' ? 'consulting' as const : 'save_nft' as const
+                  trackGameEvent(leadModal === 'consultoria' ? 'lead_consulting' : 'lead_save_nft')
                   const result = await submitGameLead({ name: leadName, email: leadEmail, type, lang })
                   setLeadModal(null)
                   setLeadName('')
