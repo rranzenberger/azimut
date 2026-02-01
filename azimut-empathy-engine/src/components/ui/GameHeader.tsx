@@ -19,11 +19,26 @@ function getCurrentLang(): Lang {
 
 export function changeGameLang(newLang: Lang) {
   if (typeof localStorage !== 'undefined') localStorage.setItem('azimut-game-lang', newLang)
-  const origin = window.top?.location?.origin ?? window.location.origin
-  const pathname = window.top?.location?.pathname ?? window.location.pathname
+  try {
+    // Tenta acessar window.top (pode falhar em cross-origin)
+    const topWindow = window.top
+    if (topWindow && topWindow.location) {
+      const origin = topWindow.location.origin
+      const pathname = topWindow.location.pathname
+      const hasLangPrefix = /^\/(pt|en|fr|es)(\/|$)/.test(pathname)
+      const newPath = hasLangPrefix ? pathname.replace(/^\/(pt|en|fr|es)/, `/${newLang}`) : `/${newLang}/game`
+      topWindow.location.href = `${origin}${newPath}`
+      return
+    }
+  } catch {
+    // Cross-origin: não consegue acessar window.top
+  }
+  // Fallback: recarrega a própria janela com o novo idioma
+  const origin = window.location.origin
+  const pathname = window.location.pathname
   const hasLangPrefix = /^\/(pt|en|fr|es)(\/|$)/.test(pathname)
   const newPath = hasLangPrefix ? pathname.replace(/^\/(pt|en|fr|es)/, `/${newLang}`) : `/${newLang}/game`
-  window.top!.location.href = `${origin}${newPath}`
+  window.location.href = `${origin}${newPath}`
 }
 
 const BASE = import.meta.env.BASE_URL
