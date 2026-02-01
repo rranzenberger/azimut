@@ -600,14 +600,14 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>Since 1987</span>
               </div>
 
-              {/* VFS Cursos - Focados na área */}
+              {/* VFS Cursos - 11 programas */}
               <div className="mb-6">
                 <p className="text-xs uppercase tracking-wider mb-3" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                  {lang === 'pt' ? 'Programas principais' : 'Main Programs'}
+                  {lang === 'pt' ? 'Programas (11)' : 'Programs (11)'}
                 </p>
-                <div className="flex flex-wrap gap-2">
-                  {['3D Animation & Visual Effects', 'Game Design', 'Film Production', 'Programming for Games', 'Sound Design', 'Digital Design'].map((course, i) => (
-                    <span key={i} className="text-xs sm:text-sm px-3 py-1.5 rounded-lg font-medium" style={{ background: 'rgba(201, 35, 55, 0.2)', color: '#ffffff', border: '1px solid rgba(201, 35, 55, 0.3)' }}>
+                <div className="flex flex-wrap gap-1.5">
+                  {['3D Animation & VFX', 'Game Design', 'Film Production', 'Programming', 'Sound Design', 'Digital Design', 'Acting', 'Animation Concept Art', 'Classical Animation', 'Makeup Design', 'Writing'].map((course, i) => (
+                    <span key={i} className="text-[11px] px-2 py-1 rounded font-medium" style={{ background: 'rgba(201, 35, 55, 0.2)', color: '#ffffff', border: '1px solid rgba(201, 35, 55, 0.3)' }}>
                       {course}
                     </span>
                   ))}
@@ -717,14 +717,14 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>Since 1995</span>
               </div>
 
-              {/* VanArts Cursos - Focados na área */}
+              {/* VanArts Cursos - 8 programas */}
               <div className="mb-6">
                 <p className="text-xs uppercase tracking-wider mb-3" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                  {lang === 'pt' ? 'Programas principais' : 'Main Programs'}
+                  {lang === 'pt' ? 'Programas (8)' : 'Programs (8)'}
                 </p>
-                <div className="flex flex-wrap gap-2">
-                  {['2D/3D Character Animation', 'Game Art & Design', 'Visual Effects', 'Acting for Film & TV', 'Professional Photography', 'Web Development'].map((course, i) => (
-                    <span key={i} className="text-xs sm:text-sm px-3 py-1.5 rounded-lg font-medium" style={{ background: 'rgba(180, 50, 50, 0.15)', color: '#ffffff', border: '1px solid rgba(180, 50, 50, 0.25)' }}>
+                <div className="flex flex-wrap gap-1.5">
+                  {['2D/3D Animation', 'Acting for Film & TV', 'Acting Foundations', 'Art Foundation', 'Game Art & Design', 'Photography', 'Web Dev & Digital Design', 'Visual Effects'].map((course, i) => (
+                    <span key={i} className="text-[11px] px-2 py-1 rounded font-medium" style={{ background: 'rgba(180, 50, 50, 0.15)', color: '#ffffff', border: '1px solid rgba(180, 50, 50, 0.25)' }}>
                       {course}
                     </span>
                   ))}
