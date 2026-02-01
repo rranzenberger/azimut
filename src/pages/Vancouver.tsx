@@ -557,16 +557,16 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         <section
           className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8"
           style={{
-            background: 'linear-gradient(180deg, #0d0d15 0%, #12101a 50%, #0d0d15 100%)',
+            background: 'linear-gradient(180deg, rgba(139, 92, 246, 0.12) 0%, rgba(59, 130, 246, 0.08) 30%, rgba(201, 35, 55, 0.1) 70%, rgba(139, 92, 246, 0.08) 100%)',
           }}
         >
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             {/* Título Principal */}
-            <div className="text-center mb-12">
+            <div className="text-center mb-14">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-handel uppercase tracking-wider mb-4" style={{ color: '#ffffff' }}>
                 {lang === 'pt' ? 'Escolas Parceiras + BCIT Pathway' : lang === 'es' ? 'Escuelas Asociadas + BCIT Pathway' : lang === 'fr' ? 'Écoles Partenaires + BCIT Pathway' : 'Partner Schools + BCIT Pathway'}
               </h2>
-              <p className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto" style={{ color: 'rgba(255,255,255,0.7)' }}>
+              <p className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto" style={{ color: 'rgba(255,255,255,0.75)' }}>
                 {lang === 'pt' ? 'Diplomas intensivos de 1 ano com pathway para Bachelor\'s Degree no BCIT' : 
                  lang === 'es' ? 'Diplomas intensivos de 1 año con pathway para Bachelor\'s Degree en BCIT' :
                  lang === 'fr' ? 'Diplômes intensifs d\'1 an avec pathway vers Bachelor\'s Degree au BCIT' :
@@ -575,250 +575,267 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
             </div>
 
             {/* ========== VFS SECTION ========== */}
-            <div className="mb-16">
-              {/* VFS Header */}
-              <div className="flex items-center gap-4 mb-6">
+            <div 
+              className="mb-10 p-6 sm:p-8 rounded-2xl"
+              style={{
+                background: 'linear-gradient(135deg, rgba(139, 22, 37, 0.2) 0%, rgba(139, 22, 37, 0.08) 100%)',
+                border: '1px solid rgba(201, 35, 55, 0.25)',
+              }}
+            >
+              {/* VFS Header com Logo */}
+              <div className="flex items-center gap-5 mb-6">
                 <div 
-                  className="flex items-center justify-center px-3 py-2 rounded-lg"
+                  className="flex items-center justify-center rounded-xl p-3"
                   style={{ background: '#8b1625' }}
                 >
-                  <span className="text-white font-black text-lg tracking-tight" style={{ fontFamily: 'system-ui' }}>VFS</span>
+                  <img src="/vfs.png" alt="Vancouver Film School" className="h-10 sm:h-12 w-auto object-contain" />
                 </div>
-                <div>
+                <div className="flex-1">
                   <h3 className="text-xl sm:text-2xl font-bold" style={{ color: '#ffffff' }}>Vancouver Film School</h3>
-                  <div className="flex gap-2 mt-1">
-                    <span className="text-xs px-2 py-0.5 rounded" style={{ background: '#c92337', color: '#fff' }}>#1 Canada</span>
-                    <span className="text-xs px-2 py-0.5 rounded" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)' }}>92% {lang === 'pt' ? 'empregabilidade' : 'employability'}</span>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    <span className="text-xs px-2.5 py-1 rounded-full font-semibold" style={{ background: '#c92337', color: '#fff' }}>#1 Canada</span>
+                    <span className="text-xs px-2.5 py-1 rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>92% {lang === 'pt' ? 'empregabilidade' : 'employability'}</span>
+                    <span className="text-xs px-2.5 py-1 rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>Since 1987</span>
                   </div>
                 </div>
               </div>
 
-              {/* VFS Cursos - Focados em nossa área */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {['3D Animation & Visual Effects', 'Game Design', 'Film Production', 'Programming for Games', 'Sound Design', 'Digital Design'].map((course, i) => (
-                  <span key={i} className="text-xs sm:text-sm px-3 py-1.5 rounded-full" style={{ background: 'rgba(139, 22, 37, 0.3)', color: 'rgba(255,255,255,0.9)', border: '1px solid rgba(201, 35, 55, 0.3)' }}>
-                    {course}
-                  </span>
-                ))}
+              {/* VFS Cursos - Focados na área */}
+              <div className="mb-6">
+                <p className="text-xs uppercase tracking-wider mb-3" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  {lang === 'pt' ? 'Programas principais' : 'Main Programs'}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {['3D Animation & Visual Effects', 'Game Design', 'Film Production', 'Programming for Games', 'Sound Design', 'Digital Design'].map((course, i) => (
+                    <span key={i} className="text-xs sm:text-sm px-3 py-1.5 rounded-lg font-medium" style={{ background: 'rgba(201, 35, 55, 0.2)', color: '#ffffff', border: '1px solid rgba(201, 35, 55, 0.3)' }}>
+                      {course}
+                    </span>
+                  ))}
+                </div>
               </div>
 
               {/* VFS Pathway Arrow Diagram */}
-              <div className="relative">
-                {/* Desktop: Horizontal */}
+              <div className="mb-4">
+                <p className="text-xs uppercase tracking-wider mb-3" style={{ color: 'rgba(255,255,255,0.5)' }}>BCIT Pathway</p>
+                
+                {/* Desktop: Horizontal Chevrons */}
                 <div className="hidden md:flex items-stretch">
-                  {/* Step 1 - VFS Diploma */}
                   <div 
-                    className="flex-1 py-4 px-5 flex flex-col justify-center relative"
+                    className="flex-1 py-3 px-4 flex flex-col justify-center"
                     style={{ 
                       background: 'linear-gradient(90deg, #8b1625 0%, #a91d2e 100%)',
-                      clipPath: 'polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%)'
+                      clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%)',
+                      borderRadius: '8px 0 0 8px'
                     }}
                   >
-                    <div className="text-white font-bold text-sm sm:text-base">1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
-                    <div className="text-white/80 text-xs sm:text-sm">VFS Diploma</div>
+                    <div className="text-white font-bold text-sm">1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
+                    <div className="text-white/80 text-xs">VFS Diploma</div>
                   </div>
-                  
-                  {/* Step 2 - BCIT Advanced */}
                   <div 
-                    className="flex-1 py-4 px-6 flex flex-col justify-center -ml-1"
+                    className="flex-1 py-3 px-5 flex flex-col justify-center -ml-px"
                     style={{ 
                       background: 'linear-gradient(90deg, #a91d2e 0%, #c92337 100%)',
-                      clipPath: 'polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%, 20px 50%)'
+                      clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%, 16px 50%)'
                     }}
                   >
-                    <div className="text-white font-bold text-sm sm:text-base">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
-                    <div className="text-white/80 text-xs sm:text-sm">BCIT Advanced Diploma</div>
+                    <div className="text-white font-bold text-sm">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
+                    <div className="text-white/80 text-xs">BCIT Advanced Diploma</div>
                   </div>
-                  
-                  {/* Step 3 - Bachelor */}
                   <div 
-                    className="flex-1 py-4 px-6 flex flex-col justify-center -ml-1"
+                    className="flex-1 py-3 px-5 flex flex-col justify-center -ml-px"
                     style={{ 
                       background: 'linear-gradient(90deg, #c92337 0%, #e02d42 100%)',
-                      clipPath: 'polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%, 20px 50%)'
+                      clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%, 16px 50%)'
                     }}
                   >
-                    <div className="text-white font-bold text-sm sm:text-base">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
-                    <div className="text-white/80 text-xs sm:text-sm">BCIT Bachelor (BBA)</div>
+                    <div className="text-white font-bold text-sm">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
+                    <div className="text-white/80 text-xs">BCIT Bachelor (BBA)</div>
                   </div>
-                  
-                  {/* Result */}
                   <div 
-                    className="py-4 px-5 flex flex-col justify-center -ml-1 min-w-[180px]"
+                    className="py-3 px-4 flex flex-col justify-center -ml-px min-w-[160px]"
                     style={{ 
                       background: 'linear-gradient(90deg, #e02d42 0%, #ff4757 100%)',
-                      clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%, 20px 50%)',
+                      clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%, 16px 50%)',
                       borderRadius: '0 8px 8px 0'
                     }}
                   >
-                    <div className="text-white font-bold text-sm">=</div>
-                    <div className="text-white text-xs leading-tight">
-                      <div>• Triple Credentials</div>
-                      <div>• Work Permit</div>
-                    </div>
+                    <div className="text-white font-bold text-xs">=</div>
+                    <div className="text-white text-[10px] leading-tight">Triple Credentials<br/>+ Work Permit</div>
                   </div>
                 </div>
 
                 {/* Mobile: Vertical */}
-                <div className="md:hidden space-y-2">
-                  <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: 'linear-gradient(90deg, #8b1625 0%, #a91d2e 100%)' }}>
-                    <div className="text-white font-bold text-sm w-16">1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
-                    <div className="text-white/90 text-sm">VFS Diploma</div>
+                <div className="md:hidden space-y-1">
+                  <div className="flex items-center gap-3 p-2.5 rounded-lg" style={{ background: '#8b1625' }}>
+                    <span className="text-white font-bold text-xs w-14">1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white/90 text-xs">VFS Diploma</span>
                   </div>
-                  <div className="text-center text-white/50 text-xl">↓</div>
-                  <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: 'linear-gradient(90deg, #a91d2e 0%, #c92337 100%)' }}>
-                    <div className="text-white font-bold text-sm w-16">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
-                    <div className="text-white/90 text-sm">BCIT Advanced Diploma</div>
+                  <div className="text-center text-white/40">↓</div>
+                  <div className="flex items-center gap-3 p-2.5 rounded-lg" style={{ background: '#a91d2e' }}>
+                    <span className="text-white font-bold text-xs w-14">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white/90 text-xs">BCIT Advanced Diploma</span>
                   </div>
-                  <div className="text-center text-white/50 text-xl">↓</div>
-                  <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: 'linear-gradient(90deg, #c92337 0%, #e02d42 100%)' }}>
-                    <div className="text-white font-bold text-sm w-16">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
-                    <div className="text-white/90 text-sm">BCIT Bachelor (BBA)</div>
+                  <div className="text-center text-white/40">↓</div>
+                  <div className="flex items-center gap-3 p-2.5 rounded-lg" style={{ background: '#c92337' }}>
+                    <span className="text-white font-bold text-xs w-14">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white/90 text-xs">BCIT Bachelor (BBA)</span>
                   </div>
-                  <div className="text-center text-white/50 text-xl">↓</div>
-                  <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: 'linear-gradient(90deg, #e02d42 0%, #ff4757 100%)' }}>
-                    <div className="text-white font-bold text-sm">= Triple Credentials + Work Permit</div>
+                  <div className="text-center text-white/40">↓</div>
+                  <div className="p-2.5 rounded-lg text-center" style={{ background: '#e02d42' }}>
+                    <span className="text-white font-bold text-xs">= Triple Credentials + Work Permit</span>
                   </div>
                 </div>
               </div>
 
-              <a href="https://vfs.edu/pathway/bcit" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-4 text-sm font-semibold text-azimut-red hover:underline">
+              <a href="https://vfs.edu/pathway/bcit" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-semibold text-azimut-red hover:underline">
                 {lang === 'pt' ? 'Ver detalhes VFS-BCIT Pathway' : 'View VFS-BCIT Pathway details'} →
               </a>
             </div>
 
             {/* ========== VANARTS SECTION ========== */}
-            <div className="mb-14">
-              {/* VanArts Header - Mesmo estilo do VFS */}
-              <div className="flex items-center gap-4 mb-6">
+            <div 
+              className="mb-10 p-6 sm:p-8 rounded-2xl"
+              style={{
+                background: 'linear-gradient(135deg, rgba(180, 50, 50, 0.12) 0%, rgba(180, 50, 50, 0.04) 100%)',
+                border: '1px solid rgba(180, 50, 50, 0.2)',
+              }}
+            >
+              {/* VanArts Header com Logo */}
+              <div className="flex items-center gap-5 mb-6">
                 <div 
-                  className="flex flex-col items-center justify-center px-2 py-1.5 rounded-lg"
-                  style={{ background: '#ffffff' }}
+                  className="flex items-center justify-center rounded-xl p-3"
+                  style={{ background: '#f8f8f8' }}
                 >
-                  <span className="font-bold text-sm leading-none" style={{ color: '#333' }}>van</span>
-                  <span className="font-bold text-sm leading-none" style={{ color: '#c92337' }}>arts</span>
+                  <img src="/vanarts2.png" alt="VanArts" className="h-10 sm:h-12 w-auto object-contain" />
                 </div>
-                <div>
+                <div className="flex-1">
                   <h3 className="text-xl sm:text-2xl font-bold" style={{ color: '#ffffff' }}>Vancouver Institute of Media Arts</h3>
-                  <div className="flex gap-2 mt-1">
-                    <span className="text-xs px-2 py-0.5 rounded" style={{ background: '#b43232', color: '#fff' }}>{lang === 'pt' ? 'Melhor custo' : 'Best Value'}</span>
-                    <span className="text-xs px-2 py-0.5 rounded" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)' }}>90%+ {lang === 'pt' ? 'empregabilidade' : 'employability'}</span>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    <span className="text-xs px-2.5 py-1 rounded-full font-semibold" style={{ background: '#b43232', color: '#fff' }}>{lang === 'pt' ? 'Melhor custo' : 'Best Value'}</span>
+                    <span className="text-xs px-2.5 py-1 rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>90%+ {lang === 'pt' ? 'empregabilidade' : 'employability'}</span>
+                    <span className="text-xs px-2.5 py-1 rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>Since 1995</span>
                   </div>
                 </div>
               </div>
 
-              {/* VanArts Cursos - Focados em nossa área (baseado na imagem) */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {['2D/3D Character Animation', 'Game Art & Design', 'Visual Effects for Film & TV', 'Web Development & Digital Design'].map((course, i) => (
-                  <span key={i} className="text-xs sm:text-sm px-3 py-1.5 rounded-full" style={{ background: 'rgba(180, 50, 50, 0.15)', color: 'rgba(255,255,255,0.9)', border: '1px solid rgba(180, 50, 50, 0.25)' }}>
-                    {course}
-                  </span>
-                ))}
+              {/* VanArts Cursos - Focados na área */}
+              <div className="mb-6">
+                <p className="text-xs uppercase tracking-wider mb-3" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  {lang === 'pt' ? 'Programas principais' : 'Main Programs'}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {['2D/3D Character Animation', 'Game Art & Design', 'Visual Effects', 'Acting for Film & TV', 'Professional Photography', 'Web Development'].map((course, i) => (
+                    <span key={i} className="text-xs sm:text-sm px-3 py-1.5 rounded-lg font-medium" style={{ background: 'rgba(180, 50, 50, 0.15)', color: '#ffffff', border: '1px solid rgba(180, 50, 50, 0.25)' }}>
+                      {course}
+                    </span>
+                  ))}
+                </div>
               </div>
 
-              {/* VanArts Pathway - Estilo outline vermelho como na imagem */}
-              <div className="relative">
-                {/* Desktop: Horizontal */}
+              {/* VanArts Pathway - Mesmo estilo do VFS */}
+              <div className="mb-4">
+                <p className="text-xs uppercase tracking-wider mb-3" style={{ color: 'rgba(255,255,255,0.5)' }}>BCIT Pathway</p>
+                
+                {/* Desktop: Horizontal Chevrons */}
                 <div className="hidden md:flex items-stretch">
-                  {/* Step 1 - VanArts */}
                   <div 
-                    className="flex-1 py-4 px-5 flex flex-col justify-center border-2 rounded-l-lg"
+                    className="flex-1 py-3 px-4 flex flex-col justify-center"
                     style={{ 
-                      borderColor: '#c92337',
-                      background: 'rgba(201, 35, 55, 0.05)'
+                      background: 'linear-gradient(90deg, #8b1625 0%, #a91d2e 100%)',
+                      clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%)',
+                      borderRadius: '8px 0 0 8px'
                     }}
                   >
-                    <div className="font-bold text-sm sm:text-base" style={{ color: '#b43232' }}>VanArts Professional Diploma</div>
-                    <div className="text-xs sm:text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>(one year)</div>
+                    <div className="text-white font-bold text-sm">1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
+                    <div className="text-white/80 text-xs">VanArts Diploma</div>
                   </div>
-                  
-                  {/* Arrow */}
-                  <div className="flex items-center justify-center w-10" style={{ color: '#c92337' }}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                  </div>
-                  
-                  {/* Step 2 - BCIT Advanced */}
                   <div 
-                    className="flex-1 py-4 px-5 flex flex-col justify-center"
+                    className="flex-1 py-3 px-5 flex flex-col justify-center -ml-px"
                     style={{ 
-                      background: '#c92337'
+                      background: 'linear-gradient(90deg, #a91d2e 0%, #c92337 100%)',
+                      clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%, 16px 50%)'
                     }}
                   >
-                    <div className="text-white font-bold text-sm sm:text-base">BCIT Advanced Diploma</div>
-                    <div className="text-white/80 text-xs sm:text-sm">in Business Management (one year)</div>
+                    <div className="text-white font-bold text-sm">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
+                    <div className="text-white/80 text-xs">BCIT Advanced Diploma</div>
                   </div>
-                  
-                  {/* Arrow */}
-                  <div className="flex items-center justify-center w-10" style={{ color: '#c92337' }}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                  </div>
-                  
-                  {/* Step 3 - Bachelor */}
                   <div 
-                    className="flex-1 py-4 px-5 flex flex-col justify-center rounded-r-lg"
+                    className="flex-1 py-3 px-5 flex flex-col justify-center -ml-px"
                     style={{ 
-                      background: '#c92337'
+                      background: 'linear-gradient(90deg, #c92337 0%, #e02d42 100%)',
+                      clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%, 16px 50%)'
                     }}
                   >
-                    <div className="text-white font-bold text-sm sm:text-base">BCIT Bachelor</div>
-                    <div className="text-white/80 text-xs sm:text-sm">of Business Administration (one year)</div>
+                    <div className="text-white font-bold text-sm">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
+                    <div className="text-white/80 text-xs">BCIT Bachelor (BBA)</div>
+                  </div>
+                  <div 
+                    className="py-3 px-4 flex flex-col justify-center -ml-px min-w-[160px]"
+                    style={{ 
+                      background: 'linear-gradient(90deg, #e02d42 0%, #ff4757 100%)',
+                      clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%, 16px 50%)',
+                      borderRadius: '0 8px 8px 0'
+                    }}
+                  >
+                    <div className="text-white font-bold text-xs">=</div>
+                    <div className="text-white text-[10px] leading-tight">Triple Credentials<br/>+ Work Permit</div>
                   </div>
                 </div>
 
                 {/* Mobile: Vertical */}
-                <div className="md:hidden space-y-2">
-                  <div className="p-3 rounded-lg border-2" style={{ borderColor: '#c92337', background: 'rgba(201, 35, 55, 0.05)' }}>
-                    <div className="font-bold text-sm" style={{ color: '#b43232' }}>VanArts Professional Diploma</div>
-                    <div className="text-xs" style={{ color: 'rgba(255,255,255,0.7)' }}>(one year)</div>
+                <div className="md:hidden space-y-1">
+                  <div className="flex items-center gap-3 p-2.5 rounded-lg" style={{ background: '#8b1625' }}>
+                    <span className="text-white font-bold text-xs w-14">1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white/90 text-xs">VanArts Diploma</span>
                   </div>
-                  <div className="text-center" style={{ color: '#c92337' }}>
-                    <svg className="mx-auto w-6 h-6 rotate-90" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  <div className="text-center text-white/40">↓</div>
+                  <div className="flex items-center gap-3 p-2.5 rounded-lg" style={{ background: '#a91d2e' }}>
+                    <span className="text-white font-bold text-xs w-14">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white/90 text-xs">BCIT Advanced Diploma</span>
                   </div>
-                  <div className="p-3 rounded-lg" style={{ background: '#c92337' }}>
-                    <div className="text-white font-bold text-sm">BCIT Advanced Diploma</div>
-                    <div className="text-white/80 text-xs">in Business Management (one year)</div>
+                  <div className="text-center text-white/40">↓</div>
+                  <div className="flex items-center gap-3 p-2.5 rounded-lg" style={{ background: '#c92337' }}>
+                    <span className="text-white font-bold text-xs w-14">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white/90 text-xs">BCIT Bachelor (BBA)</span>
                   </div>
-                  <div className="text-center" style={{ color: '#c92337' }}>
-                    <svg className="mx-auto w-6 h-6 rotate-90" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                  </div>
-                  <div className="p-3 rounded-lg" style={{ background: '#c92337' }}>
-                    <div className="text-white font-bold text-sm">BCIT Bachelor</div>
-                    <div className="text-white/80 text-xs">of Business Administration (one year)</div>
+                  <div className="text-center text-white/40">↓</div>
+                  <div className="p-2.5 rounded-lg text-center" style={{ background: '#e02d42' }}>
+                    <span className="text-white font-bold text-xs">= Triple Credentials + Work Permit</span>
                   </div>
                 </div>
               </div>
 
-              <a href="https://www.vanarts.com/pathways" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-4 text-sm font-semibold hover:underline" style={{ color: '#b43232' }}>
+              <a href="https://www.vanarts.com/pathways" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-semibold hover:underline" style={{ color: '#e57373' }}>
                 {lang === 'pt' ? 'Ver detalhes VanArts-BCIT Pathway' : 'View VanArts-BCIT Pathway details'} →
               </a>
             </div>
 
             {/* Key Advantages */}
             <div 
-              className="p-6 rounded-xl mb-10"
+              className="p-5 sm:p-6 rounded-xl mb-10"
               style={{
-                background: 'rgba(201, 35, 55, 0.08)',
-                border: '1px solid rgba(201, 35, 55, 0.2)',
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.08)',
               }}
             >
-              <h4 className="text-lg font-bold mb-4" style={{ color: '#c92337' }}>Key Advantages</h4>
+              <h4 className="text-base font-bold mb-4" style={{ color: '#c92337' }}>Key Advantages</h4>
               <div className="grid sm:grid-cols-3 gap-4">
-                <div className="flex items-start gap-3">
-                  <span className="text-lg" style={{ color: '#c92337' }}>●</span>
+                <div className="flex items-start gap-2">
+                  <span style={{ color: '#c92337' }}>●</span>
                   <span className="text-sm" style={{ color: 'rgba(255,255,255,0.85)' }}>
                     {lang === 'pt' ? 'Credenciais de 2 instituições de BC, Canadá' : 'Dual credentials from two BC institutions'}
                   </span>
                 </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-lg" style={{ color: '#c92337' }}>●</span>
+                <div className="flex items-start gap-2">
+                  <span style={{ color: '#c92337' }}>●</span>
                   <span className="text-sm" style={{ color: 'rgba(255,255,255,0.85)' }}>
                     {lang === 'pt' ? 'Elegível para Post-Graduate Work Permit' : 'Eligible for Post-Graduate Work Permit'}
                   </span>
                 </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-lg" style={{ color: '#c92337' }}>●</span>
+                <div className="flex items-start gap-2">
+                  <span style={{ color: '#c92337' }}>●</span>
                   <span className="text-sm" style={{ color: 'rgba(255,255,255,0.85)' }}>
-                    {lang === 'pt' ? 'Vancouver: Hub #1 mundial de Animation, VFX e Games' : 'Vancouver: World\'s #1 hub for Animation, VFX & Games'}
+                    {lang === 'pt' ? 'Vancouver: Hub #1 mundial de VFX & Games' : 'Vancouver: World\'s #1 hub for VFX & Games'}
                   </span>
                 </div>
               </div>
