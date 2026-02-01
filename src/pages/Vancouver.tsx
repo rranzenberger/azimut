@@ -582,21 +582,18 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 border: '1px solid rgba(201, 35, 55, 0.25)',
               }}
             >
-              {/* VFS Header com Logo */}
-              <div className="flex items-center gap-5 mb-6">
+              {/* VFS Header com Logo pequena */}
+              <div className="flex items-center gap-4 mb-6">
                 <div 
-                  className="flex items-center justify-center rounded-xl p-3"
+                  className="flex items-center justify-center rounded-lg p-2"
                   style={{ background: '#8b1625' }}
                 >
-                  <img src="/vfs.png" alt="Vancouver Film School" className="h-10 sm:h-12 w-auto object-contain" />
+                  <img src="/vfs.png" alt="VFS" className="h-6 sm:h-7 w-auto object-contain" />
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-xl sm:text-2xl font-bold" style={{ color: '#ffffff' }}>Vancouver Film School</h3>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    <span className="text-xs px-2.5 py-1 rounded-full font-semibold" style={{ background: '#c92337', color: '#fff' }}>#1 Canada</span>
-                    <span className="text-xs px-2.5 py-1 rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>92% {lang === 'pt' ? 'empregabilidade' : 'employability'}</span>
-                    <span className="text-xs px-2.5 py-1 rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>Since 1987</span>
-                  </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs px-2 py-0.5 rounded font-semibold" style={{ background: '#c92337', color: '#fff' }}>#1 Canada</span>
+                  <span className="text-xs px-2 py-0.5 rounded" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>92% {lang === 'pt' ? 'empregab.' : 'employ.'}</span>
+                  <span className="text-xs px-2 py-0.5 rounded" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>Since 1987</span>
                 </div>
               </div>
 
@@ -700,21 +697,18 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 border: '1px solid rgba(180, 50, 50, 0.2)',
               }}
             >
-              {/* VanArts Header com Logo */}
-              <div className="flex items-center gap-5 mb-6">
+              {/* VanArts Header com Logo pequena */}
+              <div className="flex items-center gap-4 mb-6">
                 <div 
-                  className="flex items-center justify-center rounded-xl p-3"
+                  className="flex items-center justify-center rounded-lg p-2"
                   style={{ background: '#f8f8f8' }}
                 >
-                  <img src="/vanarts2.png" alt="VanArts" className="h-10 sm:h-12 w-auto object-contain" />
+                  <img src="/vanarts2.png" alt="VanArts" className="h-6 sm:h-7 w-auto object-contain" />
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-xl sm:text-2xl font-bold" style={{ color: '#ffffff' }}>Vancouver Institute of Media Arts</h3>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    <span className="text-xs px-2.5 py-1 rounded-full font-semibold" style={{ background: '#b43232', color: '#fff' }}>{lang === 'pt' ? 'Melhor custo' : 'Best Value'}</span>
-                    <span className="text-xs px-2.5 py-1 rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>90%+ {lang === 'pt' ? 'empregabilidade' : 'employability'}</span>
-                    <span className="text-xs px-2.5 py-1 rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>Since 1995</span>
-                  </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs px-2 py-0.5 rounded font-semibold" style={{ background: '#b43232', color: '#fff' }}>{lang === 'pt' ? 'Melhor custo' : 'Best Value'}</span>
+                  <span className="text-xs px-2 py-0.5 rounded" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>90%+ {lang === 'pt' ? 'empregab.' : 'employ.'}</span>
+                  <span className="text-xs px-2 py-0.5 rounded" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>Since 1995</span>
                 </div>
               </div>
 
