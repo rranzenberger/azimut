@@ -119,6 +119,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
         'Game Art & Design',
         'Visual Effects for Film & TV',
         'Acting for Film & Television',
+        'Acting Foundations',
+        'Art Foundation',
         'Professional Photography',
         'Web Development & Digital Design'
       ],
@@ -251,7 +253,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
       vfsStats: [{ label: 'Employability', value: '92%' }, { label: 'Graduates', value: '40,000+' }, { label: 'Industry Partners', value: '500+' }],
       vanartsTab: 'VanArts',
       vanartsDescription: 'School focused on Animation, VFX and Game Art. More financially accessible, maintaining high quality.',
-      vanartsPrograms: ['2D/3D Character Animation', 'Game Art & Design', 'Visual Effects for Film & TV', 'Acting for Film & Television', 'Professional Photography', 'Web Development & Digital Design'],
+      vanartsPrograms: ['2D/3D Character Animation', 'Game Art & Design', 'Visual Effects for Film & TV', 'Acting for Film & Television', 'Acting Foundations', 'Art Foundation', 'Professional Photography', 'Web Development & Digital Design'],
       vanartsStats: [{ label: 'Employability', value: '90%+' }, { label: 'Years of Operation', value: '29+' }, { label: 'Student Networking', value: 'Global' }],
       testimonialsTitle: 'Brazilians in Vancouver',
       testimonials: [
@@ -309,7 +311,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
       vfsStats: [{ label: 'Empleabilidad', value: '92%' }, { label: 'Graduados', value: '40.000+' }, { label: 'Socios de Industria', value: '500+' }],
       vanartsTab: 'VanArts',
       vanartsDescription: 'Escuela enfocada en Animación, VFX y Arte de Juegos. Más accesible financieramente, manteniendo alta calidad.',
-      vanartsPrograms: ['Animación de Personajes 2D/3D', 'Arte y Diseño de Juegos', 'Efectos Visuales para Cine y TV', 'Actuación para Cine y Televisión', 'Fotografía Profesional', 'Desarrollo Web y Diseño Digital'],
+      vanartsPrograms: ['Animación de Personajes 2D/3D', 'Arte y Diseño de Juegos', 'Efectos Visuales para Cine y TV', 'Actuación para Cine y Televisión', 'Fundamentos de Actuación', 'Fundamentos de Arte', 'Fotografía Profesional', 'Desarrollo Web y Diseño Digital'],
       vanartsStats: [{ label: 'Empleabilidad', value: '90%+' }, { label: 'Años de Operación', value: '29+' }, { label: 'Networking Estudiantes', value: 'Global' }],
       testimonialsTitle: 'Brasileños en Vancouver',
       testimonials: [
@@ -367,7 +369,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
       vfsStats: [{ label: 'Employabilité', value: '92%' }, { label: 'Diplômés', value: '40.000+' }, { label: 'Partenaires Industrie', value: '500+' }],
       vanartsTab: 'VanArts',
       vanartsDescription: 'École axée sur Animation, VFX et Art de Jeux. Plus accessible financièrement, maintenant haute qualité.',
-      vanartsPrograms: ['Animation de Personnages 2D/3D', 'Art et Conception de Jeux', 'Effets Visuels pour Film et TV', 'Acting pour Film et Télévision', 'Photographie Professionnelle', 'Développement Web et Design Numérique'],
+      vanartsPrograms: ['Animation de Personnages 2D/3D', 'Art et Conception de Jeux', 'Effets Visuels pour Film et TV', 'Acting pour Film et Télévision', 'Fondements du Jeu d\'Acteur', 'Fondements Artistiques', 'Photographie Professionnelle', 'Développement Web et Design Numérique'],
       vanartsStats: [{ label: 'Employabilité', value: '90%+' }, { label: 'Années d\'Opération', value: '29+' }, { label: 'Networking Étudiants', value: 'Global' }],
       testimonialsTitle: 'Brésiliens à Vancouver',
       testimonials: [
