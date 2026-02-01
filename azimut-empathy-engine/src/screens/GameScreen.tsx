@@ -113,6 +113,7 @@ export default function GameScreen({ onLeaderboard, onBack }: GameScreenProps) {
   const [comboToast, setComboToast] = React.useState<{ message: string; visible: boolean }>({ message: '', visible: false })
   const [showDropErrorGlow, setShowDropErrorGlow] = React.useState(false)
   const [errorToast, setErrorToast] = React.useState<{ message: string; visible: boolean }>({ message: '', visible: false })
+  const [easterEggToast, setEasterEggToast] = React.useState<{ message: string; visible: boolean }>({ message: '', visible: false })
   const [motivationalPhrase, setMotivationalPhrase] = React.useState<ReturnType<typeof pickMotivationalPhrase> | null>(null)
   const [motivationalVisible, setMotivationalVisible] = React.useState(false)
   const [isMobile, setIsMobile] = React.useState(false)
