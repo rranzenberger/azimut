@@ -584,22 +584,17 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 border: '1px solid rgba(201, 35, 55, 0.3)',
               }}
             >
-              {/* VFS Header - Logo + Nome + Badges */}
-              <div className="flex flex-wrap items-center gap-4 mb-2">
+              {/* VFS Header */}
+              <p className="text-xs uppercase tracking-wider mb-3" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                {lang === 'pt' ? 'Faculdade' : 'College'}
+              </p>
+              <div className="flex flex-wrap items-end gap-4 mb-6">
                 <img 
                   src="/vfs2.png" 
                   alt="Vancouver Film School" 
                   className="rounded-xl"
                   style={{ width: '56px', height: '56px', objectFit: 'cover' }}
                 />
-                <div>
-                  <p className="text-xs uppercase tracking-wider mb-1" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                    {lang === 'pt' ? 'Faculdade Parceira' : lang === 'es' ? 'Universidad Asociada' : lang === 'fr' ? 'Établissement Partenaire' : 'Partner College'}
-                  </p>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white">Vancouver Film School</h3>
-                </div>
-              </div>
-              <div className="flex flex-wrap items-center gap-2 mb-6 ml-0 sm:ml-[72px]">
                 <span className="text-base px-4 py-1.5 rounded-full font-bold" style={{ background: '#c92337', color: '#fff' }}>#1 Canada</span>
                 <span className="text-base px-4 py-1.5 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff' }}>
                   92%+ {lang === 'pt' ? 'empregabilidade' : lang === 'es' ? 'empleabilidad' : lang === 'fr' ? 'employabilité' : 'employability'}
@@ -724,8 +719,11 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 border: '1px solid rgba(180, 50, 50, 0.25)',
               }}
             >
-              {/* VanArts Header - Logo + Nome + Badges */}
-              <div className="flex flex-wrap items-center gap-4 mb-2">
+              {/* VanArts Header */}
+              <p className="text-xs uppercase tracking-wider mb-3" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                {lang === 'pt' ? 'Faculdade' : 'College'}
+              </p>
+              <div className="flex flex-wrap items-end gap-4 mb-6">
                 <div 
                   className="flex items-center justify-center rounded-xl overflow-hidden"
                   style={{ background: '#ffffff', width: '56px', height: '56px' }}
@@ -736,14 +734,6 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                     style={{ height: '44px', width: 'auto', objectFit: 'contain' }}
                   />
                 </div>
-                <div>
-                  <p className="text-xs uppercase tracking-wider mb-1" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                    {lang === 'pt' ? 'Faculdade Parceira' : lang === 'es' ? 'Universidad Asociada' : lang === 'fr' ? 'Établissement Partenaire' : 'Partner College'}
-                  </p>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white">Vancouver Institute of Media Arts</h3>
-                </div>
-              </div>
-              <div className="flex flex-wrap items-center gap-2 mb-6 ml-0 sm:ml-[72px]">
                 <span className="text-base px-4 py-1.5 rounded-full font-bold" style={{ background: '#b43232', color: '#fff' }}>
                   {lang === 'pt' ? 'Melhor Custo-Benefício' : lang === 'es' ? 'Mejor Valor' : lang === 'fr' ? 'Meilleur Rapport' : 'Best Value'}
                 </span>
