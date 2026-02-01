@@ -1,6 +1,8 @@
 /**
  * Página do jogo Empathy Engine
  * Exibe o jogo em iframe em /{lang}/game/
+ * Em dev: aponta para localhost:5174 (jogo rodando separado)
+ * Em prod: aponta para /{lang}/game/ (build copiado para public/)
  */
 
 import { type Lang } from '../i18n'
@@ -12,6 +14,11 @@ interface GamePageProps {
 }
 
 export default function GamePage({ lang }: GamePageProps) {
+  // Em desenvolvimento, o jogo roda em localhost:5174
+  // Em produção, o build é copiado para public/{lang}/game/
+  const isDev = import.meta.env.DEV
+  const gameSrc = isDev ? `http://localhost:5174/?lang=${lang}` : `/${lang}/game/`
+
   return (
     <>
       <SEO
@@ -25,7 +32,7 @@ export default function GamePage({ lang }: GamePageProps) {
       <ErrorBoundary>
         <div style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', zIndex: 9999, background: '#0f0f12' }}>
           <iframe
-            src={`/${lang}/game/`}
+            src={gameSrc}
             title="Empathy Engine"
             style={{ width: '100%', height: '100%', border: 'none' }}
             allow="fullscreen"

@@ -50,6 +50,12 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
     { icon: '🏛️', nameKey: 'topicCultureMuseums' as const, color: '#3B82F6' },
     { icon: MAPLE_LEAF_ICON, nameKey: 'topicStudyCanada' as const, color: '#be0320' },
     { icon: '⚡', nameKey: 'topicTechConsulting' as const, color: '#FFD700' },
+    { icon: '🤖', nameKey: 'topicIaGenerativa' as const, color: '#10B981' },
+    { icon: '🌐', nameKey: 'topicWeb3' as const, color: '#F59E0B' },
+    { icon: '🎮', nameKey: 'topicGames' as const, color: '#EC4899' },
+    { icon: '🏗️', nameKey: 'topicCenografia' as const, color: '#8B5CF6' },
+    { icon: '🎨', nameKey: 'topicAnimacao2d3d' as const, color: '#A855F7' },
+    { icon: '✨', nameKey: 'topicMotionDesign' as const, color: '#14B8A6' },
   ] as const
 
   const backButton = (
