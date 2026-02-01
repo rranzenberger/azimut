@@ -582,22 +582,17 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 border: '1px solid rgba(201, 35, 55, 0.25)',
               }}
             >
-              {/* VFS Header - Logo inline pequena */}
-              <div className="flex items-center flex-wrap gap-3 mb-5">
+              {/* VFS Header - Logo pequena com borda arredondada */}
+              <div className="flex items-center gap-3 mb-5">
                 <div 
-                  className="flex items-center justify-center rounded px-2 py-1"
+                  className="flex items-center justify-center rounded-lg px-3 py-2"
                   style={{ background: '#8b1625' }}
                 >
-                  <img 
-                    src="/vfs.png" 
-                    alt="VFS" 
-                    className="h-4 w-auto object-contain"
-                    onError={(e) => { e.currentTarget.style.display = 'none' }}
-                  />
+                  <span className="text-white font-bold text-xs tracking-wide">VFS</span>
                 </div>
-                <span className="text-[10px] px-1.5 py-0.5 rounded font-semibold" style={{ background: '#c92337', color: '#fff' }}>#1 Canada</span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>92% {lang === 'pt' ? 'empregab.' : 'employ.'}</span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>Since 1987</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold" style={{ background: '#c92337', color: '#fff' }}>#1 Canada</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>92%+ employability</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>Since 1987</span>
               </div>
 
               {/* VFS Cursos - 11 programas */}
@@ -652,37 +647,37 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                     <div className="text-white/80 text-xs">BCIT Bachelor (BBA)</div>
                   </div>
                   <div 
-                    className="py-3 px-4 flex flex-col justify-center -ml-px min-w-[160px]"
+                    className="py-3 px-5 flex flex-col justify-center -ml-px min-w-[180px]"
                     style={{ 
                       background: 'linear-gradient(90deg, #e02d42 0%, #ff4757 100%)',
                       clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%, 16px 50%)',
                       borderRadius: '0 8px 8px 0'
                     }}
                   >
-                    <div className="text-white font-bold text-xs">=</div>
-                    <div className="text-white text-[10px] leading-tight">Triple Credentials<br/>+ Work Permit</div>
+                    <div className="text-white font-bold text-sm">=</div>
+                    <div className="text-white text-xs leading-snug font-medium">• Triple Credentials<br/>• Work Permit</div>
                   </div>
                 </div>
 
                 {/* Mobile: Vertical */}
                 <div className="md:hidden space-y-1">
-                  <div className="flex items-center gap-3 p-2.5 rounded-lg" style={{ background: '#8b1625' }}>
-                    <span className="text-white font-bold text-xs w-14">1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
-                    <span className="text-white/90 text-xs">VFS Diploma</span>
+                  <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: '#8b1625' }}>
+                    <span className="text-white font-bold text-sm w-16">1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white/90 text-sm">VFS Diploma</span>
                   </div>
                   <div className="text-center text-white/40">↓</div>
-                  <div className="flex items-center gap-3 p-2.5 rounded-lg" style={{ background: '#a91d2e' }}>
-                    <span className="text-white font-bold text-xs w-14">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
-                    <span className="text-white/90 text-xs">BCIT Advanced Diploma</span>
+                  <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: '#a91d2e' }}>
+                    <span className="text-white font-bold text-sm w-16">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white/90 text-sm">BCIT Advanced Diploma</span>
                   </div>
                   <div className="text-center text-white/40">↓</div>
-                  <div className="flex items-center gap-3 p-2.5 rounded-lg" style={{ background: '#c92337' }}>
-                    <span className="text-white font-bold text-xs w-14">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
-                    <span className="text-white/90 text-xs">BCIT Bachelor (BBA)</span>
+                  <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: '#c92337' }}>
+                    <span className="text-white font-bold text-sm w-16">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white/90 text-sm">BCIT Bachelor (BBA)</span>
                   </div>
                   <div className="text-center text-white/40">↓</div>
-                  <div className="p-2.5 rounded-lg text-center" style={{ background: '#e02d42' }}>
-                    <span className="text-white font-bold text-xs">= Triple Credentials + Work Permit</span>
+                  <div className="p-3 rounded-lg text-center" style={{ background: '#e02d42' }}>
+                    <span className="text-white font-bold text-sm">= Triple Credentials + Work Permit</span>
                   </div>
                 </div>
               </div>
@@ -700,21 +695,21 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 border: '1px solid rgba(180, 50, 50, 0.2)',
               }}
             >
-              {/* VanArts Header - Logo inline pequena */}
-              <div className="flex items-center flex-wrap gap-3 mb-5">
+              {/* VanArts Header - Logo pequena com borda arredondada */}
+              <div className="flex items-center gap-3 mb-5">
                 <div 
-                  className="flex items-center justify-center rounded px-2 py-1"
+                  className="flex items-center justify-center rounded-lg px-2 py-1.5"
                   style={{ background: '#f8f8f8' }}
                 >
                   <img 
                     src="/vanarts2.png" 
                     alt="VanArts" 
-                    className="h-4 w-auto object-contain"
+                    className="h-5 w-auto object-contain"
                   />
                 </div>
-                <span className="text-[10px] px-1.5 py-0.5 rounded font-semibold" style={{ background: '#b43232', color: '#fff' }}>{lang === 'pt' ? 'Melhor custo' : 'Best Value'}</span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>90%+ {lang === 'pt' ? 'empregab.' : 'employ.'}</span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>Since 1995</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold" style={{ background: '#b43232', color: '#fff' }}>Best Value</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>90%+ employability</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>Since 1995</span>
               </div>
 
               {/* VanArts Cursos - 8 programas */}
@@ -769,37 +764,37 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                     <div className="text-white/80 text-xs">BCIT Bachelor (BBA)</div>
                   </div>
                   <div 
-                    className="py-3 px-4 flex flex-col justify-center -ml-px min-w-[160px]"
+                    className="py-3 px-5 flex flex-col justify-center -ml-px min-w-[180px]"
                     style={{ 
                       background: 'linear-gradient(90deg, #e02d42 0%, #ff4757 100%)',
                       clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%, 16px 50%)',
                       borderRadius: '0 8px 8px 0'
                     }}
                   >
-                    <div className="text-white font-bold text-xs">=</div>
-                    <div className="text-white text-[10px] leading-tight">Triple Credentials<br/>+ Work Permit</div>
+                    <div className="text-white font-bold text-sm">=</div>
+                    <div className="text-white text-xs leading-snug font-medium">• Triple Credentials<br/>• Work Permit</div>
                   </div>
                 </div>
 
                 {/* Mobile: Vertical */}
                 <div className="md:hidden space-y-1">
-                  <div className="flex items-center gap-3 p-2.5 rounded-lg" style={{ background: '#8b1625' }}>
-                    <span className="text-white font-bold text-xs w-14">1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
-                    <span className="text-white/90 text-xs">VanArts Diploma</span>
+                  <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: '#8b1625' }}>
+                    <span className="text-white font-bold text-sm w-16">1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white/90 text-sm">VanArts Diploma</span>
                   </div>
                   <div className="text-center text-white/40">↓</div>
-                  <div className="flex items-center gap-3 p-2.5 rounded-lg" style={{ background: '#a91d2e' }}>
-                    <span className="text-white font-bold text-xs w-14">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
-                    <span className="text-white/90 text-xs">BCIT Advanced Diploma</span>
+                  <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: '#a91d2e' }}>
+                    <span className="text-white font-bold text-sm w-16">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white/90 text-sm">BCIT Advanced Diploma</span>
                   </div>
                   <div className="text-center text-white/40">↓</div>
-                  <div className="flex items-center gap-3 p-2.5 rounded-lg" style={{ background: '#c92337' }}>
-                    <span className="text-white font-bold text-xs w-14">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
-                    <span className="text-white/90 text-xs">BCIT Bachelor (BBA)</span>
+                  <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: '#c92337' }}>
+                    <span className="text-white font-bold text-sm w-16">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white/90 text-sm">BCIT Bachelor (BBA)</span>
                   </div>
                   <div className="text-center text-white/40">↓</div>
-                  <div className="p-2.5 rounded-lg text-center" style={{ background: '#e02d42' }}>
-                    <span className="text-white font-bold text-xs">= Triple Credentials + Work Permit</span>
+                  <div className="p-3 rounded-lg text-center" style={{ background: '#e02d42' }}>
+                    <span className="text-white font-bold text-sm">= Triple Credentials + Work Permit</span>
                   </div>
                 </div>
               </div>
