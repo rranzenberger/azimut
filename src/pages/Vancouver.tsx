@@ -1152,9 +1152,11 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 rounded-xl bg-azimut-red flex items-center justify-center text-3xl shadow-lg">
-                      🎬
-                    </div>
+                    <img 
+                      src="/vfs2.png" 
+                      alt="VFS" 
+                      className="w-16 h-16 rounded-xl shadow-lg object-cover"
+                    />
                     <div>
                       <h3 className="text-3xl md:text-4xl font-handel uppercase text-white drop-shadow-lg">
                         Vancouver Film School
@@ -1182,10 +1184,18 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               </div>
 
               <div className="grid md:grid-cols-2 gap-3 mb-6">
-                {t.vfsPrograms.map((program, i) => (
-                  <div key={i} className="flex items-center gap-2 text-white/80">
-                    <span className="text-azimut-red">•</span>
-                    {program}
+                {[...t.vfsPrograms, 'Concept Art', 'Classical Animation', 'Makeup Design', 'Short-Track'].map((program, i) => (
+                  <div 
+                    key={i} 
+                    className="flex items-center gap-2" 
+                    style={{ color: program === 'Short-Track' ? 'rgba(180, 180, 220, 0.9)' : 'rgba(255,255,255,0.8)' }}
+                  >
+                    <span style={{ color: program === 'Short-Track' ? 'rgba(150, 150, 200, 0.8)' : '#c92337' }}>
+                      {program === 'Short-Track' ? '⚡' : '•'}
+                    </span>
+                    <span style={{ fontStyle: program === 'Short-Track' ? 'italic' : 'normal' }}>
+                      {program}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -1231,8 +1241,12 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-3xl shadow-lg">
-                      🎨
+                    <div className="w-16 h-16 rounded-xl bg-white flex items-center justify-center shadow-lg overflow-hidden">
+                      <img 
+                        src="/vanarts2.png" 
+                        alt="VanArts" 
+                        className="h-12 w-auto object-contain"
+                      />
                     </div>
                     <div>
                       <h3 className="text-3xl md:text-4xl font-handel uppercase text-white drop-shadow-lg">
@@ -1304,7 +1318,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
               <div className="mt-8">
                 <div className="mb-4">
                   <h4 className="text-xl font-semibold text-white mb-2 flex items-center gap-2">
-                    <span className="text-2xl">🎬</span>
+                    <span className="text-azimut-red">▶</span>
                     {translate(lang, 'vancouverDiscoverVanArtsInside')}
                   </h4>
                   <p className="text-white/70 text-sm">
