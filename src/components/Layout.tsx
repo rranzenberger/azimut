@@ -78,6 +78,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   
   // 🆕 UX PREMIUM - Sistema de busca (opcional, pode remover se não funcionar)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  // Estado do dropdown de idiomas (mobile) – declarado aqui para o useEffect do ESC
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false)
   
   // 🆕 Atalho de teclado Ctrl+K / Cmd+K para busca + ESC para fechar modais/dropdowns
   React.useEffect(() => {
@@ -143,9 +145,6 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
     }
     return 'full'
   })
-  
-  // Estado do dropdown de idiomas (para mobile)
-  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false)
   
   // Compatibilidade com código existente
   const isMobile = headerState === 'hamburger-langs' || headerState === 'hamburger-compact' || headerState === 'hamburger-minimal'
