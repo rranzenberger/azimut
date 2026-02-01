@@ -219,8 +219,8 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
         </div>
 
         {/* Desktop: Texto descritivo (nome do jogo está no header) */}
-        <div className="hidden sm:block text-center mb-3">
-          <p className="text-base md:text-lg font-body leading-relaxed text-center max-w-2xl mx-auto mb-2" style={{ color: '#F3F4F6' }}>
+        <div className="hidden sm:block text-center mb-4">
+          <p className="text-lg md:text-xl font-body leading-relaxed text-center max-w-2xl mx-auto mb-3" style={{ color: '#F3F4F6' }}>
             {t.bullets}
             <button
               type="button"
@@ -234,35 +234,35 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
               {t.bulletsSecret}
             </button>
           </p>
-          <p className="text-sm md:text-base font-bold text-amber-400 flex items-center justify-center gap-2">
-            <span className="text-xl">✨</span> 
+          <p className="text-base md:text-lg font-bold text-amber-400 flex items-center justify-center gap-2">
+            <span className="text-2xl">✨</span> 
             <span>Quest Premium + Surpresas Desbloqueáveis</span> 
-            <span className="text-xl">🎁</span>
+            <span className="text-2xl">🎁</span>
           </p>
         </div>
 
         <div className="w-full max-w-5xl mx-auto flex flex-col items-center gap-3 sm:gap-4">
 
-          {/* Card — largura máxima, compacto */}
+          {/* Card — largura máxima */}
           <div className="card-glow-home rounded-lg sm:rounded-xl text-left flex-shrink-0 w-full max-w-5xl overflow-hidden">
-            <div className="card-glow-home-inner rounded-lg sm:rounded-xl p-2 sm:p-4 md:p-5 space-y-2 sm:space-y-3 overflow-hidden min-w-0">
+            <div className="card-glow-home-inner rounded-lg sm:rounded-xl p-3 sm:p-5 md:p-6 space-y-3 sm:space-y-4 overflow-hidden min-w-0">
             {/* 18 Tópicos em grid 6x3 */}
             <div className="min-w-0">
               <h3 
-                className="text-xs sm:text-base font-bold uppercase tracking-wider mb-2 sm:mb-3 flex items-center justify-between"
+                className="text-sm sm:text-lg font-bold uppercase tracking-wider mb-2 sm:mb-3 flex items-center justify-between"
                 style={{ color: '#C92337' }}
               >
-                <span className="flex items-center gap-1.5">
-                  <span className="text-sm sm:text-lg">🎯</span> 
+                <span className="flex items-center gap-2">
+                  <span className="text-base sm:text-xl">🎯</span> 
                   <span>18 Temas de Quest</span>
                 </span>
-                <span className="text-xs sm:text-base font-bold text-amber-400 flex items-center gap-1.5 animate-pulse">
-                  <span className="text-sm sm:text-lg">🔮</span> 
+                <span className="text-sm sm:text-lg font-bold text-amber-400 flex items-center gap-2 animate-pulse">
+                  <span className="text-base sm:text-xl">🔮</span> 
                   <span>+80 Cartas!</span>
                 </span>
               </h3>
-              {/* Grid 6x3 - compacto mas legível */}
-              <div className="grid grid-cols-6 gap-1.5 sm:gap-3">
+              {/* Grid 6x3 - fontes maiores */}
+              <div className="grid grid-cols-6 gap-2 sm:gap-3">
                 {topics.map((topic, index) => {
                   const name = t[topic.nameKey]
                   const isEstudarCanada = topic.nameKey === 'topicStudyCanada'
@@ -270,7 +270,7 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
                   return (
                     <div
                       key={topic.nameKey}
-                      className={`group flex flex-col items-center justify-center gap-0.5 sm:gap-1 p-1.5 sm:p-3 rounded-lg sm:rounded-xl transition-all duration-200 hover:scale-105 cursor-default ${isPremium ? 'ring-1 ring-amber-500/50' : ''}`}
+                      className={`group flex flex-col items-center justify-center gap-1 sm:gap-1.5 p-2 sm:p-3 rounded-lg sm:rounded-xl transition-all duration-200 hover:scale-105 cursor-default ${isPremium ? 'ring-1 ring-amber-500/50' : ''}`}
                       style={{
                         background: isPremium
                           ? 'linear-gradient(135deg, rgba(251, 191, 36, 0.18), rgba(168, 85, 247, 0.12))'
@@ -281,11 +281,11 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
                       }}
                       title={name}
                     >
-                      <span style={{ color: topic.color }} className="text-xl sm:text-2xl">
-                        <TopicIcon icon={topic.icon} size={26} />
+                      <span style={{ color: topic.color }} className="text-2xl sm:text-3xl">
+                        <TopicIcon icon={topic.icon} size={28} />
                       </span>
                       <span 
-                        className="text-[9px] sm:text-xs font-bold text-center leading-tight opacity-95 group-hover:opacity-100 truncate w-full"
+                        className="text-[10px] sm:text-sm font-bold text-center leading-tight opacity-95 group-hover:opacity-100 truncate w-full"
                         style={{ color: topic.color }}
                       >
                         {name.split(' ')[0]}
@@ -299,16 +299,16 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
             {/* Divisor */}
             <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)' }} />
 
-            {/* Como jogar — compacto */}
+            {/* Como jogar — fontes maiores */}
             <div>
               <h3 
-                className="text-[11px] sm:text-sm font-bold uppercase tracking-wider mb-1.5 sm:mb-2 flex items-center gap-1.5"
+                className="text-xs sm:text-base font-bold uppercase tracking-wider mb-2 sm:mb-3 flex items-center gap-2"
                 style={{ color: '#FFD700' }}
               >
                 <span>🎮</span> {t.howToPlay}
               </h3>
-              {/* Grid 2x2 compacto */}
-              <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
+              {/* Grid 2x2 com fontes maiores */}
+              <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 {(t.stepsShort ?? t.steps).map((step, i) => {
                   const color = STEP_COLORS[i]
                   const parts = step.text.split(step.highlight)
@@ -317,16 +317,16 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
                   return (
                     <div
                       key={i}
-                      className="flex items-center gap-1.5 sm:gap-2 py-1.5 sm:py-2 px-2 sm:px-3 rounded-lg"
-                      style={{ background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(255, 255, 255, 0.06)' }}
+                      className="flex items-center gap-2 sm:gap-3 py-2 sm:py-3 px-3 sm:px-4 rounded-lg"
+                      style={{ background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(255, 255, 255, 0.08)' }}
                     >
                       <span
-                        className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center text-[9px] sm:text-xs font-bold flex-shrink-0"
+                        className="w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-[10px] sm:text-sm font-bold flex-shrink-0"
                         style={{ background: `${color}25`, color, border: `1px solid ${color}50` }}
                       >
                         {i + 1}
                       </span>
-                      <span className="text-[10px] sm:text-xs text-[var(--text-secondary)] leading-tight min-w-0 text-left">
+                      <span className="text-[11px] sm:text-sm text-[var(--text-secondary)] leading-tight min-w-0 text-left">
                         {before}
                         <strong style={{ color }}>{step.highlight}</strong>
                         {after}
