@@ -288,7 +288,7 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
                         className="text-[11px] sm:text-base font-bold text-center leading-tight opacity-95 group-hover:opacity-100 truncate w-full"
                         style={{ color: topic.color }}
                       >
-                        {name.split(' ')[0]}
+                        {topic.nameKey === 'topicCenografiaVirtual' ? name : name.split(' ')[0]}
                       </span>
                     </div>
                   )
