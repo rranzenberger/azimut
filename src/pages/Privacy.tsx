@@ -172,7 +172,8 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           content: 'Você pode controlar cookies através do banner de consentimento ou configurações do navegador:',
           items: [
             { subtitle: 'Cookies Essenciais (não podem ser desabilitados)', list: ['cookie-consent: sua escolha de cookies', 'lang: idioma preferido', 'theme: tema claro/escuro'] },
-            { subtitle: 'Cookies de Análise (podem ser desabilitados)', list: ['Plausible Analytics: privacy-first, GDPR compliant', 'Session ID: identificador anônimo temporário'] }
+            { subtitle: 'Cookies de Análise (podem ser desabilitados)', list: ['Plausible Analytics: privacy-first, GDPR compliant', 'Session ID: identificador anônimo temporário'] },
+            { subtitle: 'Cookies de terceiros', list: ['Quando utilizamos cookies de terceiros (ex.: widget de chat, ferramentas de suporte), eles são informados no banner de consentimento e podem ser recusados em "Apenas essenciais".'] }
           ]
         },
         {
@@ -328,7 +329,8 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           content: 'Vous pouvez contrôler les témoins via la bannière de consentement ou les paramètres de votre navigateur :',
           items: [
             { subtitle: 'Témoins Essentiels (ne peuvent pas être désactivés)', list: ['cookie-consent : votre choix de témoins', 'lang : langue préférée', 'theme : thème clair/sombre'] },
-            { subtitle: 'Témoins Analytiques (peuvent être désactivés)', list: ['Plausible Analytics : respect de la vie privée, conforme RGPD', 'ID de session : identifiant anonyme temporaire'] }
+            { subtitle: 'Témoins Analytiques (peuvent être désactivés)', list: ['Plausible Analytics : respect de la vie privée, conforme RGPD', 'ID de session : identifiant anonyme temporaire'] },
+            { subtitle: 'Témoins tiers', list: ['Lorsque nous utilisons des témoins tiers (ex. widget de chat, outils de support), ils sont indiqués dans la bannière de consentement et peuvent être refusés en choisissant « Essentiels uniquement ».'] }
           ]
         },
         {
@@ -486,7 +488,8 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           content: 'You can control cookies through the consent banner or browser settings:',
           items: [
             { subtitle: 'Essential Cookies (cannot be disabled)', list: ['cookie-consent: your cookie choice', 'lang: preferred language', 'theme: light/dark theme'] },
-            { subtitle: 'Analytics Cookies (can be disabled)', list: ['Plausible Analytics: privacy-first, GDPR compliant', 'Session ID: temporary anonymous identifier'] }
+            { subtitle: 'Analytics Cookies (can be disabled)', list: ['Plausible Analytics: privacy-first, GDPR compliant', 'Session ID: temporary anonymous identifier'] },
+            { subtitle: 'Third-party cookies', list: ['When we use third-party cookies (e.g. chat widget, support tools), they are disclosed in the consent banner and can be declined by choosing "Essential only".'] }
           ]
         },
         {
@@ -557,7 +560,8 @@ const Privacy: React.FC<PrivacyProps> = ({ lang }) => {
           items: [
             { subtitle: 'Proporcionados por Usted', list: ['Nombre y email (formularios)', 'Información profesional (empresa, cargo)', 'Presupuesto y cronograma (Budget Wizard)', 'Preferencias de comunicación'] },
             { subtitle: 'Recopilados Automáticamente', list: ['Dirección IP (anonimizada)', 'Tipo de navegador y dispositivo', 'Páginas visitadas y tiempo', 'País e idioma preferido', 'Fuente de referencia'] },
-            { subtitle: 'Cookies y Seguimiento', list: ['Esenciales: idioma, tema, consentimiento', 'Analytics: Plausible (privacy-first)', 'Session ID: identificador anónimo temporal'] }
+            { subtitle: 'Cookies y Seguimiento', list: ['Esenciales: idioma, tema, consentimiento', 'Analytics: Plausible (privacy-first)', 'Session ID: identificador anónimo temporal'] },
+            { subtitle: 'Cookies de terceros', list: ['Cuando utilizamos cookies de terceros (p. ej. widget de chat, herramientas de soporte), se indican en el banner de consentimiento y pueden rechazarse eligiendo «Solo esenciales».'] }
           ]
         },
         {

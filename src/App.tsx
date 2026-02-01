@@ -7,16 +7,17 @@ import ScrollToTop from './components/ScrollToTop'
 import LoadingSkeleton from './components/LoadingSkeleton'
 import { LocalBusinessSchema } from './components/StructuredData'
 import InstallPrompt from './components/InstallPrompt'
-import PlausibleScript from './components/PlausibleScript'
 import AppLayout from './components/AppLayout'
 import ErrorBoundary from './components/ErrorBoundary'
 import Chatbot from './components/Chatbot'
 import SimplePasswordGate from './components/SimplePasswordGate'
 import LangRouteWrapper from './components/LangRouteWrapper'
 import LangRedirect from './components/LangRedirect'
-import GoogleAnalytics from './components/GoogleAnalytics'
-import GlobalSearch from './components/GlobalSearch'
 import { detectGeoFromTimezone, detectLanguageFromBrowser } from './utils/geoDetection'
+
+import DeferredAnalytics from './components/DeferredAnalytics'
+// Busca: lazy, carrega só quando abrir (melhor LCP)
+const GlobalSearch = lazy(() => import('./components/GlobalSearch').then(m => ({ default: m.default })))
 
 // ═══════════════════════════════════════════════════════════════
 // 🔒 CONTROLE DE LOGIN DO SITE
@@ -222,10 +223,11 @@ const App: React.FC = () => {
             localStorage.setItem('azimut-lang', detectedLang)
           }
         }
-      } catch (error) {
-        // ERRO CRÍTICO: usar navegador ou manter idioma atual
-        console.error('GEO: Erro crítico na detecção:', error)
-        
+      } catch (_error) {
+        // ERRO CRÍTICO: usar navegador ou manter idioma atual (sem log em prod = Best Practices)
+        if (import.meta.env.DEV) {
+          console.warn('GEO: fallback por falha na detecção', _error)
+        }
         const currentLang = localStorage.getItem('azimut-lang') as Lang | null
         if (!currentLang) {
           // Se não tem idioma salvo, usar navegador
@@ -281,16 +283,21 @@ const App: React.FC = () => {
         <SimplePasswordGate>
           <BrowserRouter>
             <ScrollToTop />
-            <GoogleAnalytics />
+            {/* Analytics: carregados após first paint (melhor LCP) */}
+            <Suspense fallback={null}>
+              <DeferredAnalytics />
+            </Suspense>
             {/* Structured Data para SEO - LocalBusiness (Organization via SEOGlobal no Layout) */}
             <LocalBusinessSchema />
-            {/* Analytics - Plausible */}
-            <PlausibleScript />
             {/* Vinheta cinematográfica - efeito de bordas escuras */}
             <div className="cinematic-vignette" aria-hidden="true" />
           
-          {/* ✅ ETAPA 2: Global Search REATIVADO - Hooks simples, sem API */}
-          <GlobalSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} lang={lang} theme={theme} />
+          {/* Global Search: lazy, carrega só quando abrir (menos JS inicial) */}
+          {searchOpen && (
+            <Suspense fallback={null}>
+              <GlobalSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} lang={lang} theme={theme} />
+            </Suspense>
+          )}
           
           {/* ✅ ETAPA 1: PWA Install Prompt REATIVADO - Componente simples */}
           <InstallPrompt />
@@ -531,11 +538,12 @@ const App: React.FC = () => {
       ) : (
         <BrowserRouter>
           <ScrollToTop />
-          <GoogleAnalytics />
+          {/* Analytics: carregados após first paint (melhor LCP) */}
+          <Suspense fallback={null}>
+            <DeferredAnalytics />
+          </Suspense>
           {/* Structured Data para SEO - LocalBusiness (Organization via SEOGlobal no Layout) */}
           <LocalBusinessSchema />
-          {/* Analytics - Plausible */}
-          <PlausibleScript />
           {/* Vinheta cinematográfica - efeito de bordas escuras */}
           <div className="cinematic-vignette" aria-hidden="true" />
           

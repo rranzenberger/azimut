@@ -125,14 +125,17 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
   // YouTube embed
   if (detectedPlatform === 'youtube') {
-    const embedUrl = `https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1${autoplay || isPlaying ? '&autoplay=1' : ''}${muted ? '&mute=1' : ''}${loop ? '&loop=1&playlist=' + youtubeId : ''}${playsinline ? '&playsinline=1' : ''}`
+    // youtube-nocookie.com evita cookies de terceiros até o usuário dar play (Best Practices / Lighthouse)
+    const embedUrl = `https://www.youtube-nocookie.com/embed/${youtubeId}?rel=0&modestbranding=1${autoplay || isPlaying ? '&autoplay=1' : ''}${muted ? '&mute=1' : ''}${loop ? '&loop=1&playlist=' + youtubeId : ''}${playsinline ? '&playsinline=1' : ''}`
 
     if (!isPlaying && !autoplay && thumbnail) {
       return (
         <div className={`relative aspect-video cursor-pointer group overflow-hidden ${className}`} onClick={handlePlay} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
           <img 
             src={thumbnail} 
-            alt={alt || 'Video thumbnail'} 
+            alt={alt || 'Video thumbnail'}
+            width={640}
+            height={360}
             className="w-full h-full object-cover"
             style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}
             onError={(e) => {
@@ -178,7 +181,9 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
         <div className={`relative aspect-video cursor-pointer group overflow-hidden ${className}`} onClick={handlePlay} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
           <img 
             src={thumbnail} 
-            alt={alt || 'Video thumbnail'} 
+            alt={alt || 'Video thumbnail'}
+            width={640}
+            height={360}
             className="w-full h-full object-cover"
             style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}
           />

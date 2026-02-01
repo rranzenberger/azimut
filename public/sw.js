@@ -69,6 +69,11 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
+  // Vídeo: deixar o navegador tratar (fallback entre .webm, .mp4, .mov)
+  if (request.destination === 'video' || /\.(webm|mp4|mov)(\?|$)/i.test(url.pathname)) {
+    return
+  }
+
   // Estratégia 1: Imagens - Cache First (mais rápido)
   if (request.destination === 'image') {
     event.respondWith(
@@ -142,9 +147,14 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
-  // Estratégia 3: Outros recursos - Network First genérico
+  // Estratégia 3: Outros recursos (vídeo, fontes, etc.) - Network First
+  // Sempre retornar Response: caches.match() pode retornar undefined (evita TypeError no respondWith)
   event.respondWith(
-    fetch(request).catch(() => caches.match(request))
+    fetch(request).catch(() =>
+      caches.match(request).then((cached) =>
+        cached || new Response(null, { status: 404, statusText: 'Not Found' })
+      )
+    )
   )
 })
 

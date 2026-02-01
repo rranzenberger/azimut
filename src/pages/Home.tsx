@@ -333,6 +333,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
           <img 
             src="/logo-azimut-star.svg" 
             alt="" 
+            width={680}
+            height={680}
             className="h-full w-full object-contain"
             style={{
               filter: theme === 'light' ? 'brightness(0.3) sepia(0.4)' : 'none'
@@ -374,6 +376,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 <OptimizedImage
                   src={backgroundImage}
                   alt=""
+                  width={1920}
+                  height={1080}
                   className="w-full h-full opacity-20"
                   objectFit="cover"
                   priority={true}
@@ -410,6 +414,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               background: theme === 'dark' ? '#050814' : '#d3cec3',
               zIndex: 1
             }}
+            aria-hidden="true"
           />
           
           {/* ═══════════════════════════════════════════════════════════════
@@ -432,14 +437,16 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               <div className="inline-flex items-center gap-2 font-sora text-[0.75rem] uppercase tracking-[0.3em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
                 <img 
                   src="/estela6-clara.svg"
-                  alt="" 
+                  alt=""
+                  width={16}
+                  height={16}
                   className="w-4 h-4"
                   style={{
                     filter: theme === 'light' ? 'brightness(0) saturate(100%) invert(15%) sepia(10%) saturate(2000%) hue-rotate(340deg) brightness(0.9) contrast(1.2)' : 'none'
                   }}
                 />
-                <span className="text-azimut-red font-semibold">AZIMUT</span>
-                <span style={{ color: theme === 'dark' ? 'rgba(255, 255, 255, 0.4)' : 'rgba(30, 28, 26, 0.4)' }}>•</span>
+                <span className={`font-semibold ${theme === 'light' ? 'text-azimut-red' : ''}`} style={theme === 'dark' ? { color: '#e84d5c' } : undefined}>AZIMUT</span>
+                <span style={{ color: theme === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(30, 28, 26, 0.4)' }}>•</span>
                 <span className={`text-[0.7rem] ${theme === 'dark' ? 'azimut-since-year' : ''}`} style={{ color: theme === 'dark' ? undefined : '#475569' }}>SINCE 1996</span>
               </div>
                 
@@ -804,15 +811,17 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 <div className="inline-flex items-center gap-1.5 font-sora text-[0.6rem] sm:text-[0.65rem] uppercase tracking-[0.2em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.05s' }}>
                   <img 
                     src="/estela6-clara.svg"
-                    alt="" 
+                    alt=""
+                    width={12}
+                    height={12}
                     className="w-2.5 h-2.5 sm:w-3 sm:h-3"
                     style={{
                       filter: theme === 'light' ? 'brightness(0) invert(0.2)' : 'none' // Escurece no tema claro
                     }}
                   />
-                  <span className="text-azimut-red font-semibold">AZIMUT</span>
-                  <span className={theme === 'dark' ? 'text-white/40' : 'text-slate-600'}>•</span>
-                  <span className={`text-[0.55rem] sm:text-[0.6rem] ${theme === 'dark' ? 'text-white/60' : 'text-slate-600'}`}>SINCE 1996</span>
+                  <span className={`font-semibold ${theme === 'light' ? 'text-azimut-red' : ''}`} style={theme === 'dark' ? { color: '#e84d5c' } : undefined}>AZIMUT</span>
+                  <span className={theme === 'dark' ? 'text-white/70' : 'text-slate-600'}>•</span>
+                  <span className={`text-[0.55rem] sm:text-[0.6rem] ${theme === 'dark' ? 'text-white/85' : 'text-slate-600'}`}>SINCE 1996</span>
                 </div>
                 
                 {/* Título - COMPACTO */}
@@ -957,7 +966,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   <span className="text-lg">🎬</span>
                   <div>
                     <span className={`block text-[0.65rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Cinema & AV</span>
-                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-[#334155]'}`}>AUDIOVISUAL</span>
+                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/75' : 'text-[#334155]'}`}>AUDIOVISUAL</span>
                   </div>
                 </div>
                 
@@ -966,7 +975,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   <span className="text-lg">🥽</span>
                   <div>
                     <span className={`block text-[0.65rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>XR/VR/AR</span>
-                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-[#334155]'}`}>IMERSIVO</span>
+                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/75' : 'text-[#334155]'}`}>IMERSIVO</span>
                   </div>
                 </div>
                 
@@ -975,7 +984,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   <span className="text-lg">🏛️</span>
                   <div>
                     <span className={`block text-[0.65rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Exposições</span>
-                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-[#334155]'}`}>& MUSEUS</span>
+                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/75' : 'text-[#334155]'}`}>& MUSEUS</span>
                   </div>
                 </div>
                 
@@ -984,7 +993,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   <span className="text-lg">🎓</span>
                   <div>
                     <span className={`block text-[0.65rem] font-semibold leading-tight ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`}>Educação</span>
-                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/50' : 'text-[#334155]'}`}>ACADEMIA</span>
+                    <span className={`block text-[0.48rem] uppercase tracking-wider ${theme === 'dark' ? 'text-white/75' : 'text-[#334155]'}`}>ACADEMIA</span>
                   </div>
                 </div>
               </div>
@@ -1155,6 +1164,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       <img
                         src="/web-3-icon.svg"
                         alt="Web3"
+                        width={40}
+                        height={40}
                         className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10"
                       />
                     </div>
@@ -1245,6 +1256,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     <img
                       src="/empaty-engine.png"
                       alt="Empathy Engine"
+                      width={180}
+                      height={43}
                       className="h-5 sm:h-6 md:h-7 w-auto object-contain flex-shrink-0"
                       style={{ maxWidth: 180 }}
                     />
@@ -1287,6 +1300,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         <img
                           src="/web-3-icon.svg"
                           alt="Web3"
+                          width={28}
+                          height={28}
                           className="w-5 h-5 sm:w-7 sm:h-7"
                         />
                       </div>
@@ -1655,7 +1670,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       </>
                     ) : imageUrl ? (
                       <>
-                        <img src={imageUrl} alt={project.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 rounded-2xl" loading="eager" />
+                        <img src={imageUrl} alt={project.title} width={800} height={450} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 rounded-2xl" loading="eager" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30 rounded-2xl"></div>
                       </>
                     ) : (

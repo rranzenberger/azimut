@@ -432,7 +432,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 
                 {/* Grupo Canadá - EN e FR */}
                 <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '1px' }}>
-                  <img src="/flag-ca.svg" alt="Canada" className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
+                  <img src="/flag-ca.svg" alt="Canada" width={28} height={14} className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
                   <button
                     type="button"
                     aria-label="English"
@@ -442,7 +442,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     }}
                     className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
                     style={{ 
-                      color: lang === 'en' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'), 
+                      color: lang === 'en' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'), 
                       opacity: 1,
                       minWidth: '20px',
                       height: '100%',
@@ -468,7 +468,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     }}
                     className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
                     style={{
-                      color: lang === 'fr' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
+                      color: lang === 'fr' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
                       opacity: 1,
                       minWidth: '20px',
                       height: '100%',
@@ -499,7 +499,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     }}
                     className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
                     style={{
-                      color: lang === 'pt' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
+                      color: lang === 'pt' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
                       opacity: 1,
                       minWidth: '20px',
                       height: '100%',
@@ -530,7 +530,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     }}
                     className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
                     style={{
-                      color: lang === 'es' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
+                      color: lang === 'es' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
                       opacity: 1,
                       minWidth: '20px',
                       height: '100%',
@@ -614,10 +614,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                         className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors"
                         style={{
                           background: lang === 'en' ? (theme === 'dark' ? 'rgba(201, 35, 55, 0.2)' : 'rgba(201, 35, 55, 0.1)') : 'transparent',
-                          color: lang === 'en' ? '#c92337' : (theme === 'dark' ? '#fff' : '#333'),
+                          color: lang === 'en' ? (theme === 'dark' ? '#e84d5c' : '#c92337') : (theme === 'dark' ? '#fff' : '#333'),
                         }}
                       >
-                        <img src="/flag-ca.svg" alt="" style={{ height: '12px', borderRadius: '2px' }} />
+                        <img src="/flag-ca.svg" alt="" width={24} height={12} style={{ height: '12px', borderRadius: '2px' }} />
                         <span className="text-xs font-medium">English</span>
                       </button>
                       {/* FR */}
@@ -628,10 +628,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                         className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors"
                         style={{
                           background: lang === 'fr' ? (theme === 'dark' ? 'rgba(201, 35, 55, 0.2)' : 'rgba(201, 35, 55, 0.1)') : 'transparent',
-                          color: lang === 'fr' ? '#c92337' : (theme === 'dark' ? '#fff' : '#333'),
+                          color: lang === 'fr' ? (theme === 'dark' ? '#e84d5c' : '#c92337') : (theme === 'dark' ? '#fff' : '#333'),
                         }}
                       >
-                        <img src="/flag-ca.svg" alt="" style={{ height: '12px', borderRadius: '2px' }} />
+                        <img src="/flag-ca.svg" alt="" width={24} height={12} style={{ height: '12px', borderRadius: '2px' }} />
                         <span className="text-xs font-medium">Français</span>
                       </button>
                       {/* PT */}
@@ -642,10 +642,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                         className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors"
                         style={{
                           background: lang === 'pt' ? (theme === 'dark' ? 'rgba(201, 35, 55, 0.2)' : 'rgba(201, 35, 55, 0.1)') : 'transparent',
-                          color: lang === 'pt' ? '#c92337' : (theme === 'dark' ? '#fff' : '#333'),
+                          color: lang === 'pt' ? (theme === 'dark' ? '#e84d5c' : '#c92337') : (theme === 'dark' ? '#fff' : '#333'),
                         }}
                       >
-                        <img src="/flag-br.svg" alt="" style={{ height: '12px', borderRadius: '2px' }} />
+                        <img src="/flag-br.svg" alt="" width={24} height={12} style={{ height: '12px', borderRadius: '2px' }} />
                         <span className="text-xs font-medium">Português</span>
                       </button>
                       {/* ES - bandeira da Espanha */}
@@ -656,10 +656,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                         className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors"
                         style={{
                           background: lang === 'es' ? (theme === 'dark' ? 'rgba(201, 35, 55, 0.2)' : 'rgba(201, 35, 55, 0.1)') : 'transparent',
-                          color: lang === 'es' ? '#c92337' : (theme === 'dark' ? '#fff' : '#333'),
+                          color: lang === 'es' ? (theme === 'dark' ? '#e84d5c' : '#c92337') : (theme === 'dark' ? '#fff' : '#333'),
                         }}
                       >
-                        <img src="/flag-es.svg" alt="" style={{ height: '12px', borderRadius: '2px' }} />
+                        <img src="/flag-es.svg" alt="" width={24} height={12} style={{ height: '12px', borderRadius: '2px' }} />
                         <span className="text-xs font-medium">Español</span>
                       </button>
                     </div>
@@ -700,8 +700,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 padding: '0 4px', // Padding reduzido
                 position: 'relative',
                 color: activeRoute === 'home' 
-                  ? (theme === 'light' ? '#ff5a6e' : '#c92337') // Light: vermelho vibrante! Dark: vermelho original
-                  : (hoveredRoute === 'home' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-secondary)')), // Texto CLARO no light!
+                  ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') // Light: vermelho vibrante; Dark: vermelho com contraste acessível
+                  : (hoveredRoute === 'home' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-secondary)')), // Texto CLARO no light!
                 textShadow: activeRoute === 'home' && theme === 'dark' ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' : undefined,
                 lineHeight: '1'
               }}
@@ -801,8 +801,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 marginRight: '0', // Sem margem extra
                 position: 'relative',
                 color: activeRoute === 'blog' 
-                  ? (theme === 'light' ? '#ff5a6e' : '#c92337') // Light: vermelho vibrante! Dark: vermelho original
-                  : (hoveredRoute === 'blog' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-secondary)')), // Texto CLARO no light!
+                  ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') // Light: vermelho vibrante; Dark: contraste acessível
+                  : (hoveredRoute === 'blog' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-secondary)')), // Texto CLARO no light!
                 textShadow: activeRoute === 'blog' && theme === 'dark' ? '0 0 12px rgba(201, 35, 55, 0.7), 0 0 25px rgba(201, 35, 55, 0.4)' : undefined,
                 lineHeight: '1'
               }}
@@ -871,7 +871,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 margin: '0'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.color = theme === 'light' ? '#ff5a6e' : '#c92337'
+                e.currentTarget.style.color = theme === 'light' ? '#ff5a6e' : '#e84d5c'
                 e.currentTarget.style.background = theme === 'dark' ? 'rgba(201, 35, 55, 0.15)' : 'rgba(255, 90, 110, 0.15)'
                 e.currentTarget.style.transform = 'scale(1.05)'
               }}
@@ -1161,7 +1161,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block py-3 px-3 sm:px-4 font-sora text-[0.7rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors rounded-lg touch-manipulation"
                 style={{ 
-                  color: activeRoute === 'home' ? '#c92337' : 'var(--theme-text-secondary)',
+                  color: activeRoute === 'home' ? (theme === 'dark' ? '#e84d5c' : '#c92337') : 'var(--theme-text-secondary)',
                   backgroundColor: activeRoute === 'home' ? 'rgba(201, 35, 55, 0.1)' : 'transparent',
                   minHeight: '44px',
                   display: 'flex',
@@ -1174,7 +1174,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block py-3 px-3 sm:px-4 font-sora text-[0.7rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors rounded-lg touch-manipulation"
                 style={{ 
-                  color: activeRoute === 'what' ? '#c92337' : 'var(--theme-text-secondary)',
+                  color: activeRoute === 'what' ? (theme === 'dark' ? '#e84d5c' : '#c92337') : 'var(--theme-text-secondary)',
                   backgroundColor: activeRoute === 'what' ? 'rgba(201, 35, 55, 0.1)' : 'transparent',
                   minHeight: '44px',
                   display: 'flex',
@@ -1187,7 +1187,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block py-3 px-3 sm:px-4 font-sora text-[0.7rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors rounded-lg touch-manipulation"
                 style={{ 
-                  color: activeRoute === 'work' ? '#c92337' : 'var(--theme-text-secondary)',
+                  color: activeRoute === 'work' ? (theme === 'dark' ? '#e84d5c' : '#c92337') : 'var(--theme-text-secondary)',
                   backgroundColor: activeRoute === 'work' ? 'rgba(201, 35, 55, 0.1)' : 'transparent',
                   minHeight: '44px',
                   display: 'flex',
@@ -1200,7 +1200,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block py-3 px-3 sm:px-4 font-sora text-[0.7rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors rounded-lg touch-manipulation"
                 style={{ 
-                  color: activeRoute === 'studio' ? '#c92337' : 'var(--theme-text-secondary)',
+                  color: activeRoute === 'studio' ? (theme === 'dark' ? '#e84d5c' : '#c92337') : 'var(--theme-text-secondary)',
                   backgroundColor: activeRoute === 'studio' ? 'rgba(201, 35, 55, 0.1)' : 'transparent',
                   minHeight: '44px',
                   display: 'flex',
@@ -1213,7 +1213,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block py-3 px-3 sm:px-4 font-sora text-[0.7rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors rounded-lg touch-manipulation"
                 style={{ 
-                  color: activeRoute === 'academy' ? '#c92337' : 'var(--theme-text-secondary)',
+                  color: activeRoute === 'academy' ? (theme === 'dark' ? '#e84d5c' : '#c92337') : 'var(--theme-text-secondary)',
                   backgroundColor: activeRoute === 'academy' ? 'rgba(201, 35, 55, 0.1)' : 'transparent',
                   minHeight: '44px',
                   display: 'flex',
@@ -1226,7 +1226,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block py-3 px-3 sm:px-4 font-sora text-[0.7rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors rounded-lg touch-manipulation"
                 style={{ 
-                  color: activeRoute === 'blog' ? '#c92337' : 'var(--theme-text-secondary)',
+                  color: activeRoute === 'blog' ? (theme === 'dark' ? '#e84d5c' : '#c92337') : 'var(--theme-text-secondary)',
                   backgroundColor: activeRoute === 'blog' ? 'rgba(201, 35, 55, 0.1)' : 'transparent',
                   minHeight: '44px',
                   display: 'flex',
@@ -1239,7 +1239,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block py-3 px-3 sm:px-4 font-sora text-[0.7rem] sm:text-[0.75rem] font-medium uppercase tracking-[0.14em] transition-colors rounded-lg touch-manipulation"
                 style={{ 
-                  color: activeRoute === 'press' ? '#c92337' : 'var(--theme-text-secondary)',
+                  color: activeRoute === 'press' ? (theme === 'dark' ? '#e84d5c' : '#c92337') : 'var(--theme-text-secondary)',
                   backgroundColor: activeRoute === 'press' ? 'rgba(201, 35, 55, 0.1)' : 'transparent',
                   minHeight: '44px',
                   display: 'flex',
@@ -1254,12 +1254,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 <div className="flex items-center justify-center font-sora text-[0.65rem] sm:text-[0.7rem] font-medium uppercase tracking-[0.14em]" style={{ color: 'var(--theme-text-secondary)' }}>
                   {/* Grupo Canadá - EN e FR muito juntos */}
                   <span className="inline-flex items-center gap-0" style={{ alignItems: 'center' }}>
-                    <img src="/flag-ca.svg" alt="Canada" className="h-3.5 w-auto rounded-[2px] opacity-90 mr-0.5" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
+                    <img src="/flag-ca.svg" alt="Canada" width={28} height={14} className="h-3.5 w-auto rounded-[2px] opacity-90 mr-0.5" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
                     <button
                       onClick={() => changeLang('en')}
                       className="transition-all duration-200 touch-manipulation"
                       style={{ 
-                        color: lang === 'en' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
+                        color: lang === 'en' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
                         opacity: lang === 'en' ? 1 : 0.7,
                         minWidth: '28px',
                         minHeight: '32px',
@@ -1275,7 +1275,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       onClick={() => changeLang('fr')}
                       className="transition-all duration-200 touch-manipulation"
                       style={{ 
-                        color: lang === 'fr' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
+                        color: lang === 'fr' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
                         opacity: lang === 'fr' ? 1 : 0.7,
                         minWidth: '28px',
                         minHeight: '32px',
@@ -1291,12 +1291,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <span className="opacity-50 mx-3.5 text-[0.8rem] font-normal flex items-center" style={{ lineHeight: '1' }}>|</span>
                   {/* PT - Brasil */}
                   <span className="inline-flex items-center gap-0" style={{ alignItems: 'center' }}>
-                    <img src="/flag-br.svg" alt="Brasil" className="h-3.5 w-auto rounded-[2px] opacity-90 mr-1" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
+                    <img src="/flag-br.svg" alt="Brasil" width={28} height={14} className="h-3.5 w-auto rounded-[2px] opacity-90 mr-1" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
                     <button
                       onClick={() => changeLang('pt')}
                       className="transition-all duration-200 touch-manipulation"
                       style={{ 
-                        color: lang === 'pt' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
+                        color: lang === 'pt' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
                         opacity: lang === 'pt' ? 1 : 0.7,
                         minWidth: '28px',
                         minHeight: '32px',
@@ -1312,12 +1312,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <span className="mx-[2px] opacity-70 text-[0.6rem] sm:text-[0.65rem] flex items-center" style={{ lineHeight: '1', display: 'inline-flex', color: '#c92337' }}>●</span>
                   {/* ES - Espanha */}
                   <span className="inline-flex items-center gap-0" style={{ alignItems: 'center' }}>
-                    <img src="/flag-es.svg" alt="España" className="h-3.5 w-auto rounded-[2px] opacity-90 mr-1" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
+                    <img src="/flag-es.svg" alt="España" width={28} height={14} className="h-3.5 w-auto rounded-[2px] opacity-90 mr-1" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
                     <button
                       onClick={() => changeLang('es')}
                       className="transition-all duration-200 touch-manipulation"
                       style={{ 
-                        color: lang === 'es' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
+                        color: lang === 'es' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
                         opacity: lang === 'es' ? 1 : 0.7,
                         minWidth: '28px',
                         minHeight: '32px',
@@ -1414,6 +1414,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 <img 
                   src="/logo-topo-site.svg"
                   alt="Azimut" 
+                  width={120}
+                  height={48}
                   className="opacity-90 h-12 w-auto mx-auto"
                 />
               </LangLink>
@@ -1423,12 +1425,12 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               {/* Cidades */}
               <div className="flex items-center justify-center gap-1.5 mt-2 text-slate-500 flex-wrap">
                 <div className="flex items-center gap-0.5">
-                  <img src="/flag-ca.svg" alt="Canada" style={{ height: '10px', width: 'auto' }} className="rounded-[1px]" />
+                  <img src="/flag-ca.svg" alt="Canada" width={20} height={10} style={{ height: '10px', width: 'auto' }} className="rounded-[1px]" />
                   <span className="text-[0.55rem]">Vancouver</span>
                 </div>
                 <span className="text-[0.5rem] opacity-50">•</span>
                 <div className="flex items-center gap-0.5">
-                  <img src="/flag-br.svg" alt="Brasil" style={{ height: '10px', width: 'auto' }} className="rounded-[1px]" />
+                  <img src="/flag-br.svg" alt="Brasil" width={20} height={10} style={{ height: '10px', width: 'auto' }} className="rounded-[1px]" />
                   <span className="text-[0.6rem]">Rio</span>
                   <span className="text-[0.5rem] opacity-40">·</span>
                   <span className="text-[0.55rem]">Floripa</span>
@@ -1439,10 +1441,10 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             {/* Grid de Links 3 colunas */}
             <div className="grid grid-cols-3 gap-2 mb-5 text-center">
               <nav className="flex flex-col gap-1" aria-label={t(lang, 'navFooterNav')}>
-                <h4 className="font-sora font-bold uppercase tracking-tight text-white mb-0.5 text-[0.32rem] min-[350px]:text-[0.38rem]" style={{ lineHeight: '1', whiteSpace: 'nowrap' }}>
+                <h2 className="font-sora font-bold uppercase tracking-tight text-white mb-0.5 text-[0.32rem] min-[350px]:text-[0.38rem]" style={{ lineHeight: '1', whiteSpace: 'nowrap' }}>
                   <span className="hidden min-[350px]:inline">{t(lang, 'navFooterNav')}</span>
                   <span className="inline min-[350px]:hidden">Nav</span>
-                </h4>
+                </h2>
                 {/* Botão de Busca Mobile */}
                 <button
                   type="button"
@@ -1452,44 +1454,44 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     setIsMobileMenuOpen(false)
                     trackInteraction('search_open', 'mobile_menu_search')
                   }}
-                  className="flex items-center justify-center gap-1 text-[0.6rem] text-slate-400 hover:text-azimut-red transition-colors"
+                  className="flex items-center justify-center gap-1 text-[0.6rem] text-slate-400 hover:text-azimut-red transition-colors min-h-[44px] px-2"
                 >
                   <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                   <span>{t(lang, 'navSearchLabel')}</span>
                 </button>
-                <LangLink to="/" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navHome')}</LangLink>
-                <LangLink to="/what" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navWhat')}</LangLink>
-                <LangLink to="/work" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navWork')}</LangLink>
-                <LangLink to="/studio" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navStudio')}</LangLink>
-                <LangLink to="/studio/equipe" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">
+                <LangLink to="/" className="text-[0.6rem] text-slate-400 hover:text-azimut-red py-2 min-h-[44px] flex items-center justify-center">{t(lang, 'navHome')}</LangLink>
+                <LangLink to="/what" className="text-[0.6rem] text-slate-400 hover:text-azimut-red py-2 min-h-[44px] flex items-center justify-center">{t(lang, 'navWhat')}</LangLink>
+                <LangLink to="/work" className="text-[0.6rem] text-slate-400 hover:text-azimut-red py-2 min-h-[44px] flex items-center justify-center">{t(lang, 'navWork')}</LangLink>
+                <LangLink to="/studio" className="text-[0.6rem] text-slate-400 hover:text-azimut-red py-2 min-h-[44px] flex items-center justify-center">{t(lang, 'navStudio')}</LangLink>
+                <LangLink to="/studio/equipe" className="text-[0.6rem] text-slate-400 hover:text-azimut-red py-2 min-h-[44px] flex items-center justify-center">
                   {lang === 'en' ? 'Team' : lang === 'fr' ? 'Équipe' : lang === 'es' ? 'Equipo' : 'Equipe'}
                 </LangLink>
               </nav>
               <nav className="flex flex-col gap-1" aria-label={t(lang, 'navFooterEdu')}>
-                <h4 className="font-sora font-bold uppercase tracking-tight text-white text-[0.32rem] min-[350px]:text-[0.38rem]" style={{ lineHeight: '1', marginBottom: '0.1rem', whiteSpace: 'nowrap' }}>
+                <h2 className="font-sora font-bold uppercase tracking-tight text-white text-[0.32rem] min-[350px]:text-[0.38rem]" style={{ lineHeight: '1', marginBottom: '0.1rem', whiteSpace: 'nowrap' }}>
                   <span className="hidden min-[350px]:inline">{t(lang, 'navFooterEdu')}</span>
                   <span className="inline min-[350px]:hidden">Edu</span>
-                </h4>
-                <LangLink to="/academy" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navAcademy')}</LangLink>
+                </h2>
+                <LangLink to="/academy" className="text-[0.6rem] text-slate-400 hover:text-azimut-red py-2 min-h-[44px] flex items-center">{t(lang, 'navAcademy')}</LangLink>
                 <div className="flex flex-col gap-0.5">
-                  <LangLink to="/academy/courses" className="text-[0.55rem] text-slate-500 hover:text-azimut-red ml-2">└ {t(lang, 'navFooterCourses')}</LangLink>
-                  <LangLink to="/academy/workshops" className="text-[0.55rem] text-slate-500 hover:text-azimut-red ml-2">└ Workshops</LangLink>
-                  <LangLink to="/academy/corporate" className="text-[0.55rem] text-slate-500 hover:text-azimut-red ml-2">└ Corporate</LangLink>
-                  <LangLink to="/academy/vancouver" className="text-[0.55rem] text-slate-500 hover:text-azimut-red ml-2">└ Vancouver</LangLink>
+                  <LangLink to="/academy/courses" className="text-[0.55rem] text-slate-400 hover:text-azimut-red ml-2 py-1.5 min-h-[44px] flex items-center">└ {t(lang, 'navFooterCourses')}</LangLink>
+                  <LangLink to="/academy/workshops" className="text-[0.55rem] text-slate-400 hover:text-azimut-red ml-2 py-1.5 min-h-[44px] flex items-center">└ Workshops</LangLink>
+                  <LangLink to="/academy/corporate" className="text-[0.55rem] text-slate-400 hover:text-azimut-red ml-2 py-1.5 min-h-[44px] flex items-center">└ Corporate</LangLink>
+                  <LangLink to="/academy/vancouver" className="text-[0.55rem] text-slate-400 hover:text-azimut-red ml-2 py-1.5 min-h-[44px] flex items-center">└ Vancouver</LangLink>
                 </div>
               </nav>
               <nav className="flex flex-col gap-1" aria-label={t(lang, 'navFooterStart')}>
-                <h4 className="font-sora font-bold uppercase tracking-tight text-white mb-0.5 text-[0.32rem] min-[350px]:text-[0.38rem]" style={{ lineHeight: '1', whiteSpace: 'nowrap' }}>
+                <h2 className="font-sora font-bold uppercase tracking-tight text-white mb-0.5 text-[0.32rem] min-[350px]:text-[0.38rem]" style={{ lineHeight: '1', whiteSpace: 'nowrap' }}>
                   <span className="hidden min-[350px]:inline">{t(lang, 'navFooterStart')}</span>
                   <span className="inline min-[350px]:hidden">Start</span>
-                </h4>
-                <LangLink to="/what" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navWhat')}</LangLink>
-                <LangLink to="/contact" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navFooterContact')}</LangLink>
-                <LangLink to="/press" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navPress')}</LangLink>
-                <LangLink to="/work/review" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navFooterReview')}</LangLink>
-                <LangLink to="/blog" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">Blog</LangLink>
+                </h2>
+                <LangLink to="/what" className="text-[0.6rem] text-slate-400 hover:text-azimut-red py-2 min-h-[44px] flex items-center justify-center">{t(lang, 'navWhat')}</LangLink>
+                <LangLink to="/contact" className="text-[0.6rem] text-slate-400 hover:text-azimut-red py-2 min-h-[44px] flex items-center justify-center">{t(lang, 'navFooterContact')}</LangLink>
+                <LangLink to="/press" className="text-[0.6rem] text-slate-400 hover:text-azimut-red py-2 min-h-[44px] flex items-center justify-center">{t(lang, 'navPress')}</LangLink>
+                <LangLink to="/work/review" className="text-[0.6rem] text-slate-400 hover:text-azimut-red py-2 min-h-[44px] flex items-center justify-center">{t(lang, 'navFooterReview')}</LangLink>
+                <LangLink to="/blog" className="text-[0.7rem] text-slate-400 hover:text-azimut-red py-2 min-h-[44px] flex items-center justify-center">Blog</LangLink>
               </nav>
             </div>
             
@@ -1515,28 +1517,28 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             
             {/* Ícones Sociais Centralizados */}
             <div className="flex items-center justify-center gap-4 mb-6">
-              <a href="https://youtube.com/@azimutart" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-red-500 transition-colors" aria-label="YouTube">
+              <a href="https://youtube.com/@azimutart" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-12 h-12 min-w-[48px] min-h-[48px] text-white/85 hover:text-red-500 transition-colors rounded-lg" aria-label="YouTube">
                 <svg fill="currentColor" viewBox="0 0 24 24" className="w-6 h-6"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
               </a>
-              <a href="https://instagram.com/azimut.art" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-pink-500 transition-colors" aria-label="Instagram">
+              <a href="https://instagram.com/azimut.art" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-12 h-12 min-w-[48px] min-h-[48px] text-white/85 hover:text-pink-500 transition-colors rounded-lg" aria-label="Instagram">
                 <svg fill="currentColor" viewBox="0 0 24 24" className="w-6 h-6"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               </a>
-              <a href="https://linkedin.com/company/azimut-art" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-blue-500 transition-colors" aria-label="LinkedIn">
+              <a href="https://linkedin.com/company/azimut-art" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-12 h-12 min-w-[48px] min-h-[48px] text-white/85 hover:text-blue-500 transition-colors rounded-lg" aria-label="LinkedIn">
                 <svg fill="currentColor" viewBox="0 0 24 24" className="w-6 h-6"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
               </a>
-              <a href="https://vimeo.com/azimutart" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-cyan-500 transition-colors" aria-label="Vimeo">
+              <a href="https://vimeo.com/azimutart" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-12 h-12 min-w-[48px] min-h-[48px] text-white/85 hover:text-cyan-500 transition-colors rounded-lg" aria-label="Vimeo">
                 <svg fill="currentColor" viewBox="0 0 24 24" className="w-6 h-6"><path d="M23.977 6.416c-.105 2.338-1.739 5.543-4.894 9.609-3.268 4.247-6.026 6.37-8.29 6.37-1.409 0-2.578-1.294-3.553-3.881L5.322 11.4C4.603 8.816 3.834 7.522 3.01 7.522c-.179 0-.806.378-1.881 1.132L0 7.197c1.185-1.044 2.351-2.084 3.501-3.128C5.08 2.701 6.266 1.984 7.055 1.91c1.867-.18 3.016 1.1 3.447 3.838.465 2.953.789 4.789.971 5.507.539 2.45 1.131 3.674 1.776 3.674.502 0 1.256-.796 2.265-2.385 1.004-1.589 1.54-2.797 1.612-3.628.144-1.371-.395-2.061-1.614-2.061-.574 0-1.167.121-1.777.391 1.186-3.868 3.434-5.757 6.762-5.637 2.473.06 3.628 1.664 3.493 4.797l-.013.01z"/></svg>
               </a>
-              <a href="https://behance.net/azimutart" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-blue-400 transition-colors" aria-label="Behance">
+              <a href="https://behance.net/azimutart" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-12 h-12 min-w-[48px] min-h-[48px] text-white/85 hover:text-blue-400 transition-colors rounded-lg" aria-label="Behance">
                 <svg fill="currentColor" viewBox="0 0 24 24" className="w-6 h-6"><path d="M6.938 4.503c.702 0 1.34.06 1.92.188.577.13 1.07.33 1.485.61.41.28.733.65.96 1.12.225.47.34 1.05.34 1.73 0 .74-.17 1.36-.507 1.86-.338.5-.837.9-1.502 1.22.906.26 1.576.72 2.022 1.37.448.66.665 1.45.665 2.36 0 .75-.13 1.39-.41 1.93-.28.55-.67 1-1.16 1.35-.48.348-1.05.6-1.67.767-.61.165-1.252.254-1.91.254H0V4.51h6.938v-.007zM6.545 9.64c.56 0 1.01-.13 1.36-.397.35-.27.52-.678.52-1.22 0-.3-.06-.55-.165-.76-.115-.21-.27-.378-.465-.503-.2-.128-.42-.22-.665-.275-.25-.057-.51-.085-.785-.085H3.262v3.24h3.283zm.18 5.507c.305 0 .59-.03.876-.092.29-.06.548-.165.763-.3.21-.138.38-.323.507-.56.13-.238.19-.53.19-.9 0-.74-.2-1.27-.61-1.593-.41-.32-.948-.48-1.608-.48H3.262v3.93h3.463v-.005zm10.89-9.143h5.37v1.31h-5.37V6.004zm2.648 11.033c.57.56 1.39.84 2.453.84.75 0 1.397-.19 1.943-.574.545-.39.89-.8 1.017-1.254h3.37c-.545 1.67-1.39 2.9-2.535 3.69-1.145.79-2.527 1.18-4.15 1.18-1.125 0-2.14-.18-3.04-.55-.905-.37-1.68-.89-2.312-1.56-.637-.67-1.125-1.47-1.478-2.4-.35-.93-.522-1.95-.522-3.06 0-1.07.18-2.07.535-2.99.36-.92.86-1.71 1.5-2.39.64-.68 1.4-1.21 2.29-1.59.89-.38 1.87-.57 2.94-.57 1.2 0 2.25.23 3.15.7.9.47 1.64 1.09 2.22 1.87.59.79 1.02 1.69 1.29 2.7.28 1.01.37 2.07.28 3.18H18.49c.05 1.09.435 1.96 1.005 2.52l.18.04z"/></svg>
               </a>
             </div>
             
             {/* Contato Compacto - alinhado à newsletter (max-w-xs), email + WhatsApp full width */}
             <div className="text-center mb-5 max-w-xs mx-auto">
-              <h4 className="font-sora text-[0.6rem] font-semibold uppercase tracking-wider text-white mb-2">
+              <h2 className="font-sora text-[0.6rem] font-semibold uppercase tracking-wider text-white mb-2">
                 {t(lang, 'navFooterContact')}
-              </h4>
+              </h2>
               <div className="flex flex-col gap-2 w-full">
                 <a 
                   href="mailto:contact@azimutimmersive.com" 
@@ -1594,8 +1596,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             
             {/* Newsletter Compacta */}
             <div className="text-center mb-6">
-              <h4 className="font-sora text-[0.6rem] font-semibold uppercase tracking-wider text-white mb-2">Newsletter</h4>
-              <p className="text-[0.65rem] text-slate-500 mb-2">
+              <h2 className="font-sora text-[0.6rem] font-semibold uppercase tracking-wider text-white mb-2">Newsletter</h2>
+              <p className="text-[0.65rem] text-slate-400 mb-2">
                 {t(lang, 'navGetUpdates')}
               </p>
               <form 
@@ -1642,13 +1644,13 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             
             {/* Copyright Mobile */}
             <div className="text-center pt-4 border-t border-white/10">
-              <p className="text-[0.6rem] text-slate-500 mb-2">
+              <p className="text-[0.6rem] text-slate-400 mb-2">
                 {t(lang, 'footer').replace('{year}', String(new Date().getFullYear()))}
               </p>
-              <div className="flex items-center justify-center gap-3 text-[0.6rem] text-slate-500">
-                <LangLink to="/privacy" className="hover:text-azimut-red">{t(lang, 'navPrivacy')}</LangLink>
+              <div className="flex items-center justify-center gap-3 text-[0.6rem] text-slate-400">
+                <LangLink to="/privacy" className={theme === 'dark' ? 'hover:opacity-90' : 'hover:text-azimut-red'} style={theme === 'dark' ? { color: '#e84d5c' } : undefined}>{t(lang, 'navPrivacy')}</LangLink>
                 <span className="opacity-50">•</span>
-                <LangLink to="/terms" className="hover:text-azimut-red">{t(lang, 'navTerms')}</LangLink>
+                <LangLink to="/terms" className={theme === 'dark' ? 'hover:opacity-90' : 'hover:text-azimut-red'} style={theme === 'dark' ? { color: '#e84d5c' } : undefined}>{t(lang, 'navTerms')}</LangLink>
               </div>
             </div>
           </div>
@@ -1665,6 +1667,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <img 
                     src="/logo-topo-site.svg"
                     alt="Azimut" 
+                    width={260}
+                    height={104}
                     className="opacity-90 hover:opacity-100 transition-opacity duration-300"
                     style={{ 
                       height: 'auto',
@@ -1693,13 +1697,13 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               <div className="flex items-center justify-between flex-wrap gap-1" style={{ color: '#64748b', marginTop: 'auto', paddingTop: '0.75rem', width: '100%', maxWidth: '260px' }}>
                 {/* Canadá - Vancouver */}
                 <div className="flex items-center gap-0.5">
-                  <img src="/flag-ca.svg" alt="Canada" className="rounded-[2px] opacity-90" style={{ display: 'block', height: '12px', width: 'auto' }} />
+                  <img src="/flag-ca.svg" alt="Canada" width={24} height={12} className="rounded-[2px] opacity-90" style={{ display: 'block', height: '12px', width: 'auto' }} />
                   <span className="text-[0.65rem] sm:text-[0.7rem]">Vancouver</span>
                 </div>
                 <span className="opacity-40 text-[0.5rem]">•</span>
                 {/* Brasil - Rio e Florianópolis juntos */}
                 <div className="flex items-center gap-0.5">
-                  <img src="/flag-br.svg" alt="Brasil" className="rounded-[2px] opacity-90" style={{ display: 'block', height: '12px', width: 'auto' }} />
+                  <img src="/flag-br.svg" alt="Brasil" width={24} height={12} className="rounded-[2px] opacity-90" style={{ display: 'block', height: '12px', width: 'auto' }} />
                   <span className="text-[0.65rem] sm:text-[0.7rem]">Rio</span>
                   <span className="opacity-40 text-[0.5rem]">·</span>
                   <span className="text-[0.6rem] sm:text-[0.65rem]">Floripa</span>
@@ -1713,9 +1717,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               <div className="grid grid-cols-3 gap-x-4 md:gap-x-5" style={{ flex: '1' }}>
                 {/* Coluna 1: Navegação Principal */}
                 <nav className="flex flex-col gap-1 sm:gap-1.5" style={{ justifyContent: 'flex-start' }}>
-                  <h4 className="font-sora text-[0.6rem] sm:text-[0.68rem] font-semibold uppercase tracking-[0.12em] mb-1.5 sm:mb-2 text-white">
+                  <h2 className="font-sora text-[0.6rem] sm:text-[0.68rem] font-semibold uppercase tracking-[0.12em] mb-1.5 sm:mb-2 text-white">
                     {t(lang, 'navFooterNav')}
-                  </h4>
+                  </h2>
                   <LangLink to="/" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navHome')}</LangLink>
                   <LangLink to="/what" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navWhat')}</LangLink>
                   <LangLink to="/work" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>{t(lang, 'navWork')}</LangLink>
@@ -1727,9 +1731,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
 
                 {/* Coluna 2: Academy */}
                 <nav className="flex flex-col gap-1 sm:gap-1.5" style={{ justifyContent: 'flex-start' }}>
-                  <h4 className="font-sora text-[0.6rem] sm:text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-white" style={{ lineHeight: '1.2', marginBottom: '0.2rem' }}>
+                  <h2 className="font-sora text-[0.6rem] sm:text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-white" style={{ lineHeight: '1.2', marginBottom: '0.2rem' }}>
                     {lang === 'en' ? 'Education' : lang === 'fr' ? 'Éducation' : lang === 'es' ? 'Educación' : 'Educação'}
-                  </h4>
+                  </h2>
                   <LangLink to="/academy" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors hover:text-[#8B2332] font-medium" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                     {t(lang, 'navAcademy')}
                   </LangLink>
@@ -1745,9 +1749,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
 
                 {/* Coluna 3: Começar */}
                 <nav className="flex flex-col gap-1 sm:gap-1.5 h-full" style={{ justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                  <h4 className="font-sora text-[0.6rem] sm:text-[0.68rem] font-semibold uppercase tracking-[0.12em] mb-1.5 sm:mb-2 text-white">
+                  <h2 className="font-sora text-[0.6rem] sm:text-[0.68rem] font-semibold uppercase tracking-[0.12em] mb-1.5 sm:mb-2 text-white">
                     {t(lang, 'navFooterStart')}
-                  </h4>
+                  </h2>
                   <div className="flex flex-col gap-1 sm:gap-1.5" style={{ flexGrow: '1' }}>
                     <LangLink to="/what" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                       {t(lang, 'navWhat')}
@@ -1865,9 +1869,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               
               {/* NEWSLETTER - Texto e formulário JUNTOS */}
               <div style={{ flexGrow: '0', width: '100%', maxWidth: '100%' }}>
-                <h4 className="font-sora text-[0.72rem] sm:text-[0.78rem] font-semibold uppercase tracking-[0.15em] mb-2.5 sm:mb-3 text-white">
+                <h2 className="font-sora text-[0.72rem] sm:text-[0.78rem] font-semibold uppercase tracking-[0.15em] mb-2.5 sm:mb-3 text-white">
                   {t(lang, 'navNewsletter')}
-                </h4>
+                </h2>
                 {/* Texto descritivo - JUNTO com o formulário */}
                 <p className="text-[0.78rem] sm:text-[0.82rem] mb-2.5" style={{ color: '#94a3b8', lineHeight: '1.4', maxWidth: '100%' }}>
                   {lang === 'en' 

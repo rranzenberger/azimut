@@ -336,7 +336,7 @@ export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
-                    <img src="/web-3-icon.svg" alt="Web3" style={{ width: 28, height: 28 }} />
+                    <img src="/web-3-icon.svg" alt="Web3" width={28} height={28} style={{ width: 28, height: 28 }} />
                   </div>
                 </div>
 
@@ -425,6 +425,8 @@ export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
                   <img
                     src="/empaty-engine.png"
                     alt="Empathy Engine"
+                    width={140}
+                    height={33}
                     style={{ height: 22, width: 'auto', maxWidth: 140, objectFit: 'contain' }}
                   />
                   <span>→</span>

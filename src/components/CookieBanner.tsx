@@ -145,7 +145,8 @@ const CookieBannerComponent: React.FC<CookieBannerProps> = ({ lang }) => {
               {text.message}{' '}
               <a 
                 href={`/${lang}/privacy`}
-                className="text-azimut-red hover:underline"
+                className="hover:underline"
+                style={{ color: '#e84d5c' }}
               >
                 {text.learnMore}
               </a>

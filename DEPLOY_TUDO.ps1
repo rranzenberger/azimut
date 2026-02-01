@@ -55,10 +55,19 @@ Write-Host "Site + Game: deploy enviado." -ForegroundColor Green
 Write-Host ""
 
 # 4) Deploy BACKOFFICE (azimut-cms)
+# Se der erro "path azimut-cms\azimut-cms does not exist": no projeto Vercel do backoffice,
+# Settings > Root Directory deixe VAZIO (nao use "azimut-cms"). Ver CORRIGIR_VERCEL_BACKOFFICE.md
 Write-Host "[3/4] Deploy BACKOFFICE (azimut-cms)..." -ForegroundColor Yellow
-vercel --prod --yes --cwd azimut-cms
+Push-Location (Join-Path $PSScriptRoot "azimut-cms")
+try {
+    vercel --prod --yes
+    if ($LASTEXITCODE -ne 0) { throw "Vercel falhou" }
+} finally {
+    Pop-Location
+}
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "ERRO no deploy do backoffice. Verifique e tente de novo." -ForegroundColor Red
+    Write-Host "ERRO no deploy do backoffice. Se o erro for 'path azimut-cms\azimut-cms':" -ForegroundColor Red
+    Write-Host "  Vercel > azimut-backoffice > Settings > Root Directory = VAZIO. Ver CORRIGIR_VERCEL_BACKOFFICE.md" -ForegroundColor Yellow
     exit 1
 }
 Write-Host "Backoffice: deploy enviado." -ForegroundColor Green

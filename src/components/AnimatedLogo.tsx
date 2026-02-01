@@ -1,11 +1,27 @@
 import React, { useRef, useEffect, useState } from 'react';
 
+/** No mobile: mostra só poster (sem vídeo) para LCP rápido. No desktop: vídeo completo. */
+function useIsMobile(): boolean {
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia('(max-width: 768px)').matches : true
+  );
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)');
+    const fn = () => setIsMobile(mq.matches);
+    mq.addEventListener('change', fn);
+    return () => mq.removeEventListener('change', fn);
+  }, []);
+  return isMobile;
+}
+
 export const AnimatedLogo: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [opacity, setOpacity] = useState(1);
   const [key, setKey] = useState(0);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
+    if (isMobile) return;
     const video = videoRef.current;
     if (!video) return;
 
@@ -14,35 +30,46 @@ export const AnimatedLogo: React.FC = () => {
     let fadeInTimeout: NodeJS.Timeout | undefined;
 
     const handleEnded = () => {
-      // Comportamento igual ao desktop:
-      // 1. Pausa no último frame
       video.pause();
-      setOpacity(1); // Garante visibilidade no último frame
-      
-      // 2. Espera 10 segundos (pausa)
+      setOpacity(1);
       pauseTimeout = setTimeout(() => {
-        // 3. Fade out por 2 segundos
         setOpacity(0);
-        
         fadeOutTimeout = setTimeout(() => {
-          // 4. Reset e fade in por 2 segundos
-          video.currentTime = 0; // Reset para início
-          setOpacity(1); // Fade in
-          video.play(); // Reinicia animação
-        }, 2000); // Fade out: 2s
-      }, 10000); // Pausa: 10s
+          video.currentTime = 0;
+          setOpacity(1);
+          video.play();
+        }, 2000);
+      }, 10000);
     };
 
     video.addEventListener('ended', handleEnded);
-
-    // Cleanup function
     return () => {
       video.removeEventListener('ended', handleEnded);
       if (pauseTimeout) clearTimeout(pauseTimeout);
       if (fadeOutTimeout) clearTimeout(fadeOutTimeout);
       if (fadeInTimeout) clearTimeout(fadeInTimeout);
     };
-  }, [key]);
+  }, [key, isMobile]);
+
+  // Mobile: só poster (melhor LCP, evita ~2MB de vídeo)
+  if (isMobile) {
+    return (
+      <div className="w-full h-full flex items-center justify-center" aria-hidden="true">
+        <img
+          src="/logo-azimut-star.svg"
+          alt="Azimut"
+          width={720}
+          height={720}
+          loading="eager"
+          fetchPriority="high"
+          className="w-full h-full object-contain pointer-events-none"
+          style={{
+            filter: 'drop-shadow(0 0 20px rgba(201, 35, 55, 0.6)) drop-shadow(0 0 40px rgba(201, 35, 55, 0.4))',
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <video
@@ -52,6 +79,9 @@ export const AnimatedLogo: React.FC = () => {
       muted
       playsInline
       preload="auto"
+      poster="/logo-azimut-star.svg"
+      width={1280}
+      height={720}
       className="w-full h-full object-contain pointer-events-none"
       style={{ 
         opacity: opacity, 
@@ -74,8 +104,10 @@ export const AnimatedLogo: React.FC = () => {
       <source src="/logo_animada_glow.mp4" type="video/mp4" />
       {/* MOV original (fallback final) */}
       <source src="/logo_animada_glow.mov" type="video/quicktime" />
+      {/* Legendas (vazio = vídeo decorativo/mudo; Lighthouse/ a11y) */}
+      <track kind="captions" src="data:text/vtt;base64,V0VCVFRUCg==" srclang="pt" label="Legendas" default />
       {/* SVG ultimate fallback */}
-      <img src="/logo-azimut-star.svg" alt="Azimut Logo Animada" loading="eager" />
+      <img src="/logo-azimut-star.svg" alt="Azimut Logo Animada" width={720} height={720} loading="eager" />
     </video>
   );
 };

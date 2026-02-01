@@ -149,7 +149,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
   }
 
   const youtubeId = project.heroImage?.original ? getYouTubeId(project.heroImage.original) : null
-  const videoEmbedUrl = youtubeId ? `https://www.youtube.com/embed/${youtubeId}` : undefined
+  const videoEmbedUrl = youtubeId ? `https://www.youtube-nocookie.com/embed/${youtubeId}` : undefined
   const videoContentUrl = project.heroImage?.original?.includes('youtube.com') || project.heroImage?.original?.includes('youtu.be') 
     ? undefined 
     : project.heroImage?.original
