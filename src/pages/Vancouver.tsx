@@ -553,93 +553,132 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* Aprenda artes audiovisuais — VFS/VanArts + chamada ao jogo */}
+        {/* Colleges de Media Arts em Vancouver - Cards Premium */}
         <section
-          className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8"
+          className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8"
           style={{
-            background: theme === 'dark' 
-              ? 'linear-gradient(180deg, rgba(15, 15, 25, 0.95) 0%, rgba(25, 20, 35, 0.98) 50%, rgba(15, 15, 25, 0.95) 100%)' 
-              : 'linear-gradient(180deg, rgba(20, 15, 25, 0.98) 0%, rgba(30, 20, 40, 0.95) 50%, rgba(20, 15, 25, 0.98) 100%)',
-            borderTop: '1px solid rgba(139, 92, 246, 0.15)',
-            borderBottom: '1px solid rgba(139, 92, 246, 0.15)',
+            background: 'linear-gradient(180deg, rgba(139, 92, 246, 0.08) 0%, rgba(59, 130, 246, 0.05) 50%, rgba(201, 35, 55, 0.06) 100%)',
           }}
         >
           <div className="max-w-5xl mx-auto">
-            {/* Título */}
-            <div className="text-center mb-10">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-handel uppercase tracking-wider mb-4" style={{ color: '#ffffff' }}>
-                {translate(lang, 'vancouverLearnHookTitle')}
+            {/* Título Principal */}
+            <div className="text-center mb-14">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-handel uppercase tracking-wider mb-5" style={{ color: '#ffffff' }}>
+                {lang === 'pt' ? 'Escolas Parceiras em Vancouver' : lang === 'es' ? 'Escuelas Asociadas en Vancouver' : lang === 'fr' ? 'Écoles Partenaires à Vancouver' : 'Partner Schools in Vancouver'}
               </h2>
-              <p className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto" style={{ color: 'rgba(255,255,255,0.8)' }}>
-                {translate(lang, 'vancouverLearnHookBody')}
+              <p className="text-base sm:text-lg leading-relaxed max-w-2xl mx-auto" style={{ color: 'rgba(255,255,255,0.7)' }}>
+                {lang === 'pt' ? 'Diplomas intensivos de 1 ano. Após graduar, continue no BCIT e obtenha Bachelor\'s Degree + Work Permit.' : 
+                 lang === 'es' ? 'Diplomas intensivos de 1 año. Después, continúa en BCIT y obtén Bachelor\'s Degree + Work Permit.' :
+                 lang === 'fr' ? 'Diplômes intensifs d\'1 an. Ensuite, continuez au BCIT et obtenez Bachelor\'s Degree + Work Permit.' :
+                 'Intensive 1-year diplomas. Then continue at BCIT and earn a Bachelor\'s Degree + Work Permit.'}
               </p>
             </div>
 
-            {/* Cards das Escolas */}
-            <div className="grid md:grid-cols-2 gap-6 mb-10">
-              {/* VFS Card */}
+            {/* Cards Empilhados - Melhor visual */}
+            <div className="space-y-6 mb-14">
+              
+              {/* VFS Card - Fundo vermelho escuro */}
               <div 
-                className="p-6 rounded-2xl flex flex-col items-center text-center transition-all duration-300 hover:scale-[1.02]"
+                className="rounded-2xl overflow-hidden transition-all duration-300 hover:scale-[1.01] hover:shadow-2xl"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(201, 35, 55, 0.12) 0%, rgba(201, 35, 55, 0.05) 100%)',
-                  border: '1px solid rgba(201, 35, 55, 0.25)',
+                  background: 'linear-gradient(135deg, #1a0a0c 0%, #2d1215 100%)',
+                  border: '1px solid rgba(201, 35, 55, 0.3)',
+                  boxShadow: '0 4px 30px rgba(201, 35, 55, 0.15)',
                 }}
               >
-                <img 
-                  src="/vfs.png" 
-                  alt="Vancouver Film School" 
-                  className="h-16 sm:h-20 w-auto mb-4 object-contain"
-                  style={{ filter: 'brightness(1.1)' }}
-                />
-                <h3 className="text-lg sm:text-xl font-bold mb-2" style={{ color: '#ffffff' }}>
-                  Vancouver Film School
-                </h3>
-                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>
-                  {lang === 'pt' ? 'Game Design, 3D Animation & VFX, Film Production, Sound Design' : 
-                   lang === 'es' ? 'Diseño de Juegos, Animación 3D y VFX, Producción Cinematográfica' :
-                   lang === 'fr' ? 'Game Design, Animation 3D et VFX, Production Cinématographique' :
-                   'Game Design, 3D Animation & VFX, Film Production, Sound Design'}
-                </p>
-                <div className="mt-3 flex gap-2">
-                  <span className="px-3 py-1 text-xs font-bold rounded-full" style={{ background: 'rgba(201, 35, 55, 0.3)', color: '#ff6b7a' }}>
-                    #1 Canada
-                  </span>
-                  <span className="px-3 py-1 text-xs font-bold rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)' }}>
-                    92% {lang === 'pt' ? 'empregabilidade' : lang === 'es' ? 'empleabilidad' : lang === 'fr' ? 'employabilité' : 'employability'}
-                  </span>
+                <div className="p-6 sm:p-8">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mb-5">
+                    {/* Logo pequena */}
+                    <div className="flex items-center justify-center w-14 h-14 rounded-xl" style={{ background: 'rgba(201, 35, 55, 0.15)' }}>
+                      <img src="/vfs.png" alt="VFS" className="h-8 w-auto object-contain" style={{ filter: 'brightness(1.2)' }} />
+                    </div>
+                    {/* Nome e badges */}
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold mb-2" style={{ color: '#ffffff' }}>
+                        Vancouver Film School
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="px-3 py-1 text-xs font-bold rounded-full" style={{ background: '#c92337', color: '#ffffff' }}>#1 Canada</span>
+                        <span className="px-3 py-1 text-xs font-bold rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: '#ffffff' }}>92% {lang === 'pt' ? 'empregabilidade' : 'employability'}</span>
+                        <span className="px-3 py-1 text-xs font-bold rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: '#ffffff' }}>Since 1987</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Cursos em destaque */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-5">
+                    {['3D Animation & VFX', 'Game Design', 'Film Production', 'Sound Design', 'Digital Design', 'Programming'].map((course, i) => (
+                      <div key={i} className="px-3 py-2 rounded-lg text-center" style={{ background: 'rgba(201, 35, 55, 0.12)', border: '1px solid rgba(201, 35, 55, 0.2)' }}>
+                        <span className="text-xs sm:text-sm font-medium" style={{ color: 'rgba(255,255,255,0.9)' }}>{course}</span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <a href="https://vfs.edu/pathway/bcit" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-azimut-red hover:underline">
+                    {lang === 'pt' ? 'Ver pathway BCIT' : 'View BCIT pathway'} →
+                  </a>
                 </div>
               </div>
 
-              {/* VanArts Card */}
+              {/* VanArts Card - Fundo claro/branco */}
               <div 
-                className="p-6 rounded-2xl flex flex-col items-center text-center transition-all duration-300 hover:scale-[1.02]"
+                className="rounded-2xl overflow-hidden transition-all duration-300 hover:scale-[1.01] hover:shadow-2xl"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(139, 92, 246, 0.05) 100%)',
-                  border: '1px solid rgba(139, 92, 246, 0.25)',
+                  background: 'linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%)',
+                  border: '1px solid rgba(0, 0, 0, 0.1)',
+                  boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
                 }}
               >
-                <img 
-                  src="/vanarts2.png" 
-                  alt="Vancouver Institute of Media Arts" 
-                  className="h-16 sm:h-20 w-auto mb-4 object-contain"
-                />
-                <h3 className="text-lg sm:text-xl font-bold mb-2" style={{ color: '#ffffff' }}>
-                  Vancouver Institute of Media Arts
-                </h3>
-                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>
-                  {lang === 'pt' ? '2D/3D Character Animation, Game Art & Design, Visual Effects' : 
-                   lang === 'es' ? 'Animación de Personajes 2D/3D, Arte de Juegos, Efectos Visuales' :
-                   lang === 'fr' ? 'Animation de Personnages 2D/3D, Art de Jeux, Effets Visuels' :
-                   '2D/3D Character Animation, Game Art & Design, Visual Effects'}
-                </p>
-                <div className="mt-3 flex gap-2">
-                  <span className="px-3 py-1 text-xs font-bold rounded-full" style={{ background: 'rgba(139, 92, 246, 0.3)', color: '#a78bfa' }}>
-                    {lang === 'pt' ? 'Melhor custo-benefício' : lang === 'es' ? 'Mejor valor' : lang === 'fr' ? 'Meilleur rapport qualité-prix' : 'Best Value'}
-                  </span>
-                  <span className="px-3 py-1 text-xs font-bold rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)' }}>
-                    90%+ {lang === 'pt' ? 'empregabilidade' : lang === 'es' ? 'empleabilidad' : lang === 'fr' ? 'employabilité' : 'employability'}
-                  </span>
+                <div className="p-6 sm:p-8">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mb-5">
+                    {/* Logo pequena */}
+                    <div className="flex items-center justify-center w-14 h-14 rounded-xl" style={{ background: 'rgba(180, 50, 50, 0.08)' }}>
+                      <img src="/vanarts2.png" alt="VanArts" className="h-8 w-auto object-contain" />
+                    </div>
+                    {/* Nome e badges */}
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold mb-2" style={{ color: '#1a1a1a' }}>
+                        Vancouver Institute of Media Arts
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="px-3 py-1 text-xs font-bold rounded-full" style={{ background: '#b43232', color: '#ffffff' }}>{lang === 'pt' ? 'Melhor custo-benefício' : 'Best Value'}</span>
+                        <span className="px-3 py-1 text-xs font-bold rounded-full" style={{ background: 'rgba(0,0,0,0.08)', color: '#333' }}>90%+ {lang === 'pt' ? 'empregabilidade' : 'employability'}</span>
+                        <span className="px-3 py-1 text-xs font-bold rounded-full" style={{ background: 'rgba(0,0,0,0.08)', color: '#333' }}>Since 1995</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Cursos em destaque */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-5">
+                    {['2D/3D Animation', 'Game Art & Design', 'Visual Effects', 'Acting', 'Photography', 'Web Development'].map((course, i) => (
+                      <div key={i} className="px-3 py-2 rounded-lg text-center" style={{ background: 'rgba(180, 50, 50, 0.08)', border: '1px solid rgba(180, 50, 50, 0.15)' }}>
+                        <span className="text-xs sm:text-sm font-medium" style={{ color: '#333' }}>{course}</span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <a href="https://www.vanarts.com/drive/uploads/2017/03/VanArts-BCIT-Pathway.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold hover:underline" style={{ color: '#b43232' }}>
+                    {lang === 'pt' ? 'Ver pathway BCIT' : 'View BCIT pathway'} →
+                  </a>
                 </div>
+              </div>
+            </div>
+
+            {/* BCIT Pathway - Compacto */}
+            <div 
+              className="p-5 sm:p-6 rounded-xl text-center mb-10"
+              style={{
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.08)',
+              }}
+            >
+              <p className="text-sm sm:text-base mb-3" style={{ color: 'rgba(255,255,255,0.8)' }}>
+                <strong style={{ color: '#c92337' }}>BCIT Pathway:</strong> {lang === 'pt' ? 'Após 1 ano, continue no BCIT e obtenha' : 'After 1 year, continue at BCIT and earn'} <strong>Advanced Diploma</strong> {lang === 'pt' ? 'ou' : 'or'} <strong>Bachelor\'s Degree</strong>
+              </p>
+              <div className="flex flex-wrap justify-center gap-4 text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                <span>🎓 {lang === 'pt' ? 'Dupla credencial' : 'Dual credentials'}</span>
+                <span>🇨🇦 {lang === 'pt' ? 'Work Permit elegível' : 'Work Permit eligible'}</span>
+                <span>💼 {lang === 'pt' ? 'Hub #1 VFX mundial' : 'World\'s #1 VFX hub'}</span>
               </div>
             </div>
 
