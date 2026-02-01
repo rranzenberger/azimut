@@ -368,14 +368,11 @@ export default function GameScreen({ onLeaderboard, onBack }: GameScreenProps) {
     )
   }
 
-  const handleBackToSite = () => {
-    const currentLang = getGameLang()
-    window.top?.location.assign(`/${currentLang}/experience-preview`)
-  }
+  // Botão "Voltar" no header vai para a tela inicial do jogo (onBack), não para o site
 
   return (
     <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-      <div className="game-bg h-screen flex flex-col overflow-hidden">
+      <div className="game-bg h-full flex flex-col overflow-hidden">
         {/* Header padrão: logo Azimut à esquerda + título + Menu */}
         <GameHeader
           leftAction={

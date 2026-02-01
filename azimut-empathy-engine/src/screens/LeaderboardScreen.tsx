@@ -24,7 +24,7 @@ export default function LeaderboardScreen({ onBack }: LeaderboardScreenProps) {
   const sorted = [...filtered].sort((a, b) => b.score - a.score).slice(0, 10)
 
   return (
-    <div className="game-bg h-screen min-h-0 flex flex-col overflow-hidden">
+    <div className="game-bg h-full flex flex-col overflow-hidden">
       <GameHeader
         leftAction={onBack ? <Button variant="back" size="sm" onClick={onBack}>← {common.back}</Button> : undefined}
         title={<span className="font-display font-bold text-azimut-red text-sm md:text-base uppercase tracking-wider">{t.title}</span>}

@@ -80,7 +80,7 @@ export default function ResultScreen({
   }
 
   return (
-    <div className="game-bg h-screen min-h-0 flex flex-col overflow-hidden">
+    <div className="game-bg h-full flex flex-col overflow-hidden">
       <GameHeader
         title={<span className="font-display font-bold text-azimut-red text-sm md:text-base uppercase tracking-wider">{t.title}</span>}
       />

@@ -553,33 +553,110 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
           </div>
         </section>
 
-        {/* Deixa Vancouver: aprenda artes audiovisuais, gráficas, game — VFS/VanArts + chamada ao jogo */}
+        {/* Aprenda artes audiovisuais — VFS/VanArts + chamada ao jogo */}
         <section
-          className="py-10 px-4 sm:px-6 lg:px-8"
+          className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8"
           style={{
-            background: theme === 'dark' ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(59, 130, 246, 0.08) 100%)' : 'linear-gradient(135deg, rgba(201, 35, 55, 0.08) 0%, rgba(139, 92, 246, 0.06) 100%)',
-            borderTop: '1px solid rgba(255,255,255,0.06)',
-            borderBottom: '1px solid rgba(255,255,255,0.06)',
+            background: theme === 'dark' 
+              ? 'linear-gradient(180deg, rgba(15, 15, 25, 0.95) 0%, rgba(25, 20, 35, 0.98) 50%, rgba(15, 15, 25, 0.95) 100%)' 
+              : 'linear-gradient(180deg, rgba(20, 15, 25, 0.98) 0%, rgba(30, 20, 40, 0.95) 50%, rgba(20, 15, 25, 0.98) 100%)',
+            borderTop: '1px solid rgba(139, 92, 246, 0.15)',
+            borderBottom: '1px solid rgba(139, 92, 246, 0.15)',
           }}
         >
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl sm:text-3xl font-handel uppercase tracking-wider mb-4" style={{ color: '#ffffff' }}>
-              {translate(lang, 'vancouverLearnHookTitle')}
-            </h2>
-            <p className="text-base sm:text-lg leading-relaxed mb-6" style={{ color: 'rgba(255,255,255,0.85)' }}>
-              {translate(lang, 'vancouverLearnHookBody')}
-            </p>
-            <Link
-              to={`/${lang}/game`}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02]"
-              style={{
-                background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
-                boxShadow: '0 4px 20px rgba(16, 185, 129, 0.4)',
-              }}
-            >
-              <span aria-hidden>🎮</span>
-              {translate(lang, 'vancouverLearnHookGameCta')} →
-            </Link>
+          <div className="max-w-5xl mx-auto">
+            {/* Título */}
+            <div className="text-center mb-10">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-handel uppercase tracking-wider mb-4" style={{ color: '#ffffff' }}>
+                {translate(lang, 'vancouverLearnHookTitle')}
+              </h2>
+              <p className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto" style={{ color: 'rgba(255,255,255,0.8)' }}>
+                {translate(lang, 'vancouverLearnHookBody')}
+              </p>
+            </div>
+
+            {/* Cards das Escolas */}
+            <div className="grid md:grid-cols-2 gap-6 mb-10">
+              {/* VFS Card */}
+              <div 
+                className="p-6 rounded-2xl flex flex-col items-center text-center transition-all duration-300 hover:scale-[1.02]"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(201, 35, 55, 0.12) 0%, rgba(201, 35, 55, 0.05) 100%)',
+                  border: '1px solid rgba(201, 35, 55, 0.25)',
+                }}
+              >
+                <img 
+                  src="/vfs.png" 
+                  alt="Vancouver Film School" 
+                  className="h-16 sm:h-20 w-auto mb-4 object-contain"
+                  style={{ filter: 'brightness(1.1)' }}
+                />
+                <h3 className="text-lg sm:text-xl font-bold mb-2" style={{ color: '#ffffff' }}>
+                  Vancouver Film School
+                </h3>
+                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>
+                  {lang === 'pt' ? 'Game Design, 3D Animation & VFX, Film Production, Sound Design' : 
+                   lang === 'es' ? 'Diseño de Juegos, Animación 3D y VFX, Producción Cinematográfica' :
+                   lang === 'fr' ? 'Game Design, Animation 3D et VFX, Production Cinématographique' :
+                   'Game Design, 3D Animation & VFX, Film Production, Sound Design'}
+                </p>
+                <div className="mt-3 flex gap-2">
+                  <span className="px-3 py-1 text-xs font-bold rounded-full" style={{ background: 'rgba(201, 35, 55, 0.3)', color: '#ff6b7a' }}>
+                    #1 Canada
+                  </span>
+                  <span className="px-3 py-1 text-xs font-bold rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)' }}>
+                    92% {lang === 'pt' ? 'empregabilidade' : lang === 'es' ? 'empleabilidad' : lang === 'fr' ? 'employabilité' : 'employability'}
+                  </span>
+                </div>
+              </div>
+
+              {/* VanArts Card */}
+              <div 
+                className="p-6 rounded-2xl flex flex-col items-center text-center transition-all duration-300 hover:scale-[1.02]"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(139, 92, 246, 0.05) 100%)',
+                  border: '1px solid rgba(139, 92, 246, 0.25)',
+                }}
+              >
+                <img 
+                  src="/vanarts2.png" 
+                  alt="Vancouver Institute of Media Arts" 
+                  className="h-16 sm:h-20 w-auto mb-4 object-contain"
+                />
+                <h3 className="text-lg sm:text-xl font-bold mb-2" style={{ color: '#ffffff' }}>
+                  Vancouver Institute of Media Arts
+                </h3>
+                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>
+                  {lang === 'pt' ? '2D/3D Character Animation, Game Art & Design, Visual Effects' : 
+                   lang === 'es' ? 'Animación de Personajes 2D/3D, Arte de Juegos, Efectos Visuales' :
+                   lang === 'fr' ? 'Animation de Personnages 2D/3D, Art de Jeux, Effets Visuels' :
+                   '2D/3D Character Animation, Game Art & Design, Visual Effects'}
+                </p>
+                <div className="mt-3 flex gap-2">
+                  <span className="px-3 py-1 text-xs font-bold rounded-full" style={{ background: 'rgba(139, 92, 246, 0.3)', color: '#a78bfa' }}>
+                    {lang === 'pt' ? 'Melhor custo-benefício' : lang === 'es' ? 'Mejor valor' : lang === 'fr' ? 'Meilleur rapport qualité-prix' : 'Best Value'}
+                  </span>
+                  <span className="px-3 py-1 text-xs font-bold rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)' }}>
+                    90%+ {lang === 'pt' ? 'empregabilidade' : lang === 'es' ? 'empleabilidad' : lang === 'fr' ? 'employabilité' : 'employability'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA Jogo */}
+            <div className="text-center">
+              <Link
+                to={`/${lang}/game`}
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02]"
+                style={{
+                  background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                  boxShadow: '0 4px 20px rgba(16, 185, 129, 0.4)',
+                }}
+              >
+                <span aria-hidden className="text-xl">🎮</span>
+                {translate(lang, 'vancouverLearnHookGameCta')} →
+              </Link>
+            </div>
           </div>
         </section>
 

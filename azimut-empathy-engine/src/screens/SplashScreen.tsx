@@ -99,7 +99,7 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
 
   return (
     <>
-    <div className="h-screen min-h-[100dvh] flex flex-col relative overflow-hidden">
+    <div className="h-full flex flex-col relative overflow-hidden">
       {/* Mobile: header com logo + idiomas (PT EN FR ES) + Voltar; pílula "Jogo Interativo" fora do menu, abaixo */}
       <header
         className="sm:hidden relative z-20 flex-shrink-0 flex items-center justify-between gap-2 px-2 py-1.5"
@@ -417,12 +417,6 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
         </div>
       </main>
 
-      {/* Footer - compacto */}
-      <footer className="relative z-10 text-center py-1 flex-shrink-0" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
-        <p className="text-[9px] sm:text-[10px] font-medium" style={{ color: '#9CA3AF' }}>
-          {t.footer}
-        </p>
-      </footer>
     </div>
     <SecretAreaModal isOpen={showSecretModal} onClose={() => setShowSecretModal(false)} t={t} />
     </>
