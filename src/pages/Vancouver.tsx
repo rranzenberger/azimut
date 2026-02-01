@@ -582,10 +582,10 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 border: '1px solid rgba(201, 35, 55, 0.3)',
               }}
             >
-              {/* VFS Header - Logo vfs1.jpg com fundo vermelho */}
+              {/* VFS Header - Logo vfs2.png com fundo vermelho */}
               <div className="flex flex-wrap items-center gap-4 mb-6">
                 <img 
-                  src="/vfs1.jpg" 
+                  src="/vfs2.png" 
                   alt="Vancouver Film School" 
                   className="rounded-xl"
                   style={{ width: '56px', height: '56px', objectFit: 'cover' }}
