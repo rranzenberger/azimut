@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { t as translate, type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import { VancouverPageSchema, VancouverFAQSchema } from '../components/StructuredData'
@@ -592,6 +593,9 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 <img 
                   src="/vfs2.png" 
                   alt="Vancouver Film School" 
+                  width={56}
+                  height={56}
+                  loading="lazy"
                   className="rounded-xl"
                   style={{ width: '56px', height: '56px', objectFit: 'cover' }}
                 />
@@ -731,6 +735,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   <img 
                     src="/vanarts2.png" 
                     alt="VanArts" 
+                    width={56}
+                    height={44}
                     loading="lazy"
                     style={{ height: '44px', width: 'auto', objectFit: 'contain' }}
                   />
@@ -1143,12 +1149,19 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
             </div>
 
             {/* VFS */}
-            <div className="school-card school-card-vfs mb-16 rounded-2xl overflow-hidden border border-white/10 hover:border-azimut-red/30 transition-all duration-500 group">
+            <motion.div
+              className="school-card school-card-vfs mb-16 rounded-2xl overflow-hidden border border-white/10 hover:border-azimut-red/30 transition-all duration-500 group"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.4 }}
+              whileHover={{ y: -4 }}
+            >
               {/* VFS Hero Image */}
               <div className="relative h-64 md:h-80 overflow-hidden">
                 <div 
                   className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
-                  style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=1200)' }}
+                  style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&q=80)' }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
@@ -1156,6 +1169,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                     <img 
                       src="/vfs2.png" 
                       alt="VFS" 
+                      width={64}
+                      height={64}
                       loading="lazy"
                       className="w-16 h-16 rounded-xl shadow-lg object-cover"
                     />
@@ -1230,15 +1245,22 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 {translate(lang, 'vancouverVisitVFS')} →
               </a>
               </div>
-            </div>
+            </motion.div>
 
             {/* VanArts */}
-            <div className="school-card school-card-vanarts rounded-2xl overflow-hidden border border-white/10 hover:border-azimut-red/30 transition-all duration-500 group">
+            <motion.div
+              className="school-card school-card-vanarts rounded-2xl overflow-hidden border border-white/10 hover:border-azimut-red/30 transition-all duration-500 group"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.4 }}
+              whileHover={{ y: -4 }}
+            >
               {/* VanArts Hero Image */}
               <div className="relative h-64 md:h-80 overflow-hidden">
                 <div 
                   className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
-                  style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1536240478700-b869070f9279?w=1200)' }}
+                  style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1536240478700-b869070f9279?w=800&q=80)' }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
@@ -1247,6 +1269,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                       <img 
                         src="/vanarts2.png" 
                         alt="VanArts" 
+                        width={48}
+                        height={48}
                         loading="lazy"
                         className="h-12 w-auto object-contain"
                       />
@@ -1335,7 +1359,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 />
               </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Vancouver City Gallery */}
             <div className="mt-16">
@@ -1358,7 +1382,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                     <div className="absolute bottom-3 left-3">
                       <span className="px-3 py-1 bg-azimut-red/80 text-white text-xs font-bold rounded-full">{item.label}</span>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>

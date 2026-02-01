@@ -43,6 +43,10 @@
 - ✅ **Focus visible**: já em `index.css` (`*:focus-visible`).
 - ✅ **Imagens**: `loading="lazy"` nas imagens da página Vancouver (vfs2, vanarts2).
 
+### 🟢 Etapa 1+2 – Performance imagens + Animações Vancouver
+- ✅ **Performance**: Unsplash com `w=800&q=80` (hero VFS/VanArts) e `w=400&q=80` (galeria); `width`/`height` em todas as img (vfs2, vanarts2) para reduzir CLS.
+- ✅ **Animações**: Framer Motion em Vancouver – cards VFS e VanArts com `whileInView` (entrada) e `whileHover` (levitar); galeria de Vancouver com `whileInView` e delay em cascata.
+
 ---
 
 ## 🟡 PENDENTE - PRÓXIMAS IMPLEMENTAÇÕES
@@ -58,16 +62,16 @@
 ### Performance
 | # | Item | Esforço | Prioridade |
 |---|------|---------|------------|
-| 1 | Otimização de imagens (WebP/AVIF) | Médio | Alta |
+| 1 | ~~Otimização de imagens~~ | ✅ Unsplash w/q + width/height | - |
 | 2 | Critical CSS inline | Médio | Média |
 | 3 | Lighthouse 95+ | Alto | Alta |
 
 ### Animações Premium (Framer Motion instalado)
 | # | Item | Esforço | Prioridade |
 |---|------|---------|------------|
-| 1 | Hover effects sofisticados | Médio | Média |
+| 1 | ~~Hover effects + scroll Vancouver~~ | ✅ Cards VFS/VanArts + galeria | - |
 | 2 | Transições de página (View Transitions) | Médio | Média |
-| 3 | Scroll-triggered animations | Médio | Baixa |
+| 3 | Scroll-triggered em outras páginas | Médio | Baixa |
 
 ---
 
