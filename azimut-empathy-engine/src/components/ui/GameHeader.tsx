@@ -1,45 +1,8 @@
 import type { ReactNode } from 'react'
+import { useLangStore, changeGameLang } from '../../stores/langStore'
+import type { Lang } from '../../stores/langStore'
 
-const LANGS = ['pt', 'en', 'fr', 'es'] as const
-type Lang = (typeof LANGS)[number]
-
-function getCurrentLang(): Lang {
-  if (typeof window === 'undefined') return 'pt'
-  try {
-    const path = window.top?.location?.pathname ?? window.location.pathname
-    const m = path.match(/^\/(pt|en|fr|es)\b/)
-    if (m) return m[1] as Lang
-  } catch {
-    // cross-origin iframe: use localStorage
-  }
-  const stored = typeof localStorage !== 'undefined' ? localStorage.getItem('azimut-game-lang') : null
-  if (stored && LANGS.includes(stored as Lang)) return stored as Lang
-  return 'pt'
-}
-
-export function changeGameLang(newLang: Lang) {
-  if (typeof localStorage !== 'undefined') localStorage.setItem('azimut-game-lang', newLang)
-  try {
-    // Tenta acessar window.top (pode falhar em cross-origin)
-    const topWindow = window.top
-    if (topWindow && topWindow.location) {
-      const origin = topWindow.location.origin
-      const pathname = topWindow.location.pathname
-      const hasLangPrefix = /^\/(pt|en|fr|es)(\/|$)/.test(pathname)
-      const newPath = hasLangPrefix ? pathname.replace(/^\/(pt|en|fr|es)/, `/${newLang}`) : `/${newLang}/game`
-      topWindow.location.href = `${origin}${newPath}`
-      return
-    }
-  } catch {
-    // Cross-origin: não consegue acessar window.top
-  }
-  // Fallback: recarrega a própria janela com o novo idioma
-  const origin = window.location.origin
-  const pathname = window.location.pathname
-  const hasLangPrefix = /^\/(pt|en|fr|es)(\/|$)/.test(pathname)
-  const newPath = hasLangPrefix ? pathname.replace(/^\/(pt|en|fr|es)/, `/${newLang}`) : `/${newLang}/game`
-  window.location.href = `${origin}${newPath}`
-}
+export { changeGameLang }
 
 const BASE = import.meta.env.BASE_URL
 
@@ -85,7 +48,7 @@ export interface GameHeaderProps {
 
 /** Header padrão de todas as telas do jogo: logo Azimut à esquerda + slots opcionais + idiomas */
 export default function GameHeader({ leftAction, title, rightAction, showLangSwitcher = true, accentColor = 'rgba(255,255,255,0.04)', className = '' }: GameHeaderProps) {
-  const currentLang = getCurrentLang()
+  const currentLang = useLangStore((s) => s.lang)
   const activeColor = '#E84858'
   const inactiveColor = '#9CA3AF'
 

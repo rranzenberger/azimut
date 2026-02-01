@@ -138,7 +138,7 @@ export default function ResultScreen({
             </Button>
             {onSaveProgressNft && (
               <Button variant="secondary" size="md" onClick={onSaveProgressNft} fullWidth>
-                {t.saveProgressNft}
+                {t.saveProgress}
               </Button>
             )}
             {onConsultoria && (
@@ -153,7 +153,7 @@ export default function ResultScreen({
             )}
             {onBackToHome && (
               <Button variant="ghost" size="md" onClick={onBackToHome} fullWidth>
-                {t.backToHome}
+                {t.backToMenu}
               </Button>
             )}
           </div>

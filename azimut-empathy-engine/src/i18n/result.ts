@@ -15,10 +15,12 @@ export interface ResultTranslations {
   nearMissMessage: string
   secondChanceButton: string
   playAgain: string
-  saveProgressNft: string
+  saveProgress: string
+  receiveNft: string
   freeConsulting: string
   leaderboard: string
-  backToHome: string
+  backToMenu: string
+  easterEggThanks: string
 }
 
 const result: Record<Lang, ResultTranslations> = {
@@ -34,10 +36,11 @@ const result: Record<Lang, ResultTranslations> = {
     nearMissMessage: 'Quase lá! Você perdeu por menos de 50 pts.',
     secondChanceButton: 'Segunda Chance (1x por dia)',
     playAgain: 'Jogar de novo',
-    saveProgressNft: 'Salvar & Receber NFT',
+    saveProgress: 'Salvar Progresso',
+    receiveNft: 'Receber NFT',
     freeConsulting: 'Consultoria Grátis',
     leaderboard: 'Ranking',
-    backToHome: 'Voltar ao Início',
+    backToMenu: 'Voltar ao Menu',
     easterEggThanks: 'Obrigado por jogar! Você é curioso. ✨',
   },
   en: {
@@ -52,10 +55,11 @@ const result: Record<Lang, ResultTranslations> = {
     nearMissMessage: 'So close! You lost by less than 50 pts.',
     secondChanceButton: 'Second Chance (1x per day)',
     playAgain: 'Play again',
-    saveProgressNft: 'Save & Get NFT',
+    saveProgress: 'Save Progress',
+    receiveNft: 'Get NFT',
     freeConsulting: 'Free Consulting',
     leaderboard: 'Leaderboard',
-    backToHome: 'Back to Home',
+    backToMenu: 'Back to Menu',
     easterEggThanks: 'Thanks for playing! You\'re curious. ✨',
   },
   es: {
@@ -70,10 +74,11 @@ const result: Record<Lang, ResultTranslations> = {
     nearMissMessage: '¡Casi! Perdiste por menos de 50 pts.',
     secondChanceButton: 'Segunda oportunidad (1x al día)',
     playAgain: 'Jugar de nuevo',
-    saveProgressNft: 'Guardar & Recibir NFT',
+    saveProgress: 'Guardar Progreso',
+    receiveNft: 'Recibir NFT',
     freeConsulting: 'Consultoría gratis',
     leaderboard: 'Ranking',
-    backToHome: 'Volver al Inicio',
+    backToMenu: 'Volver al Menú',
     easterEggThanks: '¡Gracias por jugar! Eres curioso. ✨',
   },
   fr: {
@@ -88,10 +93,11 @@ const result: Record<Lang, ResultTranslations> = {
     nearMissMessage: 'Presque ! Tu as perdu de moins de 50 pts.',
     secondChanceButton: 'Seconde chance (1x par jour)',
     playAgain: 'Rejouer',
-    saveProgressNft: 'Sauvegarder & Recevoir NFT',
+    saveProgress: 'Sauvegarder',
+    receiveNft: 'Recevoir NFT',
     freeConsulting: 'Consulting gratuit',
     leaderboard: 'Classement',
-    backToHome: 'Retour à l\'accueil',
+    backToMenu: 'Retour au Menu',
     easterEggThanks: 'Merci d\'avoir joué ! Tu es curieux. ✨',
   },
 }

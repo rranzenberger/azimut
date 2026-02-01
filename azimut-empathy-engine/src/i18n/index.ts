@@ -1,5 +1,6 @@
-export { getGameLang, isValidLang } from './lang'
-export type { Lang } from './lang'
+export { getGameLang, changeGameLang, useLangStore } from '../stores/langStore'
+export type { Lang } from '../stores/langStore'
+export { isValidLang } from './lang'
 export { getCommonTranslations } from './common'
 export type { CommonTranslations } from './common'
 export { getSplashTranslations, getTopicName } from './splash'

@@ -1,10 +1,11 @@
 import { useState, useCallback } from 'react'
-import { AzimutLogo, GameHeader, changeGameLang } from '../components/ui'
+import { AzimutLogo, GameHeader } from '../components/ui'
+import { useLangStore, changeGameLang } from '../i18n'
 import { TopicIcon, MAPLE_LEAF_ICON } from '../components/game'
 import SecretAreaModal from '../components/SecretAreaModal'
 import { setSecretUnlocked, isSecretUnlocked } from '../utils/secretArea'
 import { useAchievementsStore } from '../stores/achievementsStore'
-import { getGameLang, getSplashTranslations } from '../i18n'
+import { getSplashTranslations } from '../i18n'
 import { playSound } from '../utils/sound'
 import { trackGameEvent } from '../utils/analytics'
 
@@ -21,7 +22,7 @@ const STEP_COLORS = ['#C92337', '#A855F7', '#FFD700', '#00F5FF'] as const
 const SECRET_TAPS_NEEDED = 5
 
 export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, onSettings }: SplashScreenProps) {
-  const lang = getGameLang()
+  const lang = useLangStore((s) => s.lang)
   const t = getSplashTranslations(lang)
   const [secretTapCount, setSecretTapCount] = useState(0)
   const [showSecretModal, setShowSecretModal] = useState(false)
