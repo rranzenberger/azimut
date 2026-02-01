@@ -731,6 +731,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   <img 
                     src="/vanarts2.png" 
                     alt="VanArts" 
+                    loading="lazy"
                     style={{ height: '44px', width: 'auto', objectFit: 'contain' }}
                   />
                 </div>
@@ -1155,6 +1156,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                     <img 
                       src="/vfs2.png" 
                       alt="VFS" 
+                      loading="lazy"
                       className="w-16 h-16 rounded-xl shadow-lg object-cover"
                     />
                     <div>
@@ -1245,6 +1247,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                       <img 
                         src="/vanarts2.png" 
                         alt="VanArts" 
+                        loading="lazy"
                         className="h-12 w-auto object-contain"
                       />
                     </div>

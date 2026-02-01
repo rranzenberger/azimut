@@ -79,7 +79,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
   // 🆕 UX PREMIUM - Sistema de busca (opcional, pode remover se não funcionar)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   
-  // 🆕 Atalho de teclado Ctrl+K / Cmd+K para busca
+  // 🆕 Atalho de teclado Ctrl+K / Cmd+K para busca + ESC para fechar modais/dropdowns
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Ctrl+K (Windows/Linux) ou Cmd+K (Mac)
@@ -87,15 +87,17 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         e.preventDefault()
         setIsSearchOpen(true)
       }
-      // ESC para fechar
-      if (e.key === 'Escape' && isSearchOpen) {
-        setIsSearchOpen(false)
+      // ESC para fechar busca, dropdown de idiomas ou menu mobile
+      if (e.key === 'Escape') {
+        if (isSearchOpen) setIsSearchOpen(false)
+        else if (isLangDropdownOpen) setIsLangDropdownOpen(false)
+        else if (isMobileMenuOpen) setIsMobileMenuOpen(false)
       }
     }
     
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isSearchOpen])
+  }, [isSearchOpen, isLangDropdownOpen, isMobileMenuOpen])
   
   // 🆕 Detectar scroll para compactar header
   const [isScrolled, setIsScrolled] = useState(false)
@@ -433,6 +435,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '1px' }}>
                   <img src="/flag-ca.svg" alt="Canada" className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
                   <button
+                    type="button"
+                    aria-label="English"
                     onClick={() => {
                       trackLanguageChange(lang, 'en')
                       changeLang('en')
@@ -457,13 +461,15 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   </button>
                   <span className="shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', lineHeight: '1', fontSize: '0.5rem', transform: 'translateY(-1px)', color: '#c92337' }}>●</span>
                   <button
+                    type="button"
+                    aria-label="Français"
                     onClick={() => {
                       trackLanguageChange(lang, 'fr')
                       changeLang('fr')
                     }}
                     className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
-                    style={{ 
-                      color: lang === 'fr' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'), 
+                    style={{
+                      color: lang === 'fr' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
                       opacity: 1,
                       minWidth: '20px',
                       height: '100%',
@@ -486,13 +492,15 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '1px' }}>
                   <img src="/flag-br.svg" alt="Brasil" className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
                   <button
+                    type="button"
+                    aria-label="Português"
                     onClick={() => {
                       trackLanguageChange(lang, 'pt')
                       changeLang('pt')
                     }}
                     className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
-                    style={{ 
-                      color: lang === 'pt' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'), 
+                    style={{
+                      color: lang === 'pt' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
                       opacity: 1,
                       minWidth: '20px',
                       height: '100%',
@@ -515,13 +523,15 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '1px' }}>
                   <img src="/flag-es.svg" alt="España" className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
                   <button
+                    type="button"
+                    aria-label="Español"
                     onClick={() => {
                       trackLanguageChange(lang, 'es')
                       changeLang('es')
                     }}
                     className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
-                    style={{ 
-                      color: lang === 'es' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'), 
+                    style={{
+                      color: lang === 'es' ? (theme === 'light' ? '#ff5a6e' : '#c92337') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
                       opacity: 1,
                       minWidth: '20px',
                       height: '100%',
@@ -599,6 +609,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     >
                       {/* EN */}
                       <button
+                        type="button"
+                        aria-label="English"
                         onClick={() => { changeLang('en'); setIsLangDropdownOpen(false); }}
                         className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors"
                         style={{
@@ -611,6 +623,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       </button>
                       {/* FR */}
                       <button
+                        type="button"
+                        aria-label="Français"
                         onClick={() => { changeLang('fr'); setIsLangDropdownOpen(false); }}
                         className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors"
                         style={{
@@ -623,6 +637,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       </button>
                       {/* PT */}
                       <button
+                        type="button"
+                        aria-label="Português"
                         onClick={() => { changeLang('pt'); setIsLangDropdownOpen(false); }}
                         className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors"
                         style={{
@@ -635,6 +651,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       </button>
                       {/* ES - bandeira da Espanha */}
                       <button
+                        type="button"
+                        aria-label="Español"
                         onClick={() => { changeLang('es'); setIsLangDropdownOpen(false); }}
                         className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors"
                         style={{
@@ -656,6 +674,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           {!isMobile && (
           <nav 
             ref={navRef}
+            role="navigation"
+            aria-label="Navegação principal"
             className="flex items-center justify-center font-sora font-medium uppercase" 
             style={{ 
               color: 'var(--theme-text-secondary)', 
@@ -882,6 +902,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 }}>
                   {/* Botão CTA Principal - Desktop/Tablet: Texto compacto */}
                   <LangLink to="/contact"
+                    aria-label={lang === 'en' ? 'Start a project' : lang === 'fr' ? 'Commencer un projet' : lang === 'es' ? 'Iniciar un proyecto' : 'Iniciar um projeto'}
                     onClick={() => {
                       trackCTA('header', 'Start Project')
                       trackInteraction('cta_click', 'header_start_project')
@@ -919,6 +940,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   {/* Botão Web3 - ÍCONE GRANDE E TEXTO LADO A LADO */}
                   <LangLink 
                     to={`/${lang}/experience-preview`}
+                    aria-label="Web3 Preview"
                     onClick={() => {
                       trackCTA('header', 'Web3 Preview')
                       trackInteraction('cta_click', 'header_web3_preview')
@@ -990,6 +1012,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 {isMobile && (
                 <div className="flex items-center gap-2">
                   <LangLink to="/contact"
+                    aria-label={lang === 'en' ? 'Start a project' : lang === 'fr' ? 'Commencer un projet' : lang === 'es' ? 'Iniciar un proyecto' : 'Iniciar um projeto'}
                     onClick={() => {
                       trackCTA('header', 'Start Project Mobile')
                       trackInteraction('cta_click', 'header_start_project_mobile')
@@ -1023,6 +1046,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   </LangLink>
                 <LangLink 
                   to={`/${lang}/experience-preview`}
+                  aria-label="Web3 Preview"
                   onClick={() => {
                     trackCTA('header', 'Web3 Preview Mobile')
                     trackInteraction('cta_click', 'header_web3_preview_mobile')
@@ -1077,9 +1101,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             {/* Botão Hambúrguer - Aparece APENAS em mobile (< 640px) */}
             {isMobile && (
             <button
+              type="button"
+              aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+              aria-expanded={isMobileMenuOpen}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="flex flex-col gap-1.5 touch-manipulation shrink-0"
-              aria-label="Menu"
               style={{ 
                 minWidth: '44px', 
                 minHeight: '44px', 
@@ -1131,7 +1157,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
         {/* Menu Mobile - Aparece APENAS em mobile (< 640px) */}
         {isMobile && (
         <div className={`block overflow-hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
-          <nav className="border-t backdrop-blur-md" style={{ borderColor: 'var(--theme-border)', backgroundColor: 'var(--theme-overlay)' }}>
+          <nav role="navigation" aria-label="Menu principal" className="border-t backdrop-blur-md" style={{ borderColor: 'var(--theme-border)', backgroundColor: 'var(--theme-overlay)' }}>
             <div className="mx-auto max-w-7xl px-3 py-4 sm:px-4 sm:py-6 space-y-1">
               <LangLink to="/"
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -1414,13 +1440,15 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             
             {/* Grid de Links 3 colunas */}
             <div className="grid grid-cols-3 gap-2 mb-5 text-center">
-              <nav className="flex flex-col gap-1">
+              <nav className="flex flex-col gap-1" aria-label={t(lang, 'navFooterNav')}>
                 <h4 className="font-sora font-bold uppercase tracking-tight text-white mb-0.5 text-[0.32rem] min-[350px]:text-[0.38rem]" style={{ lineHeight: '1', whiteSpace: 'nowrap' }}>
                   <span className="hidden min-[350px]:inline">{t(lang, 'navFooterNav')}</span>
                   <span className="inline min-[350px]:hidden">Nav</span>
                 </h4>
                 {/* Botão de Busca Mobile */}
                 <button
+                  type="button"
+                  aria-label={t(lang, 'navSearchLabel')}
                   onClick={() => {
                     setIsSearchOpen(true)
                     setIsMobileMenuOpen(false)
@@ -1441,7 +1469,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   {lang === 'en' ? 'Team' : lang === 'fr' ? 'Équipe' : lang === 'es' ? 'Equipo' : 'Equipe'}
                 </LangLink>
               </nav>
-              <nav className="flex flex-col gap-1">
+              <nav className="flex flex-col gap-1" aria-label={t(lang, 'navFooterEdu')}>
                 <h4 className="font-sora font-bold uppercase tracking-tight text-white text-[0.32rem] min-[350px]:text-[0.38rem]" style={{ lineHeight: '1', marginBottom: '0.1rem', whiteSpace: 'nowrap' }}>
                   <span className="hidden min-[350px]:inline">{t(lang, 'navFooterEdu')}</span>
                   <span className="inline min-[350px]:hidden">Edu</span>
@@ -1454,7 +1482,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <LangLink to="/academy/vancouver" className="text-[0.55rem] text-slate-500 hover:text-azimut-red ml-2">└ Vancouver</LangLink>
                 </div>
               </nav>
-              <nav className="flex flex-col gap-1">
+              <nav className="flex flex-col gap-1" aria-label={t(lang, 'navFooterStart')}>
                 <h4 className="font-sora font-bold uppercase tracking-tight text-white mb-0.5 text-[0.32rem] min-[350px]:text-[0.38rem]" style={{ lineHeight: '1', whiteSpace: 'nowrap' }}>
                   <span className="hidden min-[350px]:inline">{t(lang, 'navFooterStart')}</span>
                   <span className="inline min-[350px]:hidden">Start</span>
@@ -1469,7 +1497,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
             
             {/* Botão CTA Centralizado */}
             <div className="flex justify-center mb-5">
-              <LangLink to="/contact" 
+              <LangLink to="/contact"
+                aria-label={lang === 'en' ? 'Start a project' : lang === 'fr' ? 'Commencer un projet' : lang === 'es' ? 'Iniciar un proyecto' : 'Iniciar um projeto'}
                 className="flex flex-col items-center justify-center rounded-xl border px-6 py-3 text-[0.75rem] font-medium transition-all"
                 style={{ 
                   color: '#ffffff',
@@ -1751,7 +1780,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   }}
                 />
                 {/* CTA - alinhado com primeira coluna */}
-                <LangLink to="/contact" 
+                <LangLink to="/contact"
+                  aria-label={lang === 'en' ? 'Start a project' : lang === 'fr' ? 'Commencer un projet' : lang === 'es' ? 'Iniciar un proyecto' : 'Iniciar um projeto'}
                   className="flex flex-col items-center justify-center rounded-lg border px-2 sm:px-3 text-[0.55rem] sm:text-[0.6rem] font-medium transition-all"
                   style={{ 
                     color: '#ffffff',

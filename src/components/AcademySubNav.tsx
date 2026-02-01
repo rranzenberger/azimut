@@ -79,13 +79,16 @@ const AcademySubNav: React.FC<AcademySubNavProps> = ({ lang, currentPage }) => {
       }}
     >
       <div className="mx-auto max-w-7xl w-full sm:px-4 min-[768px]:px-6 py-3 flex justify-center">
-        <nav className="flex flex-wrap justify-center gap-1 sm:gap-2">
+        <nav role="navigation" aria-label={lang === 'en' ? 'Academy sections' : lang === 'fr' ? 'Sections Academy' : lang === 'es' ? 'Secciones Academy' : 'Seções Academy'} className="flex flex-wrap justify-center gap-1 sm:gap-2">
           {navItems.map((item) => {
             const isActive = currentPage === item.id
             
             return (
               <button
                 key={item.id}
+                type="button"
+                aria-current={isActive ? 'page' : undefined}
+                aria-label={item.labels[lang]}
                 onClick={() => handleClick(item.href)}
                 className={`flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide transition-colors ${
                   isActive

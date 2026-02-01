@@ -120,6 +120,8 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
         <LangLink
           to={mainHref}
           lang={lang}
+          aria-haspopup="true"
+          aria-expanded={isOpen}
           className="nav-link-glow relative whitespace-nowrap pb-1 shrink-0 transition-colors duration-200 font-sora font-semibold flex items-center"
           style={{
             padding: '0 6px',
@@ -156,6 +158,10 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
       ) : (
         // Sem mainHref: botão que apenas abre/fecha dropdown
         <button
+          type="button"
+          aria-haspopup="true"
+          aria-expanded={isOpen}
+          aria-label={label}
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()

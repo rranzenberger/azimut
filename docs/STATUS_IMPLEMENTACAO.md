@@ -37,6 +37,12 @@
 - ✅ "Voltar ao Site" à direita
 - ✅ Removida pílula "Jogo Interativo"
 
+### 🟢 Fase 1 – Acessibilidade e Performance (última sessão)
+- ✅ **ARIA**: `role="navigation"` + `aria-label` na nav principal, footer navs, AcademySubNav; `aria-label` em botões de idioma (EN/FR/PT/ES), CTA, Web3, busca, hamburger; `aria-expanded`/`aria-haspopup` em dropdowns e menu mobile.
+- ✅ **Teclado**: ESC fecha busca, dropdown de idiomas e menu mobile; Skip link já existia.
+- ✅ **Focus visible**: já em `index.css` (`*:focus-visible`).
+- ✅ **Imagens**: `loading="lazy"` nas imagens da página Vancouver (vfs2, vanarts2).
+
 ---
 
 ## 🟡 PENDENTE - PRÓXIMAS IMPLEMENTAÇÕES
@@ -44,9 +50,9 @@
 ### Acessibilidade (WCAG 2.1 AA)
 | # | Item | Esforço | Prioridade |
 |---|------|---------|------------|
-| 1 | ARIA labels em botões/links/formulários | Médio | Alta |
-| 2 | Focus visible em todos elementos | Baixo | Alta |
-| 3 | Navegação por teclado completa | Médio | Alta |
+| 1 | ~~ARIA labels em botões/links/formulários~~ | ✅ Feito | - |
+| 2 | ~~Focus visible em todos elementos~~ | ✅ Já em CSS | - |
+| 3 | ~~Navegação por teclado completa~~ | ✅ ESC + skip link | - |
 | 4 | Contraste de cores validado | Baixo | Média |
 
 ### Performance
