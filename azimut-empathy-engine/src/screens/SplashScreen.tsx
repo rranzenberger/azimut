@@ -142,10 +142,27 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
           borderBottom: '2px solid rgba(201, 35, 55, 0.4)',
         }}
       >
-        {/* Esquerda: Logo + Nome do jogo + Pílula */}
+        {/* Esquerda: Logo + Idiomas (padrão do site) */}
         <div className="flex items-center gap-4">
           <AzimutLogo className="h-7 w-auto flex-shrink-0" />
-          {pillInteractive}
+          <div className="flex items-center gap-1">
+            {(['en', 'fr', 'pt', 'es'] as const).map((l, i) => (
+              <span key={l} className="flex items-center">
+                {i > 0 && <span className="text-white/30 mx-1">•</span>}
+                <button
+                  type="button"
+                  onClick={() => changeGameLang(l)}
+                  className="px-2 py-1 text-xs font-semibold uppercase rounded transition-colors"
+                  style={{
+                    color: lang === l ? activeLangColor : inactiveLangColor,
+                    background: lang === l ? 'rgba(201, 35, 55, 0.15)' : 'transparent',
+                  }}
+                >
+                  {l.toUpperCase()}
+                </button>
+              </span>
+            ))}
+          </div>
         </div>
         
         {/* Centro: Nome do jogo no header */}
@@ -160,24 +177,8 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
           EMPATHY ENGINE
         </h1>
         
-        {/* Direita: Idiomas + Voltar */}
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1">
-            {(['en', 'fr', 'pt', 'es'] as const).map((l) => (
-              <button
-                key={l}
-                type="button"
-                onClick={() => changeGameLang(l)}
-                className="px-2 py-1 text-xs font-semibold uppercase rounded transition-colors"
-                style={{
-                  color: lang === l ? activeLangColor : inactiveLangColor,
-                  background: lang === l ? 'rgba(201, 35, 55, 0.15)' : 'transparent',
-                }}
-              >
-                {l.toUpperCase()}
-              </button>
-            ))}
-          </div>
+        {/* Direita: Voltar ao Site */}
+        <div className="flex items-center">
           {backButton}
         </div>
       </header>
