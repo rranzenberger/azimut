@@ -578,33 +578,39 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
             <div 
               className="mb-10 p-6 sm:p-8 rounded-2xl"
               style={{
-                background: 'linear-gradient(135deg, rgba(139, 22, 37, 0.2) 0%, rgba(139, 22, 37, 0.08) 100%)',
-                border: '1px solid rgba(201, 35, 55, 0.25)',
+                background: 'linear-gradient(135deg, rgba(139, 22, 37, 0.25) 0%, rgba(139, 22, 37, 0.1) 100%)',
+                border: '1px solid rgba(201, 35, 55, 0.3)',
               }}
             >
-              {/* VFS Header - Logo pequena com borda arredondada */}
-              <div className="flex items-center gap-3 mb-5">
+              {/* VFS Header - Logo com imagem */}
+              <div className="flex flex-wrap items-center gap-4 mb-6">
                 <div 
-                  className="flex items-center justify-center rounded-lg px-3 py-2"
-                  style={{ background: '#8b1625' }}
+                  className="flex items-center justify-center rounded-xl"
+                  style={{ background: '#8b1625', width: '48px', height: '48px' }}
                 >
-                  <span className="text-white font-bold text-xs tracking-wide">VFS</span>
+                  <img 
+                    src="/vfs.png" 
+                    alt="VFS" 
+                    style={{ height: '28px', width: 'auto', objectFit: 'contain' }}
+                  />
                 </div>
-                <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold" style={{ background: '#c92337', color: '#fff' }}>#1 Canada</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>92%+ employability</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>Since 1987</span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs px-3 py-1 rounded-full font-bold" style={{ background: '#c92337', color: '#fff' }}>#1 Canada</span>
+                  <span className="text-xs px-3 py-1 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff' }}>92%+ employability</span>
+                  <span className="text-xs px-3 py-1 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff' }}>Since 1987</span>
+                </div>
               </div>
 
-              {/* VFS Cursos - 11 programas */}
+              {/* VFS Cursos - Grid 4 por linha */}
               <div className="mb-6">
-                <p className="text-xs uppercase tracking-wider mb-3" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                <p className="text-xs uppercase tracking-wider mb-4 font-semibold" style={{ color: 'rgba(255,255,255,0.6)' }}>
                   {lang === 'pt' ? 'Programas (11)' : 'Programs (11)'}
                 </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {['3D Animation & VFX', 'Game Design', 'Film Production', 'Programming', 'Sound Design', 'Digital Design', 'Acting', 'Animation Concept Art', 'Classical Animation', 'Makeup Design', 'Writing'].map((course, i) => (
-                    <span key={i} className="text-[11px] px-2 py-1 rounded font-medium" style={{ background: 'rgba(201, 35, 55, 0.2)', color: '#ffffff', border: '1px solid rgba(201, 35, 55, 0.3)' }}>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {['3D Animation & VFX', 'Game Design', 'Film Production', 'Programming', 'Sound Design', 'Digital Design', 'Acting', 'Concept Art', 'Classical Animation', 'Makeup Design', 'Writing'].map((course, i) => (
+                    <div key={i} className="text-xs px-3 py-2 rounded-lg text-center font-medium" style={{ background: 'rgba(201, 35, 55, 0.25)', color: '#ffffff', border: '1px solid rgba(201, 35, 55, 0.35)' }}>
                       {course}
-                    </span>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -691,37 +697,39 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
             <div 
               className="mb-10 p-6 sm:p-8 rounded-2xl"
               style={{
-                background: 'linear-gradient(135deg, rgba(180, 50, 50, 0.12) 0%, rgba(180, 50, 50, 0.04) 100%)',
-                border: '1px solid rgba(180, 50, 50, 0.2)',
+                background: 'linear-gradient(135deg, rgba(180, 50, 50, 0.15) 0%, rgba(180, 50, 50, 0.05) 100%)',
+                border: '1px solid rgba(180, 50, 50, 0.25)',
               }}
             >
-              {/* VanArts Header - Logo pequena com borda arredondada */}
-              <div className="flex items-center gap-3 mb-5">
+              {/* VanArts Header - Logo com imagem */}
+              <div className="flex flex-wrap items-center gap-4 mb-6">
                 <div 
-                  className="flex items-center justify-center rounded-lg px-2 py-1.5"
-                  style={{ background: '#f8f8f8' }}
+                  className="flex items-center justify-center rounded-xl overflow-hidden"
+                  style={{ background: '#ffffff', width: '48px', height: '48px' }}
                 >
                   <img 
                     src="/vanarts2.png" 
                     alt="VanArts" 
-                    className="h-5 w-auto object-contain"
+                    style={{ height: '36px', width: 'auto', objectFit: 'contain' }}
                   />
                 </div>
-                <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold" style={{ background: '#b43232', color: '#fff' }}>Best Value</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>90%+ employability</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.9)' }}>Since 1995</span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs px-3 py-1 rounded-full font-bold" style={{ background: '#b43232', color: '#fff' }}>Best Value</span>
+                  <span className="text-xs px-3 py-1 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff' }}>90%+ employability</span>
+                  <span className="text-xs px-3 py-1 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff' }}>Since 1995</span>
+                </div>
               </div>
 
-              {/* VanArts Cursos - 8 programas */}
+              {/* VanArts Cursos - Grid 4 por linha */}
               <div className="mb-6">
-                <p className="text-xs uppercase tracking-wider mb-3" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                <p className="text-xs uppercase tracking-wider mb-4 font-semibold" style={{ color: 'rgba(255,255,255,0.6)' }}>
                   {lang === 'pt' ? 'Programas (8)' : 'Programs (8)'}
                 </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {['2D/3D Animation', 'Acting for Film & TV', 'Acting Foundations', 'Art Foundation', 'Game Art & Design', 'Photography', 'Web Dev & Digital Design', 'Visual Effects'].map((course, i) => (
-                    <span key={i} className="text-[11px] px-2 py-1 rounded font-medium" style={{ background: 'rgba(180, 50, 50, 0.15)', color: '#ffffff', border: '1px solid rgba(180, 50, 50, 0.25)' }}>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {['2D/3D Animation', 'Acting for Film & TV', 'Acting Foundations', 'Art Foundation', 'Game Art & Design', 'Photography', 'Web & Digital Design', 'Visual Effects'].map((course, i) => (
+                    <div key={i} className="text-xs px-3 py-2 rounded-lg text-center font-medium" style={{ background: 'rgba(180, 50, 50, 0.2)', color: '#ffffff', border: '1px solid rgba(180, 50, 50, 0.3)' }}>
                       {course}
-                    </span>
+                    </div>
                   ))}
                 </div>
               </div>
