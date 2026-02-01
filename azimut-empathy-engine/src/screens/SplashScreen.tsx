@@ -71,9 +71,9 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
   const backButton = (
     <button
       onClick={handleBackToSite}
-      className="flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-2 rounded-lg text-[10px] sm:text-sm font-medium shrink-0"
+      className="flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-[11px] sm:text-sm font-semibold shrink-0"
       style={{
-        background: 'rgba(255, 255, 255, 0.06)',
+        background: 'rgba(255, 255, 255, 0.08)',
         border: '1px solid rgba(201, 35, 55, 0.6)',
         color: '#ffffff',
       }}
@@ -85,8 +85,8 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
 
   const pillInteractive = (
     <span
-      className="inline-flex items-center gap-1 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-[10px] sm:text-xs font-medium whitespace-nowrap"
-      style={{ background: 'rgba(255, 255, 255, 0.06)', border: '1px solid rgba(201, 35, 55, 0.6)', color: '#ffffff' }}
+      className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-[11px] sm:text-sm font-semibold whitespace-nowrap"
+      style={{ background: 'rgba(255, 255, 255, 0.08)', border: '1px solid rgba(201, 35, 55, 0.6)', color: '#ffffff' }}
       title={t.badgeInteractiveGame}
     >
       <span aria-hidden className="inline-flex" style={{ fontStyle: 'normal' }}>🎮</span>
@@ -133,32 +133,61 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
         {backButton}
       </header>
 
-      {/* Desktop: GameHeader com idiomas (EN, FR, PT, ES) + pílula + Voltar — como era original */}
-      <div className="hidden sm:block flex-shrink-0">
-        <GameHeader
-          leftAction={pillInteractive}
-          rightAction={backButton}
-          showLangSwitcher={true}
-          accentColor="rgba(201, 35, 55, 0.35)"
-        />
-      </div>
-
-      {/* Conteúdo principal — sem scroll, tudo visível */}
-      <main className="relative z-10 flex-1 min-h-0 flex flex-col items-center justify-between pt-0 pb-0 px-2 sm:px-4 md:px-6 overflow-hidden">
-        <div className="w-full max-w-4xl mx-auto text-center flex flex-col items-center gap-1 sm:gap-2">
-          {/* Mobile: pílula "Jogo Interativo" */}
-          <div className="sm:hidden flex justify-center w-full">
-            <span
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-semibold whitespace-nowrap"
-              style={{ background: 'rgba(255, 255, 255, 0.06)', border: '1px solid rgba(201, 35, 55, 0.6)', color: '#ffffff' }}
-            >
-              <span>🎮</span>
-              <span>{t.badgeInteractiveGame}</span>
-            </span>
+      {/* Desktop: Header customizado com nome do jogo */}
+      <header
+        className="hidden sm:flex relative z-20 flex-shrink-0 items-center justify-between gap-4 px-4 md:px-6 py-3"
+        style={{
+          background: 'rgba(5, 5, 8, 0.95)',
+          backdropFilter: 'blur(20px)',
+          borderBottom: '2px solid rgba(201, 35, 55, 0.4)',
+        }}
+      >
+        {/* Esquerda: Logo + Nome do jogo + Pílula */}
+        <div className="flex items-center gap-4">
+          <AzimutLogo className="h-7 w-auto flex-shrink-0" />
+          {pillInteractive}
+        </div>
+        
+        {/* Centro: Nome do jogo no header */}
+        <h1
+          className="font-display text-2xl md:text-3xl font-black tracking-tight leading-none absolute left-1/2 -translate-x-1/2"
+          style={{
+            background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 40%, #C92337 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
+        >
+          EMPATHY ENGINE
+        </h1>
+        
+        {/* Direita: Idiomas + Voltar */}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1">
+            {(['en', 'fr', 'pt', 'es'] as const).map((l) => (
+              <button
+                key={l}
+                type="button"
+                onClick={() => changeGameLang(l)}
+                className="px-2 py-1 text-xs font-semibold uppercase rounded transition-colors"
+                style={{
+                  color: lang === l ? activeLangColor : inactiveLangColor,
+                  background: lang === l ? 'rgba(201, 35, 55, 0.15)' : 'transparent',
+                }}
+              >
+                {l.toUpperCase()}
+              </button>
+            ))}
           </div>
-          {/* Nome do jogo - no topo */}
+          {backButton}
+        </div>
+      </header>
+
+      {/* Conteúdo principal */}
+      <main className="relative z-10 flex-1 min-h-0 flex flex-col items-center justify-center py-2 sm:py-4 px-3 sm:px-6 md:px-8 overflow-hidden">
+        {/* Mobile: Nome do jogo (desktop está no header) */}
+        <div className="sm:hidden text-center mb-3">
           <h1
-            className="font-display text-xl sm:text-3xl md:text-4xl font-black tracking-tight leading-none"
+            className="font-display text-2xl font-black tracking-tight leading-none mb-2"
             style={{
               background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 40%, #C92337 100%)',
               WebkitBackgroundClip: 'text',
@@ -167,46 +196,67 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
           >
             EMPATHY ENGINE
           </h1>
-          {/* Texto descritivo - fonte maior e mais legível */}
-          <p className="text-xs sm:text-sm font-body max-w-2xl mx-auto leading-relaxed text-center px-2" style={{ color: '#D1D5DB' }}>
+          {/* Texto descritivo - mobile */}
+          <p className="text-sm font-body leading-relaxed text-center px-4 mb-2" style={{ color: '#E5E7EB' }}>
             {t.bullets}
             <button
               type="button"
               onClick={handleSecretHintClick}
-              className="inline cursor-pointer border-0 bg-transparent p-0 font-inherit underline decoration-dotted decoration-cyan-400/60 underline-offset-2 hover:decoration-cyan-300 transition-all rounded focus:outline-none focus:ring-2 focus:ring-cyan-400/50"
+              className="inline cursor-pointer border-0 bg-transparent p-0 font-inherit underline decoration-dotted decoration-cyan-400/60 underline-offset-2 hover:decoration-cyan-300 transition-all rounded"
               style={{
                 color: '#00F5FF',
-                textShadow: '0 0 20px rgba(0, 245, 255, 0.35), 0 0 40px rgba(0, 245, 255, 0.15)',
+                textShadow: '0 0 20px rgba(0, 245, 255, 0.35)',
               }}
-              title={isSecretUnlocked() ? t.secretAreaTitle : t.secretAreaHint}
-              aria-label={t.bulletsSecret}
             >
               {t.bulletsSecret}
             </button>
           </p>
-          {/* Hint Quest Premium */}
-          <p className="text-[10px] sm:text-xs font-semibold text-amber-400/90 flex items-center gap-1.5">
+          <p className="text-xs font-semibold text-amber-400 flex items-center justify-center gap-1.5">
+            <span>✨</span> Quest Premium + Surpresas <span>🎁</span>
+          </p>
+        </div>
+
+        {/* Desktop: Texto descritivo (nome do jogo está no header) */}
+        <div className="hidden sm:block text-center mb-4">
+          <p className="text-base md:text-lg font-body leading-relaxed text-center max-w-2xl mx-auto mb-2" style={{ color: '#E5E7EB' }}>
+            {t.bullets}
+            <button
+              type="button"
+              onClick={handleSecretHintClick}
+              className="inline cursor-pointer border-0 bg-transparent p-0 font-inherit underline decoration-dotted decoration-cyan-400/60 underline-offset-2 hover:decoration-cyan-300 transition-all rounded"
+              style={{
+                color: '#00F5FF',
+                textShadow: '0 0 20px rgba(0, 245, 255, 0.35)',
+              }}
+            >
+              {t.bulletsSecret}
+            </button>
+          </p>
+          <p className="text-sm font-semibold text-amber-400 flex items-center justify-center gap-2">
             <span>✨</span> Quest Premium + Surpresas Desbloqueáveis <span>🎁</span>
           </p>
+        </div>
 
-          {/* Card — mais largo para caber texto */}
-          <div className="card-glow-home rounded-lg sm:rounded-xl text-left flex-shrink-0 w-full max-w-4xl overflow-hidden">
-            <div className="card-glow-home-inner rounded-lg sm:rounded-xl p-2 sm:p-4 md:p-5 space-y-2 sm:space-y-3 overflow-hidden min-w-0">
+        <div className="w-full max-w-5xl mx-auto flex flex-col items-center gap-3 sm:gap-4">
+
+          {/* Card — largura máxima */}
+          <div className="card-glow-home rounded-xl sm:rounded-2xl text-left flex-shrink-0 w-full max-w-5xl overflow-hidden">
+            <div className="card-glow-home-inner rounded-xl sm:rounded-2xl p-3 sm:p-5 md:p-6 space-y-3 sm:space-y-4 overflow-hidden min-w-0">
             {/* 18 Tópicos em grid 6x3 */}
             <div className="min-w-0">
               <h3 
-                className="text-[11px] sm:text-sm font-bold uppercase tracking-wider mb-1.5 flex items-center justify-between"
+                className="text-xs sm:text-base font-bold uppercase tracking-wider mb-2 sm:mb-3 flex items-center justify-between"
                 style={{ color: '#C92337' }}
               >
                 <span className="flex items-center gap-2">
                   <span>🎯</span> 18 Temas de Quest
                 </span>
-                <span className="text-[11px] sm:text-sm font-bold text-amber-400 flex items-center gap-1.5 animate-pulse">
+                <span className="text-xs sm:text-base font-bold text-amber-400 flex items-center gap-1.5 animate-pulse">
                   <span>🔮</span> +80 Cartas!
                 </span>
               </h3>
-              {/* Grid 6x3 - fontes maiores */}
-              <div className="grid grid-cols-6 gap-1.5 sm:gap-2">
+              {/* Grid 6x3 - fontes maiores e mais legíveis */}
+              <div className="grid grid-cols-6 gap-2 sm:gap-3">
                 {topics.map((topic, index) => {
                   const name = t[topic.nameKey]
                   const isEstudarCanada = topic.nameKey === 'topicStudyCanada'
@@ -214,22 +264,22 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
                   return (
                     <div
                       key={topic.nameKey}
-                      className={`group flex flex-col items-center justify-center gap-0.5 p-1.5 sm:p-2 rounded-lg transition-all duration-200 hover:scale-105 cursor-default ${isPremium ? 'ring-1 ring-amber-500/40' : ''}`}
+                      className={`group flex flex-col items-center justify-center gap-1 p-2 sm:p-3 rounded-xl transition-all duration-200 hover:scale-105 cursor-default ${isPremium ? 'ring-1 ring-amber-500/50' : ''}`}
                       style={{
                         background: isPremium
-                          ? 'linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(168, 85, 247, 0.1))'
+                          ? 'linear-gradient(135deg, rgba(251, 191, 36, 0.18), rgba(168, 85, 247, 0.12))'
                           : isEstudarCanada 
-                            ? 'linear-gradient(135deg, rgba(190, 3, 32, 0.12), rgba(255, 255, 255, 0.04))' 
-                            : `linear-gradient(135deg, ${topic.color}12, transparent)`,
-                        border: `1px solid ${topic.color}30`,
+                            ? 'linear-gradient(135deg, rgba(190, 3, 32, 0.15), rgba(255, 255, 255, 0.05))' 
+                            : `linear-gradient(135deg, ${topic.color}15, ${topic.color}05)`,
+                        border: `1px solid ${topic.color}35`,
                       }}
                       title={name}
                     >
-                      <span style={{ color: topic.color }} className="text-lg sm:text-xl">
-                        <TopicIcon icon={topic.icon} size={22} />
+                      <span style={{ color: topic.color }} className="text-xl sm:text-2xl">
+                        <TopicIcon icon={topic.icon} size={26} />
                       </span>
                       <span 
-                        className="text-[9px] sm:text-[11px] font-semibold text-center leading-tight opacity-90 group-hover:opacity-100 truncate w-full"
+                        className="text-[10px] sm:text-xs font-bold text-center leading-tight opacity-95 group-hover:opacity-100 truncate w-full"
                         style={{ color: topic.color }}
                       >
                         {name.split(' ')[0]}
@@ -241,18 +291,18 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
             </div>
 
             {/* Divisor */}
-            <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)' }} />
+            <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)' }} />
 
-            {/* Como jogar — mobile: textos curtos em grid 2x2 | desktop: textos longos em lista como original */}
+            {/* Como jogar — grid 2x2 sempre, fonte maior */}
             <div>
               <h3 
-                className="text-[10px] sm:text-sm font-bold uppercase tracking-widest mb-1 sm:mb-3 flex items-center gap-1 sm:gap-2"
+                className="text-xs sm:text-base font-bold uppercase tracking-wider mb-2 sm:mb-3 flex items-center gap-2"
                 style={{ color: '#FFD700' }}
               >
-                <span>🎯</span> {t.howToPlay}
+                <span>🎮</span> {t.howToPlay}
               </h3>
-              {/* Mobile: stepsShort em grid 2x2 */}
-              <div className="sm:hidden grid grid-cols-2 gap-1.5">
+              {/* Grid 2x2 para mobile e desktop */}
+              <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 {(t.stepsShort ?? t.steps).map((step, i) => {
                   const color = STEP_COLORS[i]
                   const parts = step.text.split(step.highlight)
@@ -261,44 +311,16 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
                   return (
                     <div
                       key={i}
-                      className="flex items-center gap-1.5 py-1 px-1.5 rounded"
-                      style={{ background: 'rgba(255, 255, 255, 0.03)' }}
+                      className="flex items-center gap-2 sm:gap-3 py-2 sm:py-3 px-2 sm:px-4 rounded-lg"
+                      style={{ background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(255, 255, 255, 0.06)' }}
                     >
                       <span
-                        className="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold flex-shrink-0"
-                        style={{ background: `${color}20`, color, border: `1px solid ${color}40` }}
+                        className="w-5 h-5 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-[10px] sm:text-sm font-bold flex-shrink-0"
+                        style={{ background: `${color}25`, color, border: `1px solid ${color}50` }}
                       >
                         {i + 1}
                       </span>
-                      <span className="text-[10px] text-[var(--text-secondary)] leading-tight min-w-0 text-left">
-                        {before}
-                        <strong style={{ color }}>{step.highlight}</strong>
-                        {after}
-                      </span>
-                    </div>
-                  )
-                })}
-              </div>
-              {/* Desktop: steps completos, uma linha cada, fonte maior */}
-              <div className="hidden sm:grid grid-cols-1 gap-2 sm:gap-3">
-                {t.steps.map((step, i) => {
-                  const color = STEP_COLORS[i]
-                  const parts = step.text.split(step.highlight)
-                  const before = parts[0] ?? ''
-                  const after = parts.slice(1).join(step.highlight)
-                  return (
-                    <div
-                      key={i}
-                      className="flex items-center gap-3 py-2 px-3 rounded-md min-w-0"
-                      style={{ background: 'rgba(255, 255, 255, 0.03)' }}
-                    >
-                      <span
-                        className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-                        style={{ background: `${color}20`, color, border: `1px solid ${color}40` }}
-                      >
-                        {i + 1}
-                      </span>
-                      <span className="text-base text-[var(--text-secondary)] leading-snug whitespace-nowrap overflow-x-auto min-w-0">
+                      <span className="text-[11px] sm:text-sm text-[var(--text-secondary)] leading-tight min-w-0 text-left">
                         {before}
                         <strong style={{ color }}>{step.highlight}</strong>
                         {after}
@@ -311,15 +333,15 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
             </div>
           </div>
 
-          {/* 1 botão Começar a Jogar - compacto */}
+          {/* 1 botão Começar a Jogar */}
           {onStart && (
             <button
               onClick={onStart}
-              className="flex items-center justify-center gap-2 px-8 py-2.5 sm:px-10 sm:py-3 rounded-full text-sm sm:text-base font-bold transition-all duration-300"
+              className="flex items-center justify-center gap-2 px-10 py-3 sm:px-12 sm:py-4 rounded-full text-base sm:text-lg font-bold transition-all duration-300 hover:scale-105"
               style={{
                 background: 'linear-gradient(135deg, #C92337 0%, #9B1B2A 100%)',
                 color: '#fff',
-                boxShadow: '0 6px 24px rgba(201, 35, 55, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1)',
+                boxShadow: '0 8px 32px rgba(201, 35, 55, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1)',
               }}
             >
               <span>▶</span>
@@ -327,72 +349,71 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
             </button>
           )}
 
-        </div>
-
-        {/* 4 botões em grid - na parte inferior */}
-        <div className="grid grid-cols-4 gap-2 w-full max-w-4xl mt-auto pt-2">
-          {onExperiences && (
-            <button
-              onClick={onExperiences}
-              className="flex items-center justify-center gap-1.5 py-2 rounded-lg text-[10px] sm:text-xs font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
-              style={{
-                background: 'rgba(255, 215, 0, 0.1)',
-                border: '1px solid rgba(255, 215, 0, 0.3)',
-                color: '#FFD700',
-              }}
-            >
-              <span>🏆</span>
-              <span>Ranking</span>
-            </button>
-          )}
-          {onAbout && (
-            <button
-              onClick={onAbout}
-              className="flex items-center justify-center gap-1.5 py-2 rounded-lg text-[10px] sm:text-xs font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
-              style={{
-                background: 'rgba(168, 85, 247, 0.1)',
-                border: '1px solid rgba(168, 85, 247, 0.3)',
-                color: '#C084FC',
-              }}
-            >
-              <span>📖</span>
-              <span>Tutorial</span>
-            </button>
-          )}
-          {onTips && (
-            <button
-              onClick={onTips}
-              className="flex items-center justify-center gap-1.5 py-2 rounded-lg text-[10px] sm:text-xs font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
-              style={{
-                background: 'rgba(255, 193, 7, 0.1)',
-                border: '1px solid rgba(255, 193, 7, 0.3)',
-                color: '#FCD34D',
-              }}
-            >
-              <span>💡</span>
-              <span>Dicas</span>
-            </button>
-          )}
-          {onSettings && (
-            <button
-              onClick={onSettings}
-              className="flex items-center justify-center gap-1.5 py-2 rounded-lg text-[10px] sm:text-xs font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
-              style={{
-                background: 'rgba(255, 255, 255, 0.06)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                color: '#9CA3AF',
-              }}
-            >
-              <span>⚙️</span>
-              <span>Config</span>
-            </button>
-          )}
+          {/* 4 botões em grid */}
+          <div className="grid grid-cols-4 gap-2 sm:gap-3 w-full max-w-5xl">
+            {onExperiences && (
+              <button
+                onClick={onExperiences}
+                className="flex items-center justify-center gap-1.5 py-2.5 sm:py-3 rounded-xl text-[11px] sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
+                style={{
+                  background: 'rgba(255, 215, 0, 0.12)',
+                  border: '1px solid rgba(255, 215, 0, 0.35)',
+                  color: '#FFD700',
+                }}
+              >
+                <span>🏆</span>
+                <span>Ranking</span>
+              </button>
+            )}
+            {onAbout && (
+              <button
+                onClick={onAbout}
+                className="flex items-center justify-center gap-1.5 py-2.5 sm:py-3 rounded-xl text-[11px] sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
+                style={{
+                  background: 'rgba(168, 85, 247, 0.12)',
+                  border: '1px solid rgba(168, 85, 247, 0.35)',
+                  color: '#C084FC',
+                }}
+              >
+                <span>📖</span>
+                <span>Tutorial</span>
+              </button>
+            )}
+            {onTips && (
+              <button
+                onClick={onTips}
+                className="flex items-center justify-center gap-1.5 py-2.5 sm:py-3 rounded-xl text-[11px] sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
+                style={{
+                  background: 'rgba(255, 193, 7, 0.12)',
+                  border: '1px solid rgba(255, 193, 7, 0.35)',
+                  color: '#FCD34D',
+                }}
+              >
+                <span>💡</span>
+                <span>Dicas</span>
+              </button>
+            )}
+            {onSettings && (
+              <button
+                onClick={onSettings}
+                className="flex items-center justify-center gap-1.5 py-2.5 sm:py-3 rounded-xl text-[11px] sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  border: '1px solid rgba(255, 255, 255, 0.25)',
+                  color: '#D1D5DB',
+                }}
+              >
+                <span>⚙️</span>
+                <span>Config</span>
+              </button>
+            )}
+          </div>
         </div>
       </main>
 
-      {/* Footer — cor mais visível */}
-      <footer className="relative z-10 text-center py-1.5 flex-shrink-0" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.06)' }}>
-        <p className="text-[9px] sm:text-[11px] font-medium" style={{ color: '#9CA3AF' }}>
+      {/* Footer */}
+      <footer className="relative z-10 text-center py-2 flex-shrink-0" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+        <p className="text-[10px] sm:text-xs font-medium" style={{ color: '#9CA3AF' }}>
           {t.footer}
         </p>
       </footer>
