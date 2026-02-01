@@ -634,7 +634,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                       borderRadius: '8px 0 0 8px'
                     }}
                   >
-                    <div className="text-white font-bold text-sm">1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
+                    <div className="text-white font-bold text-sm">1 {lang === 'pt' ? 'ANO' : lang === 'es' ? 'AÑO' : lang === 'fr' ? 'AN' : 'YEAR'}</div>
                     <div className="text-white/80 text-xs">VFS Diploma</div>
                   </div>
                   <div 
@@ -644,7 +644,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                       clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%, 16px 50%)'
                     }}
                   >
-                    <div className="text-white font-bold text-sm">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
+                    <div className="text-white font-bold text-sm">+ 1 {lang === 'pt' ? 'ANO' : lang === 'es' ? 'AÑO' : lang === 'fr' ? 'AN' : 'YEAR'}</div>
                     <div className="text-white/80 text-xs">BCIT Advanced Diploma</div>
                   </div>
                   <div 
@@ -654,7 +654,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                       clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%, 16px 50%)'
                     }}
                   >
-                    <div className="text-white font-bold text-sm">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
+                    <div className="text-white font-bold text-sm">+ 1 {lang === 'pt' ? 'ANO' : lang === 'es' ? 'AÑO' : lang === 'fr' ? 'AN' : 'YEAR'}</div>
                     <div className="text-white/80 text-xs">BCIT Bachelor (BBA)</div>
                   </div>
                   <div 
@@ -667,8 +667,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   >
                     <span className="text-white font-bold text-xl">=</span>
                     <div className="text-white text-sm leading-snug font-semibold">
-                      <div>Triple Credentials</div>
-                      <div>Work Permit</div>
+                      <div>{lang === 'pt' ? 'Tripla Credencial' : lang === 'es' ? 'Triple Credencial' : lang === 'fr' ? 'Triple Diplôme' : 'Triple Credentials'}</div>
+                      <div>{lang === 'pt' ? 'Visto de Trabalho' : lang === 'es' ? 'Permiso de Trabajo' : lang === 'fr' ? 'Permis de Travail' : 'Work Permit'}</div>
                     </div>
                   </div>
                 </div>
@@ -676,29 +676,31 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 {/* Mobile: Vertical */}
                 <div className="md:hidden space-y-2">
                   <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: '#8b1625' }}>
-                    <span className="text-white font-bold text-base w-20">1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white font-bold text-base w-20">1 {lang === 'pt' ? 'ANO' : lang === 'es' ? 'AÑO' : lang === 'fr' ? 'AN' : 'YEAR'}</span>
                     <span className="text-white/90 text-base">VFS Diploma</span>
                   </div>
                   <div className="text-center text-white/40">↓</div>
                   <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: '#a91d2e' }}>
-                    <span className="text-white font-bold text-base w-20">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white font-bold text-base w-20">+ 1 {lang === 'pt' ? 'ANO' : lang === 'es' ? 'AÑO' : lang === 'fr' ? 'AN' : 'YEAR'}</span>
                     <span className="text-white/90 text-base">BCIT Advanced Diploma</span>
                   </div>
                   <div className="text-center text-white/40">↓</div>
                   <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: '#c92337' }}>
-                    <span className="text-white font-bold text-base w-20">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white font-bold text-base w-20">+ 1 {lang === 'pt' ? 'ANO' : lang === 'es' ? 'AÑO' : lang === 'fr' ? 'AN' : 'YEAR'}</span>
                     <span className="text-white/90 text-base">BCIT Bachelor (BBA)</span>
                   </div>
                   <div className="text-center text-white/40">↓</div>
                   <div className="p-4 rounded-lg flex items-center justify-center gap-3" style={{ background: '#e02d42' }}>
                     <span className="text-white font-bold text-xl">=</span>
-                    <span className="text-white font-bold text-base">Triple Credentials + Work Permit</span>
+                    <span className="text-white font-bold text-base">
+                      {lang === 'pt' ? 'Tripla Credencial + Visto de Trabalho' : lang === 'es' ? 'Triple Credencial + Permiso de Trabajo' : lang === 'fr' ? 'Triple Diplôme + Permis de Travail' : 'Triple Credentials + Work Permit'}
+                    </span>
                   </div>
                 </div>
               </div>
 
               <a href="https://vfs.edu/pathway/bcit" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-base font-semibold text-azimut-red hover:underline">
-                {lang === 'pt' ? 'Ver detalhes VFS-BCIT Pathway' : 'View VFS-BCIT Pathway details'} →
+                {lang === 'pt' ? 'Ver detalhes VFS-BCIT Pathway' : lang === 'es' ? 'Ver detalles VFS-BCIT Pathway' : lang === 'fr' ? 'Voir détails VFS-BCIT Pathway' : 'View VFS-BCIT Pathway details'} →
               </a>
             </div>
 
@@ -723,9 +725,15 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   />
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-sm px-4 py-1.5 rounded-full font-bold" style={{ background: '#b43232', color: '#fff' }}>Best Value</span>
-                  <span className="text-sm px-4 py-1.5 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff' }}>90%+ employability</span>
-                  <span className="text-sm px-4 py-1.5 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff' }}>Since 1995</span>
+                  <span className="text-sm px-4 py-1.5 rounded-full font-bold" style={{ background: '#b43232', color: '#fff' }}>
+                    {lang === 'pt' ? 'Melhor Custo-Benefício' : lang === 'es' ? 'Mejor Valor' : lang === 'fr' ? 'Meilleur Rapport' : 'Best Value'}
+                  </span>
+                  <span className="text-sm px-4 py-1.5 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff' }}>
+                    90%+ {lang === 'pt' ? 'empregabilidade' : lang === 'es' ? 'empleabilidad' : lang === 'fr' ? 'employabilité' : 'employability'}
+                  </span>
+                  <span className="text-sm px-4 py-1.5 rounded-full font-medium" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff' }}>
+                    {lang === 'pt' ? 'Desde 1995' : lang === 'es' ? 'Desde 1995' : lang === 'fr' ? 'Depuis 1995' : 'Since 1995'}
+                  </span>
                 </div>
               </div>
 
@@ -757,7 +765,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                       borderRadius: '8px 0 0 8px'
                     }}
                   >
-                    <div className="text-white font-bold text-sm">1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
+                    <div className="text-white font-bold text-sm">1 {lang === 'pt' ? 'ANO' : lang === 'es' ? 'AÑO' : lang === 'fr' ? 'AN' : 'YEAR'}</div>
                     <div className="text-white/80 text-xs">VanArts Diploma</div>
                   </div>
                   <div 
@@ -767,7 +775,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                       clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%, 16px 50%)'
                     }}
                   >
-                    <div className="text-white font-bold text-sm">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
+                    <div className="text-white font-bold text-sm">+ 1 {lang === 'pt' ? 'ANO' : lang === 'es' ? 'AÑO' : lang === 'fr' ? 'AN' : 'YEAR'}</div>
                     <div className="text-white/80 text-xs">BCIT Advanced Diploma</div>
                   </div>
                   <div 
@@ -777,7 +785,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                       clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%, 16px 50%)'
                     }}
                   >
-                    <div className="text-white font-bold text-sm">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</div>
+                    <div className="text-white font-bold text-sm">+ 1 {lang === 'pt' ? 'ANO' : lang === 'es' ? 'AÑO' : lang === 'fr' ? 'AN' : 'YEAR'}</div>
                     <div className="text-white/80 text-xs">BCIT Bachelor (BBA)</div>
                   </div>
                   <div 
@@ -790,8 +798,8 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                   >
                     <span className="text-white font-bold text-xl">=</span>
                     <div className="text-white text-sm leading-snug font-semibold">
-                      <div>Triple Credentials</div>
-                      <div>Work Permit</div>
+                      <div>{lang === 'pt' ? 'Tripla Credencial' : lang === 'es' ? 'Triple Credencial' : lang === 'fr' ? 'Triple Diplôme' : 'Triple Credentials'}</div>
+                      <div>{lang === 'pt' ? 'Visto de Trabalho' : lang === 'es' ? 'Permiso de Trabajo' : lang === 'fr' ? 'Permis de Travail' : 'Work Permit'}</div>
                     </div>
                   </div>
                 </div>
@@ -799,29 +807,31 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
                 {/* Mobile: Vertical */}
                 <div className="md:hidden space-y-2">
                   <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: '#8b1625' }}>
-                    <span className="text-white font-bold text-base w-20">1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white font-bold text-base w-20">1 {lang === 'pt' ? 'ANO' : lang === 'es' ? 'AÑO' : lang === 'fr' ? 'AN' : 'YEAR'}</span>
                     <span className="text-white/90 text-base">VanArts Diploma</span>
                   </div>
                   <div className="text-center text-white/40">↓</div>
                   <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: '#a91d2e' }}>
-                    <span className="text-white font-bold text-base w-20">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white font-bold text-base w-20">+ 1 {lang === 'pt' ? 'ANO' : lang === 'es' ? 'AÑO' : lang === 'fr' ? 'AN' : 'YEAR'}</span>
                     <span className="text-white/90 text-base">BCIT Advanced Diploma</span>
                   </div>
                   <div className="text-center text-white/40">↓</div>
                   <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: '#c92337' }}>
-                    <span className="text-white font-bold text-base w-20">+ 1 {lang === 'pt' ? 'ANO' : 'YEAR'}</span>
+                    <span className="text-white font-bold text-base w-20">+ 1 {lang === 'pt' ? 'ANO' : lang === 'es' ? 'AÑO' : lang === 'fr' ? 'AN' : 'YEAR'}</span>
                     <span className="text-white/90 text-base">BCIT Bachelor (BBA)</span>
                   </div>
                   <div className="text-center text-white/40">↓</div>
                   <div className="p-4 rounded-lg flex items-center justify-center gap-3" style={{ background: '#e02d42' }}>
                     <span className="text-white font-bold text-xl">=</span>
-                    <span className="text-white font-bold text-base">Triple Credentials + Work Permit</span>
+                    <span className="text-white font-bold text-base">
+                      {lang === 'pt' ? 'Tripla Credencial + Visto de Trabalho' : lang === 'es' ? 'Triple Credencial + Permiso de Trabajo' : lang === 'fr' ? 'Triple Diplôme + Permis de Travail' : 'Triple Credentials + Work Permit'}
+                    </span>
                   </div>
                 </div>
               </div>
 
               <a href="https://www.vanarts.com/pathways" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-base font-semibold hover:underline" style={{ color: '#e57373' }}>
-                {lang === 'pt' ? 'Ver detalhes VanArts-BCIT Pathway' : 'View VanArts-BCIT Pathway details'} →
+                {lang === 'pt' ? 'Ver detalhes VanArts-BCIT Pathway' : lang === 'es' ? 'Ver detalles VanArts-BCIT Pathway' : lang === 'fr' ? 'Voir détails VanArts-BCIT Pathway' : 'View VanArts-BCIT Pathway details'} →
               </a>
             </div>
 
