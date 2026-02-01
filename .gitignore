@@ -13,6 +13,10 @@ build/
 out/
 # Jogo Empathy Engine (build gerado em vercel-build)
 public/game/
+public/pt/game/
+public/en/game/
+public/es/game/
+public/fr/game/
 
 # Misc
 .DS_Store
