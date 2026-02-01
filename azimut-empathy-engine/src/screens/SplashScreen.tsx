@@ -285,7 +285,7 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
                         <TopicIcon icon={topic.icon} size={28} />
                       </span>
                       <span 
-                        className="text-[10px] sm:text-sm font-bold text-center leading-tight opacity-95 group-hover:opacity-100 truncate w-full"
+                        className="text-[11px] sm:text-base font-bold text-center leading-tight opacity-95 group-hover:opacity-100 truncate w-full"
                         style={{ color: topic.color }}
                       >
                         {name.split(' ')[0]}
@@ -326,7 +326,7 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
                       >
                         {i + 1}
                       </span>
-                      <span className="text-[11px] sm:text-sm text-[var(--text-secondary)] leading-tight min-w-0 text-left">
+                      <span className="text-xs sm:text-base text-[var(--text-secondary)] leading-tight min-w-0 text-left">
                         {before}
                         <strong style={{ color }}>{step.highlight}</strong>
                         {after}
@@ -355,61 +355,61 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
             </button>
           )}
 
-          {/* 4 botões em grid - compacto */}
+          {/* 4 botões em grid - fontes maiores */}
           <div className="grid grid-cols-4 gap-1.5 sm:gap-2 w-full max-w-5xl">
             {onExperiences && (
               <button
                 onClick={onExperiences}
-                className="flex items-center justify-center gap-1 py-1.5 sm:py-2 rounded-lg text-[10px] sm:text-xs font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
+                className="flex items-center justify-center gap-1.5 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
                 style={{
                   background: 'rgba(255, 215, 0, 0.12)',
                   border: '1px solid rgba(255, 215, 0, 0.35)',
                   color: '#FFD700',
                 }}
               >
-                <span>🏆</span>
+                <span className="text-sm sm:text-base">🏆</span>
                 <span>Ranking</span>
               </button>
             )}
             {onAbout && (
               <button
                 onClick={onAbout}
-                className="flex items-center justify-center gap-1 py-1.5 sm:py-2 rounded-lg text-[10px] sm:text-xs font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
+                className="flex items-center justify-center gap-1.5 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
                 style={{
                   background: 'rgba(168, 85, 247, 0.12)',
                   border: '1px solid rgba(168, 85, 247, 0.35)',
                   color: '#C084FC',
                 }}
               >
-                <span>📖</span>
+                <span className="text-sm sm:text-base">📖</span>
                 <span>Tutorial</span>
               </button>
             )}
             {onTips && (
               <button
                 onClick={onTips}
-                className="flex items-center justify-center gap-1 py-1.5 sm:py-2 rounded-lg text-[10px] sm:text-xs font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
+                className="flex items-center justify-center gap-1.5 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
                 style={{
                   background: 'rgba(255, 193, 7, 0.12)',
                   border: '1px solid rgba(255, 193, 7, 0.35)',
                   color: '#FCD34D',
                 }}
               >
-                <span>💡</span>
+                <span className="text-sm sm:text-base">💡</span>
                 <span>Dicas</span>
               </button>
             )}
             {onSettings && (
               <button
                 onClick={onSettings}
-                className="flex items-center justify-center gap-1 py-1.5 sm:py-2 rounded-lg text-[10px] sm:text-xs font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
+                className="flex items-center justify-center gap-1.5 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
                 style={{
                   background: 'rgba(255, 255, 255, 0.08)',
                   border: '1px solid rgba(255, 255, 255, 0.25)',
                   color: '#D1D5DB',
                 }}
               >
-                <span>⚙️</span>
+                <span className="text-sm sm:text-base">⚙️</span>
                 <span>Config</span>
               </button>
             )}
