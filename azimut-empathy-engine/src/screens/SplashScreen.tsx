@@ -144,22 +144,21 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
       </div>
 
       {/* Conteúdo principal — sem scroll, tudo visível */}
-      <main className="relative z-10 flex-1 min-h-0 flex flex-col items-center justify-center pt-1 sm:pt-0 pb-1 px-2 sm:px-4 md:px-6 overflow-hidden">
-        <div className="w-full max-w-3xl mx-auto text-center flex flex-col items-center justify-center gap-2 sm:gap-3">
-          {/* Mobile: pílula "Jogo Interativo" fora do menu, logo abaixo do header */}
+      <main className="relative z-10 flex-1 min-h-0 flex flex-col items-center justify-start pt-0 pb-0 px-3 sm:px-6 md:px-8 overflow-hidden">
+        <div className="w-full max-w-4xl mx-auto text-center flex flex-col items-center justify-start gap-1 sm:gap-2">
+          {/* Mobile: pílula "Jogo Interativo" */}
           <div className="sm:hidden flex justify-center w-full">
             <span
-              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-semibold whitespace-nowrap"
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-semibold whitespace-nowrap"
               style={{ background: 'rgba(255, 255, 255, 0.06)', border: '1px solid rgba(201, 35, 55, 0.6)', color: '#ffffff' }}
-              title={t.badgeInteractiveGame}
             >
-              <span aria-hidden className="inline-flex" style={{ fontStyle: 'normal' }}>🎮</span>
+              <span>🎮</span>
               <span>{t.badgeInteractiveGame}</span>
             </span>
           </div>
-          {/* Nome do jogo - compacto */}
+          {/* Nome do jogo */}
           <h1
-            className="font-display text-lg sm:text-3xl md:text-4xl font-black tracking-tight leading-none"
+            className="font-display text-xl sm:text-4xl md:text-5xl font-black tracking-tight leading-none"
             style={{
               background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 40%, #C92337 100%)',
               WebkitBackgroundClip: 'text',
@@ -168,8 +167,8 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
           >
             EMPATHY ENGINE
           </h1>
-          {/* Texto abaixo do jogo: bullets; "Área secreta..." com glow/destaque premium — 5 toques destravam área secreta */}
-          <p className="text-[11px] sm:text-xs font-body max-w-2xl mx-auto leading-snug text-center px-2 sm:whitespace-nowrap" style={{ color: '#9CA3AF' }}>
+          {/* Texto descritivo - fonte maior e mais legível */}
+          <p className="text-xs sm:text-sm font-body max-w-2xl mx-auto leading-relaxed text-center px-2" style={{ color: '#B8B4A8' }}>
             {t.bullets}
             <button
               type="button"
@@ -180,30 +179,29 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
                 textShadow: '0 0 20px rgba(0, 245, 255, 0.35), 0 0 40px rgba(0, 245, 255, 0.15)',
               }}
               title={isSecretUnlocked() ? t.secretAreaTitle : t.secretAreaHint}
-              aria-label={t.bulletsSecret}
             >
               {t.bulletsSecret}
             </button>
           </p>
 
-          {/* Card — conteúdo dentro do card; compacto para caber sem scroll */}
-          <div className="card-glow-home rounded-lg sm:rounded-xl text-left mt-0 sm:mt-4 flex-shrink-0 w-full max-w-3xl overflow-hidden">
-            <div className="card-glow-home-inner rounded-lg sm:rounded-xl p-2 sm:p-4 md:p-6 space-y-2 sm:space-y-4 overflow-hidden min-w-0">
+          {/* Card — largura maior para caber os tópicos */}
+          <div className="card-glow-home rounded-lg sm:rounded-xl text-left mt-1 sm:mt-2 flex-shrink-0 w-full max-w-4xl overflow-hidden">
+            <div className="card-glow-home-inner rounded-lg sm:rounded-xl p-2.5 sm:p-5 md:p-6 space-y-2 sm:space-y-3 overflow-hidden min-w-0">
             {/* 18 Tópicos em grid 6x3 */}
             <div className="min-w-0">
               <h3 
-                className="text-xs sm:text-sm font-bold uppercase tracking-wider mb-2 flex items-center justify-between"
+                className="text-sm sm:text-base font-bold uppercase tracking-wider mb-2 flex items-center justify-between"
                 style={{ color: '#C92337' }}
               >
                 <span className="flex items-center gap-2">
                   <span>🎯</span> 18 Temas de Quest
                 </span>
-                <span className="text-xs sm:text-sm font-bold text-amber-400 flex items-center gap-1.5 animate-pulse">
-                  <span>🔮</span> +80 Cartas!
+                <span className="text-sm sm:text-base font-bold text-amber-400 flex items-center gap-1.5">
+                  <span>✨</span> +Surpresas!
                 </span>
               </h3>
-              {/* Grid 6x3 no desktop, 6x3 no mobile também */}
-              <div className="grid grid-cols-6 gap-1 sm:gap-2">
+              {/* Grid 6x3 */}
+              <div className="grid grid-cols-6 gap-1.5 sm:gap-2">
                 {topics.map((topic, index) => {
                   const name = t[topic.nameKey]
                   const isEstudarCanada = topic.nameKey === 'topicStudyCanada'
@@ -211,7 +209,7 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
                   return (
                     <div
                       key={topic.nameKey}
-                      className={`group flex flex-col items-center justify-center gap-0.5 p-1 sm:p-2 rounded-lg transition-all duration-200 hover:scale-105 cursor-default ${isPremium ? 'ring-1 ring-amber-500/40' : ''}`}
+                      className={`group flex flex-col items-center justify-center gap-0.5 p-1.5 sm:p-2.5 rounded-lg transition-all duration-200 hover:scale-105 cursor-default ${isPremium ? 'ring-1 ring-amber-500/40' : ''}`}
                       style={{
                         background: isPremium
                           ? 'linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(168, 85, 247, 0.1))'
@@ -222,11 +220,11 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
                       }}
                       title={name}
                     >
-                      <span style={{ color: topic.color }} className="text-base sm:text-xl">
-                        <TopicIcon icon={topic.icon} size={20} />
+                      <span style={{ color: topic.color }} className="text-lg sm:text-2xl">
+                        <TopicIcon icon={topic.icon} size={24} />
                       </span>
                       <span 
-                        className="text-[8px] sm:text-[10px] font-semibold text-center leading-tight opacity-80 group-hover:opacity-100 truncate w-full"
+                        className="text-[9px] sm:text-xs font-semibold text-center leading-tight opacity-90 group-hover:opacity-100 truncate w-full"
                         style={{ color: topic.color }}
                       >
                         {name.split(' ')[0]}
@@ -325,11 +323,11 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
           )}
 
           {/* 4 botões em grid - largura total alinhada com o card */}
-          <div className="grid grid-cols-4 gap-2 w-full max-w-3xl">
+          <div className="grid grid-cols-4 gap-2 sm:gap-3 w-full max-w-4xl mt-1">
             {onExperiences && (
               <button
                 onClick={onExperiences}
-                className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-[11px] sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
+                className="flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
                 style={{
                   background: 'rgba(255, 215, 0, 0.1)',
                   border: '1px solid rgba(255, 215, 0, 0.3)',
@@ -343,7 +341,7 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
             {onAbout && (
               <button
                 onClick={onAbout}
-                className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-[11px] sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
+                className="flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
                 style={{
                   background: 'rgba(168, 85, 247, 0.1)',
                   border: '1px solid rgba(168, 85, 247, 0.3)',
@@ -357,7 +355,7 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
             {onTips && (
               <button
                 onClick={onTips}
-                className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-[11px] sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
+                className="flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
                 style={{
                   background: 'rgba(255, 193, 7, 0.1)',
                   border: '1px solid rgba(255, 193, 7, 0.3)',
@@ -371,7 +369,7 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
             {onSettings && (
               <button
                 onClick={onSettings}
-                className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-[11px] sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
+                className="flex items-center justify-center gap-1.5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] whitespace-nowrap"
                 style={{
                   background: 'rgba(255, 255, 255, 0.06)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
@@ -386,9 +384,9 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
         </div>
       </main>
 
-      {/* Footer — compacto */}
-      <footer className="relative z-10 text-center py-1 flex-shrink-0" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.04)' }}>
-        <p className="text-[8px] sm:text-[10px]" style={{ color: '#4B5563' }}>
+      {/* Footer — cor destacada para ser legível */}
+      <footer className="relative z-10 text-center py-1.5 flex-shrink-0" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+        <p className="text-[10px] sm:text-xs font-medium" style={{ color: '#9CA3AF' }}>
           {t.footer}
         </p>
       </footer>
