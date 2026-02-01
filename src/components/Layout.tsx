@@ -1077,7 +1077,6 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     e.currentTarget.style.transform = 'scale(1)'
                     e.currentTarget.style.boxShadow = '0 3px 12px rgba(139, 92, 246, 0.5)'
                   }}
-                  aria-label="Web3 Preview"
                 >
                   {/* Ícone SVG Web3 Mobile - GRANDE e BRANCO */}
                   <img 
