@@ -182,6 +182,20 @@
     </style>
   </head>
   <body class="bg-azimut-bg text-slate-100">
+    <!-- Redirect para backoffice se acessado pelo domínio errado (DNS ainda não propagou) -->
+    <script>
+      (function() {
+        var host = window.location.hostname;
+        if (host === 'backoffice.azmt.com.br') {
+          // Redireciona para o backoffice no Vercel (funciona mesmo sem DNS)
+          var path = window.location.pathname || '/login';
+          if (path === '/' || path === '') path = '/login';
+          // Remove prefixo de idioma se houver (ex: /en/login -> /login)
+          path = path.replace(/^\/(pt|en|es|fr)\//, '/');
+          window.location.replace('https://azimut-backoffice.vercel.app' + path);
+        }
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
