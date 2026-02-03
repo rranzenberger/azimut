@@ -5,13 +5,14 @@
 
 ## Causa
 O projeto **azimut-backoffice** na Vercel está com **Root Directory** = `azimut-cms`.  
-Quando o script roda com `--cwd azimut-cms`, a Vercel junta e procura `azimut-cms/azimut-cms`.
+O script já roda *dentro* da pasta `azimut-cms`; a Vercel soma o Root Directory e procura `azimut-cms/azimut-cms` (que não existe).
 
 ## Solução (uma vez só)
 
-1. Abra: **https://vercel.com/azimuts-projects-6435f869/azimut-backoffice/settings**
+1. Abra as configurações do projeto backoffice:  
+   **https://vercel.com/azimuts-projects-6435f869/azimut-backoffice/settings**
 2. Em **General** → **Root Directory**
-3. Apague o valor `azimut-cms` e deixe **vazio** (ou ponha `.`)
-4. Salve (**Save**)
+3. Apague o valor `azimut-cms` e deixe o campo **vazio** (ou use `.`)
+4. Clique em **Save**
 
-Depois rode de novo o deploy (script ou .bat). O backoffice deve subir sem esse erro.
+Depois rode de novo **RODAR_DEPLOY_TUDO.bat** (ou `.\DEPLOY_TUDO.ps1`). O backoffice deve subir sem esse erro.

@@ -5,6 +5,7 @@ import ApiService from '../services/api'
 import CanadaMapleLeaf from './CanadaMapleLeaf'
 import { useFormTracking } from '../hooks/useFormTracking'
 import { logger } from '@/utils/logger'
+import { checkHoneypot, canSubmit } from '../utils/formValidation'
 
 interface VancouverInterestFormProps {
   lang: Lang
@@ -29,6 +30,7 @@ interface FormData {
   howHeard: string
   comments: string
   wantsNewsletter?: boolean // 🆕 Checkbox newsletter
+  website?: string // Honeypot anti-spam (campo oculto)
 }
 
 const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) => {
@@ -57,7 +59,8 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
     fundingSource: '',
     howHeard: '',
     comments: '',
-    wantsNewsletter: false // 🆕 Checkbox newsletter
+    wantsNewsletter: false, // 🆕 Checkbox newsletter
+    website: '' // Honeypot anti-spam (campo oculto)
   })
 
   const [loading, setLoading] = useState(false)
@@ -256,6 +259,24 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    // Rate limiting (prevenir spam)
+    if (!canSubmit()) {
+      setError(t(lang, 'formWaitBeforeResend'))
+      return
+    }
+    
+    // Honeypot anti-spam
+    if (!checkHoneypot(formData.website || '')) {
+      setLoading(true)
+      setTimeout(() => {
+        setLoading(false)
+        setSuccess(true)
+        setTimeout(() => navigate(`/${lang}/thank-you`), 2000)
+      }, 1000)
+      return
+    }
+    
     setLoading(true)
     setError(null)
     setSuccess(false)
@@ -371,7 +392,8 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
         budgetRange: '',
         fundingSource: '',
         howHeard: '',
-        comments: ''
+        comments: '',
+        website: ''
       })
 
       // Scroll to top to show success message
@@ -818,6 +840,18 @@ const VancouverInterestForm: React.FC<VancouverInterestFormProps> = ({ lang }) =
         <p className="text-xs text-white/50 text-center mt-4">
           * {t(lang, 'formVanRequired')}
         </p>
+        
+        {/* Honeypot anti-spam (campo oculto) */}
+        <input
+          type="text"
+          name="website"
+          value={formData.website || ''}
+          onChange={handleChange}
+          style={{ position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none' }}
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+        />
       </div>
     </form>
   )

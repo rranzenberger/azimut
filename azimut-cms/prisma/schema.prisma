@@ -637,6 +637,49 @@ model Settings {
   updatedAt              DateTime @updatedAt
 }
 
+// Imprensa / notícias (área de imprensa do site)
+model Press {
+  id          String   @id @default(uuid())
+  titlePt     String
+  titleEn     String?
+  titleEs     String?
+  titleFr     String?
+  summaryPt   String?  @db.Text
+  summaryEn   String?  @db.Text
+  summaryEs   String?  @db.Text
+  summaryFr   String?  @db.Text
+  url         String?  // link externo (matéria, release)
+  publishedAt DateTime?
+  displayOrder Int     @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isPublished])
+  @@index([publishedAt])
+  @@index([displayOrder])
+}
+
+// Publicações (Research & Lab - artigos, apresentações)
+model Publication {
+  id          String   @id @default(uuid())
+  titlePt     String
+  titleEn     String?
+  titleEs     String?
+  titleFr     String?
+  authors     String?  // autores (texto livre)
+  url         String?  // link (DOI, site, PDF)
+  year        Int?
+  displayOrder Int     @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isPublished])
+  @@index([year])
+  @@index([displayOrder])
+}
+
 enum Role {
   SUPER_ADMIN
   ADMIN

@@ -11,6 +11,7 @@ import ApiService from '../services/api'
 import CanadaMapleLeaf from './CanadaMapleLeaf'
 import { useFormTracking } from '../hooks/useFormTracking'
 import { logger } from '@/utils/logger'
+import { checkHoneypot, canSubmit } from '../utils/formValidation'
 
 // SelectField Component - Customizado (igual SmartContactForm)
 interface SelectFieldProps {
@@ -108,6 +109,7 @@ interface FormData {
   contactPreference?: 'email' | 'whatsapp' | 'call' | 'any'
   interest: string
   wantsNewsletter: boolean // 🆕 Checkbox newsletter
+  website?: string // Honeypot anti-spam (campo oculto)
 }
 
 const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefilledData }) => {
@@ -127,7 +129,8 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
     preferredLanguage: 'pt', // 🇧🇷 Padrão Português (maioria dos alunos são brasileiros)
     contactPreference: 'email',
     interest: '',
-    wantsNewsletter: false // 🆕 Checkbox newsletter
+    wantsNewsletter: false, // 🆕 Checkbox newsletter
+    website: '' // Honeypot anti-spam (campo oculto)
   })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -344,6 +347,23 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    // Rate limiting (prevenir spam)
+    if (!canSubmit()) {
+      setError(t(lang, 'formWaitBeforeResend'))
+      return
+    }
+    
+    // Honeypot anti-spam
+    if (!checkHoneypot(formData.website || '')) {
+      setLoading(true)
+      setTimeout(() => {
+        setLoading(false)
+        setSuccess(true)
+        setTimeout(() => navigate(`/${lang}/thank-you`), 2000)
+      }, 1000)
+      return
+    }
     
     // Validação: Nome obrigatório
     if (!formData.name) {
@@ -706,6 +726,18 @@ const AcademyQuickForm: React.FC<AcademyQuickFormProps> = ({ lang, type, prefill
           <p className="text-xs text-white/40 text-center">
             🔒 {t(lang, 'formAcademyPrivacy')}
           </p>
+          
+          {/* Honeypot anti-spam (campo oculto) */}
+          <input
+            type="text"
+            name="website"
+            value={formData.website || ''}
+            onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+            style={{ position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none' }}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+          />
         </form>
       )}
     </div>

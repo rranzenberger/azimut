@@ -5,6 +5,7 @@
 // ════════════════════════════════════════════════════════════
 
 import React, { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { 
   loadProgress, 
   getCurrentLevel, 
@@ -27,6 +28,8 @@ export const GamificationWidget: React.FC<GamificationWidgetProps> = ({
   position = 'bottom-right',
   showOnMount = true
 }) => {
+  const navigate = useNavigate()
+  const location = useLocation()
   const [progress, setProgress] = useState<UserProgress | null>(null)
   const [isOpen, setIsOpen] = useState(false)
   const [isMinimized, setIsMinimized] = useState(true)
@@ -36,6 +39,7 @@ export const GamificationWidget: React.FC<GamificationWidgetProps> = ({
     message: string
     emoji: string
   } | null>(null)
+  const [navigateFeedback, setNavigateFeedback] = useState(false)
 
   // Carregar progresso
   useEffect(() => {
@@ -50,6 +54,13 @@ export const GamificationWidget: React.FC<GamificationWidgetProps> = ({
       }, 2000)
     }
   }, [showOnMount])
+
+  // Abrir painel quando a URL tiver #gamification (ex.: após clicar em "Ver Perfil")
+  useEffect(() => {
+    if (location.hash === '#gamification') {
+      setIsMinimized(false)
+    }
+  }, [location.hash])
 
   // Atualizar progresso quando houver mudanças
   useEffect(() => {
@@ -83,49 +94,127 @@ export const GamificationWidget: React.FC<GamificationWidgetProps> = ({
       level: 'Nível',
       points: 'Pontos',
       badges: 'Badges',
+      badgesDesc: 'Conquistas desbloqueadas explorando o site',
       streak: 'Sequência',
       days: 'dias',
-      viewProfile: 'Ver Perfil',
+      streakDesc: 'Dias seguidos visitando o site',
+      achievements: 'Conquistas',
+      achievementsDesc: 'concluídas de',
+      viewProfile: 'Ver meu progresso na página Studio',
+      viewProfileTooltip: 'Abre a página Studio com este painel de progresso em destaque.',
+      alreadyHere: 'Você está aqui',
+      alreadyHereSub: 'Painel já aberto nesta página.',
+      closePanel: 'Fechar painel',
+      navigatingToast: 'Indo para Studio…',
       close: 'Fechar',
       xpToNext: 'XP para próximo nível',
-      recent: 'Recentes'
+      recent: 'Recentes',
+      howItWorks: 'Como funciona?',
+      howPoints: 'Ganhe pontos ao navegar, ver projetos, preencher formulários e completar ações no site.',
+      howLevels: 'Suba de nível (Explorador → Curioso → … → Azimut Elite) conforme acumula XP.',
+      howStreak: 'Volte em dias seguidos para manter sua sequência e desbloquear badges especiais.',
+      howBadges: 'Badges são conquistas que você desbloqueia ao explorar páginas, ver vídeos e interagir.',
+      headerSubtitle: 'Sua jornada no site Azimut — ganhe XP navegando e interagindo.'
     },
     en: {
       level: 'Level',
       points: 'Points',
       badges: 'Badges',
+      badgesDesc: 'Achievements unlocked by exploring the site',
       streak: 'Streak',
       days: 'days',
-      viewProfile: 'View Profile',
+      streakDesc: 'Consecutive days visiting the site',
+      achievements: 'Achievements',
+      achievementsDesc: 'completed out of',
+      viewProfile: 'View my progress on Studio page',
+      viewProfileTooltip: 'Opens the Studio page with this progress panel highlighted.',
+      alreadyHere: 'You are here',
+      alreadyHereSub: 'Panel is already open on this page.',
+      closePanel: 'Close panel',
+      navigatingToast: 'Going to Studio…',
       close: 'Close',
       xpToNext: 'XP to next level',
-      recent: 'Recent'
+      recent: 'Recent',
+      howItWorks: 'How does it work?',
+      howPoints: 'Earn points by browsing, viewing projects, filling forms and completing actions.',
+      howLevels: 'Level up (Explorer → Curious → … → Azimut Elite) as you accumulate XP.',
+      howStreak: 'Come back on consecutive days to keep your streak and unlock special badges.',
+      howBadges: 'Badges are achievements you unlock by exploring pages, watching videos and interacting.',
+      headerSubtitle: 'Your journey on the Azimut site — earn XP by browsing and interacting.'
     },
     es: {
       level: 'Nivel',
       points: 'Puntos',
       badges: 'Insignias',
+      badgesDesc: 'Logros desbloqueados explorando el sitio',
       streak: 'Racha',
       days: 'días',
-      viewProfile: 'Ver Perfil',
+      streakDesc: 'Días seguidos visitando el sitio',
+      achievements: 'Logros',
+      achievementsDesc: 'completados de',
+      viewProfile: 'Ver mi progreso en la página Studio',
+      viewProfileTooltip: 'Abre la página Studio con este panel de progreso destacado.',
+      alreadyHere: 'Ya estás aquí',
+      alreadyHereSub: 'El panel ya está abierto en esta página.',
+      closePanel: 'Cerrar panel',
+      navigatingToast: 'Yendo a Studio…',
       close: 'Cerrar',
       xpToNext: 'XP para siguiente nivel',
-      recent: 'Recientes'
+      recent: 'Recientes',
+      howItWorks: '¿Cómo funciona?',
+      howPoints: 'Gana puntos navegando, viendo proyectos, formularios y completando acciones.',
+      howLevels: 'Sube de nivel (Explorador → Curioso → …) según acumules XP.',
+      howStreak: 'Vuelve días seguidos para mantener tu racha y desbloquear insignias especiales.',
+      howBadges: 'Las insignias son logros que desbloqueas al explorar, ver vídeos e interactuar.',
+      headerSubtitle: 'Tu recorrido en el sitio Azimut — gana XP navegando e interactuando.'
     },
     fr: {
       level: 'Niveau',
       points: 'Points',
       badges: 'Badges',
+      badgesDesc: 'Succès débloqués en explorant le site',
       streak: 'Série',
       days: 'jours',
-      viewProfile: 'Voir Profil',
+      streakDesc: 'Jours consécutifs à visiter le site',
+      achievements: 'Succès',
+      achievementsDesc: 'complétés sur',
+      viewProfile: 'Voir ma progression sur la page Studio',
+      viewProfileTooltip: 'Ouvre la page Studio avec ce panneau de progression en évidence.',
+      alreadyHere: 'Vous y êtes',
+      alreadyHereSub: 'Le panneau est déjà ouvert sur cette page.',
+      closePanel: 'Fermer le panneau',
+      navigatingToast: 'Ouverture de Studio…',
       close: 'Fermer',
       xpToNext: 'XP pour niveau suivant',
-      recent: 'Récents'
+      recent: 'Récents',
+      howItWorks: 'Comment ça marche ?',
+      howPoints: 'Gagnez des points en naviguant, en regardant les projets et en complétant des actions.',
+      howLevels: 'Montez de niveau (Explorateur → Curieux → …) en accumulant de l\'XP.',
+      howStreak: 'Revenez des jours consécutifs pour garder votre série et débloquer des badges.',
+      howBadges: 'Les badges sont des succès débloqués en explorant, regardant des vidéos et en interagissant.',
+      headerSubtitle: 'Votre parcours sur le site Azimut — gagnez de l\'XP en naviguant et en interagissant.'
     }
   }[lang]
 
   const recentBadges = progress.badges.slice(-3).reverse()
+
+  // Já estamos na página Studio com o painel em destaque? Mostrar feedback diferente.
+  const isOnStudioPage = location.pathname.includes('/studio')
+  const isProfileView = location.hash === '#gamification'
+  const isAlreadyOnStudioProfile = isOnStudioPage && isProfileView
+
+  const handleClosePanelAndClearHash = () => {
+    setIsMinimized(true)
+    if (location.hash === '#gamification') {
+      window.history.replaceState(null, '', location.pathname + location.search)
+    }
+  }
+
+  const handleGoToStudioProfile = () => {
+    setNavigateFeedback(true)
+    setTimeout(() => setNavigateFeedback(false), 1500)
+    navigate(`/${lang}/studio#gamification`)
+  }
 
   return (
     <>
@@ -182,6 +271,9 @@ export const GamificationWidget: React.FC<GamificationWidgetProps> = ({
                     <p className="text-xs text-slate-400">
                       {progress.totalPoints.toLocaleString()} {content.points}
                     </p>
+                    <p className="text-[10px] text-slate-500 mt-0.5 leading-tight max-w-[200px]">
+                      {content.headerSubtitle}
+                    </p>
                   </div>
                 </div>
                 
@@ -226,27 +318,54 @@ export const GamificationWidget: React.FC<GamificationWidgetProps> = ({
 
             {/* Stats */}
             <div className="p-4 grid grid-cols-3 gap-2">
-              <div className="bg-[#0a0e18] rounded-lg p-3 text-center border border-azimut-red/10">
+              <div className="bg-[#0a0e18] rounded-lg p-3 text-center border border-azimut-red/10" title={content.badgesDesc}>
                 <div className="text-2xl mb-1">🏆</div>
                 <div className="text-xl font-bold text-white">{progress.badges.length}</div>
                 <div className="text-xs text-slate-400">{content.badges}</div>
+                <div className="text-[10px] text-slate-500 mt-0.5 leading-tight hidden sm:block">{content.badgesDesc}</div>
               </div>
               
-              <div className="bg-[#0a0e18] rounded-lg p-3 text-center border border-azimut-red/10">
+              <div className="bg-[#0a0e18] rounded-lg p-3 text-center border border-azimut-red/10" title={content.streakDesc}>
                 <div className="text-2xl mb-1">🔥</div>
                 <div className="text-xl font-bold text-white">{progress.streak}</div>
                 <div className="text-xs text-slate-400">{content.days}</div>
+                <div className="text-[10px] text-slate-500 mt-0.5 leading-tight hidden sm:block">{content.streakDesc}</div>
               </div>
               
-              <div className="bg-[#0a0e18] rounded-lg p-3 text-center border border-azimut-red/10">
+              <div className="bg-[#0a0e18] rounded-lg p-3 text-center border border-azimut-red/10" title={content.achievements + ': ' + content.achievementsDesc + ' ' + progress.achievements.length}>
                 <div className="text-2xl mb-1">⭐</div>
                 <div className="text-xl font-bold text-white">
                   {progress.achievements.filter(a => a.completed).length}
+                  <span className="text-slate-500 font-normal text-sm">/{progress.achievements.length}</span>
                 </div>
-                <div className="text-xs text-slate-400">
-                  {progress.achievements.length}
-                </div>
+                <div className="text-xs text-slate-400">{content.achievements}</div>
+                <div className="text-[10px] text-slate-500 mt-0.5 leading-tight hidden sm:block">{content.achievementsDesc} {progress.achievements.length}</div>
               </div>
+            </div>
+
+            {/* Como funciona? - Explicação clara para o usuário */}
+            <div className="px-4 pb-4 border-t border-azimut-red/10 pt-3">
+              <h4 className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">
+                {content.howItWorks}
+              </h4>
+              <ul className="space-y-1.5 text-xs text-slate-400">
+                <li className="flex gap-2">
+                  <span className="text-azimut-red flex-shrink-0">•</span>
+                  <span>{content.howPoints}</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-azimut-red flex-shrink-0">•</span>
+                  <span>{content.howLevels}</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-azimut-red flex-shrink-0">•</span>
+                  <span>{content.howStreak}</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-azimut-red flex-shrink-0">•</span>
+                  <span>{content.howBadges}</span>
+                </li>
+              </ul>
             </div>
 
             {/* Recent Badges */}
@@ -282,16 +401,41 @@ export const GamificationWidget: React.FC<GamificationWidgetProps> = ({
               </div>
             )}
 
-            {/* View Full Profile Button */}
-            <div className="p-4 border-t border-azimut-red/10">
-              <button
-                onClick={() => {
-                  // TODO: Abrir modal de perfil completo
-                }}
-                className="w-full bg-gradient-to-r from-azimut-red to-orange-600 hover:from-azimut-red/90 hover:to-orange-600/90 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-azimut-red/20"
-              >
-                {content.viewProfile} →
-              </button>
+            {/* CTA explícito: ir para Studio OU feedback "já está aqui" */}
+            <div className="p-4 border-t border-azimut-red/10 space-y-2">
+              {isAlreadyOnStudioProfile ? (
+                <>
+                  <div className="rounded-lg bg-slate-700/60 border border-azimut-red/20 px-3 py-2.5 text-center">
+                    <p className="text-sm font-medium text-white">{content.alreadyHere}</p>
+                    <p className="text-xs text-slate-400 mt-0.5">{content.alreadyHereSub}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleClosePanelAndClearHash}
+                    className="w-full text-sm text-slate-400 hover:text-white border border-slate-500 hover:border-slate-400 rounded-lg py-2 px-3 transition-colors"
+                  >
+                    {content.closePanel}
+                  </button>
+                </>
+              ) : (
+                <>
+                  {navigateFeedback && (
+                    <p className="text-xs text-azimut-red/90 text-center animate-pulse" role="status">
+                      {content.navigatingToast}
+                    </p>
+                  )}
+                  <button
+                    type="button"
+                    onClick={handleGoToStudioProfile}
+                    title={content.viewProfileTooltip}
+                    disabled={navigateFeedback}
+                    className="w-full bg-gradient-to-r from-azimut-red to-orange-600 hover:from-azimut-red/90 hover:to-orange-600/90 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-azimut-red/20 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-wait"
+                  >
+                    <span>{content.viewProfile}</span>
+                    <span aria-hidden>→</span>
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>

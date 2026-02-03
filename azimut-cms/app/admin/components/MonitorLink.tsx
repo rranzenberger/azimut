@@ -24,9 +24,12 @@ export function MonitorLink() {
     }
   };
 
+  const monitorTooltip = 'Sugestões de posts geradas por IA para aprovar ou descartar. O número indica pendências.';
+
   return (
     <Link
       href="/admin/blog/monitor"
+      title={monitorTooltip}
       style={{
         display: 'flex',
         alignItems: 'center',

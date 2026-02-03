@@ -423,7 +423,7 @@ export function ExperiencePreview({ lang }: ExperiencePreviewProps) {
                   <span style={{ fontSize: 18 }}>🎮</span>
                   <span>{lang === 'pt' ? 'Jogar' : lang === 'en' ? 'Play' : lang === 'es' ? 'Jugar' : 'Jouer'}</span>
                   <img
-                    src="/empaty-engine.png"
+                    src="/empaty-engine.webp"
                     alt="Empathy Engine"
                     width={140}
                     height={33}

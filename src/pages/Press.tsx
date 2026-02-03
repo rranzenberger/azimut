@@ -1,14 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { t, type Lang } from '../i18n'
+import { type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
-import { useUserTracking } from '../hooks/useUserTracking'
+import { usePress } from '../hooks/usePress'
 
 interface PressProps {
   lang: Lang
 }
 
 const Press: React.FC<PressProps> = ({ lang }) => {
+  const { items: pressItems, loading: pressLoading } = usePress(lang)
   const seo = seoData.press?.[lang] || {
     title: lang === 'pt' ? 'Imprensa - Azimut' : lang === 'es' ? 'Prensa - Azimut' : 'Press - Azimut',
     description: lang === 'pt' ? 'Material de imprensa e assessoria de comunicação da Azimut' : lang === 'es' ? 'Material de prensa y asesoría de comunicación de Azimut' : 'Press materials and communication support from Azimut'
@@ -178,6 +179,68 @@ const Press: React.FC<PressProps> = ({ lang }) => {
                 {content.download}
               </a>
             </div>
+          </div>
+
+          {/* Releases e Notas (backoffice) */}
+          <div className="mx-auto mb-12 max-w-4xl">
+            <h2 className="mb-8 font-handel text-3xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
+              {content.releases}
+            </h2>
+            <p className="mb-6 text-lg leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+              {content.releasesDesc}
+            </p>
+            {pressLoading ? (
+              <div className="space-y-4">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="rounded-2xl border border-white/10 card-adaptive p-6 animate-pulse" style={{ color: 'var(--theme-text-secondary)' }}>
+                    <div className="h-5 w-2/3 rounded bg-white/10 mb-3" />
+                    <div className="h-4 w-full rounded bg-white/10" />
+                  </div>
+                ))}
+              </div>
+            ) : pressItems.length > 0 ? (
+              <div className="space-y-4">
+                {pressItems.map((item) => (
+                  <div key={item.id} className="rounded-2xl border border-white/10 card-adaptive p-6 shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur">
+                    <h3 className="mb-2 font-sora text-lg font-semibold" style={{ color: 'var(--theme-text)' }}>
+                      {item.title}
+                    </h3>
+                    {item.summary && (
+                      <p className="mb-3 text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                        {item.summary}
+                      </p>
+                    )}
+                    <div className="flex flex-wrap items-center gap-3">
+                      {item.publishedAt && (
+                        <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--theme-text-secondary)' }}>
+                          {new Date(item.publishedAt).toLocaleDateString(lang === 'pt' ? 'pt-BR' : lang === 'es' ? 'es' : lang === 'fr' ? 'fr-FR' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                        </span>
+                      )}
+                      {item.url && (
+                        <a
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-sm font-medium text-azimut-red hover:underline"
+                        >
+                          {content.viewMore}
+                          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="rounded-2xl border border-white/10 card-adaptive p-6 text-center" style={{ color: 'var(--theme-text-secondary)' }}>
+                {lang === 'pt' && 'Nenhum release no momento.'}
+                {lang === 'en' && 'No press releases at the moment.'}
+                {lang === 'es' && 'Ningún comunicado por el momento.'}
+                {lang === 'fr' && 'Aucun communiqué pour le moment.'}
+              </p>
+            )}
           </div>
 
           {/* Featured Project - Museu Olímpico */}

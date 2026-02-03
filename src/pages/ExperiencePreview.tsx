@@ -36,8 +36,8 @@ export default function ExperiencePreviewPage({ lang }: ExperiencePreviewPagePro
         url={`/${lang}/experience-preview`}
         locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
         type="website"
-        icon="/empaty-engine.png"
-        image="/empaty-engine.png"
+        icon="/empaty-engine.webp"
+        image="/empaty-engine.webp"
       />
       <ErrorBoundary>
         <ExperiencePreview lang={lang} />

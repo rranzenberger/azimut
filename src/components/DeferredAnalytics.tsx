@@ -8,8 +8,8 @@ const PlausibleScript = lazy(() =>
 )
 
 /**
- * Monta Google Analytics e Plausible após o first paint (requestIdleCallback ou delay)
- * para não bloquear LCP no mobile.
+ * Monta Google Analytics e Plausible após o first paint (requestIdleCallback ou delay maior).
+ * Atrasa mais para melhorar LCP/FCP e "Reduce unused JavaScript" no Lighthouse.
  */
 const DeferredAnalytics: React.FC = () => {
   const [ready, setReady] = useState(false)
@@ -22,13 +22,13 @@ const DeferredAnalytics: React.FC = () => {
 
     if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
       const id = (window as Window & { requestIdleCallback: (cb: () => void, o?: { timeout: number }) => number })
-        .requestIdleCallback(run, { timeout: 1500 })
+        .requestIdleCallback(run, { timeout: 3000 })
       return () => {
         cancelled = true
         ;(window as Window & { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(id)
       }
     }
-    const id = setTimeout(run, 500)
+    const id = setTimeout(run, 1500)
     return () => {
       cancelled = true
       clearTimeout(id)

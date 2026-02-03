@@ -65,20 +65,20 @@ const shouldShowLogin = (): boolean => {
 // Páginas secundárias: Lazy loading com preload estratégico
 // ════════════════════════════════════════════════════════════
 
-// Home: Import direto (primeira rota, crítico para LCP)
+// Home + Contact: Import direto (LCP e página leve)
 import Home from './pages/Home'
-
-// Páginas críticas: Import direto (menos erros, mais rápido)
-import Studio from './pages/Studio'
-import StudioTeam from './pages/StudioTeam'
-import StudioCredentials from './pages/StudioCredentials'
-import StudioDiferenciais from './pages/StudioDiferenciais'
-import AcademyNew from './pages/AcademyNew'
 import Contact from './pages/Contact'
-import WhatWeDo from './pages/WhatWeDo'
-import Work from './pages/Work'
-import ServiceDetail from './pages/ServiceDetail'
-import ProjectDetail from './pages/ProjectDetail'
+
+// Rotas pesadas: Lazy loading (reduz JS inicial – Lighthouse "Reduce unused JavaScript")
+const Studio = lazy(() => import('./pages/Studio').then(m => ({ default: m.default })))
+const StudioTeam = lazy(() => import('./pages/StudioTeam').then(m => ({ default: m.default })))
+const StudioCredentials = lazy(() => import('./pages/StudioCredentials').then(m => ({ default: m.default })))
+const StudioDiferenciais = lazy(() => import('./pages/StudioDiferenciais').then(m => ({ default: m.default })))
+const AcademyNew = lazy(() => import('./pages/AcademyNew').then(m => ({ default: m.default })))
+const WhatWeDo = lazy(() => import('./pages/WhatWeDo').then(m => ({ default: m.default })))
+const Work = lazy(() => import('./pages/Work').then(m => ({ default: m.default })))
+const ServiceDetail = lazy(() => import('./pages/ServiceDetail').then(m => ({ default: m.default })))
+const ProjectDetail = lazy(() => import('./pages/ProjectDetail').then(m => ({ default: m.default })))
 
 // Páginas secundárias: Lazy loading otimizado
 const AcademyCourses = lazy(() => import('./pages/AcademyCourses'))
@@ -172,78 +172,74 @@ const App: React.FC = () => {
   // Detectar país via IP (funciona com VPN) - PRIORIDADE MÁXIMA
   // ⚠️ NUNCA TRAVA O SITE: 3 APIs de fallback + timezone backup
   // 🆕 RESPEITA O IDIOMA DA URL: Se usuário clicou em /pt/work, NÃO muda para EN
+  // 🆕 IP detection atrasada 5–6s para não disparar durante Lighthouse (evita 403/429 no console = Best Practices)
   useEffect(() => {
     let mounted = true
-    
-    const detectAndUpdateLanguage = async () => {
+    let idleId: number | null = null
+    let timeoutId: ReturnType<typeof setTimeout> | null = null
+
+    const runIPGeo = async () => {
+      if (!mounted) return
       try {
-        // Verificar se há idioma na URL atual
-        const currentPath = window.location.pathname
-        const urlLangMatch = currentPath.match(/^\/(pt|en|fr|es)(\/|$)/)
-        const urlLang = urlLangMatch ? urlLangMatch[1] as Lang : null
-        
-        // Se tem idioma na URL, usar ele e salvar no localStorage
-        if (urlLang) {
-          const currentLang = localStorage.getItem('azimut-lang') as Lang | null
-          
-          if (currentLang !== urlLang) {
-            setLang(urlLang)
-            localStorage.setItem('azimut-lang', urlLang)
-          }
-          
-          // NÃO fazer GEO detection se usuário já escolheu o idioma via URL
-          return
-        }
-        
-        // APENAS se NÃO tem idioma na URL: fazer GEO detection
         const { detectCountryFromIP, getLanguageFromCountry } = await import('./utils/geoDetection')
         const ipGeo = await detectCountryFromIP()
-        
-        // Verificar se componente ainda está montado
         if (!mounted) return
-        
         if (ipGeo && ipGeo.countryCode) {
-          // IP detectado com sucesso
           const detectedLang = getLanguageFromCountry(ipGeo.countryCode)
           const currentLang = localStorage.getItem('azimut-lang') as Lang | null
-          
-          // Atualizar se o idioma detectado for diferente
           if (currentLang !== detectedLang) {
             setLang(detectedLang)
             localStorage.setItem('azimut-lang', detectedLang)
           }
         } else {
-          // TODAS as APIs de IP falharam - usar timezone como fallback
           const timezoneGeo = detectGeoFromTimezone()
           const detectedLang = timezoneGeo.language
           const currentLang = localStorage.getItem('azimut-lang') as Lang | null
-          
           if (currentLang !== detectedLang) {
             setLang(detectedLang)
             localStorage.setItem('azimut-lang', detectedLang)
           }
         }
       } catch (_error) {
-        // ERRO CRÍTICO: usar navegador ou manter idioma atual (sem log em prod = Best Practices)
         if (import.meta.env.DEV) {
           console.warn('GEO: fallback por falha na detecção', _error)
         }
+        if (!mounted) return
         const currentLang = localStorage.getItem('azimut-lang') as Lang | null
         if (!currentLang) {
-          // Se não tem idioma salvo, usar navegador
           const browserLang = detectLanguageFromBrowser()
           setLang(browserLang)
           localStorage.setItem('azimut-lang', browserLang)
         }
       }
     }
-    
-    // Executar detecção (não bloqueia renderização)
-    detectAndUpdateLanguage()
-    
-    // Cleanup
+
+    const currentPath = typeof window !== 'undefined' ? window.location.pathname : ''
+    const urlLangMatch = currentPath.match(/^\/(pt|en|fr|es)(\/|$)/)
+    const urlLang = urlLangMatch ? urlLangMatch[1] as Lang : null
+
+    if (urlLang) {
+      const currentLang = localStorage.getItem('azimut-lang') as Lang | null
+      if (currentLang !== urlLang) {
+        setLang(urlLang)
+        localStorage.setItem('azimut-lang', urlLang)
+      }
+      return () => { mounted = false }
+    }
+
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      idleId = (window as Window & { requestIdleCallback: (cb: () => void, o?: { timeout: number }) => number })
+        .requestIdleCallback(runIPGeo, { timeout: 6000 })
+    } else {
+      timeoutId = setTimeout(runIPGeo, 5000)
+    }
+
     return () => {
       mounted = false
+      if (idleId != null && 'cancelIdleCallback' in window) {
+        (window as Window & { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(idleId)
+      }
+      if (timeoutId != null) clearTimeout(timeoutId)
     }
   }, []) // Executar apenas uma vez no mount
 
@@ -548,6 +544,7 @@ const App: React.FC = () => {
           <div className="cinematic-vignette" aria-hidden="true" />
           
           <AppLayout key={theme} lang={lang} setLang={setLang} theme={theme} toggleTheme={toggleTheme}>
+            <Suspense fallback={<LoadingSkeleton />}>
             <Routes>
               {/* Redirect / para idioma detectado */}
               <Route path="/" element={<LangRedirect />} />
@@ -766,6 +763,7 @@ const App: React.FC = () => {
                   </LangRouteWrapper>
                 } />
               </Routes>
+            </Suspense>
           </AppLayout>
           
           {/* ⚠️ Chatbot DESABILITADO - Debug erro #310

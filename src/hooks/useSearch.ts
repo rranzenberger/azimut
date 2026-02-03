@@ -11,6 +11,15 @@ import { useBackofficeServices } from './useBackofficeServices'
 import { useAzimutContent } from './useAzimutContent'
 import { servicesData, getServiceTitle, getServiceShortDesc } from '../data/servicesData'
 
+const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br'
+
+interface BlogPost {
+  slug: string
+  title: string
+  excerpt?: string
+  tags?: Array<{ slug: string; label: string }>
+}
+
 export interface SearchResult {
   path: string
   title: string
@@ -31,6 +40,7 @@ interface UseSearchReturn {
 export function useSearch(query: string, lang: Lang = 'pt'): UseSearchReturn {
   const [results, setResults] = useState<SearchResult[]>([])
   const [loading, setLoading] = useState(false)
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([])
 
   // Buscar dados do backoffice
   const { projects, loading: projectsLoading } = useBackofficeProjects(lang)
@@ -50,6 +60,24 @@ export function useSearch(query: string, lang: Lang = 'pt'): UseSearchReturn {
       icon: service.icon
     }))
   }, [backofficeServices, lang])
+
+  // Buscar posts do blog (uma vez, quando o modal abre)
+  useEffect(() => {
+    let cancelled = false
+    const fetchBlog = async () => {
+      try {
+        const res = await fetch(`${BACKOFFICE_URL}/api/public/blog?lang=${lang}&limit=50&offset=0`)
+        const data = await res.json()
+        if (!cancelled && data.posts) {
+          setBlogPosts(data.posts)
+        }
+      } catch {
+        // Silencioso: busca funciona sem blog
+      }
+    }
+    fetchBlog()
+    return () => { cancelled = true }
+  }, [lang])
 
   // Buscar quando query mudar
   useEffect(() => {
@@ -156,6 +184,12 @@ export function useSearch(query: string, lang: Lang = 'pt'): UseSearchReturn {
           icon: '🎓'
         },
         {
+          slug: 'blog',
+          title: 'Blog',
+          description: lang === 'pt' ? 'Artigos e novidades' : lang === 'es' ? 'Artículos y novedades' : lang === 'fr' ? 'Articles et actualités' : 'Articles and news',
+          icon: '📝'
+        },
+        {
           slug: 'contact',
           title: lang === 'pt' ? 'Contato' : lang === 'es' ? 'Contacto' : lang === 'fr' ? 'Contact' : 'Contact',
           description: lang === 'pt' ? 'Entre em contato' : lang === 'es' ? 'Contáctanos' : lang === 'fr' ? 'Contactez-nous' : 'Get in touch',
@@ -183,6 +217,30 @@ export function useSearch(query: string, lang: Lang = 'pt'): UseSearchReturn {
         }
       })
 
+      // 5. Buscar em BLOG
+      const blogCategory = lang === 'pt' ? 'Blog' : lang === 'es' ? 'Blog' : lang === 'fr' ? 'Blog' : 'Blog'
+      blogPosts.forEach((post: BlogPost) => {
+        const title = post.title?.toLowerCase() || ''
+        const excerpt = post.excerpt?.toLowerCase() || ''
+        const tags = (post.tags || []).map(t => t.label).join(' ').toLowerCase()
+        const slug = post.slug?.toLowerCase() || ''
+
+        if (
+          title.includes(queryLower) ||
+          excerpt.includes(queryLower) ||
+          tags.includes(queryLower) ||
+          slug.includes(queryLower)
+        ) {
+          searchResults.push({
+            path: `/${lang === 'pt' ? '' : lang}/blog/${post.slug}`,
+            title: post.title,
+            description: post.excerpt,
+            icon: '📝',
+            category: blogCategory
+          })
+        }
+      })
+
       // Ordenar por relevância (título primeiro, depois descrição)
       searchResults.sort((a, b) => {
         const aTitleMatch = a.title.toLowerCase().includes(queryLower)
@@ -199,7 +257,7 @@ export function useSearch(query: string, lang: Lang = 'pt'): UseSearchReturn {
     }, 300) // Debounce de 300ms
 
     return () => clearTimeout(timeoutId)
-  }, [query, projects, allServices, pagesContent, lang])
+  }, [query, projects, allServices, pagesContent, blogPosts, lang])
 
   // Loading state
   useEffect(() => {

@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import { type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { useBackofficeContent } from '../hooks/useBackofficeContent'
+import { usePublications } from '../hooks/usePublications'
 import LangLink from '../components/LangLink'
 import { useTheme } from '../contexts/ThemeContext'
 
@@ -39,6 +40,7 @@ const Research: React.FC<ResearchProps> = ({ lang }) => {
   }, [])
   
   const { page: researchPage, loading: pageLoading } = useBackofficeContent('academy/research', lang)
+  const { items: publications, loading: publicationsLoading } = usePublications(lang)
 
   const content = {
     pt: {
@@ -177,41 +179,77 @@ const Research: React.FC<ResearchProps> = ({ lang }) => {
             </div>
           </section>
 
-          {/* Publications — grid visual com placeholders (imagens/cards) */}
+          {/* Publications — backoffice (api/public/publications) */}
           <section className="mb-16 md:mb-20">
             <h2 className="mb-8 md:mb-10 font-handel text-2xl md:text-3xl font-bold uppercase text-theme-text flex items-center gap-3">
               <span className="text-azimut-red">📚</span>
               {text.publications}
             </h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3].map((i) => (
-                <div 
-                  key={i}
-                  className="rounded-xl overflow-hidden border border-azimut-red/20 bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] hover:border-azimut-red/40 transition-all"
-                >
+            {publicationsLoading ? (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="rounded-xl overflow-hidden border border-azimut-red/20 bg-white/5 animate-pulse">
+                    <div className="aspect-[4/3] bg-white/10" />
+                    <div className="p-4 md:p-5">
+                      <div className="h-4 w-3/4 rounded bg-white/10 mb-2" />
+                      <div className="h-3 w-1/2 rounded bg-white/10" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : publications.length > 0 ? (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {publications.map((pub) => (
                   <div 
-                    className="aspect-[4/3] flex items-center justify-center border-b border-azimut-red/10"
-                    style={{
-                      background: theme === 'dark' ? 'linear-gradient(145deg, rgba(26,31,44,0.6) 0%, rgba(22,27,38,0.4) 100%)' : 'linear-gradient(145deg, rgba(30,28,26,0.4) 0%, rgba(26,24,21,0.3) 100%)'
-                    }}
+                    key={pub.id}
+                    className="rounded-xl overflow-hidden border border-azimut-red/20 bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.06] hover:border-azimut-red/40 transition-all"
                   >
-                    <span className="text-5xl opacity-40" aria-hidden>📄</span>
+                    <div 
+                      className="aspect-[4/3] flex items-center justify-center border-b border-azimut-red/10"
+                      style={{
+                        background: theme === 'dark' ? 'linear-gradient(145deg, rgba(26,31,44,0.6) 0%, rgba(22,27,38,0.4) 100%)' : 'linear-gradient(145deg, rgba(30,28,26,0.4) 0%, rgba(26,24,21,0.3) 100%)'
+                      }}
+                    >
+                      <span className="text-5xl opacity-40" aria-hidden>📄</span>
+                    </div>
+                    <div className="p-4 md:p-5">
+                      {pub.year != null && (
+                        <span className="inline-block mb-2 px-2 py-0.5 rounded bg-azimut-red/15 text-xs font-semibold text-azimut-red">
+                          {pub.year}
+                        </span>
+                      )}
+                      <p className={`text-sm font-semibold mb-1 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+                        {pub.title}
+                      </p>
+                      {pub.authors && (
+                        <p className="text-xs text-theme-text-secondary/80 mb-2">{pub.authors}</p>
+                      )}
+                      {pub.url ? (
+                        <a
+                          href={pub.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs font-medium text-azimut-red hover:underline inline-flex items-center gap-1"
+                        >
+                          {lang === 'pt' ? 'Ver publicação' : lang === 'es' ? 'Ver publicación' : lang === 'fr' ? 'Voir la publication' : 'View publication'}
+                          <span aria-hidden>→</span>
+                        </a>
+                      ) : null}
+                    </div>
                   </div>
-                  <div className="p-4 md:p-5 text-center">
-                    <p className={`text-sm font-semibold mb-1 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
-                      {lang === 'pt' ? 'Publicação' : 'Publication'} {i}
-                    </p>
-                    <p className="text-xs text-theme-text-secondary/80">
-                      {lang === 'pt' ? 'Em breve' : 'Coming soon'}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <p className="mt-6 text-center text-sm text-theme-text-secondary max-w-2xl mx-auto">
-              {lang === 'pt' && 'Papers, artigos e apresentações em congressos serão listados aqui.'}
-              {lang === 'en' && 'Papers, articles and conference presentations will be listed here.'}
-            </p>
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-xl border border-azimut-red/20 bg-white/5 dark:bg-white/[0.06] p-8 text-center">
+                <p className="text-theme-text-secondary mb-2">
+                  {lang === 'pt' ? 'Nenhuma publicação cadastrada no momento.' : lang === 'es' ? 'Ninguna publicación registrada por el momento.' : lang === 'fr' ? 'Aucune publication enregistrée pour le moment.' : 'No publications listed at the moment.'}
+                </p>
+                <p className="text-sm text-theme-text-secondary/80 max-w-2xl mx-auto">
+                  {lang === 'pt' && 'Papers, artigos e apresentações em congressos serão listados aqui.'}
+                  {lang === 'en' && 'Papers, articles and conference presentations will be listed here.'}
+                </p>
+              </div>
+            )}
           </section>
 
           {/* CTA */}

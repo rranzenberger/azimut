@@ -13,7 +13,7 @@ interface SEOProps {
   description?: string
   keywords?: string
   image?: string
-  /** Ícone da aba (favicon) — ex: /empaty-engine.png */
+  /** Ícone da aba (favicon) — ex: /empaty-engine.webp */
   icon?: string
   url?: string
   type?: 'website' | 'article' | 'profile'

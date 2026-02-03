@@ -5,6 +5,11 @@ import { prisma } from '@/src/lib/prisma';
 import { AdminLogo } from './components/Logo';
 import { AdminLink } from './components/AdminLink';
 import { MonitorLink } from './components/MonitorLink';
+import { MENU_MANUAL_ITEMS } from './config/menuManual';
+
+const TOOLTIP_BY_HREF: Record<string, string> = Object.fromEntries(
+  MENU_MANUAL_ITEMS.map((i) => [i.href, i.tooltip])
+);
 import { LogoutButton } from './components/LogoutButton';
 import { ViewSiteButton } from './components/ViewSiteButton';
 import { ToastWrapper } from './components/ToastWrapper';
@@ -99,32 +104,35 @@ export default async function AdminLayout({
             gap: 10,
           }}
         >
-          <AdminLink href="/admin" label="🏠 Dashboard" />
-          <AdminLink href="/admin/analytics" label="📊 Analytics IA" />
-          <AdminLink href="/admin/projects" label="🎥 Projetos" />
-          <AdminLink href="/admin/blog" label="📝 Blog" />
+          <AdminLink href="/admin" label="🏠 Dashboard" title={TOOLTIP_BY_HREF['/admin']} />
+          <AdminLink href="/admin/help" label="📖 Manual" title={TOOLTIP_BY_HREF['/admin/help']} />
+          <AdminLink href="/admin/analytics" label="📊 Analytics IA" title={TOOLTIP_BY_HREF['/admin/analytics']} />
+          <AdminLink href="/admin/projects" label="🎥 Projetos" title={TOOLTIP_BY_HREF['/admin/projects']} />
+          <AdminLink href="/admin/blog" label="📝 Blog" title={TOOLTIP_BY_HREF['/admin/blog']} />
           <MonitorLink />
-          <AdminLink href="/admin/making-of" label="🎬 Making-of" />
-          <AdminLink href="/admin/making-of/curation" label="🎨 Curadoria" />
-          <AdminLink href="/admin/site-pages" label="📄 Páginas" />
-          <AdminLink href="/admin/media" label="🖼️ Mídias" />
-          <AdminLink href="/admin/leads" label="👥 Leads" />
-          <AdminLink href="/admin/leads/game" label="🎮 Leads do Jogo" />
-          <AdminLink href="/admin/leads/dashboard" label="🎯 Dashboard Leads IA" />
-          <AdminLink href="/admin/tools" label="🛠️ Ferramentas" />
-          <AdminLink href="/admin/roadmap" label="🗺️ Roadmap" />
-          <AdminLink href="/admin/marketing/preview" label="🎁 Marketing Preview" />
-          <AdminLink href="/admin/web3/setup-wallet" label="🔐 Configurar Carteira" />
-          <AdminLink href="/admin/web3/wallet-status" label="💰 Carteira Web3" />
-          <AdminLink href="/admin/web3/student-rewards" label="🎓 Recompensas Estudantes" />
-          <AdminLink href="/admin/newsletter" label="📨 Inscritos" />
-          <AdminLink href="/admin/n8n-workflow" label="🤖 Automação n8n" />
-          <AdminLink href="/admin/services" label="⚡ Serviços" />
-          <AdminLink href="/admin/markets" label="🏢 Mercados" />
-          <AdminLink href="/admin/history" label="📅 Timeline & Histórico" />
-          <AdminLink href="/admin/team" label="👥 Equipe" />
-          <AdminLink href="/admin/credentials" label="🏆 Credenciais" />
-          <AdminLink href="/admin/settings" label="⚙️ Configurações" />
+          <AdminLink href="/admin/making-of" label="🎬 Making-of" title={TOOLTIP_BY_HREF['/admin/making-of']} />
+          <AdminLink href="/admin/making-of/curation" label="🎨 Curadoria" title={TOOLTIP_BY_HREF['/admin/making-of/curation']} />
+          <AdminLink href="/admin/site-pages" label="📄 Páginas" title={TOOLTIP_BY_HREF['/admin/site-pages']} />
+          <AdminLink href="/admin/media" label="🖼️ Mídias" title={TOOLTIP_BY_HREF['/admin/media']} />
+          <AdminLink href="/admin/leads" label="👥 Leads" title={TOOLTIP_BY_HREF['/admin/leads']} />
+          <AdminLink href="/admin/leads/game" label="🎮 Leads do Jogo" title={TOOLTIP_BY_HREF['/admin/leads/game']} />
+          <AdminLink href="/admin/leads/dashboard" label="🎯 Dashboard Leads IA" title={TOOLTIP_BY_HREF['/admin/leads/dashboard']} />
+          <AdminLink href="/admin/tools" label="🛠️ Ferramentas" title={TOOLTIP_BY_HREF['/admin/tools']} />
+          <AdminLink href="/admin/roadmap" label="🗺️ Roadmap" title={TOOLTIP_BY_HREF['/admin/roadmap']} />
+          <AdminLink href="/admin/marketing/preview" label="🎁 Marketing Preview" title={TOOLTIP_BY_HREF['/admin/marketing/preview']} />
+          <AdminLink href="/admin/web3/setup-wallet" label="🔐 Configurar Carteira" title={TOOLTIP_BY_HREF['/admin/web3/setup-wallet']} />
+          <AdminLink href="/admin/web3/wallet-status" label="💰 Carteira Web3" title={TOOLTIP_BY_HREF['/admin/web3/wallet-status']} />
+          <AdminLink href="/admin/web3/student-rewards" label="🎓 Recompensas Estudantes" title={TOOLTIP_BY_HREF['/admin/web3/student-rewards']} />
+          <AdminLink href="/admin/newsletter" label="📨 Inscritos" title={TOOLTIP_BY_HREF['/admin/newsletter']} />
+          <AdminLink href="/admin/n8n-workflow" label="🤖 Automação n8n" title={TOOLTIP_BY_HREF['/admin/n8n-workflow']} />
+          <AdminLink href="/admin/services" label="⚡ Serviços" title={TOOLTIP_BY_HREF['/admin/services']} />
+          <AdminLink href="/admin/markets" label="🏢 Mercados" title={TOOLTIP_BY_HREF['/admin/markets']} />
+          <AdminLink href="/admin/history" label="📅 Timeline & Histórico" title={TOOLTIP_BY_HREF['/admin/history']} />
+          <AdminLink href="/admin/team" label="👥 Equipe" title={TOOLTIP_BY_HREF['/admin/team']} />
+          <AdminLink href="/admin/credentials" label="🏆 Credenciais" title={TOOLTIP_BY_HREF['/admin/credentials']} />
+          <AdminLink href="/admin/press" label="📰 Imprensa" title={TOOLTIP_BY_HREF['/admin/press']} />
+          <AdminLink href="/admin/publications" label="📚 Publicações (Research)" title={TOOLTIP_BY_HREF['/admin/publications']} />
+          <AdminLink href="/admin/settings" label="⚙️ Configurações" title={TOOLTIP_BY_HREF['/admin/settings']} />
         </nav>
 
         {/* Link para Site Principal */}

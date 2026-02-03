@@ -1254,7 +1254,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       {lang === 'pt' ? 'Jogar' : lang === 'es' ? 'Jugar' : lang === 'fr' ? 'Jouer' : 'Play'}
                     </span>
                     <img
-                      src="/empaty-engine.png"
+                      src="/empaty-engine.webp"
                       alt="Empathy Engine"
                       width={180}
                       height={43}

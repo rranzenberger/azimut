@@ -1644,7 +1644,7 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -15;
-  background-image: url('/pattern-azimut.png');
+  background-image: url('/pattern-azimut.webp');
   background-size: 300px 300px;
   background-repeat: repeat;
   opacity: 0.15;
@@ -1743,7 +1743,7 @@ body::after {
   position: fixed;
   inset: 0;
   z-index: -18; /* Muito atrás - abaixo do film-grain::before (-15) e não interfere com logo */
-  background-image: url('/fundo grao.png');
+  background-image: url('/fundo-grao.webp');
   background-size: 200px 200px; /* Aumentado para menos repetição */
   background-repeat: repeat;
   background-position: 0 0; /* Fixo - sem movimento */

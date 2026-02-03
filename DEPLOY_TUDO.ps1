@@ -56,18 +56,27 @@ Write-Host ""
 
 # 4) Deploy BACKOFFICE (azimut-cms)
 # Se der erro "path azimut-cms\azimut-cms does not exist": no projeto Vercel do backoffice,
-# Settings > Root Directory deixe VAZIO (nao use "azimut-cms"). Ver CORRIGIR_VERCEL_BACKOFFICE.md
+# Settings > Root Directory deixe VAZIO. Ver CORRIGIR_VERCEL_BACKOFFICE.md
 Write-Host "[3/4] Deploy BACKOFFICE (azimut-cms)..." -ForegroundColor Yellow
+$backofficeOk = $true
 Push-Location (Join-Path $PSScriptRoot "azimut-cms")
 try {
     vercel --prod --yes
-    if ($LASTEXITCODE -ne 0) { throw "Vercel falhou" }
+    if ($LASTEXITCODE -ne 0) { $backofficeOk = $false }
 } finally {
     Pop-Location
 }
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "ERRO no deploy do backoffice. Se o erro for 'path azimut-cms\azimut-cms':" -ForegroundColor Red
-    Write-Host "  Vercel > azimut-backoffice > Settings > Root Directory = VAZIO. Ver CORRIGIR_VERCEL_BACKOFFICE.md" -ForegroundColor Yellow
+if (-not $backofficeOk) {
+    Write-Host ""
+    Write-Host "  ERRO no deploy do BACKOFFICE." -ForegroundColor Red
+    Write-Host "  Se a mensagem foi 'path ...\azimut-cms\azimut-cms does not exist':" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "  1. Abra: https://vercel.com/azimuts-projects-6435f869/azimut-backoffice/settings" -ForegroundColor Cyan
+    Write-Host "  2. Em General > Root Directory apague o valor e deixe VAZIO" -ForegroundColor White
+    Write-Host "  3. Salve (Save) e rode o deploy de novo." -ForegroundColor White
+    Write-Host ""
+    Write-Host "  Detalhes: CORRIGIR_VERCEL_BACKOFFICE.md" -ForegroundColor Gray
+    Write-Host ""
     exit 1
 }
 Write-Host "Backoffice: deploy enviado." -ForegroundColor Green

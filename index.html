@@ -82,6 +82,10 @@
     
     <!-- Preload de recursos críticos -->
     <link rel="preload" href="/logo-azimut-star.svg" as="image" type="image/svg+xml" />
+    <!-- LCP hero: preload da imagem de fundo do backoffice/CMS para "discoverable in initial document" -->
+    <link rel="preload" href="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=1920&amp;h=1080&amp;fit=crop" as="image" />
+    <!-- Fallback hero se CMS não fornecer imagem -->
+    <link rel="preload" href="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&amp;w=2072" as="image" />
     <!-- Favicon PNG não precisa de preload - navegador carrega automaticamente -->
     
     <!-- Preload só da fonte do título hero (menos bloqueio no mobile) -->

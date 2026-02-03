@@ -10,10 +10,13 @@ import { useEffect, useState } from 'react';
 export function AdminLink({
   href,
   label,
+  title,
   disabled,
 }: {
   href: string;
   label: string;
+  /** Tooltip ao passar o mouse (HTML title) */
+  title?: string;
   disabled?: boolean;
 }) {
   const pathname = usePathname();
@@ -47,6 +50,8 @@ export function AdminLink({
 
   return (
     <div
+      role="link"
+      title={title}
       onClick={handleClick}
       style={{
         padding: '12px 16px',

@@ -126,19 +126,36 @@ export default async function PagesPage() {
       )}
 
       {pages.length === 0 && !error && (
-        <div style={{
-          padding: 60,
-          textAlign: 'center',
-          borderRadius: 16,
-          border: '1px solid rgba(255,255,255,0.08)',
-          background: 'rgba(255,255,255,0.02)',
-          color: '#9f9bb0',
-        }}>
-          <p style={{ margin: 0, fontSize: 18 }}>Nenhuma página encontrada</p>
-          <p style={{ margin: '8px 0 0', fontSize: 14, color: '#6b6680' }}>
-            As páginas serão criadas automaticamente ao sincronizar com o site
-          </p>
-        </div>
+        <>
+          <div style={{
+            padding: 60,
+            textAlign: 'center',
+            borderRadius: 16,
+            border: '1px solid rgba(255,255,255,0.08)',
+            background: 'rgba(255,255,255,0.02)',
+            color: '#9f9bb0',
+            marginBottom: 32,
+          }}>
+            <p style={{ margin: 0, fontSize: 18 }}>Nenhuma página encontrada</p>
+            <p style={{ margin: '8px 0 0', fontSize: 14, color: '#6b6680' }}>
+              As páginas serão criadas automaticamente ao sincronizar com o site
+            </p>
+          </div>
+          {/* Áreas de conteúdo sempre acessíveis a partir de Páginas */}
+          <section>
+            <SectionHeader icon="📰" title="Áreas de conteúdo (Imprensa e Research)" subtitle="Releases e publicações do site" />
+            <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
+              <Link href="/admin/press" style={{ display: 'block', padding: 24, borderRadius: 16, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', textDecoration: 'none', color: 'inherit' }}>
+                <h3 style={{ margin: 0, fontSize: 18, fontWeight: 600, color: '#fff' }}>📰 Imprensa</h3>
+                <p style={{ margin: '8px 0 0', fontSize: 13, color: '#6b6680' }}>/press</p>
+              </Link>
+              <Link href="/admin/publications" style={{ display: 'block', padding: 24, borderRadius: 16, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', textDecoration: 'none', color: 'inherit' }}>
+                <h3 style={{ margin: 0, fontSize: 18, fontWeight: 600, color: '#fff' }}>📚 Publicações (Research)</h3>
+                <p style={{ margin: '8px 0 0', fontSize: 13, color: '#6b6680' }}>/academy/research</p>
+              </Link>
+            </div>
+          </section>
+        </>
       )}
 
       {pages.length > 0 && (
@@ -336,6 +353,66 @@ export default async function PagesPage() {
               </div>
             </section>
           )}
+
+          {/* ═══════════════════════════════════════════════════════════════ */}
+          {/* 📰 ÁREAS DE CONTEÚDO (Imprensa, Research – CRUD próprio) */}
+          {/* Conteúdo dessas páginas do site é editado aqui; não usa modelo Page */}
+          {/* ═══════════════════════════════════════════════════════════════ */}
+          <section>
+            <SectionHeader 
+              icon="📰" 
+              title="Áreas de conteúdo (Imprensa e Research)" 
+              subtitle="Releases e publicações exibidos nas páginas do site"
+            />
+            <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
+              <Link
+                href="/admin/press"
+                style={{
+                  display: 'block',
+                  padding: 24,
+                  borderRadius: 16,
+                  background: 'linear-gradient(135deg, rgba(201, 35, 55, 0.08) 0%, rgba(201, 35, 55, 0.02) 100%)',
+                  border: '1px solid rgba(201, 35, 55, 0.2)',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  transition: 'all 0.25s ease',
+                }}
+              >
+                <h3 style={{ margin: 0, fontSize: 18, fontWeight: 600, color: '#fff', marginBottom: 6 }}>
+                  📰 Imprensa
+                </h3>
+                <p style={{ margin: 0, fontSize: 13, color: '#6b6680', fontFamily: 'monospace' }}>
+                  /press
+                </p>
+                <p style={{ margin: '12px 0 0', fontSize: 14, color: '#9f9bb0', lineHeight: 1.5 }}>
+                  Releases e notas exibidos na página Imprensa do site.
+                </p>
+              </Link>
+              <Link
+                href="/admin/publications"
+                style={{
+                  display: 'block',
+                  padding: 24,
+                  borderRadius: 16,
+                  background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(34, 197, 94, 0.02) 100%)',
+                  border: '1px solid rgba(34, 197, 94, 0.2)',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  transition: 'all 0.25s ease',
+                }}
+              >
+                <h3 style={{ margin: 0, fontSize: 18, fontWeight: 600, color: '#fff', marginBottom: 6 }}>
+                  📚 Publicações (Research)
+                </h3>
+                <p style={{ margin: 0, fontSize: 13, color: '#6b6680', fontFamily: 'monospace' }}>
+                  /academy/research
+                </p>
+                <p style={{ margin: '12px 0 0', fontSize: 14, color: '#9f9bb0', lineHeight: 1.5 }}>
+                  Artigos, papers e apresentações exibidos na página Research & Lab.
+                </p>
+              </Link>
+            </div>
+          </section>
 
           {/* ═══════════════════════════════════════════════════════════════ */}
           {/* 📦 OUTRAS PÁGINAS */}

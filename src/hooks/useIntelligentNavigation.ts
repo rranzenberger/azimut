@@ -67,7 +67,7 @@ export const useIntelligentNavigation = () => {
   useEffect(() => {
     detectUserProfile()
     detectLocation()
-    trackBehavior()
+    return trackBehavior()
   }, [])
 
   // Detectar perfil do usuário
