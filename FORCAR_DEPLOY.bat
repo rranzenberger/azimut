@@ -1,7 +1,16 @@
 @echo off
+REM Forcar deploy: commit vazio + push = Vercel detecta e faz deploy automatico (site e backoffice)
+REM Duplo-clique ou: FORCAR_DEPLOY.bat
+
+cd /d "%~dp0"
+
+echo.
 echo ========================================
-echo FORCAR DEPLOY NOVO - Vercel
+echo   FORCAR DEPLOY - Vercel (commit + push)
 echo ========================================
+echo.
+echo Faz um commit vazio e push para main.
+echo O Vercel dispara o deploy automaticamente.
 echo.
 
 echo [1/4] Removendo lock do Git...

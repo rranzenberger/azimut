@@ -45,6 +45,14 @@ export function middleware(req: NextRequest) {
   // No middleware, não usamos crypto (Edge). Apenas checamos se o cookie existe.
   const isAuthenticated = Boolean(token);
 
+  // Redirecionar /en/login, /pt/login, etc. para /login (backoffice não usa prefixo de idioma no login)
+  const langLoginMatch = pathname.match(/^\/(pt|en|es|fr)\/login\/?$/);
+  if (langLoginMatch) {
+    const url = req.nextUrl.clone();
+    url.pathname = '/login';
+    return NextResponse.redirect(url);
+  }
+
   // Bloquear acesso a /admin se não autenticado
   if (pathname.startsWith('/admin')) {
     if (!isAuthenticated) {
@@ -65,7 +73,7 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/login'],
+  matcher: ['/admin/:path*', '/login', '/en/login', '/pt/login', '/es/login', '/fr/login'],
 };
 
 

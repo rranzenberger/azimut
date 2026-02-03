@@ -48,7 +48,13 @@ Write-Host "[2/4] Deploy SITE + GAME (raiz)..." -ForegroundColor Yellow
 Set-Location $PSScriptRoot
 vercel --prod --yes
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "ERRO no deploy do site. Verifique e tente de novo." -ForegroundColor Red
+    Write-Host ""
+    Write-Host "ERRO no deploy do site (Vercel CLI)." -ForegroundColor Red
+    Write-Host ""
+    Write-Host "  Alternativa: rode FORCAR_DEPLOY.bat" -ForegroundColor Yellow
+    Write-Host "  Ele faz um commit vazio + push; o Vercel detecta e faz o deploy automatico pelo GitHub." -ForegroundColor Gray
+    Write-Host "  Assim o deploy nao depende do CLI." -ForegroundColor Gray
+    Write-Host ""
     exit 1
 }
 Write-Host "Site + Game: deploy enviado." -ForegroundColor Green
