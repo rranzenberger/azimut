@@ -345,8 +345,8 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
               )}
             </p>
             {/* Ativação de marca no seu evento: estande, quiosque com game, tecnologia e audiovisual — link direto para o jogo */}
-            <div className="mt-6 p-4 rounded-xl border border-azimut-red/30 bg-azimut-red/5">
-              <p className="text-sm font-medium mb-2" style={{ color: 'var(--theme-text)' }}>
+            <div className={`mt-6 p-4 rounded-xl border border-azimut-red/30 ${theme === 'dark' ? 'bg-azimut-red/10' : 'bg-azimut-red/5'}`}>
+              <p className={`text-sm font-medium mb-2 ${theme === 'dark' ? 'text-slate-200' : 'text-slate-700'}`}>
                 {lang === 'pt' ? 'Ativação de marca no seu evento: estande em feira comercial, centro cultural, lançamento de produto, evento de divulgação, interno ou exposição. Quiosque com game, tecnologia e audiovisual integrados atraem visitantes ao seu estande e à sua página. Provinha:' : lang === 'es' ? 'Activación de marca en tu evento: stand en feria comercial, centro cultural, lanzamiento de producto, evento de divulgación, interno o exposición. Quiosco con game, tecnología y audiovisual integrados atrae visitantes a tu stand y a tu web. Pruébalo:' : lang === 'fr' ? 'Activation de marque à votre événement : stand en foire commerciale, centre culturel, lancement de produit, événement de promotion, interne ou exposition. Kiosque avec game, technologie et audiovisuel intégrés — attire les visiteurs sur votre stand et votre site. Aperçu :' : 'Brand activation at your event: trade-fair stand, cultural center, product launch, promotional or in-house event, or exhibition. Kiosk with game, technology and audiovisual in one draws visitors to your stand and your site. Try it:'}{' '}
                 <LangLink to="/game" className="text-azimut-red hover:underline font-semibold">
                   {lang === 'pt' ? 'Jogue o Empathy Engine' : lang === 'es' ? 'Juega el Empathy Engine' : lang === 'fr' ? 'Jouez à l\'Empathy Engine' : 'Play Empathy Engine'} →
@@ -419,17 +419,17 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                       </div>
                     )}
                     
-                    {/* Título */}
+                    {/* Título - sempre claro pois card tem fundo escuro em ambos os temas */}
                     <h3 
-                      className={`mb-3 font-sora text-[0.88rem] font-semibold uppercase tracking-[0.03em] transition-colors duration-300 line-clamp-2 leading-snug ${theme === 'dark' ? 'text-slate-200' : 'text-on-dark-primary'}`}
+                      className="mb-3 font-sora text-[0.88rem] font-semibold uppercase tracking-[0.03em] transition-colors duration-300 line-clamp-2 leading-snug text-slate-200"
                     >
                       {/* 🆕 Usar dados do backoffice (se disponível) ou fallback para dados locais */}
                       {'title' in service ? service.title : getServiceTitle(service, lang)}
                     </h3>
                     
-                    {/* Descrição */}
+                    {/* Descrição - sempre claro pois card tem fundo escuro em ambos os temas */}
                     <p 
-                      className={`text-[0.82rem] leading-[1.75] transition-colors duration-300 flex-grow line-clamp-3 ${theme === 'dark' ? 'text-slate-400' : 'text-on-dark-secondary'}`}
+                      className="text-[0.82rem] leading-[1.75] transition-colors duration-300 flex-grow line-clamp-3 text-slate-400"
                       style={{ fontWeight: 400 }}
                     >
                       {(() => {

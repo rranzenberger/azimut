@@ -794,9 +794,17 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
 
             {/* Depoimento — bloco único premium (paleta do site) */}
             <div className="mt-12 md:mt-16 max-w-3xl mx-auto">
-              <div className="relative p-6 md:p-8 rounded-2xl border border-azimut-red/20 bg-gradient-to-br from-azimut-red/5 to-transparent dark:from-azimut-red/10 dark:to-transparent">
+              <div 
+                className="relative p-6 md:p-8 rounded-2xl border border-azimut-red/30"
+                style={{
+                  background: theme === 'dark' 
+                    ? 'linear-gradient(135deg, rgba(201, 35, 55, 0.1) 0%, rgba(26, 31, 44, 0.8) 100%)'
+                    : 'linear-gradient(135deg, rgba(201, 35, 55, 0.15) 0%, rgba(245, 241, 232, 0.95) 100%)'
+                }}
+              >
                 <div className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl bg-gradient-to-r from-transparent via-azimut-red/60 to-transparent opacity-80" aria-hidden />
-                <p className={`text-lg md:text-xl leading-relaxed italic mb-4 ${theme === 'dark' ? 'text-slate-200' : 'text-on-dark-primary'}`}>
+                {/* Texto escuro no tema claro para contraste com fundo claro */}
+                <p className={`text-lg md:text-xl leading-relaxed italic mb-4 ${theme === 'dark' ? 'text-slate-200' : 'text-slate-700'}`}>
                   {lang === 'pt' && '"A Azimut Academy une prática de mercado e método. Saí pronto para atuar em projetos imersivos."'}
                   {lang === 'en' && '"Azimut Academy combines real-world practice and method. I left ready to work on immersive projects."'}
                   {lang === 'es' && '"Azimut Academy une práctica de mercado y método. Salí listo para actuar en proyectos inmersivos."'}
@@ -830,7 +838,8 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
                   <div className="text-5xl md:text-6xl font-handel text-azimut-red mb-3">
                     {stat.value}
                   </div>
-                  <div className={`text-sm md:text-base uppercase tracking-wider ${theme === 'dark' ? 'text-slate-300' : 'text-on-dark-secondary'}`}>
+                  {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
+                  <div className="text-sm md:text-base uppercase tracking-wider text-slate-300">
                     {stat.label}
                   </div>
                 </div>
@@ -859,7 +868,8 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
                   <div className="text-2xl flex-shrink-0">
                     {item.split(' ')[0]}
                   </div>
-                  <p className={`leading-relaxed ${theme === 'dark' ? 'text-slate-300' : 'text-on-dark-secondary'}`}>
+                  {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
+                  <p className="leading-relaxed text-slate-300">
                     {item.substring(item.indexOf(' ') + 1)}
                   </p>
                 </div>
