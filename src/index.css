@@ -1,6 +1,65 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════
+   REGRA CRÍTICA: CARDS ESCUROS SEMPRE TÊM TEXTO CLARO
+   Aplica-se em AMBOS os temas (claro e escuro)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Card-adaptive: SEMPRE texto claro (fundo escuro em ambos os temas) */
+.card-adaptive,
+.card-adaptive *,
+.card-dark-adaptive,
+.card-dark-adaptive *,
+.card-dark-fixed,
+.card-dark-fixed * {
+  color: #e2e8f0 !important; /* slate-200 - claro */
+}
+
+/* Títulos em cards escuros: branco puro */
+.card-adaptive h1,
+.card-adaptive h2,
+.card-adaptive h3,
+.card-adaptive h4,
+.card-dark-adaptive h1,
+.card-dark-adaptive h2,
+.card-dark-adaptive h3,
+.card-dark-adaptive h4,
+.card-dark-fixed h1,
+.card-dark-fixed h2,
+.card-dark-fixed h3,
+.card-dark-fixed h4 {
+  color: #ffffff !important; /* branco puro */
+}
+
+/* Descrições em cards escuros: slate-300 */
+.card-adaptive p,
+.card-adaptive span:not(.text-azimut-red),
+.card-dark-adaptive p,
+.card-dark-adaptive span:not(.text-azimut-red),
+.card-dark-fixed p,
+.card-dark-fixed span:not(.text-azimut-red) {
+  color: #cbd5e1 !important; /* slate-300 - legível */
+}
+
+/* Vermelho Azimut: preservar em qualquer contexto */
+.card-adaptive .text-azimut-red,
+.card-dark-adaptive .text-azimut-red,
+.card-dark-fixed .text-azimut-red,
+.text-azimut-red {
+  color: #c92337 !important;
+  -webkit-text-fill-color: #c92337 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RODAPÉ TEMA CLARO: MARROM (não azul)
+   ═══════════════════════════════════════════════════════════════ */
+html[data-theme="light"] footer,
+[data-theme="light"] footer {
+  background-color: #1e1c1a !important; /* marrom escuro */
+  background: linear-gradient(180deg, #252220 0%, #1e1c1a 100%) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    ACESSIBILIDADE - Reduced Motion
    ═══════════════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
