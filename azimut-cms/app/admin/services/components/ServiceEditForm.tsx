@@ -16,6 +16,16 @@ const inputStyle = {
   boxSizing: 'border-box' as const,
 };
 
+type FAQItem = { question: string; answer: string };
+
+function ensureFAQArray(val: unknown): FAQItem[] {
+  if (!Array.isArray(val)) return [];
+  return val.filter(
+    (x): x is FAQItem =>
+      x && typeof x === 'object' && 'question' in x && 'answer' in x
+  );
+}
+
 export function ServiceEditForm({ service }: { service: any }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -35,6 +45,10 @@ export function ServiceEditForm({ service }: { service: any }) {
     status: service.status || 'PUBLISHED',
     priority: service.priority || 0,
     segments: service.segments?.join(', ') || '',
+    faqsPt: ensureFAQArray(service.faqsPt) as FAQItem[],
+    faqsEn: ensureFAQArray(service.faqsEn) as FAQItem[],
+    faqsEs: ensureFAQArray(service.faqsEs) as FAQItem[],
+    faqsFr: ensureFAQArray(service.faqsFr) as FAQItem[],
   });
 
   async function handleSubmit(e: FormEvent) {
@@ -55,6 +69,10 @@ export function ServiceEditForm({ service }: { service: any }) {
         body: JSON.stringify({
           ...formData,
           segments: segmentsArray,
+          faqsPt: formData.faqsPt.length ? formData.faqsPt : null,
+          faqsEn: formData.faqsEn.length ? formData.faqsEn : null,
+          faqsEs: formData.faqsEs.length ? formData.faqsEs : null,
+          faqsFr: formData.faqsFr.length ? formData.faqsFr : null,
         }),
       });
 
@@ -319,6 +337,56 @@ export function ServiceEditForm({ service }: { service: any }) {
             placeholder="Museus, VR, Tecnologia (separados por vírgula)"
           />
         </div>
+
+        {/* FAQs por idioma */}
+        {(['Pt', 'En', 'Es', 'Fr'] as const).map((lang) => {
+          const key = `faqs${lang}` as 'faqsPt' | 'faqsEn' | 'faqsEs' | 'faqsFr';
+          const faqs = formData[key];
+          return (
+            <div key={key} style={{ display: 'grid', gap: 12, padding: 16, background: 'rgba(0,0,0,0.15)', borderRadius: 10 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>FAQs ({lang === 'Pt' ? 'PT' : lang === 'En' ? 'EN' : lang === 'Es' ? 'ES' : 'FR'})</label>
+              {faqs.map((faq, index) => (
+                <div key={index} style={{ display: 'grid', gap: 8, padding: 12, border: '1px solid rgba(255,255,255,0.06)', borderRadius: 8 }}>
+                  <input
+                    type="text"
+                    value={faq.question}
+                    onChange={(e) => {
+                      const next = [...faqs];
+                      next[index] = { ...next[index], question: e.target.value };
+                      setFormData({ ...formData, [key]: next });
+                    }}
+                    style={inputStyle}
+                    placeholder="Pergunta"
+                  />
+                  <textarea
+                    value={faq.answer}
+                    onChange={(e) => {
+                      const next = [...faqs];
+                      next[index] = { ...next[index], answer: e.target.value };
+                      setFormData({ ...formData, [key]: next });
+                    }}
+                    style={{ ...inputStyle, minHeight: 70, resize: 'vertical' }}
+                    placeholder="Resposta"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, [key]: faqs.filter((_, i) => i !== index) })}
+                    style={{ justifySelf: 'start', padding: '6px 12px', fontSize: 12, color: '#fca5a5', background: 'transparent', border: '1px solid rgba(252,165,165,0.3)', borderRadius: 6, cursor: 'pointer' }}
+                  >
+                    Remover FAQ
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => setFormData({ ...formData, [key]: [...faqs, { question: '', answer: '' }] })}
+                style={{ padding: '8px 14px', fontSize: 13, color: '#86efac', background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', borderRadius: 8, cursor: 'pointer' }}
+              >
+                + Adicionar FAQ
+              </button>
+            </div>
+          );
+        })}
 
         <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
           <button

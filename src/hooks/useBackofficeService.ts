@@ -13,15 +13,21 @@ import { createTimeoutSignal } from '../utils/fetchWithTimeout';
 // URL do backoffice (produção)
 const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br';
 
+export interface ServiceFAQ {
+  question: string;
+  answer: string;
+}
+
 export interface ServiceContent {
   slug: string;
   title: string;
   description: string;
   icon: string;
-  segments: string[];  // Categorias de filtro ['education', 'training', 'corporate']
+  segments: string[];
   status: 'PUBLISHED' | 'DRAFT' | 'ARCHIVED';
   priority: number;
   updatedAt: string;
+  faqs?: ServiceFAQ[];
 }
 
 interface UseBackofficeServiceReturn {
@@ -72,16 +78,23 @@ export function useBackofficeService(
 
         if (isCancelled) return;
 
-        // Extrair dados do idioma selecionado
+        const langKey = lang.charAt(0).toUpperCase() + lang.slice(1);
+        const faqsKey = `faqs${langKey}` as keyof typeof data;
+        const rawFaqs = data[faqsKey];
+        const faqs: ServiceFAQ[] = Array.isArray(rawFaqs)
+          ? rawFaqs.filter((x: unknown) => x && typeof x === 'object' && 'question' in x && 'answer' in x)
+          : [];
+
         const serviceContent: ServiceContent = {
           slug: data.slug,
-          title: data[`title${lang.charAt(0).toUpperCase() + lang.slice(1)}`] || data.titlePt,
-          description: data[`description${lang.charAt(0).toUpperCase() + lang.slice(1)}`] || data.descriptionPt,
+          title: data[`title${langKey}`] || data.titlePt,
+          description: data[`description${langKey}`] || data.descriptionPt,
           icon: data.icon || '📦',
           segments: data.segments || [],
           status: data.status,
           priority: data.priority || 0,
           updatedAt: data.updatedAt,
+          faqs: faqs.length > 0 ? faqs : undefined,
         };
 
         setService(serviceContent);

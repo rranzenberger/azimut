@@ -13,7 +13,7 @@ export const runtime = 'nodejs';
 // GET - Buscar serviço por ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const cookieStore = cookies();
@@ -24,7 +24,7 @@ export async function GET(
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
     }
 
-    const { id } = params;
+    const { id } = await params;
 
     const service = await prisma.service.findUnique({
       where: { id },
@@ -57,7 +57,7 @@ export async function GET(
 // PUT - Atualizar serviço
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const cookieStore = cookies();
@@ -68,7 +68,7 @@ export async function PUT(
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
     }
 
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
 
     // Validar campos permitidos
@@ -86,6 +86,10 @@ export async function PUT(
       'status',
       'priority',
       'segments',
+      'faqsPt',
+      'faqsEn',
+      'faqsEs',
+      'faqsFr',
     ];
 
     const updateData: any = {};
@@ -153,7 +157,7 @@ export async function PUT(
 // DELETE - Deletar serviço
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const cookieStore = cookies();
@@ -164,7 +168,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
     }
 
-    const { id } = params;
+    const { id } = await params;
 
     // Verificar se tem projetos vinculados
     const service = await prisma.service.findUnique({

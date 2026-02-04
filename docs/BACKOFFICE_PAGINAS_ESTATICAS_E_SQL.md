@@ -17,7 +17,7 @@
    ```
 2. **SQL direto:** executar o conteúdo do arquivo **`sql/backoffice_press_publication.sql`** no PostgreSQL (Neon ou outro). O script usa `CREATE TABLE IF NOT EXISTS` e `CREATE INDEX IF NOT EXISTS`, então pode ser rodado mais de uma vez sem erro.
 
-**No Neon SQL Editor:** use o botão **Run** (Executar). Não use **Explain** nem **Analyze**. O Explain adiciona `EXPLAIN (...)` na frente da query; `EXPLAIN` não pode ser usado com comandos DDL como `CREATE TABLE`, e o banco retorna erro de sintaxe. Executar com **Run** aplica o script diretamente.
+**No Neon SQL Editor:** use o botão **Run** (Executar). Não use **Explain** nem **Analyze**. Detalhes: **[Neon SQL Editor — como executar](NEON_SQL_EDITOR.md)**.
 
 ---
 

@@ -45,6 +45,10 @@ export async function GET(
         status: true,
         priority: true,
         updatedAt: true,
+        faqsPt: true,
+        faqsEn: true,
+        faqsEs: true,
+        faqsFr: true,
       },
     })
 

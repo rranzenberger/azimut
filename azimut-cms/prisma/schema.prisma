@@ -107,6 +107,10 @@ model Service {
   status        ServiceStatus @default(PUBLISHED)
   priority      Int           @default(0)
   segments      String[]
+  faqsPt        Json?         // Array of { question: string, answer: string }
+  faqsEn        Json?
+  faqsEs        Json?
+  faqsFr        Json?
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   projects      Project[]     @relation("ProjectToService")

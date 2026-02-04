@@ -399,8 +399,10 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
 
   const t = translations[lang]
 
-  // FAQ Schema para SEO (Rich Snippets)
-  const faqs = hasServiceFAQs(slug) ? getServiceFAQs(slug, lang) : []
+  // FAQ: prioridade backoffice (service.faqs), fallback para serviceFAQs estático
+  const faqs = (backofficeService?.faqs && backofficeService.faqs.length > 0)
+    ? backofficeService.faqs
+    : (hasServiceFAQs(slug) ? getServiceFAQs(slug, lang) : [])
   const faqSchema = faqs.length > 0 ? {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -999,8 +1001,8 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
             </section>
           )}
 
-          {/* FAQs - Perguntas Frequentes */}
-          {hasServiceFAQs(slug) && (
+          {/* FAQs - Perguntas Frequentes (backoffice ou fallback estático) */}
+          {faqs.length > 0 && (
             <section 
               ref={(el) => { sectionRefs.current[7] = el }}
               className="section-container relative opacity-0"
@@ -1014,7 +1016,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
               </h2>
               
               <div className="mt-8 space-y-4">
-                {getServiceFAQs(slug, lang).map((faq, index) => (
+                {faqs.map((faq, index) => (
                   <details
                     key={index}
                     className="group relative overflow-hidden rounded-xl border transition-all backdrop-blur-sm"

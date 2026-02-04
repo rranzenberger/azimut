@@ -92,6 +92,10 @@ export async function POST(request: NextRequest) {
       status,
       priority,
       segments,
+      faqsPt,
+      faqsEn,
+      faqsEs,
+      faqsFr,
     } = body;
 
     // Validação
@@ -125,6 +129,10 @@ export async function POST(request: NextRequest) {
         status: status || 'PUBLISHED',
         priority: priority || 0,
         segments: segments || [],
+        faqsPt: Array.isArray(faqsPt) ? faqsPt : null,
+        faqsEn: Array.isArray(faqsEn) ? faqsEn : null,
+        faqsEs: Array.isArray(faqsEs) ? faqsEs : null,
+        faqsFr: Array.isArray(faqsFr) ? faqsFr : null,
       },
     });
 
