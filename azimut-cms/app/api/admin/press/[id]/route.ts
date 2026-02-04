@@ -16,7 +16,7 @@ export async function PUT(
     const session = token ? verifyAuthToken(token) : null
     if (!session) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
 
-    const { id } = params
+    const { id } = await params
     const body = await request.json()
     if (!body.titlePt) return NextResponse.json({ error: 'titlePt é obrigatório' }, { status: 400 })
 
@@ -46,7 +46,7 @@ export async function PUT(
 
 export async function DELETE(
   _request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const cookieStore = cookies()
@@ -54,7 +54,7 @@ export async function DELETE(
     const session = token ? verifyAuthToken(token) : null
     if (!session) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
 
-    const { id } = params
+    const { id } = await params
     await prisma.press.delete({ where: { id } })
     return NextResponse.json({ success: true })
   } catch (e: any) {
