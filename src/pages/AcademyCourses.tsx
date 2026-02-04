@@ -694,7 +694,7 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
                       {course.tags.map((tag: string) => (
                         <span 
                           key={tag}
-                          className={`px-2 py-1 bg-white/5 text-xs rounded ${theme === 'dark' ? 'text-white/60' : 'text-on-dark-tertiary'}`}
+                          className="px-2 py-1 bg-white/5 text-xs rounded text-white/60"
                         >
                           {tag}
                         </span>
@@ -741,7 +741,7 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
               ))}
             </div>
 
-            <p className={`mt-8 text-sm ${theme === 'dark' ? 'text-white/40' : 'text-on-dark-muted'}`}>
+            <p className={`mt-8 text-sm ${theme === 'dark' ? 'text-white/40' : 'text-slate-500'}`}>
               📸 PLACEHOLDER: Backoffice → /admin/academy/gallery
             </p>
           </div>
@@ -756,10 +756,10 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
                   🤖 Recomendação IA
                 </span>
               </div>
-              <h2 className={`text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+              <h2 className={`text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
                 {lang === 'pt' ? 'Qual curso é ideal para você?' : 'Which course is ideal for you?'}
               </h2>
-              <p className="text-xl text-white/70">
+              <p className={`text-xl ${theme === 'dark' ? 'text-white/70' : 'text-slate-700'}`}>
                 {lang === 'pt' ? 'Responda 5 perguntas e descubra os 3 melhores cursos para seu perfil' : 'Answer 5 questions and discover the 3 best courses for your profile'}
               </p>
             </div>

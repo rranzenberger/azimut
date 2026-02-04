@@ -117,12 +117,16 @@ const CookieBannerComponent: React.FC<CookieBannerProps> = ({ lang }) => {
     <div
       className={`
         fixed bottom-0 left-0 right-0 z-[9999]
-        bg-dark-900/95 backdrop-blur-md
         border-t border-white/10
         px-4 py-4 sm:px-6 sm:py-5
         transform transition-all duration-300
         ${isClosing ? 'translate-y-full opacity-0' : 'translate-y-0 opacity-100'}
       `}
+      style={{
+        // Fundo sólido escuro para funcionar em ambos os temas (claro e escuro)
+        backgroundColor: '#1a1f2c',
+        boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.3)'
+      }}
       role="dialog"
       aria-labelledby="cookie-banner-title"
       aria-describedby="cookie-banner-desc"

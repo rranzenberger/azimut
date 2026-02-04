@@ -585,12 +585,13 @@ const AcademyWorkshops: React.FC<AcademyWorkshopsProps> = ({ lang }) => {
                   className="card-adaptive rounded-xl p-6 border border-white/10 hover:border-azimut-red/50 transition-all hover:scale-105"
                 >
                   <div className="text-5xl mb-4">{format.icon}</div>
-                  <h3 className={`text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{format.title}</h3>
+                  {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
+                  <h3 className="text-xl font-bold mb-2 text-white">{format.title}</h3>
                   <p className="text-azimut-red text-sm font-semibold mb-3">{format.duration}</p>
-                  <p className={`text-sm mb-4 ${theme === 'dark' ? 'text-white/70' : 'text-on-dark-secondary'}`}>{format.description}</p>
+                  <p className="text-sm mb-4 text-white/70">{format.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {format.examples.map((ex: string) => (
-                      <span key={ex} className={`px-2 py-1 bg-white/5 text-xs rounded ${theme === 'dark' ? 'text-white/50' : 'text-on-dark-tertiary'}`}>
+                      <span key={ex} className="px-2 py-1 bg-white/5 text-xs rounded text-white/50">
                         {ex}
                       </span>
                     ))}
@@ -616,22 +617,23 @@ const AcademyWorkshops: React.FC<AcademyWorkshopsProps> = ({ lang }) => {
                   key={event.id}
                   className="card-adaptive rounded-2xl p-8 border border-white/10 hover:border-azimut-red/50 transition-all hover:-translate-y-2"
                 >
-                  <h3 className={`text-2xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{event.title}</h3>
+                  {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
+                  <h3 className="text-2xl font-bold mb-4 text-white">{event.title}</h3>
                   
                   <div className="space-y-3 mb-6">
-                    <div className={`flex items-center gap-3 ${theme === 'dark' ? 'text-white/70' : 'text-on-dark-secondary'}`}>
+                    <div className="flex items-center gap-3 text-white/70">
                       <span>📅</span>
                       <span>{event.date}</span>
                     </div>
-                    <div className={`flex items-center gap-3 ${theme === 'dark' ? 'text-white/70' : 'text-on-dark-secondary'}`}>
+                    <div className="flex items-center gap-3 text-white/70">
                       <span>📍</span>
                       <span>{event.location}</span>
                     </div>
-                    <div className={`flex items-center gap-3 ${theme === 'dark' ? 'text-white/70' : 'text-on-dark-secondary'}`}>
+                    <div className="flex items-center gap-3 text-white/70">
                       <span>⏱️</span>
                       <span>{event.duration}</span>
                     </div>
-                    <div className={`flex items-center gap-3 ${theme === 'dark' ? 'text-white/70' : 'text-on-dark-secondary'}`}>
+                    <div className="flex items-center gap-3 text-white/70">
                       <span>👥</span>
                       <span>{event.spots}</span>
                     </div>
@@ -655,10 +657,10 @@ const AcademyWorkshops: React.FC<AcademyWorkshopsProps> = ({ lang }) => {
         {/* PAST EVENTS GALLERY */}
         <section className="py-20 pb-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+            <h2 className={`text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
               {t.pastEvents.title}
             </h2>
-            <p className="text-xl text-white/70 mb-12">
+            <p className={`text-xl mb-12 ${theme === 'dark' ? 'text-white/70' : 'text-slate-700'}`}>
               {t.pastEvents.subtitle}
             </p>
 

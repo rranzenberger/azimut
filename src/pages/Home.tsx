@@ -523,7 +523,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   isolation: 'isolate',
                   transform: 'translateZ(0)', // Force GPU layer
                   willChange: 'transform',
-                  contain: 'layout style paint' // Otimização de renderização
+                  contain: 'layout style paint', // Otimização de renderização
+                  overflow: 'hidden', // Impede linhas de vazar
+                  borderRadius: '50%', // Clip circular para conter animação
+                  clipPath: 'circle(50% at 50% 50%)' // Garante corte circular
                 }}>
                   <AnimatedLogo />
                 </div>
@@ -531,7 +534,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             </div>
             
             {/* LINHA 2: 5 Cards Horizontais (SUBIDOS - SEM GAP VAZIO) */}
-            <div className="grid grid-cols-5 gap-4 -mt-24">
+            <div className="grid grid-cols-5 gap-4 -mt-24" style={{ position: 'relative', zIndex: 20 }}>
               {/* Cinema & AV */}
               <div className={`glass-panel backdrop-blur-xl rounded-xl transition-all duration-300 group flex flex-row items-center gap-2 p-3 hover:scale-[1.02]`} style={{ 
                 background: theme === 'dark' 
@@ -912,7 +915,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               }}
             >
               {/* Logo Animada - object-contain para não cropar */}
-              <div className="relative w-full h-full">
+              <div className="relative w-full h-full" style={{
+                overflow: 'hidden',
+                clipPath: 'inset(0)' // Garante que nada vaze
+              }}>
                 <AnimatedLogo />
               </div>
             </div>
@@ -1590,7 +1596,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         }}
                       >
                         <div className="text-center p-6">
-                          <h3 className={`font-handel text-3xl uppercase tracking-[0.12em] ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{mainFeatured.title}</h3>
+                          <h3 className={`font-handel text-3xl uppercase tracking-[0.12em] ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>{mainFeatured.title}</h3>
                         </div>
                       </div>
                     )}
@@ -1998,10 +2004,11 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       </div>
                     )}
                     
-                    <h3 className={`mb-3 font-handel text-lg md:text-xl uppercase tracking-wide group-hover:text-azimut-red transition-colors duration-300 line-clamp-2 leading-tight ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+                    {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
+                    <h3 className="mb-3 font-handel text-lg md:text-xl uppercase tracking-wide group-hover:text-azimut-red transition-colors duration-300 line-clamp-2 leading-tight text-white">
                       {service.title}
                     </h3>
-                    <p className={`text-sm md:text-base leading-relaxed transition-colors duration-300 ${theme === 'dark' ? 'text-theme-card-text-secondary group-hover:text-theme-card-text' : 'text-on-dark-secondary group-hover:text-on-dark-primary'}`}>
+                    <p className="text-sm md:text-base leading-relaxed transition-colors duration-300 text-slate-300 group-hover:text-slate-200">
                       {service.description}
                     </p>
                     
@@ -2074,10 +2081,11 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       </div>
                     )}
                     
-                    <h3 className={`mb-3 font-handel text-lg md:text-xl uppercase tracking-wide group-hover:text-azimut-red transition-colors duration-300 relative z-10 line-clamp-2 leading-tight ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+                    {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
+                    <h3 className="mb-3 font-handel text-lg md:text-xl uppercase tracking-wide group-hover:text-azimut-red transition-colors duration-300 relative z-10 line-clamp-2 leading-tight text-white">
                       {service.title}
                     </h3>
-                    <p className={`text-sm md:text-base leading-relaxed transition-colors duration-300 relative z-10 ${theme === 'dark' ? 'text-theme-card-text-secondary group-hover:text-theme-card-text' : 'text-on-dark-secondary group-hover:text-on-dark-primary'}`}>
+                    <p className="text-sm md:text-base leading-relaxed transition-colors duration-300 relative z-10 text-slate-300 group-hover:text-slate-200">
                       {service.description}
                     </p>
                     

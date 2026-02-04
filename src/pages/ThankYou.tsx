@@ -4,12 +4,14 @@ import { trackConversion } from '../components/GoogleAnalytics'
 import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
 import SEO from '../components/SEO'
+import { useTheme } from '../contexts/ThemeContext'
 
 interface ThankYouProps {
   lang: Lang
 }
 
 const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
+  const { theme } = useTheme()
   // REMOVIDO: useUserTracking já é chamado no Layout.tsx
   // useUserTracking()
   const starRef = useRef<HTMLDivElement>(null)
@@ -146,7 +148,7 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
           {/* Hero Celebratório */}
           <div className="text-center mb-16">
             <div className="text-8xl mb-6 animate-bounce">🎉</div>
-            <h1 className="font-handel text-6xl md:text-7xl font-bold uppercase text-white mb-4">
+            <h1 className={`font-handel text-6xl md:text-7xl font-bold uppercase mb-4 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
               {text.title}
             </h1>
             <div className="inline-block px-6 py-3 rounded-full bg-green-500/20 border-2 border-green-500/50 mb-6">
@@ -159,7 +161,7 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
 
           {/* Timeline de Próximos Passos */}
           <section className="mb-20">
-            <h2 className="text-center text-2xl font-bold text-white mb-10">{text.nextSteps}</h2>
+            <h2 className={`text-center text-2xl font-bold mb-10 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{text.nextSteps}</h2>
             <div className="grid md:grid-cols-3 gap-6">
               {text.steps.map((step, i) => (
                 <div 
@@ -169,8 +171,9 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
                   <div className="text-center p-6 rounded-lg bg-slate-900/50 border-2 border-azimut-red/30 hover:border-azimut-red transition-all h-full flex flex-col">
                     <div className="text-5xl mb-3">{step.icon}</div>
                     <div className="mb-2 text-xs font-bold text-azimut-red uppercase tracking-wider">{step.time}</div>
-                    <h3 className="text-base font-bold text-white mb-2 line-clamp-2">{step.title}</h3>
-                    <p className="text-sm text-theme-text-secondary line-clamp-3 flex-1">{step.desc}</p>
+                    {/* Texto sempre claro pois bg-slate-900/50 é escuro */}
+                    <h3 className="text-base font-bold mb-2 line-clamp-2 text-white">{step.title}</h3>
+                    <p className="text-sm text-slate-300 line-clamp-3 flex-1">{step.desc}</p>
                   </div>
                 </div>
               ))}
@@ -179,7 +182,7 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
 
           {/* Explore Links */}
           <section className="mb-16">
-            <h2 className="text-center text-2xl font-bold text-white mb-8">{text.explore}</h2>
+            <h2 className={`text-center text-2xl font-bold mb-8 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{text.explore}</h2>
             <div className="grid md:grid-cols-3 gap-6">
               {text.links.map((link, i) => (
                 <LangLink
@@ -188,7 +191,8 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
                   className="group p-6 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/50 transition-all text-center flex flex-col items-center h-full"
                 >
                   <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">{link.icon}</div>
-                  <p className="text-base font-semibold text-white group-hover:text-azimut-red transition-colors line-clamp-2">{link.text}</p>
+                  {/* Texto sempre claro pois bg-slate-900 é escuro */}
+                  <p className="text-base font-semibold group-hover:text-azimut-red transition-colors line-clamp-2 text-white">{link.text}</p>
                 </LangLink>
               ))}
             </div>
@@ -198,7 +202,7 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
           <div className="text-center">
             <LangLink
               to="/"
-              className="inline-flex items-center gap-3 px-10 py-4 rounded-lg border-2 border-white/30 text-white hover:bg-white hover:text-black transition-all font-semibold"
+              className={`inline-flex items-center gap-3 px-10 py-4 rounded-lg border-2 font-semibold transition-all ${theme === 'dark' ? 'border-white/30 text-white hover:bg-white hover:text-black' : 'border-slate-400 text-slate-800 hover:bg-slate-900 hover:text-white hover:border-slate-900'}`}
             >
               <span className="text-xl">←</span>
               {text.backHome}

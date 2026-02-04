@@ -1,15 +1,49 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
-import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
 import InternalNavigation from '../components/InternalNavigation'
 import StarBackground from '../components/StarBackground'
 import { useTheme } from '../contexts/ThemeContext'
 import { PageFooterNavigation } from '../components/PageFooterNavigation'
+import { useTeam } from '../hooks/useTeam'
+import { useCredentials } from '../hooks/useCredentials'
+import { useHistory } from '../hooks/useHistory'
 
 interface StudioProps {
   lang: Lang
+}
+
+/** Timeline estática (fallback quando não há dados do backoffice) */
+const STATIC_TIMELINE: Record<Lang, { year: string; label: string }[]> = {
+  pt: [
+    { year: '1990s', label: 'Pioneiros 3D e audiovisual' },
+    { year: '2017', label: 'Curadoria VR no Festival de Gramado' },
+    { year: 'XRBR', label: 'Membros fundadores da Associação XRBR' },
+    { year: 'Rio Museu', label: 'Direção Geral e Arte no Rio Museu Olímpico' },
+    { year: 'Hoje', label: 'Brasil ↔ Canadá • Vancouver, BC' }
+  ],
+  en: [
+    { year: '1990s', label: '3D & audiovisual pioneers' },
+    { year: '2017', label: 'VR Curatorship at Gramado Festival' },
+    { year: 'XRBR', label: 'Founding members of XRBR Association' },
+    { year: 'Rio Museu', label: 'General Direction & Art at Rio Olympic Museum' },
+    { year: 'Hoje', label: 'Brazil ↔ Canada • Vancouver, BC' }
+  ],
+  es: [
+    { year: '1990s', label: 'Pioneros 3D y audiovisual' },
+    { year: '2017', label: 'Curaduría VR en Festival de Gramado' },
+    { year: 'XRBR', label: 'Miembros fundadores de la Asociación XRBR' },
+    { year: 'Rio Museu', label: 'Dirección General y Arte en Rio Museo Olímpico' },
+    { year: 'Hoje', label: 'Brasil ↔ Canadá • Vancouver, BC' }
+  ],
+  fr: [
+    { year: '1990s', label: 'Pionniers 3D et audiovisuel' },
+    { year: '2017', label: 'Curation VR au Festival de Gramado' },
+    { year: 'XRBR', label: 'Membres fondateurs de l\'Association XRBR' },
+    { year: 'Rio Museu', label: 'Direction Générale et Art au Musée Olympique de Rio' },
+    { year: 'Hoje', label: 'Brésil ↔ Canada • Vancouver, BC' }
+  ]
 }
 
 const Studio: React.FC<StudioProps> = ({ lang }) => {
@@ -23,6 +57,11 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
   
   // Ref para o vídeo Chris Milk
   const videoRef = useRef<HTMLVideoElement>(null)
+  
+  // Dados do backoffice (Equipe, Credenciais, Histórico) — fallback para conteúdo estático
+  const { members: teamFromBackoffice } = useTeam(lang)
+  const { credentials: credentialsFromBackoffice } = useCredentials(lang)
+  const { items: historyFromBackoffice } = useHistory(lang)
   
   useEffect(() => {
     const handleScroll = () => {
@@ -323,6 +362,27 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
 
   const text = content[lang] || content.pt
 
+  // Compor dados: backoffice quando disponível, senão conteúdo estático
+  const teamMembers = teamFromBackoffice.length > 0
+    ? teamFromBackoffice.map((m) => ({
+        slug: m.slug,
+        name: m.name,
+        role: m.role,
+        credential: m.credential,
+        bio: m.bio ?? '',
+        photo: m.photoUrl || '/logo-azimut-star.svg'
+      }))
+    : text.team.members
+  const credentialsItems = credentialsFromBackoffice.length > 0
+    ? credentialsFromBackoffice.map((c) => (c.icon ? `${c.icon} ${c.text}` : `🏆 ${c.text}`))
+    : text.credentials.items
+  const timelineItems = historyFromBackoffice.length > 0
+    ? historyFromBackoffice.map((h) => ({
+        year: h.period || String(h.year),
+        label: h.title
+      }))
+    : STATIC_TIMELINE[lang]
+
   return (
     <>
       <SEO 
@@ -459,10 +519,11 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               <div className="relative flex flex-col items-center justify-center min-h-[340px] p-8 md:p-12 text-center">
                 <div className="w-16 h-1 rounded-full bg-gradient-to-r from-transparent via-azimut-red to-transparent mb-6" aria-hidden />
                 <div className="text-5xl md:text-6xl mb-4">🎬</div>
-                <p className={`font-sora text-lg md:text-xl uppercase tracking-wider ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+                {/* Texto sempre claro pois o fundo é escuro em ambos os temas */}
+                <p className="font-sora text-lg md:text-xl uppercase tracking-wider text-white">
                   {lang === 'pt' ? 'Studio Azimut' : lang === 'es' ? 'Estudio Azimut' : lang === 'fr' ? 'Studio Azimut' : 'Azimut Studio'}
                 </p>
-                <p className={`text-sm mt-2 ${theme === 'dark' ? 'text-slate-400' : 'text-on-dark-tertiary'}`}>
+                <p className="text-sm mt-2 text-slate-400">
                   {lang === 'pt' ? 'Imersivo • Interativo • Cinematográfico' : lang === 'es' ? 'Inmersivo • Interactivo • Cinematográfico' : lang === 'fr' ? 'Immersif • Interactif • Cinématographique' : 'Immersive • Interactive • Cinematic'}
                 </p>
               </div>
@@ -488,10 +549,11 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   }}
                 >
                   <div className="text-3xl mb-3">🎯</div>
-                  <h4 className={`text-lg font-bold mb-3 uppercase tracking-wide ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+                  {/* Texto sempre claro pois o card tem fundo escuro em ambos os temas */}
+                  <h4 className="text-lg font-bold mb-3 uppercase tracking-wide text-white">
                     {lang === 'pt' ? 'Missão' : lang === 'es' ? 'Misión' : lang === 'fr' ? 'Mission' : 'Mission'}
                   </h4>
-                  <p className={`text-sm leading-relaxed ${theme === 'dark' ? 'text-slate-300' : 'text-on-dark-secondary'}`}>
+                  <p className="text-sm leading-relaxed text-slate-300">
                     {lang === 'pt' 
                       ? 'Sentir DENTRO do que nossos parceiros sentem. Não observamos de fora — entramos, sentimos, e a partir daí, criamos experiências que transformam.'
                       : lang === 'es'
@@ -512,10 +574,11 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   }}
                 >
                   <div className="text-3xl mb-3">🔭</div>
-                  <h4 className={`text-lg font-bold mb-3 uppercase tracking-wide ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+                  {/* Texto sempre claro pois o card tem fundo escuro em ambos os temas */}
+                  <h4 className="text-lg font-bold mb-3 uppercase tracking-wide text-white">
                     {lang === 'pt' ? 'Visão' : lang === 'es' ? 'Visión' : lang === 'fr' ? 'Vision' : 'Vision'}
                   </h4>
-                  <p className={`text-sm leading-relaxed ${theme === 'dark' ? 'text-slate-300' : 'text-on-dark-secondary'}`}>
+                  <p className="text-sm leading-relaxed text-slate-300">
                     {lang === 'pt' 
                       ? 'Ser a máquina de empatia que conecta tecnologia e emoção. Criar experiências onde as pessoas não apenas veem — elas VIVEM.'
                       : lang === 'es'
@@ -524,7 +587,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                       ? 'Être la machine d\'empathie qui connecte technologie et émotion. Créer des expériences où les gens ne font pas que voir — ils VIVENT.'
                       : 'Be the empathy machine that connects technology and emotion. Create experiences where people don\'t just watch — they LIVE.'}
                   </p>
-                  <p className={`text-xs mt-3 italic ${theme === 'dark' ? 'text-slate-400' : 'text-on-dark-tertiary'}`}>
+                  <p className="text-xs mt-3 italic text-slate-400">
                     — Chris Milk, TED Vancouver 2015
                   </p>
                 </div>
@@ -539,10 +602,11 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   }}
                 >
                   <div className="text-3xl mb-3">💎</div>
-                  <h4 className={`text-lg font-bold mb-3 uppercase tracking-wide ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+                  {/* Texto sempre claro pois o card tem fundo escuro em ambos os temas */}
+                  <h4 className="text-lg font-bold mb-3 uppercase tracking-wide text-white">
                     {lang === 'pt' ? 'Valores' : lang === 'es' ? 'Valores' : lang === 'fr' ? 'Valeurs' : 'Values'}
                   </h4>
-                  <ul className={`text-sm space-y-2 ${theme === 'dark' ? 'text-slate-300' : 'text-on-dark-secondary'}`}>
+                  <ul className="text-sm space-y-2 text-slate-300">
                     <li className="flex items-start gap-2">
                       <span className="text-azimut-red">✦</span>
                       <span>{lang === 'pt' ? 'Empatia: Sentir DENTRO, não apenas COM' : lang === 'es' ? 'Empatía: Sentir DENTRO, no solo CON' : lang === 'fr' ? 'Empathie: Ressentir DE L\'INTÉRIEUR, pas juste AVEC' : 'Empathy: Feel FROM WITHIN, not just WITH'}</span>
@@ -567,7 +631,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   <h4 className={`text-xl font-handel uppercase tracking-wide ${theme === 'dark' ? 'text-azimut-red' : 'text-azimut-red'}`}>
                     {lang === 'pt' ? 'A Máquina de Empatia' : lang === 'es' ? 'La Máquina de Empatía' : lang === 'fr' ? 'La Machine à Empathie' : 'The Empathy Machine'}
                   </h4>
-                  <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-on-dark-tertiary'}`}>
+                  <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
                     Chris Milk • TED Talk 2015
                   </p>
                 </div>
@@ -647,7 +711,8 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                     : 'linear-gradient(135deg, rgba(201, 35, 55, 0.15) 0%, rgba(26, 24, 21, 0.4) 100%)'
                 }}
               >
-                <p className={`text-lg italic leading-relaxed ${theme === 'dark' ? 'text-slate-200' : 'text-on-dark-primary'}`}>
+                {/* Texto sempre claro pois o card tem fundo escuro em ambos os temas */}
+                <p className="text-lg italic leading-relaxed text-slate-200">
                   {lang === 'pt' 
                     ? '"Não é uma máquina de filme. Não é uma máquina de TV. É uma máquina de empatia. Você pode ver como é ser outra pessoa."'
                     : lang === 'es'
@@ -670,7 +735,8 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                     : 'linear-gradient(135deg, rgba(71, 85, 105, 0.25) 0%, rgba(26, 24, 21, 0.4) 100%)'
                 }}
               >
-                <p className={`text-lg italic leading-relaxed ${theme === 'dark' ? 'text-slate-200' : 'text-on-dark-primary'}`}>
+                {/* Texto sempre claro pois o card tem fundo escuro em ambos os temas */}
+                <p className="text-lg italic leading-relaxed text-slate-200">
                   {lang === 'pt' 
                     ? '"Ter empatia é ver o mundo pelos olhos do outro, não ver o seu mundo refletido nos olhos dele."'
                     : lang === 'es'
@@ -679,7 +745,8 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                     ? '"Avoir de l\'empathie, c\'est voir le monde à travers les yeux de l\'autre, pas voir son propre monde reflété dans ses yeux."'
                     : '"To have empathy is to see the world through the other\'s eyes, not to see your world reflected in their eyes."'}
                 </p>
-                <p className={`text-sm mt-3 font-semibold ${theme === 'dark' ? 'text-slate-400' : 'text-on-dark-tertiary'}`}>
+                {/* Texto sempre claro pois o card tem fundo escuro */}
+                <p className="text-sm mt-3 font-semibold text-slate-400">
                   — Carl Rogers, Psicólogo Humanista
                 </p>
               </div>
@@ -703,13 +770,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                 aria-hidden
               />
               <ul className="space-y-8 md:space-y-10">
-                {[
-                  { year: '1990s', label: lang === 'pt' ? 'Pioneiros 3D e audiovisual' : lang === 'es' ? 'Pioneros 3D y audiovisual' : lang === 'fr' ? 'Pionniers 3D et audiovisuel' : '3D & audiovisual pioneers' },
-                  { year: '2017', label: lang === 'pt' ? 'Curadoria VR no Festival de Gramado' : lang === 'es' ? 'Curaduría VR en Festival de Gramado' : lang === 'fr' ? 'Curation VR au Festival de Gramado' : 'VR Curatorship at Gramado Festival' },
-                  { year: 'XRBR', label: lang === 'pt' ? 'Membros fundadores da Associação XRBR' : lang === 'es' ? 'Miembros fundadores de la Asociación XRBR' : lang === 'fr' ? 'Membres fondateurs de l\'Association XRBR' : 'Founding members of XRBR Association' },
-                  { year: 'Rio Museu', label: lang === 'pt' ? 'Direção Geral e Arte no Rio Museu Olímpico' : lang === 'es' ? 'Dirección General y Arte en Rio Museo Olímpico' : lang === 'fr' ? 'Direction Générale et Art au Musée Olympique de Rio' : 'General Direction & Art at Rio Olympic Museum' },
-                  { year: 'Hoje', label: lang === 'pt' ? 'Brasil ↔ Canadá • Vancouver, BC' : lang === 'es' ? 'Brasil ↔ Canadá • Vancouver, BC' : lang === 'fr' ? 'Brésil ↔ Canada • Vancouver, BC' : 'Brazil ↔ Canada • Vancouver, BC' }
-                ].map((item, i) => (
+                {timelineItems.map((item, i) => (
                   <li key={i} className="relative flex gap-6 md:gap-8 items-start pl-14 md:pl-16">
                     <span 
                       className="absolute left-0 w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-azimut-red/60 flex items-center justify-center text-[0.65rem] md:text-xs font-bold shrink-0"
@@ -720,7 +781,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                     >
                       {item.year.length <= 5 ? item.year : item.year.slice(0, 3)}
                     </span>
-                    <p className={`text-base md:text-lg leading-relaxed pt-0.5 ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-on-dark-secondary'}`}>
+                    <p className={`text-base md:text-lg leading-relaxed pt-0.5 ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-slate-800'}`}>
                       {item.label}
                     </p>
                   </li>
@@ -804,10 +865,11 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   }}
                 >
                   <div className="text-6xl mb-4 transition-transform">🎬</div>
-                  <h3 className={`text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+                  {/* Texto sempre claro pois o card tem fundo escuro em ambos os temas */}
+                  <h3 className="text-xl font-bold mb-2 text-white">
                     {lang === 'pt' ? 'Studio + Lab + Academy' : lang === 'es' ? 'Estudio + Lab + Academia' : lang === 'fr' ? 'Studio + Lab + Académie' : 'Studio + Lab + Academy'}
                   </h3>
-                  <p className={`text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-on-dark-secondary'}`}>
+                  <p className="text-sm text-slate-300">
                     {lang === 'pt' ? 'Produção, pesquisa e educação em um só lugar' : lang === 'es' ? 'Producción, investigación y educación en un solo lugar' : lang === 'fr' ? 'Production, recherche et éducation en un seul endroit' : 'Production, research and education in one place'}
                   </p>
                 </div>
@@ -823,10 +885,11 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   }}
                 >
                   <div className="text-6xl mb-4 transition-transform">🌍</div>
-                  <h3 className={`text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+                  {/* Texto sempre claro pois o card tem fundo escuro em ambos os temas */}
+                  <h3 className="text-xl font-bold mb-2 text-white">
                     {lang === 'pt' ? 'Brasil ↔ Canadá' : lang === 'es' ? 'Brasil ↔ Canadá' : lang === 'fr' ? 'Brésil ↔ Canada' : 'Brazil ↔ Canada'}
                   </h3>
-                  <p className={`text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-on-dark-secondary'}`}>
+                  <p className="text-sm text-slate-300">
                     {lang === 'pt' ? 'Operações internacionais, perspectivas globais' : lang === 'es' ? 'Operaciones internacionales, perspectivas globales' : lang === 'fr' ? 'Opérations internationales, perspectives mondiales' : 'International operations, global perspectives'}
                   </p>
                 </div>
@@ -842,10 +905,11 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   }}
                 >
                   <div className="text-6xl mb-4 transition-transform">🎯</div>
-                  <h3 className={`text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+                  {/* Texto sempre claro pois o card tem fundo escuro em ambos os temas */}
+                  <h3 className="text-xl font-bold mb-2 text-white">
                     {lang === 'pt' ? '30+ Anos Experiência' : lang === 'es' ? '30+ Años de Experiencia' : lang === 'fr' ? '30+ Ans d\'Expérience' : '30+ Years Experience'}
                   </h3>
-                  <p className={`text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-on-dark-secondary'}`}>
+                  <p className="text-sm text-slate-300">
                     {lang === 'pt' ? 'Expertise comprovada em projetos de grande escala' : lang === 'es' ? 'Experiencia comprobada en proyectos de gran escala' : lang === 'fr' ? 'Expertise prouvée dans des projets à grande échelle' : 'Proven expertise in large-scale projects'}
                   </p>
                 </div>
@@ -916,7 +980,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               </LangLink>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
-              {text.team.members.map((member, i) => (
+              {teamMembers.map((member, i) => (
                 <div
                   key={i}
                   className="team-card group relative rounded-2xl overflow-hidden border border-azimut-red/20 hover:border-azimut-red/50 transition-all duration-500 cursor-pointer bg-gradient-to-b from-white/5 to-transparent dark:from-white/[0.04] dark:to-transparent"
@@ -1055,7 +1119,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
             </div>
             {/* Prêmios / Credenciais — cards premium com linha vermelha e gradiente */}
             <div className="grid md:grid-cols-2 gap-4">
-              {text.credentials.items.map((item, i) => {
+              {credentialsItems.map((item, i) => {
                 const isString = typeof item === 'string'
                 const icon = isString ? item.substring(0, 2) : item.icon || '🏆'
                 const lineText = isString ? item.substring(3) : item.desc || item.title || ''
@@ -1072,10 +1136,11 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                     <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-azimut-red/60 to-transparent opacity-80" aria-hidden />
                     <span className="text-3xl shrink-0 group-hover:scale-110 transition-transform" style={{ filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))' }}>{icon}</span>
                     <div className="flex-1 min-w-0">
+                      {/* Texto sempre claro pois o fundo é escuro em ambos os temas */}
                       {!isString && item.title && (
-                        <h4 className={`font-bold mb-1 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{item.title}</h4>
+                        <h4 className="font-bold mb-1 text-white">{item.title}</h4>
                       )}
-                      <span className={`leading-relaxed text-sm md:text-base ${theme === 'dark' ? 'text-theme-text-secondary' : 'text-on-dark-secondary'}`} style={{ whiteSpace: 'pre-line' }}>{lineText}</span>
+                      <span className="leading-relaxed text-sm md:text-base text-slate-300" style={{ whiteSpace: 'pre-line' }}>{lineText}</span>
                       {!isString && item.year && (
                         <div className="text-xs text-azimut-red mt-2 font-semibold">{item.year}</div>
                       )}

@@ -63,6 +63,9 @@ export const AnimatedLogo: React.FC = () => {
         backfaceVisibility: 'hidden',
         imageRendering: 'auto',
         WebkitBackfaceVisibility: 'hidden',
+        // Impedir que linhas da animação vazem para fora do container
+        clipPath: 'inset(0)',
+        overflow: 'hidden',
       }}
     >
       <source src="/logo_animada_glow_720p.webm" type="video/webm; codecs=vp9" />

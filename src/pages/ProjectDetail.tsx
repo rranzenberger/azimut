@@ -10,6 +10,7 @@ import ProjectGalleryStatus from '../components/ProjectGalleryStatus'
 import StarBackground from '../components/StarBackground'
 import { ProjectSchema, VideoObjectSchema, ReviewRatingSchema } from '../components/StructuredData'
 import Breadcrumbs from '../components/Breadcrumbs'
+import { useTheme } from '../contexts/ThemeContext'
 
 interface ProjectDetailProps {
   lang: Lang
@@ -18,6 +19,7 @@ interface ProjectDetailProps {
 const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
+  const { theme } = useTheme()
   // REMOVIDO: useUserTracking já é chamado no Layout.tsx
   // const { trackInteraction } = useUserTracking()
   const trackInteraction = (type: string, target: string) => {} // Dummy
@@ -375,10 +377,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
               {/* Seção: Na Mídia */}
               {project.gallery.some((m: any) => (m.original || '').toLowerCase().includes('jornal')) && (
                 <div className="rounded-2xl border border-white/10 card-adaptive p-6 bg-subtle backdrop-blur">
+                  {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
                   <h3 className="mb-4 font-handel text-xl uppercase tracking-[0.12em] text-white">
                     📰 {lang === 'pt' ? 'Na Mídia' : lang === 'es' ? 'En los Medios' : lang === 'fr' ? 'Dans les Médias' : 'In the Media'}
                   </h3>
-                  <p className="mb-4" style={{ color: 'var(--theme-card-text, #d3cec3)' }}>
+                  <p className="mb-4 text-slate-300">
                     {lang === 'pt' 
                       ? 'O projeto foi destaque no jornal O Globo, com reconhecimento explícito do papel da Azimut como diretor de Tecnologia-Audiovisual.'
                       : lang === 'es'
@@ -411,10 +414,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
               {/* Seção: Instalações Interativas */}
               {project.gallery.some((m: any) => (m.original || '').toLowerCase().includes('semi-esfera') || (m.original || '').toLowerCase().includes('bicicleta') || (m.original || '').toLowerCase().includes('tela-interativa')) && (
                 <div className="rounded-2xl border border-white/10 card-adaptive p-6 bg-subtle backdrop-blur">
+                  {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
                   <h3 className="mb-4 font-handel text-xl uppercase tracking-[0.12em] text-white">
                     🎮 {lang === 'pt' ? 'Instalações Interativas' : lang === 'es' ? 'Instalaciones Interactivas' : lang === 'fr' ? 'Installations Interactives' : 'Interactive Installations'}
                   </h3>
-                  <p className="mb-4" style={{ color: 'var(--theme-card-text, #d3cec3)' }}>
+                  <p className="mb-4 text-slate-300">
                     {lang === 'pt' 
                       ? 'Tecnologia inovadora desenvolvida pela Azimut: semi-esfera, games interativos, telas interativas e integração perfeita entre cenografia, tecnologia e audiovisual.'
                       : lang === 'es'
@@ -450,6 +454,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
               {/* Seção: Ginástica Artística */}
               {project.gallery.some((m: any) => (m.original || '').toLowerCase().includes('ginastica')) && (
                 <div className="rounded-2xl border border-white/10 card-adaptive p-6 bg-subtle backdrop-blur">
+                  {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
                   <h3 className="mb-4 font-handel text-xl uppercase tracking-[0.12em] text-white">
                     🤸 {lang === 'pt' ? 'Ginástica Artística' : lang === 'es' ? 'Gimnasia Artística' : lang === 'fr' ? 'Gymnastique Artistique' : 'Artistic Gymnastics'}
                   </h3>
@@ -490,6 +495,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
             <div className="mb-12 rounded-2xl border border-white/10 card-adaptive p-6 bg-white/5 backdrop-blur">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
+                  {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
                   <h3 className="mb-2 font-handel text-xl uppercase tracking-[0.12em] text-white">
                     {lang === 'pt' ? 'Site Oficial do Projeto' : lang === 'es' ? 'Sitio Oficial del Proyecto' : lang === 'fr' ? 'Site Officiel du Projet' : 'Official Project Website'}
                   </h3>
@@ -508,7 +514,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackInteraction('external_link', 'museu_olimpico_site')}
-                  className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-6 py-3 font-sora text-sm font-medium uppercase tracking-[0.1em] text-white transition-all hover:bg-azimut-red/20 hover:border-azimut-red/80 whitespace-nowrap"
+                  className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-6 py-3 font-sora text-sm font-medium uppercase tracking-[0.1em] transition-all hover:bg-azimut-red/20 hover:border-azimut-red/80 whitespace-nowrap text-white"
                 >
                   <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -680,7 +686,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
           {/* Services */}
           {project.services && project.services.length > 0 && (
             <div className="mb-12">
-              <h2 className="mb-4 font-handel text-2xl uppercase tracking-[0.12em] text-white">
+              <h2 className={`mb-4 font-handel text-2xl uppercase tracking-[0.12em] ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
                 {lang === 'pt' ? 'Serviços' : lang === 'es' ? 'Servicios' : lang === 'fr' ? 'Services' : 'Services'}
               </h2>
               <div className="flex flex-wrap gap-2">
@@ -721,7 +727,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                       </div>
                     ) : null}
                     <div className="p-4">
-                      <h3 className="mb-2 font-sora text-[1.05rem] text-white group-hover:text-azimut-red transition-colors duration-300">
+                      <h3 className={`mb-2 font-sora text-[1.05rem] group-hover:text-azimut-red transition-colors duration-300 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
                         {related.title}
                       </h3>
                       {related.summary && (
