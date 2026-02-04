@@ -129,10 +129,10 @@ export async function POST(request: NextRequest) {
         status: status || 'PUBLISHED',
         priority: priority || 0,
         segments: segments || [],
-        faqsPt: Array.isArray(faqsPt) ? faqsPt : null,
-        faqsEn: Array.isArray(faqsEn) ? faqsEn : null,
-        faqsEs: Array.isArray(faqsEs) ? faqsEs : null,
-        faqsFr: Array.isArray(faqsFr) ? faqsFr : null,
+        faqsPt: Array.isArray(faqsPt) && faqsPt.length > 0 ? faqsPt : undefined,
+        faqsEn: Array.isArray(faqsEn) && faqsEn.length > 0 ? faqsEn : undefined,
+        faqsEs: Array.isArray(faqsEs) && faqsEs.length > 0 ? faqsEs : undefined,
+        faqsFr: Array.isArray(faqsFr) && faqsFr.length > 0 ? faqsFr : undefined,
       },
     });
 

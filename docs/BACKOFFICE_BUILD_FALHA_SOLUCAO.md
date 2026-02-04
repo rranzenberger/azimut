@@ -1,8 +1,8 @@
 # Backoffice: Build Falhando → Domínio Mostra Site Errado
 
-## Problema Recorrente (3x)
+## Problema Recorrente (6+ x)
 
-Quando o **build do backoffice falha**, o domínio `azimut-backoffice.vercel.app` passa a servir o **site principal** em vez do backoffice. Isso acontece porque a Vercel mantém um cache/fallback do último deploy funcional, mas às vezes serve o projeto errado.
+Quando o **build do backoffice falha**, o domínio `azimut-backoffice.vercel.app` passa a servir o **site principal** em vez do backoffice. **Sempre que isso acontecer, o primeiro passo é rodar o build local e corrigir o erro.** Isso acontece porque a Vercel mantém um cache/fallback do último deploy funcional, mas às vezes serve o projeto errado.
 
 ### Sintomas
 
@@ -40,6 +40,7 @@ export async function PUT(
 |------|---------|------|
 | 2026-02-01 | `app/api/admin/press/[id]/route.ts` | `Property 'id' does not exist on type 'Promise<{ id: string }>'` |
 | 2026-02-01 | `app/api/admin/publications/[id]/route.ts` | Mesmo erro |
+| 2026-02-04 | `app/api/admin/services/route.ts` | `Type 'null' is not assignable` em faqsPt/faqsEn (Prisma create). Usar `undefined` em vez de `null` para campos Json opcionais. |
 
 ---
 
@@ -132,6 +133,18 @@ cd azimut-cms
 npx tsc --noEmit
 ```
 
+### 4. Prisma create com campos Json opcionais
+
+Ao criar registros com campos `Json?`, não use `null` — use `undefined` para “não definir”:
+
+```typescript
+// ❌ Pode falhar no build (nullable type)
+faqsPt: Array.isArray(faqsPt) ? faqsPt : null,
+
+// ✅ Correto
+faqsPt: Array.isArray(faqsPt) && faqsPt.length > 0 ? faqsPt : undefined,
+```
+
 ---
 
 ## URLs de Referência
@@ -150,6 +163,7 @@ npx tsc --noEmit
 | Data | Problema | Solução | Commit |
 |------|----------|---------|--------|
 | 2026-02-01 | `params` sem await em press/publications | Adicionado `await params` | `4d43bd7` |
+| 2026-02-04 | faqs null no create (services) | Usar `undefined` em vez de `null` para Json opcional no Prisma create | (este fix) |
 
 ---
 
