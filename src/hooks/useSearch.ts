@@ -7,7 +7,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { type Lang } from '../i18n'
 import { useBackofficeProjects } from './useBackofficeProjects'
-import { useBackofficeServices } from './useBackofficeServices'
+import { useBackofficeServices } from './useBackofficeService'
 import { useAzimutContent } from './useAzimutContent'
 import { servicesData, getServiceTitle, getServiceShortDesc } from '../data/servicesData'
 
