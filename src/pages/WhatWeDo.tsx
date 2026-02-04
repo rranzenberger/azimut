@@ -447,6 +447,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                       >
                         <span 
                           className="view-details-cta group-hover:underline group-hover:underline-offset-4 decoration-2 transition-colors duration-300"
+                          style={{ color: '#ffffff' }}
                         >
                           {lang === 'pt' ? 'Ver detalhes' : lang === 'es' ? 'Ver detalles' : lang === 'fr' ? 'Voir détails' : 'View details'}
                         </span>

@@ -754,13 +754,15 @@ const AcademyCorporate: React.FC<AcademyCorporateProps> = ({ lang }) => {
             <div className="grid md:grid-cols-3 gap-8">
               {t.clients.categories.map((cat: any) => (
                 <div key={cat.id} className="card-adaptive rounded-xl p-8 border border-white/10">
-                  <h3 className={`text-xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{cat.title}</h3>
+                  {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
+                  <h3 className="text-xl font-bold mb-6 text-white">{cat.title}</h3>
+                  {/* Texto sempre claro pois bg-white/5 está em card escuro */}
                   <div className="flex flex-wrap justify-center gap-4">
                     {cat.logos.map((logo: string) => (
                       <div 
-                        key={logo}
-                        className={`px-4 py-2 bg-white/5 text-sm rounded hover:bg-white/10 transition-all ${theme === 'dark' ? 'text-white/70' : 'text-on-dark-secondary'}`}
-                      >
+                          key={logo}
+                          className="px-4 py-2 bg-white/5 text-sm rounded hover:bg-white/10 transition-all text-white/70"
+                        >
                         {logo}
                       </div>
                     ))}
@@ -785,10 +787,11 @@ const AcademyCorporate: React.FC<AcademyCorporateProps> = ({ lang }) => {
                   className="card-adaptive rounded-xl p-6 border border-white/10 hover:border-azimut-red/50 transition-all hover:scale-105"
                 >
                   <div className="text-5xl mb-4">{format.icon}</div>
-                  <h3 className={`text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{format.title}</h3>
+                  {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
+                  <h3 className="text-xl font-bold mb-2 text-white">{format.title}</h3>
                   <p className="text-azimut-red text-sm font-semibold mb-3">{format.duration}</p>
-                  <p className={`text-sm mb-4 ${theme === 'dark' ? 'text-white/70' : 'text-on-dark-secondary'}`}>{format.description}</p>
-                  <p className={`text-xs ${theme === 'dark' ? 'text-white/50' : 'text-on-dark-tertiary'}`}>Ideal: {format.ideal}</p>
+                  <p className="text-sm mb-4 text-white/70">{format.description}</p>
+                  <p className="text-xs text-white/50">Ideal: {format.ideal}</p>
                 </div>
               ))}
             </div>
@@ -829,10 +832,10 @@ const AcademyCorporate: React.FC<AcademyCorporateProps> = ({ lang }) => {
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-handel uppercase tracking-wider text-white mb-4">
+              <h2 className={`text-4xl md:text-5xl font-handel uppercase tracking-wider mb-4 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
                 {t.cases.title}
               </h2>
-              <p className="text-xl text-white/70">{t.cases.subtitle}</p>
+              <p className={`text-xl ${theme === 'dark' ? 'text-white/70' : 'text-slate-700'}`}>{t.cases.subtitle}</p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
@@ -842,9 +845,9 @@ const AcademyCorporate: React.FC<AcademyCorporateProps> = ({ lang }) => {
                   className="card-adaptive rounded-2xl p-8 border border-white/10 hover:border-azimut-red/50 transition-all"
                 >
                   <div className="text-azimut-red font-bold text-lg mb-2">{caseItem.client}</div>
-                  <h3 className={`text-xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{caseItem.project}</h3>
+                  <h3 className="text-xl font-bold mb-3" style={{ color: '#ffffff' }}>{caseItem.project}</h3>
                   <div className="text-green-400 text-sm font-semibold mb-4">✓ {caseItem.result}</div>
-                  <p className={`text-sm italic ${theme === 'dark' ? 'text-white/60' : 'text-on-dark-tertiary'}`}>"{caseItem.testimonial}"</p>
+                  <p className="text-sm italic" style={{ color: 'rgba(255,255,255,0.75)' }}>"{caseItem.testimonial}"</p>
                 </div>
               ))}
             </div>
@@ -868,8 +871,8 @@ const AcademyCorporate: React.FC<AcademyCorporateProps> = ({ lang }) => {
                 >
                   <div className="text-3xl">🤝</div>
                   <div>
-                    <h3 className={`text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{partner.name}</h3>
-                    <p className={`text-sm ${theme === 'dark' ? 'text-white/70' : 'text-on-dark-secondary'}`}>{partner.description}</p>
+                    <h3 className="text-lg font-bold" style={{ color: '#ffffff' }}>{partner.name}</h3>
+                    <p className="text-sm" style={{ color: 'rgba(255,255,255,0.85)' }}>{partner.description}</p>
                   </div>
                 </div>
               ))}

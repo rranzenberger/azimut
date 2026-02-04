@@ -868,8 +868,7 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
                   <div className="text-2xl flex-shrink-0">
                     {item.split(' ')[0]}
                   </div>
-                  {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
-                  <p className="leading-relaxed text-slate-300">
+                  <p className="leading-relaxed" style={{ color: '#cbd5e1' }}>
                     {item.substring(item.indexOf(' ') + 1)}
                   </p>
                 </div>

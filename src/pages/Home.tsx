@@ -2004,11 +2004,11 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       </div>
                     )}
                     
-                    {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
-                    <h3 className="mb-3 font-handel text-lg md:text-xl uppercase tracking-wide group-hover:text-azimut-red transition-colors duration-300 line-clamp-2 leading-tight text-white">
+                    {/* Texto sempre claro: estilo inline para não ser sobrescrito no tema claro */}
+                    <h3 className="mb-3 font-handel text-lg md:text-xl uppercase tracking-wide group-hover:text-azimut-red transition-colors duration-300 line-clamp-2 leading-tight" style={{ color: '#ffffff' }}>
                       {service.title}
                     </h3>
-                    <p className="text-sm md:text-base leading-relaxed transition-colors duration-300 text-slate-300 group-hover:text-slate-200">
+                    <p className="text-sm md:text-base leading-relaxed transition-colors duration-300 group-hover:text-slate-200" style={{ color: '#cbd5e1' }}>
                       {service.description}
                     </p>
                     
@@ -2081,11 +2081,11 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       </div>
                     )}
                     
-                    {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
-                    <h3 className="mb-3 font-handel text-lg md:text-xl uppercase tracking-wide group-hover:text-azimut-red transition-colors duration-300 relative z-10 line-clamp-2 leading-tight text-white">
+                    {/* Texto sempre claro: estilo inline para não ser sobrescrito no tema claro */}
+                    <h3 className="mb-3 font-handel text-lg md:text-xl uppercase tracking-wide group-hover:text-azimut-red transition-colors duration-300 relative z-10 line-clamp-2 leading-tight" style={{ color: '#ffffff' }}>
                       {service.title}
                     </h3>
-                    <p className="text-sm md:text-base leading-relaxed transition-colors duration-300 relative z-10 text-slate-300 group-hover:text-slate-200">
+                    <p className="text-sm md:text-base leading-relaxed transition-colors duration-300 relative z-10 group-hover:text-slate-200" style={{ color: '#cbd5e1' }}>
                       {service.description}
                     </p>
                     

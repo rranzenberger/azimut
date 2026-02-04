@@ -1138,9 +1138,9 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                     <div className="flex-1 min-w-0">
                       {/* Texto sempre claro pois o fundo é escuro em ambos os temas */}
                       {!isString && item.title && (
-                        <h4 className="font-bold mb-1 text-white">{item.title}</h4>
+                        <h4 className="font-bold mb-1" style={{ color: '#ffffff' }}>{item.title}</h4>
                       )}
-                      <span className="leading-relaxed text-sm md:text-base text-slate-300" style={{ whiteSpace: 'pre-line' }}>{lineText}</span>
+                      <span className="leading-relaxed text-sm md:text-base" style={{ whiteSpace: 'pre-line', color: '#cbd5e1' }}>{lineText}</span>
                       {!isString && item.year && (
                         <div className="text-xs text-azimut-red mt-2 font-semibold">{item.year}</div>
                       )}

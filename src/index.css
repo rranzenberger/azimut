@@ -249,15 +249,33 @@ body {
    SUBMENU NAVIGATION - Cor diferenciada do header
    ═══════════════════════════════════════════════════════════════ */
 .submenu-nav {
-  /* Tema escuro: azul marinho escuro (#0a0e18) */
-  background-color: rgba(10, 14, 24, 0.98);
-  /* Removido box-shadow para eliminar a "tarja" visual abaixo do menu */
+  /* Tema escuro: marrom igual ao header/rodapé (não azul) */
+  background-color: rgba(30, 28, 26, 0.98);
+  border-bottom: 1px solid rgba(201, 35, 55, 0.15);
 }
 
 [data-theme="light"] .submenu-nav {
   /* Tema claro: bege claro (#d3cec3) */
   background-color: rgba(211, 206, 195, 0.98);
-  /* Removido box-shadow para eliminar a "tarja" visual abaixo do menu */
+  border-bottom: 1px solid rgba(42, 40, 37, 0.2);
+}
+
+/* Texto do submenu: sempre claro no escuro, escuro no claro */
+html[data-theme="dark"] .submenu-nav button,
+[data-theme="dark"] .submenu-nav button {
+  color: #94a3b8;
+}
+html[data-theme="dark"] .submenu-nav button:hover,
+[data-theme="dark"] .submenu-nav button:hover {
+  color: #e2e8f0;
+}
+html[data-theme="light"] .submenu-nav button:not([aria-current="page"]),
+[data-theme="light"] .submenu-nav button:not([aria-current="page"]) {
+  color: #475569;
+}
+html[data-theme="light"] .submenu-nav button[aria-current="page"],
+[data-theme="light"] .submenu-nav button[aria-current="page"] {
+  color: #c92337;
 }
 
 /* Animação desabilitada - estava causando sobreposição horizontal */
@@ -5498,4 +5516,60 @@ section .grid article.card-adaptive ul li {
   section .grid article.card-adaptive ul li {
     font-size: 0.7rem !important;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   OVERRIDE FINAL - TEMA CLARO: TEXTO SEMPRE CLARO EM CARDS ESCUROS
+   #root (ID) garante especificidade maior que qualquer .text-slate-XXX
+   ═══════════════════════════════════════════════════════════════ */
+#root .card-adaptive,
+#root .card-adaptive *,
+#root .card-dark-adaptive,
+#root .card-dark-adaptive *,
+#root .card-dark-fixed,
+#root .card-dark-fixed *,
+#root .card-dark-alt-adaptive,
+#root .card-dark-alt-adaptive * {
+  color: #e2e8f0 !important;
+  -webkit-text-fill-color: #e2e8f0 !important;
+}
+
+#root .card-adaptive h1,
+#root .card-adaptive h2,
+#root .card-adaptive h3,
+#root .card-adaptive h4,
+#root .card-dark-adaptive h1,
+#root .card-dark-adaptive h2,
+#root .card-dark-adaptive h3,
+#root .card-dark-adaptive h4,
+#root .card-dark-fixed h1,
+#root .card-dark-fixed h2,
+#root .card-dark-fixed h3,
+#root .card-dark-fixed h4 {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+#root .card-adaptive p,
+#root .card-adaptive span:not(.text-azimut-red):not(.view-details-cta),
+#root .card-dark-adaptive p,
+#root .card-dark-adaptive span:not(.text-azimut-red),
+#root .card-dark-fixed p,
+#root .card-dark-fixed span:not(.text-azimut-red) {
+  color: #cbd5e1 !important;
+  -webkit-text-fill-color: #cbd5e1 !important;
+}
+
+#root .card-adaptive .text-azimut-red,
+#root .card-dark-adaptive .text-azimut-red,
+#root .card-dark-fixed .text-azimut-red,
+#root .card-adaptive .view-details-cta,
+#root .card-adaptive a {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+#root .card-adaptive a.linkedin-link,
+#root .card-dark-fixed a.linkedin-link {
+  color: #0A66C2 !important;
+  -webkit-text-fill-color: #0A66C2 !important;
 }

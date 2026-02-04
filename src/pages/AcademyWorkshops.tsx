@@ -585,13 +585,12 @@ const AcademyWorkshops: React.FC<AcademyWorkshopsProps> = ({ lang }) => {
                   className="card-adaptive rounded-xl p-6 border border-white/10 hover:border-azimut-red/50 transition-all hover:scale-105"
                 >
                   <div className="text-5xl mb-4">{format.icon}</div>
-                  {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
-                  <h3 className="text-xl font-bold mb-2 text-white">{format.title}</h3>
+                  <h3 className="text-xl font-bold mb-2" style={{ color: '#ffffff' }}>{format.title}</h3>
                   <p className="text-azimut-red text-sm font-semibold mb-3">{format.duration}</p>
-                  <p className="text-sm mb-4 text-white/70">{format.description}</p>
+                  <p className="text-sm mb-4" style={{ color: 'rgba(255,255,255,0.85)' }}>{format.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {format.examples.map((ex: string) => (
-                      <span key={ex} className="px-2 py-1 bg-white/5 text-xs rounded text-white/50">
+                      <span key={ex} className="px-2 py-1 bg-white/5 text-xs rounded" style={{ color: 'rgba(255,255,255,0.7)' }}>
                         {ex}
                       </span>
                     ))}
@@ -617,23 +616,22 @@ const AcademyWorkshops: React.FC<AcademyWorkshopsProps> = ({ lang }) => {
                   key={event.id}
                   className="card-adaptive rounded-2xl p-8 border border-white/10 hover:border-azimut-red/50 transition-all hover:-translate-y-2"
                 >
-                  {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
-                  <h3 className="text-2xl font-bold mb-4 text-white">{event.title}</h3>
+                  <h3 className="text-2xl font-bold mb-4" style={{ color: '#ffffff' }}>{event.title}</h3>
                   
                   <div className="space-y-3 mb-6">
-                    <div className="flex items-center gap-3 text-white/70">
+                    <div className="flex items-center gap-3" style={{ color: 'rgba(255,255,255,0.85)' }}>
                       <span>📅</span>
                       <span>{event.date}</span>
                     </div>
-                    <div className="flex items-center gap-3 text-white/70">
+                    <div className="flex items-center gap-3" style={{ color: 'rgba(255,255,255,0.85)' }}>
                       <span>📍</span>
                       <span>{event.location}</span>
                     </div>
-                    <div className="flex items-center gap-3 text-white/70">
+                    <div className="flex items-center gap-3" style={{ color: 'rgba(255,255,255,0.85)' }}>
                       <span>⏱️</span>
                       <span>{event.duration}</span>
                     </div>
-                    <div className="flex items-center gap-3 text-white/70">
+                    <div className="flex items-center gap-3" style={{ color: 'rgba(255,255,255,0.85)' }}>
                       <span>👥</span>
                       <span>{event.spots}</span>
                     </div>
