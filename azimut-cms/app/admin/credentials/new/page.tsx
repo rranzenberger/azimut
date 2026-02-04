@@ -6,7 +6,7 @@ import { CredentialEditForm } from '../components/CredentialEditForm';
 export const revalidate = 0;
 
 export default async function NewCredentialPage() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get('azimut_admin_token')?.value;
   const session = token ? verifyAuthToken(token) : null;
 

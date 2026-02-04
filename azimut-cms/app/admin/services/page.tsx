@@ -11,9 +11,9 @@ export const revalidate = 0;
 export default async function ServicesPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get('azimut_admin_token')?.value;
   const session = token ? verifyAuthToken(token) : null;
 
@@ -21,7 +21,8 @@ export default async function ServicesPage({
     redirect('/login');
   }
 
-  const status = searchParams.status as string | undefined;
+  const params = await searchParams;
+  const status = params.status as string | undefined;
 
   let services: any[] = [];
   let error: string | null = null;

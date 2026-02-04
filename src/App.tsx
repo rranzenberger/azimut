@@ -371,6 +371,14 @@ const App: React.FC = () => {
                     </LangRouteWrapper>
                   </ErrorBoundary>
                 } />
+                {/* Rota alternativa em inglês para /studio/credentials */}
+                <Route path="/:lang/studio/credentials" element={
+                  <ErrorBoundary routeName="Studio Credentials EN">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <StudioCredentials lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
+                } />
                 <Route path="/:lang/studio/diferenciais" element={
                   <ErrorBoundary routeName="Studio Diferenciais">
                     <LangRouteWrapper setLang={setLang}>
@@ -608,6 +616,14 @@ const App: React.FC = () => {
                 } />
                 <Route path="/:lang/studio/credibilidade" element={
                   <ErrorBoundary routeName="Studio Credibility">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <StudioCredentials lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
+                } />
+                {/* Rota alternativa em inglês para /studio/credentials */}
+                <Route path="/:lang/studio/credentials" element={
+                  <ErrorBoundary routeName="Studio Credentials EN">
                     <LangRouteWrapper setLang={setLang}>
                       {(routeLang) => <StudioCredentials lang={routeLang} />}
                     </LangRouteWrapper>

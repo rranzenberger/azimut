@@ -152,7 +152,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
                 )}
                 {isLast ? (
                   <span 
-                    className="text-slate-300 dark:text-slate-200 font-medium"
+                    className="text-slate-600 dark:text-slate-200 font-medium"
                     aria-current="page"
                   >
                     {item.name}

@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { usePress } from '../hooks/usePress'
+import { useTheme } from '../contexts/ThemeContext'
 
 interface PressProps {
   lang: Lang
 }
 
 const Press: React.FC<PressProps> = ({ lang }) => {
+  const { theme } = useTheme()
   const { items: pressItems, loading: pressLoading } = usePress(lang)
   const seo = seoData.press?.[lang] || {
     title: lang === 'pt' ? 'Imprensa - Azimut' : lang === 'es' ? 'Prensa - Azimut' : 'Press - Azimut',
@@ -263,16 +265,16 @@ const Press: React.FC<PressProps> = ({ lang }) => {
                     : 'Mega project of almost two years, where Azimut took on the general direction of technology and all audiovisual production, including UI/graphics, art, videos, editing, motion graphics and integration between scenography, technology and audiovisual content.'}
                 </p>
                 <div className="mb-6 flex flex-wrap gap-3">
-                  <span className="rounded-full bg-azimut-red/20 px-4 py-2 text-sm font-medium text-white">
+                  <span className={`rounded-full bg-azimut-red/20 px-4 py-2 text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>
                     {lang === 'pt' ? 'Direção Geral de Tecnologia' : lang === 'es' ? 'Dirección General de Tecnología' : lang === 'fr' ? 'Direction Générale Technologie' : 'General Technology Direction'}
                   </span>
-                  <span className="rounded-full bg-azimut-red/20 px-4 py-2 text-sm font-medium text-white">
+                  <span className={`rounded-full bg-azimut-red/20 px-4 py-2 text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>
                     {lang === 'pt' ? 'Produção Audiovisual' : lang === 'es' ? 'Producción Audiovisual' : lang === 'fr' ? 'Production Audiovisuelle' : 'Audiovisual Production'}
                   </span>
-                  <span className="rounded-full bg-azimut-red/20 px-4 py-2 text-sm font-medium text-white">
+                  <span className={`rounded-full bg-azimut-red/20 px-4 py-2 text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>
                     {lang === 'pt' ? 'Games Interativos' : lang === 'es' ? 'Juegos Interactivos' : lang === 'fr' ? 'Jeux Interactifs' : 'Interactive Games'}
                   </span>
-                  <span className="rounded-full bg-azimut-red/20 px-4 py-2 text-sm font-medium text-white">
+                  <span className={`rounded-full bg-azimut-red/20 px-4 py-2 text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>
                     {lang === 'pt' ? 'Sala Imersiva' : lang === 'es' ? 'Sala Inmersiva' : lang === 'fr' ? 'Salle Immersive' : 'Immersive Room'}
                   </span>
                 </div>
@@ -290,7 +292,7 @@ const Press: React.FC<PressProps> = ({ lang }) => {
                     href="https://museuolimpico.rio/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-subtle px-6 py-3 font-sora text-sm font-medium uppercase tracking-[0.1em] text-white transition-all hover:bg-subtle-md hover:border-white/30"
+                    className={`inline-flex items-center gap-2 rounded-lg border px-6 py-3 font-sora text-sm font-medium uppercase tracking-[0.1em] transition-all ${theme === 'dark' ? 'border-white/20 bg-subtle text-white hover:bg-subtle-md hover:border-white/30' : 'border-slate-300 bg-slate-100 text-slate-800 hover:bg-slate-200 hover:border-slate-400'}`}
                   >
                     <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -315,7 +317,7 @@ const Press: React.FC<PressProps> = ({ lang }) => {
           <div className="mx-auto max-w-4xl text-center">
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 rounded-lg border-2 border-azimut-red bg-transparent px-8 py-4 font-sora text-sm font-medium uppercase tracking-[0.1em] text-white transition-all hover:bg-azimut-red"
+              className={`inline-flex items-center gap-2 rounded-lg border-2 border-azimut-red bg-transparent px-8 py-4 font-sora text-sm font-medium uppercase tracking-[0.1em] transition-all ${theme === 'dark' ? 'text-white hover:bg-azimut-red' : 'text-slate-800 hover:bg-azimut-red hover:text-white'}`}
             >
               {content.contact}
             </Link>

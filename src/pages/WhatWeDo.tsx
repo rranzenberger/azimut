@@ -88,11 +88,12 @@ const highlightKeywords = (text: string, lang: Lang): React.ReactNode => {
         const isSecondary = secondary.some(kw => kw.toLowerCase() === part.toLowerCase())
         
         if (isPrimary) {
-          // 🔴 PRIMÁRIA: Vermelho Azimut BOLD - máximo destaque
+          // 🔴 PRIMÁRIA: Vermelho Azimut - palavras principais
           return (
-            <span 
-              key={i} 
+            <span
+              key={i}
               className="keyword-highlight-primary"
+              style={{ color: '#c92337', fontWeight: 700 }}
             >
               {part}
             </span>
@@ -100,11 +101,12 @@ const highlightKeywords = (text: string, lang: Lang): React.ReactNode => {
         }
         
         if (isSecondary) {
-          // 🟡 SECUNDÁRIA: Amarelo/laranja claro BOLD - destaque elegante
+          // 🟡 SECUNDÁRIA: Bege - palavras secundárias
           return (
-            <span 
-              key={i} 
+            <span
+              key={i}
               className="keyword-highlight-secondary"
+              style={{ color: '#d4a574', fontWeight: 600 }}
             >
               {part}
             </span>

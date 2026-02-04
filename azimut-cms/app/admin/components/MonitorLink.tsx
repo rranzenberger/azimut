@@ -69,22 +69,12 @@ export function MonitorLink() {
             borderRadius: 12,
             minWidth: 20,
             textAlign: 'center',
-            animation: 'bounce 1s infinite',
+            // Animação removida para compatibilidade com Next.js App Router
           }}
         >
           {pendingCount > 99 ? '99+' : pendingCount}
         </span>
       )}
-      <style jsx>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.85; }
-        }
-        @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-3px); }
-        }
-      `}</style>
     </Link>
   );
 }

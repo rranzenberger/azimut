@@ -104,7 +104,7 @@ export function KeyboardShortcuts() {
             fontSize: 13,
             fontWeight: 600,
             zIndex: 9998,
-            animation: 'fadeIn 0.15s ease',
+            // Animação removida para compatibilidade com Next.js App Router
           }}
         >
           G + ? para navegar...
@@ -248,12 +248,6 @@ export function KeyboardShortcuts() {
         </div>
       )}
 
-      <style jsx global>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </>
   );
 }

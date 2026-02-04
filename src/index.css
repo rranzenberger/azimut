@@ -5,13 +5,31 @@
    Aplica-se em AMBOS os temas (claro e escuro)
    ═══════════════════════════════════════════════════════════════ */
 
-/* Card-adaptive: SEMPRE texto claro (fundo escuro em ambos os temas) */
+/* Card-adaptive: texto claro SEM aplicar em * (para não apagar cores das palavras-chave) */
 .card-adaptive,
-.card-adaptive *,
 .card-dark-adaptive,
-.card-dark-adaptive *,
 .card-dark-fixed,
-.card-dark-fixed * {
+.card-adaptive p,
+.card-adaptive h1,
+.card-adaptive h2,
+.card-adaptive h3,
+.card-adaptive h4,
+.card-adaptive div,
+.card-adaptive span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red),
+.card-dark-adaptive p,
+.card-dark-adaptive h1,
+.card-dark-adaptive h2,
+.card-dark-adaptive h3,
+.card-dark-adaptive h4,
+.card-dark-adaptive div,
+.card-dark-adaptive span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red),
+.card-dark-fixed p,
+.card-dark-fixed h1,
+.card-dark-fixed h2,
+.card-dark-fixed h3,
+.card-dark-fixed h4,
+.card-dark-fixed div,
+.card-dark-fixed span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red) {
   color: #e2e8f0 !important; /* slate-200 - claro */
 }
 
@@ -31,13 +49,13 @@
   color: #ffffff !important; /* branco puro */
 }
 
-/* Descrições em cards escuros: slate-300 */
+/* Descrições em cards escuros: slate-300 (excluir palavras-chave para manter cores) */
 .card-adaptive p,
-.card-adaptive span:not(.text-azimut-red),
+.card-adaptive span:not(.text-azimut-red):not(.keyword-highlight-primary):not(.keyword-highlight-secondary),
 .card-dark-adaptive p,
-.card-dark-adaptive span:not(.text-azimut-red),
+.card-dark-adaptive span:not(.text-azimut-red):not(.keyword-highlight-primary):not(.keyword-highlight-secondary),
 .card-dark-fixed p,
-.card-dark-fixed span:not(.text-azimut-red) {
+.card-dark-fixed span:not(.text-azimut-red):not(.keyword-highlight-primary):not(.keyword-highlight-secondary) {
   color: #cbd5e1 !important; /* slate-300 - legível */
 }
 
@@ -48,6 +66,22 @@
 .text-azimut-red {
   color: #c92337 !important;
   -webkit-text-fill-color: #c92337 !important;
+}
+
+/* Palavras-chave em cards: primária = vermelho, secundária = bege (sobrepõe .card-adaptive *) */
+#root .card-adaptive .keyword-highlight-primary,
+#root .card-adaptive p .keyword-highlight-primary,
+#root .card-dark-adaptive .keyword-highlight-primary,
+#root .card-dark-adaptive p .keyword-highlight-primary {
+  color: #c92337 !important;
+  -webkit-text-fill-color: #c92337 !important;
+}
+#root .card-adaptive .keyword-highlight-secondary,
+#root .card-adaptive p .keyword-highlight-secondary,
+#root .card-dark-adaptive .keyword-highlight-secondary,
+#root .card-dark-adaptive p .keyword-highlight-secondary {
+  color: #d4a574 !important;
+  -webkit-text-fill-color: #d4a574 !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -889,17 +923,47 @@ html[data-theme="dark"] .home-solucoes-dark {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   TEMA ESCURO: CARDS COM TEXTO CLARO SEMPRE
+   TEMA ESCURO: CARDS COM TEXTO CLARO (sem * para preservar palavras-chave)
    ═══════════════════════════════════════════════════════════════ */
 html[data-theme="dark"] .card-adaptive,
-html[data-theme="dark"] .card-adaptive *,
+html[data-theme="dark"] .card-adaptive p,
+html[data-theme="dark"] .card-adaptive h1,
+html[data-theme="dark"] .card-adaptive h2,
+html[data-theme="dark"] .card-adaptive h3,
+html[data-theme="dark"] .card-adaptive h4,
+html[data-theme="dark"] .card-adaptive div,
+html[data-theme="dark"] .card-adaptive span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red),
 html[data-theme="dark"] .card-dark-adaptive,
-html[data-theme="dark"] .card-dark-adaptive *,
+html[data-theme="dark"] .card-dark-adaptive p,
+html[data-theme="dark"] .card-dark-adaptive h1,
+html[data-theme="dark"] .card-dark-adaptive h2,
+html[data-theme="dark"] .card-dark-adaptive h3,
+html[data-theme="dark"] .card-dark-adaptive h4,
+html[data-theme="dark"] .card-dark-adaptive div,
+html[data-theme="dark"] .card-dark-adaptive span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red),
 html[data-theme="dark"] [class*="bg-slate-8"],
-html[data-theme="dark"] [class*="bg-slate-8"] *,
+html[data-theme="dark"] [class*="bg-slate-8"] p,
+html[data-theme="dark"] [class*="bg-slate-8"] span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary),
 html[data-theme="dark"] [class*="bg-slate-9"],
-html[data-theme="dark"] [class*="bg-slate-9"] * {
-  color: #ffffff !important; /* Branco puro para máxima legibilidade */
+html[data-theme="dark"] [class*="bg-slate-9"] p,
+html[data-theme="dark"] [class*="bg-slate-9"] span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary) {
+  color: #ffffff !important; /* Branco para máxima legibilidade */
+}
+
+/* Tema escuro: preservar cores das palavras-chave nos cards (primária = coral, secundária = creme) */
+html[data-theme="dark"] .card-adaptive .keyword-highlight-primary,
+html[data-theme="dark"] .card-adaptive p .keyword-highlight-primary,
+html[data-theme="dark"] .card-dark-adaptive .keyword-highlight-primary,
+html[data-theme="dark"] .card-dark-adaptive p .keyword-highlight-primary {
+  color: #c92337 !important;
+  -webkit-text-fill-color: #c92337 !important;
+}
+html[data-theme="dark"] .card-adaptive .keyword-highlight-secondary,
+html[data-theme="dark"] .card-adaptive p .keyword-highlight-secondary,
+html[data-theme="dark"] .card-dark-adaptive .keyword-highlight-secondary,
+html[data-theme="dark"] .card-dark-adaptive p .keyword-highlight-secondary {
+  color: #d4a574 !important;
+  -webkit-text-fill-color: #d4a574 !important;
 }
 
 /* Texto descritivo nos cards - mais peso para legibilidade */
@@ -1089,16 +1153,26 @@ html[data-theme="light"] .text-zinc-900:not(.card-adaptive *):not(.card-dark-ada
    2. REGRAS AUTOMÁTICAS PARA CARDS COM FUNDO ESCURO
    ═══════════════════════════════════════════════════════════════ */
 
-/* Cards escuros SEMPRE têm texto claro (em qualquer tema) */
+/* Cards escuros SEMPRE têm texto claro (em qualquer tema) - sem * para preservar keywords */
 /* NOTA: .solution-card-dark REMOVIDO - usa estilos inline no componente */
 .card-adaptive,
-.card-adaptive *,
+.card-adaptive p, .card-adaptive h1, .card-adaptive h2, .card-adaptive h3, .card-adaptive h4, .card-adaptive div,
+.card-adaptive span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red),
 .card-dark-adaptive,
-.card-dark-adaptive *,
+.card-dark-adaptive p,
+.card-dark-adaptive h1, .card-dark-adaptive h2, .card-dark-adaptive h3, .card-dark-adaptive h4,
+.card-dark-adaptive div,
+.card-dark-adaptive span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red),
 .card-dark-fixed,
-.card-dark-fixed *,
+.card-dark-fixed p,
+.card-dark-fixed h1, .card-dark-fixed h2, .card-dark-fixed h3, .card-dark-fixed h4,
+.card-dark-fixed div,
+.card-dark-fixed span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red),
 .card-dark-alt-adaptive,
-.card-dark-alt-adaptive * {
+.card-dark-alt-adaptive p,
+.card-dark-alt-adaptive h1, .card-dark-alt-adaptive h2, .card-dark-alt-adaptive h3, .card-dark-alt-adaptive h4,
+.card-dark-alt-adaptive div,
+.card-dark-alt-adaptive span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red) {
   color: #ffffff !important;
 }
 
@@ -1236,9 +1310,12 @@ html[data-theme="dark"] .pill-adaptive {
 /* SOLUÇÃO: Detectar cards com classes conhecidas (.card-dark-fixed, .card-dark-alt-adaptive)
    e FORÇAR que var(--theme-text) e var(--theme-text-secondary) sejam sempre CLAROS */
 
-/* 1. Cards com .card-dark-fixed (Pilares, etc.) - EXCETO expertise-subtitle */
+/* 1. Cards com .card-dark-fixed (Pilares, etc.) - sem * para preservar keywords */
 html[data-theme="light"] .card-dark-fixed,
-html[data-theme="light"] .card-dark-fixed *:not(.expertise-subtitle) {
+html[data-theme="light"] .card-dark-fixed p,
+html[data-theme="light"] .card-dark-fixed h1, html[data-theme="light"] .card-dark-fixed h2, html[data-theme="light"] .card-dark-fixed h3, html[data-theme="light"] .card-dark-fixed h4,
+html[data-theme="light"] .card-dark-fixed div,
+html[data-theme="light"] .card-dark-fixed span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red):not(.expertise-subtitle) {
   --theme-text: #ffffff !important;
   --theme-text-secondary: #f0ece5 !important;
   --theme-card-text: #ffffff !important;
@@ -1256,7 +1333,10 @@ html[data-theme="light"] .card-dark-fixed .expertise-subtitle {
 }
 
 html[data-theme="dark"] .card-dark-fixed,
-html[data-theme="dark"] .card-dark-fixed * {
+html[data-theme="dark"] .card-dark-fixed p,
+html[data-theme="dark"] .card-dark-fixed h1, html[data-theme="dark"] .card-dark-fixed h2, html[data-theme="dark"] .card-dark-fixed h3, html[data-theme="dark"] .card-dark-fixed h4,
+html[data-theme="dark"] .card-dark-fixed div,
+html[data-theme="dark"] .card-dark-fixed span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red) {
   --theme-text: #ffffff !important;
   --theme-text-secondary: #f0ece5 !important;
   color: #ffffff !important;
@@ -1280,31 +1360,43 @@ a.linkedin-link:hover * {
   color: #004182 !important;
 }
 
-/* 2. Cards com .card-dark-alt-adaptive (Strategy & Positioning) */
+/* 2. Cards com .card-dark-alt-adaptive (Strategy & Positioning) - sem * para preservar keywords */
 html[data-theme="light"] .card-dark-alt-adaptive,
-html[data-theme="light"] .card-dark-alt-adaptive * {
+html[data-theme="light"] .card-dark-alt-adaptive p,
+html[data-theme="light"] .card-dark-alt-adaptive h1, html[data-theme="light"] .card-dark-alt-adaptive h2, html[data-theme="light"] .card-dark-alt-adaptive h3, html[data-theme="light"] .card-dark-alt-adaptive h4,
+html[data-theme="light"] .card-dark-alt-adaptive div,
+html[data-theme="light"] .card-dark-alt-adaptive span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red) {
   --theme-text: #ffffff !important;
   --theme-text-secondary: #f0ece5 !important;
   color: #ffffff !important;
 }
 
 html[data-theme="dark"] .card-dark-alt-adaptive,
-html[data-theme="dark"] .card-dark-alt-adaptive * {
+html[data-theme="dark"] .card-dark-alt-adaptive p,
+html[data-theme="dark"] .card-dark-alt-adaptive h1, html[data-theme="dark"] .card-dark-alt-adaptive h2, html[data-theme="dark"] .card-dark-alt-adaptive h3, html[data-theme="dark"] .card-dark-alt-adaptive h4,
+html[data-theme="dark"] .card-dark-alt-adaptive div,
+html[data-theme="dark"] .card-dark-alt-adaptive span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red) {
   --theme-text: #ffffff !important;
   --theme-text-secondary: #f0ece5 !important;
   color: #ffffff !important;
 }
 
-/* 3. Cards com .card-dark-adaptive (Modelo de Cocriação, Timeline) */
+/* 3. Cards com .card-dark-adaptive (Modelo de Cocriação, Timeline) - sem * para preservar keywords */
 html[data-theme="light"] .card-dark-adaptive,
-html[data-theme="light"] .card-dark-adaptive * {
+html[data-theme="light"] .card-dark-adaptive p,
+html[data-theme="light"] .card-dark-adaptive h1, html[data-theme="light"] .card-dark-adaptive h2, html[data-theme="light"] .card-dark-adaptive h3, html[data-theme="light"] .card-dark-adaptive h4,
+html[data-theme="light"] .card-dark-adaptive div,
+html[data-theme="light"] .card-dark-adaptive span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red) {
   --theme-text: #ffffff !important;
   --theme-text-secondary: #f0ece5 !important;
   color: #ffffff !important;
 }
 
 html[data-theme="dark"] .card-dark-adaptive,
-html[data-theme="dark"] .card-dark-adaptive * {
+html[data-theme="dark"] .card-dark-adaptive p,
+html[data-theme="dark"] .card-dark-adaptive h1, html[data-theme="dark"] .card-dark-adaptive h2, html[data-theme="dark"] .card-dark-adaptive h3, html[data-theme="dark"] .card-dark-adaptive h4,
+html[data-theme="dark"] .card-dark-adaptive div,
+html[data-theme="dark"] .card-dark-adaptive span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red) {
   --theme-text: #ffffff !important;
   --theme-text-secondary: #f0ece5 !important;
   color: #ffffff !important;
@@ -3474,7 +3566,13 @@ html[data-theme="light"] .card-dark-fixed.expertise-card-premium p.expertise-sub
   color: inherit;
 }
 
-[data-theme="light"] .card-adaptive * {
+[data-theme="light"] .card-adaptive p,
+[data-theme="light"] .card-adaptive h1,
+[data-theme="light"] .card-adaptive h2,
+[data-theme="light"] .card-adaptive h3,
+[data-theme="light"] .card-adaptive h4,
+[data-theme="light"] .card-adaptive div,
+[data-theme="light"] .card-adaptive span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red) {
   /* Textos CLAROS em cards escuros no tema claro (inversão para contraste) */
   color: #ffffff;
 }
@@ -4543,38 +4641,36 @@ span.keyword-highlight-primary {
   text-shadow: none !important; /* Sem text shadow para ficar mais suave */
 }
 
-/* 🟡 SECUNDÁRIAS: Amarelo/laranja bem claro BOLD - destaque elegante */
+/* 🟡 SECUNDÁRIAS: Bege - destaque elegante (palavras secundárias) */
 .keyword-highlight-secondary,
 span.keyword-highlight-secondary {
-  color: #fce4d0 !important; /* Amarelo/laranja bem mais claro e suave */
+  color: #d4a574 !important; /* Bege/tan - visível em fundo escuro */
   font-weight: 600 !important;
   display: inline !important;
 }
 
-/* Garantir que funciona mesmo dentro de elementos com text-slate-200 */
+/* Garantir que funciona mesmo dentro de elementos com text-slate-200 (exceto cards: ver bloco abaixo) */
 .text-slate-200 .keyword-highlight-primary,
 .text-slate-300 .keyword-highlight-primary,
 .text-slate-200 .keyword-highlight-secondary,
 .text-slate-300 .keyword-highlight-secondary,
-.card-adaptive .keyword-highlight-primary,
-.card-adaptive .keyword-highlight-secondary,
 p .keyword-highlight-primary,
 p .keyword-highlight-secondary,
 [class*="text-slate"] .keyword-highlight-primary,
 [class*="text-slate"] .keyword-highlight-secondary,
 [class*="text-on-dark"] .keyword-highlight-primary,
 [class*="text-on-dark"] .keyword-highlight-secondary {
-  color: inherit !important;
   font-weight: inherit !important;
   display: inline !important;
 }
 
-/* Forçar cores mesmo dentro de cards com texto branco/cinza */
+/* Forçar cores mesmo dentro de cards: primária = vermelho Azimut */
 .card-adaptive .keyword-highlight-primary,
 .card-adaptive p .keyword-highlight-primary,
 .card-adaptive span .keyword-highlight-primary,
 .card-adaptive .keyword-highlight-primary * {
-  color: #f08080 !important; /* Vermelho coral suave */
+  color: #c92337 !important;
+  -webkit-text-fill-color: #c92337 !important;
   font-weight: 700 !important;
 }
 
@@ -4582,7 +4678,7 @@ p .keyword-highlight-secondary,
 .card-adaptive p .keyword-highlight-secondary,
 .card-adaptive span .keyword-highlight-secondary,
 .card-adaptive .keyword-highlight-secondary * {
-  color: #fce4d0 !important; /* Amarelo/laranja bem mais claro e suave */
+  color: #d4a574 !important; /* Bege - palavras secundárias */
   font-weight: 600 !important;
 }
 
@@ -4597,7 +4693,7 @@ p .keyword-highlight-secondary,
 .text-[#9a9590] .keyword-highlight-secondary,
 .text-on-dark-secondary .keyword-highlight-secondary,
 [class*="text-on-dark"] .keyword-highlight-secondary {
-  color: #fce4d0 !important; /* Amarelo/laranja bem mais claro e suave */
+  color: #d4a574 !important; /* Bege - palavras secundárias */
   font-weight: 600 !important;
 }
 
@@ -4612,7 +4708,7 @@ span.keyword-highlight-primary {
 * .keyword-highlight-secondary,
 .keyword-highlight-secondary,
 span.keyword-highlight-secondary {
-  color: #fce4d0 !important; /* Amarelo/laranja bem mais claro e suave */
+  color: #d4a574 !important; /* Bege - palavras secundárias */
   font-weight: 600 !important;
 }
 
@@ -5523,13 +5619,25 @@ section .grid article.card-adaptive ul li {
    #root (ID) garante especificidade maior que qualquer .text-slate-XXX
    ═══════════════════════════════════════════════════════════════ */
 #root .card-adaptive,
-#root .card-adaptive *,
+#root .card-adaptive p,
+#root .card-adaptive h1, #root .card-adaptive h2, #root .card-adaptive h3, #root .card-adaptive h4,
+#root .card-adaptive div,
+#root .card-adaptive span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red),
 #root .card-dark-adaptive,
-#root .card-dark-adaptive *,
+#root .card-dark-adaptive p,
+#root .card-dark-adaptive h1, #root .card-dark-adaptive h2, #root .card-dark-adaptive h3, #root .card-dark-adaptive h4,
+#root .card-dark-adaptive div,
+#root .card-dark-adaptive span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red),
 #root .card-dark-fixed,
-#root .card-dark-fixed *,
+#root .card-dark-fixed p,
+#root .card-dark-fixed h1, #root .card-dark-fixed h2, #root .card-dark-fixed h3, #root .card-dark-fixed h4,
+#root .card-dark-fixed div,
+#root .card-dark-fixed span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red),
 #root .card-dark-alt-adaptive,
-#root .card-dark-alt-adaptive * {
+#root .card-dark-alt-adaptive p,
+#root .card-dark-alt-adaptive h1, #root .card-dark-alt-adaptive h2, #root .card-dark-alt-adaptive h3, #root .card-dark-alt-adaptive h4,
+#root .card-dark-alt-adaptive div,
+#root .card-dark-alt-adaptive span:not(.keyword-highlight-primary):not(.keyword-highlight-secondary):not(.text-azimut-red) {
   color: #e2e8f0 !important;
   -webkit-text-fill-color: #e2e8f0 !important;
 }
@@ -5551,11 +5659,11 @@ section .grid article.card-adaptive ul li {
 }
 
 #root .card-adaptive p,
-#root .card-adaptive span:not(.text-azimut-red):not(.view-details-cta),
+#root .card-adaptive span:not(.text-azimut-red):not(.view-details-cta):not(.keyword-highlight-primary):not(.keyword-highlight-secondary),
 #root .card-dark-adaptive p,
-#root .card-dark-adaptive span:not(.text-azimut-red),
+#root .card-dark-adaptive span:not(.text-azimut-red):not(.keyword-highlight-primary):not(.keyword-highlight-secondary),
 #root .card-dark-fixed p,
-#root .card-dark-fixed span:not(.text-azimut-red) {
+#root .card-dark-fixed span:not(.text-azimut-red):not(.keyword-highlight-primary):not(.keyword-highlight-secondary) {
   color: #cbd5e1 !important;
   -webkit-text-fill-color: #cbd5e1 !important;
 }

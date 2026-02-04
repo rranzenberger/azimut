@@ -12,9 +12,9 @@ export const revalidate = 0;
 export default async function LeadDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get('azimut_admin_token')?.value;
   const session = token ? verifyAuthToken(token) : null;
 
@@ -22,6 +22,7 @@ export default async function LeadDetailPage({
     redirect('/login');
   }
 
+  const { id } = await params;
   let lead: any = null;
   let users: any[] = [];
   let error: string | null = null;
@@ -38,7 +39,7 @@ export default async function LeadDetailPage({
     });
 
     lead = await prisma.lead.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         assignedTo: {
           select: {

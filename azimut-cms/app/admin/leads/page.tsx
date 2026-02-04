@@ -13,9 +13,9 @@ export const revalidate = 0;
 export default async function LeadsPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get('azimut_admin_token')?.value;
   const session = token ? verifyAuthToken(token) : null;
 
@@ -24,15 +24,16 @@ export default async function LeadsPage({
   }
 
   // Extrair filtros dos searchParams
-  const status = searchParams.status as string | undefined;
-  const priority = searchParams.priority as string | undefined;
-  const leadType = searchParams.leadType as string | undefined;
-  const dateFrom = searchParams.dateFrom as string | undefined;
-  const dateTo = searchParams.dateTo as string | undefined;
-  const search = searchParams.search as string | undefined;
-  const scoreMin = searchParams.scoreMin as string | undefined;
-  const view = (searchParams.view as string) || 'list'; // 'list' ou 'kanban'
-  const page = parseInt((searchParams.page as string) || '1');
+  const params = await searchParams;
+  const status = params.status as string | undefined;
+  const priority = params.priority as string | undefined;
+  const leadType = params.leadType as string | undefined;
+  const dateFrom = params.dateFrom as string | undefined;
+  const dateTo = params.dateTo as string | undefined;
+  const search = params.search as string | undefined;
+  const scoreMin = params.scoreMin as string | undefined;
+  const view = (params.view as string) || 'list'; // 'list' ou 'kanban'
+  const page = parseInt((params.page as string) || '1');
   const limit = 50;
   const offset = (page - 1) * limit;
 

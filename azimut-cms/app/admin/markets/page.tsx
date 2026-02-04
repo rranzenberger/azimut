@@ -3,9 +3,10 @@ import { redirect } from 'next/navigation';
 import { verifyAuthToken } from '@/src/lib/auth';
 import { prisma } from '@/src/lib/prisma';
 import Link from 'next/link';
+import { HoverCard, HoverButton } from '../components/HoverCard';
 
 export default async function MarketsPage() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get('azimut_admin_token')?.value;
   const session = token ? verifyAuthToken(token) : null;
 
@@ -48,22 +49,9 @@ export default async function MarketsPage() {
             Gerencie os mercados exibidos no card "Retrato do Estúdio" da Home.
           </p>
         </div>
-        <Link
-          href="/admin/markets/new"
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#ef4444',
-            color: '#fff',
-            borderRadius: 10,
-            textDecoration: 'none',
-            fontSize: 14,
-            fontWeight: 600,
-            display: 'inline-block',
-            whiteSpace: 'nowrap',
-          }}
-        >
+        <HoverButton href="/admin/markets/new">
           + Novo Mercado
-        </Link>
+        </HoverButton>
       </header>
 
       {error && (
@@ -93,22 +81,11 @@ export default async function MarketsPage() {
           }}
         >
           <p style={{ margin: 0, fontSize: 16 }}>Nenhum mercado cadastrado ainda.</p>
-          <Link
-            href="/admin/markets/new"
-            style={{
-              display: 'inline-block',
-              marginTop: 16,
-              padding: '10px 20px',
-              backgroundColor: '#ef4444',
-              color: '#fff',
-              borderRadius: 10,
-              textDecoration: 'none',
-              fontSize: 14,
-              fontWeight: 600,
-            }}
-          >
-            Criar Primeiro Mercado
-          </Link>
+          <div style={{ marginTop: 16 }}>
+            <HoverButton href="/admin/markets/new">
+              Criar Primeiro Mercado
+            </HoverButton>
+          </div>
         </div>
       ) : (
         <div
@@ -118,28 +95,7 @@ export default async function MarketsPage() {
           }}
         >
           {markets.map((market) => (
-            <Link
-              key={market.id}
-              href={`/admin/markets/${market.id}`}
-              style={{
-                display: 'block',
-                padding: '20px 24px',
-                borderRadius: 12,
-                border: '1px solid rgba(255,255,255,0.08)',
-                background: 'rgba(255,255,255,0.03)',
-                textDecoration: 'none',
-                color: '#fff',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(201,35,55,0.4)';
-                e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
-                e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
-              }}
-            >
+            <HoverCard key={market.id} href={`/admin/markets/${market.id}`}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16 }}>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
@@ -182,7 +138,7 @@ export default async function MarketsPage() {
                   </p>
                 </div>
               </div>
-            </Link>
+            </HoverCard>
           ))}
         </div>
       )}

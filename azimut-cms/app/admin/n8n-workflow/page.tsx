@@ -6,7 +6,7 @@ import { N8nWorkflowClient } from './components/N8nWorkflowClient';
 export const revalidate = 0;
 
 export default async function N8nWorkflowPage() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get('azimut_admin_token')?.value;
   const session = token ? verifyAuthToken(token) : null;
 

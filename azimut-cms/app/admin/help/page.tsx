@@ -5,7 +5,7 @@ import { verifyAuthToken } from '@/src/lib/auth';
 import { MENU_MANUAL_ITEMS } from '../config/menuManual';
 
 export default async function HelpPage() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get('azimut_admin_token')?.value;
   const session = token ? verifyAuthToken(token) : null;
 

@@ -3,15 +3,16 @@ import { redirect } from 'next/navigation';
 import { verifyAuthToken } from '@/src/lib/auth';
 import { prisma } from '@/src/lib/prisma';
 import Link from 'next/link';
+import { HoverCard, HoverButton } from '../components/HoverCard';
 
 export const revalidate = 0;
 
 export default async function HistoryPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get('azimut_admin_token')?.value;
   const session = token ? verifyAuthToken(token) : null;
 
@@ -19,7 +20,8 @@ export default async function HistoryPage({
     redirect('/login');
   }
 
-  const type = searchParams.type as string | undefined;
+  const params = await searchParams;
+  const type = params.type as string | undefined;
 
   let history: any[] = [];
   let error: string | null = null;
@@ -77,31 +79,12 @@ export default async function HistoryPage({
             Timeline & Histórico
           </h1>
           <p style={{ margin: 0, color: '#c0bccf', fontSize: 16 }}>
-            Gerencie eventos históricos, parcerias, projetos e prêmios da Azimut.
+            Gerencie eventos históricos, parcerias, projetos e prêmios. Estes dados aparecem na timeline da página Estúdio do site.
           </p>
         </div>
-        <Link
-          href="/admin/history/new"
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#ef4444',
-            color: 'white',
-            textDecoration: 'none',
-            borderRadius: 6,
-            fontWeight: 600,
-            fontSize: 14,
-            display: 'inline-block',
-            transition: 'background-color 0.2s',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = '#dc2626';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = '#ef4444';
-          }}
-        >
+        <HoverButton href="/admin/history/new">
           + Novo Evento
-        </Link>
+        </HoverButton>
       </header>
 
       {/* Filtros */}
@@ -167,50 +150,18 @@ export default async function HistoryPage({
           <p style={{ margin: 0, color: '#c0bccf', fontSize: 16 }}>
             {type ? `Nenhum evento do tipo "${typeLabels[type]}" encontrado.` : 'Nenhum evento encontrado.'}
           </p>
-          <Link
-            href="/admin/history/new"
-            style={{
-              display: 'inline-block',
-              marginTop: 16,
-              padding: '10px 20px',
-              backgroundColor: '#ef4444',
-              color: 'white',
-              textDecoration: 'none',
-              borderRadius: 6,
-              fontWeight: 600,
-              fontSize: 14,
-            }}
-          >
-            Criar Primeiro Evento
-          </Link>
+          <div style={{ marginTop: 16 }}>
+            <HoverButton href="/admin/history/new">
+              Criar Primeiro Evento
+            </HoverButton>
+          </div>
         </div>
       ) : (
         <div style={{ display: 'grid', gap: 16 }}>
           {history.map((item) => {
             const period = item.yearEnd ? `${item.year}-${item.yearEnd}` : `${item.year}`;
             return (
-              <Link
-                key={item.id}
-                href={`/admin/history/${item.id}`}
-                style={{
-                  display: 'block',
-                  padding: 20,
-                  backgroundColor: '#1a1a2e',
-                  borderRadius: 8,
-                  border: '1px solid #2a2a3a',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  transition: 'border-color 0.2s, transform 0.2s',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#ef4444';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = '#2a2a3a';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                }}
-              >
+              <HoverCard key={item.id} href={`/admin/history/${item.id}`}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16 }}>
                   <div style={{ flex: 1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
@@ -274,7 +225,7 @@ export default async function HistoryPage({
                     </div>
                   </div>
                 </div>
-              </Link>
+              </HoverCard>
             );
           })}
         </div>

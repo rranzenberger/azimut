@@ -10,6 +10,7 @@ export interface AuthPayload {
 }
 
 const getSecret = () =>
+  process.env.JWT_SECRET ||
   process.env.ADMIN_JWT_SECRET ||
   process.env.NEXTAUTH_SECRET ||
   'dev-azimut-secret';
@@ -42,7 +43,15 @@ export function verifyAuthToken(token: string): AuthPayload | null {
     const [encodedHeader, encodedPayload, signature] = parts;
     const data = `${encodedHeader}.${encodedPayload}`;
     const expected = sign(data);
-    if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) {
+    
+    // Proteção contra buffers de tamanhos diferentes que causariam erro em timingSafeEqual
+    const sigBuffer = Buffer.from(signature);
+    const expBuffer = Buffer.from(expected);
+    if (sigBuffer.length !== expBuffer.length) {
+      return null;
+    }
+    
+    if (!crypto.timingSafeEqual(sigBuffer, expBuffer)) {
       return null;
     }
     const payload = JSON.parse(
@@ -53,6 +62,7 @@ export function verifyAuthToken(token: string): AuthPayload | null {
     }
     return payload;
   } catch (err) {
+    console.error('[Auth] verifyAuthToken error:', err);
     return null;
   }
 }

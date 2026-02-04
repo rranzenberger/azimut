@@ -538,10 +538,10 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                 {lang === 'pt' ? 'Nossa Filosofia' : lang === 'es' ? 'Nuestra Filosofía' : lang === 'fr' ? 'Notre Philosophie' : 'Our Philosophy'}
               </h3>
               
-              <div className="grid md:grid-cols-3 gap-6">
+              <div className="grid md:grid-cols-3 gap-6 philosophy-cards-on-dark">
                 {/* MISSÃO */}
                 <div 
-                  className="p-6 rounded-2xl border border-azimut-red/20"
+                  className="p-6 rounded-2xl border border-azimut-red/20 card-dark-fixed"
                   style={{
                     background: theme === 'dark' 
                       ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(15, 23, 42, 0.3) 100%)'
@@ -553,20 +553,20 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   <h4 className="text-lg font-bold mb-3 uppercase tracking-wide text-white">
                     {lang === 'pt' ? 'Missão' : lang === 'es' ? 'Misión' : lang === 'fr' ? 'Mission' : 'Mission'}
                   </h4>
-                  <p className="text-sm leading-relaxed text-slate-300">
+                  <p className="text-sm leading-relaxed text-slate-200">
                     {lang === 'pt' 
-                      ? 'Sentir DENTRO do que nossos parceiros sentem. Não observamos de fora — entramos, sentimos, e a partir daí, criamos experiências que transformam.'
+                      ? <>Sentir <span className="text-azimut-red font-semibold">DENTRO</span> do que nossos parceiros sentem. Não observamos de fora — entramos, sentimos, e a partir daí, criamos experiências que transformam.</>
                       : lang === 'es'
-                      ? 'Sentir DENTRO de lo que nuestros socios sienten. No observamos desde afuera — entramos, sentimos, y a partir de ahí, creamos experiencias que transforman.'
+                      ? <>Sentir <span className="text-azimut-red font-semibold">DENTRO</span> de lo que nuestros socios sienten. No observamos desde afuera — entramos, sentimos, y a partir de ahí, creamos experiencias que transforman.</>
                       : lang === 'fr'
-                      ? 'Ressentir DE L\'INTÉRIEUR ce que nos partenaires ressentent. Nous n\'observons pas de l\'extérieur — nous entrons, ressentons, et à partir de là, créons des expériences qui transforment.'
-                      : 'Feel FROM WITHIN what our partners feel. We don\'t observe from outside — we enter, feel, and from there, create experiences that transform.'}
+                      ? <>Ressentir <span className="text-azimut-red font-semibold">DE L&apos;INTÉRIEUR</span> ce que nos partenaires ressentent. Nous n&apos;observons pas de l&apos;extérieur — nous entrons, ressentons, et à partir de là, créons des expériences qui transforment.</>
+                      : <>Feel <span className="text-azimut-red font-semibold">FROM WITHIN</span> what our partners feel. We don&apos;t observe from outside — we enter, feel, and from there, create experiences that transform.</>}
                   </p>
                 </div>
 
                 {/* VISÃO */}
                 <div 
-                  className="p-6 rounded-2xl border border-azimut-red/20"
+                  className="p-6 rounded-2xl border border-azimut-red/20 card-dark-fixed"
                   style={{
                     background: theme === 'dark' 
                       ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(15, 23, 42, 0.3) 100%)'
@@ -578,23 +578,23 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   <h4 className="text-lg font-bold mb-3 uppercase tracking-wide text-white">
                     {lang === 'pt' ? 'Visão' : lang === 'es' ? 'Visión' : lang === 'fr' ? 'Vision' : 'Vision'}
                   </h4>
-                  <p className="text-sm leading-relaxed text-slate-300">
+                  <p className="text-sm leading-relaxed text-slate-200">
                     {lang === 'pt' 
-                      ? 'Ser a máquina de empatia que conecta tecnologia e emoção. Criar experiências onde as pessoas não apenas veem — elas VIVEM.'
+                      ? <>Ser a máquina de empatia que conecta tecnologia e emoção. Criar experiências onde as pessoas não apenas veem — elas <span className="text-azimut-red font-semibold">VIVEM</span>.</>
                       : lang === 'es'
-                      ? 'Ser la máquina de empatía que conecta tecnología y emoción. Crear experiencias donde las personas no solo ven — VIVEN.'
+                      ? <>Ser la máquina de empatía que conecta tecnología y emoción. Crear experiencias donde las personas no solo ven — <span className="text-azimut-red font-semibold">VIVEN</span>.</>
                       : lang === 'fr'
-                      ? 'Être la machine d\'empathie qui connecte technologie et émotion. Créer des expériences où les gens ne font pas que voir — ils VIVENT.'
-                      : 'Be the empathy machine that connects technology and emotion. Create experiences where people don\'t just watch — they LIVE.'}
+                      ? <>Être la machine d&apos;empathie qui connecte technologie et émotion. Créer des expériences où les gens ne font pas que voir — ils <span className="text-azimut-red font-semibold">VIVENT</span>.</>
+                      : <>Be the empathy machine that connects technology and emotion. Create experiences where people don&apos;t just watch — they <span className="text-azimut-red font-semibold">LIVE</span>.</>}
                   </p>
-                  <p className="text-xs mt-3 italic text-slate-400">
+                  <p className="text-xs mt-3 italic text-slate-300">
                     — Chris Milk, TED Vancouver 2015
                   </p>
                 </div>
 
                 {/* VALORES */}
                 <div 
-                  className="p-6 rounded-2xl border border-azimut-red/20"
+                  className="p-6 rounded-2xl border border-azimut-red/20 card-dark-fixed"
                   style={{
                     background: theme === 'dark' 
                       ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(15, 23, 42, 0.3) 100%)'
@@ -606,18 +606,33 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   <h4 className="text-lg font-bold mb-3 uppercase tracking-wide text-white">
                     {lang === 'pt' ? 'Valores' : lang === 'es' ? 'Valores' : lang === 'fr' ? 'Valeurs' : 'Values'}
                   </h4>
-                  <ul className="text-sm space-y-2 text-slate-300">
+                  <ul className="text-sm space-y-2 text-slate-200">
                     <li className="flex items-start gap-2">
                       <span className="text-azimut-red">✦</span>
-                      <span>{lang === 'pt' ? 'Empatia: Sentir DENTRO, não apenas COM' : lang === 'es' ? 'Empatía: Sentir DENTRO, no solo CON' : lang === 'fr' ? 'Empathie: Ressentir DE L\'INTÉRIEUR, pas juste AVEC' : 'Empathy: Feel FROM WITHIN, not just WITH'}</span>
+                      <span>
+                        {lang === 'pt' && <><span className="text-azimut-red font-semibold">Empatia:</span> Sentir DENTRO, não apenas COM</>}
+                        {lang === 'es' && <><span className="text-azimut-red font-semibold">Empatía:</span> Sentir DENTRO, no solo CON</>}
+                        {lang === 'fr' && <><span className="text-azimut-red font-semibold">Empathie:</span> Ressentir DE L&apos;INTÉRIEUR, pas juste AVEC</>}
+                        {lang === 'en' && <><span className="text-azimut-red font-semibold">Empathy:</span> Feel FROM WITHIN, not just WITH</>}
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-azimut-red">✦</span>
-                      <span>{lang === 'pt' ? 'Autenticidade: Descontraídos, confiantes, genuínos' : lang === 'es' ? 'Autenticidad: Relajados, confiados, genuinos' : lang === 'fr' ? 'Authenticité: Décontractés, confiants, authentiques' : 'Authenticity: Relaxed, confident, genuine'}</span>
+                      <span>
+                        {lang === 'pt' && <><span className="text-azimut-red font-semibold">Autenticidade:</span> Descontraídos, confiantes, genuínos</>}
+                        {lang === 'es' && <><span className="text-azimut-red font-semibold">Autenticidad:</span> Relajados, confiados, genuinos</>}
+                        {lang === 'fr' && <><span className="text-azimut-red font-semibold">Authenticité:</span> Décontractés, confiants, authentiques</>}
+                        {lang === 'en' && <><span className="text-azimut-red font-semibold">Authenticity:</span> Relaxed, confident, genuine</>}
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-azimut-red">✦</span>
-                      <span>{lang === 'pt' ? 'Presença: "Tô aqui", "Do teu lado", "Junto"' : lang === 'es' ? 'Presencia: "Estoy aquí", "A tu lado", "Juntos"' : lang === 'fr' ? 'Présence: "Je suis là", "À tes côtés", "Ensemble"' : 'Presence: "I\'m here", "By your side", "Together"'}</span>
+                      <span>
+                        {lang === 'pt' && <><span className="text-azimut-red font-semibold">Presença:</span> &quot;Tô aqui&quot;, &quot;Do teu lado&quot;, &quot;Junto&quot;</>}
+                        {lang === 'es' && <><span className="text-azimut-red font-semibold">Presencia:</span> &quot;Estoy aquí&quot;, &quot;A tu lado&quot;, &quot;Juntos&quot;</>}
+                        {lang === 'fr' && <><span className="text-azimut-red font-semibold">Présence:</span> &quot;Je suis là&quot;, &quot;À tes côtés&quot;, &quot;Ensemble&quot;</>}
+                        {lang === 'en' && <><span className="text-azimut-red font-semibold">Presence:</span> &quot;I&apos;m here&quot;, &quot;By your side&quot;, &quot;Together&quot;</>}
+                      </span>
                     </li>
                   </ul>
                 </div>

@@ -1,6 +1,23 @@
 # Backoffice: Build Falhando → Domínio Mostra Site Errado
 
-## Problema Recorrente (6+ x)
+> **REGRA DE OURO**: Antes de QUALQUER deploy, rodar `npm run build` no `azimut-cms` e corrigir TODOS os erros.
+
+## Processo Correto de Deploy
+
+```bash
+# 1. SEMPRE rodar build local primeiro
+cd azimut-cms
+npm run build
+
+# 2. Se houver erros, corrigir TODOS antes de continuar
+
+# 3. Só depois de build passar, fazer deploy
+vercel --prod --yes --scope team_UzGGtFQzDYcmwGZslTOxjyrT
+```
+
+---
+
+## Problema Recorrente (7x)
 
 Quando o **build do backoffice falha**, o domínio `azimut-backoffice.vercel.app` passa a servir o **site principal** em vez do backoffice. **Sempre que isso acontecer, o primeiro passo é rodar o build local e corrigir o erro.** Isso acontece porque a Vercel mantém um cache/fallback do último deploy funcional, mas às vezes serve o projeto errado.
 
@@ -163,7 +180,8 @@ faqsPt: Array.isArray(faqsPt) && faqsPt.length > 0 ? faqsPt : undefined,
 | Data | Problema | Solução | Commit |
 |------|----------|---------|--------|
 | 2026-02-01 | `params` sem await em press/publications | Adicionado `await params` | `4d43bd7` |
-| 2026-02-04 | faqs null no create (services) | Usar `undefined` em vez de `null` para Json opcional no Prisma create | (este fix) |
+| 2026-02-04 | faqs null no create (services) | Usar `undefined` em vez de `null` para Json opcional no Prisma create | - |
+| 2026-02-04 | `params` sem await em services/[id] | Adicionado `await params` em GET/PUT/DELETE | - |
 
 ---
 

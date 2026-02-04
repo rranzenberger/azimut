@@ -4,16 +4,14 @@ import SEO from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
 import StudioSubNav from '../components/StudioSubNav'
+import { useTheme } from '../contexts/ThemeContext'
 
 interface StudioDiferenciaisProps {
   lang: Lang
 }
 
 const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
-  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
-  // useUserTracking()
-  // Estrela FIXA (sem parallax) - Padronizada com Studio principal
-
+  const { theme } = useTheme()
   // Ref para o vídeo Chris Milk
   const videoRef = useRef<HTMLVideoElement>(null)
 
@@ -519,7 +517,7 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
               <h2 className="text-2xl md:text-3xl font-handel uppercase tracking-wide text-azimut-red mb-4">
                 {text.heritage.title}
               </h2>
-              <p className="text-lg leading-relaxed text-white">
+              <p className={`text-lg leading-relaxed ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>
                 {text.heritage.body}
               </p>
             </div>
@@ -563,8 +561,8 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
                 <span className="text-4xl">👁️</span>
                 {text.vision.title}
               </h2>
-              <p className="text-xl md:text-2xl leading-relaxed text-white">
-                {text.vision.body}
+<p className={`text-xl md:text-2xl leading-relaxed ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>
+              {text.vision.body}
               </p>
             </div>
           </section>
@@ -591,7 +589,8 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
               <div className="space-y-4">
                 {text.values.items.map((value, i) => (
                   <div key={i}>
-                    <h4 className="font-bold text-white mb-1">{value.title}</h4>
+                    {/* Texto sempre claro pois bg-slate-900/50 é escuro */}
+                    <h4 className="font-bold mb-1 text-white">{value.title}</h4>
                     <p className="text-sm text-theme-text-secondary">{value.description}</p>
                   </div>
                 ))}
@@ -608,7 +607,8 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
               {text.pillars.map((pillar, i) => (
                 <div key={i} className="p-6 rounded-lg bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-azimut-red/20 hover:border-azimut-red/50 transition-all group">
                   <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">{pillar.icon}</div>
-                  <h3 className="text-xl font-bold text-white mb-3">{pillar.title}</h3>
+                  {/* Texto sempre claro pois bg-gradient from-slate-900 é escuro */}
+                  <h3 className="text-xl font-bold mb-3 text-white">{pillar.title}</h3>
                   <p className="text-sm text-theme-text-secondary leading-relaxed">{pillar.body}</p>
                 </div>
               ))}
@@ -626,13 +626,14 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
                 <h2 className="text-3xl md:text-4xl font-handel uppercase text-azimut-red mb-3">
                   {text.philosophy.title}
                 </h2>
-                <p className="text-xl text-white/80 font-sora">
+                {/* Texto sempre claro pois o container tem fundo escuro */}
+                <p className="text-xl font-sora text-white/80">
                   {text.philosophy.subtitle}
                 </p>
               </div>
 
-              {/* Intro */}
-              <p className="text-lg text-center text-white/90 leading-relaxed max-w-3xl mx-auto mb-10">
+              {/* Intro - Texto sempre claro pois o container tem fundo escuro */}
+              <p className="text-lg text-center leading-relaxed max-w-3xl mx-auto mb-10 text-white/90">
                 {text.philosophy.intro}
               </p>
 
@@ -641,26 +642,27 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
                 {/* EMPATIA - Destacada */}
                 <div className="p-6 rounded-xl bg-azimut-red/20 border-2 border-azimut-red">
                   <h3 className="text-xl font-bold text-azimut-red mb-2">{text.philosophy.empathy.title}</h3>
-                  <p className="text-sm text-white/60 mb-3 font-mono">{text.philosophy.empathy.meaning}</p>
-                  <p className="text-white mb-4">{text.philosophy.empathy.description}</p>
-                  <p className="text-white/80 italic text-lg border-l-4 border-azimut-red pl-4">
+                  {/* Texto sempre claro pois está em container escuro */}
+                  <p className="text-sm mb-3 font-mono text-white/60">{text.philosophy.empathy.meaning}</p>
+                  <p className="mb-4 text-white">{text.philosophy.empathy.description}</p>
+                  <p className="italic text-lg border-l-4 border-azimut-red pl-4 text-white/80">
                     {text.philosophy.empathy.example}
                   </p>
                 </div>
 
-                {/* SIMPATIA - Mais suave */}
+                {/* SIMPATIA - Mais suave - Texto sempre claro pois está em container escuro */}
                 <div className="p-6 rounded-xl bg-slate-700/30 border border-slate-600">
-                  <h3 className="text-xl font-bold text-slate-400 mb-2">{text.philosophy.sympathy.title}</h3>
-                  <p className="text-sm text-slate-500 mb-3 font-mono">{text.philosophy.sympathy.meaning}</p>
-                  <p className="text-slate-300 mb-4">{text.philosophy.sympathy.description}</p>
-                  <p className="text-slate-400 italic text-lg border-l-4 border-slate-600 pl-4">
+                  <h3 className="text-xl font-bold mb-2 text-slate-400">{text.philosophy.sympathy.title}</h3>
+                  <p className="text-sm mb-3 font-mono text-slate-500">{text.philosophy.sympathy.meaning}</p>
+                  <p className="mb-4 text-slate-300">{text.philosophy.sympathy.description}</p>
+                  <p className="italic text-lg border-l-4 border-slate-600 pl-4 text-slate-400">
                     {text.philosophy.sympathy.example}
                   </p>
                 </div>
               </div>
 
-              {/* Conclusão */}
-              <p className="text-2xl text-center text-white font-bold mb-10">
+              {/* Conclusão - Texto sempre claro pois está em container escuro */}
+              <p className="text-2xl text-center font-bold mb-10 text-white">
                 {text.philosophy.conclusion}
               </p>
 
@@ -672,6 +674,7 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
                   <h3 className="text-2xl font-handel uppercase text-azimut-red mb-2">
                     {lang === 'pt' ? 'A Máquina de Empatia' : lang === 'es' ? 'La Máquina de Empatía' : lang === 'fr' ? 'La Machine à Empathie' : 'The Empathy Machine'}
                   </h3>
+                  {/* Texto sempre claro pois está em container escuro */}
                   <p className="text-white/60">
                     Chris Milk • TED Talk 2015
                   </p>
@@ -736,7 +739,8 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
                   {/* Overlay gradient no topo */}
                   <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-black/50 to-transparent pointer-events-none" />
                 </div>
-                <p className="text-center text-white/50 text-sm mt-4 max-w-2xl mx-auto">
+                {/* Texto sempre claro pois está em container escuro */}
+                <p className="text-center text-sm mt-4 max-w-2xl mx-auto text-white/50">
                   {lang === 'pt' 
                     ? '"VR é uma máquina de empatia - a capacidade de colocar alguém literalmente dentro da experiência de outra pessoa."'
                     : lang === 'es'
@@ -747,18 +751,18 @@ const StudioDiferenciais: React.FC<StudioDiferenciaisProps> = ({ lang }) => {
                 </p>
               </div>
 
-              {/* Citações */}
+              {/* Citações - Texto sempre claro pois está em container escuro */}
               <div className="grid md:grid-cols-2 gap-6">
                 {/* Chris Milk */}
                 <div className="p-6 rounded-xl bg-azimut-red/10 border-l-4 border-azimut-red">
-                  <p className="text-lg italic text-white/90 mb-3">{text.philosophy.chrisMilk}</p>
+                  <p className="text-lg italic mb-3 text-white/90">{text.philosophy.chrisMilk}</p>
                   <p className="text-sm text-azimut-red font-semibold">{text.philosophy.chrisMilkSource}</p>
                 </div>
 
                 {/* Carl Rogers */}
                 <div className="p-6 rounded-xl bg-slate-700/30 border-l-4 border-slate-500">
-                  <p className="text-lg italic text-white/80 mb-3">{text.philosophy.carlRogers}</p>
-                  <p className="text-sm text-slate-400 font-semibold">{text.philosophy.carlRogersSource}</p>
+                  <p className="text-lg italic mb-3 text-white/80">{text.philosophy.carlRogers}</p>
+                  <p className="text-sm font-semibold text-slate-400">{text.philosophy.carlRogersSource}</p>
                 </div>
               </div>
             </div>

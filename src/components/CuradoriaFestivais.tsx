@@ -178,7 +178,7 @@ const CuradoriaFestivais: React.FC<CuradoriaFestivaisProps> = ({ lang }) => {
             ? 'Curation Officielle: Une Responsabilité que Nous Honorons'
             : 'Official Curation: A Responsibility We Honor'}
         </p>
-        <p className="text-sm mb-3" style={{ color: 'var(--theme-text-secondary)' }}>
+        <p className="text-sm mb-3 text-slate-800">
           {lang === 'pt' 
             ? 'Desde 2017, temos a honra de ser os curadores oficiais da seção VR/IA do Festival de Cinema de Gramado. São 8+ anos selecionando e apresentando as melhores obras imersivas do mundo, uma responsabilidade que levamos a sério.'
             : lang === 'es'
@@ -187,7 +187,7 @@ const CuradoriaFestivais: React.FC<CuradoriaFestivaisProps> = ({ lang }) => {
             ? 'Depuis 2017, nous avons l\'honneur d\'être les curateurs officiels de la section VR/IA du Festival de Cinéma de Gramado. Ce sont 8+ ans de sélection et présentation des meilleures œuvres immersives au monde, une responsabilité que nous prenons au sérieux.'
             : 'Since 2017, we have had the honor of being the official curators of the VR/AI section at Gramado Film Festival. 8+ years selecting and presenting the world\'s best immersive works, a responsibility we take seriously.'}
         </p>
-        <p className="text-xs italic" style={{ color: 'var(--theme-text-muted)' }}>
+        <p className="text-xs italic text-slate-700">
           {lang === 'pt' 
             ? 'Não encontramos outro estúdio no Brasil com curadoria oficial em festival internacional de cinema.'
             : lang === 'es'

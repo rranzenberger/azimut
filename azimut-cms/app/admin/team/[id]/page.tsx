@@ -9,9 +9,9 @@ export const revalidate = 0;
 export default async function TeamDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get('azimut_admin_token')?.value;
   const session = token ? verifyAuthToken(token) : null;
 
@@ -19,12 +19,13 @@ export default async function TeamDetailPage({
     redirect('/login');
   }
 
+  const { id } = await params;
   let member: any = null;
   let error: string | null = null;
 
   try {
     member = await prisma.teamMembers.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!member) {

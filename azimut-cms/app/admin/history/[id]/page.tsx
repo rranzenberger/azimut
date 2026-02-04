@@ -9,9 +9,9 @@ export const revalidate = 0;
 export default async function HistoryDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get('azimut_admin_token')?.value;
   const session = token ? verifyAuthToken(token) : null;
 
@@ -19,12 +19,13 @@ export default async function HistoryDetailPage({
     redirect('/login');
   }
 
+  const { id } = await params;
   let history: any = null;
   let error: string | null = null;
 
   try {
     history = await prisma.companyHistory.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!history) {

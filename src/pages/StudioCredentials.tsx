@@ -14,12 +14,14 @@ import SEO from '../components/SEO'
 import LangLink from '../components/LangLink'
 import CompanyTimeline from '../components/CompanyTimeline'
 import StudioSubNav from '../components/StudioSubNav'
+import { useTheme } from '../contexts/ThemeContext'
 
 interface StudioCredentialsProps {
   lang: Lang
 }
 
 const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
+  const { theme } = useTheme()
   const [activeFilter, setActiveFilter] = useState<string>('all')
   const [yearsOfInnovation, setYearsOfInnovation] = useState<number>(30) // Fallback padrão (2026 - 1996 = 30)
 
@@ -616,15 +618,15 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
                   {t.eyebrow}
                 </span>
                 
-                <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                <h1 className={`text-5xl md:text-7xl font-bold mb-6 leading-tight ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
                   {dynamicContent.title}
                 </h1>
                 
-                <p className="text-xl md:text-2xl text-white/70 mb-8 leading-relaxed">
+                <p className={`text-xl md:text-2xl mb-8 leading-relaxed ${theme === 'dark' ? 'text-white/70' : 'text-slate-700'}`}>
                   {dynamicContent.subtitle}
                 </p>
 
-                <p className="text-lg text-white/60 leading-relaxed">
+                <p className={`text-lg leading-relaxed ${theme === 'dark' ? 'text-white/60' : 'text-slate-600'}`}>
                   {dynamicContent.hero.description}
                 </p>
               </div>
@@ -635,7 +637,7 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
                   <div className="text-9xl md:text-[12rem] font-bold text-transparent bg-clip-text bg-gradient-to-br from-azimut-red via-orange-500 to-yellow-500 leading-none mb-4">
                     {dynamicContent.hero.bigNumber}
                   </div>
-                  <div className="text-2xl md:text-3xl font-bold text-white uppercase tracking-wider">
+                  <div className={`text-2xl md:text-3xl font-bold uppercase tracking-wider ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>
                     {dynamicContent.hero.bigNumberLabel}
                   </div>
                 </div>
@@ -662,7 +664,8 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
                     <div className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-azimut-red to-orange-500 mb-2">
                       {stat.number}
                     </div>
-                    <div className="text-sm md:text-base text-white/70 font-medium uppercase tracking-wide">
+                    {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
+                    <div className="text-sm md:text-base font-medium uppercase tracking-wide text-white/70">
                       {stat.label}
                     </div>
                   </div>
@@ -678,7 +681,7 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
         <section className="py-20">
           <div className="container-padding max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
                 {t.highlights.title}
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-transparent via-azimut-red to-transparent mx-auto" />
@@ -701,13 +704,13 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
                       {item.year}
                     </div>
                     
-                    {/* Title */}
-                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-azimut-red transition-colors">
+                    {/* Title - sempre claro pois card-adaptive tem fundo escuro */}
+                    <h3 className="text-2xl font-bold mb-3 group-hover:text-azimut-red transition-colors text-white">
                       {item.title}
                     </h3>
                     
-                    {/* Description */}
-                    <p className="text-white/70 leading-relaxed">
+                    {/* Description - sempre claro pois card-adaptive tem fundo escuro */}
+                    <p className="leading-relaxed text-white/70">
                       {item.desc}
                     </p>
                   </div>
@@ -724,10 +727,10 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
         <section className="py-20 bg-gradient-to-b from-transparent via-slate-900/30 to-transparent">
           <div className="container-padding max-w-7xl mx-auto">
             <div className="text-center mb-4">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
                 {t.partnerships.title}
               </h2>
-              <p className="text-xl text-white/60 max-w-3xl mx-auto mb-8">
+              <p className={`text-xl max-w-3xl mx-auto mb-8 ${theme === 'dark' ? 'text-white/60' : 'text-slate-600'}`}>
                 {t.partnerships.subtitle}
               </p>
               <div className="w-24 h-1 bg-gradient-to-r from-transparent via-azimut-red to-transparent mx-auto" />
@@ -748,8 +751,8 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
                       {partner.icon}
                     </div>
                     
-                    {/* Name */}
-                    <h3 className="text-xl font-bold text-white mb-2">
+                    {/* Name - sempre claro pois card-adaptive tem fundo escuro */}
+                    <h3 className="text-xl font-bold mb-2 text-white">
                       {partner.name}
                     </h3>
                     
@@ -758,13 +761,13 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
                       {partner.role}
                     </div>
                     
-                    {/* Period */}
-                    <div className="text-sm text-white/50 font-mono mb-3">
+                    {/* Period - sempre claro pois card-adaptive tem fundo escuro */}
+                    <div className="text-sm font-mono mb-3 text-white/50">
                       {partner.period}
                     </div>
                     
-                    {/* Highlight */}
-                    <p className="text-sm text-white/70 leading-relaxed">
+                    {/* Highlight - sempre claro pois card-adaptive tem fundo escuro */}
+                    <p className="text-sm leading-relaxed text-white/70">
                       {partner.highlight}
                     </p>
                   </div>
@@ -782,10 +785,10 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
                 <span>📅</span>
                 {lang === 'pt' ? 'Nossa História' : lang === 'en' ? 'Our History' : lang === 'es' ? 'Nuestra Historia' : 'Notre Histoire'}
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
                 {dynamicContent.timeline.title}
               </h2>
-              <p className="text-xl text-white/60 max-w-3xl mx-auto mb-6">
+              <p className={`text-xl max-w-3xl mx-auto mb-6 ${theme === 'dark' ? 'text-white/60' : 'text-slate-600'}`}>
                 {dynamicContent.timeline.subtitle}
               </p>
               <div className="w-full max-w-xl h-0.5 bg-gradient-to-r from-transparent via-azimut-red to-transparent mx-auto mb-8" />
@@ -800,7 +803,9 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
                   className={`px-6 py-2 rounded-full font-medium transition-all ${
                     activeFilter === key
                       ? 'bg-azimut-red text-white shadow-lg shadow-azimut-red/30'
-                      : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white'
+                      : theme === 'dark'
+                        ? 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white'
+                        : 'bg-slate-200/70 text-slate-800 hover:bg-slate-300/80'
                   }`}
                 >
                   {label}
@@ -823,10 +828,10 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
         {/* CTA FINAL - IMPACTANTE */}
         <section className="py-20 bg-gradient-to-b from-transparent to-slate-900/50">
           <div className="container-padding max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
               {dynamicContent.cta.title}
             </h2>
-            <p className="text-xl text-white/60 mb-12">
+            <p className={`text-xl mb-12 ${theme === 'dark' ? 'text-white/60' : 'text-slate-600'}`}>
               {dynamicContent.cta.subtitle}
             </p>
 
@@ -841,7 +846,7 @@ const StudioCredentials: React.FC<StudioCredentialsProps> = ({ lang }) => {
               
               <LangLink
                 to="/studio"
-                className="group inline-flex items-center gap-3 px-10 py-5 rounded-xl border-2 border-white/20 text-white hover:bg-white hover:text-black transition-all font-bold uppercase tracking-wider"
+                className={`group inline-flex items-center gap-3 px-10 py-5 rounded-xl border-2 font-bold uppercase tracking-wider transition-all ${theme === 'dark' ? 'border-white/20 text-white hover:bg-white hover:text-black' : 'border-slate-400 text-slate-800 hover:bg-slate-900 hover:text-white hover:border-slate-900'}`}
               >
                 <span className="text-xl group-hover:-translate-x-1 transition-transform">←</span>
                 {dynamicContent.cta.secondaryButton}

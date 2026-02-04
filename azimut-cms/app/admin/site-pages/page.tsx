@@ -12,7 +12,7 @@ export const revalidate = 0;
 // ═══════════════════════════════════════════════════════════════
 
 export default async function PagesPage() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get('azimut_admin_token')?.value;
   const session = token ? verifyAuthToken(token) : null;
 
@@ -155,6 +155,23 @@ export default async function PagesPage() {
               </Link>
             </div>
           </section>
+          <section>
+            <SectionHeader icon="🎨" title="Estúdio (Equipe, Credenciais, Histórico)" subtitle="Conteúdo da página /studio do site" />
+            <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
+              <Link href="/admin/team" style={{ display: 'block', padding: 24, borderRadius: 16, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', textDecoration: 'none', color: 'inherit' }}>
+                <h3 style={{ margin: 0, fontSize: 18, fontWeight: 600, color: '#fff' }}>👥 Equipe</h3>
+                <p style={{ margin: '8px 0 0', fontSize: 13, color: '#6b6680' }}>/studio/equipe</p>
+              </Link>
+              <Link href="/admin/credentials" style={{ display: 'block', padding: 24, borderRadius: 16, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', textDecoration: 'none', color: 'inherit' }}>
+                <h3 style={{ margin: 0, fontSize: 18, fontWeight: 600, color: '#fff' }}>🏆 Credenciais</h3>
+                <p style={{ margin: '8px 0 0', fontSize: 13, color: '#6b6680' }}>/studio/credibilidade</p>
+              </Link>
+              <Link href="/admin/history" style={{ display: 'block', padding: 24, borderRadius: 16, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', textDecoration: 'none', color: 'inherit' }}>
+                <h3 style={{ margin: 0, fontSize: 18, fontWeight: 600, color: '#fff' }}>📅 Histórico (Timeline)</h3>
+                <p style={{ margin: '8px 0 0', fontSize: 13, color: '#6b6680' }}>/studio (timeline)</p>
+              </Link>
+            </div>
+          </section>
         </>
       )}
 
@@ -242,6 +259,21 @@ export default async function PagesPage() {
                 subtitle={totalEstudio > 0 ? `${totalEstudio} subpáginas` : undefined}
               />
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                {/* Links diretos: Equipe, Credenciais, Histórico (conteúdo que aparece na página /studio do site) */}
+                <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))' }}>
+                  <Link href="/admin/team" style={{ display: 'block', padding: 16, borderRadius: 12, background: 'rgba(236, 72, 153, 0.08)', border: '1px solid rgba(236, 72, 153, 0.25)', textDecoration: 'none', color: 'inherit' }}>
+                    <span style={{ fontWeight: 600, color: '#fff' }}>👥 Equipe</span>
+                    <p style={{ margin: '4px 0 0', fontSize: 12, color: '#6b6680' }}>/studio/equipe</p>
+                  </Link>
+                  <Link href="/admin/credentials" style={{ display: 'block', padding: 16, borderRadius: 12, background: 'rgba(236, 72, 153, 0.08)', border: '1px solid rgba(236, 72, 153, 0.25)', textDecoration: 'none', color: 'inherit' }}>
+                    <span style={{ fontWeight: 600, color: '#fff' }}>🏆 Credenciais</span>
+                    <p style={{ margin: '4px 0 0', fontSize: 12, color: '#6b6680' }}>/studio/credibilidade</p>
+                  </Link>
+                  <Link href="/admin/history" style={{ display: 'block', padding: 16, borderRadius: 12, background: 'rgba(236, 72, 153, 0.08)', border: '1px solid rgba(236, 72, 153, 0.25)', textDecoration: 'none', color: 'inherit' }}>
+                    <span style={{ fontWeight: 600, color: '#fff' }}>📅 Histórico</span>
+                    <p style={{ margin: '4px 0 0', fontSize: 12, color: '#6b6680' }}>timeline em /studio</p>
+                  </Link>
+                </div>
                 {paginasOrganizadas.studio.principal.map((page) => (
                   <MainPageCard key={page.id} page={page} />
                 ))}

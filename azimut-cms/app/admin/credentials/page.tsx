@@ -3,11 +3,12 @@ import { redirect } from 'next/navigation';
 import { verifyAuthToken } from '@/src/lib/auth';
 import { prisma } from '@/src/lib/prisma';
 import Link from 'next/link';
+import { HoverCard, HoverButton } from '../components/HoverCard';
 
 export const revalidate = 0;
 
 export default async function CredentialsPage() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get('azimut_admin_token')?.value;
   const session = token ? verifyAuthToken(token) : null;
 
@@ -50,28 +51,9 @@ export default async function CredentialsPage() {
             Gerencie as credenciais exibidas na página Studio.
           </p>
         </div>
-        <Link
-          href="/admin/credentials/new"
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#ef4444',
-            color: 'white',
-            textDecoration: 'none',
-            borderRadius: 6,
-            fontWeight: 600,
-            fontSize: 14,
-            display: 'inline-block',
-            transition: 'background-color 0.2s',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = '#dc2626';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = '#ef4444';
-          }}
-        >
+        <HoverButton href="/admin/credentials/new">
           + Nova Credencial
-        </Link>
+        </HoverButton>
       </header>
 
       {error && (
@@ -101,22 +83,11 @@ export default async function CredentialsPage() {
           <p style={{ margin: 0, color: '#c0bccf', fontSize: 16 }}>
             Nenhuma credencial cadastrada ainda.
           </p>
-          <Link
-            href="/admin/credentials/new"
-            style={{
-              display: 'inline-block',
-              marginTop: 16,
-              padding: '10px 20px',
-              backgroundColor: '#ef4444',
-              color: 'white',
-              textDecoration: 'none',
-              borderRadius: 6,
-              fontWeight: 600,
-              fontSize: 14,
-            }}
-          >
-            Criar primeira credencial
-          </Link>
+          <div style={{ marginTop: 16 }}>
+            <HoverButton href="/admin/credentials/new">
+              Criar primeira credencial
+            </HoverButton>
+          </div>
         </div>
       ) : (
         <div
@@ -127,28 +98,7 @@ export default async function CredentialsPage() {
           }}
         >
           {credentials.map((cred) => (
-            <Link
-              key={cred.id}
-              href={`/admin/credentials/${cred.id}`}
-              style={{
-                padding: 20,
-                backgroundColor: 'rgba(0,0,0,0.2)',
-                borderRadius: 12,
-                border: '1px solid rgba(255,255,255,0.1)',
-                textDecoration: 'none',
-                color: 'inherit',
-                display: 'block',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.3)';
-                e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.5)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.2)';
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
-              }}
-            >
+            <HoverCard key={cred.id} href={`/admin/credentials/${cred.id}`}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
                 {cred.icon && (
                   <span style={{ fontSize: 24 }}>{cred.icon}</span>
@@ -193,7 +143,7 @@ export default async function CredentialsPage() {
                   Ordem: {cred.order}
                 </span>
               </div>
-            </Link>
+            </HoverCard>
           ))}
         </div>
       )}

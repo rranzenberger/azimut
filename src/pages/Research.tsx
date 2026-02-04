@@ -148,7 +148,7 @@ const Research: React.FC<ResearchProps> = ({ lang }) => {
                   </div>
                   <div className="relative z-10">
                     <div className="text-4xl md:text-5xl mb-3">{area.icon}</div>
-                    <h3 className={`text-lg md:text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{area.title}</h3>
+                    <h3 className={`text-lg md:text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>{area.title}</h3>
                     <p className="text-sm text-theme-text-secondary leading-relaxed">{area.desc}</p>
                   </div>
                 </div>
@@ -172,7 +172,7 @@ const Research: React.FC<ResearchProps> = ({ lang }) => {
                   <div className="mb-3 inline-block px-3 py-1.5 rounded-lg bg-azimut-red/15 border border-azimut-red/30 text-xs font-bold text-azimut-red">
                     {project.year}
                   </div>
-                  <h3 className={`text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>{project.title}</h3>
+                  <h3 className={`text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>{project.title}</h3>
                   <p className="text-sm text-theme-text-secondary leading-relaxed">{project.desc}</p>
                 </div>
               ))}
@@ -218,7 +218,7 @@ const Research: React.FC<ResearchProps> = ({ lang }) => {
                           {pub.year}
                         </span>
                       )}
-                      <p className={`text-sm font-semibold mb-1 ${theme === 'dark' ? 'text-white' : 'text-on-dark-primary'}`}>
+                      <p className={`text-sm font-semibold mb-1 ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>
                         {pub.title}
                       </p>
                       {pub.authors && (

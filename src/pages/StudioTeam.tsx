@@ -449,7 +449,7 @@ const StudioTeam: React.FC<StudioTeamProps> = ({ lang }) => {
               border: '1px solid rgba(255, 255, 255, 0.1)'
             }}
           >
-            <p className="mb-5 text-[0.95rem]" style={{ color: 'var(--theme-text-secondary)' }}>
+            <p className="mb-5 text-[0.95rem] text-slate-200">
               {text.ctaText}
             </p>
             <LangLink

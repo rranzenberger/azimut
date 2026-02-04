@@ -6,13 +6,14 @@ import { PublicationEditForm } from '../PublicationEditForm'
 
 export const revalidate = 0
 
-export default async function EditPublicationPage({ params }: { params: { id: string } }) {
-  const cookieStore = cookies()
+export default async function EditPublicationPage({ params }: { params: Promise<{ id: string }> }) {
+  const cookieStore = await cookies()
   const token = cookieStore.get('azimut_admin_token')?.value
   const session = token ? verifyAuthToken(token) : null
   if (!session) redirect('/login')
 
-  const item = await prisma.publication.findUnique({ where: { id: params.id } })
+  const { id } = await params
+  const item = await prisma.publication.findUnique({ where: { id } })
   if (!item) redirect('/admin/publications')
 
   return (
