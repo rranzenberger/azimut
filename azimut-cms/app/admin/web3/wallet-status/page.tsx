@@ -23,56 +23,118 @@ interface WalletStatus {
     canReceivePayments: boolean
   }
   setupMessage?: string
+  config?: {
+    web3RpcUrl: string | null
+    web3NftContractAddress: string | null
+    web3StudentRewardContractAddress: string | null
+  }
+}
+
+interface Web3ConfigForm {
+  companyWalletAddress: string
+  web3RpcUrl: string
+  web3NftContractAddress: string
+  web3StudentRewardContractAddress: string
+}
+
+const defaultForm: Web3ConfigForm = {
+  companyWalletAddress: '',
+  web3RpcUrl: 'https://polygon-rpc.com',
+  web3NftContractAddress: '',
+  web3StudentRewardContractAddress: '',
 }
 
 export default function WalletStatusPage() {
   const [status, setStatus] = useState<WalletStatus | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [configForm, setConfigForm] = useState<Web3ConfigForm>(defaultForm)
+  const [saving, setSaving] = useState(false)
+  const [saveMessage, setSaveMessage] = useState<string | null>(null)
 
   useEffect(() => {
     fetchStatus()
+    fetchConfig()
   }, [])
+
+  async function fetchConfig() {
+    try {
+      const res = await fetch('/api/web3/settings')
+      const data = await res.json().catch(() => ({}))
+      if (res.ok && data) {
+        setConfigForm({
+          companyWalletAddress: data.companyWalletAddress || '',
+          web3RpcUrl: data.web3RpcUrl || 'https://polygon-rpc.com',
+          web3NftContractAddress: data.web3NftContractAddress || '',
+          web3StudentRewardContractAddress: data.web3StudentRewardContractAddress || '',
+        })
+      }
+    } catch (_) {}
+  }
 
   async function fetchStatus() {
     setLoading(true)
     setError(null)
     try {
       const response = await fetch('/api/web3/wallet/status')
+      const data = await response.json().catch(() => ({}))
       if (response.ok) {
-        const data = await response.json()
         setStatus(data)
+        setError(null)
+        if (data.config) {
+          setConfigForm(prev => ({
+            ...prev,
+            web3RpcUrl: data.config.web3RpcUrl || prev.web3RpcUrl,
+            web3NftContractAddress: data.config.web3NftContractAddress || prev.web3NftContractAddress,
+            web3StudentRewardContractAddress: data.config.web3StudentRewardContractAddress || prev.web3StudentRewardContractAddress,
+          }))
+        }
+        if (data.address) setConfigForm(prev => ({ ...prev, companyWalletAddress: data.address }))
       } else {
-        setError('Erro ao buscar status da carteira')
+        const serverMessage = data.message || data.error || 'Erro ao buscar status da carteira'
+        setError(serverMessage)
       }
     } catch (err) {
-      setError('Erro ao conectar com API')
+      setError('Erro ao conectar com API. Preencha os dados abaixo (carteira e RPC) ou defina COMPANY_WALLET_ADDRESS e RPC_URL na Vercel.')
     } finally {
       setLoading(false)
     }
   }
 
-  if (loading) {
+  async function saveConfig(e: React.FormEvent) {
+    e.preventDefault()
+    setSaving(true)
+    setSaveMessage(null)
+    try {
+      const res = await fetch('/api/web3/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          companyWalletAddress: configForm.companyWalletAddress || undefined,
+          web3RpcUrl: configForm.web3RpcUrl || undefined,
+          web3NftContractAddress: configForm.web3NftContractAddress || undefined,
+          web3StudentRewardContractAddress: configForm.web3StudentRewardContractAddress || undefined,
+        }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (res.ok) {
+        setSaveMessage('Configuração salva. Atualize o status acima.')
+        fetchStatus()
+      } else {
+        setSaveMessage(data.error || 'Erro ao salvar')
+      }
+    } catch (_) {
+      setSaveMessage('Erro ao salvar')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  if (loading && !status) {
     return (
       <div style={{ width: '100%', maxWidth: 1400 }}>
         <div style={{ padding: 40, textAlign: 'center', color: '#c0bccf' }}>
           Carregando status da carteira...
-        </div>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div style={{ width: '100%', maxWidth: 1400 }}>
-        <div style={{
-          padding: 24,
-          borderRadius: 12,
-          background: 'rgba(239, 68, 68, 0.1)',
-          border: '1px solid rgba(239, 68, 68, 0.3)',
-          color: '#fca5a5',
-        }}>
-          ⚠️ {error}
         </div>
       </div>
     )
@@ -84,10 +146,10 @@ export default function WalletStatusPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <h1 style={{ margin: 0, fontSize: 32, fontWeight: 700, marginBottom: 8 }}>
-              💰 Status da Carteira Web3
+              💰 Carteira Web3
             </h1>
             <p style={{ margin: 0, color: '#c0bccf', fontSize: 16 }}>
-              Saldo, taxas e transações da carteira da empresa
+              Saldo, Polygon e contratos — configure aqui ou use variáveis na Vercel
             </p>
           </div>
           <button
@@ -103,10 +165,107 @@ export default function WalletStatusPage() {
               cursor: 'pointer',
             }}
           >
-            🔄 Atualizar
+            🔄 Atualizar status
           </button>
         </div>
       </header>
+
+      {error && (
+        <div style={{
+          padding: 24,
+          borderRadius: 12,
+          background: 'rgba(239, 68, 68, 0.1)',
+          border: '1px solid rgba(239, 68, 68, 0.3)',
+          color: '#fca5a5',
+          marginBottom: 24,
+        }}>
+          ⚠️ {error}
+        </div>
+      )}
+
+      {/* Formulário: Carteira pública, RPC, Contratos */}
+      <div style={{
+        padding: 24,
+        borderRadius: 12,
+        background: 'rgba(0,0,0,0.3)',
+        border: '1px solid rgba(255,255,255,0.1)',
+        marginBottom: 32,
+      }}>
+        <h2 style={{ fontSize: 20, fontWeight: 600, color: '#fff', marginBottom: 16 }}>
+          📋 Dados da carteira e Polygon (editáveis)
+        </h2>
+        <form onSubmit={saveConfig}>
+          <div style={{ display: 'grid', gap: 16, maxWidth: 640 }}>
+            <div>
+              <label style={{ display: 'block', fontSize: 14, color: '#c0bccf', marginBottom: 6 }}>Endereço público da carteira (0x...)</label>
+              <input
+                type="text"
+                value={configForm.companyWalletAddress}
+                onChange={e => setConfigForm(prev => ({ ...prev, companyWalletAddress: e.target.value }))}
+                placeholder="0xd5B2Da856140810c34834be5CEB366Dd7857500e"
+                style={{ width: '100%', padding: 10, borderRadius: 8, border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(0,0,0,0.3)', color: '#fff', fontSize: 14 }}
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: 14, color: '#c0bccf', marginBottom: 6 }}>RPC da rede (Polygon)</label>
+              <input
+                type="text"
+                value={configForm.web3RpcUrl}
+                onChange={e => setConfigForm(prev => ({ ...prev, web3RpcUrl: e.target.value }))}
+                placeholder="https://polygon-rpc.com"
+                style={{ width: '100%', padding: 10, borderRadius: 8, border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(0,0,0,0.3)', color: '#fff', fontSize: 14 }}
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: 14, color: '#c0bccf', marginBottom: 6 }}>Contrato NFT (endereço que emite o NFT)</label>
+              <input
+                type="text"
+                value={configForm.web3NftContractAddress}
+                onChange={e => setConfigForm(prev => ({ ...prev, web3NftContractAddress: e.target.value }))}
+                placeholder="0x..."
+                style={{ width: '100%', padding: 10, borderRadius: 8, border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(0,0,0,0.3)', color: '#fff', fontSize: 14 }}
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: 14, color: '#c0bccf', marginBottom: 6 }}>Contrato Student Reward</label>
+              <input
+                type="text"
+                value={configForm.web3StudentRewardContractAddress}
+                onChange={e => setConfigForm(prev => ({ ...prev, web3StudentRewardContractAddress: e.target.value }))}
+                placeholder="0x..."
+                style={{ width: '100%', padding: 10, borderRadius: 8, border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(0,0,0,0.3)', color: '#fff', fontSize: 14 }}
+              />
+            </div>
+          </div>
+          <div style={{ marginTop: 16, display: 'flex', alignItems: 'center', gap: 12 }}>
+            <button
+              type="submit"
+              disabled={saving}
+              style={{
+                padding: '10px 24px',
+                borderRadius: 8,
+                border: 'none',
+                background: '#c92337',
+                color: '#fff',
+                fontSize: 14,
+                fontWeight: 600,
+                cursor: saving ? 'not-allowed' : 'pointer',
+                opacity: saving ? 0.7 : 1,
+              }}
+            >
+              {saving ? 'Salvando...' : 'Salvar configuração'}
+            </button>
+            {saveMessage && (
+              <span style={{ fontSize: 14, color: saveMessage.startsWith('Configuração') ? '#86efac' : '#fca5a5' }}>
+                {saveMessage}
+              </span>
+            )}
+          </div>
+        </form>
+        <p style={{ marginTop: 12, fontSize: 12, color: '#8f8ba2' }}>
+          Chave privada: configure apenas na Vercel (Environment Variables) como <code style={{ background: 'rgba(0,0,0,0.3)', padding: '2px 6px', borderRadius: 4 }}>COMPANY_WALLET_PRIVATE_KEY</code>. Não preencha aqui.
+        </p>
+      </div>
 
       {status && (
         <>

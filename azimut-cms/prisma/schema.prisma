@@ -637,6 +637,11 @@ model Settings {
   defaultLanguage        String?  @default("pt")
   defaultCountry         String?  @default("BR")
   timezone               String?  @default("America/Sao_Paulo")
+  companyWalletAddress   String?  // Endereço público da carteira Polygon (editável no backoffice)
+  companyWalletPrivateKeyEncrypted String?  @db.Text // Chave privada criptografada (opcional; preferir env)
+  web3RpcUrl             String?  // RPC da rede (ex: https://polygon-rpc.com)
+  web3NftContractAddress String?  // Contrato que emite NFT
+  web3StudentRewardContractAddress String?  // Contrato StudentReward
   createdAt              DateTime @default(now())
   updatedAt              DateTime @updatedAt
 }
