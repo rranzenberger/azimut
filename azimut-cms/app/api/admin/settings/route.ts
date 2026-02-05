@@ -5,6 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/src/lib/prisma';
+import type { Settings } from '@prisma/client';
 import { verifyAuthToken } from '@/src/lib/auth';
 import { cookies } from 'next/headers';
 
@@ -40,10 +41,11 @@ export async function GET(request: NextRequest) {
             notificationEmail: process.env.NOTIFICATION_EMAIL || null,
           },
         });
-      } catch (createError: any) {
+      } catch (createError: unknown) {
         // Se falhar ao criar (tabela não existe), retornar valores padrão genéricos
-        console.warn('⚠️ Tabela Settings não existe. Retornando valores padrão.', createError.message);
-        settings = {
+        const msg = createError instanceof Error ? createError.message : String(createError);
+        console.warn('⚠️ Tabela Settings não existe. Retornando valores padrão.', msg);
+        const fallback: Settings = {
           id: 'singleton',
           siteName: 'Azimut',
           siteUrl: 'https://azmt.com.br',
@@ -69,18 +71,24 @@ export async function GET(request: NextRequest) {
           defaultLanguage: 'pt',
           defaultCountry: 'BR',
           timezone: 'America/Sao_Paulo',
+          companyWalletAddress: null,
+          companyWalletPrivateKeyEncrypted: null,
+          web3RpcUrl: null,
+          web3NftContractAddress: null,
+          web3StudentRewardContractAddress: null,
           createdAt: new Date(),
           updatedAt: new Date(),
         };
+        settings = fallback;
       }
     }
 
     return NextResponse.json({ settings });
-  } catch (error: any) {
-    console.warn('⚠️ Erro ao buscar Settings. Retornando valores padrão.', error.message);
-    
-    // Retornar valores padrão genéricos em vez de erro
-    const defaultSettings = {
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : String(error);
+    console.warn('⚠️ Erro ao buscar Settings. Retornando valores padrão.', msg);
+
+    const defaultSettings: Settings = {
       id: 'singleton',
       siteName: 'Azimut',
       siteUrl: 'https://azmt.com.br',
@@ -106,10 +114,15 @@ export async function GET(request: NextRequest) {
       defaultLanguage: 'pt',
       defaultCountry: 'BR',
       timezone: 'America/Sao_Paulo',
+      companyWalletAddress: null,
+      companyWalletPrivateKeyEncrypted: null,
+      web3RpcUrl: null,
+      web3NftContractAddress: null,
+      web3StudentRewardContractAddress: null,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-    
+
     return NextResponse.json({ settings: defaultSettings });
   }
 }

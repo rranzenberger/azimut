@@ -5,13 +5,14 @@
  */
 
 import { prisma } from './prisma';
+import type { Settings } from '@prisma/client';
 
-let cachedSettings: any = null;
+let cachedSettings: Settings | null = null;
 let cacheTimestamp: number = 0;
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutos
 
-// Valores padrão genéricos para fallback
-const DEFAULT_SETTINGS = {
+// Valores padrão genéricos para fallback (inclui campos Web3)
+const DEFAULT_SETTINGS: Settings = {
   id: 'singleton',
   siteName: 'Azimut',
   siteUrl: 'https://azmt.com.br',
@@ -37,6 +38,11 @@ const DEFAULT_SETTINGS = {
   defaultLanguage: 'pt',
   defaultCountry: 'BR',
   timezone: 'America/Sao_Paulo',
+  companyWalletAddress: null,
+  companyWalletPrivateKeyEncrypted: null,
+  web3RpcUrl: null,
+  web3NftContractAddress: null,
+  web3StudentRewardContractAddress: null,
   createdAt: new Date(),
   updatedAt: new Date(),
 };
