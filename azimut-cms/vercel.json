@@ -1,7 +1,10 @@
 {
   "framework": "nextjs",
-  "crons": [{
-    "path": "/api/cron/email-sequences",
-    "schedule": "0 10 * * *"
-  }]
+  "crons": [{"path": "/api/cron/email-sequences", "schedule": "0 10 * * *"}],
+  "redirects": [
+    {"source": "/en/login", "destination": "/login", "permanent": false},
+    {"source": "/pt/login", "destination": "/login", "permanent": false},
+    {"source": "/es/login", "destination": "/login", "permanent": false},
+    {"source": "/fr/login", "destination": "/login", "permanent": false}
+  ]
 }

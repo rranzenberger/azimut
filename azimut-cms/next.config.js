@@ -28,9 +28,13 @@ const nextConfig = {
   // Apenas extensões necessárias
   pageExtensions: ['ts', 'tsx'],
   
-  // Rewrites: Redirecionar URLs para APIs
+  // Rewrites: /:lang/login -> /login (garantir que sempre caia na tela de login)
   async rewrites() {
     return [
+      { source: '/en/login', destination: '/login' },
+      { source: '/pt/login', destination: '/login' },
+      { source: '/es/login', destination: '/login' },
+      { source: '/fr/login', destination: '/login' },
       {
         source: '/sitemap.xml',
         destination: '/api/sitemap',
