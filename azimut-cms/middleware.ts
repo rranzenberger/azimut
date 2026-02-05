@@ -64,16 +64,19 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // REMOVIDO: redirect automático de /login para /admin
-  // Estava causando problema quando cookie era inválido
-  // Agora usuário pode acessar /login mesmo com cookie antigo
-  // A página /login fará logout automático se necessário
-  
+  // NUNCA redirecionar /login para /admin aqui. Sempre deixar /login ser exibido.
+  // A página /login faz redirecionamento após login bem-sucedido (client-side).
+  // Redirecionar aqui causava tela em branco quando cookie era inválido ou expirado.
+  if (pathname === '/login' || pathname === '/login/') {
+    return NextResponse.next();
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/login', '/en/login', '/pt/login', '/es/login', '/fr/login'],
+  // Incluir todas as variantes de login para /login sempre mostrar a tela de login
+  matcher: ['/admin/:path*', '/login', '/login/', '/en/login', '/pt/login', '/es/login', '/fr/login'],
 };
 
 
