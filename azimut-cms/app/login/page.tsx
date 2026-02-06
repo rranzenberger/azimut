@@ -187,15 +187,8 @@ export default function LoginPage() {
         fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
         padding: '20px',
       }}
-      data-page="login"
     >
-      <Suspense
-        fallback={
-          <div style={{ color: '#d3cec3', textAlign: 'center' }}>
-            Carregando tela de login...
-          </div>
-        }
-      >
+      <Suspense fallback={<div style={{ color: '#d3cec3' }}>Carregando...</div>}>
         <LoginForm />
       </Suspense>
     </main>

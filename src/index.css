@@ -226,6 +226,11 @@ body {
   --theme-bg-sticky: rgba(211, 206, 195, 0.98);
 }
 
+/* Tema claro: cor de fundo no html */
+html[data-theme="light"] {
+  background-color: var(--theme-bg, #f5f1e8);
+}
+
 .glass-panel {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -272,24 +277,31 @@ body {
   filter: contrast(1.4) brightness(1.3);
 }
 
-/* Granulação MUITO SUTIL no tema CLARO */
+/* Granulação VISÍVEL no tema CLARO */
 [data-theme="light"] .film-grain::before {
-  opacity: 0.06; /* BEM SUTIL - quase imperceptível */
-  mix-blend-mode: multiply;
-  filter: contrast(1.0) brightness(1.0);
+  opacity: 0.18; /* AUMENTADO - granulação visível */
+  mix-blend-mode: overlay;
+  filter: contrast(1.2) brightness(0.95);
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   SUBMENU NAVIGATION - Cor diferenciada do header
+   SUBMENU NAVIGATION - Tema escuro: cinza azulado (igual header). Tema claro: bege.
    ═══════════════════════════════════════════════════════════════ */
 .submenu-nav {
-  /* Tema escuro: marrom igual ao header/rodapé (não azul) */
-  background-color: rgba(30, 28, 26, 0.98);
+  /* Tema escuro: cinza escuro frio (mesmo do header), sem marrom */
+  background-color: rgba(6, 10, 18, 0.98);
   border-bottom: 1px solid rgba(201, 35, 55, 0.15);
 }
 
-[data-theme="light"] .submenu-nav {
-  /* Tema claro: bege claro (#d3cec3) */
+html[data-theme="dark"] .submenu-nav,
+[data-theme="dark"] .submenu-nav {
+  background-color: rgba(6, 10, 18, 0.98);
+  border-bottom: 1px solid rgba(201, 35, 55, 0.15);
+}
+
+[data-theme="light"] .submenu-nav,
+html[data-theme="light"] .submenu-nav {
+  /* Tema claro: bege (#d3cec3) – marrom/bege só no claro */
   background-color: rgba(211, 206, 195, 0.98);
   border-bottom: 1px solid rgba(42, 40, 37, 0.2);
 }
@@ -1513,6 +1525,11 @@ html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"] *
   --theme-focus-ring: 0 0 0 2px rgba(201, 35, 55, 0.3);
 }
 
+html[data-theme="light"] {
+  /* Cor de fundo base no HTML para tema claro */
+  background-color: #f5f1e8; /* Bege quase branco */
+}
+
 [data-theme="light"] {
   /* Tema Claro - Alto Contraste */
   --theme-bg: #f5f1e8; /* Bege quase branco - Premium (Opção 3 escolhida) */
@@ -1526,7 +1543,7 @@ html[data-theme="dark"] [style*="background: linear-gradient(135deg, #0a0f1a"] *
   --theme-overlay: rgba(245, 241, 232, 0.98); /* Overlay alinhado com novo fundo */
   --pattern-opacity: 0.06;
   --grain-opacity: 0.35; /* Granulação média no tema claro */
-  --gradient-overlay: linear-gradient(135deg, rgba(201, 35, 55, 0.08) 0%, transparent 45%, rgba(201, 35, 55, 0.06) 100%); /* Gradiente vermelho médio no tema claro */
+  --gradient-overlay: linear-gradient(135deg, rgba(201, 35, 55, 0.18) 0%, transparent 45%, rgba(201, 35, 55, 0.12) 100%); /* Gradiente vermelho MAIS VISÍVEL no tema claro */
   /* Cores específicas para tema claro */
   --theme-card-text: #ffffff;      /* Branco puro para máxima legibilidade */
   --theme-card-text-secondary: #cbd5e1; /* Cinza claro para descrições em cards escuros */
@@ -1737,14 +1754,20 @@ html {
   }
 }
 
+html {
+  /* Cor de fundo base no HTML para que body::before/after fiquem visíveis */
+  background-color: var(--theme-bg, #050814);
+  transition: background-color 0.5s ease;
+}
+
 body {
   font-family: var(--font-inter, system-ui, -apple-system, sans-serif);
-  background-color: var(--theme-bg, #050814);
+  background-color: transparent; /* Transparente para mostrar camadas de overlay */
   color: var(--theme-text, #ffffff);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  transition: background-color 0.5s ease, color 0.5s ease;
+  transition: color 0.5s ease;
   overflow-x: hidden;
   width: 100%;
   max-width: 100vw;
@@ -1821,6 +1844,11 @@ body::before {
   transition: opacity 0.5s ease;
 }
 
+[data-theme="light"] body::before {
+  opacity: 0.08; /* Pattern mais sutil no tema claro */
+  mix-blend-mode: multiply;
+}
+
 /* ═══════════════════════════════════════════════════════════════
    CAMADA 2: Gradiente Vermelho Overlay
    ═══════════════════════════════════════════════════════════════ */
@@ -1857,11 +1885,11 @@ body::after {
 }
 
 [data-theme="light"] #root::before {
-  /* Mobile: mantém gradiente original sutil */
+  /* Mobile: gradiente vermelho MAIS VISÍVEL */
   background:
-    radial-gradient(ellipse 90% 50% at 15% -15%, rgba(201, 35, 55, 0.008) 0%, transparent 55%),
-    radial-gradient(ellipse 80% 50% at 90% 115%, rgba(139, 35, 50, 0.006) 0%, transparent 50%);
-  opacity: 0.15;
+    radial-gradient(ellipse 90% 50% at 15% -15%, rgba(201, 35, 55, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 50% at 90% 115%, rgba(139, 35, 50, 0.08) 0%, transparent 50%);
+  opacity: 0.8;
 }
 
 /* Desktop: CINEMATOGRÁFICO - Gradientes ASSIMÉTRICOS - MAIS INTENSOS */
@@ -1933,9 +1961,9 @@ body::after {
 }
 
 [data-theme="light"] #root::after {
-  mix-blend-mode: multiply; /* Multiply para grão visível no claro */
-  opacity: 0.32; /* AUMENTADO - granulação mais visível */
-  filter: contrast(1.4) brightness(0.92); /* Contraste e escurecimento */
+  mix-blend-mode: overlay; /* Overlay para grão visível no claro */
+  opacity: 0.45; /* AUMENTADO - granulação BEM mais visível */
+  filter: contrast(1.3) brightness(0.95); /* Contraste e escurecimento */
 }
 
 /* Animação desabilitada - estava causando sobreposição horizontal */
@@ -1958,7 +1986,7 @@ body::after {
 }
 
 [data-theme="light"] .cinematic-vignette {
-  background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 50%, rgba(0, 0, 0, 0.08) 100%);
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 50%, rgba(0, 0, 0, 0.15) 100%);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -2590,6 +2618,17 @@ html[data-theme="light"] .tech-pill:hover {
 
 [data-theme="light"] .card-dark-fixed .text-azimut-red {
   color: #c92337 !important;
+}
+
+/* Cards "O Que Nos Torna Únicos" - Studio: texto sempre claro (fundo escuro) */
+.studio-unique-card h3,
+.studio-unique-card p {
+  color: #ffffff !important;
+  -webkit-text-fill-color: inherit !important;
+}
+.studio-unique-card p {
+  color: #e2e8f0 !important;
+  -webkit-text-fill-color: #e2e8f0 !important;
 }
 
 /* Tratamento de foto da equipe - Fundo degradê premium */

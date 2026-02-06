@@ -870,61 +870,79 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
             
             {/* Preview Cards com IMAGENS */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="group relative rounded-xl overflow-hidden border border-azimut-red/20 transition-all" style={{ height: '300px' }}>
+              <div 
+                className="group relative rounded-xl overflow-hidden transition-all" 
+                style={{ 
+                  height: '300px',
+                  border: theme === 'dark' ? '1px solid rgba(201, 35, 55, 0.2)' : '1px solid rgba(201, 35, 55, 0.4)',
+                  boxShadow: theme === 'light' ? '0 4px 20px rgba(0, 0, 0, 0.15)' : 'none'
+                }}
+              >
                 <div 
-                  className="absolute inset-0 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center"
+                  className="absolute inset-0 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center studio-unique-card"
                   style={{
                     background: theme === 'dark' 
                       ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.7) 100%)'
-                      : 'linear-gradient(135deg, rgba(30, 28, 26, 0.9) 0%, rgba(26, 24, 21, 0.7) 100%)'
+                      : 'linear-gradient(135deg, rgba(30, 28, 26, 0.97) 0%, rgba(26, 24, 21, 0.95) 100%)'
                   }}
                 >
                   <div className="text-6xl mb-4 transition-transform">🎬</div>
-                  {/* Texto sempre claro pois o card tem fundo escuro em ambos os temas */}
-                  <h3 className="text-xl font-bold mb-2 text-white">
+                  <h3 className="text-xl font-bold mb-2" style={{ color: '#ffffff' }}>
                     {lang === 'pt' ? 'Studio + Lab + Academy' : lang === 'es' ? 'Estudio + Lab + Academia' : lang === 'fr' ? 'Studio + Lab + Académie' : 'Studio + Lab + Academy'}
                   </h3>
-                  <p className="text-sm text-slate-300">
+                  <p className="text-sm" style={{ color: '#e2e8f0' }}>
                     {lang === 'pt' ? 'Produção, pesquisa e educação em um só lugar' : lang === 'es' ? 'Producción, investigación y educación en un solo lugar' : lang === 'fr' ? 'Production, recherche et éducation en un seul endroit' : 'Production, research and education in one place'}
                   </p>
                 </div>
               </div>
 
-              <div className="group relative rounded-xl overflow-hidden border border-azimut-red/20 transition-all" style={{ height: '300px' }}>
+              <div 
+                className="group relative rounded-xl overflow-hidden transition-all" 
+                style={{ 
+                  height: '300px',
+                  border: theme === 'dark' ? '1px solid rgba(201, 35, 55, 0.2)' : '1px solid rgba(201, 35, 55, 0.4)',
+                  boxShadow: theme === 'light' ? '0 4px 20px rgba(0, 0, 0, 0.15)' : 'none'
+                }}
+              >
                 <div 
-                  className="absolute inset-0 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center"
+                  className="absolute inset-0 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center studio-unique-card"
                   style={{
                     background: theme === 'dark' 
                       ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.5) 100%)'
-                      : 'linear-gradient(135deg, rgba(30, 28, 26, 0.7) 0%, rgba(26, 24, 21, 0.5) 100%)'
+                      : 'linear-gradient(135deg, rgba(30, 28, 26, 0.97) 0%, rgba(26, 24, 21, 0.95) 100%)'
                   }}
                 >
                   <div className="text-6xl mb-4 transition-transform">🌍</div>
-                  {/* Texto sempre claro pois o card tem fundo escuro em ambos os temas */}
-                  <h3 className="text-xl font-bold mb-2 text-white">
+                  <h3 className="text-xl font-bold mb-2" style={{ color: '#ffffff' }}>
                     {lang === 'pt' ? 'Brasil ↔ Canadá' : lang === 'es' ? 'Brasil ↔ Canadá' : lang === 'fr' ? 'Brésil ↔ Canada' : 'Brazil ↔ Canada'}
                   </h3>
-                  <p className="text-sm text-slate-300">
+                  <p className="text-sm" style={{ color: '#e2e8f0' }}>
                     {lang === 'pt' ? 'Operações internacionais, perspectivas globais' : lang === 'es' ? 'Operaciones internacionales, perspectivas globales' : lang === 'fr' ? 'Opérations internationales, perspectives mondiales' : 'International operations, global perspectives'}
                   </p>
                 </div>
               </div>
 
-              <div className="group relative rounded-xl overflow-hidden border border-azimut-red/20 transition-all" style={{ height: '300px' }}>
+              <div 
+                className="group relative rounded-xl overflow-hidden transition-all" 
+                style={{ 
+                  height: '300px',
+                  border: theme === 'dark' ? '1px solid rgba(201, 35, 55, 0.2)' : '1px solid rgba(201, 35, 55, 0.4)',
+                  boxShadow: theme === 'light' ? '0 4px 20px rgba(0, 0, 0, 0.15)' : 'none'
+                }}
+              >
                 <div 
-                  className="absolute inset-0 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center"
+                  className="absolute inset-0 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center studio-unique-card"
                   style={{
                     background: theme === 'dark' 
                       ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(15, 23, 42, 0.3) 100%)'
-                      : 'linear-gradient(135deg, rgba(30, 28, 26, 0.5) 0%, rgba(26, 24, 21, 0.3) 100%)'
+                      : 'linear-gradient(135deg, rgba(30, 28, 26, 0.97) 0%, rgba(26, 24, 21, 0.95) 100%)'
                   }}
                 >
                   <div className="text-6xl mb-4 transition-transform">🎯</div>
-                  {/* Texto sempre claro pois o card tem fundo escuro em ambos os temas */}
-                  <h3 className="text-xl font-bold mb-2 text-white">
+                  <h3 className="text-xl font-bold mb-2" style={{ color: '#ffffff' }}>
                     {lang === 'pt' ? '30+ Anos Experiência' : lang === 'es' ? '30+ Años de Experiencia' : lang === 'fr' ? '30+ Ans d\'Expérience' : '30+ Years Experience'}
                   </h3>
-                  <p className="text-sm text-slate-300">
+                  <p className="text-sm" style={{ color: '#e2e8f0' }}>
                     {lang === 'pt' ? 'Expertise comprovada em projetos de grande escala' : lang === 'es' ? 'Experiencia comprobada en proyectos de gran escala' : lang === 'fr' ? 'Expertise prouvée dans des projets à grande échelle' : 'Proven expertise in large-scale projects'}
                   </p>
                 </div>

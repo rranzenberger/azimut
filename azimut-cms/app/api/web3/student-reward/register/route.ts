@@ -5,6 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { ethers } from 'ethers'
+import { getWeb3WalletConfig } from '@/src/lib/web3-settings'
 
 interface RegisterProjectRequest {
   studentAddress: string
@@ -18,9 +19,10 @@ export async function POST(request: NextRequest) {
     const body: RegisterProjectRequest = await request.json()
     const { studentAddress, projectValue, description, paymentMethod } = body
 
-    const COMPANY_WALLET_PRIVATE_KEY = process.env.COMPANY_WALLET_PRIVATE_KEY
-    const RPC_URL = process.env.RPC_URL || 'https://polygon-rpc.com'
-    const STUDENT_REWARD_CONTRACT = process.env.STUDENT_REWARD_CONTRACT_ADDRESS
+    const config = await getWeb3WalletConfig()
+    const COMPANY_WALLET_PRIVATE_KEY = config.companyWalletPrivateKey || process.env.COMPANY_WALLET_PRIVATE_KEY
+    const RPC_URL = config.web3RpcUrl || process.env.RPC_URL || 'https://polygon-rpc.com'
+    const STUDENT_REWARD_CONTRACT = config.web3StudentRewardContractAddress || process.env.STUDENT_REWARD_CONTRACT_ADDRESS
 
     if (!COMPANY_WALLET_PRIVATE_KEY) {
       return NextResponse.json(

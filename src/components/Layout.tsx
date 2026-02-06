@@ -333,12 +333,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
           >
             {/* Logo COMPOSTA: Estrela fixa + Texto ao lado */}
             {/* 
-              Componentes separados:
-              - logo-estrela-meno.svg (81x84) - estrela com raios
-              - azimut-menu.svg (147x32) - texto "azimut"  
-              - azimut-interactive.svg (348x92) - texto completo
-              
-              A estrela NUNCA muda de posição, só o texto faz transição
+              Dois estados: (1) logo + "azimut" ao lado  (2) ao rolar = só estrela, no mesmo lugar.
+              - logo-estrela-meno.svg = estrela (sempre mesma posição)
+              - azimut-menu.svg = texto "azimut" (some ao rolar)
             */}
             <div 
               className="hover:opacity-90 touch-manipulation"
@@ -354,72 +351,78 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 style={{ 
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '4px',
+                  gap: '10px',
                 }}
               >
-                {/* LOGO MOBILE (hamburger-compact e hamburger-minimal) - estrela com nome embaixo */}
+                {/* LOGO MOBILE: ao rolar = só estrela (mesmo lugar); sem rolar = logo com nome */}
                 {(headerState === 'hamburger-compact' || headerState === 'hamburger-minimal') && (
-                  <img
-                    src={theme === 'dark' ? '/logo-mobile-escuro.svg' : '/logo-mobile-escuro.svg'}
-                    alt="Azimut"
-                    style={{ 
-                      height: isScrolled ? '42px' : '50px',
-                      width: 'auto',
-                      display: 'block',
-                      transition: 'height 0.3s ease',
-                      flexShrink: 0,
-                    }}
-                    loading="eager"
-                  />
-                )}
-                
-                {/* LOGO DESKTOP - estrela + texto ao lado */}
-                {(headerState === 'full' || headerState === 'compact' || headerState === 'hamburger-langs') && (
-                  <>
-                    {/* ESTRELA */}
+                  isScrolled ? (
                     <img
                       src="/SVG/logo-estrela-meno.svg"
-                      alt=""
-                      aria-hidden="true"
-                      style={{ 
-                        height: isScrolled ? '36px' : '42px',
+                      alt="Azimut"
+                      style={{
+                        height: '38px',
                         width: 'auto',
                         display: 'block',
-                        transition: 'height 0.3s ease',
                         flexShrink: 0,
                       }}
                       loading="eager"
                     />
-                    
-                    {/* TEXTO COMPLETO (>1400px) - "azimut + IMMERSIVE • INTERACTIVE..." */}
-                    {headerState === 'full' && (
-                      <img
-                        src="/SVG/azimut-interactive.svg"
-                        alt="Azimut – Immersive • Interactive • Cinematic Experiences"
-                        style={{ 
-                          height: isScrolled ? '36px' : '42px',
-                          width: 'auto',
-                          display: 'block',
-                          transition: 'height 0.3s ease, opacity 0.3s ease',
-                        }}
-                        loading="eager"
-                      />
-                    )}
-                    
-                    {/* TEXTO MÉDIO - "azimut" */}
-                    {(headerState === 'compact' || headerState === 'hamburger-langs') && (
+                  ) : (
+                    <img
+                      src={theme === 'dark' ? '/logo-mobile-escuro.svg' : '/logo-mobile-escuro.svg'}
+                      alt="Azimut"
+                      style={{
+                        height: '50px',
+                        width: 'auto',
+                        display: 'block',
+                        flexShrink: 0,
+                      }}
+                      loading="eager"
+                    />
+                  )
+                )}
+                
+                {/* LOGO DESKTOP - estrela (sempre no mesmo lugar) + "azimut" ao lado; ao rolar só estrela */}
+                {(headerState === 'full' || headerState === 'compact' || headerState === 'hamburger-langs') && (
+                  <>
+                    {/* ESTRELA - posição fixa, não trepa */}
+                    <img
+                      src="/SVG/logo-estrela-meno.svg"
+                      alt=""
+                      aria-hidden="true"
+                      style={{
+                        height: isScrolled ? '36px' : '42px',
+                        width: 'auto',
+                        display: 'block',
+                        transition: 'height 0.25s ease',
+                        flexShrink: 0,
+                      }}
+                      loading="eager"
+                    />
+                    {/* Só "azimut" (sem tagline); ao rolar some e estrela fica no mesmo lugar */}
+                    <span
+                      style={{
+                        display: 'inline-block',
+                        maxWidth: isScrolled ? 0 : '200px',
+                        opacity: isScrolled ? 0 : 1,
+                        overflow: 'hidden',
+                        transition: 'max-width 0.25s ease, opacity 0.25s ease',
+                        verticalAlign: 'middle',
+                      }}
+                    >
                       <img
                         src="/SVG/azimut-menu.svg"
                         alt="Azimut"
-                        style={{ 
+                        style={{
                           height: isScrolled ? '20px' : '24px',
                           width: 'auto',
                           display: 'block',
-                          transition: 'height 0.3s ease, opacity 0.3s ease',
+                          flexShrink: 0,
                         }}
                         loading="eager"
                       />
-                    )}
+                    </span>
                   </>
                 )}
               </LangLink>

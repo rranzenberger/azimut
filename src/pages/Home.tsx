@@ -928,40 +928,6 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             
             </div>
             
-            {/* Tagline IMMERSIVE - DESTAQUE MÁXIMO abaixo da logo */}
-            <div className="relative py-8 text-center px-4" style={{ order: 3, zIndex: 20 }}>
-              <p className={`font-sora uppercase tracking-[0.25em] leading-[1.5] font-bold ${theme === 'dark' ? 'text-white' : 'text-[#1a1817]'}`} style={{ 
-                fontSize: 'clamp(1.1rem, 5vw, 1.6rem)',
-                textShadow: theme === 'dark' 
-                  ? '0 2px 15px rgba(255, 255, 255, 0.6)' 
-                  : '0 2px 10px rgba(0, 0, 0, 0.4)',
-                letterSpacing: '0.22em',
-                fontWeight: 700
-              }}>
-                {lang === 'pt' ? (
-                  <>
-                    <span className="block">IMERSIVO • INTERATIVO</span>
-                    <span className="block mt-6">EXPERIÊNCIAS CINEMÁTICAS</span>
-                  </>
-                ) : lang === 'es' ? (
-                  <>
-                    <span className="block">INMERSIVO • INTERACTIVO</span>
-                    <span className="block mt-6">EXPERIENCIAS CINEMATOGRÁFICAS</span>
-                  </>
-                ) : lang === 'fr' ? (
-                  <>
-                    <span className="block">IMMERSIF • INTERACTIF</span>
-                    <span className="block mt-6">EXPÉRIENCES CINÉMATOGRAPHIQUES</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="block">IMMERSIVE • INTERACTIVE</span>
-                    <span className="block mt-6">CINEMATIC EXPERIENCES</span>
-                  </>
-                )}
-              </p>
-            </div>
-            
             {/* 3️⃣ CARDS - TERCEIRO (APÓS vídeo) - GRID 2x2 */}
             <div className="relative z-10 flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden mt-6" style={{ order: 4 }}>
               

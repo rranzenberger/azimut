@@ -3,12 +3,7 @@ pragma solidity ^0.8.20;
 
 /**
  * @title StudentNFT
- * @dev NFT exclusivo para estudantes que contratam projetos
- * Versão simplificada - ERC-721 básico
- * 
- * NOTA: Para produção, use OpenZeppelin:
- * npm install @openzeppelin/contracts
- * import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+ * @dev NFT exclusivo para estudantes que contratam projetos. Versão simplificada ERC-721 básico.
  */
 
 interface IERC721 {
@@ -18,9 +13,7 @@ interface IERC721 {
 }
 
 /**
- * @dev Versão simplificada do StudentNFT
- * Para deploy rápido, use este contrato básico
- * Para produção completa, use versão com OpenZeppelin
+ * @dev Versão simplificada do StudentNFT para deploy rápido.
  */
 contract StudentNFT {
     address public owner;

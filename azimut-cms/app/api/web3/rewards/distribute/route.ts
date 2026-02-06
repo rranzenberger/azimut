@@ -5,6 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { ethers } from 'ethers'
+import { getWeb3WalletConfig } from '@/src/lib/web3-settings'
 
 interface RewardRequest {
   toAddress: string
@@ -19,10 +20,10 @@ export async function POST(request: NextRequest) {
     const body: RewardRequest = await request.json()
     const { toAddress, rewardType, amount, nftId, description } = body
 
-    // Endereço da carteira da empresa (para enviar recompensas)
-    const COMPANY_WALLET_ADDRESS = process.env.COMPANY_WALLET_ADDRESS
-    const COMPANY_WALLET_PRIVATE_KEY = process.env.COMPANY_WALLET_PRIVATE_KEY
-    const RPC_URL = process.env.RPC_URL || 'https://polygon-rpc.com'
+    const config = await getWeb3WalletConfig()
+    const COMPANY_WALLET_ADDRESS = config.companyWalletAddress || process.env.COMPANY_WALLET_ADDRESS
+    const COMPANY_WALLET_PRIVATE_KEY = config.companyWalletPrivateKey || process.env.COMPANY_WALLET_PRIVATE_KEY
+    const RPC_URL = config.web3RpcUrl || process.env.RPC_URL || 'https://polygon-rpc.com'
 
     if (!COMPANY_WALLET_ADDRESS) {
       return NextResponse.json(
@@ -97,7 +98,7 @@ export async function POST(request: NextRequest) {
         txHash = tx.hash
       } else if (rewardType === 'NFT') {
         // Mint NFT (requer contrato NFT)
-        const NFT_CONTRACT_ADDRESS = process.env.NFT_CONTRACT_ADDRESS
+        const NFT_CONTRACT_ADDRESS = config.web3NftContractAddress || process.env.NFT_CONTRACT_ADDRESS
         
         if (!NFT_CONTRACT_ADDRESS) {
           return NextResponse.json(
