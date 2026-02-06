@@ -920,7 +920,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                         src={getProjectImageUrl(cases[0], 'large')!}
                         alt={getProjectImageAlt(cases[0])}
                         loading="lazy"
-                        className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105"
+                        className="absolute inset-0 h-full w-full object-contain transition-transform group-hover:scale-105"
                       />
                       {/* Overlay gradient para legibilidade */}
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent pointer-events-none"></div>
@@ -1074,7 +1074,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                         src={getProjectImageUrl(item, 'medium')!}
                         alt={getProjectImageAlt(item)}
                         className="absolute inset-0 h-full w-full transition-transform duration-500 group-hover:scale-110"
-                        objectFit="cover"
+                        objectFit="contain"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent pointer-events-none opacity-100 group-hover:from-azimut-red/20 group-hover:via-slate-950/40 transition-all duration-300"></div>
                     </>

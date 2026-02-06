@@ -131,7 +131,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                   src={imageUrl}
                   alt={project.heroImage?.alt || project.title}
                   className="absolute inset-0 h-full w-full transition-transform duration-700 group-hover:scale-110"
-                  objectFit="cover"
+                  objectFit="contain"
                 />
                 {/* Overlay gradient */}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent pointer-events-none transition-opacity duration-300 group-hover:opacity-80" />
@@ -298,7 +298,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 src={imageUrl}
                 alt={project.heroImage?.alt || project.title}
                 className="absolute inset-0 h-full w-full transition-transform duration-500 group-hover:scale-110"
-                objectFit="cover"
+                objectFit="contain"
               />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center">
@@ -362,7 +362,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 src={imageUrl}
                 alt={project.heroImage?.alt || project.title}
                 className="absolute inset-0 h-full w-full transition-transform duration-700 group-hover:scale-110"
-                objectFit="cover"
+                objectFit="contain"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent pointer-events-none opacity-100 group-hover:from-azimut-red/20 group-hover:via-slate-950/40 transition-all duration-500" />
             </>

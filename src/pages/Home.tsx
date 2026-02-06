@@ -347,7 +347,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* margin-top negativo compensa o padding do Layout */}
         {/* ════════════════════════════════════════════════════════════════ */}
         <section 
-          className="relative flex flex-col lg:flex-row lg:items-start overflow-y-auto film-grain py-4 sm:py-6 md:py-8"
+          className="relative flex flex-col lg:flex-row lg:items-start film-grain py-4 sm:py-6 md:py-8"
           style={{ 
             marginTop: '-80px', 
             paddingTop: '100px', 
@@ -355,7 +355,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             isolation: 'isolate', // Isola contexto de stacking
             transform: 'translateZ(0)', // Force GPU layer
             willChange: 'auto',
-            overflowX: 'clip' // Melhor que hidden para evitar linhas
+            overflowX: 'clip', // Evita scroll horizontal / linhas que vazam
+            overflowY: 'visible'   // Evita scroll aninhado: só o body rola
           }}
         >
           {/* Background: Imagem do Backoffice (heroBackgroundImage) ou Featured Project */}
@@ -433,22 +434,30 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             <div className="grid grid-cols-[62%_38%] gap-4 items-start">
               {/* Coluna Esquerda: Conteúdo Texto */}
               <div className="space-y-4">
-              {/* Badge AZIMUT */}
+              {/* Badge AZIMUT - estrelinha sempre vermelha */}
               <div className="inline-flex items-center gap-2 font-sora text-[0.75rem] uppercase tracking-[0.3em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.1s' }}>
                 <img 
-                  src="/estela6-clara.svg"
+                  src="/estrela-vermelha.svg"
                   alt=""
                   width={16}
                   height={16}
-                  className="w-4 h-4"
-                  style={{
-                    filter: theme === 'light' ? 'brightness(0) saturate(100%) invert(15%) sepia(10%) saturate(2000%) hue-rotate(340deg) brightness(0.9) contrast(1.2)' : 'none'
-                  }}
+                  className="w-4 h-4 flex-shrink-0"
                 />
                 <span className={`font-semibold ${theme === 'light' ? 'text-azimut-red' : ''}`} style={theme === 'dark' ? { color: '#e84d5c' } : undefined}>AZIMUT</span>
                 <span style={{ color: theme === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(30, 28, 26, 0.4)' }}>•</span>
                 <span className={`text-[0.7rem] ${theme === 'dark' ? 'azimut-since-year' : ''}`} style={{ color: theme === 'dark' ? undefined : '#475569' }}>SINCE 1996</span>
               </div>
+
+                {/* Tagline: IMMERSIVE • INTERACTIVE • CINEMATIC EXPERIENCE (Opção B - entre badge e H1) */}
+                <p
+                  className="font-sora text-[0.65rem] sm:text-[0.7rem] uppercase tracking-[0.25em] animate-fade-in-up opacity-0"
+                  style={{
+                    animationDelay: '0.15s',
+                    color: theme === 'dark' ? 'rgba(255, 255, 255, 0.6)' : '#64748b'
+                  }}
+                >
+                  {t(lang, 'heroTagline')}
+                </p>
                 
                 {/* Título em 3 LINHAS - MULTILÍNGUE */}
                 {/* ESCURO: branco | CLARO: escuro elegante */}
@@ -810,22 +819,27 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             <div className="relative z-20 flex flex-col justify-start w-full px-4 sm:px-6 mx-auto max-w-full overflow-x-hidden" style={{ marginTop: '-80px', paddingTop: '80px' }}>
               <div className="relative z-20 w-full text-left space-y-3 px-0">
                 
-                {/* Badge AZIMUT - NO TOPO */}
+                {/* Badge AZIMUT - NO TOPO - estrelinha sempre vermelha */}
                 <div className="inline-flex items-center gap-1.5 font-sora text-[0.6rem] sm:text-[0.65rem] uppercase tracking-[0.2em] animate-fade-in-up opacity-0" style={{ animationDelay: '0.05s' }}>
                   <img 
-                    src="/estela6-clara.svg"
+                    src="/estrela-vermelha.svg"
                     alt=""
                     width={12}
                     height={12}
-                    className="w-2.5 h-2.5 sm:w-3 sm:h-3"
-                    style={{
-                      filter: theme === 'light' ? 'brightness(0) invert(0.2)' : 'none' // Escurece no tema claro
-                    }}
+                    className="w-2.5 h-2.5 sm:w-3 sm:h-3 flex-shrink-0"
                   />
                   <span className={`font-semibold ${theme === 'light' ? 'text-azimut-red' : ''}`} style={theme === 'dark' ? { color: '#e84d5c' } : undefined}>AZIMUT</span>
                   <span className={theme === 'dark' ? 'text-white/70' : 'text-slate-600'}>•</span>
                   <span className={`text-[0.55rem] sm:text-[0.6rem] ${theme === 'dark' ? 'text-white/85' : 'text-slate-600'}`}>SINCE 1996</span>
                 </div>
+
+                {/* Tagline (Opção B - entre badge e H1) */}
+                <p
+                  className={`font-sora text-[0.55rem] sm:text-[0.6rem] uppercase tracking-[0.2em] animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/60' : 'text-slate-500'}`}
+                  style={{ animationDelay: '0.08s' }}
+                >
+                  {t(lang, 'heroTagline')}
+                </p>
                 
                 {/* Título - COMPACTO */}
                 <h1 className={`font-handel uppercase animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ 
@@ -1550,7 +1564,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       <img
                         src={mainFeatured.heroImage?.large || mainFeatured.heroImage?.medium}
                         alt={mainFeatured.title}
-                        className="w-full h-full object-cover rounded-t-2xl"
+                        className="w-full h-full object-contain rounded-t-2xl"
                       />
                     ) : (
                       <div 
@@ -1642,7 +1656,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       </>
                     ) : imageUrl ? (
                       <>
-                        <img src={imageUrl} alt={project.title} width={800} height={450} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 rounded-2xl" loading="eager" />
+                        <img src={imageUrl} alt={project.title} width={800} height={450} className="absolute inset-0 w-full h-full object-contain transition-transform duration-700 group-hover:scale-110 rounded-2xl" loading="eager" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30 rounded-2xl"></div>
                       </>
                     ) : (
