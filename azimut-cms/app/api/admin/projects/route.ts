@@ -45,9 +45,16 @@ export async function GET(request: NextRequest) {
       limit,
       offset,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Projects GET error:', error);
-    return NextResponse.json({ error: 'Erro ao listar projetos' }, { status: 500 });
+    return NextResponse.json({ 
+      error: 'Erro ao listar projetos',
+      debug: {
+        message: error?.message,
+        code: error?.code,
+        meta: error?.meta,
+      }
+    }, { status: 500 });
   }
 }
 
