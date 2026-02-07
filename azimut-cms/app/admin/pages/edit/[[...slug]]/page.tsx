@@ -1505,8 +1505,31 @@ export default function EditPagePage() {
             <h2 style={{ margin: '0 0 16px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
               📸 Mídia da Página
             </h2>
+            {slug === 'home' && (
+              <div style={{
+                marginBottom: 24,
+                padding: 16,
+                borderRadius: 10,
+                background: 'rgba(34, 197, 94, 0.12)',
+                border: '1px solid rgba(34, 197, 94, 0.35)',
+                color: '#bbf7d0',
+                fontSize: 13,
+                lineHeight: 1.6,
+              }}>
+                <strong style={{ color: '#fff' }}>Onde atualizar o material da Home</strong>
+                <ul style={{ margin: '8px 0 0', paddingLeft: 20 }}>
+                  <li><strong>Vídeo e capa do topo (hero):</strong> configurados aqui abaixo — “Vídeo da Página” e “Thumbnail (Capa)”.</li>
+                  <li><strong>Imagens dos cards “Projetos em Destaque”:</strong> vêm de cada projeto. Para alterar ou fazer upload, vá em{' '}
+                    <a href="/admin/projects" target="_blank" rel="noopener noreferrer" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>Projetos</a>
+                    {' '}→ edite o projeto → defina a <strong>Imagem de capa (thumbnail/hero)</strong>.
+                  </li>
+                </ul>
+              </div>
+            )}
             <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
-              Adicione vídeo com thumbnail ou imagem de destaque para esta página.
+              {slug === 'home'
+                ? 'Aqui você define apenas o vídeo e a imagem de capa do topo da página (hero).'
+                : 'Adicione vídeo com thumbnail ou imagem de destaque para esta página.'}
             </p>
 
             {/* Vídeo com Thumbnail (Opcional) */}
@@ -1565,14 +1588,17 @@ export default function EditPagePage() {
             <div style={{ marginTop: 20, padding: 12, borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
               <p style={{ margin: 0, fontSize: 13, color: '#c0bccf' }}>
                 💡 <strong>Não vê suas mídias aqui?</strong>{' '}
-                <a
-                  href="/admin/media"
-                  target="_blank"
-                  style={{ color: '#7dd3fc', textDecoration: 'underline' }}
-                >
+                <a href="/admin/media" target="_blank" rel="noopener noreferrer" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>
                   Envie primeiro em "Mídias" →
                 </a>
               </p>
+              {slug === 'home' && (
+                <p style={{ margin: '8px 0 0', fontSize: 13, color: '#8f8ba2' }}>
+                  Para as imagens dos cards <strong>Projetos em Destaque</strong>, use{' '}
+                  <a href="/admin/projects" target="_blank" rel="noopener noreferrer" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>Projetos</a>
+                  {' '}→ editar cada projeto → Mídia principal (upload da imagem de capa).
+                </p>
+              )}
             </div>
           </section>
         )}

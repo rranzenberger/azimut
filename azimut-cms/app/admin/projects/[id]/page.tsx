@@ -976,11 +976,10 @@ export default function EditProjectPage() {
           }}
         >
           <h2 style={{ margin: '0 0 8px 0', fontSize: 18, color: '#fff' }}>
-            🖼️ Mídia Principal do Projeto
+            🖼️ Imagem de capa (cards da Home e página Projetos)
           </h2>
           <p style={{ margin: '0 0 20px 0', fontSize: 13, color: '#c0bccf' }}>
-            Defina a imagem principal (hero/thumbnail) e vídeo do projeto.
-            Estas mídias são exibidas na listagem e página de detalhes.
+            Esta é a <strong>imagem de capa</strong> do projeto: aparece nos <strong>cards da Home (Projetos em Destaque)</strong> e na <strong>página Projetos</strong>. Se um card aparecer quebrado no site, defina a Imagem Principal aqui. Envie o arquivo em <strong>Mídias</strong> antes, ou faça upload direto abaixo.
           </p>
           
           <UnifiedMediaUpload
@@ -1017,7 +1016,7 @@ export default function EditProjectPage() {
               description: 'Vídeo principal do projeto'
             }}
             existingMedia={allMedia}
-            imageLabel="Imagem Principal (Hero/Thumbnail)"
+            imageLabel="Imagem de capa (aparece nos cards da Home e na página Projetos)"
             videoLabel="Vídeo do Projeto (Opcional)"
           />
         </div>
