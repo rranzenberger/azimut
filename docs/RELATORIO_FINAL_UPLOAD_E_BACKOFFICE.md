@@ -1,5 +1,22 @@
 # Relatório final: onde fazer upload e onde atualizar no backoffice
 
+## 0. Reorganização do backoffice (UX para leigos)
+
+Na **edição de Páginas** (ex.: Home), no topo há um **Guia rápido — O que você quer atualizar?** com botões que levam direto a cada área, em vez de rolar a página inteira:
+
+| Botão no Guia | O que edita |
+|---------------|-------------|
+| **Nome e status** | Nome da página e se está Publicado/Rascunho |
+| **Textos do topo** | Slogan (H1), subtítulo, descrição mobile/desktop |
+| **Vídeo e capa do topo** | Vídeo do hero e thumbnail (só nesta seção) |
+| **Imagens dos cards (Projetos)** | Abre a lista de Projetos — as imagens dos cards vêm de cada projeto |
+| **Pilares (categorias)** | Textos dos badges/pills na Home (ex.: Museus & exposições) |
+| **SEO (Google)** | Título e descrição para busca |
+
+**Fluxo recomendado:** 1) Enviar arquivos em **Mídias** (menu lateral). 2) Na página ou no projeto, usar "Selecionar da Biblioteca" ou "Fazer upload" no campo desejado.
+
+---
+
 ## 1. Visão geral
 
 | O que você quer atualizar | Onde no backoffice | Onde fazer upload primeiro |
@@ -78,3 +95,17 @@
 - [ ] Definir **Imagem Principal** (upload ou **Selecionar da Biblioteca**).
 - [ ] Clicar em **Salvar Alterações**.
 - [ ] Conferir no site (Home e página Projetos) se os cards passaram a mostrar a imagem.
+
+---
+
+## 6. Resumo: O quê → Onde (textos, imagens, vídeos)
+
+| Conteúdo | Onde no backoffice | Observação |
+|----------|--------------------|------------|
+| **Textos do topo da Home** (slogan, subtítulo) | Páginas → Home → **Textos do topo** (Guia rápido) | PT, EN, ES, FR |
+| **Vídeo do topo da Home** | Páginas → Home → **Vídeo e capa do topo** | Upload ou Biblioteca; máx. 25 MB |
+| **Capa (thumbnail) do vídeo** | Mesma seção acima | 1920×1080 recomendado |
+| **Imagens dos cards da Home** | Projetos → editar projeto → **Imagem de capa** | Um projeto = um card |
+| **Textos dos pilares** (badges Home) | Páginas → Home → **Pilares** | Ex.: Museus & exposições |
+| **SEO** (título/descrição para Google) | Páginas → [página] → **SEO** | Por idioma |
+| **Upload geral** (antes de usar em qualquer lugar) | **Mídias** (menu lateral) | Depois selecione na página/projeto |

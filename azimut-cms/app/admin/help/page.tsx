@@ -72,6 +72,29 @@ export default async function HelpPage() {
         </div>
       </section>
 
+      {/* Onde fazer upload - UX para leigos */}
+      <section
+        style={{
+          marginBottom: 40,
+          padding: 24,
+          borderRadius: 16,
+          background: 'rgba(56, 189, 248, 0.06)',
+          border: '1px solid rgba(56, 189, 248, 0.25)',
+        }}
+      >
+        <h2 style={{ margin: '0 0 12px', fontSize: 20, fontWeight: 600, color: '#7dd3fc' }}>
+          📸 Onde fazer upload (imagens e vídeos)
+        </h2>
+        <p style={{ margin: '0 0 16px', fontSize: 14, color: '#94a3b8', lineHeight: 1.6 }}>
+          Use o <strong>Guia rápido</strong> no topo da edição de Páginas (ex.: Home) para ir direto à área desejada, sem rolar a página inteira.
+        </p>
+        <ul style={{ margin: 0, padding: '0 0 0 20px', fontSize: 14, color: '#c0bccf', lineHeight: 1.9 }}>
+          <li><strong>Vídeo e capa do topo da Home:</strong> Páginas → Editar Home → botão &quot;Vídeo e capa do topo&quot; (ou role até &quot;Mídia da Página&quot;).</li>
+          <li><strong>Imagens dos cards (Projetos em Destaque):</strong> Projetos → editar cada projeto → &quot;Imagem de capa&quot;. Não é na página Home.</li>
+          <li><strong>Enviar arquivos primeiro:</strong> menu <strong>Mídias</strong> → upload. Depois selecione &quot;Da Biblioteca&quot; na página ou no projeto.</li>
+        </ul>
+      </section>
+
       {/* Table of Contents */}
       <section style={{ marginBottom: 40 }}>
         <h2 style={{ margin: '0 0 16px', fontSize: 18, fontWeight: 600, color: '#9f9bb0' }}>

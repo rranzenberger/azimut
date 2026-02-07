@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { FieldEditorWithMetadata } from '@/src/components/admin/FieldEditorWithMetadata';
 import MediaUploadField from '@/components/admin/MediaUploadField';
@@ -315,6 +315,17 @@ const inputStyle: React.CSSProperties = {
   fontFamily: 'inherit',
 };
 
+const navButtonStyle: React.CSSProperties = {
+  padding: '10px 16px',
+  borderRadius: 8,
+  border: '1px solid rgba(56, 189, 248, 0.4)',
+  background: 'rgba(56, 189, 248, 0.1)',
+  color: '#7dd3fc',
+  fontSize: 13,
+  fontWeight: 500,
+  cursor: 'pointer',
+};
+
 export default function EditPagePage() {
   const router = useRouter();
   const params = useParams();
@@ -332,6 +343,21 @@ export default function EditPagePage() {
   const [translating, setTranslating] = useState<string | null>(null); // campo sendo traduzido
   // Projetos que aparecem nos cards da Home (para mostrar nomes e links na seção Mídia)
   const [homeFeaturedProjects, setHomeFeaturedProjects] = useState<Array<{ id: string; title: string; priorityHome: number }>>([]);
+
+  // Refs para navegação por áreas (evitar "tripa" — ir direto ao bloco)
+  const refBasico = useRef<HTMLDivElement>(null);
+  const refHeroTexto = useRef<HTMLDivElement>(null);
+  const refMidiaPagina = useRef<HTMLDivElement>(null);
+  const refPillars = useRef<HTMLDivElement>(null);
+  const refSeo = useRef<HTMLDivElement>(null);
+
+  // Seções colapsáveis (accordion): só uma aberta por vez = menos "tripa", fácil para leigos
+  const [openSection, setOpenSection] = useState<string | null>('basico');
+
+  const scrollToSection = useCallback((ref: React.RefObject<HTMLDivElement | null>, sectionId: string) => {
+    setOpenSection(sectionId);
+    setTimeout(() => ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+  }, []);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -811,19 +837,83 @@ export default function EditPagePage() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 32 }}>
-        {/* Informações Básicas */}
-        <section
-          style={{
-            padding: 28,
-            borderRadius: 12,
-            border: '1px solid rgba(255,255,255,0.08)',
-            background: 'rgba(255,255,255,0.03)',
-          }}
+      {/* ═══ GUIA RÁPIDO: Onde atualizar o quê (evita "tripa", UX para leigos) ═══ */}
+      <div
+        style={{
+          marginBottom: 24,
+          padding: 20,
+          borderRadius: 12,
+          border: '1px solid rgba(56, 189, 248, 0.35)',
+          background: 'rgba(56, 189, 248, 0.06)',
+        }}
+      >
+        <h2 style={{ margin: '0 0 12px', fontSize: 18, fontWeight: 600, color: '#fff' }}>
+          🧭 Guia rápido — O que você quer atualizar?
+        </h2>
+        <p style={{ margin: '0 0 16px', fontSize: 13, color: '#94a3b8' }}>
+          Clique no bloco para ir direto à área. Assim você não precisa rolar a página inteira.
+        </p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+          <button type="button" onClick={() => scrollToSection(refBasico, 'basico')} style={navButtonStyle}>
+            📋 Nome e status
+          </button>
+          <button type="button" onClick={() => scrollToSection(refHeroTexto, 'heroTexto')} style={navButtonStyle}>
+            🎯 Textos do topo (slogan, subtítulo)
+          </button>
+          {slug !== 'studio' && slug !== 'studio/diferenciais' && (
+            <button type="button" onClick={() => scrollToSection(refMidiaPagina, 'midia')} style={navButtonStyle}>
+              📸 Vídeo e capa do topo
+            </button>
+          )}
+          {slug === 'home' && (
+            <>
+              <a href="/admin/projects" style={{ ...navButtonStyle, textDecoration: 'none' }} target="_blank" rel="noopener noreferrer">
+                🖼️ Imagens dos cards (Projetos)
+              </a>
+              <button type="button" onClick={() => scrollToSection(refPillars, 'pillars')} style={navButtonStyle}>
+                💡 Pilares (categorias)
+              </button>
+            </>
+          )}
+          <button type="button" onClick={() => scrollToSection(refSeo, 'seo')} style={navButtonStyle}>
+            🔍 SEO (Google)
+          </button>
+        </div>
+        <p style={{ margin: '12px 0 0', fontSize: 12, color: '#64748b' }}>
+          💡 Dica: envie imagens e vídeos em <strong>Mídias</strong> (menu lateral) e depois escolha aqui ou em Projetos. <a href="/admin/help" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>Guia completo →</a>
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 16 }}>
+        {/* Informações Básicas - colapsável */}
+        <div
+          ref={refBasico}
+          id="secao-basico"
+          style={{ borderRadius: 12, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)', overflow: 'hidden' }}
         >
-          <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
-            📋 Informações Básicas
-          </h2>
+          <button
+            type="button"
+            onClick={() => setOpenSection((s) => (s === 'basico' ? null : 'basico'))}
+            style={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '16px 20px',
+              background: openSection === 'basico' ? 'rgba(255,255,255,0.06)' : 'transparent',
+              border: 'none',
+              color: '#fff',
+              fontSize: 18,
+              fontWeight: 600,
+              cursor: 'pointer',
+              textAlign: 'left',
+            }}
+          >
+            <span>📋 Informações Básicas</span>
+            <span style={{ color: '#94a3b8', fontSize: 14 }}>{openSection === 'basico' ? '▼ Fechar' : '▶ Abrir'}</span>
+          </button>
+          {openSection === 'basico' && (
+            <div style={{ padding: '0 28px 28px 28px' }}>
           <MultilangTextField
             label="Nome da Página"
             location="Páginas > Informações Básicas > Nome"
@@ -847,20 +937,27 @@ export default function EditPagePage() {
               <option value="ARCHIVED">Arquivado</option>
             </select>
           </div>
-        </section>
+            </div>
+          )}
+        </div>
 
-        {/* Hero Slogan */}
-        <section
-          style={{
-            padding: 28,
-            borderRadius: 12,
-            border: '1px solid rgba(255,255,255,0.08)',
-            background: 'rgba(255,255,255,0.03)',
-          }}
+        {/* Hero Slogan - colapsável */}
+        <div
+          ref={refHeroTexto}
+          id="secao-hero-texto"
+          style={{ borderRadius: 12, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)', overflow: 'hidden' }}
         >
-          <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
-            🎯 Hero Slogan (Texto do Head)
-          </h2>
+          <button
+            type="button"
+            onClick={() => setOpenSection((s) => (s === 'heroTexto' ? null : 'heroTexto'))}
+            style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', background: openSection === 'heroTexto' ? 'rgba(255,255,255,0.06)' : 'transparent', border: 'none', color: '#fff', fontSize: 18, fontWeight: 600, cursor: 'pointer', textAlign: 'left' }}
+          >
+            <span>🎯 Textos do topo (slogan, subtítulo)</span>
+            <span style={{ color: '#94a3b8', fontSize: 14 }}>{openSection === 'heroTexto' ? '▼ Fechar' : '▶ Abrir'}</span>
+          </button>
+          {openSection === 'heroTexto' && (
+            <div style={{ padding: '0 28px 28px 28px' }}>
+          <h3 style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 600, color: '#e8e6f2' }}>Hero Slogan (Texto do Head)</h3>
           <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
             Texto principal exibido no topo da página, acima do conteúdo. Aparece no hero/banner da página.
           </p>
@@ -922,20 +1019,18 @@ export default function EditPagePage() {
             onTranslate={(lang) => handleTranslate('heroSlogan', lang as 'en' | 'es' | 'fr')}
             translating={translating?.startsWith('heroSlogan-') || false}
           />
-        </section>
+            </div>
+          )}
+        </div>
 
-        {/* Hero Subtitle */}
-        <section
-          style={{
-            padding: 28,
-            borderRadius: 12,
-            border: '1px solid rgba(255,255,255,0.08)',
-            background: 'rgba(255,255,255,0.03)',
-          }}
-        >
-          <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
-            📝 Hero Subtitle (Texto Secundário)
-          </h2>
+        {/* Hero Subtitle - colapsável */}
+        <div style={{ borderRadius: 12, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)', overflow: 'hidden' }}>
+          <button type="button" onClick={() => setOpenSection((s) => (s === 'heroSubtitle' ? null : 'heroSubtitle'))} style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', background: openSection === 'heroSubtitle' ? 'rgba(255,255,255,0.06)' : 'transparent', border: 'none', color: '#fff', fontSize: 18, fontWeight: 600, cursor: 'pointer', textAlign: 'left' }}>
+            <span>📝 Hero Subtitle (Texto Secundário)</span>
+            <span style={{ color: '#94a3b8', fontSize: 14 }}>{openSection === 'heroSubtitle' ? '▼ Fechar' : '▶ Abrir'}</span>
+          </button>
+          {openSection === 'heroSubtitle' && (
+            <div style={{ padding: '0 28px 28px 28px' }}>
           <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
             Texto secundário exibido abaixo do slogan principal. Descrição mais detalhada sobre a empresa/produto.
           </p>
@@ -986,20 +1081,18 @@ export default function EditPagePage() {
             onTranslate={(lang) => handleTranslate('heroSubtitle', lang as 'en' | 'es' | 'fr')}
             translating={translating?.startsWith('heroSubtitle-') || false}
           />
-        </section>
+            </div>
+          )}
+        </div>
 
-        {/* Hero Description - MOBILE vs DESKTOP */}
-        <section
-          style={{
-            padding: 28,
-            borderRadius: 12,
-            border: '1px solid rgba(201,35,55,0.2)',
-            background: 'rgba(201,35,55,0.05)',
-          }}
-        >
-          <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
-            📱💻 Hero Description (Mobile vs Desktop/Web)
-          </h2>
+        {/* Hero Description - MOBILE vs DESKTOP - colapsável */}
+        <div style={{ borderRadius: 12, border: '1px solid rgba(201,35,55,0.2)', background: 'rgba(201,35,55,0.05)', overflow: 'hidden' }}>
+          <button type="button" onClick={() => setOpenSection((s) => (s === 'heroDescription' ? null : 'heroDescription'))} style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', background: openSection === 'heroDescription' ? 'rgba(255,255,255,0.06)' : 'transparent', border: 'none', color: '#fff', fontSize: 18, fontWeight: 600, cursor: 'pointer', textAlign: 'left' }}>
+            <span>📱💻 Hero Description (Mobile vs Desktop)</span>
+            <span style={{ color: '#94a3b8', fontSize: 14 }}>{openSection === 'heroDescription' ? '▼ Fechar' : '▶ Abrir'}</span>
+          </button>
+          {openSection === 'heroDescription' && (
+            <div style={{ padding: '0 28px 28px 28px' }}>
           <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
             <strong>Versões diferentes para cada plataforma:</strong>
             <br />
@@ -1121,7 +1214,9 @@ export default function EditPagePage() {
               translating={translating?.startsWith('heroDescriptionDesktop-') || false}
             />
           </div>
-        </section>
+            </div>
+          )}
+        </div>
 
         {/* Hero Media - SISTEMA HÍBRIDO: Media OU URL */}
         {slug === 'home' && (
@@ -1257,19 +1352,19 @@ export default function EditPagePage() {
           </section>
         )}
 
-        {/* Pillars - Apenas para home */}
+        {/* Pillars - Apenas para home - colapsável */}
         {slug === 'home' && (
-          <section
-            style={{
-              padding: 28,
-              borderRadius: 12,
-              border: '1px solid rgba(255,255,255,0.08)',
-              background: 'rgba(255,255,255,0.03)',
-            }}
+          <div
+            ref={refPillars}
+            id="secao-pillars"
+            style={{ borderRadius: 12, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)', overflow: 'hidden' }}
           >
-            <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
-              🏛️ Pillars (Pilares da Home)
-            </h2>
+            <button type="button" onClick={() => setOpenSection((s) => (s === 'pillars' ? null : 'pillars'))} style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', background: openSection === 'pillars' ? 'rgba(255,255,255,0.06)' : 'transparent', border: 'none', color: '#fff', fontSize: 18, fontWeight: 600, cursor: 'pointer', textAlign: 'left' }}>
+              <span>💡 Pilares (categorias da Home)</span>
+              <span style={{ color: '#94a3b8', fontSize: 14 }}>{openSection === 'pillars' ? '▼ Fechar' : '▶ Abrir'}</span>
+            </button>
+            {openSection === 'pillars' && (
+              <div style={{ padding: '0 28px 28px 28px' }}>
             <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
               Três textos curtos exibidos como badges/pills na página inicial. Ex: "Museus & Cultura", "Marcas & Eventos", "Educação & Pesquisa".
             </p>
@@ -1404,21 +1499,23 @@ export default function EditPagePage() {
                 />
               </div>
             </div>
-          </section>
+            </div>
+          )}
+          </div>
         )}
 
-        {/* SEO */}
-        <section
-          style={{
-            padding: 28,
-            borderRadius: 12,
-            border: '1px solid rgba(255,255,255,0.08)',
-            background: 'rgba(255,255,255,0.03)',
-          }}
+        {/* SEO - colapsável */}
+        <div
+          ref={refSeo}
+          id="secao-seo"
+          style={{ borderRadius: 12, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)', overflow: 'hidden' }}
         >
-          <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
-            🔍 SEO (Search Engine Optimization)
-          </h2>
+          <button type="button" onClick={() => setOpenSection((s) => (s === 'seo' ? null : 'seo'))} style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', background: openSection === 'seo' ? 'rgba(255,255,255,0.06)' : 'transparent', border: 'none', color: '#fff', fontSize: 18, fontWeight: 600, cursor: 'pointer', textAlign: 'left' }}>
+            <span>🔍 SEO (Google)</span>
+            <span style={{ color: '#94a3b8', fontSize: 14 }}>{openSection === 'seo' ? '▼ Fechar' : '▶ Abrir'}</span>
+          </button>
+          {openSection === 'seo' && (
+            <div style={{ padding: '0 28px 28px 28px' }}>
           <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
             Títulos e descrições que aparecem nos resultados de busca do Google e outras plataformas.
           </p>
@@ -1512,13 +1609,17 @@ export default function EditPagePage() {
             onTranslate={(lang) => handleTranslate('seoDesc', lang as 'en' | 'es' | 'fr')}
             translating={translating?.startsWith('seoDesc-') || false}
           />
-        </section>
+            </div>
+          )}
+        </div>
 
         {/* ═══════════════════════════════════════════════════════════
-            MÍDIA DA PÁGINA (Universal) - Exceto Studio que tem seção própria
+            MÍDIA DA PÁGINA (Universal) - Exceto Studio que tem seção própria - colapsável
         ═══════════════════════════════════════════════════════════ */}
         {slug !== 'studio' && slug !== 'studio/diferenciais' && (
-          <section
+          <div
+            ref={refMidiaPagina}
+            id="secao-midia-pagina"
             style={{
               padding: 28,
               borderRadius: 12,

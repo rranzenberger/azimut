@@ -76,44 +76,92 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
           </div>
         </div>
 
-        {/* Menu de Navegação */}
+        {/* Guia rápido — atalhos para quem quer só atualizar conteúdo */}
+        <div
+          style={{
+            padding: '12px 16px',
+            margin: '0 12px 12px',
+            borderRadius: 10,
+            background: 'rgba(201, 35, 55, 0.12)',
+            border: '1px solid rgba(201, 35, 55, 0.3)',
+          }}
+        >
+          <div style={{ fontSize: 11, fontWeight: 600, color: '#e8a0a8', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 8 }}>
+            Guia rápido
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            <AdminLink href="/admin/pages/edit/home" label="✏️ Atualizar Home" title="Textos, vídeo e capa do topo da Home" />
+            <AdminLink href="/admin/projects" label="🖼️ Projetos e imagens" title="Imagens dos cards da Home e da página Projetos" />
+            <AdminLink href="/admin/media" label="📤 Mídias (upload)" title="Enviar imagens e vídeos; depois use em Páginas e Projetos" />
+            <AdminLink href="/admin/help" label="📖 Manual" title="Onde está cada coisa e como usar" />
+          </div>
+        </div>
+
+        {/* Menu de Navegação — por áreas */}
         <nav
           style={{
             flex: 1,
-            padding: '20px 20px',
+            padding: '0 20px 20px',
             display: 'flex',
             flexDirection: 'column',
-            gap: 10,
+            gap: 6,
+            overflowY: 'auto',
           }}
         >
+          <div style={{ fontSize: 10, fontWeight: 600, color: '#6b6b7a', textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 4, marginBottom: 2, paddingLeft: 4 }}>
+            Conteúdo do site
+          </div>
           <AdminLink href="/admin" label="🏠 Dashboard" title={TOOLTIP_BY_HREF['/admin']} />
-          <AdminLink href="/admin/help" label="📖 Manual" title={TOOLTIP_BY_HREF['/admin/help']} />
-          <AdminLink href="/admin/analytics" label="📊 Analytics IA" title={TOOLTIP_BY_HREF['/admin/analytics']} />
+          <AdminLink href="/admin/site-pages" label="📄 Páginas" title={TOOLTIP_BY_HREF['/admin/site-pages']} />
           <AdminLink href="/admin/projects" label="🎥 Projetos" title={TOOLTIP_BY_HREF['/admin/projects']} />
           <AdminLink href="/admin/blog" label="📝 Blog" title={TOOLTIP_BY_HREF['/admin/blog']} />
           <MonitorLink />
           <AdminLink href="/admin/making-of" label="🎬 Making-of" title={TOOLTIP_BY_HREF['/admin/making-of']} />
           <AdminLink href="/admin/making-of/curation" label="🎨 Curadoria" title={TOOLTIP_BY_HREF['/admin/making-of/curation']} />
-          <AdminLink href="/admin/site-pages" label="📄 Páginas" title={TOOLTIP_BY_HREF['/admin/site-pages']} />
+          <AdminLink href="/admin/services" label="⚡ Serviços" title={TOOLTIP_BY_HREF['/admin/services']} />
+
+          <div style={{ fontSize: 10, fontWeight: 600, color: '#6b6b7a', textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
+            Mídia
+          </div>
           <AdminLink href="/admin/media" label="🖼️ Mídias" title={TOOLTIP_BY_HREF['/admin/media']} />
+
+          <div style={{ fontSize: 10, fontWeight: 600, color: '#6b6b7a', textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
+            Leads e IA
+          </div>
+          <AdminLink href="/admin/analytics" label="📊 Analytics IA" title={TOOLTIP_BY_HREF['/admin/analytics']} />
           <AdminLink href="/admin/leads" label="👥 Leads" title={TOOLTIP_BY_HREF['/admin/leads']} />
           <AdminLink href="/admin/leads/game" label="🎮 Leads do Jogo" title={TOOLTIP_BY_HREF['/admin/leads/game']} />
           <AdminLink href="/admin/leads/dashboard" label="🎯 Dashboard Leads IA" title={TOOLTIP_BY_HREF['/admin/leads/dashboard']} />
+
+          <div style={{ fontSize: 10, fontWeight: 600, color: '#6b6b7a', textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
+            Ferramentas e config
+          </div>
           <AdminLink href="/admin/tools" label="🛠️ Ferramentas" title={TOOLTIP_BY_HREF['/admin/tools']} />
           <AdminLink href="/admin/roadmap" label="🗺️ Roadmap" title={TOOLTIP_BY_HREF['/admin/roadmap']} />
           <AdminLink href="/admin/marketing/preview" label="🎁 Marketing Preview" title={TOOLTIP_BY_HREF['/admin/marketing/preview']} />
+          <AdminLink href="/admin/n8n-workflow" label="🤖 Automação n8n" title={TOOLTIP_BY_HREF['/admin/n8n-workflow']} />
+          <AdminLink href="/admin/newsletter" label="📨 Inscritos" title={TOOLTIP_BY_HREF['/admin/newsletter']} />
+
+          <div style={{ fontSize: 10, fontWeight: 600, color: '#6b6b7a', textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
+            Web3 e recompensas
+          </div>
           <AdminLink href="/admin/web3/setup-wallet" label="🔐 Configurar Carteira" title={TOOLTIP_BY_HREF['/admin/web3/setup-wallet']} />
           <AdminLink href="/admin/web3/wallet-status" label="💰 Carteira Web3" title={TOOLTIP_BY_HREF['/admin/web3/wallet-status']} />
           <AdminLink href="/admin/web3/student-rewards" label="🎓 Recompensas Estudantes" title={TOOLTIP_BY_HREF['/admin/web3/student-rewards']} />
-          <AdminLink href="/admin/newsletter" label="📨 Inscritos" title={TOOLTIP_BY_HREF['/admin/newsletter']} />
-          <AdminLink href="/admin/n8n-workflow" label="🤖 Automação n8n" title={TOOLTIP_BY_HREF['/admin/n8n-workflow']} />
-          <AdminLink href="/admin/services" label="⚡ Serviços" title={TOOLTIP_BY_HREF['/admin/services']} />
+
+          <div style={{ fontSize: 10, fontWeight: 600, color: '#6b6b7a', textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
+            Studio e institucional
+          </div>
           <AdminLink href="/admin/markets" label="🏢 Mercados" title={TOOLTIP_BY_HREF['/admin/markets']} />
           <AdminLink href="/admin/history" label="📅 Timeline & Histórico" title={TOOLTIP_BY_HREF['/admin/history']} />
           <AdminLink href="/admin/team" label="👥 Equipe" title={TOOLTIP_BY_HREF['/admin/team']} />
           <AdminLink href="/admin/credentials" label="🏆 Credenciais" title={TOOLTIP_BY_HREF['/admin/credentials']} />
           <AdminLink href="/admin/press" label="📰 Imprensa" title={TOOLTIP_BY_HREF['/admin/press']} />
           <AdminLink href="/admin/publications" label="📚 Publicações (Research)" title={TOOLTIP_BY_HREF['/admin/publications']} />
+
+          <div style={{ fontSize: 10, fontWeight: 600, color: '#6b6b7a', textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
+            Sistema
+          </div>
           <AdminLink href="/admin/settings" label="⚙️ Configurações" title={TOOLTIP_BY_HREF['/admin/settings']} />
         </nav>
 
