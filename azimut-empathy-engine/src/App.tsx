@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useSettingsStore } from './stores/settingsStore'
 import SplashScreen from './screens/SplashScreen'
 import GameScreen from './screens/GameScreen'
+import GameErrorBoundary from './components/ErrorBoundary'
 import TutorialScreen from './screens/TutorialScreen'
 import TipsScreen from './screens/TipsScreen'
 import LeaderboardScreen from './screens/LeaderboardScreen'
@@ -71,10 +72,12 @@ function App() {
             exit={transition.exit}
             transition={transition.transition}
           >
-            <GameScreen
-              onLeaderboard={() => setView('leaderboard')}
-              onBack={() => setView('splash')}
-            />
+            <GameErrorBoundary>
+              <GameScreen
+                onLeaderboard={() => setView('leaderboard')}
+                onBack={() => setView('splash')}
+              />
+            </GameErrorBoundary>
           </motion.div>
         )}
 

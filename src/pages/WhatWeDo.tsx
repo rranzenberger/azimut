@@ -13,6 +13,26 @@ import { PageFooterNavigation } from '../components/PageFooterNavigation'
 import { useTheme } from '../contexts/ThemeContext'
 
 // ═══════════════════════════════════════════════════════════════
+// CURADORIA 2026: 12 cards (múltiplo de 4 = 3 linhas × 4, sem quebrar o grid)
+// Palavras-chave: vermelho (#c92337) | secundárias: bege (#d4a574) | texto: branco
+// Ver docs/CURADORIA_SERVICOS_WHAT_2026.md
+// ═══════════════════════════════════════════════════════════════
+const CURATED_SERVICE_SLUGS: string[] = [
+  'cinema-audiovisual',
+  'pos-producao-vfx',
+  'animacao-2d-3d',
+  'xr-interatividade-web3',
+  'cenografia-design-espacial',
+  'games-interativos',
+  'ia-criativa',
+  'direcao-arte-criativa',
+  'teatro-espetaculos-imersivos',
+  'branded-experiences-ativacoes',
+  'consultoria-estrategia',
+  'educacao-treinamento',
+]
+
+// ═══════════════════════════════════════════════════════════════
 // FUNÇÃO: Destacar palavras-chave com DUAS cores harmônicas
 // PRIMÁRIAS (tech): Coral médio - destaque principal
 // SECUNDÁRIAS (conceitos): Bege sutil + semi-bold - destaque suave
@@ -221,7 +241,20 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   }
   
   // 🆕 USAR DADOS DO BACKOFFICE (se disponíveis) ou FALLBACK para dados locais
-  const servicesSource = backofficeServices.length > 0 ? backofficeServices : servicesData
+  const rawSource = backofficeServices.length > 0 ? backofficeServices : servicesData
+  
+  // Curadoria: só exibir slugs da lista (evita duplicatas e cards genéricos do backoffice)
+  const servicesSource = rawSource.filter(service => {
+    const slug = 'slug' in service ? service.slug : (service as { slug: string }).slug
+    if (!CURATED_SERVICE_SLUGS.includes(slug)) return false
+    // Backoffice: esconder placeholders (descrição vazia ou igual ao título)
+    if ('description' in service && typeof (service as { description?: string }).description === 'string') {
+      const desc = (service as { description: string }).description?.trim() ?? ''
+      const title = (service as { title?: string }).title?.trim() ?? ''
+      if (desc === '' || desc === title) return false
+    }
+    return true
+  })
   
   // Filtrar serviços com base no filtro ativo
   const filteredServices = activeFilter === 'all' 
@@ -365,7 +398,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-14">
               {filteredServices.map((service, index) => (
                 <LangLink 
-                  key={service.id}
+                  key={'id' in service ? String(service.id) : service.slug}
                   to={`/what/${service.slug}`}
                   className="group relative rounded-xl cursor-pointer transition-all duration-400 hover:z-50 z-10 card-adaptive"
                   style={{

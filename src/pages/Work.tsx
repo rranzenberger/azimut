@@ -648,7 +648,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
             </h1>
             <p className="max-w-3xl leading-relaxed text-slate-400 dark:text-slate-300" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
               {lang === 'pt' ? (
-                <>Projetos que transformam espaços, marcas e experiências. De museus olímpicos a curadoria de festivais internacionais, cada trabalho é uma oportunidade de criar narrativas imersivas que conectam pessoas e histórias de forma única. <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">Conheça nossas soluções</LangLink> ou <LangLink to="/contact" className="text-azimut-red hover:text-azimut-red/80 underline">inicie seu projeto</LangLink>.</>
+                <>Projetos que transformam espaços, marcas e experiências. De museus olímpicos a curadoria de festivais internacionais, cada trabalho é uma oportunidade de criar narrativas imersivas que conectam pessoas e histórias de forma única. <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">Conheça nossos serviços</LangLink> ou <LangLink to="/contact" className="text-azimut-red hover:text-azimut-red/80 underline">inicie seu projeto</LangLink>.</>
               ) : lang === 'es' ? (
                 <>Proyectos que transforman espacios, marcas y experiencias. Desde museos olímpicos hasta curaduría de festivales internacionales, cada trabajo es una oportunidad de crear narrativas inmersivas que conectan personas e historias de forma única. <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">Conoce nuestras soluciones</LangLink> o <LangLink to="/contact" className="text-azimut-red hover:text-azimut-red/80 underline">inicia tu proyecto</LangLink>.</>
               ) : lang === 'fr' ? (
@@ -1246,7 +1246,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               icon: '🏛️'
             },
             next: {
-              label: lang === 'pt' ? 'Ver Soluções' : lang === 'es' ? 'Ver Soluciones' : lang === 'fr' ? 'Voir Solutions' : 'View Solutions',
+              label: lang === 'pt' ? 'Ver Serviços' : lang === 'es' ? 'Ver Soluciones' : lang === 'fr' ? 'Voir Solutions' : 'View Solutions',
               href: '/what',
               icon: '✨'
             }

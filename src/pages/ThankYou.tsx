@@ -57,7 +57,7 @@ const ThankYou: React.FC<ThankYouProps> = ({ lang }) => {
       steps: [
         { icon: '📧', title: 'Análise', desc: 'Avaliação do projeto', time: '1h' },
         { icon: '💬', title: 'Retorno 24h', desc: 'Conversa detalhada', time: '24h' },
-        { icon: '🎯', title: 'Proposta', desc: 'Soluções sob medida', time: '48h' }
+        { icon: '🎯', title: 'Proposta', desc: 'Serviços sob medida', time: '48h' }
       ],
       explore: 'Enquanto isso, explore:',
       links: [

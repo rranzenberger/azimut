@@ -31,7 +31,7 @@ export function useSearch(query: string, lang: Lang) {
         keywords: ['home', 'inicio', 'accueil', 'homepage']
       },
       {
-        title: lang === 'pt' ? 'Soluções' : lang === 'es' ? 'Soluciones' : lang === 'fr' ? 'Solutions' : 'Solutions',
+        title: lang === 'pt' ? 'Serviços' : lang === 'es' ? 'Soluciones' : lang === 'fr' ? 'Solutions' : 'Solutions',
         description: lang === 'pt' ? 'Nossos serviços e especialidades' : lang === 'es' ? 'Nuestros servicios y especialidades' : lang === 'fr' ? 'Nos services et spécialités' : 'Our services and specialties',
         path: `/${lang}/what`,
         category: lang === 'pt' ? 'Página' : lang === 'es' ? 'Página' : lang === 'fr' ? 'Page' : 'Page',

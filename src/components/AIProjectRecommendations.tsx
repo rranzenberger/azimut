@@ -43,7 +43,7 @@ export const AIProjectRecommendations: React.FC<AIProjectRecommendationsProps> =
       default: 'Projetos Recomendados para Você',
       museums: 'Outros Museus que Criamos',
       education: 'Projetos Educacionais Similares',
-      corporate: 'Soluções Corporativas',
+      corporate: 'Serviços Corporativos',
       vr: 'Experiências Imersivas VR/AR'
     },
     en: {

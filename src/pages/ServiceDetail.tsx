@@ -29,6 +29,11 @@ interface ServiceDetailProps {
 const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
   const { slug } = useParams<{ slug: string }>()
   const { theme } = useTheme()
+
+  // Curadoria 2026: slug "realidade-virtual-vr" unificado em "xr-interatividade-web3"
+  if (slug === 'realidade-virtual-vr') {
+    return <Navigate to={`/${lang}/what/xr-interatividade-web3`} replace />
+  }
   // REMOVIDO: useUserTracking já é chamado no Layout.tsx
   // const { trackInteraction } = useUserTracking()
   const trackInteraction = (type: string, target: string) => {} // Dummy
@@ -184,7 +189,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
             to="/what"
             className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-sm font-semibold uppercase tracking-[0.1em] text-theme-text hover:bg-azimut-red/20 transition-all"
           >
-            {lang === 'pt' ? 'Voltar para Soluções' : lang === 'es' ? 'Volver a Soluciones' : lang === 'fr' ? 'Retour aux solutions' : 'Back to Solutions'}
+            {lang === 'pt' ? 'Voltar para Serviços' : lang === 'es' ? 'Volver a Soluciones' : lang === 'fr' ? 'Retour aux solutions' : 'Back to Solutions'}
           </LangLink>
         </div>
       </main>
@@ -201,9 +206,19 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
 
   const title = getServiceTitle(service, lang)
   const shortDesc = getServiceShortDesc(service, lang)
-  const longDescRaw = getServiceLongDesc(service, lang)
-  const deliverables = getServiceDeliverables(service, lang)
-  const process = getServiceProcess(service, lang)
+  // Preferir conteúdo da subpágina do backoffice quando existir (editável no CMS)
+  const longDescRaw = (backofficeService?.longDesc && backofficeService.longDesc.length > 0)
+    ? backofficeService.longDesc
+    : getServiceLongDesc(service, lang)
+  const deliverables = (backofficeService?.deliverables && backofficeService.deliverables.length > 0)
+    ? backofficeService.deliverables
+    : getServiceDeliverables(service, lang)
+  const process = (backofficeService?.process && backofficeService.process.length > 0)
+    ? backofficeService.process
+    : getServiceProcess(service, lang)
+  const technologiesList = (backofficeService?.technologies && backofficeService.technologies.length > 0)
+    ? backofficeService.technologies
+    : (service as { technologies?: string[] }).technologies ?? []
   
   // Garantir 4 cards para layout 2x2 (dividir se necessário)
   // Cards 1-2 (acima): maiores - textos mais completos
@@ -356,7 +371,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
 
   const translations = {
     pt: {
-      backToServices: 'Voltar para Soluções',
+      backToServices: 'Voltar para Serviços',
       whatWeDeliver: 'O que entregamos',
       ourProcess: 'Nosso processo',
       technologies: 'Tecnologias & Ferramentas',
@@ -485,7 +500,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
               lang={lang}
               items={[
                 { name: lang === 'pt' ? 'Início' : lang === 'es' ? 'Inicio' : lang === 'fr' ? 'Accueil' : 'Home', url: `/${lang}` },
-                { name: lang === 'pt' ? 'Soluções' : lang === 'es' ? 'Soluciones' : lang === 'fr' ? 'Solutions' : 'Solutions', url: `/${lang}/what` },
+                { name: lang === 'pt' ? 'Serviços' : lang === 'es' ? 'Soluciones' : lang === 'fr' ? 'Solutions' : 'Solutions', url: `/${lang}/what` },
                 { name: title, url: `/${lang}/what/${slug}` }
               ]}
             />

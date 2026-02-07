@@ -624,7 +624,7 @@ export const translations: Dict = {
     heroTagline: 'IMERSIVO • INTERATIVO • EXPERIÊNCIA CINEMATOGRÁFICA',
 
     navHome: 'Início',
-    navWhat: 'Soluções',
+    navWhat: 'Serviços',
     navWork: 'Projetos',
     navStudio: 'Estúdio',
     navAcademy: 'Academy',
@@ -799,7 +799,7 @@ export const translations: Dict = {
     formVanCodeDetected: '💡 Código detectado automaticamente',
     formVanCityPlaceholder: 'São Paulo, Brazil / New York, USA / Paris, France',
     // Nav dropdown (menu)
-    navSolutionsAll: 'Todas as Soluções',
+    navSolutionsAll: 'Todos os Serviços',
     navSolutionsAllDesc: 'Visão geral completa (16)',
     navSolutionsCulture: 'Cultura & Instituições',
     navSolutionsCultureDesc: 'Museus, festivais, curadoria, teatro',

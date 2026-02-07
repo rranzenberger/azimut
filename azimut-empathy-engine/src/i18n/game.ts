@@ -77,6 +77,8 @@ export interface GameTranslations {
   superPremiumBadge: string
   /** Easter egg: 7 toques no título durante o jogo */
   easterEggExplorer: string
+  /** Loading ao preparar fase (evita tela roxa no mobile) */
+  preparingGame: string
 }
 
 const game: Record<Lang, GameTranslations> = {
@@ -152,6 +154,7 @@ const game: Record<Lang, GameTranslations> = {
     premiumBadge: '✦ Premium',
     superPremiumBadge: '✦ Super Premium',
     easterEggExplorer: 'Você é um explorador! Easter egg encontrado. 🎮✨',
+    preparingGame: 'Preparando jogo...',
   },
   en: {
     back: 'Back',
@@ -224,6 +227,7 @@ const game: Record<Lang, GameTranslations> = {
     premiumBadge: '✦ Premium',
     superPremiumBadge: '✦ Super Premium',
     easterEggExplorer: 'You\'re an explorer! Easter egg found. 🎮✨',
+    preparingGame: 'Preparing game...',
   },
   es: {
     back: 'Volver',
@@ -295,6 +299,7 @@ const game: Record<Lang, GameTranslations> = {
     premiumBadge: '✦ Premium',
     superPremiumBadge: '✦ Super Premium',
     easterEggExplorer: '¡Eres un explorador! Easter egg encontrado. 🎮✨',
+    preparingGame: 'Preparando juego...',
   },
   fr: {
     back: 'Retour',
@@ -367,6 +372,7 @@ const game: Record<Lang, GameTranslations> = {
     premiumBadge: '✦ Premium',
     superPremiumBadge: '✦ Super Premium',
     easterEggExplorer: 'Tu es un explorateur ! Easter egg trouvé. 🎮✨',
+    preparingGame: 'Préparation du jeu...',
   },
 }
 

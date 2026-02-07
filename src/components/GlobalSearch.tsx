@@ -14,7 +14,7 @@ interface SearchResult {
 const SITE_PAGES = {
   pt: [
     { type: 'page', title: 'Home', description: 'Página inicial', url: '/', icon: '🏠' },
-    { type: 'page', title: 'O que fazemos', description: 'Nossas soluções e serviços', url: '/what', icon: '🎯' },
+    { type: 'page', title: 'O que fazemos', description: 'Nossos serviços', url: '/what', icon: '🎯' },
     { type: 'page', title: 'Projetos', description: 'Portfólio de trabalhos', url: '/work', icon: '🎬' },
     { type: 'page', title: 'Estúdio', description: 'Conheça nossa equipe', url: '/studio', icon: '🎨' },
     { type: 'page', title: 'Equipe', description: 'Nossos profissionais', url: '/studio/equipe', icon: '👥' },
@@ -73,7 +73,7 @@ const SERVICES = {
   pt: [
     { type: 'service', title: 'Realidade Virtual (VR)', description: 'Experiências imersivas em VR', url: '/what/vr-virtual-reality', icon: '🥽' },
     { type: 'service', title: 'Realidade Aumentada (AR)', description: 'Overlay digital no mundo real', url: '/what/ar-augmented-reality', icon: '📱' },
-    { type: 'service', title: 'Inteligência Artificial', description: 'Soluções com IA generativa', url: '/what/ai-artificial-intelligence', icon: '🤖' },
+    { type: 'service', title: 'Inteligência Artificial', description: 'Serviços com IA generativa', url: '/what/ai-artificial-intelligence', icon: '🤖' },
     { type: 'service', title: 'Cinema e Audiovisual', description: 'Produção cinematográfica', url: '/what/cinema-audiovisual', icon: '🎬' },
     { type: 'service', title: 'Design de Exposições', description: 'Cenografia para museus', url: '/what/exhibition-design', icon: '🏛️' },
     { type: 'service', title: 'Instalações Interativas', description: 'Experiências interativas', url: '/what/interactive-installations', icon: '✨' },

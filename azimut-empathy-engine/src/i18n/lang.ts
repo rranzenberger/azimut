@@ -9,8 +9,9 @@ const LANGS: Lang[] = ['pt', 'en', 'fr', 'es']
 export function getGameLang(): Lang {
   if (typeof window === 'undefined') return 'pt'
   try {
-    const path = window.top?.location?.pathname ?? window.location.pathname
-    const m = path.match(/^\/(pt|en|fr|es)\b/)
+    // Prefer iframe path first (mobile-safe)
+    const path = window.location.pathname || (function () { try { return window.top!.location.pathname } catch { return '' } })()
+    const m = path.match(/\/(pt|en|fr|es)(?:\/|$)/)
     if (m) return m[1] as Lang
   } catch {
     // cross-origin iframe

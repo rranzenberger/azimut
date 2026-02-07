@@ -495,7 +495,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
             {/* PARÁGRAFO - Legível e respirável */}
             <p className="body-large mb-16">
               {lang === 'pt' ? (
-                <>A Azimut é um estúdio criativo-tecnológico dedicado a experiências imersivas, interativas e cinematográficas. Com raízes no Brasil e Canadá, navegamos entre cinema, design, engenharia, educação e pesquisa. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Veja nossos projetos</LangLink> ou <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">conheça nossas soluções</LangLink>.</>
+                <>A Azimut é um estúdio criativo-tecnológico dedicado a experiências imersivas, interativas e cinematográficas. Com raízes no Brasil e Canadá, navegamos entre cinema, design, engenharia, educação e pesquisa. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Veja nossos projetos</LangLink> ou <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">conheça nossos serviços</LangLink>.</>
               ) : lang === 'es' ? (
                 <>Somos un estudio híbrido que combina producción cinematográfica, investigación en IA y educación inmersiva. Operamos entre Brasil y Canadá, creando experiencias que transforman cómo las personas aprenden e interactúan con el mundo digital. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Ver nuestros proyectos</LangLink> o <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">conocer nuestras soluciones</LangLink>.</>
               ) : lang === 'fr' ? (
@@ -1273,7 +1273,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               icon: '🎬'
             },
             next: {
-              label: lang === 'pt' ? 'Ver Soluções' : lang === 'es' ? 'Ver Soluciones' : lang === 'fr' ? 'Voir Solutions' : 'View Solutions',
+              label: lang === 'pt' ? 'Ver Serviços' : lang === 'es' ? 'Ver Soluciones' : lang === 'fr' ? 'Voir Solutions' : 'View Solutions',
               href: '/what',
               icon: '✨'
             }

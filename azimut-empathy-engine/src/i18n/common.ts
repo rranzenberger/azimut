@@ -9,6 +9,9 @@ export interface CommonTranslations {
   pts: string
   phaseNames: Record<1 | 2 | 3 | 4, string>
   levelNames: Record<number, string>
+  /** Fallback quando o jogo quebra (ErrorBoundary) */
+  errorTitle: string
+  errorBackToSite: string
 }
 
 const common: Record<Lang, CommonTranslations> = {
@@ -18,6 +21,8 @@ const common: Record<Lang, CommonTranslations> = {
     pts: 'pts',
     phaseNames: { 1: 'Sentir', 2: 'Conectar', 3: 'Sincronizar', 4: 'Transformar' },
     levelNames: { 1: 'Aprendiz', 2: 'Aprendiz', 3: 'Iniciante', 4: 'Iniciante', 5: 'Criador', 6: 'Criador', 7: 'Expert', 8: 'Expert', 9: 'Maestro', 10: 'Maestro' },
+    errorTitle: 'Algo deu errado',
+    errorBackToSite: 'Voltar ao site',
   },
   en: {
     back: 'Back',
@@ -25,6 +30,8 @@ const common: Record<Lang, CommonTranslations> = {
     pts: 'pts',
     phaseNames: { 1: 'Feel', 2: 'Connect', 3: 'Sync', 4: 'Transform' },
     levelNames: { 1: 'Apprentice', 2: 'Apprentice', 3: 'Beginner', 4: 'Beginner', 5: 'Creator', 6: 'Creator', 7: 'Expert', 8: 'Expert', 9: 'Maestro', 10: 'Maestro' },
+    errorTitle: 'Something went wrong',
+    errorBackToSite: 'Back to site',
   },
   es: {
     back: 'Volver',
@@ -32,6 +39,8 @@ const common: Record<Lang, CommonTranslations> = {
     pts: 'pts',
     phaseNames: { 1: 'Sentir', 2: 'Conectar', 3: 'Sincronizar', 4: 'Transformar' },
     levelNames: { 1: 'Aprendiz', 2: 'Aprendiz', 3: 'Principiante', 4: 'Principiante', 5: 'Creador', 6: 'Creador', 7: 'Experto', 8: 'Experto', 9: 'Maestro', 10: 'Maestro' },
+    errorTitle: 'Algo salió mal',
+    errorBackToSite: 'Volver al sitio',
   },
   fr: {
     back: 'Retour',
@@ -39,6 +48,8 @@ const common: Record<Lang, CommonTranslations> = {
     pts: 'pts',
     phaseNames: { 1: 'Ressentir', 2: 'Connecter', 3: 'Synchroniser', 4: 'Transformer' },
     levelNames: { 1: 'Apprenti', 2: 'Apprenti', 3: 'Débutant', 4: 'Débutant', 5: 'Créateur', 6: 'Créateur', 7: 'Expert', 8: 'Expert', 9: 'Maestro', 10: 'Maestro' },
+    errorTitle: 'Une erreur s\'est produite',
+    errorBackToSite: 'Retour au site',
   },
 }
 

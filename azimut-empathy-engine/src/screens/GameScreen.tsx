@@ -117,6 +117,7 @@ export default function GameScreen({ onLeaderboard, onBack }: GameScreenProps) {
   const [motivationalPhrase, setMotivationalPhrase] = React.useState<ReturnType<typeof pickMotivationalPhrase> | null>(null)
   const [motivationalVisible, setMotivationalVisible] = React.useState(false)
   const [isMobile, setIsMobile] = React.useState(false)
+  const [showPreparingOverlay, setShowPreparingOverlay] = React.useState(true)
   const motivationalTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const lastMotivationalPhaseRef = useRef<number>(0)
   const surpriseShownForPhaseRef = useRef<number>(-1)
@@ -162,6 +163,12 @@ export default function GameScreen({ onLeaderboard, onBack }: GameScreenProps) {
       startGame()
     }
   }, [status, startGame])
+
+  // Overlay "Preparando jogo..." para evitar tela roxa no mobile ao tocar em Começar a Jogar
+  useEffect(() => {
+    const t = setTimeout(() => setShowPreparingOverlay(false), 400)
+    return () => clearTimeout(t)
+  }, [])
 
   // Modal de surpresa ao iniciar a fase (uma vez por fase)
   useEffect(() => {
@@ -373,6 +380,18 @@ export default function GameScreen({ onLeaderboard, onBack }: GameScreenProps) {
   return (
     <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className="game-bg h-full flex flex-col overflow-hidden">
+        {/* Overlay "Preparando jogo..." — evita tela roxa travada no mobile */}
+        {showPreparingOverlay && (
+          <div
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-4 bg-[#0a0a12]/95"
+            style={{ backdropFilter: 'blur(8px)' }}
+            aria-live="polite"
+            aria-busy="true"
+          >
+            <div className="w-10 h-10 border-2 border-[#A855F7] border-t-transparent rounded-full animate-spin" />
+            <span className="text-white/90 font-body text-sm sm:text-base">{gameT.preparingGame}</span>
+          </div>
+        )}
         {/* Header padrão: logo Azimut à esquerda + título + Menu */}
         <GameHeader
           leftAction={

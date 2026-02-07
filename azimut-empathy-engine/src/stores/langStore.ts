@@ -11,11 +11,12 @@ const LANGS: Lang[] = ['pt', 'en', 'fr', 'es']
 function getInitialLang(): Lang {
   if (typeof window === 'undefined') return 'pt'
   try {
-    const path = window.top?.location?.pathname ?? window.location.pathname
-    const m = path.match(/^\/(pt|en|fr|es)\b/)
+    // Prefer iframe's own path first (mobile-safe; evita erro ao acessar window.top em iframe)
+    const path = window.location.pathname || (function () { try { return window.top!.location.pathname } catch { return '' } })()
+    const m = path.match(/\/(pt|en|fr|es)(?:\/|$)/)
     if (m) return m[1] as Lang
   } catch {
-    // cross-origin iframe
+    // cross-origin ou restrição mobile
   }
   const stored = typeof localStorage !== 'undefined' ? localStorage.getItem('azimut-game-lang') : null
   if (stored && LANGS.includes(stored as Lang)) return stored as Lang

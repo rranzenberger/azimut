@@ -53,7 +53,7 @@ const BudgetWizard: React.FC<BudgetWizardProps> = ({ lang, onComplete, onCancel 
       step1Title: 'O que você precisa?',
       step1Subtitle: 'Selecione todas as opções que se aplicam',
       step2Title: 'Qual seu orçamento?',
-      step2Subtitle: 'Isso nos ajuda a sugerir as melhores soluções',
+      step2Subtitle: 'Isso nos ajuda a sugerir os melhores serviços',
       step3Title: 'Contexto do projeto',
       step3Subtitle: 'Conte-nos mais sobre seu projeto',
       step4Title: 'Recomendações para você',

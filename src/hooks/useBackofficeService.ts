@@ -28,6 +28,11 @@ export interface ServiceContent {
   priority: number;
   updatedAt: string;
   faqs?: ServiceFAQ[];
+  /** Conteúdo da subpágina (editável no backoffice) */
+  longDesc?: string[];
+  deliverables?: string[];
+  process?: string[];
+  technologies?: string[];
 }
 
 interface UseBackofficeServiceReturn {
@@ -85,6 +90,9 @@ export function useBackofficeService(
           ? rawFaqs.filter((x: unknown) => x && typeof x === 'object' && 'question' in x && 'answer' in x)
           : [];
 
+        const longDescRaw = data[`longDesc${langKey}`];
+        const deliverablesRaw = data[`deliverables${langKey}`];
+        const processRaw = data[`process${langKey}`];
         const serviceContent: ServiceContent = {
           slug: data.slug,
           title: data[`title${langKey}`] || data.titlePt,
@@ -95,6 +103,10 @@ export function useBackofficeService(
           priority: data.priority || 0,
           updatedAt: data.updatedAt,
           faqs: faqs.length > 0 ? faqs : undefined,
+          longDesc: Array.isArray(longDescRaw) && longDescRaw.length > 0 ? longDescRaw : undefined,
+          deliverables: Array.isArray(deliverablesRaw) && deliverablesRaw.length > 0 ? deliverablesRaw : undefined,
+          process: Array.isArray(processRaw) && processRaw.length > 0 ? processRaw : undefined,
+          technologies: Array.isArray(data.technologies) ? data.technologies : undefined,
         };
 
         setService(serviceContent);

@@ -90,6 +90,19 @@ export async function PUT(
       'faqsEn',
       'faqsEs',
       'faqsFr',
+      'longDescPt',
+      'longDescEn',
+      'longDescEs',
+      'longDescFr',
+      'deliverablesPt',
+      'deliverablesEn',
+      'deliverablesEs',
+      'deliverablesFr',
+      'processPt',
+      'processEn',
+      'processEs',
+      'processFr',
+      'technologies',
     ];
 
     const updateData: any = {};

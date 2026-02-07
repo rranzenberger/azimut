@@ -1350,7 +1350,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     }}
                   >
                     <span style={{ borderBottom: '1px solid currentColor' }}>
-                      {lang === 'pt' ? 'Soluções VR / AR / Web3' : lang === 'es' ? 'Soluciones VR / AR / Web3' : lang === 'fr' ? 'Solutions VR / AR / Web3' : 'VR / AR / Web3 Solutions'}
+                      {lang === 'pt' ? 'Serviços VR / AR / Web3' : lang === 'es' ? 'Soluciones VR / AR / Web3' : lang === 'fr' ? 'Solutions VR / AR / Web3' : 'VR / AR / Web3 Solutions'}
                     </span>
                     <svg className="w-4 h-4 transition-transform group-hover/btn3:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -1525,7 +1525,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </h2>
               <p className={`text-sm md:text-base leading-[1.65] max-w-3xl mx-auto ${theme === 'dark' ? 'text-slate-300' : 'text-slate-700'}`}>
                 {lang === 'pt' ? (
-                  <>Uma seleção dos nossos trabalhos mais emblemáticos. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Veja nosso portfólio completo</LangLink> ou <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">conheça nossas soluções</LangLink>.</>
+                  <>Uma seleção dos nossos trabalhos mais emblemáticos. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Veja nosso portfólio completo</LangLink> ou <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">conheça nossos serviços</LangLink>.</>
                 ) : lang === 'es' ? (
                   <>Una selección de nuestros trabajos más emblemáticos. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Ver nuestro portafolio completo</LangLink> o <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">conocer nuestras soluciones</LangLink>.</>
                 ) : lang === 'fr' ? (
@@ -1951,7 +1951,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </h2>
               <p className={`${theme === 'dark' ? 'text-slate-300' : 'text-slate-700'} max-w-2xl mx-auto text-lg leading-[1.65]`}>
                 {lang === 'pt' ? (
-                  <>Soluções completas para transformar ideias em experiências memoráveis. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Veja exemplos reais</LangLink> ou <LangLink to="/studio" className="text-azimut-red hover:text-azimut-red/80 underline">conheça nosso estúdio</LangLink>.</>
+                  <>Serviços completos para transformar ideias em experiências memoráveis. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Veja exemplos reais</LangLink> ou <LangLink to="/studio" className="text-azimut-red hover:text-azimut-red/80 underline">conheça nosso estúdio</LangLink>.</>
                 ) : lang === 'es' ? (
                   <>Soluciones completas para transformar ideas en experiencias memorables. <LangLink to="/work" className="text-azimut-red hover:text-azimut-red/80 underline">Ver ejemplos reales</LangLink> o <LangLink to="/studio" className="text-azimut-red hover:text-azimut-red/80 underline">conocer nuestro estudio</LangLink>.</>
                 ) : lang === 'fr' ? (
@@ -2087,7 +2087,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 to="/what"
                 className="inline-flex items-center justify-center gap-3 rounded-lg bg-azimut-red px-8 py-4 font-sora text-sm uppercase tracking-[0.1em] text-white transition-all duration-300 hover:bg-azimut-red/90 hover:scale-105 shadow-lg hover:shadow-xl"
               >
-                <span>{lang === 'pt' ? 'Explorar Todas as Soluções' : lang === 'es' ? 'Explorar Todas las Soluciones' : lang === 'fr' ? 'Explorer Toutes les Solutions' : 'Explore All Solutions'}</span>
+                <span>{lang === 'pt' ? 'Explorar Todos os Serviços' : lang === 'es' ? 'Explorar Todas las Soluciones' : lang === 'fr' ? 'Explorer Toutes les Solutions' : 'Explore All Solutions'}</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
@@ -2112,7 +2112,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               icon: '🎬'
             },
             next: {
-              label: lang === 'pt' ? 'Ver Soluções' : lang === 'es' ? 'Ver Soluciones' : lang === 'fr' ? 'Voir Solutions' : 'View Solutions',
+              label: lang === 'pt' ? 'Ver Serviços' : lang === 'es' ? 'Ver Soluciones' : lang === 'fr' ? 'Voir Solutions' : 'View Solutions',
               href: '/what',
               icon: '✨'
             }

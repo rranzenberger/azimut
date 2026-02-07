@@ -720,7 +720,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 }}
               ></span>
             </LangLink>
-            {/* Soluções com submenu */}
+            {/* Serviços com submenu */}
             <NavDropdown
               label={t(lang, 'navWhat')}
               mainHref="/what"

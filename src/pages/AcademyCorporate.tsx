@@ -32,7 +32,7 @@ const AcademyCorporate: React.FC<AcademyCorporateProps> = ({ lang }) => {
       },
       hero: {
         badge: '🏢 Treinamento Corporativo',
-        title: 'Soluções B2B',
+        title: 'Serviços B2B',
         subtitle: 'Treinamento customizado para sua equipe',
         description: 'Capacitamos empresas, governos, ONGs e instituições de ensino com treinamentos sob medida em tecnologias imersivas e produção audiovisual.'
       },
@@ -671,7 +671,7 @@ const AcademyCorporate: React.FC<AcademyCorporateProps> = ({ lang }) => {
                 >
                   {lang === 'pt' && (
                     <>
-                      SOLUÇÕES<br />
+                      SERVIÇOS<br />
                       <span className="text-azimut-red">B2B</span>
                     </>
                   )}

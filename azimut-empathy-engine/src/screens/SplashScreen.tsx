@@ -41,7 +41,15 @@ export default function SplashScreen({ onStart, onExperiences, onAbout, onTips, 
   }, [secretTapCount])
 
   const handleBackToSite = () => {
-    window.top?.location.assign(`/${lang}/experience-preview`)
+    try {
+      if (window.top && window.top !== window) {
+        window.top.location.assign(`/${lang}/experience-preview`)
+      } else {
+        window.location.assign(`/${lang}/experience-preview`)
+      }
+    } catch {
+      window.location.assign(`/${lang}/experience-preview`)
+    }
   }
 
   // 18 tópicos (17 reais + 1 premium) - grid 6x3
