@@ -130,11 +130,26 @@ const WorkProjects: React.FC<WorkProjectsProps> = ({ lang }) => {
   const cases = useMemo(() => {
     if (!Array.isArray(allCases)) return []
     return allCases.filter((project: WorkProject) => {
-      if (selectedCategory.length > 0) {
-        const has = project.projectCategory?.some(c => selectedCategory.includes(c))
-        if (!has) return false
+      // Quando vem de um botão de categoria (tem selectedCategory E selectedType),
+      // usar lógica OR: basta passar em UM dos critérios
+      if (selectedCategory.length > 0 && selectedType) {
+        const matchesCategory = project.projectCategory?.some(c => selectedCategory.includes(c))
+        const matchesType = project.type?.toLowerCase() === selectedType.toLowerCase()
+        // Também buscar no type do projeto por keywords da categoria
+        const cat = MAIN_CATEGORIES.find(c => c.type === selectedType)
+        const matchesKeywords = cat?.keywords?.some(kw => 
+          project.type?.toLowerCase().includes(kw.toLowerCase()) ||
+          project.tags?.some(t => t.toLowerCase().includes(kw.toLowerCase()))
+        )
+        if (!matchesCategory && !matchesType && !matchesKeywords) return false
+      } else {
+        // Filtros independentes (AND)
+        if (selectedCategory.length > 0) {
+          const has = project.projectCategory?.some(c => selectedCategory.includes(c))
+          if (!has) return false
+        }
+        if (selectedType && project.type?.toLowerCase() !== selectedType.toLowerCase()) return false
       }
-      if (selectedType && project.type !== selectedType) return false
       if (selectedTag && (!project.tags || !project.tags.includes(selectedTag))) return false
       return true
     })

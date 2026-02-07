@@ -52,7 +52,7 @@ export const MAIN_CATEGORIES: MainCategory[] = [
     },
     icon: '🎬',
     keywords: ['video', 'cinema', 'filme', 'film', 'audiovisual', 'produção cinematográfica'],
-    projectCategory: ['video', 'cinema', 'audiovisual'],
+    projectCategory: ['video', 'cinema', 'audiovisual', 'corporate'],
     type: 'FILM'
   },
   {
@@ -77,8 +77,8 @@ export const MAIN_CATEGORIES: MainCategory[] = [
       fr: 'Musées'
     },
     icon: '🏛️',
-    keywords: ['museu', 'museum', 'exposição', 'exhibition', 'exposições interativas'],
-    projectCategory: ['museum', 'exhibition'],
+    keywords: ['museu', 'museum', 'exposição', 'exhibition', 'exposições interativas', 'instalacao'],
+    projectCategory: ['museum', 'exhibition', 'museus', 'exposicao', 'instalacao'],
     type: 'MUSEUM'
   },
   {
@@ -90,7 +90,7 @@ export const MAIN_CATEGORIES: MainCategory[] = [
       fr: 'Festivals'
     },
     icon: '🎪',
-    keywords: ['festival', 'curadoria', 'curation', 'gramado'],
+    keywords: ['festival', 'curadoria', 'curation', 'gramado', 'evento'],
     projectCategory: ['curadoria', 'festival'],
     type: 'FESTIVAL'
   },
@@ -103,8 +103,8 @@ export const MAIN_CATEGORIES: MainCategory[] = [
       fr: 'Design'
     },
     icon: '🎨',
-    keywords: ['design', 'animação', 'animation', 'motion design', 'vfx', 'cgi', '3d', '2d'],
-    projectCategory: ['design', 'animation', 'vfx'],
+    keywords: ['design', 'animação', 'animation', 'motion design', 'vfx', 'cgi', '3d', '2d', 'games'],
+    projectCategory: ['design', 'animation', 'vfx', 'motion', 'games'],
     type: 'ANIMATION'
   },
   {

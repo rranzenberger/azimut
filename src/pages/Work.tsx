@@ -357,12 +357,30 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     return allCases.filter((project: WorkProject) => {
       // ═══════════════════════════════════════════════════════════════
       // 🎯 FILTROS AVANÇADOS (multi-select)
+      // Quando vem de botão de categoria (category + type juntos),
+      // usar OR: basta passar em UM dos critérios
       // ═══════════════════════════════════════════════════════════════
       
-      // Filtro por categoria (multi-select)
-      if (selectedCategory.length > 0) {
-        const hasCategory = project.projectCategory?.some(cat => selectedCategory.includes(cat))
-        if (!hasCategory) return false
+      if (selectedCategory.length > 0 && selectedType) {
+        // Lógica OR: projectCategory OU type OU keywords
+        const matchesCategory = project.projectCategory?.some(cat => selectedCategory.includes(cat))
+        const matchesType = project.type?.toLowerCase() === selectedType.toLowerCase()
+        const cat = MAIN_CATEGORIES.find(c => c.type === selectedType)
+        const matchesKeywords = cat?.keywords?.some(kw => 
+          project.type?.toLowerCase().includes(kw.toLowerCase()) ||
+          project.tags?.some((t: string) => t.toLowerCase().includes(kw.toLowerCase()))
+        )
+        if (!matchesCategory && !matchesType && !matchesKeywords) return false
+      } else {
+        // Filtros independentes (AND)
+        if (selectedCategory.length > 0) {
+          const hasCategory = project.projectCategory?.some(cat => selectedCategory.includes(cat))
+          if (!hasCategory) return false
+        }
+        
+        if (selectedType && project.type?.toLowerCase() !== selectedType.toLowerCase()) {
+          return false
+        }
       }
       
       // Filtro por tipo de trabalho (multi-select)
@@ -388,11 +406,6 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
       
       // Filtro por tag
       if (selectedTag && (!project.tags || !project.tags.includes(selectedTag))) {
-        return false
-      }
-      
-      // Filtro por tipo
-      if (selectedType && project.type !== selectedType) {
         return false
       }
       
