@@ -8,9 +8,9 @@ Use este arquivo para não nos perdermos. Marque conforme for fazendo.
 
 | Etapa | O quê | Onde | Status |
 |-------|--------|------|--------|
-| **3** | Criar colunas (ALTER) no Neon | `sql/rodape_footer_settings.sql` – só os 3 ALTER → **Run** | [ ] Feito |
-| **4** | Popular rodapé (INSERT + UPDATE) no Neon | Mesmo arquivo – INSERT + UPDATE → **Run** | [ ] Feito |
-| **5** | Deploy (git push) | Terminal: commit + push | [ ] Feito |
+| **3** | Criar colunas (ALTER) no Neon | `sql/rodape_footer_settings.sql` – só os 3 ALTER → **Run** | [x] Feito |
+| **4** | Popular rodapé (INSERT + UPDATE) no Neon | Mesmo arquivo – INSERT + UPDATE → **Run** | [x] Feito |
+| **5** | Deploy (git push) | Terminal: commit + push | [x] Feito |
 
 **Ordem:** 3 → 4 → 5. Não use **Explain** no Neon (só **Run**).
 
@@ -29,7 +29,7 @@ No Neon SQL Editor, use **Run** para executar o script. Se usar **Explain**, dá
 **Como:** Abrir `sql/rodape_footer_settings.sql`, selecionar da linha do primeiro `ALTER` até o último `ALTER`, clicar em **Run**.
 
 **Registro:**
-- [ ] Executado em: ___/___/_____ às _____
+- [x] Executado em: 07/02/2026 (~15:10)
 
 ---
 
@@ -40,7 +40,7 @@ No Neon SQL Editor, use **Run** para executar o script. Se usar **Explain**, dá
 **Como:** No mesmo arquivo, selecionar do `INSERT INTO "Settings"` até o fim do `UPDATE` (antes do comentário da Etapa 5), clicar em **Run**.
 
 **Registro:**
-- [ ] Executado em: ___/___/_____ às _____
+- [x] Executado em: 07/02/2026 (~15:10)
 
 ---
 
@@ -56,7 +56,7 @@ git push origin main
 ```
 
 **Registro:**
-- [ ] Deploy em: ___/___/_____ às _____
+- [x] Deploy em: 07/02/2026 (commit + push main – API pública settings, hook useFooterSettings, Layout rodapé)
 
 ---
 
@@ -72,4 +72,4 @@ git push origin main
 | Vimeo           | https://vimeo.com/azimutart |
 | Behance         | https://behance.net/azimutart |
 
-Depois que a API pública e o Layout do site estiverem usando esses campos, você poderá mudar tudo em **Configurações** no backoffice.
+O site já usa esses campos: o rodapé busca dados em **Configurações** (API pública `/api/public/settings`). Para alterar WhatsApp, email ou redes, edite em **Backoffice → Configurações → Rodapé (contato e redes no site)** e salve.
