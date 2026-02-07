@@ -850,7 +850,21 @@ export default function EditPagePage() {
           <button type="button" onClick={() => handleSectionToggle('seo')} style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid rgba(56, 189, 248, 0.4)', background: openSection === 'seo' ? 'rgba(56, 189, 248, 0.25)' : 'rgba(56, 189, 248, 0.1)', color: '#7dd3fc', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>
             🔍 SEO (Google)
           </button>
+          {slug === 'home' && (
+            <a href="/admin/projects" style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid rgba(201,35,55,0.5)', background: 'rgba(201,35,55,0.15)', color: '#fca5a5', fontSize: 13, fontWeight: 600, cursor: 'pointer', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              🏆 Projetos em Destaque →
+            </a>
+          )}
         </div>
+        {slug === 'home' && (
+          <div style={{ marginTop: 14, padding: 14, borderRadius: 10, background: 'rgba(201,35,55,0.08)', border: '1px solid rgba(201,35,55,0.25)' }}>
+            <p style={{ margin: 0, fontSize: 13, color: '#e8a0a8', lineHeight: 1.6 }}>
+              <strong style={{ color: '#fca5a5' }}>🏆 Projetos em Destaque</strong> — Os cards (Museu Olímpico, TMNT, Curadoria, VR Zen) que aparecem na Home são editados na página{' '}
+              <a href="/admin/projects" style={{ color: '#7dd3fc', textDecoration: 'underline', fontWeight: 600 }}>Projetos</a>.
+              Lá você define a imagem de capa, título, descrição e a <strong>prioridade na Home</strong> (posição 1, 2, 3...).
+            </p>
+          </div>
+        )}
         <p style={{ margin: '12px 0 0', fontSize: 12, color: '#64748b' }}>
           💡 Dica: envie imagens e vídeos em <strong>Mídias</strong> (menu lateral) e depois escolha aqui ou em Projetos.{' '}
           <a href="/admin/help" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>Guia completo →</a>
