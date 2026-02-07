@@ -393,6 +393,22 @@ export const MENU_MANUAL_ITEMS: MenuItemManual[] = [
     ],
   },
   {
+    href: '/admin/editais',
+    label: '📋 Editais',
+    tooltip: 'Oportunidades ativas: editais e chamadas. Ligar/desligar cada item no site pelo status.',
+    description: 'Lista de editais e chamadas (cultura, arte, XR, festivais, BR/CA). Os com status Aberto aparecem na seção "Oportunidades Ativas" na página Projetos do site. Use status Aberto para exibir e Fechado para ocultar. Não precisa de SQL.',
+    howTo: [
+      'Acesse Editais no menu',
+      'Clique em um edital para editar',
+      'Altere Status para Aberto (mostra no site) ou Fechado (oculta)',
+      'Salve. O site atualiza na próxima visita à página Projetos',
+    ],
+    tips: [
+      'Ligar item no site = Status Aberto. Desligar = Status Fechado.',
+      'Sugestões da IA entram como Enviado; revise e mude para Aberto se quiser publicar.',
+    ],
+  },
+  {
     href: '/admin/n8n-workflow',
     label: '🤖 Automação n8n',
     tooltip: 'Configuração e status dos workflows de automação (n8n).',

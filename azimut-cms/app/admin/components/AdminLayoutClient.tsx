@@ -142,6 +142,7 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
           <AdminLink href="/admin/marketing/preview" label="🎁 Marketing Preview" title={TOOLTIP_BY_HREF['/admin/marketing/preview']} />
           <AdminLink href="/admin/n8n-workflow" label="🤖 Automação n8n" title={TOOLTIP_BY_HREF['/admin/n8n-workflow']} />
           <AdminLink href="/admin/newsletter" label="📨 Inscritos" title={TOOLTIP_BY_HREF['/admin/newsletter']} />
+          <AdminLink href="/admin/editais" label="📋 Editais" title={TOOLTIP_BY_HREF['/admin/editais']} />
 
           <div style={{ fontSize: 10, fontWeight: 600, color: AZIMUT.textMuted, textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
             Web3 e recompensas

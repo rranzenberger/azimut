@@ -3,7 +3,10 @@
   "env": {
     "PRISMA_CLIENT_ENGINE_TYPE": "library"
   },
-  "crons": [{"path": "/api/cron/email-sequences", "schedule": "0 10 * * *"}],
+  "crons": [
+    {"path": "/api/cron/email-sequences", "schedule": "0 10 * * *"},
+    {"path": "/api/cron/refresh-editais", "schedule": "0 8 * * 1,4"}
+  ],
   "redirects": [
     {"source": "/en/login", "destination": "/login", "permanent": false},
     {"source": "/pt/login", "destination": "/login", "permanent": false},
