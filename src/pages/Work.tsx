@@ -744,8 +744,40 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
             )}
           </div>
 
-
-
+          {/* ═══ CARD DESTAQUE: Curadoria (editável via backoffice) ═══ */}
+          {!hasActiveFilters && (
+            <div className="mb-10 overflow-hidden rounded-2xl border border-azimut-red/30 bg-gradient-to-r from-azimut-red/10 via-transparent to-transparent backdrop-blur-sm transition-all hover:border-azimut-red/50 hover:shadow-lg hover:shadow-azimut-red/10">
+              <div className="flex items-center gap-5 p-5 sm:p-6">
+                <div className="flex-shrink-0 flex h-14 w-14 items-center justify-center rounded-xl bg-azimut-red/15 text-3xl">
+                  🎪
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="mb-1 font-handel text-lg uppercase tracking-[0.1em] text-azimut-red">
+                    {cmsContent?.curationTitle || (lang === 'pt' ? 'Curadoria Gramado' : lang === 'es' ? 'Curaduría Gramado' : 'Gramado Curation')}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-slate-400 line-clamp-2">
+                    {cmsContent?.curationDescription || (lang === 'pt' 
+                      ? 'Nosso maior diferencial: curadoria de nível internacional para festivais. Único estúdio no Brasil com expertise em curadoria cinematográfica.'
+                      : lang === 'es'
+                      ? 'Nuestro mayor diferencial: curaduría de nivel internacional para festivales.'
+                      : 'Our biggest differentiator: international-level curation for festivals.')}
+                  </p>
+                </div>
+                <button
+                  onClick={() => {
+                    setSelectedCategory(['curadoria'])
+                  }}
+                  className="flex-shrink-0 inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/15 px-5 py-2.5 font-sora text-xs font-semibold uppercase tracking-[0.1em] text-azimut-red hover:bg-azimut-red/25 transition-all"
+                >
+                  <span className="hidden sm:inline">{lang === 'pt' ? 'Ver Curadoria' : lang === 'es' ? 'Ver Curaduría' : 'View Curation'}</span>
+                  <span className="sm:hidden">{lang === 'pt' ? 'Ver' : 'View'}</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* Featured Project - Full Width - SEMPRE MOSTRA, mesmo sem dados */}
           {cases.length > 0 && (
