@@ -173,6 +173,27 @@ export async function GET(request: NextRequest) {
                     : market.heroMessageEn,
       } : null,
       
+      // Campos de curadoria/banner destaque (página work)
+      curationTitle: pageData ? (
+        lang === 'pt' ? (pageData as any).curationTitlePt :
+        lang === 'es' ? ((pageData as any).curationTitleEs || (pageData as any).curationTitleEn) :
+        lang === 'fr' ? ((pageData as any).curationTitleFr || (pageData as any).curationTitleEn) :
+        (pageData as any).curationTitleEn
+      ) || null : null,
+      curationDescription: pageData ? (
+        lang === 'pt' ? (pageData as any).curationDescriptionPt :
+        lang === 'es' ? ((pageData as any).curationDescriptionEs || (pageData as any).curationDescriptionEn) :
+        lang === 'fr' ? ((pageData as any).curationDescriptionFr || (pageData as any).curationDescriptionEn) :
+        (pageData as any).curationDescriptionEn
+      ) || null : null,
+      curationButtonText: pageData ? (
+        lang === 'pt' ? (pageData as any).curationButtonTextPt :
+        lang === 'es' ? ((pageData as any).curationButtonTextEs || (pageData as any).curationButtonTextEn) :
+        lang === 'fr' ? ((pageData as any).curationButtonTextFr || (pageData as any).curationButtonTextEn) :
+        (pageData as any).curationButtonTextEn
+      ) || null : null,
+      curationFilterCategory: pageData ? (pageData as any).curationFilterCategory || null : null,
+
       page: pageData ? {
         name: pageData.name,
         slug: pageData.slug,

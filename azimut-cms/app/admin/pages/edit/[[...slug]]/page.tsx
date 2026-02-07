@@ -85,6 +85,20 @@ interface Page {
   };
   status: string;
   sections?: Section[];
+  // ═══ Banner Curadoria/Destaque (página work) ═══
+  curationTitlePt?: string;
+  curationTitleEn?: string;
+  curationTitleEs?: string;
+  curationTitleFr?: string;
+  curationDescriptionPt?: string;
+  curationDescriptionEn?: string;
+  curationDescriptionEs?: string;
+  curationDescriptionFr?: string;
+  curationButtonTextPt?: string;
+  curationButtonTextEn?: string;
+  curationButtonTextEs?: string;
+  curationButtonTextFr?: string;
+  curationFilterCategory?: string;
 }
 
 interface MediaItem {
@@ -395,6 +409,20 @@ export default function EditPagePage() {
     thumbEs: '/chris-milk-thumbnail.jpg',
     thumbFr: '/chris-milk-thumbnail.jpg',
     status: 'PUBLISHED',
+    // ═══ Curadoria do momento (página Work) ═══
+    curationTitlePt: '',
+    curationTitleEn: '',
+    curationTitleEs: '',
+    curationTitleFr: '',
+    curationDescriptionPt: '',
+    curationDescriptionEn: '',
+    curationDescriptionEs: '',
+    curationDescriptionFr: '',
+    curationButtonTextPt: '',
+    curationButtonTextEn: '',
+    curationButtonTextEs: '',
+    curationButtonTextFr: '',
+    curationFilterCategory: '',
   });
 
   useEffect(() => {
@@ -467,6 +495,20 @@ export default function EditPagePage() {
           thumbEs: data.thumbEs || '/chris-milk-thumbnail.jpg',
           thumbFr: data.thumbFr || '/chris-milk-thumbnail.jpg',
           status: data.status || 'PUBLISHED',
+          // ═══ Curadoria do momento (página Work) ═══
+          curationTitlePt: data.curationTitlePt || '',
+          curationTitleEn: data.curationTitleEn || '',
+          curationTitleEs: data.curationTitleEs || '',
+          curationTitleFr: data.curationTitleFr || '',
+          curationDescriptionPt: data.curationDescriptionPt || '',
+          curationDescriptionEn: data.curationDescriptionEn || '',
+          curationDescriptionEs: data.curationDescriptionEs || '',
+          curationDescriptionFr: data.curationDescriptionFr || '',
+          curationButtonTextPt: data.curationButtonTextPt || '',
+          curationButtonTextEn: data.curationButtonTextEn || '',
+          curationButtonTextEs: data.curationButtonTextEs || '',
+          curationButtonTextFr: data.curationButtonTextFr || '',
+          curationFilterCategory: data.curationFilterCategory || '',
         });
 
         // Buscar lista de todas as páginas para o dropdown
@@ -850,6 +892,11 @@ export default function EditPagePage() {
           <button type="button" onClick={() => handleSectionToggle('seo')} style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid rgba(56, 189, 248, 0.4)', background: openSection === 'seo' ? 'rgba(56, 189, 248, 0.25)' : 'rgba(56, 189, 248, 0.1)', color: '#7dd3fc', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>
             🔍 SEO (Google)
           </button>
+          {slug === 'work' && (
+            <button type="button" onClick={() => handleSectionToggle('curadoria')} style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid rgba(201,35,55,0.5)', background: openSection === 'curadoria' ? 'rgba(201,35,55,0.2)' : 'rgba(201,35,55,0.1)', color: '#fca5a5', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>
+              🎪 Curadoria do momento
+            </button>
+          )}
           {slug === 'home' && (
             <a href="/admin/projects" style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid rgba(201,35,55,0.5)', background: 'rgba(201,35,55,0.15)', color: '#fca5a5', fontSize: 13, fontWeight: 600, cursor: 'pointer', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
               🏆 Projetos em Destaque →
@@ -1469,6 +1516,54 @@ export default function EditPagePage() {
             translating={translating?.startsWith('seoDesc-') || false}
           />
         </CollapsibleSection>
+
+        {/* ═══ Curadoria do momento (só página Work) ═══ */}
+        {slug === 'work' && (
+          <CollapsibleSection id="curadoria" title="Curadoria do momento (card na página Projetos)" icon="🎪" borderColor="rgba(201,35,55,0.3)" bgColor="rgba(201,35,55,0.08)" isOpen={openSection === 'curadoria'} onToggle={handleSectionToggle}>
+            <p style={{ margin: '0 0 20px', color: '#94a3b8', fontSize: 13, lineHeight: 1.6 }}>
+              Card em destaque na página <strong>/work</strong> (Projetos). Edite o título, a descrição e o texto do botão. O botão aplica o filtro indicado em &quot;Filtro ao clicar&quot; na lista de projetos.
+            </p>
+            <div style={{ display: 'grid', gap: 20 }}>
+              <div>
+                <label style={{ display: 'block', marginBottom: 6, fontSize: 12, fontWeight: 600, color: '#e8e6f2' }}>Título do card (PT)</label>
+                <input type="text" value={formData.curationTitlePt} onChange={(e) => setFormData({ ...formData, curationTitlePt: e.target.value })} placeholder="Ex: Curadoria Gramado" style={{ ...inputStyle, width: '100%' }} />
+              </div>
+              <div>
+                <label style={{ display: 'block', marginBottom: 6, fontSize: 12, fontWeight: 600, color: '#e8e6f2' }}>Título (EN / ES / FR)</label>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
+                  <input type="text" value={formData.curationTitleEn} onChange={(e) => setFormData({ ...formData, curationTitleEn: e.target.value })} placeholder="EN" style={inputStyle} />
+                  <input type="text" value={formData.curationTitleEs} onChange={(e) => setFormData({ ...formData, curationTitleEs: e.target.value })} placeholder="ES" style={inputStyle} />
+                  <input type="text" value={formData.curationTitleFr} onChange={(e) => setFormData({ ...formData, curationTitleFr: e.target.value })} placeholder="FR" style={inputStyle} />
+                </div>
+              </div>
+              <div>
+                <label style={{ display: 'block', marginBottom: 6, fontSize: 12, fontWeight: 600, color: '#e8e6f2' }}>Descrição do card (PT)</label>
+                <textarea value={formData.curationDescriptionPt} onChange={(e) => setFormData({ ...formData, curationDescriptionPt: e.target.value })} placeholder="Texto exibido no card..." rows={3} style={{ ...inputStyle, width: '100%', resize: 'vertical' }} />
+              </div>
+              <div>
+                <label style={{ display: 'block', marginBottom: 6, fontSize: 12, fontWeight: 600, color: '#e8e6f2' }}>Descrição (EN / ES / FR)</label>
+                <div style={{ display: 'grid', gap: 10 }}>
+                  <textarea value={formData.curationDescriptionEn} onChange={(e) => setFormData({ ...formData, curationDescriptionEn: e.target.value })} placeholder="EN" rows={2} style={{ ...inputStyle, resize: 'vertical' }} />
+                  <textarea value={formData.curationDescriptionEs} onChange={(e) => setFormData({ ...formData, curationDescriptionEs: e.target.value })} placeholder="ES" rows={2} style={{ ...inputStyle, resize: 'vertical' }} />
+                  <textarea value={formData.curationDescriptionFr} onChange={(e) => setFormData({ ...formData, curationDescriptionFr: e.target.value })} placeholder="FR" rows={2} style={{ ...inputStyle, resize: 'vertical' }} />
+                </div>
+              </div>
+              <div>
+                <label style={{ display: 'block', marginBottom: 6, fontSize: 12, fontWeight: 600, color: '#e8e6f2' }}>Texto do botão (PT / EN / ES / FR)</label>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
+                  <input type="text" value={formData.curationButtonTextPt} onChange={(e) => setFormData({ ...formData, curationButtonTextPt: e.target.value })} placeholder="PT" style={inputStyle} />
+                  <input type="text" value={formData.curationButtonTextEn} onChange={(e) => setFormData({ ...formData, curationButtonTextEn: e.target.value })} placeholder="EN" style={inputStyle} />
+                  <input type="text" value={formData.curationButtonTextEs} onChange={(e) => setFormData({ ...formData, curationButtonTextEs: e.target.value })} placeholder="ES" style={inputStyle} />
+                  <input type="text" value={formData.curationButtonTextFr} onChange={(e) => setFormData({ ...formData, curationButtonTextFr: e.target.value })} placeholder="FR" style={inputStyle} />
+                </div>
+              </div>
+              <div>
+                <label style={{ display: 'block', marginBottom: 6, fontSize: 12, fontWeight: 600, color: '#e8e6f2' }}>Filtro ao clicar (categoria aplicada na lista)</label>
+                <input type="text" value={formData.curationFilterCategory} onChange={(e) => setFormData({ ...formData, curationFilterCategory: e.target.value })} placeholder="Ex: curadoria" style={{ ...inputStyle, width: '100%', maxWidth: 280 }} />
+              </div>
+            </div>
+          </CollapsibleSection>
+        )}
 
         {/* ═══════════════════════════════════════════════════════════
             MÍDIA DA PÁGINA (Universal) - Exceto Studio que tem seção própria

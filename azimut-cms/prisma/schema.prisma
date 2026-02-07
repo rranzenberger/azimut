@@ -285,7 +285,7 @@ model Page {
   pillar3En              String?
   pillar3Es              String?
   pillar3Fr              String?
-  // Hero Media - Sistema H├¡brido (Media OU URL manual)
+  // Hero Media - Sistema Hibrido (Media OU URL manual)
   heroBackgroundImageId  String?
   heroBackgroundImageUrl String?
   demoreelVideoId        String?
@@ -293,6 +293,20 @@ model Page {
   heroBackgroundImage    Media?     @relation("PageHeroBackground", fields: [heroBackgroundImageId], references: [id])
   demoreelVideo          Media?     @relation("PageDemoreelVideo", fields: [demoreelVideoId], references: [id])
   sections               Section[]
+  // ═══ Banner Curadoria/Destaque (editável no backoffice) ═══
+  curationTitlePt          String?
+  curationTitleEn          String?
+  curationTitleEs          String?
+  curationTitleFr          String?
+  curationDescriptionPt    String?
+  curationDescriptionEn    String?
+  curationDescriptionEs    String?
+  curationDescriptionFr    String?
+  curationButtonTextPt     String?
+  curationButtonTextEn     String?
+  curationButtonTextEs     String?
+  curationButtonTextFr     String?
+  curationFilterCategory   String?
 }
 
 model Section {

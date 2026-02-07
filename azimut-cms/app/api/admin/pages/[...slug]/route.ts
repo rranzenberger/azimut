@@ -114,6 +114,20 @@ export async function PUT(
       pillar3Es,
       pillar3Fr,
       status,
+      // ═══ Curadoria do momento (página Work) ═══
+      curationTitlePt,
+      curationTitleEn,
+      curationTitleEs,
+      curationTitleFr,
+      curationDescriptionPt,
+      curationDescriptionEn,
+      curationDescriptionEs,
+      curationDescriptionFr,
+      curationButtonTextPt,
+      curationButtonTextEn,
+      curationButtonTextEs,
+      curationButtonTextFr,
+      curationFilterCategory,
     } = body;
 
     const page = await prisma.page.update({
@@ -159,6 +173,20 @@ export async function PUT(
         ...(pillar3Es !== undefined && { pillar3Es }),
         ...(pillar3Fr !== undefined && { pillar3Fr }),
         ...(status && { status }),
+        // ═══ Curadoria do momento (página Work) ═══
+        ...(curationTitlePt !== undefined && { curationTitlePt }),
+        ...(curationTitleEn !== undefined && { curationTitleEn }),
+        ...(curationTitleEs !== undefined && { curationTitleEs }),
+        ...(curationTitleFr !== undefined && { curationTitleFr }),
+        ...(curationDescriptionPt !== undefined && { curationDescriptionPt }),
+        ...(curationDescriptionEn !== undefined && { curationDescriptionEn }),
+        ...(curationDescriptionEs !== undefined && { curationDescriptionEs }),
+        ...(curationDescriptionFr !== undefined && { curationDescriptionFr }),
+        ...(curationButtonTextPt !== undefined && { curationButtonTextPt }),
+        ...(curationButtonTextEn !== undefined && { curationButtonTextEn }),
+        ...(curationButtonTextEs !== undefined && { curationButtonTextEs }),
+        ...(curationButtonTextFr !== undefined && { curationButtonTextFr }),
+        ...(curationFilterCategory !== undefined && { curationFilterCategory }),
       },
     });
 
