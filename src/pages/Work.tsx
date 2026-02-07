@@ -22,7 +22,7 @@ import CuradoriaFestivais from '../components/CuradoriaFestivais'
 import StarBackground from '../components/StarBackground'
 import OptimizedImage from '../components/OptimizedImage'
 import { useTheme } from '../contexts/ThemeContext'
-import { MAIN_CATEGORIES, SECONDARY_FILTERS, getCategoryFilters, getCategoryLabel } from '../utils/categoryMapping'
+import { MAIN_CATEGORIES, getCategoryFilters, getCategoryLabel } from '../utils/categoryMapping'
 import { PageFooterNavigation } from '../components/PageFooterNavigation'
 import LangLink from '../components/LangLink'
 import LoadingSkeleton from '../components/LoadingSkeleton'
@@ -91,9 +91,6 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null)
   const [selectedYear, setSelectedYear] = useState<number | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
-  
-  // Estado para filtros colapsáveis
-  const [showSecondaryFilters, setShowSecondaryFilters] = useState(false)
   
   // Filtros legados (mantidos para compatibilidade)
   const [selectedTag, setSelectedTag] = useState<string | null>(() => {
@@ -727,235 +724,28 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               )}
             </p>
           </div>
-          {/* ═══════════════════════════════════════════════════════════════
-              🎯 FILTROS VISUAIS PREMIUM - Portfolio 2026
-              ═══════════════════════════════════════════════════════════ */}
-          <div id="filters-section" className="mb-12">
-            {/* Busca - Destacada no topo */}
-            <div className="mb-6">
-              <div className="relative max-w-md">
-                <input
-                  type="text"
-                  placeholder={lang === 'pt' ? '🔍 Buscar projetos...' : lang === 'es' ? '🔍 Buscar proyectos...' : lang === 'fr' ? '🔍 Rechercher...' : '🔍 Search projects...'}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className={`w-full rounded-xl border-2 bg-subtle px-5 py-4 text-sm font-medium focus:border-azimut-red focus:outline-none focus:ring-2 focus:ring-azimut-red/30 transition-all ${
-                    theme === 'dark' ? 'border-white/30' : 'border-slate-400/60'
-                  }`}
-                  style={{ 
-                    color: 'var(--theme-text)',
-                  }}
-                />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery('')}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-azimut-red transition-colors"
-                  >
-                    ✕
-                  </button>
-                )}
-              </div>
+          {/* ═══ Barra de ações: contador + limpar filtros ═══ */}
+          <div id="filters-section" className="mb-6 flex items-center justify-between">
+            <div id="results-counter" className="font-sora text-sm text-slate-500 dark:text-slate-400">
+              {cases.length} {lang === 'pt' ? (cases.length === 1 ? 'projeto' : 'projetos') : lang === 'es' ? (cases.length === 1 ? 'proyecto' : 'proyectos') : (cases.length === 1 ? 'project' : 'projects')}
+              {hasActiveFilters && (
+                <span className="ml-2 text-azimut-red">
+                  ({lang === 'pt' ? 'filtrado' : lang === 'es' ? 'filtrado' : 'filtered'})
+                </span>
+              )}
             </div>
-            
-            {/* Botão para mostrar/ocultar filtros secundários */}
-            <div className="mb-4">
-              <button
-                onClick={() => setShowSecondaryFilters(!showSecondaryFilters)}
-                className="flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-sora font-medium uppercase tracking-wide transition-all hover:border-azimut-red/60"
-                style={{ 
-                  color: 'var(--theme-text-secondary)',
-                  borderColor: theme === 'dark' ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)'
-                }}
-              >
-                <span>{showSecondaryFilters ? '▼' : '▶'}</span>
-                <span>{lang === 'pt' ? 'Filtros Avançados' : lang === 'es' ? 'Filtros Avanzados' : lang === 'fr' ? 'Filtres Avancés' : 'Advanced Filters'}</span>
-              </button>
-            </div>
-
-            {/* ═══════════════════════════════════════════════════════════════
-                DESTAQUE: CUADORIA GRAMADO (ÚNICO NO BRASIL)
-                Ocultar quando há filtros ativos para não confundir o usuário
-                ═══════════════════════════════════════════════════════════ */}
-            {!hasActiveFilters && (
-            <div className="mb-8 rounded-2xl border-2 border-azimut-red/60 bg-gradient-to-br from-azimut-red/15 via-azimut-red/5 to-transparent p-6 backdrop-blur-sm">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 text-4xl">🎪</div>
-                <div className="flex-1">
-                  <h3 className="mb-2 font-handel text-xl uppercase tracking-[0.12em] text-azimut-red">
-                    {lang === 'pt' ? 'Curadoria Gramado' : lang === 'es' ? 'Curaduría Gramado' : lang === 'fr' ? 'Curation Gramado' : 'Gramado Curation'}
-                  </h3>
-                  <p className="mb-4 text-sm leading-relaxed text-slate-400 dark:text-slate-300">
-                    {lang === 'pt' 
-                      ? 'Nosso maior diferencial: curadoria de nível internacional para festivais. Único estúdio no Brasil que combina produção técnica premium com expertise em curadoria cinematográfica.'
-                      : lang === 'es'
-                      ? 'Nuestro mayor diferencial: curaduría de nivel internacional para festivales. Único estudio en Brasil que combina producción técnica premium con experiencia en curaduría cinematográfica.'
-                      : lang === 'fr'
-                      ? 'Notre plus grand atout: curation de niveau international pour festivals. Le seul studio au Brésil qui combine production technique premium avec expertise en curation cinématographique.'
-                      : 'Our biggest differentiator: international-level curation for festivals. The only studio in Brazil that combines premium technical production with expertise in film curation.'}
-                  </p>
-                  <button
-                    onClick={() => {
-                      setSelectedCategory(['curadoria'])
-                      setSelectedWorkType(['festival'])
-                    }}
-                    className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/60 bg-azimut-red/20 px-5 py-2.5 font-sora text-xs font-semibold uppercase tracking-[0.1em] hover:bg-azimut-red/30 transition-all"
-                    style={{ color: 'var(--theme-text)' }}
-                  >
-                    {lang === 'pt' ? 'Ver Projetos de Curadoria' : lang === 'es' ? 'Ver Proyectos de Curaduría' : lang === 'fr' ? 'Voir Projets de Curation' : 'View Curation Projects'}
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-            )}
-
-            {/* Filtros Secundários Colapsáveis */}
-            {showSecondaryFilters && (
-              <div className="mb-6 space-y-6 rounded-xl border p-6" style={{ 
-                borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
-                backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.5)'
-              }}>
-                {/* Tipo de Trabalho */}
-                <div>
-                  <label className="mb-3 block font-sora text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-                    {lang === 'pt' ? 'Tipo de Trabalho' : lang === 'es' ? 'Tipo de Trabajo' : lang === 'fr' ? 'Type de Travail' : 'Work Type'}
-                  </label>
-                  <div className="flex flex-wrap gap-3">
-                    {SECONDARY_FILTERS.find(f => f.type === 'workType')?.options.map((option) => (
-                      <button
-                        key={option.value}
-                        onClick={() => {
-                          if (selectedWorkType.includes(option.value)) {
-                            setSelectedWorkType(selectedWorkType.filter(t => t !== option.value))
-                          } else {
-                            setSelectedWorkType([...selectedWorkType, option.value])
-                          }
-                        }}
-                        className={`rounded-xl border px-4 py-2.5 font-sora text-xs font-semibold uppercase tracking-[0.1em] transition-all duration-300 ${
-                          selectedWorkType.includes(option.value)
-                            ? 'border-azimut-red/60 bg-gradient-to-br from-azimut-red/30 to-azimut-red/10 text-azimut-red shadow-lg shadow-azimut-red/20'
-                            : theme === 'dark' 
-                              ? 'border-white/20 bg-subtle text-slate-400 hover:border-white/40 hover:text-slate-300'
-                              : 'border-slate-300/40 bg-white/60 text-slate-700 hover:border-slate-400/60 hover:text-slate-900'
-                        }`}
-                      >
-                        {option.label[lang]}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Tecnologias */}
-                <div>
-                  <label className="mb-3 block font-sora text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-                    {lang === 'pt' ? 'Tecnologias' : lang === 'es' ? 'Tecnologías' : lang === 'fr' ? 'Technologies' : 'Technologies'}
-                  </label>
-                  <div className="flex flex-wrap gap-3">
-                    {SECONDARY_FILTERS.find(f => f.type === 'technologies')?.options.map((option) => (
-                      <button
-                        key={option.value}
-                        onClick={() => {
-                          if (selectedTechnologies.includes(option.value)) {
-                            setSelectedTechnologies(selectedTechnologies.filter(t => t !== option.value))
-                          } else {
-                            setSelectedTechnologies([...selectedTechnologies, option.value])
-                          }
-                        }}
-                        className={`rounded-xl border px-4 py-2.5 font-sora text-xs font-semibold uppercase tracking-[0.1em] transition-all duration-300 ${
-                          selectedTechnologies.includes(option.value)
-                            ? 'border-azimut-red/60 bg-gradient-to-br from-azimut-red/30 to-azimut-red/10 text-azimut-red shadow-lg shadow-azimut-red/20'
-                            : theme === 'dark' 
-                              ? 'border-white/20 bg-subtle text-slate-400 hover:border-white/40 hover:text-slate-300'
-                              : 'border-slate-300/40 bg-white/60 text-slate-700 hover:border-slate-400/60 hover:text-slate-900'
-                        }`}
-                      >
-                        {option.label[lang]}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Indústria */}
-                <div>
-                  <label className="mb-3 block font-sora text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-                    {lang === 'pt' ? 'Indústria' : lang === 'es' ? 'Industria' : lang === 'fr' ? 'Industrie' : 'Industry'}
-                  </label>
-                  <div className="flex flex-wrap gap-3">
-                    {SECONDARY_FILTERS.find(f => f.type === 'industry')?.options.map((option) => (
-                      <button
-                        key={option.value}
-                        onClick={() => {
-                          setSelectedIndustry(selectedIndustry === option.value ? null : option.value)
-                        }}
-                        className={`rounded-xl border px-4 py-2.5 font-sora text-xs font-semibold uppercase tracking-[0.1em] transition-all duration-300 ${
-                          selectedIndustry === option.value
-                            ? 'border-azimut-red/60 bg-gradient-to-br from-azimut-red/30 to-azimut-red/10 text-azimut-red shadow-lg shadow-azimut-red/20'
-                            : theme === 'dark' 
-                              ? 'border-white/20 bg-subtle text-slate-400 hover:border-white/40 hover:text-slate-300'
-                              : 'border-slate-300/40 bg-white/60 text-slate-700 hover:border-slate-400/60 hover:text-slate-900'
-                        }`}
-                      >
-                        {option.label[lang]}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Ano */}
-                {allYears.length > 0 && (
-                  <div>
-                    <label className="mb-3 block font-sora text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-                      {lang === 'pt' ? 'Ano' : lang === 'es' ? 'Año' : lang === 'fr' ? 'Année' : 'Year'}
-                    </label>
-                    <select
-                      value={selectedYear || ''}
-                      onChange={(e) => setSelectedYear(e.target.value ? parseInt(e.target.value) : null)}
-                      className={`w-full max-w-xs rounded-xl border bg-subtle px-4 py-2.5 text-sm focus:border-azimut-red/60 focus:outline-none focus:ring-2 focus:ring-azimut-red/30 transition-all ${
-                        theme === 'dark' ? 'border-white/20' : 'border-slate-300/40'
-                      }`}
-                      style={{ 
-                        appearance: 'none', 
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`, 
-                        backgroundRepeat: 'no-repeat', 
-                        backgroundPosition: 'right 12px center', 
-                        paddingRight: '32px',
-                        color: 'var(--theme-text)'
-                      }}
-                    >
-                      <option value="">{lang === 'pt' ? '📅 Todos os anos' : lang === 'es' ? '📅 Todos los años' : lang === 'fr' ? '📅 Toutes les années' : '📅 All years'}</option>
-                      {allYears.map(year => (
-                        <option key={year} value={year}>{year}</option>
-                      ))}
-                    </select>
-                  </div>
-                )}
-              </div>
-            )}
-            
-            {/* Limpar filtros */}
             {hasActiveFilters && (
               <button
                 onClick={clearFilters}
-                className="rounded-xl border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 text-sm font-sora font-semibold uppercase tracking-[0.1em] hover:bg-azimut-red/20 transition-all"
-                style={{ color: 'var(--theme-text)' }}
+                className="flex items-center gap-2 rounded-lg border border-azimut-red/40 bg-azimut-red/10 px-4 py-2 text-xs font-sora font-semibold uppercase tracking-wide text-azimut-red hover:bg-azimut-red/20 transition-all"
               >
-                {lang === 'pt' ? '🗑️ Limpar Filtros' : lang === 'es' ? '🗑️ Limpiar Filtros' : lang === 'fr' ? '🗑️ Effacer les Filtres' : '🗑️ Clear Filters'}
+                {lang === 'pt' ? '✕ Limpar filtros' : lang === 'es' ? '✕ Limpiar' : '✕ Clear'}
               </button>
             )}
           </div>
-          
-          {/* Contador de resultados */}
-          <div className="mb-6 text-sm text-slate-600 dark:text-slate-500">
-            {lang === 'pt' 
-              ? `Mostrando ${cases.length} ${cases.length === 1 ? 'projeto' : 'projetos'}${hasActiveFilters ? ' (filtrado)' : ''}`
-              : lang === 'es'
-              ? `Mostrando ${cases.length} ${cases.length === 1 ? 'proyecto' : 'proyectos'}${hasActiveFilters ? ' (filtrado)' : ''}`
-              : lang === 'fr'
-              ? `Affichage de ${cases.length} ${cases.length === 1 ? 'projet' : 'projets'}${hasActiveFilters ? ' (filtré)' : ''}`
-              : `Showing ${cases.length} ${cases.length === 1 ? 'project' : 'projects'}${hasActiveFilters ? ' (filtered)' : ''}`}
-          </div>
+
+
+
 
           {/* Featured Project - Full Width - SEMPRE MOSTRA, mesmo sem dados */}
           {cases.length > 0 && (
