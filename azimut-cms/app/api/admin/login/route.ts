@@ -1,6 +1,7 @@
 /**
  * API de Login
  * Autentica usuário e retorna token JWT
+ * Debug: logs detalhados em produção (ver Vercel Logs) quando falha.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -23,7 +24,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Buscar usuário no banco (case-insensitive: evita falha se no banco estiver Admin@... ou com espaços)
+    // Buscar usuário no banco (case-insensitive)
     const emailNorm = email.toLowerCase().trim();
     let user;
     try {
@@ -33,7 +34,7 @@ export async function POST(request: NextRequest) {
         },
       });
     } catch (dbError: any) {
-      console.error('Database error:', dbError);
+      console.error('[Login] Database error:', dbError?.message || dbError);
       return NextResponse.json(
         { error: 'Erro ao conectar ao banco de dados. Verifique DATABASE_URL e o seed.' },
         { status: 500 }
@@ -41,6 +42,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (!user) {
+      console.log('[Login] 401: usuário não encontrado (email não existe no banco). Rode o seed ou /api/admin/setup.');
       return NextResponse.json(
         { error: 'Credenciais inválidas' },
         { status: 401 }
@@ -51,6 +53,7 @@ export async function POST(request: NextRequest) {
     const isValidPassword = await bcrypt.compare(password, user.password);
 
     if (!isValidPassword) {
+      console.log('[Login] 401: senha incorreta para o usuário. Use /api/admin/setup (token) ou seed-admin-user.ts para redefinir.');
       return NextResponse.json(
         { error: 'Credenciais inválidas' },
         { status: 401 }

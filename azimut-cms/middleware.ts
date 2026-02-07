@@ -5,6 +5,9 @@ const BASIC_AUTH_ENABLED = process.env.BASIC_AUTH_ENABLED === 'true';
 const BASIC_AUTH_USER = process.env.BASIC_AUTH_USER || 'admin';
 const BASIC_AUTH_PASS = process.env.BASIC_AUTH_PASS || 'azimut2025';
 
+// Backoffice aberto: NÃO exige cookie para /admin (só para debug; desative em produção)
+const BACKOFFICE_OPEN = process.env.BACKOFFICE_OPEN === 'true';
+
 function checkBasicAuth(req: NextRequest): NextResponse | null {
   if (!BASIC_AUTH_ENABLED) return null;
 
@@ -53,9 +56,9 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Bloquear acesso a /admin se não autenticado
+  // Bloquear acesso a /admin se não autenticado (exceto quando BACKOFFICE_OPEN=true)
   if (pathname.startsWith('/admin')) {
-    if (!isAuthenticated) {
+    if (!BACKOFFICE_OPEN && !isAuthenticated) {
       const url = req.nextUrl.clone();
       url.pathname = '/login';
       url.search = `?next=${encodeURIComponent(pathname)}`;

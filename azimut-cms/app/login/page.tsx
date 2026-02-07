@@ -148,7 +148,7 @@ function LoginForm() {
             {error}
             {(error.includes('Credenciais') || error.includes('inválidas') || error.includes('Falha ao autenticar') || error.includes('banco')) && (
               <p style={{ marginTop: 8, marginBottom: 0, fontSize: 11, color: '#94a3b8' }}>
-                Em produção: confira <strong>DATABASE_URL</strong> no projeto Vercel e rode o seed do admin na máquina com essa URL: <code style={{ background: 'rgba(0,0,0,0.2)', padding: '2px 6px', borderRadius: 4 }}>DATABASE_URL=&quot;sua-url-neon&quot; npx tsx scripts/seed-admin-user.ts</code> (cria/redefine admin@azimut.com.br / Azimut2025!).
+                Em produção: (1) Chame <strong>POST /api/admin/setup</strong> com body <code style={{ background: 'rgba(0,0,0,0.2)', padding: '2px 6px', borderRadius: 4 }}>{`{ "token": "azimut-seed-2025-setup-temp" }`}</code> (redefine admin/Azimut2025! no banco da Vercel). (2) Ou rode na máquina com a DATABASE_URL da Vercel: <code style={{ background: 'rgba(0,0,0,0.2)', padding: '2px 6px', borderRadius: 4 }}>npx tsx scripts/seed-admin-user.ts</code>. Veja logs na Vercel para debug (usuário não encontrado vs senha incorreta).
               </p>
             )}
           </div>

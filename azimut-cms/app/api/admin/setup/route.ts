@@ -27,12 +27,16 @@ export async function POST(request: NextRequest) {
 
     console.log('🌱 Running seed via API...');
 
-    // 1. Criar usuário admin
-    console.log('Creating admin user...');
+    // 1. Criar ou ATUALIZAR usuário admin (senha sempre redefinida para Azimut2025!)
+    console.log('Creating/updating admin user...');
     const hashedPassword = await bcrypt.hash('Azimut2025!', 10);
     const admin = await prisma.user.upsert({
       where: { email: 'admin@azimut.com.br' },
-      update: {},
+      update: {
+        password: hashedPassword,
+        name: 'Admin Azimut',
+        role: 'SUPER_ADMIN',
+      },
       create: {
         email: 'admin@azimut.com.br',
         name: 'Admin Azimut',
@@ -40,7 +44,7 @@ export async function POST(request: NextRequest) {
         role: 'SUPER_ADMIN',
       },
     });
-    console.log('✅ Admin created:', admin.email);
+    console.log('✅ Admin OK (senha redefinida):', admin.email);
 
     // 2. Verificar se já existem dados (para evitar duplicação)
     const existingMarkets = await prisma.market.count();
