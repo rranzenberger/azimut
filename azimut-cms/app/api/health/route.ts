@@ -13,4 +13,12 @@ export async function GET() {
   })
 }
 
+// POST para diagnóstico – se funcionar, POST está ok na Vercel
+export async function POST() {
+  return NextResponse.json({
+    status: 'post-ok',
+    timestamp: new Date().toISOString(),
+  })
+}
+
 export const runtime = 'edge'

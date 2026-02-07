@@ -11,6 +11,28 @@ import bcrypt from 'bcryptjs';
 
 export const runtime = 'nodejs'; // Necessário para usar crypto
 
+// Diagnóstico: GET retorna info sobre módulos carregados (remover depois)
+export async function GET() {
+  try {
+    const hasCrypto = typeof (await import('crypto')).createHmac === 'function';
+    const hasBcrypt = typeof (await import('bcryptjs')).compare === 'function';
+    const userCount = await prisma.user.count();
+    return NextResponse.json({
+      ok: true,
+      crypto: hasCrypto,
+      bcrypt: hasBcrypt,
+      userCount,
+      env: {
+        hasDbUrl: !!process.env.DATABASE_URL,
+        hasJwtSecret: !!(process.env.JWT_SECRET || process.env.ADMIN_JWT_SECRET || process.env.NEXTAUTH_SECRET),
+        nodeEnv: process.env.NODE_ENV,
+      },
+    });
+  } catch (e: any) {
+    return NextResponse.json({ ok: false, error: e.message, stack: e.stack?.split('\n').slice(0, 5) }, { status: 500 });
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
