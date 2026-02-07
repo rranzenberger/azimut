@@ -746,11 +746,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               label={t(lang, 'navWork')}
               mainHref="/work"
               items={[
-                { label: t(lang, 'navWorkAll'), href: '/work', description: t(lang, 'navWorkAllDesc') },
-                { label: t(lang, 'navWorkMuseums'), href: '/work?type=museum', description: t(lang, 'navWorkMuseumsDesc') },
-                { label: t(lang, 'navWorkFestivals'), href: '/work?type=festival', description: t(lang, 'navWorkFestivalsDesc') },
-                { label: t(lang, 'navWorkBrands'), href: '/work?type=brand', description: t(lang, 'navWorkBrandsDesc') },
-                { label: t(lang, 'navWorkVr'), href: '/work?tag=vr', description: t(lang, 'navWorkVrDesc') },
+                { label: t(lang, 'navWorkAll'), href: '/work/projects', description: t(lang, 'navWorkAllDesc') },
+                { label: t(lang, 'navWorkMuseums'), href: '/work/projects?type=MUSEUM', description: t(lang, 'navWorkMuseumsDesc') },
+                { label: t(lang, 'navWorkFestivals'), href: '/work/projects?type=FESTIVAL', description: t(lang, 'navWorkFestivalsDesc') },
+                { label: t(lang, 'navWorkBrands'), href: '/work/projects?type=brand', description: t(lang, 'navWorkBrandsDesc') },
+                { label: t(lang, 'navWorkVr'), href: '/work/projects?type=VR_FILM', description: t(lang, 'navWorkVrDesc') },
                 { label: t(lang, 'navWorkWeb3'), href: '/experience-preview', description: t(lang, 'navWorkWeb3Desc') }
               ]}
               lang={lang}

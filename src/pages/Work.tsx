@@ -618,12 +618,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         >
           <div className="mx-auto max-w-7xl w-full sm:px-4 min-[768px]:px-6 py-3 flex justify-center">
             <nav className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
-              {/* + TODOS / Ver todos os projetos */}
+              {/* + TODOS → subpágina com todos os projetos */}
               <button
-                onClick={() => {
-                  clearFilters()
-                  navigate(`/${lang}/work`)
-                }}
+                onClick={() => navigate(`/${lang}/work/projects`)}
                 className={`flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide transition-colors ${
                   !hasActiveFilters
                     ? 'text-azimut-red border-b-2 border-azimut-red'
@@ -656,15 +653,13 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                       // Limpar outros filtros primeiro
                       clearFilters()
                       
-                      // Aplicar filtros da categoria
-                      if (filters.projectCategory) {
-                        setSelectedCategory(filters.projectCategory)
-                      }
+                      // Ir para subpágina de todos os projetos com filtro
                       if (filters.type) {
-                        setSelectedType(filters.type)
-                        navigate(`/${lang}/work?type=${filters.type}`)
+                        navigate(`/${lang}/work/projects?type=${filters.type}`)
+                      } else if (filters.projectCategory?.length) {
+                        navigate(`/${lang}/work/projects?type=${filters.type || ''}`)
                       } else {
-                        navigate(`/${lang}/work`)
+                        navigate(`/${lang}/work/projects`)
                       }
                     }}
                     className={`flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide transition-all duration-200 ${
@@ -723,6 +718,19 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 <>Projects that transform spaces, brands and experiences. From Olympic museums to international festival curation, each work is an opportunity to create immersive narratives that uniquely connect people and stories. <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">Explore our solutions</LangLink> or <LangLink to="/contact" className="text-azimut-red hover:text-azimut-red/80 underline">start your project</LangLink>.</>
               )}
             </p>
+            {/* CTA: Projetos realizados / Veja todo nosso portfólio */}
+            <div className="mt-6 flex flex-wrap items-center gap-4">
+              <Link
+                to={`/${lang}/work/projects`}
+                className="inline-flex items-center gap-2 rounded-xl border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-sm font-semibold uppercase tracking-[0.1em] text-azimut-red hover:bg-azimut-red/20 transition-all"
+              >
+                {lang === 'pt' ? 'Veja todo nosso portfólio' : lang === 'es' ? 'Ver todo nuestro portafolio' : lang === 'fr' ? 'Voir tout notre portfolio' : 'View full portfolio'}
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+              </Link>
+              <span className="text-sm text-slate-500 dark:text-slate-400">
+                {lang === 'pt' ? 'Projetos realizados com filtros por área.' : lang === 'es' ? 'Proyectos realizados con filtros por área.' : lang === 'fr' ? 'Projets réalisés avec filtres par domaine.' : 'Completed projects with filters by area.'}
+              </span>
+            </div>
           </div>
           {/* ═══ Barra de ações: contador + limpar filtros ═══ */}
           <div id="filters-section" className="mb-6 flex items-center justify-between">

@@ -77,6 +77,7 @@ const StudioDiferenciais = lazy(() => import('./pages/StudioDiferenciais').then(
 const AcademyNew = lazy(() => import('./pages/AcademyNew').then(m => ({ default: m.default })))
 const WhatWeDo = lazy(() => import('./pages/WhatWeDo').then(m => ({ default: m.default })))
 const Work = lazy(() => import('./pages/Work').then(m => ({ default: m.default })))
+const WorkProjects = lazy(() => import('./pages/WorkProjects').then(m => ({ default: m.default })))
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail').then(m => ({ default: m.default })))
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail').then(m => ({ default: m.default })))
 
@@ -343,6 +344,13 @@ const App: React.FC = () => {
                     </LangRouteWrapper>
                   </ErrorBoundary>
                 } />
+                <Route path="/:lang/work/projects" element={
+                  <ErrorBoundary routeName="WorkProjects">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <WorkProjects lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
+                } />
                 <Route path="/:lang/work/:slug" element={
                   <ErrorBoundary routeName="Project">
                     <LangRouteWrapper setLang={setLang}>
@@ -590,6 +598,13 @@ const App: React.FC = () => {
                   <ErrorBoundary routeName="Work">
                     <LangRouteWrapper setLang={setLang}>
                       {(routeLang) => <Work lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
+                } />
+                <Route path="/:lang/work/projects" element={
+                  <ErrorBoundary routeName="WorkProjects">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <WorkProjects lang={routeLang} />}
                     </LangRouteWrapper>
                   </ErrorBoundary>
                 } />
