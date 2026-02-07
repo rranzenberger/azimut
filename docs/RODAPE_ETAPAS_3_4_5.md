@@ -56,7 +56,7 @@ git push origin main
 ```
 
 **Registro:**
-- [x] Deploy em: 07/02/2026 (commit + push main – API pública settings, hook useFooterSettings, Layout rodapé)
+- [x] Deploy em: 07/02/2026 (commit d60e696, push main – API pública settings, hook useFooterSettings, Layout rodapé)
 
 ---
 
