@@ -182,9 +182,8 @@ export default function MediaPage() {
         <h1 style={{ margin: 0, fontSize: 32, fontWeight: 700, marginBottom: 8, letterSpacing: '-0.5px' }}>
           Mídias
         </h1>
-        <p style={{ margin: '0 0 24px', color: '#c0bccf', fontSize: 16 }}>
-          Envie imagens ou vídeos. Imagens até {MAX_IMAGE_MB}MB, vídeos até {MAX_VIDEO_MB}MB. Alt text até {MAX_ALT} caracteres.
-          Imagens: JPEG/PNG/WebP recomendados. Vídeo: MP4/MOV.
+        <p style={{ margin: '0 0 24px', color: '#c0bccf', fontSize: 16, lineHeight: 1.6 }}>
+          Envie imagens ou vídeos aqui; depois use em <strong style={{ color: '#e8e6f2' }}>Páginas</strong> (ex.: Home — vídeo e capa do topo) e em <strong style={{ color: '#e8e6f2' }}>Projetos</strong> (imagem de capa e galeria) escolhendo &quot;Selecionar da Biblioteca&quot;. Imagens até {MAX_IMAGE_MB}MB, vídeos até {MAX_VIDEO_MB}MB. Alt text até {MAX_ALT} caracteres. Formatos: JPEG/PNG/WebP (imagem), MP4/MOV (vídeo).
         </p>
 
         <div

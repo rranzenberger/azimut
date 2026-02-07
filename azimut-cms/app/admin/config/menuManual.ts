@@ -65,8 +65,8 @@ export const MENU_MANUAL_ITEMS: MenuItemManual[] = [
   {
     href: '/admin/projects',
     label: '🎥 Projetos',
-    tooltip: 'Portfólio: criar e editar projetos exibidos na página /work do site.',
-    description: 'CRUD do portfólio de projetos (página /work do site). Cada projeto tem título, descrição, imagens, galeria, tags, slug e SEO. Use para publicar novos trabalhos e manter o portfólio atualizado.',
+    tooltip: 'Portfólio: projetos na página Projetos (/work) e nos cards da Home. Imagem de capa = card.',
+    description: 'CRUD do portfólio. Cada projeto aparece na listagem /work e, se tiver prioridade, nos cards "Projetos em Destaque" da Home. A "Imagem de capa" do projeto é a que aparece no card (Home e página Projetos). Campos: título, descrição, galeria, tags, slug, SEO.',
     howTo: [
       'Clique em "Novo Projeto" para criar',
       'Preencha: Título (PT obrigatório), Slug (URL amigável), Descrição',
@@ -189,8 +189,8 @@ export const MENU_MANUAL_ITEMS: MenuItemManual[] = [
   {
     href: '/admin/site-pages',
     label: '📄 Páginas',
-    tooltip: 'Conteúdo das páginas do site (Home, Studio, Academy, etc.) e áreas Imprensa/Research.',
-    description: 'Central das páginas do site. Lista páginas editáveis (Home, Projetos, Soluções, Estúdio, Academy, Blog, Contato, etc.) e as áreas Imprensa e Publicações (Research). Clique em uma página para editar textos, hero e SEO.',
+    tooltip: 'Textos e mídia do topo de cada página. Home = slogan, vídeo e capa do hero (não os cards de projetos).',
+    description: 'Edição do conteúdo das páginas do site (Home, Studio, Academy, Contato, etc.). Na Home você edita: slogan, subtítulo, vídeo e capa do topo (hero). Os cards "Projetos em Destaque" vêm de Projetos, não daqui. Cada página tem hero, textos e SEO.',
     howTo: [
       'Acesse Páginas no menu',
       'Clique na página que deseja editar (ex: Home, Studio)',
@@ -220,8 +220,8 @@ export const MENU_MANUAL_ITEMS: MenuItemManual[] = [
   {
     href: '/admin/media',
     label: '🖼️ Mídias',
-    tooltip: 'Biblioteca de imagens e arquivos enviados para o site.',
-    description: 'Biblioteca de mídia: upload e gestão de imagens e arquivos usados no site. As mídias podem ser vinculadas a projetos, páginas e seções. Use para centralizar imagens e evitar duplicação.',
+    tooltip: 'Enviar imagens e vídeos aqui; depois use em Páginas e Projetos (Selecionar da Biblioteca).',
+    description: 'Upload central de imagens e vídeos. Envie aqui primeiro; ao editar uma Página ou um Projeto, use "Selecionar da Biblioteca" para escolher essas mídias. O que você envia aqui aparece disponível em Home (vídeo/capa), Projetos (imagem de capa e galeria) e Serviços.',
     howTo: [
       'Acesse Mídias no menu',
       'Clique em "Upload" para enviar novas imagens',

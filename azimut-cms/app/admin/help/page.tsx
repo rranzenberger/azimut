@@ -95,6 +95,64 @@ export default async function HelpPage() {
         </ul>
       </section>
 
+      {/* Mapa Site → Backoffice */}
+      <section
+        style={{
+          marginBottom: 40,
+          padding: 24,
+          borderRadius: 16,
+          background: 'rgba(34, 197, 94, 0.06)',
+          border: '1px solid rgba(34, 197, 94, 0.25)',
+        }}
+      >
+        <h2 style={{ margin: '0 0 12px', fontSize: 20, fontWeight: 600, color: '#86efac' }}>
+          🗺️ Mapa: Onde cada parte do site é editada
+        </h2>
+        <p style={{ margin: '0 0 16px', fontSize: 14, color: '#94a3b8', lineHeight: 1.6 }}>
+          Relação direta entre o que o visitante vê no site e onde você edita no backoffice.
+        </p>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, color: '#c0bccf' }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.12)' }}>
+                <th style={{ textAlign: 'left', padding: '10px 12px', color: '#e8e6f2', fontWeight: 600 }}>No site (página / conteúdo)</th>
+                <th style={{ textAlign: 'left', padding: '10px 12px', color: '#e8e6f2', fontWeight: 600 }}>Onde editar no backoffice</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <td style={{ padding: '10px 12px' }}>Home — slogan, subtítulo, vídeo e capa do topo</td>
+                <td style={{ padding: '10px 12px' }}><Link href="/admin/pages/edit/home" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>Páginas → Editar Home</Link></td>
+              </tr>
+              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <td style={{ padding: '10px 12px' }}>Home — cards &quot;Projetos em Destaque&quot; (imagens)</td>
+                <td style={{ padding: '10px 12px' }}><Link href="/admin/projects" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>Projetos</Link> → editar cada projeto → Imagem de capa</td>
+              </tr>
+              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <td style={{ padding: '10px 12px' }}>Projetos (listagem e detalhe) — título, texto, galeria, imagem de capa</td>
+                <td style={{ padding: '10px 12px' }}><Link href="/admin/projects" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>Projetos</Link> → editar o projeto</td>
+              </tr>
+              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <td style={{ padding: '10px 12px' }}>Serviços (What) — cards e páginas de cada serviço</td>
+                <td style={{ padding: '10px 12px' }}><Link href="/admin/services" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>Serviços</Link></td>
+              </tr>
+              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <td style={{ padding: '10px 12px' }}>Studio, Academy, Contato, outras páginas — textos e hero</td>
+                <td style={{ padding: '10px 12px' }}><Link href="/admin/site-pages" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>Páginas</Link> → escolher a página</td>
+              </tr>
+              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <td style={{ padding: '10px 12px' }}>Blog — posts e listagem</td>
+                <td style={{ padding: '10px 12px' }}><Link href="/admin/blog" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>Blog</Link></td>
+              </tr>
+              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <td style={{ padding: '10px 12px' }}>Enviar imagens e vídeos (para usar em qualquer lugar)</td>
+                <td style={{ padding: '10px 12px' }}><Link href="/admin/media" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>Mídias</Link></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       {/* Table of Contents */}
       <section style={{ marginBottom: 40 }}>
         <h2 style={{ margin: '0 0 16px', fontSize: 18, fontWeight: 600, color: '#9f9bb0' }}>

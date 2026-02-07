@@ -1,5 +1,7 @@
 # Relatório final: onde fazer upload e onde atualizar no backoffice
 
+> **Mapa completo site ↔ backoffice:** ver também `docs/MAPA_SITE_BACKOFFICE.md` e, no backoffice, **Manual** (menu) → seção "Mapa: Onde cada parte do site é editada".
+
 ## 0. Reorganização do backoffice (UX para leigos)
 
 Na **edição de Páginas** (ex.: Home), no topo há um **Guia rápido — O que você quer atualizar?** com botões que levam direto a cada área, em vez de rolar a página inteira:

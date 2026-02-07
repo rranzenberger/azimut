@@ -108,7 +108,7 @@ export default async function PagesPage() {
           Páginas do Site
         </h1>
         <p style={{ margin: '8px 0 0', color: '#9f9bb0', fontSize: 16 }}>
-          Gerencie conteúdo, SEO e traduções de cada página
+          Gerencie conteúdo, SEO e traduções de cada página. Cada item abaixo corresponde a uma URL no site (ex.: Home = /pt/home, Studio = /pt/studio).
         </p>
       </header>
 
