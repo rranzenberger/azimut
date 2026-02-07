@@ -748,10 +748,21 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           {/* ═══ Barra de ações: contador + limpar filtros ═══ */}
           <div id="filters-section" className="mb-6 flex items-center justify-between">
             <div id="results-counter" className="font-sora text-sm text-slate-500 dark:text-slate-400">
-              {cases.length} {lang === 'pt' ? (cases.length === 1 ? 'projeto' : 'projetos') : lang === 'es' ? (cases.length === 1 ? 'proyecto' : 'proyectos') : (cases.length === 1 ? 'project' : 'projects')}
-              {hasActiveFilters && (
-                <span className="ml-2 text-azimut-red">
-                  ({lang === 'pt' ? 'filtrado' : lang === 'es' ? 'filtrado' : 'filtered'})
+              {hasActiveFilters ? (
+                <>
+                  {cases.length} {lang === 'pt' ? (cases.length === 1 ? 'projeto' : 'projetos') : (cases.length === 1 ? 'project' : 'projects')}
+                  <span className="ml-2 text-azimut-red">
+                    ({lang === 'pt' ? 'filtrado' : lang === 'es' ? 'filtrado' : 'filtered'})
+                  </span>
+                </>
+              ) : (
+                <span>
+                  {lang === 'pt' ? 'Destaques' : lang === 'es' ? 'Destacados' : lang === 'fr' ? 'En vedette' : 'Highlights'}
+                  {cases.length > 4 && (
+                    <span className="ml-1 text-slate-600">
+                      ({cases.length} {lang === 'pt' ? 'no portfólio completo' : 'in full portfolio'})
+                    </span>
+                  )}
                 </span>
               )}
             </div>
@@ -948,10 +959,10 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
             </div>
           )}
 
-          {/* Other Projects Grid */}
+          {/* Other Projects Grid - Apenas 3 cards na página principal */}
           {cases.length > 1 && (
             <div id="projects-grid" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
-              {cases.slice(1).map((item: WorkProject, index: number) => (
+              {cases.slice(1, 4).map((item: WorkProject, index: number) => (
               <article
                 key={item.slug}
                 className={`group rounded-2xl border card-adaptive overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(var(--theme-accent-red-rgb),0.3)] ${
@@ -1077,6 +1088,19 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 </div>
               </article>
               ))}
+            </div>
+          )}
+
+          {/* CTA: Ver todo portfólio (quando há mais projetos além dos 4 exibidos) */}
+          {cases.length > 4 && !hasActiveFilters && (
+            <div className="mb-16 flex justify-center">
+              <Link
+                to={`/${lang}/work/projects`}
+                className="inline-flex items-center gap-3 rounded-xl border border-azimut-red/50 bg-azimut-red/10 px-8 py-4 font-sora text-sm font-semibold uppercase tracking-[0.12em] text-azimut-red hover:bg-azimut-red/20 hover:border-azimut-red/70 transition-all"
+              >
+                {lang === 'pt' ? `Ver todos os ${cases.length} projetos` : lang === 'es' ? `Ver los ${cases.length} proyectos` : lang === 'fr' ? `Voir les ${cases.length} projets` : `View all ${cases.length} projects`}
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+              </Link>
             </div>
           )}
 
