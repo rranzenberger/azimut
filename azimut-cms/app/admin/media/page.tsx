@@ -1,6 +1,8 @@
 "use client";
 
 import { FormEvent, useState } from 'react';
+import Link from 'next/link';
+import { AZIMUT } from '../theme';
 
 type UploadResult = {
   id: string;
@@ -179,31 +181,94 @@ export default function MediaPage() {
   return (
     <div style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box' }}>
       <div style={{ maxWidth: 900, margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
-        <h1 style={{ margin: 0, fontSize: 32, fontWeight: 700, marginBottom: 8, letterSpacing: '-0.5px' }}>
+        <h1 style={{ margin: 0, fontSize: 32, fontWeight: 700, marginBottom: 8, letterSpacing: '-0.5px', color: AZIMUT.text }}>
           Mídias
         </h1>
-        <p style={{ margin: '0 0 24px', color: '#c0bccf', fontSize: 16, lineHeight: 1.6 }}>
-          Envie imagens ou vídeos aqui; depois use em <strong style={{ color: '#e8e6f2' }}>Páginas</strong> (ex.: Home — vídeo e capa do topo) e em <strong style={{ color: '#e8e6f2' }}>Projetos</strong> (imagem de capa e galeria) escolhendo &quot;Selecionar da Biblioteca&quot;. Imagens até {MAX_IMAGE_MB}MB, vídeos até {MAX_VIDEO_MB}MB. Alt text até {MAX_ALT} caracteres. Formatos: JPEG/PNG/WebP (imagem), MP4/MOV (vídeo).
+        <p style={{ margin: '0 0 24px', color: AZIMUT.textSecondary, fontSize: 16, lineHeight: 1.6 }}>
+          Envie imagens ou vídeos aqui; depois use em <strong style={{ color: AZIMUT.text }}>Páginas</strong> e <strong style={{ color: AZIMUT.text }}>Projetos</strong> escolhendo &quot;Selecionar da Biblioteca&quot;. Imagens até {MAX_IMAGE_MB}MB, vídeos até {MAX_VIDEO_MB}MB.
         </p>
+
+        {/* Onde isso aparece no site — referência visual */}
+        <div
+          style={{
+            marginBottom: 24,
+            padding: 20,
+            borderRadius: 12,
+            border: `1px solid ${AZIMUT.accentBorder}`,
+            background: AZIMUT.accentBg,
+          }}
+        >
+          <div style={{ fontSize: 12, fontWeight: 600, color: AZIMUT.accentText, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 14 }}>
+            Onde usar no site (referência)
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
+            <Link
+              href="/admin/pages/edit/home"
+              style={{
+                padding: 14,
+                borderRadius: 10,
+                background: AZIMUT.previewBg,
+                border: `1px solid ${AZIMUT.previewBorder}`,
+                color: AZIMUT.textSecondary,
+                fontSize: 13,
+                textDecoration: 'none',
+                display: 'block',
+              }}
+            >
+              <span style={{ color: AZIMUT.red, fontWeight: 600, marginRight: 6 }}>Home</span>
+              Vídeo e capa do topo (hero)
+            </Link>
+            <Link
+              href="/admin/projects"
+              style={{
+                padding: 14,
+                borderRadius: 10,
+                background: AZIMUT.previewBg,
+                border: `1px solid ${AZIMUT.previewBorder}`,
+                color: AZIMUT.textSecondary,
+                fontSize: 13,
+                textDecoration: 'none',
+                display: 'block',
+              }}
+            >
+              <span style={{ color: AZIMUT.red, fontWeight: 600, marginRight: 6 }}>Projetos</span>
+              Imagem de capa dos cards e galeria
+            </Link>
+            <Link
+              href="/admin/site-pages"
+              style={{
+                padding: 14,
+                borderRadius: 10,
+                background: AZIMUT.previewBg,
+                border: `1px solid ${AZIMUT.previewBorder}`,
+                color: AZIMUT.textSecondary,
+                fontSize: 13,
+                textDecoration: 'none',
+                display: 'block',
+              }}
+            >
+              <span style={{ color: AZIMUT.red, fontWeight: 600, marginRight: 6 }}>Páginas</span>
+              Hero e imagens de outras páginas
+            </Link>
+          </div>
+        </div>
 
         <div
           style={{
             marginBottom: 16,
             padding: 12,
             borderRadius: 10,
-            border: '1px solid rgba(255,255,255,0.08)',
-            background: 'rgba(255,255,255,0.02)',
-            color: '#c0bccf',
+            border: `1px solid ${AZIMUT.border}`,
+            background: AZIMUT.bgCard,
+            color: AZIMUT.textSecondary,
             fontSize: 14,
             lineHeight: 1.55,
           }}
         >
-          <strong style={{ color: '#e8e6f2' }}>Guidelines por área do site</strong>
+          <strong style={{ color: AZIMUT.text }}>Guidelines por área do site</strong>
           <ul style={{ margin: '8px 0 0 16px', padding: 0 }}>
-            <li>Hero (banner): 1920x1080 ou 2000x1125, até ~700KB (imagem); vídeo loop 10–20s, até ~10–15MB.</li>
-            <li>Galeria/Projetos: 1600x900, até ~500KB; thumbs 600x600, até ~200KB.</li>
-            <li>Cards pequenos: 800x600, até ~300KB.</li>
-            <li>Vídeo full: até 60s, 1080p, ideal &lt; 25MB.</li>
+            <li>Hero (banner): 1920×1080, até ~700KB (imagem); vídeo até ~25MB.</li>
+            <li>Projetos/cards: 1920×1080, até ~5MB; galeria até ~8MB.</li>
             <li>Alt text: máx {MAX_ALT} caracteres (PT/EN).</li>
           </ul>
         </div>

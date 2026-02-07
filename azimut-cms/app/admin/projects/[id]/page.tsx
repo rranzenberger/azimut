@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { GalleryManager } from '../components/GalleryManager';
 import UnifiedMediaUpload from '@/components/admin/UnifiedMediaUpload';
+import { AZIMUT } from '../../theme';
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
@@ -971,17 +972,19 @@ export default function EditProjectPage() {
             marginTop: 32,
             padding: '20px 24px',
             borderRadius: 12,
-            border: '1px solid rgba(147, 51, 234, 0.3)',
-            background: 'rgba(147, 51, 234, 0.08)',
+            border: `1px solid ${AZIMUT.accentBorder}`,
+            background: AZIMUT.accentBg,
           }}
         >
-          <h2 style={{ margin: '0 0 8px 0', fontSize: 18, color: '#fff' }}>
+          <h2 style={{ margin: '0 0 8px 0', fontSize: 18, color: AZIMUT.text }}>
             🖼️ Imagem de capa (cards da Home e página Projetos)
           </h2>
-          <p style={{ margin: '0 0 20px 0', fontSize: 13, color: '#c0bccf' }}>
-            Esta é a <strong>imagem de capa</strong> do projeto: aparece nos <strong>cards da Home (Projetos em Destaque)</strong> e na <strong>página Projetos</strong>. Se um card aparecer quebrado no site, defina a Imagem Principal aqui. Envie o arquivo em <strong>Mídias</strong> antes, ou faça upload direto abaixo.
+          <p style={{ margin: '0 0 12px 0', fontSize: 13, color: AZIMUT.textSecondary }}>
+            Esta é a <strong>imagem de capa</strong> do projeto. Envie em <strong>Mídias</strong> antes ou faça upload abaixo.
           </p>
-          
+          <div style={{ marginBottom: 20, padding: '10px 14px', borderRadius: 8, background: AZIMUT.previewBg, border: `1px solid ${AZIMUT.previewBorder}`, fontSize: 12, color: AZIMUT.textSecondary }}>
+            <strong style={{ color: AZIMUT.red }}>No site:</strong> esta imagem aparece no <strong>card da Home</strong> (Projetos em Destaque) e na <strong>listagem /work</strong> (Projetos).
+          </div>
           <UnifiedMediaUpload
             pageSlug={`project-${formData.slug || id}`}
             sectionSlug="hero"
@@ -1040,7 +1043,7 @@ export default function EditProjectPage() {
               padding: '10px 20px',
               borderRadius: 8,
               border: 'none',
-              background: saving ? '#666' : '#c92337',
+              background: saving ? '#666' : AZIMUT.red,
               color: '#fff',
               fontSize: 14,
               fontWeight: 600,

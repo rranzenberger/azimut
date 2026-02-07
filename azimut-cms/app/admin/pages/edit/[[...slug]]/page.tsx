@@ -7,6 +7,7 @@ import MediaUploadField from '@/components/admin/MediaUploadField';
 import VideoWithThumbnailField from '@/components/admin/VideoWithThumbnailField';
 import MultiLangVideoField from '@/components/admin/MultiLangVideoField';
 import UnifiedMediaUpload from '@/components/admin/UnifiedMediaUpload';
+import { AZIMUT } from '../../../theme';
 // Force rebuild: 2026-01-26-v3
 
 interface Section {
@@ -1623,13 +1624,26 @@ export default function EditPagePage() {
             style={{
               padding: 28,
               borderRadius: 12,
-              border: '1px solid rgba(56, 189, 248, 0.3)',
-              background: 'rgba(56, 189, 248, 0.08)',
+              border: `1px solid ${AZIMUT.accentBorder}`,
+              background: AZIMUT.accentBg,
             }}
           >
-            <h2 style={{ margin: '0 0 16px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
+            <h2 style={{ margin: '0 0 16px', fontSize: 22, fontWeight: 600, color: AZIMUT.text }}>
               📸 Mídia da Página
             </h2>
+            {slug === 'home' && (
+              <div style={{
+                marginBottom: 16,
+                padding: '12px 14px',
+                borderRadius: 8,
+                background: AZIMUT.previewBg,
+                border: `1px solid ${AZIMUT.previewBorder}`,
+                fontSize: 12,
+                color: AZIMUT.textSecondary,
+              }}>
+                <strong style={{ color: AZIMUT.red }}>No site:</strong> o que você edita aqui = <strong>topo da Home</strong> (vídeo e capa antes do play).
+              </div>
+            )}
             {slug === 'home' && (
               <div style={{
                 marginBottom: 24,
@@ -1786,7 +1800,7 @@ export default function EditPagePage() {
               padding: '12px 24px',
               borderRadius: 8,
               border: 'none',
-              background: saving ? 'rgba(201,35,55,0.5)' : '#c92337',
+              background: saving ? 'rgba(201,35,55,0.5)' : AZIMUT.red,
               color: '#fff',
               fontSize: 14,
               fontWeight: 600,

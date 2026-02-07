@@ -8,6 +8,7 @@ import { ViewSiteButton } from './ViewSiteButton';
 import { ToastWrapper } from './ToastWrapper';
 import { KeyboardShortcuts } from './KeyboardShortcuts';
 import { MENU_MANUAL_ITEMS } from '../config/menuManual';
+import { AZIMUT } from '../theme';
 
 const TOOLTIP_BY_HREF: Record<string, string> = Object.fromEntries(
   MENU_MANUAL_ITEMS.map((i) => [i.href, i.tooltip])
@@ -26,18 +27,18 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
     <div
       style={{
         minHeight: '100vh',
-        background: '#0a0e18',
-        color: '#d3cec3',
+        background: AZIMUT.bgDark,
+        color: AZIMUT.text,
         fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
         display: 'grid',
         gridTemplateColumns: '280px 1fr',
       }}
     >
-      {/* Sidebar - Menu Lateral Sempre Visível */}
+      {/* Sidebar — visual alinhado ao site Azimut */}
       <aside
         style={{
-          borderRight: '1px solid rgba(255,255,255,0.08)',
-          background: 'rgba(255,255,255,0.02)',
+          borderRight: `1px solid ${AZIMUT.border}`,
+          background: AZIMUT.bgCard,
           display: 'flex',
           flexDirection: 'column',
           position: 'sticky',
@@ -50,7 +51,7 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
         <div
           style={{
             padding: '20px 20px 16px 20px',
-            borderBottom: '1px solid rgba(255,255,255,0.08)',
+            borderBottom: `1px solid ${AZIMUT.border}`,
             display: 'flex',
             alignItems: 'flex-start',
             justifyContent: 'flex-start',
@@ -65,13 +66,13 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
         <div
           style={{
             padding: '20px 20px',
-            borderBottom: '1px solid rgba(255,255,255,0.08)',
+            borderBottom: `1px solid ${AZIMUT.border}`,
           }}
         >
-          <div style={{ fontSize: 14, color: '#c0bccf', marginBottom: 6, fontWeight: 500 }}>
+          <div style={{ fontSize: 14, color: AZIMUT.textSecondary, marginBottom: 6, fontWeight: 500 }}>
             {userData.email}
           </div>
-          <div style={{ fontSize: 13, color: '#8f8ba2', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+          <div style={{ fontSize: 13, color: AZIMUT.textMuted, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
             {userData.role}
           </div>
         </div>
@@ -82,11 +83,11 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
             padding: '12px 16px',
             margin: '0 12px 12px',
             borderRadius: 10,
-            background: 'rgba(201, 35, 55, 0.12)',
-            border: '1px solid rgba(201, 35, 55, 0.3)',
+            background: AZIMUT.accentBg,
+            border: `1px solid ${AZIMUT.accentBorder}`,
           }}
         >
-          <div style={{ fontSize: 11, fontWeight: 600, color: '#e8a0a8', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 8 }}>
+          <div style={{ fontSize: 11, fontWeight: 600, color: AZIMUT.accentText, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 8 }}>
             Guia rápido
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -108,7 +109,7 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
             overflowY: 'auto',
           }}
         >
-          <div style={{ fontSize: 10, fontWeight: 600, color: '#6b6b7a', textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 4, marginBottom: 2, paddingLeft: 4 }}>
+          <div style={{ fontSize: 10, fontWeight: 600, color: AZIMUT.textMuted, textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 4, marginBottom: 2, paddingLeft: 4 }}>
             Conteúdo do site
           </div>
           <AdminLink href="/admin" label="🏠 Dashboard" title={TOOLTIP_BY_HREF['/admin']} />
@@ -120,12 +121,12 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
           <AdminLink href="/admin/making-of/curation" label="🎨 Curadoria" title={TOOLTIP_BY_HREF['/admin/making-of/curation']} />
           <AdminLink href="/admin/services" label="⚡ Serviços" title={TOOLTIP_BY_HREF['/admin/services']} />
 
-          <div style={{ fontSize: 10, fontWeight: 600, color: '#6b6b7a', textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
+          <div style={{ fontSize: 10, fontWeight: 600, color: AZIMUT.textMuted, textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
             Mídia
           </div>
           <AdminLink href="/admin/media" label="🖼️ Mídias" title={TOOLTIP_BY_HREF['/admin/media']} />
 
-          <div style={{ fontSize: 10, fontWeight: 600, color: '#6b6b7a', textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
+          <div style={{ fontSize: 10, fontWeight: 600, color: AZIMUT.textMuted, textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
             Leads e IA
           </div>
           <AdminLink href="/admin/analytics" label="📊 Analytics IA" title={TOOLTIP_BY_HREF['/admin/analytics']} />
@@ -133,7 +134,7 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
           <AdminLink href="/admin/leads/game" label="🎮 Leads do Jogo" title={TOOLTIP_BY_HREF['/admin/leads/game']} />
           <AdminLink href="/admin/leads/dashboard" label="🎯 Dashboard Leads IA" title={TOOLTIP_BY_HREF['/admin/leads/dashboard']} />
 
-          <div style={{ fontSize: 10, fontWeight: 600, color: '#6b6b7a', textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
+          <div style={{ fontSize: 10, fontWeight: 600, color: AZIMUT.textMuted, textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
             Ferramentas e config
           </div>
           <AdminLink href="/admin/tools" label="🛠️ Ferramentas" title={TOOLTIP_BY_HREF['/admin/tools']} />
@@ -142,14 +143,14 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
           <AdminLink href="/admin/n8n-workflow" label="🤖 Automação n8n" title={TOOLTIP_BY_HREF['/admin/n8n-workflow']} />
           <AdminLink href="/admin/newsletter" label="📨 Inscritos" title={TOOLTIP_BY_HREF['/admin/newsletter']} />
 
-          <div style={{ fontSize: 10, fontWeight: 600, color: '#6b6b7a', textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
+          <div style={{ fontSize: 10, fontWeight: 600, color: AZIMUT.textMuted, textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
             Web3 e recompensas
           </div>
           <AdminLink href="/admin/web3/setup-wallet" label="🔐 Configurar Carteira" title={TOOLTIP_BY_HREF['/admin/web3/setup-wallet']} />
           <AdminLink href="/admin/web3/wallet-status" label="💰 Carteira Web3" title={TOOLTIP_BY_HREF['/admin/web3/wallet-status']} />
           <AdminLink href="/admin/web3/student-rewards" label="🎓 Recompensas Estudantes" title={TOOLTIP_BY_HREF['/admin/web3/student-rewards']} />
 
-          <div style={{ fontSize: 10, fontWeight: 600, color: '#6b6b7a', textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
+          <div style={{ fontSize: 10, fontWeight: 600, color: AZIMUT.textMuted, textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
             Studio e institucional
           </div>
           <AdminLink href="/admin/markets" label="🏢 Mercados" title={TOOLTIP_BY_HREF['/admin/markets']} />
@@ -159,7 +160,7 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
           <AdminLink href="/admin/press" label="📰 Imprensa" title={TOOLTIP_BY_HREF['/admin/press']} />
           <AdminLink href="/admin/publications" label="📚 Publicações (Research)" title={TOOLTIP_BY_HREF['/admin/publications']} />
 
-          <div style={{ fontSize: 10, fontWeight: 600, color: '#6b6b7a', textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
+          <div style={{ fontSize: 10, fontWeight: 600, color: AZIMUT.textMuted, textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
             Sistema
           </div>
           <AdminLink href="/admin/settings" label="⚙️ Configurações" title={TOOLTIP_BY_HREF['/admin/settings']} />
@@ -169,7 +170,7 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
         <div
           style={{
             padding: '20px',
-            borderTop: '1px solid rgba(255,255,255,0.08)',
+            borderTop: `1px solid ${AZIMUT.border}`,
           }}
         >
           <ViewSiteButton />
