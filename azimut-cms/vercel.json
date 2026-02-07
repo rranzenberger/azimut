@@ -1,5 +1,8 @@
 {
   "framework": "nextjs",
+  "env": {
+    "PRISMA_CLIENT_ENGINE_TYPE": "library"
+  },
   "crons": [{"path": "/api/cron/email-sequences", "schedule": "0 10 * * *"}],
   "redirects": [
     {"source": "/en/login", "destination": "/login", "permanent": false},
