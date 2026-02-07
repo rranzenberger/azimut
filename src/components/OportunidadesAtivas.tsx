@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import type { Lang } from '../i18n'
-import { opportunities, type Opportunity } from '../data/opportunities'
+import type { Opportunity } from '../data/opportunities'
+import { useEditais } from '../hooks/useEditais'
 
 type CountryFilter = 'ALL' | 'BR' | 'CA' | 'EU' | 'US' | 'INTL'
 type StatusFilter = 'all' | 'open' | 'upcoming'
@@ -123,6 +124,12 @@ const OportunidadesAtivas: React.FC<Props> = ({ lang, limit }) => {
   const t = labels
   const [country, setCountry] = useState<CountryFilter>('ALL')
   const [status, setStatus] = useState<StatusFilter>('open')
+
+  const { opportunities, loading, fromApi } = useEditais({
+    status: 'all',
+    country: 'ALL',
+    limit: 50,
+  })
 
   const filtered = useMemo(() => {
     return opportunities

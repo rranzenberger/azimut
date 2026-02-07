@@ -618,7 +618,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         >
           <div className="mx-auto max-w-7xl w-full sm:px-4 min-[768px]:px-6 py-3 flex justify-center">
             <nav className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
-              {/* Todos os Projetos */}
+              {/* + TODOS / Ver todos os projetos */}
               <button
                 onClick={() => {
                   clearFilters()
@@ -630,8 +630,8 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                     : 'text-slate-400 hover:text-azimut-red'
                 }`}
               >
-                <span>✦</span>
-                <span>{lang === 'pt' ? 'Todos' : 'All'}</span>
+                <span>+</span>
+                <span>{lang === 'pt' ? 'TODOS' : lang === 'es' ? 'TODOS' : lang === 'fr' ? 'TOUS' : 'ALL'}</span>
               </button>
               
               {/* 6 Categorias Principais */}

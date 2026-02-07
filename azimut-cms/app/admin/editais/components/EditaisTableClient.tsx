@@ -83,7 +83,7 @@ export function EditaisTableClient({ editais }: { editais: EditalRow[] }) {
             <th style={{ padding: '12px 12px 12px 0', color: '#94a3b8', fontWeight: 600 }}>Nome</th>
             <th style={{ padding: '12px', color: '#94a3b8', fontWeight: 600 }}>Área</th>
             <th style={{ padding: '12px', color: '#94a3b8', fontWeight: 600 }}>País</th>
-            <th style={{ padding: '12px', color: '#94a3b8', fontWeight: 600 }}>Prazo</th>
+            <th style={{ padding: '12px', color: '#94a3b8', fontWeight: 600 }}>Disponível até</th>
             <th style={{ padding: '12px', color: '#94a3b8', fontWeight: 600 }}>Status</th>
             <th style={{ padding: '12px 12px 12px 0', color: '#94a3b8', fontWeight: 600 }}></th>
           </tr>
