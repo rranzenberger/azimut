@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { GalleryManager } from '../components/GalleryManager';
 import UnifiedMediaUpload from '@/components/admin/UnifiedMediaUpload';
+import CollapsibleSection from '@/app/admin/components/CollapsibleSection';
 import { AZIMUT } from '../../theme';
 
 const inputStyle: React.CSSProperties = {
@@ -27,6 +28,10 @@ export default function EditProjectPage() {
   const [error, setError] = useState<string | null>(null);
   const [gallery, setGallery] = useState<any[]>([]);
   const [allMedia, setAllMedia] = useState<any[]>([]);
+  const [openSection, setOpenSection] = useState<string | null>('basico');
+  const handleSectionToggle = useCallback((sid: string) => {
+    setOpenSection((prev) => (prev === sid ? null : sid));
+  }, []);
   const [formData, setFormData] = useState({
     title: '',
     shortTitle: '',
@@ -224,24 +229,56 @@ export default function EditProjectPage() {
     );
   }
 
+  const isOnHome = formData.priorityHome > 0;
+
   return (
     <>
-      <header style={{ marginBottom: 24 }}>
-        <h1 style={{ margin: 0, fontSize: 26 }}>Editar Projeto</h1>
-        <p style={{ margin: 4, color: '#c0bccf' }}>Edite as informações do projeto.</p>
+      <header style={{ marginBottom: 16 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
+          <h1 style={{ margin: 0, fontSize: 26, fontWeight: 700 }}>
+            {formData.title || 'Editar Projeto'}
+          </h1>
+          {isOnHome && (
+            <span style={{ fontSize: 11, padding: '4px 12px', borderRadius: 999, background: 'rgba(201,35,55,0.15)', color: '#fca5a5', border: '1px solid rgba(201,35,55,0.3)', fontWeight: 700, textTransform: 'uppercase' }}>
+              HOME #{formData.priorityHome}
+            </span>
+          )}
+        </div>
+        <p style={{ margin: 0, color: '#6b6780', fontSize: 14 }}>
+          Slug: /{formData.slug} • {formData.status === 'PUBLISHED' ? '🟢 Publicado' : formData.status === 'DRAFT' ? '🟡 Rascunho' : '⚪ Arquivado'}
+        </p>
       </header>
 
+      {/* ═══ REFERÊNCIA: onde aparece no site ═══ */}
+      <div style={{ marginBottom: 20, padding: '14px 20px', borderRadius: 12, border: '1px solid rgba(56, 189, 248, 0.25)', background: 'rgba(56, 189, 248, 0.04)', fontSize: 13, color: '#94a3b8' }}>
+        <span style={{ fontWeight: 600, color: '#7dd3fc' }}>🗺️ Onde este projeto aparece no site:</span>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginTop: 8 }}>
+          {isOnHome && <span>🏠 <strong>Home</strong> — card em destaque (posição #{formData.priorityHome})</span>}
+          <span>📁 <strong>/work</strong> — listagem de projetos</span>
+          {formData.hasDetailPage && <span>📄 <strong>/work/{formData.slug}</strong> — página detalhada</span>}
+        </div>
+      </div>
+
+      {/* ═══ GUIA RÁPIDO ═══ */}
+      <div style={{ marginBottom: 20, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+        {[
+          { id: 'basico', label: '📋 Dados básicos' },
+          { id: 'resumo', label: '📝 Resumo e descrição' },
+          { id: 'midia', label: '📸 Imagem de capa' },
+          { id: 'localizacao', label: '📍 Localização' },
+          { id: 'seo', label: '🔍 SEO' },
+          { id: 'filtros', label: '🎯 Filtros avançados' },
+          { id: 'galeria', label: '🖼️ Galeria' },
+          { id: 'config', label: '⚙️ Configurações' },
+        ].map((btn) => (
+          <button key={btn.id} type="button" onClick={() => handleSectionToggle(btn.id)} style={{ padding: '8px 14px', borderRadius: 8, border: '1px solid rgba(56, 189, 248, 0.3)', background: openSection === btn.id ? 'rgba(56, 189, 248, 0.2)' : 'rgba(56, 189, 248, 0.06)', color: '#7dd3fc', fontSize: 12, fontWeight: 500, cursor: 'pointer', transition: 'all 0.15s' }}>
+            {btn.label}
+          </button>
+        ))}
+      </div>
+
       {error && (
-        <div
-          style={{
-            padding: '12px 14px',
-            borderRadius: 10,
-            border: '1px solid rgba(201,35,55,0.35)',
-            background: 'rgba(201,35,55,0.12)',
-            color: '#fca5a5',
-            marginBottom: 16,
-          }}
-        >
+        <div style={{ padding: '12px 14px', borderRadius: 10, border: '1px solid rgba(201,35,55,0.35)', background: 'rgba(201,35,55,0.12)', color: '#fca5a5', marginBottom: 16 }}>
           {error}
         </div>
       )}
@@ -249,54 +286,45 @@ export default function EditProjectPage() {
       <form
         onSubmit={handleSubmit}
         style={{
-          padding: 24,
-          borderRadius: 12,
-          border: '1px solid rgba(255,255,255,0.08)',
-          background: 'rgba(255,255,255,0.03)',
           display: 'grid',
-          gap: 16,
-          maxWidth: 800,
+          gap: 12,
+          maxWidth: 900,
         }}
       >
-        <div style={{ display: 'grid', gap: 8 }}>
-          <label style={{ fontSize: 14, fontWeight: 600 }}>Título *</label>
-          <input
-            type="text"
-            value={formData.title}
-            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-            required
-            style={inputStyle}
-            placeholder="Nome do projeto"
-          />
-        </div>
-
-        <div style={{ display: 'grid', gap: 8 }}>
-          <label style={{ fontSize: 14, fontWeight: 600 }}>Título Curto</label>
-          <input
-            type="text"
-            value={formData.shortTitle}
-            onChange={(e) => setFormData({ ...formData, shortTitle: e.target.value })}
-            style={inputStyle}
-            placeholder="Título curto para cards"
-          />
-        </div>
-
-        <div style={{ display: 'grid', gap: 8 }}>
-          <label style={{ fontSize: 14, fontWeight: 600 }}>Slug *</label>
-          <input
-            type="text"
-            value={formData.slug}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                slug: e.target.value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
-              })
-            }
-            required
-            style={inputStyle}
-            placeholder="url-amigavel-do-projeto"
-          />
-        </div>
+        {/* ═══ DADOS BÁSICOS ═══ */}
+        <CollapsibleSection id="basico" title="Dados básicos" icon="📋" defaultOpen isOpen={openSection === 'basico'} onToggle={handleSectionToggle}>
+          <div style={{ display: 'grid', gap: 12 }}>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>Título *</label>
+              <input type="text" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} required style={inputStyle} placeholder="Nome do projeto" />
+              <small style={{ color: '#6b6780', fontSize: 11 }}>Aparece no card do site e na página de detalhe</small>
+            </div>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>Título Curto</label>
+              <input type="text" value={formData.shortTitle} onChange={(e) => setFormData({ ...formData, shortTitle: e.target.value })} style={inputStyle} placeholder="Título curto para cards" />
+            </div>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>Slug *</label>
+              <input type="text" value={formData.slug} onChange={(e) => setFormData({ ...formData, slug: e.target.value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') })} required style={inputStyle} placeholder="url-amigavel-do-projeto" />
+              <small style={{ color: '#6b6780', fontSize: 11 }}>URL: /work/{formData.slug}</small>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <div style={{ display: 'grid', gap: 8 }}>
+                <label style={{ fontSize: 14, fontWeight: 600 }}>Status</label>
+                <select value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value })} style={inputStyle}>
+                  <option value="DRAFT">Rascunho</option>
+                  <option value="PUBLISHED">Publicado</option>
+                  <option value="ARCHIVED">Arquivado</option>
+                </select>
+              </div>
+              <div style={{ display: 'grid', gap: 8 }}>
+                <label style={{ fontSize: 14, fontWeight: 600 }}>Prioridade Home</label>
+                <input type="number" value={formData.priorityHome} onChange={(e) => setFormData({ ...formData, priorityHome: parseInt(e.target.value) || 0 })} style={inputStyle} placeholder="0" min="0" />
+                <small style={{ color: '#6b6780', fontSize: 11 }}>Maior que 0 = aparece na Home</small>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           <div style={{ display: 'grid', gap: 8 }}>
