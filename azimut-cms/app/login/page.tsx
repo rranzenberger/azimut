@@ -11,8 +11,33 @@ function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [setupMsg, setSetupMsg] = useState<string | null>(null);
+  const [setupLoading, setSetupLoading] = useState(false);
 
   const next = search?.get('next') || '/admin';
+
+  async function handleResetAdmin() {
+    setSetupMsg(null);
+    setSetupLoading(true);
+    try {
+      const res = await fetch('/api/admin/setup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: 'azimut-seed-2025-setup-temp' }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.success) {
+        setSetupMsg('Admin redefinido. Tente entrar agora com admin@azimut.com.br / Azimut2025!');
+        setError(null);
+      } else {
+        setSetupMsg(data.error || data.details || `Erro ${res.status}. Veja o console (F12).`);
+      }
+    } catch (e) {
+      setSetupMsg('Erro de rede. Verifique a URL do backoffice.');
+    } finally {
+      setSetupLoading(false);
+    }
+  }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -177,6 +202,35 @@ function LoginForm() {
         <p style={{ marginTop: 12, fontSize: 12, color: '#8f8ba2' }}>
           Default: admin@azimut.com.br / Azimut2025!
         </p>
+
+        <div style={{ marginTop: 16, paddingTop: 16, borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+          <p style={{ margin: 0, marginBottom: 8, fontSize: 12, color: '#94a3b8' }}>
+            Não consegue entrar? Redefina o admin no banco (cria ou atualiza a senha):
+          </p>
+          <button
+            type="button"
+            onClick={handleResetAdmin}
+            disabled={setupLoading}
+            style={{
+              width: '100%',
+              padding: '10px 14px',
+              borderRadius: 8,
+              border: '1px solid rgba(255,255,255,0.2)',
+              background: 'rgba(255,255,255,0.06)',
+              color: '#c0bccf',
+              fontSize: 13,
+              cursor: setupLoading ? 'wait' : 'pointer',
+              opacity: setupLoading ? 0.7 : 1,
+            }}
+          >
+            {setupLoading ? 'Redefinindo...' : 'Redefinir admin (setup)'}
+          </button>
+          {setupMsg && (
+            <p style={{ marginTop: 8, marginBottom: 0, fontSize: 12, color: setupMsg.startsWith('Admin') ? '#86efac' : '#fca5a5' }}>
+              {setupMsg}
+            </p>
+          )}
+        </div>
       </form>
   );
 }
