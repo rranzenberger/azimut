@@ -1,13 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { FieldEditorWithMetadata } from '@/src/components/admin/FieldEditorWithMetadata';
 import MediaUploadField from '@/components/admin/MediaUploadField';
 import VideoWithThumbnailField from '@/components/admin/VideoWithThumbnailField';
 import MultiLangVideoField from '@/components/admin/MultiLangVideoField';
 import UnifiedMediaUpload from '@/components/admin/UnifiedMediaUpload';
-// Force rebuild: 2026-01-26-v3
+import CollapsibleSection from '@/app/admin/components/CollapsibleSection';
+// Force rebuild: 2026-02-01-v1
 
 interface Section {
   id: string;
@@ -332,6 +333,12 @@ export default function EditPagePage() {
   const [translating, setTranslating] = useState<string | null>(null); // campo sendo traduzido
   // Projetos que aparecem nos cards da Home (para mostrar nomes e links na seção Mídia)
   const [homeFeaturedProjects, setHomeFeaturedProjects] = useState<Array<{ id: string; title: string; priorityHome: number }>>([]);
+
+  // Accordion: seção aberta (só uma por vez — evita "tripa" gigante)
+  const [openSection, setOpenSection] = useState<string | null>('basico');
+  const handleSectionToggle = useCallback((id: string) => {
+    setOpenSection((prev) => (prev === id ? null : id));
+  }, []);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -811,19 +818,47 @@ export default function EditPagePage() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 32 }}>
-        {/* Informações Básicas */}
-        <section
-          style={{
-            padding: 28,
-            borderRadius: 12,
-            border: '1px solid rgba(255,255,255,0.08)',
-            background: 'rgba(255,255,255,0.03)',
-          }}
-        >
-          <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
-            📋 Informações Básicas
-          </h2>
+      {/* ═══ GUIA RÁPIDO: Onde atualizar o quê ═══ */}
+      <div style={{ marginBottom: 24, padding: 20, borderRadius: 12, border: '1px solid rgba(56, 189, 248, 0.35)', background: 'rgba(56, 189, 248, 0.06)' }}>
+        <h2 style={{ margin: '0 0 12px', fontSize: 18, fontWeight: 600, color: '#fff' }}>
+          🧭 Guia rápido — O que você quer atualizar?
+        </h2>
+        <p style={{ margin: '0 0 16px', fontSize: 13, color: '#94a3b8' }}>
+          Clique no bloco para ir direto à área. Assim você não precisa rolar a página inteira.
+        </p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+          {[
+            { id: 'basico', label: '📋 Nome e status' },
+            { id: 'heroTexto', label: '🎯 Textos do topo' },
+            { id: 'heroSubtitle', label: '📝 Subtítulo' },
+            { id: 'heroDescription', label: '📱💻 Mobile/Desktop' },
+          ].map((btn) => (
+            <button key={btn.id} type="button" onClick={() => handleSectionToggle(btn.id)} style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid rgba(56, 189, 248, 0.4)', background: openSection === btn.id ? 'rgba(56, 189, 248, 0.25)' : 'rgba(56, 189, 248, 0.1)', color: '#7dd3fc', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>
+              {btn.label}
+            </button>
+          ))}
+          {slug !== 'studio' && slug !== 'studio/diferenciais' && (
+            <button type="button" onClick={() => handleSectionToggle('midia')} style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid rgba(56, 189, 248, 0.4)', background: openSection === 'midia' ? 'rgba(56, 189, 248, 0.25)' : 'rgba(56, 189, 248, 0.1)', color: '#7dd3fc', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>
+              📸 Vídeo e capa
+            </button>
+          )}
+          {slug === 'home' && (
+            <button type="button" onClick={() => handleSectionToggle('pillars')} style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid rgba(56, 189, 248, 0.4)', background: openSection === 'pillars' ? 'rgba(56, 189, 248, 0.25)' : 'rgba(56, 189, 248, 0.1)', color: '#7dd3fc', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>
+              💡 Pilares
+            </button>
+          )}
+          <button type="button" onClick={() => handleSectionToggle('seo')} style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid rgba(56, 189, 248, 0.4)', background: openSection === 'seo' ? 'rgba(56, 189, 248, 0.25)' : 'rgba(56, 189, 248, 0.1)', color: '#7dd3fc', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>
+            🔍 SEO (Google)
+          </button>
+        </div>
+        <p style={{ margin: '12px 0 0', fontSize: 12, color: '#64748b' }}>
+          💡 Dica: envie imagens e vídeos em <strong>Mídias</strong> (menu lateral) e depois escolha aqui ou em Projetos.{' '}
+          <a href="/admin/help" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>Guia completo →</a>
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 16 }}>
+        <CollapsibleSection id="basico" title="Informações Básicas" icon="📋" isOpen={openSection === 'basico'} onToggle={handleSectionToggle}>
           <MultilangTextField
             label="Nome da Página"
             location="Páginas > Informações Básicas > Nome"
@@ -832,7 +867,6 @@ export default function EditPagePage() {
             onChange={(value) => setFormData({ ...formData, name: value })}
             maxLength={FIELD_LIMITS.name.max}
           />
-
           <div style={{ marginTop: 20 }}>
             <label style={{ display: 'block', marginBottom: 8, fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>
               Status
@@ -847,20 +881,9 @@ export default function EditPagePage() {
               <option value="ARCHIVED">Arquivado</option>
             </select>
           </div>
-        </section>
+        </CollapsibleSection>
 
-        {/* Hero Slogan */}
-        <section
-          style={{
-            padding: 28,
-            borderRadius: 12,
-            border: '1px solid rgba(255,255,255,0.08)',
-            background: 'rgba(255,255,255,0.03)',
-          }}
-        >
-          <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
-            🎯 Hero Slogan (Texto do Head)
-          </h2>
+        <CollapsibleSection id="heroTexto" title="Textos do topo (slogan)" icon="🎯" isOpen={openSection === 'heroTexto'} onToggle={handleSectionToggle}>
           <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
             Texto principal exibido no topo da página, acima do conteúdo. Aparece no hero/banner da página.
           </p>
@@ -922,20 +945,9 @@ export default function EditPagePage() {
             onTranslate={(lang) => handleTranslate('heroSlogan', lang as 'en' | 'es' | 'fr')}
             translating={translating?.startsWith('heroSlogan-') || false}
           />
-        </section>
+        </CollapsibleSection>
 
-        {/* Hero Subtitle */}
-        <section
-          style={{
-            padding: 28,
-            borderRadius: 12,
-            border: '1px solid rgba(255,255,255,0.08)',
-            background: 'rgba(255,255,255,0.03)',
-          }}
-        >
-          <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
-            📝 Hero Subtitle (Texto Secundário)
-          </h2>
+        <CollapsibleSection id="heroSubtitle" title="Subtítulo (Texto Secundário)" icon="📝" isOpen={openSection === 'heroSubtitle'} onToggle={handleSectionToggle}>
           <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
             Texto secundário exibido abaixo do slogan principal. Descrição mais detalhada sobre a empresa/produto.
           </p>
@@ -986,20 +998,9 @@ export default function EditPagePage() {
             onTranslate={(lang) => handleTranslate('heroSubtitle', lang as 'en' | 'es' | 'fr')}
             translating={translating?.startsWith('heroSubtitle-') || false}
           />
-        </section>
+        </CollapsibleSection>
 
-        {/* Hero Description - MOBILE vs DESKTOP */}
-        <section
-          style={{
-            padding: 28,
-            borderRadius: 12,
-            border: '1px solid rgba(201,35,55,0.2)',
-            background: 'rgba(201,35,55,0.05)',
-          }}
-        >
-          <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
-            📱💻 Hero Description (Mobile vs Desktop/Web)
-          </h2>
+        <CollapsibleSection id="heroDescription" title="Hero Description (Mobile vs Desktop)" icon="📱💻" borderColor="rgba(201,35,55,0.2)" bgColor="rgba(201,35,55,0.05)" isOpen={openSection === 'heroDescription'} onToggle={handleSectionToggle}>
           <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
             <strong>Versões diferentes para cada plataforma:</strong>
             <br />
@@ -1121,7 +1122,7 @@ export default function EditPagePage() {
               translating={translating?.startsWith('heroDescriptionDesktop-') || false}
             />
           </div>
-        </section>
+        </CollapsibleSection>
 
         {/* Hero Media - SISTEMA HÍBRIDO: Media OU URL */}
         {slug === 'home' && (
@@ -1259,17 +1260,7 @@ export default function EditPagePage() {
 
         {/* Pillars - Apenas para home */}
         {slug === 'home' && (
-          <section
-            style={{
-              padding: 28,
-              borderRadius: 12,
-              border: '1px solid rgba(255,255,255,0.08)',
-              background: 'rgba(255,255,255,0.03)',
-            }}
-          >
-            <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
-              🏛️ Pillars (Pilares da Home)
-            </h2>
+          <CollapsibleSection id="pillars" title="Pilares (categorias da Home)" icon="💡" isOpen={openSection === 'pillars'} onToggle={handleSectionToggle}>
             <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
               Três textos curtos exibidos como badges/pills na página inicial. Ex: "Museus & Cultura", "Marcas & Eventos", "Educação & Pesquisa".
             </p>
@@ -1404,21 +1395,10 @@ export default function EditPagePage() {
                 />
               </div>
             </div>
-          </section>
+          </CollapsibleSection>
         )}
 
-        {/* SEO */}
-        <section
-          style={{
-            padding: 28,
-            borderRadius: 12,
-            border: '1px solid rgba(255,255,255,0.08)',
-            background: 'rgba(255,255,255,0.03)',
-          }}
-        >
-          <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
-            🔍 SEO (Search Engine Optimization)
-          </h2>
+        <CollapsibleSection id="seo" title="SEO (Google)" icon="🔍" isOpen={openSection === 'seo'} onToggle={handleSectionToggle}>
           <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
             Títulos e descrições que aparecem nos resultados de busca do Google e outras plataformas.
           </p>
@@ -1512,23 +1492,13 @@ export default function EditPagePage() {
             onTranslate={(lang) => handleTranslate('seoDesc', lang as 'en' | 'es' | 'fr')}
             translating={translating?.startsWith('seoDesc-') || false}
           />
-        </section>
+        </CollapsibleSection>
 
         {/* ═══════════════════════════════════════════════════════════
             MÍDIA DA PÁGINA (Universal) - Exceto Studio que tem seção própria
         ═══════════════════════════════════════════════════════════ */}
         {slug !== 'studio' && slug !== 'studio/diferenciais' && (
-          <section
-            style={{
-              padding: 28,
-              borderRadius: 12,
-              border: '1px solid rgba(56, 189, 248, 0.3)',
-              background: 'rgba(56, 189, 248, 0.08)',
-            }}
-          >
-            <h2 style={{ margin: '0 0 16px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
-              📸 Mídia da Página
-            </h2>
+          <CollapsibleSection id="midia" title="Mídia da Página" icon="📸" borderColor="rgba(56, 189, 248, 0.3)" bgColor="rgba(56, 189, 248, 0.08)" isOpen={openSection === 'midia'} onToggle={handleSectionToggle}>
             {slug === 'home' && (
               <div style={{
                 marginBottom: 24,
@@ -1638,7 +1608,7 @@ export default function EditPagePage() {
                 </p>
               )}
             </div>
-          </section>
+          </CollapsibleSection>
         )}
 
         {/* Seções - Placeholder */}
