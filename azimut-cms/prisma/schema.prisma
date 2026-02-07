@@ -645,6 +645,7 @@ model Settings {
   siteUrl                String?  @default("https://azmt.com.br")
   contactEmail           String?
   contactPhone           String?
+  whatsappNumber         String?  // Número para link wa.me (ex: +55 48 999701301)
   defaultMetaDescription String?
   defaultKeywords        String?
   ogImageUrl             String?
@@ -653,6 +654,8 @@ model Settings {
   linkedinUrl            String?
   twitterUrl             String?
   youtubeUrl             String?
+  vimeoUrl               String?
+  behanceUrl             String?
   kabbamApiKey           String?
   kabbamApiUrl           String?
   smtpHost               String?

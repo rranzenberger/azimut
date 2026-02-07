@@ -1429,18 +1429,18 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               <p className="text-[0.75rem] text-slate-400 leading-relaxed max-w-xs mx-auto">
                 {t(lang, 'heroLead').split('–')[0].trim()}
               </p>
-              {/* Cidades */}
-              <div className="flex items-center justify-center gap-1.5 mt-2 text-slate-500 flex-wrap">
-                <div className="flex items-center gap-0.5">
-                  <img src="/flag-ca.svg" alt="Canada" width={20} height={10} style={{ height: '10px', width: 'auto' }} className="rounded-[1px]" />
-                  <span className="text-[0.55rem]">Vancouver</span>
+              {/* Cidades – bandeiras e nomes maiores, harmoniosos (mobile); tema claro/escuro */}
+              <div className={`flex items-center justify-center gap-3 mt-4 flex-wrap ${theme === 'dark' ? 'text-slate-300' : 'text-slate-600'}`}>
+                <div className="flex items-center gap-2">
+                  <img src="/flag-ca.svg" alt="Canada" width={36} height={18} className="rounded-[3px] opacity-95 shrink-0" style={{ height: '22px', width: 'auto' }} />
+                  <span className="text-[1rem] font-medium tracking-tight">Vancouver</span>
                 </div>
-                <span className="text-[0.5rem] opacity-50">•</span>
-                <div className="flex items-center gap-0.5">
-                  <img src="/flag-br.svg" alt="Brasil" width={20} height={10} style={{ height: '10px', width: 'auto' }} className="rounded-[1px]" />
-                  <span className="text-[0.6rem]">Rio</span>
-                  <span className="text-[0.5rem] opacity-40">·</span>
-                  <span className="text-[0.55rem]">Floripa</span>
+                <span className={`text-[0.85rem] ${theme === 'dark' ? 'opacity-55' : 'opacity-65'}`}>•</span>
+                <div className="flex items-center gap-2">
+                  <img src="/flag-br.svg" alt="Brasil" width={36} height={18} className="rounded-[3px] opacity-95 shrink-0" style={{ height: '22px', width: 'auto' }} />
+                  <span className="text-[1rem] font-medium tracking-tight">Rio</span>
+                  <span className={`text-[0.8rem] ${theme === 'dark' ? 'opacity-55' : 'opacity-65'}`}>·</span>
+                  <span className="text-[1rem] font-medium tracking-tight">Floripa</span>
                 </div>
               </div>
             </div>
@@ -1700,20 +1700,20 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 {t(lang, 'heroLead').split('–')[0].trim()}
               </p>
               
-              {/* Cidades - Alinhadas com a largura da logo (260px) */}
-              <div className="flex items-center justify-between flex-wrap gap-1" style={{ color: '#64748b', marginTop: 'auto', paddingTop: '0.75rem', width: '100%', maxWidth: '260px' }}>
-                {/* Canadá - Vancouver */}
-                <div className="flex items-center gap-0.5">
-                  <img src="/flag-ca.svg" alt="Canada" width={24} height={12} className="rounded-[2px] opacity-90" style={{ display: 'block', height: '12px', width: 'auto' }} />
-                  <span className="text-[0.65rem] sm:text-[0.7rem]">Vancouver</span>
+              {/* Cidades – bandeiras e nomes maiores, harmoniosos (desktop); tema claro/escuro */}
+              <div
+                className={`flex items-center justify-between flex-wrap gap-2.5 sm:gap-3 mt-auto pt-4 w-full max-w-[280px] text-[0.95rem] sm:text-[1.05rem] ${theme === 'dark' ? 'text-slate-300' : 'text-slate-600'}`}
+              >
+                <div className="flex items-center gap-2.5">
+                  <img src="/flag-ca.svg" alt="Canada" width={40} height={20} className="rounded-[3px] opacity-95 shrink-0" style={{ display: 'block', height: '24px', width: 'auto' }} />
+                  <span className="font-medium tracking-tight">Vancouver</span>
                 </div>
-                <span className="opacity-40 text-[0.5rem]">•</span>
-                {/* Brasil - Rio e Florianópolis juntos */}
-                <div className="flex items-center gap-0.5">
-                  <img src="/flag-br.svg" alt="Brasil" width={24} height={12} className="rounded-[2px] opacity-90" style={{ display: 'block', height: '12px', width: 'auto' }} />
-                  <span className="text-[0.65rem] sm:text-[0.7rem]">Rio</span>
-                  <span className="opacity-40 text-[0.5rem]">·</span>
-                  <span className="text-[0.6rem] sm:text-[0.65rem]">Floripa</span>
+                <span className={`text-[0.9rem] ${theme === 'dark' ? 'opacity-55' : 'opacity-65'}`}>•</span>
+                <div className="flex items-center gap-2.5">
+                  <img src="/flag-br.svg" alt="Brasil" width={40} height={20} className="rounded-[3px] opacity-95 shrink-0" style={{ display: 'block', height: '24px', width: 'auto' }} />
+                  <span className="font-medium tracking-tight">Rio</span>
+                  <span className={`text-[0.85rem] ${theme === 'dark' ? 'opacity-55' : 'opacity-65'}`}>·</span>
+                  <span className="font-medium tracking-tight">Floripa</span>
                 </div>
               </div>
             </div>

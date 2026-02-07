@@ -35,6 +35,7 @@ export function SettingsForm({ settings }: { settings: any }) {
     siteUrl: settings.siteUrl || '',
     contactEmail: settings.contactEmail || '',
     contactPhone: settings.contactPhone || '',
+    whatsappNumber: settings.whatsappNumber || '',
     // SEO
     defaultMetaDescription: settings.defaultMetaDescription || '',
     defaultKeywords: settings.defaultKeywords || '',
@@ -45,6 +46,8 @@ export function SettingsForm({ settings }: { settings: any }) {
     linkedinUrl: settings.linkedinUrl || '',
     twitterUrl: settings.twitterUrl || '',
     youtubeUrl: settings.youtubeUrl || '',
+    vimeoUrl: settings.vimeoUrl || '',
+    behanceUrl: settings.behanceUrl || '',
     // Integrações
     kabbamApiKey: settings.kabbamApiKey || '',
     kabbamApiUrl: settings.kabbamApiUrl || '',
@@ -160,6 +163,90 @@ export function SettingsForm({ settings }: { settings: any }) {
                 style={inputStyle}
               />
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Rodapé – Contato e redes (aparecem no footer do site) */}
+      <div style={sectionStyle}>
+        <h2 style={{ margin: '0 0 20px', fontSize: 20, fontWeight: 700, letterSpacing: '-0.3px' }}>
+          Rodapé (contato e redes no site)
+        </h2>
+        <p style={{ color: '#94a3b8', fontSize: 13, marginBottom: 20 }}>
+          Estes campos aparecem no rodapé do site: email, botão WhatsApp e ícones das redes sociais.
+        </p>
+        <div style={{ display: 'grid', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>Email (rodapé)</label>
+              <input
+                type="email"
+                value={formData.contactEmail}
+                onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
+                style={inputStyle}
+                placeholder="contact@azimutimmersive.com"
+              />
+            </div>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>WhatsApp (número para link wa.me)</label>
+              <input
+                type="text"
+                value={formData.whatsappNumber}
+                onChange={(e) => setFormData({ ...formData, whatsappNumber: e.target.value })}
+                style={inputStyle}
+                placeholder="+55 48 999701301"
+              />
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>Instagram URL</label>
+              <input
+                type="url"
+                value={formData.instagramUrl}
+                onChange={(e) => setFormData({ ...formData, instagramUrl: e.target.value })}
+                style={inputStyle}
+                placeholder="https://www.instagram.com/azimut_vr/"
+              />
+            </div>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>YouTube URL</label>
+              <input
+                type="url"
+                value={formData.youtubeUrl}
+                onChange={(e) => setFormData({ ...formData, youtubeUrl: e.target.value })}
+                style={inputStyle}
+              />
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>LinkedIn URL</label>
+              <input
+                type="url"
+                value={formData.linkedinUrl}
+                onChange={(e) => setFormData({ ...formData, linkedinUrl: e.target.value })}
+                style={inputStyle}
+              />
+            </div>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>Vimeo URL</label>
+              <input
+                type="url"
+                value={formData.vimeoUrl}
+                onChange={(e) => setFormData({ ...formData, vimeoUrl: e.target.value })}
+                style={inputStyle}
+              />
+            </div>
+          </div>
+          <div style={{ display: 'grid', gap: 8 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Behance URL</label>
+            <input
+              type="url"
+              value={formData.behanceUrl}
+              onChange={(e) => setFormData({ ...formData, behanceUrl: e.target.value })}
+              style={inputStyle}
+            />
           </div>
         </div>
       </div>
