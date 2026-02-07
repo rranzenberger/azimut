@@ -164,6 +164,7 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
           <div style={{ fontSize: 10, fontWeight: 600, color: AZIMUT.textMuted, textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
             Sistema
           </div>
+          <AdminLink href="/admin/footer" label="🔻 Rodapé" title="Contato, WhatsApp e redes sociais do rodapé do site" />
           <AdminLink href="/admin/settings" label="⚙️ Configurações" title={TOOLTIP_BY_HREF['/admin/settings']} />
         </nav>
 

@@ -678,6 +678,23 @@ model Settings {
   updatedAt              DateTime @updatedAt
 }
 
+// Rodapé do site – dados de contato e redes sociais (tabela isolada de Settings)
+model FooterSettings {
+  id             String   @id @default("singleton")
+  contactEmail   String?
+  contactPhone   String?
+  whatsappNumber String?  // Número para link wa.me (ex: +55 48 999701301)
+  instagramUrl   String?
+  youtubeUrl     String?
+  linkedinUrl    String?
+  vimeoUrl       String?
+  behanceUrl     String?
+  facebookUrl    String?
+  twitterUrl     String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
 // Imprensa / notícias (área de imprensa do site)
 model Press {
   id          String   @id @default(uuid())
