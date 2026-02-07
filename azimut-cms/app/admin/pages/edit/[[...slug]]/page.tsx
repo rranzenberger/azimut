@@ -330,6 +330,8 @@ export default function EditPagePage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [translating, setTranslating] = useState<string | null>(null); // campo sendo traduzido
+  // Projetos que aparecem nos cards da Home (para mostrar nomes e links na seção Mídia)
+  const [homeFeaturedProjects, setHomeFeaturedProjects] = useState<Array<{ id: string; title: string; priorityHome: number }>>([]);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -483,6 +485,28 @@ export default function EditPagePage() {
     if (slug) {
       fetchPage();
     }
+  }, [slug]);
+
+  // Buscar projetos em destaque na Home (para listar nomes na seção Mídia da Página)
+  useEffect(() => {
+    if (slug !== 'home') return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch('/api/admin/projects?limit=50');
+        if (!res.ok || cancelled) return;
+        const data = await res.json();
+        const list = (data.projects || [])
+          .filter((p: any) => (p.status === 'PUBLISHED' || p.status === 'DRAFT'))
+          .sort((a: any, b: any) => (b.priorityHome ?? 0) - (a.priorityHome ?? 0))
+          .slice(0, 6)
+          .map((p: any) => ({ id: p.id, title: p.title || p.shortTitle || p.slug || 'Sem título', priorityHome: p.priorityHome ?? 0 }));
+        if (!cancelled) setHomeFeaturedProjects(list);
+      } catch {
+        if (!cancelled) setHomeFeaturedProjects([]);
+      }
+    })();
+    return () => { cancelled = true; };
   }, [slug]);
 
   // Função de tradução automática
@@ -1519,11 +1543,25 @@ export default function EditPagePage() {
                 <strong style={{ color: '#fff' }}>Onde atualizar o material da Home</strong>
                 <ul style={{ margin: '8px 0 0', paddingLeft: 20 }}>
                   <li><strong>Vídeo e capa do topo (hero):</strong> configurados aqui abaixo — “Vídeo da Página” e “Thumbnail (Capa)”.</li>
-                  <li><strong>Imagens dos cards “Projetos em Destaque”:</strong> vêm de cada projeto. Para alterar ou fazer upload, vá em{' '}
-                    <a href="/admin/projects" target="_blank" rel="noopener noreferrer" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>Projetos</a>
-                    {' '}→ edite o projeto → defina a <strong>Imagem de capa (thumbnail/hero)</strong>.
+                  <li><strong>Imagens dos cards “Projetos em Destaque”:</strong> não são aqui. Cada card usa a <strong>imagem de capa do projeto</strong>. Clique no nome do projeto abaixo para definir a imagem.
                   </li>
                 </ul>
+                {homeFeaturedProjects.length > 0 && (
+                  <div style={{ marginTop: 14, paddingTop: 12, borderTop: '1px solid rgba(34, 197, 94, 0.35)' }}>
+                    <strong style={{ color: '#fff' }}>Projetos que aparecem nos cards (defina a imagem em cada um):</strong>
+                    <ul style={{ margin: '8px 0 0', paddingLeft: 20, listStyle: 'none' }}>
+                      {homeFeaturedProjects.map((p) => (
+                        <li key={p.id} style={{ marginBottom: 6 }}>
+                          <a href={`/admin/projects/${p.id}`} target="_blank" rel="noopener noreferrer" style={{ color: '#7dd3fc', textDecoration: 'underline', fontWeight: 600 }}>
+                            {p.title}
+                          </a>
+                          {' '}
+                          <span style={{ color: '#86efac' }}>→ Editar imagem de capa</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             )}
             <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
