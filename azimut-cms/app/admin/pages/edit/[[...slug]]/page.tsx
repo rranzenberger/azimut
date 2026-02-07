@@ -1126,27 +1126,12 @@ export default function EditPagePage() {
 
         {/* Hero Media - SISTEMA HÍBRIDO: Media OU URL */}
         {slug === 'home' && (
-          <section
-            style={{
-              padding: 28,
-              borderRadius: 12,
-              border: '1px solid rgba(201,35,55,0.2)',
-              background: 'rgba(201,35,55,0.05)',
-            }}
-          >
-            <h2 style={{ margin: '0 0 16px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
-              🎬 Hero Media (Imagem & Demoreel)
-            </h2>
+          <CollapsibleSection id="heroMedia" title="Hero Media (Imagem & Demoreel)" icon="🎬" borderColor="rgba(201,35,55,0.2)" bgColor="rgba(201,35,55,0.05)" isOpen={openSection === 'heroMedia'} onToggle={handleSectionToggle}>
             <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
               <strong>Sistema Híbrido:</strong> Use upload local (Mídias) <strong>OU</strong> URL manual (YouTube/Vimeo/Unsplash).
               <br />
               📌 <strong>Prioridade:</strong> Se selecionar Media, usa ela. Senão, usa URL manual.
             </p>
-
-            {/* ═══════════════════════════════════════════════════════════
-                UPLOAD UNIFICADO: IMAGEM + VÍDEO
-                Sistema simplificado - tudo em um lugar
-            ═══════════════════════════════════════════════════════════ */}
             <UnifiedMediaUpload
               pageSlug={slug || 'page'}
               sectionSlug="hero"
@@ -1180,42 +1165,25 @@ export default function EditPagePage() {
               imageLabel="Imagem de Fundo do Hero"
               videoLabel="Vídeo Demoreel Institucional"
             />
-
-            {/* Link rápido para Mídias */}
             <div style={{ marginTop: 24, padding: 12, borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
               <p style={{ margin: 0, fontSize: 13, color: '#c0bccf' }}>
                 💡 <strong>Não vê suas mídias aqui?</strong>{' '}
-                <a
-                  href="/admin/media"
-                  target="_blank"
-                  style={{ color: '#7dd3fc', textDecoration: 'underline' }}
-                >
+                <a href="/admin/media" target="_blank" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>
                   Envie primeiro em "Mídias" →
                 </a>
               </p>
             </div>
-          </section>
+          </CollapsibleSection>
         )}
 
         {/* ═══════════════════════════════════════════════════════════
             MÍDIA DE FILOSOFIA - Páginas Studio e Diferenciais
         ═══════════════════════════════════════════════════════════ */}
         {(slug === 'studio' || slug === 'studio/diferenciais') && (
-          <section
-            style={{
-              padding: 28,
-              borderRadius: 12,
-              border: '1px solid rgba(147, 51, 234, 0.3)',
-              background: 'rgba(147, 51, 234, 0.08)',
-            }}
-          >
-            <h2 style={{ margin: '0 0 16px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
-              💡 Mídia de Filosofia - Vídeos Multilíngues
-            </h2>
+          <CollapsibleSection id="studioMedia" title="Mídia de Filosofia - Vídeos Multilíngues" icon="💡" borderColor="rgba(147, 51, 234, 0.3)" bgColor="rgba(147, 51, 234, 0.08)" isOpen={openSection === 'studioMedia'} onToggle={handleSectionToggle}>
             <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
               Configure vídeos diferentes para cada idioma. Se não tiver vídeo em um idioma, usa o Português automaticamente.
             </p>
-
             <MultiLangVideoField
               label="Vídeo Filosofia (Chris Milk)"
               videoPt={formData.videoPt}
@@ -1241,21 +1209,15 @@ export default function EditPagePage() {
                 description: 'TED Talk Chris Milk - A Máquina de Empatia'
               }}
             />
-
-            {/* Link rápido para Mídias */}
             <div style={{ padding: 12, borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
               <p style={{ margin: 0, fontSize: 13, color: '#c0bccf' }}>
                 💡 <strong>Não vê suas mídias aqui?</strong>{' '}
-                <a
-                  href="/admin/media"
-                  target="_blank"
-                  style={{ color: '#a78bfa', textDecoration: 'underline' }}
-                >
+                <a href="/admin/media" target="_blank" style={{ color: '#a78bfa', textDecoration: 'underline' }}>
                   Envie primeiro em "Mídias" →
                 </a>
               </p>
             </div>
-          </section>
+          </CollapsibleSection>
         )}
 
         {/* Pillars - Apenas para home */}
@@ -1613,21 +1575,11 @@ export default function EditPagePage() {
 
         {/* Seções - Placeholder */}
         {page?.sections && page.sections.length > 0 && (
-          <section
-            style={{
-              padding: 28,
-              borderRadius: 12,
-              border: '1px solid rgba(255,255,255,0.08)',
-              background: 'rgba(255,255,255,0.03)',
-            }}
-          >
-            <h2 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 600, color: '#fff' }}>
-              📑 Seções ({page.sections.length})
-            </h2>
+          <CollapsibleSection id="secoes" title={`Seções (${page.sections.length})`} icon="📑" isOpen={openSection === 'secoes'} onToggle={handleSectionToggle}>
             <p style={{ margin: '0 0 16px', color: '#8f8ba2', fontSize: 13 }}>
               Gerenciamento de seções será implementado em breve.
             </p>
-          </section>
+          </CollapsibleSection>
         )}
 
         {/* Botões de ação */}
