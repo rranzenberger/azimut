@@ -1,7 +1,9 @@
 'use client';
 
 export function ViewSiteButton() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:5173';
+  // Em produção (Vercel) usar NEXT_PUBLIC_SITE_URL ou site real; em dev localhost
+  const isProduction = typeof window !== 'undefined' && !window.location.hostname.includes('localhost');
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || (isProduction ? 'https://azmt.com.br' : 'http://localhost:5173');
 
   return (
     <a

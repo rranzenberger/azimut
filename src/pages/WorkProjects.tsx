@@ -88,12 +88,23 @@ const WorkProjects: React.FC<WorkProjectsProps> = ({ lang }) => {
 
   const { content: cmsContent, loading: cmsLoading } = useAzimutContent({ page: 'work', lang })
 
+  // Fallback quando backoffice retorna vazio ou está inacessível (igual à página Work)
+  const defaultCases = useMemo((): WorkProject[] => [
+    { slug: 'museu-olimpico-rio', title: lang === 'pt' ? 'Museu Olímpico do Rio' : lang === 'es' ? 'Museo Olímpico de Río' : lang === 'fr' ? 'Musée Olympique de Rio' : 'Rio Olympic Museum', summary: lang === 'pt' ? 'Direção geral, tecnologia e audiovisual. Projeto expográfico completo com recursos interativos.' : 'General direction, technology and audiovisual. Complete expographic project with digital interactive resources.', year: 2016, tags: [lang === 'pt' ? 'Museografia Digital' : 'Digital Museography', lang === 'pt' ? 'Projeto Expográfico' : 'Expographic Project'], type: 'MUSEUM', projectCategory: ['museum', 'exhibition'] },
+    { slug: 'exposicao-itinerante-tmnt', title: lang === 'pt' ? 'TMNT - Tartarugas Ninjas - Exposição Itinerante' : 'TMNT - Ninja Turtles - Itinerant Exhibition', summary: lang === 'pt' ? 'Projeto expográfico para exposição itinerante interativa.' : 'Expographic project for interactive itinerant exhibition.', year: 2024, tags: [lang === 'pt' ? 'Exposição Itinerante' : 'Itinerant Exhibition', 'Animation'], type: 'EXHIBITION', projectCategory: ['museum', 'exhibition', 'animation'] },
+    { slug: 'curadoria-festival-gramado-vr', title: lang === 'pt' ? 'Curadoria Festival de Gramado - Mostra VR' : 'Gramado Film Festival - VR Showcase', summary: lang === 'pt' ? 'Curadoria e programação de mostra VR desde 2017.' : 'Curation and programming of VR film showcase since 2017.', year: 2024, tags: [lang === 'pt' ? 'Curadoria' : 'Curation', 'Festival', 'VR'], type: 'FESTIVAL', projectCategory: ['curadoria', 'festival', 'vr-360'] },
+    { slug: 'filme-vr-360-zen', title: lang === 'pt' ? 'VR ZEN - Filme VR 360°' : 'VR ZEN - 360° Virtual Reality Film', summary: lang === 'pt' ? 'Coprodução de filme 360° com narrativa transmidiática.' : 'Co-production of 360° film. Interactive transmedia narrative.', year: 2023, tags: ['VR', '360°', lang === 'pt' ? 'Documentário' : 'Documentary'], type: 'VR_FILM', projectCategory: ['vr-360', 'vr', 'cinema'] },
+    { slug: 'curso-producao-cinematicvr-ufrj', title: lang === 'pt' ? 'Produção CinematicVR - UFRJ' : 'CinematicVR Production - UFRJ', summary: lang === 'pt' ? 'Curso de extensão em Produção CinematicVR. Direção audiovisual e pedagógica.' : 'University extension course in CinematicVR Production.', year: 2023, tags: [lang === 'pt' ? 'Educação' : 'Education', 'VR'], type: 'EDUCATION', projectCategory: ['education', 'vr-360'] },
+    { slug: 'animacao-3d-personagens', title: lang === 'pt' ? 'Animação 3D e Personagens' : '3D Animation & Characters', summary: lang === 'pt' ? 'Personagens 3D, animações e motion design para exposições e educação.' : '3D character creation, animations and motion design.', year: 2024, tags: ['3D', 'Animation', 'Motion Design'], type: 'ANIMATION', projectCategory: ['design', 'animation', 'vfx'] },
+    { slug: 'maquete-virtual-arquitetura', title: lang === 'pt' ? 'Maquete Virtual e Renders 3D' : 'Virtual Model & 3D Renders', summary: lang === 'pt' ? 'Maquetes virtuais e renders 3D para projetos arquitetônicos e culturais.' : 'Interactive virtual models and 3D renders for architectural and cultural projects.', year: 2024, tags: ['3D', lang === 'pt' ? 'Maquete Virtual' : 'Virtual Model'], type: 'ARCHITECTURE', projectCategory: ['design', 'vfx'] },
+  ], [lang])
+
   const allCases = useMemo(() => {
     if (cmsContent?.highlightProjects && Array.isArray(cmsContent.highlightProjects) && cmsContent.highlightProjects.length > 0) {
       return cmsContent.highlightProjects as WorkProject[]
     }
-    return []
-  }, [cmsContent?.highlightProjects])
+    return defaultCases
+  }, [cmsContent?.highlightProjects, defaultCases])
 
   useEffect(() => {
     if (typeFromUrl) {
@@ -237,11 +248,20 @@ const WorkProjects: React.FC<WorkProjectsProps> = ({ lang }) => {
           {!cmsLoading && cases.length === 0 && (
             <div className="py-16 text-center">
               <p className="text-lg text-slate-400 mb-4">
-                {lang === 'pt' ? 'Nenhum projeto encontrado com os filtros selecionados.' : 'No projects found with the selected filters.'}
+                {lang === 'pt' ? 'Nenhum projeto encontrado com os filtros selecionados.' : lang === 'es' ? 'No se encontraron proyectos con los filtros seleccionados.' : lang === 'fr' ? 'Aucun projet trouvé avec les filtres sélectionnés.' : 'No projects found with the selected filters.'}
               </p>
-              <LangLink to="/work" className="text-azimut-red hover:underline">
-                {lang === 'pt' ? 'Voltar ao Nosso Trabalho' : 'Back to Our Work'}
-              </LangLink>
+              {hasActiveFilters ? (
+                <button
+                  onClick={clearFilters}
+                  className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-sm font-semibold uppercase tracking-[0.1em] text-azimut-red hover:bg-azimut-red/20 transition-all"
+                >
+                  {lang === 'pt' ? 'Ver todos os projetos' : lang === 'es' ? 'Ver todos los proyectos' : lang === 'fr' ? 'Voir tous les projets' : 'View all projects'}
+                </button>
+              ) : (
+                <Link to={`/${lang}/work`} className="inline-flex items-center gap-2 text-azimut-red hover:underline font-sora text-sm">
+                  {lang === 'pt' ? '← Voltar ao Nosso Trabalho' : lang === 'es' ? '← Volver a Nuestro Trabajo' : lang === 'fr' ? '← Retour à Notre Travail' : '← Back to Our Work'}
+                </Link>
+              )}
             </div>
           )}
 
