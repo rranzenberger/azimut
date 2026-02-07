@@ -23,6 +23,7 @@ import StarBackground from '../components/StarBackground'
 import OptimizedImage from '../components/OptimizedImage'
 import { useTheme } from '../contexts/ThemeContext'
 import { MAIN_CATEGORIES, getCategoryFilters, getCategoryLabel } from '../utils/categoryMapping'
+import { getInterestProfile, personalizeProjectOrder } from '../utils/personalizeProjects'
 import { PageFooterNavigation } from '../components/PageFooterNavigation'
 import LangLink from '../components/LangLink'
 import LoadingSkeleton from '../components/LoadingSkeleton'
@@ -428,6 +429,19 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
       return true
     })
   }, [allCases, selectedCategory, selectedWorkType, selectedTechnologies, selectedIndustry, selectedTag, selectedType, selectedYear, searchQuery])
+
+  // ═══════════════════════════════════════════════════════════════
+  // 🧠 PERSONALIZAÇÃO: reordenar os 3 cards com base no interesse
+  // Visitante novo → priorityHome (flag do backoffice)
+  // Visitante com histórico → sobrepõe com projetos relevantes
+  // ═══════════════════════════════════════════════════════════════
+  const interestProfile = useMemo(() => getInterestProfile(), [])
+  
+  const personalizedCases = useMemo(() => {
+    // Só personaliza quando NÃO tem filtros ativos (visão padrão)
+    if (hasActiveFilters) return cases
+    return personalizeProjectOrder(cases, interestProfile)
+  }, [cases, interestProfile, hasActiveFilters])
   
   // Extrair valores únicos para filtros
   const allTags = useMemo(() => {
@@ -546,8 +560,8 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
 
   // Imagem OG dinâmica: usar primeira imagem do primeiro projeto se disponível
   const ogImage = useMemo(() => {
-    if (cases.length > 0 && cases[0]) {
-      const firstProjectImage = getProjectImageUrl(cases[0], 'large')
+    if (personalizedCases.length > 0 && personalizedCases[0]) {
+      const firstProjectImage = getProjectImageUrl(personalizedCases[0], 'large')
       if (firstProjectImage) return firstProjectImage
     }
     return seo.image || 'https://azmt.com.br/og-work.png'
@@ -555,7 +569,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
 
   // Schema.org: ItemList para lista de projetos (SEO)
   const projectListSchema = useMemo(() => {
-    if (cases.length === 0) return null
+    if (personalizedCases.length === 0) return null
     
     return {
       name: lang === 'pt' 
@@ -566,7 +580,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         ? 'Portfolio de Projets Azimut'
         : 'Azimut Project Portfolio',
       description: seo.description,
-      items: cases.slice(0, 20).map((project: WorkProject, index: number) => ({
+      items: personalizedCases.slice(0, 20).map((project: WorkProject, index: number) => ({
         name: project.title,
         url: `https://azmt.com.br/${lang}/work/${project.slug}`,
         image: getProjectImageUrl(project, 'medium'),
@@ -750,7 +764,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
             <div id="results-counter" className="font-sora text-sm text-slate-500 dark:text-slate-400">
               {hasActiveFilters ? (
                 <>
-                  {cases.length} {lang === 'pt' ? (cases.length === 1 ? 'projeto' : 'projetos') : (cases.length === 1 ? 'project' : 'projects')}
+                  {personalizedCases.length} {lang === 'pt' ? (personalizedCases.length === 1 ? 'projeto' : 'projetos') : (personalizedCases.length === 1 ? 'project' : 'projects')}
                   <span className="ml-2 text-azimut-red">
                     ({lang === 'pt' ? 'filtrado' : lang === 'es' ? 'filtrado' : 'filtered'})
                   </span>
@@ -758,9 +772,14 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               ) : (
                 <span>
                   {lang === 'pt' ? 'Destaques' : lang === 'es' ? 'Destacados' : lang === 'fr' ? 'En vedette' : 'Highlights'}
-                  {cases.length > 4 && (
+                  {interestProfile.hasEnoughData && (
+                    <span className="ml-1 text-azimut-red/60 text-xs">
+                      ({lang === 'pt' ? 'personalizado' : 'personalized'})
+                    </span>
+                  )}
+                  {personalizedCases.length > 4 && (
                     <span className="ml-1 text-slate-600">
-                      ({cases.length} {lang === 'pt' ? 'no portfólio completo' : 'in full portfolio'})
+                      ({personalizedCases.length} {lang === 'pt' ? 'no portfólio completo' : 'in full portfolio'})
                     </span>
                   )}
                 </span>
@@ -815,9 +834,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           )}
 
           {/* Featured Project - Full Width - SEMPRE MOSTRA, mesmo sem dados */}
-          {cases.length > 0 && (
+          {personalizedCases.length > 0 && (
               <article
-                id={cases.length === 1 ? 'projects-grid' : undefined}
+                id={personalizedCases.length === 1 ? 'projects-grid' : undefined}
                 className={`mb-8 overflow-hidden rounded-3xl border card-adaptive shadow-[0_32px_80px_rgba(0,0,0,0.6)] cursor-pointer ${
                   theme === 'dark' ? 'border-white/10' : 'border-slate-300/30'
                 }`}
@@ -826,25 +845,25 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   e.stopPropagation()
                   
                   try {
-                    trackInteraction('project_view', cases[0].slug)
-                    trackProjectInteraction(cases[0].slug, 'CLICK')
+                    trackInteraction('project_view', personalizedCases[0].slug)
+                    trackProjectInteraction(personalizedCases[0].slug, 'CLICK')
                   } catch (err) {
                     console.warn('Tracking error:', err)
                   }
                   
                   // Navegação
-                  navigate(`/${lang}/work/${cases[0].slug}`)
+                  navigate(`/${lang}/work/${personalizedCases[0].slug}`)
                 }}
               >
               <div className="grid md:grid-cols-2">
-                {/* Image Area - BACKOFFICE: cases[0].heroImage ou thumbnailUrl */}
+                {/* Image Area - BACKOFFICE: personalizedCases[0].heroImage ou thumbnailUrl */}
                 <div className="relative aspect-video md:aspect-auto md:min-h-[400px] bg-gradient-to-br from-slate-800/80 to-slate-950 overflow-hidden group">
                   {/* Renderizar imagem se disponível (heroImage ou thumbnailUrl) */}
-                  {getProjectImageUrl(cases[0], 'large') ? (
+                  {getProjectImageUrl(personalizedCases[0], 'large') ? (
                     <>
                       <img
-                        src={getProjectImageUrl(cases[0], 'large')!}
-                        alt={getProjectImageAlt(cases[0])}
+                        src={getProjectImageUrl(personalizedCases[0], 'large')!}
+                        alt={getProjectImageAlt(personalizedCases[0])}
                         loading="lazy"
                         className="absolute inset-0 h-full w-full object-contain transition-transform group-hover:scale-105"
                       />
@@ -883,7 +902,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                       textShadow: theme === 'light' ? '0 2px 8px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.3)' : '0 2px 4px rgba(0, 0, 0, 0.2)'
                     }}
                   >
-                    {cases[0].title}
+                    {personalizedCases[0].title}
                   </h2>
                   <p 
                     className="mb-4 text-base leading-relaxed line-clamp-4"
@@ -892,9 +911,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                       textShadow: theme === 'light' ? '0 1px 4px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3)' : '0 1px 2px rgba(0, 0, 0, 0.2)'
                     }}
                   >
-                    {cases[0].summary || cases[0].shortTitle}
+                    {personalizedCases[0].summary || personalizedCases[0].shortTitle}
                   </p>
-                  {(cases[0].city || cases[0].country) && (
+                  {(personalizedCases[0].city || personalizedCases[0].country) && (
                     <p 
                       className="mb-4 text-sm"
                       style={{ 
@@ -902,12 +921,12 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                         textShadow: theme === 'light' ? '0 1px 3px rgba(0, 0, 0, 0.5)' : 'none'
                       }}
                     >
-                      📍 {[cases[0].city, cases[0].country].filter(Boolean).join(', ')}
+                      📍 {[personalizedCases[0].city, personalizedCases[0].country].filter(Boolean).join(', ')}
                     </p>
                   )}
-                  {cases[0].tags && cases[0].tags.length > 0 && (
+                  {personalizedCases[0].tags && personalizedCases[0].tags.length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {((cases[0]?.tags && Array.isArray(cases[0].tags)) ? cases[0].tags : []).slice(0, 3).map((tag: string, idx: number) => (
+                      {((personalizedCases[0]?.tags && Array.isArray(personalizedCases[0].tags)) ? personalizedCases[0].tags : []).slice(0, 3).map((tag: string, idx: number) => (
                         <span key={idx} className="pill-adaptive rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.18em]">
                           {tag}
                         </span>
@@ -916,11 +935,11 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   )}
                   {/* CTA */}
                   <Link
-                    to={`/${lang}/work/${cases[0].slug}`}
+                    to={`/${lang}/work/${personalizedCases[0].slug}`}
                     onClick={(e) => {
                       e.stopPropagation()
-                      trackInteraction('project_view', cases[0].slug)
-                      trackProjectInteraction(cases[0].slug, 'CLICK')
+                      trackInteraction('project_view', personalizedCases[0].slug)
+                      trackProjectInteraction(personalizedCases[0].slug, 'CLICK')
                     }}
                     className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-[0.75rem] font-semibold uppercase tracking-[0.1em] hover:bg-azimut-red/20 transition-all mt-4"
                     style={{ color: 'var(--theme-text)' }}
@@ -936,7 +955,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           )}
           
           {/* Mensagem quando não há resultados */}
-          {cases.length === 0 && !cmsLoading && (
+          {personalizedCases.length === 0 && !cmsLoading && (
             <div className="py-16 text-center">
               <p className="text-lg text-slate-600 dark:text-slate-400 mb-4">
                 {lang === 'pt' 
@@ -960,9 +979,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           )}
 
           {/* Other Projects Grid - Apenas 3 cards na página principal */}
-          {cases.length > 1 && (
+          {personalizedCases.length > 1 && (
             <div id="projects-grid" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
-              {cases.slice(1, 4).map((item: WorkProject, index: number) => (
+              {personalizedCases.slice(1, 4).map((item: WorkProject, index: number) => (
               <article
                 key={item.slug}
                 className={`group rounded-2xl border card-adaptive overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(var(--theme-accent-red-rgb),0.3)] ${
@@ -1092,13 +1111,13 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
           )}
 
           {/* CTA: Ver todo portfólio (quando há mais projetos além dos 4 exibidos) */}
-          {cases.length > 4 && !hasActiveFilters && (
+          {personalizedCases.length > 4 && !hasActiveFilters && (
             <div className="mb-16 flex justify-center">
               <Link
                 to={`/${lang}/work/projects`}
                 className="inline-flex items-center gap-3 rounded-xl border border-azimut-red/50 bg-azimut-red/10 px-8 py-4 font-sora text-sm font-semibold uppercase tracking-[0.12em] text-azimut-red hover:bg-azimut-red/20 hover:border-azimut-red/70 transition-all"
               >
-                {lang === 'pt' ? `Ver todos os ${cases.length} projetos` : lang === 'es' ? `Ver los ${cases.length} proyectos` : lang === 'fr' ? `Voir les ${cases.length} projets` : `View all ${cases.length} projects`}
+                {lang === 'pt' ? `Ver todos os ${personalizedCases.length} projetos` : lang === 'es' ? `Ver los ${personalizedCases.length} proyectos` : lang === 'fr' ? `Voir les ${personalizedCases.length} projets` : `View all ${personalizedCases.length} projects`}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </Link>
             </div>
