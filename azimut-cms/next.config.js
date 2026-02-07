@@ -13,15 +13,16 @@ const nextConfig = {
     ],
   },
   
-  // Configuração simples de webpack
-  webpack: (config) => {
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      fs: false,
-      path: false,
-      crypto: false,
-    };
-    
+  // Configuração de webpack (apenas fallbacks do client; crypto disponível no Node.js)
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        path: false,
+        crypto: false,
+      };
+    }
     return config;
   },
   

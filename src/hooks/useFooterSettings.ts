@@ -42,9 +42,7 @@ export function useFooterSettings(): FooterSettings {
 
   useEffect(() => {
     let cancelled = false;
-    // Prioridade: /api/public/footer-settings (tabela isolada).
-    // Fallback: /api/public/settings (tabela Settings, retrocompatível).
-    fetch(`${API_BASE}/public/footer-settings`)
+    fetch(`${API_BASE}/public/settings`)
       .then((res) => (res.ok ? res.json() : null))
       .then((json) => {
         if (cancelled || !json) return;
@@ -58,24 +56,7 @@ export function useFooterSettings(): FooterSettings {
           behanceUrl: json.behanceUrl?.trim() || FALLBACK.behanceUrl,
         });
       })
-      .catch(() => {
-        // Fallback para API antiga (Settings)
-        fetch(`${API_BASE}/public/settings`)
-          .then((res) => (res.ok ? res.json() : null))
-          .then((json) => {
-            if (cancelled || !json) return;
-            setData({
-              contactEmail: json.contactEmail?.trim() || FALLBACK.contactEmail,
-              whatsappNumber: toWhatsAppNumber(json.whatsappNumber || json.contactPhone) || FALLBACK.whatsappNumber,
-              instagramUrl: json.instagramUrl?.trim() || FALLBACK.instagramUrl,
-              youtubeUrl: json.youtubeUrl?.trim() || FALLBACK.youtubeUrl,
-              linkedinUrl: json.linkedinUrl?.trim() || FALLBACK.linkedinUrl,
-              vimeoUrl: json.vimeoUrl?.trim() || FALLBACK.vimeoUrl,
-              behanceUrl: json.behanceUrl?.trim() || FALLBACK.behanceUrl,
-            });
-          })
-          .catch(() => {});
-      });
+      .catch(() => {});
     return () => { cancelled = true; };
   }, []);
 

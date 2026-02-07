@@ -1,11 +1,6 @@
 /**
- * API Pública – Configurações gerais do site
- * Sem autenticação. Retorna campos seguros.
- *
- * NOTA: Os dados do rodapé (contato, WhatsApp, redes sociais) agora ficam em
- * /api/public/footer-settings (tabela FooterSettings isolada).
- * Esta rota mantém retrocompatibilidade retornando os mesmos campos de Settings
- * para clientes antigos que ainda usem /api/public/settings.
+ * API Pública – Configurações do rodapé (contato, WhatsApp, redes)
+ * Sem autenticação. Retorna só campos seguros para o site.
  */
 
 import { NextResponse } from 'next/server';
@@ -31,8 +26,6 @@ export async function GET() {
       });
     }
 
-    // Retrocompatibilidade: ainda retorna campos de rodapé do Settings
-    // (preferir /api/public/footer-settings para dados atualizados)
     return NextResponse.json({
       contactEmail: row.contactEmail ?? null,
       whatsappNumber: row.whatsappNumber ?? row.contactPhone ?? null,
