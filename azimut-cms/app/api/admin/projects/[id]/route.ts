@@ -179,6 +179,7 @@ export async function PUT(
       bodyKeys.length === 2 && bodyKeys.includes('featured') && bodyKeys.includes('priorityHome');
 
     if (isMinimalUpdate) {
+      // Não incluir gallery para evitar SELECT em ProjectMedia (captionPt pode não existir no banco)
       const project = await prisma.project.update({
         where: { id: params.id },
         data: { featured: featured ?? existing.featured, priorityHome: finalPriorityHome },
@@ -187,10 +188,6 @@ export async function PUT(
           market: true,
           tags: true,
           services: true,
-          gallery: {
-            include: { media: true },
-            orderBy: { order: 'asc' },
-          },
         },
       });
       return NextResponse.json({ project });
