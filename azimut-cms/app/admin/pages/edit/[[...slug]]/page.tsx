@@ -1101,7 +1101,7 @@ export default function EditPagePage() {
                               Cancelar
                             </button>
                           </div>
-                          {projectSaveMsg?.id === p0.id && (
+                          {projectSaveMsg && projectSaveMsg.id === p0.id && (
                             <div style={{ padding: '6px 12px', borderRadius: 6, fontSize: 12, fontWeight: 600, background: projectSaveMsg.type === 'success' ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)', color: projectSaveMsg.type === 'success' ? '#86efac' : '#fca5a5', border: `1px solid ${projectSaveMsg.type === 'success' ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}` }}>
                               {projectSaveMsg.text}
                             </div>
@@ -1116,7 +1116,7 @@ export default function EditPagePage() {
                           <p style={{ margin: 0, fontSize: 14, color: '#94a3b8', lineHeight: 1.6, cursor: 'pointer' }} onClick={() => startEditProject(p0)} title="Clique para editar">
                             {p0.summary || <em style={{ color: '#475569' }}>Sem descrição — clique para adicionar</em>}
                           </p>
-                          {projectSaveMsg?.id === p0.id && projectSaveMsg.type === 'success' && (
+                          {projectSaveMsg && projectSaveMsg.id === p0.id && projectSaveMsg.type === 'success' && (
                             <div style={{ marginTop: 8, padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 600, background: 'rgba(34,197,94,0.15)', color: '#86efac', display: 'inline-block' }}>
                               {projectSaveMsg.text}
                             </div>
@@ -1195,7 +1195,7 @@ export default function EditPagePage() {
                                   ✕
                                 </button>
                               </div>
-                              {projectSaveMsg?.id === p.id && (
+                              {projectSaveMsg && projectSaveMsg.id === p.id && (
                                 <div style={{ padding: '4px 8px', borderRadius: 4, fontSize: 10, fontWeight: 600, background: projectSaveMsg.type === 'success' ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)', color: projectSaveMsg.type === 'success' ? '#86efac' : '#fca5a5' }}>
                                   {projectSaveMsg.text}
                                 </div>
@@ -1218,7 +1218,7 @@ export default function EditPagePage() {
                                 ))}
                                 {p.year && <span style={{ fontSize: 10, color: '#475569', marginLeft: 'auto' }}>{p.year}</span>}
                               </div>
-                              {projectSaveMsg?.id === p.id && projectSaveMsg.type === 'success' && (
+                              {projectSaveMsg && projectSaveMsg.id === p.id && projectSaveMsg.type === 'success' && (
                                 <div style={{ marginTop: 4, padding: '3px 8px', borderRadius: 4, fontSize: 10, fontWeight: 600, background: 'rgba(34,197,94,0.15)', color: '#86efac', display: 'inline-block' }}>
                                   {projectSaveMsg.text}
                                 </div>
