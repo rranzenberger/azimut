@@ -248,11 +248,11 @@ export async function GET(request: NextRequest) {
       })),
     };
     
-    // 7. Cache header e CORS (1 hora)
+    // 7. Cache: Home com cache curto para alterações no backoffice aparecerem logo no site
+    const cacheMaxAge = page === 'home' ? 300 : 3600; // home: 5 min; outras: 1 h
     return NextResponse.json(response, {
       headers: {
-        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200',
-        // CORS - Permitir site principal acessar
+        'Cache-Control': `public, s-maxage=${cacheMaxAge}, stale-while-revalidate=600`,
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET',
         'Access-Control-Allow-Headers': 'Content-Type',

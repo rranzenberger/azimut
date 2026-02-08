@@ -653,8 +653,9 @@ export default function EditPagePage() {
         const res = await fetch('/api/admin/projects?limit=50');
         if (!res.ok || cancelled) return;
         const data = await res.json();
+        // Mesma regra da API pública (site): featured + PUBLISHED + priorityHome > 0
         const list = (data.projects || [])
-          .filter((p: any) => p.featured && p.status === 'PUBLISHED')
+          .filter((p: any) => p.featured && p.status === 'PUBLISHED' && (p.priorityHome ?? 0) > 0)
           .sort((a: any, b: any) => {
             const pa = a.priorityHome ?? 0;
             const pb = b.priorityHome ?? 0;
