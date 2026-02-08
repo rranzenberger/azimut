@@ -325,20 +325,16 @@ export function useProject(slug: string, lang: string = 'pt'): UseProjectResult 
         );
 
         if (!response.ok) {
-          if (response.status === 404) {
-            // ═══════════════════════════════════════════════════════════════
-            // FALLBACK: Se projeto não encontrado, usar placeholder
-            // ═══════════════════════════════════════════════════════════════
-            const placeholderProject = getPlaceholderProject(slug, lang);
-            if (placeholderProject) {
-              if (!cancelled) {
-                setProject(placeholderProject);
-                setError(null); // Não é erro, é placeholder
-              }
-              return;
+          // Fallback: 404 ou 500 → usar placeholder para slugs conhecidos (ex: museu-olimpico-rio)
+          const placeholderProject = getPlaceholderProject(slug, lang);
+          if (placeholderProject && (response.status === 404 || response.status === 500)) {
+            if (!cancelled) {
+              setProject(placeholderProject);
+              setError(null);
             }
-            throw new Error('Project not found');
+            return;
           }
+          if (response.status === 404) throw new Error('Project not found');
           throw new Error(`Failed to fetch project: ${response.statusText}`);
         }
 

@@ -21,6 +21,42 @@ const SLUG_REDIRECTS: Record<string, string> = {
   'rio-museu-olimpico': 'museu-olimpico-rio',
 }
 
+// Monta projeto mínimo a partir do item da lista Work (quando API falha e não há placeholder)
+function minimalProjectFromList(item: any): any {
+  if (!item || !item.slug) return null
+  const hero = item.heroImage
+  return {
+    slug: item.slug,
+    title: item.title || item.slug,
+    shortTitle: item.shortTitle || null,
+    summary: item.summary || null,
+    description: item.description || item.summary || null,
+    city: item.city || null,
+    stateProvince: item.stateProvince || null,
+    country: item.country || null,
+    year: item.year ?? null,
+    month: item.month ?? null,
+    client: item.client || null,
+    partnership: item.partnership || null,
+    coproduction: item.coproduction || null,
+    type: item.type || null,
+    tags: Array.isArray(item.tags) ? item.tags : [],
+    services: Array.isArray(item.services) ? item.services : [],
+    heroImage: hero ? {
+      type: hero.type || 'IMAGE',
+      original: hero.original || hero.large || hero.medium || hero.thumbnail,
+      thumbnail: hero.thumbnail || hero.medium || hero.original,
+      medium: hero.medium || hero.thumbnail || hero.original,
+      large: hero.large || hero.medium || hero.original,
+      alt: hero.alt || item.title,
+    } : null,
+    gallery: [],
+    market: null,
+    cta: {},
+    seo: null,
+  }
+}
+
 const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
@@ -33,14 +69,22 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
   const canonicalSlug = (slug && SLUG_REDIRECTS[slug]) || slug || ''
   const { project, loading, error } = useProject(canonicalSlug, lang)
 
-  // Redirecionar URL para slug canônico (ex: /work/rio-museu-olimpico → /work/museu-olimpico-rio)
+  // Redirecionar para slug canônico (ex: /pt/work/rio-museu-olimpico → /pt/work/museu-olimpico-rio)
+  // Path sempre relativo (/:lang/work/:slug) para evitar SecurityError no History.replaceState
   useEffect(() => {
     if (slug && SLUG_REDIRECTS[slug]) {
-      navigate(`/${lang === 'pt' ? '' : lang}/work/${SLUG_REDIRECTS[slug]}`, { replace: true })
+      const path = `/${lang}/work/${SLUG_REDIRECTS[slug]}`
+      navigate(path, { replace: true })
     }
   }, [slug, lang, navigate])
   const { content: cmsContent } = useAzimutContent({ page: 'work' })
   const allProjects = cmsContent?.highlightProjects || []
+
+  // Quando API falha e não há placeholder: usar dados da lista Work (imagem e dados básicos)
+  const fallbackFromList = (!project && (canonicalSlug || slug))
+    ? (allProjects as any[]).find((p: any) => p.slug === canonicalSlug || p.slug === slug)
+    : null
+  const effectiveProject = project ?? (fallbackFromList ? minimalProjectFromList(fallbackFromList) : null)
   
   // Estados para filtros da galeria (apenas Museu Olímpico)
   const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null)
@@ -48,18 +92,17 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
   
   // Projetos relacionados (mesmo tipo ou tags similares, excluindo o atual)
   const relatedProjects = React.useMemo(() => {
-    if (!project || allProjects.length === 0) return []
+    if (!effectiveProject || allProjects.length === 0) return []
     
     return allProjects
-      .filter((p: any) => p.slug !== project.slug)
+      .filter((p: any) => p.slug !== effectiveProject.slug)
       .filter((p: any) => {
-        // Mesmo tipo ou tags em comum
-        const hasSameType = project.type && p.type === project.type
-        const hasCommonTags = project.tags?.some((tag: string) => p.tags?.includes(tag))
+        const hasSameType = effectiveProject.type && p.type === effectiveProject.type
+        const hasCommonTags = effectiveProject.tags?.some((tag: string) => p.tags?.includes(tag))
         return hasSameType || hasCommonTags
       })
-      .slice(0, 3) // Máximo 3 relacionados
-  }, [project, allProjects])
+      .slice(0, 3)
+  }, [effectiveProject, allProjects])
   
   // Tracking
   useEffect(() => {
@@ -116,28 +159,30 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
     )
   }
 
-  // Error state
-  if (error || !project) {
+  // Error state: só quando não temos nem projeto nem fallback da lista Work
+  if (!effectiveProject) {
+    const messages = {
+      pt: { title: 'Projeto não encontrado', body: 'O projeto que você está procurando não existe, foi removido ou está temporariamente indisponível. Tente novamente ou volte à lista.', back: 'Voltar para Projetos' },
+      en: { title: 'Project not found', body: 'The project you are looking for does not exist, has been removed, or is temporarily unavailable. Try again or go back to the list.', back: 'Back to Projects' },
+      es: { title: 'Proyecto no encontrado', body: 'El proyecto que buscas no existe, ha sido eliminado o está temporalmente no disponible. Intenta de nuevo o vuelve a la lista.', back: 'Volver a Proyectos' },
+      fr: { title: 'Projet non trouvé', body: 'Le projet que vous recherchez n\'existe pas, a été supprimé ou est temporairement indisponible. Réessayez ou retournez à la liste.', back: 'Retour aux projets' },
+    }
+    const msg = messages[lang] || messages.en
     return (
       <main className="relative py-16 md:py-20">
-        <div className="mx-auto max-w-6xl px-6 text-center">
-          <h1 className="mb-4 font-handel text-4xl uppercase tracking-[0.16em] text-white">
-            {lang === 'pt' ? 'Projeto não encontrado' : lang === 'es' ? 'Proyecto no encontrado' : lang === 'fr' ? 'Projet non trouvé' : 'Project not found'}
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="mb-4 font-handel text-4xl uppercase tracking-[0.16em]" style={{ color: 'var(--theme-text)' }}>
+            {msg.title}
           </h1>
-          <p className="mb-8 text-slate-600 dark:text-slate-400">
-            {lang === 'pt' 
-              ? 'O projeto que você está procurando não existe ou foi removido.'
-              : lang === 'es'
-              ? 'El proyecto que buscas no existe o ha sido eliminado.'
-              : lang === 'fr'
-              ? 'Le projet que vous recherchez n\'existe pas ou a été supprimé.'
-              : 'The project you are looking for does not exist or has been removed.'}
+          <p className="mb-8 text-sm md:text-base max-w-lg mx-auto" style={{ color: 'var(--theme-text-secondary)' }}>
+            {msg.body}
           </p>
           <Link
-            to="/work"
-            className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-sm font-semibold uppercase tracking-[0.1em] text-slate-900 dark:text-white hover:bg-azimut-red/20 transition-all"
+            to={`/${lang}/work`}
+            className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-sm font-semibold uppercase tracking-[0.1em] transition-all hover:bg-azimut-red/20"
+            style={{ color: 'var(--theme-text)' }}
           >
-            {lang === 'pt' ? 'Voltar para Projetos' : lang === 'es' ? 'Volver a Proyectos' : lang === 'fr' ? 'Retour aux projets' : 'Back to Projects'}
+            {msg.back}
           </Link>
         </div>
       </main>
@@ -145,30 +190,29 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
   }
 
   // Usar campos SEO otimizados pela IA se disponíveis, senão usar fallback
-  const seoTitle = project.seo?.title || `${project.title} | ${seoData.work[lang].title}`
-  const seoDescription = project.seo?.description || project.description || project.summary || seoData.work[lang].description
-  const seoKeywords = project.seo?.keywords?.join(', ') || seoData.work[lang].keywords
+  const seoTitle = effectiveProject.seo?.title || `${effectiveProject.title} | ${seoData.work[lang].title}`
+  const seoDescription = effectiveProject.seo?.description || effectiveProject.description || effectiveProject.summary || seoData.work[lang].description
+  const seoKeywords = effectiveProject.seo?.keywords?.join(', ') || seoData.work[lang].keywords
 
   // Detectar se hero é vídeo (tipo ou URL): vídeo aparece aqui na subpágina, não no card
-  const hasVideo = project.heroImage?.original && (
-    project.heroImage.type === 'VIDEO' ||
-    project.heroImage.original.includes('youtube.com') || 
-    project.heroImage.original.includes('youtu.be') ||
-    project.heroImage.original.includes('.mp4') ||
-    project.heroImage.original.includes('.webm')
+  const hasVideo = effectiveProject.heroImage?.original && (
+    effectiveProject.heroImage.type === 'VIDEO' ||
+    effectiveProject.heroImage.original.includes('youtube.com') ||
+    effectiveProject.heroImage.original.includes('youtu.be') ||
+    effectiveProject.heroImage.original.includes('.mp4') ||
+    effectiveProject.heroImage.original.includes('.webm')
   )
 
-  // Extrair ID do YouTube se for vídeo do YouTube
   const getYouTubeId = (url: string) => {
     const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)
     return match ? match[1] : null
   }
 
-  const youtubeId = project.heroImage?.original ? getYouTubeId(project.heroImage.original) : null
+  const youtubeId = effectiveProject.heroImage?.original ? getYouTubeId(effectiveProject.heroImage.original) : null
   const videoEmbedUrl = youtubeId ? `https://www.youtube-nocookie.com/embed/${youtubeId}` : undefined
-  const videoContentUrl = project.heroImage?.original?.includes('youtube.com') || project.heroImage?.original?.includes('youtu.be') 
-    ? undefined 
-    : project.heroImage?.original
+  const videoContentUrl = effectiveProject.heroImage?.original?.includes('youtube.com') || effectiveProject.heroImage?.original?.includes('youtu.be')
+    ? undefined
+    : effectiveProject.heroImage?.original
 
   return (
     <>
@@ -176,32 +220,32 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
         title={seoTitle}
         description={seoDescription}
         keywords={seoKeywords}
-        url={`/${lang}/work/${project.slug}`}
+        url={`/${lang}/work/${effectiveProject.slug}`}
         locale={lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : lang === 'es' ? 'es_ES' : 'fr_FR'}
-        image={project.heroImage?.large || project.heroImage?.original}
+        image={effectiveProject.heroImage?.large || effectiveProject.heroImage?.original}
         type="article"
       />
       
       {/* Schema.org: Project/CreativeWork */}
       <ProjectSchema
-        name={project.title}
+        name={effectiveProject.title}
         description={seoDescription}
-        image={project.heroImage?.large || project.heroImage?.original || 'https://azmt.com.br/og-image.png'}
-        dateCreated={project.year ? `${project.year}-01-01` : new Date().toISOString().split('T')[0]}
+        image={effectiveProject.heroImage?.large || effectiveProject.heroImage?.original || 'https://azmt.com.br/og-image.png'}
+        dateCreated={effectiveProject.year ? `${effectiveProject.year}-01-01` : new Date().toISOString().split('T')[0]}
         creator="Azimut"
-        client={project.client}
-        category={project.tags?.[0]}
-        url={`/${lang}/work/${project.slug}`}
+        client={effectiveProject.client}
+        category={effectiveProject.tags?.[0]}
+        url={`/${lang}/work/${effectiveProject.slug}`}
         lang={lang}
       />
 
       {/* Schema.org: VideoObject (se tiver vídeo) */}
-      {hasVideo && project.heroImage && (
+      {hasVideo && effectiveProject.heroImage && (
         <VideoObjectSchema
-          name={project.title}
+          name={effectiveProject.title}
           description={seoDescription}
-          thumbnailUrl={project.heroImage.thumbnail || project.heroImage.original}
-          uploadDate={project.year ? `${project.year}-01-01` : new Date().toISOString().split('T')[0]}
+          thumbnailUrl={effectiveProject.heroImage.thumbnail || effectiveProject.heroImage.original}
+          uploadDate={effectiveProject.year ? `${effectiveProject.year}-01-01` : new Date().toISOString().split('T')[0]}
           contentUrl={videoContentUrl}
           embedUrl={videoEmbedUrl}
           lang={lang}
@@ -209,9 +253,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
       )}
 
       {/* Schema.org: Review/Rating (avaliação genérica para projetos premiados) */}
-      {project.tags?.some(tag => tag.toLowerCase().includes('premiado') || tag.toLowerCase().includes('award')) && (
+      {effectiveProject.tags?.some(tag => tag.toLowerCase().includes('premiado') || tag.toLowerCase().includes('award')) && (
         <ReviewRatingSchema
-          itemName={project.title}
+          itemName={effectiveProject.title}
           itemType="CreativeWork"
           ratingValue={4.8}
           bestRating={5}
@@ -219,7 +263,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
           reviewCount={1}
           reviews={[{
             author: 'Azimut',
-            datePublished: project.year ? `${project.year}-01-01` : new Date().toISOString().split('T')[0],
+            datePublished: effectiveProject.year ? `${effectiveProject.year}-01-01` : new Date().toISOString().split('T')[0],
             reviewBody: seoDescription,
             ratingValue: 5
           }]}
@@ -249,10 +293,20 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
               items={[
                 { name: lang === 'pt' ? 'Início' : lang === 'es' ? 'Inicio' : lang === 'fr' ? 'Accueil' : 'Home', url: `/${lang === 'pt' ? '' : lang}` },
                 { name: lang === 'pt' ? 'Projetos' : lang === 'es' ? 'Proyectos' : lang === 'fr' ? 'Projets' : 'Work', url: `/${lang === 'pt' ? '' : lang}/work` },
-                { name: project.title, url: `/${lang === 'pt' ? '' : lang}/work/${project.slug}` }
+                { name: effectiveProject.title, url: `/${lang === 'pt' ? '' : lang}/work/${effectiveProject.slug}` }
               ]}
             />
           </div>
+
+          {/* Aviso discreto quando a página usa dados da lista Work (API indisponível) */}
+          {!project && fallbackFromList && (
+            <div className="mb-6 py-3 px-4 rounded-xl border text-sm text-center" style={{ borderColor: 'var(--theme-text-muted)', color: 'var(--theme-text-secondary)' }}>
+              {lang === 'pt' && 'Exibindo dados básicos. Conteúdo completo em breve.'}
+              {lang === 'en' && 'Showing basic info. Full content coming soon.'}
+              {lang === 'es' && 'Mostrando datos básicos. Contenido completo próximamente.'}
+              {lang === 'fr' && 'Affichage des informations de base. Contenu complet bientôt.'}
+            </div>
+          )}
 
           {/* Hero: imagem principal ou vídeo (vídeo só aqui na subpágina, não no card) */}
           <div className="mb-10 md:mb-12">
@@ -260,7 +314,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
               {hasVideo && videoEmbedUrl ? (
                 <iframe
                   src={videoEmbedUrl}
-                  title={project.heroImage?.alt || project.title}
+                  title={effectiveProject.heroImage?.alt || effectiveProject.title}
                   className="absolute inset-0 h-full w-full"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -270,14 +324,14 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                   src={videoContentUrl}
                   controls
                   className="absolute inset-0 h-full w-full object-contain bg-black"
-                  poster={project.heroImage?.thumbnail || undefined}
+                  poster={effectiveProject.heroImage?.thumbnail || undefined}
                 >
                   {lang === 'pt' ? 'Seu navegador não suporta vídeo.' : lang === 'es' ? 'Su navegador no soporta video.' : lang === 'fr' ? 'Votre navigateur ne prend pas en charge la vidéo.' : 'Your browser does not support video.'}
                 </video>
-              ) : project.heroImage?.large || project.heroImage?.original ? (
+              ) : effectiveProject.heroImage?.large || effectiveProject.heroImage?.original ? (
                 <img
-                  src={project.heroImage.large || project.heroImage.original}
-                  alt={project.heroImage.alt || `${project.title}${project.summary ? ` - ${project.summary.substring(0, 100)}` : ''}${project.year ? ` (${project.year})` : ''} - Azimut`}
+                  src={effectiveProject.heroImage.large || effectiveProject.heroImage.original}
+                  alt={effectiveProject.heroImage.alt || `${effectiveProject.title}${effectiveProject.summary ? ` - ${effectiveProject.summary.substring(0, 100)}` : ''}${effectiveProject.year ? ` (${effectiveProject.year})` : ''} - Azimut`}
                   className="absolute inset-0 h-full w-full object-cover"
                 />
               ) : (
@@ -292,7 +346,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                   </div>
                 </div>
               )}
-              {!hasVideo && (project.heroImage?.large || project.heroImage?.original) && (
+              {!hasVideo && (effectiveProject.heroImage?.large || effectiveProject.heroImage?.original) && (
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
               )}
             </div>
@@ -300,13 +354,13 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
             {/* Title and Meta */}
             <div className="mb-6">
               <h1 className="mb-4 font-handel text-4xl md:text-5xl lg:text-6xl uppercase tracking-[0.12em] text-white dark:text-white" style={{ color: 'var(--theme-text)' }}>
-                {project.title}
+                {effectiveProject.title}
               </h1>
               
               {/* Tags */}
-              {project.tags && project.tags.length > 0 && (
+              {effectiveProject.tags && effectiveProject.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tags.map((tag: string, idx: number) => (
+                  {effectiveProject.tags.map((tag: string, idx: number) => (
                     <span 
                       key={idx} 
                       className="pill-adaptive rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.18em]"
@@ -319,23 +373,23 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
 
               {/* Meta Info - só exibe campos preenchidos (tema claro/escuro) */}
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm" style={{ color: 'var(--theme-text-secondary)' }}>
-                {(project.year != null || project.month != null) && (
+                {(effectiveProject.year != null || effectiveProject.month != null) && (
                   <span className="flex items-center gap-2">
                     <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    {project.month != null && project.year != null
-                      ? `${String(project.month).padStart(2, '0')}/${project.year}`
-                      : project.year}
+                    {effectiveProject.month != null && effectiveProject.year != null
+                      ? `${String(effectiveProject.month).padStart(2, '0')}/${effectiveProject.year}`
+                      : effectiveProject.year}
                   </span>
                 )}
-                {(project.city || project.stateProvince || project.country) && (
+                {(effectiveProject.city || effectiveProject.stateProvince || effectiveProject.country) && (
                   <span className="flex items-center gap-2">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    {project.slug === 'museu-olimpico-rio' 
+                    {effectiveProject.slug === 'museu-olimpico-rio' 
                       ? lang === 'pt' 
                         ? 'Velódromo, Parque Olímpico, Barra da Tijuca, Rio de Janeiro'
                         : lang === 'es'
@@ -343,10 +397,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                         : lang === 'fr'
                         ? 'Vélodrome, Parc Olympique, Barra da Tijuca, Rio de Janeiro'
                         : 'Velodrome, Olympic Park, Barra da Tijuca, Rio de Janeiro'
-                      : [project.city, project.stateProvince, project.country].filter(Boolean).join(', ')}
+                      : [effectiveProject.city, effectiveProject.stateProvince, effectiveProject.country].filter(Boolean).join(', ')}
                   </span>
                 )}
-                {project.slug === 'museu-olimpico-rio' && (
+                {effectiveProject.slug === 'museu-olimpico-rio' && (
                   <span className="flex items-center gap-2 text-xs" style={{ color: 'var(--theme-text-muted)' }}>
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -360,36 +414,36 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                       : 'Near Rita Lee Park'}
                   </span>
                 )}
-                {project.type && (
+                {effectiveProject.type && (
                   <span className="flex items-center gap-2">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                     </svg>
-                    {project.type}
+                    {effectiveProject.type}
                   </span>
                 )}
-                {project.client && (
+                {effectiveProject.client && (
                   <span className="flex items-center gap-2">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
-                    {project.client}
+                    {effectiveProject.client}
                   </span>
                 )}
-                {project.partnership && project.partnership.trim() && (
+                {effectiveProject.partnership && effectiveProject.partnership.trim() && (
                   <span className="flex items-center gap-2">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
-                    {lang === 'pt' ? 'Parceria:' : lang === 'es' ? 'Asociación:' : lang === 'fr' ? 'Partenariat:' : 'Partnership:'} {project.partnership}
+                    {lang === 'pt' ? 'Parceria:' : lang === 'es' ? 'Asociación:' : lang === 'fr' ? 'Partenariat:' : 'Partnership:'} {effectiveProject.partnership}
                   </span>
                 )}
-                {project.coproduction && project.coproduction.trim() && (
+                {effectiveProject.coproduction && effectiveProject.coproduction.trim() && (
                   <span className="flex items-center gap-2">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
-                    {lang === 'pt' ? 'Coprodução:' : lang === 'es' ? 'Coproducción:' : lang === 'fr' ? 'Coproduction:' : 'Co-production:'} {project.coproduction}
+                    {lang === 'pt' ? 'Coprodução:' : lang === 'es' ? 'Coproducción:' : lang === 'fr' ? 'Coproduction:' : 'Co-production:'} {effectiveProject.coproduction}
                   </span>
                 )}
               </div>
@@ -397,16 +451,16 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
           </div>
 
           {/* Description - Prioriza description completa, fallback para summary */}
-          {(project.description || project.summary) && (
+          {(effectiveProject.description || effectiveProject.summary) && (
             <div className="mb-12">
               <div className="prose prose-invert max-w-none">
                 <div 
                   className="text-lg leading-relaxed"
                   style={{ color: 'var(--theme-text-secondary)' }}
                   dangerouslySetInnerHTML={{ 
-                    __html: project.description 
-                      ? project.description.replace(/\n/g, '<br />')
-                      : (project.summary || '').replace(/\n/g, '<br />')
+                    __html: effectiveProject.description 
+                      ? effectiveProject.description.replace(/\n/g, '<br />')
+                      : (effectiveProject.summary || '').replace(/\n/g, '<br />')
                   }}
                 />
               </div>
@@ -414,13 +468,13 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
           )}
 
           {/* Galeria universal: todas as imagens e vídeos em sequência (ordem do backoffice), com legenda opcional */}
-          {project.gallery && project.gallery.length > 0 && (
+          {effectiveProject.gallery && effectiveProject.gallery.length > 0 && (
             <section className="mb-14 md:mb-16 pt-2 border-t border-slate-200/80 dark:border-white/10" aria-label={lang === 'pt' ? 'Galeria' : lang === 'es' ? 'Galería' : lang === 'fr' ? 'Galerie' : 'Gallery'}>
               <h2 className="font-handel text-2xl md:text-3xl uppercase tracking-[0.12em] mb-10 md:mb-12" style={{ color: 'var(--theme-text)' }}>
                 {lang === 'pt' ? 'Galeria' : lang === 'es' ? 'Galería' : lang === 'fr' ? 'Galerie' : 'Gallery'}
               </h2>
               <div className="space-y-12 md:space-y-16">
-                {project.gallery.map((media: any, index: number) => {
+                {effectiveProject.gallery.map((media: any, index: number) => {
                   const isVideo = media.type === 'VIDEO'
                   const videoUrl = isVideo ? (media.original || '') : ''
                   const isDirectVideo = isVideo && (videoUrl.includes('.mp4') || videoUrl.includes('.webm'))
@@ -435,7 +489,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                         {media.type === 'IMAGE' ? (
                           <img
                             src={media.large || media.medium || media.thumbnail || media.original}
-                            alt={media.alt || `${project.title} – ${index + 1}`}
+                            alt={media.alt || `${effectiveProject.title} – ${index + 1}`}
                             className="w-full h-full object-contain"
                             loading="lazy"
                           />
@@ -449,7 +503,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                         ) : youtubeId ? (
                           <iframe
                             src={`https://www.youtube-nocookie.com/embed/${youtubeId}`}
-                            title={media.alt || project.title}
+                            title={media.alt || effectiveProject.title}
                             className="absolute inset-0 w-full h-full"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
@@ -476,19 +530,19 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
           )}
 
           {/* Status da Galeria - Apenas para Museu Olímpico */}
-          {project.slug === 'museu-olimpico-rio' && project.gallery && project.gallery.length > 0 && (
-            <ProjectGalleryStatus gallery={project.gallery} lang={lang} />
+          {effectiveProject.slug === 'museu-olimpico-rio' && effectiveProject.gallery && effectiveProject.gallery.length > 0 && (
+            <ProjectGalleryStatus gallery={effectiveProject.gallery} lang={lang} />
           )}
 
           {/* Seções Temáticas - Apenas para Museu Olímpico */}
-          {project.slug === 'museu-olimpico-rio' && project.gallery && project.gallery.length > 0 && (
+          {effectiveProject.slug === 'museu-olimpico-rio' && effectiveProject.gallery && effectiveProject.gallery.length > 0 && (
             <div className="mb-12 space-y-8">
               <h2 className="font-handel text-2xl uppercase tracking-[0.12em] mb-6" style={{ color: 'var(--theme-text)' }}>
                 {lang === 'pt' ? 'Seções Temáticas' : lang === 'es' ? 'Secciones Temáticas' : lang === 'fr' ? 'Sections Thématiques' : 'Thematic Sections'}
               </h2>
 
               {/* Seção: Na Mídia */}
-              {project.gallery.some((m: any) => (m.original || '').toLowerCase().includes('jornal')) && (
+              {effectiveProject.gallery.some((m: any) => (m.original || '').toLowerCase().includes('jornal')) && (
                 <div className="rounded-2xl border border-white/10 card-adaptive p-6 bg-subtle backdrop-blur">
                   {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
                   <h3 className="mb-4 font-handel text-xl uppercase tracking-[0.12em] text-white">
@@ -504,7 +558,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                       : 'The project was featured in O Globo newspaper, with explicit recognition of Azimut\'s role as Technology-Audiovisual Director.'}
                   </p>
                   <div className="grid gap-4 sm:grid-cols-2">
-                    {project.gallery
+                    {effectiveProject.gallery
                       .filter((m: any) => (m.original || '').toLowerCase().includes('jornal'))
                       .map((media: any) => (
                         <div
@@ -514,7 +568,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                         >
                           <img
                             src={media.medium || media.thumbnail || media.original}
-                            alt={media.alt || `${project.title} - Galeria de imagens${media.altPt ? `: ${media.altPt}` : ''} - Azimut`}
+                            alt={media.alt || `${effectiveProject.title} - Galeria de imagens${media.altPt ? `: ${media.altPt}` : ''} - Azimut`}
                             className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                             loading="lazy"
                           />
@@ -525,7 +579,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
               )}
 
               {/* Seção: Instalações Interativas */}
-              {project.gallery.some((m: any) => (m.original || '').toLowerCase().includes('semi-esfera') || (m.original || '').toLowerCase().includes('bicicleta') || (m.original || '').toLowerCase().includes('tela-interativa')) && (
+              {effectiveProject.gallery.some((m: any) => (m.original || '').toLowerCase().includes('semi-esfera') || (m.original || '').toLowerCase().includes('bicicleta') || (m.original || '').toLowerCase().includes('tela-interativa')) && (
                 <div className="rounded-2xl border border-white/10 card-adaptive p-6 bg-subtle backdrop-blur">
                   {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
                   <h3 className="mb-4 font-handel text-xl uppercase tracking-[0.12em] text-white">
@@ -541,7 +595,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                       : 'Innovative technology developed by Azimut: semi-sphere, interactive games, interactive screens and perfect integration between scenography, technology and audiovisual.'}
                   </p>
                   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {project.gallery
+                    {effectiveProject.gallery
                       .filter((m: any) => {
                         const url = (m.original || '').toLowerCase()
                         return url.includes('semi-esfera') || url.includes('bicicleta') || url.includes('tela-interativa') || url.includes('velodromo-exterior')
@@ -554,7 +608,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                         >
                           <img
                             src={media.medium || media.thumbnail || media.original}
-                            alt={media.alt || `${project.title} - Galeria de imagens${media.altPt ? `: ${media.altPt}` : ''} - Azimut`}
+                            alt={media.alt || `${effectiveProject.title} - Galeria de imagens${media.altPt ? `: ${media.altPt}` : ''} - Azimut`}
                             className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                             loading="lazy"
                           />
@@ -565,7 +619,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
               )}
 
               {/* Seção: Ginástica Artística */}
-              {project.gallery.some((m: any) => (m.original || '').toLowerCase().includes('ginastica')) && (
+              {effectiveProject.gallery.some((m: any) => (m.original || '').toLowerCase().includes('ginastica')) && (
                 <div className="rounded-2xl border border-white/10 card-adaptive p-6 bg-subtle backdrop-blur">
                   {/* Texto sempre claro pois card-adaptive tem fundo escuro */}
                   <h3 className="mb-4 font-handel text-xl uppercase tracking-[0.12em] text-white">
@@ -581,7 +635,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                       : 'Example of curation and perfect integration: 5 thematic areas with Rio 2016 physical equipment, athlete videos and interactive technology.'}
                   </p>
                   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {project.gallery
+                    {effectiveProject.gallery
                       .filter((m: any) => (m.original || '').toLowerCase().includes('ginastica'))
                       .map((media: any) => (
                         <div
@@ -591,7 +645,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                         >
                           <img
                             src={media.medium || media.thumbnail || media.original}
-                            alt={media.alt || `${project.title} - Galeria de imagens${media.altPt ? `: ${media.altPt}` : ''} - Azimut`}
+                            alt={media.alt || `${effectiveProject.title} - Galeria de imagens${media.altPt ? `: ${media.altPt}` : ''} - Azimut`}
                             className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                             loading="lazy"
                           />
@@ -604,7 +658,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
           )}
 
           {/* Link para site oficial - apenas para Museu Olímpico */}
-          {project.slug === 'museu-olimpico-rio' && (
+          {effectiveProject.slug === 'museu-olimpico-rio' && (
             <div className="mb-12 rounded-2xl border border-white/10 card-adaptive p-6 bg-white/5 backdrop-blur">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
@@ -639,7 +693,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
           )}
 
           {/* Gallery com Filtros e Curadoria - Apenas para Museu Olímpico */}
-          {project.gallery && project.gallery.length > 0 && (
+          {effectiveProject.gallery && effectiveProject.gallery.length > 0 && (
             <div className="mb-12">
               <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <h2 className="font-handel text-2xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
@@ -647,7 +701,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                 </h2>
                 
                 {/* Filtros - Apenas para Museu Olímpico */}
-                {project.slug === 'museu-olimpico-rio' && (
+                {effectiveProject.slug === 'museu-olimpico-rio' && (
                   <div className="flex flex-wrap gap-2">
                     <button
                       onClick={() => {
@@ -697,11 +751,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
 
               {/* Galeria Filtrada */}
               {(() => {
-                let filteredGallery = project.gallery
+                let filteredGallery = effectiveProject.gallery
                 
                 // Filtrar por categoria (baseado no nome do arquivo ou alt text)
                 if (selectedCategory) {
-                  filteredGallery = project.gallery.filter((media: any) => {
+                  filteredGallery = effectiveProject.gallery.filter((media: any) => {
                     const alt = (media.alt || '').toLowerCase()
                     const url = (media.original || '').toLowerCase()
                     return alt.includes(selectedCategory) || url.includes(selectedCategory)
@@ -717,7 +771,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                     'bicicleta-interativa',
                     'tela-interativa-mapa'
                   ]
-                  filteredGallery = project.gallery.filter((media: any) => {
+                  filteredGallery = effectiveProject.gallery.filter((media: any) => {
                     const url = (media.original || '').toLowerCase()
                     return tier1Files.some(file => url.includes(file))
                   })
@@ -740,7 +794,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                 return (
                   <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {filteredGallery.map((media: any, index: number) => {
-                      const isTier1 = project.slug === 'museu-olimpico-rio' && [
+                      const isTier1 = effectiveProject.slug === 'museu-olimpico-rio' && [
                         'jornal-o-globo-capa',
                         'velodromo-exterior',
                         'semi-esfera-verde',
@@ -771,7 +825,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                             {media.type === 'IMAGE' ? (
                               <img
                                 src={media.medium || media.thumbnail || media.original}
-                                alt={media.alt || `${project.title} - ${index + 1}`}
+                                alt={media.alt || `${effectiveProject.title} - ${index + 1}`}
                                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                                 loading="lazy"
                               />
@@ -846,13 +900,13 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
           )}
 
           {/* Services */}
-          {project.services && project.services.length > 0 && (
+          {effectiveProject.services && effectiveProject.services.length > 0 && (
             <div className="mb-12">
               <h2 className={`mb-4 font-handel text-2xl uppercase tracking-[0.12em] ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
                 {lang === 'pt' ? 'Serviços' : lang === 'es' ? 'Servicios' : lang === 'fr' ? 'Services' : 'Services'}
               </h2>
               <div className="flex flex-wrap gap-2">
-                {project.services.map((service: any) => (
+                {effectiveProject.services.map((service: any) => (
                   <span 
                     key={service.slug}
                     className="rounded-lg border border-white/10 bg-subtle px-4 py-2 text-sm"
