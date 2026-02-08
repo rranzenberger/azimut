@@ -66,7 +66,7 @@ export function ProjectCard({ project }: { project: any }) {
             <img
               src={imageUrl}
               alt={project.title}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center', display: 'block', backgroundColor: '#0f172a' }}
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = 'none';
                 (e.target as HTMLImageElement).parentElement!.style.background =

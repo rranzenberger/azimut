@@ -31,6 +31,8 @@ interface ProjectData {
     avif?: string;
     alt?: string;
   } | null;
+  heroImageFit?: string;
+  heroImagePosition?: string;
   gallery?: Array<{
     id: string;
     type: 'IMAGE' | 'VIDEO';

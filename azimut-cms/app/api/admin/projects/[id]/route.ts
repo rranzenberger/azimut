@@ -100,6 +100,8 @@ export async function PUT(
       ctaLabelEn,
       ctaUrl,
       heroImageId,
+      heroImageFit,
+      heroImagePosition,
       marketId,
       // ═══════════════════════════════════════════════════════════════
       // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
@@ -137,7 +139,7 @@ export async function PUT(
         descriptionPt: true, descriptionEn: true, descriptionEs: true, descriptionFr: true,
         city: true, stateProvince: true, country: true, year: true, month: true,
         client: true, partnership: true, coproduction: true, type: true, status: true, featured: true, priorityHome: true,
-        hasDetailPage: true, thumbnailUrl: true, ctaLabelPt: true, ctaLabelEn: true, ctaUrl: true, heroImageId: true, marketId: true,
+        hasDetailPage: true, thumbnailUrl: true, ctaLabelPt: true, ctaLabelEn: true, ctaUrl: true, heroImageId: true, heroImageFit: true, heroImagePosition: true, marketId: true,
         createdAt: true, updatedAt: true,
         seoTitlePt: true, seoTitleEn: true, seoTitleEs: true, seoTitleFr: true,
         seoDescPt: true, seoDescEn: true, seoDescEs: true, seoDescFr: true, seoKeywords: true,
@@ -239,6 +241,8 @@ export async function PUT(
         ctaLabelEn: ctaLabelEn !== undefined ? ctaLabelEn : existing.ctaLabelEn,
         ctaUrl: ctaUrl !== undefined ? ctaUrl : existing.ctaUrl,
         heroImageId: heroImageId !== undefined ? heroImageId : existing.heroImageId,
+        ...(heroImageFit !== undefined && { heroImageFit: heroImageFit || null }),
+        ...(heroImagePosition !== undefined && { heroImagePosition: heroImagePosition || null }),
         marketId: marketId !== undefined ? marketId : existing.marketId,
         // ═══════════════════════════════════════════════════════════════
         // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026

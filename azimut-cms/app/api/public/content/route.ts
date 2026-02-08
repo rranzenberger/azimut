@@ -224,14 +224,9 @@ export async function GET(request: NextRequest) {
         })),
       } : null,
       
-      // Projetos na Home: MESMA lista do backoffice (featured + priorityHome) para ficar igual
-      // Para página 'work': todos os projetos publicados
-      // Para home: recomendações por comportamento OU lista global featured+priority (nunca market.highlightProjects, para não divergir do backoffice)
-      highlightProjects: (
-        page === 'work' 
-          ? featuredProjects
-          : (recommendedProjects || featuredProjects)
-      ).map(p => formatProject(p, lang)),
+      // Projetos na Home: SEMPRE a mesma lista do backoffice (featured + priorityHome 1–4)
+      // Para página 'work': todos os projetos publicados. Para home: sempre featuredProjects (nunca recommendedProjects), assim o site e o backoffice mostram os mesmos destaques.
+      highlightProjects: featuredProjects.map(p => formatProject(p, lang)),
       
       services: services.map(s => ({
         slug: s.slug,
@@ -325,6 +320,8 @@ function formatProject(project: any, lang: string) {
            : project.heroImage.altEn,
       format: project.heroImage.format, // 'YOUTUBE', 'VIMEO', etc
     } : null,
+    heroImageFit: project.heroImageFit || 'contain',
+    heroImagePosition: project.heroImagePosition || 'center',
     // 🆕 Thumbnail alternativo (quando não há heroImage)
     thumbnailUrl: project.thumbnailUrl || null,
     // 🆕 Se projeto tem subpágina própria

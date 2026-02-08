@@ -278,21 +278,14 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     }
   }, [])
   
-  // Projetos: Personalizados por IA OU do backoffice OU padrão (fallback)
-  // MIGRAÇÃO GRADUAL: Prioridade Backoffice → Personalização IA → Estático
-  // SEMPRE tem fallback - nunca quebra!
+  // Projetos: SEMPRE os mesmos do backoffice (destaques = featured + priorityHome 1–4)
+  // Prioridade: backoffice (CMS) → fallback estático. Não usar personalizedProjects para os slots principais, para não divergir do backoffice.
   const projects = useMemo(() => {
-    // 1º: Tentar projetos personalizados por IA (se disponível)
-    if (personalizedProjects && Array.isArray(personalizedProjects) && personalizedProjects.length > 0) {
-      return personalizedProjects;
-    }
-    // 2º: Tentar projetos do backoffice (se disponível)
     if (cmsContent?.highlightProjects && Array.isArray(cmsContent.highlightProjects) && cmsContent.highlightProjects.length > 0) {
       return cmsContent.highlightProjects;
     }
-    // 3º: Fallback estático (SEMPRE funciona)
     return defaultProjects;
-  }, [personalizedProjects, cmsContent?.highlightProjects, defaultProjects]);
+  }, [cmsContent?.highlightProjects, defaultProjects]);
 
   // Perfil de interesse do visitante (localStorage) — mesma lógica da página Work
   const interestProfile = useMemo(() => getInterestProfile(), []);
@@ -1577,7 +1570,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                       <img
                         src={mainFeatured.heroImage?.large || mainFeatured.heroImage?.medium || mainFeatured.heroImage?.original || mainFeatured.thumbnailUrl || ''}
                         alt={mainFeatured.heroImage?.alt || mainFeatured.title}
-                        className="w-full h-full object-contain rounded-t-2xl"
+                        className="w-full h-full object-contain object-center rounded-t-2xl"
                       />
                     ) : (
                       <div 
@@ -1663,13 +1656,24 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     {hasVideo ? (
                       <>
                         <div className="absolute inset-0 overflow-hidden rounded-2xl">
-                          <VideoPlayer videoUrl={project.heroImage.original} thumbnailUrl={project.heroImage.thumbnail || imageUrl} alt={project.title} className="w-full h-full object-cover" />
+                          <VideoPlayer videoUrl={project.heroImage.original} thumbnailUrl={project.heroImage.thumbnail || imageUrl} alt={project.title} className="w-full h-full" objectFit={(project as any).heroImageFit === 'cover' ? 'cover' : 'contain'} />
                         </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30 rounded-2xl"></div>
                       </>
                     ) : imageUrl ? (
                       <>
-                        <img src={imageUrl} alt={project.title} width={800} height={450} className="absolute inset-0 w-full h-full object-contain transition-transform duration-700 group-hover:scale-110 rounded-2xl" loading="eager" />
+                        <img
+                          src={imageUrl}
+                          alt={project.title}
+                          width={800}
+                          height={450}
+                          className="absolute inset-0 w-full h-full transition-transform duration-700 group-hover:scale-110 rounded-2xl"
+                          style={{
+                            objectFit: (project as any).heroImageFit === 'cover' ? 'cover' : 'contain',
+                            objectPosition: (project as any).heroImagePosition || 'center',
+                          }}
+                          loading="eager"
+                        />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30 rounded-2xl"></div>
                       </>
                     ) : (

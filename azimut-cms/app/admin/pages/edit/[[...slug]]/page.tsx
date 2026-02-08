@@ -1201,7 +1201,7 @@ export default function EditPagePage() {
                     {/* Imagem grande + Upload */}
                     <div style={{ position: 'relative', paddingTop: '50%', background: '#111827' }}>
                       {p0.heroImage ? (
-                        <img src={p0.heroImage} alt={p0.title} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', backgroundColor: '#0f172a' }} />
+                        <img src={p0.heroImage} alt={p0.title} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center', backgroundColor: '#0f172a' }} />
                       ) : (
                         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' as const, gap: 8, background: 'linear-gradient(135deg, rgba(201,35,55,0.2), rgba(10,14,26,0.9))' }}>
                           <span style={{ fontSize: 48, opacity: 0.3 }}>🖼️</span>
@@ -1361,7 +1361,7 @@ export default function EditPagePage() {
                         {/* Imagem do card + Upload */}
                         <div style={{ position: 'relative', paddingTop: '65%', background: '#111827' }}>
                           {p.heroImage ? (
-                            <img src={p.heroImage} alt={p.title} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', backgroundColor: '#0f172a' }} />
+                            <img src={p.heroImage} alt={p.title} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center', backgroundColor: '#0f172a' }} />
                           ) : (
                             <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' as const, background: 'linear-gradient(135deg, rgba(201,35,55,0.1), rgba(10,14,26,0.8))' }}>
                               <span style={{ fontSize: 32, opacity: 0.3 }}>🖼️</span>

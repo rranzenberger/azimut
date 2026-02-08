@@ -97,6 +97,8 @@ export async function GET(
              : lang === 'fr' ? (project.heroImage.altFr || project.heroImage.altEn)
              : project.heroImage.altEn,
       } : null,
+      heroImageFit: (project as any).heroImageFit || 'contain',
+      heroImagePosition: (project as any).heroImagePosition || 'center',
       market: project.market ? {
         code: project.market.code,
         label: lang === 'pt' ? project.market.labelPt 

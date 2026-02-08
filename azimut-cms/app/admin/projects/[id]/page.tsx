@@ -64,6 +64,8 @@ export default function EditProjectPage() {
     thumbnailUrl: '',
     heroImageId: '',
     heroImageUrl: '',
+    heroImageFit: 'contain',
+    heroImagePosition: 'center',
     // ═══════════════════════════════════════════════════════════════
     // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
     // ═══════════════════════════════════════════════════════════════
@@ -153,6 +155,8 @@ export default function EditProjectPage() {
           thumbnailUrl: project.thumbnailUrl || '',
           heroImageId: project.heroImageId || '',
           heroImageUrl: project.heroImage?.originalUrl || '',
+          heroImageFit: project.heroImageFit || 'contain',
+          heroImagePosition: project.heroImagePosition || 'center',
           // ═══════════════════════════════════════════════════════════════
           // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
           // ═══════════════════════════════════════════════════════════════
@@ -355,6 +359,40 @@ export default function EditProjectPage() {
                 imageLabel="Imagem de capa"
                 videoLabel="Vídeo de capa (opcional)"
               />
+              {/* Enquadramento e posição da imagem (cards + subpágina) */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: 12 }}>
+                <div style={{ display: 'grid', gap: 6 }}>
+                  <label style={{ fontSize: 13, fontWeight: 600 }}>Enquadramento da imagem</label>
+                  <select
+                    value={formData.heroImageFit}
+                    onChange={(e) => setFormData({ ...formData, heroImageFit: e.target.value })}
+                    style={inputStyle}
+                  >
+                    <option value="contain">Enquadrar sem cortes (recomendado)</option>
+                    <option value="cover">Preencher (pode cortar bordas)</option>
+                  </select>
+                  <small style={{ color: '#6b6780', fontSize: 11 }}>Cards e subpágina do projeto</small>
+                </div>
+                <div style={{ display: 'grid', gap: 6 }}>
+                  <label style={{ fontSize: 13, fontWeight: 600 }}>Posição da imagem</label>
+                  <select
+                    value={formData.heroImagePosition}
+                    onChange={(e) => setFormData({ ...formData, heroImagePosition: e.target.value })}
+                    style={inputStyle}
+                  >
+                    <option value="center">Centro</option>
+                    <option value="top">Topo</option>
+                    <option value="bottom">Base</option>
+                    <option value="left">Esquerda</option>
+                    <option value="right">Direita</option>
+                    <option value="top left">Topo esquerda</option>
+                    <option value="top right">Topo direita</option>
+                    <option value="bottom left">Base esquerda</option>
+                    <option value="bottom right">Base direita</option>
+                  </select>
+                  <small style={{ color: '#6b6780', fontSize: 11 }}>Onde a imagem é ancorada no quadro</small>
+                </div>
+              </div>
             </div>
           </div>
         </CollapsibleSection>

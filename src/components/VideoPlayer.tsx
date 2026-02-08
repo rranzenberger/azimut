@@ -13,6 +13,8 @@ interface VideoPlayerProps {
   thumbnailUrl?: string
   alt?: string
   className?: string
+  /** Enquadramento da thumbnail: 'contain' = sem cortes, centralizada; 'cover' = preenche o card */
+  objectFit?: 'cover' | 'contain'
   autoplay?: boolean
   muted?: boolean
   loop?: boolean
@@ -37,6 +39,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   thumbnailUrl,
   alt,
   className = '',
+  objectFit = 'cover',
   autoplay = false,
   muted = false,
   loop = false,
@@ -136,7 +139,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
             alt={alt || 'Video thumbnail'}
             width={640}
             height={360}
-            className="w-full h-full object-cover"
+            className={`w-full h-full ${objectFit === 'contain' ? 'object-contain object-center' : 'object-cover'}`}
             style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}
             onError={(e) => {
               // Fallback para thumbnail de qualidade menor
@@ -184,7 +187,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
             alt={alt || 'Video thumbnail'}
             width={640}
             height={360}
-            className="w-full h-full object-cover"
+            className={`w-full h-full ${objectFit === 'contain' ? 'object-contain object-center' : 'object-cover'}`}
             style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}
           />
           {/* Play button overlay */}

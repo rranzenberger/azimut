@@ -162,6 +162,9 @@ model Project {
   ctaLabelEn    String?
   ctaUrl        String?
   heroImageId   String?              @unique
+  // Enquadramento da imagem de capa: evita cortes e controla posição (cards + subpágina)
+  heroImageFit     String?           // 'cover' | 'contain' (default: contain para sem cortes)
+  heroImagePosition String?          // 'center' | 'top' | 'bottom' | 'left' | 'right' | '50% 30%'
   marketId      String?
   createdAt     DateTime             @default(now())
   updatedAt     DateTime             @updatedAt

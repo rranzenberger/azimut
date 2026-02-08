@@ -118,6 +118,8 @@ export async function POST(request: NextRequest) {
       ctaLabelEn,
       ctaUrl,
       heroImageId,
+      heroImageFit,
+      heroImagePosition,
       marketId,
       // ═══════════════════════════════════════════════════════════════
       // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
@@ -183,6 +185,8 @@ export async function POST(request: NextRequest) {
         ctaLabelEn: ctaLabelEn || null,
         ctaUrl: ctaUrl || null,
         heroImageId: heroImageId || null,
+        heroImageFit: heroImageFit || 'contain',
+        heroImagePosition: heroImagePosition || 'center',
         marketId: marketId || null,
         // ═══════════════════════════════════════════════════════════════
         // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026

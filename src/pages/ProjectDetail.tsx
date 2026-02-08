@@ -50,6 +50,8 @@ function minimalProjectFromList(item: any): any {
       large: hero.large || hero.medium || hero.original,
       alt: hero.alt || item.title,
     } : null,
+    heroImageFit: item.heroImageFit || 'contain',
+    heroImagePosition: item.heroImagePosition || 'center',
     gallery: [],
     market: null,
     cta: {},
@@ -345,7 +347,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                 <img
                   src={effectiveProject.heroImage.large || effectiveProject.heroImage.original}
                   alt={effectiveProject.heroImage.alt || `${effectiveProject.title}${effectiveProject.summary ? ` - ${effectiveProject.summary.substring(0, 100)}` : ''}${effectiveProject.year ? ` (${effectiveProject.year})` : ''} - Azimut`}
-                  className="absolute inset-0 h-full w-full object-cover"
+                  className="absolute inset-0 h-full w-full"
+                  style={{
+                    objectFit: (effectiveProject as any).heroImageFit === 'cover' ? 'cover' : 'contain',
+                    objectPosition: (effectiveProject as any).heroImagePosition || 'center',
+                  }}
                 />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center">
