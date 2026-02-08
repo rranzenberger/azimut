@@ -431,6 +431,16 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     })
   }, [allCases, selectedCategory, selectedWorkType, selectedTechnologies, selectedIndustry, selectedTag, selectedType, selectedYear, searchQuery])
 
+  const hasActiveFilters =
+    selectedCategory.length > 0 ||
+    selectedWorkType.length > 0 ||
+    selectedTechnologies.length > 0 ||
+    selectedIndustry !== null ||
+    selectedTag !== null ||
+    selectedType !== null ||
+    selectedYear !== null ||
+    searchQuery !== ''
+
   // ═══════════════════════════════════════════════════════════════
   // 🧠 PERSONALIZAÇÃO: reordenar os 3 cards com base no interesse
   // Visitante novo → priorityHome (flag do backoffice)
@@ -531,16 +541,6 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     
     return `${parts.join(' - ')} | Azimut Portfolio`
   }
-  
-  const hasActiveFilters = 
-    selectedCategory.length > 0 ||
-    selectedWorkType.length > 0 ||
-    selectedTechnologies.length > 0 ||
-    selectedIndustry !== null ||
-    selectedTag !== null ||
-    selectedType !== null ||
-    selectedYear !== null ||
-    searchQuery !== ''
   
   // Tracking de página (não bloqueia renderização)
   useEffect(() => {
