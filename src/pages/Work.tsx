@@ -554,6 +554,11 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     }
   }, [])
 
+  // Preload do chunk WorkProjects para evitar 404 ao navegar para /work/projects
+  useEffect(() => {
+    import('./WorkProjects').catch(() => {})
+  }, [])
+
   // Estrela FIXA (sem parallax) - Padronizada com Studio e WhatWeDo
 
   // Dados já vêm traduzidos do backoffice
