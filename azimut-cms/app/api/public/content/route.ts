@@ -81,9 +81,7 @@ export async function GET(request: NextRequest) {
       },
       orderBy: [
         { priorityHome: 'asc' },
-        { yearEnd: 'desc' },
         { year: 'desc' },
-        { monthEnd: 'desc' },
         { month: 'desc' },
         { title: 'asc' },
       ],

@@ -129,9 +129,23 @@ export async function PUT(
       seoKeywords,
     } = body;
 
-    // Verificar se projeto existe
+    // Verificar se projeto existe (select sem yearStart/monthStart/yearEnd/monthEnd para não quebrar se a migration ainda não rodou no banco)
     const existing = await prisma.project.findUnique({
       where: { id: params.id },
+      select: {
+        id: true, title: true, shortTitle: true, slug: true, summaryPt: true, summaryEn: true, summaryEs: true, summaryFr: true,
+        descriptionPt: true, descriptionEn: true, descriptionEs: true, descriptionFr: true,
+        city: true, stateProvince: true, country: true, year: true, month: true,
+        client: true, partnership: true, coproduction: true, type: true, status: true, featured: true, priorityHome: true,
+        hasDetailPage: true, thumbnailUrl: true, ctaLabelPt: true, ctaLabelEn: true, ctaUrl: true, heroImageId: true, marketId: true,
+        createdAt: true, updatedAt: true,
+        seoTitlePt: true, seoTitleEn: true, seoTitleEs: true, seoTitleFr: true,
+        seoDescPt: true, seoDescEn: true, seoDescEs: true, seoDescFr: true, seoKeywords: true,
+        monitorEnabled: true, monitorKeywords: true, creditType: true, creditText: true, azimutContributions: true,
+        projectCategory: true, workType: true, technologies: true, industry: true, azimutRole: true,
+        duration: true, awards: true, metrics: true, videoUrl: true, videoShowreel: true,
+        externalLinks: true, partnerLogos: true, beforeAfterImages: true,
+      },
     });
 
     if (!existing) {
@@ -189,10 +203,11 @@ export async function PUT(
         country: country !== undefined ? country : existing.country,
         year: year !== undefined ? (year ? parseInt(year) : null) : existing.year,
         month: month !== undefined ? (month ? parseInt(month) : null) : existing.month,
-        yearStart: yearStart !== undefined ? (yearStart ? parseInt(yearStart) : null) : existing.yearStart,
-        monthStart: monthStart !== undefined ? (monthStart ? parseInt(monthStart) : null) : existing.monthStart,
-        yearEnd: yearEnd !== undefined ? (yearEnd ? parseInt(yearEnd) : null) : existing.yearEnd,
-        monthEnd: monthEnd !== undefined ? (monthEnd ? parseInt(monthEnd) : null) : existing.monthEnd,
+        // Incluir yearStart/monthStart/yearEnd/monthEnd só quando enviados no body (evita 500 se as colunas ainda não existirem no banco)
+        ...(yearStart !== undefined && { yearStart: yearStart ? parseInt(yearStart) : null }),
+        ...(monthStart !== undefined && { monthStart: monthStart ? parseInt(monthStart) : null }),
+        ...(yearEnd !== undefined && { yearEnd: yearEnd ? parseInt(yearEnd) : null }),
+        ...(monthEnd !== undefined && { monthEnd: monthEnd ? parseInt(monthEnd) : null }),
         client: client !== undefined ? client : existing.client,
         partnership: partnership !== undefined ? partnership : existing.partnership,
         coproduction: coproduction !== undefined ? coproduction : existing.coproduction,

@@ -34,16 +34,12 @@ export async function GET(request: NextRequest) {
     const orderByClause = featuredOnly
       ? [
           { priorityHome: 'asc' as const },
-          { yearEnd: 'desc' as const },
           { year: 'desc' as const },
-          { monthEnd: 'desc' as const },
           { month: 'desc' as const },
           { title: 'asc' as const },
         ]
       : [
-          { yearEnd: 'desc' as const },
           { year: 'desc' as const },
-          { monthEnd: 'desc' as const },
           { month: 'desc' as const },
           { createdAt: 'desc' as const },
         ];
