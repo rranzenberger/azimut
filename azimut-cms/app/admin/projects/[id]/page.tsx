@@ -48,6 +48,7 @@ export default function EditProjectPage() {
     stateProvince: '',
     country: '',
     year: '',
+    month: '',
     client: '',
     type: '',
     status: 'DRAFT',
@@ -130,6 +131,7 @@ export default function EditProjectPage() {
           stateProvince: project.stateProvince || '',
           country: project.country || '',
           year: project.year ? String(project.year) : '',
+          month: project.month ? String(project.month) : '',
           client: project.client || '',
           type: project.type || '',
           status: project.status || 'DRAFT',
@@ -308,20 +310,14 @@ export default function EditProjectPage() {
               <input type="text" value={formData.slug} onChange={(e) => setFormData({ ...formData, slug: e.target.value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') })} required style={inputStyle} placeholder="url-amigavel-do-projeto" />
               <small style={{ color: '#6b6780', fontSize: 11 }}>URL: /work/{formData.slug}</small>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-              <div style={{ display: 'grid', gap: 8 }}>
-                <label style={{ fontSize: 14, fontWeight: 600 }}>Status</label>
-                <select value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value })} style={inputStyle}>
-                  <option value="DRAFT">Rascunho</option>
-                  <option value="PUBLISHED">Publicado</option>
-                  <option value="ARCHIVED">Arquivado</option>
-                </select>
-              </div>
-              <div style={{ display: 'grid', gap: 8 }}>
-                <label style={{ fontSize: 14, fontWeight: 600 }}>Prioridade Home</label>
-                <input type="number" value={formData.priorityHome} onChange={(e) => setFormData({ ...formData, priorityHome: parseInt(e.target.value) || 0 })} style={inputStyle} placeholder="0" min="0" />
-                <small style={{ color: '#6b6780', fontSize: 11 }}>Maior que 0 = aparece na Home</small>
-              </div>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>Status</label>
+              <select value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value })} style={inputStyle}>
+                <option value="DRAFT">Rascunho</option>
+                <option value="PUBLISHED">Publicado</option>
+                <option value="ARCHIVED">Arquivado</option>
+              </select>
+              <small style={{ color: '#6b6780', fontSize: 11 }}>Publicado = visível no site. Rascunho = oculto.</small>
             </div>
           </div>
         </CollapsibleSection>
@@ -530,7 +526,7 @@ export default function EditProjectPage() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 16 }}>
           <div style={{ display: 'grid', gap: 8 }}>
             <label style={{ fontSize: 14, fontWeight: 600 }}>Cidade</label>
             <input
@@ -559,9 +555,34 @@ export default function EditProjectPage() {
               onChange={(e) => setFormData({ ...formData, year: e.target.value })}
               style={inputStyle}
               placeholder="2024"
-              min="2000"
+              min="1990"
               max="2100"
             />
+            {(!formData.year || formData.year === '0') && (
+              <small style={{ color: '#fbbf24', fontSize: 11 }}>⚠️ Sem ano definido</small>
+            )}
+          </div>
+          <div style={{ display: 'grid', gap: 8 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Mês</label>
+            <select
+              value={formData.month}
+              onChange={(e) => setFormData({ ...formData, month: e.target.value })}
+              style={inputStyle}
+            >
+              <option value="">— Opcional</option>
+              <option value="1">Janeiro</option>
+              <option value="2">Fevereiro</option>
+              <option value="3">Março</option>
+              <option value="4">Abril</option>
+              <option value="5">Maio</option>
+              <option value="6">Junho</option>
+              <option value="7">Julho</option>
+              <option value="8">Agosto</option>
+              <option value="9">Setembro</option>
+              <option value="10">Outubro</option>
+              <option value="11">Novembro</option>
+              <option value="12">Dezembro</option>
+            </select>
           </div>
         </div>
 
@@ -588,83 +609,107 @@ export default function EditProjectPage() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Status</label>
-            <select
-              value={formData.status}
-              onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-              style={inputStyle}
-            >
-              <option value="DRAFT">Rascunho</option>
-              <option value="PUBLISHED">Publicado</option>
-              <option value="ARCHIVED">Arquivado</option>
-            </select>
-          </div>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Prioridade Home</label>
-            <input
-              type="number"
-              value={formData.priorityHome}
-              onChange={(e) => setFormData({ ...formData, priorityHome: parseInt(e.target.value) || 0 })}
-              style={inputStyle}
-              placeholder="0"
-              min="0"
-            />
-          </div>
-        </div>
-
         {/* ═══════════════════════════════════════════════════════════════ */}
-        {/* 🎛️ CONFIGURAÇÕES DE EXIBIÇÃO */}
+        {/* 🎛️ CONFIGURAÇÕES DE EXIBIÇÃO — Home & Destaque */}
         {/* ═══════════════════════════════════════════════════════════════ */}
         <div
           style={{
             marginTop: 16,
-            padding: '16px 20px',
-            borderRadius: 10,
-            border: '1px solid rgba(59, 130, 246, 0.3)',
-            background: 'rgba(59, 130, 246, 0.08)',
+            padding: '20px 24px',
+            borderRadius: 12,
+            border: `1px solid ${formData.featured ? 'rgba(34,197,94,0.4)' : 'rgba(100,116,139,0.3)'}`,
+            background: formData.featured ? 'rgba(34,197,94,0.06)' : 'rgba(100,116,139,0.06)',
+            transition: 'all 0.3s ease',
           }}
         >
-          <h3 style={{ margin: '0 0 16px 0', fontSize: 15, color: '#93c5fd' }}>
-            🎛️ Configurações de Exibição
+          <h3 style={{ margin: '0 0 4px 0', fontSize: 16, color: formData.featured ? '#86efac' : '#94a3b8' }}>
+            🎛️ Configurações de Exibição — Home & Destaque
           </h3>
+          <p style={{ margin: '0 0 16px 0', fontSize: 12, color: '#64748b' }}>
+            Defina se este projeto aparece na Home e na seção de destaque do site.
+          </p>
           
           <div style={{ display: 'grid', gap: 16 }}>
-            {/* Featured */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <input
-                type="checkbox"
-                id="featured"
-                checked={formData.featured}
-                onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                style={{ width: 18, height: 18 }}
-              />
-              <label htmlFor="featured" style={{ fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>
-                ⭐ Projeto em destaque (Featured)
-              </label>
+            {/* Featured — checkbox grande com explicação */}
+            <div style={{
+              padding: '12px 16px',
+              borderRadius: 8,
+              background: formData.featured ? 'rgba(34,197,94,0.1)' : 'rgba(255,255,255,0.03)',
+              border: `1px solid ${formData.featured ? 'rgba(34,197,94,0.25)' : 'rgba(255,255,255,0.08)'}`,
+              transition: 'all 0.3s ease',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <input
+                  type="checkbox"
+                  id="featured"
+                  checked={formData.featured}
+                  onChange={(e) => {
+                    const isChecked = e.target.checked;
+                    setFormData({ ...formData, featured: isChecked, priorityHome: isChecked ? (formData.priorityHome || 10) : 0 });
+                  }}
+                  style={{ width: 20, height: 20, cursor: 'pointer', accentColor: '#22c55e' }}
+                />
+                <label htmlFor="featured" style={{ fontSize: 15, fontWeight: 700, cursor: 'pointer', color: formData.featured ? '#86efac' : '#94a3b8' }}>
+                  {formData.featured ? '⭐ PROJETO EM DESTAQUE' : '○ Projeto NÃO está em destaque'}
+                </label>
+              </div>
+              <p style={{ margin: '8px 0 0 30px', fontSize: 12, color: '#64748b', lineHeight: 1.5 }}>
+                {formData.featured
+                  ? '✅ Este projeto APARECE na Home e nos destaques do site. Para remover, desmarque esta opção.'
+                  : '❌ Este projeto NÃO aparece na Home. Ele só aparece na página Work / Portfólio completo. Para colocá-lo em destaque, marque esta opção.'}
+              </p>
             </div>
+
+            {/* PriorityHome — só aparece se featured está ativo */}
+            {formData.featured && (
+              <div style={{
+                padding: '12px 16px',
+                borderRadius: 8,
+                background: 'rgba(56,189,248,0.06)',
+                border: '1px solid rgba(56,189,248,0.2)',
+              }}>
+                <label style={{ fontSize: 14, fontWeight: 600, color: '#7dd3fc', display: 'block', marginBottom: 8 }}>
+                  📊 Prioridade na Home (ordem de exibição)
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <input
+                    type="number"
+                    value={formData.priorityHome}
+                    onChange={(e) => setFormData({ ...formData, priorityHome: parseInt(e.target.value) || 0 })}
+                    style={{ ...inputStyle, width: 100, textAlign: 'center', fontSize: 18, fontWeight: 700 }}
+                    placeholder="10"
+                    min="0"
+                    max="100"
+                  />
+                  <div style={{ fontSize: 12, color: '#64748b', lineHeight: 1.5 }}>
+                    <p style={{ margin: 0 }}><strong style={{ color: '#fbbf24' }}>Maior número = mais destaque</strong></p>
+                    <p style={{ margin: '2px 0 0' }}>Ex: 100 = principal, 50 = segundo, 10 = terceiro</p>
+                    <p style={{ margin: '2px 0 0' }}>Se colocar <strong>0</strong>, o projeto sai da Home mesmo com destaque ativo</p>
+                  </div>
+                </div>
+              </div>
+            )}
             
             {/* Has Detail Page */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <input
                 type="checkbox"
                 id="hasDetailPage"
                 checked={formData.hasDetailPage}
                 onChange={(e) => setFormData({ ...formData, hasDetailPage: e.target.checked })}
-                style={{ width: 18, height: 18 }}
+                style={{ width: 18, height: 18, cursor: 'pointer' }}
               />
-              <label htmlFor="hasDetailPage" style={{ fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>
+              <label htmlFor="hasDetailPage" style={{ fontSize: 14, fontWeight: 600, cursor: 'pointer', color: '#cbd5e1' }}>
                 📄 Tem subpágina própria (Ver Detalhes)
               </label>
             </div>
-            <p style={{ margin: '-8px 0 0 26px', fontSize: 12, color: '#8f8ba2' }}>
+            <p style={{ margin: '-8px 0 0 28px', fontSize: 12, color: '#64748b' }}>
               Se ativado, mostra botão "Ver Detalhes" que leva para página completa do projeto.
             </p>
             
             {/* Thumbnail URL alternativa */}
             <div style={{ display: 'grid', gap: 8, marginTop: 8 }}>
-              <label style={{ fontSize: 14, fontWeight: 600 }}>🖼️ URL do Thumbnail (alternativo)</label>
+              <label style={{ fontSize: 14, fontWeight: 600, color: '#cbd5e1' }}>🖼️ URL do Thumbnail (alternativo)</label>
               <input
                 type="url"
                 value={formData.thumbnailUrl}
@@ -672,7 +717,7 @@ export default function EditProjectPage() {
                 style={inputStyle}
                 placeholder="https://exemplo.com/thumbnail.jpg (opcional - usa heroImage se vazio)"
               />
-              <small style={{ color: '#8f8ba2', fontSize: 11 }}>
+              <small style={{ color: '#64748b', fontSize: 11 }}>
                 URL direta para thumbnail. Se vazio, usa a imagem principal (heroImage).
               </small>
             </div>

@@ -143,6 +143,7 @@ model Project {
   stateProvince String?
   country       String?
   year          Int?
+  month         Int?               // Mês do projeto (1-12, opcional)
   client        String?
   type          String?
   featured      Boolean              @default(false)
