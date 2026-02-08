@@ -24,11 +24,27 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const limit = parseInt(searchParams.get('limit') || '100');
     const offset = parseInt(searchParams.get('offset') || '0');
+    const featuredOnly = searchParams.get('featured') === 'true';
+
+    // Se featured=true, buscar EXATAMENTE como a API pública faz:
+    // featured + priorityHome > 0 + PUBLISHED, ordenado por priorityHome desc, year desc, title asc
+    const whereClause = featuredOnly
+      ? { featured: true, priorityHome: { gt: 0 }, status: 'PUBLISHED' as const }
+      : {};
+
+    const orderByClause = featuredOnly
+      ? [
+          { priorityHome: 'desc' as const },
+          { year: 'desc' as const },
+          { title: 'asc' as const },
+        ]
+      : [{ createdAt: 'desc' as const }];
 
     const projects = await prisma.project.findMany({
-      skip: offset,
-      take: limit,
-      orderBy: { createdAt: 'desc' },
+      where: whereClause,
+      skip: featuredOnly ? 0 : offset,
+      take: featuredOnly ? 20 : limit,
+      orderBy: orderByClause,
       include: {
         heroImage: true,
         market: true,
@@ -37,7 +53,9 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const total = await prisma.project.count();
+    const total = featuredOnly
+      ? await prisma.project.count({ where: whereClause })
+      : await prisma.project.count();
 
     return NextResponse.json({
       projects,

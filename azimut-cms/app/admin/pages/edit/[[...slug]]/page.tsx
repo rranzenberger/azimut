@@ -643,28 +643,22 @@ export default function EditPagePage() {
     }
   }, [slug]);
 
-  // Buscar projetos em destaque na Home — MESMA regra da API pública (site)
-  // Filtro: featured + PUBLISHED. Ordenação: priorityHome desc, year desc, title asc (igual ao site)
+  // Buscar projetos em destaque na Home — MESMA query da API pública (site)
+  // Usa ?featured=true que executa a MESMA query Prisma no servidor:
+  // featured=true, priorityHome > 0, PUBLISHED, orderBy priorityHome desc, year desc, title asc
+  // Isso garante que o backoffice mostra EXATAMENTE os mesmos projetos que o site público
   useEffect(() => {
     if (slug !== 'home') return;
     let cancelled = false;
     (async () => {
       try {
-        const res = await fetch('/api/admin/projects?limit=50');
+        // featured=true: API retorna MESMA query que a API pública usa
+        const res = await fetch('/api/admin/projects?featured=true');
         if (!res.ok || cancelled) return;
         const data = await res.json();
-        // Mesma regra da API pública (site): featured + PUBLISHED + priorityHome > 0
+        // Já vem filtrado e ordenado do servidor (mesma query da API pública)
+        // Não precisa filtrar nem ordenar client-side!
         const list = (data.projects || [])
-          .filter((p: any) => p.featured && p.status === 'PUBLISHED' && (p.priorityHome ?? 0) > 0)
-          .sort((a: any, b: any) => {
-            const pa = a.priorityHome ?? 0;
-            const pb = b.priorityHome ?? 0;
-            if (pb !== pa) return pb - pa;
-            const ya = a.year ?? 0;
-            const yb = b.year ?? 0;
-            if (yb !== ya) return yb - ya;
-            return (a.title || '').localeCompare(b.title || '', 'pt');
-          })
           .slice(0, 6)
           .map((p: any) => ({
             id: p.id,
