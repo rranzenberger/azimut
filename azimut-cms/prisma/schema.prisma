@@ -142,9 +142,11 @@ model Project {
   city          String?
   stateProvince String?
   country       String?
-  year          Int?
+  year          Int?               // Ano do projeto
   month         Int?               // Mês do projeto (1-12, opcional)
-  client        String?
+  client        String?            // Cliente, corporação ou para quem foi o projeto
+  partnership   String?            // Parceria(s) – nomes ou descrição
+  coproduction  String?            // Coprodução – nomes ou descrição
   type          String?
   featured      Boolean              @default(false)
   priorityHome  Int                  @default(0)

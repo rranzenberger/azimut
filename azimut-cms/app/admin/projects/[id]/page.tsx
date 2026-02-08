@@ -50,6 +50,8 @@ export default function EditProjectPage() {
     year: '',
     month: '',
     client: '',
+    partnership: '',
+    coproduction: '',
     type: '',
     status: 'DRAFT',
     featured: false,
@@ -133,6 +135,8 @@ export default function EditProjectPage() {
           year: project.year ? String(project.year) : '',
           month: project.month ? String(project.month) : '',
           client: project.client || '',
+          partnership: project.partnership || '',
+          coproduction: project.coproduction || '',
           type: project.type || '',
           status: project.status || 'DRAFT',
           featured: project.featured || false,
@@ -588,13 +592,13 @@ export default function EditProjectPage() {
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Cliente</label>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Cliente / Corporação</label>
             <input
               type="text"
               value={formData.client}
               onChange={(e) => setFormData({ ...formData, client: e.target.value })}
               style={inputStyle}
-              placeholder="Nome do cliente"
+              placeholder="Para quem foi o projeto (cliente, corporação, instituição)"
             />
           </div>
           <div style={{ display: 'grid', gap: 8 }}>
@@ -605,6 +609,28 @@ export default function EditProjectPage() {
               onChange={(e) => setFormData({ ...formData, type: e.target.value })}
               style={inputStyle}
               placeholder="Ex: Museu, Festival, Marca"
+            />
+          </div>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 12 }}>
+          <div style={{ display: 'grid', gap: 8 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Parceria</label>
+            <input
+              type="text"
+              value={formData.partnership}
+              onChange={(e) => setFormData({ ...formData, partnership: e.target.value })}
+              style={inputStyle}
+              placeholder="Nomes ou descrição da parceria (opcional)"
+            />
+          </div>
+          <div style={{ display: 'grid', gap: 8 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Coprodução</label>
+            <input
+              type="text"
+              value={formData.coproduction}
+              onChange={(e) => setFormData({ ...formData, coproduction: e.target.value })}
+              style={inputStyle}
+              placeholder="Nomes ou descrição da coprodução (opcional)"
             />
           </div>
         </div>

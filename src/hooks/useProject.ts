@@ -14,7 +14,10 @@ interface ProjectData {
   stateProvince?: string;
   country?: string;
   year?: number;
+  month?: number;
   client?: string;
+  partnership?: string | null;
+  coproduction?: string | null;
   type?: string;
   tags: string[];
   services: Array<{ slug: string; title: string }>;

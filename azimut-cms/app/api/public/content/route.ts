@@ -301,7 +301,10 @@ function formatProject(project: any, lang: string) {
     stateProvince: project.stateProvince,
     country: project.country,
     year: project.year,
-    client: project.client,
+    month: project.month,
+    client: project.client || null,
+    partnership: project.partnership || null,
+    coproduction: project.coproduction || null,
     type: project.type,
     tags: project.tags?.map((t: any) => 
       lang === 'pt' ? t.labelPt 
