@@ -404,6 +404,50 @@ export default function EditPagePage() {
     }
   }, [editProjectData]);
 
+  // Upload de imagem/vídeo de capa para projetos em destaque
+  const [uploadingImageId, setUploadingImageId] = useState<string | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<string>('');
+
+  const handleHeroImageUpload = useCallback(async (projectId: string, file: File) => {
+    setUploadingImageId(projectId);
+    setUploadProgress('Enviando...');
+    setProjectSaveMsg(null);
+    try {
+      // 1. Upload do arquivo
+      const formData = new FormData();
+      formData.append('file', file);
+      setUploadProgress('Enviando arquivo...');
+      const uploadRes = await fetch('/api/admin/media/upload', { method: 'POST', body: formData });
+      if (!uploadRes.ok) {
+        const err = await uploadRes.json().catch(() => ({}));
+        throw new Error(err.error || 'Falha no upload');
+      }
+      const { media } = await uploadRes.json();
+
+      // 2. Associar ao projeto como heroImage
+      setUploadProgress('Atualizando projeto...');
+      const updateRes = await fetch(`/api/admin/projects/${projectId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ heroImageId: media.id }),
+      });
+      if (!updateRes.ok) throw new Error('Erro ao atualizar imagem do projeto');
+
+      // 3. Atualizar preview local
+      const newUrl = media.mediumUrl || media.largeUrl || media.originalUrl || media.thumbnailUrl;
+      setHomeFeaturedProjects(prev => prev.map(p =>
+        p.id === projectId ? { ...p, heroImage: newUrl } : p
+      ));
+      setProjectSaveMsg({ id: projectId, type: 'success', text: 'Imagem atualizada!' });
+      setTimeout(() => setProjectSaveMsg(null), 3000);
+    } catch (err: any) {
+      setProjectSaveMsg({ id: projectId, type: 'error', text: err.message || 'Erro no upload' });
+    } finally {
+      setUploadingImageId(null);
+      setUploadProgress('');
+    }
+  }, []);
+
   // Accordion: seção aberta (só uma por vez — evita "tripa" gigante)
   const [openSection, setOpenSection] = useState<string | null>('basico');
   const handleSectionToggle = useCallback((id: string) => {
@@ -728,6 +772,11 @@ export default function EditPagePage() {
 
   return (
     <div style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box' }}>
+      {/* Animações CSS para spinners e pulso */}
+      <style>{`
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+      `}</style>
       {/* Breadcrumb Principal com Dropdown - REDUNDÂNCIA VISUAL */}
       <div
         style={{
@@ -1016,31 +1065,48 @@ export default function EditPagePage() {
                   const isEditing = editingProjectId === p0.id;
                   return (
                   <div style={{ margin: '20px 20px 0', borderRadius: 14, overflow: 'hidden', position: 'relative', border: isEditing ? '2px solid rgba(34,197,94,0.5)' : '1px solid rgba(255,255,255,0.08)' }}>
-                    {/* Imagem grande */}
+                    {/* Imagem grande + Upload */}
                     <div style={{ position: 'relative', paddingTop: '50%', background: '#111827' }}>
                       {p0.heroImage ? (
                         <img src={p0.heroImage} alt={p0.title} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
                       ) : (
-                        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, rgba(201,35,55,0.2), rgba(10,14,26,0.9))' }}>
+                        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' as const, gap: 8, background: 'linear-gradient(135deg, rgba(201,35,55,0.2), rgba(10,14,26,0.9))' }}>
                           <span style={{ fontSize: 48, opacity: 0.3 }}>🖼️</span>
-                          <p style={{ position: 'absolute', bottom: 20, color: '#64748b', fontSize: 12 }}>Defina a imagem de capa deste projeto</p>
+                          <p style={{ color: '#64748b', fontSize: 12, margin: 0 }}>Sem imagem de capa</p>
+                        </div>
+                      )}
+                      {/* Overlay de upload em progresso */}
+                      {uploadingImageId === p0.id && (
+                        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.7)', display: 'flex', flexDirection: 'column' as const, alignItems: 'center', justifyContent: 'center', gap: 8, zIndex: 10 }}>
+                          <div style={{ width: 40, height: 40, border: '3px solid rgba(34,197,94,0.3)', borderTopColor: '#22c55e', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+                          <span style={{ color: '#86efac', fontSize: 13, fontWeight: 600 }}>{uploadProgress}</span>
                         </div>
                       )}
                       <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '60%', background: 'linear-gradient(to top, rgba(10,14,26,0.95), transparent)', pointerEvents: 'none' }}></div>
+                      {/* Badge de posição */}
                       <div style={{ position: 'absolute', top: 12, left: 12, display: 'flex', gap: 6 }}>
                         <span style={{ background: 'rgba(201,35,55,0.9)', color: '#fff', padding: '4px 12px', borderRadius: 6, fontSize: 11, fontWeight: 700, backdropFilter: 'blur(8px)' }}>DESTAQUE PRINCIPAL</span>
                         <span style={{ background: 'rgba(0,0,0,0.6)', color: '#86efac', padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 600, backdropFilter: 'blur(8px)' }}>P{p0.priorityHome}</span>
                       </div>
-                      {/* Botões: editar inline OU ir para página do projeto */}
+                      {/* Botões: upload, editar, completo */}
                       <div style={{ position: 'absolute', top: 12, right: 12, display: 'flex', gap: 6 }}>
+                        {/* Botão Upload Imagem */}
+                        <label style={{ background: 'rgba(168,85,247,0.85)', color: '#fff', padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: uploadingImageId === p0.id ? 'wait' : 'pointer', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', gap: 4 }}>
+                          📷 {p0.heroImage ? 'Trocar imagem' : 'Upload imagem'}
+                          <input type="file" accept="image/*,video/mp4,video/webm" style={{ display: 'none' }} onChange={(e) => { const f = e.target.files?.[0]; if (f) handleHeroImageUpload(p0.id, f); e.target.value = ''; }} disabled={uploadingImageId === p0.id} />
+                        </label>
                         {!isEditing && (
                           <button type="button" onClick={() => startEditProject(p0)} style={{ background: 'rgba(34,197,94,0.85)', color: '#fff', padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 600, border: 'none', cursor: 'pointer', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', gap: 4 }}>
-                            ✏️ Editar aqui
+                            ✏️ Editar textos
                           </button>
                         )}
                         <a href={`/admin/projects/${p0.id}`} style={{ background: 'rgba(0,0,0,0.6)', color: '#7dd3fc', padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 600, textDecoration: 'none', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', gap: 4 }}>
-                          Editar completo →
+                          Completo →
                         </a>
+                      </div>
+                      {/* Info de tamanho recomendado */}
+                      <div style={{ position: 'absolute', bottom: 8, right: 12, background: 'rgba(0,0,0,0.6)', padding: '3px 10px', borderRadius: 6, backdropFilter: 'blur(8px)' }}>
+                        <span style={{ fontSize: 10, color: '#94a3b8' }}>Recomendado: 1920×1080px · JPG/PNG · Max 8MB · Vídeo: MP4/WebM max 25MB</span>
                       </div>
                     </div>
                     {/* Info abaixo da imagem — MODO EDIÇÃO ou MODO LEITURA */}
@@ -1139,7 +1205,7 @@ export default function EditPagePage() {
                       const isEditing = editingProjectId === p.id;
                       return (
                       <div key={p.id} style={{ borderRadius: 12, overflow: 'hidden', border: isEditing ? '2px solid rgba(34,197,94,0.5)' : '1px solid rgba(255,255,255,0.06)', background: 'rgba(20,24,39,0.8)' }}>
-                        {/* Imagem do card */}
+                        {/* Imagem do card + Upload */}
                         <div style={{ position: 'relative', paddingTop: '65%', background: '#111827' }}>
                           {p.heroImage ? (
                             <img src={p.heroImage} alt={p.title} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -1149,9 +1215,21 @@ export default function EditPagePage() {
                               <span style={{ fontSize: 10, color: '#475569', marginTop: 4 }}>Sem imagem</span>
                             </div>
                           )}
+                          {/* Overlay upload em progresso */}
+                          {uploadingImageId === p.id && (
+                            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.7)', display: 'flex', flexDirection: 'column' as const, alignItems: 'center', justifyContent: 'center', gap: 6, zIndex: 10 }}>
+                              <div style={{ width: 28, height: 28, border: '3px solid rgba(34,197,94,0.3)', borderTopColor: '#22c55e', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+                              <span style={{ color: '#86efac', fontSize: 10, fontWeight: 600 }}>{uploadProgress}</span>
+                            </div>
+                          )}
                           <div style={{ position: 'absolute', top: 8, right: 8, background: 'rgba(0,0,0,0.75)', color: '#86efac', padding: '3px 8px', borderRadius: 6, fontSize: 10, fontWeight: 700, backdropFilter: 'blur(8px)' }}>
                             #{idx + 2} · P{p.priorityHome}
                           </div>
+                          {/* Botão upload de imagem no card menor */}
+                          <label style={{ position: 'absolute', bottom: 8, left: 8, background: 'rgba(168,85,247,0.85)', color: '#fff', padding: '4px 10px', borderRadius: 6, fontSize: 10, fontWeight: 600, cursor: uploadingImageId === p.id ? 'wait' : 'pointer', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', gap: 3, zIndex: 5 }}>
+                            📷 {p.heroImage ? 'Trocar' : 'Upload'}
+                            <input type="file" accept="image/*,video/mp4,video/webm" style={{ display: 'none' }} onChange={(e) => { const f = e.target.files?.[0]; if (f) handleHeroImageUpload(p.id, f); e.target.value = ''; }} disabled={uploadingImageId === p.id} />
+                          </label>
                           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '40%', background: 'linear-gradient(to top, rgba(20,24,39,0.9), transparent)', pointerEvents: 'none' }}></div>
                         </div>
                         {/* Info do card */}
