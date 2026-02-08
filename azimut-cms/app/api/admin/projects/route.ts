@@ -34,10 +34,19 @@ export async function GET(request: NextRequest) {
     const orderByClause = featuredOnly
       ? [
           { priorityHome: 'asc' as const },
+          { yearEnd: 'desc' as const },
           { year: 'desc' as const },
+          { monthEnd: 'desc' as const },
+          { month: 'desc' as const },
           { title: 'asc' as const },
         ]
-      : [{ createdAt: 'desc' as const }];
+      : [
+          { yearEnd: 'desc' as const },
+          { year: 'desc' as const },
+          { monthEnd: 'desc' as const },
+          { month: 'desc' as const },
+          { createdAt: 'desc' as const },
+        ];
 
     const projects = await prisma.project.findMany({
       where: whereClause,
@@ -97,6 +106,11 @@ export async function POST(request: NextRequest) {
       stateProvince,
       country,
       year,
+      month,
+      yearStart,
+      monthStart,
+      yearEnd,
+      monthEnd,
       client,
       partnership,
       coproduction,
@@ -157,6 +171,11 @@ export async function POST(request: NextRequest) {
         stateProvince: stateProvince || null,
         country: country || null,
         year: year ? parseInt(year) : null,
+        month: month ? parseInt(month) : null,
+        yearStart: yearStart ? parseInt(yearStart) : null,
+        monthStart: monthStart ? parseInt(monthStart) : null,
+        yearEnd: yearEnd ? parseInt(yearEnd) : null,
+        monthEnd: monthEnd ? parseInt(monthEnd) : null,
         client: client || null,
         partnership: partnership || null,
         coproduction: coproduction || null,

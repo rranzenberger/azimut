@@ -418,7 +418,7 @@ export default function EditPagePage() {
   // Substituir projeto por outro (modal): slot 0=principal, 1,2,3=secundários
   const SLOT_PRIORITIES = [1, 2, 3, 4] as const; // ordem: 1º principal, 2º–4º secundários
   const [replaceSlotIndex, setReplaceSlotIndex] = useState<number | null>(null);
-  const [replaceProjectList, setReplaceProjectList] = useState<Array<{ id: string; title: string; slug: string; status: string }>>([]);
+  const [replaceProjectList, setReplaceProjectList] = useState<Array<{ id: string; title: string; slug: string; status: string; year?: number | null; month?: number | null; yearEnd?: number | null; monthEnd?: number | null }>>([]);
   const [replacingProjectId, setReplacingProjectId] = useState<string | null>(null);
   const [replaceError, setReplaceError] = useState<string | null>(null);
 
@@ -431,7 +431,15 @@ export default function EditPagePage() {
       const data = await res.json();
       const currentIds = homeFeaturedProjects.slice(0, 4).map((p: any) => p.id);
       const others = (data.projects || []).filter((p: any) => p.status === 'PUBLISHED' && !currentIds.includes(p.id));
-      setReplaceProjectList(others.map((p: any) => ({ id: p.id, title: p.title || p.slug, slug: p.slug, status: p.status })));
+      // Ordenar pela data de término (yearEnd ou year): mais recente no topo, mais antigo em baixo; depois por título
+      const sorted = [...others].sort((a: any, b: any) => {
+        const ya = a.yearEnd ?? a.year ?? 0, yb = b.yearEnd ?? b.year ?? 0;
+        if (yb !== ya) return yb - ya;
+        const ma = a.monthEnd ?? a.month ?? 0, mb = b.monthEnd ?? b.month ?? 0;
+        if (mb !== ma) return mb - ma;
+        return (a.title || a.slug || '').localeCompare(b.title || b.slug || '', 'pt');
+      });
+      setReplaceProjectList(sorted.map((p: any) => ({ id: p.id, title: p.title || p.slug, slug: p.slug, status: p.status, year: p.year ?? null, month: p.month ?? null, yearEnd: p.yearEnd ?? null, monthEnd: p.monthEnd ?? null })));
     } catch (e: any) {
       setReplaceError(e.message || 'Erro ao carregar lista');
       setReplaceProjectList([]);
@@ -443,22 +451,18 @@ export default function EditPagePage() {
     setReplacingProjectId(newProjectId);
     setReplaceError(null);
     const priorityForSlot = SLOT_PRIORITIES[replaceSlotIndex];
-    const currentInSlot = homeFeaturedProjects[replaceSlotIndex];
     try {
-      if (currentInSlot) {
-        const rOld = await fetch(`/api/admin/projects/${currentInSlot.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ featured: false, priorityHome: 0 }),
-        });
-        if (!rOld.ok) throw new Error('Erro ao remover projeto da vaga');
-      }
+      // Só atribuir o novo projeto ao slot; a API já desocupa quem estava nesse slot (updateMany)
       const rNew = await fetch(`/api/admin/projects/${newProjectId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ featured: true, priorityHome: priorityForSlot }),
       });
-      if (!rNew.ok) throw new Error('Erro ao colocar projeto na vaga');
+      if (!rNew.ok) {
+        const errBody = await rNew.json().catch(() => ({}));
+        const msg = errBody?.error || rNew.statusText || 'Erro ao colocar projeto na vaga';
+        throw new Error(`${msg} (HTTP ${rNew.status})`);
+      }
       setReplaceSlotIndex(null);
       const res = await fetch('/api/admin/projects?featured=true');
       if (res.ok) {
@@ -1500,24 +1504,32 @@ export default function EditPagePage() {
                         <h3 style={{ margin: 0, fontSize: 18, fontWeight: 700, color: '#fff' }}>
                           {replaceSlotIndex === 0 ? 'Substituir destaque principal' : `Substituir projeto #${replaceSlotIndex + 1} (secundário)`}
                         </h3>
-                        <p style={{ margin: '8px 0 0', fontSize: 13, color: '#94a3b8' }}>Escolha um projeto para ocupar esta vaga. O projeto atual sairá dos 4 em evidência.</p>
+                        <p style={{ margin: '8px 0 0', fontSize: 13, color: '#94a3b8' }}>Clique no projeto para trocar. O que está aqui hoje sai automaticamente — uma única ação, sem erro.</p>
                       </div>
                       {replaceError && (
                         <div style={{ margin: '12px 20px 0', padding: '10px 14px', borderRadius: 8, background: 'rgba(239,68,68,0.15)', color: '#fca5a5', fontSize: 13 }}>{replaceError}</div>
                       )}
                       <div style={{ padding: 16, overflowY: 'auto', flex: 1 }}>
                         {replaceProjectList.length === 0 && !replaceError && <p style={{ color: '#64748b', fontSize: 13 }}>Carregando projetos...</p>}
-                        {replaceProjectList.map((proj) => (
-                          <button
-                            key={proj.id}
-                            type="button"
-                            onClick={() => confirmReplaceProject(proj.id)}
-                            disabled={replacingProjectId !== null}
-                            style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 14px', marginBottom: 6, borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.04)', color: '#e2e8f0', fontSize: 14, cursor: replacingProjectId ? 'wait' : 'pointer' }}
-                          >
-                            {replacingProjectId === proj.id ? '⏳ Colocando...' : proj.title}
-                          </button>
-                        ))}
+                        {replaceProjectList.map((proj) => {
+                          const monthNames = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+                          const y = proj.yearEnd ?? proj.year, m = proj.monthEnd ?? proj.month;
+                          const dateLabel = y ? (m ? `${monthNames[m - 1]}/${y}` : String(y)) : '—';
+                          return (
+                            <button
+                              key={proj.id}
+                              type="button"
+                              onClick={() => confirmReplaceProject(proj.id)}
+                              disabled={replacingProjectId !== null}
+                              style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between', gap: 12, textAlign: 'left', padding: '12px 14px', marginBottom: 6, borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.04)', color: '#e2e8f0', fontSize: 14, cursor: replacingProjectId ? 'wait' : 'pointer' }}
+                            >
+                              <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                {replacingProjectId === proj.id ? '⏳ Colocando...' : proj.title}
+                              </span>
+                              <span style={{ flexShrink: 0, fontSize: 12, color: '#94a3b8' }}>{dateLabel}</span>
+                            </button>
+                          );
+                        })}
                       </div>
                       <div style={{ padding: '12px 24px 20px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
                         <button type="button" onClick={() => setReplaceSlotIndex(null)} style={{ padding: '10px 20px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: '#94a3b8', fontSize: 14, cursor: 'pointer' }}>

@@ -26,6 +26,11 @@ export default function NewProjectPage() {
     city: '',
     country: '',
     year: '',
+    month: '',
+    yearStart: '',
+    monthStart: '',
+    yearEnd: '',
+    monthEnd: '',
     client: '',
     type: '',
     status: 'DRAFT',
@@ -379,6 +384,56 @@ export default function NewProjectPage() {
               min="2000"
               max="2100"
             />
+          </div>
+          <div style={{ display: 'grid', gap: 8 }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Mês</label>
+            <select
+              value={formData.month}
+              onChange={(e) => setFormData({ ...formData, month: e.target.value })}
+              style={inputStyle}
+            >
+              <option value="">— Opcional</option>
+              <option value="1">Janeiro</option>
+              <option value="2">Fevereiro</option>
+              <option value="3">Março</option>
+              <option value="4">Abril</option>
+              <option value="5">Maio</option>
+              <option value="6">Junho</option>
+              <option value="7">Julho</option>
+              <option value="8">Agosto</option>
+              <option value="9">Setembro</option>
+              <option value="10">Outubro</option>
+              <option value="11">Novembro</option>
+              <option value="12">Dezembro</option>
+            </select>
+          </div>
+        </div>
+        <div style={{ marginTop: 16, padding: '14px 18px', borderRadius: 10, border: '1px solid rgba(100,116,139,0.25)', background: 'rgba(100,116,139,0.05)' }}>
+          <p style={{ margin: '0 0 10px', fontSize: 13, fontWeight: 600, color: '#94a3b8' }}>Projeto longo (opcional): data de início e de término</p>
+          <p style={{ margin: '0 0 12px', fontSize: 11, color: '#64748b' }}>A ordenação usa a <strong>data de término</strong>. Se não preencher, usa ano/mês acima.</p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 12 }}>
+            <div style={{ display: 'grid', gap: 6 }}>
+              <label style={{ fontSize: 12, fontWeight: 600 }}>Ano início</label>
+              <input type="number" value={formData.yearStart} onChange={(e) => setFormData({ ...formData, yearStart: e.target.value })} style={inputStyle} placeholder="2020" min="1990" max="2100" />
+            </div>
+            <div style={{ display: 'grid', gap: 6 }}>
+              <label style={{ fontSize: 12, fontWeight: 600 }}>Mês início</label>
+              <select value={formData.monthStart} onChange={(e) => setFormData({ ...formData, monthStart: e.target.value })} style={inputStyle}>
+                <option value="">—</option>
+                {[1,2,3,4,5,6,7,8,9,10,11,12].map((m) => <option key={m} value={m}>{['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'][m-1]}</option>)}
+              </select>
+            </div>
+            <div style={{ display: 'grid', gap: 6 }}>
+              <label style={{ fontSize: 12, fontWeight: 600 }}>Ano término</label>
+              <input type="number" value={formData.yearEnd} onChange={(e) => setFormData({ ...formData, yearEnd: e.target.value })} style={inputStyle} placeholder="2024" min="1990" max="2100" />
+            </div>
+            <div style={{ display: 'grid', gap: 6 }}>
+              <label style={{ fontSize: 12, fontWeight: 600 }}>Mês término</label>
+              <select value={formData.monthEnd} onChange={(e) => setFormData({ ...formData, monthEnd: e.target.value })} style={inputStyle}>
+                <option value="">—</option>
+                {[1,2,3,4,5,6,7,8,9,10,11,12].map((m) => <option key={m} value={m}>{['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'][m-1]}</option>)}
+              </select>
+            </div>
           </div>
         </div>
 

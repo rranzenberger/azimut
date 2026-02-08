@@ -89,9 +89,9 @@ export function ProjectsListClient({ projects, error }: ProjectsListClientProps)
     result.sort((a: any, b: any) => {
       switch (sortBy) {
         case 'year-desc':
-          return (b.year || 0) - (a.year || 0);
+          return (b.yearEnd ?? b.year || 0) - (a.yearEnd ?? a.year || 0);
         case 'year-asc':
-          return (a.year || 0) - (b.year || 0);
+          return (a.yearEnd ?? a.year || 0) - (b.yearEnd ?? b.year || 0);
         case 'title':
           return (a.title || '').localeCompare(b.title || '', 'pt');
         case 'priority':

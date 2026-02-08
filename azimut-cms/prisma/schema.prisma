@@ -142,8 +142,13 @@ model Project {
   city          String?
   stateProvince String?
   country       String?
-  year          Int?               // Ano do projeto
+  year          Int?               // Ano do projeto (ou ano único quando não usa início/fim)
   month         Int?               // Mês do projeto (1-12, opcional)
+  // Projeto longo: data de início e de término (classificação pela data de término)
+  yearStart     Int?               // Ano de início
+  monthStart    Int?               // Mês de início (1-12)
+  yearEnd       Int?               // Ano de término (usado para ordenação)
+  monthEnd      Int?               // Mês de término (1-12)
   client        String?            // Cliente, corporação ou para quem foi o projeto
   partnership   String?            // Parceria(s) – nomes ou descrição
   coproduction  String?            // Coprodução – nomes ou descrição
