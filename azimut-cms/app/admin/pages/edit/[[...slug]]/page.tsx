@@ -370,11 +370,13 @@ export default function EditPagePage() {
     setProjectSaveMsg(null);
   }, []);
 
-  // Salvar projeto editado via API PUT (prioridade sempre 0–100 inteiro para evitar erro)
+  // Salvar projeto editado via API PUT (slots 0 = Não, 1–4 = Principal 1–4)
   const saveEditProject = useCallback(async (projectId: string) => {
     setSavingProject(true);
     setProjectSaveMsg(null);
-    const priority = Math.min(100, Math.max(0, parseInt(String(editProjectData.priorityHome), 10) || 0));
+    const slots = [0, 1, 2, 3, 4] as const;
+    const priority = slots.includes(editProjectData.priorityHome as any) ? editProjectData.priorityHome : Math.min(4, Math.max(0, parseInt(String(editProjectData.priorityHome), 10) || 0));
+    const featured = priority > 0;
     try {
       const res = await fetch(`/api/admin/projects/${projectId}`, {
         method: 'PUT',
@@ -383,16 +385,17 @@ export default function EditPagePage() {
           title: editProjectData.title,
           summaryPt: editProjectData.summaryPt,
           priorityHome: priority,
+          featured,
         }),
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         throw new Error(err.error || 'Erro ao salvar');
       }
-      // Atualizar na lista local (mesma ordenação do site: priorityHome desc, year desc, title asc)
+      // Ordenação do site: priorityHome asc (1, 2, 3, 4), year desc, title asc
       const sortFeatured = (a: any, b: any) => {
         const pa = a.priorityHome ?? 0, pb = b.priorityHome ?? 0;
-        if (pb !== pa) return pb - pa;
+        if (pa !== pb) return pa - pb;
         const ya = a.year ?? 0, yb = b.year ?? 0;
         if (yb !== ya) return yb - ya;
         return (a.title || '').localeCompare(b.title || '', 'pt');
@@ -413,7 +416,7 @@ export default function EditPagePage() {
   }, [editProjectData]);
 
   // Substituir projeto por outro (modal): slot 0=principal, 1,2,3=secundários
-  const SLOT_PRIORITIES = [100, 90, 80, 70] as const; // ordem: 1º principal, 2º–4º secundários
+  const SLOT_PRIORITIES = [1, 2, 3, 4] as const; // ordem: 1º principal, 2º–4º secundários
   const [replaceSlotIndex, setReplaceSlotIndex] = useState<number | null>(null);
   const [replaceProjectList, setReplaceProjectList] = useState<Array<{ id: string; title: string; slug: string; status: string }>>([]);
   const [replacingProjectId, setReplacingProjectId] = useState<string | null>(null);
@@ -446,7 +449,7 @@ export default function EditPagePage() {
         const rOld = await fetch(`/api/admin/projects/${currentInSlot.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ featured: true, priorityHome: 5 }),
+          body: JSON.stringify({ featured: false, priorityHome: 0 }),
         });
         if (!rOld.ok) throw new Error('Erro ao remover projeto da vaga');
       }
@@ -1124,16 +1127,16 @@ export default function EditPagePage() {
               </div>
             </div>
 
-            {/* Ordem e prioridades explícitas (100, 90, 80, 70) */}
+            {/* Ordem e prioridades: slots 1, 2, 3, 4 (0 = não exibir) */}
             <div style={{ marginBottom: 16, padding: '14px 18px', borderRadius: 10, background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.25)', display: 'flex', gap: 10, alignItems: 'flex-start' }}>
               <span style={{ fontSize: 18, flexShrink: 0 }}>📌</span>
               <div style={{ fontSize: 13, color: '#94a3b8', lineHeight: 1.6 }}>
                 <strong style={{ color: '#86efac' }}>Ordem na Home (prioridade explícita):</strong>
                 <ul style={{ margin: '8px 0 0', paddingLeft: 20, listStyle: 'disc' }}>
-                  <li><strong style={{ color: '#fbbf24' }}>1º — Principal (prioridade 100)</strong> — card grande no topo</li>
-                  <li><strong style={{ color: '#86efac' }}>2º — Secundário (prioridade 90)</strong> — primeiro card menor</li>
-                  <li><strong style={{ color: '#86efac' }}>3º — Secundário (prioridade 80)</strong> — segundo card menor</li>
-                  <li><strong style={{ color: '#86efac' }}>4º — Secundário (prioridade 70)</strong> — terceiro card menor</li>
+                  <li><strong style={{ color: '#fbbf24' }}>1º — Principal (slot 1)</strong> — card grande no topo</li>
+                  <li><strong style={{ color: '#86efac' }}>2º — Secundário (slot 2)</strong> — primeiro card menor</li>
+                  <li><strong style={{ color: '#86efac' }}>3º — Secundário (slot 3)</strong> — segundo card menor</li>
+                  <li><strong style={{ color: '#86efac' }}>4º — Secundário (slot 4)</strong> — terceiro card menor</li>
                 </ul>
                 <p style={{ margin: '10px 0 0', fontSize: 12, color: '#64748b' }}>
                   Use <strong style={{ color: '#f59e0b' }}>Substituir</strong> para trocar o projeto da vaga por outro existente; <strong style={{ color: '#3b82f6' }}>Novo aqui</strong> para criar um projeto que já entra nessa posição.
@@ -1258,6 +1261,9 @@ export default function EditPagePage() {
                       {isEditing ? (
                         /* ═══ MODO EDIÇÃO INLINE ═══ */
                         <div style={{ display: 'grid', gap: 12 }}>
+                          <p style={{ margin: '0 0 4px', fontSize: 12, color: '#86efac', fontWeight: 600 }}>
+                            Edição rápida: altere título, resumo e prioridade abaixo. Para descrição completa, galeria e imagens, use o link ao final.
+                          </p>
                           <div>
                             <label style={{ display: 'block', fontSize: 11, color: '#86efac', fontWeight: 600, marginBottom: 4, textTransform: 'uppercase' as const, letterSpacing: '0.05em' }}>Título do projeto</label>
                             <input
@@ -1279,16 +1285,18 @@ export default function EditPagePage() {
                             />
                           </div>
                           <div>
-                            <label style={{ display: 'block', fontSize: 11, color: '#86efac', fontWeight: 600, marginBottom: 4, textTransform: 'uppercase' as const, letterSpacing: '0.05em' }}>Prioridade Home</label>
-                            <input
-                              type="number"
-                              min={0}
-                              max={100}
+                            <label style={{ display: 'block', fontSize: 11, color: '#86efac', fontWeight: 600, marginBottom: 4, textTransform: 'uppercase' as const, letterSpacing: '0.05em' }}>Posição na Home</label>
+                            <select
                               value={editProjectData.priorityHome}
-                              onChange={e => setEditProjectData(prev => ({ ...prev, priorityHome: Math.min(100, Math.max(0, parseInt(e.target.value, 10) || 0)) }))}
-                              style={{ width: 100, padding: '8px 12px', borderRadius: 8, border: '1px solid rgba(34,197,94,0.3)', background: 'rgba(0,0,0,0.4)', color: '#86efac', fontSize: 16, fontWeight: 700, textAlign: 'center', outline: 'none' }}
-                            />
-                            <span style={{ marginLeft: 8, fontSize: 11, color: '#64748b' }}>Maior = aparece primeiro (0–100)</span>
+                              onChange={e => setEditProjectData(prev => ({ ...prev, priorityHome: parseInt(e.target.value, 10) || 0 }))}
+                              style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid rgba(34,197,94,0.3)', background: 'rgba(0,0,0,0.4)', color: '#86efac', fontSize: 14, fontWeight: 600, outline: 'none', minWidth: 160 }}
+                            >
+                              <option value={0}>Não exibir na Home</option>
+                              <option value={1}>Principal 1 (card grande)</option>
+                              <option value={2}>Principal 2</option>
+                              <option value={3}>Principal 3</option>
+                              <option value={4}>Principal 4</option>
+                            </select>
                           </div>
                           {/* Botões salvar/cancelar */}
                           <div style={{ display: 'flex', gap: 10, marginTop: 4 }}>
@@ -1304,6 +1312,9 @@ export default function EditPagePage() {
                               {projectSaveMsg.text}
                             </div>
                           )}
+                          <a href={`/admin/projects/${p0.id}`} style={{ display: 'block', marginTop: 8, fontSize: 12, color: '#7dd3fc', textDecoration: 'underline', fontWeight: 600 }}>
+                            → Edição completa (descrição, galeria, imagens, todos os campos)
+                          </a>
                         </div>
                       ) : (
                         /* ═══ MODO LEITURA (preview) ═══ */
@@ -1383,6 +1394,9 @@ export default function EditPagePage() {
                           {isEditing ? (
                             /* ═══ MODO EDIÇÃO INLINE (card menor) ═══ */
                             <div style={{ display: 'grid', gap: 8 }}>
+                              <p style={{ margin: 0, fontSize: 10, color: '#86efac', fontWeight: 600 }}>
+                                Título, resumo e prioridade (0–100). Salve ou abra edição completa abaixo.
+                              </p>
                               <div>
                                 <label style={{ display: 'block', fontSize: 10, color: '#86efac', fontWeight: 600, marginBottom: 3 }}>Título</label>
                                 <input
@@ -1402,15 +1416,18 @@ export default function EditPagePage() {
                                 />
                               </div>
                               <div>
-                                <label style={{ display: 'block', fontSize: 10, color: '#86efac', fontWeight: 600, marginBottom: 3 }}>Prioridade</label>
-                                <input
-                                  type="number"
-                                  min={0}
-                                  max={100}
+                                <label style={{ display: 'block', fontSize: 10, color: '#86efac', fontWeight: 600, marginBottom: 3 }}>Posição na Home</label>
+                                <select
                                   value={editProjectData.priorityHome}
-                                  onChange={e => setEditProjectData(prev => ({ ...prev, priorityHome: Math.min(100, Math.max(0, parseInt(e.target.value, 10) || 0)) }))}
-                                  style={{ width: 70, padding: '5px 8px', borderRadius: 6, border: '1px solid rgba(34,197,94,0.3)', background: 'rgba(0,0,0,0.4)', color: '#86efac', fontSize: 14, fontWeight: 700, textAlign: 'center', outline: 'none' }}
-                                />
+                                  onChange={e => setEditProjectData(prev => ({ ...prev, priorityHome: parseInt(e.target.value, 10) || 0 }))}
+                                  style={{ width: '100%', padding: '5px 8px', borderRadius: 6, border: '1px solid rgba(34,197,94,0.3)', background: 'rgba(0,0,0,0.4)', color: '#86efac', fontSize: 12, fontWeight: 600, outline: 'none' }}
+                                >
+                                  <option value={0}>Não na Home</option>
+                                  <option value={1}>Principal 1</option>
+                                  <option value={2}>Principal 2</option>
+                                  <option value={3}>Principal 3</option>
+                                  <option value={4}>Principal 4</option>
+                                </select>
                               </div>
                               <div style={{ display: 'flex', gap: 6, marginTop: 2 }}>
                                 <button type="button" onClick={() => saveEditProject(p.id)} disabled={savingProject} style={{ flex: 1, padding: '6px 0', borderRadius: 6, background: savingProject ? '#374151' : 'rgba(34,197,94,0.8)', color: '#fff', fontSize: 11, fontWeight: 700, border: 'none', cursor: savingProject ? 'wait' : 'pointer' }}>
@@ -1425,6 +1442,9 @@ export default function EditPagePage() {
                                   {projectSaveMsg.text}
                                 </div>
                               )}
+                              <a href={`/admin/projects/${p.id}`} style={{ fontSize: 10, color: '#7dd3fc', textDecoration: 'underline' }}>
+                                Edição completa →
+                              </a>
                             </div>
                           ) : (
                             /* ═══ MODO LEITURA (card menor) ═══ */

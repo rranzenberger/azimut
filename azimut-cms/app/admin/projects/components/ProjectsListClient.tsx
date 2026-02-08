@@ -44,7 +44,7 @@ export function ProjectsListClient({ projects, error }: ProjectsListClientProps)
     const published = projects.filter((p: any) => p.status === 'PUBLISHED').length;
     const draft = projects.filter((p: any) => p.status === 'DRAFT').length;
     const archived = projects.filter((p: any) => p.status === 'ARCHIVED').length;
-    const featured = projects.filter((p: any) => p.featured && p.priorityHome > 0).length;
+    const featured = projects.filter((p: any) => p.featured && p.priorityHome >= 1 && p.priorityHome <= 4).length;
     const noYear = projects.filter((p: any) => !p.year || p.year === 0).length;
     return { published, draft, archived, featured, noYear, total: projects.length };
   }, [projects]);
@@ -73,9 +73,9 @@ export function ProjectsListClient({ projects, error }: ProjectsListClientProps)
 
     // Destaque
     if (filterFeatured === 'featured') {
-      result = result.filter((p: any) => p.featured && p.priorityHome > 0);
+      result = result.filter((p: any) => p.featured && p.priorityHome >= 1 && p.priorityHome <= 4);
     } else if (filterFeatured === 'normal') {
-      result = result.filter((p: any) => !p.featured || !p.priorityHome || p.priorityHome <= 0);
+      result = result.filter((p: any) => !p.featured || p.priorityHome < 1 || p.priorityHome > 4);
     }
 
     // Ano
@@ -95,7 +95,7 @@ export function ProjectsListClient({ projects, error }: ProjectsListClientProps)
         case 'title':
           return (a.title || '').localeCompare(b.title || '', 'pt');
         case 'priority':
-          return (b.priorityHome || 0) - (a.priorityHome || 0);
+          return (a.priorityHome || 0) - (b.priorityHome || 0);
         case 'recent':
         default:
           return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
@@ -106,8 +106,8 @@ export function ProjectsListClient({ projects, error }: ProjectsListClientProps)
   }, [projects, search, filterStatus, filterFeatured, filterYear, sortBy]);
 
   // Separar home e demais
-  const homeProjects = filtered.filter((p: any) => p.priorityHome > 0 && p.featured).sort((a: any, b: any) => (b.priorityHome || 0) - (a.priorityHome || 0));
-  const otherProjects = filtered.filter((p: any) => !p.featured || !p.priorityHome || p.priorityHome <= 0);
+  const homeProjects = filtered.filter((p: any) => p.featured && p.priorityHome >= 1 && p.priorityHome <= 4).sort((a: any, b: any) => (a.priorityHome || 0) - (b.priorityHome || 0));
+  const otherProjects = filtered.filter((p: any) => !p.featured || p.priorityHome < 1 || p.priorityHome > 4);
 
   return (
     <div style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box' }}>

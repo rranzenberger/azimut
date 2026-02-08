@@ -134,6 +134,27 @@ export async function PUT(
       return NextResponse.json({ error: 'Projeto não encontrado' }, { status: 404 });
     }
 
+    // Slots da Home: 0 = não exibir, 1 = Principal 1, 2 = Principal 2, 3 = Principal 3, 4 = Principal 4.
+    const safePriority =
+      priorityHome !== undefined && priorityHome !== null
+        ? Math.min(4, Math.max(0, Math.round(Number(priorityHome)) || 0))
+        : undefined;
+    const finalPriorityHome = safePriority !== undefined ? safePriority : existing.priorityHome;
+
+    const HOME_SLOTS = [1, 2, 3, 4] as const;
+    const isSlot = (n: number) => HOME_SLOTS.includes(n as any);
+
+    // Garantia: ao marcar este projeto em um slot, qualquer OUTRO projeto nesse slot é desmarcado (e vice-versa implícito: ao desmarcar este, só este sai da Home).
+    if (isSlot(finalPriorityHome)) {
+      await prisma.project.updateMany({
+        where: {
+          id: { not: params.id },
+          priorityHome: finalPriorityHome,
+        },
+        data: { priorityHome: 0, featured: false },
+      });
+    }
+
     // Verificar se slug mudou e se já existe
     if (slug && slug !== existing.slug) {
       const slugExists = await prisma.project.findUnique({
@@ -170,7 +191,7 @@ export async function PUT(
         type: type !== undefined ? type : existing.type,
         status: status !== undefined ? (status as any) : existing.status,
         featured: featured !== undefined ? featured : existing.featured,
-        priorityHome: priorityHome !== undefined ? priorityHome : existing.priorityHome,
+        priorityHome: finalPriorityHome,
         ctaLabelPt: ctaLabelPt !== undefined ? ctaLabelPt : existing.ctaLabelPt,
         ctaLabelEn: ctaLabelEn !== undefined ? ctaLabelEn : existing.ctaLabelEn,
         ctaUrl: ctaUrl !== undefined ? ctaUrl : existing.ctaUrl,

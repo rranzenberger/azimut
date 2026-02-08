@@ -26,6 +26,7 @@ export function ProjectCard({ project }: { project: any }) {
   const imageUrl = getImageUrl();
   const st = statusColors[project.status] || statusColors.DRAFT;
   const isHome = project.priorityHome > 0;
+  const homeSlotLabel = project.priorityHome === 1 ? 'Principal 1' : project.priorityHome === 2 ? 'Principal 2' : project.priorityHome === 3 ? 'Principal 3' : project.priorityHome === 4 ? 'Principal 4' : null;
 
   return (
     <Link
@@ -101,7 +102,7 @@ export function ProjectCard({ project }: { project: any }) {
               letterSpacing: '0.5px',
               textTransform: 'uppercase',
             }}>
-              HOME #{project.priorityHome}
+              🏠 {homeSlotLabel || `#${project.priorityHome}`}
             </div>
           )}
           {/* Badge featured */}
@@ -204,7 +205,7 @@ export function ProjectCard({ project }: { project: any }) {
           gap: 8,
         }}>
           <span style={{ color: '#c92337', fontWeight: 600 }}>No site →</span>
-          Aparece nos cards &quot;Projetos em Destaque&quot; da Home (posição #{project.priorityHome})
+          Aparece nos cards &quot;Projetos em Destaque&quot; da Home ({homeSlotLabel || `posição #${project.priorityHome}`})
         </div>
       )}
     </Link>

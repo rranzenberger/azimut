@@ -236,6 +236,7 @@ export default function EditProjectPage() {
   }
 
   const isOnHome = formData.priorityHome > 0;
+  const homeSlotLabel = formData.priorityHome === 1 ? 'Principal 1' : formData.priorityHome === 2 ? 'Principal 2' : formData.priorityHome === 3 ? 'Principal 3' : formData.priorityHome === 4 ? 'Principal 4' : null;
 
   return (
     <>
@@ -244,14 +245,17 @@ export default function EditProjectPage() {
           <h1 style={{ margin: 0, fontSize: 26, fontWeight: 700 }}>
             {formData.title || 'Editar Projeto'}
           </h1>
-          {isOnHome && (
+          {isOnHome && homeSlotLabel && (
             <span style={{ fontSize: 11, padding: '4px 12px', borderRadius: 999, background: 'rgba(201,35,55,0.15)', color: '#fca5a5', border: '1px solid rgba(201,35,55,0.3)', fontWeight: 700, textTransform: 'uppercase' }}>
-              HOME #{formData.priorityHome}
+              🏠 {homeSlotLabel}
             </span>
           )}
         </div>
         <p style={{ margin: 0, color: '#6b6780', fontSize: 14 }}>
           Slug: /{formData.slug} • {formData.status === 'PUBLISHED' ? '🟢 Publicado' : formData.status === 'DRAFT' ? '🟡 Rascunho' : '⚪ Arquivado'}
+        </p>
+        <p style={{ margin: '12px 0 0', padding: '10px 14px', borderRadius: 8, background: 'rgba(56,189,248,0.08)', border: '1px solid rgba(56,189,248,0.2)', fontSize: 13, color: '#94a3b8' }}>
+          <strong style={{ color: '#7dd3fc' }}>Mesma estrutura do &quot;Novo Projeto&quot;:</strong> aqui você edita todos os campos (título, resumo, descrição, capa, localização, prioridade, galeria, filtros, SEO). Use os botões abaixo para abrir cada seção.
         </p>
       </header>
 
@@ -259,7 +263,7 @@ export default function EditProjectPage() {
       <div style={{ marginBottom: 20, padding: '14px 20px', borderRadius: 12, border: '1px solid rgba(56, 189, 248, 0.25)', background: 'rgba(56, 189, 248, 0.04)', fontSize: 13, color: '#94a3b8' }}>
         <span style={{ fontWeight: 600, color: '#7dd3fc' }}>🗺️ Onde este projeto aparece no site:</span>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginTop: 8 }}>
-          {isOnHome && <span>🏠 <strong>Home</strong> — card em destaque (posição #{formData.priorityHome})</span>}
+          {isOnHome && homeSlotLabel && <span>🏠 <strong>Home</strong> — {homeSlotLabel}</span>}
           <span>📁 <strong>/work</strong> — listagem de projetos</span>
           {formData.hasDetailPage && <span>📄 <strong>/work/{formData.slug}</strong> — página detalhada</span>}
         </div>
@@ -268,14 +272,9 @@ export default function EditProjectPage() {
       {/* ═══ GUIA RÁPIDO ═══ */}
       <div style={{ marginBottom: 20, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
         {[
-          { id: 'basico', label: '📋 Dados básicos' },
-          { id: 'resumo', label: '📝 Resumo e descrição' },
-          { id: 'midia', label: '📸 Imagem de capa' },
+          { id: 'basico', label: '📋 Dados básicos (título, slug, capa)' },
           { id: 'localizacao', label: '📍 Localização' },
-          { id: 'seo', label: '🔍 SEO' },
-          { id: 'filtros', label: '🎯 Filtros avançados' },
           { id: 'galeria', label: '🖼️ Galeria' },
-          { id: 'config', label: '⚙️ Configurações' },
         ].map((btn) => (
           <button key={btn.id} type="button" onClick={() => handleSectionToggle(btn.id)} style={{ padding: '8px 14px', borderRadius: 8, border: '1px solid rgba(56, 189, 248, 0.3)', background: openSection === btn.id ? 'rgba(56, 189, 248, 0.2)' : 'rgba(56, 189, 248, 0.06)', color: '#7dd3fc', fontSize: 12, fontWeight: 500, cursor: 'pointer', transition: 'all 0.15s' }}>
             {btn.label}
@@ -322,6 +321,32 @@ export default function EditProjectPage() {
                 <option value="ARCHIVED">Arquivado</option>
               </select>
               <small style={{ color: '#6b6780', fontSize: 11 }}>Publicado = visível no site. Rascunho = oculto.</small>
+            </div>
+            {/* Imagem ou vídeo de capa (igual ao Novo Projeto) */}
+            <div style={{ display: 'grid', gap: 8, marginTop: 16, paddingTop: 16, borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>Imagem ou vídeo principal (capa)</label>
+              <p style={{ margin: '0 0 8px', fontSize: 12, color: '#8f8ba2' }}>Aparece nos cards da Home e na subpágina. Mesmo campo do formulário &quot;Novo Projeto&quot;.</p>
+              <UnifiedMediaUpload
+                pageSlug={`project-${formData.slug || id}`}
+                sectionSlug="hero"
+                imageId={formData.heroImageId}
+                imageUrl={formData.thumbnailUrl || formData.heroImageUrl}
+                videoId=""
+                videoUrl={formData.videoUrl}
+                onImageChange={(mediaId, url) => {
+                  setFormData({ ...formData, heroImageId: mediaId || '', heroImageUrl: url || '', thumbnailUrl: url || formData.thumbnailUrl });
+                }}
+                onVideoChange={(mediaId, url) => {
+                  setFormData({ ...formData, videoUrl: url || '' });
+                }}
+                allowVideo={true}
+                allowExternalUrl={true}
+                imageSpecs={{ width: 1920, height: 1080, maxSizeMB: 5, description: 'Imagem de capa do projeto' }}
+                videoSpecs={{ maxSizeMB: 50, description: 'Vídeo de capa do projeto' }}
+                existingMedia={allMedia}
+                imageLabel="Imagem de capa"
+                videoLabel="Vídeo de capa (opcional)"
+              />
             </div>
           </div>
         </CollapsibleSection>
@@ -653,86 +678,73 @@ export default function EditProjectPage() {
         </CollapsibleSection>
 
         {/* ═══════════════════════════════════════════════════════════════ */}
-        {/* 🎛️ CONFIGURAÇÕES DE EXIBIÇÃO — Home & Destaque */}
+        {/* 🎛️ Aparecer na Home — Principal 1, 2, 3 ou 4 (só um por projeto; ao marcar, o outro perde o slot) */}
         {/* ═══════════════════════════════════════════════════════════════ */}
         <div
           style={{
             marginTop: 16,
             padding: '20px 24px',
             borderRadius: 12,
-            border: `1px solid ${formData.featured ? 'rgba(34,197,94,0.4)' : 'rgba(100,116,139,0.3)'}`,
-            background: formData.featured ? 'rgba(34,197,94,0.06)' : 'rgba(100,116,139,0.06)',
+            border: `1px solid ${formData.priorityHome > 0 ? 'rgba(34,197,94,0.4)' : 'rgba(100,116,139,0.3)'}`,
+            background: formData.priorityHome > 0 ? 'rgba(34,197,94,0.06)' : 'rgba(100,116,139,0.06)',
             transition: 'all 0.3s ease',
           }}
         >
-          <h3 style={{ margin: '0 0 4px 0', fontSize: 16, color: formData.featured ? '#86efac' : '#94a3b8' }}>
-            🎛️ Configurações de Exibição — Home & Destaque
+          <h3 style={{ margin: '0 0 4px 0', fontSize: 16, color: formData.priorityHome > 0 ? '#86efac' : '#94a3b8' }}>
+            🏠 Aparecer na página principal (Home)
           </h3>
           <p style={{ margin: '0 0 16px 0', fontSize: 12, color: '#64748b' }}>
-            Defina se este projeto aparece na Home e na seção de destaque do site.
+            Marque <strong>um</strong> dos slots para este projeto aparecer na Home. Se marcar um slot que já tem outro projeto, aquele projeto sai da Home. Se não marcar nenhum, este projeto não aparece na Home.
+          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+            {[
+              { value: 0, label: 'Não exibir na Home', desc: '' },
+              { value: 1, label: 'Principal 1', desc: 'Card grande no topo' },
+              { value: 2, label: 'Principal 2', desc: '' },
+              { value: 3, label: 'Principal 3', desc: '' },
+              { value: 4, label: 'Principal 4', desc: '' },
+            ].map(({ value, label, desc }) => {
+              const isChecked = formData.priorityHome === value;
+              return (
+                <label
+                  key={value}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    padding: '10px 14px',
+                    borderRadius: 8,
+                    background: isChecked ? 'rgba(34,197,94,0.15)' : 'rgba(255,255,255,0.04)',
+                    border: `1px solid ${isChecked ? 'rgba(34,197,94,0.4)' : 'rgba(255,255,255,0.08)'}`,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={isChecked}
+                    onChange={() => {
+                      setFormData({
+                        ...formData,
+                        featured: value > 0,
+                        priorityHome: value,
+                      });
+                    }}
+                    style={{ width: 18, height: 18, cursor: 'pointer', accentColor: '#22c55e' }}
+                  />
+                  <span style={{ fontWeight: 600, color: isChecked ? '#86efac' : '#94a3b8', fontSize: 14 }}>
+                    {label}
+                  </span>
+                  {desc ? <span style={{ fontSize: 11, color: '#64748b' }}>{desc}</span> : null}
+                </label>
+              );
+            })}
+          </div>
+          <p style={{ margin: '12px 0 0', fontSize: 11, color: '#64748b' }}>
+            Ao salvar, se você marcou Principal 2 e outro projeto já estava em Principal 2, aquele projeto será desmarcado automaticamente.
           </p>
           
-          <div style={{ display: 'grid', gap: 16 }}>
-            {/* Featured — checkbox grande com explicação */}
-            <div style={{
-              padding: '12px 16px',
-              borderRadius: 8,
-              background: formData.featured ? 'rgba(34,197,94,0.1)' : 'rgba(255,255,255,0.03)',
-              border: `1px solid ${formData.featured ? 'rgba(34,197,94,0.25)' : 'rgba(255,255,255,0.08)'}`,
-              transition: 'all 0.3s ease',
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <input
-                  type="checkbox"
-                  id="featured"
-                  checked={formData.featured}
-                  onChange={(e) => {
-                    const isChecked = e.target.checked;
-                    setFormData({ ...formData, featured: isChecked, priorityHome: isChecked ? (formData.priorityHome || 10) : 0 });
-                  }}
-                  style={{ width: 20, height: 20, cursor: 'pointer', accentColor: '#22c55e' }}
-                />
-                <label htmlFor="featured" style={{ fontSize: 15, fontWeight: 700, cursor: 'pointer', color: formData.featured ? '#86efac' : '#94a3b8' }}>
-                  {formData.featured ? '⭐ PROJETO EM DESTAQUE' : '○ Projeto NÃO está em destaque'}
-                </label>
-              </div>
-              <p style={{ margin: '8px 0 0 30px', fontSize: 12, color: '#64748b', lineHeight: 1.5 }}>
-                {formData.featured
-                  ? '✅ Este projeto APARECE na Home e nos destaques do site. Para remover, desmarque esta opção.'
-                  : '❌ Este projeto NÃO aparece na Home. Ele só aparece na página Work / Portfólio completo. Para colocá-lo em destaque, marque esta opção.'}
-              </p>
-            </div>
-
-            {/* PriorityHome — só aparece se featured está ativo */}
-            {formData.featured && (
-              <div style={{
-                padding: '12px 16px',
-                borderRadius: 8,
-                background: 'rgba(56,189,248,0.06)',
-                border: '1px solid rgba(56,189,248,0.2)',
-              }}>
-                <label style={{ fontSize: 14, fontWeight: 600, color: '#7dd3fc', display: 'block', marginBottom: 8 }}>
-                  📊 Prioridade na Home (ordem de exibição)
-                </label>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <input
-                    type="number"
-                    value={formData.priorityHome}
-                    onChange={(e) => setFormData({ ...formData, priorityHome: parseInt(e.target.value) || 0 })}
-                    style={{ ...inputStyle, width: 100, textAlign: 'center', fontSize: 18, fontWeight: 700 }}
-                    placeholder="10"
-                    min="0"
-                    max="100"
-                  />
-                  <div style={{ fontSize: 12, color: '#64748b', lineHeight: 1.5 }}>
-                    <p style={{ margin: 0 }}><strong style={{ color: '#fbbf24' }}>Maior número = mais destaque</strong></p>
-                    <p style={{ margin: '2px 0 0' }}>Ex: 100 = principal, 50 = segundo, 10 = terceiro</p>
-                    <p style={{ margin: '2px 0 0' }}>Se colocar <strong>0</strong>, o projeto sai da Home mesmo com destaque ativo</p>
-                  </div>
-                </div>
-              </div>
-            )}
-            
+          <div style={{ display: 'grid', gap: 16, marginTop: 20 }}>
             {/* Has Detail Page */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <input
@@ -1080,64 +1092,9 @@ export default function EditProjectPage() {
           </div>
         </div>
 
-        {/* ═══════════════════════════════════════════════════════════════ */}
-        {/* 🖼️ MÍDIA PRINCIPAL DO PROJETO */}
-        {/* ═══════════════════════════════════════════════════════════════ */}
-        <div
-          style={{
-            marginTop: 32,
-            padding: '20px 24px',
-            borderRadius: 12,
-            border: `1px solid ${AZIMUT.accentBorder}`,
-            background: AZIMUT.accentBg,
-          }}
-        >
-          <h2 style={{ margin: '0 0 8px 0', fontSize: 18, color: AZIMUT.text }}>
-            🖼️ Imagem de capa (cards da Home e página Projetos)
-          </h2>
-          <p style={{ margin: '0 0 12px 0', fontSize: 13, color: AZIMUT.textSecondary }}>
-            Esta é a <strong>imagem de capa</strong> do projeto. Envie em <strong>Mídias</strong> antes ou faça upload abaixo.
-          </p>
-          <div style={{ marginBottom: 20, padding: '10px 14px', borderRadius: 8, background: AZIMUT.previewBg, border: `1px solid ${AZIMUT.previewBorder}`, fontSize: 12, color: AZIMUT.textSecondary }}>
-            <strong style={{ color: AZIMUT.red }}>No site:</strong> esta imagem aparece no <strong>card da Home</strong> (Projetos em Destaque) e na <strong>listagem /work</strong> (Projetos).
-          </div>
-          <UnifiedMediaUpload
-            pageSlug={`project-${formData.slug || id}`}
-            sectionSlug="hero"
-            imageId={formData.heroImageId}
-            imageUrl={formData.thumbnailUrl || formData.heroImageUrl}
-            videoId=""
-            videoUrl={formData.videoUrl}
-            onImageChange={(mediaId, url) => {
-              setFormData({ 
-                ...formData, 
-                heroImageId: mediaId || '',
-                heroImageUrl: url || '',
-                thumbnailUrl: url || formData.thumbnailUrl
-              });
-            }}
-            onVideoChange={(mediaId, url) => {
-              setFormData({ 
-                ...formData, 
-                videoUrl: url || ''
-              });
-            }}
-            allowVideo={true}
-            allowExternalUrl={true}
-            imageSpecs={{
-              width: 1920,
-              height: 1080,
-              maxSizeMB: 5,
-              description: 'Imagem principal do projeto (hero/thumbnail)'
-            }}
-            videoSpecs={{
-              maxSizeMB: 50,
-              description: 'Vídeo principal do projeto'
-            }}
-            existingMedia={allMedia}
-            imageLabel="Imagem de capa (aparece nos cards da Home e na página Projetos)"
-            videoLabel="Vídeo do Projeto (Opcional)"
-          />
+        {/* Imagem/vídeo de capa está na seção "Dados básicos" (igual ao Novo Projeto) */}
+        <div style={{ marginTop: 24, padding: '12px 16px', borderRadius: 8, background: 'rgba(56,189,248,0.06)', border: '1px solid rgba(56,189,248,0.15)', fontSize: 13, color: '#94a3b8' }}>
+          🖼️ <strong style={{ color: '#7dd3fc' }}>Imagem/vídeo de capa</strong> está na seção <strong>Dados básicos</strong> acima — mesma organização do formulário &quot;Novo Projeto&quot;.
         </div>
 
         {/* Galeria de Mídias (Adicional) – subpágina do projeto */}

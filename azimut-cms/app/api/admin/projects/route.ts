@@ -26,15 +26,14 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(searchParams.get('offset') || '0');
     const featuredOnly = searchParams.get('featured') === 'true';
 
-    // Se featured=true, buscar EXATAMENTE como a API pública faz:
-    // featured + priorityHome > 0 + PUBLISHED, ordenado por priorityHome desc, year desc, title asc
+    // Se featured=true: featured + priorityHome 1–4 + PUBLISHED, ordenado por priorityHome asc (1º, 2º, 3º, 4º)
     const whereClause = featuredOnly
-      ? { featured: true, priorityHome: { gt: 0 }, status: 'PUBLISHED' as const }
+      ? { featured: true, priorityHome: { gte: 1, lte: 4 }, status: 'PUBLISHED' as const }
       : {};
 
     const orderByClause = featuredOnly
       ? [
-          { priorityHome: 'desc' as const },
+          { priorityHome: 'asc' as const },
           { year: 'desc' as const },
           { title: 'asc' as const },
         ]

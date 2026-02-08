@@ -4,7 +4,7 @@ import { FormEvent, useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import UnifiedMediaUpload from '@/components/admin/UnifiedMediaUpload';
 
-const HOME_SLOT_PRIORITIES: Record<number, number> = { 0: 100, 1: 90, 2: 80, 3: 70 };
+const HOME_SLOT_PRIORITIES: Record<number, number> = { 0: 1, 1: 2, 2: 3, 3: 4 };
 
 export default function NewProjectPage() {
   const router = useRouter();
@@ -54,13 +54,13 @@ export default function NewProjectPage() {
 
   const [allMedia, setAllMedia] = useState<{ id: string; type: 'IMAGE' | 'VIDEO'; originalUrl: string; thumbnailUrl?: string }[]>([]);
 
-  // Se veio da Home (botão "Novo aqui"): já como destaque e prioridade da vaga
+  // Se veio da Home (botão "Novo aqui"): já como destaque e slot 1–4
   useEffect(() => {
     const slot = searchParams.get('fromHomeSlot');
     if (slot === null) return;
     const slotNum = parseInt(slot, 10);
     if (Number.isNaN(slotNum) || slotNum < 0 || slotNum > 3) return;
-    const priority = HOME_SLOT_PRIORITIES[slotNum] ?? 70;
+    const priority = HOME_SLOT_PRIORITIES[slotNum] ?? 4;
     setFormData(prev => ({ ...prev, featured: true, priorityHome: priority }));
   }, [searchParams]);
 
@@ -405,54 +405,41 @@ export default function NewProjectPage() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Status</label>
-            <select
-              value={formData.status}
-              onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-              style={inputStyle}
-            >
-              <option value="DRAFT">Rascunho</option>
-              <option value="PUBLISHED">Publicado</option>
-              <option value="ARCHIVED">Arquivado</option>
-            </select>
-          </div>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Prioridade Home (posição nos cards)</label>
-            <input
-              type="number"
-              value={formData.priorityHome}
-              onChange={(e) => setFormData({ ...formData, priorityHome: parseInt(e.target.value) || 0 })}
-              style={inputStyle}
-              min="0"
-              placeholder="70"
-            />
-            <small style={{ color: '#8f8ba2', fontSize: 12 }}>
-              Número <strong>maior</strong> = aparece <strong>antes</strong>. Ex.: 100 = 1º card (principal), 90 = 2º, 80 = 3º, 70 = 4º. Projetos novos em destaque começam em 70 (4º); ajuste na edição para subir de posição.
-            </small>
-          </div>
+        <div style={{ display: 'grid', gap: 8 }}>
+          <label style={{ fontSize: 14, fontWeight: 600 }}>Status</label>
+          <select
+            value={formData.status}
+            onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+            style={inputStyle}
+          >
+            <option value="DRAFT">Rascunho</option>
+            <option value="PUBLISHED">Publicado</option>
+            <option value="ARCHIVED">Arquivado</option>
+          </select>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <input
-            type="checkbox"
-            id="featured"
-            checked={formData.featured}
-            onChange={(e) => {
-              const isChecked = e.target.checked;
-              // Ao marcar "em destaque", usar 70 por padrão (4º card) para não pular para o 1º
-              setFormData({
-                ...formData,
-                featured: isChecked,
-                priorityHome: isChecked ? (formData.priorityHome || 0) || 70 : (formData.priorityHome || 0),
-              });
-            }}
-            style={{ width: 18, height: 18, cursor: 'pointer' }}
-          />
-          <label htmlFor="featured" style={{ fontSize: 14, cursor: 'pointer' }}>
-            Projeto em destaque
-          </label>
+        <div style={{ marginTop: 16, padding: '16px 20px', borderRadius: 12, border: '1px solid rgba(100,116,139,0.3)', background: 'rgba(100,116,139,0.06)' }}>
+          <label style={{ fontSize: 14, fontWeight: 600, display: 'block', marginBottom: 10 }}>🏠 Aparecer na página principal (Home)</label>
+          <p style={{ margin: '0 0 12px 0', fontSize: 12, color: '#8f8ba2' }}>
+            Marque <strong>um</strong> slot para este projeto aparecer na Home. Se marcar um slot já ocupado por outro projeto, aquele projeto sai ao salvar.
+          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+            {[
+              { value: 0, label: 'Não exibir na Home' },
+              { value: 1, label: 'Principal 1 (card grande)' },
+              { value: 2, label: 'Principal 2' },
+              { value: 3, label: 'Principal 3' },
+              { value: 4, label: 'Principal 4' },
+            ].map(({ value, label }) => {
+              const isChecked = formData.priorityHome === value;
+              return (
+                <label key={value} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 12px', borderRadius: 8, background: isChecked ? 'rgba(34,197,94,0.12)' : 'rgba(255,255,255,0.04)', border: `1px solid ${isChecked ? 'rgba(34,197,94,0.35)' : 'rgba(255,255,255,0.08)'}`, cursor: 'pointer', fontSize: 13 }}>
+                  <input type="checkbox" checked={isChecked} onChange={() => setFormData({ ...formData, featured: value > 0, priorityHome: value })} style={{ width: 16, height: 16, accentColor: '#22c55e' }} />
+                  {label}
+                </label>
+              );
+            })}
+          </div>
         </div>
 
         {/* ═══════════════════════════════════════════════════════════════ */}

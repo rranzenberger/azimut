@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
           priorityHome: true,
         },
         orderBy: [
-          { priorityHome: 'desc' },
+          { priorityHome: 'asc' },
           { updatedAt: 'desc' },
         ],
       })
@@ -104,9 +104,9 @@ export async function GET(request: NextRequest) {
           ? project.updatedAt.toISOString().split('T')[0]
           : project.createdAt.toISOString().split('T')[0]
         
-        // Prioridade baseada em priorityHome (0.5 a 0.9)
-        const priority = project.priorityHome 
-          ? Math.max(0.5, Math.min(0.9, 0.5 + (project.priorityHome / 100) * 0.4))
+        // Prioridade baseada em priorityHome: slots 1–4 (0.6 a 0.9), outros 0.7
+        const priority = project.priorityHome >= 1 && project.priorityHome <= 4
+          ? Math.max(0.5, Math.min(0.9, 0.5 + (project.priorityHome / 4) * 0.4))
           : 0.7
 
         xml += `  <url>

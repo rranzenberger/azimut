@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
             heroImage: true,
             tags: true,
           },
-          orderBy: { priorityHome: 'desc' },
+          orderBy: { priorityHome: 'asc' },
           take: 6,
         },
       },
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
               heroImage: true,
               tags: true,
             },
-            orderBy: { priorityHome: 'desc' },
+            orderBy: { priorityHome: 'asc' },
             take: 6,
           },
         },
@@ -68,13 +68,11 @@ export async function GET(request: NextRequest) {
       },
     });
     
-    // 3. Buscar projetos (mesma regra do backoffice Home: featured + priorityHome > 0, ordenado por priorityHome)
-    // Para página 'work': buscar TODOS os projetos publicados
-    // Para home: apenas featured com prioridade > 0 (igual ao preview do backoffice)
+    // 3. Buscar projetos: home = featured + priorityHome 1–4, ordenado por priorityHome asc (1º, 2º, 3º, 4º)
     let featuredProjects = await prisma.project.findMany({
       where: {
         status: 'PUBLISHED',
-        ...(page !== 'work' ? { featured: true, priorityHome: { gt: 0 } } : {}),
+        ...(page !== 'work' ? { featured: true, priorityHome: { gte: 1, lte: 4 } } : {}),
       },
       include: {
         heroImage: true,
@@ -82,7 +80,7 @@ export async function GET(request: NextRequest) {
         services: true,
       },
       orderBy: [
-        { priorityHome: 'desc' },
+        { priorityHome: 'asc' },
         { year: 'desc' },
         { title: 'asc' },
       ],
