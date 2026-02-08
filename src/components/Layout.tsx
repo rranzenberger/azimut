@@ -437,8 +437,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 <div className="h-5 w-px shrink-0" style={{ backgroundColor: 'var(--theme-border)', flexShrink: 0, alignSelf: 'center', marginRight: '10px', opacity: 0.4, borderRadius: '1px' }}></div>
                 
                 {/* Grupo Canadá - EN e FR */}
-                <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '1px' }}>
-                  <img src="/flag-ca.svg" alt="Canada" width={28} height={14} className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
+                <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '3px' }}>
+                  <img src="/flag-ca.svg" alt="Canada" width={28} height={18} className="w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '18px', width: 'auto', maxHeight: '18px', maxWidth: '26px' }} />
                   <button
                     type="button"
                     aria-label="English"
@@ -446,25 +446,25 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       trackLanguageChange(lang, 'en')
                       changeLang('en')
                     }}
-                    className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
+                    className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-semibold uppercase"
                     style={{ 
                       color: lang === 'en' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'), 
                       opacity: 1,
-                      minWidth: '20px',
+                      minWidth: '22px',
                       height: '100%',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      padding: '0',
+                      padding: '0 1px',
                       lineHeight: '1',
                       margin: '0',
-                      fontSize: '0.6rem',
-                      letterSpacing: '0.02em'
+                      fontSize: '0.75rem',
+                      letterSpacing: '0.03em'
                     }}
                   >
                     EN
                   </button>
-                  <span className="shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', lineHeight: '1', fontSize: '0.5rem', transform: 'translateY(-1px)', color: '#c92337' }}>●</span>
+                  <span className="shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', lineHeight: '1', fontSize: '0.45rem', transform: 'translateY(-1px)', color: '#c92337' }}>●</span>
                   <button
                     type="button"
                     aria-label="Français"
@@ -472,30 +472,30 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       trackLanguageChange(lang, 'fr')
                       changeLang('fr')
                     }}
-                    className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
+                    className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-semibold uppercase"
                     style={{
                       color: lang === 'fr' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
                       opacity: 1,
-                      minWidth: '20px',
+                      minWidth: '22px',
                       height: '100%',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      padding: '0',
+                      padding: '0 1px',
                       lineHeight: '1',
                       margin: '0',
-                      fontSize: '0.6rem',
-                      letterSpacing: '0.02em'
+                      fontSize: '0.75rem',
+                      letterSpacing: '0.03em'
                     }}
                   >
                     FR
                   </button>
                 </span>
                 {/* Separador entre grupos */}
-                <span className="opacity-40 shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', marginLeft: '5px', marginRight: '9px', lineHeight: '1', fontSize: '0.55rem' }}>|</span>
+                <span className="opacity-50 shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', marginLeft: '7px', marginRight: '10px', lineHeight: '1', fontSize: '0.7rem' }}>|</span>
                 {/* PT - Brasil */}
-                <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '1px' }}>
-                  <img src="/flag-br.svg" alt="Brasil" className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
+                <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '3px' }}>
+                  <img src="/flag-br.svg" alt="Brasil" className="w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '18px', width: 'auto', maxHeight: '18px', maxWidth: '26px' }} />
                   <button
                     type="button"
                     aria-label="Português"
@@ -503,30 +503,30 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       trackLanguageChange(lang, 'pt')
                       changeLang('pt')
                     }}
-                    className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
+                    className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-semibold uppercase"
                     style={{
                       color: lang === 'pt' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
                       opacity: 1,
-                      minWidth: '20px',
+                      minWidth: '22px',
                       height: '100%',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      padding: '0',
+                      padding: '0 1px',
                       lineHeight: '1',
                       margin: '0',
-                      fontSize: '0.6rem',
-                      letterSpacing: '0.02em'
+                      fontSize: '0.75rem',
+                      letterSpacing: '0.03em'
                     }}
                   >
                     PT
                   </button>
                 </span>
                 {/* Separador */}
-                <span className="shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', lineHeight: '1', fontSize: '0.5rem', transform: 'translateY(-1px)', color: '#c92337', marginLeft: '4px', marginRight: '4px' }}>●</span>
+                <span className="shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', lineHeight: '1', fontSize: '0.45rem', transform: 'translateY(-1px)', color: '#c92337', marginLeft: '5px', marginRight: '5px' }}>●</span>
                 {/* ES - Espanha */}
-                <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '1px' }}>
-                  <img src="/flag-es.svg" alt="España" className="h-3.5 w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
+                <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '3px' }}>
+                  <img src="/flag-es.svg" alt="España" className="w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '18px', width: 'auto', maxHeight: '18px', maxWidth: '26px' }} />
                   <button
                     type="button"
                     aria-label="Español"
@@ -534,20 +534,20 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       trackLanguageChange(lang, 'es')
                       changeLang('es')
                     }}
-                    className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-medium uppercase"
+                    className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-semibold uppercase"
                     style={{
                       color: lang === 'es' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
                       opacity: 1,
-                      minWidth: '20px',
+                      minWidth: '22px',
                       height: '100%',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      padding: '0',
+                      padding: '0 1px',
                       lineHeight: '1',
                       margin: '0',
-                      fontSize: '0.6rem',
-                      letterSpacing: '0.02em'
+                      fontSize: '0.75rem',
+                      letterSpacing: '0.03em'
                     }}
                   >
                     ES
