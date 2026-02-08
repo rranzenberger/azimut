@@ -173,6 +173,29 @@ export async function PUT(
       });
     }
 
+    // Caminho mínimo: quando o body tem só featured + priorityHome (ex.: "Substituir destaque"), atualizar só esses dois campos para evitar 500
+    const bodyKeys = Object.keys(body).filter((k) => body[k] !== undefined);
+    const isMinimalUpdate =
+      bodyKeys.length === 2 && bodyKeys.includes('featured') && bodyKeys.includes('priorityHome');
+
+    if (isMinimalUpdate) {
+      const project = await prisma.project.update({
+        where: { id: params.id },
+        data: { featured: featured ?? existing.featured, priorityHome: finalPriorityHome },
+        include: {
+          heroImage: true,
+          market: true,
+          tags: true,
+          services: true,
+          gallery: {
+            include: { media: true },
+            orderBy: { order: 'asc' },
+          },
+        },
+      });
+      return NextResponse.json({ project });
+    }
+
     // Verificar se slug mudou e se já existe
     if (slug && slug !== existing.slug) {
       const slugExists = await prisma.project.findUnique({
@@ -351,11 +374,17 @@ export async function PUT(
 
     return NextResponse.json({ project });
   } catch (error: any) {
-    console.error('Project update error:', error);
-    if (error.code === 'P2002') {
+    const message = error?.message || error?.meta?.message || String(error);
+    const code = error?.code;
+    console.error('[PUT Project] Error:', message, code, error?.meta);
+    if (code === 'P2002') {
       return NextResponse.json({ error: 'Slug já existe' }, { status: 400 });
     }
-    return NextResponse.json({ error: 'Erro ao atualizar projeto' }, { status: 500 });
+    // Retornar a mensagem real para debug (ex.: coluna inexistente, constraint)
+    return NextResponse.json(
+      { error: message || 'Erro ao atualizar projeto', code: code || null },
+      { status: 500 }
+    );
   }
 }
 
