@@ -546,10 +546,21 @@ export default function EditPagePage() {
         if (!res.ok || cancelled) return;
         const data = await res.json();
         const list = (data.projects || [])
-          .filter((p: any) => (p.status === 'PUBLISHED' || p.status === 'DRAFT'))
+          .filter((p: any) => p.featured && p.priorityHome > 0 && p.status === 'PUBLISHED')
           .sort((a: any, b: any) => (b.priorityHome ?? 0) - (a.priorityHome ?? 0))
           .slice(0, 6)
-          .map((p: any) => ({ id: p.id, title: p.title || p.shortTitle || p.slug || 'Sem título', priorityHome: p.priorityHome ?? 0 }));
+          .map((p: any) => ({
+            id: p.id,
+            title: p.title || p.shortTitle || p.slug || 'Sem título',
+            summary: p.summaryPt || p.summaryEn || '',
+            priorityHome: p.priorityHome ?? 0,
+            slug: p.slug,
+            heroImage: p.heroImage?.medium || p.heroImage?.large || p.thumbnailUrl || null,
+            tags: (p.tags || []).map((t: any) => t.name || t).slice(0, 3),
+            city: p.city,
+            country: p.country,
+            year: p.year,
+          }));
         if (!cancelled) setHomeFeaturedProjects(list);
       } catch {
         if (!cancelled) setHomeFeaturedProjects([]);
@@ -889,6 +900,11 @@ export default function EditPagePage() {
               💡 Pilares
             </button>
           )}
+          {slug === 'home' && (
+            <button type="button" onClick={() => handleSectionToggle('destaques')} style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid rgba(201,35,55,0.5)', background: openSection === 'destaques' ? 'rgba(201,35,55,0.25)' : 'rgba(201,35,55,0.1)', color: '#fca5a5', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
+              🏆 Projetos em Destaque
+            </button>
+          )}
           <button type="button" onClick={() => handleSectionToggle('seo')} style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid rgba(56, 189, 248, 0.4)', background: openSection === 'seo' ? 'rgba(56, 189, 248, 0.25)' : 'rgba(56, 189, 248, 0.1)', color: '#7dd3fc', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>
             🔍 SEO (Google)
           </button>
@@ -897,19 +913,115 @@ export default function EditPagePage() {
               🎪 Curadoria do momento
             </button>
           )}
-          {slug === 'home' && (
-            <a href="/admin/projects" style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid rgba(201,35,55,0.5)', background: 'rgba(201,35,55,0.15)', color: '#fca5a5', fontSize: 13, fontWeight: 600, cursor: 'pointer', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-              🏆 Projetos em Destaque →
-            </a>
-          )}
         </div>
-        {slug === 'home' && (
-          <div style={{ marginTop: 14, padding: 14, borderRadius: 10, background: 'rgba(201,35,55,0.08)', border: '1px solid rgba(201,35,55,0.25)' }}>
-            <p style={{ margin: 0, fontSize: 13, color: '#e8a0a8', lineHeight: 1.6 }}>
-              <strong style={{ color: '#fca5a5' }}>🏆 Projetos em Destaque</strong> — Os cards (Museu Olímpico, TMNT, Curadoria, VR Zen) que aparecem na Home são editados na página{' '}
-              <a href="/admin/projects" style={{ color: '#7dd3fc', textDecoration: 'underline', fontWeight: 600 }}>Projetos</a>.
-              Lá você define a imagem de capa, título, descrição e a <strong>prioridade na Home</strong> (posição 1, 2, 3...).
+
+        {/* ═══ SEÇÃO: Projetos em Destaque (visual) ═══ */}
+        {slug === 'home' && openSection === 'destaques' && (
+          <div style={{ marginTop: 20, padding: 20, borderRadius: 14, background: 'rgba(201,35,55,0.06)', border: '1px solid rgba(201,35,55,0.2)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+              <h3 style={{ margin: 0, fontSize: 18, fontWeight: 700, color: '#fca5a5' }}>
+                🏆 Projetos em Destaque na Home
+              </h3>
+              <a href="/admin/projects" style={{ fontSize: 12, color: '#7dd3fc', textDecoration: 'underline' }}>
+                Gerenciar projetos →
+              </a>
+            </div>
+            <p style={{ margin: '0 0 16px', fontSize: 13, color: '#94a3b8', lineHeight: 1.5 }}>
+              Preview de como os projetos aparecem no site. Para alterar imagem, título ou descrição, clique no projeto. Para mudar a ordem, ajuste o campo "Prioridade Home" de cada projeto.
             </p>
+
+            {homeFeaturedProjects.length === 0 ? (
+              <div style={{ padding: 24, textAlign: 'center', color: '#64748b', fontSize: 14 }}>
+                Nenhum projeto com destaque ativo. Defina <strong>featured = true</strong> e <strong>prioridade &gt; 0</strong> nos projetos.
+              </div>
+            ) : (
+              <>
+                {/* Card Principal (destaque grande) */}
+                {homeFeaturedProjects[0] && (
+                  <div style={{ marginBottom: 16, borderRadius: 12, overflow: 'hidden', border: '1px solid rgba(201,35,55,0.3)', background: 'rgba(0,0,0,0.3)' }}>
+                    <div style={{ position: 'relative', paddingTop: '45%', background: '#111827' }}>
+                      {homeFeaturedProjects[0].heroImage ? (
+                        <img src={homeFeaturedProjects[0].heroImage} alt={homeFeaturedProjects[0].title} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (
+                        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, rgba(201,35,55,0.15), rgba(0,0,0,0.4))' }}>
+                          <span style={{ fontSize: 40, opacity: 0.4 }}>🖼️</span>
+                        </div>
+                      )}
+                      <div style={{ position: 'absolute', top: 8, left: 8, background: 'rgba(201,35,55,0.9)', color: '#fff', padding: '3px 10px', borderRadius: 6, fontSize: 11, fontWeight: 700 }}>
+                        DESTAQUE PRINCIPAL · Prioridade {homeFeaturedProjects[0].priorityHome}
+                      </div>
+                    </div>
+                    <div style={{ padding: 16 }}>
+                      <div style={{ display: 'flex', gap: 6, marginBottom: 8, flexWrap: 'wrap' }}>
+                        {homeFeaturedProjects[0].tags?.map((tag: string, i: number) => (
+                          <span key={i} style={{ padding: '2px 8px', borderRadius: 4, background: 'rgba(201,35,55,0.15)', color: '#fca5a5', fontSize: 11 }}>{tag}</span>
+                        ))}
+                      </div>
+                      <h4 style={{ margin: '0 0 6px', fontSize: 18, fontWeight: 700, color: '#fff' }}>{homeFeaturedProjects[0].title}</h4>
+                      <p style={{ margin: '0 0 10px', fontSize: 13, color: '#94a3b8', lineHeight: 1.5 }}>
+                        {homeFeaturedProjects[0].summary || <em style={{ color: '#64748b' }}>Sem descrição</em>}
+                      </p>
+                      {(homeFeaturedProjects[0].city || homeFeaturedProjects[0].country) && (
+                        <p style={{ margin: 0, fontSize: 12, color: '#64748b' }}>
+                          📍 {[homeFeaturedProjects[0].city, homeFeaturedProjects[0].country].filter(Boolean).join(', ')}
+                        </p>
+                      )}
+                      <a href={`/admin/projects/${homeFeaturedProjects[0].id}`} style={{ display: 'inline-block', marginTop: 10, padding: '6px 14px', borderRadius: 6, background: 'rgba(201,35,55,0.2)', border: '1px solid rgba(201,35,55,0.4)', color: '#fca5a5', fontSize: 12, fontWeight: 600, textDecoration: 'none' }}>
+                        ✏️ Editar projeto
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+                {/* 3 Cards Menores */}
+                {homeFeaturedProjects.length > 1 && (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+                    {homeFeaturedProjects.slice(1, 4).map((p: any, idx: number) => (
+                      <div key={p.id} style={{ borderRadius: 10, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(0,0,0,0.25)' }}>
+                        <div style={{ position: 'relative', paddingTop: '60%', background: '#111827' }}>
+                          {p.heroImage ? (
+                            <img src={p.heroImage} alt={p.title} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+                          ) : (
+                            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, rgba(201,35,55,0.1), rgba(0,0,0,0.3))' }}>
+                              <span style={{ fontSize: 28, opacity: 0.3 }}>🖼️</span>
+                            </div>
+                          )}
+                          <div style={{ position: 'absolute', top: 6, right: 6, background: 'rgba(0,0,0,0.7)', color: '#86efac', padding: '2px 7px', borderRadius: 4, fontSize: 10, fontWeight: 600 }}>
+                            #{idx + 2} · P{p.priorityHome}
+                          </div>
+                        </div>
+                        <div style={{ padding: 10 }}>
+                          <h5 style={{ margin: '0 0 4px', fontSize: 13, fontWeight: 600, color: '#e2e8f0', lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as any }}>{p.title}</h5>
+                          {p.city && <p style={{ margin: '0 0 4px', fontSize: 11, color: '#64748b' }}>📍 {p.city}{p.country ? `, ${p.country}` : ''}</p>}
+                          <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', marginBottom: 6 }}>
+                            {p.tags?.map((tag: string, i: number) => (
+                              <span key={i} style={{ padding: '1px 6px', borderRadius: 3, background: 'rgba(255,255,255,0.06)', color: '#94a3b8', fontSize: 10 }}>{tag}</span>
+                            ))}
+                            {p.year && <span style={{ fontSize: 10, color: '#64748b' }}>{p.year}</span>}
+                          </div>
+                          <a href={`/admin/projects/${p.id}`} style={{ fontSize: 11, color: '#7dd3fc', textDecoration: 'underline' }}>
+                            ✏️ Editar
+                          </a>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Projetos adicionais (5, 6) */}
+                {homeFeaturedProjects.length > 4 && (
+                  <div style={{ marginTop: 12, padding: 10, borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                    <p style={{ margin: '0 0 6px', fontSize: 12, color: '#64748b' }}>Outros projetos em destaque:</p>
+                    {homeFeaturedProjects.slice(4).map((p: any) => (
+                      <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '4px 0' }}>
+                        <span style={{ fontSize: 11, color: '#86efac', fontWeight: 600 }}>P{p.priorityHome}</span>
+                        <a href={`/admin/projects/${p.id}`} style={{ fontSize: 12, color: '#7dd3fc', textDecoration: 'underline' }}>{p.title}</a>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
           </div>
         )}
         <p style={{ margin: '12px 0 0', fontSize: 12, color: '#64748b' }}>
