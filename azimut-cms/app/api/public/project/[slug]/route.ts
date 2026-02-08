@@ -80,6 +80,7 @@ export async function GET(
                (s.titleEs || s.titleEn),
       })) || [],
       heroImage: project.heroImage ? {
+        type: project.heroImage.type,
         original: project.heroImage.originalUrl,
         thumbnail: project.heroImage.thumbnailUrl,
         medium: project.heroImage.mediumUrl,
@@ -130,6 +131,10 @@ export async function GET(
              : lang === 'fr' ? (pm.media.altFr || pm.media.altEn)
              : pm.media.altEn,
         order: pm.order,
+        caption: lang === 'pt' ? (pm.captionPt ?? null)
+             : lang === 'es' ? (pm.captionEs ?? pm.captionEn ?? null)
+             : lang === 'fr' ? (pm.captionFr ?? pm.captionEn ?? null)
+             : (pm.captionEn ?? null),
       })) || [],
     };
 

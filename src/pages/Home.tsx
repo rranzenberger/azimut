@@ -378,7 +378,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             
             // PRIORIDADE 2: Projeto Featured
             const featured = recommended[0] || defaultProjects[0]
-            const featuredImage = featured?.heroImage?.large || featured?.heroImage?.medium || featured?.heroImage?.original || featured?.thumbnailUrl
+            const featuredImage = featured?.heroImage?.type === 'VIDEO'
+              ? (featured?.heroImage?.thumbnail || featured?.thumbnailUrl)
+              : (featured?.heroImage?.large || featured?.heroImage?.medium || featured?.heroImage?.original || featured?.thumbnailUrl)
             
             // FALLBACK 3: Placeholder
             const backgroundImage = heroBackgroundImage || featuredImage || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072'

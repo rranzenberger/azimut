@@ -88,15 +88,15 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Loading state
+  // Loading state (cores compatíveis com tema claro/escuro)
   if (loading) {
     return (
       <main className="relative py-16 md:py-20">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="animate-pulse space-y-8">
-            <div className="h-12 bg-slate-800 rounded w-1/3"></div>
-            <div className="h-64 bg-slate-800 rounded"></div>
-            <div className="h-32 bg-slate-800 rounded"></div>
+            <div className="h-12 rounded w-1/3 bg-slate-200 dark:bg-slate-800" />
+            <div className="aspect-video md:aspect-[21/9] rounded-2xl md:rounded-3xl bg-slate-200 dark:bg-slate-800" />
+            <div className="h-32 rounded-2xl bg-slate-200 dark:bg-slate-800" />
           </div>
         </div>
       </main>
@@ -136,8 +136,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
   const seoDescription = project.seo?.description || project.description || project.summary || seoData.work[lang].description
   const seoKeywords = project.seo?.keywords?.join(', ') || seoData.work[lang].keywords
 
-  // Detectar se tem vídeo no heroImage
+  // Detectar se hero é vídeo (tipo ou URL): vídeo aparece aqui na subpágina, não no card
   const hasVideo = project.heroImage?.original && (
+    project.heroImage.type === 'VIDEO' ||
     project.heroImage.original.includes('youtube.com') || 
     project.heroImage.original.includes('youtu.be') ||
     project.heroImage.original.includes('.mp4') ||
@@ -227,9 +228,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
           />
         </div>
 
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           {/* Breadcrumbs Visuais Premium */}
-          <div className="mb-8">
+          <div className="mb-6 md:mb-8">
             <Breadcrumbs 
               lang={lang}
               items={[
@@ -240,10 +241,27 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
             />
           </div>
 
-          {/* Hero Section */}
-          <div className="mb-12">
-            <div className="relative aspect-video md:aspect-[21/9] rounded-3xl overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 mb-8">
-              {project.heroImage?.large || project.heroImage?.original ? (
+          {/* Hero: imagem principal ou vídeo (vídeo só aqui na subpágina, não no card) */}
+          <div className="mb-10 md:mb-12">
+            <div className="relative aspect-video md:aspect-[21/9] rounded-2xl md:rounded-3xl overflow-hidden bg-slate-900 mb-6 md:mb-8 shadow-2xl ring-1 ring-black/10 dark:ring-white/5">
+              {hasVideo && videoEmbedUrl ? (
+                <iframe
+                  src={videoEmbedUrl}
+                  title={project.heroImage?.alt || project.title}
+                  className="absolute inset-0 h-full w-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              ) : hasVideo && videoContentUrl ? (
+                <video
+                  src={videoContentUrl}
+                  controls
+                  className="absolute inset-0 h-full w-full object-contain bg-black"
+                  poster={project.heroImage?.thumbnail || undefined}
+                >
+                  {lang === 'pt' ? 'Seu navegador não suporta vídeo.' : lang === 'es' ? 'Su navegador no soporta video.' : lang === 'fr' ? 'Votre navigateur ne prend pas en charge la vidéo.' : 'Your browser does not support video.'}
+                </video>
+              ) : project.heroImage?.large || project.heroImage?.original ? (
                 <img
                   src={project.heroImage.large || project.heroImage.original}
                   alt={project.heroImage.alt || `${project.title}${project.summary ? ` - ${project.summary.substring(0, 100)}` : ''}${project.year ? ` (${project.year})` : ''} - Azimut`}
@@ -255,13 +273,15 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                     <svg className="w-20 h-20 text-slate-600 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <p className="text-sm text-slate-800 dark:text-slate-500 uppercase tracking-wider">
+                    <p className="text-sm uppercase tracking-wider" style={{ color: 'var(--theme-text-muted)' }}>
                       {lang === 'pt' ? 'Sem imagem' : lang === 'es' ? 'Sin imagen' : lang === 'fr' ? 'Sans image' : 'No image'}
                     </p>
                   </div>
                 </div>
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+              {!hasVideo && (project.heroImage?.large || project.heroImage?.original) && (
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+              )}
             </div>
 
             {/* Title and Meta */}
@@ -284,17 +304,19 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                 </div>
               )}
 
-              {/* Meta Info */}
-              <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
-                {project.year && (
+              {/* Meta Info - só exibe campos preenchidos (tema claro/escuro) */}
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm" style={{ color: 'var(--theme-text-secondary)' }}>
+                {(project.year != null || project.month != null) && (
                   <span className="flex items-center gap-2">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    {project.year}
+                    {project.month != null && project.year != null
+                      ? `${String(project.month).padStart(2, '0')}/${project.year}`
+                      : project.year}
                   </span>
                 )}
-                {(project.city || project.country) && (
+                {(project.city || project.stateProvince || project.country) && (
                   <span className="flex items-center gap-2">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -308,7 +330,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                         : lang === 'fr'
                         ? 'Vélodrome, Parc Olympique, Barra da Tijuca, Rio de Janeiro'
                         : 'Velodrome, Olympic Park, Barra da Tijuca, Rio de Janeiro'
-                      : [project.city, project.country].filter(Boolean).join(', ')}
+                      : [project.city, project.stateProvince, project.country].filter(Boolean).join(', ')}
                   </span>
                 )}
                 {project.slug === 'museu-olimpico-rio' && (
@@ -376,6 +398,68 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                 />
               </div>
             </div>
+          )}
+
+          {/* Galeria universal: todas as imagens e vídeos em sequência (ordem do backoffice), com legenda opcional */}
+          {project.gallery && project.gallery.length > 0 && (
+            <section className="mb-14 md:mb-16 pt-2 border-t border-slate-200/80 dark:border-white/10" aria-label={lang === 'pt' ? 'Galeria' : lang === 'es' ? 'Galería' : lang === 'fr' ? 'Galerie' : 'Gallery'}>
+              <h2 className="font-handel text-2xl md:text-3xl uppercase tracking-[0.12em] mb-10 md:mb-12" style={{ color: 'var(--theme-text)' }}>
+                {lang === 'pt' ? 'Galeria' : lang === 'es' ? 'Galería' : lang === 'fr' ? 'Galerie' : 'Gallery'}
+              </h2>
+              <div className="space-y-12 md:space-y-16">
+                {project.gallery.map((media: any, index: number) => {
+                  const isVideo = media.type === 'VIDEO'
+                  const videoUrl = isVideo ? (media.original || '') : ''
+                  const isDirectVideo = isVideo && (videoUrl.includes('.mp4') || videoUrl.includes('.webm'))
+                  const youtubeId = isVideo && videoUrl ? (() => {
+                    const m = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)
+                    return m ? m[1] : null
+                  })() : null
+                  const hasCaption = media.caption && String(media.caption).trim()
+                  return (
+                    <figure key={media.id || index} className="space-y-3">
+                      <div className="relative aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden bg-slate-900 ring-1 ring-black/10 dark:ring-white/5 shadow-lg">
+                        {media.type === 'IMAGE' ? (
+                          <img
+                            src={media.large || media.medium || media.thumbnail || media.original}
+                            alt={media.alt || `${project.title} – ${index + 1}`}
+                            className="w-full h-full object-contain"
+                            loading="lazy"
+                          />
+                        ) : isDirectVideo ? (
+                          <video
+                            src={videoUrl}
+                            controls
+                            className="w-full h-full object-contain bg-black"
+                            poster={media.thumbnail || undefined}
+                          />
+                        ) : youtubeId ? (
+                          <iframe
+                            src={`https://www.youtube-nocookie.com/embed/${youtubeId}`}
+                            title={media.alt || project.title}
+                            className="absolute inset-0 w-full h-full"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        ) : (
+                          <a href={media.original} target="_blank" rel="noopener noreferrer" className="absolute inset-0 flex items-center justify-center bg-slate-900">
+                            {media.thumbnail && <img src={media.thumbnail} alt="" className="w-full h-full object-cover opacity-80" />}
+                            <span className="relative w-16 h-16 rounded-full bg-azimut-red/90 flex items-center justify-center">
+                              <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                            </span>
+                          </a>
+                        )}
+                      </div>
+                      {hasCaption && (
+                        <figcaption className="text-sm md:text-base leading-relaxed max-w-4xl mt-2 md:mt-3" style={{ color: 'var(--theme-text-secondary)' }}>
+                          {media.caption}
+                        </figcaption>
+                      )}
+                    </figure>
+                  )
+                })}
+              </div>
+            </section>
           )}
 
           {/* Status da Galeria - Apenas para Museu Olímpico */}
@@ -641,56 +725,105 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                 }
 
                 return (
-                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {filteredGallery.map((media: any, index: number) => {
-                      // Verificar se é TIER 1 para destacar
-                      const isTier1 = [
+                      const isTier1 = project.slug === 'museu-olimpico-rio' && [
                         'jornal-o-globo-capa',
                         'velodromo-exterior',
                         'semi-esfera-verde',
                         'bicicleta-interativa',
                         'tela-interativa-mapa'
                       ].some(file => (media.original || '').toLowerCase().includes(file))
-                      
+                      const isVideo = media.type === 'VIDEO'
+                      const videoUrl = isVideo ? (media.original || '') : ''
+                      const isDirectVideo = isVideo && (videoUrl.includes('.mp4') || videoUrl.includes('.webm'))
+                      const youtubeId = isVideo && videoUrl ? (() => {
+                        const m = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)
+                        return m ? m[1] : null
+                      })() : null
+
                       return (
-                        <div
-                          key={media.id}
-                          className={`group relative aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 cursor-pointer transition-all ${
-                            isTier1 ? 'ring-2 ring-azimut-red/50 shadow-lg shadow-azimut-red/20' : ''
-                          }`}
-                          onClick={() => {
-                            trackInteraction('gallery_image_click', media.id)
-                            window.open(media.large || media.original, '_blank')
-                          }}
-                        >
-                          {media.type === 'IMAGE' ? (
-                            <img
-                              src={media.medium || media.thumbnail || media.original}
-                              alt={media.alt || `${project.title} - Galeria de imagens${media.altPt ? `: ${media.altPt}` : ''} - Azimut`}
-                              className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
-                              loading="lazy"
-                            />
-                          ) : (
-                            <div className="absolute inset-0 flex items-center justify-center bg-slate-900">
-                              <svg className="w-16 h-16 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
-                            </div>
-                          )}
-                          {isTier1 && (
-                            <div className="absolute top-2 right-2 bg-azimut-red text-white px-2 py-1 rounded text-xs font-bold">
-                              ⭐
-                            </div>
-                          )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            {media.alt && (
-                              <div className="absolute bottom-0 left-0 right-0 p-4 text-white text-sm">
-                                {media.alt}
+                        <figure key={media.id} className="space-y-2">
+                          <div
+                            className={`group relative aspect-video rounded-xl overflow-hidden bg-slate-900 transition-all ${
+                              isTier1 ? 'ring-2 ring-azimut-red/50 shadow-lg shadow-azimut-red/20' : ''
+                            } ${!isVideo ? 'cursor-pointer' : ''}`}
+                            onClick={() => {
+                              if (!isVideo) {
+                                trackInteraction('gallery_image_click', media.id)
+                                window.open(media.large || media.original, '_blank')
+                              }
+                            }}
+                          >
+                            {media.type === 'IMAGE' ? (
+                              <img
+                                src={media.medium || media.thumbnail || media.original}
+                                alt={media.alt || `${project.title} - ${index + 1}`}
+                                className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                loading="lazy"
+                              />
+                            ) : isDirectVideo ? (
+                              <video
+                                src={videoUrl}
+                                controls
+                                className="absolute inset-0 h-full w-full object-contain bg-black"
+                                poster={media.thumbnail || undefined}
+                                onClick={(e) => e.stopPropagation()}
+                              />
+                            ) : youtubeId ? (
+                              <div
+                                className="absolute inset-0 flex items-center justify-center bg-black cursor-pointer"
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  window.open(`https://www.youtube.com/watch?v=${youtubeId}`, '_blank')
+                                }}
+                              >
+                                <img
+                                  src={media.thumbnail || `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+                                  alt=""
+                                  className="absolute inset-0 h-full w-full object-cover opacity-80"
+                                />
+                                <div className="relative w-16 h-16 rounded-full bg-azimut-red/90 flex items-center justify-center">
+                                  <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z" />
+                                  </svg>
+                                </div>
+                              </div>
+                            ) : (
+                              <a
+                                href={media.original}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="absolute inset-0 flex items-center justify-center bg-slate-900"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <img src={media.thumbnail || media.original} alt="" className="absolute inset-0 h-full w-full object-cover opacity-70" />
+                                <span className="relative w-14 h-14 rounded-full bg-azimut-red/90 flex items-center justify-center">
+                                  <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z" />
+                                  </svg>
+                                </span>
+                              </a>
+                            )}
+                            {isTier1 && (
+                              <div className="absolute top-2 right-2 bg-azimut-red text-white px-2 py-1 rounded text-xs font-bold">
+                                ⭐
+                              </div>
+                            )}
+                            {!isVideo && media.alt && (
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                                <div className="absolute bottom-0 left-0 right-0 p-4 text-white text-sm">
+                                  {media.alt}
+                                </div>
                               </div>
                             )}
                           </div>
-                        </div>
+                          {media.caption && media.caption.trim() && (
+                            <figcaption className="text-sm leading-relaxed px-1" style={{ color: 'var(--theme-text-secondary)' }}>
+                              {media.caption}
+                            </figcaption>
+                          )}
+                        </figure>
                       )
                     })}
                   </div>

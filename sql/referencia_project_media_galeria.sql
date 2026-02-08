@@ -1,0 +1,33 @@
+-- ═══════════════════════════════════════════════════════════════════════════
+-- Referência: Galeria do Projeto (ProjectMedia)
+-- Relaciona cada projeto a N mídias (imagens/vídeos) com ordem e legenda.
+-- A tabela já existe via Prisma migrations; este arquivo é documentação/referência.
+-- ═══════════════════════════════════════════════════════════════════════════
+-- Estrutura (já criada pelo Prisma):
+--
+-- ProjectMedia
+--   id          UUID PK
+--   projectId   UUID FK → Project(id)
+--   mediaId     UUID FK → Media(id)
+--   order       INT  (0, 1, 2, …) – ordem de exibição na subpágina
+--   captionPt   TEXT – legenda/info em português (opcional)
+--   captionEn   TEXT – legenda em inglês (opcional)
+--   captionEs   TEXT – legenda em espanhol (opcional)
+--   captionFr   TEXT – legenda em francês (opcional)
+--   createdAt   TIMESTAMP
+--   updatedAt   TIMESTAMP
+--   UNIQUE(projectId, mediaId)
+--   INDEX(projectId, order)
+--
+-- Uso:
+-- - No backoffice: adicionar mídias ao projeto, reordenar (PUT mediaIds), editar legendas (PATCH captionPt/En/Es/Fr).
+-- - Na subpágina do projeto: listar gallery por order ASC; mostrar legenda só se preenchida.
+-- ═══════════════════════════════════════════════════════════════════════════
+
+-- Exemplo: listar galeria de um projeto (por slug)
+-- SELECT pm.order, pm."captionPt", m.type, m."originalUrl"
+-- FROM "ProjectMedia" pm
+-- JOIN "Media" m ON m.id = pm."mediaId"
+-- JOIN "Project" p ON p.id = pm."projectId"
+-- WHERE p.slug = 'natal-rio-bonito-2025'
+-- ORDER BY pm.order ASC;

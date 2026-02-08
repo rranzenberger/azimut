@@ -47,6 +47,7 @@ interface WorkProject {
   city?: string
   country?: string
   heroImage?: {
+    type?: 'IMAGE' | 'VIDEO'
     original?: string
     thumbnail?: string
     medium?: string
@@ -487,14 +488,13 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     setSearchQuery('')
   }
   
-  // Helper: Obter URL da imagem (prioriza heroImage, depois thumbnailUrl)
+  // Helper: Obter URL da imagem para cards (vídeo não no card: usar só thumbnail)
   const getProjectImageUrl = (project: WorkProject, size: 'large' | 'medium' | 'thumbnail' = 'large'): string | null => {
     if (project.heroImage) {
+      if (project.heroImage.type === 'VIDEO') return project.heroImage.thumbnail || null
       return project.heroImage[size] || project.heroImage.large || project.heroImage.medium || project.heroImage.original || null
     }
-    if (project.thumbnailUrl) {
-      return project.thumbnailUrl
-    }
+    if (project.thumbnailUrl) return project.thumbnailUrl
     return null
   }
 

@@ -530,110 +530,127 @@ export default function EditProjectPage() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 16 }}>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Cidade</label>
-            <input
-              type="text"
-              value={formData.city}
-              onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-              style={inputStyle}
-              placeholder="Rio de Janeiro"
-            />
+        {/* ═══ LOCALIZAÇÃO E META (subpágina do projeto: só campos preenchidos aparecem) ═══ */}
+        <CollapsibleSection id="localizacao" title="Localização e meta do projeto" icon="📍" isOpen={openSection === 'localizacao'} onToggle={handleSectionToggle}>
+          <p style={{ margin: '0 0 16px 0', fontSize: 12, color: '#8f8ba2' }}>
+            Campos opcionais. Na subpágina do projeto só aparecem os que estiverem preenchidos (vazios não entram).
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>Cidade</label>
+              <input
+                type="text"
+                value={formData.city}
+                onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                style={inputStyle}
+                placeholder="Rio de Janeiro"
+              />
+            </div>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>Estado / Província</label>
+              <input
+                type="text"
+                value={formData.stateProvince}
+                onChange={(e) => setFormData({ ...formData, stateProvince: e.target.value })}
+                style={inputStyle}
+                placeholder="RJ"
+              />
+            </div>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>País</label>
+              <input
+                type="text"
+                value={formData.country}
+                onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                style={inputStyle}
+                placeholder="Brasil"
+              />
+            </div>
           </div>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>País</label>
-            <input
-              type="text"
-              value={formData.country}
-              onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-              style={inputStyle}
-              placeholder="Brasil"
-            />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 16 }}>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>Ano</label>
+              <input
+                type="number"
+                value={formData.year}
+                onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+                style={inputStyle}
+                placeholder="2024"
+                min="1990"
+                max="2100"
+              />
+              {(!formData.year || formData.year === '0') && (
+                <small style={{ color: '#fbbf24', fontSize: 11 }}>⚠️ Sem ano definido</small>
+              )}
+            </div>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>Mês</label>
+              <select
+                value={formData.month}
+                onChange={(e) => setFormData({ ...formData, month: e.target.value })}
+                style={inputStyle}
+              >
+                <option value="">— Opcional</option>
+                <option value="1">Janeiro</option>
+                <option value="2">Fevereiro</option>
+                <option value="3">Março</option>
+                <option value="4">Abril</option>
+                <option value="5">Maio</option>
+                <option value="6">Junho</option>
+                <option value="7">Julho</option>
+                <option value="8">Agosto</option>
+                <option value="9">Setembro</option>
+                <option value="10">Outubro</option>
+                <option value="11">Novembro</option>
+                <option value="12">Dezembro</option>
+              </select>
+            </div>
           </div>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Ano</label>
-            <input
-              type="number"
-              value={formData.year}
-              onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-              style={inputStyle}
-              placeholder="2024"
-              min="1990"
-              max="2100"
-            />
-            {(!formData.year || formData.year === '0') && (
-              <small style={{ color: '#fbbf24', fontSize: 11 }}>⚠️ Sem ano definido</small>
-            )}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 16 }}>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>Cliente / Corporação</label>
+              <input
+                type="text"
+                value={formData.client}
+                onChange={(e) => setFormData({ ...formData, client: e.target.value })}
+                style={inputStyle}
+                placeholder="Para quem foi o projeto (cliente, corporação, instituição)"
+              />
+            </div>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>Tipo</label>
+              <input
+                type="text"
+                value={formData.type}
+                onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                style={inputStyle}
+                placeholder="Ex: Museu, Festival, Marca"
+              />
+            </div>
           </div>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Mês</label>
-            <select
-              value={formData.month}
-              onChange={(e) => setFormData({ ...formData, month: e.target.value })}
-              style={inputStyle}
-            >
-              <option value="">— Opcional</option>
-              <option value="1">Janeiro</option>
-              <option value="2">Fevereiro</option>
-              <option value="3">Março</option>
-              <option value="4">Abril</option>
-              <option value="5">Maio</option>
-              <option value="6">Junho</option>
-              <option value="7">Julho</option>
-              <option value="8">Agosto</option>
-              <option value="9">Setembro</option>
-              <option value="10">Outubro</option>
-              <option value="11">Novembro</option>
-              <option value="12">Dezembro</option>
-            </select>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 12 }}>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>Parceria</label>
+              <input
+                type="text"
+                value={formData.partnership}
+                onChange={(e) => setFormData({ ...formData, partnership: e.target.value })}
+                style={inputStyle}
+                placeholder="Nomes ou descrição da parceria (opcional)"
+              />
+            </div>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <label style={{ fontSize: 14, fontWeight: 600 }}>Coprodução</label>
+              <input
+                type="text"
+                value={formData.coproduction}
+                onChange={(e) => setFormData({ ...formData, coproduction: e.target.value })}
+                style={inputStyle}
+                placeholder="Nomes ou descrição da coprodução (opcional)"
+              />
+            </div>
           </div>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Cliente / Corporação</label>
-            <input
-              type="text"
-              value={formData.client}
-              onChange={(e) => setFormData({ ...formData, client: e.target.value })}
-              style={inputStyle}
-              placeholder="Para quem foi o projeto (cliente, corporação, instituição)"
-            />
-          </div>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Tipo</label>
-            <input
-              type="text"
-              value={formData.type}
-              onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-              style={inputStyle}
-              placeholder="Ex: Museu, Festival, Marca"
-            />
-          </div>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 12 }}>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Parceria</label>
-            <input
-              type="text"
-              value={formData.partnership}
-              onChange={(e) => setFormData({ ...formData, partnership: e.target.value })}
-              style={inputStyle}
-              placeholder="Nomes ou descrição da parceria (opcional)"
-            />
-          </div>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Coprodução</label>
-            <input
-              type="text"
-              value={formData.coproduction}
-              onChange={(e) => setFormData({ ...formData, coproduction: e.target.value })}
-              style={inputStyle}
-              placeholder="Nomes ou descrição da coprodução (opcional)"
-            />
-          </div>
-        </div>
+        </CollapsibleSection>
 
         {/* ═══════════════════════════════════════════════════════════════ */}
         {/* 🎛️ CONFIGURAÇÕES DE EXIBIÇÃO — Home & Destaque */}
@@ -1123,16 +1140,13 @@ export default function EditProjectPage() {
           />
         </div>
 
-        {/* Galeria de Mídias (Adicional) */}
-        <div style={{ marginTop: 24 }}>
-          <h3 style={{ margin: '0 0 8px 0', fontSize: 16, color: '#fff' }}>
-            📸 Galeria de Mídias (Adicional)
-          </h3>
-          <p style={{ margin: '0 0 12px 0', fontSize: 12, color: '#8f8ba2' }}>
-            Adicione mais imagens e vídeos que aparecerão na página de detalhes do projeto.
+        {/* Galeria de Mídias (Adicional) – subpágina do projeto */}
+        <CollapsibleSection id="galeria" title="Galeria de Mídias (subpágina do projeto)" icon="📸" isOpen={openSection === 'galeria'} onToggle={handleSectionToggle}>
+          <p style={{ margin: '0 0 16px 0', fontSize: 12, color: '#8f8ba2' }}>
+            Imagens e vídeos que aparecem na subpágina do projeto (sequência com ordem e legenda em PT/EN/ES/FR). Adicione por upload, URL ou biblioteca; reordene e edite as legendas em cada item.
           </p>
           <GalleryManager projectId={id} initialGallery={gallery} />
-        </div>
+        </CollapsibleSection>
 
         <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
           <button

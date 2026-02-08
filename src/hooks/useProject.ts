@@ -22,6 +22,7 @@ interface ProjectData {
   tags: string[];
   services: Array<{ slug: string; title: string }>;
   heroImage?: {
+    type?: 'IMAGE' | 'VIDEO';
     original: string;
     thumbnail?: string;
     medium?: string;
@@ -43,6 +44,7 @@ interface ProjectData {
     height?: number;
     alt?: string;
     order: number;
+    caption?: string | null;
   }>;
   market?: {
     code: string;

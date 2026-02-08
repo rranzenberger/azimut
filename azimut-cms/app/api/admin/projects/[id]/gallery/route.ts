@@ -197,6 +197,57 @@ export async function PUT(
   }
 }
 
+// PATCH - Atualizar legenda de um item da galeria
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const cookieStore = cookies();
+    const token = cookieStore.get('azimut_admin_token')?.value;
+    const session = token ? verifyAuthToken(token) : null;
+
+    if (!session) {
+      return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
+    }
+
+    const body = await request.json();
+    const { projectMediaId, captionPt, captionEn, captionEs, captionFr } = body;
+
+    if (!projectMediaId) {
+      return NextResponse.json({ error: 'projectMediaId é obrigatório' }, { status: 400 });
+    }
+
+    const updated = await prisma.projectMedia.updateMany({
+      where: {
+        id: projectMediaId,
+        projectId: params.id,
+      },
+      data: {
+        ...(captionPt !== undefined && { captionPt: captionPt || null }),
+        ...(captionEn !== undefined && { captionEn: captionEn || null }),
+        ...(captionEs !== undefined && { captionEs: captionEs || null }),
+        ...(captionFr !== undefined && { captionFr: captionFr || null }),
+      },
+    });
+
+    if (updated.count === 0) {
+      return NextResponse.json({ error: 'Item da galeria não encontrado' }, { status: 404 });
+    }
+
+    const gallery = await prisma.projectMedia.findMany({
+      where: { projectId: params.id },
+      include: { media: true },
+      orderBy: { order: 'asc' },
+    });
+
+    return NextResponse.json({ gallery });
+  } catch (error) {
+    console.error('Gallery PATCH error:', error);
+    return NextResponse.json({ error: 'Erro ao atualizar legenda' }, { status: 500 });
+  }
+}
+
 
 
 

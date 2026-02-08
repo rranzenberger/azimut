@@ -21,6 +21,8 @@ interface GalleryItem {
   order: number;
   captionPt?: string | null;
   captionEn?: string | null;
+  captionEs?: string | null;
+  captionFr?: string | null;
   media: Media;
 }
 
@@ -42,8 +44,12 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
   const [urlInput, setUrlInput] = useState('');
   const [urlType, setUrlType] = useState<'IMAGE' | 'VIDEO'>('IMAGE');
   const [editingCaption, setEditingCaption] = useState<string | null>(null);
-  const [captionText, setCaptionText] = useState('');
+  const [captions, setCaptions] = useState<{ pt: string; en: string; es: string; fr: string }>({
+    pt: '', en: '', es: '', fr: '',
+  });
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const LANG_LABELS = { pt: 'Português', en: 'English', es: 'Español', fr: 'Français' } as const;
 
   // Carregar mídias disponíveis
   useEffect(() => {
@@ -230,29 +236,33 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
     }
   }
 
-  // Salvar legenda
+  // Salvar legendas (PT/EN/ES/FR) no ProjectMedia – aparecem na subpágina do projeto
   async function handleSaveCaption(itemId: string) {
+    const item = gallery.find(g => g.id === itemId);
+    if (!item) return;
     setLoading(true);
+    setError(null);
     try {
-      // Por ora, salvar como altPt da mídia (ideal seria ter captionPt no ProjectMedia)
-      const item = gallery.find(g => g.id === itemId);
-      if (item) {
-        await fetch(`/api/admin/media/${item.mediaId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ altPt: captionText }),
-        });
-        
-        // Atualizar localmente
-        setGallery(gallery.map(g => 
-          g.id === itemId 
-            ? { ...g, media: { ...g.media, altPt: captionText } }
-            : g
-        ));
-        setSuccess('Legenda salva!');
+      const res = await fetch(`/api/admin/projects/${projectId}/gallery`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          projectMediaId: itemId,
+          captionPt: captions.pt || null,
+          captionEn: captions.en || null,
+          captionEs: captions.es || null,
+          captionFr: captions.fr || null,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || 'Erro ao salvar legendas');
+        return;
       }
+      if (data.gallery) setGallery(data.gallery);
+      setSuccess('Legendas salvas! Aparecem na subpágina do projeto (conforme idioma).');
     } catch (err) {
-      setError('Erro ao salvar legenda');
+      setError('Erro ao salvar legendas');
     } finally {
       setLoading(false);
       setEditingCaption(null);
@@ -629,32 +639,42 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
 
               {/* Conteúdo do card */}
               <div style={{ padding: 12 }}>
-                {/* Campo de legenda */}
+                {/* Legendas em 4 idiomas (PT, EN, ES, FR) */}
                 {editingCaption === item.id ? (
                   <div style={{ marginBottom: 10 }}>
-                    <textarea
-                      value={captionText}
-                      onChange={(e) => setCaptionText(e.target.value)}
-                      placeholder="Digite a legenda..."
-                      style={{
-                        width: '100%',
-                        minHeight: 60,
-                        padding: 8,
-                        borderRadius: 6,
-                        border: '1px solid rgba(201,35,55,0.5)',
-                        background: 'rgba(255,255,255,0.05)',
-                        color: '#fff',
-                        fontSize: 12,
-                        resize: 'vertical',
-                      }}
-                    />
-                    <div style={{ display: 'flex', gap: 6, marginTop: 6 }}>
+                    <p style={{ margin: '0 0 8px', fontSize: 11, color: '#8f8ba2', fontWeight: 600 }}>
+                      Legendas (subpágina do projeto)
+                    </p>
+                    {(['pt', 'en', 'es', 'fr'] as const).map((lang) => (
+                      <div key={lang} style={{ marginBottom: 6 }}>
+                        <label style={{ display: 'block', fontSize: 10, color: '#666', marginBottom: 2 }}>
+                          {LANG_LABELS[lang]}
+                        </label>
+                        <textarea
+                          value={captions[lang]}
+                          onChange={(e) => setCaptions((c) => ({ ...c, [lang]: e.target.value }))}
+                          placeholder={`Legenda em ${LANG_LABELS[lang]}...`}
+                          style={{
+                            width: '100%',
+                            minHeight: 44,
+                            padding: 6,
+                            borderRadius: 4,
+                            border: '1px solid rgba(255,255,255,0.12)',
+                            background: 'rgba(255,255,255,0.05)',
+                            color: '#fff',
+                            fontSize: 12,
+                            resize: 'vertical',
+                          }}
+                        />
+                      </div>
+                    ))}
+                    <div style={{ display: 'flex', gap: 6, marginTop: 8 }}>
                       <button
                         type="button"
                         onClick={() => handleSaveCaption(item.id)}
                         style={{
                           flex: 1,
-                          padding: 6,
+                          padding: 8,
                           borderRadius: 4,
                           border: 'none',
                           background: '#6ee7b7',
@@ -664,14 +684,14 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
                           cursor: 'pointer',
                         }}
                       >
-                        ✓ Salvar
+                        ✓ Salvar legendas
                       </button>
                       <button
                         type="button"
                         onClick={() => setEditingCaption(null)}
                         style={{
                           flex: 1,
-                          padding: 6,
+                          padding: 8,
                           borderRadius: 4,
                           border: '1px solid rgba(255,255,255,0.2)',
                           background: 'transparent',
@@ -688,7 +708,12 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
                   <div
                     onClick={() => {
                       setEditingCaption(item.id);
-                      setCaptionText(item.media.altPt || '');
+                      setCaptions({
+                        pt: item.captionPt ?? item.media.altPt ?? '',
+                        en: item.captionEn ?? '',
+                        es: item.captionEs ?? '',
+                        fr: item.captionFr ?? '',
+                      });
                     }}
                     style={{
                       padding: 8,
@@ -699,13 +724,13 @@ export function GalleryManager({ projectId, initialGallery = [] }: GalleryManage
                       minHeight: 40,
                     }}
                   >
-                    {item.media.altPt ? (
-                      <p style={{ margin: 0, fontSize: 12, color: '#ccc', lineHeight: 1.4 }}>
-                        {item.media.altPt}
+                    {[item.captionPt, item.captionEn, item.captionEs, item.captionFr].some(Boolean) ? (
+                      <p style={{ margin: 0, fontSize: 11, color: '#8f8ba2' }}>
+                        PT {item.captionPt ? '✓' : '—'} · EN {item.captionEn ? '✓' : '—'} · ES {item.captionEs ? '✓' : '—'} · FR {item.captionFr ? '✓' : '—'}
                       </p>
                     ) : (
                       <p style={{ margin: 0, fontSize: 12, color: '#666', fontStyle: 'italic' }}>
-                        📝 Clique para adicionar legenda...
+                        📝 Clique para adicionar legendas (PT, EN, ES, FR)...
                       </p>
                     )}
                   </div>
