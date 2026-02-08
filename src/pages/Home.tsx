@@ -31,7 +31,12 @@ interface ProjectHeroImage {
   type?: string
   original?: string
   thumbnail?: string
+  medium?: string
+  large?: string
+  webp?: string
+  avif?: string
   alt?: string
+  format?: string
 }
 
 interface HomeProject {
@@ -44,6 +49,8 @@ interface HomeProject {
   year?: number
   tags: string[]
   heroImage?: ProjectHeroImage | null
+  thumbnailUrl?: string | null
+  image?: string
 }
 
 interface HomeService {
@@ -371,7 +378,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             
             // PRIORIDADE 2: Projeto Featured
             const featured = recommended[0] || defaultProjects[0]
-            const featuredImage = featured?.heroImage?.large || featured?.heroImage?.medium || featured?.heroImage?.original
+            const featuredImage = featured?.heroImage?.large || featured?.heroImage?.medium || featured?.heroImage?.original || featured?.thumbnailUrl
             
             // FALLBACK 3: Placeholder
             const backgroundImage = heroBackgroundImage || featuredImage || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072'
@@ -1564,10 +1571,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         alt={mainFeatured.heroImage?.alt || mainFeatured.title}
                         className="w-full h-full rounded-t-2xl"
                       />
-                    ) : mainFeatured?.heroImage?.large || mainFeatured?.heroImage?.medium ? (
+                    ) : (mainFeatured?.heroImage?.large || mainFeatured?.heroImage?.medium || mainFeatured?.heroImage?.original || mainFeatured?.thumbnailUrl) ? (
                       <img
-                        src={mainFeatured.heroImage?.large || mainFeatured.heroImage?.medium}
-                        alt={mainFeatured.title}
+                        src={mainFeatured.heroImage?.large || mainFeatured.heroImage?.medium || mainFeatured.heroImage?.original || mainFeatured.thumbnailUrl || ''}
+                        alt={mainFeatured.heroImage?.alt || mainFeatured.title}
                         className="w-full h-full object-contain rounded-t-2xl"
                       />
                     ) : (
@@ -1642,7 +1649,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               {recommended.slice(1, 4).map((project: HomeProject, index: number) => {
                 const hasVideo = project?.heroImage?.type === 'VIDEO' && project?.heroImage?.original
-                const imageUrl = project?.heroImage?.large || project?.heroImage?.medium || project?.heroImage?.original || project?.image || ''
+                const imageUrl = project?.heroImage?.large || project?.heroImage?.medium || project?.heroImage?.original || project?.thumbnailUrl || project?.image || ''
                 
                 return (
                   <article
