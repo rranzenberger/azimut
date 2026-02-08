@@ -345,12 +345,64 @@ export default function EditPagePage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [translating, setTranslating] = useState<string | null>(null); // campo sendo traduzido
-  // Projetos que aparecem nos cards da Home (preview visual + links de edição)
+  // Projetos que aparecem nos cards da Home (preview visual + edição inline)
   const [homeFeaturedProjects, setHomeFeaturedProjects] = useState<Array<{
     id: string; title: string; summary: string; priorityHome: number;
     slug: string; heroImage: string | null; tags: string[];
     city: string; country: string; year: number | null;
   }>>([]);
+  // Edição inline de projetos na Home
+  const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
+  const [editProjectData, setEditProjectData] = useState<{ title: string; summaryPt: string; priorityHome: number }>({ title: '', summaryPt: '', priorityHome: 0 });
+  const [savingProject, setSavingProject] = useState(false);
+  const [projectSaveMsg, setProjectSaveMsg] = useState<{ id: string; type: 'success' | 'error'; text: string } | null>(null);
+
+  // Iniciar edição de um projeto
+  const startEditProject = useCallback((p: any) => {
+    setEditingProjectId(p.id);
+    setEditProjectData({ title: p.title, summaryPt: p.summary, priorityHome: p.priorityHome });
+    setProjectSaveMsg(null);
+  }, []);
+
+  // Cancelar edição
+  const cancelEditProject = useCallback(() => {
+    setEditingProjectId(null);
+    setProjectSaveMsg(null);
+  }, []);
+
+  // Salvar projeto editado via API PUT
+  const saveEditProject = useCallback(async (projectId: string) => {
+    setSavingProject(true);
+    setProjectSaveMsg(null);
+    try {
+      const res = await fetch(`/api/admin/projects/${projectId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: editProjectData.title,
+          summaryPt: editProjectData.summaryPt,
+          priorityHome: Number(editProjectData.priorityHome),
+        }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || 'Erro ao salvar');
+      }
+      // Atualizar na lista local
+      setHomeFeaturedProjects(prev => prev.map(p =>
+        p.id === projectId
+          ? { ...p, title: editProjectData.title, summary: editProjectData.summaryPt, priorityHome: Number(editProjectData.priorityHome) }
+          : p
+      ).sort((a, b) => (b.priorityHome ?? 0) - (a.priorityHome ?? 0)));
+      setEditingProjectId(null);
+      setProjectSaveMsg({ id: projectId, type: 'success', text: 'Salvo com sucesso!' });
+      setTimeout(() => setProjectSaveMsg(null), 3000);
+    } catch (err: any) {
+      setProjectSaveMsg({ id: projectId, type: 'error', text: err.message || 'Erro ao salvar projeto' });
+    } finally {
+      setSavingProject(false);
+    }
+  }, [editProjectData]);
 
   // Accordion: seção aberta (só uma por vez — evita "tripa" gigante)
   const [openSection, setOpenSection] = useState<string | null>('basico');
@@ -931,7 +983,7 @@ export default function EditPagePage() {
               </a>
             </div>
             <p style={{ margin: '0 0 16px', fontSize: 13, color: '#94a3b8', lineHeight: 1.5 }}>
-              Preview de como os projetos aparecem no site. Para alterar imagem, título ou descrição, clique no projeto. Para mudar a ordem, ajuste o campo "Prioridade Home" de cada projeto.
+              Edite título, resumo e prioridade diretamente aqui. As alterações são salvas no projeto e refletem automaticamente no site (Home + Work).
             </p>
 
             {/* Label: Preview do Site */}
@@ -958,71 +1010,135 @@ export default function EditPagePage() {
                   </p>
                 </div>
 
-                {/* ═══ CARD PRINCIPAL (destaque grande) ═══ */}
-                {homeFeaturedProjects[0] && (
-                  <div style={{ margin: '20px 20px 0', borderRadius: 14, overflow: 'hidden', position: 'relative', border: '1px solid rgba(255,255,255,0.08)' }}>
+                {/* ═══ CARD PRINCIPAL (destaque grande) — edição inline ═══ */}
+                {homeFeaturedProjects[0] && (() => {
+                  const p0 = homeFeaturedProjects[0];
+                  const isEditing = editingProjectId === p0.id;
+                  return (
+                  <div style={{ margin: '20px 20px 0', borderRadius: 14, overflow: 'hidden', position: 'relative', border: isEditing ? '2px solid rgba(34,197,94,0.5)' : '1px solid rgba(255,255,255,0.08)' }}>
                     {/* Imagem grande */}
                     <div style={{ position: 'relative', paddingTop: '50%', background: '#111827' }}>
-                      {homeFeaturedProjects[0].heroImage ? (
-                        <img src={homeFeaturedProjects[0].heroImage} alt={homeFeaturedProjects[0].title} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+                      {p0.heroImage ? (
+                        <img src={p0.heroImage} alt={p0.title} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
                       ) : (
                         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, rgba(201,35,55,0.2), rgba(10,14,26,0.9))' }}>
                           <span style={{ fontSize: 48, opacity: 0.3 }}>🖼️</span>
                           <p style={{ position: 'absolute', bottom: 20, color: '#64748b', fontSize: 12 }}>Defina a imagem de capa deste projeto</p>
                         </div>
                       )}
-                      {/* Gradiente sobre a imagem (como no site) */}
                       <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '60%', background: 'linear-gradient(to top, rgba(10,14,26,0.95), transparent)', pointerEvents: 'none' }}></div>
-                      {/* Badge de posição */}
                       <div style={{ position: 'absolute', top: 12, left: 12, display: 'flex', gap: 6 }}>
-                        <span style={{ background: 'rgba(201,35,55,0.9)', color: '#fff', padding: '4px 12px', borderRadius: 6, fontSize: 11, fontWeight: 700, backdropFilter: 'blur(8px)' }}>
-                          DESTAQUE PRINCIPAL
-                        </span>
-                        <span style={{ background: 'rgba(0,0,0,0.6)', color: '#86efac', padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 600, backdropFilter: 'blur(8px)' }}>
-                          P{homeFeaturedProjects[0].priorityHome}
-                        </span>
+                        <span style={{ background: 'rgba(201,35,55,0.9)', color: '#fff', padding: '4px 12px', borderRadius: 6, fontSize: 11, fontWeight: 700, backdropFilter: 'blur(8px)' }}>DESTAQUE PRINCIPAL</span>
+                        <span style={{ background: 'rgba(0,0,0,0.6)', color: '#86efac', padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 600, backdropFilter: 'blur(8px)' }}>P{p0.priorityHome}</span>
                       </div>
-                      {/* Botão editar sobreposto */}
-                      <a href={`/admin/projects/${homeFeaturedProjects[0].id}`} style={{ position: 'absolute', top: 12, right: 12, background: 'rgba(201,35,55,0.85)', color: '#fff', padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 600, textDecoration: 'none', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', gap: 4 }}>
-                        ✏️ Editar projeto
-                      </a>
+                      {/* Botões: editar inline OU ir para página do projeto */}
+                      <div style={{ position: 'absolute', top: 12, right: 12, display: 'flex', gap: 6 }}>
+                        {!isEditing && (
+                          <button type="button" onClick={() => startEditProject(p0)} style={{ background: 'rgba(34,197,94,0.85)', color: '#fff', padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 600, border: 'none', cursor: 'pointer', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', gap: 4 }}>
+                            ✏️ Editar aqui
+                          </button>
+                        )}
+                        <a href={`/admin/projects/${p0.id}`} style={{ background: 'rgba(0,0,0,0.6)', color: '#7dd3fc', padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 600, textDecoration: 'none', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', gap: 4 }}>
+                          Editar completo →
+                        </a>
+                      </div>
                     </div>
-                    {/* Info abaixo da imagem (como no site) */}
+                    {/* Info abaixo da imagem — MODO EDIÇÃO ou MODO LEITURA */}
                     <div style={{ padding: '16px 20px 20px', background: 'rgba(10,14,26,0.95)' }}>
                       {/* Tags */}
                       <div style={{ display: 'flex', gap: 8, marginBottom: 10, flexWrap: 'wrap', alignItems: 'center' }}>
-                        {homeFeaturedProjects[0].tags?.map((tag: string, i: number) => (
+                        {p0.tags?.map((tag: string, i: number) => (
                           <span key={i} style={{ padding: '3px 10px', borderRadius: 20, background: 'rgba(201,35,55,0.2)', border: '1px solid rgba(201,35,55,0.4)', color: '#fca5a5', fontSize: 11, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.03em' }}>{tag}</span>
                         ))}
-                        {(homeFeaturedProjects[0].city || homeFeaturedProjects[0].country) && (
+                        {(p0.city || p0.country) && (
                           <span style={{ marginLeft: 'auto', fontSize: 12, color: '#94a3b8' }}>
-                            📍 {[homeFeaturedProjects[0].city, homeFeaturedProjects[0].country].filter(Boolean).join(', ')}
+                            📍 {[p0.city, p0.country].filter(Boolean).join(', ')}
                           </span>
                         )}
                       </div>
-                      {/* Título */}
-                      <h3 style={{ margin: '0 0 8px', fontSize: 20, fontWeight: 800, color: '#fff', textTransform: 'uppercase' as const, letterSpacing: '0.04em' }}>
-                        {homeFeaturedProjects[0].title}
-                      </h3>
-                      {/* Resumo */}
-                      <p style={{ margin: 0, fontSize: 14, color: '#94a3b8', lineHeight: 1.6 }}>
-                        {homeFeaturedProjects[0].summary || <em style={{ color: '#475569' }}>Sem descrição — edite o campo "Resumo" do projeto</em>}
-                      </p>
-                      {/* Botões como no site */}
-                      <div style={{ display: 'flex', gap: 10, marginTop: 14 }}>
-                        <span style={{ padding: '8px 18px', borderRadius: 6, background: 'rgba(201,35,55,0.8)', color: '#fff', fontSize: 12, fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.06em' }}>VER PROJETO</span>
-                        <span style={{ padding: '8px 18px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.2)', color: '#94a3b8', fontSize: 12, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.06em' }}>PROJETO SIMILAR</span>
-                      </div>
+
+                      {isEditing ? (
+                        /* ═══ MODO EDIÇÃO INLINE ═══ */
+                        <div style={{ display: 'grid', gap: 12 }}>
+                          <div>
+                            <label style={{ display: 'block', fontSize: 11, color: '#86efac', fontWeight: 600, marginBottom: 4, textTransform: 'uppercase' as const, letterSpacing: '0.05em' }}>Título do projeto</label>
+                            <input
+                              type="text"
+                              value={editProjectData.title}
+                              onChange={e => setEditProjectData(prev => ({ ...prev, title: e.target.value }))}
+                              style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid rgba(34,197,94,0.3)', background: 'rgba(0,0,0,0.4)', color: '#fff', fontSize: 18, fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.04em', outline: 'none' }}
+                              placeholder="Título do projeto"
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: 11, color: '#86efac', fontWeight: 600, marginBottom: 4, textTransform: 'uppercase' as const, letterSpacing: '0.05em' }}>Resumo (PT)</label>
+                            <textarea
+                              value={editProjectData.summaryPt}
+                              onChange={e => setEditProjectData(prev => ({ ...prev, summaryPt: e.target.value }))}
+                              rows={3}
+                              style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid rgba(34,197,94,0.3)', background: 'rgba(0,0,0,0.4)', color: '#94a3b8', fontSize: 14, lineHeight: 1.6, resize: 'vertical', outline: 'none' }}
+                              placeholder="Resumo do projeto em português"
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: 11, color: '#86efac', fontWeight: 600, marginBottom: 4, textTransform: 'uppercase' as const, letterSpacing: '0.05em' }}>Prioridade Home</label>
+                            <input
+                              type="number"
+                              value={editProjectData.priorityHome}
+                              onChange={e => setEditProjectData(prev => ({ ...prev, priorityHome: parseInt(e.target.value) || 0 }))}
+                              min={0}
+                              max={100}
+                              style={{ width: 100, padding: '8px 12px', borderRadius: 8, border: '1px solid rgba(34,197,94,0.3)', background: 'rgba(0,0,0,0.4)', color: '#86efac', fontSize: 16, fontWeight: 700, textAlign: 'center', outline: 'none' }}
+                            />
+                            <span style={{ marginLeft: 8, fontSize: 11, color: '#64748b' }}>Maior = aparece primeiro</span>
+                          </div>
+                          {/* Botões salvar/cancelar */}
+                          <div style={{ display: 'flex', gap: 10, marginTop: 4 }}>
+                            <button type="button" onClick={() => saveEditProject(p0.id)} disabled={savingProject} style={{ padding: '8px 24px', borderRadius: 8, background: savingProject ? '#374151' : 'rgba(34,197,94,0.8)', color: '#fff', fontSize: 13, fontWeight: 700, border: 'none', cursor: savingProject ? 'wait' : 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
+                              {savingProject ? '⏳ Salvando...' : '💾 Salvar alterações'}
+                            </button>
+                            <button type="button" onClick={cancelEditProject} style={{ padding: '8px 18px', borderRadius: 8, background: 'transparent', color: '#94a3b8', fontSize: 13, fontWeight: 600, border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer' }}>
+                              Cancelar
+                            </button>
+                          </div>
+                          {projectSaveMsg?.id === p0.id && (
+                            <div style={{ padding: '6px 12px', borderRadius: 6, fontSize: 12, fontWeight: 600, background: projectSaveMsg.type === 'success' ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)', color: projectSaveMsg.type === 'success' ? '#86efac' : '#fca5a5', border: `1px solid ${projectSaveMsg.type === 'success' ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}` }}>
+                              {projectSaveMsg.text}
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        /* ═══ MODO LEITURA (preview) ═══ */
+                        <>
+                          <h3 style={{ margin: '0 0 8px', fontSize: 20, fontWeight: 800, color: '#fff', textTransform: 'uppercase' as const, letterSpacing: '0.04em', cursor: 'pointer' }} onClick={() => startEditProject(p0)} title="Clique para editar">
+                            {p0.title}
+                          </h3>
+                          <p style={{ margin: 0, fontSize: 14, color: '#94a3b8', lineHeight: 1.6, cursor: 'pointer' }} onClick={() => startEditProject(p0)} title="Clique para editar">
+                            {p0.summary || <em style={{ color: '#475569' }}>Sem descrição — clique para adicionar</em>}
+                          </p>
+                          {projectSaveMsg?.id === p0.id && projectSaveMsg.type === 'success' && (
+                            <div style={{ marginTop: 8, padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 600, background: 'rgba(34,197,94,0.15)', color: '#86efac', display: 'inline-block' }}>
+                              {projectSaveMsg.text}
+                            </div>
+                          )}
+                          <div style={{ display: 'flex', gap: 10, marginTop: 14 }}>
+                            <span style={{ padding: '8px 18px', borderRadius: 6, background: 'rgba(201,35,55,0.8)', color: '#fff', fontSize: 12, fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.06em' }}>VER PROJETO</span>
+                            <span style={{ padding: '8px 18px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.2)', color: '#94a3b8', fontSize: 12, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.06em' }}>PROJETO SIMILAR</span>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
-                )}
+                  );
+                })()}
 
-                {/* ═══ 3 CARDS MENORES (como no site) ═══ */}
+                {/* ═══ 3 CARDS MENORES (como no site) — edição inline ═══ */}
                 {homeFeaturedProjects.length > 1 && (
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, padding: '16px 20px 24px' }}>
-                    {homeFeaturedProjects.slice(1, 4).map((p: any, idx: number) => (
-                      <div key={p.id} style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(20,24,39,0.8)', transition: 'transform 0.2s', cursor: 'pointer' }}
-                        onClick={() => window.location.href = `/admin/projects/${p.id}`}>
+                    {homeFeaturedProjects.slice(1, 4).map((p: any, idx: number) => {
+                      const isEditing = editingProjectId === p.id;
+                      return (
+                      <div key={p.id} style={{ borderRadius: 12, overflow: 'hidden', border: isEditing ? '2px solid rgba(34,197,94,0.5)' : '1px solid rgba(255,255,255,0.06)', background: 'rgba(20,24,39,0.8)' }}>
                         {/* Imagem do card */}
                         <div style={{ position: 'relative', paddingTop: '65%', background: '#111827' }}>
                           {p.heroImage ? (
@@ -1033,38 +1149,94 @@ export default function EditPagePage() {
                               <span style={{ fontSize: 10, color: '#475569', marginTop: 4 }}>Sem imagem</span>
                             </div>
                           )}
-                          {/* Badge de posição */}
                           <div style={{ position: 'absolute', top: 8, right: 8, background: 'rgba(0,0,0,0.75)', color: '#86efac', padding: '3px 8px', borderRadius: 6, fontSize: 10, fontWeight: 700, backdropFilter: 'blur(8px)' }}>
                             #{idx + 2} · P{p.priorityHome}
                           </div>
-                          {/* Ícone de play se tiver vídeo? */}
-                          {/* Gradiente inferior */}
                           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '40%', background: 'linear-gradient(to top, rgba(20,24,39,0.9), transparent)', pointerEvents: 'none' }}></div>
                         </div>
                         {/* Info do card */}
                         <div style={{ padding: '12px 14px 14px' }}>
-                          <h5 style={{ margin: '0 0 6px', fontSize: 14, fontWeight: 700, color: '#e2e8f0', lineHeight: 1.3, textTransform: 'uppercase' as const, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as any }}>
-                            {p.title}
-                          </h5>
-                          {p.city && (
-                            <p style={{ margin: '0 0 6px', fontSize: 11, color: '#64748b' }}>
-                              📍 {p.city}{p.country ? `, ${p.country}` : ''}
-                            </p>
+                          {isEditing ? (
+                            /* ═══ MODO EDIÇÃO INLINE (card menor) ═══ */
+                            <div style={{ display: 'grid', gap: 8 }}>
+                              <div>
+                                <label style={{ display: 'block', fontSize: 10, color: '#86efac', fontWeight: 600, marginBottom: 3 }}>Título</label>
+                                <input
+                                  type="text"
+                                  value={editProjectData.title}
+                                  onChange={e => setEditProjectData(prev => ({ ...prev, title: e.target.value }))}
+                                  style={{ width: '100%', padding: '6px 10px', borderRadius: 6, border: '1px solid rgba(34,197,94,0.3)', background: 'rgba(0,0,0,0.4)', color: '#fff', fontSize: 13, fontWeight: 600, outline: 'none' }}
+                                />
+                              </div>
+                              <div>
+                                <label style={{ display: 'block', fontSize: 10, color: '#86efac', fontWeight: 600, marginBottom: 3 }}>Resumo (PT)</label>
+                                <textarea
+                                  value={editProjectData.summaryPt}
+                                  onChange={e => setEditProjectData(prev => ({ ...prev, summaryPt: e.target.value }))}
+                                  rows={2}
+                                  style={{ width: '100%', padding: '6px 10px', borderRadius: 6, border: '1px solid rgba(34,197,94,0.3)', background: 'rgba(0,0,0,0.4)', color: '#94a3b8', fontSize: 12, lineHeight: 1.5, resize: 'vertical', outline: 'none' }}
+                                />
+                              </div>
+                              <div>
+                                <label style={{ display: 'block', fontSize: 10, color: '#86efac', fontWeight: 600, marginBottom: 3 }}>Prioridade</label>
+                                <input
+                                  type="number"
+                                  value={editProjectData.priorityHome}
+                                  onChange={e => setEditProjectData(prev => ({ ...prev, priorityHome: parseInt(e.target.value) || 0 }))}
+                                  min={0} max={100}
+                                  style={{ width: 70, padding: '5px 8px', borderRadius: 6, border: '1px solid rgba(34,197,94,0.3)', background: 'rgba(0,0,0,0.4)', color: '#86efac', fontSize: 14, fontWeight: 700, textAlign: 'center', outline: 'none' }}
+                                />
+                              </div>
+                              <div style={{ display: 'flex', gap: 6, marginTop: 2 }}>
+                                <button type="button" onClick={() => saveEditProject(p.id)} disabled={savingProject} style={{ flex: 1, padding: '6px 0', borderRadius: 6, background: savingProject ? '#374151' : 'rgba(34,197,94,0.8)', color: '#fff', fontSize: 11, fontWeight: 700, border: 'none', cursor: savingProject ? 'wait' : 'pointer' }}>
+                                  {savingProject ? '⏳' : '💾 Salvar'}
+                                </button>
+                                <button type="button" onClick={cancelEditProject} style={{ padding: '6px 10px', borderRadius: 6, background: 'transparent', color: '#94a3b8', fontSize: 11, border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer' }}>
+                                  ✕
+                                </button>
+                              </div>
+                              {projectSaveMsg?.id === p.id && (
+                                <div style={{ padding: '4px 8px', borderRadius: 4, fontSize: 10, fontWeight: 600, background: projectSaveMsg.type === 'success' ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)', color: projectSaveMsg.type === 'success' ? '#86efac' : '#fca5a5' }}>
+                                  {projectSaveMsg.text}
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            /* ═══ MODO LEITURA (card menor) ═══ */
+                            <>
+                              <h5 style={{ margin: '0 0 6px', fontSize: 14, fontWeight: 700, color: '#e2e8f0', lineHeight: 1.3, textTransform: 'uppercase' as const, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as any, cursor: 'pointer' }} onClick={() => startEditProject(p)} title="Clique para editar">
+                                {p.title}
+                              </h5>
+                              {p.city && (
+                                <p style={{ margin: '0 0 6px', fontSize: 11, color: '#64748b' }}>
+                                  📍 {p.city}{p.country ? `, ${p.country}` : ''}
+                                </p>
+                              )}
+                              <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', alignItems: 'center' }}>
+                                {p.tags?.map((tag: string, i: number) => (
+                                  <span key={i} style={{ padding: '2px 7px', borderRadius: 4, background: 'rgba(255,255,255,0.06)', color: '#94a3b8', fontSize: 10, fontWeight: 500 }}>{tag}</span>
+                                ))}
+                                {p.year && <span style={{ fontSize: 10, color: '#475569', marginLeft: 'auto' }}>{p.year}</span>}
+                              </div>
+                              {projectSaveMsg?.id === p.id && projectSaveMsg.type === 'success' && (
+                                <div style={{ marginTop: 4, padding: '3px 8px', borderRadius: 4, fontSize: 10, fontWeight: 600, background: 'rgba(34,197,94,0.15)', color: '#86efac', display: 'inline-block' }}>
+                                  {projectSaveMsg.text}
+                                </div>
+                              )}
+                              <div style={{ marginTop: 8, display: 'flex', gap: 6 }}>
+                                <button type="button" onClick={() => startEditProject(p)} style={{ fontSize: 11, color: '#86efac', background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.3)', borderRadius: 6, padding: '3px 10px', cursor: 'pointer', fontWeight: 600 }}>
+                                  ✏️ Editar aqui
+                                </button>
+                                <a href={`/admin/projects/${p.id}`} style={{ fontSize: 11, color: '#7dd3fc', textDecoration: 'none', padding: '3px 10px', display: 'flex', alignItems: 'center' }}>
+                                  Completo →
+                                </a>
+                              </div>
+                            </>
                           )}
-                          <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', alignItems: 'center' }}>
-                            {p.tags?.map((tag: string, i: number) => (
-                              <span key={i} style={{ padding: '2px 7px', borderRadius: 4, background: 'rgba(255,255,255,0.06)', color: '#94a3b8', fontSize: 10, fontWeight: 500 }}>{tag}</span>
-                            ))}
-                            {p.year && <span style={{ fontSize: 10, color: '#475569', marginLeft: 'auto' }}>{p.year}</span>}
-                          </div>
-                          <div style={{ marginTop: 8, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <a href={`/admin/projects/${p.id}`} onClick={(e) => e.stopPropagation()} style={{ fontSize: 11, color: '#fca5a5', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4 }}>
-                              ✏️ Editar projeto
-                            </a>
-                          </div>
                         </div>
                       </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
 
@@ -1096,7 +1268,7 @@ export default function EditPagePage() {
           <div style={{ margin: '16px 0 0', padding: '12px 16px', borderRadius: 10, background: 'rgba(34,197,94,0.06)', border: '1px solid rgba(34,197,94,0.15)', display: 'flex', gap: 10, alignItems: 'flex-start' }}>
             <span style={{ fontSize: 16, flexShrink: 0 }}>💡</span>
             <div style={{ fontSize: 12, color: '#94a3b8', lineHeight: 1.6 }}>
-              <strong style={{ color: '#86efac' }}>Como editar:</strong> Clique em "Editar projeto" para alterar título, imagem, descrição e tags. Para mudar a <strong style={{ color: '#fca5a5' }}>ordem</strong>, ajuste o campo "Prioridade Home" na página de cada projeto. Envie novas imagens em <a href="/admin/media" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>Mídias</a>.
+              <strong style={{ color: '#86efac' }}>Edição rápida:</strong> Clique em <strong>"Editar aqui"</strong> ou no título/resumo para editar diretamente. As alterações são salvas no projeto automaticamente. Para alterar <strong style={{ color: '#fca5a5' }}>imagem de capa</strong> ou campos avançados, clique em "Editar completo". Envie novas imagens em <a href="/admin/media" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>Mídias</a>.
             </div>
           </div>
         )}
