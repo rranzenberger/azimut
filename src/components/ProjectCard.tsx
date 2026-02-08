@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import { useTheme } from '../contexts/ThemeContext'
+import { prefetchProject } from '../hooks/useProject'
 import OptimizedImage from './OptimizedImage'
 
 interface ProjectCardProps {
@@ -243,6 +244,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             {project.hasDetailPage !== false && (
               <Link
                 to={`/${lang}/work/${project.slug}`}
+                state={{ projectPreview: project }}
+                onMouseEnter={() => prefetchProject(project.slug, lang)}
                 onClick={(e) => {
                   e.stopPropagation()
                   onInteraction?.('click', project.slug)
@@ -285,6 +288,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         
         <Link
           to={project.hasDetailPage !== false ? `/${lang}/work/${project.slug}` : '#'}
+          state={project.hasDetailPage !== false ? { projectPreview: project } : undefined}
+          onMouseEnter={() => project.hasDetailPage !== false && prefetchProject(project.slug, lang)}
           onClick={(e) => {
             if (project.hasDetailPage === false) e.preventDefault()
             onInteraction?.('click', project.slug)
@@ -348,6 +353,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       
       <Link
         to={project.hasDetailPage !== false ? `/${lang}/work/${project.slug}` : '#'}
+        state={project.hasDetailPage !== false ? { projectPreview: project } : undefined}
+        onMouseEnter={() => project.hasDetailPage !== false && prefetchProject(project.slug, lang)}
         onClick={(e) => {
           if (project.hasDetailPage === false) e.preventDefault()
           onInteraction?.('click', project.slug)

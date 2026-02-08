@@ -9,6 +9,7 @@ import { trackPageView, trackProjectInteraction } from '../utils/analytics'
 import InternalNavigation from '../components/InternalNavigation'
 // MIGRAÇÃO GRADUAL: Backoffice reativado COM fallbacks fortes
 import { useAzimutContent } from '../hooks/useAzimutContent'
+import { prefetchProject } from '../hooks/useProject'
 import { usePersonalizedContent } from '../hooks/usePersonalizedContent'
 // 🆕 FASE 2: Site Inteligente - Detecção de Intenção
 import { useIntentionDetection } from '../hooks/useIntentionDetection'
@@ -856,9 +857,10 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                     console.warn('Tracking error:', err)
                   }
                   
-                  // Navegação
-                  navigate(`/${lang}/work/${personalizedCases[0].slug}`)
+                  // Navegação (state permite mostrar preview na subpágina na hora)
+                  navigate(`/${lang}/work/${personalizedCases[0].slug}`, { state: { projectPreview: personalizedCases[0] } })
                 }}
+                onMouseEnter={() => prefetchProject(personalizedCases[0].slug, lang)}
               >
               <div className="grid md:grid-cols-2">
                 {/* Image Area - BACKOFFICE: personalizedCases[0].heroImage ou thumbnailUrl */}
@@ -941,6 +943,8 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   {/* CTA */}
                   <Link
                     to={`/${lang}/work/${personalizedCases[0].slug}`}
+                    state={{ projectPreview: personalizedCases[0] }}
+                    onMouseEnter={() => prefetchProject(personalizedCases[0].slug, lang)}
                     onClick={(e) => {
                       e.stopPropagation()
                       trackInteraction('project_view', personalizedCases[0].slug)
@@ -1010,10 +1014,13 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                     console.warn('Tracking error:', err)
                   }
                   
-                  // Navegação
-                  navigate(`/${lang}/work/${item.slug}`)
+                  // Navegação (state = preview na subpágina; prefetch já feito no hover)
+                  navigate(`/${lang}/work/${item.slug}`, { state: { projectPreview: item } })
                 }}
-                onMouseEnter={() => trackProjectInteraction(item.slug, 'HOVER')}
+                onMouseEnter={() => {
+                  trackProjectInteraction(item.slug, 'HOVER')
+                  prefetchProject(item.slug, lang)
+                }}
               >
                 {/* Image - BACKOFFICE: item.heroImage ou thumbnailUrl */}
                 <div className="relative aspect-video bg-gradient-to-br from-slate-800/80 to-slate-950 overflow-hidden">
@@ -1096,6 +1103,8 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   {/* CTA */}
                   <Link
                     to={`/${lang}/work/${item.slug}`}
+                    state={{ projectPreview: item }}
+                    onMouseEnter={() => prefetchProject(item.slug, lang)}
                     onClick={(e) => {
                       e.stopPropagation()
                       trackInteraction('project_view', item.slug)

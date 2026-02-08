@@ -419,16 +419,18 @@ export default function NewProjectPage() {
             </select>
           </div>
           <div style={{ display: 'grid', gap: 8 }}>
-            <label style={{ fontSize: 14, fontWeight: 600 }}>Prioridade Home</label>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Prioridade Home (posição nos cards)</label>
             <input
               type="number"
               value={formData.priorityHome}
               onChange={(e) => setFormData({ ...formData, priorityHome: parseInt(e.target.value) || 0 })}
               style={inputStyle}
               min="0"
-              placeholder="0"
+              placeholder="70"
             />
-            <small style={{ color: '#8f8ba2', fontSize: 12 }}>Maior número = maior destaque na home</small>
+            <small style={{ color: '#8f8ba2', fontSize: 12 }}>
+              Número <strong>maior</strong> = aparece <strong>antes</strong>. Ex.: 100 = 1º card (principal), 90 = 2º, 80 = 3º, 70 = 4º. Projetos novos em destaque começam em 70 (4º); ajuste na edição para subir de posição.
+            </small>
           </div>
         </div>
 
@@ -437,7 +439,15 @@ export default function NewProjectPage() {
             type="checkbox"
             id="featured"
             checked={formData.featured}
-            onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
+            onChange={(e) => {
+              const isChecked = e.target.checked;
+              // Ao marcar "em destaque", usar 70 por padrão (4º card) para não pular para o 1º
+              setFormData({
+                ...formData,
+                featured: isChecked,
+                priorityHome: isChecked ? (formData.priorityHome || 0) || 70 : (formData.priorityHome || 0),
+              });
+            }}
             style={{ width: 18, height: 18, cursor: 'pointer' }}
           />
           <label htmlFor="featured" style={{ fontSize: 14, cursor: 'pointer' }}>

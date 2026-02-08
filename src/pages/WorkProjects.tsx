@@ -9,6 +9,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import type { Lang } from '../i18n'
 import SEO from '../components/SEO'
 import { useAzimutContent } from '../hooks/useAzimutContent'
+import { prefetchProject } from '../hooks/useProject'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { trackPageView, trackProjectInteraction } from '../utils/analytics'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -292,8 +293,9 @@ const WorkProjects: React.FC<WorkProjectsProps> = ({ lang }) => {
                   onClick={() => {
                     trackInteraction('project_view', item.slug)
                     trackProjectInteraction(item.slug, 'CLICK')
-                    navigate(`/${lang}/work/${item.slug}`)
+                    navigate(`/${lang}/work/${item.slug}`, { state: { projectPreview: item } })
                   }}
+                  onMouseEnter={() => prefetchProject(item.slug, lang)}
                 >
                   <div className="relative aspect-video bg-gradient-to-br from-slate-800/80 to-slate-950 overflow-hidden">
                     {getProjectImageUrl(item) ? (
@@ -333,6 +335,8 @@ const WorkProjects: React.FC<WorkProjectsProps> = ({ lang }) => {
                     </div>
                     <Link
                       to={`/${lang}/work/${item.slug}`}
+                      state={{ projectPreview: item }}
+                      onMouseEnter={() => prefetchProject(item.slug, lang)}
                       onClick={(e) => { e.stopPropagation(); trackInteraction('project_view', item.slug) }}
                       className="mt-3 inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-4 py-2 font-sora text-[0.7rem] font-semibold uppercase tracking-[0.1em] hover:bg-azimut-red/20 transition-all w-full justify-center"
                       style={{ color: 'var(--theme-text)' }}

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -60,6 +60,7 @@ function minimalProjectFromList(item: any): any {
 const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
+  const location = useLocation()
   const { theme } = useTheme()
   // REMOVIDO: useUserTracking já é chamado no Layout.tsx
   // const { trackInteraction } = useUserTracking()
@@ -68,6 +69,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
 
   const canonicalSlug = (slug && SLUG_REDIRECTS[slug]) || slug || ''
   const { project, loading, error } = useProject(canonicalSlug, lang)
+
+  // Preview vindo da lista (Work): mostra conteúdo na hora e completa quando a API responder
+  const projectPreview = (location.state as any)?.projectPreview ?? null
 
   // Redirecionar para slug canônico (ex: /pt/work/rio-museu-olimpico → /pt/work/museu-olimpico-rio)
   // Path sempre relativo (/:lang/work/:slug) para evitar SecurityError no History.replaceState
@@ -80,11 +84,13 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
   const { content: cmsContent } = useAzimutContent({ page: 'work' })
   const allProjects = cmsContent?.highlightProjects || []
 
-  // Quando API falha e não há placeholder: usar dados da lista Work (imagem e dados básicos)
+  // Ordem: API → preview da navegação → lista Work (fallback quando API falha)
   const fallbackFromList = (!project && (canonicalSlug || slug))
     ? (allProjects as any[]).find((p: any) => p.slug === canonicalSlug || p.slug === slug)
     : null
-  const effectiveProject = project ?? (fallbackFromList ? minimalProjectFromList(fallbackFromList) : null)
+  const effectiveProject = project
+    ?? (projectPreview ? minimalProjectFromList(projectPreview) : null)
+    ?? (fallbackFromList ? minimalProjectFromList(fallbackFromList) : null)
   
   // Estados para filtros da galeria (apenas Museu Olímpico)
   const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null)
@@ -144,15 +150,22 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Loading state (cores compatíveis com tema claro/escuro)
-  if (loading) {
+  // Skeleton só quando não temos nada para mostrar (sem preview da lista e sem cache)
+  if (loading && !effectiveProject) {
     return (
       <main className="relative py-16 md:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="animate-pulse space-y-8">
-            <div className="h-12 rounded w-1/3 bg-slate-200 dark:bg-slate-800" />
-            <div className="aspect-video md:aspect-[21/9] rounded-2xl md:rounded-3xl bg-slate-200 dark:bg-slate-800" />
-            <div className="h-32 rounded-2xl bg-slate-200 dark:bg-slate-800" />
+          <div className="animate-pulse space-y-6">
+            <div className="h-10 rounded w-1/3 bg-slate-200 dark:bg-slate-700" />
+            <div className="aspect-video md:aspect-[21/9] rounded-2xl md:rounded-3xl bg-slate-200 dark:bg-slate-700" />
+            <div className="h-6 rounded w-full max-w-2xl bg-slate-200 dark:bg-slate-700" />
+            <div className="h-6 rounded w-3/4 max-w-xl bg-slate-200 dark:bg-slate-700" />
+            <div className="h-24 rounded-2xl bg-slate-200 dark:bg-slate-700" />
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="aspect-video rounded-xl bg-slate-200 dark:bg-slate-700" />
+              ))}
+            </div>
           </div>
         </div>
       </main>

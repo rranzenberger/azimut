@@ -70,6 +70,40 @@ interface UseProjectResult {
 
 const API_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br';
 
+// Cache em memória: reduz tempo ao reabrir a mesma subpágina ou após prefetch
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutos
+const projectCache = new Map<string, { data: ProjectData; at: number }>();
+
+function cacheKey(slug: string, lang: string) {
+  return `${slug}:${lang}`;
+}
+
+function getCached(slug: string, lang: string): ProjectData | null {
+  const entry = projectCache.get(cacheKey(slug, lang));
+  if (!entry || Date.now() - entry.at > CACHE_TTL_MS) return null;
+  return entry.data;
+}
+
+function setCached(slug: string, lang: string, data: ProjectData) {
+  projectCache.set(cacheKey(slug, lang), { data, at: Date.now() });
+}
+
+/** Prefetch: busca o projeto e guarda no cache; útil no hover do card em Work */
+export function prefetchProject(slug: string, lang: string = 'pt'): void {
+  if (!slug) return;
+  if (getCached(slug, lang)) return; // já em cache
+  const url = `${API_URL}/api/public/project/${slug}?lang=${lang}`;
+  fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
+    .then((res) => {
+      if (!res.ok) return;
+      return res.json();
+    })
+    .then((data) => {
+      if (data && data.slug) setCached(slug, lang, data);
+    })
+    .catch(() => {});
+}
+
 // ═══════════════════════════════════════════════════════════════
 // FALLBACK: Projetos placeholder quando backoffice está vazio
 // ═══════════════════════════════════════════════════════════════
@@ -307,13 +341,21 @@ export function useProject(slug: string, lang: string = 'pt'): UseProjectResult 
       return;
     }
 
+    const cached = getCached(slug, lang);
+    if (cached) {
+      setProject(cached);
+      setLoading(false);
+      setError(null);
+    } else {
+      setProject(null);
+      setLoading(true);
+      setError(null);
+    }
+
     let cancelled = false;
 
     const fetchProject = async () => {
       try {
-        setLoading(true);
-        setError(null);
-
         const response = await fetch(
           `${API_URL}/api/public/project/${slug}?lang=${lang}`,
           {
@@ -325,6 +367,7 @@ export function useProject(slug: string, lang: string = 'pt'): UseProjectResult 
         );
 
         if (!response.ok) {
+          if (cached) return; // já mostrando cache, não sobrescrever com erro
           // Fallback: 404 ou 500 → usar placeholder para slugs conhecidos (ex: museu-olimpico-rio)
           const placeholderProject = getPlaceholderProject(slug, lang);
           if (placeholderProject && (response.status === 404 || response.status === 500)) {
@@ -339,13 +382,14 @@ export function useProject(slug: string, lang: string = 'pt'): UseProjectResult 
         }
 
         const data = await response.json();
-        
+
         if (!cancelled) {
           setProject(data);
+          setCached(slug, lang, data);
         }
       } catch (err) {
+        if (cached) return;
         if (!cancelled) {
-          // Tentar fallback antes de mostrar erro
           const placeholderProject = getPlaceholderProject(slug, lang);
           if (placeholderProject) {
             setProject(placeholderProject);

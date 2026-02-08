@@ -370,10 +370,11 @@ export default function EditPagePage() {
     setProjectSaveMsg(null);
   }, []);
 
-  // Salvar projeto editado via API PUT
+  // Salvar projeto editado via API PUT (prioridade sempre 0–100 inteiro para evitar erro)
   const saveEditProject = useCallback(async (projectId: string) => {
     setSavingProject(true);
     setProjectSaveMsg(null);
+    const priority = Math.min(100, Math.max(0, parseInt(String(editProjectData.priorityHome), 10) || 0));
     try {
       const res = await fetch(`/api/admin/projects/${projectId}`, {
         method: 'PUT',
@@ -381,7 +382,7 @@ export default function EditPagePage() {
         body: JSON.stringify({
           title: editProjectData.title,
           summaryPt: editProjectData.summaryPt,
-          priorityHome: Number(editProjectData.priorityHome),
+          priorityHome: priority,
         }),
       });
       if (!res.ok) {
@@ -398,7 +399,7 @@ export default function EditPagePage() {
       };
       setHomeFeaturedProjects(prev => prev.map(p =>
         p.id === projectId
-          ? { ...p, title: editProjectData.title, summary: editProjectData.summaryPt, priorityHome: Number(editProjectData.priorityHome) }
+          ? { ...p, title: editProjectData.title, summary: editProjectData.summaryPt, priorityHome: priority }
           : p
       ).sort(sortFeatured));
       setEditingProjectId(null);
@@ -1179,6 +1180,9 @@ export default function EditPagePage() {
                   <p style={{ margin: '8px 0 0', fontSize: 12, color: '#64748b' }}>
                     Uma seleção dos nossos trabalhos mais emblemáticos
                   </p>
+                  <p style={{ margin: '14px 16px 0', padding: '10px 16px', borderRadius: 8, background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.35)', fontSize: 13, color: '#86efac', fontWeight: 600 }}>
+                    ✏️ Para editar: clique no botão verde <strong>EDITAR ESTE PROJETO</strong> em cada card (em cima da imagem ou logo abaixo do texto).
+                  </p>
                 </div>
 
                 {/* ═══ CARD PRINCIPAL (destaque grande) — edição inline ═══ */}
@@ -1218,8 +1222,8 @@ export default function EditPagePage() {
                           <input type="file" accept="image/*,video/mp4,video/webm" style={{ display: 'none' }} onChange={(e) => { const f = e.target.files?.[0]; if (f) handleHeroImageUpload(p0.id, f); e.target.value = ''; }} disabled={uploadingImageId === p0.id} />
                         </label>
                         {!isEditing && (
-                          <button type="button" onClick={() => startEditProject(p0)} style={{ background: 'rgba(34,197,94,0.85)', color: '#fff', padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 600, border: 'none', cursor: 'pointer', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', gap: 4 }}>
-                            ✏️ Editar textos
+                          <button type="button" onClick={() => startEditProject(p0)} style={{ background: '#22c55e', color: '#fff', padding: '10px 20px', borderRadius: 10, fontSize: 14, fontWeight: 700, border: '2px solid #fff', cursor: 'pointer', boxShadow: '0 4px 14px rgba(34,197,94,0.5)', display: 'flex', alignItems: 'center', gap: 6 }}>
+                            ✏️ EDITAR ESTE PROJETO
                           </button>
                         )}
                         <button type="button" onClick={() => openReplaceModal(0)} style={{ background: 'rgba(245,158,11,0.85)', color: '#fff', padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 600, border: 'none', cursor: 'pointer', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -1278,13 +1282,13 @@ export default function EditPagePage() {
                             <label style={{ display: 'block', fontSize: 11, color: '#86efac', fontWeight: 600, marginBottom: 4, textTransform: 'uppercase' as const, letterSpacing: '0.05em' }}>Prioridade Home</label>
                             <input
                               type="number"
-                              value={editProjectData.priorityHome}
-                              onChange={e => setEditProjectData(prev => ({ ...prev, priorityHome: parseInt(e.target.value) || 0 }))}
                               min={0}
                               max={100}
+                              value={editProjectData.priorityHome}
+                              onChange={e => setEditProjectData(prev => ({ ...prev, priorityHome: Math.min(100, Math.max(0, parseInt(e.target.value, 10) || 0)) }))}
                               style={{ width: 100, padding: '8px 12px', borderRadius: 8, border: '1px solid rgba(34,197,94,0.3)', background: 'rgba(0,0,0,0.4)', color: '#86efac', fontSize: 16, fontWeight: 700, textAlign: 'center', outline: 'none' }}
                             />
-                            <span style={{ marginLeft: 8, fontSize: 11, color: '#64748b' }}>Maior = aparece primeiro</span>
+                            <span style={{ marginLeft: 8, fontSize: 11, color: '#64748b' }}>Maior = aparece primeiro (0–100)</span>
                           </div>
                           {/* Botões salvar/cancelar */}
                           <div style={{ display: 'flex', gap: 10, marginTop: 4 }}>
@@ -1315,7 +1319,13 @@ export default function EditPagePage() {
                               {projectSaveMsg.text}
                             </div>
                           )}
-                          <div style={{ display: 'flex', gap: 10, marginTop: 14 }}>
+                          <div style={{ marginTop: 16, padding: '14px 18px', background: 'rgba(34,197,94,0.12)', borderRadius: 10, border: '2px solid rgba(34,197,94,0.4)' }}>
+                            <p style={{ margin: '0 0 10px', fontSize: 11, color: '#86efac', fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.08em' }}>Edição rápida (título, resumo, prioridade)</p>
+                            <button type="button" onClick={() => startEditProject(p0)} style={{ width: '100%', background: '#22c55e', color: '#fff', padding: '12px 20px', borderRadius: 8, fontSize: 14, fontWeight: 700, border: 'none', cursor: 'pointer', textTransform: 'uppercase' as const, letterSpacing: '0.06em', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, boxShadow: '0 2px 10px rgba(34,197,94,0.3)' }}>
+                              ✏️ EDITAR ESTE PROJETO
+                            </button>
+                          </div>
+                          <div style={{ display: 'flex', gap: 10, marginTop: 14, flexWrap: 'wrap', alignItems: 'center' }}>
                             <span style={{ padding: '8px 18px', borderRadius: 6, background: 'rgba(201,35,55,0.8)', color: '#fff', fontSize: 12, fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.06em' }}>VER PROJETO</span>
                             <span style={{ padding: '8px 18px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.2)', color: '#94a3b8', fontSize: 12, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.06em' }}>PROJETO SIMILAR</span>
                           </div>
@@ -1395,9 +1405,10 @@ export default function EditPagePage() {
                                 <label style={{ display: 'block', fontSize: 10, color: '#86efac', fontWeight: 600, marginBottom: 3 }}>Prioridade</label>
                                 <input
                                   type="number"
+                                  min={0}
+                                  max={100}
                                   value={editProjectData.priorityHome}
-                                  onChange={e => setEditProjectData(prev => ({ ...prev, priorityHome: parseInt(e.target.value) || 0 }))}
-                                  min={0} max={100}
+                                  onChange={e => setEditProjectData(prev => ({ ...prev, priorityHome: Math.min(100, Math.max(0, parseInt(e.target.value, 10) || 0)) }))}
                                   style={{ width: 70, padding: '5px 8px', borderRadius: 6, border: '1px solid rgba(34,197,94,0.3)', background: 'rgba(0,0,0,0.4)', color: '#86efac', fontSize: 14, fontWeight: 700, textAlign: 'center', outline: 'none' }}
                                 />
                               </div>
@@ -1437,12 +1448,12 @@ export default function EditPagePage() {
                                   {projectSaveMsg.text}
                                 </div>
                               )}
-                              <div style={{ marginTop: 8, display: 'flex', gap: 6 }}>
-                                <button type="button" onClick={() => startEditProject(p)} style={{ fontSize: 11, color: '#86efac', background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.3)', borderRadius: 6, padding: '3px 10px', cursor: 'pointer', fontWeight: 600 }}>
-                                  ✏️ Editar aqui
+                              <div style={{ marginTop: 10 }}>
+                                <button type="button" onClick={() => startEditProject(p)} style={{ width: '100%', background: '#22c55e', color: '#fff', padding: '10px 14px', borderRadius: 8, fontSize: 12, fontWeight: 700, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, boxShadow: '0 2px 8px rgba(34,197,94,0.3)' }}>
+                                  ✏️ EDITAR ESTE PROJETO
                                 </button>
-                                <a href={`/admin/projects/${p.id}`} style={{ fontSize: 11, color: '#7dd3fc', textDecoration: 'none', padding: '3px 10px', display: 'flex', alignItems: 'center' }}>
-                                  Completo →
+                                <a href={`/admin/projects/${p.id}`} style={{ display: 'block', marginTop: 6, fontSize: 11, color: '#7dd3fc', textDecoration: 'none', textAlign: 'center' }}>
+                                  Edição completa →
                                 </a>
                               </div>
                             </>
