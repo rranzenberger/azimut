@@ -1123,6 +1123,23 @@ export default function EditPagePage() {
               </div>
             </div>
 
+            {/* Ordem e prioridades explícitas (100, 90, 80, 70) */}
+            <div style={{ marginBottom: 16, padding: '14px 18px', borderRadius: 10, background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.25)', display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+              <span style={{ fontSize: 18, flexShrink: 0 }}>📌</span>
+              <div style={{ fontSize: 13, color: '#94a3b8', lineHeight: 1.6 }}>
+                <strong style={{ color: '#86efac' }}>Ordem na Home (prioridade explícita):</strong>
+                <ul style={{ margin: '8px 0 0', paddingLeft: 20, listStyle: 'disc' }}>
+                  <li><strong style={{ color: '#fbbf24' }}>1º — Principal (prioridade 100)</strong> — card grande no topo</li>
+                  <li><strong style={{ color: '#86efac' }}>2º — Secundário (prioridade 90)</strong> — primeiro card menor</li>
+                  <li><strong style={{ color: '#86efac' }}>3º — Secundário (prioridade 80)</strong> — segundo card menor</li>
+                  <li><strong style={{ color: '#86efac' }}>4º — Secundário (prioridade 70)</strong> — terceiro card menor</li>
+                </ul>
+                <p style={{ margin: '10px 0 0', fontSize: 12, color: '#64748b' }}>
+                  Use <strong style={{ color: '#f59e0b' }}>Substituir</strong> para trocar o projeto da vaga por outro existente; <strong style={{ color: '#3b82f6' }}>Novo aqui</strong> para criar um projeto que já entra nessa posição.
+                </p>
+              </div>
+            </div>
+
             {/* Label: Preview do Site */}
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginBottom: 16, padding: '4px 12px', borderRadius: 20, background: 'rgba(201,35,55,0.15)', border: '1px solid rgba(201,35,55,0.3)' }}>
               <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', animation: 'pulse 2s infinite' }}></span>
