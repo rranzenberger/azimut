@@ -14,6 +14,7 @@ import StarBackground from '../components/StarBackground'
 import OptimizedImage from '../components/OptimizedImage'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { useTheme } from '../contexts/ThemeContext'
+import { getInterestProfile, personalizeProjectOrder } from '../utils/personalizeProjects'
 import { logger } from '@/utils/logger'
 import { PageFooterNavigation } from '../components/PageFooterNavigation'
 import LangLink from '../components/LangLink'
@@ -277,7 +278,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     // 1º: Tentar projetos personalizados por IA (se disponível)
     if (personalizedProjects && Array.isArray(personalizedProjects) && personalizedProjects.length > 0) {
       return personalizedProjects;
-    } 
+    }
     // 2º: Tentar projetos do backoffice (se disponível)
     if (cmsContent?.highlightProjects && Array.isArray(cmsContent.highlightProjects) && cmsContent.highlightProjects.length > 0) {
       return cmsContent.highlightProjects;
@@ -285,21 +286,24 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     // 3º: Fallback estático (SEMPRE funciona)
     return defaultProjects;
   }, [personalizedProjects, cmsContent?.highlightProjects, defaultProjects]);
-  
-  // Projetos recomendados - SEMPRE tem pelo menos 4 itens (1 featured + 3 grid)
-  // Garantir que sempre seja um array válido com pelo menos 4 itens
+
+  // Perfil de interesse do visitante (localStorage) — mesma lógica da página Work
+  const interestProfile = useMemo(() => getInterestProfile(), []);
+
+  // Projetos recomendados: base (prioridade backoffice) + reordenação por comportamento
+  // 1 featured + 3 cards; quando o visitante tem histórico, os 3 cards seguem o interesse dele
   const recommended = useMemo(() => {
-    const projs = projects && Array.isArray(projects) && projects.length > 0 
-      ? projects 
+    const base = projects && Array.isArray(projects) && projects.length > 0
+      ? projects
       : defaultProjects;
-    // Garantir que sempre retorna pelo menos 4 itens para featured + grid
     const minRequired = 4;
-    if (projs.length < minRequired) {
-      // Se não tem 4, preenche com projetos default
-      return [...projs, ...defaultProjects.slice(0, minRequired - projs.length)];
-    }
-    return projs.slice(0, minRequired);
-  }, [projects, defaultProjects]);
+    const pool = base.length < minRequired
+      ? [...base, ...defaultProjects.slice(0, minRequired - base.length)]
+      : base;
+    // Reordenar por comportamento (destaque fixo; 3 seguintes personalizados)
+    const personalized = personalizeProjectOrder(pool, interestProfile);
+    return personalized.slice(0, minRequired);
+  }, [projects, defaultProjects, interestProfile]);
 
   // SEO otimizado com backoffice e keywords
   const seo = usePageSEO('home', lang)

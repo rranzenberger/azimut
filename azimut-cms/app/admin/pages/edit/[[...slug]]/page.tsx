@@ -388,12 +388,19 @@ export default function EditPagePage() {
         const err = await res.json().catch(() => ({}));
         throw new Error(err.error || 'Erro ao salvar');
       }
-      // Atualizar na lista local
+      // Atualizar na lista local (mesma ordenação do site: priorityHome desc, year desc, title asc)
+      const sortFeatured = (a: any, b: any) => {
+        const pa = a.priorityHome ?? 0, pb = b.priorityHome ?? 0;
+        if (pb !== pa) return pb - pa;
+        const ya = a.year ?? 0, yb = b.year ?? 0;
+        if (yb !== ya) return yb - ya;
+        return (a.title || '').localeCompare(b.title || '', 'pt');
+      };
       setHomeFeaturedProjects(prev => prev.map(p =>
         p.id === projectId
           ? { ...p, title: editProjectData.title, summary: editProjectData.summaryPt, priorityHome: Number(editProjectData.priorityHome) }
           : p
-      ).sort((a, b) => (b.priorityHome ?? 0) - (a.priorityHome ?? 0)));
+      ).sort(sortFeatured));
       setEditingProjectId(null);
       setProjectSaveMsg({ id: projectId, type: 'success', text: 'Salvo com sucesso!' });
       setTimeout(() => setProjectSaveMsg(null), 3000);
@@ -636,7 +643,8 @@ export default function EditPagePage() {
     }
   }, [slug]);
 
-  // Buscar projetos em destaque na Home (para listar nomes na seção Mídia da Página)
+  // Buscar projetos em destaque na Home — MESMA regra da API pública (site)
+  // Filtro: featured + PUBLISHED. Ordenação: priorityHome desc, year desc, title asc (igual ao site)
   useEffect(() => {
     if (slug !== 'home') return;
     let cancelled = false;
@@ -646,8 +654,16 @@ export default function EditPagePage() {
         if (!res.ok || cancelled) return;
         const data = await res.json();
         const list = (data.projects || [])
-          .filter((p: any) => p.featured && p.priorityHome > 0 && p.status === 'PUBLISHED')
-          .sort((a: any, b: any) => (b.priorityHome ?? 0) - (a.priorityHome ?? 0))
+          .filter((p: any) => p.featured && p.status === 'PUBLISHED')
+          .sort((a: any, b: any) => {
+            const pa = a.priorityHome ?? 0;
+            const pb = b.priorityHome ?? 0;
+            if (pb !== pa) return pb - pa;
+            const ya = a.year ?? 0;
+            const yb = b.year ?? 0;
+            if (yb !== ya) return yb - ya;
+            return (a.title || '').localeCompare(b.title || '', 'pt');
+          })
           .slice(0, 6)
           .map((p: any) => ({
             id: p.id,
@@ -1032,8 +1048,16 @@ export default function EditPagePage() {
               </a>
             </div>
             <p style={{ margin: '0 0 16px', fontSize: 13, color: '#94a3b8', lineHeight: 1.5 }}>
-              Edite título, resumo e prioridade diretamente aqui. As alterações são salvas no projeto e refletem automaticamente no site (Home + Work).
+              Edite título, resumo e prioridade diretamente aqui. As alterações são salvas no projeto e refletem no site (Home + Work). A ordem abaixo é a mesma do site: maior prioridade = card principal; empate = ano (mais recente) e depois título.
             </p>
+
+            {/* Mensagem: Home no site ajusta ao comportamento do usuário */}
+            <div style={{ marginBottom: 16, padding: '12px 14px', borderRadius: 10, background: 'rgba(56,189,248,0.08)', border: '1px solid rgba(56,189,248,0.2)', display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+              <span style={{ fontSize: 16, flexShrink: 0 }}>👤</span>
+              <div style={{ fontSize: 12, color: '#94a3b8', lineHeight: 1.6 }}>
+                <strong style={{ color: '#7dd3fc' }}>Comportamento do visitante:</strong> A ordem que você define aqui é a <strong>base</strong> do site. Na Home pública: o <strong>destaque principal</strong> (POS 1) é sempre o que você escolheu; os <strong>3 cards abaixo</strong> podem ser reordenados automaticamente conforme o visitante interage (categorias clicadas, projetos vistos). Visitante novo vê exatamente esta ordem; quem já navegou no site pode ver os 3 cards na ordem do interesse dele.
+              </div>
+            </div>
 
             {/* Label: Preview do Site */}
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginBottom: 16, padding: '4px 12px', borderRadius: 20, background: 'rgba(201,35,55,0.15)', border: '1px solid rgba(201,35,55,0.3)' }}>

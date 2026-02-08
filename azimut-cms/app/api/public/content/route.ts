@@ -68,13 +68,13 @@ export async function GET(request: NextRequest) {
       },
     });
     
-    // 3. Buscar projetos
+    // 3. Buscar projetos (mesma regra do backoffice Home: featured + priorityHome > 0, ordenado por priorityHome)
     // Para página 'work': buscar TODOS os projetos publicados
-    // Para outras páginas: apenas featured (destaque na home)
+    // Para home: apenas featured com prioridade > 0 (igual ao preview do backoffice)
     let featuredProjects = await prisma.project.findMany({
       where: {
         status: 'PUBLISHED',
-        ...(page !== 'work' ? { featured: true } : {}),
+        ...(page !== 'work' ? { featured: true, priorityHome: { gt: 0 } } : {}),
       },
       include: {
         heroImage: true,
@@ -86,7 +86,7 @@ export async function GET(request: NextRequest) {
         { year: 'desc' },
         { title: 'asc' },
       ],
-      ...(page !== 'work' ? { take: 6 } : {}), // Para work: sem limite
+      ...(page !== 'work' ? { take: 6 } : {}),
     });
 
     // 4. Personalização baseada em comportamento (se temos sessionId)
@@ -225,15 +225,13 @@ export async function GET(request: NextRequest) {
         })),
       } : null,
       
-      // Projetos priorizados por geo/comportamento
-      // Para página 'work': usar TODOS os projetos publicados (featuredProjects)
-      // Para outras páginas: usar recomendações ou destaques do mercado
+      // Projetos na Home: MESMA lista do backoffice (featured + priorityHome) para ficar igual
+      // Para página 'work': todos os projetos publicados
+      // Para home: recomendações por comportamento OU lista global featured+priority (nunca market.highlightProjects, para não divergir do backoffice)
       highlightProjects: (
         page === 'work' 
-          ? featuredProjects // Work: todos os projetos publicados
-          : (recommendedProjects || 
-             (market?.highlightProjects?.length ? market.highlightProjects : null) || 
-             featuredProjects)
+          ? featuredProjects
+          : (recommendedProjects || featuredProjects)
       ).map(p => formatProject(p, lang)),
       
       services: services.map(s => ({
