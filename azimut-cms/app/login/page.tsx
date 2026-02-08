@@ -280,22 +280,35 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <main
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#0a0e18',
-        color: '#d3cec3',
-        fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
-        padding: '20px',
-      }}
-    >
-      <Suspense fallback={<div style={{ color: '#d3cec3' }}>Carregando...</div>}>
-        <LoginForm />
-      </Suspense>
-    </main>
+    <>
+      <style>{`
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus {
+          -webkit-box-shadow: 0 0 0 1000px #141824 inset !important;
+          -webkit-text-fill-color: #fff !important;
+          border-color: rgba(201,35,55,0.4) !important;
+          caret-color: #fff !important;
+          transition: background-color 5000s ease-in-out 0s;
+        }
+      `}</style>
+      <main
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: '#0a0e18',
+          color: '#d3cec3',
+          fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+          padding: '20px',
+        }}
+      >
+        <Suspense fallback={<div style={{ color: '#d3cec3' }}>Carregando...</div>}>
+          <LoginForm />
+        </Suspense>
+      </main>
+    </>
   );
 }
 
