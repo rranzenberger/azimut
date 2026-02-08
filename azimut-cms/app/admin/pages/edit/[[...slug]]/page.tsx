@@ -1140,6 +1140,23 @@ export default function EditPagePage() {
               </div>
             </div>
 
+            {/* Imagens: tamanho, formato, sem corte, otimização automática (PT/EN/ES/FR) */}
+            <div style={{ marginBottom: 16, padding: '14px 18px', borderRadius: 10, background: 'rgba(168,85,247,0.06)', border: '1px solid rgba(168,85,247,0.2)', display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+              <span style={{ fontSize: 18, flexShrink: 0 }}>🖼️</span>
+              <div style={{ fontSize: 12, color: '#94a3b8', lineHeight: 1.65 }}>
+                <strong style={{ color: '#e9d5ff' }}>Imagens dos cards (aplica a todos os idiomas do site: PT, EN, ES, FR)</strong>
+                <ul style={{ margin: '8px 0 0', paddingLeft: 20, listStyle: 'disc' }}>
+                  <li><strong>Sem cortes nem distorção:</strong> a imagem sempre se encaixa no card por completo (<em>object-contain</em>). Se a proporção for diferente do card, aparecem faixas laterais ou verticais (fundo escuro).</li>
+                  <li><strong>Destaque principal (card grande):</strong> melhor em <strong>1920×1080 px</strong> (proporção 16:9). Formato: JPG ou PNG, ideal até 2 MB.</li>
+                  <li><strong>Cards secundários (3 menores):</strong> melhor em <strong>800×600 px</strong> (proporção 4:3). JPG ou PNG, ideal até 1 MB.</li>
+                  <li><strong>Vídeo de capa:</strong> MP4 ou WebM, máx. 25 MB.</li>
+                </ul>
+                <p style={{ margin: '10px 0 0', fontSize: 12, color: '#86efac' }}>
+                  <strong>Otimização:</strong> ao subir a imagem pelo backoffice (Trocar imagem / Upload), o sistema <strong>já otimiza automaticamente</strong> para o site: gera thumbnail, tamanho médio, grande e WebP. Não é necessário otimizar manualmente nem uma por uma.
+                </p>
+              </div>
+            </div>
+
             {/* Label: Preview do Site */}
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginBottom: 16, padding: '4px 12px', borderRadius: 20, background: 'rgba(201,35,55,0.15)', border: '1px solid rgba(201,35,55,0.3)' }}>
               <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', animation: 'pulse 2s infinite' }}></span>
@@ -1173,7 +1190,7 @@ export default function EditPagePage() {
                     {/* Imagem grande + Upload */}
                     <div style={{ position: 'relative', paddingTop: '50%', background: '#111827' }}>
                       {p0.heroImage ? (
-                        <img src={p0.heroImage} alt={p0.title} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <img src={p0.heroImage} alt={p0.title} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', backgroundColor: '#0f172a' }} />
                       ) : (
                         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' as const, gap: 8, background: 'linear-gradient(135deg, rgba(201,35,55,0.2), rgba(10,14,26,0.9))' }}>
                           <span style={{ fontSize: 48, opacity: 0.3 }}>🖼️</span>
@@ -1217,7 +1234,7 @@ export default function EditPagePage() {
                       </div>
                       {/* Info de tamanho recomendado */}
                       <div style={{ position: 'absolute', bottom: 8, right: 12, background: 'rgba(0,0,0,0.6)', padding: '3px 10px', borderRadius: 6, backdropFilter: 'blur(8px)' }}>
-                        <span style={{ fontSize: 10, color: '#94a3b8' }}>Recomendado: 1920×1080px · JPG/PNG · Max 8MB · Vídeo: MP4/WebM max 25MB</span>
+                        <span style={{ fontSize: 10, color: '#94a3b8' }}>Principal: 1920×1080 (16:9) · Secundários: 800×600 (4:3) · JPG/PNG · Upload otimiza automaticamente</span>
                       </div>
                     </div>
                     {/* Info abaixo da imagem — MODO EDIÇÃO ou MODO LEITURA */}
@@ -1319,7 +1336,7 @@ export default function EditPagePage() {
                         {/* Imagem do card + Upload */}
                         <div style={{ position: 'relative', paddingTop: '65%', background: '#111827' }}>
                           {p.heroImage ? (
-                            <img src={p.heroImage} alt={p.title} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={p.heroImage} alt={p.title} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', backgroundColor: '#0f172a' }} />
                           ) : (
                             <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' as const, background: 'linear-gradient(135deg, rgba(201,35,55,0.1), rgba(10,14,26,0.8))' }}>
                               <span style={{ fontSize: 32, opacity: 0.3 }}>🖼️</span>

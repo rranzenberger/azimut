@@ -1563,7 +1563,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     borderRadius: '1rem'
                   }}
                 >
-                  <div className="relative aspect-video w-full overflow-hidden rounded-t-2xl">
+                  <div className={`relative aspect-video w-full overflow-hidden rounded-t-2xl ${theme === 'dark' ? 'bg-slate-950' : 'bg-slate-800'}`}>
                     {hasVideo ? (
                       <VideoPlayer
                         videoUrl={mainFeatured.heroImage.original}
@@ -1654,7 +1654,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 return (
                   <article
                     key={project.slug || index}
-                    className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur transition-all duration-500 hover:scale-[1.02] hover:border-azimut-red/60 hover:shadow-[0_30px_80px_rgba(201,35,55,0.5)]"
+                    className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur transition-all duration-500 hover:scale-[1.02] hover:border-azimut-red/60 hover:shadow-[0_30px_80px_rgba(201,35,55,0.5)] bg-slate-950"
                     onClick={() => { window.location.href = `/${lang}/work/${project.slug}` }}
                     style={{ animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`, cursor: 'pointer' }}
                   >
