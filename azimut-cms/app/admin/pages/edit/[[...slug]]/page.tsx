@@ -667,7 +667,7 @@ export default function EditPagePage() {
             priorityHome: p.priorityHome ?? 0,
             slug: p.slug,
             heroImage: p.heroImage?.mediumUrl || p.heroImage?.largeUrl || p.heroImage?.originalUrl || p.thumbnailUrl || null,
-            tags: (p.tags || []).map((t: any) => t.name || t).slice(0, 3),
+            tags: (p.tags || []).map((t: any) => t.labelPt || t.labelEn || t.slug || 'tag').slice(0, 3),
             city: p.city,
             country: p.country,
             year: p.year,
