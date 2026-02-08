@@ -2,6 +2,7 @@
 
 import { FormEvent, useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import UnifiedMediaUpload from '@/components/admin/UnifiedMediaUpload';
 
 const HOME_SLOT_PRIORITIES: Record<number, number> = { 0: 100, 1: 90, 2: 80, 3: 70 };
 
@@ -46,7 +47,12 @@ export default function NewProjectPage() {
     externalLinks: '',
     partnerLogos: '',
     beforeAfterImages: '',
+    heroImageId: '',
+    heroMediaType: '' as '' | 'IMAGE' | 'VIDEO',
+    heroMediaUrl: '',
   });
+
+  const [allMedia, setAllMedia] = useState<{ id: string; type: 'IMAGE' | 'VIDEO'; originalUrl: string; thumbnailUrl?: string }[]>([]);
 
   // Se veio da Home (botão "Novo aqui"): já como destaque e prioridade da vaga
   useEffect(() => {
@@ -58,6 +64,22 @@ export default function NewProjectPage() {
     setFormData(prev => ({ ...prev, featured: true, priorityHome: priority }));
   }, [searchParams]);
 
+  // Carregar lista de mídias para escolher/upload da capa
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch('/api/admin/media?limit=100');
+        if (!res.ok || cancelled) return;
+        const data = await res.json();
+        if (!cancelled) setAllMedia(data.media || []);
+      } catch {
+        if (!cancelled) setAllMedia([]);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError(null);
@@ -67,6 +89,7 @@ export default function NewProjectPage() {
       // Processar campos JSON e arrays antes de enviar
       const payload = {
         ...formData,
+        heroImageId: formData.heroImageId || null,
         awards: formData.awards ? JSON.parse(formData.awards) : null,
         metrics: formData.metrics ? JSON.parse(formData.metrics) : null,
         externalLinks: formData.externalLinks ? JSON.parse(formData.externalLinks) : null,
@@ -102,6 +125,11 @@ export default function NewProjectPage() {
       <header style={{ marginBottom: 24 }}>
         <h1 style={{ margin: 0, fontSize: 26 }}>Novo Projeto</h1>
         <p style={{ margin: 4, color: '#c0bccf' }}>Crie um novo projeto para o portfólio.</p>
+        <p style={{ margin: '12px 0 0', fontSize: 13, color: '#8f8ba2', maxWidth: 720 }}>
+          <strong>Slug</strong> = URL amigável do projeto (ex: world-league-cup → /work/world-league-cup). Apenas letras minúsculas, números e hífens.
+          <br />
+          <strong>Imagem/vídeo de capa:</strong> você pode escolher ou enviar a capa aqui; mais imagens e vídeos (galeria) podem ser adicionados na edição do projeto, na aba <strong>Galeria</strong>.
+        </p>
       </header>
 
       <form
@@ -157,6 +185,62 @@ export default function NewProjectPage() {
           <small style={{ color: '#8f8ba2', fontSize: 12 }}>
             URL amigável (ex: rio-museu-olimpico). Apenas letras, números e hífens.
           </small>
+        </div>
+
+        <div style={{ display: 'grid', gap: 8, padding: '16px 0', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+          <label style={{ fontSize: 14, fontWeight: 600 }}>Imagem ou vídeo principal (capa)</label>
+          <p style={{ margin: '0 0 12px 0', fontSize: 12, color: '#8f8ba2' }}>
+            Opcional. Escolha na biblioteca ou faça upload. Aparece nos cards da Home e na subpágina do projeto. Mais itens na galeria podem ser adicionados depois, na edição.
+          </p>
+          <UnifiedMediaUpload
+            pageSlug="admin-projects-new"
+            sectionSlug="hero"
+            imageId={(() => {
+              const fromList = allMedia.find((m) => m.id === formData.heroImageId);
+              const isImage = formData.heroMediaType === 'IMAGE' || fromList?.type === 'IMAGE';
+              return isImage && formData.heroImageId ? formData.heroImageId : undefined;
+            })()}
+            imageUrl={(() => {
+              const fromList = allMedia.find((m) => m.id === formData.heroImageId);
+              const isImage = formData.heroMediaType === 'IMAGE' || fromList?.type === 'IMAGE';
+              if (!isImage || !formData.heroImageId) return undefined;
+              return formData.heroMediaUrl || fromList?.thumbnailUrl || fromList?.originalUrl;
+            })()}
+            videoId={(() => {
+              const fromList = allMedia.find((m) => m.id === formData.heroImageId);
+              const isVideo = formData.heroMediaType === 'VIDEO' || fromList?.type === 'VIDEO';
+              return isVideo && formData.heroImageId ? formData.heroImageId : undefined;
+            })()}
+            videoUrl={(() => {
+              const fromList = allMedia.find((m) => m.id === formData.heroImageId);
+              const isVideo = formData.heroMediaType === 'VIDEO' || fromList?.type === 'VIDEO';
+              if (!isVideo || !formData.heroImageId) return undefined;
+              return formData.heroMediaUrl || fromList?.originalUrl;
+            })()}
+            onImageChange={(mediaId, url) => {
+              setFormData((prev) => ({
+                ...prev,
+                heroImageId: mediaId || '',
+                heroMediaType: 'IMAGE',
+                heroMediaUrl: url || '',
+              }));
+            }}
+            onVideoChange={(mediaId, url) => {
+              setFormData((prev) => ({
+                ...prev,
+                heroImageId: mediaId || '',
+                heroMediaType: 'VIDEO',
+                heroMediaUrl: url || '',
+              }));
+            }}
+            allowVideo={true}
+            allowExternalUrl={true}
+            imageSpecs={{ width: 1920, height: 1080, maxSizeMB: 5, description: 'Imagem de capa do projeto' }}
+            videoSpecs={{ maxSizeMB: 50, description: 'Vídeo de capa do projeto' }}
+            existingMedia={allMedia}
+            imageLabel="Imagem de capa"
+            videoLabel="Vídeo de capa (se preferir vídeo em vez de imagem)"
+          />
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>

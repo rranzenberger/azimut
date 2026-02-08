@@ -31,3 +31,21 @@
 -- JOIN "Project" p ON p.id = pm."projectId"
 -- WHERE p.slug = 'natal-rio-bonito-2025'
 -- ORDER BY pm.order ASC;
+
+-- Exemplo: inserir UMA mídia na galeria (substitua os UUIDs pelos reais)
+-- Você precisa do projectId (ex: da tabela Project) e do mediaId (ex: da tabela Media).
+-- INSERT INTO "ProjectMedia" (id, "projectId", "mediaId", "order", "captionPt", "captionEn", "captionEs", "captionFr", "createdAt", "updatedAt")
+-- SELECT
+--   gen_random_uuid(),
+--   p.id,
+--   'UUID-DA-MIDIA-AQUI',
+--   COALESCE((SELECT MAX(pm."order") + 1 FROM "ProjectMedia" pm WHERE pm."projectId" = p.id), 0),
+--   'Legenda em português',
+--   'Caption in English',
+--   NULL,
+--   NULL,
+--   NOW(),
+--   NOW()
+-- FROM "Project" p
+-- WHERE p.slug = 'slug-do-projeto'
+-- LIMIT 1;
