@@ -1,10 +1,13 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { FormEvent, useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+
+const HOME_SLOT_PRIORITIES: Record<number, number> = { 0: 100, 1: 90, 2: 80, 3: 70 };
 
 export default function NewProjectPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -44,6 +47,16 @@ export default function NewProjectPage() {
     partnerLogos: '',
     beforeAfterImages: '',
   });
+
+  // Se veio da Home (botão "Novo aqui"): já como destaque e prioridade da vaga
+  useEffect(() => {
+    const slot = searchParams.get('fromHomeSlot');
+    if (slot === null) return;
+    const slotNum = parseInt(slot, 10);
+    if (Number.isNaN(slotNum) || slotNum < 0 || slotNum > 3) return;
+    const priority = HOME_SLOT_PRIORITIES[slotNum] ?? 70;
+    setFormData(prev => ({ ...prev, featured: true, priorityHome: priority }));
+  }, [searchParams]);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();

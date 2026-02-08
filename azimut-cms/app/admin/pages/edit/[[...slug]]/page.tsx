@@ -411,6 +411,75 @@ export default function EditPagePage() {
     }
   }, [editProjectData]);
 
+  // Substituir projeto por outro (modal): slot 0=principal, 1,2,3=secundários
+  const SLOT_PRIORITIES = [100, 90, 80, 70] as const; // ordem: 1º principal, 2º–4º secundários
+  const [replaceSlotIndex, setReplaceSlotIndex] = useState<number | null>(null);
+  const [replaceProjectList, setReplaceProjectList] = useState<Array<{ id: string; title: string; slug: string; status: string }>>([]);
+  const [replacingProjectId, setReplacingProjectId] = useState<string | null>(null);
+  const [replaceError, setReplaceError] = useState<string | null>(null);
+
+  const openReplaceModal = useCallback(async (slotIndex: number) => {
+    setReplaceSlotIndex(slotIndex);
+    setReplaceError(null);
+    try {
+      const res = await fetch('/api/admin/projects?limit=300');
+      if (!res.ok) throw new Error('Falha ao carregar projetos');
+      const data = await res.json();
+      const currentIds = homeFeaturedProjects.slice(0, 4).map((p: any) => p.id);
+      const others = (data.projects || []).filter((p: any) => p.status === 'PUBLISHED' && !currentIds.includes(p.id));
+      setReplaceProjectList(others.map((p: any) => ({ id: p.id, title: p.title || p.slug, slug: p.slug, status: p.status })));
+    } catch (e: any) {
+      setReplaceError(e.message || 'Erro ao carregar lista');
+      setReplaceProjectList([]);
+    }
+  }, [homeFeaturedProjects]);
+
+  const confirmReplaceProject = useCallback(async (newProjectId: string) => {
+    if (replaceSlotIndex === null) return;
+    setReplacingProjectId(newProjectId);
+    setReplaceError(null);
+    const priorityForSlot = SLOT_PRIORITIES[replaceSlotIndex];
+    const currentInSlot = homeFeaturedProjects[replaceSlotIndex];
+    try {
+      if (currentInSlot) {
+        const rOld = await fetch(`/api/admin/projects/${currentInSlot.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ featured: true, priorityHome: 5 }),
+        });
+        if (!rOld.ok) throw new Error('Erro ao remover projeto da vaga');
+      }
+      const rNew = await fetch(`/api/admin/projects/${newProjectId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ featured: true, priorityHome: priorityForSlot }),
+      });
+      if (!rNew.ok) throw new Error('Erro ao colocar projeto na vaga');
+      setReplaceSlotIndex(null);
+      const res = await fetch('/api/admin/projects?featured=true');
+      if (res.ok) {
+        const data = await res.json();
+        const list = (data.projects || []).slice(0, 6).map((p: any) => ({
+          id: p.id,
+          title: p.title || p.shortTitle || p.slug || 'Sem título',
+          summary: p.summaryPt || p.summaryEn || '',
+          priorityHome: p.priorityHome ?? 0,
+          slug: p.slug,
+          heroImage: p.heroImage?.mediumUrl || p.heroImage?.largeUrl || p.heroImage?.originalUrl || p.thumbnailUrl || null,
+          tags: (p.tags || []).map((t: any) => t.labelPt || t.labelEn || t.slug || 'tag').slice(0, 3),
+          city: p.city,
+          country: p.country,
+          year: p.year,
+        }));
+        setHomeFeaturedProjects(list);
+      }
+    } catch (e: any) {
+      setReplaceError(e.message || 'Erro ao substituir');
+    } finally {
+      setReplacingProjectId(null);
+    }
+  }, [replaceSlotIndex, homeFeaturedProjects]);
+
   // Upload de imagem/vídeo de capa para projetos em destaque
   const [uploadingImageId, setUploadingImageId] = useState<string | null>(null);
   const [uploadProgress, setUploadProgress] = useState<string>('');
@@ -1119,6 +1188,12 @@ export default function EditPagePage() {
                             ✏️ Editar textos
                           </button>
                         )}
+                        <button type="button" onClick={() => openReplaceModal(0)} style={{ background: 'rgba(245,158,11,0.85)', color: '#fff', padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 600, border: 'none', cursor: 'pointer', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', gap: 4 }}>
+                          🔄 Substituir
+                        </button>
+                        <a href={`/admin/projects/new?fromHomeSlot=0`} style={{ background: 'rgba(59,130,246,0.85)', color: '#fff', padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 600, textDecoration: 'none', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', gap: 4 }}>
+                          ➕ Novo aqui
+                        </a>
                         <a href={`/admin/projects/${p0.id}`} style={{ background: 'rgba(0,0,0,0.6)', color: '#7dd3fc', padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 600, textDecoration: 'none', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', gap: 4 }}>
                           Completo →
                         </a>
@@ -1244,11 +1319,19 @@ export default function EditPagePage() {
                           <div style={{ position: 'absolute', top: 8, right: 8, background: 'rgba(0,0,0,0.75)', color: '#86efac', padding: '3px 8px', borderRadius: 6, fontSize: 10, fontWeight: 700, backdropFilter: 'blur(8px)' }}>
                             #{idx + 2} · P{p.priorityHome}
                           </div>
-                          {/* Botão upload de imagem no card menor */}
+                          {/* Botões: upload, substituir, novo */}
                           <label style={{ position: 'absolute', bottom: 8, left: 8, background: 'rgba(168,85,247,0.85)', color: '#fff', padding: '4px 10px', borderRadius: 6, fontSize: 10, fontWeight: 600, cursor: uploadingImageId === p.id ? 'wait' : 'pointer', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', gap: 3, zIndex: 5 }}>
                             📷 {p.heroImage ? 'Trocar' : 'Upload'}
                             <input type="file" accept="image/*,video/mp4,video/webm" style={{ display: 'none' }} onChange={(e) => { const f = e.target.files?.[0]; if (f) handleHeroImageUpload(p.id, f); e.target.value = ''; }} disabled={uploadingImageId === p.id} />
                           </label>
+                          <div style={{ position: 'absolute', bottom: 8, right: 8, display: 'flex', gap: 4, zIndex: 5 }}>
+                            <button type="button" onClick={() => openReplaceModal(idx + 1)} style={{ background: 'rgba(245,158,11,0.9)', color: '#fff', padding: '4px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, border: 'none', cursor: 'pointer', backdropFilter: 'blur(8px)' }} title="Substituir por outro projeto">
+                              🔄
+                            </button>
+                            <a href={`/admin/projects/new?fromHomeSlot=${idx + 1}`} style={{ background: 'rgba(59,130,246,0.9)', color: '#fff', padding: '4px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, textDecoration: 'none', backdropFilter: 'blur(8px)' }} title="Novo projeto neste destaque">
+                              ➕
+                            </a>
+                          </div>
                           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '40%', background: 'linear-gradient(to top, rgba(20,24,39,0.9), transparent)', pointerEvents: 'none' }}></div>
                         </div>
                         {/* Info do card */}
@@ -1343,6 +1426,42 @@ export default function EditPagePage() {
                     VER TODOS OS {homeFeaturedProjects.length} PROJETOS →
                   </a>
                 </div>
+
+                {/* ═══ Modal: Substituir projeto por outro ═══ */}
+                {replaceSlotIndex !== null && (
+                  <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }} onClick={() => setReplaceSlotIndex(null)}>
+                    <div style={{ background: '#0f172a', borderRadius: 16, border: '1px solid rgba(255,255,255,0.1)', maxWidth: 480, width: '90%', maxHeight: '80vh', overflow: 'hidden', display: 'flex', flexDirection: 'column' as const }} onClick={e => e.stopPropagation()}>
+                      <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                        <h3 style={{ margin: 0, fontSize: 18, fontWeight: 700, color: '#fff' }}>
+                          {replaceSlotIndex === 0 ? 'Substituir destaque principal' : `Substituir projeto #${replaceSlotIndex + 1} (secundário)`}
+                        </h3>
+                        <p style={{ margin: '8px 0 0', fontSize: 13, color: '#94a3b8' }}>Escolha um projeto para ocupar esta vaga. O projeto atual sairá dos 4 em evidência.</p>
+                      </div>
+                      {replaceError && (
+                        <div style={{ margin: '12px 20px 0', padding: '10px 14px', borderRadius: 8, background: 'rgba(239,68,68,0.15)', color: '#fca5a5', fontSize: 13 }}>{replaceError}</div>
+                      )}
+                      <div style={{ padding: 16, overflowY: 'auto', flex: 1 }}>
+                        {replaceProjectList.length === 0 && !replaceError && <p style={{ color: '#64748b', fontSize: 13 }}>Carregando projetos...</p>}
+                        {replaceProjectList.map((proj) => (
+                          <button
+                            key={proj.id}
+                            type="button"
+                            onClick={() => confirmReplaceProject(proj.id)}
+                            disabled={replacingProjectId !== null}
+                            style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 14px', marginBottom: 6, borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.04)', color: '#e2e8f0', fontSize: 14, cursor: replacingProjectId ? 'wait' : 'pointer' }}
+                          >
+                            {replacingProjectId === proj.id ? '⏳ Colocando...' : proj.title}
+                          </button>
+                        ))}
+                      </div>
+                      <div style={{ padding: '12px 24px 20px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+                        <button type="button" onClick={() => setReplaceSlotIndex(null)} style={{ padding: '10px 20px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: '#94a3b8', fontSize: 14, cursor: 'pointer' }}>
+                          Cancelar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {/* ═══ Projetos adicionais (5, 6) ═══ */}
                 {homeFeaturedProjects.length > 4 && (
