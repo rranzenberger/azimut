@@ -16,6 +16,11 @@ interface ProjectDetailProps {
   lang: Lang
 }
 
+// Slug antigo/errado → slug canônico (evita "projeto não encontrado" por URL errada)
+const SLUG_REDIRECTS: Record<string, string> = {
+  'rio-museu-olimpico': 'museu-olimpico-rio',
+}
+
 const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
@@ -24,8 +29,16 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
   // const { trackInteraction } = useUserTracking()
   const trackInteraction = (type: string, target: string) => {} // Dummy
   const starRef = useRef<HTMLDivElement>(null)
-  
-  const { project, loading, error } = useProject(slug || '', lang)
+
+  const canonicalSlug = (slug && SLUG_REDIRECTS[slug]) || slug || ''
+  const { project, loading, error } = useProject(canonicalSlug, lang)
+
+  // Redirecionar URL para slug canônico (ex: /work/rio-museu-olimpico → /work/museu-olimpico-rio)
+  useEffect(() => {
+    if (slug && SLUG_REDIRECTS[slug]) {
+      navigate(`/${lang === 'pt' ? '' : lang}/work/${SLUG_REDIRECTS[slug]}`, { replace: true })
+    }
+  }, [slug, lang, navigate])
   const { content: cmsContent } = useAzimutContent({ page: 'work' })
   const allProjects = cmsContent?.highlightProjects || []
   

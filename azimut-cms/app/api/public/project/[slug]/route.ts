@@ -8,16 +8,21 @@ import { prisma } from '@/src/lib/prisma';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   const { searchParams } = new URL(request.url);
   const lang = searchParams.get('lang') || 'pt';
-  const slug = params.slug;
+  const { slug: rawSlug } = await params;
+  // Redirecionar slug antigo/errado para o correto (evita 404/500 por typo)
+  const slugMap: Record<string, string> = {
+    'rio-museu-olimpico': 'museu-olimpico-rio',
+  };
+  const slug = slugMap[rawSlug] ?? rawSlug;
 
   try {
     // Buscar projeto com todas as relações
     const project = await prisma.project.findUnique({
-      where: { 
+      where: {
         slug,
         status: 'PUBLISHED', // Apenas projetos publicados
       },
