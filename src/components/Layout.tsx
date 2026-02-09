@@ -438,7 +438,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 
                 {/* Grupo Canadá - EN e FR */}
                 <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '3px' }}>
-                  <img src="/flag-ca.svg" alt="Canada" width={28} height={18} className="w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '18px', width: 'auto', maxHeight: '18px', maxWidth: '26px' }} />
+                  <img src="/flag-ca.svg" alt="Canada" width={34} height={22} className="w-auto rounded-[2px] opacity-95 shrink-0" style={{ display: 'block', height: '22px', width: 'auto', maxHeight: '22px', maxWidth: '34px' }} />
                   <button
                     type="button"
                     aria-label="English"
@@ -450,7 +450,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     style={{ 
                       color: lang === 'en' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'), 
                       opacity: 1,
-                      minWidth: '22px',
+                      minWidth: '26px',
                       height: '100%',
                       display: 'flex',
                       alignItems: 'center',
@@ -458,13 +458,13 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       padding: '0 1px',
                       lineHeight: '1',
                       margin: '0',
-                      fontSize: '0.75rem',
+                      fontSize: '0.875rem',
                       letterSpacing: '0.03em'
                     }}
                   >
                     EN
                   </button>
-                  <span className="shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', lineHeight: '1', fontSize: '0.45rem', transform: 'translateY(-1px)', color: '#c92337' }}>●</span>
+                  <span className="shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', lineHeight: '1', fontSize: '0.7rem', transform: 'translateY(-1px)', color: '#c92337', opacity: 1 }}>●</span>
                   <button
                     type="button"
                     aria-label="Français"
@@ -484,7 +484,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       padding: '0 1px',
                       lineHeight: '1',
                       margin: '0',
-                      fontSize: '0.75rem',
+                      fontSize: '0.8125rem',
                       letterSpacing: '0.03em'
                     }}
                   >
@@ -495,7 +495,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 <span className="opacity-50 shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', marginLeft: '7px', marginRight: '10px', lineHeight: '1', fontSize: '0.7rem' }}>|</span>
                 {/* PT - Brasil */}
                 <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '3px' }}>
-                  <img src="/flag-br.svg" alt="Brasil" className="w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '18px', width: 'auto', maxHeight: '18px', maxWidth: '26px' }} />
+                  <img src="/flag-br.svg" alt="Brasil" className="w-auto rounded-[2px] opacity-95 shrink-0" style={{ display: 'block', height: '20px', width: 'auto', maxHeight: '20px', maxWidth: '29px' }} />
                   <button
                     type="button"
                     aria-label="Português"
@@ -507,7 +507,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     style={{
                       color: lang === 'pt' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
                       opacity: 1,
-                      minWidth: '22px',
+                      minWidth: '24px',
                       height: '100%',
                       display: 'flex',
                       alignItems: 'center',
@@ -515,18 +515,18 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       padding: '0 1px',
                       lineHeight: '1',
                       margin: '0',
-                      fontSize: '0.75rem',
+                      fontSize: '0.8125rem',
                       letterSpacing: '0.03em'
                     }}
                   >
                     PT
                   </button>
                 </span>
-                {/* Separador */}
-                <span className="shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', lineHeight: '1', fontSize: '0.45rem', transform: 'translateY(-1px)', color: '#c92337', marginLeft: '5px', marginRight: '5px' }}>●</span>
+                {/* Separador - bolinha vermelha mais aparente */}
+                <span className="shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', lineHeight: '1', fontSize: '0.65rem', transform: 'translateY(-1px)', color: '#c92337', opacity: 1, marginLeft: '5px', marginRight: '5px' }}>●</span>
                 {/* ES - Espanha */}
                 <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '3px' }}>
-                  <img src="/flag-es.svg" alt="España" className="w-auto rounded-[2px] opacity-90 shrink-0" style={{ display: 'block', height: '18px', width: 'auto', maxHeight: '18px', maxWidth: '26px' }} />
+                  <img src="/flag-es.svg" alt="España" className="w-auto rounded-[2px] opacity-95 shrink-0" style={{ display: 'block', height: '20px', width: 'auto', maxHeight: '20px', maxWidth: '29px' }} />
                   <button
                     type="button"
                     aria-label="Español"
@@ -538,7 +538,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     style={{
                       color: lang === 'es' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
                       opacity: 1,
-                      minWidth: '22px',
+                      minWidth: '24px',
                       height: '100%',
                       display: 'flex',
                       alignItems: 'center',
@@ -546,7 +546,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       padding: '0 1px',
                       lineHeight: '1',
                       margin: '0',
-                      fontSize: '0.75rem',
+                      fontSize: '0.8125rem',
                       letterSpacing: '0.03em'
                     }}
                   >
@@ -1257,18 +1257,18 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               
               {/* Idiomas e CTA no menu mobile */}
               <div className="pt-3 mt-3 sm:pt-4 sm:mt-4 border-t space-y-2 sm:space-y-3" style={{ borderColor: 'var(--theme-border)' }}>
-                <div className="flex items-center justify-center font-sora text-[0.65rem] sm:text-[0.7rem] font-medium uppercase tracking-[0.14em]" style={{ color: 'var(--theme-text-secondary)' }}>
+                <div className="flex items-center justify-center font-sora text-[0.7rem] sm:text-[0.8rem] font-medium uppercase tracking-[0.14em]" style={{ color: 'var(--theme-text-secondary)' }}>
                   {/* Grupo Canadá - EN e FR muito juntos */}
                   <span className="inline-flex items-center gap-0" style={{ alignItems: 'center' }}>
-                    <img src="/flag-ca.svg" alt="Canada" width={28} height={14} className="h-3.5 w-auto rounded-[2px] opacity-90 mr-0.5" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
+                    <img src="/flag-ca.svg" alt="Canada" width={32} height={16} className="w-auto rounded-[2px] opacity-95 mr-0.5" style={{ display: 'block', height: '17px', width: 'auto', maxHeight: '17px', maxWidth: '24px' }} />
                     <button
                       onClick={() => changeLang('en')}
                       className="transition-all duration-200 touch-manipulation"
                       style={{ 
                         color: lang === 'en' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
                         opacity: lang === 'en' ? 1 : 0.7,
-                        minWidth: '28px',
-                        minHeight: '32px',
+                        minWidth: '30px',
+                        minHeight: '34px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center'
@@ -1276,15 +1276,15 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     >
                       EN
                     </button>
-                    <span className="mx-[2px] opacity-70 text-[0.6rem] sm:text-[0.65rem] flex items-center" style={{ lineHeight: '1', display: 'inline-flex' }}>●</span>
+                    <span className="mx-[3px] flex items-center" style={{ lineHeight: '1', display: 'inline-flex', color: '#c92337', opacity: 1, fontSize: '0.7rem' }}>●</span>
                     <button
                       onClick={() => changeLang('fr')}
                       className="transition-all duration-200 touch-manipulation"
                       style={{ 
                         color: lang === 'fr' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
                         opacity: lang === 'fr' ? 1 : 0.7,
-                        minWidth: '28px',
-                        minHeight: '32px',
+                        minWidth: '30px',
+                        minHeight: '34px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center'
@@ -1297,15 +1297,15 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   <span className="opacity-50 mx-3.5 text-[0.8rem] font-normal flex items-center" style={{ lineHeight: '1' }}>|</span>
                   {/* PT - Brasil */}
                   <span className="inline-flex items-center gap-0" style={{ alignItems: 'center' }}>
-                    <img src="/flag-br.svg" alt="Brasil" width={28} height={14} className="h-3.5 w-auto rounded-[2px] opacity-90 mr-1" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
+                    <img src="/flag-br.svg" alt="Brasil" width={32} height={16} className="w-auto rounded-[2px] opacity-95 mr-1" style={{ display: 'block', height: '17px', width: 'auto', maxHeight: '17px', maxWidth: '24px' }} />
                     <button
                       onClick={() => changeLang('pt')}
                       className="transition-all duration-200 touch-manipulation"
                       style={{ 
                         color: lang === 'pt' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
                         opacity: lang === 'pt' ? 1 : 0.7,
-                        minWidth: '28px',
-                        minHeight: '32px',
+                        minWidth: '30px',
+                        minHeight: '34px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center'
@@ -1314,19 +1314,19 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       PT
                     </button>
                   </span>
-                  {/* Separador */}
-                  <span className="mx-[2px] opacity-70 text-[0.6rem] sm:text-[0.65rem] flex items-center" style={{ lineHeight: '1', display: 'inline-flex', color: '#c92337' }}>●</span>
+                  {/* Separador - bolinha vermelha mais aparente */}
+                  <span className="mx-[3px] flex items-center" style={{ lineHeight: '1', display: 'inline-flex', color: '#c92337', opacity: 1, fontSize: '0.7rem' }}>●</span>
                   {/* ES - Espanha */}
                   <span className="inline-flex items-center gap-0" style={{ alignItems: 'center' }}>
-                    <img src="/flag-es.svg" alt="España" width={28} height={14} className="h-3.5 w-auto rounded-[2px] opacity-90 mr-1" style={{ display: 'block', height: '14px', width: 'auto', maxHeight: '14px', maxWidth: '20px' }} />
+                    <img src="/flag-es.svg" alt="España" width={32} height={16} className="w-auto rounded-[2px] opacity-95 mr-1" style={{ display: 'block', height: '17px', width: 'auto', maxHeight: '17px', maxWidth: '24px' }} />
                     <button
                       onClick={() => changeLang('es')}
                       className="transition-all duration-200 touch-manipulation"
                       style={{ 
                         color: lang === 'es' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : 'var(--theme-text-muted)'), 
                         opacity: lang === 'es' ? 1 : 0.7,
-                        minWidth: '28px',
-                        minHeight: '32px',
+                        minWidth: '30px',
+                        minHeight: '34px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center'
