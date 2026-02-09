@@ -44,7 +44,7 @@ export function GalleryManager({ projectId, initialGallery = [], onGalleryChange
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [showAddPanel, setShowAddPanel] = useState(false);
+  const [showAddPanel, setShowAddPanel] = useState(initialGallery?.length === 0);
   const [selectedMediaId, setSelectedMediaId] = useState<string>('');
   const [urlInput, setUrlInput] = useState('');
   const [urlType, setUrlType] = useState<'IMAGE' | 'VIDEO'>('IMAGE');
@@ -448,7 +448,7 @@ export function GalleryManager({ projectId, initialGallery = [], onGalleryChange
 
   return (
     <div style={{ marginTop: 16 }}>
-      {/* Cabeçalho compacto: título + contagem + botão */}
+      {/* Cabeçalho: título, contagem e botão bem visível para adicionar mais */}
       <div style={{
         display: 'flex',
         flexWrap: 'wrap',
@@ -456,35 +456,43 @@ export function GalleryManager({ projectId, initialGallery = [], onGalleryChange
         justifyContent: 'space-between',
         gap: 12,
         marginBottom: 16,
-        padding: '10px 14px',
-        borderRadius: 8,
-        background: 'rgba(255,255,255,0.03)',
-        border: '1px solid rgba(255,255,255,0.06)',
+        padding: '12px 16px',
+        borderRadius: 10,
+        background: 'rgba(255,255,255,0.04)',
+        border: '1px solid rgba(201,35,55,0.2)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-          <h3 style={{ margin: 0, fontSize: 15, fontWeight: 600, color: '#fff' }}>
-            📸 Galeria ({gallery.length})
+          <h3 style={{ margin: 0, fontSize: 16, fontWeight: 600, color: '#fff' }}>
+            📸 Galeria ({gallery.length}) — subpágina do projeto
           </h3>
-          <span style={{ fontSize: 12, color: '#8f8ba2' }}>
-            🖼️ {imageCount} imgs · 🎬 {videoCount} vídeos · subpágina do projeto
-          </span>
+          {gallery.length > 0 && (
+            <span style={{ fontSize: 12, color: '#8f8ba2' }}>
+              🖼️ {imageCount} imgs · 🎬 {videoCount} vídeos · cada item com miniatura abaixo
+            </span>
+          )}
+          {gallery.length === 0 && (
+            <span style={{ fontSize: 13, color: '#fca5a5' }}>
+              Use o botão &quot;+ Adicionar imagem ou vídeo&quot; para começar
+            </span>
+          )}
         </div>
         <button
           type="button"
           onClick={() => setShowAddPanel(!showAddPanel)}
           disabled={loading || uploading}
           style={{
-            padding: '10px 20px',
+            padding: '12px 24px',
             borderRadius: 8,
             border: 'none',
-            background: showAddPanel ? '#666' : 'linear-gradient(135deg, #c92337 0%, #ff6b6b 100%)',
+            background: showAddPanel ? '#555' : 'linear-gradient(135deg, #c92337 0%, #e11d48 100%)',
             color: '#fff',
             fontSize: 14,
-            fontWeight: 600,
+            fontWeight: 700,
             cursor: 'pointer',
+            boxShadow: showAddPanel ? 'none' : '0 2px 8px rgba(201,35,55,0.4)',
           }}
         >
-          {showAddPanel ? '✕ Fechar' : '+ Adicionar'}
+          {showAddPanel ? '✕ Fechar' : '+ Adicionar imagem ou vídeo'}
         </button>
       </div>
 
@@ -517,16 +525,19 @@ export function GalleryManager({ projectId, initialGallery = [], onGalleryChange
         </div>
       )}
 
-      {/* Painel de adicionar — em linha quando houver espaço */}
+      {/* Painel de adicionar — bem visível: upload, URL, biblioteca */}
       {showAddPanel && (
         <div style={{
-          padding: 14,
-          borderRadius: 10,
-          border: '2px dashed rgba(201,35,55,0.35)',
-          background: 'rgba(201,35,55,0.05)',
-          marginBottom: 16,
+          padding: 18,
+          borderRadius: 12,
+          border: '2px solid rgba(201,35,55,0.4)',
+          background: 'rgba(201,35,55,0.08)',
+          marginBottom: 20,
         }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
+          <p style={{ margin: '0 0 14px 0', fontSize: 13, fontWeight: 600, color: '#fca5a5' }}>
+            ➕ Adicione quantas imagens e vídeos quiser: escolha uma opção abaixo
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 14 }}>
             {/* Upload de arquivo */}
             <div style={{ 
               padding: 16, 
@@ -683,18 +694,15 @@ export function GalleryManager({ projectId, initialGallery = [], onGalleryChange
       {/* Grid de Mídias */}
       {gallery.length === 0 ? (
         <div style={{
-          padding: 60,
+          padding: 32,
           textAlign: 'center',
           borderRadius: 12,
-          border: '2px dashed rgba(255,255,255,0.1)',
+          border: '2px dashed rgba(255,255,255,0.12)',
           background: 'rgba(255,255,255,0.02)',
         }}>
-          <div style={{ fontSize: 48, marginBottom: 16 }}>📷</div>
-          <p style={{ margin: 0, fontSize: 15, color: '#8f8ba2' }}>
-            Nenhuma mídia na galeria ainda
-          </p>
-          <p style={{ margin: '8px 0 0', fontSize: 13, color: '#666' }}>
-            Clique em "+ Adicionar Mídia" para começar
+          <div style={{ fontSize: 40, marginBottom: 12 }}>📷</div>
+          <p style={{ margin: 0, fontSize: 14, color: '#94a3b8' }}>
+            Nenhuma mídia na galeria ainda. As que você adicionar acima aparecerão aqui com <strong>miniatura</strong>, e você poderá reordenar, apagar, substituir e ajustar posição/escala.
           </p>
         </div>
       ) : (

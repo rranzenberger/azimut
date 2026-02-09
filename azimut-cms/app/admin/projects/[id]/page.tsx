@@ -32,6 +32,12 @@ export default function EditProjectPage() {
   const handleSectionToggle = useCallback((sid: string) => {
     setOpenSection((prev) => (prev === sid ? null : sid));
   }, []);
+  // Abrir a aba Galeria por padrão quando o projeto não tem itens na galeria (após carregar)
+  useEffect(() => {
+    if (!loading && gallery.length === 0 && openSection === 'basico') {
+      setOpenSection('galeria');
+    }
+  }, [loading, gallery.length, openSection]);
   const [formData, setFormData] = useState({
     title: '',
     shortTitle: '',
@@ -292,7 +298,7 @@ export default function EditProjectPage() {
         {[
           { id: 'basico', label: '📋 Dados básicos (título, slug, capa)' },
           { id: 'localizacao', label: '📍 Localização' },
-          { id: 'galeria', label: `🖼️ Galeria${galleryCountLabel}` },
+          { id: 'galeria', label: gallery.length === 0 ? '🖼️ Galeria — adicionar imagens e vídeos' : `🖼️ Galeria${galleryCountLabel}` },
         ].map((btn) => (
           <button key={btn.id} type="button" onClick={() => handleSectionToggle(btn.id)} style={{ padding: '8px 14px', borderRadius: 8, border: '1px solid rgba(56, 189, 248, 0.3)', background: openSection === btn.id ? 'rgba(56, 189, 248, 0.2)' : 'rgba(56, 189, 248, 0.06)', color: '#7dd3fc', fontSize: 12, fontWeight: 500, cursor: 'pointer', transition: 'all 0.15s' }}>
             {btn.label}
@@ -1184,19 +1190,22 @@ export default function EditProjectPage() {
         <div style={{ marginTop: 24, padding: '12px 16px', borderRadius: 8, background: 'rgba(56,189,248,0.06)', border: '1px solid rgba(56,189,248,0.15)', fontSize: 13, color: '#94a3b8' }}>
           🖼️ <strong style={{ color: '#7dd3fc' }}>Imagem/vídeo de capa</strong> está na seção <strong>Dados básicos</strong> acima — mesma organização do formulário &quot;Novo Projeto&quot;.
         </div>
+        <div style={{ marginTop: 10, padding: '12px 16px', borderRadius: 8, background: 'rgba(201,35,55,0.08)', border: '1px solid rgba(201,35,55,0.25)', fontSize: 13, color: '#fca5a5' }}>
+          📸 <strong>Várias imagens e vídeos (galeria):</strong> use a aba <strong>Galeria</strong> acima para adicionar, reordenar e editar as mídias da subpágina do projeto. Lá você verá miniaturas e os botões Upload, URL e Biblioteca.
+        </div>
 
         {/* Galeria de Mídias (Adicional) – subpágina do projeto */}
         <CollapsibleSection
           id="galeria"
           title={gallery.length > 0
-            ? `Galeria de Mídias — ${gallery.length} itens (${galleryImageCount} imagens, ${galleryVideoCount} vídeos)`
-            : 'Galeria de Mídias (subpágina do projeto) — adicionar imagens e vídeos'}
+            ? `Galeria — ${gallery.length} itens (${galleryImageCount} imgs, ${galleryVideoCount} vídeos) · miniatura, apagar, substituir, posição`
+            : 'Galeria — adicionar imagens e vídeos (subpágina do projeto)'}
           icon="📸"
           isOpen={openSection === 'galeria'}
           onToggle={handleSectionToggle}
         >
-          <p style={{ margin: '0 0 12px 0', fontSize: 11, color: '#8f8ba2' }}>
-            Imagens e vídeos da subpágina. Upload, URL ou biblioteca; reordene (← →), legendas (📝), substituir (🔄), posição/escala (📐).
+          <p style={{ margin: '0 0 12px 0', fontSize: 12, color: '#94a3b8' }}>
+            <strong>Onde adicionar mais:</strong> use o botão &quot;+ Adicionar&quot; abaixo para enviar arquivo, colar URL (imagem/vídeo) ou escolher da biblioteca. Cada item aparece com miniatura; você pode reordenar (← →), editar legendas (📝), apagar (🗑️), substituir (🔄) e ajustar posição/escala (📐).
           </p>
           <GalleryManager projectId={id} initialGallery={gallery} onGalleryChange={setGallery} />
         </CollapsibleSection>
