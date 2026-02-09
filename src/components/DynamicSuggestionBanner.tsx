@@ -37,6 +37,20 @@ const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
   const cooldownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const shownIndicesRef = useRef<Record<string, { titles: Set<number>; ctas: Set<number>; secondaries: Set<number> }>>({})
 
+  const pickRandom = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)]
+  const pickNextUnseen = <T,>(arr: T[], used: Set<number>): T => {
+    const n = arr.length
+    if (n === 0) return arr[0]
+    let available = [...Array(n).keys()].filter((i) => !used.has(i))
+    if (available.length === 0) {
+      used.clear()
+      available = [...Array(n).keys()]
+    }
+    const idx = available[Math.floor(Math.random() * available.length)]
+    used.add(idx)
+    return arr[idx]
+  }
+
   const startCooldown = () => {
     const cooldownMs = COOLDOWN_MIN_MS + Math.random() * (COOLDOWN_MAX_MS - COOLDOWN_MIN_MS)
     setNextShowAllowedAt(Date.now() + cooldownMs)
@@ -72,10 +86,10 @@ const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
     }
   }, [isVisible, intention?.intention, lang])
   
-  if (!intention || loading || !isVisible || intention.confidence < minConfidence || !contextualTexts) {
+  if (!intention || loading || !isVisible || intention.confidence < minConfidence) {
     return null
   }
-  
+
   const handleClick = () => {
     // Rotas específicas por tipo de intenção
     const routes: Record<string, string> = {
@@ -95,22 +109,6 @@ const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
     setIsDismissed(true)
     setIsVisible(false)
     startCooldown()
-  }
-  
-  const pickRandom = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)]
-
-  // Escolhe um item que ainda não foi mostrado; quando todos foram, reseta e escolhe de novo
-  const pickNextUnseen = <T,>(arr: T[], used: Set<number>): T => {
-    const n = arr.length
-    if (n === 0) return arr[0]
-    let available = [...Array(n).keys()].filter((i) => !used.has(i))
-    if (available.length === 0) {
-      used.clear()
-      available = [...Array(n).keys()]
-    }
-    const idx = available[Math.floor(Math.random() * available.length)]
-    used.add(idx)
-    return arr[idx]
   }
 
   const getContextualTexts = () => {
@@ -453,6 +451,8 @@ const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
     navigate(`/${lang}/contact`)
     setIsVisible(false)
   }
+
+  if (!contextualTexts) return null
   
   return (
     <div
