@@ -53,7 +53,7 @@ export function AcademyHubClient({ pages, error }: AcademyHubClientProps) {
           Academy — edição visual
         </h1>
         <p style={{ margin: 0, color: AZIMUT.textSecondary, fontSize: 16 }}>
-          Layout semelhante ao site: Vancouver, Cursos, Workshops, Corporate. Cards com Trocar imagem e EDITAR.
+          Todas as mídias como no site: em cada card use o hero (Trocar imagem / EDITAR) e o botão 🖼️ para ver a galeria completa (cursos, past events, Vancouver).
         </p>
       </header>
 
@@ -66,7 +66,7 @@ export function AcademyHubClient({ pages, error }: AcademyHubClientProps) {
         fontSize: 14,
         color: '#86efac',
       }}>
-        <strong>Como na Home:</strong> cada card representa uma parte da Academy no site. Use <strong>Trocar imagem</strong> para o hero e <strong>EDITAR ESTE CONTEÚDO</strong> para textos, hero e SEO.
+        <strong>O site exibe o que está aqui.</strong> Cada card = uma seção. Hero = Trocar imagem / EDITAR. Cursos, Workshops e Vancouver têm várias mídias: use <strong>🖼️ Ver todos os cursos</strong>, <strong>🖼️ Ver galeria Past Events</strong> e <strong>🖼️ Vancouver mídias</strong> para editar tudo (como no site).
       </div>
 
       {pages.length === 0 ? (
@@ -167,23 +167,77 @@ export function AcademyHubClient({ pages, error }: AcademyHubClientProps) {
                   <p style={{ margin: 0, fontSize: 12, color: AZIMUT.textMuted }}>
                     /{page.slug}
                   </p>
-                  <Link
-                    href={editPath}
-                    style={{
-                      display: 'inline-block',
-                      marginTop: 12,
-                      padding: '10px 18px',
-                      borderRadius: 8,
-                      background: 'rgba(34,197,94,0.15)',
-                      border: '1px solid rgba(34,197,94,0.4)',
-                      color: '#86efac',
-                      fontSize: 13,
-                      fontWeight: 600,
-                      textDecoration: 'none',
-                    }}
-                  >
-                    Edição completa →
-                  </Link>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 12 }}>
+                    <Link
+                      href={editPath}
+                      style={{
+                        padding: '10px 18px',
+                        borderRadius: 8,
+                        background: 'rgba(34,197,94,0.15)',
+                        border: '1px solid rgba(34,197,94,0.4)',
+                        color: '#86efac',
+                        fontSize: 13,
+                        fontWeight: 600,
+                        textDecoration: 'none',
+                      }}
+                    >
+                      Edição completa →
+                    </Link>
+                    {page.slug === 'academy/courses' && (
+                      <Link
+                        href="/admin/academy/courses"
+                        style={{
+                          padding: '10px 14px',
+                          borderRadius: 8,
+                          background: 'rgba(59,130,246,0.2)',
+                          border: '1px solid rgba(59,130,246,0.5)',
+                          color: '#93c5fd',
+                          fontSize: 12,
+                          fontWeight: 600,
+                          textDecoration: 'none',
+                        }}
+                        title="Ver todos os cursos (como no site)"
+                      >
+                        🖼️ Ver todos os cursos
+                      </Link>
+                    )}
+                    {page.slug === 'academy/workshops' && (
+                      <Link
+                        href="/admin/academy/events/gallery"
+                        style={{
+                          padding: '10px 14px',
+                          borderRadius: 8,
+                          background: 'rgba(59,130,246,0.2)',
+                          border: '1px solid rgba(59,130,246,0.5)',
+                          color: '#93c5fd',
+                          fontSize: 12,
+                          fontWeight: 600,
+                          textDecoration: 'none',
+                        }}
+                        title="Ver galeria Past Events (como no site)"
+                      >
+                        🖼️ Ver galeria Past Events
+                      </Link>
+                    )}
+                    {page.slug === 'academy/vancouver' && (
+                      <Link
+                        href="/admin/academy/vancouver"
+                        style={{
+                          padding: '10px 14px',
+                          borderRadius: 8,
+                          background: 'rgba(59,130,246,0.2)',
+                          border: '1px solid rgba(59,130,246,0.5)',
+                          color: '#93c5fd',
+                          fontSize: 12,
+                          fontWeight: 600,
+                          textDecoration: 'none',
+                        }}
+                        title="Vídeos e mídias VFS/VanArts"
+                      >
+                        🖼️ Vancouver mídias
+                      </Link>
+                    )}
+                  </div>
                 </div>
               </div>
             );

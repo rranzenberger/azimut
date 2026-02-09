@@ -2,27 +2,40 @@
 // ACADEMY WORKSHOPS - REDESIGN PREMIUM 2026
 // ════════════════════════════════════════════════════════════
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
-import { useUserTracking } from '../hooks/useUserTracking'
 import { useTheme } from '../contexts/ThemeContext'
 import { PageFooterNavigation } from '../components/PageFooterNavigation'
 import AcademySubNav from '../components/AcademySubNav'
 import { useBackofficeContent } from '../hooks/useBackofficeContent'
+
+const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br'
 
 interface AcademyWorkshopsProps {
   lang: Lang
 }
 
 const AcademyWorkshops: React.FC<AcademyWorkshopsProps> = ({ lang }) => {
-  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
-  // useUserTracking()
   const { theme } = useTheme()
-  
+  const [pastEventsSlots, setPastEventsSlots] = useState<Array<{ id: string; media?: { originalUrl?: string; thumbnailUrl?: string; mediumUrl?: string } }> | null>(null)
+
   // Backoffice content com fallback para conteúdo hardcoded
   const { page: backofficePage } = useBackofficeContent('academy-workshops', lang)
+
+  // Past Events do backoffice (o site exibe o que está no backoffice)
+  useEffect(() => {
+    let cancelled = false
+    fetch(`${BACKOFFICE_URL}/api/public/academy/past-events`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (cancelled || !data?.slots) return
+        setPastEventsSlots(data.slots)
+      })
+      .catch(() => {})
+    return () => { cancelled = true }
+  }, [])
 
   const content: Record<Lang, any> = {
     pt: {
@@ -662,21 +675,30 @@ const AcademyWorkshops: React.FC<AcademyWorkshopsProps> = ({ lang }) => {
               {t.pastEvents.subtitle}
             </p>
 
-            {/* PLACEHOLDER: Fotos de eventos */}
+            {/* Galeria Past Events: dados do backoffice (admin/academy/events/gallery) */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                <div 
-                  key={i}
-                  className="aspect-square bg-gradient-to-br from-slate-800 to-black rounded-lg border border-white/10 hover:border-azimut-red/50 transition-all hover:scale-105 cursor-pointer flex items-center justify-center"
-                >
-                  <span className="text-4xl opacity-20">📸</span>
-                </div>
-              ))}
+              {(pastEventsSlots && pastEventsSlots.length > 0 ? pastEventsSlots : Array.from({ length: 8 }, (_, i) => ({ id: `ph-${i}` }))).map((slot: any) => {
+                const imgUrl = slot.media?.originalUrl || slot.media?.thumbnailUrl || slot.media?.mediumUrl
+                return (
+                  <div
+                    key={slot.id}
+                    className="aspect-square bg-gradient-to-br from-slate-800 to-black rounded-lg border border-white/10 hover:border-azimut-red/50 transition-all hover:scale-105 cursor-pointer flex items-center justify-center overflow-hidden"
+                  >
+                    {imgUrl ? (
+                      <img src={imgUrl} alt="" className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-4xl opacity-20">📸</span>
+                    )}
+                  </div>
+                )
+              })}
             </div>
 
-            <p className={`mt-8 text-sm ${theme === 'dark' ? 'text-white/40' : 'text-slate-600'}`}>
-              📸 PLACEHOLDER: Backoffice → /admin/academy/events/gallery
-            </p>
+            {pastEventsSlots && pastEventsSlots.length > 0 && (
+              <p className={`mt-8 text-sm ${theme === 'dark' ? 'text-white/40' : 'text-slate-600'}`}>
+                Conteúdo editável em Backoffice → Academy → Ver galeria Past Events
+              </p>
+            )}
           </div>
         </section>
 

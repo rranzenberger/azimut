@@ -2,11 +2,10 @@
 // ACADEMY COURSES - REDESIGN PREMIUM 2026
 // ════════════════════════════════════════════════════════════
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
-import { useUserTracking } from '../hooks/useUserTracking'
 import CourseRecommender from '../components/CourseRecommender'
 import AcademyQuickForm from '../components/AcademyQuickForm'
 import { useTheme } from '../contexts/ThemeContext'
@@ -14,18 +13,52 @@ import { PageFooterNavigation } from '../components/PageFooterNavigation'
 import AcademySubNav from '../components/AcademySubNav'
 import { useBackofficeContent } from '../hooks/useBackofficeContent'
 
+const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br'
+
 interface AcademyCoursesProps {
   lang: Lang
 }
 
 const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
-  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
-  // useUserTracking()
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const { theme } = useTheme()
-  
+  const [coursesFromApi, setCoursesFromApi] = useState<any[] | null>(null)
+
   // Backoffice content com fallback para conteúdo hardcoded
   const { page: backofficePage } = useBackofficeContent('academy-courses', lang)
+
+  // Cursos do backoffice (o site exibe o que está no backoffice)
+  useEffect(() => {
+    let cancelled = false
+    fetch(`${BACKOFFICE_URL}/api/public/academy/courses`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (cancelled || !data?.courses?.length) return
+        const mapped = data.courses.map((c: any, i: number) => {
+          const title = (lang === 'en' ? c.titleEn : c.titlePt) || c.titleEn || c.titlePt || ''
+          const description = (lang === 'en' ? c.descriptionEn : c.descriptionPt) || c.descriptionEn || c.descriptionPt || ''
+          const duration = (lang === 'en' ? c.durationEn : c.durationPt) || c.durationEn || c.durationPt || ''
+          const level = (lang === 'en' ? c.levelEn : c.levelPt) || c.levelEn || c.levelPt || ''
+          const price = (lang === 'en' ? c.priceEn : c.pricePt) || c.priceEn || c.pricePt || ''
+          return {
+            id: c.id,
+            category: c.category || 'all',
+            icon: '📚',
+            title,
+            description,
+            duration,
+            level,
+            price,
+            featured: !!c.featured,
+            tags: Array.isArray(c.tags) ? c.tags : [],
+            imageUrl: c.image?.originalUrl || c.image?.thumbnailUrl || c.image?.mediumUrl,
+          }
+        })
+        setCoursesFromApi(mapped)
+      })
+      .catch(() => {})
+    return () => { cancelled = true }
+  }, [lang])
 
   const content: Record<Lang, any> = {
     pt: {
@@ -427,9 +460,10 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
   }
 
   const t = content[lang] || content.pt
-  const filteredCourses = selectedCategory === 'all' 
-    ? t.courses 
-    : t.courses.filter((c: any) => c.category === selectedCategory)
+  const courseList = (coursesFromApi !== null && coursesFromApi.length > 0) ? coursesFromApi : t.courses
+  const filteredCourses = selectedCategory === 'all'
+    ? courseList
+    : courseList.filter((c: any) => c.category === selectedCategory)
 
   return (
     <>
@@ -663,9 +697,13 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
                       : 'border-white/10 hover:border-azimut-red/30'
                   }`}
                 >
-                  {/* Thumbnail */}
-                  <div className="relative aspect-video bg-gradient-to-br from-slate-800 to-black flex items-center justify-center">
-                    <span className="text-8xl opacity-30">{course.icon}</span>
+                  {/* Thumbnail - imagem do backoffice ou ícone */}
+                  <div className="relative aspect-video bg-gradient-to-br from-slate-800 to-black flex items-center justify-center overflow-hidden">
+                    {course.imageUrl ? (
+                      <img src={course.imageUrl} alt={course.title} className="absolute inset-0 w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-8xl opacity-30">{course.icon}</span>
+                    )}
                     {course.featured && (
                       <div className="absolute top-4 right-4">
                         <span className="px-3 py-1 bg-azimut-red text-white text-xs font-bold uppercase rounded-full">
@@ -691,7 +729,7 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
                     </div>
 
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {course.tags.map((tag: string) => (
+                      {(course.tags || []).map((tag: string) => (
                         <span 
                           key={tag}
                           className="px-2 py-1 bg-white/5 text-xs rounded text-white/60"
