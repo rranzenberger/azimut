@@ -7,6 +7,8 @@ import { cookies } from 'next/headers';
 import { verifyAuthToken } from '@/src/lib/auth';
 import { prisma } from '@/src/lib/prisma';
 
+const APPROVED_STATUS = 'APPROVED' as const;
+
 export const dynamic = 'force-dynamic';
 
 export async function POST(
@@ -34,7 +36,7 @@ export async function POST(
 
     await prisma.makingOf.update({
       where: { id },
-      data: { status: 'APPROVED' },
+      data: { status: APPROVED_STATUS },
     });
 
     return NextResponse.json({ success: true, message: 'Making-of aprovado' });

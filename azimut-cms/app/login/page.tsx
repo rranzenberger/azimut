@@ -80,10 +80,10 @@ function LoginForm() {
           maxWidth: 420,
           background: 'rgba(255,255,255,0.04)',
           border: '1px solid rgba(255,255,255,0.08)',
-          borderRadius: 12,
-          padding: '28px 20px',
+          borderRadius: 16,
+          padding: '32px 24px',
           margin: '0 auto',
-          boxShadow: '0 10px 30px rgba(0,0,0,0.35)',
+          boxShadow: '0 10px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(201,35,55,0.06)',
         }}
       >
         <h1 style={{ margin: 0, marginBottom: 16, fontSize: 24, fontWeight: 700 }}>Backoffice Azimut</h1>
@@ -298,7 +298,7 @@ export default function LoginPage() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: '#0a0e18',
+          background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,35,55,0.08) 0%, transparent 50%), #0a0e18',
           color: '#d3cec3',
           fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
           padding: '20px',

@@ -60,6 +60,7 @@ export function AdminLink({
         border: isActive
           ? '1px solid rgba(201,35,55,0.35)'
           : '1px solid rgba(255,255,255,0.06)',
+        borderLeft: isActive ? '3px solid #c92337' : '3px solid transparent',
         color: disabled ? '#8f8ba2' : isActive ? '#fca5a5' : '#e8e6f2',
         fontWeight: 600,
         cursor: disabled || isNavigating ? 'not-allowed' : 'pointer',
@@ -67,7 +68,7 @@ export function AdminLink({
         fontSize: 15,
         opacity: disabled ? 0.5 : 1,
         display: 'block',
-        transition: 'all 0.2s',
+        transition: 'all 0.2s ease',
         userSelect: 'none',
       }}
       onMouseEnter={(e) => {

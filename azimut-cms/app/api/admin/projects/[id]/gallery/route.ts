@@ -13,9 +13,10 @@ export const runtime = 'nodejs';
 // POST - Adicionar mídia à galeria
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id: projectId } = await params;
     const cookieStore = cookies();
     const token = cookieStore.get('azimut_admin_token')?.value;
     const session = token ? verifyAuthToken(token) : null;
@@ -33,7 +34,7 @@ export async function POST(
 
     // Verificar se projeto existe
     const project = await prisma.project.findUnique({
-      where: { id: params.id },
+      where: { id: projectId },
     });
 
     if (!project) {
@@ -53,7 +54,7 @@ export async function POST(
     const existing = await prisma.projectMedia.findUnique({
       where: {
         projectId_mediaId: {
-          projectId: params.id,
+          projectId,
           mediaId: mediaId,
         },
       },
@@ -65,7 +66,7 @@ export async function POST(
 
     // Obter a maior ordem atual
     const maxOrder = await prisma.projectMedia.findFirst({
-      where: { projectId: params.id },
+      where: { projectId },
       orderBy: { order: 'desc' },
       select: { order: true },
     });
@@ -75,7 +76,7 @@ export async function POST(
     // Adicionar à galeria
     const projectMedia = await prisma.projectMedia.create({
       data: {
-        projectId: params.id,
+        projectId,
         mediaId: mediaId,
         order: newOrder,
       },
@@ -97,9 +98,10 @@ export async function POST(
 // DELETE - Remover mídia da galeria
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id: projectId } = await params;
     const cookieStore = cookies();
     const token = cookieStore.get('azimut_admin_token')?.value;
     const session = token ? verifyAuthToken(token) : null;
@@ -119,7 +121,7 @@ export async function DELETE(
     const projectMedia = await prisma.projectMedia.findUnique({
       where: {
         projectId_mediaId: {
-          projectId: params.id,
+          projectId,
           mediaId: mediaId,
         },
       },
@@ -146,9 +148,10 @@ export async function DELETE(
 // PUT - Reordenar mídias
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id: projectId } = await params;
     const cookieStore = cookies();
     const token = cookieStore.get('azimut_admin_token')?.value;
     const session = token ? verifyAuthToken(token) : null;
@@ -168,7 +171,7 @@ export async function PUT(
     const updates = mediaIds.map((mediaId: string, index: number) =>
       prisma.projectMedia.updateMany({
         where: {
-          projectId: params.id,
+          projectId,
           mediaId: mediaId,
         },
         data: {
@@ -181,7 +184,7 @@ export async function PUT(
 
     // Retornar galeria atualizada
     const gallery = await prisma.projectMedia.findMany({
-      where: { projectId: params.id },
+      where: { projectId },
       include: {
         media: true,
       },
@@ -200,9 +203,10 @@ export async function PUT(
 // PATCH - Atualizar legenda de um item da galeria
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id: projectId } = await params;
     const cookieStore = cookies();
     const token = cookieStore.get('azimut_admin_token')?.value;
     const session = token ? verifyAuthToken(token) : null;
@@ -229,7 +233,7 @@ export async function PATCH(
     }
 
     const current = await prisma.projectMedia.findFirst({
-      where: { id: projectMediaId, projectId: params.id },
+      where: { id: projectMediaId, projectId },
       include: { media: true },
     });
     if (!current) {
@@ -262,7 +266,7 @@ export async function PATCH(
       }
       const alreadyInGallery = await prisma.projectMedia.findUnique({
         where: {
-          projectId_mediaId: { projectId: params.id, mediaId: newMediaId },
+          projectId_mediaId: { projectId, mediaId: newMediaId },
         },
       });
       if (alreadyInGallery) {
@@ -274,7 +278,7 @@ export async function PATCH(
     const updated = await prisma.projectMedia.updateMany({
       where: {
         id: projectMediaId,
-        projectId: params.id,
+        projectId,
       },
       data,
     });
@@ -284,7 +288,7 @@ export async function PATCH(
     }
 
     const gallery = await prisma.projectMedia.findMany({
-      where: { projectId: params.id },
+      where: { projectId },
       include: { media: true },
       orderBy: { order: 'asc' },
     });

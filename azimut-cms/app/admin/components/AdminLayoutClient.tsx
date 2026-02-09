@@ -27,7 +27,7 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
     <div
       style={{
         minHeight: '100vh',
-        background: AZIMUT.bgDark,
+        background: `linear-gradient(165deg, ${AZIMUT.bgDark} 0%, #060a12 100%)`,
         color: AZIMUT.text,
         fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
         display: 'grid',
@@ -39,12 +39,14 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
         style={{
           borderRight: `1px solid ${AZIMUT.border}`,
           background: AZIMUT.bgCard,
+          boxShadow: '4px 0 24px rgba(0,0,0,0.2)',
           display: 'flex',
           flexDirection: 'column',
           position: 'sticky',
           top: 0,
           height: '100vh',
           overflowY: 'auto',
+          transition: 'box-shadow 0.2s ease',
         }}
       >
         {/* Logo no Topo */}
@@ -197,6 +199,8 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
           overflowY: 'auto',
           overflowX: 'hidden',
           boxSizing: 'border-box',
+          justifySelf: 'start',
+          transition: 'opacity 0.15s ease',
         }}
       >
         <ToastWrapper>

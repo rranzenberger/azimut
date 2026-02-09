@@ -6,6 +6,23 @@ O backoffice deve ser deployado no projeto Vercel **azimut-backoffice** (onde es
 
 ---
 
+## Redeploy após correções (fix build + UI premium)
+
+**O deploy que falhou (~1h atrás)** foi do commit **b3aa7b9** (“use Prisma enums”), que quebra o build na Vercel (`Prisma.MakingOfType` não exportado). A correção já está no commit **c8bcde3** (string literals / `as const`). Para o próximo deploy passar:
+
+1. **Enviar o código para o GitHub** (se ainda não enviou):
+   ```bash
+   git push origin main
+   ```
+2. **Na Vercel:** como os deploys automáticos podem estar atrasados, **force um novo deploy**:
+   - Aba **Deployments** → botão **“Create Deployment”** (ou no deploy com erro → **⋯** → **Redeploy**).
+   - Escolha o branch **main** e o **último commit** (c8bcde3 ou mais recente).
+   - Opcional: desmarque **Use existing Build Cache**.
+   - Confirme e aguarde o build.
+3. Se fizer **push** e os automáticos estiverem ok, o deploy sobe sozinho; senão use o passo 2.
+
+---
+
 ## Corrigir erro "Couldn't find any 'pages' or 'app' directory"
 
 Esse erro acontece quando o build roda na **raiz do repo** em vez de dentro da pasta do backoffice (`azimut-cms`). O Next.js precisa rodar com essa pasta como raiz.
@@ -31,18 +48,27 @@ Assim o install e o build rodam **dentro de azimut-cms** e o Next.js encontra a 
 
 ---
 
-## Deploy via CLI (pasta `azimut-cms`)
+## Deploy via CLI (pasta `azimut-cms`) — forçar deploy com pasta correta
 
-Se quiser deploy pela CLI a partir da pasta do backoffice:
+Para **forçar** o deploy usando a pasta correta (evitar build na raiz):
 
-1. **Root Directory** no projeto **azimut-backoffice** deve estar **vazio** (e Install/Build Command como acima).
-2. Ou, se Root Directory = `azimut-cms`, limpe-o só para o deploy CLI; depois volte para `azimut-cms` se usar Git.
+1. Abra o terminal na **raiz do repositório** (ou use o script abaixo).
+2. Entre na pasta do backoffice e rode os comandos.
 
+**Opção A – Script (recomendado)**  
+- Se aparecer *"The specified token is not valid"*, execute antes no terminal: **`vercel login`**.
+- Depois: dê dois cliques em **`docs/deploy/FORCAR_DEPLOY_BACKOFFICE.bat`**  
+  ou no PowerShell (na raiz do repo): `.\docs\deploy\FORCAR_DEPLOY_BACKOFFICE.ps1`
+
+**Opção B – Comandos manuais**
 ```powershell
 cd azimut-cms
 vercel link --yes --project azimut-backoffice
 vercel --prod --yes
 ```
+
+Assim o deploy sobe a partir de **`azimut-cms`** (onde está o `app/` e o Next.js).  
+**Root Directory** no projeto **azimut-backoffice** na Vercel pode ficar vazio; para deploys via Git, use Install/Build com `cd azimut-cms && ...` como na seção acima.
 
 ---
 
