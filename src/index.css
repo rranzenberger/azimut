@@ -5588,6 +5588,11 @@ span.keyword-highlight-secondary {
   color: #64748b !important; /* Slate-500 para contraste adequado no tema claro */
 }
 
+/* Hero badge: bolinha entre AZIMUT e SINCE sempre vermelha (tema claro/escuro, mobile/desktop) */
+.hero-badge-dot {
+  color: #c92337 !important;
+}
+
 /* ═══════════════════════════════════════════════════════════════
    CARDS DE CURADORIA - PREVENÇÃO DE OVERFLOW
    ═══════════════════════════════════════════════════════════════ */

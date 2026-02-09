@@ -435,11 +435,11 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   className="w-4 h-4 flex-shrink-0"
                 />
                 <span className={`font-semibold ${theme === 'light' ? 'text-azimut-red' : ''}`} style={theme === 'dark' ? { color: '#e84d5c' } : undefined}>AZIMUT</span>
-                <span style={{ color: theme === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(30, 28, 26, 0.4)' }}>•</span>
+                <span className="hero-badge-dot text-azimut-red" style={{ color: '#c92337' }}>•</span>
                 <span className={`text-[0.7rem] ${theme === 'dark' ? 'azimut-since-year' : ''}`} style={{ color: theme === 'dark' ? undefined : '#475569' }}>SINCE 1996</span>
               </div>
 
-                {/* Tagline: IMMERSIVE • INTERACTIVE • CINEMATIC EXPERIENCE — tema claro: texto escuro para contraste no gradiente */}
+                {/* Tagline: IMMERSIVE • INTERACTIVE • CINEMATIC EXPERIENCE — bolinha sempre vermelha; tema claro: texto escuro para contraste no gradiente */}
                 <p
                   className="font-sora text-[0.65rem] sm:text-[0.7rem] uppercase tracking-[0.25em] animate-fade-in-up opacity-0"
                   style={{
@@ -447,7 +447,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     color: theme === 'dark' ? 'rgba(255, 255, 255, 0.6)' : '#1e293b'
                   }}
                 >
-                  {t(lang, 'heroTagline')}
+                  IMMERSIVE <span className="text-azimut-red" style={{ color: '#c92337' }}>•</span> INTERACTIVE <span className="text-azimut-red" style={{ color: '#c92337' }}>•</span> CINEMATIC EXPERIENCE
                 </p>
                 
                 {/* Título em 3 LINHAS - MULTILÍNGUE */}
@@ -820,16 +820,16 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     className="w-2.5 h-2.5 sm:w-3 sm:h-3 flex-shrink-0"
                   />
                   <span className={`font-semibold ${theme === 'light' ? 'text-azimut-red' : ''}`} style={theme === 'dark' ? { color: '#e84d5c' } : undefined}>AZIMUT</span>
-                  <span className={theme === 'dark' ? 'text-white/70' : 'text-slate-600'}>•</span>
+                  <span className="hero-badge-dot text-azimut-red" style={{ color: '#c92337' }}>•</span>
                   <span className={`text-[0.55rem] sm:text-[0.6rem] ${theme === 'dark' ? 'text-white/85' : 'text-slate-600'}`}>SINCE 1996</span>
                 </div>
 
-                {/* Tagline (Opção B - entre badge e H1); tema claro: texto escuro para contraste no gradiente */}
+                {/* Tagline (Opção B - entre badge e H1); bolinha sempre vermelha; tema claro: texto escuro para contraste no gradiente */}
                 <p
                   className={`font-sora text-[0.55rem] sm:text-[0.6rem] uppercase tracking-[0.2em] animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/60' : ''}`}
                   style={{ animationDelay: '0.08s', color: theme === 'dark' ? undefined : '#1e293b' }}
                 >
-                  {t(lang, 'heroTagline')}
+                  IMMERSIVE <span className="text-azimut-red" style={{ color: '#c92337' }}>•</span> INTERACTIVE <span className="text-azimut-red" style={{ color: '#c92337' }}>•</span> CINEMATIC EXPERIENCE
                 </p>
                 
                 {/* Título - COMPACTO */}
