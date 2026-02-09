@@ -16,23 +16,28 @@ interface DynamicSuggestionBannerProps {
   autoHideDelay?: number // Tempo para auto-hide em ms (padrão: 8000)
 }
 
+// Tempo que o card fica visível antes de trocar/ocultar (bem maior para não parecer pisca-pisca)
+const DEFAULT_AUTO_HIDE_MS = 28000
+
 const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
   lang,
   theme = 'dark',
   minConfidence = 0.7,
-  autoHideDelay = 8000
+  autoHideDelay = DEFAULT_AUTO_HIDE_MS
 }) => {
   const { intention, loading } = useIntentionDetection(lang)
   const navigate = useNavigate()
   const [isVisible, setIsVisible] = useState(false)
   const [isDismissed, setIsDismissed] = useState(false)
+  // Texto fixo por “sessão” do card: só troca quando a intenção muda, evita pisca-pisca
+  const [contextualTexts, setContextualTexts] = useState<{ title: string; cta: string; secondary: string } | null>(null)
   
   // Mostrar banner quando intenção detectada
   useEffect(() => {
     if (intention && intention.confidence >= minConfidence && !isDismissed) {
       setIsVisible(true)
       
-      // Auto-hide após delay
+      // Auto-hide após delay (bem maior para sensação de apoio, não de distração)
       const timer = setTimeout(() => {
         setIsVisible(false)
       }, autoHideDelay)
@@ -48,7 +53,16 @@ const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
     setIsDismissed(false)
   }, [intention?.intention])
   
-  if (!intention || loading || !isVisible || intention.confidence < minConfidence) {
+  // Definir texto do card UMA VEZ por exibição/intenção (evita pisca-pisca ao re-renderizar)
+  useEffect(() => {
+    if (isVisible && intention) {
+      setContextualTexts(getContextualTexts())
+    } else {
+      setContextualTexts(null)
+    }
+  }, [isVisible, intention?.intention, lang])
+  
+  if (!intention || loading || !isVisible || intention.confidence < minConfidence || !contextualTexts) {
     return null
   }
   
@@ -397,8 +411,6 @@ const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
     }
   }
   
-  const contextual = getContextualTexts()
-  
   // Ícone contextual por tipo de interesse
   const getContextualIcon = () => {
     const icons: Record<string, string> = {
@@ -446,7 +458,7 @@ const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
                 color: theme === 'dark' ? '#e2e8f0' : '#1e293b'
               }}
             >
-              {contextual.title}
+              {contextualTexts.title}
             </p>
           </div>
           
@@ -476,7 +488,7 @@ const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
               backgroundColor: '#c92337'
             }}
           >
-            {contextual.cta}
+            {contextualTexts.cta}
           </button>
           
           {/* Botão secundário */}
@@ -489,7 +501,7 @@ const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
               border: `1px solid ${theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}`
             }}
           >
-            {contextual.secondary}
+            {contextualTexts.secondary}
           </button>
         </div>
       </div>
