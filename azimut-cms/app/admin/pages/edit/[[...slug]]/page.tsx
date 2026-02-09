@@ -2360,6 +2360,15 @@ export default function EditPagePage() {
         ═══════════════════════════════════════════════════════════ */}
         {slug !== 'studio' && slug !== 'studio/diferenciais' && (
           <CollapsibleSection id="midia" title="Mídia da Página" icon="📸" borderColor="rgba(56, 189, 248, 0.3)" bgColor="rgba(56, 189, 248, 0.08)" isOpen={openSection === 'midia'} onToggle={handleSectionToggle}>
+            {slug === 'academy' && (
+              <div style={{ marginBottom: 24, padding: 16, borderRadius: 10, background: 'rgba(56, 189, 248, 0.12)', border: '1px solid rgba(56, 189, 248, 0.35)', color: '#bae6fd', fontSize: 13, lineHeight: 1.6 }}>
+                <strong style={{ color: '#fff' }}>Mídia da página Academy — onde editar</strong>
+                <p style={{ margin: '8px 0 0' }}>O hero e vídeo desta página são configurados aqui abaixo. As mídias dos Cursos, Past Events e Vancouver (todas as imagens e cards como no site) são editadas no hub Academy, por item.</p>
+                <p style={{ margin: '12px 0 0' }}>
+                  <a href="/admin/academy" style={{ color: '#7dd3fc', fontWeight: 700, textDecoration: 'underline' }}>→ Abrir Academy (edição visual)</a> — Cursos, Past Events, Vancouver e páginas, com Trocar imagem e EDITAR em cada card.
+                </p>
+              </div>
+            )}
             {slug === 'home' && (
               <div style={{
                 marginBottom: 24,
