@@ -7,6 +7,7 @@ import MediaUploadField from '@/components/admin/MediaUploadField';
 import VideoWithThumbnailField from '@/components/admin/VideoWithThumbnailField';
 import MultiLangVideoField from '@/components/admin/MultiLangVideoField';
 import UnifiedMediaUpload from '@/components/admin/UnifiedMediaUpload';
+import MediaPreviewBlock from '@/components/admin/MediaPreviewBlock';
 import CollapsibleSection from '@/app/admin/components/CollapsibleSection';
 // Force rebuild: 2026-02-01-v1
 
@@ -1107,6 +1108,43 @@ export default function EditPagePage() {
             </button>
           )}
         </div>
+
+        {/* Preview: Hero da Home (como no site) — mesmo padrão visual dos Projetos */}
+        {slug === 'home' && (
+          <MediaPreviewBlock
+            title="Hero da Home — como aparece no site"
+            mainLabel="Imagem de fundo ou vídeo demoreel"
+            mainImageUrl={formData.heroBackgroundImageUrl || null}
+            mainVideoUrl={formData.demoreelVideoUrl || null}
+            mainTitle={formData.heroSloganPt || 'Home'}
+            mainOnly
+            galleryEmptyMessage="Use a seção « Hero Media » abaixo para trocar imagem ou vídeo."
+          />
+        )}
+
+        {/* Preview hero para páginas Academy (cursos, workshops, corporate, vancouver, etc.) — se tiver hero */}
+        {slug !== 'home' && slug?.includes('academy') && (
+          <MediaPreviewBlock
+            title="Hero da página Academy — como aparece no site"
+            mainLabel="Imagem de fundo / hero"
+            mainImageUrl={formData.heroBackgroundImageUrl || null}
+            mainTitle={formData.name || 'Academy'}
+            mainOnly
+            galleryEmptyMessage="Use a seção « Vídeo e capa » abaixo para definir a imagem de hero."
+          />
+        )}
+
+        {/* Preview hero para página Newsletter (se existir e tiver hero) */}
+        {slug === 'newsletter' && (
+          <MediaPreviewBlock
+            title="Hero da página Newsletter — como aparece no site"
+            mainLabel="Imagem de fundo / hero"
+            mainImageUrl={formData.heroBackgroundImageUrl || null}
+            mainTitle={formData.name || 'Newsletter'}
+            mainOnly
+            galleryEmptyMessage="Use a seção « Vídeo e capa » abaixo para definir a imagem de hero."
+          />
+        )}
 
         {/* ═══ SEÇÃO: Projetos em Destaque (visual) - SEMPRE VISÍVEL na Home ═══ */}
         {slug === 'home' && (

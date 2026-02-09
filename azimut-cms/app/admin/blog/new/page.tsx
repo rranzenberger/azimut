@@ -2,6 +2,8 @@
 
 import { FormEvent, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import MediaPreviewBlock from '@/components/admin/MediaPreviewBlock';
+import UnifiedMediaUpload from '@/components/admin/UnifiedMediaUpload';
 
 interface Category {
   id: string;
@@ -15,6 +17,7 @@ export default function NewBlogPostPage() {
   const [error, setError] = useState<string | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [activeTab, setActiveTab] = useState<'pt' | 'en' | 'es' | 'fr'>('pt');
+  const [allMedia, setAllMedia] = useState<{ id: string; type: 'IMAGE' | 'VIDEO'; originalUrl: string; thumbnailUrl?: string; altPt?: string }[]>([]);
 
   const [formData, setFormData] = useState({
     slug: '',
@@ -30,6 +33,7 @@ export default function NewBlogPostPage() {
     contentEn: '',
     contentEs: '',
     contentFr: '',
+    coverImageId: '',
     coverImageUrl: '',
     coverImageAlt: '',
     authorName: '',
@@ -41,6 +45,22 @@ export default function NewBlogPostPage() {
 
   useEffect(() => {
     fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/admin/media?limit=100')
+      .then((res) => (res.ok ? res.json() : { media: [] }))
+      .then((data) => {
+        const list = (data.media || []).map((m: any) => ({
+          id: m.id,
+          type: m.type || 'IMAGE',
+          originalUrl: m.originalUrl || '',
+          thumbnailUrl: m.thumbnailUrl || m.mediumUrl,
+          altPt: m.altPt,
+        }));
+        setAllMedia(list);
+      })
+      .catch(() => {});
   }, []);
 
   async function fetchCategories() {
@@ -114,6 +134,15 @@ export default function NewBlogPostPage() {
           maxWidth: 900,
         }}
       >
+        {/* Preview: capa como no site */}
+        <MediaPreviewBlock
+          title="Capa do post — como aparece no site"
+          mainLabel="Imagem de capa"
+          mainImageUrl={formData.coverImageUrl || null}
+          mainTitle={formData.titlePt || 'Título do post'}
+          mainOnly
+        />
+
         {/* Informações Básicas */}
         <section style={sectionStyle}>
           <h2 style={sectionTitleStyle}>📋 Informações Básicas</h2>
@@ -255,7 +284,23 @@ export default function NewBlogPostPage() {
         {/* Imagem e Metadados */}
         <section style={sectionStyle}>
           <h2 style={sectionTitleStyle}>🖼️ Imagem e Metadados</h2>
-          
+
+          <div style={{ marginBottom: 16 }}>
+            <label style={labelStyle}>Imagem de capa (upload ou biblioteca)</label>
+            <UnifiedMediaUpload
+              pageSlug="blog"
+              sectionSlug="cover"
+              imageId={formData.coverImageId || undefined}
+              imageUrl={formData.coverImageUrl || undefined}
+              onImageChange={(mediaId, url) => setFormData({ ...formData, coverImageId: mediaId || '', coverImageUrl: url || '' })}
+              allowVideo={false}
+              allowExternalUrl={true}
+              existingMedia={allMedia}
+              imageLabel="Capa do post"
+              imageSpecs={{ width: 1200, height: 675, maxSizeMB: 3, description: 'Capa do post (recomendado 1200x675)' }}
+            />
+          </div>
+          <p style={{ fontSize: 12, color: '#94a3b8', marginBottom: 12 }}>Ou cole a URL da imagem abaixo:</p>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 16 }}>
             <div style={{ display: 'grid', gap: 8 }}>
               <label style={labelStyle}>URL da Imagem de Capa</label>

@@ -1,8 +1,10 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import MediaPreviewBlock from '@/components/admin/MediaPreviewBlock';
+import UnifiedMediaUpload from '@/components/admin/UnifiedMediaUpload';
 
 const inputStyle = {
   padding: '10px 14px',
@@ -16,11 +18,20 @@ const inputStyle = {
   boxSizing: 'border-box' as const,
 };
 
+interface MediaItem {
+  id: string;
+  type: 'IMAGE' | 'VIDEO';
+  originalUrl: string;
+  thumbnailUrl?: string;
+  altPt?: string;
+}
+
 export function TeamEditForm({ member }: { member?: any }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [allMedia, setAllMedia] = useState<MediaItem[]>([]);
   const [formData, setFormData] = useState({
     slug: member?.slug || '',
     name: member?.name || '',
@@ -41,6 +52,25 @@ export function TeamEditForm({ member }: { member?: any }) {
     displayOrder: member?.displayOrder || 0,
     isPublished: member?.isPublished !== undefined ? member.isPublished : true,
   });
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/admin/media?limit=100')
+      .then((res) => res.ok ? res.json() : { media: [] })
+      .then((data) => {
+        if (cancelled) return;
+        const list = (data.media || []).map((m: any) => ({
+          id: m.id,
+          type: m.type || 'IMAGE',
+          originalUrl: m.originalUrl || '',
+          thumbnailUrl: m.thumbnailUrl || m.mediumUrl || m.originalUrl,
+          altPt: m.altPt,
+        }));
+        setAllMedia(list);
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -159,6 +189,15 @@ export function TeamEditForm({ member }: { member?: any }) {
           </div>
         )}
 
+        {/* Preview: foto do membro — como aparece no site */}
+        <MediaPreviewBlock
+          title="Foto do membro — como aparece no site"
+          mainLabel="Foto"
+          mainImageUrl={formData.photoUrl || null}
+          mainTitle={formData.name || 'Nome do membro'}
+          mainOnly
+        />
+
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           <div style={{ display: 'grid', gap: 8 }}>
             <label style={{ fontSize: 14, fontWeight: 600 }}>Slug *</label>
@@ -266,13 +305,28 @@ export function TeamEditForm({ member }: { member?: any }) {
         </div>
 
         <div style={{ display: 'grid', gap: 8 }}>
-          <label style={{ fontSize: 14, fontWeight: 600 }}>URL da Foto</label>
+          <label style={{ fontSize: 14, fontWeight: 600 }}>Foto do membro</label>
+          <UnifiedMediaUpload
+            pageSlug="team"
+            sectionSlug="photo"
+            imageId={formData.photoMediaId || undefined}
+            imageUrl={formData.photoUrl || undefined}
+            onImageChange={(mediaId, url) => setFormData({ ...formData, photoMediaId: mediaId || '', photoUrl: url || '' })}
+            allowVideo={false}
+            allowExternalUrl={true}
+            existingMedia={allMedia}
+            imageLabel="Foto do membro (retrato recomendado)"
+            imageSpecs={{ width: 600, height: 800, maxSizeMB: 2, description: 'Foto do membro (proporção 3:4)' }}
+          />
+          <div style={{ fontSize: 12, color: '#94a3b8', marginTop: 4 }}>
+            Ou cole a URL da imagem abaixo:
+          </div>
           <input
             type="text"
             value={formData.photoUrl}
             onChange={(e) => setFormData({ ...formData, photoUrl: e.target.value })}
             style={inputStyle}
-            placeholder="/Ranz.jpeg"
+            placeholder="/Ranz.jpeg ou https://..."
           />
           {/* Orientação de upload de foto */}
           <div style={{
