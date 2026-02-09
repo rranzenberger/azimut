@@ -6,10 +6,14 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { Prisma } from '@prisma/client';
 import { verifyAuthToken } from '@/src/lib/auth';
 import { prisma } from '@/src/lib/prisma';
 
 export const dynamic = 'force-dynamic';
+
+const MAKING_OF_TYPES: Prisma.MakingOfType[] = ['PERSONAL', 'PARTNERSHIP', 'HIRED', 'CLIENT', 'EVENT'];
+const MAKING_OF_STATUSES: Prisma.MakingOfStatus[] = ['DRAFT', 'REVIEW', 'APPROVED', 'PUBLISHED', 'ARCHIVED'];
 
 export async function GET(request: NextRequest) {
   try {
@@ -26,9 +30,13 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get('status') || undefined;
     const limit = Math.min(parseInt(searchParams.get('limit') || '100', 10), 500);
 
-    const where: { makingOfType?: string; status?: string } = {};
-    if (type && type !== 'all') where.makingOfType = type;
-    if (status && status !== 'all') where.status = status;
+    const where: Prisma.MakingOfWhereInput = {};
+    if (type && type !== 'all' && MAKING_OF_TYPES.includes(type as Prisma.MakingOfType)) {
+      where.makingOfType = type as Prisma.MakingOfType;
+    }
+    if (status && status !== 'all' && MAKING_OF_STATUSES.includes(status as Prisma.MakingOfStatus)) {
+      where.status = status as Prisma.MakingOfStatus;
+    }
 
     const items = await prisma.makingOf.findMany({
       where,
