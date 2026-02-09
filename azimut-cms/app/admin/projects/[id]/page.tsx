@@ -31,6 +31,10 @@ export default function EditProjectPage() {
   const [openSection, setOpenSection] = useState<string | null>('capagaleria');
   const handleSectionToggle = useCallback((sid: string) => {
     setOpenSection((prev) => (prev === sid ? null : sid));
+    setTimeout(() => {
+      const el = document.getElementById(`secao-${sid}`);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
   }, []);
   // Abrir Capa e Galeria por padrão (visual primeiro); se galeria vazia já foca lá
   useEffect(() => {
@@ -334,18 +338,47 @@ export default function EditProjectPage() {
         </div>
       </div>
 
-      {/* ═══ GUIA RÁPIDO ═══ */}
-      <div style={{ marginBottom: 20, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+      {/* ═══ NAVEGAÇÃO: ícones para ir direto a cada parte (evita tripa) ═══ */}
+      <p style={{ margin: '0 0 10px 0', fontSize: 12, color: '#94a3b8' }}>
+        Clique no ícone para abrir e ir à seção. Não precisa rolar a página inteira.
+      </p>
+      <div style={{ marginBottom: 24, display: 'flex', flexWrap: 'wrap', gap: 12 }}>
         {[
-          { id: 'capagaleria', label: gallery.length === 0 ? '🖼️ Capa e Galeria — adicionar imagens e vídeos' : `🖼️ Capa e Galeria${galleryCountLabel}` },
-          { id: 'basico', label: '📋 Dados básicos (título, slug)' },
-          { id: 'localizacao', label: '📍 Localização' },
-          { id: 'texto', label: '📝 Texto, SEO e exibição' },
-        ].map((btn) => (
-          <button key={btn.id} type="button" onClick={() => handleSectionToggle(btn.id)} style={{ padding: '8px 14px', borderRadius: 8, border: '1px solid rgba(56, 189, 248, 0.3)', background: openSection === btn.id ? 'rgba(56, 189, 248, 0.2)' : 'rgba(56, 189, 248, 0.06)', color: '#7dd3fc', fontSize: 12, fontWeight: 500, cursor: 'pointer', transition: 'all 0.15s' }}>
-            {btn.label}
-          </button>
-        ))}
+          { id: 'capagaleria', icon: '🖼️', label: 'Capa e Galeria', sub: gallery.length === 0 ? 'Adicionar imagens/vídeos' : `${gallery.length} itens` },
+          { id: 'basico', icon: '📋', label: 'Dados básicos', sub: 'Título, slug' },
+          { id: 'localizacao', icon: '📍', label: 'Localização', sub: 'Cidade, Home, meta' },
+          { id: 'texto', icon: '📝', label: 'Texto e SEO', sub: 'Resumos, descrição, filtros' },
+        ].map((btn) => {
+          const isActive = openSection === btn.id;
+          return (
+            <button
+              key={btn.id}
+              type="button"
+              onClick={() => handleSectionToggle(btn.id)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                padding: '14px 20px',
+                borderRadius: 12,
+                border: `2px solid ${isActive ? 'rgba(56, 189, 248, 0.6)' : 'rgba(255,255,255,0.12)'}`,
+                background: isActive ? 'rgba(56, 189, 248, 0.15)' : 'rgba(255,255,255,0.04)',
+                color: isActive ? '#7dd3fc' : '#cbd5e1',
+                fontSize: 15,
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                minWidth: 160,
+              }}
+            >
+              <span style={{ fontSize: 24 }}>{btn.icon}</span>
+              <span style={{ textAlign: 'left' }}>
+                <span style={{ display: 'block', fontSize: 14 }}>{btn.label}</span>
+                <span style={{ display: 'block', fontSize: 11, fontWeight: 400, opacity: 0.85 }}>{btn.sub}</span>
+              </span>
+            </button>
+          );
+        })}
       </div>
 
       {error && (
