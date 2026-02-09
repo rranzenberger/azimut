@@ -110,6 +110,15 @@ export async function GET(
         label: lang === 'pt' ? project.ctaLabelPt : project.ctaLabelEn,
         url: project.ctaUrl,
       },
+      // Dados extras (só aparecem na subpágina se preenchidos)
+      duration: project.duration || null,
+      videoUrl: project.videoUrl || null,
+      videoShowreel: project.videoShowreel || null,
+      awards: project.awards || null,
+      metrics: project.metrics || null,
+      externalLinks: project.externalLinks || null,
+      partnerLogos: project.partnerLogos || [],
+      beforeAfterImages: project.beforeAfterImages || null,
       // 🔍 SEO - Campos otimizados pela IA
       seo: {
         title: lang === 'pt' ? project.seoTitlePt :

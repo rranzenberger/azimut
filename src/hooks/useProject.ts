@@ -56,6 +56,14 @@ interface ProjectData {
     label?: string;
     url?: string;
   };
+  duration?: string | null;
+  videoUrl?: string | null;
+  videoShowreel?: string | null;
+  awards?: Array<{ title?: string; organization?: string; year?: number; category?: string }> | null;
+  metrics?: Record<string, unknown> | null;
+  externalLinks?: Array<{ label: string; url: string }> | null;
+  partnerLogos?: string[];
+  beforeAfterImages?: { before: string; after: string; label?: string } | null;
   // 🔍 SEO - Campos otimizados pela IA
   seo?: {
     title?: string;

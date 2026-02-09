@@ -222,6 +222,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
     const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)
     return match ? match[1] : null
   }
+  const getVimeoId = (url: string) => {
+    const match = url.match(/(?:vimeo\.com\/)(?:video\/)?([0-9]+)/)
+    return match ? match[1] : null
+  }
 
   const youtubeId = effectiveProject.heroImage?.original ? getYouTubeId(effectiveProject.heroImage.original) : null
   const videoEmbedUrl = youtubeId ? `https://www.youtube-nocookie.com/embed/${youtubeId}` : undefined
@@ -465,6 +469,14 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                     {lang === 'pt' ? 'Coprodução:' : lang === 'es' ? 'Coproducción:' : lang === 'fr' ? 'Coproduction:' : 'Co-production:'} {effectiveProject.coproduction}
                   </span>
                 )}
+                {(effectiveProject as any).duration && String((effectiveProject as any).duration).trim() && (
+                  <span className="flex items-center gap-2">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {(effectiveProject as any).duration}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -484,6 +496,139 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                 />
               </div>
             </div>
+          )}
+
+          {/* Vídeo principal (só se preenchido no backoffice) */}
+          {(effectiveProject as any).videoUrl && String((effectiveProject as any).videoUrl).trim() && (() => {
+            const url = (effectiveProject as any).videoUrl
+            const yId = getYouTubeId(url)
+            const vId = getVimeoId(url)
+            const embedUrl = yId ? `https://www.youtube-nocookie.com/embed/${yId}` : vId ? `https://player.vimeo.com/video/${vId}` : null
+            if (!embedUrl) return null
+            return (
+              <section className="mb-12">
+                <h2 className="font-handel text-xl md:text-2xl uppercase tracking-[0.12em] mb-4" style={{ color: 'var(--theme-text)' }}>
+                  {lang === 'pt' ? 'Vídeo principal' : lang === 'es' ? 'Vídeo principal' : lang === 'fr' ? 'Vidéo principale' : 'Main video'}
+                </h2>
+                <div className="relative aspect-video rounded-2xl overflow-hidden bg-slate-900 ring-1 ring-black/10 dark:ring-white/5">
+                  <iframe src={embedUrl} title={effectiveProject.title} className="absolute inset-0 w-full h-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+                </div>
+              </section>
+            )
+          })()}
+
+          {/* Showreel (só se preenchido) */}
+          {(effectiveProject as any).videoShowreel && String((effectiveProject as any).videoShowreel).trim() && (() => {
+            const url = (effectiveProject as any).videoShowreel
+            const yId = getYouTubeId(url)
+            const vId = getVimeoId(url)
+            const embedUrl = yId ? `https://www.youtube-nocookie.com/embed/${yId}` : vId ? `https://player.vimeo.com/video/${vId}` : null
+            if (!embedUrl) return null
+            return (
+              <section className="mb-12">
+                <h2 className="font-handel text-xl md:text-2xl uppercase tracking-[0.12em] mb-4" style={{ color: 'var(--theme-text)' }}>
+                  {lang === 'pt' ? 'Showreel' : lang === 'es' ? 'Showreel' : lang === 'fr' ? 'Showreel' : 'Showreel'}
+                </h2>
+                <div className="relative aspect-video rounded-2xl overflow-hidden bg-slate-900 ring-1 ring-black/10 dark:ring-white/5">
+                  <iframe src={embedUrl} title={`${effectiveProject.title} - Showreel`} className="absolute inset-0 w-full h-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+                </div>
+              </section>
+            )
+          })()}
+
+          {/* Prêmios (só se houver itens) */}
+          {(effectiveProject as any).awards && Array.isArray((effectiveProject as any).awards) && (effectiveProject as any).awards.length > 0 && (
+            <section className="mb-12">
+              <h2 className="font-handel text-xl md:text-2xl uppercase tracking-[0.12em] mb-4" style={{ color: 'var(--theme-text)' }}>
+                {lang === 'pt' ? 'Prêmios' : lang === 'es' ? 'Premios' : lang === 'fr' ? 'Prix' : 'Awards'}
+              </h2>
+              <ul className="space-y-3">
+                {((effectiveProject as any).awards as Array<{ title?: string; organization?: string; year?: number; category?: string }>).map((a: any, i: number) => (
+                  <li key={i} className="flex flex-wrap items-baseline gap-2 text-sm" style={{ color: 'var(--theme-text-secondary)' }}>
+                    <span className="font-semibold" style={{ color: 'var(--theme-text)' }}>{a.title}</span>
+                    {a.organization && <span>— {a.organization}</span>}
+                    {a.year != null && <span>({a.year})</span>}
+                    {a.category && <span className="rounded-full border px-2 py-0.5 text-xs">{a.category}</span>}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {/* Métricas de impacto (só se houver dados) */}
+          {(effectiveProject as any).metrics && typeof (effectiveProject as any).metrics === 'object' && Object.keys((effectiveProject as any).metrics).length > 0 && (
+            <section className="mb-12">
+              <h2 className="font-handel text-xl md:text-2xl uppercase tracking-[0.12em] mb-4" style={{ color: 'var(--theme-text)' }}>
+                {lang === 'pt' ? 'Métricas de impacto' : lang === 'es' ? 'Métricas de impacto' : lang === 'fr' ? 'Métriques d\'impact' : 'Impact metrics'}
+              </h2>
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {Object.entries((effectiveProject as any).metrics as Record<string, unknown>).map(([key, value]) => {
+                  if (value == null || value === '') return null
+                  const display = typeof value === 'object' ? JSON.stringify(value) : String(value)
+                  return (
+                    <div key={key} className="rounded-xl border border-white/10 bg-white/5 dark:bg-white/5 px-4 py-3">
+                      <span className="block text-xs uppercase tracking-wider opacity-80" style={{ color: 'var(--theme-text-muted)' }}>{key}</span>
+                      <span className="font-medium" style={{ color: 'var(--theme-text)' }}>{display}</span>
+                    </div>
+                  )
+                })}
+              </div>
+            </section>
+          )}
+
+          {/* Links externos (só se houver itens) */}
+          {(effectiveProject as any).externalLinks && Array.isArray((effectiveProject as any).externalLinks) && (effectiveProject as any).externalLinks.length > 0 && (
+            <section className="mb-12">
+              <h2 className="font-handel text-xl md:text-2xl uppercase tracking-[0.12em] mb-4" style={{ color: 'var(--theme-text)' }}>
+                {lang === 'pt' ? 'Links' : lang === 'es' ? 'Enlaces' : lang === 'fr' ? 'Liens' : 'Links'}
+              </h2>
+              <div className="flex flex-wrap gap-3">
+                {((effectiveProject as any).externalLinks as Array<{ label: string; url: string }>).map((link: any, i: number) => (
+                  <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-4 py-2 font-sora text-sm font-medium transition-all hover:bg-azimut-red/20 hover:border-azimut-red/80" style={{ color: 'var(--theme-text)' }}>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Logos de parceiros (só se houver URLs) */}
+          {(effectiveProject as any).partnerLogos && Array.isArray((effectiveProject as any).partnerLogos) && (effectiveProject as any).partnerLogos.length > 0 && (
+            <section className="mb-12">
+              <h2 className="font-handel text-xl md:text-2xl uppercase tracking-[0.12em] mb-4" style={{ color: 'var(--theme-text)' }}>
+                {lang === 'pt' ? 'Parceiros' : lang === 'es' ? 'Socios' : lang === 'fr' ? 'Partenaires' : 'Partners'}
+              </h2>
+              <div className="flex flex-wrap items-center gap-6">
+                {((effectiveProject as any).partnerLogos as string[]).map((logoUrl: string, i: number) => (
+                  <img key={i} src={logoUrl} alt="" className="h-10 md:h-12 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity" loading="lazy" />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Antes / Depois (só se preenchido) */}
+          {(effectiveProject as any).beforeAfterImages && typeof (effectiveProject as any).beforeAfterImages === 'object' && ((effectiveProject as any).beforeAfterImages as any).before && ((effectiveProject as any).beforeAfterImages as any).after && (
+            (() => {
+              const ba = (effectiveProject as any).beforeAfterImages as { before: string; after: string; label?: string }
+              return (
+                <section className="mb-12">
+                  <h2 className="font-handel text-xl md:text-2xl uppercase tracking-[0.12em] mb-4" style={{ color: 'var(--theme-text)' }}>
+                    {ba.label && ba.label.trim() ? ba.label : (lang === 'pt' ? 'Antes e depois' : lang === 'es' ? 'Antes y después' : lang === 'fr' ? 'Avant et après' : 'Before & after')}
+                  </h2>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="rounded-2xl overflow-hidden bg-slate-900 ring-1 ring-black/10 dark:ring-white/5">
+                      <img src={ba.before} alt={lang === 'pt' ? 'Antes' : lang === 'es' ? 'Antes' : lang === 'fr' ? 'Avant' : 'Before'} className="w-full h-auto object-contain" loading="lazy" />
+                      <p className="text-center py-2 text-sm" style={{ color: 'var(--theme-text-muted)' }}>{lang === 'pt' ? 'Antes' : lang === 'es' ? 'Antes' : lang === 'fr' ? 'Avant' : 'Before'}</p>
+                    </div>
+                    <div className="rounded-2xl overflow-hidden bg-slate-900 ring-1 ring-black/10 dark:ring-white/5">
+                      <img src={ba.after} alt={lang === 'pt' ? 'Depois' : lang === 'es' ? 'Después' : lang === 'fr' ? 'Après' : 'After'} className="w-full h-auto object-contain" loading="lazy" />
+                      <p className="text-center py-2 text-sm" style={{ color: 'var(--theme-text-muted)' }}>{lang === 'pt' ? 'Depois' : lang === 'es' ? 'Después' : lang === 'fr' ? 'Après' : 'After'}</p>
+                    </div>
+                  </div>
+                </section>
+              )
+            })()
           )}
 
           {/* Galeria universal: todas as imagens e vídeos em sequência (ordem do backoffice), com legenda opcional */}

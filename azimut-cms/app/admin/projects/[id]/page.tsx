@@ -28,14 +28,14 @@ export default function EditProjectPage() {
   const [error, setError] = useState<string | null>(null);
   const [gallery, setGallery] = useState<any[]>([]);
   const [allMedia, setAllMedia] = useState<any[]>([]);
-  const [openSection, setOpenSection] = useState<string | null>('basico');
+  const [openSection, setOpenSection] = useState<string | null>('capagaleria');
   const handleSectionToggle = useCallback((sid: string) => {
     setOpenSection((prev) => (prev === sid ? null : sid));
   }, []);
-  // Abrir a aba Galeria por padrão quando o projeto não tem itens na galeria (após carregar)
+  // Abrir Capa e Galeria por padrão (visual primeiro); se galeria vazia já foca lá
   useEffect(() => {
     if (!loading && gallery.length === 0 && openSection === 'basico') {
-      setOpenSection('galeria');
+      setOpenSection('capagaleria');
     }
   }, [loading, gallery.length, openSection]);
   const [formData, setFormData] = useState({
@@ -279,9 +279,50 @@ export default function EditProjectPage() {
           Slug: /{formData.slug} • {formData.status === 'PUBLISHED' ? '🟢 Publicado' : formData.status === 'DRAFT' ? '🟡 Rascunho' : '⚪ Arquivado'}
         </p>
         <p style={{ margin: '12px 0 0', padding: '10px 14px', borderRadius: 8, background: 'rgba(56,189,248,0.08)', border: '1px solid rgba(56,189,248,0.2)', fontSize: 13, color: '#94a3b8' }}>
-          <strong style={{ color: '#7dd3fc' }}>Mesma estrutura do &quot;Novo Projeto&quot;:</strong> aqui você edita todos os campos (título, resumo, descrição, capa, localização, prioridade, galeria, filtros, SEO). Use os botões abaixo para abrir cada seção.
+          Comece pela <strong>Capa e Galeria</strong> para ver e editar as mídias como no site; depois use Dados básicos, Localização e Texto/SEO.
         </p>
       </header>
+
+      {/* ═══ PREVIEW: como aparece no site (card principal + galeria) ═══ */}
+      <div style={{ marginBottom: 24, padding: 20, borderRadius: 16, border: '1px solid rgba(56,189,248,0.25)', background: 'rgba(56,189,248,0.04)' }}>
+        <h3 style={{ margin: '0 0 16px 0', fontSize: 14, fontWeight: 700, color: '#7dd3fc', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          👁 Como aparece no site
+        </h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 280px) 1fr', gap: 24, alignItems: 'start' }}>
+          <div>
+            <p style={{ margin: '0 0 8px 0', fontSize: 11, color: '#94a3b8', fontWeight: 600 }}>Card principal (Home / listagem)</p>
+            <div style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(0,0,0,0.3)', aspectRatio: '16/10' }}>
+              {(formData.heroImageUrl || formData.thumbnailUrl) ? (
+                <img src={formData.heroImageUrl || formData.thumbnailUrl || ''} alt="" style={{ width: '100%', height: '100%', objectFit: formData.heroImageFit === 'cover' ? 'cover' : 'contain', objectPosition: formData.heroImagePosition || 'center' }} />
+              ) : (
+                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', fontSize: 12 }}>Sem imagem de capa</div>
+              )}
+              <div style={{ padding: '10px 12px', background: 'rgba(0,0,0,0.6)' }}>
+                <span style={{ fontSize: 13, fontWeight: 600, color: '#fff' }}>{formData.title || 'Título do projeto'}</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p style={{ margin: '0 0 8px 0', fontSize: 11, color: '#94a3b8', fontWeight: 600 }}>Galeria da subpágina ({gallery.length} itens)</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, minHeight: 72, alignItems: 'center' }}>
+              {gallery.length === 0 ? (
+                <span style={{ fontSize: 12, color: '#64748b' }}>Nenhuma mídia ainda. Adicione na seção Capa e Galeria abaixo.</span>
+              ) : (
+                gallery.slice(0, 12).map((g: any, i: number) => {
+                  const thumb = g?.media?.thumbnailUrl || g?.media?.mediumUrl || g?.original;
+                  const isVideo = g?.media?.type === 'VIDEO';
+                  return (
+                    <div key={g?.id || i} style={{ width: 56, height: 56, borderRadius: 8, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', background: '#1e293b', flexShrink: 0 }}>
+                      {thumb ? <img src={thumb} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, color: '#64748b' }}>{isVideo ? '🎬' : '🖼'}</div>}
+                    </div>
+                  );
+                })
+              )}
+              {gallery.length > 12 && <span style={{ fontSize: 11, color: '#64748b' }}>+{gallery.length - 12} mais</span>}
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* ═══ REFERÊNCIA: onde aparece no site ═══ */}
       <div style={{ marginBottom: 20, padding: '14px 20px', borderRadius: 12, border: '1px solid rgba(56, 189, 248, 0.25)', background: 'rgba(56, 189, 248, 0.04)', fontSize: 13, color: '#94a3b8' }}>
@@ -296,9 +337,10 @@ export default function EditProjectPage() {
       {/* ═══ GUIA RÁPIDO ═══ */}
       <div style={{ marginBottom: 20, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
         {[
-          { id: 'basico', label: '📋 Dados básicos (título, slug, capa)' },
+          { id: 'capagaleria', label: gallery.length === 0 ? '🖼️ Capa e Galeria — adicionar imagens e vídeos' : `🖼️ Capa e Galeria${galleryCountLabel}` },
+          { id: 'basico', label: '📋 Dados básicos (título, slug)' },
           { id: 'localizacao', label: '📍 Localização' },
-          { id: 'galeria', label: gallery.length === 0 ? '🖼️ Galeria — adicionar imagens e vídeos' : `🖼️ Galeria${galleryCountLabel}` },
+          { id: 'texto', label: '📝 Texto, SEO e exibição' },
         ].map((btn) => (
           <button key={btn.id} type="button" onClick={() => handleSectionToggle(btn.id)} style={{ padding: '8px 14px', borderRadius: 8, border: '1px solid rgba(56, 189, 248, 0.3)', background: openSection === btn.id ? 'rgba(56, 189, 248, 0.2)' : 'rgba(56, 189, 248, 0.06)', color: '#7dd3fc', fontSize: 12, fontWeight: 500, cursor: 'pointer', transition: 'all 0.15s' }}>
             {btn.label}
@@ -320,8 +362,63 @@ export default function EditProjectPage() {
           maxWidth: 900,
         }}
       >
-        {/* ═══ DADOS BÁSICOS ═══ */}
-        <CollapsibleSection id="basico" title="Dados básicos" icon="📋" defaultOpen isOpen={openSection === 'basico'} onToggle={handleSectionToggle}>
+        {/* ═══ CAPA E GALERIA (visual primeiro — como no site) ═══ */}
+        <CollapsibleSection id="capagaleria" title={gallery.length > 0 ? `Capa e Galeria — ${gallery.length} itens na subpágina` : 'Capa e Galeria — adicionar imagens e vídeos'} icon="🖼️" defaultOpen isOpen={openSection === 'capagaleria'} onToggle={handleSectionToggle}>
+          <p style={{ margin: '0 0 16px 0', fontSize: 12, color: '#94a3b8' }}>
+            <strong>Card principal:</strong> a capa aparece na Home e na listagem. <strong>Galeria:</strong> as mídias abaixo aparecem na subpágina do projeto (/work/{formData.slug || '...'}). Reordene, edite legendas e ajuste posição/escala.
+          </p>
+          <div style={{ display: 'grid', gap: 16, marginBottom: 20, padding: '16px 0', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+            <label style={{ fontSize: 14, fontWeight: 600 }}>Imagem ou vídeo principal (capa)</label>
+            <UnifiedMediaUpload
+              pageSlug={`project-${formData.slug || id}`}
+              sectionSlug="hero"
+              imageId={formData.heroImageId}
+              imageUrl={formData.thumbnailUrl || formData.heroImageUrl}
+              videoId=""
+              videoUrl={formData.videoUrl}
+              onImageChange={(mediaId, url) => {
+                setFormData({ ...formData, heroImageId: mediaId || '', heroImageUrl: url || '', thumbnailUrl: url || formData.thumbnailUrl });
+              }}
+              onVideoChange={(mediaId, url) => {
+                setFormData({ ...formData, videoUrl: url || '' });
+              }}
+              allowVideo={true}
+              allowExternalUrl={true}
+              imageSpecs={{ width: 1920, height: 1080, maxSizeMB: 5, description: 'Imagem de capa do projeto' }}
+              videoSpecs={{ maxSizeMB: 50, description: 'Vídeo de capa do projeto' }}
+              existingMedia={allMedia}
+              imageLabel="Imagem de capa"
+              videoLabel="Vídeo de capa (opcional)"
+            />
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <div style={{ display: 'grid', gap: 6 }}>
+                <label style={{ fontSize: 13, fontWeight: 600 }}>Enquadramento da imagem</label>
+                <select value={formData.heroImageFit} onChange={(e) => setFormData({ ...formData, heroImageFit: e.target.value })} style={inputStyle}>
+                  <option value="contain">Sem cortes (contain)</option>
+                  <option value="cover">Preencher (cover)</option>
+                </select>
+              </div>
+              <div style={{ display: 'grid', gap: 6 }}>
+                <label style={{ fontSize: 13, fontWeight: 600 }}>Posição da imagem</label>
+                <select value={formData.heroImagePosition} onChange={(e) => setFormData({ ...formData, heroImagePosition: e.target.value })} style={inputStyle}>
+                  <option value="center">Centro</option>
+                  <option value="top">Topo</option>
+                  <option value="bottom">Base</option>
+                  <option value="left">Esquerda</option>
+                  <option value="right">Direita</option>
+                  <option value="top left">Topo esquerda</option>
+                  <option value="top right">Topo direita</option>
+                  <option value="bottom left">Base esquerda</option>
+                  <option value="bottom right">Base direita</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <GalleryManager projectId={id} initialGallery={gallery} onGalleryChange={setGallery} />
+        </CollapsibleSection>
+
+        {/* ═══ DADOS BÁSICOS (título, slug — capa está em Capa e Galeria) ═══ */}
+        <CollapsibleSection id="basico" title="Dados básicos (título, slug)" icon="📋" isOpen={openSection === 'basico'} onToggle={handleSectionToggle}>
           <div style={{ display: 'grid', gap: 12 }}>
             <div style={{ display: 'grid', gap: 8 }}>
               <label style={{ fontSize: 14, fontWeight: 600 }}>Título *</label>
@@ -346,74 +443,14 @@ export default function EditProjectPage() {
               </select>
               <small style={{ color: '#6b6780', fontSize: 11 }}>Publicado = visível no site. Rascunho = oculto.</small>
             </div>
-            {/* Imagem ou vídeo de capa (igual ao Novo Projeto) */}
-            <div style={{ display: 'grid', gap: 8, marginTop: 16, paddingTop: 16, borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-              <label style={{ fontSize: 14, fontWeight: 600 }}>Imagem ou vídeo principal (capa)</label>
-              <p style={{ margin: '0 0 8px', fontSize: 12, color: '#8f8ba2' }}>Aparece nos cards da Home e na subpágina. Mesmo campo do formulário &quot;Novo Projeto&quot;.</p>
-              <UnifiedMediaUpload
-                pageSlug={`project-${formData.slug || id}`}
-                sectionSlug="hero"
-                imageId={formData.heroImageId}
-                imageUrl={formData.thumbnailUrl || formData.heroImageUrl}
-                videoId=""
-                videoUrl={formData.videoUrl}
-                onImageChange={(mediaId, url) => {
-                  setFormData({ ...formData, heroImageId: mediaId || '', heroImageUrl: url || '', thumbnailUrl: url || formData.thumbnailUrl });
-                }}
-                onVideoChange={(mediaId, url) => {
-                  setFormData({ ...formData, videoUrl: url || '' });
-                }}
-                allowVideo={true}
-                allowExternalUrl={true}
-                imageSpecs={{ width: 1920, height: 1080, maxSizeMB: 5, description: 'Imagem de capa do projeto' }}
-                videoSpecs={{ maxSizeMB: 50, description: 'Vídeo de capa do projeto' }}
-                existingMedia={allMedia}
-                imageLabel="Imagem de capa"
-                videoLabel="Vídeo de capa (opcional)"
-              />
-              {/* Enquadramento e posição da imagem (cards + subpágina) */}
-              <div style={{ marginTop: 12, padding: '10px 12px', borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', marginBottom: 8 }}>
-                <p style={{ margin: 0, fontSize: 11, color: '#8f8ba2' }}>
-                  <strong>Como ajustar a capa:</strong> Enquadramento define se a imagem aparece inteira (sem cortes) ou preenche o quadro (pode cortar). Posição define onde a imagem fica ancorada (ex.: centro, topo, canto).
-                </p>
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: 8 }}>
-                <div style={{ display: 'grid', gap: 6 }}>
-                  <label style={{ fontSize: 13, fontWeight: 600 }}>Enquadramento da imagem</label>
-                  <select
-                    value={formData.heroImageFit}
-                    onChange={(e) => setFormData({ ...formData, heroImageFit: e.target.value })}
-                    style={inputStyle}
-                  >
-                    <option value="contain">Sem cortes (contain) — imagem inteira visível</option>
-                    <option value="cover">Preencher (cover) — pode cortar bordas</option>
-                  </select>
-                  <small style={{ color: '#6b6780', fontSize: 11 }}>Usado nos cards da Home e na subpágina do projeto.</small>
-                </div>
-                <div style={{ display: 'grid', gap: 6 }}>
-                  <label style={{ fontSize: 13, fontWeight: 600 }}>Posição da imagem</label>
-                  <select
-                    value={formData.heroImagePosition}
-                    onChange={(e) => setFormData({ ...formData, heroImagePosition: e.target.value })}
-                    style={inputStyle}
-                  >
-                    <option value="center">Centro</option>
-                    <option value="top">Topo</option>
-                    <option value="bottom">Base</option>
-                    <option value="left">Esquerda</option>
-                    <option value="right">Direita</option>
-                    <option value="top left">Topo esquerda</option>
-                    <option value="top right">Topo direita</option>
-                    <option value="bottom left">Base esquerda</option>
-                    <option value="bottom right">Base direita</option>
-                  </select>
-                  <small style={{ color: '#6b6780', fontSize: 11 }}>Clique no menu para escolher onde a imagem é ancorada no quadro.</small>
-                </div>
-              </div>
-            </div>
           </div>
         </CollapsibleSection>
 
+        {/* ═══ TEXTO, SEO E EXIBIÇÃO (resumos, descrições, SEO, Home, filtros, prêmios...) ═══ */}
+        <CollapsibleSection id="texto" title="Texto, SEO e exibição" icon="📝" isOpen={openSection === 'texto'} onToggle={handleSectionToggle}>
+          <p style={{ margin: '0 0 16px 0', fontSize: 12, color: '#94a3b8' }}>
+            Resumos e descrições (subpágina), SEO, onde aparece na Home, localização, filtros e dados extras (prêmios, métricas, links). Preencha o que for relevante.
+          </p>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           <div style={{ display: 'grid', gap: 8 }}>
             <label style={{ fontSize: 14, fontWeight: 600 }}>Resumo (PT)</label>
@@ -1185,29 +1222,6 @@ export default function EditProjectPage() {
             </small>
           </div>
         </div>
-
-        {/* Imagem/vídeo de capa está na seção "Dados básicos" (igual ao Novo Projeto) */}
-        <div style={{ marginTop: 24, padding: '12px 16px', borderRadius: 8, background: 'rgba(56,189,248,0.06)', border: '1px solid rgba(56,189,248,0.15)', fontSize: 13, color: '#94a3b8' }}>
-          🖼️ <strong style={{ color: '#7dd3fc' }}>Imagem/vídeo de capa</strong> está na seção <strong>Dados básicos</strong> acima — mesma organização do formulário &quot;Novo Projeto&quot;.
-        </div>
-        <div style={{ marginTop: 10, padding: '12px 16px', borderRadius: 8, background: 'rgba(201,35,55,0.08)', border: '1px solid rgba(201,35,55,0.25)', fontSize: 13, color: '#fca5a5' }}>
-          📸 <strong>Várias imagens e vídeos (galeria):</strong> use a aba <strong>Galeria</strong> acima para adicionar, reordenar e editar as mídias da subpágina do projeto. Lá você verá miniaturas e os botões Upload, URL e Biblioteca.
-        </div>
-
-        {/* Galeria de Mídias (Adicional) – subpágina do projeto */}
-        <CollapsibleSection
-          id="galeria"
-          title={gallery.length > 0
-            ? `Galeria — ${gallery.length} itens (${galleryImageCount} imgs, ${galleryVideoCount} vídeos) · miniatura, apagar, substituir, posição`
-            : 'Galeria — adicionar imagens e vídeos (subpágina do projeto)'}
-          icon="📸"
-          isOpen={openSection === 'galeria'}
-          onToggle={handleSectionToggle}
-        >
-          <p style={{ margin: '0 0 12px 0', fontSize: 12, color: '#94a3b8' }}>
-            <strong>Onde adicionar mais:</strong> use o botão &quot;+ Adicionar&quot; abaixo para enviar arquivo, colar URL (imagem/vídeo) ou escolher da biblioteca. Cada item aparece com miniatura; você pode reordenar (← →), editar legendas (📝), apagar (🗑️), substituir (🔄) e ajustar posição/escala (📐).
-          </p>
-          <GalleryManager projectId={id} initialGallery={gallery} onGalleryChange={setGallery} />
         </CollapsibleSection>
 
         <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
