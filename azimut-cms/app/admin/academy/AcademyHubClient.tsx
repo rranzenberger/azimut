@@ -81,8 +81,42 @@ export function AcademyHubClient({ pages, error }: AcademyHubClientProps) {
       </header>
 
       <div style={{ padding: '18px 22px', marginBottom: 28, borderRadius: 12, background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.35)', fontSize: 14, color: '#86efac', lineHeight: 1.5 }}>
-        <strong>Mídia da página Academy — como aparece no site.</strong> Abaixo: Cursos e Past Events com todos os cards/slots; depois Vancouver e as páginas (hero + textos). Cada item tem Trocar e EDITAR.
+        <strong>Mídia da página Academy — como aparece no site.</strong> Aqui em cima: os 4 cards da página Academy (Vancouver, Cursos, Events, B2B). Abaixo: Cursos e Past Events com todos os cards/slots. Cada item tem Trocar e EDITAR.
       </div>
+
+      {/* ═══ SEÇÃO 0: 4 CARDS DA PÁGINA ACADEMY (como no site — INTERNATIONAL, PROFESSIONAL, EVENTS, B2B) ═══ */}
+      <section style={{ marginBottom: 40 }}>
+        <h2 style={{ margin: '0 0 16px', fontSize: 20, fontWeight: 700, color: AZIMUT.text }}>4 cards da página Academy — edite as mídias aqui</h2>
+        <p style={{ margin: '0 0 20px', fontSize: 14, color: AZIMUT.textMuted }}>Estas são as imagens e textos que aparecem nos 4 blocos da página /academy (Vancouver, Cursos, Workshops, Corporate). Trocar imagem = imagem do card; EDITAR = textos e hero da página.</p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 20 }}>
+          {['academy/vancouver', 'academy/courses', 'academy/workshops', 'academy/corporate'].map((slug) => {
+            const page = pages.find((p: any) => p.slug === slug);
+            const heroUrl = page ? getHeroUrl(page) : null;
+            const label = slugToLabel[slug] || slug;
+            const editPath = getEditPath(slug);
+            const badges: Record<string, string> = { 'academy/vancouver': 'INTERNATIONAL', 'academy/courses': 'PROFESSIONAL', 'academy/workshops': 'EVENTS', 'academy/corporate': 'B2B' };
+            const badge = badges[slug] || '';
+            return (
+              <div key={slug} style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)', transition: 'all 0.25s ease' }} onMouseEnter={cardHover.on} onMouseLeave={cardHover.off}>
+                <div style={{ position: 'relative', paddingTop: '56%', background: heroUrl ? '#0a0a0a' : 'linear-gradient(135deg, rgba(201,35,55,0.15), rgba(10,14,26,0.9))' }}>
+                  {heroUrl ? <img src={heroUrl} alt="" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} /> : <span style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 56, opacity: 0.5 }}>{slug === 'academy/vancouver' ? '🇨🇦' : slug === 'academy/courses' ? '📚' : slug === 'academy/workshops' ? '🎬' : '🏢'}</span>}
+                  <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '50%', background: 'linear-gradient(to top, rgba(10,14,26,0.95), transparent)', pointerEvents: 'none' }} />
+                  {badge && <span style={{ position: 'absolute', top: 12, left: 12, padding: '4px 12px', borderRadius: 20, background: 'rgba(201,35,55,0.9)', color: '#fff', fontSize: 11, fontWeight: 700, letterSpacing: '0.05em' }}>{badge}</span>}
+                  <div style={{ position: 'absolute', top: 12, right: 12, display: 'flex', gap: 6 }}>
+                    <Link href={editPath} style={{ background: 'rgba(168,85,247,0.9)', color: '#fff', padding: '8px 14px', borderRadius: 8, fontSize: 12, fontWeight: 600, textDecoration: 'none' }}>📷 Trocar imagem</Link>
+                    <Link href={editPath} style={{ background: '#22c55e', color: '#fff', padding: '10px 18px', borderRadius: 8, fontSize: 13, fontWeight: 700, textDecoration: 'none', boxShadow: '0 2px 12px rgba(34,197,94,0.35)' }}>✏️ EDITAR</Link>
+                  </div>
+                </div>
+                <div style={{ padding: '16px 20px' }}>
+                  <h3 style={{ margin: '0 0 6px', fontSize: 18, fontWeight: 700, color: AZIMUT.text }}>{label}</h3>
+                  <p style={{ margin: 0, fontSize: 12, color: AZIMUT.textMuted }}>/{slug}</p>
+                  <Link href={editPath} style={{ display: 'inline-block', marginTop: 10, fontSize: 13, color: '#86efac', fontWeight: 600, textDecoration: 'none' }}>Edição completa (textos e hero) →</Link>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
 
       {/* ═══ SEÇÃO 1: CURSOS — como no site (grid igual Projetos) ═══ */}
       <section style={{ marginBottom: 40 }}>
