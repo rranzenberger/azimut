@@ -34,10 +34,14 @@ Esse mesmo padrão deve ser aplicado a:
 - **Academy** no menu "Conteúdo do site": leva ao hub visual (`/admin/academy`).
 - **Academy → Events (galeria)** disponível no hub ou em submenu.
 
+### 4. Hub Vancouver (`/admin/academy/vancouver`)
+- Página dedicada **CA Vancouver — VFS & VanArts**: link para **EDITAR PÁGINA** (hero, textos, vídeo de capa) e blocos para **Vídeos VFS/VanArts** e **Galeria / Student Work** (por agora com link para Mídias; depois pode ser expandível como Cursos/Past Events).
+- No hub Academy, na lista "Expandível como Projetos", foi adicionado o link **CA Vancouver** → `/admin/academy/vancouver`.
+
 ---
 
 ## Próximos passos (revisão premium)
 
-- **Vancouver (VFS / VanArts):** Página(s) de edição visual com hero, logo, badges, estatísticas, lista de programas, Quick Facts, vídeo e blocos "Live in Vancouver" (imagens editáveis por card).
+- **Vancouver (VFS / VanArts) — aprofundar:** Vídeos e galeria expandíveis (como Cursos/Past Events): listagem visual, adicionar item, Trocar mídia por card. Hoje: edição da página + Mídias gerais.
 - **Blog:** Listagem em **cards visuais** (imagem, tag Destaque, categoria, título, excerpt) com **Trocar** e **EDITAR** em cada card.
 - **Consistência:** Todas as páginas de edição do backoffice seguem o mesmo padrão visual (tema escuro, bordas Azimut, botões Trocar/EDITAR, preview quando possível).

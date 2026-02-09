@@ -66,6 +66,8 @@ model Media {
   blogPostCovers      BlogPost[]     @relation("BlogPostCover")
   makingOf            MakingOf?      @relation("MakingOfMedia", fields: [makingOfId], references: [id])
   makingOfId          String?
+  academyCourseCovers AcademyCourse[]
+  academyPastEvents   AcademyPastEvent[]
 
   // ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
   // Sistema de Tags (Op├º├úo 2) - Contexto da imagem
@@ -339,6 +341,48 @@ model Section {
   updatedAt      DateTime  @updatedAt
   page           Page      @relation(fields: [pageId], references: [id])
   linkedProjects Project[] @relation("SectionProjects")
+}
+
+// ═══ ACADEMY — Cards de Cursos (6 no site) e Past Events (8 slots) ═══
+model AcademyCourse {
+  id           String   @id @default(uuid())
+  order        Int      @default(0)
+  imageId      String?
+  image        Media?   @relation(fields: [imageId], references: [id], onDelete: SetNull)
+  titlePt      String?
+  titleEn      String?
+  titleEs      String?
+  titleFr      String?
+  descriptionPt String?
+  descriptionEn String?
+  descriptionEs String?
+  descriptionFr String?
+  pricePt      String?
+  priceEn      String?
+  durationPt   String?
+  durationEn   String?
+  levelPt      String?
+  levelEn      String?
+  category     String?  // vr, ai, motion, game
+  tags         String[] // ["VR", "Cinema", "360°"]
+  featured     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([order])
+}
+
+model AcademyPastEvent {
+  id        String   @id @default(uuid())
+  order     Int      @default(0) // ordenação (0, 1, 2... pode expandir)
+  mediaId   String?
+  media     Media?   @relation(fields: [mediaId], references: [id], onDelete: SetNull)
+  captionPt String?
+  captionEn String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([order])
 }
 
 model CompanyHistory {

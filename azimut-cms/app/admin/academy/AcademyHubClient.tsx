@@ -53,7 +53,7 @@ export function AcademyHubClient({ pages, error }: AcademyHubClientProps) {
           Academy — edição visual
         </h1>
         <p style={{ margin: 0, color: AZIMUT.textSecondary, fontSize: 16 }}>
-          Cards como no site. Troque a imagem e edite textos em cada bloco.
+          Layout semelhante ao site: Vancouver, Cursos, Workshops, Corporate. Cards com Trocar imagem e EDITAR.
         </p>
       </header>
 
@@ -192,9 +192,12 @@ export function AcademyHubClient({ pages, error }: AcademyHubClientProps) {
       )}
 
       <div style={{ marginTop: 32, padding: '20px 24px', borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-        <h3 style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 600, color: AZIMUT.text }}>Outros</h3>
+        <h3 style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 600, color: AZIMUT.text }}>Expandível como Projetos</h3>
+        <p style={{ margin: '0 0 12px', fontSize: 13, color: AZIMUT.textMuted }}>Cursos e Past Events: pode adicionar quantos quiser (igual à galeria de projetos). Vancouver: hero, vídeos e mídias VFS/VanArts.</p>
         <ul style={{ margin: 0, paddingLeft: 20, color: AZIMUT.textSecondary, fontSize: 14, lineHeight: 1.8 }}>
-          <li><Link href="/admin/academy/events/gallery" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>Galeria Past Events</Link> — imagens da seção &quot;Past Events&quot; (Workshops)</li>
+          <li><Link href="/admin/academy/courses" style={{ color: '#7dd3fc', textDecoration: 'underline', fontWeight: 600 }}>Cursos</Link> — cada card = um curso (Trocar imagem, EDITAR, + Adicionar curso)</li>
+          <li><Link href="/admin/academy/events/gallery" style={{ color: '#7dd3fc', textDecoration: 'underline', fontWeight: 600 }}>Past Events</Link> — imagens da seção Workshops (+ Adicionar slot)</li>
+          <li><Link href="/admin/academy/vancouver" style={{ color: '#7dd3fc', textDecoration: 'underline', fontWeight: 600 }}>CA Vancouver</Link> — página + vídeos e mídias (VFS, VanArts)</li>
           <li><Link href="/admin/site-pages" style={{ color: '#7dd3fc', textDecoration: 'underline' }}>Páginas</Link> — listagem completa (Academy, Vancouver, etc.)</li>
         </ul>
       </div>
