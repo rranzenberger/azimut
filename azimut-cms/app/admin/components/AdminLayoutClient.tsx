@@ -116,6 +116,7 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
           </div>
           <AdminLink href="/admin" label="🏠 Dashboard" title={TOOLTIP_BY_HREF['/admin']} />
           <AdminLink href="/admin/site-pages" label="📄 Páginas" title={TOOLTIP_BY_HREF['/admin/site-pages']} />
+          <AdminLink href="/admin/academy" label="🎓 Academy" title={TOOLTIP_BY_HREF['/admin/academy']} />
           <AdminLink href="/admin/projects" label="🎥 Projetos" title={TOOLTIP_BY_HREF['/admin/projects']} />
           <AdminLink href="/admin/blog" label="📝 Blog" title={TOOLTIP_BY_HREF['/admin/blog']} />
           <MonitorLink />

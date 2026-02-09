@@ -101,6 +101,22 @@ export const MENU_MANUAL_ITEMS: MenuItemManual[] = [
     ],
   },
   {
+    href: '/admin/academy',
+    label: '🎓 Academy',
+    tooltip: 'Edição visual da Academy: Cursos, Workshops, Corporate, Vancouver. Cards como na Home — trocar imagem e editar textos.',
+    description: 'Hub visual da Academy. Lista as páginas da Academy (Cursos, Workshops, Corporate, Research, etc.) em cards como no site. Em cada card: Trocar imagem (hero) e EDITAR (abre o editor de página). Inclui link para a galeria Past Events.',
+    howTo: [
+      'Acesse Academy no menu',
+      'Veja os cards de cada parte (Cursos, Workshops, Corporate, etc.)',
+      'Use "Trocar imagem" para alterar o hero; "EDITAR" para textos e SEO',
+      'Para Past Events: use o link "Galeria Past Events" ou edite a página Workshops',
+    ],
+    tips: [
+      'O mesmo padrão da Home: preview visual + botões Trocar e EDITAR',
+      'As páginas Academy são editadas em Páginas > editar; o hub é um atalho visual',
+    ],
+  },
+  {
     href: '/admin/blog',
     label: '📝 Blog',
     tooltip: 'Artigos do blog: criar, editar e publicar posts do site.',
