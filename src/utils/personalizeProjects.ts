@@ -115,11 +115,18 @@ export function getInterestProfile(): InterestProfile {
 }
 
 /**
- * Reordena projetos: mantém destaque (index 0), personaliza os 3 seguintes
- * 
- * @param projects - Todos os projetos ordenados por priorityHome
- * @param profile - Perfil de interesse do visitante
- * @returns Projetos reordenados (destaque + 3 personalizados + restante)
+ * Reordena projetos: mantém destaque (index 0), personaliza os N-1 seguintes por interesse.
+ *
+ * Lógica (pensando como IA):
+ * - Slot 1: sempre curadoria do backoffice (destaque fixo).
+ * - Slots 2–7: os mesmos projetos do backoffice, reordenados por relevância ao perfil
+ *   (categorias clicadas, projetos vistos). Visitante novo vê ordem do backoffice;
+ *   visitante com histórico vê os 6 cards secundários ordenados por interesse.
+ * - Pool: apenas os projetos já em destaque (1–7); não traz projetos de fora.
+ *
+ * @param projects - Todos os projetos ordenados por priorityHome (ex.: 7 da Home)
+ * @param profile - Perfil de interesse do visitante (localStorage)
+ * @returns Projetos reordenados (destaque + até N-1 por relevância + restante)
  */
 export function personalizeProjectOrder<T extends {
   projectCategory?: string[]
@@ -132,9 +139,10 @@ export function personalizeProjectOrder<T extends {
   if (!profile.hasEnoughData) return projects // Sem dados → ordem original (priorityHome)
 
   const [featured, ...rest] = projects
-  if (rest.length <= 3) return projects // Poucos projetos → não personaliza
+  const numSlots = rest.length
+  if (numSlots <= 1) return projects // Poucos projetos → não personaliza
 
-  // Calcular score de relevância para cada projeto
+  // Calcular score de relevância para cada projeto (categorias, tipo, tags)
   const scored = rest.map(project => {
     let relevanceScore = 0
 
@@ -142,7 +150,6 @@ export function personalizeProjectOrder<T extends {
       const cat = MAIN_CATEGORIES.find(c => c.id === interest.categoryId)
       if (!cat) continue
 
-      // Verifica se o projeto pertence a esta categoria
       const matchesCategory = project.projectCategory?.some(pc =>
         cat.projectCategory?.includes(pc)
       )
@@ -160,18 +167,17 @@ export function personalizeProjectOrder<T extends {
     return { project, relevanceScore }
   })
 
-  // Separar: projetos relevantes (score > 0) e restante
+  // Separar: relevantes (score > 0) ordenados por score; demais na ordem original
   const relevant = scored
     .filter(s => s.relevanceScore > 0)
     .sort((a, b) => b.relevanceScore - a.relevanceScore)
 
-  const notRelevant = scored
-    .filter(s => s.relevanceScore === 0)
+  const notRelevant = scored.filter(s => s.relevanceScore === 0)
 
-  // Montar resultado: destaque + até 3 relevantes + restante por priorityHome
-  const personalizedTop = relevant.slice(0, 3).map(s => s.project)
+  // Montar: destaque + até numSlots por relevância + restante (mantém diversidade)
+  const personalizedTop = relevant.slice(0, numSlots).map(s => s.project)
   const remaining = [
-    ...relevant.slice(3).map(s => s.project),
+    ...relevant.slice(numSlots).map(s => s.project),
     ...notRelevant.map(s => s.project),
   ]
 

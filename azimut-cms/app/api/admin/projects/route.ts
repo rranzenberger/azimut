@@ -22,13 +22,14 @@ export async function GET(request: NextRequest) {
     }
 
     const { searchParams } = new URL(request.url);
-    const limit = parseInt(searchParams.get('limit') || '100');
+    const requestedLimit = parseInt(searchParams.get('limit') || '100');
+    const limit = Math.min(Math.max(1, requestedLimit), 5000);
     const offset = parseInt(searchParams.get('offset') || '0');
     const featuredOnly = searchParams.get('featured') === 'true';
 
     // Se featured=true: featured + priorityHome 1–4 + PUBLISHED, ordenado por priorityHome asc (1º, 2º, 3º, 4º)
     const whereClause = featuredOnly
-      ? { featured: true, priorityHome: { gte: 1, lte: 4 }, status: 'PUBLISHED' as const }
+      ? { featured: true, priorityHome: { gte: 1, lte: 7 }, status: 'PUBLISHED' as const }
       : {};
 
     const orderByClause = featuredOnly

@@ -325,6 +325,14 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     }
     return defaultCases;
   }, [cmsContent?.highlightProjects, defaultCases, cmsLoading, cmsError])
+
+  // Os 7 principais (destaques da Home): API retorna em featuredProjects quando page=work
+  const featuredSeven = useMemo(() => {
+    if (cmsContent?.featuredProjects && Array.isArray(cmsContent.featuredProjects) && cmsContent.featuredProjects.length > 0) {
+      return cmsContent.featuredProjects;
+    }
+    return [];
+  }, [cmsContent?.featuredProjects])
   
   // SEO dinâmico baseado nos projetos disponíveis
   const baseSeo = seoData.work[lang]
@@ -443,7 +451,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     searchQuery !== ''
 
   // ═══════════════════════════════════════════════════════════════
-  // 🧠 PERSONALIZAÇÃO: reordenar os 3 cards com base no interesse
+  // 🧠 PERSONALIZAÇÃO: reordenar cards com base no interesse
   // Visitante novo → priorityHome (flag do backoffice)
   // Visitante com histórico → sobrepõe com projetos relevantes
   // ═══════════════════════════════════════════════════════════════
@@ -454,6 +462,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     if (hasActiveFilters) return cases
     return personalizeProjectOrder(cases, interestProfile)
   }, [cases, interestProfile, hasActiveFilters])
+
+  // Card principal (destaque): quando temos os 7 da Home, usar o 1º; senão o 1º da lista personalizada
+  const mainFeaturedProject = (featuredSeven.length > 0 ? featuredSeven[0] : personalizedCases[0]) as WorkProject | undefined
   
   // Extrair valores únicos para filtros
   const allTags = useMemo(() => {
@@ -564,14 +575,14 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
 
   // Dados já vêm traduzidos do backoffice
 
-  // Imagem OG dinâmica: usar primeira imagem do primeiro projeto se disponível
+  // Imagem OG dinâmica: usar imagem do projeto em destaque (1º dos 7 ou 1º da lista)
   const ogImage = useMemo(() => {
-    if (personalizedCases.length > 0 && personalizedCases[0]) {
-      const firstProjectImage = getProjectImageUrl(personalizedCases[0], 'large')
+    if (mainFeaturedProject) {
+      const firstProjectImage = getProjectImageUrl(mainFeaturedProject, 'large')
       if (firstProjectImage) return firstProjectImage
     }
     return seo.image || 'https://azmt.com.br/og-work.png'
-  }, [cases, seo.image])
+  }, [mainFeaturedProject, seo.image])
 
   // Schema.org: ItemList para lista de projetos (SEO)
   const projectListSchema = useMemo(() => {
@@ -656,9 +667,10 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 onClick={() => navigate(`/${lang}/work/projects`)}
                 className={`flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide transition-colors ${
                   !hasActiveFilters
-                    ? 'text-azimut-red border-b-2 border-azimut-red'
-                    : 'text-slate-400 hover:text-azimut-red'
+                    ? 'border-b-2 border-azimut-red'
+                    : 'text-slate-400 hover:opacity-90'
                 }`}
+                style={!hasActiveFilters ? { color: 'var(--theme-text)' } : undefined}
               >
                 <span>+</span>
                 <span>{lang === 'pt' ? 'TODOS' : lang === 'es' ? 'TODOS' : lang === 'fr' ? 'TOUS' : 'ALL'}</span>
@@ -697,12 +709,13 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                     }}
                     className={`flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide transition-all duration-200 ${
                       isActive
-                        ? 'text-azimut-red border-b-2 border-azimut-red scale-105'
+                        ? 'border-b-2 border-azimut-red scale-105'
                         : isRecommended
-                        ? 'text-azimut-red/80 hover:text-azimut-red hover:scale-105 relative'
-                        : 'text-slate-400 hover:text-azimut-red hover:scale-105'
+                        ? 'hover:scale-105 relative'
+                        : 'text-slate-400 hover:opacity-90 hover:scale-105'
                     }`}
                     style={{
+                      ...(isActive || isRecommended ? { color: 'var(--theme-text)' } : {}),
                       transform: isRecommended ? 'scale(1.05)' : undefined
                     }}
                   >
@@ -729,6 +742,16 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
 
         {/* Conteúdo - DENTRO do container */}
         <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
+          {/* Indicador de carregamento: evita tela branca enquanto a API responde */}
+          {cmsLoading && (
+            <div className="flex items-center justify-center gap-3 py-6 text-slate-400" role="status" aria-label={lang === 'pt' ? 'Carregando' : 'Loading'}>
+              <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+              <span className="font-sora text-sm">{lang === 'pt' ? 'Carregando projetos...' : lang === 'es' ? 'Cargando proyectos...' : lang === 'fr' ? 'Chargement des projets...' : 'Loading projects...'}</span>
+            </div>
+          )}
           
           {/* Hero Section */}
           <div className="pt-6 md:pt-8 mb-8">
@@ -742,20 +765,21 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
             </h1>
             <p className="max-w-3xl leading-relaxed text-slate-400 dark:text-slate-300" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.25rem)' }}>
               {lang === 'pt' ? (
-                <>Projetos que transformam espaços, marcas e experiências. De museus olímpicos a curadoria de festivais internacionais, cada trabalho é uma oportunidade de criar narrativas imersivas que conectam pessoas e histórias de forma única. <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">Conheça nossos serviços</LangLink> ou <LangLink to="/contact" className="text-azimut-red hover:text-azimut-red/80 underline">inicie seu projeto</LangLink>.</>
+                <>Projetos que transformam espaços, marcas e experiências. De museus olímpicos a curadoria de festivais internacionais, cada trabalho é uma oportunidade de criar narrativas imersivas que conectam pessoas e histórias de forma única. <LangLink to="/what" className="underline hover:opacity-90" style={{ color: 'var(--theme-text)' }}>Conheça nossos serviços</LangLink> ou <LangLink to="/contact" className="underline hover:opacity-90" style={{ color: 'var(--theme-text)' }}>inicie seu projeto</LangLink>.</>
               ) : lang === 'es' ? (
-                <>Proyectos que transforman espacios, marcas y experiencias. Desde museos olímpicos hasta curaduría de festivales internacionales, cada trabajo es una oportunidad de crear narrativas inmersivas que conectan personas e historias de forma única. <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">Conoce nuestras soluciones</LangLink> o <LangLink to="/contact" className="text-azimut-red hover:text-azimut-red/80 underline">inicia tu proyecto</LangLink>.</>
+                <>Proyectos que transforman espacios, marcas y experiencias. Desde museos olímpicos hasta curaduría de festivales internacionales, cada trabajo es una oportunidad de crear narrativas inmersivas que conectan personas e historias de forma única. <LangLink to="/what" className="underline hover:opacity-90" style={{ color: 'var(--theme-text)' }}>Conoce nuestras soluciones</LangLink> o <LangLink to="/contact" className="underline hover:opacity-90" style={{ color: 'var(--theme-text)' }}>inicia tu proyecto</LangLink>.</>
               ) : lang === 'fr' ? (
-                <>Des projets qui transforment les espaces, les marques et les expériences. Des musées olympiques à la curation de festivals internationaux, chaque travail est une opportunité de créer des narrations immersives qui connectent les personnes et les histoires de manière unique. <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">Découvrez nos solutions</LangLink> ou <LangLink to="/contact" className="text-azimut-red hover:text-azimut-red/80 underline">lancez votre projet</LangLink>.</>
+                <>Des projets qui transforment les espaces, les marques et les expériences. Des musées olympiques à la curation de festivals internationaux, chaque travail est une opportunité de créer des narrations immersives qui connectent les personnes et les histoires de manière unique. <LangLink to="/what" className="underline hover:opacity-90" style={{ color: 'var(--theme-text)' }}>Découvrez nos solutions</LangLink> ou <LangLink to="/contact" className="underline hover:opacity-90" style={{ color: 'var(--theme-text)' }}>lancez votre projet</LangLink>.</>
               ) : (
-                <>Projects that transform spaces, brands and experiences. From Olympic museums to international festival curation, each work is an opportunity to create immersive narratives that uniquely connect people and stories. <LangLink to="/what" className="text-azimut-red hover:text-azimut-red/80 underline">Explore our solutions</LangLink> or <LangLink to="/contact" className="text-azimut-red hover:text-azimut-red/80 underline">start your project</LangLink>.</>
+                <>Projects that transform spaces, brands and experiences. From Olympic museums to international festival curation, each work is an opportunity to create immersive narratives that uniquely connect people and stories. <LangLink to="/what" className="underline hover:opacity-90" style={{ color: 'var(--theme-text)' }}>Explore our solutions</LangLink> or <LangLink to="/contact" className="underline hover:opacity-90" style={{ color: 'var(--theme-text)' }}>start your project</LangLink>.</>
               )}
             </p>
             {/* CTA: Projetos realizados / Veja todo nosso portfólio */}
             <div className="mt-6 flex flex-wrap items-center gap-4">
               <Link
                 to={`/${lang}/work/projects`}
-                className="inline-flex items-center gap-2 rounded-xl border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-sm font-semibold uppercase tracking-[0.1em] text-azimut-red hover:bg-azimut-red/20 transition-all"
+                className="inline-flex items-center gap-2 rounded-xl border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-sm font-semibold uppercase tracking-[0.1em] hover:bg-azimut-red/20 transition-all"
+                style={{ color: 'var(--theme-text)' }}
               >
                 {lang === 'pt' ? 'Veja todo nosso portfólio' : lang === 'es' ? 'Ver todo nuestro portafolio' : lang === 'fr' ? 'Voir tout notre portfolio' : 'View full portfolio'}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
@@ -771,7 +795,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
               {hasActiveFilters ? (
                 <>
                   {personalizedCases.length} {lang === 'pt' ? (personalizedCases.length === 1 ? 'projeto' : 'projetos') : (personalizedCases.length === 1 ? 'project' : 'projects')}
-                  <span className="ml-2 text-azimut-red">
+                  <span className="ml-2" style={{ color: 'var(--theme-text)' }}>
                     ({lang === 'pt' ? 'filtrado' : lang === 'es' ? 'filtrado' : 'filtered'})
                   </span>
                 </>
@@ -779,9 +803,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                 <span>
                   {lang === 'pt' ? 'Destaques' : lang === 'es' ? 'Destacados' : lang === 'fr' ? 'En vedette' : 'Highlights'}
                   {interestProfile.hasEnoughData && (
-                    <span className="ml-1 text-azimut-red/60 text-xs">
-                      ({lang === 'pt' ? 'personalizado' : 'personalized'})
-                    </span>
+<span className="ml-1 text-xs" style={{ color: 'var(--theme-text-muted)' }}>
+                    ({lang === 'pt' ? 'personalizado' : 'personalized'})
+                  </span>
                   )}
                   {personalizedCases.length > 4 && (
                     <span className="ml-1 text-slate-600">
@@ -794,7 +818,8 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
             {hasActiveFilters && (
               <button
                 onClick={clearFilters}
-                className="flex items-center gap-2 rounded-lg border border-azimut-red/40 bg-azimut-red/10 px-4 py-2 text-xs font-sora font-semibold uppercase tracking-wide text-azimut-red hover:bg-azimut-red/20 transition-all"
+                className="flex items-center gap-2 rounded-lg border border-azimut-red/40 bg-azimut-red/10 px-4 py-2 text-xs font-sora font-semibold uppercase tracking-wide hover:bg-azimut-red/20 transition-all"
+                style={{ color: 'var(--theme-text)' }}
               >
                 {lang === 'pt' ? '✕ Limpar filtros' : lang === 'es' ? '✕ Limpiar' : '✕ Clear'}
               </button>
@@ -809,7 +834,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   🎪
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="mb-1 font-handel text-lg uppercase tracking-[0.1em] text-azimut-red">
+                  <h3 className="mb-1 font-handel text-lg uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>
                     {cmsContent?.curationTitle || (lang === 'pt' ? 'Curadoria Gramado' : lang === 'es' ? 'Curaduría Gramado' : lang === 'fr' ? 'Curation Gramado' : 'Gramado Curation')}
                   </h3>
                   <p className="text-sm leading-relaxed text-slate-400 line-clamp-2">
@@ -827,7 +852,8 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                     const filterCat = cmsContent?.curationFilterCategory || 'curadoria'
                     setSelectedCategory([filterCat])
                   }}
-                  className="flex-shrink-0 inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/15 px-5 py-2.5 font-sora text-xs font-semibold uppercase tracking-[0.1em] text-azimut-red hover:bg-azimut-red/25 transition-all"
+                  className="flex-shrink-0 inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/15 px-5 py-2.5 font-sora text-xs font-semibold uppercase tracking-[0.1em] hover:bg-azimut-red/25 transition-all"
+                  style={{ color: 'var(--theme-text)' }}
                 >
                   <span className="hidden sm:inline">{cmsContent?.curationButtonText || (lang === 'pt' ? 'Ver Curadoria' : lang === 'es' ? 'Ver Curaduría' : lang === 'fr' ? 'Voir Curation' : 'View Curation')}</span>
                   <span className="sm:hidden">{lang === 'pt' ? 'Ver' : 'View'}</span>
@@ -839,8 +865,8 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
             </div>
           )}
 
-          {/* Featured Project - Full Width - SEMPRE MOSTRA, mesmo sem dados */}
-          {personalizedCases.length > 0 && (
+          {/* Featured Project - Full Width (1º dos 7 principais quando API envia featuredProjects; senão 1º da lista) */}
+          {mainFeaturedProject && (
               <article
                 id={personalizedCases.length === 1 ? 'projects-grid' : undefined}
                 className={`mb-8 overflow-hidden rounded-3xl border card-adaptive shadow-[0_32px_80px_rgba(0,0,0,0.6)] cursor-pointer ${
@@ -851,26 +877,25 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   e.stopPropagation()
                   
                   try {
-                    trackInteraction('project_view', personalizedCases[0].slug)
-                    trackProjectInteraction(personalizedCases[0].slug, 'CLICK')
+                    trackInteraction('project_view', mainFeaturedProject.slug)
+                    trackProjectInteraction(mainFeaturedProject.slug, 'CLICK')
                   } catch (err) {
                     console.warn('Tracking error:', err)
                   }
                   
-                  // Navegação (state permite mostrar preview na subpágina na hora)
-                  navigate(`/${lang}/work/${personalizedCases[0].slug}`, { state: { projectPreview: personalizedCases[0] } })
+                  navigate(`/${lang}/work/${mainFeaturedProject.slug}`, { state: { projectPreview: mainFeaturedProject } })
                 }}
-                onMouseEnter={() => prefetchProject(personalizedCases[0].slug, lang)}
+                onMouseEnter={() => prefetchProject(mainFeaturedProject.slug, lang)}
               >
               <div className="grid md:grid-cols-2">
-                {/* Image Area - BACKOFFICE: personalizedCases[0].heroImage ou thumbnailUrl */}
+                {/* Image Area - BACKOFFICE: heroImage ou thumbnailUrl */}
                 <div className="relative aspect-video md:aspect-auto md:min-h-[400px] bg-gradient-to-br from-slate-800/80 to-slate-950 overflow-hidden group">
                   {/* Renderizar imagem se disponível (heroImage ou thumbnailUrl) */}
-                  {getProjectImageUrl(personalizedCases[0], 'large') ? (
+                  {getProjectImageUrl(mainFeaturedProject, 'large') ? (
                     <>
                       <img
-                        src={getProjectImageUrl(personalizedCases[0], 'large')!}
-                        alt={getProjectImageAlt(personalizedCases[0])}
+                        src={getProjectImageUrl(mainFeaturedProject, 'large')!}
+                        alt={getProjectImageAlt(mainFeaturedProject)}
                         loading="lazy"
                         className="absolute inset-0 h-full w-full object-contain transition-transform group-hover:scale-105"
                       />
@@ -909,7 +934,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                       textShadow: theme === 'light' ? '0 2px 8px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.3)' : '0 2px 4px rgba(0, 0, 0, 0.2)'
                     }}
                   >
-                    {personalizedCases[0].title}
+                    {mainFeaturedProject.title}
                   </h2>
                   <p 
                     className="mb-4 text-base leading-relaxed line-clamp-4"
@@ -918,9 +943,9 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                       textShadow: theme === 'light' ? '0 1px 4px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3)' : '0 1px 2px rgba(0, 0, 0, 0.2)'
                     }}
                   >
-                    {personalizedCases[0].summary || personalizedCases[0].shortTitle}
+                    {mainFeaturedProject.summary || mainFeaturedProject.shortTitle}
                   </p>
-                  {(personalizedCases[0].city || personalizedCases[0].country) && (
+                  {(mainFeaturedProject.city || mainFeaturedProject.country) && (
                     <p 
                       className="mb-4 text-sm"
                       style={{ 
@@ -928,12 +953,12 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                         textShadow: theme === 'light' ? '0 1px 3px rgba(0, 0, 0, 0.5)' : 'none'
                       }}
                     >
-                      📍 {[personalizedCases[0].city, personalizedCases[0].country].filter(Boolean).join(', ')}
+                      📍 {[mainFeaturedProject.city, mainFeaturedProject.country].filter(Boolean).join(', ')}
                     </p>
                   )}
-                  {personalizedCases[0].tags && personalizedCases[0].tags.length > 0 && (
+                  {mainFeaturedProject.tags && mainFeaturedProject.tags.length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {((personalizedCases[0]?.tags && Array.isArray(personalizedCases[0].tags)) ? personalizedCases[0].tags : []).slice(0, 3).map((tag: string, idx: number) => (
+                      {((mainFeaturedProject?.tags && Array.isArray(mainFeaturedProject.tags)) ? mainFeaturedProject.tags : []).slice(0, 3).map((tag: string, idx: number) => (
                         <span key={idx} className="pill-adaptive rounded-full border px-3 py-1 font-sora text-[0.68rem] uppercase tracking-[0.18em]">
                           {tag}
                         </span>
@@ -942,13 +967,13 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                   )}
                   {/* CTA */}
                   <Link
-                    to={`/${lang}/work/${personalizedCases[0].slug}`}
-                    state={{ projectPreview: personalizedCases[0] }}
-                    onMouseEnter={() => prefetchProject(personalizedCases[0].slug, lang)}
+                    to={`/${lang}/work/${mainFeaturedProject.slug}`}
+                    state={{ projectPreview: mainFeaturedProject }}
+                    onMouseEnter={() => prefetchProject(mainFeaturedProject.slug, lang)}
                     onClick={(e) => {
                       e.stopPropagation()
-                      trackInteraction('project_view', personalizedCases[0].slug)
-                      trackProjectInteraction(personalizedCases[0].slug, 'CLICK')
+                      trackInteraction('project_view', mainFeaturedProject.slug)
+                      trackProjectInteraction(mainFeaturedProject.slug, 'CLICK')
                     }}
                     className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-[0.75rem] font-semibold uppercase tracking-[0.1em] hover:bg-azimut-red/20 transition-all mt-4"
                     style={{ color: 'var(--theme-text)' }}
@@ -1129,7 +1154,8 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
             <div className="mb-16 flex justify-center">
               <Link
                 to={`/${lang}/work/projects`}
-                className="inline-flex items-center gap-3 rounded-xl border border-azimut-red/50 bg-azimut-red/10 px-8 py-4 font-sora text-sm font-semibold uppercase tracking-[0.12em] text-azimut-red hover:bg-azimut-red/20 hover:border-azimut-red/70 transition-all"
+                className="inline-flex items-center gap-3 rounded-xl border border-azimut-red/50 bg-azimut-red/10 px-8 py-4 font-sora text-sm font-semibold uppercase tracking-[0.12em] hover:bg-azimut-red/20 hover:border-azimut-red/70 transition-all"
+                style={{ color: 'var(--theme-text)' }}
               >
                 {lang === 'pt' ? `Ver todos os ${personalizedCases.length} projetos` : lang === 'es' ? `Ver los ${personalizedCases.length} proyectos` : lang === 'fr' ? `Voir les ${personalizedCases.length} projets` : `View all ${personalizedCases.length} projects`}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>

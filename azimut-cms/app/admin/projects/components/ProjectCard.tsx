@@ -26,7 +26,7 @@ export function ProjectCard({ project }: { project: any }) {
   const imageUrl = getImageUrl();
   const st = statusColors[project.status] || statusColors.DRAFT;
   const isHome = project.priorityHome > 0;
-  const homeSlotLabel = project.priorityHome === 1 ? 'Principal 1' : project.priorityHome === 2 ? 'Principal 2' : project.priorityHome === 3 ? 'Principal 3' : project.priorityHome === 4 ? 'Principal 4' : null;
+  const homeSlotLabel = project.priorityHome === 1 ? 'Principal 1' : project.priorityHome === 2 ? 'Principal 2' : project.priorityHome === 3 ? 'Principal 3' : project.priorityHome === 4 ? 'Principal 4' : project.priorityHome === 5 ? 'Principal 5' : project.priorityHome === 6 ? 'Principal 6' : project.priorityHome === 7 ? 'Principal 7' : null;
 
   return (
     <Link

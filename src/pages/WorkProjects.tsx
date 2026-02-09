@@ -195,8 +195,9 @@ const WorkProjects: React.FC<WorkProjectsProps> = ({ lang }) => {
                   clearFilters()
                 }}
                 className={`flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide transition-colors ${
-                  !hasActiveFilters ? 'text-azimut-red border-b-2 border-azimut-red' : 'text-slate-400 hover:text-azimut-red'
+                  !hasActiveFilters ? 'border-b-2 border-azimut-red' : 'text-slate-400 hover:opacity-90'
                 }`}
+                style={!hasActiveFilters ? { color: 'var(--theme-text)' } : undefined}
               >
                 <span>+</span>
                 <span>{lang === 'pt' ? 'TODOS' : lang === 'es' ? 'TODOS' : lang === 'fr' ? 'TOUS' : 'ALL'}</span>
@@ -216,8 +217,9 @@ const WorkProjects: React.FC<WorkProjectsProps> = ({ lang }) => {
                       }
                     }}
                     className={`flex items-center gap-1.5 px-3 sm:px-5 py-2 rounded-lg font-sora text-xs font-medium uppercase tracking-wide transition-all duration-200 ${
-                      isActive ? 'text-azimut-red border-b-2 border-azimut-red scale-105' : 'text-slate-400 hover:text-azimut-red hover:scale-105'
+                      isActive ? 'border-b-2 border-azimut-red scale-105' : 'text-slate-400 hover:opacity-90 hover:scale-105'
                     }`}
+                    style={isActive ? { color: 'var(--theme-text)' } : undefined}
                   >
                     <span>{category.icon}</span>
                     <span>{category.label[lang]}</span>
@@ -229,7 +231,17 @@ const WorkProjects: React.FC<WorkProjectsProps> = ({ lang }) => {
         </div>
 
         <div style={{ height: '48px' }} />
-        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 min-h-[40vh]">
+          {/* Indicador de carregamento: evita tela branca / campos vazios enquanto a API responde */}
+          {cmsLoading && (
+            <div className="flex items-center justify-center gap-3 py-12 text-slate-400" role="status" aria-label={lang === 'pt' ? 'Carregando' : 'Loading'}>
+              <svg className="animate-spin h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+              <span className="font-sora text-sm">{lang === 'pt' ? 'Carregando portfólio...' : lang === 'es' ? 'Cargando portafolio...' : lang === 'fr' ? 'Chargement du portfolio...' : 'Loading portfolio...'}</span>
+            </div>
+          )}
           <div className="pt-6 md:pt-8 mb-8">
             <span className="block font-sora text-[0.7rem] font-medium uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
               {lang === 'pt' ? 'PORTFÓLIO' : lang === 'es' ? 'PORTAFOLIO' : lang === 'fr' ? 'PORTFOLIO' : 'PORTFOLIO'}
@@ -244,12 +256,13 @@ const WorkProjects: React.FC<WorkProjectsProps> = ({ lang }) => {
             <div className="mb-6 flex items-center justify-between flex-wrap gap-3">
               <div className="font-sora text-sm text-slate-500 dark:text-slate-400">
                 {cases.length} {lang === 'pt' ? (cases.length === 1 ? 'projeto' : 'projetos') : lang === 'es' ? (cases.length === 1 ? 'proyecto' : 'proyectos') : (cases.length === 1 ? 'project' : 'projects')}
-                {hasActiveFilters && <span className="ml-2 text-azimut-red">({lang === 'pt' ? 'filtrado' : 'filtered'})</span>}
+                {hasActiveFilters && <span className="ml-2" style={{ color: 'var(--theme-text)' }}>({lang === 'pt' ? 'filtrado' : 'filtered'})</span>}
               </div>
               {hasActiveFilters && (
                 <button
                   onClick={clearFilters}
-                  className="flex items-center gap-2 rounded-lg border border-azimut-red/40 bg-azimut-red/10 px-4 py-2 text-xs font-sora font-semibold uppercase tracking-wide text-azimut-red hover:bg-azimut-red/20 transition-all"
+                  className="flex items-center gap-2 rounded-lg border border-azimut-red/40 bg-azimut-red/10 px-4 py-2 text-xs font-sora font-semibold uppercase tracking-wide hover:bg-azimut-red/20 transition-all"
+                  style={{ color: 'var(--theme-text)' }}
                 >
                   {lang === 'pt' ? '✕ Limpar filtros' : '✕ Clear filters'}
                 </button>
@@ -269,12 +282,13 @@ const WorkProjects: React.FC<WorkProjectsProps> = ({ lang }) => {
               {hasActiveFilters ? (
                 <button
                   onClick={clearFilters}
-                  className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-sm font-semibold uppercase tracking-[0.1em] text-azimut-red hover:bg-azimut-red/20 transition-all"
+                  className="inline-flex items-center gap-2 rounded-lg border border-azimut-red/50 bg-azimut-red/10 px-5 py-2.5 font-sora text-sm font-semibold uppercase tracking-[0.1em] hover:bg-azimut-red/20 transition-all"
+                  style={{ color: 'var(--theme-text)' }}
                 >
                   {lang === 'pt' ? 'Ver todos os projetos' : lang === 'es' ? 'Ver todos los proyectos' : lang === 'fr' ? 'Voir tous les projets' : 'View all projects'}
                 </button>
               ) : (
-                <Link to={`/${lang}/work`} className="inline-flex items-center gap-2 text-azimut-red hover:underline font-sora text-sm">
+                <Link to={`/${lang}/work`} className="inline-flex items-center gap-2 hover:underline font-sora text-sm" style={{ color: 'var(--theme-text)' }}>
                   {lang === 'pt' ? '← Voltar ao Nosso Trabalho' : lang === 'es' ? '← Volver a Nuestro Trabajo' : lang === 'fr' ? '← Retour à Notre Travail' : '← Back to Our Work'}
                 </Link>
               )}

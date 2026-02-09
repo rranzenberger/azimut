@@ -102,3 +102,6 @@ docs/deploy/
 
 # Env local
 .env*.local
+
+.vercel
+.env*.local

@@ -169,7 +169,7 @@ const CuradoriaFestivais: React.FC<CuradoriaFestivaisProps> = ({ lang }) => {
 
       {/* Badge de Destaque */}
       <div className="mt-8 rounded-2xl border border-azimut-red/60 bg-azimut-red/10 p-6 text-center">
-        <p className="mb-2 font-handel text-xl uppercase tracking-[0.12em] text-azimut-red">
+        <p className="mb-2 font-handel text-xl uppercase tracking-[0.12em]" style={{ color: 'var(--theme-text)' }}>
           {lang === 'pt' 
             ? 'Curadoria Oficial: Uma Responsabilidade que Honramos'
             : lang === 'es'

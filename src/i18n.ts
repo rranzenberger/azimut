@@ -315,7 +315,7 @@ export const translations: Dict = {
     // Hero Home
     heroTitle: 'EXPÉRIENCES QUI CONNECTENT LES MONDES',
     heroSubtitle: 'Nous créons des expériences immersives entre le Brésil et le Canada.',
-    heroTagline: 'IMMERSIF • INTERACTIF • EXPÉRIENCE CINÉMATOGRAPHIQUE',
+    heroTagline: 'IMMERSIVE • INTERACTIVE • CINEMATIC EXPERIENCE',
 
     // Navigation
     navHome: 'Accueil',
@@ -621,7 +621,7 @@ export const translations: Dict = {
     // Hero Home
     heroTitle: 'EXPERIÊNCIAS QUE CONECTAM MUNDOS',
     heroSubtitle: 'Criamos experiências imersivas entre Brasil e Canadá.',
-    heroTagline: 'IMERSIVO • INTERATIVO • EXPERIÊNCIA CINEMATOGRÁFICA',
+    heroTagline: 'IMMERSIVE • INTERACTIVE • CINEMATIC EXPERIENCE',
 
     navHome: 'Início',
     navWhat: 'Serviços',
@@ -926,7 +926,7 @@ export const translations: Dict = {
     // Hero Home
     heroTitle: 'EXPERIENCIAS QUE CONECTAN MUNDOS',
     heroSubtitle: 'Creamos experiencias inmersivas entre Brasil y Canadá.',
-    heroTagline: 'INMERSIVO • INTERACTIVO • EXPERIENCIA CINEMATOGRÁFICA',
+    heroTagline: 'IMMERSIVE • INTERACTIVE • CINEMATIC EXPERIENCE',
 
     // Navigation
     navHome: 'Inicio',

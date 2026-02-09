@@ -278,7 +278,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     }
   }, [])
   
-  // Projetos: SEMPRE os mesmos do backoffice (destaques = featured + priorityHome 1–4)
+  // Projetos: SEMPRE os mesmos do backoffice (destaques = featured + priorityHome 1–7)
   // Prioridade: backoffice (CMS) → fallback estático. Não usar personalizedProjects para os slots principais, para não divergir do backoffice.
   const projects = useMemo(() => {
     if (cmsContent?.highlightProjects && Array.isArray(cmsContent.highlightProjects) && cmsContent.highlightProjects.length > 0) {
@@ -291,16 +291,16 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   const interestProfile = useMemo(() => getInterestProfile(), []);
 
   // Projetos recomendados: base (prioridade backoffice) + reordenação por comportamento
-  // 1 featured + 3 cards; quando o visitante tem histórico, os 3 cards seguem o interesse dele
+  // 1 destaque + 6 cards (2 linhas de 3); quando o visitante tem histórico, a ordem pode ser personalizada
   const recommended = useMemo(() => {
     const base = projects && Array.isArray(projects) && projects.length > 0
       ? projects
       : defaultProjects;
-    const minRequired = 4;
+    const minRequired = 7;
     const pool = base.length < minRequired
       ? [...base, ...defaultProjects.slice(0, minRequired - base.length)]
       : base;
-    // Reordenar por comportamento (destaque fixo; 3 seguintes personalizados)
+    // Reordenar por comportamento (destaque fixo; seguintes personalizados)
     const personalized = personalizeProjectOrder(pool, interestProfile);
     return personalized.slice(0, minRequired);
   }, [projects, defaultProjects, interestProfile]);
@@ -363,35 +363,20 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             overflowY: 'visible'   // Evita scroll aninhado: só o body rola
           }}
         >
-          {/* Background: Imagem do Backoffice (heroBackgroundImage) ou Featured Project */}
-          {/* APENAS NO TEMA ESCURO - Tema claro usa gradiente bege sem imagem */}
-          {theme === 'dark' && (() => {
-            // PRIORIDADE 1: Imagem do backoffice (page.heroBackgroundImage)
-            const heroBackgroundImage = cmsContent?.page?.heroBackgroundImage
-            
-            // PRIORIDADE 2: Projeto Featured
-            const featured = recommended[0] || defaultProjects[0]
-            const featuredImage = featured?.heroImage?.type === 'VIDEO'
-              ? (featured?.heroImage?.thumbnail || featured?.thumbnailUrl)
-              : (featured?.heroImage?.large || featured?.heroImage?.medium || featured?.heroImage?.original || featured?.thumbnailUrl)
-            
-            // FALLBACK 3: Placeholder
-            const backgroundImage = heroBackgroundImage || featuredImage || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072'
-            
-            return (
-              <div className="absolute inset-0 w-full h-full hidden lg:block">
-                <OptimizedImage
-                  src={backgroundImage}
-                  alt=""
-                  width={1920}
-                  height={1080}
-                  className="w-full h-full opacity-20"
-                  objectFit="cover"
-                  priority={true}
-                />
-              </div>
-            )
-          })()}
+          {/* Granulação cinematográfica no hero (sem imagem de fundo para não conflitar com logo e texto) */}
+          <div
+            className="absolute inset-0 w-full h-full hidden lg:block pointer-events-none"
+            style={{
+              zIndex: 0,
+              backgroundImage: 'url(/fundo-grao.webp)',
+              backgroundSize: '220px 220px',
+              backgroundRepeat: 'repeat',
+              mixBlendMode: theme === 'dark' ? 'screen' : 'overlay',
+              opacity: theme === 'dark' ? 0.22 : 0.12,
+              filter: theme === 'dark' ? 'contrast(1.3) brightness(1.2)' : 'contrast(1.2) brightness(0.98)',
+            }}
+            aria-hidden="true"
+          />
           
           {/* ═══════════════════════════════════════════════════════════════
               GRADIENTES POR TEMA - APENAS DESKTOP (lg:)
@@ -454,12 +439,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 <span className={`text-[0.7rem] ${theme === 'dark' ? 'azimut-since-year' : ''}`} style={{ color: theme === 'dark' ? undefined : '#475569' }}>SINCE 1996</span>
               </div>
 
-                {/* Tagline: IMMERSIVE • INTERACTIVE • CINEMATIC EXPERIENCE (Opção B - entre badge e H1) */}
+                {/* Tagline: IMMERSIVE • INTERACTIVE • CINEMATIC EXPERIENCE — tema claro: texto escuro para contraste no gradiente */}
                 <p
                   className="font-sora text-[0.65rem] sm:text-[0.7rem] uppercase tracking-[0.25em] animate-fade-in-up opacity-0"
                   style={{
                     animationDelay: '0.15s',
-                    color: theme === 'dark' ? 'rgba(255, 255, 255, 0.6)' : '#64748b'
+                    color: theme === 'dark' ? 'rgba(255, 255, 255, 0.6)' : '#1e293b'
                   }}
                 >
                   {t(lang, 'heroTagline')}
@@ -469,7 +454,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 {/* ESCURO: branco | CLARO: escuro elegante */}
                 <h1 className="font-handel uppercase animate-fade-in-up opacity-0 hero-title" style={{ 
                   fontSize: 'clamp(3rem, 5.5vw, 5.8rem)',
-                  lineHeight: '1.1',
+                  lineHeight: '1.15',
                   letterSpacing: '0.08em',
                   animationDelay: '0.2s',
                   color: theme === 'dark' ? '#ffffff' : '#0f172a'
@@ -512,10 +497,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   })()}
                 </h1>
                   
-                {/* Subtítulo COMPACTO */}
-                <p className="max-w-xl text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0 hero-subtitle" style={{ 
+                {/* Subtítulo COMPACTO - margem para não sobrepor título nem os cards; tema claro: texto escuro para contraste no gradiente */}
+                <p className="max-w-xl text-[0.95rem] leading-relaxed animate-fade-in-up opacity-0 hero-subtitle mt-5 mb-2" style={{ 
                   animationDelay: '0.3s',
-                  color: theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : '#475569'
+                  color: theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : '#1e293b'
                 }}>
                   {heroSubtitle.split('.')[0]}.
                 </p>
@@ -548,8 +533,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </div>
             </div>
             
-            {/* LINHA 2: 5 Cards Horizontais (SUBIDOS - SEM GAP VAZIO) */}
-            <div className="grid grid-cols-5 gap-4 -mt-24" style={{ position: 'relative', zIndex: 20 }}>
+            {/* LINHA 2: 5 Cards Horizontais - espaço para não sobrepor o subtítulo do hero */}
+            <div className="grid grid-cols-5 gap-4 mt-2" style={{ position: 'relative', zIndex: 20 }}>
               {/* Cinema & AV */}
               <div className={`glass-panel backdrop-blur-xl rounded-xl transition-all duration-300 group flex flex-row items-center gap-2 p-3 hover:scale-[1.02]`} style={{ 
                 background: theme === 'dark' 
@@ -839,10 +824,10 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   <span className={`text-[0.55rem] sm:text-[0.6rem] ${theme === 'dark' ? 'text-white/85' : 'text-slate-600'}`}>SINCE 1996</span>
                 </div>
 
-                {/* Tagline (Opção B - entre badge e H1) */}
+                {/* Tagline (Opção B - entre badge e H1); tema claro: texto escuro para contraste no gradiente */}
                 <p
-                  className={`font-sora text-[0.55rem] sm:text-[0.6rem] uppercase tracking-[0.2em] animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/60' : 'text-slate-500'}`}
-                  style={{ animationDelay: '0.08s' }}
+                  className={`font-sora text-[0.55rem] sm:text-[0.6rem] uppercase tracking-[0.2em] animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/60' : ''}`}
+                  style={{ animationDelay: '0.08s', color: theme === 'dark' ? undefined : '#1e293b' }}
                 >
                   {t(lang, 'heroTagline')}
                 </p>
@@ -850,7 +835,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 {/* Título - COMPACTO */}
                 <h1 className={`font-handel uppercase animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white' : 'text-[#1e1c1a]'}`} style={{ 
                   fontSize: 'clamp(1.5rem, 5.5vw, 2.8rem)',
-                  lineHeight: '1.1',
+                  lineHeight: '1.15',
                   letterSpacing: '0.08em',
                   animationDelay: '0.1s',
                   wordBreak: 'break-word',
@@ -897,8 +882,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   })()}
                 </h1>
                 
-                {/* Subtítulo */}
-                <p className={`text-[0.75rem] sm:text-[0.85rem] leading-relaxed animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/90' : 'text-[#4a4543]'}`} style={{ animationDelay: '0.15s' }}>
+                {/* Subtítulo - margem para não sobrepor o título; tema claro: texto escuro para contraste no gradiente */}
+                <p className={`text-[0.75rem] sm:text-[0.85rem] leading-relaxed animate-fade-in-up opacity-0 mt-3 ${theme === 'dark' ? 'text-white/90' : ''}`} style={{ animationDelay: '0.15s', color: theme === 'dark' ? undefined : '#1e293b' }}>
                   {heroSubtitle.split('.')[0]}.
                 </p>
                 
@@ -1649,33 +1634,34 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 return (
                   <article
                     key={project.slug || index}
-                    className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur transition-all duration-500 hover:scale-[1.02] hover:border-azimut-red/60 hover:shadow-[0_30px_80px_rgba(201,35,55,0.5)] bg-slate-950"
+                    className="group relative aspect-[4/3] overflow-hidden rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_30px_80px_rgba(201,35,55,0.5)] bg-slate-950"
+                    style={{
+                      animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`,
+                      cursor: 'pointer',
+                      borderWidth: '1px',
+                      borderStyle: 'solid',
+                      borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(50,42,35,0.4)',
+                      boxSizing: 'border-box',
+                    }}
                     onClick={() => { window.location.href = `/${lang}/work/${project.slug}` }}
-                    style={{ animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`, cursor: 'pointer' }}
                   >
                     {hasVideo ? (
-                      <>
-                        <div className="absolute inset-0 overflow-hidden rounded-2xl">
-                          <VideoPlayer videoUrl={project.heroImage.original} thumbnailUrl={project.heroImage.thumbnail || imageUrl} alt={project.title} className="w-full h-full" objectFit={(project as any).heroImageFit === 'cover' ? 'cover' : 'contain'} />
-                        </div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30 rounded-2xl"></div>
-                      </>
+                      <div className="absolute inset-0 overflow-hidden rounded-2xl">
+                        <VideoPlayer videoUrl={project.heroImage.original} thumbnailUrl={project.heroImage.thumbnail || imageUrl} alt={project.title} className="w-full h-full" objectFit={(project as any).heroImageFit === 'cover' ? 'cover' : 'contain'} />
+                      </div>
                     ) : imageUrl ? (
-                      <>
-                        <img
-                          src={imageUrl}
-                          alt={project.title}
-                          width={800}
-                          height={450}
-                          className="absolute inset-0 w-full h-full transition-transform duration-700 group-hover:scale-110 rounded-2xl"
-                          style={{
-                            objectFit: (project as any).heroImageFit === 'cover' ? 'cover' : 'contain',
-                            objectPosition: (project as any).heroImagePosition || 'center',
-                          }}
-                          loading="eager"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30 rounded-2xl"></div>
-                      </>
+                      <img
+                        src={imageUrl}
+                        alt={project.title}
+                        width={800}
+                        height={450}
+                        className="absolute inset-0 w-full h-full transition-transform duration-700 group-hover:scale-110 rounded-2xl"
+                        style={{
+                          objectFit: (project as any).heroImageFit === 'cover' ? 'cover' : 'contain',
+                          objectPosition: (project as any).heroImagePosition || 'center',
+                        }}
+                        loading="eager"
+                      />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center rounded-2xl" style={{ 
                         background: theme === 'dark' 
@@ -1689,62 +1675,170 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         </div>
                       </div>
                     )}
-                    
-                    <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
+                    {/* Tarja igual em todos os 6 cards: tema escuro preto, tema claro marrom; cantos alinhados ao card (sem bicos) */}
+                    <div 
+                      className="absolute bottom-0 left-0 right-0 z-10 pt-6 pb-4 px-4 overflow-hidden"
+                      style={{
+                        borderBottomLeftRadius: '1rem',
+                        borderBottomRightRadius: '1rem',
+                        background: theme === 'dark' 
+                          ? 'linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.92) 45%, rgba(0,0,0,0.88) 100%)'
+                          : 'linear-gradient(to top, rgba(58,48,42,0.96) 0%, rgba(55,45,38,0.92) 45%, rgba(50,42,35,0.88) 100%)',
+                      }}
+                    >
                       <h3 
-                        className="mb-2 font-handel text-xl md:text-2xl uppercase tracking-wide group-hover:!text-azimut-red transition-colors duration-300 line-clamp-2"
-                        style={{ 
-                          color: theme === 'dark' ? '#ffffff' : '#f5f1e8',
-                          textShadow: theme === 'light' ? '0 2px 8px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.3)' : '0 2px 4px rgba(0, 0, 0, 0.2)'
-                        }}
+                        className="font-handel text-base md:text-lg uppercase tracking-wide group-hover:!text-azimut-red transition-colors duration-300 line-clamp-1 mb-2"
+                        style={{ color: theme === 'dark' ? '#ffffff' : '#f5f1e8' }}
                       >
-                        {project.title}
+                        {project.shortTitle || project.title}
                       </h3>
-                      {(project.city || project.country) && (
-                        <p 
-                          className="text-xs mb-3 flex items-center gap-1"
-                          style={{ 
-                            color: theme === 'dark' ? 'rgba(255, 255, 255, 0.7)' : '#e8e5df',
-                            textShadow: theme === 'light' ? '0 1px 4px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3)' : '0 1px 2px rgba(0, 0, 0, 0.2)'
-                          }}
-                        >
-                          📍 {[project.city, project.country].filter(Boolean).join(', ')}
-                        </p>
-                      )}
-                      <div className="flex flex-wrap items-center justify-between gap-2">
-                        {project.tags && project.tags.length > 0 && (
-                          <div className="flex flex-wrap gap-2 text-[0.68rem]">
-                            {project.tags.slice(0, 2).map((tag: string, idx: number) => (
-                              <span 
-                                key={idx} 
-                                className="rounded-full border bg-black/50 backdrop-blur px-2.5 py-1"
-                                style={{ 
-                                  borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.4)',
-                                  color: theme === 'dark' ? 'rgba(255, 255, 255, 0.9)' : '#f5f1e8',
-                                  textShadow: theme === 'light' ? '0 1px 3px rgba(0, 0, 0, 0.5)' : 'none',
-                                  backgroundColor: theme === 'light' ? 'rgba(0, 0, 0, 0.6)' : 'rgba(0, 0, 0, 0.5)'
-                                }}
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                        {project.year && (
-                          <span 
-                            className="text-xs font-medium backdrop-blur px-2.5 py-1 rounded-full"
-                            style={{ 
-                              color: theme === 'dark' ? 'rgba(255, 255, 255, 0.7)' : '#d3cec3',
-                              textShadow: theme === 'light' ? '0 1px 3px rgba(0, 0, 0, 0.5)' : 'none',
-                              backgroundColor: theme === 'light' ? 'rgba(0, 0, 0, 0.6)' : 'rgba(0, 0, 0, 0.5)'
-                            }}
-                          >
-                            {project.year}
+                      {/* Uma única linha: localização · ano · tags */}
+                      <div className="flex flex-nowrap items-center gap-x-2 gap-y-0 text-[0.7rem] min-h-[1.25rem] overflow-hidden">
+                        {(project.city || project.country) && (
+                          <span className="shrink-0" style={{ color: theme === 'dark' ? 'rgba(255,255,255,0.85)' : '#e8e5df' }}>
+                            📍 {[project.city, project.country].filter(Boolean).join(', ')}
                           </span>
+                        )}
+                        {(project.city || project.country) && project.year && <span className="shrink-0" style={{ color: 'rgba(255,255,255,0.5)' }}>·</span>}
+                        {project.year && (
+                          <span className="shrink-0" style={{ color: theme === 'dark' ? 'rgba(255,255,255,0.85)' : '#e8e5df' }}>{project.year}</span>
+                        )}
+                        {project.tags && project.tags.length > 0 && (
+                          <>
+                            {(project.city || project.country || project.year) && <span className="shrink-0" style={{ color: 'rgba(255,255,255,0.5)' }}>·</span>}
+                            <span className="flex flex-nowrap items-center gap-1.5 shrink min-w-0">
+                              {project.tags.slice(0, 2).map((tag: string, idx: number) => (
+                                <span 
+                                  key={idx} 
+                                  className="rounded-full border shrink-0 px-2 py-0.5 text-[0.6rem] uppercase tracking-wider whitespace-nowrap"
+                                  style={{ 
+                                    borderColor: theme === 'dark' ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.35)',
+                                    color: theme === 'dark' ? 'rgba(255,255,255,0.95)' : '#f5f1e8',
+                                    backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.35)',
+                                  }}
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                            </span>
+                          </>
                         )}
                       </div>
                     </div>
-                    <div className="absolute inset-0 border-2 border-azimut-red opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none rounded-2xl"></div>
+                    <div className="absolute inset-0 border-2 border-azimut-red opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none rounded-2xl overflow-hidden"></div>
+                  </article>
+                )
+              })}
+            </div>
+
+            {/* Segunda linha: 3 cards (slots 5, 6, 7) — quando há perfil, ordem é personalizada; label opcional */}
+            {interestProfile.hasEnoughData && (
+              <p className={`text-center text-sm mb-4 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                {lang === 'pt' && 'Sugestões para você'}
+                {lang === 'es' && 'Sugerencias para ti'}
+                {lang === 'fr' && 'Suggestions pour vous'}
+                {lang === 'en' && 'Suggestions for you'}
+              </p>
+            )}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              {recommended.slice(4, 7).map((project: HomeProject, index: number) => {
+                const hasVideo = project?.heroImage?.type === 'VIDEO' && project?.heroImage?.original
+                const imageUrl = project?.heroImage?.large || project?.heroImage?.medium || project?.heroImage?.original || project?.thumbnailUrl || project?.image || ''
+                return (
+                  <article
+                    key={project.slug || index + 4}
+                    className="group relative aspect-[4/3] overflow-hidden rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_30px_80px_rgba(201,35,55,0.5)] bg-slate-950"
+                    style={{
+                      animation: `fadeInUp 0.6s ease-out ${(4 + index) * 0.1}s both`,
+                      cursor: 'pointer',
+                      borderWidth: '1px',
+                      borderStyle: 'solid',
+                      borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(50,42,35,0.4)',
+                      boxSizing: 'border-box',
+                    }}
+                    onClick={() => { window.location.href = `/${lang}/work/${project.slug}` }}
+                  >
+                    {hasVideo ? (
+                      <div className="absolute inset-0 overflow-hidden rounded-2xl">
+                        <VideoPlayer videoUrl={project.heroImage.original} thumbnailUrl={project.heroImage.thumbnail || imageUrl} alt={project.title} className="w-full h-full" objectFit={(project as any).heroImageFit === 'cover' ? 'cover' : 'contain'} />
+                      </div>
+                    ) : imageUrl ? (
+                      <img
+                        src={imageUrl}
+                        alt={project.title}
+                        width={800}
+                        height={450}
+                        className="absolute inset-0 w-full h-full transition-transform duration-700 group-hover:scale-110 rounded-2xl"
+                        style={{
+                          objectFit: (project as any).heroImageFit === 'cover' ? 'cover' : 'contain',
+                          objectPosition: (project as any).heroImagePosition || 'center',
+                        }}
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center rounded-2xl" style={{ 
+                        background: theme === 'dark' 
+                          ? 'linear-gradient(to bottom right, #000000, #0f172a, #000000)' 
+                          : 'linear-gradient(to bottom right, #1e1c1a, #2a2825, #1e1c1a)' 
+                      }}>
+                        <div className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-azimut-red/30 bg-azimut-red/10 backdrop-blur">
+                          <svg className="h-6 w-6 text-azimut-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                        </div>
+                      </div>
+                    )}
+                    {/* Tarja igual em todos os 6 cards: tema escuro preto, tema claro marrom; cantos alinhados ao card (sem bicos) */}
+                    <div 
+                      className="absolute bottom-0 left-0 right-0 z-10 pt-6 pb-4 px-4 overflow-hidden"
+                      style={{
+                        borderBottomLeftRadius: '1rem',
+                        borderBottomRightRadius: '1rem',
+                        background: theme === 'dark' 
+                          ? 'linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.92) 45%, rgba(0,0,0,0.88) 100%)'
+                          : 'linear-gradient(to top, rgba(58,48,42,0.96) 0%, rgba(55,45,38,0.92) 45%, rgba(50,42,35,0.88) 100%)',
+                      }}
+                    >
+                      <h3 
+                        className="font-handel text-base md:text-lg uppercase tracking-wide group-hover:!text-azimut-red transition-colors duration-300 line-clamp-1 mb-2"
+                        style={{ color: theme === 'dark' ? '#ffffff' : '#f5f1e8' }}
+                      >
+                        {project.shortTitle || project.title}
+                      </h3>
+                      {/* Uma única linha: localização · ano · tags */}
+                      <div className="flex flex-nowrap items-center gap-x-2 gap-y-0 text-[0.7rem] min-h-[1.25rem] overflow-hidden">
+                        {(project.city || project.country) && (
+                          <span className="shrink-0" style={{ color: theme === 'dark' ? 'rgba(255,255,255,0.85)' : '#e8e5df' }}>
+                            📍 {[project.city, project.country].filter(Boolean).join(', ')}
+                          </span>
+                        )}
+                        {(project.city || project.country) && project.year && <span className="shrink-0" style={{ color: 'rgba(255,255,255,0.5)' }}>·</span>}
+                        {project.year && (
+                          <span className="shrink-0" style={{ color: theme === 'dark' ? 'rgba(255,255,255,0.85)' : '#e8e5df' }}>{project.year}</span>
+                        )}
+                        {project.tags && project.tags.length > 0 && (
+                          <>
+                            {(project.city || project.country || project.year) && <span className="shrink-0" style={{ color: 'rgba(255,255,255,0.5)' }}>·</span>}
+                            <span className="flex flex-nowrap items-center gap-1.5 shrink min-w-0">
+                              {project.tags.slice(0, 2).map((tag: string, idx: number) => (
+                                <span 
+                                  key={idx} 
+                                  className="rounded-full border shrink-0 px-2 py-0.5 text-[0.6rem] uppercase tracking-wider whitespace-nowrap"
+                                  style={{ 
+                                    borderColor: theme === 'dark' ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.35)',
+                                    color: theme === 'dark' ? 'rgba(255,255,255,0.95)' : '#f5f1e8',
+                                    backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.35)',
+                                  }}
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                            </span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                    <div className="absolute inset-0 border-2 border-azimut-red opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none rounded-2xl overflow-hidden"></div>
                   </article>
                 )
               })}

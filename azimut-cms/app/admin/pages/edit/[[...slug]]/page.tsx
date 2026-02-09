@@ -370,12 +370,12 @@ export default function EditPagePage() {
     setProjectSaveMsg(null);
   }, []);
 
-  // Salvar projeto editado via API PUT (slots 0 = Não, 1–4 = Principal 1–4)
+  // Salvar projeto editado via API PUT (slots 0 = Não, 1–7 = Principal 1–7)
   const saveEditProject = useCallback(async (projectId: string) => {
     setSavingProject(true);
     setProjectSaveMsg(null);
-    const slots = [0, 1, 2, 3, 4] as const;
-    const priority = slots.includes(editProjectData.priorityHome as any) ? editProjectData.priorityHome : Math.min(4, Math.max(0, parseInt(String(editProjectData.priorityHome), 10) || 0));
+    const slots = [0, 1, 2, 3, 4, 5, 6, 7] as const;
+    const priority = slots.includes(editProjectData.priorityHome as any) ? editProjectData.priorityHome : Math.min(7, Math.max(0, parseInt(String(editProjectData.priorityHome), 10) || 0));
     const featured = priority > 0;
     try {
       const res = await fetch(`/api/admin/projects/${projectId}`, {
@@ -415,8 +415,8 @@ export default function EditPagePage() {
     }
   }, [editProjectData]);
 
-  // Substituir projeto por outro (modal): slot 0=principal, 1,2,3=secundários
-  const SLOT_PRIORITIES = [1, 2, 3, 4] as const; // ordem: 1º principal, 2º–4º secundários
+  // Substituir projeto por outro (modal): slot 0=principal, 1–6=secundários (2–7)
+  const SLOT_PRIORITIES = [1, 2, 3, 4, 5, 6, 7] as const; // ordem: 1º principal, 2º–7º secundários
   const [replaceSlotIndex, setReplaceSlotIndex] = useState<number | null>(null);
   const [replaceProjectList, setReplaceProjectList] = useState<Array<{ id: string; title: string; slug: string; status: string; year?: number | null; month?: number | null; yearEnd?: number | null; monthEnd?: number | null }>>([]);
   const [replacingProjectId, setReplacingProjectId] = useState<string | null>(null);
@@ -426,10 +426,10 @@ export default function EditPagePage() {
     setReplaceSlotIndex(slotIndex);
     setReplaceError(null);
     try {
-      const res = await fetch('/api/admin/projects?limit=300');
+      const res = await fetch('/api/admin/projects?limit=5000');
       if (!res.ok) throw new Error('Falha ao carregar projetos');
       const data = await res.json();
-      const currentIds = homeFeaturedProjects.slice(0, 4).map((p: any) => p.id);
+      const currentIds = homeFeaturedProjects.slice(0, 7).map((p: any) => p.id);
       const others = (data.projects || []).filter((p: any) => p.status === 'PUBLISHED' && !currentIds.includes(p.id));
       // Ordenar pela data de término (yearEnd ou year): mais recente no topo, mais antigo em baixo; depois por título
       const sorted = [...others].sort((a: any, b: any) => {
@@ -736,7 +736,7 @@ export default function EditPagePage() {
         // Já vem filtrado e ordenado do servidor (mesma query da API pública)
         // Não precisa filtrar nem ordenar client-side!
         const list = (data.projects || [])
-          .slice(0, 6)
+          .slice(0, 7)
           .map((p: any) => ({
             id: p.id,
             title: p.title || p.shortTitle || p.slug || 'Sem título',
@@ -1131,16 +1131,15 @@ export default function EditPagePage() {
               </div>
             </div>
 
-            {/* Ordem e prioridades: slots 1, 2, 3, 4 (0 = não exibir) */}
+            {/* Ordem e prioridades: slots 1–7 (0 = não exibir) */}
             <div style={{ marginBottom: 16, padding: '14px 18px', borderRadius: 10, background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.25)', display: 'flex', gap: 10, alignItems: 'flex-start' }}>
               <span style={{ fontSize: 18, flexShrink: 0 }}>📌</span>
               <div style={{ fontSize: 13, color: '#94a3b8', lineHeight: 1.6 }}>
                 <strong style={{ color: '#86efac' }}>Ordem na Home (prioridade explícita):</strong>
                 <ul style={{ margin: '8px 0 0', paddingLeft: 20, listStyle: 'disc' }}>
                   <li><strong style={{ color: '#fbbf24' }}>1º — Principal (slot 1)</strong> — card grande no topo</li>
-                  <li><strong style={{ color: '#86efac' }}>2º — Secundário (slot 2)</strong> — primeiro card menor</li>
-                  <li><strong style={{ color: '#86efac' }}>3º — Secundário (slot 3)</strong> — segundo card menor</li>
-                  <li><strong style={{ color: '#86efac' }}>4º — Secundário (slot 4)</strong> — terceiro card menor</li>
+                  <li><strong style={{ color: '#86efac' }}>2º–4º — Secundários (slots 2, 3, 4)</strong> — primeira linha de 3 cards</li>
+                  <li><strong style={{ color: '#86efac' }}>5º–7º — Secundários (slots 5, 6, 7)</strong> — segunda linha de 3 cards</li>
                 </ul>
                 <p style={{ margin: '10px 0 0', fontSize: 12, color: '#64748b' }}>
                   Use <strong style={{ color: '#f59e0b' }}>Substituir</strong> para trocar o projeto da vaga por outro existente; <strong style={{ color: '#3b82f6' }}>Novo aqui</strong> para criar um projeto que já entra nessa posição.
@@ -1300,6 +1299,9 @@ export default function EditPagePage() {
                               <option value={2}>Principal 2</option>
                               <option value={3}>Principal 3</option>
                               <option value={4}>Principal 4</option>
+                              <option value={5}>Principal 5</option>
+                              <option value={6}>Principal 6</option>
+                              <option value={7}>Principal 7</option>
                             </select>
                           </div>
                           {/* Botões salvar/cancelar */}
@@ -1431,6 +1433,9 @@ export default function EditPagePage() {
                                   <option value={2}>Principal 2</option>
                                   <option value={3}>Principal 3</option>
                                   <option value={4}>Principal 4</option>
+                                  <option value={5}>Principal 5</option>
+                                  <option value={6}>Principal 6</option>
+                                  <option value={7}>Principal 7</option>
                                 </select>
                               </div>
                               <div style={{ display: 'flex', gap: 6, marginTop: 2 }}>
@@ -1479,6 +1484,98 @@ export default function EditPagePage() {
                                 <a href={`/admin/projects/${p.id}`} style={{ display: 'block', marginTop: 6, fontSize: 11, color: '#7dd3fc', textDecoration: 'none', textAlign: 'center' }}>
                                   Edição completa →
                                 </a>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {/* ═══ Segunda linha: 3 cards (slots 5, 6, 7) ═══ */}
+                {homeFeaturedProjects.length > 4 && (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, padding: '0 20px 24px' }}>
+                    {homeFeaturedProjects.slice(4, 7).map((p: any, idx: number) => {
+                      const isEditing = editingProjectId === p.id;
+                      const slotIdx = 4 + idx;
+                      return (
+                      <div key={p.id} style={{ borderRadius: 12, overflow: 'hidden', border: isEditing ? '2px solid rgba(34,197,94,0.5)' : '1px solid rgba(255,255,255,0.06)', background: 'rgba(20,24,39,0.8)' }}>
+                        <div style={{ position: 'relative', paddingTop: '65%', background: '#111827' }}>
+                          {p.heroImage ? (
+                            <img src={p.heroImage} alt={p.title} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center', backgroundColor: '#0f172a' }} />
+                          ) : (
+                            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' as const, background: 'linear-gradient(135deg, rgba(201,35,55,0.1), rgba(10,14,26,0.8))' }}>
+                              <span style={{ fontSize: 32, opacity: 0.3 }}>🖼️</span>
+                              <span style={{ fontSize: 10, color: '#475569', marginTop: 4 }}>Sem imagem</span>
+                            </div>
+                          )}
+                          {uploadingImageId === p.id && (
+                            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.7)', display: 'flex', flexDirection: 'column' as const, alignItems: 'center', justifyContent: 'center', gap: 6, zIndex: 10 }}>
+                              <div style={{ width: 28, height: 28, border: '3px solid rgba(34,197,94,0.3)', borderTopColor: '#22c55e', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+                              <span style={{ color: '#86efac', fontSize: 10, fontWeight: 600 }}>{uploadProgress}</span>
+                            </div>
+                          )}
+                          <div style={{ position: 'absolute', top: 8, right: 8, background: 'rgba(0,0,0,0.75)', color: '#86efac', padding: '3px 8px', borderRadius: 6, fontSize: 10, fontWeight: 700, backdropFilter: 'blur(8px)' }}>
+                            #{slotIdx + 1} · P{p.priorityHome}
+                          </div>
+                          <label style={{ position: 'absolute', bottom: 8, left: 8, background: 'rgba(168,85,247,0.85)', color: '#fff', padding: '4px 10px', borderRadius: 6, fontSize: 10, fontWeight: 600, cursor: uploadingImageId === p.id ? 'wait' : 'pointer', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', gap: 3, zIndex: 5 }}>
+                            📷 {p.heroImage ? 'Trocar' : 'Upload'}
+                            <input type="file" accept="image/*,video/mp4,video/webm" style={{ display: 'none' }} onChange={(e) => { const f = e.target.files?.[0]; if (f) handleHeroImageUpload(p.id, f); e.target.value = ''; }} disabled={uploadingImageId === p.id} />
+                          </label>
+                          <div style={{ position: 'absolute', bottom: 8, right: 8, display: 'flex', gap: 4, zIndex: 5 }}>
+                            <button type="button" onClick={() => openReplaceModal(slotIdx)} style={{ background: 'rgba(245,158,11,0.9)', color: '#fff', padding: '4px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, border: 'none', cursor: 'pointer', backdropFilter: 'blur(8px)' }} title="Substituir por outro projeto">🔄</button>
+                            <a href={`/admin/projects/new?fromHomeSlot=${slotIdx}`} style={{ background: 'rgba(59,130,246,0.9)', color: '#fff', padding: '4px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, textDecoration: 'none', backdropFilter: 'blur(8px)' }} title="Novo projeto neste destaque">➕</a>
+                          </div>
+                          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '40%', background: 'linear-gradient(to top, rgba(20,24,39,0.9), transparent)', pointerEvents: 'none' }}></div>
+                        </div>
+                        <div style={{ padding: '12px 14px 14px' }}>
+                          {isEditing ? (
+                            <div style={{ display: 'grid', gap: 8 }}>
+                              <div><label style={{ display: 'block', fontSize: 10, color: '#86efac', fontWeight: 600, marginBottom: 3 }}>Título</label>
+                                <input type="text" value={editProjectData.title} onChange={e => setEditProjectData(prev => ({ ...prev, title: e.target.value }))} style={{ width: '100%', padding: '6px 10px', borderRadius: 6, border: '1px solid rgba(34,197,94,0.3)', background: 'rgba(0,0,0,0.4)', color: '#fff', fontSize: 13, fontWeight: 600, outline: 'none' }} />
+                              </div>
+                              <div><label style={{ display: 'block', fontSize: 10, color: '#86efac', fontWeight: 600, marginBottom: 3 }}>Resumo (PT)</label>
+                                <textarea value={editProjectData.summaryPt} onChange={e => setEditProjectData(prev => ({ ...prev, summaryPt: e.target.value }))} rows={2} style={{ width: '100%', padding: '6px 10px', borderRadius: 6, border: '1px solid rgba(34,197,94,0.3)', background: 'rgba(0,0,0,0.4)', color: '#94a3b8', fontSize: 12, lineHeight: 1.5, resize: 'vertical', outline: 'none' }} />
+                              </div>
+                              <div><label style={{ display: 'block', fontSize: 10, color: '#86efac', fontWeight: 600, marginBottom: 3 }}>Posição na Home</label>
+                                <select value={editProjectData.priorityHome} onChange={e => setEditProjectData(prev => ({ ...prev, priorityHome: parseInt(e.target.value, 10) || 0 }))} style={{ width: '100%', padding: '5px 8px', borderRadius: 6, border: '1px solid rgba(34,197,94,0.3)', background: 'rgba(0,0,0,0.4)', color: '#86efac', fontSize: 12, fontWeight: 600, outline: 'none' }}>
+                                  <option value={0}>Não na Home</option>
+                                  <option value={1}>Principal 1</option>
+                                  <option value={2}>Principal 2</option>
+                                  <option value={3}>Principal 3</option>
+                                  <option value={4}>Principal 4</option>
+                                  <option value={5}>Principal 5</option>
+                                  <option value={6}>Principal 6</option>
+                                  <option value={7}>Principal 7</option>
+                                </select>
+                              </div>
+                              <div style={{ display: 'flex', gap: 6, marginTop: 2 }}>
+                                <button type="button" onClick={() => saveEditProject(p.id)} disabled={savingProject} style={{ flex: 1, padding: '6px 0', borderRadius: 6, background: savingProject ? '#374151' : 'rgba(34,197,94,0.8)', color: '#fff', fontSize: 11, fontWeight: 700, border: 'none', cursor: savingProject ? 'wait' : 'pointer' }}>{savingProject ? '⏳' : '💾 Salvar'}</button>
+                                <button type="button" onClick={cancelEditProject} style={{ padding: '6px 10px', borderRadius: 6, background: 'transparent', color: '#94a3b8', fontSize: 11, border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer' }}>✕</button>
+                              </div>
+                              {projectSaveMsg && projectSaveMsg.id === p.id && (
+                                <div style={{ padding: '4px 8px', borderRadius: 4, fontSize: 10, fontWeight: 600, background: projectSaveMsg.type === 'success' ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)', color: projectSaveMsg.type === 'success' ? '#86efac' : '#fca5a5' }}>{projectSaveMsg.text}</div>
+                              )}
+                              <a href={`/admin/projects/${p.id}`} style={{ fontSize: 10, color: '#7dd3fc', textDecoration: 'underline' }}>Edição completa →</a>
+                            </div>
+                          ) : (
+                            <>
+                              <h5 style={{ margin: '0 0 6px', fontSize: 14, fontWeight: 700, color: '#e2e8f0', lineHeight: 1.3, textTransform: 'uppercase' as const, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as any, cursor: 'pointer' }} onClick={() => startEditProject(p)} title="Clique para editar">{p.title}</h5>
+                              {p.city && <p style={{ margin: '0 0 6px', fontSize: 11, color: '#64748b' }}>📍 {p.city}{p.country ? `, ${p.country}` : ''}</p>}
+                              <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', alignItems: 'center' }}>
+                                {p.tags?.map((tag: string, i: number) => (
+                                  <span key={i} style={{ padding: '2px 7px', borderRadius: 4, background: 'rgba(255,255,255,0.06)', color: '#94a3b8', fontSize: 10, fontWeight: 500 }}>{tag}</span>
+                                ))}
+                                {p.year && <span style={{ fontSize: 10, color: '#475569', marginLeft: 'auto' }}>{p.year}</span>}
+                              </div>
+                              {projectSaveMsg && projectSaveMsg.id === p.id && projectSaveMsg.type === 'success' && (
+                                <div style={{ marginTop: 4, padding: '3px 8px', borderRadius: 4, fontSize: 10, fontWeight: 600, background: 'rgba(34,197,94,0.15)', color: '#86efac', display: 'inline-block' }}>{projectSaveMsg.text}</div>
+                              )}
+                              <div style={{ marginTop: 10 }}>
+                                <button type="button" onClick={() => startEditProject(p)} style={{ width: '100%', background: '#22c55e', color: '#fff', padding: '10px 14px', borderRadius: 8, fontSize: 12, fontWeight: 700, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, boxShadow: '0 2px 8px rgba(34,197,94,0.3)' }}>✏️ EDITAR ESTE PROJETO</button>
+                                <a href={`/admin/projects/${p.id}`} style={{ display: 'block', marginTop: 6, fontSize: 11, color: '#7dd3fc', textDecoration: 'none', textAlign: 'center' }}>Edição completa →</a>
                               </div>
                             </>
                           )}
@@ -1540,11 +1637,11 @@ export default function EditPagePage() {
                   </div>
                 )}
 
-                {/* ═══ Projetos adicionais (5, 6) ═══ */}
-                {homeFeaturedProjects.length > 4 && (
+                {/* ═══ Projetos adicionais (8+) — se no futuro houver mais de 7 slots ═══ */}
+                {homeFeaturedProjects.length > 7 && (
                   <div style={{ margin: '0 20px 20px', padding: 12, borderRadius: 10, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                    <p style={{ margin: '0 0 8px', fontSize: 12, color: '#64748b', fontWeight: 600 }}>Outros projetos em destaque (não exibidos na Home padrão):</p>
-                    {homeFeaturedProjects.slice(4).map((p: any) => (
+                    <p style={{ margin: '0 0 8px', fontSize: 12, color: '#64748b', fontWeight: 600 }}>Outros projetos em destaque (além dos 7 slots):</p>
+                    {homeFeaturedProjects.slice(7).map((p: any) => (
                       <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 0' }}>
                         <span style={{ fontSize: 11, color: '#86efac', fontWeight: 700 }}>P{p.priorityHome}</span>
                         <a href={`/admin/projects/${p.id}`} style={{ fontSize: 12, color: '#7dd3fc', textDecoration: 'underline' }}>{p.title}</a>

@@ -4,7 +4,7 @@ import { FormEvent, useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import UnifiedMediaUpload from '@/components/admin/UnifiedMediaUpload';
 
-const HOME_SLOT_PRIORITIES: Record<number, number> = { 0: 1, 1: 2, 2: 3, 3: 4 };
+const HOME_SLOT_PRIORITIES: Record<number, number> = { 0: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7 };
 
 export default function NewProjectPage() {
   const router = useRouter();
@@ -61,13 +61,13 @@ export default function NewProjectPage() {
 
   const [allMedia, setAllMedia] = useState<{ id: string; type: 'IMAGE' | 'VIDEO'; originalUrl: string; thumbnailUrl?: string }[]>([]);
 
-  // Se veio da Home (botão "Novo aqui"): já como destaque e slot 1–4
+  // Se veio da Home (botão "Novo aqui"): já como destaque e slot 1–7
   useEffect(() => {
     const slot = searchParams.get('fromHomeSlot');
     if (slot === null) return;
     const slotNum = parseInt(slot, 10);
-    if (Number.isNaN(slotNum) || slotNum < 0 || slotNum > 3) return;
-    const priority = HOME_SLOT_PRIORITIES[slotNum] ?? 4;
+    if (Number.isNaN(slotNum) || slotNum < 0 || slotNum > 6) return;
+    const priority = HOME_SLOT_PRIORITIES[slotNum] ?? 7;
     setFormData(prev => ({ ...prev, featured: true, priorityHome: priority }));
   }, [searchParams]);
 
@@ -521,6 +521,9 @@ export default function NewProjectPage() {
               { value: 2, label: 'Principal 2' },
               { value: 3, label: 'Principal 3' },
               { value: 4, label: 'Principal 4' },
+              { value: 5, label: 'Principal 5' },
+              { value: 6, label: 'Principal 6' },
+              { value: 7, label: 'Principal 7' },
             ].map(({ value, label }) => {
               const isChecked = formData.priorityHome === value;
               return (
