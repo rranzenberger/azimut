@@ -4,7 +4,7 @@
 // Aparece quando IA detecta interesse claro (confidence > 0.7)
 // ════════════════════════════════════════════════════════════
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import { useIntentionDetection } from '../hooks/useIntentionDetection'
@@ -16,8 +16,10 @@ interface DynamicSuggestionBannerProps {
   autoHideDelay?: number // Tempo para auto-hide em ms (padrão: 8000)
 }
 
-// Tempo que o card fica visível para leitura tranquila (1 min)
-const DEFAULT_AUTO_HIDE_MS = 60000
+// 45s visível; cooldown 1–2 min (aleatório) antes de mostrar outro
+const DEFAULT_AUTO_HIDE_MS = 45000
+const COOLDOWN_MIN_MS = 60000
+const COOLDOWN_MAX_MS = 120000
 
 const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
   lang,
@@ -31,22 +33,30 @@ const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
   const [isDismissed, setIsDismissed] = useState(false)
   // Texto fixo por “sessão” do card: só troca quando a intenção muda, evita pisca-pisca
   const [contextualTexts, setContextualTexts] = useState<{ title: string; cta: string; secondary: string } | null>(null)
-  
-  // Mostrar banner quando intenção detectada
+  const [nextShowAllowedAt, setNextShowAllowedAt] = useState(0)
+  const cooldownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const shownIndicesRef = useRef<Record<string, { titles: Set<number>; ctas: Set<number>; secondaries: Set<number> }>>({})
+
+  const startCooldown = () => {
+    const cooldownMs = COOLDOWN_MIN_MS + Math.random() * (COOLDOWN_MAX_MS - COOLDOWN_MIN_MS)
+    setNextShowAllowedAt(Date.now() + cooldownMs)
+    if (cooldownTimerRef.current) clearTimeout(cooldownTimerRef.current)
+    cooldownTimerRef.current = setTimeout(() => setNextShowAllowedAt(0), cooldownMs)
+  }
+
   useEffect(() => {
-    if (intention && intention.confidence >= minConfidence && !isDismissed) {
+    const canShow = nextShowAllowedAt === 0 || Date.now() >= nextShowAllowedAt
+    if (intention && intention.confidence >= minConfidence && !isDismissed && canShow) {
       setIsVisible(true)
-      
-      // Auto-hide após delay (bem maior para sensação de apoio, não de distração)
       const timer = setTimeout(() => {
         setIsVisible(false)
+        startCooldown()
       }, autoHideDelay)
-      
       return () => clearTimeout(timer)
     } else {
       setIsVisible(false)
     }
-  }, [intention, minConfidence, autoHideDelay, isDismissed])
+  }, [intention, minConfidence, autoHideDelay, isDismissed, nextShowAllowedAt])
   
   // Reset dismissed quando intenção muda
   useEffect(() => {
@@ -84,12 +94,25 @@ const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
   const handleDismiss = () => {
     setIsDismissed(true)
     setIsVisible(false)
+    startCooldown()
   }
   
-  // Seleciona texto aleatório do array
   const pickRandom = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)]
-  
-  // Textos variados e humanizados - como um amigo de verdade
+
+  // Escolhe um item que ainda não foi mostrado; quando todos foram, reseta e escolhe de novo
+  const pickNextUnseen = <T,>(arr: T[], used: Set<number>): T => {
+    const n = arr.length
+    if (n === 0) return arr[0]
+    let available = [...Array(n).keys()].filter((i) => !used.has(i))
+    if (available.length === 0) {
+      used.clear()
+      available = [...Array(n).keys()]
+    }
+    const idx = available[Math.floor(Math.random() * available.length)]
+    used.add(idx)
+    return arr[idx]
+  }
+
   const getContextualTexts = () => {
     const intentionType = intention?.intention || ''
     
@@ -403,14 +426,17 @@ const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
     
     const selectedSet = textSets[intentionType] || fallbackTexts
     const langTexts = selectedSet[lang] || selectedSet['en']
-    
+    if (!shownIndicesRef.current[intentionType]) {
+      shownIndicesRef.current[intentionType] = { titles: new Set(), ctas: new Set(), secondaries: new Set() }
+    }
+    const seen = shownIndicesRef.current[intentionType]
     return {
-      title: pickRandom(langTexts.titles),
-      cta: pickRandom(langTexts.ctas),
-      secondary: pickRandom(langTexts.secondaries)
+      title: pickNextUnseen(langTexts.titles, seen.titles),
+      cta: pickNextUnseen(langTexts.ctas, seen.ctas),
+      secondary: pickNextUnseen(langTexts.secondaries, seen.secondaries)
     }
   }
-  
+
   // Ícone contextual por tipo de interesse
   const getContextualIcon = () => {
     const icons: Record<string, string> = {
