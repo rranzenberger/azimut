@@ -16,8 +16,8 @@ interface DynamicSuggestionBannerProps {
   autoHideDelay?: number // Tempo para auto-hide em ms (padrão: 8000)
 }
 
-// Tempo que o card fica visível antes de trocar/ocultar (bem maior para não parecer pisca-pisca)
-const DEFAULT_AUTO_HIDE_MS = 28000
+// Tempo que o card fica visível para leitura tranquila (1 min)
+const DEFAULT_AUTO_HIDE_MS = 60000
 
 const DynamicSuggestionBanner: React.FC<DynamicSuggestionBannerProps> = ({
   lang,

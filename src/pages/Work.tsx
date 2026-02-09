@@ -636,7 +636,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
         lang={lang} 
         theme={theme}
         minConfidence={0.3}
-        autoHideDelay={28000}
+        autoHideDelay={60000}
       />
       
       {/* 🐛 DEBUG: Painel de Debug (apenas em desenvolvimento) */}

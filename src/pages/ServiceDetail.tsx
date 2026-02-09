@@ -482,7 +482,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
         lang={lang} 
         theme={theme}
         minConfidence={0.3}
-        autoHideDelay={28000}
+        autoHideDelay={60000}
       />
       
       <main className="py-16 md:py-20" style={{ position: 'relative', zIndex: 1 }}>
