@@ -212,10 +212,63 @@ export async function PATCH(
     }
 
     const body = await request.json();
-    const { projectMediaId, captionPt, captionEn, captionEs, captionFr } = body;
+    const {
+      projectMediaId,
+      captionPt,
+      captionEn,
+      captionEs,
+      captionFr,
+      mediaId: newMediaId,
+      displayFit,
+      displayPosition,
+      displayScale,
+    } = body;
 
     if (!projectMediaId) {
       return NextResponse.json({ error: 'projectMediaId é obrigatório' }, { status: 400 });
+    }
+
+    const current = await prisma.projectMedia.findFirst({
+      where: { id: projectMediaId, projectId: params.id },
+      include: { media: true },
+    });
+    if (!current) {
+      return NextResponse.json({ error: 'Item da galeria não encontrado' }, { status: 404 });
+    }
+
+    const data: {
+      captionPt?: string | null;
+      captionEn?: string | null;
+      captionEs?: string | null;
+      captionFr?: string | null;
+      mediaId?: string;
+      displayFit?: string | null;
+      displayPosition?: string | null;
+      displayScale?: number | null;
+    } = {};
+    if (captionPt !== undefined) data.captionPt = captionPt || null;
+    if (captionEn !== undefined) data.captionEn = captionEn || null;
+    if (captionEs !== undefined) data.captionEs = captionEs || null;
+    if (captionFr !== undefined) data.captionFr = captionFr || null;
+    if (displayFit !== undefined) data.displayFit = displayFit || null;
+    if (displayPosition !== undefined) data.displayPosition = displayPosition || null;
+    if (displayScale !== undefined) data.displayScale = displayScale == null ? null : Number(displayScale);
+
+    // Substituir mídia (manter ordem e legendas se não enviar novas)
+    if (newMediaId && newMediaId !== current.mediaId) {
+      const mediaExists = await prisma.media.findUnique({ where: { id: newMediaId } });
+      if (!mediaExists) {
+        return NextResponse.json({ error: 'Mídia não encontrada' }, { status: 404 });
+      }
+      const alreadyInGallery = await prisma.projectMedia.findUnique({
+        where: {
+          projectId_mediaId: { projectId: params.id, mediaId: newMediaId },
+        },
+      });
+      if (alreadyInGallery) {
+        return NextResponse.json({ error: 'Esta mídia já está na galeria' }, { status: 400 });
+      }
+      data.mediaId = newMediaId;
     }
 
     const updated = await prisma.projectMedia.updateMany({
@@ -223,12 +276,7 @@ export async function PATCH(
         id: projectMediaId,
         projectId: params.id,
       },
-      data: {
-        ...(captionPt !== undefined && { captionPt: captionPt || null }),
-        ...(captionEn !== undefined && { captionEn: captionEn || null }),
-        ...(captionEs !== undefined && { captionEs: captionEs || null }),
-        ...(captionFr !== undefined && { captionFr: captionFr || null }),
-      },
+      data,
     });
 
     if (updated.count === 0) {

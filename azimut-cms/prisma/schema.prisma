@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider  = "prisma-client-js"
+  engineType = "library"
 }
 
 datasource db {
@@ -425,6 +426,10 @@ model ProjectMedia {
   captionEn String?
   captionEs String?
   captionFr String?
+  // Posição e escala no quadro (subpágina do projeto)
+  displayFit     String?  // 'contain' | 'cover' — enquadramento (cortar ou não)
+  displayPosition String? // 'center' | 'top' | 'bottom' | 'left' | 'right' | 'top left' | ...
+  displayScale   Float?   // 0.8–1.2 (80%–120%) — zoom no quadro
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   media     Media    @relation(fields: [mediaId], references: [id], onDelete: Cascade)

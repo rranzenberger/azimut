@@ -142,6 +142,9 @@ export async function GET(
              : lang === 'es' ? (pm.captionEs ?? pm.captionEn ?? null)
              : lang === 'fr' ? (pm.captionFr ?? pm.captionEn ?? null)
              : (pm.captionEn ?? null),
+        displayFit: pm.displayFit ?? 'contain',
+        displayPosition: pm.displayPosition ?? 'center',
+        displayScale: pm.displayScale ?? 1,
       })) || [],
     };
 

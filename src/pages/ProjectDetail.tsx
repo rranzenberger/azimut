@@ -502,6 +502,20 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                     return m ? m[1] : null
                   })() : null
                   const hasCaption = media.caption && String(media.caption).trim()
+                  const fit = media.displayFit || 'contain'
+                  const pos = media.displayPosition || 'center'
+                  const scale = media.displayScale != null ? media.displayScale : 1
+                  const transformOriginMap: Record<string, string> = {
+                    'top left': '0% 0%', top: '50% 0%', 'top right': '100% 0%',
+                    left: '0% 50%', center: '50% 50%', right: '100% 50%',
+                    'bottom left': '0% 100%', bottom: '50% 100%', 'bottom right': '100% 100%',
+                  }
+                  const transformOrigin = transformOriginMap[pos] || '50% 50%'
+                  const imgStyle = {
+                    objectFit: fit as 'contain' | 'cover',
+                    objectPosition: pos,
+                    ...(scale !== 1 && { transform: `scale(${scale})`, transformOrigin }),
+                  }
                   return (
                     <figure key={media.id || index} className="space-y-3">
                       <div className="relative aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden bg-slate-900 ring-1 ring-black/10 dark:ring-white/5 shadow-lg">
@@ -509,14 +523,16 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
                           <img
                             src={media.large || media.medium || media.thumbnail || media.original}
                             alt={media.alt || `${effectiveProject.title} – ${index + 1}`}
-                            className="w-full h-full object-contain"
+                            className="w-full h-full"
+                            style={imgStyle}
                             loading="lazy"
                           />
                         ) : isDirectVideo ? (
                           <video
                             src={videoUrl}
                             controls
-                            className="w-full h-full object-contain bg-black"
+                            className="w-full h-full bg-black"
+                            style={imgStyle}
                             poster={media.thumbnail || undefined}
                           />
                         ) : youtubeId ? (

@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Prisma: usar engine "library" no build e em runtime (evita erro em serverless/Next collect page data)
+  env: {
+    PRISMA_CLIENT_ENGINE_TYPE: 'library',
+  },
   // Desabilitar completamente features desnecessárias
   poweredByHeader: false,
   compress: true,

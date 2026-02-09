@@ -250,6 +250,12 @@ export default function EditProjectPage() {
   const isOnHome = formData.priorityHome > 0;
   const homeSlotLabel = formData.priorityHome === 1 ? 'Principal 1' : formData.priorityHome === 2 ? 'Principal 2' : formData.priorityHome === 3 ? 'Principal 3' : formData.priorityHome === 4 ? 'Principal 4' : formData.priorityHome === 5 ? 'Principal 5' : formData.priorityHome === 6 ? 'Principal 6' : formData.priorityHome === 7 ? 'Principal 7' : null;
 
+  const galleryImageCount = gallery.filter((g: any) => g?.media?.type === 'IMAGE').length;
+  const galleryVideoCount = gallery.filter((g: any) => g?.media?.type === 'VIDEO').length;
+  const galleryCountLabel = gallery.length > 0
+    ? ` (${gallery.length}${galleryImageCount + galleryVideoCount > 0 ? ` — ${galleryImageCount} imgs, ${galleryVideoCount} víd` : ''})`
+    : '';
+
   return (
     <>
       <header style={{ marginBottom: 16 }}>
@@ -286,7 +292,7 @@ export default function EditProjectPage() {
         {[
           { id: 'basico', label: '📋 Dados básicos (título, slug, capa)' },
           { id: 'localizacao', label: '📍 Localização' },
-          { id: 'galeria', label: '🖼️ Galeria' },
+          { id: 'galeria', label: `🖼️ Galeria${galleryCountLabel}` },
         ].map((btn) => (
           <button key={btn.id} type="button" onClick={() => handleSectionToggle(btn.id)} style={{ padding: '8px 14px', borderRadius: 8, border: '1px solid rgba(56, 189, 248, 0.3)', background: openSection === btn.id ? 'rgba(56, 189, 248, 0.2)' : 'rgba(56, 189, 248, 0.06)', color: '#7dd3fc', fontSize: 12, fontWeight: 500, cursor: 'pointer', transition: 'all 0.15s' }}>
             {btn.label}
@@ -360,7 +366,12 @@ export default function EditProjectPage() {
                 videoLabel="Vídeo de capa (opcional)"
               />
               {/* Enquadramento e posição da imagem (cards + subpágina) */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: 12 }}>
+              <div style={{ marginTop: 12, padding: '10px 12px', borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', marginBottom: 8 }}>
+                <p style={{ margin: 0, fontSize: 11, color: '#8f8ba2' }}>
+                  <strong>Como ajustar a capa:</strong> Enquadramento define se a imagem aparece inteira (sem cortes) ou preenche o quadro (pode cortar). Posição define onde a imagem fica ancorada (ex.: centro, topo, canto).
+                </p>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: 8 }}>
                 <div style={{ display: 'grid', gap: 6 }}>
                   <label style={{ fontSize: 13, fontWeight: 600 }}>Enquadramento da imagem</label>
                   <select
@@ -368,10 +379,10 @@ export default function EditProjectPage() {
                     onChange={(e) => setFormData({ ...formData, heroImageFit: e.target.value })}
                     style={inputStyle}
                   >
-                    <option value="contain">Enquadrar sem cortes (recomendado)</option>
-                    <option value="cover">Preencher (pode cortar bordas)</option>
+                    <option value="contain">Sem cortes (contain) — imagem inteira visível</option>
+                    <option value="cover">Preencher (cover) — pode cortar bordas</option>
                   </select>
-                  <small style={{ color: '#6b6780', fontSize: 11 }}>Cards e subpágina do projeto</small>
+                  <small style={{ color: '#6b6780', fontSize: 11 }}>Usado nos cards da Home e na subpágina do projeto.</small>
                 </div>
                 <div style={{ display: 'grid', gap: 6 }}>
                   <label style={{ fontSize: 13, fontWeight: 600 }}>Posição da imagem</label>
@@ -390,7 +401,7 @@ export default function EditProjectPage() {
                     <option value="bottom left">Base esquerda</option>
                     <option value="bottom right">Base direita</option>
                   </select>
-                  <small style={{ color: '#6b6780', fontSize: 11 }}>Onde a imagem é ancorada no quadro</small>
+                  <small style={{ color: '#6b6780', fontSize: 11 }}>Clique no menu para escolher onde a imagem é ancorada no quadro.</small>
                 </div>
               </div>
             </div>
@@ -1175,11 +1186,19 @@ export default function EditProjectPage() {
         </div>
 
         {/* Galeria de Mídias (Adicional) – subpágina do projeto */}
-        <CollapsibleSection id="galeria" title="Galeria de Mídias (subpágina do projeto)" icon="📸" isOpen={openSection === 'galeria'} onToggle={handleSectionToggle}>
-          <p style={{ margin: '0 0 16px 0', fontSize: 12, color: '#8f8ba2' }}>
-            Imagens e vídeos que aparecem na subpágina do projeto (sequência com ordem e legenda em PT/EN/ES/FR). Adicione por upload, URL ou biblioteca; reordene e edite as legendas em cada item.
+        <CollapsibleSection
+          id="galeria"
+          title={gallery.length > 0
+            ? `Galeria de Mídias — ${gallery.length} itens (${galleryImageCount} imagens, ${galleryVideoCount} vídeos)`
+            : 'Galeria de Mídias (subpágina do projeto) — adicionar imagens e vídeos'}
+          icon="📸"
+          isOpen={openSection === 'galeria'}
+          onToggle={handleSectionToggle}
+        >
+          <p style={{ margin: '0 0 12px 0', fontSize: 11, color: '#8f8ba2' }}>
+            Imagens e vídeos da subpágina. Upload, URL ou biblioteca; reordene (← →), legendas (📝), substituir (🔄), posição/escala (📐).
           </p>
-          <GalleryManager projectId={id} initialGallery={gallery} />
+          <GalleryManager projectId={id} initialGallery={gallery} onGalleryChange={setGallery} />
         </CollapsibleSection>
 
         <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
