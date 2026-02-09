@@ -464,7 +464,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   >
                     EN
                   </button>
-                  <span className="shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', lineHeight: '1', fontSize: '0.7rem', transform: 'translateY(-1px)', color: '#c92337', opacity: 1 }}>●</span>
+                  <span className="shrink-0 font-sora" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'stretch', lineHeight: '1', fontSize: '0.7rem', color: '#c92337', opacity: 1, width: '0.5em', flexShrink: 0 }}>●</span>
                   <button
                     type="button"
                     aria-label="Français"
@@ -522,8 +522,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     PT
                   </button>
                 </span>
-                {/* Separador - bolinha vermelha mais aparente */}
-                <span className="shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', lineHeight: '1', fontSize: '0.65rem', transform: 'translateY(-1px)', color: '#c92337', opacity: 1, marginLeft: '5px', marginRight: '5px' }}>●</span>
+                {/* Separador - bolinha vermelha mais aparente, centralizada */}
+                <span className="shrink-0 font-sora" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'stretch', lineHeight: '1', fontSize: '0.65rem', color: '#c92337', opacity: 1, marginLeft: '5px', marginRight: '5px', width: '0.5em', flexShrink: 0 }}>●</span>
                 {/* ES - Espanha */}
                 <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '3px' }}>
                   <img src="/flag-es.svg" alt="España" className="w-auto rounded-[2px] opacity-95 shrink-0" style={{ display: 'block', height: '20px', width: 'auto', maxHeight: '20px', maxWidth: '29px' }} />
@@ -1276,7 +1276,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     >
                       EN
                     </button>
-                    <span className="mx-[3px] flex items-center" style={{ lineHeight: '1', display: 'inline-flex', color: '#c92337', opacity: 1, fontSize: '0.7rem' }}>●</span>
+                    <span className="mx-[3px] flex items-center justify-center shrink-0" style={{ lineHeight: '1', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minHeight: '34px', color: '#c92337', opacity: 1, fontSize: '0.7rem' }}>●</span>
                     <button
                       onClick={() => changeLang('fr')}
                       className="transition-all duration-200 touch-manipulation"
@@ -1314,8 +1314,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       PT
                     </button>
                   </span>
-                  {/* Separador - bolinha vermelha mais aparente */}
-                  <span className="mx-[3px] flex items-center" style={{ lineHeight: '1', display: 'inline-flex', color: '#c92337', opacity: 1, fontSize: '0.7rem' }}>●</span>
+                  {/* Separador - bolinha vermelha mais aparente, centralizada */}
+                  <span className="mx-[3px] flex items-center justify-center shrink-0" style={{ lineHeight: '1', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minHeight: '34px', color: '#c92337', opacity: 1, fontSize: '0.7rem' }}>●</span>
                   {/* ES - Espanha */}
                   <span className="inline-flex items-center gap-0" style={{ alignItems: 'center' }}>
                     <img src="/flag-es.svg" alt="España" width={32} height={16} className="w-auto rounded-[2px] opacity-95 mr-1" style={{ display: 'block', height: '17px', width: 'auto', maxHeight: '17px', maxWidth: '24px' }} />

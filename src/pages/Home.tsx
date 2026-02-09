@@ -447,7 +447,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     color: theme === 'dark' ? 'rgba(255, 255, 255, 0.6)' : '#1e293b'
                   }}
                 >
-                  IMMERSIVE <span className="text-azimut-red" style={{ color: '#c92337' }}>•</span> INTERACTIVE <span className="text-azimut-red" style={{ color: '#c92337' }}>•</span> CINEMATIC EXPERIENCE
+                  IMMERSIVE <span className="text-azimut-red inline-block align-middle" style={{ color: '#c92337', fontSize: '0.85rem' }}>•</span> INTERACTIVE <span className="text-azimut-red inline-block align-middle" style={{ color: '#c92337', fontSize: '0.85rem' }}>•</span> CINEMATIC EXPERIENCE
                 </p>
                 
                 {/* Título em 3 LINHAS - MULTILÍNGUE */}
@@ -829,7 +829,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                   className={`font-sora text-[0.55rem] sm:text-[0.6rem] uppercase tracking-[0.2em] animate-fade-in-up opacity-0 ${theme === 'dark' ? 'text-white/60' : ''}`}
                   style={{ animationDelay: '0.08s', color: theme === 'dark' ? undefined : '#1e293b' }}
                 >
-                  IMMERSIVE <span className="text-azimut-red" style={{ color: '#c92337' }}>•</span> INTERACTIVE <span className="text-azimut-red" style={{ color: '#c92337' }}>•</span> CINEMATIC EXPERIENCE
+                  IMMERSIVE <span className="text-azimut-red inline-block align-middle" style={{ color: '#c92337', fontSize: '0.7rem' }}>•</span> INTERACTIVE <span className="text-azimut-red inline-block align-middle" style={{ color: '#c92337', fontSize: '0.7rem' }}>•</span> CINEMATIC EXPERIENCE
                 </p>
                 
                 {/* Título - COMPACTO */}
