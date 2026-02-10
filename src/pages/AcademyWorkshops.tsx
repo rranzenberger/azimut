@@ -22,7 +22,7 @@ const AcademyWorkshops: React.FC<AcademyWorkshopsProps> = ({ lang }) => {
   const [pastEventsSlots, setPastEventsSlots] = useState<Array<{ id: string; media?: { originalUrl?: string; thumbnailUrl?: string; mediumUrl?: string } }> | null>(null)
 
   // Backoffice content com fallback para conteúdo hardcoded
-  const { page: backofficePage } = useBackofficeContent('academy-workshops', lang)
+  const { page: backofficePage } = useBackofficeContent('academy/workshops', lang)
 
   // Past Events do backoffice (o site exibe o que está no backoffice)
   useEffect(() => {

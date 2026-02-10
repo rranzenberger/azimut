@@ -25,7 +25,7 @@ const AcademyCourses: React.FC<AcademyCoursesProps> = ({ lang }) => {
   const [coursesFromApi, setCoursesFromApi] = useState<any[] | null>(null)
 
   // Backoffice content com fallback para conteúdo hardcoded
-  const { page: backofficePage } = useBackofficeContent('academy-courses', lang)
+  const { page: backofficePage } = useBackofficeContent('academy/courses', lang)
 
   // Cursos do backoffice (o site exibe o que está no backoffice)
   useEffect(() => {

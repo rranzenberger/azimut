@@ -37,7 +37,7 @@ const Vancouver: React.FC<VancouverProps> = ({ lang }) => {
   const { image, vancouverTime } = useTimeBasedImage()
   
   // Buscar conteúdo do backoffice (mobile/desktop)
-  const { page: backofficePage } = useBackofficeContent('vancouver', lang)
+  const { page: backofficePage } = useBackofficeContent('academy/vancouver', lang)
   
   // Função para scroll suave até a calculadora com efeito de destaque
   const scrollToCalculator = () => {

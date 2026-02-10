@@ -732,7 +732,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
       // 🆕 Se marcou newsletter, criar NewsletterSubscriber
       if (formData.wantsNewsletter && formData.email) {
         try {
-          const backofficeUrl = import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azimut.com.br'
+          const backofficeUrl = import.meta.env.VITE_CMS_API_URL || import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br'
           await fetch(`${backofficeUrl}/api/public/newsletter`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -750,7 +750,7 @@ export default function SmartContactForm({ lang = 'pt' }: SmartContactFormProps)
 
       // Enviar notificação por email
       try {
-        await fetch(`${import.meta.env.VITE_CMS_API_URL || 'https://backoffice.azimut.com.br'}/api/notify-form`, {
+        await fetch(`${import.meta.env.VITE_CMS_API_URL || import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br'}/api/notify-form`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

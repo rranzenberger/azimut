@@ -292,6 +292,7 @@ export async function GET(request: NextRequest) {
         market: null,
         page: null,
         highlightProjects: [],
+        featuredProjects: undefined,
         services: [],
       },
       { 

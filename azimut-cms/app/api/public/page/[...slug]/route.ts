@@ -1,13 +1,13 @@
 /**
  * API PÚBLICA - Sem autenticação
  * Permite que o site principal consuma conteúdo do backoffice
- * 
- * GET /api/public/page/[slug]
- * 
+ *
+ * GET /api/public/page/[...slug] — catch-all: aceita home, studio/about, academy/courses, etc.
+ *
  * Exemplos:
- * - /api/public/page/home
- * - /api/public/page/studio/about
- * - /api/public/page/academy/courses
+ * - /api/public/page/home          → slug = ['home']
+ * - /api/public/page/studio/about  → slug = ['studio', 'about']
+ * - /api/public/page/academy/courses → slug = ['academy', 'courses']
  */
 
 import { NextRequest, NextResponse } from 'next/server'
@@ -25,24 +25,25 @@ function toAbsoluteImageUrl(url: string | null | undefined, request: NextRequest
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ slug: string | string[] }> | { slug: string | string[] } }
+  { params }: { params: Promise<{ slug: string[] }> | { slug: string[] } }
 ) {
   try {
-    // Resolver params (pode ser Promise ou objeto direto)
     const resolvedParams = await Promise.resolve(params)
-    
-    // Suporta slugs com barras: studio/about -> ['studio', 'about'] -> 'studio/about'
-    const slug = Array.isArray(resolvedParams.slug) 
-      ? resolvedParams.slug.join('/') 
-      : resolvedParams.slug
+    const slugSegments = resolvedParams.slug
+    if (!slugSegments?.length) {
+      return NextResponse.json(
+        { error: 'Slug obrigatório' },
+        { status: 400 }
+      )
+    }
+    const slug = slugSegments.join('/')
 
-    console.log('[PUBLIC API] GET /api/public/page/[slug] - slug:', slug)
+    console.log('[PUBLIC API] GET /api/public/page/[...slug] - slug:', slug)
 
-    // Buscar página no banco (somente campos públicos) + hero image para o site exibir
     const page = await prisma.page.findUnique({
-      where: { 
+      where: {
         slug,
-        status: 'PUBLISHED' // Apenas páginas publicadas
+        status: 'PUBLISHED',
       },
       select: {
         slug: true,
@@ -56,7 +57,6 @@ export async function GET(
             thumbnailUrl: true,
           },
         },
-        // SEO - Todos os idiomas
         seoTitlePt: true,
         seoTitleEn: true,
         seoTitleEs: true,
@@ -65,7 +65,6 @@ export async function GET(
         seoDescEn: true,
         seoDescEs: true,
         seoDescFr: true,
-        // Hero - Todos os idiomas
         heroSloganPt: true,
         heroSloganEn: true,
         heroSloganEs: true,
@@ -74,7 +73,6 @@ export async function GET(
         heroSubtitleEn: true,
         heroSubtitleEs: true,
         heroSubtitleFr: true,
-        // ═══ Hero Description MOBILE/DESKTOP ═══
         heroDescriptionMobilePt: true,
         heroDescriptionMobileEn: true,
         heroDescriptionMobileEs: true,
@@ -95,7 +93,6 @@ export async function GET(
       )
     }
 
-    // URL da imagem hero (absoluta para o site em outro domínio carregar)
     const rawHeroUrl =
       page.heroBackgroundImage?.originalUrl ||
       page.heroBackgroundImage?.mediumUrl ||
@@ -104,28 +101,15 @@ export async function GET(
       null
     const heroImageUrl = toAbsoluteImageUrl(rawHeroUrl, request)
 
-    // Retornar dados públicos
     return NextResponse.json({
       slug: page.slug,
       name: page.name,
       heroImageUrl,
       seo: {
-        pt: {
-          title: page.seoTitlePt,
-          description: page.seoDescPt,
-        },
-        en: {
-          title: page.seoTitleEn,
-          description: page.seoDescEn,
-        },
-        es: {
-          title: page.seoTitleEs,
-          description: page.seoDescEs,
-        },
-        fr: {
-          title: page.seoTitleFr,
-          description: page.seoDescFr,
-        },
+        pt: { title: page.seoTitlePt, description: page.seoDescPt },
+        en: { title: page.seoTitleEn, description: page.seoDescEn },
+        es: { title: page.seoTitleEs, description: page.seoDescEs },
+        fr: { title: page.seoTitleFr, description: page.seoDescFr },
       },
       hero: {
         pt: {
@@ -156,9 +140,7 @@ export async function GET(
       updatedAt: page.updatedAt,
     }, {
       headers: {
-        // Cache por 5 minutos (300 segundos)
         'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
-        // CORS - Permitir site principal acessar
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET',
         'Access-Control-Allow-Headers': 'Content-Type',
@@ -173,7 +155,6 @@ export async function GET(
   }
 }
 
-// Opções CORS para preflight
 export async function OPTIONS() {
   return new NextResponse(null, {
     status: 200,
@@ -184,4 +165,3 @@ export async function OPTIONS() {
     },
   })
 }
-

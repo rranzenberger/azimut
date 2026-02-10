@@ -22,7 +22,7 @@ const AcademyCorporate: React.FC<AcademyCorporateProps> = ({ lang }) => {
   const { theme } = useTheme()
   
   // Backoffice content com fallback para conteúdo hardcoded
-  const { page: backofficePage } = useBackofficeContent('academy-corporate', lang)
+  const { page: backofficePage } = useBackofficeContent('academy/corporate', lang)
 
   const content: Record<Lang, any> = {
     pt: {

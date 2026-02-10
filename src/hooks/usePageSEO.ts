@@ -57,17 +57,20 @@ export function usePageSEO(
     return generateKeywordsString(pageKeywords, lang, includeLongTail)
   }, [pageKeywords, lang, rawDescription])
 
+  const isVancouver = slug === 'vancouver' || slug === 'academy/vancouver'
+  const isHome = slug === 'home'
+  const isWork = slug === 'work'
   // URL da imagem (padrão ou específica da página)
-  const image = slug === 'vancouver' 
+  const image = isVancouver
     ? 'https://azmt.com.br/og-vancouver.jpg'
-    : slug === 'work'
+    : isWork
     ? 'https://azmt.com.br/og-work.jpg'
     : 'https://azmt.com.br/og-image.jpg'
 
   // URL canônica
-  const url = slug === 'home' 
+  const url = isHome
     ? `https://azmt.com.br/${lang === 'pt' ? '' : lang}`
-    : slug === 'vancouver'
+    : isVancouver
     ? `https://azmt.com.br/${lang === 'pt' ? '' : lang}/academy/vancouver`
     : `https://azmt.com.br/${lang === 'pt' ? '' : lang}/${slug}`
 
