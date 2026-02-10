@@ -109,31 +109,10 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   const { intention, loading: intentionLoading } = useIntentionDetection(lang)
   const { trackCategoryClick, trackProjectView } = useBehaviorTracking()
   
-  // Auto-aplicar filtro baseado em intenção detectada (apenas uma vez)
-  const [intentionApplied, setIntentionApplied] = useState(false)
-  useEffect(() => {
-    if (intention?.recommendedCategory && !intentionApplied && !selectedCategory.length && !selectedType) {
-      // Mapear categoria recomendada para filtros
-      const categoryMap: Record<string, { category?: string[], type?: string }> = {
-        'museus': { category: ['museum', 'museus', 'exposição'] },
-        'vr': { category: ['vr-360', 'vr', 'ar', 'xr'] },
-        'cinema': { category: ['video', 'cinema', 'audiovisual'] }
-      }
-      
-      const mapping = categoryMap[intention.recommendedCategory]
-      if (mapping) {
-        if (mapping.category) {
-          setSelectedCategory(mapping.category)
-        }
-        if (mapping.type) {
-          setSelectedType(mapping.type)
-        }
-        setIntentionApplied(true) // Marcar como aplicado
-      }
-    }
-  }, [intention?.recommendedCategory, intentionApplied, selectedCategory.length, selectedType])
+  // Não auto-aplicar filtro ao abrir Work: ao clicar no menu Work a página deve mostrar todos os projetos (sem MUSEUMS nem outro filtro). Filtros só via URL (?type=, ?tag=) ou clique do usuário nos botões de categoria.
+  // (intention auto-apply desativado para que /work abra sempre sem filtro e com todos os cards)
 
-  // Atualizar filtros quando a URL mudar (navegação via dropdown)
+  // Atualizar filtros quando a URL mudar (navegação via dropdown ou menu Work)
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const tag = params.get('tag')
@@ -141,6 +120,10 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     
     setSelectedTag(tag)
     setSelectedType(type)
+    // Ao abrir /work sem ?tag= ou ?type=, garantir que categoria também fique limpa (todos os cards visíveis)
+    if (!tag && !type) {
+      setSelectedCategory([])
+    }
     
     // Scroll para área de PROJETOS quando um filtro é aplicado (não para filtros)
     if (tag || type) {
