@@ -13,6 +13,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/src/lib/prisma'
 
+function toAbsoluteImageUrl(url: string | null | undefined, request: NextRequest): string | null {
+  if (!url || !url.trim()) return null
+  if (url.startsWith('http://') || url.startsWith('https://')) return url
+  const envBase = process.env.NEXT_PUBLIC_BACKOFFICE_URL
+  const base = envBase && (envBase.startsWith('http://') || envBase.startsWith('https://'))
+    ? envBase.replace(/\/$/, '')
+    : request.nextUrl?.origin || 'https://backoffice.azmt.com.br'
+  return url.startsWith('/') ? `${base}${url}` : `${base}/${url}`
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string | string[] }> | { slug: string | string[] } }
@@ -28,7 +38,7 @@ export async function GET(
 
     console.log('[PUBLIC API] GET /api/public/page/[slug] - slug:', slug)
 
-    // Buscar página no banco (somente campos públicos)
+    // Buscar página no banco (somente campos públicos) + hero image para o site exibir
     const page = await prisma.page.findUnique({
       where: { 
         slug,
@@ -37,6 +47,15 @@ export async function GET(
       select: {
         slug: true,
         name: true,
+        heroBackgroundImageId: true,
+        heroBackgroundImageUrl: true,
+        heroBackgroundImage: {
+          select: {
+            originalUrl: true,
+            mediumUrl: true,
+            thumbnailUrl: true,
+          },
+        },
         // SEO - Todos os idiomas
         seoTitlePt: true,
         seoTitleEn: true,
@@ -76,10 +95,20 @@ export async function GET(
       )
     }
 
+    // URL da imagem hero (absoluta para o site em outro domínio carregar)
+    const rawHeroUrl =
+      page.heroBackgroundImage?.originalUrl ||
+      page.heroBackgroundImage?.mediumUrl ||
+      page.heroBackgroundImage?.thumbnailUrl ||
+      page.heroBackgroundImageUrl ||
+      null
+    const heroImageUrl = toAbsoluteImageUrl(rawHeroUrl, request)
+
     // Retornar dados públicos
     return NextResponse.json({
       slug: page.slug,
       name: page.name,
+      heroImageUrl,
       seo: {
         pt: {
           title: page.seoTitlePt,

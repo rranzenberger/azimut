@@ -43,3 +43,7 @@ FROM generate_series(0, 7) AS n
 WHERE NOT EXISTS (SELECT 1 FROM "AcademyPastEvent" LIMIT 1);
 
 -- Cursos: crie pelo backoffice em /admin/academy/courses (botão "Criar 6 iniciais" ou "+ Adicionar curso").
+
+-- 4) Garantir que as 4 páginas dos cards da Academy existam (para imagens/textos do backoffice irem para o site)
+-- Execute também: sql/ensure_academy_landing_pages.sql
+-- Isso cria/atualiza academy/vancouver, academy/courses, academy/workshops, academy/corporate como PUBLISHED.

@@ -16,6 +16,8 @@ const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffic
 interface PageContent {
   slug: string;
   name: string;
+  /** URL da imagem de fundo do hero (backoffice → site) */
+  heroImageUrl?: string | null;
   seo: {
     title?: string | null;
     description?: string | null;
@@ -77,10 +79,11 @@ export function useBackofficeContent(
 
         if (isCancelled) return;
 
-        // Extrair dados do idioma selecionado
+        // Extrair dados do idioma selecionado + hero image (backoffice → site)
         const pageContent: PageContent = {
           slug: data.slug,
           name: data.name,
+          heroImageUrl: data.heroImageUrl ?? null,
           seo: {
             title: data.seo[lang]?.title,
             description: data.seo[lang]?.description,

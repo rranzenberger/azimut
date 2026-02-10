@@ -257,9 +257,11 @@ async function main() {
     { name: 'Sobre', slug: 'studio/about', status: 'PUBLISHED' },
     { name: 'Equipe', slug: 'studio/team', status: 'PUBLISHED' },
     { name: 'Academy', slug: 'academy', status: 'PUBLISHED' },
-    { name: 'Pesquisa', slug: 'academy/research', status: 'PUBLISHED' },
+    { name: 'CA Vancouver', slug: 'academy/vancouver', status: 'PUBLISHED' },
     { name: 'Cursos', slug: 'academy/courses', status: 'PUBLISHED' },
+    { name: 'Workshops & Eventos', slug: 'academy/workshops', status: 'PUBLISHED' },
     { name: 'Corporate', slug: 'academy/corporate', status: 'PUBLISHED' },
+    { name: 'Pesquisa', slug: 'academy/research', status: 'PUBLISHED' },
     { name: 'Contato', slug: 'contact', status: 'PUBLISHED' },
   ];
 

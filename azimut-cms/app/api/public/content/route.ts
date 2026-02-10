@@ -68,11 +68,12 @@ export async function GET(request: NextRequest) {
       },
     });
     
-    // 3. Buscar projetos: home = featured + priorityHome 1–7, ordenado por priorityHome asc (1º–7º)
+    // 3. Buscar projetos: home = 7 destaques (priorityHome 1–7); work = 7 destaques + lista completa com marcados primeiro
+    const isWork = page === 'work';
     let featuredProjects = await prisma.project.findMany({
       where: {
         status: 'PUBLISHED',
-        ...(page !== 'work' ? { featured: true, priorityHome: { gte: 1, lte: 7 } } : {}),
+        ...(isWork ? {} : { featured: true, priorityHome: { gte: 1, lte: 7 } }),
       },
       include: {
         heroImage: true,
@@ -80,17 +81,18 @@ export async function GET(request: NextRequest) {
         services: true,
       },
       orderBy: [
-        { priorityHome: 'asc' },
+        // work: marcados primeiro (priorityHome 7→1); home: ordem 1º–7º (asc)
+        { priorityHome: isWork ? 'desc' : 'asc' },
         { year: 'desc' },
         { month: 'desc' },
         { title: 'asc' },
       ],
-      ...(page !== 'work' ? { take: 7 } : {}),
+      ...(isWork ? {} : { take: 7 }),
     });
 
-    // 3b. Para page=work: buscar também os 7 em destaque (para seção "Projetos em destaque" na Work)
-    let featuredProjectsWork = null;
-    if (page === 'work') {
+    // 3b. Para page=work: os 7 em destaque (topo da página) = exatamente os marcados no backoffice
+    let featuredProjectsWork: typeof featuredProjects | null = null;
+    if (isWork) {
       featuredProjectsWork = await prisma.project.findMany({
         where: {
           status: 'PUBLISHED',
@@ -110,6 +112,7 @@ export async function GET(request: NextRequest) {
         ],
         take: 7,
       });
+      // Lista completa (highlightProjects) já com marcados no topo: featuredProjects acima está orderBy priorityHome desc
     }
 
     // 4. Personalização baseada em comportamento (se temos sessionId)
@@ -248,9 +251,9 @@ export async function GET(request: NextRequest) {
         })),
       } : null,
       
-      // Projetos: home = 7 destaques (highlightProjects); work = todos (highlightProjects) + 7 destaques (featuredProjects)
+      // Projetos: home = 7 destaques; work = lista com marcados no topo (highlightProjects) + 7 para o topo (featuredProjects)
       highlightProjects: featuredProjects.map(p => formatProject(p, lang)),
-      featuredProjects: featuredProjectsWork ? featuredProjectsWork.map(p => formatProject(p, lang)) : undefined,
+      featuredProjects: featuredProjectsWork?.length ? featuredProjectsWork.map(p => formatProject(p, lang)) : undefined,
       
       services: services.map(s => ({
         slug: s.slug,

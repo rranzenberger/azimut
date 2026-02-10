@@ -2,10 +2,10 @@
 // ACADEMY HUB - REDESIGN PREMIUM 2026
 // ════════════════════════════════════════════════════════════
 // Página principal da Academy com estrutura visual completa
-// Placeholders para imagens/vídeos que virão do backoffice
+// Os 4 cards (Vancouver, Cursos, Workshops, Corporate) vêm do backoffice quando disponíveis
 // ════════════════════════════════════════════════════════════
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
@@ -37,6 +37,16 @@ interface AcademyStat {
   label: string
 }
 
+/** Seção da landing Academy vinda do backoffice (imagem + textos) */
+interface AcademyLandingSection {
+  slug: string
+  name: string
+  heroImageUrl: string | null
+  heroSlogan: { pt?: string | null; en?: string | null }
+  heroSubtitle: { pt?: string | null; en?: string | null }
+  heroDescription: { pt?: string | null; en?: string | null }
+}
+
 interface AcademyContent {
   meta: {
     title: string
@@ -64,10 +74,24 @@ interface AcademyContent {
   }
 }
 
+const BACKOFFICE_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br'
+
 const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
-  // REMOVIDO: useUserTracking já é chamado no Layout.tsx
-  // useUserTracking()
   const { theme } = useTheme()
+  const [landingSections, setLandingSections] = useState<AcademyLandingSection[]>([])
+
+  // Buscar os 4 cards da Academy no backoffice (imagens e textos) para exibir no site
+  useEffect(() => {
+    let cancelled = false
+    fetch(`${BACKOFFICE_URL}/api/public/academy/landing-sections`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: { sections?: AcademyLandingSection[] } | null) => {
+        if (cancelled || !data?.sections) return
+        setLandingSections(data.sections)
+      })
+      .catch(() => {})
+    return () => { cancelled = true }
+  }, [])
 
   // ═══════════════════════════════════════════════════════════
   // CONTEÚDO POR IDIOMA
@@ -372,6 +396,17 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
   }
 
   const t = content[lang] || content.pt
+
+  // Para cada card, pegar dados do backoffice quando existirem (slug: academy/vancouver, academy/courses, etc.)
+  const getBackofficeSection = (sectionId: string) =>
+    landingSections.find((s) => s.slug === `academy/${sectionId}`)
+  const textFromBackoffice = (s: AcademyLandingSection | undefined, field: 'heroSlogan' | 'heroSubtitle' | 'heroDescription') => {
+    if (!s) return null
+    const obj = s[field]
+    if (!obj) return null
+    const val = (obj as Record<string, string | null | undefined>)[lang] ?? (obj as Record<string, string | null | undefined>).pt ?? (obj as Record<string, string | null | undefined>).en
+    return val && String(val).trim() ? val : null
+  }
 
   return (
     <>
@@ -718,7 +753,12 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid md:grid-cols-2 gap-6 lg:gap-10">
-              {t.sections.map((section: AcademySection, idx: number) => (
+              {t.sections.map((section: AcademySection, idx: number) => {
+                const backSection = getBackofficeSection(section.id)
+                const cardImageUrl = backSection?.heroImageUrl
+                const cardTitle = textFromBackoffice(backSection, 'heroSlogan') || textFromBackoffice(backSection, 'heroSubtitle') || section.title
+                const cardDescription = textFromBackoffice(backSection, 'heroDescription') || section.description
+                return (
                 <Link
                   key={section.id}
                   to={`/${lang}${section.link}`}
@@ -729,20 +769,30 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
                 >
                   {/* Linha vermelha premium no topo do card */}
                   <div className="absolute top-0 left-0 right-0 h-1 rounded-t-2xl bg-gradient-to-r from-transparent via-azimut-red to-transparent opacity-90 z-10" aria-hidden />
-                  {/* Image/Video Thumbnail — área para imagem ou vídeo */}
+                  {/* Image/Video Thumbnail — imagem do backoffice ou placeholder */}
                   <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-slate-800/90 to-slate-900">
-                    <div 
-                      className="absolute inset-0 opacity-40 group-hover:opacity-30 transition-opacity"
-                      style={{
-                        background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(201,35,55,0.15) 0%, transparent 60%)'
-                      }}
-                      aria-hidden
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-8xl md:text-9xl opacity-25 group-hover:scale-110 transition-transform duration-500" aria-hidden>
-                        {section.icon}
-                      </span>
-                    </div>
+                    {cardImageUrl ? (
+                      <div
+                        className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
+                        style={{ backgroundImage: `url(${cardImageUrl})` }}
+                        aria-hidden
+                      />
+                    ) : (
+                      <>
+                        <div 
+                          className="absolute inset-0 opacity-40 group-hover:opacity-30 transition-opacity"
+                          style={{
+                            background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(201,35,55,0.15) 0%, transparent 60%)'
+                          }}
+                          aria-hidden
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-8xl md:text-9xl opacity-25 group-hover:scale-110 transition-transform duration-500" aria-hidden>
+                            {section.icon}
+                          </span>
+                        </div>
+                      </>
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent group-hover:from-black/80 transition-opacity" />
                     {/* Badge */}
                     <div className="absolute top-4 left-4 z-10">
@@ -756,17 +806,17 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
                     </div>
                   </div>
 
-                  {/* Content — texto e CTA */}
+                  {/* Content — texto do backoffice ou fallback local */}
                   <div className="p-6 md:p-8">
                     <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
                       <span className="text-4xl md:text-5xl flex-shrink-0">{section.icon}</span>
                       <h3 className="text-2xl md:text-3xl font-handel uppercase tracking-wider group-hover:text-azimut-red transition-colors" style={{ color: 'var(--theme-text)' }}>
-                        {section.title}
+                        {cardTitle}
                       </h3>
                     </div>
 
                     <p className="text-base md:text-lg leading-relaxed mb-4 md:mb-6" style={{ color: 'var(--theme-text-secondary)' }}>
-                      {section.description}
+                      {cardDescription}
                     </p>
 
                     {/* Highlight (ex.: Vancouver comissão) */}
@@ -789,7 +839,8 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
                     </div>
                   </div>
                 </Link>
-              ))}
+              );
+              })}
             </div>
 
             {/* Depoimento — bloco único premium (paleta do site) */}
