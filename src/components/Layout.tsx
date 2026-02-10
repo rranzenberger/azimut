@@ -430,7 +430,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               </LangLink>
             </div>
 
-            {/* Idiomas INLINE - Alinhamento vertical rigoroso: mesma altura de bandeiras, mesma fonte, um único eixo central */}
+            {/* Idiomas INLINE - Alinhamento matemático: eixo único 32px, bandeiras 20px centralizadas, fonte 15px, bolinha→ES +2px */}
             {showLanguagesInline && (
               <div
                 className="flex items-center shrink-0"
@@ -442,21 +442,21 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                   lineHeight: 1,
                 }}
               >
-                {/* Altura de referência para toda a linha (bandeiras + texto + bolinhas alinhados ao centro) */}
+                {/* Faixa de altura fixa 32px: centro = 16px; bandeiras 20px (centro 10px) alinham ao centro do eixo */}
                 <div
                   className="flex items-center shrink-0"
                   style={{
-                    height: '28px',
+                    height: '32px',
                     display: 'flex',
                     alignItems: 'center',
                     gap: 0,
                   }}
                 >
-                  {/* Separador vertical - centralizado na faixa de 28px */}
+                  {/* Separador vertical: 20px altura, centralizado no eixo 32px */}
                   <div
                     className="w-px shrink-0"
                     style={{
-                      height: '18px',
+                      height: '20px',
                       backgroundColor: 'var(--theme-border)',
                       marginRight: '10px',
                       opacity: 0.4,
@@ -464,8 +464,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     }}
                   />
                   {/* Grupo Canadá - EN e FR */}
-                  <span className="inline-flex items-center shrink-0" style={{ gap: '3px' }}>
-                    <img src="/flag-ca.svg" alt="Canada" className="shrink-0 rounded-[2px] opacity-95 object-contain" style={{ width: 'auto', height: '20px', maxWidth: '30px', display: 'block' }} />
+                  <span className="inline-flex items-center shrink-0" style={{ gap: '3px', alignItems: 'center' }}>
+                    <img src="/flag-ca.svg" alt="Canada" className="shrink-0 rounded-[2px] opacity-95 object-contain" style={{ width: 'auto', height: '20px', maxWidth: '30px', display: 'block', verticalAlign: 'middle', margin: 0 }} />
                     <button
                       type="button"
                       aria-label="English"
@@ -473,14 +473,14 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-semibold uppercase"
                       style={{
                         color: lang === 'en' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
-                        minWidth: '26px', padding: '0 1px', margin: 0,
-                        fontSize: '0.8125rem', letterSpacing: '0.03em', lineHeight: 1,
+                        minWidth: '28px', padding: '0 1px', margin: 0,
+                        fontSize: '0.9375rem', letterSpacing: '0.03em', lineHeight: 1,
                         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                       }}
                     >
                       EN
                     </button>
-                    <span className="shrink-0 inline-flex items-center justify-center" style={{ fontSize: '0.6rem', color: '#c92337', width: '0.45em', lineHeight: 1 }}>●</span>
+                    <span className="shrink-0 inline-flex items-center justify-center" style={{ fontSize: '0.65rem', color: '#c92337', width: '0.5em', lineHeight: 1 }}>●</span>
                     <button
                       type="button"
                       aria-label="Français"
@@ -488,19 +488,19 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-semibold uppercase"
                       style={{
                         color: lang === 'fr' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
-                        minWidth: '22px', padding: '0 1px', margin: 0,
-                        fontSize: '0.8125rem', letterSpacing: '0.03em', lineHeight: 1,
+                        minWidth: '24px', padding: '0 1px', margin: 0,
+                        fontSize: '0.9375rem', letterSpacing: '0.03em', lineHeight: 1,
                         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                       }}
                     >
                       FR
                     </button>
                   </span>
-                  {/* Separador | */}
-                  <span className="opacity-50 shrink-0 font-sora inline-flex items-center" style={{ marginLeft: '7px', marginRight: '10px', fontSize: '0.7rem', lineHeight: 1 }}>|</span>
+                  {/* Separador | - fonte alinhada ao eixo */}
+                  <span className="opacity-50 shrink-0 font-sora inline-flex items-center" style={{ marginLeft: '7px', marginRight: '10px', fontSize: '0.75rem', lineHeight: 1 }}>|</span>
                   {/* PT - Brasil */}
-                  <span className="inline-flex items-center shrink-0" style={{ gap: '3px' }}>
-                    <img src="/flag-br.svg" alt="Brasil" className="shrink-0 rounded-[2px] opacity-95 object-contain" style={{ width: 'auto', height: '20px', maxWidth: '29px', display: 'block' }} />
+                  <span className="inline-flex items-center shrink-0" style={{ gap: '3px', alignItems: 'center' }}>
+                    <img src="/flag-br.svg" alt="Brasil" className="shrink-0 rounded-[2px] opacity-95 object-contain" style={{ width: 'auto', height: '20px', maxWidth: '29px', display: 'block', verticalAlign: 'middle', margin: 0 }} />
                     <button
                       type="button"
                       aria-label="Português"
@@ -508,19 +508,19 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-semibold uppercase"
                       style={{
                         color: lang === 'pt' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
-                        minWidth: '24px', padding: '0 1px', margin: 0,
-                        fontSize: '0.8125rem', letterSpacing: '0.03em', lineHeight: 1,
+                        minWidth: '26px', padding: '0 1px', margin: 0,
+                        fontSize: '0.9375rem', letterSpacing: '0.03em', lineHeight: 1,
                         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                       }}
                     >
                       PT
                     </button>
                   </span>
-                  {/* Bolinha vermelha entre PT e ES */}
-                  <span className="shrink-0 inline-flex items-center justify-center" style={{ fontSize: '0.6rem', color: '#c92337', marginLeft: '5px', marginRight: '5px', width: '0.45em', lineHeight: 1 }}>●</span>
-                  {/* ES - Espanha */}
-                  <span className="inline-flex items-center shrink-0" style={{ gap: '3px' }}>
-                    <img src="/flag-es.svg" alt="España" className="shrink-0 rounded-[2px] opacity-95 object-contain" style={{ width: 'auto', height: '20px', maxWidth: '29px', display: 'block' }} />
+                  {/* Bolinha entre PT e ES: marginRight 7px (5+2) para respirar antes da bandeira ES */}
+                  <span className="shrink-0 inline-flex items-center justify-center" style={{ fontSize: '0.65rem', color: '#c92337', marginLeft: '5px', marginRight: '7px', width: '0.5em', lineHeight: 1 }}>●</span>
+                  {/* ES - Espanha: marginLeft 0 (espaço já na bolinha) */}
+                  <span className="inline-flex items-center shrink-0" style={{ gap: '3px', alignItems: 'center' }}>
+                    <img src="/flag-es.svg" alt="España" className="shrink-0 rounded-[2px] opacity-95 object-contain" style={{ width: 'auto', height: '20px', maxWidth: '29px', display: 'block', verticalAlign: 'middle', margin: 0 }} />
                     <button
                       type="button"
                       aria-label="Español"
@@ -528,8 +528,8 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                       className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-semibold uppercase"
                       style={{
                         color: lang === 'es' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
-                        minWidth: '24px', padding: '0 1px', margin: 0,
-                        fontSize: '0.8125rem', letterSpacing: '0.03em', lineHeight: 1,
+                        minWidth: '26px', padding: '0 1px', margin: 0,
+                        fontSize: '0.9375rem', letterSpacing: '0.03em', lineHeight: 1,
                         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                       }}
                     >
