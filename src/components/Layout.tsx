@@ -430,129 +430,113 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
               </LangLink>
             </div>
 
-            {/* Idiomas INLINE - Aparecem em: full, compact, hamburger-langs */}
+            {/* Idiomas INLINE - Alinhamento vertical rigoroso: mesma altura de bandeiras, mesma fonte, um único eixo central */}
             {showLanguagesInline && (
-              <div className="flex items-center shrink-0" style={{ alignItems: 'center', height: '100%', display: 'flex', gap: '0' }}>
-                {/* Separador visual (pílula/linha) - COMPACTO */}
-                <div className="h-5 w-px shrink-0" style={{ backgroundColor: 'var(--theme-border)', flexShrink: 0, alignSelf: 'center', marginRight: '10px', opacity: 0.4, borderRadius: '1px' }}></div>
-                
-                {/* Grupo Canadá - EN e FR */}
-                <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '3px' }}>
-                  <img src="/flag-ca.svg" alt="Canada" width={34} height={22} className="w-auto rounded-[2px] opacity-95 shrink-0" style={{ display: 'block', height: '22px', width: 'auto', maxHeight: '22px', maxWidth: '34px' }} />
-                  <button
-                    type="button"
-                    aria-label="English"
-                    onClick={() => {
-                      trackLanguageChange(lang, 'en')
-                      changeLang('en')
-                    }}
-                    className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-semibold uppercase"
-                    style={{ 
-                      color: lang === 'en' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'), 
-                      opacity: 1,
-                      minWidth: '26px',
-                      height: '100%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      padding: '0 1px',
-                      lineHeight: '1',
-                      margin: '0',
-                      fontSize: '0.875rem',
-                      letterSpacing: '0.03em'
-                    }}
-                  >
-                    EN
-                  </button>
-                  <span className="shrink-0 font-sora" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'stretch', lineHeight: '1', fontSize: '0.7rem', color: '#c92337', opacity: 1, width: '0.5em', flexShrink: 0 }}>●</span>
-                  <button
-                    type="button"
-                    aria-label="Français"
-                    onClick={() => {
-                      trackLanguageChange(lang, 'fr')
-                      changeLang('fr')
-                    }}
-                    className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-semibold uppercase"
+              <div
+                className="flex items-center shrink-0"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  height: '100%',
+                  gap: 0,
+                  lineHeight: 1,
+                }}
+              >
+                {/* Altura de referência para toda a linha (bandeiras + texto + bolinhas alinhados ao centro) */}
+                <div
+                  className="flex items-center shrink-0"
+                  style={{
+                    height: '28px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 0,
+                  }}
+                >
+                  {/* Separador vertical - centralizado na faixa de 28px */}
+                  <div
+                    className="w-px shrink-0"
                     style={{
-                      color: lang === 'fr' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
-                      opacity: 1,
-                      minWidth: '22px',
-                      height: '100%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      padding: '0 1px',
-                      lineHeight: '1',
-                      margin: '0',
-                      fontSize: '0.8125rem',
-                      letterSpacing: '0.03em'
+                      height: '18px',
+                      backgroundColor: 'var(--theme-border)',
+                      marginRight: '10px',
+                      opacity: 0.4,
+                      borderRadius: '1px',
                     }}
-                  >
-                    FR
-                  </button>
-                </span>
-                {/* Separador entre grupos */}
-                <span className="opacity-50 shrink-0 font-sora" style={{ display: 'flex', alignItems: 'center', height: '100%', marginLeft: '7px', marginRight: '10px', lineHeight: '1', fontSize: '0.7rem' }}>|</span>
-                {/* PT - Brasil */}
-                <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '3px' }}>
-                  <img src="/flag-br.svg" alt="Brasil" className="w-auto rounded-[2px] opacity-95 shrink-0" style={{ display: 'block', height: '20px', width: 'auto', maxHeight: '20px', maxWidth: '29px' }} />
-                  <button
-                    type="button"
-                    aria-label="Português"
-                    onClick={() => {
-                      trackLanguageChange(lang, 'pt')
-                      changeLang('pt')
-                    }}
-                    className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-semibold uppercase"
-                    style={{
-                      color: lang === 'pt' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
-                      opacity: 1,
-                      minWidth: '24px',
-                      height: '100%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      padding: '0 1px',
-                      lineHeight: '1',
-                      margin: '0',
-                      fontSize: '0.8125rem',
-                      letterSpacing: '0.03em'
-                    }}
-                  >
-                    PT
-                  </button>
-                </span>
-                {/* Separador - bolinha vermelha mais aparente, centralizada */}
-                <span className="shrink-0 font-sora" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'stretch', lineHeight: '1', fontSize: '0.65rem', color: '#c92337', opacity: 1, marginLeft: '5px', marginRight: '5px', width: '0.5em', flexShrink: 0 }}>●</span>
-                {/* ES - Espanha */}
-                <span className="flex items-center shrink-0" style={{ display: 'flex', alignItems: 'center', height: '100%', gap: '3px' }}>
-                  <img src="/flag-es.svg" alt="España" className="w-auto rounded-[2px] opacity-95 shrink-0" style={{ display: 'block', height: '20px', width: 'auto', maxHeight: '20px', maxWidth: '29px' }} />
-                  <button
-                    type="button"
-                    aria-label="Español"
-                    onClick={() => {
-                      trackLanguageChange(lang, 'es')
-                      changeLang('es')
-                    }}
-                    className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-semibold uppercase"
-                    style={{
-                      color: lang === 'es' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
-                      opacity: 1,
-                      minWidth: '24px',
-                      height: '100%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      padding: '0 1px',
-                      lineHeight: '1',
-                      margin: '0',
-                      fontSize: '0.8125rem',
-                      letterSpacing: '0.03em'
-                    }}
-                  >
-                    ES
-                  </button>
-                </span>
+                  />
+                  {/* Grupo Canadá - EN e FR */}
+                  <span className="inline-flex items-center shrink-0" style={{ gap: '3px' }}>
+                    <img src="/flag-ca.svg" alt="Canada" className="shrink-0 rounded-[2px] opacity-95 object-contain" style={{ width: 'auto', height: '20px', maxWidth: '30px', display: 'block' }} />
+                    <button
+                      type="button"
+                      aria-label="English"
+                      onClick={() => { trackLanguageChange(lang, 'en'); changeLang('en') }}
+                      className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-semibold uppercase"
+                      style={{
+                        color: lang === 'en' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
+                        minWidth: '26px', padding: '0 1px', margin: 0,
+                        fontSize: '0.8125rem', letterSpacing: '0.03em', lineHeight: 1,
+                        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                      }}
+                    >
+                      EN
+                    </button>
+                    <span className="shrink-0 inline-flex items-center justify-center" style={{ fontSize: '0.6rem', color: '#c92337', width: '0.45em', lineHeight: 1 }}>●</span>
+                    <button
+                      type="button"
+                      aria-label="Français"
+                      onClick={() => { trackLanguageChange(lang, 'fr'); changeLang('fr') }}
+                      className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-semibold uppercase"
+                      style={{
+                        color: lang === 'fr' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
+                        minWidth: '22px', padding: '0 1px', margin: 0,
+                        fontSize: '0.8125rem', letterSpacing: '0.03em', lineHeight: 1,
+                        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                      }}
+                    >
+                      FR
+                    </button>
+                  </span>
+                  {/* Separador | */}
+                  <span className="opacity-50 shrink-0 font-sora inline-flex items-center" style={{ marginLeft: '7px', marginRight: '10px', fontSize: '0.7rem', lineHeight: 1 }}>|</span>
+                  {/* PT - Brasil */}
+                  <span className="inline-flex items-center shrink-0" style={{ gap: '3px' }}>
+                    <img src="/flag-br.svg" alt="Brasil" className="shrink-0 rounded-[2px] opacity-95 object-contain" style={{ width: 'auto', height: '20px', maxWidth: '29px', display: 'block' }} />
+                    <button
+                      type="button"
+                      aria-label="Português"
+                      onClick={() => { trackLanguageChange(lang, 'pt'); changeLang('pt') }}
+                      className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-semibold uppercase"
+                      style={{
+                        color: lang === 'pt' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
+                        minWidth: '24px', padding: '0 1px', margin: 0,
+                        fontSize: '0.8125rem', letterSpacing: '0.03em', lineHeight: 1,
+                        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                      }}
+                    >
+                      PT
+                    </button>
+                  </span>
+                  {/* Bolinha vermelha entre PT e ES */}
+                  <span className="shrink-0 inline-flex items-center justify-center" style={{ fontSize: '0.6rem', color: '#c92337', marginLeft: '5px', marginRight: '5px', width: '0.45em', lineHeight: 1 }}>●</span>
+                  {/* ES - Espanha */}
+                  <span className="inline-flex items-center shrink-0" style={{ gap: '3px' }}>
+                    <img src="/flag-es.svg" alt="España" className="shrink-0 rounded-[2px] opacity-95 object-contain" style={{ width: 'auto', height: '20px', maxWidth: '29px', display: 'block' }} />
+                    <button
+                      type="button"
+                      aria-label="Español"
+                      onClick={() => { trackLanguageChange(lang, 'es'); changeLang('es') }}
+                      className="transition-all duration-200 touch-manipulation shrink-0 font-sora font-semibold uppercase"
+                      style={{
+                        color: lang === 'es' ? (theme === 'light' ? '#ff5a6e' : '#e84d5c') : (theme === 'light' ? '#f5f5f5' : '#a8b4c4'),
+                        minWidth: '24px', padding: '0 1px', margin: 0,
+                        fontSize: '0.8125rem', letterSpacing: '0.03em', lineHeight: 1,
+                        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                      }}
+                    >
+                      ES
+                    </button>
+                  </span>
+                </div>
               </div>
             )}
             
