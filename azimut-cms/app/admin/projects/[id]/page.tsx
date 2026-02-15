@@ -297,7 +297,7 @@ export default function EditProjectPage() {
             />
           ) : (
             <>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }} data-editar-nome-area>
                 <h1
                   onClick={() => setEditingTitle(true)}
                   role="button"
@@ -334,34 +334,21 @@ export default function EditProjectPage() {
                     display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    width: 36,
-                    height: 36,
-                    padding: 0,
-                    borderRadius: 8,
-                    border: '1px solid rgba(56,189,248,0.5)',
-                    background: 'rgba(56,189,248,0.15)',
+                    gap: 6,
+                    height: 40,
+                    padding: '0 14px',
+                    borderRadius: 10,
+                    border: '2px solid rgba(56,189,248,0.6)',
+                    background: 'rgba(56,189,248,0.2)',
                     color: '#7dd3fc',
                     cursor: 'pointer',
                     flexShrink: 0,
+                    fontSize: 14,
+                    fontWeight: 700,
                   }}
                 >
-                  <Pencil size={18} strokeWidth={2.5} />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setEditingTitle(true)}
-                  style={{
-                    fontSize: 12,
-                    padding: '6px 12px',
-                    borderRadius: 8,
-                    border: '1px solid rgba(56,189,248,0.4)',
-                    background: 'rgba(56,189,248,0.1)',
-                    color: '#7dd3fc',
-                    cursor: 'pointer',
-                    fontWeight: 600,
-                  }}
-                >
-                  Editar nome
+                  <span aria-hidden="true"><Pencil size={20} strokeWidth={2.5} /></span>
+                  <span>Editar nome</span>
                 </button>
               </div>
             </>
@@ -376,7 +363,7 @@ export default function EditProjectPage() {
           Slug: /{formData.slug} • {formData.status === 'PUBLISHED' ? '🟢 Publicado' : formData.status === 'DRAFT' ? '🟡 Rascunho' : '⚪ Arquivado'}
         </p>
         <p style={{ margin: '12px 0 0', padding: '10px 14px', borderRadius: 8, background: 'rgba(56,189,248,0.08)', border: '1px solid rgba(56,189,248,0.2)', fontSize: 13, color: '#94a3b8' }}>
-          <strong>Nome do projeto:</strong> clique no título acima ou em «Editar nome» para alterar; depois clique em <strong>Salvar</strong> no final da página. Comece pela <strong>Capa e Galeria</strong> para mídias; use Dados básicos (slug), Localização e Texto/SEO.
+          <strong>Nome do projeto:</strong> use o botão <strong>✏️ Editar nome</strong> ao lado do título (ou clique no título) para alterar; depois clique em <strong>Salvar</strong> no final da página. Comece pela <strong>Capa e Galeria</strong> para mídias; use Dados básicos (slug), Localização e Texto/SEO.
         </p>
       </header>
 
