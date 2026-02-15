@@ -38,12 +38,7 @@ export default function EditProjectPage() {
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 50);
   }, []);
-  // Abrir Capa e Galeria por padrão (visual primeiro); se galeria vazia já foca lá
-  useEffect(() => {
-    if (!loading && gallery.length === 0 && openSection === 'basico') {
-      setOpenSection('capagaleria');
-    }
-  }, [loading, gallery.length, openSection]);
+  // Estado inicial já é 'capagaleria'; não forçar troca quando o usuário abre "Dados básicos" (evita seção fechar e scroll ao topo)
   const [formData, setFormData] = useState({
     title: '',
     shortTitle: '',
