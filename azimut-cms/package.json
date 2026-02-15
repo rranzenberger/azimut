@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
-    "build": "cross-env PRISMA_CLIENT_ENGINE_TYPE=library prisma generate && next build",
-    "vercel-build": "cross-env PRISMA_CLIENT_ENGINE_TYPE=library prisma generate && next build",
+    "build": "prisma generate && cross-env PRISMA_CLIENT_ENGINE_TYPE=library next build",
+    "vercel-build": "prisma generate && cross-env PRISMA_CLIENT_ENGINE_TYPE=library next build",
     "start": "next start -p 3001",
     "lint": "next lint",
     "postinstall": "prisma generate",

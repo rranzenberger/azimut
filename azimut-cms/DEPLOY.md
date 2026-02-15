@@ -16,12 +16,16 @@ PRISMA_CLIENT_ENGINE_TYPE=library npm run build
 
 ## Vercel / ambiente de deploy
 
-No painel do projeto (Vercel ou outro), adicione a variável de ambiente:
+O script `vercel-build` já roda `next build` com `PRISMA_CLIENT_ENGINE_TYPE=library` (via cross-env). Se o build ainda falhar com "Invalid client engine type":
 
-- **Nome:** `PRISMA_CLIENT_ENGINE_TYPE`
-- **Valor:** `library`
+1. No Vercel: **Project → Settings → Environment Variables**
+2. Adicione:
+   - **Name:** `PRISMA_CLIENT_ENGINE_TYPE`
+   - **Value:** `library`
+   - Marque **Production**, **Preview** e **Development**
+3. Faça um novo deploy (Redeploy).
 
-Assim o build em CI/deploy usa o engine "library" do Prisma e evita o erro "Invalid client engine type".
+Alternativa: em **Settings → General → Build Command**, use: `sh scripts/vercel-build.sh`
 
 ## Migrations
 
