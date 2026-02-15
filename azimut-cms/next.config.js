@@ -4,6 +4,10 @@ const nextConfig = {
   env: {
     PRISMA_CLIENT_ENGINE_TYPE: 'library',
   },
+  // Garantir que Prisma não seja bundled no App Router (usa require nativo)
+  experimental: {
+    serverComponentsExternalPackages: ['@prisma/client', '.prisma/client'],
+  },
   // Desabilitar completamente features desnecessárias
   poweredByHeader: false,
   compress: true,

@@ -1,3 +1,5 @@
+// Garantir engine "library" antes de carregar o client (evita erro no build Vercel)
+import './set-prisma-engine';
 import { PrismaClient } from '@prisma/client';
 
 const globalForPrisma = globalThis as unknown as {
