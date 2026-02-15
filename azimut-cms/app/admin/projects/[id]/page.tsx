@@ -5,6 +5,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { GalleryManager } from '../components/GalleryManager';
 import UnifiedMediaUpload from '@/components/admin/UnifiedMediaUpload';
 import CollapsibleSection from '@/app/admin/components/CollapsibleSection';
+import { Pencil } from 'lucide-react';
 import { AZIMUT } from '../../theme';
 
 const inputStyle: React.CSSProperties = {
@@ -29,6 +30,7 @@ export default function EditProjectPage() {
   const [gallery, setGallery] = useState<any[]>([]);
   const [allMedia, setAllMedia] = useState<any[]>([]);
   const [openSection, setOpenSection] = useState<string | null>('capagaleria');
+  const [editingTitle, setEditingTitle] = useState(false);
   const handleSectionToggle = useCallback((sid: string) => {
     setOpenSection((prev) => (prev === sid ? null : sid));
     setTimeout(() => {
@@ -269,10 +271,101 @@ export default function EditProjectPage() {
   return (
     <>
       <header style={{ marginBottom: 16 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-          <h1 style={{ margin: 0, fontSize: 26, fontWeight: 700 }}>
-            {formData.title || 'Editar Projeto'}
-          </h1>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8, flexWrap: 'wrap' }}>
+          {editingTitle ? (
+            <input
+              type="text"
+              value={formData.title}
+              onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+              onBlur={() => setEditingTitle(false)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  setEditingTitle(false);
+                }
+                if (e.key === 'Escape') setEditingTitle(false);
+              }}
+              autoFocus
+              placeholder="Nome do projeto"
+              style={{
+                ...inputStyle,
+                fontSize: 26,
+                fontWeight: 700,
+                maxWidth: 'min(100%, 480px)',
+                padding: '6px 12px',
+              }}
+            />
+          ) : (
+            <>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                <h1
+                  onClick={() => setEditingTitle(true)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setEditingTitle(true); } }}
+                  title="Clique para editar o nome do projeto"
+                  style={{
+                    margin: 0,
+                    fontSize: 26,
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    padding: '4px 8px',
+                    borderRadius: 8,
+                    border: '1px solid transparent',
+                    transition: 'background 0.2s, border-color 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
+                    e.currentTarget.style.borderColor = 'rgba(56,189,248,0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.borderColor = 'transparent';
+                  }}
+                >
+                  {formData.title || 'Editar Projeto'}
+                </h1>
+                <button
+                  type="button"
+                  onClick={() => setEditingTitle(true)}
+                  title="Editar nome do projeto"
+                  aria-label="Editar nome do projeto"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 36,
+                    height: 36,
+                    padding: 0,
+                    borderRadius: 8,
+                    border: '1px solid rgba(56,189,248,0.5)',
+                    background: 'rgba(56,189,248,0.15)',
+                    color: '#7dd3fc',
+                    cursor: 'pointer',
+                    flexShrink: 0,
+                  }}
+                >
+                  <Pencil size={18} strokeWidth={2.5} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setEditingTitle(true)}
+                  style={{
+                    fontSize: 12,
+                    padding: '6px 12px',
+                    borderRadius: 8,
+                    border: '1px solid rgba(56,189,248,0.4)',
+                    background: 'rgba(56,189,248,0.1)',
+                    color: '#7dd3fc',
+                    cursor: 'pointer',
+                    fontWeight: 600,
+                  }}
+                >
+                  Editar nome
+                </button>
+              </div>
+            </>
+          )}
           {isOnHome && homeSlotLabel && (
             <span style={{ fontSize: 11, padding: '4px 12px', borderRadius: 999, background: 'rgba(201,35,55,0.15)', color: '#fca5a5', border: '1px solid rgba(201,35,55,0.3)', fontWeight: 700, textTransform: 'uppercase' }}>
               🏠 {homeSlotLabel}
@@ -283,7 +376,7 @@ export default function EditProjectPage() {
           Slug: /{formData.slug} • {formData.status === 'PUBLISHED' ? '🟢 Publicado' : formData.status === 'DRAFT' ? '🟡 Rascunho' : '⚪ Arquivado'}
         </p>
         <p style={{ margin: '12px 0 0', padding: '10px 14px', borderRadius: 8, background: 'rgba(56,189,248,0.08)', border: '1px solid rgba(56,189,248,0.2)', fontSize: 13, color: '#94a3b8' }}>
-          Comece pela <strong>Capa e Galeria</strong> para ver e editar as mídias como no site; depois use Dados básicos, Localização e Texto/SEO.
+          <strong>Nome do projeto:</strong> clique no título acima ou em «Editar nome» para alterar; depois clique em <strong>Salvar</strong> no final da página. Comece pela <strong>Capa e Galeria</strong> para mídias; use Dados básicos (slug), Localização e Texto/SEO.
         </p>
       </header>
 
