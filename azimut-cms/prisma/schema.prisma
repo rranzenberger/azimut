@@ -1,5 +1,5 @@
 generator client {
-  provider  = "prisma-client-js"
+  provider   = "prisma-client-js"
   engineType = "library"
 }
 
@@ -9,14 +9,14 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(uuid())
-  email         String   @unique
+  id            String     @id @default(uuid())
+  email         String     @unique
   name          String?
   password      String
-  role          Role     @default(EDITOR)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  assignedLeads Lead[]   @relation("LeadAssignedTo")
+  role          Role       @default(EDITOR)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  assignedLeads Lead[]     @relation("LeadAssignedTo")
   makingOfs     MakingOf[] @relation("UserMakingOf")
 }
 
@@ -38,8 +38,8 @@ model Market {
 }
 
 model Media {
-  id                  String         @id @default(uuid())
-  type                MediaType      @default(IMAGE)
+  id                  String             @id @default(uuid())
+  type                MediaType          @default(IMAGE)
   originalUrl         String
   thumbnailUrl        String?
   mediumUrl           String?
@@ -56,26 +56,22 @@ model Media {
   altEn               String?
   altEs               String?
   altFr               String?
-  createdAt           DateTime       @default(now())
-  updatedAt           DateTime       @updatedAt
-  projectHero         Project?
-  projectGalleries    ProjectMedia[]
-  pageHeroBackgrounds Page[]         @relation("PageHeroBackground")
-  pageDemoreelVideos  Page[]         @relation("PageDemoreelVideo")
-  analysis            MediaAnalysis?
-  blogPostCovers      BlogPost[]     @relation("BlogPostCover")
-  makingOf            MakingOf?      @relation("MakingOfMedia", fields: [makingOfId], references: [id])
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  imageType           String?
+  pageSlug            String?
+  sectionSlug         String?
+  servicesTags        String[]
   makingOfId          String?
   academyCourseCovers AcademyCourse[]
   academyPastEvents   AcademyPastEvent[]
-
-  // ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-  // Sistema de Tags (Op├º├úo 2) - Contexto da imagem
-  // ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-  pageSlug     String? // "what/cinema-audiovisual", "home", "work", etc.
-  sectionSlug  String? // "hero", "gallery", "section-image"
-  imageType    String? // "hero-background", "gallery-image", "service-icon"
-  servicesTags String[] // ["cinema-audiovisual", "pos-producao-vfx"]
+  blogPostCovers      BlogPost[]         @relation("BlogPostCover")
+  makingOf            MakingOf?          @relation("MakingOfMedia", fields: [makingOfId], references: [id])
+  analysis            MediaAnalysis?
+  pageDemoreelVideos  Page[]             @relation("PageDemoreelVideo")
+  pageHeroBackgrounds Page[]             @relation("PageHeroBackground")
+  projectHero         Project?
+  projectGalleries    ProjectMedia[]
 
   @@index([pageSlug])
   @@index([sectionSlug])
@@ -91,223 +87,185 @@ model Tag {
   category  TagCategory
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
-  projects  Project[]   @relation("ProjectToTag")
   blogPosts BlogPost[]  @relation("BlogPostToTag")
+  projects  Project[]   @relation("ProjectToTag")
 }
 
 model Service {
-  id            String        @id @default(uuid())
-  slug          String        @unique
-  titlePt       String
-  titleEn       String
-  titleEs       String?
-  titleFr       String?
-  descriptionPt String?
-  descriptionEn String?
-  descriptionEs String?
-  descriptionFr String?
-  icon          String?
-  status        ServiceStatus @default(PUBLISHED)
-  priority      Int           @default(0)
-  segments      String[]
-  faqsPt        Json?         // Array of { question: string, answer: string }
-  faqsEn        Json?
-  faqsEs        Json?
-  faqsFr        Json?
-  // Conteúdo da subpágina (editável no backoffice)
-  longDescPt    Json?         // string[] - parágrafos do texto longo
-  longDescEn    Json?
-  longDescEs    Json?
-  longDescFr    Json?
-  deliverablesPt Json?        // string[]
+  id             String        @id @default(uuid())
+  slug           String        @unique
+  titlePt        String
+  titleEn        String
+  titleEs        String?
+  titleFr        String?
+  descriptionPt  String?
+  descriptionEn  String?
+  descriptionEs  String?
+  descriptionFr  String?
+  icon           String?
+  status         ServiceStatus @default(PUBLISHED)
+  priority       Int           @default(0)
+  segments       String[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  faqsPt         Json?
+  faqsEn         Json?
+  faqsEs         Json?
+  faqsFr         Json?
+  longDescPt     Json?
+  longDescEn     Json?
+  longDescEs     Json?
+  longDescFr     Json?
+  deliverablesPt Json?
   deliverablesEn Json?
   deliverablesEs Json?
   deliverablesFr Json?
-  processPt     Json?         // string[]
-  processEn     Json?
-  processEs     Json?
-  processFr     Json?
-  technologies  String[]      @default([])
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  projects      Project[]     @relation("ProjectToService")
+  processPt      Json?
+  processEn      Json?
+  processEs      Json?
+  processFr      Json?
+  technologies   String[]      @default([])
+  projects       Project[]     @relation("ProjectToService")
 }
 
 model Project {
-  id            String               @id @default(uuid())
-  slug          String               @unique
-  title         String
-  shortTitle    String?
-  summaryPt     String?
-  summaryEn     String?
-  summaryEs     String?
-  summaryFr     String?
-  city          String?
-  stateProvince String?
-  country       String?
-  year          Int?               // Ano do projeto (ou ano único quando não usa início/fim)
-  month         Int?               // Mês do projeto (1-12, opcional)
-  // Projeto longo: data de início e de término (classificação pela data de término)
-  yearStart     Int?               // Ano de início
-  monthStart    Int?               // Mês de início (1-12)
-  yearEnd       Int?               // Ano de término (usado para ordenação)
-  monthEnd      Int?               // Mês de término (1-12)
-  client        String?            // Cliente, corporação ou para quem foi o projeto
-  partnership   String?            // Parceria(s) – nomes ou descrição
-  coproduction  String?            // Coprodução – nomes ou descrição
-  type          String?
-  featured      Boolean              @default(false)
-  priorityHome  Int                  @default(0)
-  hasDetailPage Boolean              @default(false) // Se true, projeto tem subpágina própria
-  thumbnailUrl  String?              // URL alternativa para thumbnail
-  status        ProjectStatus        @default(DRAFT)
-  ctaLabelPt    String?
-  ctaLabelEn    String?
-  ctaUrl        String?
-  heroImageId   String?              @unique
-  // Enquadramento da imagem de capa: evita cortes e controla posição (cards + subpágina)
-  heroImageFit     String?           // 'cover' | 'contain' (default: contain para sem cortes)
-  heroImagePosition String?          // 'center' | 'top' | 'bottom' | 'left' | 'right' | '50% 30%'
-  marketId      String?
-  createdAt     DateTime             @default(now())
-  updatedAt     DateTime             @updatedAt
-  descriptionEn String?
-  descriptionEs String?
-  descriptionFr String?
-  descriptionPt String?
-  
-  // 🔍 SEO - Otimização para Buscadores
-  seoTitlePt      String?
-  seoTitleEn      String?
-  seoTitleEs      String?
-  seoTitleFr      String?
-  seoDescPt       String?
-  seoDescEn       String?
-  seoDescEs       String?
-  seoDescFr       String?
-  seoKeywords     String[]          // Keywords para SEO
-  
-  // 🔍 Monitoramento Automático de Conteúdo
-  monitorEnabled        Boolean           @default(false)
-  monitorKeywords       String[]          // Keywords para busca automática
-  creditType            CreditType?       // Tipo de crédito para posts relacionados
-  creditText            String?           // Texto do crédito ("Animação por Azimut")
-  azimutContributions   String[]          // Lista de contribuições da Azimut
-  
-  // ═══════════════════════════════════════════════════════════════
-  // 🎯 FILTROS AVANÇADOS - Portfolio Premium 2026
-  // ═══════════════════════════════════════════════════════════════
-  
-  // Categoria Principal (multi-select)
-  projectCategory    String[]  // ['curadoria', 'vr-360', 'museum', 'education', 'motion', 'games', 'corporate']
-  
-  // Tipo de Trabalho (multi-select)
-  workType          String[]  // ['filme', 'exposicao', 'curso', 'palestra', 'workshop', 'instalacao', 'making-of', 'evento']
-  
-  // Tecnologias Utilizadas (multi-select)
-  technologies      String[]  // ['VR', '360', 'IA', '3D', 'Motion Graphics', 'Interactive', 'AR', 'XR']
-  
-  // Setor/Indústria (single-select)
-  industry          String?   // 'cultural', 'entertainment', 'education', 'corporate', 'government', 'research'
-  
-  // Papel da Azimut no Projeto (multi-select)
-  azimutRole        String[]  // ['direcao', 'curadoria', 'producao', 'animacao', 'consultoria', 'treinamento']
-  
-  // Duração do Projeto
-  duration          String?   // "3 meses", "2015-2017", "8 anos consecutivos"
-  
-  // Prêmios (JSON estruturado)
-  awards            Json?     // [{title, organization, year, category, logo?, link?}]
-  
-  // Métricas de Impacto (JSON estruturado)
-  metrics           Json?     // {visitors, revenue, duration, impact, stats}
-  
-  // Vídeos
-  videoUrl          String?   // URL principal (YouTube/Vimeo)
-  videoShowreel     String?   // URL do showreel/highlights
-  
-  // Links Externos (JSON estruturado)
-  externalLinks     Json?     // [{label, url}]
-  
-  // Logos de Parceiros
-  partnerLogos      String[]  // URLs das imagens dos parceiros
-  
-  // Before/After Images (JSON estruturado)
-  beforeAfterImages Json?     // {before, after, label}
-  
-  // ═══════════════════════════════════════════════════════════════
-  
-  pageViews     PageView[]
-  heroImage     Media?               @relation(fields: [heroImageId], references: [id])
-  market        Market?              @relation(fields: [marketId], references: [id])
-  interactions  ProjectInteraction[]
-  gallery       ProjectMedia[]
-  services      Service[]            @relation("ProjectToService")
-  tags          Tag[]                @relation("ProjectToTag")
-  sections      Section[]            @relation("SectionProjects")
-  monitoredPosts BlogPostMonitor[]   @relation("ProjectMonitoredPosts") // Relação com monitoramento
-  makingOfs      MakingOf[]          @relation("ProjectMakingOf") // Making-ofs do projeto
-  
-  @@index([year])
-  @@index([projectCategory])
+  id                  String               @id @default(uuid())
+  slug                String               @unique
+  title               String
+  shortTitle          String?
+  summaryPt           String?
+  summaryEn           String?
+  summaryEs           String?
+  summaryFr           String?
+  city                String?
+  stateProvince       String?
+  country             String?
+  year                Int?
+  client              String?
+  type                String?
+  featured            Boolean              @default(false)
+  priorityHome        Int                  @default(0)
+  status              ProjectStatus        @default(DRAFT)
+  ctaLabelPt          String?
+  ctaLabelEn          String?
+  ctaUrl              String?
+  heroImageId         String?              @unique
+  marketId            String?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  descriptionEn       String?
+  descriptionEs       String?
+  descriptionFr       String?
+  descriptionPt       String?
+  azimutContributions String[]
+  creditText          String?
+  creditType          CreditType?
+  monitorEnabled      Boolean              @default(false)
+  monitorKeywords     String[]
+  projectCategory     String[]             @default([])
+  workType            String[]             @default([])
+  technologies        String[]             @default([])
+  industry            String?
+  azimutRole          String[]             @default([])
+  duration            String?
+  awards              Json?
+  metrics             Json?
+  videoUrl            String?
+  videoShowreel       String?
+  externalLinks       Json?
+  partnerLogos        String[]             @default([])
+  beforeAfterImages   Json?
+  exhibitionCities    String[]             @default([])
+  currentCity         String?
+  exhibitionStatus    String?
+  isItinerant         Boolean?             @default(false)
+  hasDetailPage       Boolean              @default(false)
+  thumbnailUrl        String?              @db.VarChar(500)
+  seoTitlePt          String?
+  seoTitleEn          String?
+  seoTitleEs          String?
+  seoTitleFr          String?
+  seoDescPt           String?
+  seoDescEn           String?
+  seoDescEs           String?
+  seoDescFr           String?
+  seoKeywords         String[]             @default([])
+  month               Int?
+  partnership         String?
+  coproduction        String?
+  yearStart           Int?
+  monthStart          Int?
+  yearEnd             Int?
+  monthEnd            Int?
+  heroImageFit        String?
+  heroImagePosition   String?
+  monitoredPosts      BlogPostMonitor[]    @relation("ProjectMonitoredPosts")
+  makingOfs           MakingOf[]           @relation("ProjectMakingOf")
+  pageViews           PageView[]
+  heroImage           Media?               @relation(fields: [heroImageId], references: [id])
+  market              Market?              @relation(fields: [marketId], references: [id])
+  interactions        ProjectInteraction[]
+  gallery             ProjectMedia[]
+  services            Service[]            @relation("ProjectToService")
+  tags                Tag[]                @relation("ProjectToTag")
+  sections            Section[]            @relation("SectionProjects")
+
+  @@index([projectCategory], type: Gin)
   @@index([industry])
-  @@index([featured])
-  @@index([status])
+  @@index([azimutRole], type: Gin)
+  @@index([currentCity])
+  @@index([exhibitionStatus])
+  @@index([technologies], type: Gin)
+  @@index([workType], type: Gin)
 }
 
 model Page {
-  id                     String     @id @default(uuid())
-  name                   String
-  slug                   String     @unique
-  seoTitlePt             String?
-  seoTitleEn             String?
-  seoDescPt              String?
-  seoDescEn              String?
-  status                 PageStatus @default(PUBLISHED)
-  createdAt              DateTime   @default(now())
-  updatedAt              DateTime   @updatedAt
-  heroSloganPt           String?
-  heroSloganEn           String?
-  heroSloganEs           String?
-  heroSloganFr           String?
-  heroSubtitleEn         String?
-  heroSubtitleEs         String?
-  heroSubtitleFr         String?
-  heroSubtitlePt         String?
-  // ═══ Hero Description MOBILE/DESKTOP (4 idiomas) ═══
-  heroDescriptionMobilePt   String?
-  heroDescriptionMobileEn   String?
-  heroDescriptionMobileEs   String?
-  heroDescriptionMobileFr   String?
+  id                       String     @id @default(uuid())
+  name                     String
+  slug                     String     @unique
+  seoTitlePt               String?
+  seoTitleEn               String?
+  seoDescPt                String?
+  seoDescEn                String?
+  status                   PageStatus @default(PUBLISHED)
+  createdAt                DateTime   @default(now())
+  updatedAt                DateTime   @updatedAt
+  heroSloganPt             String?
+  heroSloganEn             String?
+  heroSloganEs             String?
+  heroSloganFr             String?
+  heroSubtitleEn           String?
+  heroSubtitleEs           String?
+  heroSubtitleFr           String?
+  heroSubtitlePt           String?
+  seoDescEs                String?
+  seoDescFr                String?
+  seoTitleEs               String?
+  seoTitleFr               String?
+  pillar1Pt                String?
+  pillar1En                String?
+  pillar1Es                String?
+  pillar1Fr                String?
+  pillar2Pt                String?
+  pillar2En                String?
+  pillar2Es                String?
+  pillar2Fr                String?
+  pillar3Pt                String?
+  pillar3En                String?
+  pillar3Es                String?
+  pillar3Fr                String?
+  heroBackgroundImageId    String?
+  demoreelVideoId          String?
+  heroBackgroundImageUrl   String?
+  demoreelVideoUrl         String?
+  heroDescriptionMobilePt  String?
+  heroDescriptionMobileEn  String?
+  heroDescriptionMobileEs  String?
+  heroDescriptionMobileFr  String?
   heroDescriptionDesktopPt String?
-  heroDescriptionDesktopEn  String?
-  heroDescriptionDesktopEs  String?
-  heroDescriptionDesktopFr  String?
-  seoDescEs              String?
-  seoDescFr              String?
-  seoTitleEs             String?
-  seoTitleFr             String?
-  pillar1Pt              String?
-  pillar1En              String?
-  pillar1Es              String?
-  pillar1Fr              String?
-  pillar2Pt              String?
-  pillar2En              String?
-  pillar2Es              String?
-  pillar2Fr              String?
-  pillar3Pt              String?
-  pillar3En              String?
-  pillar3Es              String?
-  pillar3Fr              String?
-  // Hero Media - Sistema Hibrido (Media OU URL manual)
-  heroBackgroundImageId  String?
-  heroBackgroundImageUrl String?
-  demoreelVideoId        String?
-  demoreelVideoUrl       String?
-  heroBackgroundImage    Media?     @relation("PageHeroBackground", fields: [heroBackgroundImageId], references: [id])
-  demoreelVideo          Media?     @relation("PageDemoreelVideo", fields: [demoreelVideoId], references: [id])
-  sections               Section[]
-  // ═══ Banner Curadoria/Destaque (editável no backoffice) ═══
+  heroDescriptionDesktopEn String?
+  heroDescriptionDesktopEs String?
+  heroDescriptionDesktopFr String?
   curationTitlePt          String?
   curationTitleEn          String?
   curationTitleEs          String?
@@ -321,6 +279,9 @@ model Page {
   curationButtonTextEs     String?
   curationButtonTextFr     String?
   curationFilterCategory   String?
+  demoreelVideo            Media?     @relation("PageDemoreelVideo", fields: [demoreelVideoId], references: [id])
+  heroBackgroundImage      Media?     @relation("PageHeroBackground", fields: [heroBackgroundImageId], references: [id])
+  sections                 Section[]
 }
 
 model Section {
@@ -341,75 +302,77 @@ model Section {
   updatedAt      DateTime  @updatedAt
   page           Page      @relation(fields: [pageId], references: [id])
   linkedProjects Project[] @relation("SectionProjects")
+
+  @@index([order])
+  @@index([pageId])
 }
 
-// ═══ ACADEMY — Cards de Cursos (6 no site) e Past Events (8 slots) ═══
 model AcademyCourse {
-  id           String   @id @default(uuid())
-  order        Int      @default(0)
-  imageId      String?
-  image        Media?   @relation(fields: [imageId], references: [id], onDelete: SetNull)
-  titlePt      String?
-  titleEn      String?
-  titleEs      String?
-  titleFr      String?
+  id            String   @id @default(uuid())
+  order         Int      @default(0)
+  imageId       String?
+  titlePt       String?
+  titleEn       String?
+  titleEs       String?
+  titleFr       String?
   descriptionPt String?
   descriptionEn String?
   descriptionEs String?
   descriptionFr String?
-  pricePt      String?
-  priceEn      String?
-  durationPt   String?
-  durationEn   String?
-  levelPt      String?
-  levelEn      String?
-  category     String?  // vr, ai, motion, game
-  tags         String[] // ["VR", "Cinema", "360°"]
-  featured     Boolean  @default(false)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  pricePt       String?
+  priceEn       String?
+  durationPt    String?
+  durationEn    String?
+  levelPt       String?
+  levelEn       String?
+  category      String?
+  tags          String[] @default([])
+  featured      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  image         Media?   @relation(fields: [imageId], references: [id])
 
   @@index([order])
 }
 
 model AcademyPastEvent {
   id        String   @id @default(uuid())
-  order     Int      @default(0) // ordenação (0, 1, 2... pode expandir)
+  order     Int      @default(0)
   mediaId   String?
-  media     Media?   @relation(fields: [mediaId], references: [id], onDelete: SetNull)
   captionPt String?
   captionEn String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  media     Media?   @relation(fields: [mediaId], references: [id])
 
   @@index([order])
 }
 
 model CompanyHistory {
-  id             String   @id @default(uuid())
-  year           Int
-  yearEnd        Int?
-  displayOrder   Int      @default(0)
-  type           HistoryType
-  titlePt        String
-  titleEn        String
-  titleEs        String?
-  titleFr        String?
-  descriptionPt  String?
-  descriptionEn  String?
-  descriptionEs  String?
-  descriptionFr  String?
-  bulletsPt      String[]
-  bulletsEn      String[]
-  bulletsEs      String[]
-  bulletsFr      String[]
-  icon           String?
-  logoUrl        String?
-  externalLink   String?
-  isPublished    Boolean  @default(true)
-  isFeatured     Boolean  @default(false)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id            String   @id @default(dbgenerated("(gen_random_uuid())::text"))
+  year          Int
+  yearEnd       Int?
+  displayOrder  Int      @default(0)
+  type          String
+  titlePt       String
+  titleEn       String
+  titleEs       String?
+  titleFr       String?
+  descriptionPt String?
+  descriptionEn String?
+  descriptionEs String?
+  descriptionFr String?
+  bulletsPt     String[]
+  bulletsEn     String[]
+  bulletsEs     String[]
+  bulletsFr     String[]
+  icon          String?
+  logoUrl       String?
+  externalLink  String?
+  isPublished   Boolean  @default(true)
+  isFeatured    Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
 
   @@index([year])
   @@index([type])
@@ -418,27 +381,27 @@ model CompanyHistory {
 }
 
 model TeamMembers {
-  id            String   @id @default(uuid())
-  slug          String   @unique
-  name          String
-  rolePt        String
-  roleEn        String
-  roleEs        String?
-  roleFr        String?
-  credentialPt  String?
-  credentialEn  String?
-  credentialEs  String?
-  credentialFr  String?
-  bioPt         String?
-  bioEn         String?
-  bioEs         String?
-  bioFr         String?
-  photoUrl      String?
-  photoMediaId  String?
-  displayOrder  Int      @default(0)
+  id           String   @id @default(dbgenerated("(gen_random_uuid())::text"))
+  slug         String   @unique
+  name         String
+  rolePt       String
+  roleEn       String
+  roleEs       String?
+  roleFr       String?
+  credentialPt String?
+  credentialEn String?
+  credentialEs String?
+  credentialFr String?
+  bioPt        String?
+  bioEn        String?
+  bioEs        String?
+  bioFr        String?
+  photoUrl     String?
+  photoMediaId String?
+  displayOrder Int      @default(0)
   isPublished  Boolean  @default(true)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
 
   @@index([slug])
   @@index([isPublished])
@@ -446,7 +409,7 @@ model TeamMembers {
 }
 
 model Credentials {
-  id          String   @id @default(uuid())
+  id          String   @id @default(dbgenerated("(gen_random_uuid())::text"))
   order       Int      @default(0)
   icon        String?
   textPt      String
@@ -455,71 +418,67 @@ model Credentials {
   textFr      String?
   isPublished Boolean  @default(true)
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  updatedAt   DateTime @default(now()) @updatedAt
 
   @@index([order])
   @@index([isPublished])
 }
 
 model ProjectMedia {
-  id        String   @id @default(uuid())
-  projectId String
-  mediaId   String
-  order     Int      @default(0)
-  captionPt String?  // Legenda/info sobre a mídia (PT)
-  captionEn String?
-  captionEs String?
-  captionFr String?
-  // Posição e escala no quadro (subpágina do projeto)
-  displayFit     String?  // 'contain' | 'cover' — enquadramento (cortar ou não)
-  displayPosition String? // 'center' | 'top' | 'bottom' | 'left' | 'right' | 'top left' | ...
-  displayScale   Float?   // 0.8–1.2 (80%–120%) — zoom no quadro
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  media     Media    @relation(fields: [mediaId], references: [id], onDelete: Cascade)
-  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  id              String   @id @default(uuid())
+  projectId       String
+  mediaId         String
+  order           Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  captionPt       String?
+  captionEn       String?
+  captionEs       String?
+  captionFr       String?
+  displayFit      String?
+  displayPosition String?
+  displayScale    Float?
+  media           Media    @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  project         Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@unique([projectId, mediaId])
   @@index([projectId, order])
 }
 
 model VisitorSession {
-  sessionId      String   @id
-  ipAddress      String?
-  userAgent      String?
-  language       String?
-  country        String?
-  region         String?
-  city           String?
-  duration       Int      @default(0)
-  lastActivityAt DateTime @default(now())
-  leadId         String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-
-  // NOVOS CAMPOS PARA ANALYTICS AVAN├çADO
-  visitorFingerprint    String? @unique // Hash ├║nico do visitante (identifica an├┤nimo)
-  deviceType            String? // mobile, desktop, tablet
-  browser               String? // Chrome, Safari, Firefox, etc
-  os                    String? // Windows, macOS, iOS, Android
-  screenResolution      String? // 1920x1080
-  referrer              String? // De onde veio
-  utmSource             String? // utm_source da URL
-  utmMedium             String? // utm_medium
-  utmCampaign           String? // utm_campaign
-  visitCount            Int     @default(1) // Quantas vezes voltou
-  isReturning           Boolean @default(false) // Visitante frequente
-  isPWAInstalled        Boolean @default(false) // Instalou PWA
-  bounceRate            Boolean @default(false) // S├│ entrou e saiu (sem intera├º├úo)
-  engagementScore       Int     @default(0) // 0-100 (baseado em intera├º├Áes)
-  conversionProbability Float? // Probabilidade de converter (0-1, calculado por IA)
-
-  interestScore       InterestScore?
-  pageViews           PageView[]
-  projectInteractions ProjectInteraction[]
-  pwaInstalls         PWAInstall[]
-  visitorBehaviors    VisitorBehavior[]
-  lead                Lead?                @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  sessionId             String               @id
+  ipAddress             String?
+  userAgent             String?
+  language              String?
+  country               String?
+  region                String?
+  city                  String?
+  duration              Int                  @default(0)
+  lastActivityAt        DateTime             @default(now())
+  leadId                String?
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
+  visitorFingerprint    String?              @unique
+  deviceType            String?
+  browser               String?
+  os                    String?
+  screenResolution      String?
+  referrer              String?
+  utmSource             String?
+  utmMedium             String?
+  utmCampaign           String?
+  visitCount            Int                  @default(1)
+  isReturning           Boolean              @default(false)
+  isPWAInstalled        Boolean              @default(false)
+  bounceRate            Boolean              @default(false)
+  engagementScore       Int                  @default(0)
+  conversionProbability Float?
+  interestScore         InterestScore?
+  pwaInstalls           PWAInstall[]
+  pageViews             PageView[]
+  projectInteractions   ProjectInteraction[]
+  visitorBehaviors      VisitorBehavior[]
+  lead                  Lead?                @relation(fields: [leadId], references: [id])
 
   @@index([visitorFingerprint])
   @@index([country])
@@ -540,6 +499,10 @@ model PageView {
   viewedAt    DateTime       @default(now())
   project     Project?       @relation(fields: [projectId], references: [id])
   session     VisitorSession @relation(fields: [sessionId], references: [sessionId])
+
+  @@index([pageSlug])
+  @@index([sessionId])
+  @@index([viewedAt])
 }
 
 model ProjectInteraction {
@@ -551,6 +514,9 @@ model ProjectInteraction {
   createdAt DateTime               @default(now())
   project   Project                @relation(fields: [projectId], references: [id])
   session   VisitorSession         @relation(fields: [sessionId], references: [sessionId])
+
+  @@index([projectId])
+  @@index([sessionId])
 }
 
 model InterestScore {
@@ -574,61 +540,92 @@ model InterestScore {
   session             VisitorSession @relation(fields: [sessionId], references: [sessionId])
 }
 
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
 model Lead {
-  id               String       @id @default(uuid())
-  name             String
-  email            String
-  phone            String?
-  company          String?
-  position         String?
-  leadType         LeadType     @default(CONTACT_FORM)
-  projectType      String?
-  budget           String?
-  timeline         String?
-  description      String?
-  sourceUrl        String?
-  referrer         String?
-  utmSource        String?
-  utmMedium        String?
-  utmCampaign      String?
-  status           LeadStatus   @default(NEW)
-  priority         LeadPriority @default(MEDIUM)
-  createdAt        DateTime     @default(now())
-  updatedAt        DateTime     @updatedAt
-  assignedToId     String?
-  assignedAt       DateTime?
-  notes            String?
-  lastContactAt    DateTime?
-  // NOVOS CAMPOS PARA ANALYTICS
-  leadScore        Int          @default(0) // 0-100
-  organizationType String? // governo, museu, corporativo, etc
-  estimatedValue   Float? // R$
-  interestInGrants Boolean      @default(false)
-  country          String?
-  city             String?
-  
-  // 🕵️ LEAD INTELLIGENCE - Toda investigação sobre o lead
-  leadIntelligence Json? // Armazena classificação, risco, verificações, enriquecimento, flags, histórico
-
-  // RELAÇÃO COM NEWSLETTER (opcional)
-  newsletterSubscriber NewsletterSubscriber? // Relação opcional com Newsletter
-
-  // CAMPOS VANCOUVER (Estudar em Vancouver)
-  age              Int?
-  currentSituation String?
-  targetSchool     String? // VFS, VanArts, etc
-  areaInterest     String? // 3D Animation, Game Design, etc
-  intakeYear       String? // 2026, 2027, 2028
-  englishLevel     String? // Iniciante, Intermedi├írio, Avan├ºado, Fluente
-  hasPortfolio     String? // sim-completo, sim-precisa-melhorar, comecando, nao-tenho
-  budgetRange      String? // ate-100k, 100k-200k, etc
-  fundingSource    String? // familia, economia-propria, financiamento, bolsa
-  howHeard         String? // webinar, palestra-escola, feira, redes-sociais, indicacao, google
-  comments         String?
-
-  assignedTo  User?            @relation("LeadAssignedTo", fields: [assignedToId], references: [id])
-  editalLeads LeadEdital[]
-  sessions    VisitorSession[]
+  id                    String                  @id @default(uuid())
+  name                  String
+  email                 String
+  phone                 String?
+  company               String?
+  position              String?
+  leadType              LeadType                @default(CONTACT_FORM)
+  projectType           String?
+  budget                String?
+  timeline              String?
+  description           String?
+  sourceUrl             String?
+  referrer              String?
+  utmSource             String?
+  utmMedium             String?
+  utmCampaign           String?
+  status                LeadStatus              @default(NEW)
+  priority              LeadPriority            @default(MEDIUM)
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  assignedToId          String?
+  assignedAt            DateTime?
+  notes                 String?
+  lastContactAt         DateTime?
+  leadScore             Int                     @default(0)
+  organizationType      String?
+  estimatedValue        Float?
+  interestInGrants      Boolean                 @default(false)
+  country               String?
+  city                  String?
+  age                   Int?
+  areaInterest          String?
+  budgetRange           String?
+  comments              String?
+  currentSituation      String?
+  englishLevel          String?
+  fundingSource         String?
+  hasPortfolio          String?
+  howHeard              String?
+  intakeYear            String?
+  targetSchool          String?
+  newsletterSource      String?
+  preferredLanguage     String?
+  wantsNewsletter       Boolean                 @default(false)
+  enriched_profile      Json?
+  conversation_context  String?
+  recommended_approach  String?
+  enrichment_status     String?                 @default("pending") @db.VarChar(20)
+  enriched_at           DateTime?               @db.Timestamp(6)
+  lead_score            Int?                    @default(0)
+  decision_power        String?                 @db.VarChar(20)
+  detected_city         String?                 @db.VarChar(100)
+  detected_company      String?                 @db.VarChar(200)
+  linkedin_url          String?                 @db.VarChar(500)
+  leadIntelligence      Json?
+  classification        String?
+  riskScore             Int?
+  qualityScore          Int?
+  decisionStatus        String?
+  reviewRequired        Boolean?                @default(false)
+  emailSent             Boolean?                @default(false)
+  emailSentAt           DateTime?               @db.Timestamp(6)
+  emailProviderId       String?
+  whatsappSent          Boolean?                @default(false)
+  whatsappSentAt        DateTime?               @db.Timestamp(6)
+  fingerprint           String?
+  behavior              Json?
+  enrichment            Json?
+  flags                 String[]
+  ambiente              String?                 @default("producao") @db.VarChar(20)
+  cluster               String?                 @db.VarChar(5)
+  tier                  String?                 @db.VarChar(5)
+  tipo_relacao          String?                 @default("cliente_potencial") @db.VarChar(30)
+  leadSource            String?                 @default("inbound")
+  prospeccaoId          String?
+  assignedTo            User?                   @relation("LeadAssignedTo", fields: [assignedToId], references: [id])
+  ProspeccaoAtiva       ProspeccaoAtiva?        @relation(fields: [prospeccaoId], references: [id])
+  editalLeads           LeadEdital[]
+  newsletterSubscriber  NewsletterSubscriber[]
+  sessions              VisitorSession[]
+  conversation_triggers conversation_triggers[]
+  enrichment_sources    enrichment_sources[]
+  lead_interactions     lead_interactions[]
+  sent_emails           sent_emails[]
 
   @@index([status])
   @@index([priority])
@@ -636,6 +633,22 @@ model Lead {
   @@index([createdAt])
   @@index([leadScore])
   @@index([email])
+  @@index([leadSource])
+  @@index([prospeccaoId])
+  @@index([classification], map: "idx_lead_classification")
+  @@index([createdAt], map: "idx_lead_createdat")
+  @@index([email], map: "idx_lead_email")
+  @@index([enrichment_status], map: "idx_lead_enrichment_status")
+  @@index([lead_score], map: "idx_lead_lead_score")
+  @@index([leadIntelligence], map: "idx_lead_leadintelligence_gin", type: Gin)
+  @@index([phone], map: "idx_lead_phone")
+  @@index([riskScore], map: "idx_lead_riskscore")
+  @@index([createdAt(sort: Desc)], map: "lead_createdat_idx")
+  @@index([email], map: "lead_email_idx")
+  @@index([flags], map: "lead_flags_gin", type: Gin)
+  @@index([leadIntelligence], map: "lead_leadintelligence_gin", type: Gin)
+  @@index([leadIntelligence], map: "lead_li_gin_idx", type: Gin)
+  @@index([phone], map: "lead_phone_idx")
 }
 
 model Edital {
@@ -704,44 +717,43 @@ model LeadEdital {
 }
 
 model Settings {
-  id                     String   @id @default("singleton")
-  siteName               String?  @default("Azimut")
-  siteUrl                String?  @default("https://azmt.com.br")
-  contactEmail           String?
-  contactPhone           String?
-  whatsappNumber         String?  // Número para link wa.me (ex: +55 48 999701301)
-  defaultMetaDescription String?
-  defaultKeywords        String?
-  ogImageUrl             String?
-  facebookUrl            String?
-  instagramUrl           String?
-  linkedinUrl            String?
-  twitterUrl             String?
-  youtubeUrl             String?
-  vimeoUrl               String?
-  behanceUrl             String?
-  kabbamApiKey           String?
-  kabbamApiUrl           String?
-  smtpHost               String?
-  smtpPort               Int?
-  smtpUser               String?
-  smtpPassword           String?
-  smtpFromEmail          String?
-  deepseekApiKey         String?
-  notificationEmail      String?
-  defaultLanguage        String?  @default("pt")
-  defaultCountry         String?  @default("BR")
-  timezone               String?  @default("America/Sao_Paulo")
-  companyWalletAddress   String?  // Endereço público da carteira Polygon (editável no backoffice)
-  companyWalletPrivateKeyEncrypted String?  @db.Text // Chave privada criptografada (opcional; preferir env)
-  web3RpcUrl             String?  // RPC da rede (ex: https://polygon-rpc.com)
-  web3NftContractAddress String?  // Contrato que emite NFT
-  web3StudentRewardContractAddress String?  // Contrato StudentReward
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
+  id                               String   @id @default("singleton")
+  siteName                         String?  @default("Azimut")
+  siteUrl                          String?  @default("https://azmt.com.br")
+  contactEmail                     String?
+  contactPhone                     String?
+  defaultMetaDescription           String?
+  defaultKeywords                  String?
+  ogImageUrl                       String?
+  facebookUrl                      String?
+  instagramUrl                     String?
+  linkedinUrl                      String?
+  twitterUrl                       String?
+  youtubeUrl                       String?
+  kabbamApiKey                     String?
+  kabbamApiUrl                     String?
+  smtpHost                         String?
+  smtpPort                         Int?
+  smtpUser                         String?
+  smtpPassword                     String?
+  smtpFromEmail                    String?
+  deepseekApiKey                   String?
+  notificationEmail                String?
+  defaultLanguage                  String?  @default("pt")
+  defaultCountry                   String?  @default("BR")
+  timezone                         String?  @default("America/Sao_Paulo")
+  createdAt                        DateTime @default(now())
+  updatedAt                        DateTime @updatedAt
+  web3RpcUrl                       String?
+  web3NftContractAddress           String?
+  web3StudentRewardContractAddress String?
+  companyWalletAddress             String?
+  companyWalletPrivateKeyEncrypted String?
+  whatsappNumber                   String?
+  vimeoUrl                         String?
+  behanceUrl                       String?
 }
 
-// Rodapé do site – dados de contato e redes sociais (tabela isolada)
 model FooterSettings {
   id             String   @id @default("singleton")
   contactEmail   String?
@@ -755,50 +767,669 @@ model FooterSettings {
   facebookUrl    String?
   twitterUrl     String?
   createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  updatedAt      DateTime @default(now()) @updatedAt
 }
 
-// Imprensa / notícias (área de imprensa do site)
 model Press {
-  id          String   @id @default(uuid())
-  titlePt     String
-  titleEn     String?
-  titleEs     String?
-  titleFr     String?
-  summaryPt   String?  @db.Text
-  summaryEn   String?  @db.Text
-  summaryEs   String?  @db.Text
-  summaryFr   String?  @db.Text
-  url         String?  // link externo (matéria, release)
-  publishedAt DateTime?
-  displayOrder Int     @default(0)
-  isPublished Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           String    @id @default(uuid())
+  titlePt      String
+  titleEn      String?
+  titleEs      String?
+  titleFr      String?
+  summaryPt    String?
+  summaryEn    String?
+  summaryEs    String?
+  summaryFr    String?
+  url          String?
+  publishedAt  DateTime?
+  displayOrder Int       @default(0)
+  isPublished  Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @default(now()) @updatedAt
 
   @@index([isPublished])
   @@index([publishedAt])
   @@index([displayOrder])
 }
 
-// Publicações (Research & Lab - artigos, apresentações)
 model Publication {
-  id          String   @id @default(uuid())
-  titlePt     String
-  titleEn     String?
-  titleEs     String?
-  titleFr     String?
-  authors     String?  // autores (texto livre)
-  url         String?  // link (DOI, site, PDF)
-  year        Int?
-  displayOrder Int     @default(0)
-  isPublished Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           String   @id @default(uuid())
+  titlePt      String
+  titleEn      String?
+  titleEs      String?
+  titleFr      String?
+  authors      String?
+  url          String?
+  year         Int?
+  displayOrder Int      @default(0)
+  isPublished  Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
 
   @@index([isPublished])
   @@index([year])
   @@index([displayOrder])
+}
+
+model QuizVancouverResponse {
+  id              String   @id @default(uuid())
+  sessionId       String?
+  leadId          String?
+  experience      String
+  english         String
+  goal            String
+  area            String
+  budget          String
+  timeline        String
+  portfolio       String
+  software        String
+  commitment      String
+  support         String
+  score           Int
+  readiness       String
+  bestSchool      String
+  estimatedBudget String
+  lang            String   @default("pt")
+  completedAt     DateTime @default(now())
+  createdAt       DateTime @default(now())
+
+  @@index([sessionId])
+  @@index([leadId])
+  @@index([score])
+  @@index([readiness])
+  @@index([completedAt])
+}
+
+model CourseRecommendationResponse {
+  id           String   @id @default(uuid())
+  sessionId    String?
+  leadId       String?
+  experience   String
+  goal         String
+  time         String
+  budget       String
+  interest     String
+  course1Id    String
+  course1Match Int
+  course2Id    String
+  course2Match Int
+  course3Id    String
+  course3Match Int
+  lang         String   @default("pt")
+  completedAt  DateTime @default(now())
+  createdAt    DateTime @default(now())
+
+  @@index([sessionId])
+  @@index([leadId])
+  @@index([completedAt])
+}
+
+model AcademyVideo {
+  id            String        @id @default(uuid())
+  videoUrl      String
+  thumbnailUrl  String?
+  type          VideoType     @default(YOUTUBE)
+  titlePt       String
+  titleEn       String
+  titleEs       String?
+  titleFr       String?
+  descriptionPt String?
+  descriptionEn String?
+  descriptionEs String?
+  descriptionFr String?
+  category      VideoCategory @default(INSTITUTIONAL)
+  section       VideoSection  @default(VANCOUVER)
+  school        String?
+  duration      Int?
+  views         Int           @default(0)
+  featured      Boolean       @default(false)
+  priority      Int           @default(0)
+  status        VideoStatus   @default(PUBLISHED)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([category])
+  @@index([section])
+  @@index([school])
+  @@index([featured])
+  @@index([priority])
+  @@index([status])
+}
+
+model Webinar {
+  id               String                @id @default(uuid())
+  titlePt          String
+  titleEn          String
+  titleEs          String?
+  titleFr          String?
+  descriptionPt    String?
+  descriptionEn    String?
+  descriptionEs    String?
+  descriptionFr    String?
+  scheduledAt      DateTime
+  duration         Int
+  timezone         String                @default("America/Sao_Paulo")
+  platform         String
+  meetingUrl       String?
+  recordingUrl     String?
+  targetAudience   String[]
+  language         String                @default("pt")
+  maxParticipants  Int?
+  requiresApproval Boolean               @default(false)
+  status           WebinarStatus         @default(SCHEDULED)
+  featured         Boolean               @default(false)
+  thumbnailUrl     String?
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+  registrations    WebinarRegistration[]
+
+  @@index([scheduledAt])
+  @@index([status])
+  @@index([featured])
+}
+
+model WebinarRegistration {
+  id           String    @id @default(uuid())
+  webinarId    String
+  name         String
+  email        String
+  phone        String?
+  company      String?
+  status       String    @default("CONFIRMED")
+  registeredAt DateTime  @default(now())
+  attendedAt   DateTime?
+  webinar      Webinar   @relation(fields: [webinarId], references: [id], onDelete: Cascade)
+
+  @@index([webinarId])
+  @@index([email])
+  @@index([status])
+}
+
+model MediaAnalysis {
+  id        String   @id @default(uuid())
+  mediaId   String   @unique
+  analysis  Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  media     Media    @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  @@index([mediaId])
+}
+
+model PWAInstall {
+  id         String         @id @default(uuid())
+  sessionId  String
+  type       String
+  platform   String?
+  userAgent  String?
+  browser    String?
+  deviceType String?
+  outcome    String?
+  country    String?
+  city       String?
+  createdAt  DateTime       @default(now())
+  session    VisitorSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@index([type])
+  @@index([country])
+  @@index([createdAt])
+}
+
+model VisitorBehavior {
+  id           String         @id @default(uuid())
+  sessionId    String
+  behaviorType String
+  element      String?
+  elementType  String?
+  pageSlug     String?
+  value        String?
+  metadata     Json?
+  timestamp    DateTime       @default(now())
+  session      VisitorSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@index([behaviorType])
+  @@index([pageSlug])
+  @@index([timestamp])
+}
+
+model FieldMetadata {
+  id                String   @id @default(uuid())
+  pageSlug          String   @map("page_slug")
+  sectionKey        String   @map("section_key")
+  fieldKey          String   @map("field_key")
+  fieldLabel        String   @map("field_label")
+  fieldDescription  String?  @map("field_description")
+  fieldType         String   @map("field_type")
+  maxLength         Int?     @map("max_length")
+  minLength         Int?     @map("min_length")
+  required          Boolean  @default(false)
+  allowedFormats    String[] @map("allowed_formats")
+  imageWidth        Int?     @map("image_width")
+  imageHeight       Int?     @map("image_height")
+  imageAspectRatio  String?  @map("image_aspect_ratio")
+  videoMaxDuration  Int?     @map("video_max_duration")
+  videoMaxSizeMb    Int?     @map("video_max_size_mb")
+  textFormat        String?  @map("text_format")
+  lineBreaksAllowed Boolean  @default(false) @map("line_breaks_allowed")
+  whereAppears      String?  @map("where_appears")
+  visualGuideUrl    String?  @map("visual_guide_url")
+  cardPosition      Int?     @map("card_position")
+  exampleValue      String?  @map("example_value")
+  exampleImageUrl   String?  @map("example_image_url")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@unique([pageSlug, sectionKey, fieldKey])
+  @@index([pageSlug, sectionKey])
+  @@map("field_metadata")
+}
+
+model ImageSpecification {
+  id                 String   @id @default(uuid())
+  pageSlug           String   @map("page_slug")
+  sectionKey         String   @map("section_key")
+  fieldKey           String   @map("field_key")
+  recommendedWidth   Int      @map("recommended_width")
+  recommendedHeight  Int      @map("recommended_height")
+  minWidth           Int?     @map("min_width")
+  minHeight          Int?     @map("min_height")
+  maxWidth           Int?     @map("max_width")
+  maxHeight          Int?     @map("max_height")
+  aspectRatio        String?  @map("aspect_ratio")
+  maxFileSizeMb      Int      @default(5) @map("max_file_size_mb")
+  allowedFormats     String[] @default(["jpg", "jpeg", "png", "webp", "avif"]) @map("allowed_formats")
+  description        String?  @map("description")
+  whereAppears       String?  @map("where_appears")
+  visualGuideUrl     String?  @map("visual_guide_url")
+  autoCompress       Boolean  @default(true) @map("auto_compress")
+  autoConvertWebp    Boolean  @default(true) @map("auto_convert_webp")
+  generateThumbnails Boolean  @default(false) @map("generate_thumbnails")
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  @@unique([pageSlug, sectionKey, fieldKey])
+  @@index([pageSlug, sectionKey])
+  @@map("image_specifications")
+}
+
+model BlogCategory {
+  id        String     @id @default(uuid())
+  slug      String     @unique
+  namePt    String
+  nameEn    String
+  nameEs    String?
+  nameFr    String?
+  descPt    String?
+  descEn    String?
+  descEs    String?
+  descFr    String?
+  color     String?    @default("#c92337")
+  icon      String?
+  priority  Int        @default(0)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  posts     BlogPost[]
+}
+
+model BlogPost {
+  id                 String            @id @default(uuid())
+  slug               String            @unique
+  titlePt            String
+  titleEn            String
+  titleEs            String?
+  titleFr            String?
+  excerptPt          String?
+  excerptEn          String?
+  excerptEs          String?
+  excerptFr          String?
+  contentPt          String?
+  contentEn          String?
+  contentEs          String?
+  contentFr          String?
+  seoTitlePt         String?
+  seoTitleEn         String?
+  seoTitleEs         String?
+  seoTitleFr         String?
+  seoDescPt          String?
+  seoDescEn          String?
+  seoDescEs          String?
+  seoDescFr          String?
+  coverImageId       String?
+  coverImageUrl      String?
+  coverImageAlt      String?
+  authorName         String?
+  authorImageUrl     String?
+  readingTimeMin     Int?              @default(5)
+  status             BlogPostStatus    @default(DRAFT)
+  featured           Boolean           @default(false)
+  publishedAt        DateTime?
+  categoryId         String?
+  viewCount          Int               @default(0)
+  shareCount         Int               @default(0)
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  category           BlogCategory?     @relation(fields: [categoryId], references: [id])
+  coverImage         Media?            @relation("BlogPostCover", fields: [coverImageId], references: [id])
+  monitorSuggestions BlogPostMonitor[] @relation("BlogPostMonitorToPost")
+  tags               Tag[]             @relation("BlogPostToTag")
+
+  @@index([slug])
+  @@index([status, publishedAt])
+  @@index([categoryId])
+  @@index([featured])
+}
+
+model BlogPostMonitor {
+  id                  String        @id @default(uuid())
+  projectId           String?
+  projectName         String?
+  creditType          CreditType    @default(CLIENTE)
+  creditText          String?
+  azimutRole          String?
+  azimutContributions String[]
+  sourceType          SourceType
+  sourceUrl           String
+  sourceTitle         String?
+  sourceContent       String?
+  sourceImageUrl      String?
+  sourceVideoUrl      String?
+  sourceAuthor        String?
+  sourceDate          DateTime?
+  suggestedTitlePt    String?
+  suggestedTitleEn    String?
+  suggestedTitleEs    String?
+  suggestedTitleFr    String?
+  suggestedExcerptPt  String?
+  suggestedExcerptEn  String?
+  suggestedExcerptEs  String?
+  suggestedExcerptFr  String?
+  suggestedContentPt  String?
+  suggestedContentEn  String?
+  suggestedContentEs  String?
+  suggestedContentFr  String?
+  aiProcessedAt       DateTime?
+  keywords            String[]
+  mentions            String[]
+  status              MonitorStatus @default(PENDING)
+  publishAfterDate    DateTime?
+  canPublishNow       Boolean       @default(false)
+  creditMode          CreditMode    @default(FULL_CREDIT)
+  isAutoral           Boolean       @default(false)
+  blogPostId          String?
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+  blogPost            BlogPost?     @relation("BlogPostMonitorToPost", fields: [blogPostId], references: [id])
+  project             Project?      @relation("ProjectMonitoredPosts", fields: [projectId], references: [id])
+
+  @@index([projectId])
+  @@index([status])
+  @@index([sourceType])
+  @@index([createdAt])
+}
+
+model MakingOf {
+  id                  String            @id @default(uuid())
+  projectId           String?
+  projectName         String?
+  makingOfType        MakingOfType      @default(PERSONAL)
+  source              MakingOfSource    @default(INTERNAL)
+  collaboratorId      String?
+  collaboratorName    String?
+  clientName          String?
+  clientEmail         String?
+  title               String
+  description         String?
+  mediaType           MakingOfMediaType @default(IMAGE)
+  location            String?
+  eventDate           DateTime?
+  tags                String[]
+  status              MakingOfStatus    @default(DRAFT)
+  featured            Boolean           @default(false)
+  publishToBlog       Boolean           @default(false)
+  publishToNewsletter Boolean           @default(false)
+  publishToSocial     Boolean           @default(false)
+  creditText          String?
+  canPublishNow       Boolean           @default(true)
+  publishAfterDate    DateTime?
+  uploadedBy          String
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  collaborator        Collaborator?     @relation(fields: [collaboratorId], references: [id])
+  project             Project?          @relation("ProjectMakingOf", fields: [projectId], references: [id])
+  uploadedByUser      User              @relation("UserMakingOf", fields: [uploadedBy], references: [id])
+  mediaFiles          Media[]           @relation("MakingOfMedia")
+
+  @@index([projectId])
+  @@index([collaboratorId])
+  @@index([status])
+  @@index([makingOfType])
+  @@index([createdAt])
+}
+
+model Collaborator {
+  id          String     @id @default(uuid())
+  name        String
+  email       String?    @unique
+  phone       String?
+  instagram   String?
+  portfolio   String?
+  bio         String?
+  specialties String[]
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  makingOfs   MakingOf[]
+
+  @@index([name])
+  @@index([isActive])
+}
+
+model NewsletterSubscriber {
+  id                String           @id @default(dbgenerated("(gen_random_uuid())::text"))
+  email             String           @unique
+  name              String?
+  preferredLanguage String           @default("pt")
+  source            String
+  status            NewsletterStatus @default(ACTIVE)
+  subscribedAt      DateTime         @default(now())
+  unsubscribedAt    DateTime?
+  lastEmailSentAt   DateTime?
+  emailCount        Int              @default(0)
+  leadId            String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @default(now()) @updatedAt
+  lead              Lead?            @relation(fields: [leadId], references: [id])
+
+  @@index([email])
+  @@index([status])
+  @@index([source])
+  @@index([preferredLanguage])
+  @@index([leadId])
+}
+
+model ProspeccaoAtiva {
+  id                    String           @id @default(dbgenerated("(gen_random_uuid())::text"))
+  nome                  String?
+  cargo                 String?
+  empresa               String?
+  segmento              String?
+  cluster               String?
+  departamento          String?
+  email                 String?
+  emailValidado         Boolean          @default(false)
+  emailScore            Int?
+  linkedinUrl           String?
+  whatsapp              String?
+  instagram             String?
+  telefone              String?
+  perfilResumo          String?
+  empresaContexto       String?
+  postsRecentes         Json?
+  eventosRecentes       Json?
+  ganchoPersonalizado   String?
+  conexaoEmComum        String?
+  formaEntrarFornecedor String?
+  servicoAlvo           String?
+  servicoContexto       String?
+  pacoteComercial       String?
+  score                 Int              @default(0)
+  scoreDeepSeek         Int?
+  scoreClaude           Int?
+  prioridade            String           @default("MEDIUM")
+  valorEstimado         Float?
+  rota                  String?
+  canalPrimario         String?
+  canalSecundario       String?
+  fonteQuery            String?
+  fonteUrl              String?
+  fonteApollo           Boolean          @default(false)
+  fonteSerpApi          Boolean          @default(false)
+  fonteBing             Boolean          @default(false)
+  status                ProspeccaoStatus @default(NOVO)
+  etapa                 String?
+  warmupFeito           Boolean          @default(false)
+  warmupData            DateTime?
+  warmupTipo            String?
+  diasAposWarmup        Int?
+  mensagemEmail         String?
+  mensagemLinkedin      String?
+  mensagemWhatsapp      String?
+  assuntoEmail          String?
+  iaUsadaEmail          String?
+  emailEnviado          Boolean          @default(false)
+  emailEnviadoEm        DateTime?
+  emailAberto           Boolean          @default(false)
+  emailAbertoEm         DateTime?
+  linkedinEnviado       Boolean          @default(false)
+  linkedinEnviadoEm     DateTime?
+  whatsappEnviado       Boolean          @default(false)
+  whatsappEnviadoEm     DateTime?
+  respondeu             Boolean          @default(false)
+  respondeuEm           DateTime?
+  respondeuCanal        String?
+  respostaTexto         String?
+  sentimentoResposta    String?
+  followUpCount         Int              @default(0)
+  proximoFollowUp       DateTime?
+  followUpMensagem      String?
+  emNurture             Boolean          @default(false)
+  nurtureInicio         DateTime?
+  nurtureDias           Int              @default(60)
+  alertaRanz            Boolean          @default(false)
+  alertaRanzEnviado     Boolean          @default(false)
+  alertaRanzEm          DateTime?
+  ambiente              String           @default("producao")
+  observacoes           String?
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @default(now())
+  Lead                  Lead[]
+
+  @@index([ambiente])
+  @@index([cluster])
+  @@index([createdAt])
+  @@index([emNurture])
+  @@index([emailEnviado])
+  @@index([empresa])
+  @@index([prioridade])
+  @@index([respondeu])
+  @@index([score])
+  @@index([segmento])
+  @@index([status])
+}
+
+model conversation_triggers {
+  id            Int       @id @default(autoincrement())
+  lead_id       String?
+  trigger_type  String    @db.VarChar(50)
+  trigger_text  String
+  source        String?   @db.VarChar(100)
+  priority      Int?      @default(5)
+  used_at       DateTime? @db.Timestamp(6)
+  was_effective Boolean?
+  created_at    DateTime? @default(now()) @db.Timestamp(6)
+  Lead          Lead?     @relation(fields: [lead_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model email_templates {
+  id               Int           @id @default(autoincrement())
+  name             String        @db.VarChar(100)
+  subject_template String
+  body_template    String
+  tone             String?       @default("semiformal") @db.VarChar(20)
+  use_case         String?       @db.VarChar(50)
+  lang             String?       @default("pt") @db.VarChar(5)
+  is_active        Boolean?      @default(true)
+  success_rate     Decimal?      @db.Decimal(5, 2)
+  created_at       DateTime?     @default(now()) @db.Timestamp(6)
+  updated_at       DateTime?     @default(now()) @db.Timestamp(6)
+  sent_emails      sent_emails[]
+}
+
+model enrichment_sources {
+  id             Int       @id @default(autoincrement())
+  lead_id        String?
+  source_type    String    @db.VarChar(50)
+  source_url     String?   @db.VarChar(1000)
+  raw_data       Json?
+  processed_data Json?
+  fetched_at     DateTime? @default(now()) @db.Timestamp(6)
+  is_valid       Boolean?  @default(true)
+  Lead           Lead?     @relation(fields: [lead_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([lead_id], map: "idx_enrichment_sources_lead_id")
+}
+
+model lead_interactions {
+  id               Int       @id @default(autoincrement())
+  lead_id          String?
+  interaction_type String    @db.VarChar(50)
+  direction        String    @db.VarChar(10)
+  subject          String?   @db.VarChar(500)
+  content          String?
+  context          Json?
+  sentiment        String?   @db.VarChar(20)
+  created_at       DateTime? @default(now()) @db.Timestamp(6)
+  created_by       String?   @db.VarChar(100)
+  Lead             Lead?     @relation(fields: [lead_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([lead_id], map: "idx_lead_interactions_lead_id")
+}
+
+model lead_profile {
+  id                   String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  lead_id              String    @unique
+  email                String?
+  linkedin_url         String?
+  youtube_url          String?
+  instagram_url        String?
+  site_empresa_url     String?
+  eventos_participados Json?     @default("[]")
+  posts_relevantes     Json?     @default("[]")
+  cargo_confirmado     String?
+  porte_empresa        String?
+  profile_data         Json?     @default("{}")
+  created_at           DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at           DateTime? @default(now()) @db.Timestamptz(6)
+}
+
+model sent_emails {
+  id                   Int              @id @default(autoincrement())
+  lead_id              String?
+  template_id          Int?
+  subject              String           @db.VarChar(500)
+  body                 String
+  personalization_data Json?
+  sent_at              DateTime?        @default(now()) @db.Timestamp(6)
+  opened_at            DateTime?        @db.Timestamp(6)
+  clicked_at           DateTime?        @db.Timestamp(6)
+  replied_at           DateTime?        @db.Timestamp(6)
+  bounced              Boolean?         @default(false)
+  resend_id            String?          @db.VarChar(100)
+  created_by           String?          @db.VarChar(100)
+  Lead                 Lead?            @relation(fields: [lead_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  email_templates      email_templates? @relation(fields: [template_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 enum Role {
@@ -813,15 +1444,6 @@ enum TagCategory {
   INDUSTRY
   FORMAT
   OTHER
-}
-
-enum HistoryType {
-  milestone
-  partnership
-  project
-  award
-  location
-  other
 }
 
 enum ServiceStatus {
@@ -908,120 +1530,6 @@ enum ProjectInteractionType {
   CTA
 }
 
-// ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-// QUIZ VANCOUVER & COURSE RECOMMENDER - IA RESPONSES
-// ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-
-model QuizVancouverResponse {
-  id        String  @id @default(uuid())
-  sessionId String? // Se an├┤nimo (antes do lead)
-  leadId    String? // Se j├í preencheu formul├írio
-
-  // Respostas do Quiz (10 perguntas)
-  experience String // zero, beginner, intermediate, advanced
-  english    String // basic, intermediate, advanced, native
-  goal       String // career-change, skill-up, portfolio, immigration
-  area       String // animation, vfx, game, film
-  budget     String // low, medium, high, very-high
-  timeline   String // asap, soon, planning, researching
-  portfolio  String // none, basic, good, professional
-  software   String // none, basic, intermediate, advanced
-  commitment String // exploring, serious, decided, ready
-  support    String // self, partial, full, sponsored
-
-  // Resultado calculado
-  score           Int // 0-100
-  readiness       String // low, medium, high
-  bestSchool      String // VFS, VanArts
-  estimatedBudget String // CAD 25k-30k, etc
-
-  // Metadata
-  lang        String   @default("pt")
-  completedAt DateTime @default(now())
-  createdAt   DateTime @default(now())
-
-  @@index([sessionId])
-  @@index([leadId])
-  @@index([score])
-  @@index([readiness])
-  @@index([completedAt])
-}
-
-model CourseRecommendationResponse {
-  id        String  @id @default(uuid())
-  sessionId String? // Se an├┤nimo (antes do lead)
-  leadId    String? // Se j├í preencheu formul├írio
-
-  // Respostas do Recomendador (5 perguntas)
-  experience String // zero, beginner, intermediate, advanced
-  goal       String // job, freelance, career-change, level-up
-  time       String // part-time, weekends, full-time
-  budget     String // low, medium, high
-  interest   String // ai, creative, technical, immersive
-
-  // Cursos recomendados (Top 3)
-  course1Id    String
-  course1Match Int // % match
-  course2Id    String
-  course2Match Int
-  course3Id    String
-  course3Match Int
-
-  // Metadata
-  lang        String   @default("pt")
-  completedAt DateTime @default(now())
-  createdAt   DateTime @default(now())
-
-  @@index([sessionId])
-  @@index([leadId])
-  @@index([completedAt])
-}
-
-// ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-// VIDEOS VFS/VANARTS
-// ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-
-model AcademyVideo {
-  id String @id @default(uuid())
-
-  // Video Info
-  videoUrl     String // YouTube/Vimeo URL
-  thumbnailUrl String?
-  type         VideoType @default(YOUTUBE)
-
-  // Content
-  titlePt       String
-  titleEn       String
-  titleEs       String?
-  titleFr       String?
-  descriptionPt String?
-  descriptionEn String?
-  descriptionEs String?
-  descriptionFr String?
-
-  // Category
-  category VideoCategory @default(INSTITUTIONAL)
-  section  VideoSection  @default(VANCOUVER) // Vancouver, Courses, Workshops, Corporate
-  school   String? // VFS, VanArts, Azimut
-
-  // Metadata
-  duration Int? // seconds
-  views    Int         @default(0)
-  featured Boolean     @default(false)
-  priority Int         @default(0)
-  status   VideoStatus @default(PUBLISHED)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([category])
-  @@index([section])
-  @@index([school])
-  @@index([featured])
-  @@index([priority])
-  @@index([status])
-}
-
 enum VideoType {
   YOUTUBE
   VIMEO
@@ -1051,77 +1559,6 @@ enum VideoStatus {
   ARCHIVED
 }
 
-// ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-// WEBINARS
-// ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-
-model Webinar {
-  id String @id @default(uuid())
-
-  // Content
-  titlePt       String
-  titleEn       String
-  titleEs       String?
-  titleFr       String?
-  descriptionPt String?
-  descriptionEn String?
-  descriptionEs String?
-  descriptionFr String?
-
-  // Schedule
-  scheduledAt DateTime
-  duration    Int // minutes
-  timezone    String   @default("America/Sao_Paulo")
-
-  // Platform
-  platform     String // Zoom, Google Meet, YouTube Live
-  meetingUrl   String? // URL da reuni├úo
-  recordingUrl String? // URL da grava├º├úo (depois do evento)
-
-  // Target
-  targetAudience String[] // students, corporate, schools, general
-  language       String   @default("pt")
-
-  // Registration
-  registrations    WebinarRegistration[]
-  maxParticipants  Int?
-  requiresApproval Boolean               @default(false)
-
-  // Metadata
-  status       WebinarStatus @default(SCHEDULED)
-  featured     Boolean       @default(false)
-  thumbnailUrl String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([scheduledAt])
-  @@index([status])
-  @@index([featured])
-}
-
-model WebinarRegistration {
-  id        String @id @default(uuid())
-  webinarId String
-
-  // User Info
-  name    String
-  email   String
-  phone   String?
-  company String?
-
-  // Metadata
-  status       String    @default("CONFIRMED") // CONFIRMED, CANCELLED, ATTENDED, NO_SHOW
-  registeredAt DateTime  @default(now())
-  attendedAt   DateTime?
-
-  webinar Webinar @relation(fields: [webinarId], references: [id], onDelete: Cascade)
-
-  @@index([webinarId])
-  @@index([email])
-  @@index([status])
-}
-
 enum WebinarStatus {
   SCHEDULED
   LIVE
@@ -1129,491 +1566,74 @@ enum WebinarStatus {
   CANCELLED
 }
 
-// ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-// AI MEDIA ANALYSIS
-// ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-
-model MediaAnalysis {
-  id        String   @id @default(uuid())
-  mediaId   String   @unique
-  analysis  Json // Armazena o JSON completo da an├ílise
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  media Media @relation(fields: [mediaId], references: [id], onDelete: Cascade)
-
-  @@index([mediaId])
-}
-
-// ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-// ANALYTICS & VISITOR TRACKING
-// ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-
-model PWAInstall {
-  id         String   @id @default(uuid())
-  sessionId  String
-  type       String // 'installed' | 'prompt_shown' | 'prompt_dismissed' | 'prompt_accepted'
-  platform   String? // Win32, Linux x86_64, iPhone, etc
-  userAgent  String?
-  browser    String? // Chrome, Safari, Firefox, etc
-  deviceType String? // mobile, desktop, tablet
-  outcome    String? // 'accepted' | 'dismissed'
-  country    String?
-  city       String?
-  createdAt  DateTime @default(now())
-
-  session VisitorSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
-
-  @@index([sessionId])
-  @@index([type])
-  @@index([country])
-  @@index([createdAt])
-}
-
-model VisitorBehavior {
-  id           String   @id @default(uuid())
-  sessionId    String
-  behaviorType String // 'page_view' | 'click' | 'scroll' | 'hover' | 'form_start' | 'form_abandon' | 'video_play' | 'download' | 'share' | 'search' | 'filter' | 'pwa_install' | 'cta_click' | 'external_link'
-  element      String? // ID ou classe do elemento interagido
-  elementType  String? // 'button' | 'link' | 'image' | 'video' | 'form' | etc
-  pageSlug     String? // P├ígina onde aconteceu
-  value        String? // Valor (ex: termo de busca, filtro selecionado)
-  metadata     Json? // Dados extras (coordenadas, tempo, etc)
-  timestamp    DateTime @default(now())
-
-  session VisitorSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
-
-  @@index([sessionId])
-  @@index([behaviorType])
-  @@index([pageSlug])
-  @@index([timestamp])
-}
-
-model FieldMetadata {
-  id         String @id @default(uuid())
-  pageSlug   String @map("page_slug")
-  sectionKey String @map("section_key")
-  fieldKey   String @map("field_key")
-
-  fieldLabel       String  @map("field_label")
-  fieldDescription String? @map("field_description")
-  fieldType        String  @map("field_type")
-
-  maxLength      Int?     @map("max_length")
-  minLength      Int?     @map("min_length")
-  required       Boolean  @default(false)
-  allowedFormats String[] @map("allowed_formats")
-
-  imageWidth       Int?    @map("image_width")
-  imageHeight      Int?    @map("image_height")
-  imageAspectRatio String? @map("image_aspect_ratio")
-  videoMaxDuration Int?    @map("video_max_duration")
-  videoMaxSizeMb   Int?    @map("video_max_size_mb")
-
-  textFormat        String? @map("text_format")
-  lineBreaksAllowed Boolean @default(false) @map("line_breaks_allowed")
-
-  whereAppears   String? @map("where_appears")
-  visualGuideUrl String? @map("visual_guide_url")
-  cardPosition   Int?    @map("card_position")
-
-  exampleValue    String? @map("example_value")
-  exampleImageUrl String? @map("example_image_url")
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@unique([pageSlug, sectionKey, fieldKey])
-  @@index([pageSlug, sectionKey])
-  @@map("field_metadata")
-}
-
-model ImageSpecification {
-  id         String @id @default(uuid())
-  pageSlug   String @map("page_slug")
-  sectionKey String @map("section_key")
-  fieldKey   String @map("field_key")
-
-  recommendedWidth  Int      @map("recommended_width")
-  recommendedHeight Int      @map("recommended_height")
-  minWidth          Int?     @map("min_width")
-  minHeight         Int?     @map("min_height")
-  maxWidth          Int?     @map("max_width")
-  maxHeight         Int?     @map("max_height")
-  aspectRatio       String?  @map("aspect_ratio")
-  maxFileSizeMb     Int      @default(5) @map("max_file_size_mb")
-  allowedFormats    String[] @default(["jpg", "jpeg", "png", "webp", "avif"]) @map("allowed_formats")
-
-  description    String? @map("description")
-  whereAppears   String? @map("where_appears")
-  visualGuideUrl String? @map("visual_guide_url")
-
-  autoCompress       Boolean @default(true) @map("auto_compress")
-  autoConvertWebp    Boolean @default(true) @map("auto_convert_webp")
-  generateThumbnails Boolean @default(false) @map("generate_thumbnails")
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@unique([pageSlug, sectionKey, fieldKey])
-  @@index([pageSlug, sectionKey])
-  @@map("image_specifications")
-}
-
-// ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-// ­ƒôØ BLOG - Sistema completo de artigos
-// ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-
-model BlogCategory {
-  id          String   @id @default(uuid())
-  slug        String   @unique
-  namePt      String
-  nameEn      String
-  nameEs      String?
-  nameFr      String?
-  descPt      String?
-  descEn      String?
-  descEs      String?
-  descFr      String?
-  color       String?  @default("#c92337") // Cor do badge
-  icon        String?  // ├ìcone (emoji ou nome do ├¡cone)
-  priority    Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  posts       BlogPost[]
-}
-
-model BlogPost {
-  id              String         @id @default(uuid())
-  slug            String         @unique
-  
-  // T├¡tulos (4 idiomas)
-  titlePt         String
-  titleEn         String
-  titleEs         String?
-  titleFr         String?
-  
-  // Resumo/Excerpt (4 idiomas) - aparece na listagem
-  excerptPt       String?
-  excerptEn       String?
-  excerptEs       String?
-  excerptFr       String?
-  
-  // Conte├║do completo (4 idiomas) - Markdown ou HTML
-  contentPt       String?        @db.Text
-  contentEn       String?        @db.Text
-  contentEs       String?        @db.Text
-  contentFr       String?        @db.Text
-  
-  // SEO (4 idiomas)
-  seoTitlePt      String?
-  seoTitleEn      String?
-  seoTitleEs      String?
-  seoTitleFr      String?
-  seoDescPt       String?
-  seoDescEn       String?
-  seoDescEs       String?
-  seoDescFr       String?
-  
-  // Imagem de capa
-  coverImageId    String?
-  coverImage      Media?         @relation("BlogPostCover", fields: [coverImageId], references: [id])
-  coverImageUrl   String?        // URL alternativa se n├úo usar Media
-  coverImageAlt   String?
-  
-  // Metadados
-  authorName      String?
-  authorImageUrl  String?
-  readingTimeMin  Int?           @default(5) // Tempo de leitura em minutos
-  
-  // Status e publica├º├úo
-  status          BlogPostStatus @default(DRAFT)
-  featured        Boolean        @default(false) // Destaque na home do blog
-  publishedAt     DateTime?      // Data de publica├º├úo (permite agendar)
-  
-  // Categoria (uma por post)
-  categoryId      String?
-  category        BlogCategory?  @relation(fields: [categoryId], references: [id])
-  
-  // Tags (muitas por post) - reutiliza Tag existente
-  tags            Tag[]          @relation("BlogPostToTag")
-  
-  // M├®tricas
-  viewCount       Int            @default(0)
-  shareCount      Int            @default(0)
-  
-  // Rela├º├úo com Monitoramento
-  monitorSuggestions BlogPostMonitor[] @relation("BlogPostMonitorToPost")
-  
-  // Timestamps
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  
-  @@index([slug])
-  @@index([status, publishedAt])
-  @@index([categoryId])
-  @@index([featured])
-}
-
 enum BlogPostStatus {
-  DRAFT      // Rascunho - n├úo vis├¡vel
-  PUBLISHED  // Publicado - vis├¡vel
-  SCHEDULED  // Agendado - publicar em publishedAt
-  ARCHIVED   // Arquivado - n├úo vis├¡vel
-}
-
-// ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-// ­ƒñû SISTEMA DE MONITORAMENTO AUTOM├üTICO DE CONTE├ÜDO
-// ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-// Monitora automaticamente not├¡cias, redes sociais, v├¡deos
-// sobre projetos da Azimut e sugere posts para o blog
-// ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-
-model BlogPostMonitor {
-  id                    String            @id @default(uuid())
-  
-  // Rela├º├úo com Projeto
-  projectId             String?
-  project               Project?          @relation("ProjectMonitoredPosts", fields: [projectId], references: [id])
-  projectName           String?           // Nome do projeto para busca (se n├úo tiver projeto cadastrado)
-  
-  // Tipo de Cr├®dito
-  creditType            CreditType        @default(CLIENTE)
-  creditText            String?           // "Anima├º├úo por Azimut", "Produ├º├úo Azimut", etc.
-  azimutRole            String?           // "Anima├º├úo", "Produ├º├úo", "Realiza├º├úo", etc.
-  azimutContributions   String[]          // ["arte generativa", "motion design", "led 20x5m"]
-  
-  // Fonte do Conte├║do
-  sourceType            SourceType        // NEWS, INSTAGRAM, YOUTUBE, BLOG, PRESS, TWITTER, FACEBOOK
-  sourceUrl             String
-  sourceTitle           String?
-  sourceContent         String?           @db.Text
-  sourceImageUrl        String?
-  sourceVideoUrl        String?
-  sourceAuthor          String?
-  sourceDate            DateTime?
-  
-  // Conte├║do Processado por IA
-  suggestedTitlePt      String?
-  suggestedTitleEn      String?
-  suggestedTitleEs      String?
-  suggestedTitleFr      String?
-  suggestedExcerptPt    String?
-  suggestedExcerptEn    String?
-  suggestedExcerptEs    String?
-  suggestedExcerptFr    String?
-  suggestedContentPt    String?           @db.Text
-  suggestedContentEn    String?           @db.Text
-  suggestedContentEs    String?           @db.Text
-  suggestedContentFr    String?           @db.Text
-  aiProcessedAt         DateTime?
-  
-  // Metadados
-  keywords              String[]
-  mentions              String[]          // Influencers, ve├¡culos, etc.
-  status                MonitorStatus     @default(PENDING) // PENDING, APPROVED, REJECTED, PUBLISHED
-  
-  // Data de Publica├º├úo (para projetos que precisam aguardar estreia)
-  publishAfterDate      DateTime?         // Data a partir da qual pode publicar (ex: data de estreia)
-  canPublishNow         Boolean           @default(false)  // Se true, pode publicar imediatamente
-  
-  // Tipo de Cr├®dito e Publica├º├úo
-  creditMode            CreditMode        @default(FULL_CREDIT) // FULL_CREDIT ou REWRITE
-  isAutoral             Boolean           @default(false)  // Se ├® projeto autoral (pode publicar livremente)
-  
-  // Rela├º├úo com Post Aprovado
-  blogPostId            String?
-  blogPost              BlogPost?         @relation("BlogPostMonitorToPost", fields: [blogPostId], references: [id])
-  
-  // Timestamps
-  createdAt             DateTime          @default(now())
-  updatedAt             DateTime          @updatedAt
-  
-  @@index([projectId])
-  @@index([status])
-  @@index([sourceType])
-  @@index([createdAt])
+  DRAFT
+  PUBLISHED
+  SCHEDULED
+  ARCHIVED
 }
 
 enum CreditType {
-  CLIENTE   // Projeto do cliente - cr├®dito parcial ("Anima├º├úo por Azimut")
-  AUTORAL   // Projeto autoral - cr├®dito total ("Produ├º├úo Azimut")
-  EVENTO    // Evento - cr├®dito total ("Realiza├º├úo Azimut")
+  CLIENTE
+  AUTORAL
+  EVENTO
 }
 
 enum SourceType {
-  NEWS       // Not├¡cias (Google News, sites de not├¡cias)
-  INSTAGRAM  // Posts do Instagram
-  YOUTUBE    // V├¡deos do YouTube
-  BLOG       // Posts de blogs
-  PRESS      // Mat├®rias de imprensa
-  TWITTER    // Tweets
-  FACEBOOK   // Posts do Facebook
-  RSS        // Feeds RSS
-  LINKEDIN   // Posts do LinkedIn
-  JOURNAL    // Jornais impressos/digitais
-  TV         // Telejornais, programas de TV
-  PODCAST    // Podcasts
-  NOTION     // P├íginas do Notion
-  OTHER      // Outras fontes
+  NEWS
+  INSTAGRAM
+  YOUTUBE
+  BLOG
+  PRESS
+  TWITTER
+  FACEBOOK
+  RSS
+  LINKEDIN
+  JOURNAL
+  TV
+  PODCAST
+  OTHER
 }
 
 enum CreditMode {
-  FULL_CREDIT  // Postar mat├®ria original com cr├®ditos completos
-  REWRITE      // Reorganizar texto/imagens com IA (reescrever)
+  FULL_CREDIT
+  REWRITE
 }
 
 enum MonitorStatus {
-  PENDING    // Aguardando aprova├º├úo
-  APPROVED   // Aprovado (j├í virou post ou ser├í publicado)
-  REJECTED   // Rejeitado
-  PUBLISHED  // J├í publicado como post
-}
-
-// ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-// SISTEMA DE MAKING-OF
-// ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
-
-model MakingOf {
-  id                String          @id @default(uuid())
-  
-  // Rela├º├úo com Projeto
-  projectId         String?
-  project           Project?        @relation("ProjectMakingOf", fields: [projectId], references: [id])
-  projectName       String?         // Nome do projeto se n├úo tiver cadastrado
-  
-  // Tipo de Making-of
-  makingOfType      MakingOfType    @default(PERSONAL)
-  source            MakingOfSource  @default(INTERNAL)
-  
-  // Colaborador/Criador
-  collaboratorId    String?
-  collaborator      Collaborator?   @relation(fields: [collaboratorId], references: [id])
-  collaboratorName  String?         // Nome se n├úo tiver cadastrado (ex: "Eduardo Nartino")
-  
-  // Cliente (se for depoimento/material do cliente)
-  clientName        String?
-  clientEmail       String?
-  
-  // Conte├║do
-  title             String
-  description       String?         @db.Text
-  mediaType         MakingOfMediaType @default(IMAGE)
-  
-  // M├¡dias
-  mediaFiles        Media[]         @relation("MakingOfMedia")
-  
-  // Metadados
-  location          String?         // Local onde foi feito
-  eventDate         DateTime?       // Data do evento/grava├º├úo
-  tags              String[]
-  
-  // Status e Publica├º├úo
-  status            MakingOfStatus  @default(DRAFT)
-  featured          Boolean         @default(false)
-  publishToBlog     Boolean         @default(false)
-  publishToNewsletter Boolean       @default(false)
-  publishToSocial   Boolean         @default(false)
-  
-  // Cr├®ditos e Permiss├Áes
-  creditText        String?         // "Making-of por Eduardo Nartino"
-  canPublishNow     Boolean         @default(true)
-  publishAfterDate  DateTime?       // Se precisar aguardar data
-  
-  // Upload
-  uploadedBy        String
-  uploadedByUser    User            @relation("UserMakingOf", fields: [uploadedBy], references: [id])
-  
-  // Timestamps
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
-  
-  @@index([projectId])
-  @@index([collaboratorId])
-  @@index([status])
-  @@index([makingOfType])
-  @@index([createdAt])
-}
-
-model Collaborator {
-  id            String      @id @default(uuid())
-  name          String
-  email         String?     @unique
-  phone         String?
-  instagram     String?     // @username
-  portfolio     String?     // URL do portfolio
-  bio           String?     @db.Text
-  specialties   String[]    // ["making-of", "fotografia", "v├¡deo"]
-  
-  // Rela├º├úo
-  makingOfs     MakingOf[]
-  
-  // Status
-  isActive      Boolean     @default(true)
-  
-  // Timestamps
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  
-  @@index([name])
-  @@index([isActive])
+  PENDING
+  APPROVED
+  REJECTED
+  PUBLISHED
 }
 
 enum MakingOfType {
-  PERSONAL      // Making-of pessoal da equipe Azimut
-  PARTNERSHIP   // Parceria (troca de apoio)
-  HIRED         // Contratado para fazer making-of
-  CLIENT        // Material/depoimento do cliente
-  EVENT         // Evento (Festival VR, etc.)
+  PERSONAL
+  PARTNERSHIP
+  HIRED
+  CLIENT
+  EVENT
 }
 
 enum MakingOfSource {
-  INTERNAL      // Feito pela equipe Azimut
-  COLLABORATOR  // Feito por colaborador (Eduardo Nartino, etc.)
-  CLIENT        // Enviado pelo cliente
-  PARTNER       // Parceria
+  INTERNAL
+  COLLABORATOR
+  CLIENT
+  PARTNER
 }
 
 enum MakingOfMediaType {
-  IMAGE         // Apenas imagens
-  VIDEO         // Apenas v├¡deos
-  MIXED         // Imagens + v├¡deos
+  IMAGE
+  VIDEO
+  MIXED
 }
 
 enum MakingOfStatus {
-  DRAFT         // Rascunho
-  REVIEW        // Em revis├úo
-  APPROVED      // Aprovado
-  PUBLISHED     // Publicado
-  ARCHIVED      // Arquivado
-}
-
-// ═══════════════════════════════════════════════════════════════
-// NEWSLETTER SUBSCRIBERS - Separado de Leads
-// ═══════════════════════════════════════════════════════════════
-
-model NewsletterSubscriber {
-  id                String              @id @default(uuid())
-  email             String              @unique
-  name              String?             // Opcional (se vier de formulário)
-  preferredLanguage String              @default("pt") // pt, en, es, fr
-  source            String              // footer, contact_form, vancouver_form, manual, blog
-  status            NewsletterStatus    @default(ACTIVE) // ACTIVE, UNSUBSCRIBED, BOUNCED, SPAM
-  subscribedAt      DateTime            @default(now())
-  unsubscribedAt    DateTime?
-  lastEmailSentAt   DateTime?
-  emailCount        Int                 @default(0) // Quantos emails já recebeu
-  leadId            String?             @unique // Relação opcional com Lead (se vier de formulário)
-  lead              Lead?               @relation(fields: [leadId], references: [id], onDelete: SetNull)
-  
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  
-  @@index([email])
-  @@index([status])
-  @@index([source])
-  @@index([preferredLanguage])
-  @@index([leadId])
+  DRAFT
+  REVIEW
+  APPROVED
+  PUBLISHED
+  ARCHIVED
 }
 
 enum NewsletterStatus {
@@ -1623,4 +1643,20 @@ enum NewsletterStatus {
   SPAM
 }
 
-
+enum ProspeccaoStatus {
+  NOVO
+  PESQUISANDO
+  QUALIFICADO
+  WARMUP
+  PRONTO
+  ENVIADO
+  ABERTO
+  RESPONDEU
+  EM_REUNIAO
+  PROPOSTA
+  GANHO
+  PERDIDO
+  NURTURE
+  REMOVIDO
+  DUPLICADO
+}
