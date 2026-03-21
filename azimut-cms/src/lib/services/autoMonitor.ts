@@ -4,6 +4,7 @@
 // ════════════════════════════════════════════════════════════
 
 import { prisma } from '@/src/lib/prisma';
+import { SourceType } from '@prisma/client';
 import { AIProviderService } from '@/src/lib/ai-provider';
 import { searchMultipleSources, detectSourceType, getSourceInfo } from './enhancedContentMonitor';
 
@@ -158,7 +159,7 @@ Retorne apenas os resultados RELEVANTES em formato JSON.
           creditType: project.creditType || 'CLIENTE',
           creditText: project.creditText || 'Azimut',
           azimutContributions: project.azimutContributions || [],
-          sourceType,
+          sourceType: sourceType as SourceType,
           sourceUrl: item.url,
           sourceTitle: item.title,
           sourceContent: item.content,
