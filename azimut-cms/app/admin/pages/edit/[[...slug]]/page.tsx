@@ -1982,6 +1982,8 @@ export default function EditPagePage() {
               <strong>Sistema Híbrido:</strong> Use upload local (Mídias) <strong>OU</strong> URL manual (YouTube/Vimeo/Unsplash).
               <br />
               📌 <strong>Prioridade:</strong> Se selecionar Media, usa ela. Senão, usa URL manual.
+              <br />
+              🎥 <strong>Demoreel da Home:</strong> este é o vídeo do topo da página inicial. Fallback atual do site: <code>/demo-azimut.mp4</code>.
             </p>
             <UnifiedMediaUpload
               pageSlug={slug || 'page'}
@@ -2014,7 +2016,7 @@ export default function EditPagePage() {
               }}
               existingMedia={allMedia}
               imageLabel="Imagem de Fundo do Hero"
-              videoLabel="Vídeo Demoreel Institucional"
+              videoLabel="Vídeo Demoreel da Home (topo da página)"
             />
             <div style={{ marginTop: 24, padding: 12, borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
               <p style={{ margin: 0, fontSize: 13, color: '#c0bccf' }}>

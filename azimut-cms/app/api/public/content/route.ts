@@ -53,6 +53,7 @@ export async function GET(request: NextRequest) {
     const pageData = await prisma.page.findUnique({
       where: { slug: page },
       include: {
+        demoreelVideo: true,
         sections: {
           orderBy: { order: 'asc' },
           include: {
@@ -235,6 +236,7 @@ export async function GET(request: NextRequest) {
         },
         heroSlogan: heroSlogan || null,
         heroSubtitle: heroSubtitle || null,
+        demoreelVideo: pageData.demoreelVideo?.originalUrl || pageData.demoreelVideoUrl || null,
         pillars: pillars || null, // Array de 3 pillars ou null
         sections: pageData.sections.map(section => ({
           type: section.type,
