@@ -468,7 +468,7 @@ export default function EditPagePage() {
       const res = await fetch('/api/admin/projects?featured=true');
       if (res.ok) {
         const data = await res.json();
-        const list = (data.projects || []).slice(0, 10).map((p: any) => ({
+        const featuredList = (data.projects || []).slice(0, 10).map((p: any) => ({
           id: p.id,
           title: p.title || p.shortTitle || p.slug || 'Sem título',
           summary: p.summaryPt || p.summaryEn || '',
@@ -480,7 +480,34 @@ export default function EditPagePage() {
           country: p.country,
           year: p.year,
         }));
-        setHomeFeaturedProjects(list);
+
+        if (featuredList.length < 10) {
+          const allRes = await fetch('/api/admin/projects?limit=5000');
+          if (allRes.ok) {
+            const allData = await allRes.json();
+            const usedIds = new Set(featuredList.map((p: any) => p.id));
+            const fillers = (allData.projects || [])
+              .filter((p: any) => p.status === 'PUBLISHED' && !usedIds.has(p.id))
+              .slice(0, 10 - featuredList.length)
+              .map((p: any, idx: number) => ({
+                id: p.id,
+                title: p.title || p.shortTitle || p.slug || 'Sem título',
+                summary: p.summaryPt || p.summaryEn || '',
+                priorityHome: p.priorityHome || (featuredList.length + idx + 1),
+                slug: p.slug,
+                heroImage: p.heroImage?.mediumUrl || p.heroImage?.largeUrl || p.heroImage?.originalUrl || p.thumbnailUrl || null,
+                tags: (p.tags || []).map((t: any) => t.labelPt || t.labelEn || t.slug || 'tag').slice(0, 3),
+                city: p.city,
+                country: p.country,
+                year: p.year,
+              }));
+            setHomeFeaturedProjects([...featuredList, ...fillers]);
+          } else {
+            setHomeFeaturedProjects(featuredList);
+          }
+        } else {
+          setHomeFeaturedProjects(featuredList);
+        }
       }
     } catch (e: any) {
       setReplaceError(e.message || 'Erro ao substituir');
@@ -736,7 +763,7 @@ export default function EditPagePage() {
         const data = await res.json();
         // Já vem filtrado e ordenado do servidor (mesma query da API pública)
         // Não precisa filtrar nem ordenar client-side!
-        const list = (data.projects || [])
+        const featuredList = (data.projects || [])
           .slice(0, 10)
           .map((p: any) => ({
             id: p.id,
@@ -750,7 +777,34 @@ export default function EditPagePage() {
             country: p.country,
             year: p.year,
           }));
-        if (!cancelled) setHomeFeaturedProjects(list);
+
+        if (featuredList.length < 10) {
+          const allRes = await fetch('/api/admin/projects?limit=5000');
+          if (allRes.ok && !cancelled) {
+            const allData = await allRes.json();
+            const usedIds = new Set(featuredList.map((p: any) => p.id));
+            const fillers = (allData.projects || [])
+              .filter((p: any) => p.status === 'PUBLISHED' && !usedIds.has(p.id))
+              .slice(0, 10 - featuredList.length)
+              .map((p: any, idx: number) => ({
+                id: p.id,
+                title: p.title || p.shortTitle || p.slug || 'Sem título',
+                summary: p.summaryPt || p.summaryEn || '',
+                priorityHome: p.priorityHome || (featuredList.length + idx + 1),
+                slug: p.slug,
+                heroImage: p.heroImage?.mediumUrl || p.heroImage?.largeUrl || p.heroImage?.originalUrl || p.thumbnailUrl || null,
+                tags: (p.tags || []).map((t: any) => t.labelPt || t.labelEn || t.slug || 'tag').slice(0, 3),
+                city: p.city,
+                country: p.country,
+                year: p.year,
+              }));
+            setHomeFeaturedProjects([...featuredList, ...fillers]);
+          } else if (!cancelled) {
+            setHomeFeaturedProjects(featuredList);
+          }
+        } else if (!cancelled) {
+          setHomeFeaturedProjects(featuredList);
+        }
       } catch {
         if (!cancelled) setHomeFeaturedProjects([]);
       }
