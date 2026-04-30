@@ -128,6 +128,11 @@ export async function PUT(
       curationButtonTextEs,
       curationButtonTextFr,
       curationFilterCategory,
+      // Hero Media (home): imagem + demoreel
+      heroBackgroundImageId,
+      heroBackgroundImageUrl,
+      demoreelVideoId,
+      demoreelVideoUrl,
     } = body;
 
     const page = await prisma.page.update({
@@ -187,6 +192,11 @@ export async function PUT(
         ...(curationButtonTextEs !== undefined && { curationButtonTextEs }),
         ...(curationButtonTextFr !== undefined && { curationButtonTextFr }),
         ...(curationFilterCategory !== undefined && { curationFilterCategory }),
+        // Hero Media (home): aceita limpar com string vazia => null
+        ...(heroBackgroundImageId !== undefined && { heroBackgroundImageId: heroBackgroundImageId || null }),
+        ...(heroBackgroundImageUrl !== undefined && { heroBackgroundImageUrl: heroBackgroundImageUrl || null }),
+        ...(demoreelVideoId !== undefined && { demoreelVideoId: demoreelVideoId || null }),
+        ...(demoreelVideoUrl !== undefined && { demoreelVideoUrl: demoreelVideoUrl || null }),
       },
     });
 
