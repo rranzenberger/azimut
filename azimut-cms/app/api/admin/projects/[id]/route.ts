@@ -164,15 +164,43 @@ export async function PUT(
     const HOME_SLOTS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;
     const isSlot = (n: number) => HOME_SLOTS.includes(n as any);
 
-    // Garantia: ao marcar este projeto em um slot, qualquer OUTRO projeto nesse slot é desmarcado (e vice-versa implícito: ao desmarcar este, só este sai da Home).
+    // Regra de slots da Home:
+    // - Se mover de um slot A para outro slot B, faz swap (quem estava no B vai para A).
+    // - Se vier de "não exibir" (0) para um slot, desocupa o slot destino.
+    // - Se sair de slot para "não exibir" (0), só remove este projeto da Home.
     if (isSlot(finalPriorityHome)) {
-      await prisma.project.updateMany({
-        where: {
-          id: { not: params.id },
-          priorityHome: finalPriorityHome,
-        },
-        data: { priorityHome: 0, featured: false },
-      });
+      const previousPriority = existing.priorityHome ?? 0;
+      const isSwap =
+        isSlot(previousPriority) &&
+        previousPriority !== finalPriorityHome;
+
+      if (isSwap) {
+        const displaced = await prisma.project.findFirst({
+          where: {
+            id: { not: params.id },
+            priorityHome: finalPriorityHome,
+          },
+          select: { id: true },
+        });
+
+        if (displaced) {
+          await prisma.project.update({
+            where: { id: displaced.id },
+            data: {
+              priorityHome: previousPriority,
+              featured: true,
+            },
+          });
+        }
+      } else {
+        await prisma.project.updateMany({
+          where: {
+            id: { not: params.id },
+            priorityHome: finalPriorityHome,
+          },
+          data: { priorityHome: 0, featured: false },
+        });
+      }
     }
 
     // Caminho mínimo: quando o body tem só featured + priorityHome (ex.: "Substituir destaque"), atualizar só esses dois campos para evitar 500
