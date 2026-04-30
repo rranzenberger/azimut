@@ -19,7 +19,7 @@ interface VideoPlayerProps {
   muted?: boolean
   loop?: boolean
   playsinline?: boolean
-  platform?: 'youtube' | 'vimeo'
+  platform?: 'youtube' | 'vimeo' | 'file'
 }
 
 // Extrair ID do YouTube
@@ -58,7 +58,8 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   // Detectar plataforma automaticamente se não fornecida
   const detectedPlatform = platform || 
     (videoUrl.includes('youtube') || videoUrl.includes('youtu.be') ? 'youtube' : 
-     videoUrl.includes('vimeo') ? 'vimeo' : null)
+     videoUrl.includes('vimeo') ? 'vimeo' :
+     (videoUrl.startsWith('/') || videoUrl.match(/\.(mp4|webm|mov)(\?.*)?$/i)) ? 'file' : null)
 
   const youtubeId = detectedPlatform === 'youtube' ? extractYouTubeId(videoUrl) : null
   const vimeoId = detectedPlatform === 'vimeo' ? extractVimeoId(videoUrl) : null
@@ -87,7 +88,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   }
 
   // ID não extraído
-  if (!youtubeId && !vimeoId) {
+  if ((detectedPlatform === 'youtube' && !youtubeId) || (detectedPlatform === 'vimeo' && !vimeoId)) {
     return (
       <div className={`relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center ${className}`}>
         <div className="text-center p-6">
@@ -211,6 +212,29 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
           allowFullScreen
           className="w-full h-full"
           style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}
+        />
+      </div>
+    )
+  }
+
+  // Arquivo de vídeo direto (mp4/webm/mov)
+  if (detectedPlatform === 'file') {
+    return (
+      <div className={`relative aspect-video overflow-hidden ${className}`} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
+        <video
+          src={videoUrl}
+          poster={thumbnailUrl}
+          autoPlay={autoplay}
+          muted={muted || autoplay}
+          loop={loop}
+          playsInline={playsinline}
+          controls={!autoplay}
+          className="w-full h-full"
+          style={{
+            borderRadius: className.includes('rounded') ? undefined : '1rem',
+            objectFit: objectFit === 'contain' ? 'contain' : 'cover',
+            background: '#000',
+          }}
         />
       </div>
     )
