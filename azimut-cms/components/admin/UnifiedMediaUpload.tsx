@@ -22,6 +22,9 @@ interface MediaData {
   originalUrl: string
   thumbnailUrl?: string
   altPt?: string
+  pageSlug?: string
+  sectionSlug?: string
+  imageType?: string
 }
 
 interface UnifiedMediaUploadProps {
@@ -87,6 +90,9 @@ export default function UnifiedMediaUpload({
   const [videoPreview, setVideoPreview] = useState<string | null>(videoUrl || null)
   const [externalImageUrl, setExternalImageUrl] = useState('')
   const [externalVideoUrl, setExternalVideoUrl] = useState('')
+  const [videoLibraryFilter, setVideoLibraryFilter] = useState<'all' | 'demoreel'>(
+    sectionSlug === 'hero' ? 'demoreel' : 'all'
+  )
   
   const imageInputRef = useRef<HTMLInputElement>(null)
   const videoInputRef = useRef<HTMLInputElement>(null)
@@ -129,6 +135,7 @@ export default function UnifiedMediaUpload({
       formData.append('type', type)
       formData.append('pageSlug', pageSlug)
       if (sectionSlug) formData.append('sectionSlug', sectionSlug)
+      if (sectionSlug === 'hero' && type === 'VIDEO') formData.append('imageType', 'demoreel')
 
       const response = await fetch('/api/admin/media/upload', {
         method: 'POST',
@@ -591,15 +598,51 @@ export default function UnifiedMediaUpload({
               onChange={(e) => e.target.value && handleSelectFromLibrary(e.target.value, 'VIDEO')}
               style={selectStyle}
             >
-              <option value="">📚 Selecionar da Biblioteca</option>
+              <option value="">📚 Selecionar da Biblioteca ({videoLibraryFilter === 'demoreel' ? 'somente demoreel' : 'todos'})</option>
               {existingMedia
-                .filter(m => m.type === 'VIDEO')
+                .filter((m) => {
+                  if (m.type !== 'VIDEO') return false
+                  if (videoLibraryFilter === 'all') return true
+                  return m.imageType === 'demoreel' || m.sectionSlug === 'hero'
+                })
                 .map(media => (
                   <option key={media.id} value={media.id}>
                     🎬 {media.altPt || media.originalUrl.split('/').pop()}
                   </option>
                 ))}
             </select>
+          </div>
+          <div style={{ display: 'flex', gap: 8, marginTop: -8, marginBottom: 12 }}>
+            <button
+              type="button"
+              onClick={() => setVideoLibraryFilter('demoreel')}
+              style={{
+                padding: '6px 10px',
+                borderRadius: 999,
+                border: '1px solid rgba(201,35,55,0.45)',
+                background: videoLibraryFilter === 'demoreel' ? 'rgba(201,35,55,0.22)' : 'rgba(201,35,55,0.08)',
+                color: '#fca5a5',
+                fontSize: 11,
+                cursor: 'pointer',
+              }}
+            >
+              🎬 Apenas demoreel
+            </button>
+            <button
+              type="button"
+              onClick={() => setVideoLibraryFilter('all')}
+              style={{
+                padding: '6px 10px',
+                borderRadius: 999,
+                border: '1px solid rgba(56,189,248,0.45)',
+                background: videoLibraryFilter === 'all' ? 'rgba(56,189,248,0.22)' : 'rgba(56,189,248,0.08)',
+                color: '#7dd3fc',
+                fontSize: 11,
+                cursor: 'pointer',
+              }}
+            >
+              📚 Todos os vídeos
+            </button>
           </div>
 
           {/* URL Externa de Vídeo */}

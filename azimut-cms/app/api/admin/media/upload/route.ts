@@ -8,7 +8,7 @@ import { put } from '@vercel/blob';
 export const runtime = 'nodejs';
 
 const MAX_IMAGE_MB = 8;
-const MAX_VIDEO_MB = 25;
+const MAX_VIDEO_MB = 50;
 const UPLOAD_BASE = process.env.UPLOAD_BASE || 'uploads';
 
 export async function POST(req: NextRequest) {
@@ -44,10 +44,14 @@ export async function POST(req: NextRequest) {
 
     let mediaRecord;
 
+    const pageSlug = (form.get('pageSlug') as string) || undefined;
+    const sectionSlug = (form.get('sectionSlug') as string) || undefined;
+    const imageType = (form.get('imageType') as string) || undefined;
+
     if (type === 'IMAGE') {
-      mediaRecord = await processImage(buffer, file.name, contentType);
+      mediaRecord = await processImage(buffer, file.name, contentType, { pageSlug, sectionSlug, imageType });
     } else {
-      mediaRecord = await processVideo(buffer, file.name, contentType);
+      mediaRecord = await processVideo(buffer, file.name, contentType, { pageSlug, sectionSlug, imageType });
     }
 
     return NextResponse.json({ success: true, media: mediaRecord });
@@ -60,7 +64,12 @@ export async function POST(req: NextRequest) {
   }
 }
 
-async function processImage(buffer: Buffer, filename: string, contentType: string) {
+async function processImage(
+  buffer: Buffer,
+  filename: string,
+  contentType: string,
+  meta?: { pageSlug?: string; sectionSlug?: string; imageType?: string }
+) {
   const image = sharp(buffer);
   const metadata = await image.metadata();
   const timestamp = Date.now();
@@ -121,11 +130,19 @@ async function processImage(buffer: Buffer, filename: string, contentType: strin
       format: format || null,
       contentType,
       altPt: `Upload ${baseName}`,
+      pageSlug: meta?.pageSlug || null,
+      sectionSlug: meta?.sectionSlug || null,
+      imageType: meta?.imageType || null,
     },
   });
 }
 
-async function processVideo(buffer: Buffer, filename: string, contentType: string) {
+async function processVideo(
+  buffer: Buffer,
+  filename: string,
+  contentType: string,
+  meta?: { pageSlug?: string; sectionSlug?: string; imageType?: string }
+) {
   const baseName = filename.replace(/[^a-zA-Z0-9-_.]/g, '_');
   const relPath = `${UPLOAD_BASE}/videos/${Date.now()}-${baseName}`;
   const publicUrl = await saveFileLocal(relPath, buffer, contentType);
@@ -140,6 +157,9 @@ async function processVideo(buffer: Buffer, filename: string, contentType: strin
       contentType,
       sizeBytes: buffer.byteLength,
       altPt: `Vídeo ${baseName}`,
+      pageSlug: meta?.pageSlug || null,
+      sectionSlug: meta?.sectionSlug || null,
+      imageType: meta?.imageType || null,
     },
   });
 }
