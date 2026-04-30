@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
+import { upload } from '@vercel/blob/client'
 
 /**
  * UnifiedMediaUpload - Componente unificado para upload de mídia
@@ -129,13 +130,54 @@ export default function UnifiedMediaUpload({
         throw new Error(`Tipo inválido! Use: ${validTypes.map(t => t.split('/')[1]).join(', ')}`)
       }
 
-      // FormData
+      const imageType = sectionSlug === 'hero' && type === 'VIDEO' ? 'demoreel' : undefined
+
+      // Vídeos: upload direto para Blob (evita limite de payload da função serverless)
+      if (type === 'VIDEO') {
+        const blob = await upload(file.name, file, {
+          access: 'public',
+          handleUploadUrl: '/api/admin/media/upload/client',
+          clientPayload: JSON.stringify({
+            type,
+            pageSlug,
+            sectionSlug: sectionSlug || null,
+            imageType: imageType || null,
+          }),
+        })
+
+        const createResponse = await fetch('/api/admin/media', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'VIDEO',
+            originalUrl: blob.url,
+            altPt: `Vídeo ${pageSlug}`,
+            pageSlug,
+            sectionSlug: sectionSlug || null,
+            imageType: imageType || null,
+          })
+        })
+
+        if (!createResponse.ok) {
+          const errorData = await createResponse.json().catch(() => ({}))
+          throw new Error(errorData.error || 'Erro ao registrar vídeo na biblioteca')
+        }
+
+        const createData = await createResponse.json()
+        const mediaId = createData.media?.id
+        const mediaUrl = createData.media?.originalUrl || blob.url
+        onSuccess(mediaId, mediaUrl)
+        setSuccess('Vídeo enviado com sucesso!')
+        return
+      }
+
+      // Imagens mantidas no fluxo atual
       const formData = new FormData()
       formData.append('file', file)
       formData.append('type', type)
       formData.append('pageSlug', pageSlug)
       if (sectionSlug) formData.append('sectionSlug', sectionSlug)
-      if (sectionSlug === 'hero' && type === 'VIDEO') formData.append('imageType', 'demoreel')
+      if (imageType) formData.append('imageType', imageType)
 
       const response = await fetch('/api/admin/media/upload', {
         method: 'POST',
