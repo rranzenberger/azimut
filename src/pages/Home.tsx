@@ -1005,14 +1005,21 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* Vídeo Fullscreen - Total largura lateral (de fora a fora) */}
         <section ref={demoreelRef} className="relative h-screen w-full overflow-hidden">
           {(() => {
-            // Buscar demoreel configurado no backoffice (home > Hero Media)
+            // Buscar demoreel configurado no backoffice (home > Demoreel Watch Our Work)
             const demoreelVideoBackoffice = cmsContent?.page?.demoreelVideo
             const featured = recommended[0] || defaultProjects[0]
             const fallbackVideo = featured?.heroImage?.type === 'VIDEO' ? featured.heroImage.original : null
             
-            // ORDEM DE PRIORIDADE: 1) Backoffice 2) Projeto destaque 3) URL antiga (fallback seguro)
-            const videoUrl = demoreelVideoBackoffice || fallbackVideo || 'https://www.youtube.com/watch?v=F_kfcfK_v44'
-            const thumbnailUrl = featured?.heroImage?.thumbnail || undefined
+            // ORDEM DE PRIORIDADE: 1) Backoffice 2) Projeto destaque 3) MP4 local.
+            // Evita "vídeo não suportado" quando vier URL de YouTube em formato watch.
+            const preferredVideoUrl = demoreelVideoBackoffice || fallbackVideo || '/demo-azimut.mp4'
+            const videoUrl = typeof preferredVideoUrl === 'string' && preferredVideoUrl.includes('youtube.com/watch')
+              ? '/demo-azimut.mp4'
+              : preferredVideoUrl
+            const thumbnailUrl =
+              cmsContent?.page?.demoreelThumbnailUrl ||
+              featured?.heroImage?.thumbnail ||
+              undefined
             
             return (
               <>

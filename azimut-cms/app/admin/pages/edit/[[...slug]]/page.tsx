@@ -1090,6 +1090,11 @@ export default function EditPagePage() {
             </button>
           )}
           {slug === 'home' && (
+            <button type="button" onClick={() => handleSectionToggle('heroMedia')} style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid rgba(201,35,55,0.5)', background: openSection === 'heroMedia' ? 'rgba(201,35,55,0.2)' : 'rgba(201,35,55,0.1)', color: '#fca5a5', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
+              🎥 Demoreel (Watch Our Work)
+            </button>
+          )}
+          {slug === 'home' && (
             <button type="button" onClick={() => handleSectionToggle('pillars')} style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid rgba(56, 189, 248, 0.4)', background: openSection === 'pillars' ? 'rgba(56, 189, 248, 0.25)' : 'rgba(56, 189, 248, 0.1)', color: '#7dd3fc', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>
               💡 Pilares
             </button>
@@ -1115,7 +1120,12 @@ export default function EditPagePage() {
             title="Hero da Home — como aparece no site"
             mainLabel="Imagem de fundo ou vídeo demoreel"
             mainImageUrl={formData.heroBackgroundImageUrl || null}
-            mainVideoUrl={formData.demoreelVideoUrl || null}
+            mainVideoUrl={
+              formData.demoreelVideoUrl ||
+              (formData.demoreelVideoId
+                ? (allMedia.find((m) => m.id === formData.demoreelVideoId && m.type === 'VIDEO')?.originalUrl || null)
+                : null)
+            }
             mainTitle={formData.heroSloganPt || 'Home'}
             mainOnly
             galleryEmptyMessage="Use a seção « Hero Media » abaixo para trocar imagem ou vídeo."
@@ -1977,13 +1987,17 @@ export default function EditPagePage() {
 
         {/* Hero Media - SISTEMA HÍBRIDO: Media OU URL */}
         {slug === 'home' && (
-          <CollapsibleSection id="heroMedia" title="Hero Media (Imagem & Demoreel)" icon="🎬" borderColor="rgba(201,35,55,0.2)" bgColor="rgba(201,35,55,0.05)" isOpen={openSection === 'heroMedia'} onToggle={handleSectionToggle}>
+          <CollapsibleSection id="heroMedia" title="Demoreel Watch Our Work (vídeo abaixo do Hero) + Hero Media" icon="🎬" borderColor="rgba(201,35,55,0.2)" bgColor="rgba(201,35,55,0.05)" isOpen={openSection === 'heroMedia'} onToggle={handleSectionToggle}>
             <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
+              <strong>Este é o vídeo da seção "Watch Our Work" (abaixo do Hero).</strong>
+              <br />
               <strong>Sistema Híbrido:</strong> Use upload local (Mídias) <strong>OU</strong> URL manual (YouTube/Vimeo/Unsplash).
               <br />
               📌 <strong>Prioridade:</strong> Se selecionar Media, usa ela. Senão, usa URL manual.
               <br />
-              🎥 <strong>Demoreel da Home:</strong> este é o vídeo do topo da página inicial. Fallback atual do site: <code>/demo-azimut.mp4</code>.
+              ⚠️ <strong>Recomendado:</strong> usar MP4 uploadado no CMS (URL do tipo YouTube "watch?v=" pode dar vídeo não suportado).
+              <br />
+              🖼️ <strong>Capa (thumbnail) do demoreel:</strong> use a <strong>Imagem de Fundo do Hero</strong> abaixo. Essa imagem vira a capa do vídeo no site.
             </p>
             <UnifiedMediaUpload
               pageSlug={slug || 'page'}
@@ -2015,9 +2029,33 @@ export default function EditPagePage() {
                 description: 'Vídeo institucional (MP4, WebM ou MOV)'
               }}
               existingMedia={allMedia}
-              imageLabel="Imagem de Fundo do Hero"
-              videoLabel="Vídeo Demoreel da Home (topo da página)"
+              imageLabel="Imagem de Fundo do Hero (também capa do demoreel)"
+              videoLabel="Vídeo Demoreel do Watch Our Work (Home)"
             />
+            {(() => {
+              const mediaVideoUrl = formData.demoreelVideoId
+                ? (allMedia.find((m) => m.id === formData.demoreelVideoId && m.type === 'VIDEO')?.originalUrl || null)
+                : null;
+              const activeVideoUrl = formData.demoreelVideoUrl || mediaVideoUrl || null;
+              const sourceLabel = formData.demoreelVideoUrl
+                ? 'URL manual'
+                : mediaVideoUrl
+                  ? 'Biblioteca de Mídias'
+                  : 'Nenhum vídeo definido';
+              return (
+                <div style={{ marginTop: 14, padding: 12, borderRadius: 8, background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.28)' }}>
+                  <p style={{ margin: 0, fontSize: 13, color: '#d1fae5' }}>
+                    <strong>Vídeo ativo no site (Watch Our Work):</strong> {sourceLabel}
+                  </p>
+                  <p style={{ margin: '6px 0 0', fontSize: 12, color: '#a7f3d0', wordBreak: 'break-all' }}>
+                    {activeVideoUrl || 'Sem URL ativa no momento. Faça upload ou informe uma URL.'}
+                  </p>
+                  <p style={{ margin: '8px 0 0', fontSize: 12, color: '#a7f3d0', wordBreak: 'break-all' }}>
+                    <strong>Capa ativa no site:</strong> {formData.heroBackgroundImageUrl || 'Sem capa definida. Selecione a imagem acima.'}
+                  </p>
+                </div>
+              );
+            })()}
             <div style={{ marginTop: 24, padding: 12, borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
               <p style={{ margin: 0, fontSize: 13, color: '#c0bccf' }}>
                 💡 <strong>Não vê suas mídias aqui?</strong>{' '}
