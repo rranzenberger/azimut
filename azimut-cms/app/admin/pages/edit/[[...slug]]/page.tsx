@@ -416,8 +416,8 @@ export default function EditPagePage() {
     }
   }, [editProjectData]);
 
-  // Substituir projeto por outro (modal): slot 0=principal, 1–6=secundários (2–7)
-  const SLOT_PRIORITIES = [1, 2, 3, 4, 5, 6, 7] as const; // ordem: 1º principal, 2º–7º secundários
+  // Substituir projeto por outro (modal): slot 0=principal, 1–9=secundários (2–10)
+  const SLOT_PRIORITIES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const; // ordem: 1º principal, 2º–10º secundários
   const [replaceSlotIndex, setReplaceSlotIndex] = useState<number | null>(null);
   const [replaceProjectList, setReplaceProjectList] = useState<Array<{ id: string; title: string; slug: string; status: string; year?: number | null; month?: number | null; yearEnd?: number | null; monthEnd?: number | null }>>([]);
   const [replacingProjectId, setReplacingProjectId] = useState<string | null>(null);
@@ -468,7 +468,7 @@ export default function EditPagePage() {
       const res = await fetch('/api/admin/projects?featured=true');
       if (res.ok) {
         const data = await res.json();
-        const list = (data.projects || []).slice(0, 6).map((p: any) => ({
+        const list = (data.projects || []).slice(0, 10).map((p: any) => ({
           id: p.id,
           title: p.title || p.shortTitle || p.slug || 'Sem título',
           summary: p.summaryPt || p.summaryEn || '',
@@ -1405,10 +1405,25 @@ export default function EditPagePage() {
                   );
                 })()}
 
-                {/* ═══ 3 CARDS MENORES (como no site) — edição inline ═══ */}
-                {homeFeaturedProjects.length > 1 && (
+                {/* ═══ 3 CARDS MENORES (como no site) — edição inline (slots 2,3,4) ═══ */}
+                {(homeFeaturedProjects.length > 1 || true) && (
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, padding: '16px 20px 24px' }}>
-                    {homeFeaturedProjects.slice(1, 4).map((p: any, idx: number) => {
+                    {[0, 1, 2].map((idx: number) => {
+                      const p: any = homeFeaturedProjects[idx + 1] || null;
+                      if (!p) {
+                        return (
+                          <div key={`empty-slot-${idx + 2}`} style={{ borderRadius: 12, overflow: 'hidden', border: '1px dashed rgba(148,163,184,0.35)', background: 'rgba(20,24,39,0.45)', minHeight: 260, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                            <div style={{ padding: 14 }}>
+                              <div style={{ fontSize: 11, color: '#86efac', fontWeight: 700, marginBottom: 8 }}>#{idx + 2} · P{idx + 2}</div>
+                              <p style={{ margin: 0, fontSize: 12, color: '#64748b' }}>Slot vazio. Clique em substituir ou criar novo para preencher este destaque.</p>
+                            </div>
+                            <div style={{ padding: 12, display: 'flex', gap: 8 }}>
+                              <button type="button" onClick={() => openReplaceModal(idx + 1)} style={{ flex: 1, background: 'rgba(245,158,11,0.9)', color: '#fff', padding: '8px 10px', borderRadius: 8, fontSize: 11, fontWeight: 700, border: 'none', cursor: 'pointer' }}>🔄 Substituir</button>
+                              <a href={`/admin/projects/new?fromHomeSlot=${idx + 1}`} style={{ flex: 1, textAlign: 'center', background: 'rgba(59,130,246,0.9)', color: '#fff', padding: '8px 10px', borderRadius: 8, fontSize: 11, fontWeight: 700, textDecoration: 'none' }}>➕ Novo</a>
+                            </div>
+                          </div>
+                        );
+                      }
                       const isEditing = editingProjectId === p.id;
                       return (
                       <div key={p.id} style={{ borderRadius: 12, overflow: 'hidden', border: isEditing ? '2px solid rgba(34,197,94,0.5)' : '1px solid rgba(255,255,255,0.06)', background: 'rgba(20,24,39,0.8)' }}>
@@ -1550,11 +1565,26 @@ export default function EditPagePage() {
                 )}
 
                 {/* ═══ Segunda e terceira linhas: 6 cards (slots 5 até 10) ═══ */}
-                {homeFeaturedProjects.length > 4 && (
+                {true && (
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, padding: '0 20px 24px' }}>
-                    {homeFeaturedProjects.slice(4, 10).map((p: any, idx: number) => {
-                      const isEditing = editingProjectId === p.id;
+                    {[0, 1, 2, 3, 4, 5].map((idx: number) => {
+                      const p: any = homeFeaturedProjects[idx + 4] || null;
                       const slotIdx = 4 + idx;
+                      if (!p) {
+                        return (
+                          <div key={`empty-slot-${slotIdx + 1}`} style={{ borderRadius: 12, overflow: 'hidden', border: '1px dashed rgba(148,163,184,0.35)', background: 'rgba(20,24,39,0.45)', minHeight: 260, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                            <div style={{ padding: 14 }}>
+                              <div style={{ fontSize: 11, color: '#86efac', fontWeight: 700, marginBottom: 8 }}>#{slotIdx + 1} · P{slotIdx + 1}</div>
+                              <p style={{ margin: 0, fontSize: 12, color: '#64748b' }}>Slot vazio. Clique em substituir ou criar novo para preencher este destaque.</p>
+                            </div>
+                            <div style={{ padding: 12, display: 'flex', gap: 8 }}>
+                              <button type="button" onClick={() => openReplaceModal(slotIdx)} style={{ flex: 1, background: 'rgba(245,158,11,0.9)', color: '#fff', padding: '8px 10px', borderRadius: 8, fontSize: 11, fontWeight: 700, border: 'none', cursor: 'pointer' }}>🔄 Substituir</button>
+                              <a href={`/admin/projects/new?fromHomeSlot=${slotIdx}`} style={{ flex: 1, textAlign: 'center', background: 'rgba(59,130,246,0.9)', color: '#fff', padding: '8px 10px', borderRadius: 8, fontSize: 11, fontWeight: 700, textDecoration: 'none' }}>➕ Novo</a>
+                            </div>
+                          </div>
+                        );
+                      }
+                      const isEditing = editingProjectId === p.id;
                       return (
                       <div key={p.id} style={{ borderRadius: 12, overflow: 'hidden', border: isEditing ? '2px solid rgba(34,197,94,0.5)' : '1px solid rgba(255,255,255,0.06)', background: 'rgba(20,24,39,0.8)' }}>
                         <div style={{ position: 'relative', paddingTop: '65%', background: '#111827' }}>

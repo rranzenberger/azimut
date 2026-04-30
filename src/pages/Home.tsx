@@ -297,9 +297,30 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
       ? projects
       : defaultProjects;
     const minRequired = 10;
-    const pool = base.length < minRequired
-      ? [...base, ...defaultProjects.slice(0, minRequired - base.length)]
-      : base;
+
+    // Garante quantidade minima para a grade (1 principal + 9 cards), evitando buracos visuais.
+    const uniquePool: HomeProject[] = []
+    const seen = new Set<string>()
+    const pushUnique = (list: HomeProject[]) => {
+      for (const item of list) {
+        const key = item?.slug || `${item?.title || 'project'}-${item?.year || ''}`
+        if (seen.has(key)) continue
+        seen.add(key)
+        uniquePool.push(item)
+      }
+    }
+
+    pushUnique(base as HomeProject[])
+    pushUnique(defaultProjects as HomeProject[])
+
+    const fallbackCycle = [...(base as HomeProject[]), ...(defaultProjects as HomeProject[])]
+    let i = 0
+    while (uniquePool.length < minRequired && fallbackCycle.length > 0 && i < 100) {
+      uniquePool.push(fallbackCycle[i % fallbackCycle.length])
+      i += 1
+    }
+
+    const pool = uniquePool.slice(0, minRequired)
     // Reordenar por comportamento (destaque fixo; seguintes personalizados)
     const personalized = personalizeProjectOrder(pool, interestProfile);
     return personalized.slice(0, minRequired);
@@ -1644,7 +1665,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 
                 return (
                   <article
-                    key={project.slug || index}
+                    key={`${project.slug || 'project'}-${index}`}
                     className="group relative aspect-[4/3] overflow-hidden rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_30px_80px_rgba(201,35,55,0.5)] bg-slate-950"
                     style={{
                       animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`,
@@ -1757,7 +1778,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 const imageUrl = project?.heroImage?.large || project?.heroImage?.medium || project?.heroImage?.original || project?.thumbnailUrl || project?.image || ''
                 return (
                   <article
-                    key={project.slug || index + 4}
+                    key={`${project.slug || 'project'}-${index + 4}`}
                     className="group relative aspect-[4/3] overflow-hidden rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_30px_80px_rgba(201,35,55,0.5)] bg-slate-950"
                     style={{
                       animation: `fadeInUp 0.6s ease-out ${(4 + index) * 0.1}s both`,
