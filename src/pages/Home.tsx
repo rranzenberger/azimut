@@ -1002,8 +1002,17 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         {/* Linha vermelha ACIMA do vídeo - Full width */}
         <div className="w-full h-[3px] bg-gradient-to-r from-transparent via-azimut-red to-transparent" />
 
-        {/* Vídeo Fullscreen - Total largura lateral (de fora a fora) */}
-        <section ref={demoreelRef} className="relative h-screen w-full overflow-hidden">
+        {/* Vídeo 16:9 sem crop - mantém textos/legendas do demoreel */}
+        <section
+          ref={demoreelRef}
+          className="relative w-full overflow-hidden"
+          style={{
+            // Área mais alta para desktop, mas sempre preservando 16:9
+            aspectRatio: '16 / 9',
+            minHeight: 'min(56.25vw, 420px)',
+            maxHeight: '85vh',
+          }}
+        >
           {(() => {
             // Buscar demoreel configurado no backoffice (home > Demoreel Watch Our Work)
             const demoreelVideoBackoffice = cmsContent?.page?.demoreelVideo
@@ -1029,7 +1038,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     videoUrl={videoUrl}
                     thumbnailUrl={thumbnailUrl}
                     alt={lang === 'pt' ? 'Demoreel Azimut' : lang === 'es' ? 'Demoreel Azimut' : lang === 'fr' ? 'Démoreel Azimut' : 'Azimut Demoreel'}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full"
+                    objectFit="contain"
                     autoplay={isDemoreelVisible}
                     muted={true}
                     loop={true}
