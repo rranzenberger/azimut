@@ -23,6 +23,7 @@ interface MediaData {
   originalUrl: string
   thumbnailUrl?: string
   altPt?: string
+  createdAt?: string | Date
   pageSlug?: string
   sectionSlug?: string
   imageType?: string
@@ -108,7 +109,7 @@ export default function UnifiedMediaUpload({
     }
   }
 
-  const getMediaOptionLabel = (media: Media) => {
+  const getMediaOptionLabel = (media: MediaData) => {
     const base = (media.altPt || '').trim()
     const fileName = getFileNameFromUrl(media.originalUrl)
     const created = media.createdAt ? new Date(media.createdAt).toLocaleDateString('pt-BR') : ''
