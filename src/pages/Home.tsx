@@ -1054,6 +1054,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 <div className="absolute inset-0 w-full h-full">
                   <VideoPlayer
                     videoUrl={videoUrl}
+                    fallbackVideoUrl="/demo-azimut.mp4"
                     thumbnailUrl={thumbnailUrl}
                     alt={lang === 'pt' ? 'Demoreel Azimut' : lang === 'es' ? 'Demoreel Azimut' : lang === 'fr' ? 'Démoreel Azimut' : 'Azimut Demoreel'}
                     className="w-full h-full"

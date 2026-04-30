@@ -10,6 +10,7 @@ import { trackVideoEvent } from '../utils/analytics'
 
 interface VideoPlayerProps {
   videoUrl: string
+  fallbackVideoUrl?: string
   thumbnailUrl?: string
   alt?: string
   className?: string
@@ -36,6 +37,7 @@ function extractVimeoId(url: string): string | null {
 
 export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   videoUrl,
+  fallbackVideoUrl,
   thumbnailUrl,
   alt,
   className = '',
@@ -50,6 +52,8 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   // TODOS OS HOOKS NO TOPO - OBRIGATÓRIO PARA EVITAR ERRO #310
   // ═══════════════════════════════════════════════════════════
   const [isPlaying, setIsPlaying] = useState(false)
+  const [currentFileUrl, setCurrentFileUrl] = useState(videoUrl)
+  const [filePlaybackFailed, setFilePlaybackFailed] = useState(false)
   const videoIdRef = useRef<string | null>(null)
   const progressTracked = useRef<Set<number>>(new Set())
   const hasPlayed = useRef(false)
@@ -67,6 +71,11 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   useEffect(() => {
     videoIdRef.current = youtubeId || vimeoId || videoUrl
   }, [youtubeId, vimeoId, videoUrl])
+
+  useEffect(() => {
+    setCurrentFileUrl(videoUrl)
+    setFilePlaybackFailed(false)
+  }, [videoUrl])
 
   // ═══════════════════════════════════════════════════════════
   // AGORA SIM PODEMOS TER RETURNS CONDICIONAIS (DEPOIS DOS HOOKS)
@@ -218,16 +227,37 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
   // Arquivo de vídeo direto (mp4/webm/mov)
   if (detectedPlatform === 'file') {
+    if (filePlaybackFailed) {
+      return (
+        <div className={`relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center ${className}`}>
+          <div className="text-center p-6">
+            <svg className="w-16 h-16 mx-auto mb-2 text-azimut-red/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+            </svg>
+            <p className="text-xs text-slate-400 uppercase tracking-wider">Erro ao carregar vídeo</p>
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div className={`relative aspect-video overflow-hidden ${className}`} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
         <video
-          src={videoUrl}
+          src={currentFileUrl}
           poster={thumbnailUrl}
           autoPlay={autoplay}
           muted={muted || autoplay}
           loop={loop}
           playsInline={playsinline}
           controls={!autoplay}
+          preload="metadata"
+          onError={() => {
+            if (fallbackVideoUrl && currentFileUrl !== fallbackVideoUrl) {
+              setCurrentFileUrl(fallbackVideoUrl)
+              return
+            }
+            setFilePlaybackFailed(true)
+          }}
           className="w-full h-full"
           style={{
             borderRadius: className.includes('rounded') ? undefined : '1rem',
