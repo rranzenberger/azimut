@@ -98,6 +98,30 @@ export async function GET(request: NextRequest) {
       ...(isWork ? {} : { take: 10 }),
     });
 
+    // Home: completar os 10 slots com projetos publicados (com capa) quando faltar prioridade configurada.
+    if (!isWork && featuredProjects.length < 10) {
+      const usedIds = featuredProjects.map((p) => p.id);
+      const fillers = await prisma.project.findMany({
+        where: {
+          status: 'PUBLISHED',
+          id: { notIn: usedIds },
+          heroImageId: { not: null },
+        },
+        include: {
+          heroImage: true,
+          tags: true,
+          services: true,
+        },
+        orderBy: [
+          { year: 'desc' },
+          { month: 'desc' },
+          { title: 'asc' },
+        ],
+        take: 10 - featuredProjects.length,
+      });
+      featuredProjects = [...featuredProjects, ...fillers];
+    }
+
     // 3b. Para page=work: os 7 em destaque (topo da página) = exatamente os marcados no backoffice
     let featuredProjectsWork: typeof featuredProjects | null = null;
     if (isWork) {
