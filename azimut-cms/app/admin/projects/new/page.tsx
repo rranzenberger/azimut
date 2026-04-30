@@ -524,6 +524,9 @@ export default function NewProjectPage() {
               { value: 5, label: 'Principal 5' },
               { value: 6, label: 'Principal 6' },
               { value: 7, label: 'Principal 7' },
+              { value: 8, label: 'Principal 8' },
+              { value: 9, label: 'Principal 9' },
+              { value: 10, label: 'Principal 10' },
             ].map(({ value, label }) => {
               const isChecked = formData.priorityHome === value;
               return (

@@ -56,10 +56,9 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const hasCompleted = useRef(false)
 
   // Detectar plataforma automaticamente se não fornecida
-  const detectedPlatform = platform || 
-    (videoUrl.includes('youtube') || videoUrl.includes('youtu.be') ? 'youtube' : 
-     videoUrl.includes('vimeo') ? 'vimeo' :
-     (videoUrl.startsWith('/') || videoUrl.match(/\.(mp4|webm|mov)(\?.*)?$/i)) ? 'file' : null)
+  const detectedPlatform = platform ||
+    (videoUrl.includes('youtube') || videoUrl.includes('youtu.be') ? 'youtube' :
+     videoUrl.includes('vimeo') ? 'vimeo' : 'file')
 
   const youtubeId = detectedPlatform === 'youtube' ? extractYouTubeId(videoUrl) : null
   const vimeoId = detectedPlatform === 'vimeo' ? extractVimeoId(videoUrl) : null

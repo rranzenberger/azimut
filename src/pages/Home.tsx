@@ -278,7 +278,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     }
   }, [])
   
-  // Projetos: SEMPRE os mesmos do backoffice (destaques = featured + priorityHome 1–7)
+  // Projetos: SEMPRE os mesmos do backoffice (destaques = featured + priorityHome 1–10)
   // Prioridade: backoffice (CMS) → fallback estático. Não usar personalizedProjects para os slots principais, para não divergir do backoffice.
   const projects = useMemo(() => {
     if (cmsContent?.highlightProjects && Array.isArray(cmsContent.highlightProjects) && cmsContent.highlightProjects.length > 0) {
@@ -291,12 +291,12 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
   const interestProfile = useMemo(() => getInterestProfile(), []);
 
   // Projetos recomendados: base (prioridade backoffice) + reordenação por comportamento
-  // 1 destaque + 6 cards (2 linhas de 3); quando o visitante tem histórico, a ordem pode ser personalizada
+  // 1 destaque + 9 cards (3 linhas de 3); quando o visitante tem histórico, a ordem pode ser personalizada
   const recommended = useMemo(() => {
     const base = projects && Array.isArray(projects) && projects.length > 0
       ? projects
       : defaultProjects;
-    const minRequired = 7;
+    const minRequired = 10;
     const pool = base.length < minRequired
       ? [...base, ...defaultProjects.slice(0, minRequired - base.length)]
       : base;
@@ -1020,11 +1020,8 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             const fallbackVideo = featured?.heroImage?.type === 'VIDEO' ? featured.heroImage.original : null
             
             // ORDEM DE PRIORIDADE: 1) Backoffice 2) Projeto destaque 3) MP4 local.
-            // Evita "vídeo não suportado" quando vier URL de YouTube em formato watch.
             const preferredVideoUrl = demoreelVideoBackoffice || fallbackVideo || '/demo-azimut.mp4'
-            const videoUrl = typeof preferredVideoUrl === 'string' && preferredVideoUrl.includes('youtube.com/watch')
-              ? '/demo-azimut.mp4'
-              : preferredVideoUrl
+            const videoUrl = preferredVideoUrl
             const thumbnailUrl =
               cmsContent?.page?.demoreelThumbnailUrl ||
               featured?.heroImage?.thumbnail ||
@@ -1639,7 +1636,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               )
             })()}
 
-            {/* 3 PROJETOS SECUNDÁRIOS - Grid 1x3 */}
+            {/* Primeira linha de projetos secundários: 3 cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               {recommended.slice(1, 4).map((project: HomeProject, index: number) => {
                 const hasVideo = project?.heroImage?.type === 'VIDEO' && project?.heroImage?.original
@@ -1689,7 +1686,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         </div>
                       </div>
                     )}
-                    {/* Tarja igual em todos os 6 cards: tema escuro preto, tema claro marrom; cantos alinhados ao card (sem bicos) */}
+                    {/* Tarja igual em todos os cards: tema escuro preto, tema claro marrom; cantos alinhados ao card (sem bicos) */}
                     <div 
                       className="absolute bottom-0 left-0 right-0 z-10 pt-6 pb-4 px-4 overflow-hidden"
                       style={{
@@ -1745,7 +1742,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               })}
             </div>
 
-            {/* Segunda linha: 3 cards (slots 5, 6, 7) — quando há perfil, ordem é personalizada; label opcional */}
+            {/* Segunda e terceira linhas: 6 cards (slots 5–10) — quando há perfil, ordem é personalizada; label opcional */}
             {interestProfile.hasEnoughData && (
               <p className={`text-center text-sm mb-4 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
                 {lang === 'pt' && 'Sugestões para você'}
@@ -1755,7 +1752,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
               </p>
             )}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              {recommended.slice(4, 7).map((project: HomeProject, index: number) => {
+              {recommended.slice(4, 10).map((project: HomeProject, index: number) => {
                 const hasVideo = project?.heroImage?.type === 'VIDEO' && project?.heroImage?.original
                 const imageUrl = project?.heroImage?.large || project?.heroImage?.medium || project?.heroImage?.original || project?.thumbnailUrl || project?.image || ''
                 return (
@@ -1802,7 +1799,7 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                         </div>
                       </div>
                     )}
-                    {/* Tarja igual em todos os 6 cards: tema escuro preto, tema claro marrom; cantos alinhados ao card (sem bicos) */}
+                    {/* Tarja igual em todos os cards: tema escuro preto, tema claro marrom; cantos alinhados ao card (sem bicos) */}
                     <div 
                       className="absolute bottom-0 left-0 right-0 z-10 pt-6 pb-4 px-4 overflow-hidden"
                       style={{

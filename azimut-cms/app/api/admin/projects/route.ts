@@ -27,9 +27,9 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(searchParams.get('offset') || '0');
     const featuredOnly = searchParams.get('featured') === 'true';
 
-    // Se featured=true: featured + priorityHome 1–4 + PUBLISHED, ordenado por priorityHome asc (1º, 2º, 3º, 4º)
+    // Se featured=true: featured + priorityHome 1–10 + PUBLISHED, ordenado por priorityHome asc
     const whereClause = featuredOnly
-      ? { featured: true, priorityHome: { gte: 1, lte: 7 }, status: 'PUBLISHED' as const }
+      ? { featured: true, priorityHome: { gte: 1, lte: 10 }, status: 'PUBLISHED' as const }
       : {};
 
     const orderByClause = featuredOnly

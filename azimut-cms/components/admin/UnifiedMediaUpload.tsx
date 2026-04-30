@@ -98,6 +98,24 @@ export default function UnifiedMediaUpload({
   const imageInputRef = useRef<HTMLInputElement>(null)
   const videoInputRef = useRef<HTMLInputElement>(null)
 
+  const getFileNameFromUrl = (url: string) => {
+    try {
+      const clean = url.split('?')[0]
+      const last = clean.split('/').pop() || ''
+      return decodeURIComponent(last) || 'arquivo'
+    } catch {
+      return 'arquivo'
+    }
+  }
+
+  const getMediaOptionLabel = (media: Media) => {
+    const base = (media.altPt || '').trim()
+    const fileName = getFileNameFromUrl(media.originalUrl)
+    const created = media.createdAt ? new Date(media.createdAt).toLocaleDateString('pt-BR') : ''
+    const left = base && base !== `Vídeo ${pageSlug}` ? base : fileName
+    return created ? `${left} · ${created}` : left
+  }
+
   // Atualizar previews quando valores mudam
   useEffect(() => {
     if (imageUrl) setImagePreview(imageUrl)
@@ -151,7 +169,7 @@ export default function UnifiedMediaUpload({
           body: JSON.stringify({
             type: 'VIDEO',
             originalUrl: blob.url,
-            altPt: `Vídeo ${pageSlug}`,
+            altPt: `Vídeo ${file.name}`,
             pageSlug,
             sectionSlug: sectionSlug || null,
             imageType: imageType || null,
@@ -295,7 +313,7 @@ export default function UnifiedMediaUpload({
         body: JSON.stringify({
           type: 'VIDEO',
           originalUrl: externalVideoUrl.trim(),
-          altPt: `Vídeo ${pageSlug}`,
+          altPt: `Vídeo ${getFileNameFromUrl(externalVideoUrl.trim())}`,
           pageSlug,
           sectionSlug,
         })
@@ -659,7 +677,7 @@ export default function UnifiedMediaUpload({
                 })
                 .map(media => (
                   <option key={media.id} value={media.id}>
-                    🎬 {media.altPt || media.originalUrl.split('/').pop()}
+                    🎬 {getMediaOptionLabel(media)}
                   </option>
                 ))}
             </select>
@@ -733,6 +751,10 @@ export default function UnifiedMediaUpload({
               {videoPreview.includes('youtube') || videoPreview.includes('vimeo') ? (
                 <div style={{
                   padding: 16,
+                  minHeight: 260,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
                   background: 'rgba(0,0,0,0.3)',
                   borderRadius: 8,
                   textAlign: 'center',
@@ -748,7 +770,7 @@ export default function UnifiedMediaUpload({
                   controls
                   style={{
                     width: '100%',
-                    maxHeight: 200,
+                    maxHeight: 360,
                     borderRadius: 8,
                   }}
                 />

@@ -154,14 +154,14 @@ export async function PUT(
       return NextResponse.json({ error: 'Projeto não encontrado' }, { status: 404 });
     }
 
-    // Slots da Home: 0 = não exibir, 1 = Principal 1, 2 = Principal 2, 3 = Principal 3, 4 = Principal 4.
+    // Slots da Home: 0 = não exibir, 1..10 = ordem na Home.
     const safePriority =
       priorityHome !== undefined && priorityHome !== null
-        ? Math.min(7, Math.max(0, Math.round(Number(priorityHome)) || 0))
+        ? Math.min(10, Math.max(0, Math.round(Number(priorityHome)) || 0))
         : undefined;
     const finalPriorityHome = safePriority !== undefined ? safePriority : existing.priorityHome;
 
-    const HOME_SLOTS = [1, 2, 3, 4, 5, 6, 7] as const;
+    const HOME_SLOTS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;
     const isSlot = (n: number) => HOME_SLOTS.includes(n as any);
 
     // Garantia: ao marcar este projeto em um slot, qualquer OUTRO projeto nesse slot é desmarcado (e vice-versa implícito: ao desmarcar este, só este sai da Home).

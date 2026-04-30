@@ -371,12 +371,12 @@ export default function EditPagePage() {
     setProjectSaveMsg(null);
   }, []);
 
-  // Salvar projeto editado via API PUT (slots 0 = Não, 1–7 = Principal 1–7)
+  // Salvar projeto editado via API PUT (slots 0 = Não, 1–10 = Principal 1–10)
   const saveEditProject = useCallback(async (projectId: string) => {
     setSavingProject(true);
     setProjectSaveMsg(null);
-    const slots = [0, 1, 2, 3, 4, 5, 6, 7] as const;
-    const priority = slots.includes(editProjectData.priorityHome as any) ? editProjectData.priorityHome : Math.min(7, Math.max(0, parseInt(String(editProjectData.priorityHome), 10) || 0));
+    const slots = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;
+    const priority = slots.includes(editProjectData.priorityHome as any) ? editProjectData.priorityHome : Math.min(10, Math.max(0, parseInt(String(editProjectData.priorityHome), 10) || 0));
     const featured = priority > 0;
     try {
       const res = await fetch(`/api/admin/projects/${projectId}`, {
@@ -430,7 +430,7 @@ export default function EditPagePage() {
       const res = await fetch('/api/admin/projects?limit=5000');
       if (!res.ok) throw new Error('Falha ao carregar projetos');
       const data = await res.json();
-      const currentIds = homeFeaturedProjects.slice(0, 7).map((p: any) => p.id);
+      const currentIds = homeFeaturedProjects.slice(0, 10).map((p: any) => p.id);
       const others = (data.projects || []).filter((p: any) => p.status === 'PUBLISHED' && !currentIds.includes(p.id));
       // Ordenar pela data de término (yearEnd ou year): mais recente no topo, mais antigo em baixo; depois por título
       const sorted = [...others].sort((a: any, b: any) => {
@@ -737,7 +737,7 @@ export default function EditPagePage() {
         // Já vem filtrado e ordenado do servidor (mesma query da API pública)
         // Não precisa filtrar nem ordenar client-side!
         const list = (data.projects || [])
-          .slice(0, 7)
+          .slice(0, 10)
           .map((p: any) => ({
             id: p.id,
             title: p.title || p.shortTitle || p.slug || 'Sem título',
@@ -1179,7 +1179,7 @@ export default function EditPagePage() {
               </div>
             </div>
 
-            {/* Ordem e prioridades: slots 1–7 (0 = não exibir) */}
+            {/* Ordem e prioridades: slots 1–10 (0 = não exibir) */}
             <div style={{ marginBottom: 16, padding: '14px 18px', borderRadius: 10, background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.25)', display: 'flex', gap: 10, alignItems: 'flex-start' }}>
               <span style={{ fontSize: 18, flexShrink: 0 }}>📌</span>
               <div style={{ fontSize: 13, color: '#94a3b8', lineHeight: 1.6 }}>
@@ -1188,6 +1188,7 @@ export default function EditPagePage() {
                   <li><strong style={{ color: '#fbbf24' }}>1º — Principal (slot 1)</strong> — card grande no topo</li>
                   <li><strong style={{ color: '#86efac' }}>2º–4º — Secundários (slots 2, 3, 4)</strong> — primeira linha de 3 cards</li>
                   <li><strong style={{ color: '#86efac' }}>5º–7º — Secundários (slots 5, 6, 7)</strong> — segunda linha de 3 cards</li>
+                  <li><strong style={{ color: '#86efac' }}>8º–10º — Secundários (slots 8, 9, 10)</strong> — terceira linha de 3 cards</li>
                 </ul>
                 <p style={{ margin: '10px 0 0', fontSize: 12, color: '#64748b' }}>
                   Use <strong style={{ color: '#f59e0b' }}>Substituir</strong> para trocar o projeto da vaga por outro existente; <strong style={{ color: '#3b82f6' }}>Novo aqui</strong> para criar um projeto que já entra nessa posição.
@@ -1350,6 +1351,9 @@ export default function EditPagePage() {
                               <option value={5}>Principal 5</option>
                               <option value={6}>Principal 6</option>
                               <option value={7}>Principal 7</option>
+                              <option value={8}>Principal 8</option>
+                              <option value={9}>Principal 9</option>
+                              <option value={10}>Principal 10</option>
                             </select>
                           </div>
                           {/* Botões salvar/cancelar */}
@@ -1484,6 +1488,9 @@ export default function EditPagePage() {
                                   <option value={5}>Principal 5</option>
                                   <option value={6}>Principal 6</option>
                                   <option value={7}>Principal 7</option>
+                                  <option value={8}>Principal 8</option>
+                                  <option value={9}>Principal 9</option>
+                                  <option value={10}>Principal 10</option>
                                 </select>
                               </div>
                               <div style={{ display: 'flex', gap: 6, marginTop: 2 }}>
@@ -1542,10 +1549,10 @@ export default function EditPagePage() {
                   </div>
                 )}
 
-                {/* ═══ Segunda linha: 3 cards (slots 5, 6, 7) ═══ */}
+                {/* ═══ Segunda e terceira linhas: 6 cards (slots 5 até 10) ═══ */}
                 {homeFeaturedProjects.length > 4 && (
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, padding: '0 20px 24px' }}>
-                    {homeFeaturedProjects.slice(4, 7).map((p: any, idx: number) => {
+                    {homeFeaturedProjects.slice(4, 10).map((p: any, idx: number) => {
                       const isEditing = editingProjectId === p.id;
                       const slotIdx = 4 + idx;
                       return (
@@ -1597,6 +1604,9 @@ export default function EditPagePage() {
                                   <option value={5}>Principal 5</option>
                                   <option value={6}>Principal 6</option>
                                   <option value={7}>Principal 7</option>
+                                  <option value={8}>Principal 8</option>
+                                  <option value={9}>Principal 9</option>
+                                  <option value={10}>Principal 10</option>
                                 </select>
                               </div>
                               <div style={{ display: 'flex', gap: 6, marginTop: 2 }}>
@@ -1685,11 +1695,11 @@ export default function EditPagePage() {
                   </div>
                 )}
 
-                {/* ═══ Projetos adicionais (8+) — se no futuro houver mais de 7 slots ═══ */}
-                {homeFeaturedProjects.length > 7 && (
+                {/* ═══ Projetos adicionais (11+) — se no futuro houver mais de 10 slots ═══ */}
+                {homeFeaturedProjects.length > 10 && (
                   <div style={{ margin: '0 20px 20px', padding: 12, borderRadius: 10, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                    <p style={{ margin: '0 0 8px', fontSize: 12, color: '#64748b', fontWeight: 600 }}>Outros projetos em destaque (além dos 7 slots):</p>
-                    {homeFeaturedProjects.slice(7).map((p: any) => (
+                    <p style={{ margin: '0 0 8px', fontSize: 12, color: '#64748b', fontWeight: 600 }}>Outros projetos em destaque (além dos 10 slots):</p>
+                    {homeFeaturedProjects.slice(10).map((p: any) => (
                       <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 0' }}>
                         <span style={{ fontSize: 11, color: '#86efac', fontWeight: 700 }}>P{p.priorityHome}</span>
                         <a href={`/admin/projects/${p.id}`} style={{ fontSize: 12, color: '#7dd3fc', textDecoration: 'underline' }}>{p.title}</a>

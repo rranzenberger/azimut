@@ -76,12 +76,12 @@ export async function GET(request: NextRequest) {
       },
     });
     
-    // 3. Buscar projetos: home = 7 destaques (priorityHome 1–7); work = 7 destaques + lista completa com marcados primeiro
+    // 3. Buscar projetos: home = 10 destaques (priorityHome 1–10); work = 7 destaques + lista completa com marcados primeiro
     const isWork = page === 'work';
     let featuredProjects = await prisma.project.findMany({
       where: {
         status: 'PUBLISHED',
-        ...(isWork ? {} : { featured: true, priorityHome: { gte: 1, lte: 7 } }),
+        ...(isWork ? {} : { featured: true, priorityHome: { gte: 1, lte: 10 } }),
       },
       include: {
         heroImage: true,
@@ -95,7 +95,7 @@ export async function GET(request: NextRequest) {
         { month: 'desc' },
         { title: 'asc' },
       ],
-      ...(isWork ? {} : { take: 7 }),
+      ...(isWork ? {} : { take: 10 }),
     });
 
     // 3b. Para page=work: os 7 em destaque (topo da página) = exatamente os marcados no backoffice
@@ -266,7 +266,7 @@ export async function GET(request: NextRequest) {
         })),
       } : null,
       
-      // Projetos: home = 7 destaques; work = lista com marcados no topo (highlightProjects) + 7 para o topo (featuredProjects)
+      // Projetos: home = 10 destaques; work = lista com marcados no topo (highlightProjects) + 7 para o topo (featuredProjects)
       highlightProjects: featuredProjects.map(p => formatProject(p, lang)),
       featuredProjects: featuredProjectsWork?.length ? featuredProjectsWork.map(p => formatProject(p, lang)) : undefined,
       

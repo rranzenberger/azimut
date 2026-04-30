@@ -255,7 +255,7 @@ export default function EditProjectPage() {
   }
 
   const isOnHome = formData.priorityHome > 0;
-  const homeSlotLabel = formData.priorityHome === 1 ? 'Principal 1' : formData.priorityHome === 2 ? 'Principal 2' : formData.priorityHome === 3 ? 'Principal 3' : formData.priorityHome === 4 ? 'Principal 4' : formData.priorityHome === 5 ? 'Principal 5' : formData.priorityHome === 6 ? 'Principal 6' : formData.priorityHome === 7 ? 'Principal 7' : null;
+  const homeSlotLabel = formData.priorityHome > 0 && formData.priorityHome <= 10 ? `Principal ${formData.priorityHome}` : null;
 
   const galleryImageCount = gallery.filter((g: any) => g?.media?.type === 'IMAGE').length;
   const galleryVideoCount = gallery.filter((g: any) => g?.media?.type === 'VIDEO').length;
@@ -914,7 +914,7 @@ export default function EditProjectPage() {
         </CollapsibleSection>
 
         {/* ═══════════════════════════════════════════════════════════════ */}
-        {/* 🎛️ Aparecer na Home — Principal 1, 2, 3 ou 4 (só um por projeto; ao marcar, o outro perde o slot) */}
+        {/* 🎛️ Aparecer na Home — Principal 1 até 10 (só um por projeto; ao marcar, o outro perde o slot) */}
         {/* ═══════════════════════════════════════════════════════════════ */}
         <div
           style={{
@@ -942,6 +942,9 @@ export default function EditProjectPage() {
               { value: 5, label: 'Principal 5', desc: '' },
               { value: 6, label: 'Principal 6', desc: '' },
               { value: 7, label: 'Principal 7', desc: '' },
+              { value: 8, label: 'Principal 8', desc: '' },
+              { value: 9, label: 'Principal 9', desc: '' },
+              { value: 10, label: 'Principal 10', desc: '' },
             ].map(({ value, label, desc }) => {
               const isChecked = formData.priorityHome === value;
               return (
