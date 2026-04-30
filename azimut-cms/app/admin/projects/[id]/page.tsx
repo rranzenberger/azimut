@@ -31,6 +31,8 @@ export default function EditProjectPage() {
   const [allMedia, setAllMedia] = useState<any[]>([]);
   const [openSection, setOpenSection] = useState<string | null>('capagaleria');
   const [editingTitle, setEditingTitle] = useState(false);
+  const [savingHomeOrder, setSavingHomeOrder] = useState(false);
+  const [homeOrderMsg, setHomeOrderMsg] = useState<string | null>(null);
   const handleSectionToggle = useCallback((sid: string) => {
     setOpenSection((prev) => (prev === sid ? null : sid));
     setTimeout(() => {
@@ -246,6 +248,36 @@ export default function EditProjectPage() {
     }
   }
 
+  async function handleQuickHomeOrderSave(nextPriority: number) {
+    setHomeOrderMsg(null);
+    setSavingHomeOrder(true);
+    try {
+      const res = await fetch(`/api/admin/projects/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          featured: nextPriority > 0,
+          priorityHome: nextPriority,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(data?.error || `Erro ao salvar posição (HTTP ${res.status})`);
+      }
+      setFormData((prev) => ({
+        ...prev,
+        featured: nextPriority > 0,
+        priorityHome: nextPriority,
+      }));
+      setHomeOrderMsg('Posição na Home salva.');
+    } catch (err: any) {
+      setHomeOrderMsg(err?.message || 'Erro ao salvar posição na Home.');
+    } finally {
+      setSavingHomeOrder(false);
+      setTimeout(() => setHomeOrderMsg(null), 3000);
+    }
+  }
+
   if (loading) {
     return (
       <div style={{ padding: 24 }}>
@@ -353,6 +385,31 @@ export default function EditProjectPage() {
               🏠 {homeSlotLabel}
             </span>
           )}
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '4px 8px', borderRadius: 10, border: '1px solid rgba(34,197,94,0.35)', background: 'rgba(34,197,94,0.08)' }}>
+            <span style={{ fontSize: 11, color: '#86efac', fontWeight: 700, textTransform: 'uppercase' }}>Ordem Home</span>
+            <select
+              value={formData.priorityHome}
+              onChange={(e) => {
+                const nextPriority = parseInt(e.target.value, 10) || 0;
+                void handleQuickHomeOrderSave(nextPriority);
+              }}
+              disabled={savingHomeOrder}
+              style={{ ...inputStyle, height: 30, minWidth: 150, padding: '0 8px', fontSize: 12, color: '#86efac', border: '1px solid rgba(34,197,94,0.35)', background: 'rgba(0,0,0,0.35)' }}
+            >
+              <option value={0}>Não exibir</option>
+              <option value={1}>Principal 1</option>
+              <option value={2}>Principal 2</option>
+              <option value={3}>Principal 3</option>
+              <option value={4}>Principal 4</option>
+              <option value={5}>Principal 5</option>
+              <option value={6}>Principal 6</option>
+              <option value={7}>Principal 7</option>
+              <option value={8}>Principal 8</option>
+              <option value={9}>Principal 9</option>
+              <option value={10}>Principal 10</option>
+            </select>
+            {savingHomeOrder && <span style={{ fontSize: 11, color: '#94a3b8' }}>salvando...</span>}
+          </div>
         </div>
         <p style={{ margin: 0, color: '#6b6780', fontSize: 14 }}>
           Slug: /{formData.slug} • {formData.status === 'PUBLISHED' ? '🟢 Publicado' : formData.status === 'DRAFT' ? '🟡 Rascunho' : '⚪ Arquivado'}
@@ -360,6 +417,11 @@ export default function EditProjectPage() {
         <p style={{ margin: '12px 0 0', padding: '10px 14px', borderRadius: 8, background: 'rgba(56,189,248,0.08)', border: '1px solid rgba(56,189,248,0.2)', fontSize: 13, color: '#94a3b8' }}>
           <strong>Nome do projeto:</strong> use o botão <strong>✏️ Editar nome</strong> ao lado do título (ou clique no título) para alterar; depois clique em <strong>Salvar</strong> no final da página. Comece pela <strong>Capa e Galeria</strong> para mídias; use Dados básicos (slug), Localização e Texto/SEO.
         </p>
+        {homeOrderMsg && (
+          <p style={{ margin: '8px 0 0', fontSize: 12, color: homeOrderMsg.includes('Erro') ? '#fca5a5' : '#86efac' }}>
+            {homeOrderMsg}
+          </p>
+        )}
       </header>
 
       {/* ═══ PREVIEW: como aparece no site (card principal + galeria) ═══ */}

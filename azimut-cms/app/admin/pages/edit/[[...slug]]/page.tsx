@@ -430,8 +430,11 @@ export default function EditPagePage() {
       const res = await fetch('/api/admin/projects?limit=5000');
       if (!res.ok) throw new Error('Falha ao carregar projetos');
       const data = await res.json();
-      const currentIds = homeFeaturedProjects.slice(0, 10).map((p: any) => p.id);
-      const others = (data.projects || []).filter((p: any) => p.status === 'PUBLISHED' && !currentIds.includes(p.id));
+      const priorityForSlot = SLOT_PRIORITIES[slotIndex];
+      const currentInSlot = homeFeaturedProjects.find((p: any) => (p.priorityHome ?? 0) === priorityForSlot);
+      const others = (data.projects || []).filter((p: any) =>
+        p.status === 'PUBLISHED' && p.id !== currentInSlot?.id
+      );
       // Ordenar pela data de término (yearEnd ou year): mais recente no topo, mais antigo em baixo; depois por título
       const sorted = [...others].sort((a: any, b: any) => {
         const ya = a.yearEnd ?? a.year ?? 0, yb = b.yearEnd ?? b.year ?? 0;
