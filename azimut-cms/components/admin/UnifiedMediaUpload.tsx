@@ -155,7 +155,17 @@ export default function UnifiedMediaUpload({
       setSuccess(`${type === 'IMAGE' ? 'Imagem' : 'Vídeo'} enviado com sucesso!`)
 
     } catch (err: any) {
-      setError(err.message || 'Erro ao fazer upload')
+      const rawMessage = err?.message || 'Erro ao fazer upload'
+      const isLikelyPayloadLimit =
+        type === 'VIDEO' &&
+        file.size > 4 * 1024 * 1024 &&
+        (rawMessage.includes('Failed to fetch') || rawMessage.toLowerCase().includes('network'))
+
+      if (isLikelyPayloadLimit) {
+        setError('Upload bloqueado no servidor (limite de payload). Use URL externa (/demo-azimut.mp4) ou vídeo menor.')
+      } else {
+        setError(rawMessage)
+      }
     } finally {
       setUploading(null)
     }

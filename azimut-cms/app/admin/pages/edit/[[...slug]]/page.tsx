@@ -1766,6 +1766,32 @@ export default function EditPagePage() {
               imageLabel="Imagem de Fundo do Hero (também capa do demoreel)"
               videoLabel="Vídeo Demoreel do Watch Our Work (Home)"
             />
+            <div style={{ marginTop: 10, padding: 12, borderRadius: 8, background: 'rgba(56,189,248,0.08)', border: '1px solid rgba(56,189,248,0.25)' }}>
+              <p style={{ margin: 0, fontSize: 12, color: '#bae6fd' }}>
+                <strong>Atalho rápido:</strong> se o upload travar, use o arquivo já publicado no site principal.
+              </p>
+              <div style={{ marginTop: 8, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, demoreelVideoId: '', demoreelVideoUrl: '/demo-azimut.mp4' })}
+                  style={{
+                    padding: '8px 12px',
+                    borderRadius: 8,
+                    border: '1px solid rgba(56,189,248,0.45)',
+                    background: 'rgba(56,189,248,0.14)',
+                    color: '#7dd3fc',
+                    fontSize: 12,
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                  }}
+                >
+                  Usar /demo-azimut.mp4
+                </button>
+                <span style={{ alignSelf: 'center', fontSize: 11, color: '#93c5fd' }}>
+                  Depois clique em <strong>Salvar Página</strong>.
+                </span>
+              </div>
+            </div>
             {(() => {
               const mediaVideoUrl = formData.demoreelVideoId
                 ? (allMedia.find((m) => m.id === formData.demoreelVideoId && m.type === 'VIDEO')?.originalUrl || null)
