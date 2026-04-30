@@ -81,7 +81,7 @@ interface UseProjectResult {
 const API_URL = import.meta.env.VITE_BACKOFFICE_URL || 'https://backoffice.azmt.com.br';
 
 // Cache em memória: reduz tempo ao reabrir a mesma subpágina ou após prefetch
-const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutos
+const CACHE_TTL_MS = 0; // sem cache em memória para atualização imediata da subpágina de projeto
 const projectCache = new Map<string, { data: ProjectData; at: number }>();
 
 function cacheKey(slug: string, lang: string) {
@@ -103,7 +103,7 @@ export function prefetchProject(slug: string, lang: string = 'pt'): void {
   if (!slug) return;
   if (getCached(slug, lang)) return; // já em cache
   const url = `${API_URL}/api/public/project/${slug}?lang=${lang}`;
-  fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
+  fetch(url, { method: 'GET', cache: 'no-store', headers: { 'Content-Type': 'application/json' } })
     .then((res) => {
       if (!res.ok) return;
       return res.json();
@@ -367,9 +367,10 @@ export function useProject(slug: string, lang: string = 'pt'): UseProjectResult 
     const fetchProject = async () => {
       try {
         const response = await fetch(
-          `${API_URL}/api/public/project/${slug}?lang=${lang}`,
+          `${API_URL}/api/public/project/${slug}?lang=${lang}&_ts=${Date.now()}`,
           {
             method: 'GET',
+            cache: 'no-store',
             headers: {
               'Content-Type': 'application/json',
             },
