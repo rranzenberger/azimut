@@ -4,7 +4,10 @@ import { FormEvent, useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import UnifiedMediaUpload from '@/components/admin/UnifiedMediaUpload';
 
-const HOME_SLOT_PRIORITIES: Record<number, number> = { 0: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7 };
+const HOME_SLOT_PRIORITIES: Record<number, number> = {
+  0: 1, 1: 2, 2: 3, 3: 4, 4: 5,
+  5: 6, 6: 7, 7: 8, 8: 9, 9: 10,
+};
 
 export default function NewProjectPage() {
   const router = useRouter();
@@ -66,8 +69,8 @@ export default function NewProjectPage() {
     const slot = searchParams.get('fromHomeSlot');
     if (slot === null) return;
     const slotNum = parseInt(slot, 10);
-    if (Number.isNaN(slotNum) || slotNum < 0 || slotNum > 6) return;
-    const priority = HOME_SLOT_PRIORITIES[slotNum] ?? 7;
+    if (Number.isNaN(slotNum) || slotNum < 0 || slotNum > 9) return;
+    const priority = HOME_SLOT_PRIORITIES[slotNum] ?? 10;
     setFormData(prev => ({ ...prev, featured: true, priorityHome: priority }));
   }, [searchParams]);
 
@@ -148,7 +151,10 @@ export default function NewProjectPage() {
           background: 'rgba(255,255,255,0.03)',
           display: 'grid',
           gap: 16,
-          maxWidth: 800,
+          width: '100%',
+          maxWidth: 1200,
+          boxSizing: 'border-box',
+          overflow: 'hidden',
         }}
       >
         <div style={{ display: 'grid', gap: 8 }}>
@@ -249,7 +255,7 @@ export default function NewProjectPage() {
             videoLabel="Vídeo de capa (se preferir vídeo em vez de imagem)"
           />
           {/* Enquadramento e posição da imagem (cards + subpágina) */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: 12 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 12, marginTop: 12 }}>
             <div style={{ display: 'grid', gap: 6 }}>
               <label style={{ fontSize: 13, fontWeight: 600 }}>Enquadramento da imagem</label>
               <select
@@ -284,7 +290,7 @@ export default function NewProjectPage() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
           <div style={{ display: 'grid', gap: 8 }}>
             <label style={{ fontSize: 14, fontWeight: 600 }}>Resumo (PT)</label>
             <textarea
@@ -307,7 +313,7 @@ export default function NewProjectPage() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
           <div style={{ display: 'grid', gap: 8 }}>
             <label style={{ fontSize: 14, fontWeight: 600 }}>Resumo (ES)</label>
             <textarea
@@ -336,7 +342,7 @@ export default function NewProjectPage() {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
           <div style={{ display: 'grid', gap: 8 }}>
             <label style={{ fontSize: 14, fontWeight: 600 }}>Descrição Completa (PT)</label>
             <textarea
@@ -388,7 +394,7 @@ export default function NewProjectPage() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
           <div style={{ display: 'grid', gap: 8 }}>
             <label style={{ fontSize: 14, fontWeight: 600 }}>Cidade</label>
             <input
@@ -447,7 +453,7 @@ export default function NewProjectPage() {
         <div style={{ marginTop: 16, padding: '14px 18px', borderRadius: 10, border: '1px solid rgba(100,116,139,0.25)', background: 'rgba(100,116,139,0.05)' }}>
           <p style={{ margin: '0 0 10px', fontSize: 13, fontWeight: 600, color: '#94a3b8' }}>Projeto longo (opcional): data de início e de término</p>
           <p style={{ margin: '0 0 12px', fontSize: 11, color: '#64748b' }}>A ordenação usa a <strong>data de término</strong>. Se não preencher, usa ano/mês acima.</p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 12 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: 12 }}>
             <div style={{ display: 'grid', gap: 6 }}>
               <label style={{ fontSize: 12, fontWeight: 600 }}>Ano início</label>
               <input type="number" value={formData.yearStart} onChange={(e) => setFormData({ ...formData, yearStart: e.target.value })} style={inputStyle} placeholder="2020" min="1990" max="2100" />
@@ -473,7 +479,7 @@ export default function NewProjectPage() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
           <div style={{ display: 'grid', gap: 8 }}>
             <label style={{ fontSize: 14, fontWeight: 600 }}>Cliente</label>
             <input
@@ -906,12 +912,14 @@ export default function NewProjectPage() {
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
+  minWidth: 0,
   height: 42,
   borderRadius: 8,
   border: '1px solid rgba(255,255,255,0.12)',
   background: 'rgba(255,255,255,0.04)',
   color: '#fff',
   padding: '0 12px',
+  boxSizing: 'border-box',
   outline: 'none',
   fontSize: 14,
   fontFamily: 'inherit',
