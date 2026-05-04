@@ -25,7 +25,7 @@ const SERVICE_CARD_IMAGE_DEFAULTS = {
   'xr-interatividade-web3': 'https://img.youtube.com/vi/Vm1s2cwHI-M/maxresdefault.jpg',
   'cenografia-design-espacial': 'https://img.youtube.com/vi/aK81n1sF7ds/maxresdefault.jpg',
   'games-interativos': 'https://img.youtube.com/vi/KuzwrKRacG8/maxresdefault.jpg',
-  'ia-criativa': 'https://img.youtube.com/vi/y3uhoRpQPYY/maxresdefault.jpg',
+  'ia-criativa': '/images/service-cards/ia-criativa.png',
   'direcao-arte-criativa': 'https://img.youtube.com/vi/OFOy_z2sJag/maxresdefault.jpg',
   'teatro-espetaculos-imersivos': 'https://img.youtube.com/vi/BXC9j4oauQo/maxresdefault.jpg',
   'branded-experiences-ativacoes': 'https://img.youtube.com/vi/1Pcoi_E9SXI/maxresdefault.jpg',

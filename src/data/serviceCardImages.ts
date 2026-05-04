@@ -42,8 +42,8 @@ export const SERVICE_CARD_IMAGE_DEFAULTS: Record<string, string> = {
   'xr-interatividade-web3': THUMB_VAN_A,
   'cenografia-design-espacial': THUMB_MAG_1,
   'games-interativos': THUMB_MAG_5,
-  /** IA — reel criativo (evita og-work.png que quebrava). */
-  'ia-criativa': THUMB_VAN_B,
+  /** IA — imagem estática (still cinematico); evita colidir com VanArts no reel do projeto. */
+  'ia-criativa': '/images/service-cards/ia-criativa.png',
   'direcao-arte-criativa': THUMB_MAG_2,
   'teatro-espetaculos-imersivos': THUMB_MAG_3,
   /** Ativações — imagem institucional forte (evita og-vancouver.jpg que quebrava). */

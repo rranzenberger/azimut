@@ -1,6 +1,6 @@
 /**
  * Por cada serviço (Solutions /what), slug do projeto no CMS cuja hero define a imagem do card.
- * - Cinema = Encantador de Almas | IA criativa = Gramado VR/IA (não repetir o mesmo filme nos dois).
+ * - Cinema = Encantador de Almas. IA criativa usa imagem estática no card (sem projeto hero).
  * - Serviços omitidos caem no fallback em serviceCardImages.ts (YouTube).
  */
 export const SERVICE_CARD_PROJECT_SLUGS: Record<string, string> = {
@@ -10,7 +10,6 @@ export const SERVICE_CARD_PROJECT_SLUGS: Record<string, string> = {
   'xr-interatividade-web3': 'vr-amazonia',
   'cenografia-design-espacial': 'museu-rio-olimpico',
   'games-interativos': 'senna-ativacoes',
-  'ia-criativa': 'gramado-vr-ia',
   'direcao-arte-criativa': 'van-gogh-la-fontaine',
   'teatro-espetaculos-imersivos': 'amazonias-possiveis',
   'branded-experiences-ativacoes': 'natal-cultural',
