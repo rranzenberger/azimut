@@ -6,7 +6,10 @@ import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
 import InternalNavigation from '../components/InternalNavigation'
 import { servicesData, getServiceTitle, getServiceShortDesc } from '../data/servicesData'
-import { getDefaultServiceCardImage } from '../data/serviceCardImages'
+import {
+  getDefaultServiceCardImage,
+  CARD_IMAGE_EMERGENCY_FALLBACK,
+} from '../data/serviceCardImages'
 import { useBackofficeServices } from '../hooks/useBackofficeService'
 import StarBackground from '../components/StarBackground'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
@@ -454,6 +457,23 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                             className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                             loading={index < 8 ? 'eager' : 'lazy'}
                             decoding="async"
+                            onError={(e) => {
+                              const el = e.currentTarget
+                              const url = el.src.split('?')[0]
+                              if (url.includes('maxresdefault')) {
+                                el.src = el.src.replace(/maxresdefault\.jpg/i, 'hqdefault.jpg')
+                                return
+                              }
+                              if (!el.dataset.triedSlugDefault) {
+                                el.dataset.triedSlugDefault = '1'
+                                const d = getDefaultServiceCardImage(service.slug)
+                                if (d && url !== d.split('?')[0]) {
+                                  el.src = d
+                                  return
+                                }
+                              }
+                              el.src = CARD_IMAGE_EMERGENCY_FALLBACK
+                            }}
                           />
                         ) : null}
                         <div
