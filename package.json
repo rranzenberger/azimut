@@ -10,7 +10,8 @@
     "game:dev": "cd azimut-empathy-engine && npm run dev",
     "build:game": "cd azimut-empathy-engine && npm ci && npm run build",
     "copy:game": "node scripts/copy-game.cjs",
-    "vercel-build": "npm run build:game && npm run copy:game && vite build"
+    "vercel-build": "npm run build:game && npm run copy:game && vite build",
+    "check:card-images": "node scripts/check-service-card-images.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^9.122.0",
