@@ -23,7 +23,7 @@ const SERVICE_CARD_IMAGE_DEFAULTS = {
   'pos-producao-vfx': 'https://img.youtube.com/vi/Vm1s2cwHI-M/maxresdefault.jpg',
   'animacao-2d-3d': 'https://img.youtube.com/vi/y3uhoRpQPYY/maxresdefault.jpg',
   'xr-interatividade-web3': 'https://img.youtube.com/vi/Vm1s2cwHI-M/maxresdefault.jpg',
-  'cenografia-design-espacial': 'https://img.youtube.com/vi/aK81n1sF7ds/maxresdefault.jpg',
+  'cenografia-design-espacial': '/images/service-cards/cenografia-design-espacial.png',
   'games-interativos': 'https://img.youtube.com/vi/KuzwrKRacG8/maxresdefault.jpg',
   'ia-criativa': '/images/service-cards/ia-criativa.png',
   'direcao-arte-criativa': 'https://img.youtube.com/vi/OFOy_z2sJag/maxresdefault.jpg',

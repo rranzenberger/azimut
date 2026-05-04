@@ -22,7 +22,6 @@ const THUMB_MUSEU = ytMax('1Pcoi_E9SXI')
 const THUMB_VAN_A = ytMax('Vm1s2cwHI-M')
 const THUMB_VAN_B = ytMax('y3uhoRpQPYY')
 /** Thumbs de vídeos curados em VancouverMagazine.tsx (conteúdo Azimut no site) */
-const THUMB_MAG_1 = ytMax('aK81n1sF7ds')
 const THUMB_MAG_2 = ytMax('OFOy_z2sJag')
 const THUMB_MAG_3 = ytMax('BXC9j4oauQo')
 const THUMB_MAG_4 = ytMax('FWHN6qFf-tE')
@@ -40,7 +39,8 @@ export const SERVICE_CARD_IMAGE_DEFAULTS: Record<string, string> = {
   'pos-producao-vfx': THUMB_VAN_A,
   'animacao-2d-3d': THUMB_VAN_B,
   'xr-interatividade-web3': THUMB_VAN_A,
-  'cenografia-design-espacial': THUMB_MAG_1,
+  /** Cenografia — interior/espacial (still); evita hero CMS / YouTube a falhar no card. */
+  'cenografia-design-espacial': '/images/service-cards/cenografia-design-espacial.png',
   'games-interativos': THUMB_MAG_5,
   /** IA — imagem estática (still cinematico); evita colidir com VanArts no reel do projeto. */
   'ia-criativa': '/images/service-cards/ia-criativa.png',

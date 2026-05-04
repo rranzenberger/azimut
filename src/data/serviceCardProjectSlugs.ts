@@ -1,6 +1,6 @@
 /**
  * Por cada serviço (Solutions /what), slug do projeto no CMS cuja hero define a imagem do card.
- * - Cinema = Encantador de Almas. IA criativa usa imagem estática no card (sem projeto hero).
+ * - Cinema = Encantador de Almas. IA e cenografia usam imagem estática no card (sem projeto hero).
  * - Serviços omitidos caem no fallback em serviceCardImages.ts (YouTube).
  */
 export const SERVICE_CARD_PROJECT_SLUGS: Record<string, string> = {
@@ -8,7 +8,6 @@ export const SERVICE_CARD_PROJECT_SLUGS: Record<string, string> = {
   'pos-producao-vfx': 'bw-energy-maromba',
   'animacao-2d-3d': 'natal-rio-bonito-2025',
   'xr-interatividade-web3': 'vr-amazonia',
-  'cenografia-design-espacial': 'museu-rio-olimpico',
   'games-interativos': 'senna-ativacoes',
   'direcao-arte-criativa': 'van-gogh-la-fontaine',
   'teatro-espetaculos-imersivos': 'amazonias-possiveis',
