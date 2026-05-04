@@ -83,6 +83,7 @@ export async function PUT(
       'descriptionEs',
       'descriptionFr',
       'icon',
+      'cardImageUrl',
       'status',
       'priority',
       'segments',

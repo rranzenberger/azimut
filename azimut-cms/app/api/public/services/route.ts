@@ -49,6 +49,7 @@ export async function GET(request: NextRequest) {
         descriptionEs: true,
         descriptionFr: true,
         icon: true,
+        cardImageUrl: true,
         segments: true,
         status: true,
         priority: true,

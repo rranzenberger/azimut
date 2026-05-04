@@ -21,11 +21,20 @@ interface VideoPlayerProps {
   loop?: boolean
   playsinline?: boolean
   platform?: 'youtube' | 'vimeo' | 'file'
+  /** Preenche o container pai (hero full-bleed) sem forçar aspect-video */
+  fillParent?: boolean
+  /** Controles nativos (MP4). Se omitido: mostra quando não está em autoplay */
+  showControls?: boolean
 }
 
-// Extrair ID do YouTube
+// Extrair ID do YouTube (watch, embed, youtu.be, shorts)
 function extractYouTubeId(url: string): string | null {
-  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/)
+  const trimmed = url.trim()
+  const shorts = trimmed.match(/youtube\.com\/shorts\/([^&\n?#/]+)/i)
+  if (shorts) return shorts[1]
+  const match = trimmed.match(
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/
+  )
   return match ? match[1] : null
 }
 
@@ -46,14 +55,22 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   muted = false,
   loop = false,
   playsinline = false,
-  platform
+  platform,
+  fillParent = false,
+  showControls,
 }) => {
+  const normalizedUrl = typeof videoUrl === 'string' ? videoUrl.trim() : ''
   // ═══════════════════════════════════════════════════════════
   // TODOS OS HOOKS NO TOPO - OBRIGATÓRIO PARA EVITAR ERRO #310
   // ═══════════════════════════════════════════════════════════
   const [isPlaying, setIsPlaying] = useState(false)
-  const [currentFileUrl, setCurrentFileUrl] = useState(videoUrl)
+  const [currentFileUrl, setCurrentFileUrl] = useState(normalizedUrl)
   const [filePlaybackFailed, setFilePlaybackFailed] = useState(false)
+  /** Iframe YouTube/Vimeo: evita “buraco preto” enquanto o player embutido carrega */
+  const [embedReady, setEmbedReady] = useState(false)
+  /** MP4: primeiro frame / playback — até lá mostra-se camada de fundo */
+  const [fileSurfaceReady, setFileSurfaceReady] = useState(false)
+  const fileVideoRef = useRef<HTMLVideoElement | null>(null)
   const videoIdRef = useRef<string | null>(null)
   const progressTracked = useRef<Set<number>>(new Set())
   const hasPlayed = useRef(false)
@@ -61,21 +78,59 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
   // Detectar plataforma automaticamente se não fornecida
   const detectedPlatform = platform ||
-    (videoUrl.includes('youtube') || videoUrl.includes('youtu.be') ? 'youtube' :
-     videoUrl.includes('vimeo') ? 'vimeo' : 'file')
+    (normalizedUrl.includes('youtube') || normalizedUrl.includes('youtu.be') ? 'youtube' :
+     normalizedUrl.includes('vimeo') ? 'vimeo' : 'file')
 
-  const youtubeId = detectedPlatform === 'youtube' ? extractYouTubeId(videoUrl) : null
-  const vimeoId = detectedPlatform === 'vimeo' ? extractVimeoId(videoUrl) : null
+  const youtubeId = detectedPlatform === 'youtube' ? extractYouTubeId(normalizedUrl) : null
+  const vimeoId = detectedPlatform === 'vimeo' ? extractVimeoId(normalizedUrl) : null
 
   // Armazenar videoId para tracking - HOOK SEMPRE EXECUTADO
   useEffect(() => {
     videoIdRef.current = youtubeId || vimeoId || videoUrl
-  }, [youtubeId, vimeoId, videoUrl])
+  }, [youtubeId, vimeoId, normalizedUrl])
 
   useEffect(() => {
-    setCurrentFileUrl(videoUrl)
+    setCurrentFileUrl(normalizedUrl)
     setFilePlaybackFailed(false)
-  }, [videoUrl])
+    setFileSurfaceReady(false)
+  }, [normalizedUrl])
+
+  useEffect(() => {
+    setFileSurfaceReady(false)
+  }, [currentFileUrl])
+
+  useEffect(() => {
+    setEmbedReady(false)
+  }, [normalizedUrl, autoplay, detectedPlatform, youtubeId, vimeoId])
+
+  const wrapperClass = fillParent
+    ? `relative w-full h-full min-h-0 overflow-hidden ${className}`
+    : `relative aspect-video overflow-hidden ${className}`
+
+  const thumbWrapClass = fillParent
+    ? `relative w-full h-full min-h-0 cursor-pointer group overflow-hidden ${className}`
+    : `relative aspect-video cursor-pointer group overflow-hidden ${className}`
+
+  const errorBoxClass = fillParent
+    ? `relative w-full h-full min-h-0 bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center ${className}`
+    : `relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center ${className}`
+
+  const nativeControls = showControls !== undefined ? showControls : !autoplay
+
+  // Safari / políticas de autoplay: reforçar play() em vídeo arquivo
+  useEffect(() => {
+    if (detectedPlatform !== 'file' || !autoplay) return
+    const el = fileVideoRef.current
+    if (!el) return
+    const tryPlay = () => {
+      void el.play().catch(() => {
+        /* autoplay bloqueado ou falha transitória */
+      })
+    }
+    tryPlay()
+    el.addEventListener('loadeddata', tryPlay)
+    return () => el.removeEventListener('loadeddata', tryPlay)
+  }, [autoplay, detectedPlatform, currentFileUrl])
 
   // ═══════════════════════════════════════════════════════════
   // AGORA SIM PODEMOS TER RETURNS CONDICIONAIS (DEPOIS DOS HOOKS)
@@ -84,7 +139,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   // Plataforma não suportada
   if (!detectedPlatform) {
     return (
-      <div className={`relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center ${className}`}>
+      <div className={errorBoxClass}>
         <div className="text-center p-6">
           <svg className="w-16 h-16 mx-auto mb-2 text-azimut-red/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
@@ -98,7 +153,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   // ID não extraído
   if ((detectedPlatform === 'youtube' && !youtubeId) || (detectedPlatform === 'vimeo' && !vimeoId)) {
     return (
-      <div className={`relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center ${className}`}>
+      <div className={errorBoxClass}>
         <div className="text-center p-6">
           <svg className="w-16 h-16 mx-auto mb-2 text-azimut-red/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
@@ -142,7 +197,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
     if (!isPlaying && !autoplay && thumbnail) {
       return (
-        <div className={`relative aspect-video cursor-pointer group overflow-hidden ${className}`} onClick={handlePlay} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
+        <div className={thumbWrapClass} onClick={handlePlay} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
           <img 
             src={thumbnail} 
             alt={alt || 'Video thumbnail'}
@@ -171,14 +226,33 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     }
 
     return (
-      <div className={`relative aspect-video overflow-hidden ${className}`} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
+      <div className={wrapperClass} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
+        {/* Fundo sempre visível até o iframe pintar (evita retângulo preto) */}
+        {thumbnail ? (
+          <img
+            src={thumbnail}
+            alt=""
+            aria-hidden
+            className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
+          />
+        ) : (
+          <div
+            className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-br from-slate-900 via-[#0a0f18] to-black"
+            aria-hidden
+          />
+        )}
         <iframe
           src={embedUrl}
           title={alt || 'YouTube Video'}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
-          className="w-full h-full"
-          style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}
+          className="absolute inset-0 z-10 h-full w-full"
+          style={{
+            borderRadius: className.includes('rounded') ? undefined : '1rem',
+            opacity: embedReady ? 1 : 0,
+            transition: 'opacity 0.35s ease-out',
+          }}
+          onLoad={() => setEmbedReady(true)}
         />
       </div>
     )
@@ -190,7 +264,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
     if (!isPlaying && !autoplay && thumbnail) {
       return (
-        <div className={`relative aspect-video cursor-pointer group overflow-hidden ${className}`} onClick={handlePlay} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
+        <div className={thumbWrapClass} onClick={handlePlay} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
           <img 
             src={thumbnail} 
             alt={alt || 'Video thumbnail'}
@@ -212,14 +286,32 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     }
 
     return (
-      <div className={`relative aspect-video overflow-hidden ${className}`} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
+      <div className={wrapperClass} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
+        {thumbnail ? (
+          <img
+            src={thumbnail}
+            alt=""
+            aria-hidden
+            className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
+          />
+        ) : (
+          <div
+            className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-br from-slate-900 via-[#0a0f18] to-black"
+            aria-hidden
+          />
+        )}
         <iframe
           src={embedUrl}
           title={alt || 'Vimeo Video'}
           allow="autoplay; fullscreen; picture-in-picture"
           allowFullScreen
-          className="w-full h-full"
-          style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}
+          className="absolute inset-0 z-10 h-full w-full"
+          style={{
+            borderRadius: className.includes('rounded') ? undefined : '1rem',
+            opacity: embedReady ? 1 : 0,
+            transition: 'opacity 0.35s ease-out',
+          }}
+          onLoad={() => setEmbedReady(true)}
         />
       </div>
     )
@@ -229,7 +321,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   if (detectedPlatform === 'file') {
     if (filePlaybackFailed) {
       return (
-        <div className={`relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center ${className}`}>
+        <div className={errorBoxClass}>
           <div className="text-center p-6">
             <svg className="w-16 h-16 mx-auto mb-2 text-azimut-red/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
@@ -241,16 +333,34 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     }
 
     return (
-      <div className={`relative aspect-video overflow-hidden ${className}`} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
+      <div className={wrapperClass} style={{ borderRadius: className.includes('rounded') ? undefined : '1rem' }}>
+        {/* Letterbox / buffer: nunca área vazia preta enquanto o ficheiro não pinta */}
+        <div
+          className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-br from-slate-900 via-[#0a0f18] to-black"
+          aria-hidden
+        />
+        {thumbnailUrl ? (
+          <img
+            src={thumbnailUrl}
+            alt=""
+            aria-hidden
+            className={`pointer-events-none absolute inset-0 z-[1] h-full w-full ${
+              objectFit === 'contain' ? 'object-contain object-center' : 'object-cover'
+            } ${fileSurfaceReady ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
+          />
+        ) : null}
         <video
+          ref={fileVideoRef}
           src={currentFileUrl}
           poster={thumbnailUrl}
           autoPlay={autoplay}
           muted={muted || autoplay}
           loop={loop}
           playsInline={playsinline}
-          controls={!autoplay}
-          preload="metadata"
+          controls={nativeControls}
+          preload={autoplay ? 'auto' : 'metadata'}
+          onLoadedData={() => setFileSurfaceReady(true)}
+          onPlaying={() => setFileSurfaceReady(true)}
           onError={() => {
             if (fallbackVideoUrl && currentFileUrl !== fallbackVideoUrl) {
               setCurrentFileUrl(fallbackVideoUrl)
@@ -258,11 +368,11 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
             }
             setFilePlaybackFailed(true)
           }}
-          className="w-full h-full"
+          className="relative z-[2] h-full w-full"
           style={{
             borderRadius: className.includes('rounded') ? undefined : '1rem',
             objectFit: objectFit === 'contain' ? 'contain' : 'cover',
-            background: '#000',
+            background: 'transparent',
           }}
         />
       </div>

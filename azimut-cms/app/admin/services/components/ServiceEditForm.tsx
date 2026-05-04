@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useRef, type ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -31,6 +31,8 @@ export function ServiceEditForm({ service }: { service: any }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [cardImageUploading, setCardImageUploading] = useState(false);
+  const cardImageFileRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState({
     slug: service.slug || '',
     titlePt: service.titlePt || '',
@@ -42,6 +44,7 @@ export function ServiceEditForm({ service }: { service: any }) {
     descriptionEs: service.descriptionEs || '',
     descriptionFr: service.descriptionFr || '',
     icon: service.icon || '',
+    cardImageUrl: service.cardImageUrl || '',
     status: service.status || 'PUBLISHED',
     priority: service.priority || 0,
     segments: service.segments?.join(', ') || '',
@@ -68,6 +71,7 @@ export function ServiceEditForm({ service }: { service: any }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
+          cardImageUrl: formData.cardImageUrl.trim() || null,
           segments: segmentsArray,
           faqsPt: formData.faqsPt.length ? formData.faqsPt : null,
           faqsEn: formData.faqsEn.length ? formData.faqsEn : null,
@@ -121,6 +125,53 @@ export function ServiceEditForm({ service }: { service: any }) {
     } catch (err: any) {
       setError(err.message);
       setLoading(false);
+    }
+  }
+
+  async function handleCardImageFileChange(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      setError(null);
+      setMessage({
+        type: 'error',
+        text: 'Escolhe um ficheiro de imagem (JPEG, PNG, WebP ou GIF).',
+      });
+      return;
+    }
+    setCardImageUploading(true);
+    setError(null);
+    setMessage(null);
+    try {
+      const slug = (formData.slug || service.slug || '').trim();
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('pageSlug', slug ? `what/${slug}` : 'what/service-card');
+      fd.append('sectionSlug', 'service-card-image');
+      const res = await fetch('/api/admin/media/upload', { method: 'POST', body: fd });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Erro no upload');
+      const media = data.media as {
+        largeUrl?: string | null;
+        mediumUrl?: string | null;
+        originalUrl?: string | null;
+      };
+      const url =
+        (media?.largeUrl && String(media.largeUrl)) ||
+        (media?.mediumUrl && String(media.mediumUrl)) ||
+        (media?.originalUrl && String(media.originalUrl));
+      if (!url) throw new Error('Resposta sem URL da imagem');
+      setFormData((prev) => ({ ...prev, cardImageUrl: url }));
+      setMessage({
+        type: 'success',
+        text: 'Imagem enviada. Clica em «Salvar alterações» para publicar no site.',
+      });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Erro ao enviar imagem';
+      setMessage({ type: 'error', text: msg });
+    } finally {
+      setCardImageUploading(false);
+      if (cardImageFileRef.current) cardImageFileRef.current.value = '';
     }
   }
 
@@ -300,6 +351,153 @@ export function ServiceEditForm({ service }: { service: any }) {
           <small style={{ color: '#9f9bb0', fontSize: 12 }}>
             Use emojis ou ícones Unicode. Ex: 🏛️ 🎭 🗺️ ⚙️ 📚 🤖 (suporta até 10 caracteres)
           </small>
+        </div>
+
+        <div
+          style={{
+            display: 'grid',
+            gap: 12,
+            padding: 16,
+            borderRadius: 12,
+            border: '1px solid rgba(201, 35, 55, 0.25)',
+            background: 'rgba(201, 35, 55, 0.06)',
+          }}
+        >
+          <label style={{ fontSize: 14, fontWeight: 600 }}>
+            Imagem do card (Solutions — /what)
+          </label>
+          <small style={{ color: '#9f9bb0', fontSize: 12, marginTop: -4, lineHeight: 1.45 }}>
+            Cada <strong style={{ color: '#c8c4d4' }}>serviço</strong> na lista{' '}
+            <strong style={{ color: '#c8c4d4' }}>Admin → Serviços</strong> é um card na página Solutions: editas aqui,
+            nesta página, serviço a serviço. Podes <strong style={{ color: '#c8c4d4' }}>enviar um ficheiro</strong> para
+            substituir a imagem, ou colar uma URL. Proporção ~16:10; imagens até 8&nbsp;MB. Se limpares o campo e
+            guardares, o site volta à imagem padrão (por slug).
+          </small>
+          <input
+            ref={cardImageFileRef}
+            type="file"
+            accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
+            style={{ display: 'none' }}
+            onChange={handleCardImageFileChange}
+          />
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'center' }}>
+            <button
+              type="button"
+              disabled={cardImageUploading}
+              onClick={() => cardImageFileRef.current?.click()}
+              style={{
+                padding: '10px 16px',
+                borderRadius: 8,
+                border: '1px solid rgba(201,35,55,0.45)',
+                background: cardImageUploading ? 'rgba(50,50,50,0.4)' : 'rgba(201,35,55,0.15)',
+                color: '#fda4af',
+                fontSize: 13,
+                fontWeight: 600,
+                cursor: cardImageUploading ? 'not-allowed' : 'pointer',
+              }}
+            >
+              {cardImageUploading ? 'A enviar…' : 'Enviar imagem (substituir)'}
+            </button>
+            <button
+              type="button"
+              disabled={cardImageUploading || !formData.cardImageUrl.trim()}
+              onClick={() => {
+                setFormData({ ...formData, cardImageUrl: '' });
+                setMessage({
+                  type: 'success',
+                  text: 'URL removida. Guarda para voltar à imagem padrão do site.',
+                });
+              }}
+              style={{
+                padding: '10px 16px',
+                borderRadius: 8,
+                border: '1px solid rgba(148,163,184,0.35)',
+                background: 'rgba(255,255,255,0.05)',
+                color: '#94a3b8',
+                fontSize: 13,
+                fontWeight: 600,
+                cursor:
+                  cardImageUploading || !formData.cardImageUrl.trim() ? 'not-allowed' : 'pointer',
+              }}
+            >
+              Limpar (padrão do site)
+            </button>
+          </div>
+          <label style={{ fontSize: 13, fontWeight: 600, color: '#b8b4c8' }}>Ou URL da imagem</label>
+          <input
+            type="text"
+            value={formData.cardImageUrl}
+            onChange={(e) => setFormData({ ...formData, cardImageUrl: e.target.value })}
+            style={inputStyle}
+            placeholder="https://… (opcional; preenchido automaticamente após enviar ficheiro)"
+          />
+          <div
+            style={{
+              borderRadius: 10,
+              overflow: 'hidden',
+              border: '1px solid rgba(255,255,255,0.12)',
+              aspectRatio: '16 / 10',
+              maxWidth: 480,
+              background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
+              position: 'relative',
+            }}
+          >
+            {formData.cardImageUrl.trim() ? (
+              <img
+                src={formData.cardImageUrl.trim()}
+                alt="Pré-visualização do card"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block',
+                }}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.opacity = '0.35';
+                }}
+              />
+            ) : (
+              <div
+                style={{
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#64748b',
+                  fontSize: 13,
+                  padding: 16,
+                  textAlign: 'center',
+                }}
+              >
+                Envia uma imagem ou cola uma URL para pré-visualizar — ou guarda com campo vazio para o padrão do site.
+              </div>
+            )}
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 45%)',
+                pointerEvents: 'none',
+              }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                bottom: 10,
+                left: 12,
+                right: 12,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                pointerEvents: 'none',
+              }}
+            >
+              {formData.icon && <span style={{ fontSize: 22 }}>{formData.icon}</span>}
+              <span style={{ fontWeight: 700, fontSize: 12, color: '#f8fafc', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                {formData.titleEn || formData.titlePt || 'Título'}
+              </span>
+            </div>
+          </div>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>

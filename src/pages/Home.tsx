@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { t, type Lang } from '../i18n'
 import SEO from '../components/SEO'
@@ -15,7 +15,6 @@ import OptimizedImage from '../components/OptimizedImage'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { useTheme } from '../contexts/ThemeContext'
 import { getInterestProfile, personalizeProjectOrder } from '../utils/personalizeProjects'
-import { logger } from '@/utils/logger'
 import { PageFooterNavigation } from '../components/PageFooterNavigation'
 import LangLink from '../components/LangLink'
 // 🆕 UX PREMIUM - Loading Skeleton (OPCIONAL - pode remover se não funcionar)
@@ -63,8 +62,6 @@ interface HomeService {
 const Home: React.FC<HomeProps> = ({ lang }) => {
   // 🎨 TEMA: Usar hook centralizado (não criar estado local!)
   const { theme } = useTheme()
-  const demoreelRef = useRef<HTMLDivElement>(null)
-  const [isDemoreelVisible, setIsDemoreelVisible] = useState(false)
   
   // ✅ Hooks ROBUSTOS - Nunca causam erro #310
   // Controlados via flags CMS_ENABLED e PERSONALIZATION_ENABLED
@@ -236,47 +233,6 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     }
   }, [])
   
-  // ✅ NOVO: IntersectionObserver para autoplay do demoreel
-  // ROBUSTO: try/catch para evitar quebrar a página
-  useEffect(() => {
-    let observer: IntersectionObserver | null = null
-    const currentRef = demoreelRef.current
-    
-    try {
-      observer = new IntersectionObserver(
-        ([entry]) => {
-          try {
-            setIsDemoreelVisible(entry.isIntersecting)
-          } catch (e) {
-            // Silencioso
-          }
-        },
-        {
-          root: null, // viewport
-          rootMargin: '0px',
-          threshold: 0.5, // 50% do vídeo visível
-        }
-      )
-
-      if (currentRef) {
-        observer.observe(currentRef)
-      }
-    } catch (error) {
-      // IntersectionObserver pode não estar disponível em alguns navegadores antigos
-      logger.warn('IntersectionObserver não disponível:', error)
-    }
-
-    return () => {
-      try {
-        if (observer && currentRef) {
-          observer.unobserve(currentRef)
-        }
-        observer?.disconnect()
-      } catch (e) {
-        // Silencioso
-      }
-    }
-  }, [])
   
   // Projetos: SEMPRE os mesmos do backoffice (destaques = featured + priorityHome 1–10)
   // Prioridade: backoffice (CMS) → fallback estático. Não usar personalizedProjects para os slots principais, para não divergir do backoffice.
@@ -1025,7 +981,6 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
 
         {/* Vídeo 16:9 sem crop - mantém textos/legendas do demoreel */}
         <section
-          ref={demoreelRef}
           className="relative w-full overflow-hidden"
           style={{
             // Área mais alta para desktop, mas sempre preservando 16:9
@@ -1036,12 +991,14 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
         >
           {(() => {
             // Buscar demoreel configurado no backoffice (home > Demoreel Watch Our Work)
-            const demoreelVideoBackoffice = cmsContent?.page?.demoreelVideo
+            const demoreelRaw = cmsContent?.page?.demoreelVideo
+            const demoreelFromCms =
+              typeof demoreelRaw === 'string' ? demoreelRaw.trim() : ''
             const featured = recommended[0] || defaultProjects[0]
             const fallbackVideo = featured?.heroImage?.type === 'VIDEO' ? featured.heroImage.original : null
             
             // ORDEM DE PRIORIDADE: 1) Backoffice 2) Projeto destaque 3) MP4 local.
-            const preferredVideoUrl = demoreelVideoBackoffice || fallbackVideo || '/demo-azimut.mp4'
+            const preferredVideoUrl = demoreelFromCms || fallbackVideo || '/demo-azimut.mp4'
             const videoUrl = preferredVideoUrl
             const thumbnailUrl =
               cmsContent?.page?.demoreelThumbnailUrl ||
@@ -1059,15 +1016,17 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                     alt={lang === 'pt' ? 'Demoreel Azimut' : lang === 'es' ? 'Demoreel Azimut' : lang === 'fr' ? 'Démoreel Azimut' : 'Azimut Demoreel'}
                     className="w-full h-full"
                     objectFit="contain"
-                    autoplay={isDemoreelVisible}
+                    fillParent
+                    showControls
+                    autoplay
                     muted={true}
                     loop={true}
                     playsinline={true}
                   />
                 </div>
                 
-                {/* Overlay escuro sutil */}
-                <div className="absolute inset-0 bg-black/30" />
+                {/* Overlay escuro sutil — pointer-events-none para não bloquear play/controles do vídeo */}
+                <div className="pointer-events-none absolute inset-0 bg-black/30" />
                 
                 {/* Scroll indicator */}
                 <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">

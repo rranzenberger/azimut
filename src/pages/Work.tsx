@@ -164,6 +164,12 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     page: 'work',
     lang // Passar idioma para backoffice
   })
+
+  /** Mesmos 10 destaques que a Home (priorityHome 1–10 + fillers) — a API `page=work` usa outra ordenação na lista completa */
+  const { content: homeHighlightContent } = useAzimutContent({
+    page: 'home',
+    lang,
+  })
   
   // 🎯 PERSONALIZAÇÃO IA: Filtro automático baseado em visitor type
   const { profile } = usePersonalizedContent()
@@ -309,14 +315,46 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
     return defaultCases;
   }, [cmsContent?.highlightProjects, defaultCases, cmsLoading, cmsError])
 
-  // Os 7 principais (destaques da Home): API retorna em featuredProjects quando page=work
-  const featuredSeven = useMemo(() => {
-    if (cmsContent?.featuredProjects && Array.isArray(cmsContent.featuredProjects) && cmsContent.featuredProjects.length > 0) {
-      return cmsContent.featuredProjects;
+  // Mesma ordem que a Home: CMS highlightProjects → até 10 slots → personalizeProjectOrder (priorityHome / comportamento)
+  const interestProfile = useMemo(() => getInterestProfile(), [])
+
+  const recommended = useMemo(() => {
+    const fromHome =
+      homeHighlightContent?.highlightProjects &&
+      Array.isArray(homeHighlightContent.highlightProjects) &&
+      homeHighlightContent.highlightProjects.length > 0
+        ? homeHighlightContent.highlightProjects
+        : null
+    const base =
+      fromHome ||
+      (allCases && Array.isArray(allCases) && allCases.length > 0 ? allCases : defaultCases)
+    const minRequired = 10
+
+    const uniquePool: WorkProject[] = []
+    const seen = new Set<string>()
+    const pushUnique = (list: WorkProject[]) => {
+      for (const item of list) {
+        const key = item?.slug || `${item?.title || 'project'}-${item?.year || ''}`
+        if (seen.has(key)) continue
+        seen.add(key)
+        uniquePool.push(item)
+      }
     }
-    return [];
-  }, [cmsContent?.featuredProjects])
-  
+
+    pushUnique(base as WorkProject[])
+    pushUnique(defaultCases as WorkProject[])
+
+    const fallbackCycle = [...(base as WorkProject[]), ...(defaultCases as WorkProject[])]
+    let i = 0
+    while (uniquePool.length < minRequired && fallbackCycle.length > 0 && i < 100) {
+      uniquePool.push(fallbackCycle[i % fallbackCycle.length])
+      i += 1
+    }
+
+    const pool = uniquePool.slice(0, minRequired)
+    return personalizeProjectOrder(pool, interestProfile).slice(0, minRequired)
+  }, [homeHighlightContent?.highlightProjects, allCases, defaultCases, interestProfile])
+
   // SEO dinâmico baseado nos projetos disponíveis
   const baseSeo = seoData.work[lang]
   const seo = useMemo(() => {
@@ -438,16 +476,21 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
   // Visitante novo → priorityHome (flag do backoffice)
   // Visitante com histórico → sobrepõe com projetos relevantes
   // ═══════════════════════════════════════════════════════════════
-  const interestProfile = useMemo(() => getInterestProfile(), [])
-  
   const personalizedCases = useMemo(() => {
     // Só personaliza quando NÃO tem filtros ativos (visão padrão)
     if (hasActiveFilters) return cases
     return personalizeProjectOrder(cases, interestProfile)
   }, [cases, interestProfile, hasActiveFilters])
 
-  // Card principal (destaque): quando temos os 7 da Home, usar o 1º; senão o 1º da lista personalizada
-  const mainFeaturedProject = (featuredSeven.length > 0 ? featuredSeven[0] : personalizedCases[0]) as WorkProject | undefined
+  // Destaque: mesmos índices que a Home (recommended[0]) quando sem filtros; com filtros → 1º da lista filtrada
+  const mainFeaturedProject = (
+    !hasActiveFilters ? recommended[0] : personalizedCases[0]
+  ) as WorkProject | undefined
+
+  /** Slots 1–9 como na Home (1 principal + 9 na grelha 3×3) */
+  const secondaryProjects: WorkProject[] = !hasActiveFilters
+    ? recommended.slice(1, 10)
+    : personalizedCases.slice(1, 10)
   
   // Extrair valores únicos para filtros
   const allTags = useMemo(() => {
@@ -558,7 +601,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
 
   // Dados já vêm traduzidos do backoffice
 
-  // Imagem OG dinâmica: usar imagem do projeto em destaque (1º dos 7 ou 1º da lista)
+  // Imagem OG dinâmica: projeto em destaque (recommended[0] alinhado à Home)
   const ogImage = useMemo(() => {
     if (mainFeaturedProject) {
       const firstProjectImage = getProjectImageUrl(mainFeaturedProject, 'large')
@@ -790,9 +833,10 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
                     ({lang === 'pt' ? 'personalizado' : 'personalized'})
                   </span>
                   )}
-                  {personalizedCases.length > 4 && (
+                  {!hasActiveFilters && allCases.length > 10 && (
                     <span className="ml-1 text-slate-600">
-                      ({personalizedCases.length} {lang === 'pt' ? 'no portfólio completo' : 'in full portfolio'})
+                      ({allCases.length}{' '}
+                      {lang === 'pt' ? 'no portfólio completo' : lang === 'es' ? 'en el portafolio' : lang === 'fr' ? 'dans le portfolio' : 'in full portfolio'})
                     </span>
                   )}
                 </span>
@@ -848,7 +892,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
             </div>
           )}
 
-          {/* Featured Project - Full Width (1º dos 7 principais quando API envia featuredProjects; senão 1º da lista) */}
+          {/* Featured Project - Full Width (mesmo slot 0 que a Home: backoffice + personalização) */}
           {mainFeaturedProject && (
               <article
                 id={personalizedCases.length === 1 ? 'projects-grid' : undefined}
@@ -995,12 +1039,12 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
             </div>
           )}
 
-          {/* Other Projects Grid - Apenas 3 cards na página principal */}
-          {personalizedCases.length > 1 && (
+          {/* Grelha 3×3 — mesmos slots 1–9 que a Home (ordem do backoffice + personalização) */}
+          {secondaryProjects.length > 0 && (
             <div id="projects-grid" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
-              {personalizedCases.slice(1, 4).map((item: WorkProject, index: number) => (
+              {secondaryProjects.map((item: WorkProject, index: number) => (
               <article
-                key={item.slug}
+                key={`${item.slug}-${index}`}
                 className={`group rounded-2xl border card-adaptive overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)] backdrop-blur transition-all duration-300 hover:scale-[1.02] hover:border-azimut-red/50 hover:shadow-[0_24px_60px_rgba(var(--theme-accent-red-rgb),0.3)] ${
                   theme === 'dark' ? 'border-white/10' : 'border-slate-300/30'
                 }`}
@@ -1132,15 +1176,15 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
             </div>
           )}
 
-          {/* CTA: Ver todo portfólio (quando há mais projetos além dos 4 exibidos) */}
-          {personalizedCases.length > 4 && !hasActiveFilters && (
+          {/* CTA: lista completa quando há mais do que os 10 destaques (1 + 9) */}
+          {allCases.length > 10 && !hasActiveFilters && (
             <div className="mb-16 flex justify-center">
               <Link
                 to={`/${lang}/work/projects`}
                 className="inline-flex items-center gap-3 rounded-xl border border-azimut-red/50 bg-azimut-red/10 px-8 py-4 font-sora text-sm font-semibold uppercase tracking-[0.12em] hover:bg-azimut-red/20 hover:border-azimut-red/70 transition-all"
                 style={{ color: 'var(--theme-text)' }}
               >
-                {lang === 'pt' ? `Ver todos os ${personalizedCases.length} projetos` : lang === 'es' ? `Ver los ${personalizedCases.length} proyectos` : lang === 'fr' ? `Voir les ${personalizedCases.length} projets` : `View all ${personalizedCases.length} projects`}
+                {lang === 'pt' ? `Ver todos os ${allCases.length} projetos` : lang === 'es' ? `Ver los ${allCases.length} proyectos` : lang === 'fr' ? `Voir les ${allCases.length} projets` : `View all ${allCases.length} projects`}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </Link>
             </div>

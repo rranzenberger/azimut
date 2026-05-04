@@ -385,8 +385,8 @@ export default function EditProjectPage() {
               🏠 {homeSlotLabel}
             </span>
           )}
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '4px 8px', borderRadius: 10, border: '1px solid rgba(34,197,94,0.35)', background: 'rgba(34,197,94,0.08)' }}>
-            <span style={{ fontSize: 11, color: '#86efac', fontWeight: 700, textTransform: 'uppercase' }}>Ordem Home</span>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '6px 10px', borderRadius: 10, border: '1px solid rgba(34,197,94,0.35)', background: 'rgba(34,197,94,0.08)' }}>
+            <span style={{ fontSize: 13, color: '#86efac', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em' }}>Ordem Home</span>
             <select
               value={formData.priorityHome}
               onChange={(e) => {
@@ -394,7 +394,7 @@ export default function EditProjectPage() {
                 void handleQuickHomeOrderSave(nextPriority);
               }}
               disabled={savingHomeOrder}
-              style={{ ...inputStyle, height: 30, minWidth: 150, padding: '0 8px', fontSize: 12, color: '#86efac', border: '1px solid rgba(34,197,94,0.35)', background: 'rgba(0,0,0,0.35)' }}
+              style={{ ...inputStyle, height: 40, minWidth: 190, padding: '0 12px', fontSize: 15, fontWeight: 700, color: '#e2e8f0', border: '1px solid rgba(34,197,94,0.35)', background: 'rgba(0,0,0,0.45)' }}
             >
               <option value={0}>Não exibir</option>
               <option value={1}>Principal 1</option>
@@ -408,7 +408,7 @@ export default function EditProjectPage() {
               <option value={9}>Principal 9</option>
               <option value={10}>Principal 10</option>
             </select>
-            {savingHomeOrder && <span style={{ fontSize: 11, color: '#94a3b8' }}>salvando...</span>}
+            {savingHomeOrder && <span style={{ fontSize: 12, color: '#94a3b8', fontWeight: 600 }}>salvando...</span>}
           </div>
         </div>
         <p style={{ margin: 0, color: '#6b6780', fontSize: 14 }}>

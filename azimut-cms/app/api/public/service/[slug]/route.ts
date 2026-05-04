@@ -41,6 +41,7 @@ export async function GET(
         descriptionEs: true,
         descriptionFr: true,
         icon: true,
+        cardImageUrl: true,
         segments: true,
         status: true,
         priority: true,

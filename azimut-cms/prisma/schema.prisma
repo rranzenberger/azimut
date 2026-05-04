@@ -103,6 +103,8 @@ model Service {
   descriptionEs  String?
   descriptionFr  String?
   icon           String?
+  /// Imagem do card na página Solutions (/what) — URL pública (upload CDN ou externa)
+  cardImageUrl   String?
   status         ServiceStatus @default(PUBLISHED)
   priority       Int           @default(0)
   segments       String[]

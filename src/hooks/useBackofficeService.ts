@@ -27,6 +27,8 @@ export interface ServiceContent {
   status: 'PUBLISHED' | 'DRAFT' | 'ARCHIVED';
   priority: number;
   updatedAt: string;
+  /** Imagem do card em /what (Solutions) */
+  cardImageUrl?: string | null;
   faqs?: ServiceFAQ[];
   /** Conteúdo da subpágina (editável no backoffice) */
   longDesc?: string[];
@@ -98,6 +100,7 @@ export function useBackofficeService(
           title: data[`title${langKey}`] || data.titlePt,
           description: data[`description${langKey}`] || data.descriptionPt,
           icon: data.icon || '📦',
+          cardImageUrl: data.cardImageUrl || null,
           segments: data.segments || [],
           status: data.status,
           priority: data.priority || 0,
@@ -184,6 +187,7 @@ export function useBackofficeServices(
           title: item[`title${lang.charAt(0).toUpperCase() + lang.slice(1)}`] || item.titlePt,
           description: item[`description${lang.charAt(0).toUpperCase() + lang.slice(1)}`] || item.descriptionPt,
           icon: item.icon || '📦',
+          cardImageUrl: item.cardImageUrl || null,
           segments: item.segments || [],
           status: item.status,
           priority: item.priority || 0,

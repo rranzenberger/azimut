@@ -6,6 +6,7 @@ import { useUserTracking } from '../hooks/useUserTracking'
 import LangLink from '../components/LangLink'
 import InternalNavigation from '../components/InternalNavigation'
 import { servicesData, getServiceTitle, getServiceShortDesc } from '../data/servicesData'
+import { getDefaultServiceCardImage } from '../data/serviceCardImages'
 import { useBackofficeServices } from '../hooks/useBackofficeService'
 import StarBackground from '../components/StarBackground'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
@@ -400,7 +401,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                 <LangLink 
                   key={'id' in service ? String(service.id) : service.slug}
                   to={`/what/${service.slug}`}
-                  className="group relative rounded-xl cursor-pointer transition-all duration-400 hover:z-50 z-10 card-adaptive"
+                  className="group relative overflow-hidden rounded-xl cursor-pointer transition-all duration-400 hover:z-50 z-10 card-adaptive"
                   style={{
                     animation: `fadeInUp 0.5s ease-out ${index * 0.04}s both`,
                     boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
@@ -431,14 +432,43 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                   />
                   {/* Glow intenso no hover */}
                   <div 
-                    className="absolute inset-x-0 top-0 h-[4px] rounded-t-xl opacity-0 group-hover:opacity-100 transition-all duration-300"
+                    className="absolute inset-x-0 top-0 h-[4px] rounded-t-xl opacity-0 group-hover:opacity-100 transition-all duration-300 z-20"
                     style={{ 
                       background: 'linear-gradient(90deg, #c92337 0%, #ff5a6a 50%, #c92337 100%)',
                       boxShadow: '0 0 25px rgba(232,72,88,1), 0 0 50px rgba(201,35,55,0.8)'
                     }}
                   />
+
+                  {/* Hero visual — CMS cardImageUrl ou imagem padrão por slug */}
+                  {(() => {
+                    const cardImg =
+                      'cardImageUrl' in service && service.cardImageUrl
+                        ? service.cardImageUrl
+                        : getDefaultServiceCardImage(service.slug)
+                    return (
+                      <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-gradient-to-br from-slate-900 to-black">
+                        {cardImg ? (
+                          <img
+                            src={cardImg}
+                            alt=""
+                            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            loading={index < 8 ? 'eager' : 'lazy'}
+                            decoding="async"
+                          />
+                        ) : null}
+                        <div
+                          className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/20 pointer-events-none"
+                          aria-hidden
+                        />
+                        <div
+                          className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent pointer-events-none opacity-80"
+                          aria-hidden
+                        />
+                      </div>
+                    )
+                  })()}
                   
-                  <article className="relative flex flex-col h-full p-5 pt-6">
+                  <article className="relative flex flex-col h-full p-5 pt-5">
                     {/* Ícone com container sutil */}
                     {service.icon && (
                       <div className="mb-4 flex-shrink-0">
