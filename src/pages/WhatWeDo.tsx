@@ -11,6 +11,7 @@ import {
   CARD_IMAGE_EMERGENCY_FALLBACK,
 } from '../data/serviceCardImages'
 import { useBackofficeServices } from '../hooks/useBackofficeService'
+import { useServiceCardProjectImages } from '../hooks/useServiceCardProjectImages'
 import StarBackground from '../components/StarBackground'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { PageFooterNavigation } from '../components/PageFooterNavigation'
@@ -163,6 +164,9 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
   
   // 🆕 BUSCAR SERVIÇOS DO BACKOFFICE (com fallback para dados locais)
   const { services: backofficeServices, loading: loadingServices } = useBackofficeServices(lang)
+
+  /** Hero dos projetos curados (CMS) — prioridade sobre defaults YouTube */
+  const { projectImagesByService } = useServiceCardProjectImages(CURATED_SERVICE_SLUGS)
   
   // Ler filtro da URL (?filter=culture)
   const [activeFilter, setActiveFilter] = useState<FilterCategory>(() => {
@@ -447,7 +451,8 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ lang }) => {
                     const cardImg =
                       'cardImageUrl' in service && service.cardImageUrl
                         ? service.cardImageUrl
-                        : getDefaultServiceCardImage(service.slug)
+                        : projectImagesByService[service.slug] ||
+                          getDefaultServiceCardImage(service.slug)
                     return (
                       <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-gradient-to-br from-slate-900 to-black">
                         {cardImg ? (
