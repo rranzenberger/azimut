@@ -8,7 +8,7 @@ export const SERVICE_CARD_PROJECT_SLUGS: Record<string, string> = {
   'pos-producao-vfx': 'bw-energy-maromba',
   'animacao-2d-3d': 'natal-rio-bonito-2025',
   'xr-interatividade-web3': 'vr-amazonia',
-  /** Cenografia: imagem própria em public/images/service-cards (não sobrescrever com hero do museu) */
+  'cenografia-design-espacial': 'museu-rio-olimpico',
   'games-interativos': 'senna-ativacoes',
   'ia-criativa': 'gramado-vr-ia',
   'direcao-arte-criativa': 'van-gogh-la-fontaine',

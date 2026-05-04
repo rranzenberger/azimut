@@ -397,6 +397,11 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
 
   const t = content[lang] || content.pt
 
+  /** Imagem local do card «Vancouver» (instalação interativa) quando o CMS não define hero */
+  const DEFAULT_ACADEMY_CARD_IMAGES: Partial<Record<string, string>> = {
+    vancouver: '/images/academy/vancouver-card.png',
+  }
+
   // Para cada card, pegar dados do backoffice quando existirem (slug: academy/vancouver, academy/courses, etc.)
   const getBackofficeSection = (sectionId: string) =>
     landingSections.find((s) => s.slug === `academy/${sectionId}`)
@@ -755,7 +760,8 @@ const AcademyNew: React.FC<AcademyProps> = ({ lang }) => {
             <div className="grid md:grid-cols-2 gap-6 lg:gap-10">
               {t.sections.map((section: AcademySection, idx: number) => {
                 const backSection = getBackofficeSection(section.id)
-                const cardImageUrl = backSection?.heroImageUrl
+                const cardImageUrl =
+                  backSection?.heroImageUrl || DEFAULT_ACADEMY_CARD_IMAGES[section.id] || null
                 const cardTitle = textFromBackoffice(backSection, 'heroSlogan') || textFromBackoffice(backSection, 'heroSubtitle') || section.title
                 const cardDescription = textFromBackoffice(backSection, 'heroDescription') || section.description
                 return (
