@@ -23,7 +23,7 @@ const SERVICE_CARD_IMAGE_DEFAULTS = {
   'pos-producao-vfx': 'https://img.youtube.com/vi/Vm1s2cwHI-M/maxresdefault.jpg',
   'animacao-2d-3d': 'https://img.youtube.com/vi/y3uhoRpQPYY/maxresdefault.jpg',
   'xr-interatividade-web3': 'https://img.youtube.com/vi/Vm1s2cwHI-M/maxresdefault.jpg',
-  'cenografia-design-espacial': 'https://img.youtube.com/vi/aK81n1sF7ds/maxresdefault.jpg',
+  'cenografia-design-espacial': '/images/service-cards/cenografia-design-espacial.png',
   'games-interativos': 'https://img.youtube.com/vi/KuzwrKRacG8/maxresdefault.jpg',
   'ia-criativa': 'https://img.youtube.com/vi/y3uhoRpQPYY/maxresdefault.jpg',
   'direcao-arte-criativa': 'https://img.youtube.com/vi/OFOy_z2sJag/maxresdefault.jpg',
@@ -37,6 +37,19 @@ const EMERGENCY = 'https://img.youtube.com/vi/1Pcoi_E9SXI/hqdefault.jpg'
 
 async function probe(label, url) {
   try {
+    if (url.startsWith('/')) {
+      const fs = await import('fs')
+      const path = await import('path')
+      const local = path.join(process.cwd(), 'public', url.replace(/^\//, ''))
+      const exists = fs.existsSync(local)
+      return {
+        label,
+        url,
+        status: exists ? 200 : 404,
+        ok: exists,
+        ct: exists ? 'local/public' : 'missing-file',
+      }
+    }
     const r = await fetch(url, {
       method: 'GET',
       redirect: 'follow',

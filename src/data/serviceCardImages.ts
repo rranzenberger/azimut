@@ -29,6 +29,9 @@ const THUMB_MAG_4 = ytMax('FWHN6qFf-tE')
 const THUMB_MAG_5 = ytMax('KuzwrKRacG8')
 const THUMB_MAG_6 = ytMax('1DR6AuPBMxU')
 
+/** Instalação interativa «Quem é o mais veloz?» — cenografia digital (public/) */
+const CARD_CENOGRAFIA_INTERATIVA = '/images/service-cards/cenografia-design-espacial.png'
+
 /**
  * Nota: OG em azmt.com.br (og-work / og-vancouver) falharam em produção para alguns browsers/CDN,
  * deixando o card só com o fundo escuro. Os cards usam thumbs YouTube (mesmo pool do site).
@@ -40,7 +43,7 @@ export const SERVICE_CARD_IMAGE_DEFAULTS: Record<string, string> = {
   'pos-producao-vfx': THUMB_VAN_A,
   'animacao-2d-3d': THUMB_VAN_B,
   'xr-interatividade-web3': THUMB_VAN_A,
-  'cenografia-design-espacial': THUMB_MAG_1,
+  'cenografia-design-espacial': CARD_CENOGRAFIA_INTERATIVA,
   'games-interativos': THUMB_MAG_5,
   /** IA — reel criativo (evita og-work.png que quebrava). */
   'ia-criativa': THUMB_VAN_B,
