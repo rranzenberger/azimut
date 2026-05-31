@@ -209,7 +209,7 @@ export default function AzimutHero({ lang = 'pt', accent = '#e23744' }: AzimutHe
         .azimut-hero{
           position:relative; width:100%; aspect-ratio:16/7; min-height:360px;
           border-radius:24px; overflow:hidden;
-          background:linear-gradient(160deg,#11172b,#0c1020 70%);
+          background:linear-gradient(160deg,#1c1712,#0d0907 70%);
           border:1px solid rgba(255,255,255,.07);
           box-shadow:0 40px 120px -40px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.04);
           font-family:'Archivo','Helvetica Neue',sans-serif;
@@ -248,6 +248,14 @@ export default function AzimutHero({ lang = 'pt', accent = '#e23744' }: AzimutHe
           .ah-content{ align-items:flex-end; padding-bottom:48px; }
         }
         @media(prefers-reduced-motion:reduce){ .azimut-hero canvas{ opacity:.9; } }
+        /* O hero é sempre escuro: força as cores do texto p/ não sumir no tema claro */
+        .azimut-hero .ah-kicker{ color:#ff5663 !important; }
+        .azimut-hero .ah-manifesto{ color:#eef1f8 !important; }
+        .azimut-hero .ah-manifesto em{ color:#ff5663 !important; }
+        .azimut-hero .ah-tags{ color:#8a93ad !important; }
+        .azimut-hero .ah-readout{ color:#8a93ad !important; }
+        .azimut-hero .ah-readout b{ color:#eef1f8 !important; }
+        .azimut-hero .ah-readout .hl{ color:#ff5663 !important; }
       `}</style>
 
       <canvas ref={canvasRef} />
