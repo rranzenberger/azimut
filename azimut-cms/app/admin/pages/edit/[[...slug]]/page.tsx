@@ -697,7 +697,12 @@ export default function EditPagePage() {
           pillar3Fr: data.pillar3Fr || '',
           // Hero Media (IDs + URLs)
           heroBackgroundImageId: data.heroBackgroundImageId || '',
-          heroBackgroundImageUrl: data.heroBackgroundImageUrl || '',
+          heroBackgroundImageUrl:
+            data.heroBackgroundImageUrl ||
+            data.heroBackgroundImage?.largeUrl ||
+            data.heroBackgroundImage?.originalUrl ||
+            data.heroBackgroundImage?.mediumUrl ||
+            '',
           demoreelVideoId: data.demoreelVideoId || '',
           demoreelVideoUrl: data.demoreelVideoUrl || '',
           // Vídeos Multilíngues
@@ -1141,6 +1146,11 @@ export default function EditPagePage() {
               {btn.label}
             </button>
           ))}
+          {slug === 'studio' && (
+            <button type="button" onClick={() => handleSectionToggle('studioOverviewImage')} style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid rgba(201,35,55,0.5)', background: openSection === 'studioOverviewImage' ? 'rgba(201,35,55,0.2)' : 'rgba(201,35,55,0.1)', color: '#fca5a5', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
+              🖼️ Imagem Quem Somos
+            </button>
+          )}
           {slug !== 'studio' && slug !== 'studio/diferenciais' && (
             <button type="button" onClick={() => handleSectionToggle('midia')} style={{ padding: '10px 16px', borderRadius: 8, border: '1px solid rgba(56, 189, 248, 0.4)', background: openSection === 'midia' ? 'rgba(56, 189, 248, 0.25)' : 'rgba(56, 189, 248, 0.1)', color: '#7dd3fc', fontSize: 13, fontWeight: 500, cursor: 'pointer' }}>
               📸 Vídeo e capa
@@ -1198,6 +1208,18 @@ export default function EditPagePage() {
             mainTitle={formData.name || 'Academy'}
             mainOnly
             galleryEmptyMessage="Use a seção « Vídeo e capa » abaixo para definir a imagem de hero."
+          />
+        )}
+
+        {/* Preview — bloco Quem Somos (Studio / Overview) */}
+        {slug === 'studio' && (
+          <MediaPreviewBlock
+            title="Bloco Quem Somos (Overview) — como aparece no site"
+            mainLabel="Imagem cinematográfica abaixo do texto «Quem Somos»"
+            mainImageUrl={formData.heroBackgroundImageUrl || null}
+            mainTitle="Azimut Studio"
+            mainOnly
+            galleryEmptyMessage="Use a seção « Imagem Quem Somos » abaixo para enviar ou trocar a foto."
           />
         )}
 
@@ -2198,6 +2220,57 @@ export default function EditPagePage() {
             />
           </div>
         </CollapsibleSection>
+
+        {/* ═══════════════════════════════════════════════════════════
+            IMAGEM OVERVIEW — Studio (bloco Quem Somos com claquete)
+        ═══════════════════════════════════════════════════════════ */}
+        {slug === 'studio' && (
+          <CollapsibleSection
+            id="studioOverviewImage"
+            title="Imagem — bloco Quem Somos (Overview)"
+            icon="🖼️"
+            borderColor="rgba(201,35,55,0.35)"
+            bgColor="rgba(201,35,55,0.08)"
+            isOpen={openSection === 'studioOverviewImage'}
+            onToggle={handleSectionToggle}
+          >
+            <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
+              Esta imagem aparece no retângulo cinematográfico abaixo do texto <strong>«Quem Somos»</strong> em{' '}
+              <strong>/studio</strong> (menu Studio → Overview). Se não houver imagem, o site mostra o placeholder com claquete 🎬.
+              <br />
+              Recomendado: <strong>1920×1080</strong> (16:9), JPG ou PNG até 5 MB.
+            </p>
+            <UnifiedMediaUpload
+              pageSlug="studio"
+              sectionSlug="overview"
+              imageId={formData.heroBackgroundImageId}
+              imageUrl={formData.heroBackgroundImageUrl}
+              onImageChange={(mediaId, url) =>
+                setFormData({
+                  ...formData,
+                  heroBackgroundImageId: mediaId || '',
+                  heroBackgroundImageUrl: url || '',
+                })
+              }
+              allowVideo={false}
+              allowExternalUrl={true}
+              imageSpecs={{
+                width: 1920,
+                height: 1080,
+                maxSizeMB: 5,
+                description: 'Foto do estúdio, equipe ou still cinematográfico',
+              }}
+              existingMedia={allMedia}
+              imageLabel="Imagem do bloco Quem Somos"
+            />
+            <div style={{ marginTop: 14, padding: 12, borderRadius: 8, background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.28)' }}>
+              <p style={{ margin: 0, fontSize: 13, color: '#d1fae5' }}>
+                <strong>Imagem ativa no site:</strong>{' '}
+                {formData.heroBackgroundImageUrl || 'Nenhuma — placeholder com claquete até você enviar uma foto.'}
+              </p>
+            </div>
+          </CollapsibleSection>
+        )}
 
         {/* ═══════════════════════════════════════════════════════════
             MÍDIA DE FILOSOFIA - Páginas Studio e Diferenciais

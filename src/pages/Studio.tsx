@@ -9,6 +9,7 @@ import { PageFooterNavigation } from '../components/PageFooterNavigation'
 import { useTeam } from '../hooks/useTeam'
 import { useCredentials } from '../hooks/useCredentials'
 import { useHistory } from '../hooks/useHistory'
+import { useBackofficeContent } from '../hooks/useBackofficeContent'
 
 interface StudioProps {
   lang: Lang
@@ -62,6 +63,9 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
   const { members: teamFromBackoffice } = useTeam(lang)
   const { credentials: credentialsFromBackoffice } = useCredentials(lang)
   const { items: historyFromBackoffice } = useHistory(lang)
+  /** Imagem do bloco Quem Somos — backoffice Páginas → studio → Imagem Quem Somos */
+  const { page: studioPageFromCms } = useBackofficeContent('studio', lang)
+  const overviewImageUrl = studioPageFromCms?.heroImageUrl ?? null
   
   useEffect(() => {
     const handleScroll = () => {
@@ -505,25 +509,35 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               )}
             </p>
 
-            {/* Bloco visual cinematográfico — suporte a vídeo de fundo (showreel); gradiente se não houver vídeo */}
+            {/* Bloco visual cinematográfico — imagem do backoffice ou placeholder */}
             <div className="relative rounded-2xl overflow-hidden mb-12 border border-azimut-red/20 shadow-2xl" style={{ minHeight: '340px' }}>
-              <div 
-                className="absolute inset-0 rounded-2xl"
-                style={{
-                  background: theme === 'dark'
-                    ? 'linear-gradient(145deg, #1a1f2c 0%, #242938 40%, #1e2330 70%, #171b26 100%)'
-                    : 'linear-gradient(145deg, rgba(30,28,26,0.95) 0%, rgba(26,24,21,0.9) 100%)'
-                }}
-              />
+              {overviewImageUrl ? (
+                <img
+                  src={overviewImageUrl}
+                  alt=""
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div
+                  className="absolute inset-0 rounded-2xl"
+                  style={{
+                    background: theme === 'dark'
+                      ? 'linear-gradient(145deg, #1a1f2c 0%, #242938 40%, #1e2330 70%, #171b26 100%)'
+                      : 'linear-gradient(145deg, rgba(30,28,26,0.95) 0%, rgba(26,24,21,0.9) 100%)',
+                  }}
+                />
+              )}
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(201,35,55,0.08),transparent)] rounded-2xl pointer-events-none" aria-hidden />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/25 pointer-events-none" aria-hidden />
               <div className="relative flex flex-col items-center justify-center min-h-[340px] p-8 md:p-12 text-center">
                 <div className="w-16 h-1 rounded-full bg-gradient-to-r from-transparent via-azimut-red to-transparent mb-6" aria-hidden />
-                <div className="text-5xl md:text-6xl mb-4">🎬</div>
-                {/* Texto sempre claro pois o fundo é escuro em ambos os temas */}
-                <p className="font-sora text-lg md:text-xl uppercase tracking-wider text-white">
+                {!overviewImageUrl && <div className="text-5xl md:text-6xl mb-4">🎬</div>}
+                <p className="font-sora text-lg md:text-xl uppercase tracking-wider text-white drop-shadow-lg">
                   {lang === 'pt' ? 'Studio Azimut' : lang === 'es' ? 'Estudio Azimut' : lang === 'fr' ? 'Studio Azimut' : 'Azimut Studio'}
                 </p>
-                <p className="text-sm mt-2 text-slate-400">
+                <p className="text-sm mt-2 text-slate-300 drop-shadow-md">
                   {lang === 'pt' ? 'Imersivo • Interativo • Cinematográfico' : lang === 'es' ? 'Inmersivo • Interactivo • Cinematográfico' : lang === 'fr' ? 'Immersif • Interactif • Cinématographique' : 'Immersive • Interactive • Cinematic'}
                 </p>
               </div>

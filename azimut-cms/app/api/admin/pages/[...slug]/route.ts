@@ -39,6 +39,14 @@ export async function GET(
         sections: {
           orderBy: { order: 'asc' },
         },
+        heroBackgroundImage: {
+          select: {
+            originalUrl: true,
+            mediumUrl: true,
+            largeUrl: true,
+            thumbnailUrl: true,
+          },
+        },
       },
     });
 
