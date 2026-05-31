@@ -1018,21 +1018,21 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   <div className="red-line-top absolute top-0 left-0 right-0 h-1 rounded-t-2xl bg-gradient-to-r from-transparent via-azimut-red to-transparent opacity-80 z-10" aria-hidden />
                   {/* FOTO REAL — galeria cinematográfica, hover scale */}
                   <LangLink to={`/studio/equipe#${member.slug}`} className="block">
-                    <div className="team-photo relative overflow-hidden aspect-[3/4] w-full">
+                    <div className="team-photo relative overflow-hidden aspect-[4/3] w-full">
                       <img
                         src={member.photo}
                         alt={member.name}
                         loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         style={{
+                          // 4/3 sem escala: só "abaixa" a imagem (mostra o topo = o rosto).
+                          // Quanto MENOR o %, mais sobe o enquadramento (mostra mais o rosto).
                           objectPosition:
-                            member.slug === 'alberto' || member.name.includes('Alberto') ? 'center 35%'
-                              : member.slug === 'ranz' || member.name.includes('Ranz') ? 'center 30%'
+                            member.slug === 'ranz' || member.name.includes('Ranz') ? 'center 20%'
+                              : member.slug === 'anick' || member.name.includes('Anick') ? 'center 20%'
+                              : member.slug === 'alberto' || member.name.includes('Alberto') ? 'center center'
                               : 'center center',
-                          transform:
-                            member.slug === 'alberto' || member.name.includes('Alberto') ? 'scale(1.25)'
-                              : member.slug === 'ranz' || member.name.includes('Ranz') ? 'scale(1.2)'
-                              : 'scale(1)',
+                          transform: 'none',
                           transformOrigin: 'center center'
                         }}
                         onError={(e) => {
