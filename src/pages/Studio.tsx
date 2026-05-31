@@ -1027,8 +1027,8 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                         style={{
                           // 4/3. Maior % = desce (mostra menos topo); menor % = sobe (mostra mais o rosto).
                           objectPosition:
-                            member.slug === 'ranz' || member.name.includes('Ranz') ? 'center 8%'
-                              : member.slug === 'anick' || member.name.includes('Anick') ? 'center 30%'
+                            member.slug === 'ranz' || member.name.includes('Ranz') ? 'center top'
+                              : member.slug === 'anick' || member.name.includes('Anick') ? 'center 15%'
                               : member.slug === 'alberto' || member.name.includes('Alberto') ? 'center 35%'
                               : 'center center',
                           // Alberto é foto deitada: escala para enquadrar o rosto e tirar a "tarja" do topo.
