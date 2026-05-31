@@ -1,0 +1,197 @@
+/* Studio overview — azimute instrument (port from azimut-studio-card.html) */
+
+.studio-az-card {
+  position: relative;
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: linear-gradient(160deg, #11172b, #0c1020 70%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow:
+    0 40px 120px -40px rgba(0, 0, 0, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  aspect-ratio: 16 / 7;
+  min-height: 360px;
+}
+
+.studio-az-card::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 64px;
+  height: 3px;
+  border-radius: 0 0 4px 4px;
+  background: linear-gradient(90deg, transparent, #c92337, transparent);
+  box-shadow: 0 0 18px 2px rgba(201, 35, 55, 0.6);
+  z-index: 6;
+}
+
+.studio-az-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.45;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.studio-az-card__bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.28;
+  z-index: 0;
+}
+
+.studio-az-card__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 1;
+}
+
+.studio-az-card__content {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  padding: clamp(28px, 5vw, 72px);
+  pointer-events: none;
+}
+
+.studio-az-card__text {
+  max-width: 560px;
+}
+
+.studio-az-card__kicker {
+  font-family: var(--font-sora, 'Sora', system-ui, sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #ff5663;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  animation: studioAzRise 0.8s 0.1s forwards cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.studio-az-card__kicker-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #c92337;
+  box-shadow: 0 0 10px #c92337;
+  flex-shrink: 0;
+}
+
+.studio-az-card__manifesto {
+  font-family: var(--font-sora, 'Sora', system-ui, sans-serif);
+  font-weight: 300;
+  font-size: clamp(1.75rem, 4.4vw, 3.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.01em;
+  color: #eef1f8;
+  margin: 22px 0 26px;
+  opacity: 0;
+  animation: studioAzRise 0.9s 0.25s forwards cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.studio-az-card__manifesto em {
+  font-style: italic;
+  color: #ff5663;
+  font-weight: 400;
+}
+
+.studio-az-card__tags {
+  font-family: var(--font-sora, 'Sora', system-ui, sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8a93ad;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: studioAzRise 0.9s 0.42s forwards cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.studio-az-card__tag {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.studio-az-card__tag-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #c92337;
+  flex-shrink: 0;
+}
+
+.studio-az-card__readout {
+  margin-top: 30px;
+  font-family: ui-monospace, 'Cascadia Code', 'Consolas', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: #8a93ad;
+  border-left: 2px solid rgba(201, 35, 55, 0.5);
+  padding-left: 14px;
+  line-height: 1.7;
+  opacity: 0;
+  animation: studioAzRise 0.9s 0.6s forwards cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.studio-az-card__readout b {
+  color: #eef1f8;
+  font-weight: 600;
+}
+
+.studio-az-card__readout-hl {
+  color: #ff5663;
+}
+
+@keyframes studioAzRise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .studio-az-card {
+    aspect-ratio: auto;
+    min-height: 520px;
+  }
+
+  .studio-az-card__content {
+    align-items: flex-end;
+    padding-bottom: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-az-card__kicker,
+  .studio-az-card__manifesto,
+  .studio-az-card__tags,
+  .studio-az-card__readout {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

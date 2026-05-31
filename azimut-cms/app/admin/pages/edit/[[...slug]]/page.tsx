@@ -2235,10 +2235,10 @@ export default function EditPagePage() {
             onToggle={handleSectionToggle}
           >
             <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
-              Esta imagem aparece no retângulo cinematográfico abaixo do texto <strong>«Quem Somos»</strong> em{' '}
-              <strong>/studio</strong> (menu Studio → Overview). Se não houver imagem, o site mostra o placeholder com claquete 🎬.
+              Imagem <strong>opcional</strong> como camada sutil atrás do card animado (instrumento de azimute) em{' '}
+              <strong>/studio</strong> → Overview. O card com texto e animação é gerado pelo site; esta foto só enriquece o fundo.
               <br />
-              Recomendado: <strong>1920×1080</strong> (16:9), JPG ou PNG até 5 MB.
+              Recomendado: <strong>1920×1080</strong> (16:9), JPG ou PNG até 5 MB. Deixe vazio para usar só a animação.
             </p>
             <UnifiedMediaUpload
               pageSlug="studio"
