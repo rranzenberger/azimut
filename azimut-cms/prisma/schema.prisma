@@ -260,6 +260,11 @@ model Page {
   demoreelVideoId          String?
   heroBackgroundImageUrl   String?
   demoreelVideoUrl         String?
+  // Bloco Quem Somos (Studio/Overview): 1 imagem por idioma (URL). PT cai no legado heroBackgroundImageUrl.
+  overviewImagePtUrl       String?
+  overviewImageEnUrl       String?
+  overviewImageEsUrl       String?
+  overviewImageFrUrl       String?
   heroDescriptionMobilePt  String?
   heroDescriptionMobileEn  String?
   heroDescriptionMobileEs  String?

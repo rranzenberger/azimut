@@ -57,6 +57,10 @@ export async function GET(
             thumbnailUrl: true,
           },
         },
+        overviewImagePtUrl: true,
+        overviewImageEnUrl: true,
+        overviewImageEsUrl: true,
+        overviewImageFrUrl: true,
         seoTitlePt: true,
         seoTitleEn: true,
         seoTitleEs: true,
@@ -101,10 +105,20 @@ export async function GET(
       null
     const heroImageUrl = toAbsoluteImageUrl(rawHeroUrl, request)
 
+    // Bloco Quem Somos (Studio/Overview): 1 imagem por idioma.
+    // PT cai no legado (heroBackgroundImageUrl) quando não houver imagem PT dedicada.
+    const overviewImages = {
+      pt: toAbsoluteImageUrl(page.overviewImagePtUrl || rawHeroUrl, request),
+      en: toAbsoluteImageUrl(page.overviewImageEnUrl, request),
+      es: toAbsoluteImageUrl(page.overviewImageEsUrl, request),
+      fr: toAbsoluteImageUrl(page.overviewImageFrUrl, request),
+    }
+
     return NextResponse.json({
       slug: page.slug,
       name: page.name,
       heroImageUrl,
+      overviewImages,
       seo: {
         pt: { title: page.seoTitlePt, description: page.seoDescPt },
         en: { title: page.seoTitleEn, description: page.seoDescEn },

@@ -614,6 +614,11 @@ export default function EditPagePage() {
     heroBackgroundImageUrl: '',
     demoreelVideoId: '',
     demoreelVideoUrl: '',
+    // Bloco Quem Somos (Studio/Overview): 1 imagem por idioma
+    overviewImagePtUrl: '',
+    overviewImageEnUrl: '',
+    overviewImageEsUrl: '',
+    overviewImageFrUrl: '',
     // Vídeos Multilíngues (valores padrão para Chris Milk)
     videoPt: '/ChrisMilk.mp4',
     videoEn: '',
@@ -705,6 +710,11 @@ export default function EditPagePage() {
             '',
           demoreelVideoId: data.demoreelVideoId || '',
           demoreelVideoUrl: data.demoreelVideoUrl || '',
+          // Bloco Quem Somos (Studio/Overview): 1 imagem por idioma
+          overviewImagePtUrl: data.overviewImagePtUrl || '',
+          overviewImageEnUrl: data.overviewImageEnUrl || '',
+          overviewImageEsUrl: data.overviewImageEsUrl || '',
+          overviewImageFrUrl: data.overviewImageFrUrl || '',
           // Vídeos Multilíngues
           videoPt: data.videoPt || '/ChrisMilk.mp4',
           videoEn: data.videoEn || '',
@@ -1215,11 +1225,11 @@ export default function EditPagePage() {
         {slug === 'studio' && (
           <MediaPreviewBlock
             title="Bloco Quem Somos (Overview) — como aparece no site"
-            mainLabel="Imagem cinematográfica abaixo do texto «Quem Somos»"
-            mainImageUrl={formData.heroBackgroundImageUrl || null}
+            mainLabel="Imagem (por idioma) exibida abaixo do card animado — preview: PT"
+            mainImageUrl={formData.overviewImagePtUrl || formData.heroBackgroundImageUrl || null}
             mainTitle="Azimut Studio"
             mainOnly
-            galleryEmptyMessage="Use a seção « Imagem Quem Somos » abaixo para enviar ou trocar a foto."
+            galleryEmptyMessage="Use a seção « Imagem Quem Somos » abaixo para enviar as imagens (1 por idioma)."
           />
         )}
 
@@ -2235,38 +2245,87 @@ export default function EditPagePage() {
             onToggle={handleSectionToggle}
           >
             <p style={{ margin: '0 0 24px', color: '#8f8ba2', fontSize: 13, lineHeight: 1.6 }}>
-              Imagem <strong>opcional</strong> como camada sutil atrás do card animado (instrumento de azimute) em{' '}
-              <strong>/studio</strong> → Overview. O card com texto e animação é gerado pelo site; esta foto só enriquece o fundo.
+              Imagem exibida <strong>abaixo</strong> do card animado (instrumento de azimute) em{' '}
+              <strong>/studio</strong> → Overview. O card de cima é 100% gerado pelo site (sem foto por trás);
+              aqui você define <strong>uma imagem por idioma</strong> — o site mostra a do idioma que o visitante estiver vendo.
               <br />
-              Recomendado: <strong>1920×1080</strong> (16:9), JPG ou PNG até 5 MB. Deixe vazio para usar só a animação.
+              Recomendado: <strong>1920×1080</strong> (16:9), JPG ou PNG até 5 MB. Idioma sem imagem própria usa o
+              <strong> Português</strong> como fallback.
             </p>
-            <UnifiedMediaUpload
-              pageSlug="studio"
-              sectionSlug="overview"
-              imageId={formData.heroBackgroundImageId}
-              imageUrl={formData.heroBackgroundImageUrl}
-              onImageChange={(mediaId, url) =>
-                setFormData({
-                  ...formData,
-                  heroBackgroundImageId: mediaId || '',
-                  heroBackgroundImageUrl: url || '',
-                })
-              }
-              allowVideo={false}
-              allowExternalUrl={true}
-              imageSpecs={{
-                width: 1920,
-                height: 1080,
-                maxSizeMB: 5,
-                description: 'Foto do estúdio, equipe ou still cinematográfico',
-              }}
-              existingMedia={allMedia}
-              imageLabel="Imagem do bloco Quem Somos"
-            />
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 20 }}>
+              {/* PT */}
+              <div style={{ padding: 16, borderRadius: 10, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}>
+                <h4 style={{ margin: '0 0 12px', fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>🇧🇷 Português (PT)</h4>
+                <UnifiedMediaUpload
+                  pageSlug="studio"
+                  sectionSlug="overview-pt"
+                  imageUrl={formData.overviewImagePtUrl}
+                  onImageChange={(_mediaId, url) => setFormData({ ...formData, overviewImagePtUrl: url || '' })}
+                  allowVideo={false}
+                  allowExternalUrl={true}
+                  imageSpecs={{ width: 1920, height: 1080, maxSizeMB: 5, description: 'Imagem do bloco Quem Somos (PT)' }}
+                  existingMedia={allMedia}
+                  imageLabel="Imagem Quem Somos — PT"
+                />
+              </div>
+
+              {/* EN */}
+              <div style={{ padding: 16, borderRadius: 10, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}>
+                <h4 style={{ margin: '0 0 12px', fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>🇺🇸 English (EN)</h4>
+                <UnifiedMediaUpload
+                  pageSlug="studio"
+                  sectionSlug="overview-en"
+                  imageUrl={formData.overviewImageEnUrl}
+                  onImageChange={(_mediaId, url) => setFormData({ ...formData, overviewImageEnUrl: url || '' })}
+                  allowVideo={false}
+                  allowExternalUrl={true}
+                  imageSpecs={{ width: 1920, height: 1080, maxSizeMB: 5, description: 'Imagem do bloco Quem Somos (EN)' }}
+                  existingMedia={allMedia}
+                  imageLabel="Imagem Quem Somos — EN"
+                />
+              </div>
+
+              {/* ES */}
+              <div style={{ padding: 16, borderRadius: 10, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}>
+                <h4 style={{ margin: '0 0 12px', fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>🇪🇸 Español (ES)</h4>
+                <UnifiedMediaUpload
+                  pageSlug="studio"
+                  sectionSlug="overview-es"
+                  imageUrl={formData.overviewImageEsUrl}
+                  onImageChange={(_mediaId, url) => setFormData({ ...formData, overviewImageEsUrl: url || '' })}
+                  allowVideo={false}
+                  allowExternalUrl={true}
+                  imageSpecs={{ width: 1920, height: 1080, maxSizeMB: 5, description: 'Imagem do bloco Quem Somos (ES)' }}
+                  existingMedia={allMedia}
+                  imageLabel="Imagem Quem Somos — ES"
+                />
+              </div>
+
+              {/* FR */}
+              <div style={{ padding: 16, borderRadius: 10, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}>
+                <h4 style={{ margin: '0 0 12px', fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>🇫🇷 Français (FR)</h4>
+                <UnifiedMediaUpload
+                  pageSlug="studio"
+                  sectionSlug="overview-fr"
+                  imageUrl={formData.overviewImageFrUrl}
+                  onImageChange={(_mediaId, url) => setFormData({ ...formData, overviewImageFrUrl: url || '' })}
+                  allowVideo={false}
+                  allowExternalUrl={true}
+                  imageSpecs={{ width: 1920, height: 1080, maxSizeMB: 5, description: 'Imagem do bloco Quem Somos (FR)' }}
+                  existingMedia={allMedia}
+                  imageLabel="Imagem Quem Somos — FR"
+                />
+              </div>
+            </div>
+
             <div style={{ marginTop: 14, padding: 12, borderRadius: 8, background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.28)' }}>
-              <p style={{ margin: 0, fontSize: 13, color: '#d1fae5' }}>
-                <strong>Imagem ativa no site:</strong>{' '}
-                {formData.heroBackgroundImageUrl || 'Nenhuma — placeholder com claquete até você enviar uma foto.'}
+              <p style={{ margin: 0, fontSize: 13, color: '#d1fae5', lineHeight: 1.7 }}>
+                <strong>Imagens ativas no site:</strong><br />
+                PT: {formData.overviewImagePtUrl || formData.heroBackgroundImageUrl || '— (fallback / vazio)'}<br />
+                EN: {formData.overviewImageEnUrl || '— (usa PT)'}<br />
+                ES: {formData.overviewImageEsUrl || '— (usa PT)'}<br />
+                FR: {formData.overviewImageFrUrl || '— (usa PT)'}
               </p>
             </div>
           </CollapsibleSection>

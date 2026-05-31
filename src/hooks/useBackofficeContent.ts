@@ -18,6 +18,12 @@ interface PageContent {
   name: string;
   /** URL da imagem de fundo do hero (backoffice → site) */
   heroImageUrl?: string | null;
+  /**
+   * Imagem do bloco Quem Somos (Studio/Overview) já resolvida para o idioma atual.
+   * Backoffice permite 4 imagens (pt/en/es/fr); aqui já vem a do `lang` pedido,
+   * com fallback para a imagem única legada (heroImageUrl).
+   */
+  overviewImageUrl?: string | null;
   seo: {
     title?: string | null;
     description?: string | null;
@@ -79,11 +85,19 @@ export function useBackofficeContent(
 
         if (isCancelled) return;
 
+        // Imagem do bloco Quem Somos por idioma (pt/en/es/fr) com fallback p/ imagem única
+        const overviewImageUrl =
+          data.overviewImages?.[lang] ??
+          data.overviewImages?.pt ??
+          data.heroImageUrl ??
+          null;
+
         // Extrair dados do idioma selecionado + hero image (backoffice → site)
         const pageContent: PageContent = {
           slug: data.slug,
           name: data.name,
           heroImageUrl: data.heroImageUrl ?? null,
+          overviewImageUrl,
           seo: {
             title: data.seo[lang]?.title,
             description: data.seo[lang]?.description,

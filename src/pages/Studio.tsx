@@ -10,7 +10,7 @@ import { useTeam } from '../hooks/useTeam'
 import { useCredentials } from '../hooks/useCredentials'
 import { useHistory } from '../hooks/useHistory'
 import { useBackofficeContent } from '../hooks/useBackofficeContent'
-import StudioOverviewCard from '../components/StudioOverviewCard'
+import AzimutHero from '../components/AzimutHero'
 
 interface StudioProps {
   lang: Lang
@@ -64,9 +64,9 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
   const { members: teamFromBackoffice } = useTeam(lang)
   const { credentials: credentialsFromBackoffice } = useCredentials(lang)
   const { items: historyFromBackoffice } = useHistory(lang)
-  /** Imagem do bloco Quem Somos — backoffice Páginas → studio → Imagem Quem Somos */
+  /** Imagem do bloco Quem Somos — backoffice Páginas → studio → Imagem Quem Somos (1 por idioma) */
   const { page: studioPageFromCms } = useBackofficeContent('studio', lang)
-  const overviewImageUrl = studioPageFromCms?.heroImageUrl ?? null
+  const overviewImageUrl = studioPageFromCms?.overviewImageUrl ?? null
   
   useEffect(() => {
     const handleScroll = () => {
@@ -510,7 +510,21 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
               )}
             </p>
 
-            <StudioOverviewCard lang={lang} backgroundImageUrl={overviewImageUrl} />
+            {/* Hero animado (azimute) — é o fundo completo, sem foto por trás */}
+            <AzimutHero lang={lang} />
+
+            {/* Imagem do backoffice (1 por idioma) — exibida ABAIXO do hero */}
+            {overviewImageUrl && (
+              <div className="mt-6 rounded-2xl overflow-hidden border border-azimut-red/20 shadow-2xl">
+                <img
+                  src={overviewImageUrl}
+                  alt={lang === 'pt' ? 'Estúdio Azimut' : 'Azimut Studio'}
+                  className="w-full h-auto block"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            )}
 
             {/* ═══════════════════════════════════════════════════════════
                 MISSÃO, VISÃO E VALORES - Filosofia de Empatia

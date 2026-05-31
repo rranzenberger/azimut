@@ -141,6 +141,11 @@ export async function PUT(
       heroBackgroundImageUrl,
       demoreelVideoId,
       demoreelVideoUrl,
+      // Bloco Quem Somos (Studio/Overview): 1 imagem por idioma
+      overviewImagePtUrl,
+      overviewImageEnUrl,
+      overviewImageEsUrl,
+      overviewImageFrUrl,
     } = body;
 
     const page = await prisma.page.update({
@@ -205,6 +210,11 @@ export async function PUT(
         ...(heroBackgroundImageUrl !== undefined && { heroBackgroundImageUrl: heroBackgroundImageUrl || null }),
         ...(demoreelVideoId !== undefined && { demoreelVideoId: demoreelVideoId || null }),
         ...(demoreelVideoUrl !== undefined && { demoreelVideoUrl: demoreelVideoUrl || null }),
+        // Bloco Quem Somos (Studio/Overview): 1 imagem por idioma (aceita limpar com '')
+        ...(overviewImagePtUrl !== undefined && { overviewImagePtUrl: overviewImagePtUrl || null }),
+        ...(overviewImageEnUrl !== undefined && { overviewImageEnUrl: overviewImageEnUrl || null }),
+        ...(overviewImageEsUrl !== undefined && { overviewImageEsUrl: overviewImageEsUrl || null }),
+        ...(overviewImageFrUrl !== undefined && { overviewImageFrUrl: overviewImageFrUrl || null }),
       },
     });
 
