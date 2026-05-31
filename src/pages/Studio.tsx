@@ -1025,14 +1025,15 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                         loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         style={{
-                          // 4/3 sem escala: só "abaixa" a imagem (mostra o topo = o rosto).
-                          // Quanto MENOR o %, mais sobe o enquadramento (mostra mais o rosto).
+                          // 4/3. Maior % = desce (mostra menos topo); menor % = sobe (mostra mais o rosto).
                           objectPosition:
-                            member.slug === 'ranz' || member.name.includes('Ranz') ? 'center 20%'
-                              : member.slug === 'anick' || member.name.includes('Anick') ? 'center 20%'
-                              : member.slug === 'alberto' || member.name.includes('Alberto') ? 'center center'
+                            member.slug === 'ranz' || member.name.includes('Ranz') ? 'center center'
+                              : member.slug === 'anick' || member.name.includes('Anick') ? 'center 30%'
+                              : member.slug === 'alberto' || member.name.includes('Alberto') ? 'center 35%'
                               : 'center center',
-                          transform: 'none',
+                          // Alberto é foto deitada: escala para enquadrar o rosto e tirar a "tarja" do topo.
+                          transform:
+                            member.slug === 'alberto' || member.name.includes('Alberto') ? 'scale(1.2)' : 'none',
                           transformOrigin: 'center center'
                         }}
                         onError={(e) => {
