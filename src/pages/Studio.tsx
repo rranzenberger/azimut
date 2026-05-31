@@ -1018,7 +1018,7 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   <div className="red-line-top absolute top-0 left-0 right-0 h-1 rounded-t-2xl bg-gradient-to-r from-transparent via-azimut-red to-transparent opacity-80 z-10" aria-hidden />
                   {/* FOTO REAL — galeria cinematográfica, hover scale */}
                   <LangLink to={`/studio/equipe#${member.slug}`} className="block">
-                    <div className="team-photo relative overflow-hidden aspect-[4/3] w-full">
+                    <div className="team-photo relative overflow-hidden aspect-[3/4] w-full">
                       <img
                         src={member.photo}
                         alt={member.name}
@@ -1027,12 +1027,11 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                         style={{
                           objectPosition:
                             member.slug === 'alberto' || member.name.includes('Alberto') ? 'center 35%'
-                              : member.slug === 'ranz' || member.name.includes('Ranz') ? 'center 22%'
-                              : member.slug === 'anick' || member.name.includes('Anick') ? 'center 30%'
+                              : member.slug === 'ranz' || member.name.includes('Ranz') ? 'center 30%'
                               : 'center center',
                           transform:
-                            member.slug === 'alberto' || member.name.includes('Alberto') ? 'scale(1.2)'
-                              : member.slug === 'ranz' || member.name.includes('Ranz') ? 'scale(1.15)'
+                            member.slug === 'alberto' || member.name.includes('Alberto') ? 'scale(1.25)'
+                              : member.slug === 'ranz' || member.name.includes('Ranz') ? 'scale(1.2)'
                               : 'scale(1)',
                           transformOrigin: 'center center'
                         }}
