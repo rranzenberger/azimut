@@ -1019,14 +1019,17 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   {/* FOTO REAL — galeria cinematográfica, hover scale */}
                   <LangLink to={`/studio/equipe#${member.slug}`} className="block">
                     <div className="team-photo relative overflow-hidden aspect-[4/3] w-full">
-                      <img 
+                      <img
                         src={member.photo}
                         alt={member.name}
                         loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        style={{ 
-                          objectPosition: member.name.includes('Alberto') ? 'center 35%' : 'center center',
-                          transform: member.name.includes('Alberto') ? 'scale(1.2)' : 'scale(1)',
+                        style={{
+                          objectPosition:
+                            member.slug === 'alberto' || member.name.includes('Alberto') ? 'center 35%'
+                              : member.slug === 'ranz' || member.name.includes('Ranz') ? 'center 18%'
+                              : 'center center',
+                          transform: member.slug === 'alberto' || member.name.includes('Alberto') ? 'scale(1.2)' : 'scale(1)',
                           transformOrigin: 'center center'
                         }}
                         onError={(e) => {
@@ -1037,6 +1040,12 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                           e.currentTarget.src = '/logo-azimut-star.svg'
                           e.currentTarget.className = 'absolute bottom-4 right-4 w-12 h-12 object-contain opacity-20'
                         }}
+                      />
+                      {/* Degradê escuro na base da foto — emenda suave com a tarja (igual em todos os membros) */}
+                      <div
+                        className="absolute inset-x-0 bottom-0 h-1/2 pointer-events-none"
+                        style={{ background: 'linear-gradient(to top, rgba(15,23,42,0.96) 0%, rgba(15,23,42,0.5) 38%, transparent 72%)' }}
+                        aria-hidden
                       />
                     </div>
                   </LangLink>
