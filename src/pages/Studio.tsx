@@ -1027,10 +1027,13 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                         style={{
                           objectPosition:
                             member.slug === 'alberto' || member.name.includes('Alberto') ? 'center 35%'
-                              : member.slug === 'ranz' || member.name.includes('Ranz') ? 'center 18%'
+                              : member.slug === 'ranz' || member.name.includes('Ranz') ? 'center 22%'
                               : member.slug === 'anick' || member.name.includes('Anick') ? 'center 30%'
                               : 'center center',
-                          transform: member.slug === 'alberto' || member.name.includes('Alberto') ? 'scale(1.2)' : 'scale(1)',
+                          transform:
+                            member.slug === 'alberto' || member.name.includes('Alberto') ? 'scale(1.2)'
+                              : member.slug === 'ranz' || member.name.includes('Ranz') ? 'scale(1.15)'
+                              : 'scale(1)',
                           transformOrigin: 'center center'
                         }}
                         onError={(e) => {
