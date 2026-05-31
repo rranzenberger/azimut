@@ -15,14 +15,26 @@ export async function registerServiceWorker() {
       const registration = await navigator.serviceWorker.register('/sw.js', {
         scope: '/'
       })
-      
+
+      // Auto-update: quando um novo SW assume o controle, recarrega 1x para
+      // carregar a versão nova do app (evita ficar preso em build antigo).
+      // Só ativa se já havia um SW controlando (não recarrega na 1ª visita).
+      if (navigator.serviceWorker.controller) {
+        let refreshing = false
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          if (refreshing) return
+          refreshing = true
+          window.location.reload()
+        })
+      }
+
       // Verificar atualizações periodicamente
       registration.addEventListener('updatefound', () => {
         const newWorker = registration.installing
         if (newWorker) {
           newWorker.addEventListener('statechange', () => {
             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // Nova versão disponível - mostrar notificação para usuário
+              // Nova versão instalada: assume já (o SW faz skipWaiting/claim → controllerchange → reload)
             }
           })
         }

@@ -1,9 +1,9 @@
 // Service Worker para PWA - Azimut
 // Versão 1.0.0
 
-const CACHE_VERSION = 'azimut-v2'
-const STATIC_CACHE = 'azimut-static-v2'
-const IMAGE_CACHE = 'azimut-images-v2'
+const CACHE_VERSION = 'azimut-v3'
+const STATIC_CACHE = 'azimut-static-v3'
+const IMAGE_CACHE = 'azimut-images-v3'
 const OFFLINE_URL = '/offline.html'
 
 // Assets essenciais para cache imediato (critical)
