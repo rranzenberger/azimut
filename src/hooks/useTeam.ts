@@ -11,6 +11,8 @@ export interface TeamMember {
   credential?: string
   bio?: string
   photoUrl?: string
+  /** Foto dedicada do card no Overview (/studio), proporção 4:3. Vazia = usa photoUrl. */
+  cardPhotoUrl?: string | null
   displayOrder: number
 }
 

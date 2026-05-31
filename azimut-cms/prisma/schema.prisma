@@ -405,6 +405,9 @@ model TeamMembers {
   bioFr        String?
   photoUrl     String?
   photoMediaId String?
+  // Foto dedicada do card no Overview (/studio) — proporção 4:3, independente da foto 3:4 da subpágina
+  cardPhotoUrl     String?
+  cardPhotoMediaId String?
   displayOrder Int      @default(0)
   isPublished  Boolean  @default(true)
   createdAt    DateTime @default(now())

@@ -45,6 +45,8 @@ export async function POST(request: NextRequest) {
         bioFr: body.bioFr || null,
         photoUrl: body.photoUrl || null,
         photoMediaId: body.photoMediaId || null,
+        cardPhotoUrl: body.cardPhotoUrl || null,
+        cardPhotoMediaId: body.cardPhotoMediaId || null,
         displayOrder: body.displayOrder || 0,
         isPublished: body.isPublished !== undefined ? body.isPublished : true,
       },

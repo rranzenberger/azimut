@@ -49,6 +49,8 @@ export function TeamEditForm({ member }: { member?: any }) {
     bioFr: member?.bioFr || '',
     photoUrl: member?.photoUrl || '',
     photoMediaId: member?.photoMediaId || '',
+    cardPhotoUrl: member?.cardPhotoUrl || '',
+    cardPhotoMediaId: member?.cardPhotoMediaId || '',
     displayOrder: member?.displayOrder || 0,
     isPublished: member?.isPublished !== undefined ? member.isPublished : true,
   });
@@ -351,6 +353,40 @@ export function TeamEditForm({ member }: { member?: any }) {
               💡 Fotos horizontais serão exibidas com barras laterais. Fotos muito grandes podem ser cortadas.
             </p>
           </div>
+        </div>
+
+        {/* ───────────────────────────────────────────────────────────
+            Foto do CARD no Overview (/studio) — 4:3, independente da 3:4
+        ─────────────────────────────────────────────────────────── */}
+        <div style={{ display: 'grid', gap: 8, padding: 16, borderRadius: 10, border: '1px solid rgba(201,35,55,0.35)', background: 'rgba(201,35,55,0.06)' }}>
+          <label style={{ fontSize: 14, fontWeight: 700, color: '#fca5a5' }}>
+            Foto do Card (Overview /studio) — proporção 4:3 (opcional)
+          </label>
+          <p style={{ margin: '0 0 4px', fontSize: 13, color: '#cbd5e1', lineHeight: 1.5 }}>
+            Foto <strong>deitada (4:3)</strong> usada só no card da página <strong>/studio</strong> (seção Equipe).
+            Independente da foto retrato acima (que é usada na subpágina <strong>/studio/equipe</strong>).
+            <strong> Se ficar vazia, o card usa a foto de cima automaticamente.</strong>
+          </p>
+          <UnifiedMediaUpload
+            pageSlug="team"
+            sectionSlug="card-photo"
+            imageId={formData.cardPhotoMediaId || undefined}
+            imageUrl={formData.cardPhotoUrl || undefined}
+            onImageChange={(mediaId, url) => setFormData({ ...formData, cardPhotoMediaId: mediaId || '', cardPhotoUrl: url || '' })}
+            allowVideo={false}
+            allowExternalUrl={true}
+            existingMedia={allMedia}
+            imageLabel="Foto do card (deitada 4:3)"
+            imageSpecs={{ width: 1200, height: 900, maxSizeMB: 2, description: 'Foto do card no Overview (proporção 4:3, rosto centralizado)' }}
+          />
+          <div style={{ fontSize: 12, color: '#94a3b8', marginTop: 4 }}>Ou cole a URL da imagem 4:3 abaixo:</div>
+          <input
+            type="text"
+            value={formData.cardPhotoUrl}
+            onChange={(e) => setFormData({ ...formData, cardPhotoUrl: e.target.value })}
+            style={inputStyle}
+            placeholder="/Ranz-card.jpg ou https://..."
+          />
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>

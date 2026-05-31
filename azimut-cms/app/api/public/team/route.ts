@@ -41,6 +41,7 @@ export async function GET(request: NextRequest) {
         credential: member[credentialKey] || member.credentialPt || member.credentialEn,
         bio: member[bioKey] || member.bioPt || member.bioEn,
         photoUrl: member.photoUrl,
+        cardPhotoUrl: member.cardPhotoUrl || null,
         displayOrder: member.displayOrder
       }
     })

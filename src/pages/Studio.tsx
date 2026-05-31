@@ -375,7 +375,9 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
         role: m.role,
         credential: m.credential,
         bio: m.bio ?? '',
-        photo: m.photoUrl || '/logo-azimut-star.svg'
+        photo: m.photoUrl || '/logo-azimut-star.svg',
+        // Foto dedicada do card (4:3). Vazia = usa a foto retrato com enquadramento ajustado.
+        cardPhoto: m.cardPhotoUrl || ''
       }))
     : text.team.members
   const credentialsItems = credentialsFromBackoffice.length > 0
@@ -1020,20 +1022,23 @@ const Studio: React.FC<StudioProps> = ({ lang }) => {
                   <LangLink to={`/studio/equipe#${member.slug}`} className="block">
                     <div className="team-photo relative overflow-hidden aspect-[4/3] w-full">
                       <img
-                        src={member.photo}
+                        src={(member as { cardPhoto?: string }).cardPhoto || member.photo}
                         alt={member.name}
                         loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         style={{
-                          // 4/3. Maior % = desce (mostra menos topo); menor % = sobe (mostra mais o rosto).
+                          // Se houver foto dedicada do card (4:3, já enquadrada), usa enquadramento central simples.
+                          // Senão, ajusta por pessoa a foto retrato dentro da moldura 4:3.
                           objectPosition:
-                            member.slug === 'ranz' || member.name.includes('Ranz') ? 'center top'
+                            (member as { cardPhoto?: string }).cardPhoto ? 'center center'
+                              : member.slug === 'ranz' || member.name.includes('Ranz') ? 'center top'
                               : member.slug === 'anick' || member.name.includes('Anick') ? 'center top'
                               : member.slug === 'alberto' || member.name.includes('Alberto') ? 'center 35%'
                               : 'center center',
-                          // Alberto é foto deitada: escala para enquadrar o rosto e tirar a "tarja" do topo.
                           transform:
-                            member.slug === 'alberto' || member.name.includes('Alberto') ? 'scale(1.2)' : 'none',
+                            (member as { cardPhoto?: string }).cardPhoto ? 'none'
+                              : member.slug === 'alberto' || member.name.includes('Alberto') ? 'scale(1.2)'
+                              : 'none',
                           transformOrigin: 'center center'
                         }}
                         onError={(e) => {
