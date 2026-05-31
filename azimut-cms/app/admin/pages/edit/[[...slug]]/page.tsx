@@ -2305,13 +2305,13 @@ export default function EditPagePage() {
                 }
                 onImageChange={(_mediaId, url) => {
                   const v = url || ''
-                  setFormData({
-                    ...formData,
+                  setFormData((prev) => ({
+                    ...prev,
                     ...(overviewImgLang === 'pt' ? { overviewImagePtUrl: v } : {}),
                     ...(overviewImgLang === 'en' ? { overviewImageEnUrl: v } : {}),
                     ...(overviewImgLang === 'es' ? { overviewImageEsUrl: v } : {}),
                     ...(overviewImgLang === 'fr' ? { overviewImageFrUrl: v } : {}),
-                  })
+                  }))
                 }}
                 allowVideo={false}
                 allowExternalUrl={true}
