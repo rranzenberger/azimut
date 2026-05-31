@@ -569,6 +569,9 @@ export default function EditPagePage() {
     setOpenSection((prev) => (prev === id ? null : id));
   }, []);
 
+  // Studio/Overview: aba de idioma ativa na seção "Imagem Quem Somos" (1 uploader por vez)
+  const [overviewImgLang, setOverviewImgLang] = useState<'pt' | 'en' | 'es' | 'fr'>('pt');
+
   const [formData, setFormData] = useState({
     name: '',
     seoTitlePt: '',
@@ -2253,70 +2256,69 @@ export default function EditPagePage() {
               <strong> Português</strong> como fallback.
             </p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 20 }}>
-              {/* PT */}
-              <div style={{ padding: 16, borderRadius: 10, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}>
-                <h4 style={{ margin: '0 0 12px', fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>🇧🇷 Português (PT)</h4>
-                <UnifiedMediaUpload
-                  pageSlug="studio"
-                  sectionSlug="overview-pt"
-                  imageUrl={formData.overviewImagePtUrl}
-                  onImageChange={(_mediaId, url) => setFormData({ ...formData, overviewImagePtUrl: url || '' })}
-                  allowVideo={false}
-                  allowExternalUrl={true}
-                  imageSpecs={{ width: 1920, height: 1080, maxSizeMB: 5, description: 'Imagem do bloco Quem Somos (PT)' }}
-                  existingMedia={allMedia}
-                  imageLabel="Imagem Quem Somos — PT"
-                />
-              </div>
+            {/* Abas por idioma — 1 uploader por vez em largura total (evita aperto/sobreposição) */}
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 20 }}>
+              {([
+                { k: 'pt', label: '🇧🇷 Português', val: formData.overviewImagePtUrl || formData.heroBackgroundImageUrl },
+                { k: 'en', label: '🇺🇸 English', val: formData.overviewImageEnUrl },
+                { k: 'es', label: '🇪🇸 Español', val: formData.overviewImageEsUrl },
+                { k: 'fr', label: '🇫🇷 Français', val: formData.overviewImageFrUrl },
+              ] as const).map((t) => {
+                const active = overviewImgLang === t.k
+                return (
+                  <button
+                    key={t.k}
+                    type="button"
+                    onClick={() => setOverviewImgLang(t.k)}
+                    style={{
+                      display: 'inline-flex', alignItems: 'center', gap: 8,
+                      padding: '10px 18px', borderRadius: 8, cursor: 'pointer',
+                      fontSize: 14, fontWeight: 600,
+                      border: active ? '2px solid rgba(201,35,55,0.9)' : '1px solid rgba(255,255,255,0.12)',
+                      background: active ? 'rgba(201,35,55,0.22)' : 'rgba(255,255,255,0.03)',
+                      color: active ? '#fca5a5' : '#c0bccf',
+                    }}
+                  >
+                    {t.label}
+                    <span style={{ fontSize: 12, color: t.val ? '#34d399' : '#6b7280' }}>
+                      {t.val ? '● definida' : '○ vazia'}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
 
-              {/* EN */}
-              <div style={{ padding: 16, borderRadius: 10, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}>
-                <h4 style={{ margin: '0 0 12px', fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>🇺🇸 English (EN)</h4>
-                <UnifiedMediaUpload
-                  pageSlug="studio"
-                  sectionSlug="overview-en"
-                  imageUrl={formData.overviewImageEnUrl}
-                  onImageChange={(_mediaId, url) => setFormData({ ...formData, overviewImageEnUrl: url || '' })}
-                  allowVideo={false}
-                  allowExternalUrl={true}
-                  imageSpecs={{ width: 1920, height: 1080, maxSizeMB: 5, description: 'Imagem do bloco Quem Somos (EN)' }}
-                  existingMedia={allMedia}
-                  imageLabel="Imagem Quem Somos — EN"
-                />
-              </div>
-
-              {/* ES */}
-              <div style={{ padding: 16, borderRadius: 10, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}>
-                <h4 style={{ margin: '0 0 12px', fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>🇪🇸 Español (ES)</h4>
-                <UnifiedMediaUpload
-                  pageSlug="studio"
-                  sectionSlug="overview-es"
-                  imageUrl={formData.overviewImageEsUrl}
-                  onImageChange={(_mediaId, url) => setFormData({ ...formData, overviewImageEsUrl: url || '' })}
-                  allowVideo={false}
-                  allowExternalUrl={true}
-                  imageSpecs={{ width: 1920, height: 1080, maxSizeMB: 5, description: 'Imagem do bloco Quem Somos (ES)' }}
-                  existingMedia={allMedia}
-                  imageLabel="Imagem Quem Somos — ES"
-                />
-              </div>
-
-              {/* FR */}
-              <div style={{ padding: 16, borderRadius: 10, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}>
-                <h4 style={{ margin: '0 0 12px', fontSize: 14, fontWeight: 600, color: '#e8e6f2' }}>🇫🇷 Français (FR)</h4>
-                <UnifiedMediaUpload
-                  pageSlug="studio"
-                  sectionSlug="overview-fr"
-                  imageUrl={formData.overviewImageFrUrl}
-                  onImageChange={(_mediaId, url) => setFormData({ ...formData, overviewImageFrUrl: url || '' })}
-                  allowVideo={false}
-                  allowExternalUrl={true}
-                  imageSpecs={{ width: 1920, height: 1080, maxSizeMB: 5, description: 'Imagem do bloco Quem Somos (FR)' }}
-                  existingMedia={allMedia}
-                  imageLabel="Imagem Quem Somos — FR"
-                />
-              </div>
+            {/* Uploader do idioma ativo — largura total. key força reset do preview ao trocar de aba */}
+            <div style={{ padding: 18, borderRadius: 10, border: '1px solid rgba(201,35,55,0.25)', background: 'rgba(255,255,255,0.02)' }}>
+              <h4 style={{ margin: '0 0 14px', fontSize: 15, fontWeight: 700, color: '#e8e6f2' }}>
+                Imagem do idioma: <span style={{ color: '#fca5a5' }}>{overviewImgLang.toUpperCase()}</span>
+              </h4>
+              <UnifiedMediaUpload
+                key={`ovl-${overviewImgLang}`}
+                pageSlug="studio"
+                sectionSlug={`overview-${overviewImgLang}`}
+                imageUrl={
+                  overviewImgLang === 'pt' ? formData.overviewImagePtUrl
+                    : overviewImgLang === 'en' ? formData.overviewImageEnUrl
+                    : overviewImgLang === 'es' ? formData.overviewImageEsUrl
+                    : formData.overviewImageFrUrl
+                }
+                onImageChange={(_mediaId, url) => {
+                  const v = url || ''
+                  setFormData({
+                    ...formData,
+                    ...(overviewImgLang === 'pt' ? { overviewImagePtUrl: v } : {}),
+                    ...(overviewImgLang === 'en' ? { overviewImageEnUrl: v } : {}),
+                    ...(overviewImgLang === 'es' ? { overviewImageEsUrl: v } : {}),
+                    ...(overviewImgLang === 'fr' ? { overviewImageFrUrl: v } : {}),
+                  })
+                }}
+                allowVideo={false}
+                allowExternalUrl={true}
+                imageSpecs={{ width: 1920, height: 1080, maxSizeMB: 5, description: `Imagem do bloco Quem Somos (${overviewImgLang.toUpperCase()})` }}
+                existingMedia={allMedia}
+                imageLabel={`Imagem Quem Somos — ${overviewImgLang.toUpperCase()}`}
+              />
             </div>
 
             <div style={{ marginTop: 14, padding: 12, borderRadius: 8, background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.28)' }}>
