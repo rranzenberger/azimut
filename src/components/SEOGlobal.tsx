@@ -27,7 +27,9 @@ const SEOGlobal: React.FC<SEOGlobalProps> = ({ lang }) => {
     '@type': 'Organization',
     '@id': `${baseUrl}/#organization`,
     name: 'Azimut',
-    alternateName: ['Azimut Studio', 'Azimut Academy', 'Azimut Immersive'],
+    alternateName: ['Azimut Studio', 'Azimut Academy', 'Azimut Immersive', 'Azimut Projetos Audiovisuais'],
+    legalName: 'Azimut Projetos Audiovisuais Ltda.',
+    award: 'Direção Geral, Tecnologia, Arte e Audiovisual — Rio Museu Olímpico (Rio Olympic Museum)',
     url: baseUrl,
     logo: {
       '@type': 'ImageObject',
