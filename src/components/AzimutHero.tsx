@@ -168,8 +168,8 @@ export default function AzimutHero({ lang = 'pt', accent = '#e23744' }: AzimutHe
       ctx.beginPath(); ctx.moveTo(cx, cy)
       ctx.lineTo(cx + Math.cos(sweep) * R, cy + Math.sin(sweep) * R); ctx.stroke()
 
-      // agulha fixa 360° / N (VR 360)
-      const b = ((360 - 90) * Math.PI) / 180
+      // agulha fixa na diagonal (rumo Brasil -> Canadá), decorativa
+      const b = ((326 - 90) * Math.PI) / 180
       ctx.strokeStyle = 'rgba(238,241,248,.9)'; ctx.lineWidth = 2
       ctx.beginPath()
       ctx.moveTo(cx - Math.cos(b) * R * 0.4, cy - Math.sin(b) * R * 0.4)
