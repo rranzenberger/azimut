@@ -8,7 +8,7 @@ export const translations: Dict = {
   en: {
     // Hero Home
     heroTitle: 'EXPERIENCES THAT CONNECT WORLDS',
-    heroSubtitle: 'We create immersive experiences between Brazil and Canada.',
+    heroSubtitle: 'We activate your audience and grow your results with cinema, AI and immersive VR 360 — the team behind the technology and art of the Rio Olympic Museum.',
     heroTagline: 'IMMERSIVE • INTERACTIVE • CINEMATIC EXPERIENCE',
 
     // Navigation
@@ -314,7 +314,7 @@ export const translations: Dict = {
   fr: {
     // Hero Home
     heroTitle: 'EXPÉRIENCES QUI CONNECTENT LES MONDES',
-    heroSubtitle: 'Nous créons des expériences immersives entre le Brésil et le Canada.',
+    heroSubtitle: 'Nous activons votre public et amplifions vos résultats avec cinéma, IA et VR 360 immersif — l\'équipe derrière la technologie et l\'art du Musée Olympique de Rio.',
     heroTagline: 'IMMERSIVE • INTERACTIVE • CINEMATIC EXPERIENCE',
 
     // Navigation
@@ -620,7 +620,7 @@ export const translations: Dict = {
   pt: {
     // Hero Home
     heroTitle: 'EXPERIÊNCIAS QUE CONECTAM MUNDOS',
-    heroSubtitle: 'Criamos experiências imersivas entre Brasil e Canadá.',
+    heroSubtitle: 'Ativamos seu público e ampliamos seus resultados com cinema, IA e VR 360 imersivo — a equipe por trás da tecnologia e arte do Rio Museu Olímpico.',
     heroTagline: 'IMMERSIVE • INTERACTIVE • CINEMATIC EXPERIENCE',
 
     navHome: 'Início',
@@ -925,7 +925,7 @@ export const translations: Dict = {
   es: {
     // Hero Home
     heroTitle: 'EXPERIENCIAS QUE CONECTAN MUNDOS',
-    heroSubtitle: 'Creamos experiencias inmersivas entre Brasil y Canadá.',
+    heroSubtitle: 'Activamos a tu público y ampliamos tus resultados con cine, IA y VR 360 inmersivo — el equipo detrás de la tecnología y arte del Rio Museo Olímpico.',
     heroTagline: 'IMMERSIVE • INTERACTIVE • CINEMATIC EXPERIENCE',
 
     // Navigation
