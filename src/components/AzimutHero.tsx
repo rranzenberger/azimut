@@ -23,29 +23,35 @@ interface LangCopy {
   cb: string
   r2l: string
   r2: string
+  r3l: string
+  r3: string
   card: Record<number, string>
 }
 
 const LANGS: Record<Lang, LangCopy> = {
   en: { l1: 'Every project', pre: 'begins with a ', it: 'bearing.',
         tags: ['IMMERSIVE', 'INTERACTIVE', 'CINEMATIC'],
-        r1l: 'BEARING', ca: 'Brazil ', cb: ' Canada · 326°',
+        r1l: 'BEARING', ca: 'Brazil ', cb: ' Canada · VR 360°',
         r2l: 'HEADING', r2: 'cinema · design · engineering · research',
+        r3l: 'AI', r3: 'Generative Movies in Artificial Intelligence',
         card: { 0: 'N', 90: 'E', 180: 'S', 270: 'W' } },
   pt: { l1: 'Todo projeto começa', pre: 'com um ', it: 'rumo.',
         tags: ['IMERSIVO', 'INTERATIVO', 'CINEMATOGRÁFICO'],
-        r1l: 'RUMO', ca: 'Brasil ', cb: ' Canadá · 326°',
+        r1l: 'RUMO', ca: 'Brasil ', cb: ' Canadá · VR 360°',
         r2l: 'ROTA', r2: 'cinema · design · engenharia · pesquisa',
+        r3l: 'IA', r3: 'Filmes Generativos em Inteligência Artificial',
         card: { 0: 'N', 90: 'L', 180: 'S', 270: 'O' } },
   es: { l1: 'Todo proyecto empieza', pre: 'con un ', it: 'rumbo.',
         tags: ['INMERSIVO', 'INTERACTIVO', 'CINEMATOGRÁFICO'],
-        r1l: 'RUMBO', ca: 'Brasil ', cb: ' Canadá · 326°',
+        r1l: 'RUMBO', ca: 'Brasil ', cb: ' Canadá · VR 360°',
         r2l: 'RUTA', r2: 'cine · diseño · ingeniería · investigación',
+        r3l: 'IA', r3: 'Películas Generativas en Inteligencia Artificial',
         card: { 0: 'N', 90: 'E', 180: 'S', 270: 'O' } },
   fr: { l1: 'Tout projet commence', pre: 'par un ', it: 'cap.',
         tags: ['IMMERSIF', 'INTERACTIF', 'CINÉMATIQUE'],
-        r1l: 'CAP', ca: 'Brésil ', cb: ' Canada · 326°',
+        r1l: 'CAP', ca: 'Brésil ', cb: ' Canada · VR 360°',
         r2l: 'ROUTE', r2: 'cinéma · design · ingénierie · recherche',
+        r3l: 'IA', r3: 'Films Génératifs en Intelligence Artificielle',
         card: { 0: 'N', 90: 'E', 180: 'S', 270: 'O' } },
 }
 
@@ -162,8 +168,8 @@ export default function AzimutHero({ lang = 'pt', accent = '#e23744' }: AzimutHe
       ctx.beginPath(); ctx.moveTo(cx, cy)
       ctx.lineTo(cx + Math.cos(sweep) * R, cy + Math.sin(sweep) * R); ctx.stroke()
 
-      // agulha fixa 326° (Brasil -> Canadá)
-      const b = ((326 - 90) * Math.PI) / 180
+      // agulha fixa 360° / N (VR 360)
+      const b = ((360 - 90) * Math.PI) / 180
       ctx.strokeStyle = 'rgba(238,241,248,.9)'; ctx.lineWidth = 2
       ctx.beginPath()
       ctx.moveTo(cx - Math.cos(b) * R * 0.4, cy - Math.sin(b) * R * 0.4)
@@ -273,7 +279,8 @@ export default function AzimutHero({ lang = 'pt', accent = '#e23744' }: AzimutHe
           </div>
           <div className="ah-readout">
             <b>{L.r1l}</b>&nbsp;&nbsp;{L.ca}<span className="hl">→</span>{L.cb}<br />
-            <b>{L.r2l}</b>&nbsp;&nbsp;{L.r2}
+            <b>{L.r2l}</b>&nbsp;&nbsp;{L.r2}<br />
+            <b>{L.r3l}</b>&nbsp;&nbsp;<span className="hl">{L.r3}</span>
           </div>
         </div>
       </div>
