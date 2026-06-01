@@ -481,6 +481,17 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 }}>
                   {heroSubtitle.split('.')[0]}.
                 </p>
+                {/* Selo de diferencial — prova/autoridade em 1 olhada */}
+                <div className="flex flex-wrap gap-2 mt-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
+                  {[
+                    lang === 'en' ? 'Senior team' : lang === 'es' ? 'Equipo sénior' : lang === 'fr' ? 'Équipe senior' : 'Equipe sênior',
+                    lang === 'en' ? "Master's / PhD" : 'Mestres / PhD',
+                    lang === 'en' ? '30 years' : lang === 'es' ? '30 años' : lang === 'fr' ? '30 ans' : '30 anos',
+                    'IA-native',
+                  ].map((label) => (
+                    <span key={label} style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '4px 11px', borderRadius: '999px', border: '1px solid rgba(201,35,55,0.5)', color: theme === 'dark' ? '#fca5a5' : '#c92337', background: theme === 'dark' ? 'rgba(201,35,55,0.12)' : 'rgba(201,35,55,0.08)' }}>{label}</span>
+                  ))}
+                </div>
                 
               </div>
               
@@ -863,6 +874,17 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
                 <p className={`text-[0.75rem] sm:text-[0.85rem] leading-relaxed animate-fade-in-up opacity-0 mt-3 ${theme === 'dark' ? 'text-white/90' : ''}`} style={{ animationDelay: '0.15s', color: theme === 'dark' ? undefined : '#1e293b' }}>
                   {heroSubtitle.split('.')[0]}.
                 </p>
+                {/* Selo de diferencial — prova/autoridade em 1 olhada */}
+                <div className="flex flex-wrap gap-2 mt-3 animate-fade-in-up opacity-0" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
+                  {[
+                    lang === 'en' ? 'Senior team' : lang === 'es' ? 'Equipo sénior' : lang === 'fr' ? 'Équipe senior' : 'Equipe sênior',
+                    lang === 'en' ? "Master's / PhD" : 'Mestres / PhD',
+                    lang === 'en' ? '30 years' : lang === 'es' ? '30 años' : lang === 'fr' ? '30 ans' : '30 anos',
+                    'IA-native',
+                  ].map((label) => (
+                    <span key={label} style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: '999px', border: '1px solid rgba(201,35,55,0.5)', color: theme === 'dark' ? '#fca5a5' : '#c92337', background: theme === 'dark' ? 'rgba(201,35,55,0.12)' : 'rgba(201,35,55,0.08)' }}>{label}</span>
+                  ))}
+                </div>
                 
               </div>
             </div>
