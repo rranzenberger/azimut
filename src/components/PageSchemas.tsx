@@ -17,7 +17,7 @@ interface PageSchemasProps {
 
 export const PageSchemas: React.FC<PageSchemasProps> = ({ lang, pageType, customData }) => {
   const location = useLocation()
-  const baseUrl = 'https://www.azmt.com.br'
+  const baseUrl = 'https://azimutimmersive.com'
   const currentUrl = `${baseUrl}${location.pathname}`
 
   // ═══════════════════════════════════════════════════════

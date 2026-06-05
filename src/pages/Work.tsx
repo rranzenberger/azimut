@@ -607,7 +607,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
       const firstProjectImage = getProjectImageUrl(mainFeaturedProject, 'large')
       if (firstProjectImage) return firstProjectImage
     }
-    return seo.image || 'https://www.azmt.com.br/og-work.png'
+    return seo.image || 'https://azimutimmersive.com/og-work.png'
   }, [mainFeaturedProject, seo.image])
 
   // Schema.org: ItemList para lista de projetos (SEO)
@@ -625,7 +625,7 @@ const Work: React.FC<WorkProps> = ({ lang }) => {
       description: seo.description,
       items: personalizedCases.slice(0, 20).map((project: WorkProject, index: number) => ({
         name: project.title,
-        url: `https://www.azmt.com.br/${lang}/work/${project.slug}`,
+        url: `https://azimutimmersive.com/${lang}/work/${project.slug}`,
         image: getProjectImageUrl(project, 'medium'),
         position: index + 1
       }))

@@ -62,17 +62,17 @@ export function usePageSEO(
   const isWork = slug === 'work'
   // URL da imagem (padrão ou específica da página)
   const image = isVancouver
-    ? 'https://www.azmt.com.br/og-vancouver.jpg'
+    ? 'https://azimutimmersive.com/og-vancouver.jpg'
     : isWork
-    ? 'https://www.azmt.com.br/og-work.jpg'
-    : 'https://www.azmt.com.br/og-image.jpg'
+    ? 'https://azimutimmersive.com/og-work.jpg'
+    : 'https://azimutimmersive.com/og-image.jpg'
 
   // URL canônica — sempre com prefixo de idioma (inclui /pt) para bater com os hreflang
   const url = isHome
-    ? `https://www.azmt.com.br/${lang}`
+    ? `https://azimutimmersive.com/${lang}`
     : isVancouver
-    ? `https://www.azmt.com.br/${lang}/academy/vancouver`
-    : `https://www.azmt.com.br/${lang}/${slug}`
+    ? `https://azimutimmersive.com/${lang}/academy/vancouver`
+    : `https://azimutimmersive.com/${lang}/${slug}`
 
   return {
     title: optimizedTitle,

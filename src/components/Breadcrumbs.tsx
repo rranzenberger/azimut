@@ -22,7 +22,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   className = ''
 }) => {
   const location = useLocation()
-  const siteUrl = 'https://www.azmt.com.br'
+  const siteUrl = 'https://azimutimmersive.com'
 
   // Gerar breadcrumbs automaticamente baseado na URL se não fornecidos
   const breadcrumbs = useMemo(() => {

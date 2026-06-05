@@ -440,7 +440,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
     provider: {
       '@type': 'Organization',
       name: 'Azimut',
-      url: 'https://www.azmt.com.br'
+      url: 'https://azimutimmersive.com'
     },
     areaServed: {
       '@type': 'Country',

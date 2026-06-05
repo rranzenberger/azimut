@@ -37,9 +37,9 @@ export const OrganizationSchema: React.FC<{ lang?: string }> = ({ lang = 'pt' })
     '@type': 'Organization',
     name: 'Azimut',
     alternateName: ['Azimut Studio', 'Azimut Academy'],
-    url: 'https://www.azmt.com.br',
-    logo: 'https://www.azmt.com.br/logo-azimut-star.svg',
-    image: 'https://www.azmt.com.br/og-image.png',
+    url: 'https://azimutimmersive.com',
+    logo: 'https://azimutimmersive.com/logo-azimut-star.svg',
+    image: 'https://azimutimmersive.com/og-image.png',
     description: lang === 'pt' 
       ? 'Estúdio especializado em experiências imersivas VR/AR, cinema interativo, exposições culturais e agenciamento educacional para Vancouver (VFS/VanArts). Atuando entre Brasil e Canadá desde 1996.'
       : lang === 'en'
@@ -132,10 +132,10 @@ export const LocalBusinessSchema: React.FC = () => {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    '@id': 'https://www.azmt.com.br/#business',
+    '@id': 'https://azimutimmersive.com/#business',
     name: 'Azimut - Experiências Imersivas',
-    image: 'https://www.azmt.com.br/og-image.png',
-    url: 'https://www.azmt.com.br',
+    image: 'https://azimutimmersive.com/og-image.png',
+    url: 'https://azimutimmersive.com',
     telephone: '+55-21-99999-9999',
     priceRange: '$$',
     address: {
@@ -206,7 +206,7 @@ export const LocalBusinessSchema: React.FC = () => {
 // VANCOUVER PAGE SCHEMA - Educational Organization
 // ════════════════════════════════════════════════════════════
 export const VancouverPageSchema = ({ lang }: { lang: string }) => {
-  const baseUrl = 'https://www.azmt.com.br'
+  const baseUrl = 'https://azimutimmersive.com'
   const langPath = lang === 'pt' ? '/pt' : lang === 'en' ? '/en' : lang === 'es' ? '/es' : '/fr'
   
   const schema = {
@@ -290,7 +290,7 @@ export const VancouverPageSchema = ({ lang }: { lang: string }) => {
 // FAQ SCHEMA - Para Rich Snippets no Google
 // ════════════════════════════════════════════════════════════
 export const VancouverFAQSchema = ({ lang, faqs }: { lang: string, faqs: Array<{ question: string, answer: string }> }) => {
-  const baseUrl = 'https://www.azmt.com.br'
+  const baseUrl = 'https://azimutimmersive.com'
   const langPath = lang === 'pt' ? '/pt' : lang === 'en' ? '/en' : lang === 'es' ? '/es' : '/fr'
   
   const schema = {
@@ -340,7 +340,7 @@ export const CourseSchema: React.FC<{
   teaches = [],
   lang = 'pt'
 }) => {
-  const baseUrl = 'https://www.azmt.com.br'
+  const baseUrl = 'https://azimutimmersive.com'
   const langPath = lang === 'pt' ? '/pt' : lang === 'en' ? '/en' : lang === 'es' ? '/es' : '/fr'
   
   const schema = {
@@ -380,7 +380,7 @@ export const BreadcrumbSchema: React.FC<{
   items: Array<{ name: string; url: string }>
   lang?: string
 }> = ({ items, lang = 'pt' }) => {
-  const baseUrl = 'https://www.azmt.com.br'
+  const baseUrl = 'https://azimutimmersive.com'
   
   const schema = {
     '@context': 'https://schema.org',
@@ -422,7 +422,7 @@ export const ServiceSchema: React.FC<{
   url,
   lang = 'pt'
 }) => {
-  const baseUrl = 'https://www.azmt.com.br'
+  const baseUrl = 'https://azimutimmersive.com'
   
   const schema = {
     '@context': 'https://schema.org',
@@ -480,7 +480,7 @@ export const VideoObjectSchema: React.FC<{
   embedUrl,
   lang = 'pt'
 }) => {
-  const baseUrl = 'https://www.azmt.com.br'
+  const baseUrl = 'https://azimutimmersive.com'
   
   const schema = {
     '@context': 'https://schema.org',
@@ -537,7 +537,7 @@ export const ArticleSchema: React.FC<{
   url,
   lang = 'pt'
 }) => {
-  const baseUrl = 'https://www.azmt.com.br'
+  const baseUrl = 'https://azimutimmersive.com'
   
   const schema = {
     '@context': 'https://schema.org',
@@ -600,7 +600,7 @@ export const ReviewRatingSchema: React.FC<{
   reviews = [],
   lang = 'pt'
 }) => {
-  const baseUrl = 'https://www.azmt.com.br'
+  const baseUrl = 'https://azimutimmersive.com'
   
   const schema: any = {
     '@context': 'https://schema.org',
@@ -667,7 +667,7 @@ export const ProjectSchema: React.FC<{
   url,
   lang = 'pt'
 }) => {
-  const baseUrl = 'https://www.azmt.com.br'
+  const baseUrl = 'https://azimutimmersive.com'
   
   const schema = {
     '@context': 'https://schema.org',
@@ -715,7 +715,7 @@ export const ItemListSchema: React.FC<{
   items,
   lang = 'pt'
 }) => {
-  const baseUrl = 'https://www.azmt.com.br'
+  const baseUrl = 'https://azimutimmersive.com'
   
   const schema = {
     '@context': 'https://schema.org',

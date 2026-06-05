@@ -173,7 +173,7 @@ const WorkProjects: React.FC<WorkProjectsProps> = ({ lang }) => {
   const seo = {
     title: lang === 'pt' ? 'Projetos realizados | Azimut' : lang === 'es' ? 'Proyectos realizados | Azimut' : lang === 'fr' ? 'Projets réalisés | Azimut' : 'Our portfolio | Azimut',
     description: lang === 'pt' ? 'Portfólio completo de projetos em VR, XR, museus, festivais e experiências imersivas.' : 'Full portfolio of VR, XR, museums, festivals and immersive experiences.',
-    url: `https://www.azmt.com.br/${lang}/work/projects`,
+    url: `https://azimutimmersive.com/${lang}/work/projects`,
   }
 
   return (

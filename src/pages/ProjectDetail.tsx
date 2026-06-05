@@ -251,7 +251,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
       <ProjectSchema
         name={effectiveProject.title}
         description={seoDescription}
-        image={effectiveProject.heroImage?.large || effectiveProject.heroImage?.original || 'https://www.azmt.com.br/og-image.png'}
+        image={effectiveProject.heroImage?.large || effectiveProject.heroImage?.original || 'https://azimutimmersive.com/og-image.png'}
         dateCreated={effectiveProject.year ? `${effectiveProject.year}-01-01` : new Date().toISOString().split('T')[0]}
         creator="Azimut"
         client={effectiveProject.client}
