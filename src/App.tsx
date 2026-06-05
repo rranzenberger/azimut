@@ -88,6 +88,7 @@ const AcademyCorporate = lazy(() => import('./pages/AcademyCorporate'))
 const Research = lazy(() => import('./pages/Research'))
 const Vancouver = lazy(() => import('./pages/Vancouver'))
 const Press = lazy(() => import('./pages/Press'))
+const Partner = lazy(() => import('./pages/Partner'))
 const Privacy = lazy(() => import('./pages/Privacy'))
 const Terms = lazy(() => import('./pages/Terms'))
 const ThankYou = lazy(() => import('./pages/ThankYou'))
@@ -450,6 +451,13 @@ const App: React.FC = () => {
                     </LangRouteWrapper>
                   </ErrorBoundary>
                 } />
+                <Route path="/:lang/partner" element={
+                  <ErrorBoundary routeName="Partner">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Partner lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
+                } />
                 <Route path="/:lang/privacy" element={
                   <ErrorBoundary routeName="Privacy">
                     <LangRouteWrapper setLang={setLang}>
@@ -704,6 +712,13 @@ const App: React.FC = () => {
                   <ErrorBoundary routeName="Press">
                     <LangRouteWrapper setLang={setLang}>
                       {(routeLang) => <Press lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
+                } />
+                <Route path="/:lang/partner" element={
+                  <ErrorBoundary routeName="Partner">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <Partner lang={routeLang} />}
                     </LangRouteWrapper>
                   </ErrorBoundary>
                 } />

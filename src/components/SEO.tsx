@@ -173,24 +173,24 @@ export default SEO
 export const seoData = {
   home: {
     pt: {
-      title: 'Azimut - Produtora Audiovisual & Experiências Imersivas',
-      description: 'Desde 1996 criando experiências imersivas, VR, AR e projetos culturais premiados. Academy com cursos de VFX, Animação e Game Design. Preparação para VFS e VanArts Vancouver.',
-      keywords: 'produtora audiovisual, VR, AR, realidade virtual, experiências imersivas, VFX, animação, game design, Vancouver, VFS, VanArts',
+      title: 'Experiências Imersivas para Museus, Marcas e Eventos | Azimut',
+      description: 'Estúdio com 30 anos criando VR 360, instalações interativas e audiovisual. Equipe do Rio Museu Olímpico (+20 mil visitantes). IA-native. Brasil ↔ Canadá.',
+      keywords: 'experiência imersiva museu Brasil, VR 360, instalações interativas, audiovisual imersivo, exposição imersiva, Azimut, Rio Museu Olímpico',
     },
     en: {
-      title: 'Azimut - Audiovisual Production & Immersive Experiences',
-      description: 'Since 1996 creating award-winning immersive experiences, VR, AR and cultural projects. Academy with VFX, Animation and Game Design courses. VFS and VanArts Vancouver preparation.',
-      keywords: 'audiovisual production, VR, AR, virtual reality, immersive experiences, VFX, animation, game design, Vancouver, VFS, VanArts',
+      title: 'Immersive Experiences for Museums, Brands & Events | Azimut',
+      description: '30-year immersive studio: VR 360, interactive installations and cinematic audiovisual. Rio Olympic Museum team (20,000+ visitors). AI-native. Brazil ↔ Canada.',
+      keywords: 'immersive experience museum Brazil, VR 360, interactive installations, immersive audiovisual, immersive exhibition, Azimut, Rio Olympic Museum',
     },
     es: {
-      title: 'Azimut - Produccion Audiovisual & Experiencias Inmersivas',
-      description: 'Desde 1996 creando experiencias inmersivas premiadas, VR, AR y proyectos culturales. Academy con cursos de VFX, Animacion y Game Design. Preparacion para VFS y VanArts.',
-      keywords: 'produccion audiovisual, VR, AR, realidad virtual, experiencias inmersivas, VFX, animacion, game design, Vancouver, VFS, VanArts',
+      title: 'Experiencias Inmersivas para Museos, Marcas y Eventos | Azimut',
+      description: 'Estudio con 30 años creando VR 360, instalaciones interactivas y audiovisual. Equipo del Museo Olímpico de Río (+20 mil visitantes). IA-native. Brasil ↔ Canadá.',
+      keywords: 'experiencia inmersiva museo Brasil, VR 360, instalaciones interactivas, audiovisual inmersivo, exposición inmersiva, Azimut, Museo Olímpico Río',
     },
     fr: {
-      title: 'Azimut - Production Audiovisuelle & Experiences Immersives',
-      description: 'Depuis 1996 creant des experiences immersives primees, VR, AR et projets culturels. Academy avec cours VFX, Animation et Game Design. Preparation VFS et VanArts Vancouver.',
-      keywords: 'production audiovisuelle, VR, AR, realite virtuelle, experiences immersives, VFX, animation, game design, Vancouver, VFS, VanArts',
+      title: 'Expériences Immersives pour Musées, Marques et Événements | Azimut',
+      description: 'Studio avec 30 ans créant VR 360, installations interactives et audiovisuel. Équipe du Musée Olympique de Rio (+20 000 visiteurs). IA-native. Brésil ↔ Canada.',
+      keywords: 'expérience immersive musée Brésil, VR 360, installations interactives, audiovisuel immersif, exposition immersive, Azimut, Musée Olympique Rio',
     },
   },
   work: {
