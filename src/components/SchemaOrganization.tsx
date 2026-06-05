@@ -1,4 +1,4 @@
-// ════════════════════════════════════════════════════════════
+﻿// ════════════════════════════════════════════════════════════
 // SCHEMA.ORG - Organization Schema
 // ════════════════════════════════════════════════════════════
 // JSON-LD Schema.org para melhorar SEO e rich snippets
@@ -24,8 +24,8 @@ interface SchemaOrganizationProps {
 
 const SchemaOrganization: React.FC<SchemaOrganizationProps> = ({
   name = 'Azimut',
-  url = 'https://azmt.com.br',
-  logo = 'https://azmt.com.br/logo-azimut-star.svg',
+  url = 'https://www.azmt.com.br',
+  logo = 'https://www.azmt.com.br/logo-azimut-star.svg',
   description = 'Produtora pioneira em experiências imersivas, VR, AR e projetos culturais. Academy: Cursos de VFX, Animação, Game Design e preparação para VFS/VanArts Vancouver.',
   sameAs = [
     'https://instagram.com/azimut',

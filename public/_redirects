@@ -1,7 +1,8 @@
-# Redirects para SEO - HTTP → HTTPS e www → sem www
-http://www.azmt.com.br/*    https://azmt.com.br/:splat    301!
-http://azmt.com.br/*        https://azmt.com.br/:splat    301!
-https://www.azmt.com.br/*   https://azmt.com.br/:splat    301!
+# Redirects para SEO - HTTP → HTTPS e sem-www → www (host canônico: www.azmt.com.br)
+# Obs.: em produção quem aplica o redirect é a Vercel (domínio). Mantido aqui só para não contradizer.
+http://www.azmt.com.br/*    https://www.azmt.com.br/:splat    301!
+http://azmt.com.br/*        https://www.azmt.com.br/:splat    301!
+https://azmt.com.br/*       https://www.azmt.com.br/:splat    301!
 
 # SPA Routing - todas as rotas para index.html
 /*    /index.html   200

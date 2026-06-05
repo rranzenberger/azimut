@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+﻿import React, { useEffect, useRef } from 'react'
 import { useParams, Navigate } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import { getServiceBySlug, getServiceTitle, getServiceShortDesc, getServiceLongDesc, getServiceDeliverables, getServiceProcess, servicesData } from '../data/servicesData'
@@ -440,7 +440,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ lang }) => {
     provider: {
       '@type': 'Organization',
       name: 'Azimut',
-      url: 'https://azmt.com.br'
+      url: 'https://www.azmt.com.br'
     },
     areaServed: {
       '@type': 'Country',

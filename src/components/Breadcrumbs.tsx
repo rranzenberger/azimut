@@ -1,4 +1,4 @@
-// ═══════════════════════════════════════════════════════════════
+﻿// ═══════════════════════════════════════════════════════════════
 // BREADCRUMBS VISUAL - Componente Premium de Navegação
 // ═══════════════════════════════════════════════════════════════
 // Componente visual + Schema.org BreadcrumbList
@@ -22,7 +22,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   className = ''
 }) => {
   const location = useLocation()
-  const siteUrl = 'https://azmt.com.br'
+  const siteUrl = 'https://www.azmt.com.br'
 
   // Gerar breadcrumbs automaticamente baseado na URL se não fornecidos
   const breadcrumbs = useMemo(() => {

@@ -1,4 +1,4 @@
-// ════════════════════════════════════════════════════════════
+﻿// ════════════════════════════════════════════════════════════
 // SCHEMA.ORG - BreadcrumbList Schema
 // ════════════════════════════════════════════════════════════
 // JSON-LD BreadcrumbList para melhorar navegação interna
@@ -23,7 +23,7 @@ const SchemaBreadcrumbList: React.FC<SchemaBreadcrumbListProps> = ({
   lang = 'pt'
 }) => {
   const location = useLocation()
-  const siteUrl = 'https://azmt.com.br'
+  const siteUrl = 'https://www.azmt.com.br'
 
   // Gerar breadcrumbs automaticamente baseado na URL se não fornecidos
   const breadcrumbs = useMemo(() => {
