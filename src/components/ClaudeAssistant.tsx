@@ -14,6 +14,7 @@ import { useUserProfileDetection, getUserInsights, trackInteraction } from '../h
 // 🆕 FASE 2: Detecção de Intenção para personalizar assistente
 import { useIntentionDetection } from '../hooks/useIntentionDetection'
 import { logger } from '@/utils/logger'
+import { ApiService } from '../services/api'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -261,18 +262,25 @@ const ClaudeAssistant: React.FC<ClaudeAssistantProps> = ({ lang }) => {
       }
       setMessages(prev => [...prev, assistantMessage])
 
-      // If lead data was captured, save it
+      // If lead data was captured, save it via CMS (rota /api/leads/capture não existe no site Vite)
       if (data.leadData) {
-        await fetch('/api/leads/capture', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            ...data.leadData,
+        try {
+          await ApiService.submitLead({
+            name: data.leadData.name || 'Claude Chat Lead',
+            email: data.leadData.email || '',
+            phone: data.leadData.phone,
+            leadType: data.leadData.leadType || 'chat',
             source: 'claude_assistant',
-            userProfile: userProfile.profile,
-            chatTranscript: [...messages, userMessage, assistantMessage]
+            lang,
+            interest: data.leadData.interest,
+            message: `Chat via Claude Assistant (perfil: ${userProfile.profile})\n\nTranscript:\n${[...messages, userMessage, assistantMessage].map(m => `${m.role}: ${m.content}`).join('\n')}`,
           })
-        })
+        } catch (leadError) {
+          logger.error(leadError instanceof Error ? leadError : new Error(String(leadError)), {
+            action: 'submitLead',
+            component: 'ClaudeAssistant'
+          })
+        }
       }
     } catch (error) {
       logger.error(error instanceof Error ? error : new Error(String(error)), { 

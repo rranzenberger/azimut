@@ -4,6 +4,7 @@ import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import { useTheme } from '../contexts/ThemeContext'
 import StarBackground from '../components/StarBackground'
+import { ApiService } from '../services/api'
 
 interface PartnerProps {
   lang: Lang
@@ -149,10 +150,15 @@ const Partner: React.FC<PartnerProps> = ({ lang }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      await fetch('/api/leads/capture', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, source: 'partner-page', lang }),
+      await ApiService.submitLead({
+        name: formData.name,
+        email: formData.email,
+        leadType: 'partner',
+        source: 'partner-page',
+        lang,
+        interest: formData.type,
+        budget: formData.budget,
+        message: `Parceria: ${formData.type}\nPaís/cidade: ${formData.country}\nProjeto: ${formData.project}`,
       })
     } catch {}
     setSent(true)
