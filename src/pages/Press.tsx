@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import { Link } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
@@ -26,7 +26,7 @@ const Press: React.FC<PressProps> = ({ lang }) => {
       intro: 'A Azimut está disponível para entrevistas, comentários e informações sobre nossos projetos. Nossa equipe de comunicação está pronta para atender jornalistas, veículos de mídia e profissionais interessados em conhecer mais sobre nosso trabalho.',
       contactTitle: 'Contato para Imprensa',
       contactEmail: 'imprensa@azmt.com.br',
-      contactPhone: '+55 (21) 99999-9999',
+      contactPhone: '+55 (48) 99970-1301',
       pressKit: 'Kit de Imprensa',
       pressKitDesc: 'Baixe nosso kit completo com informações sobre a empresa, projetos principais, imagens em alta resolução e releases.',
       releases: 'Releases e Notas',
@@ -45,7 +45,7 @@ const Press: React.FC<PressProps> = ({ lang }) => {
       intro: 'Azimut is available for interviews, comments, and information about our projects. Our communication team is ready to assist journalists, media outlets, and professionals interested in learning more about our work.',
       contactTitle: 'Press Contact',
       contactEmail: 'press@azmt.com.br',
-      contactPhone: '+1 (604) 999-9999',
+      contactPhone: '+55 (48) 99970-1301',
       pressKit: 'Press Kit',
       pressKitDesc: 'Download our complete kit with information about the company, main projects, high-resolution images, and press releases.',
       releases: 'Press Releases',
@@ -64,7 +64,7 @@ const Press: React.FC<PressProps> = ({ lang }) => {
       intro: 'Azimut está disponible para entrevistas, comentarios e información sobre nuestros proyectos. Nuestro equipo de comunicación está listo para atender a periodistas, medios de comunicación y profesionales interesados en conocer más sobre nuestro trabajo.',
       contactTitle: 'Contacto de Prensa',
       contactEmail: 'prensa@azmt.com.br',
-      contactPhone: '+55 (21) 99999-9999',
+      contactPhone: '+55 (48) 99970-1301',
       pressKit: 'Kit de Prensa',
       pressKitDesc: 'Descargue nuestro kit completo con información sobre la empresa, proyectos principales, imágenes en alta resolución y comunicados.',
       releases: 'Comunicados y Notas',
@@ -83,7 +83,7 @@ const Press: React.FC<PressProps> = ({ lang }) => {
       intro: 'Azimut est disponible pour des interviews, commentaires et informations sur nos projets. Notre équipe de communication est prête à assister les journalistes, médias et professionnels intéressés par notre travail.',
       contactTitle: 'Contact Presse',
       contactEmail: 'presse@azmt.com.br',
-      contactPhone: '+1 (604) 999-9999',
+      contactPhone: '+55 (48) 99970-1301',
       pressKit: 'Kit Presse',
       pressKitDesc: 'Téléchargez notre kit complet avec des informations sur l\'entreprise, les principaux projets, images haute résolution et communiqués de presse.',
       releases: 'Communiqués de Presse',
