@@ -13,6 +13,7 @@ import { AnimatedLogo } from '../components/AnimatedLogo'
 import StarBackground from '../components/StarBackground'
 import OptimizedImage from '../components/OptimizedImage'
 import TrustedBy from '../components/TrustedBy'
+import StatsBar from '../components/StatsBar'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { useTheme } from '../contexts/ThemeContext'
 import { getInterestProfile, personalizeProjectOrder } from '../utils/personalizeProjects'
@@ -1518,6 +1519,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             </div>
           </div>
         </section>
+
+        {/* Números de impacto (contadores animados ao entrar na viewport) */}
+        <StatsBar lang={lang} />
 
         {/* Faixa de prova social: clientes e parceiros (texto; trocar por logos quando houver) */}
         <TrustedBy lang={lang} />
