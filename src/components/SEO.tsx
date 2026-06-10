@@ -1,4 +1,4 @@
-// ════════════════════════════════════════════════════════════
+﻿// ════════════════════════════════════════════════════════════
 // SEO COMPONENT - Meta Tags Otimizadas
 // ════════════════════════════════════════════════════════════
 // Componente reutilizável para SEO em todas as páginas
@@ -29,9 +29,9 @@ const SEO: React.FC<SEOProps> = ({
   title = 'Azimut - Produção Audiovisual, Experiências Imersivas & Academy',
   description = 'Produtora pioneira em experiências imersivas, VR, AR e projetos culturais. Academy: Cursos de VFX, Animação, Game Design e preparação para VFS/VanArts Vancouver.',
   keywords = 'produtora audiovisual, VR, AR, realidade virtual, experiências imersivas, VFX, animação, game design, Vancouver, VFS, VanArts, cursos cinema, produção cultural',
-  image = 'https://azmt.com.br/og-image.png',
+  image = 'https://azimutimmersive.com/og-image.png',
   icon,
-  url = 'https://azmt.com.br',
+  url = 'https://azimutimmersive.com',
   type = 'website',
   author = 'Azimut',
   publishedTime,
@@ -41,7 +41,7 @@ const SEO: React.FC<SEOProps> = ({
   canonical
 }) => {
   const location = useLocation()
-  const siteUrl = 'https://azmt.com.br'
+  const siteUrl = 'https://azimutimmersive.com'
   const fullUrl = url.startsWith('http') ? url : `${siteUrl}${url}`
   const fullImage = image.startsWith('http') ? image : `${siteUrl}${image}`
   const canonicalUrl = canonical || fullUrl
@@ -131,7 +131,7 @@ const SEO: React.FC<SEOProps> = ({
       <meta name="twitter:image:alt" content={title} />
       <meta name="twitter:site" content="@azimut" />
       <meta name="twitter:creator" content="@azimut" />
-      <meta name="twitter:domain" content="azmt.com.br" />
+      <meta name="twitter:domain" content="azimutimmersive.com" />
 
       {/* Additional Meta Tags */}
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -173,24 +173,24 @@ export default SEO
 export const seoData = {
   home: {
     pt: {
-      title: 'Azimut - Produtora Audiovisual & Experiências Imersivas',
-      description: 'Desde 1996 criando experiências imersivas, VR, AR e projetos culturais premiados. Academy com cursos de VFX, Animação e Game Design. Preparação para VFS e VanArts Vancouver.',
-      keywords: 'produtora audiovisual, VR, AR, realidade virtual, experiências imersivas, VFX, animação, game design, Vancouver, VFS, VanArts',
+      title: 'Experiências Imersivas para Museus, Marcas e Eventos | Azimut',
+      description: 'Estúdio com 30 anos criando VR 360, instalações interativas e audiovisual. Equipe do Rio Museu Olímpico (+20 mil visitantes). IA-native. Brasil ↔ Canadá.',
+      keywords: 'experiência imersiva museu Brasil, VR 360, instalações interativas, audiovisual imersivo, exposição imersiva, Azimut, Rio Museu Olímpico',
     },
     en: {
-      title: 'Azimut - Audiovisual Production & Immersive Experiences',
-      description: 'Since 1996 creating award-winning immersive experiences, VR, AR and cultural projects. Academy with VFX, Animation and Game Design courses. VFS and VanArts Vancouver preparation.',
-      keywords: 'audiovisual production, VR, AR, virtual reality, immersive experiences, VFX, animation, game design, Vancouver, VFS, VanArts',
+      title: 'Immersive Experiences for Museums, Brands & Events | Azimut',
+      description: '30-year immersive studio: VR 360, interactive installations and cinematic audiovisual. Rio Olympic Museum team (20,000+ visitors). AI-native. Brazil ↔ Canada.',
+      keywords: 'immersive experience museum Brazil, VR 360, interactive installations, immersive audiovisual, immersive exhibition, Azimut, Rio Olympic Museum',
     },
     es: {
-      title: 'Azimut - Produccion Audiovisual & Experiencias Inmersivas',
-      description: 'Desde 1996 creando experiencias inmersivas premiadas, VR, AR y proyectos culturales. Academy con cursos de VFX, Animacion y Game Design. Preparacion para VFS y VanArts.',
-      keywords: 'produccion audiovisual, VR, AR, realidad virtual, experiencias inmersivas, VFX, animacion, game design, Vancouver, VFS, VanArts',
+      title: 'Experiencias Inmersivas para Museos, Marcas y Eventos | Azimut',
+      description: 'Estudio con 30 años creando VR 360, instalaciones interactivas y audiovisual. Equipo del Museo Olímpico de Río (+20 mil visitantes). IA-native. Brasil ↔ Canadá.',
+      keywords: 'experiencia inmersiva museo Brasil, VR 360, instalaciones interactivas, audiovisual inmersivo, exposición inmersiva, Azimut, Museo Olímpico Río',
     },
     fr: {
-      title: 'Azimut - Production Audiovisuelle & Experiences Immersives',
-      description: 'Depuis 1996 creant des experiences immersives primees, VR, AR et projets culturels. Academy avec cours VFX, Animation et Game Design. Preparation VFS et VanArts Vancouver.',
-      keywords: 'production audiovisuelle, VR, AR, realite virtuelle, experiences immersives, VFX, animation, game design, Vancouver, VFS, VanArts',
+      title: 'Expériences Immersives pour Musées, Marques et Événements | Azimut',
+      description: 'Studio avec 30 ans créant VR 360, installations interactives et audiovisuel. Équipe du Musée Olympique de Rio (+20 000 visiteurs). IA-native. Brésil ↔ Canada.',
+      keywords: 'expérience immersive musée Brésil, VR 360, installations interactives, audiovisuel immersif, exposition immersive, Azimut, Musée Olympique Rio',
     },
   },
   work: {
@@ -198,25 +198,25 @@ export const seoData = {
       title: 'Portfolio de Projetos - VR, AR, Exposições e Experiências Imersivas | Azimut',
       description: 'Explore nosso portfólio completo com mais de 90 projetos realizados desde 1996. Museus olímpicos, curadoria de festivais internacionais, instalações VR/AR, exposições digitais e experiências imersivas. Único estúdio no Brasil com curadoria oficial em festival internacional de cinema (Gramado VR/IA desde 2017).',
       keywords: 'portfolio azimut, projetos VR, realidade virtual, AR aumentada, exposições imersivas, museus digitais, curadoria festivais, instalações interativas, experiências 360, projetos culturais, Rio Museu Olímpico, Festival Gramado, produção audiovisual premiada',
-      image: 'https://azmt.com.br/og-work.png',
+      image: 'https://azimutimmersive.com/og-work.png',
     },
     en: {
       title: 'Project Portfolio - VR, AR, Exhibitions & Immersive Experiences | Azimut',
       description: 'Explore our complete portfolio with over 90 projects since 1996. Olympic museums, international festival curation, VR/AR installations, digital exhibitions and immersive experiences. The only studio in Brazil with official curation at an international film festival (Gramado VR/AI since 2017).',
       keywords: 'azimut portfolio, VR projects, virtual reality, augmented reality AR, immersive exhibitions, digital museums, festival curation, interactive installations, 360 experiences, cultural projects, Rio Olympic Museum, Gramado Festival, award-winning audiovisual production',
-      image: 'https://azmt.com.br/og-work.png',
+      image: 'https://azimutimmersive.com/og-work.png',
     },
     es: {
       title: 'Portfolio de Proyectos - VR, AR, Exposiciones y Experiencias Inmersivas | Azimut',
       description: 'Explora nuestro portafolio completo con más de 90 proyectos desde 1996. Museos olímpicos, curaduría de festivales internacionales, instalaciones VR/AR, exposiciones digitales y experiencias inmersivas. Único estudio en Brasil con curaduría oficial en festival internacional de cine (Gramado VR/IA desde 2017).',
       keywords: 'portafolio azimut, proyectos VR, realidad virtual, AR aumentada, exposiciones inmersivas, museos digitales, curaduría festivales, instalaciones interactivas, experiencias 360, proyectos culturales, Museo Olímpico Rio, Festival Gramado, producción audiovisual premiada',
-      image: 'https://azmt.com.br/og-work.png',
+      image: 'https://azimutimmersive.com/og-work.png',
     },
     fr: {
       title: 'Portfolio de Projets - VR, AR, Expositions et Expériences Immersives | Azimut',
       description: 'Explorez notre portfolio complet avec plus de 90 projets depuis 1996. Musées olympiques, curation de festivals internationaux, installations VR/AR, expositions numériques et expériences immersives. Le seul studio au Brésil avec curation officielle dans un festival international de cinéma (Gramado VR/IA depuis 2017).',
       keywords: 'portfolio azimut, projets VR, réalité virtuelle, AR augmentée, expositions immersives, musées numériques, curation festivals, installations interactives, expériences 360, projets culturels, Musée Olympique Rio, Festival Gramado, production audiovisuelle primée',
-      image: 'https://azmt.com.br/og-work.png',
+      image: 'https://azimutimmersive.com/og-work.png',
     },
   },
   studio: {

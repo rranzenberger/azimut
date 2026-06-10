@@ -26,7 +26,8 @@ export default function GamePage({ lang }: GamePageProps) {
   const [isMobile, setIsMobile] = useState(false)
 
   const isDev = import.meta.env.DEV
-  const gameSrc = isDev ? `http://localhost:5174/?lang=${lang}` : `/${lang}/game/`
+  // Prod: jogo estático em /{lang}/play/ (não /game/, p/ não sombrear esta rota e usar o wrapper)
+  const gameSrc = isDev ? `http://localhost:5174/?lang=${lang}` : `/${lang}/play/`
 
   useEffect(() => {
     const check = () => setIsMobile(typeof window !== 'undefined' && window.innerWidth < 768)

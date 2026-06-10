@@ -1,4 +1,4 @@
-# ═══════════════════════════════════════════════════════════
+﻿# ═══════════════════════════════════════════════════════════
 # robots.txt - Azimut Site
 # Otimizado para SEO e buscadores de IA
 # ═══════════════════════════════════════════════════════════
@@ -39,7 +39,7 @@ User-agent: Baiduspider
 Allow: /
 
 # Sitemap location (para todos os buscadores)
-Sitemap: https://azmt.com.br/sitemap.xml
+Sitemap: https://azimutimmersive.com/sitemap.xml
 Allow: /
 Crawl-delay: 0
 
@@ -65,7 +65,7 @@ User-agent: Claude-Web
 Allow: /
 
 # Sitemap (obrigatório para SEO)
-Sitemap: https://azmt.com.br/sitemap.xml
+Sitemap: https://azimutimmersive.com/sitemap.xml
 
 # Host (opcional, mas recomendado)
-Host: https://azmt.com.br
+Host: https://azimutimmersive.com

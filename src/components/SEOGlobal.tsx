@@ -1,4 +1,4 @@
-// ════════════════════════════════════════════════════════════
+﻿// ════════════════════════════════════════════════════════════
 // SEO GLOBAL - Schemas JSON-LD para TODAS as páginas
 // ════════════════════════════════════════════════════════════
 // Este componente é incluído no Layout.tsx e injeta schemas
@@ -16,7 +16,7 @@ interface SEOGlobalProps {
 
 const SEOGlobal: React.FC<SEOGlobalProps> = ({ lang }) => {
   const location = useLocation()
-  const baseUrl = 'https://azmt.com.br'
+  const baseUrl = 'https://azimutimmersive.com'
   const currentUrl = `${baseUrl}${location.pathname}`
 
   // ════════════════════════════════════════════════════════════

@@ -1,8 +1,6 @@
-# Redirects para SEO - HTTP → HTTPS e www → sem www
-http://www.azmt.com.br/*    https://azmt.com.br/:splat    301!
-http://azmt.com.br/*        https://azmt.com.br/:splat    301!
-https://www.azmt.com.br/*   https://azmt.com.br/:splat    301!
+# Host canônico: azimutimmersive.com
+# Obs.: em produção quem aplica os redirects de domínio (azmt.com.br, azmt.ca → azimutimmersive.com)
+# é a Vercel, no painel de Domains. Este arquivo é formato Netlify e serve só de documentação/fallback.
 
 # SPA Routing - todas as rotas para index.html
 /*    /index.html   200
-

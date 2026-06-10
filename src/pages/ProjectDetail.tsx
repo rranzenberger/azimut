@@ -1,5 +1,7 @@
-import React, { useEffect, useRef } from 'react'
+﻿import React, { useEffect, useRef } from 'react'
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { type Lang } from '../i18n'
 import SEO, { seoData } from '../components/SEO'
 import { useUserTracking } from '../hooks/useUserTracking'
@@ -249,7 +251,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
       <ProjectSchema
         name={effectiveProject.title}
         description={seoDescription}
-        image={effectiveProject.heroImage?.large || effectiveProject.heroImage?.original || 'https://azmt.com.br/og-image.png'}
+        image={effectiveProject.heroImage?.large || effectiveProject.heroImage?.original || 'https://azimutimmersive.com/og-image.png'}
         dateCreated={effectiveProject.year ? `${effectiveProject.year}-01-01` : new Date().toISOString().split('T')[0]}
         creator="Azimut"
         client={effectiveProject.client}
@@ -481,19 +483,19 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ lang }) => {
             </div>
           </div>
 
-          {/* Description - Prioriza description completa, fallback para summary */}
+          {/* Description - Prioriza description completa, fallback para summary. Renderiza markdown (##, **, listas) */}
           {(effectiveProject.description || effectiveProject.summary) && (
             <div className="mb-12">
-              <div className="prose prose-invert max-w-none">
-                <div 
-                  className="text-lg leading-relaxed"
-                  style={{ color: 'var(--theme-text-secondary)' }}
-                  dangerouslySetInnerHTML={{ 
-                    __html: effectiveProject.description 
-                      ? effectiveProject.description.replace(/\n/g, '<br />')
-                      : (effectiveProject.summary || '').replace(/\n/g, '<br />')
-                  }}
-                />
+              <div
+                className={`prose prose-lg max-w-none leading-relaxed ${
+                  theme === 'dark'
+                    ? 'prose-invert prose-headings:text-white prose-p:text-white/80 prose-a:text-azimut-red prose-strong:text-white prose-li:text-white/80'
+                    : 'prose-slate prose-headings:text-[#0f172a] prose-p:text-black/80 prose-a:text-azimut-red prose-strong:text-[#0f172a] prose-li:text-black/80'
+                }`}
+              >
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {effectiveProject.description || effectiveProject.summary || ''}
+                </ReactMarkdown>
               </div>
             </div>
           )}

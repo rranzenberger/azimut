@@ -1483,7 +1483,6 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 <LangLink to="/what" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navWhat')}</LangLink>
                 <LangLink to="/contact" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navFooterContact')}</LangLink>
                 <LangLink to="/press" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navPress')}</LangLink>
-                <LangLink to="/work/review" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navFooterReview')}</LangLink>
                 <LangLink to="/blog" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">Blog</LangLink>
               </nav>
             </div>
@@ -1754,9 +1753,6 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     </LangLink>
                     <LangLink to="/press" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                       {t(lang, 'navPress')}
-                    </LangLink>
-                    <LangLink to="/work/review" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
-                      {t(lang, 'navFooterReview')}
                     </LangLink>
                     <LangLink to="/blog" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                       Blog

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Subpágina: Todos os projetos (Projetos realizados / Our portfolio).
  * Rota: /:lang/work/projects
  * Pills (ALL, Video, VR&XR, etc.) levam aqui com ?type=... quando aplicável.
@@ -173,7 +173,7 @@ const WorkProjects: React.FC<WorkProjectsProps> = ({ lang }) => {
   const seo = {
     title: lang === 'pt' ? 'Projetos realizados | Azimut' : lang === 'es' ? 'Proyectos realizados | Azimut' : lang === 'fr' ? 'Projets réalisés | Azimut' : 'Our portfolio | Azimut',
     description: lang === 'pt' ? 'Portfólio completo de projetos em VR, XR, museus, festivais e experiências imersivas.' : 'Full portfolio of VR, XR, museums, festivals and immersive experiences.',
-    url: `https://azmt.com.br/${lang}/work/projects`,
+    url: `https://azimutimmersive.com/${lang}/work/projects`,
   }
 
   return (

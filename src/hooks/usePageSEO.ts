@@ -1,4 +1,4 @@
-// ════════════════════════════════════════════════════════════
+﻿// ════════════════════════════════════════════════════════════
 // HOOK: usePageSEO - SEO Otimizado com Backoffice
 // ════════════════════════════════════════════════════════════
 // Busca dados SEO do backoffice e otimiza com keywords
@@ -62,17 +62,17 @@ export function usePageSEO(
   const isWork = slug === 'work'
   // URL da imagem (padrão ou específica da página)
   const image = isVancouver
-    ? 'https://azmt.com.br/og-vancouver.jpg'
+    ? 'https://azimutimmersive.com/og-vancouver.jpg'
     : isWork
-    ? 'https://azmt.com.br/og-work.jpg'
-    : 'https://azmt.com.br/og-image.jpg'
+    ? 'https://azimutimmersive.com/og-work.jpg'
+    : 'https://azimutimmersive.com/og-image.jpg'
 
-  // URL canônica
+  // URL canônica — sempre com prefixo de idioma (inclui /pt) para bater com os hreflang
   const url = isHome
-    ? `https://azmt.com.br/${lang === 'pt' ? '' : lang}`
+    ? `https://azimutimmersive.com/${lang}`
     : isVancouver
-    ? `https://azmt.com.br/${lang === 'pt' ? '' : lang}/academy/vancouver`
-    : `https://azmt.com.br/${lang === 'pt' ? '' : lang}/${slug}`
+    ? `https://azimutimmersive.com/${lang}/academy/vancouver`
+    : `https://azimutimmersive.com/${lang}/${slug}`
 
   return {
     title: optimizedTitle,
