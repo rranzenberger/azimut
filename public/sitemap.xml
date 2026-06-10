@@ -383,4 +383,12 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://azimutimmersive.com/fr/terms" />
   </url>
 
+  <url><loc>https://azimutimmersive.com/pt/partner</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://azimutimmersive.com/en/partner</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://azimutimmersive.com/es/partner</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://azimutimmersive.com/fr/partner</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://azimutimmersive.com/pt/blog/como-criar-exposicao-imersiva-museus</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://azimutimmersive.com/pt/blog/custo-instalacao-vr-evento-corporativo</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://azimutimmersive.com/en/blog/how-to-create-immersive-museum-experience-brazil</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://azimutimmersive.com/pt/blog/narrativa-espacial-museus</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>

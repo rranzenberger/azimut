@@ -12,6 +12,7 @@ import { VideoPlayer } from '../components/VideoPlayer'
 import { AnimatedLogo } from '../components/AnimatedLogo'
 import StarBackground from '../components/StarBackground'
 import OptimizedImage from '../components/OptimizedImage'
+import TrustedBy from '../components/TrustedBy'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { useTheme } from '../contexts/ThemeContext'
 import { getInterestProfile, personalizeProjectOrder } from '../utils/personalizeProjects'
@@ -1517,6 +1518,9 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
             </div>
           </div>
         </section>
+
+        {/* Faixa de prova social: clientes e parceiros (texto; trocar por logos quando houver) */}
+        <TrustedBy lang={lang} />
 
         {/* ════════════════════════════════════════════════════════════════ */}
         {/* PROJETOS EM DESTAQUE - 1 Card Grande + 3 Cards Pequenos */}
