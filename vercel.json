@@ -2,7 +2,9 @@
   "buildCommand": "npm run vercel-build",
   "redirects": [
     { "source": "/gigradar", "destination": "/pt/gigradar", "permanent": false },
-    { "source": "/beta", "destination": "/pt/gigradar", "permanent": false }
+    { "source": "/beta", "destination": "/pt/gigradar", "permanent": false },
+    { "source": "/giradar", "destination": "/pt/gigradar", "permanent": false },
+    { "source": "/:lang/giradar", "destination": "/:lang/gigradar", "permanent": false }
   ],
   "rewrites": [
     {
