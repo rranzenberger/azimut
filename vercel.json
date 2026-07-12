@@ -1,5 +1,9 @@
 {
   "buildCommand": "npm run vercel-build",
+  "redirects": [
+    { "source": "/gigradar", "destination": "/pt/gigradar", "permanent": false },
+    { "source": "/beta", "destination": "/pt/gigradar", "permanent": false }
+  ],
   "rewrites": [
     {
       "source": "/((?!assets/)(?!fonts/).*)",
