@@ -89,6 +89,7 @@ const Research = lazy(() => import('./pages/Research'))
 const Vancouver = lazy(() => import('./pages/Vancouver'))
 const Press = lazy(() => import('./pages/Press'))
 const Partner = lazy(() => import('./pages/Partner'))
+const GigRadar = lazy(() => import('./pages/GigRadar'))
 const Privacy = lazy(() => import('./pages/Privacy'))
 const Terms = lazy(() => import('./pages/Terms'))
 const ThankYou = lazy(() => import('./pages/ThankYou'))
@@ -458,6 +459,13 @@ const App: React.FC = () => {
                     </LangRouteWrapper>
                   </ErrorBoundary>
                 } />
+                <Route path="/:lang/gigradar" element={
+                  <ErrorBoundary routeName="GigRadar">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <GigRadar lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
+                } />
                 <Route path="/:lang/privacy" element={
                   <ErrorBoundary routeName="Privacy">
                     <LangRouteWrapper setLang={setLang}>
@@ -719,6 +727,13 @@ const App: React.FC = () => {
                   <ErrorBoundary routeName="Partner">
                     <LangRouteWrapper setLang={setLang}>
                       {(routeLang) => <Partner lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
+                } />
+                <Route path="/:lang/gigradar" element={
+                  <ErrorBoundary routeName="GigRadar">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <GigRadar lang={routeLang} />}
                     </LangRouteWrapper>
                   </ErrorBoundary>
                 } />
