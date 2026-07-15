@@ -134,6 +134,8 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
           </div>
           <AdminLink href="/admin/analytics" label="📊 Analytics IA" title={TOOLTIP_BY_HREF['/admin/analytics']} />
           <AdminLink href="/admin/leads" label="👥 Leads" title={TOOLTIP_BY_HREF['/admin/leads']} />
+          <AdminLink href="/admin/leads?leadType=GIGRADAR_BETA" label="🚗 GigRadar Beta" title={TOOLTIP_BY_HREF['/admin/leads?leadType=GIGRADAR_BETA']} />
+          <AdminLink href="/admin/gigradar-logs" label="🧪 GigRadar Logs" title={TOOLTIP_BY_HREF['/admin/gigradar-logs']} />
           <AdminLink href="/admin/leads/game" label="🎮 Leads do Jogo" title={TOOLTIP_BY_HREF['/admin/leads/game']} />
           <AdminLink href="/admin/leads/dashboard" label="🎯 Dashboard Leads IA" title={TOOLTIP_BY_HREF['/admin/leads/dashboard']} />
 

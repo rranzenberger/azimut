@@ -138,6 +138,19 @@ export async function POST(request: Request) {
       // Continuar com score calculado manualmente
     }
 
+    // 15/jul: leadType vinha IGNORADO — todo cadastro (inclusive GigRadar Beta) caía
+    // como CONTACT_FORM genérico, mesmo o cliente mandando o tipo certo. Mapeia agora
+    // (aceita o valor exato ou o slug 'gigradar-beta' que a página /gigradar manda) e
+    // marca o texto com uma tag defensiva, pra achar mesmo antes de a migração do
+    // enum rodar (mesmo padrão usado no comparador da aba GigRadar Beta).
+    const rawLeadType = String(data.leadType || '').toLowerCase()
+    const leadType = rawLeadType === 'gigradar-beta' || rawLeadType === 'gigradar_beta'
+      ? 'GIGRADAR_BETA'
+      : 'CONTACT_FORM'
+    const description = leadType === 'GIGRADAR_BETA'
+      ? `[GIGRADAR] ${data.description || data.message || ''}`.trim()
+      : (data.description || null)
+
     // Criar lead no banco
     const lead = await prisma.lead.create({
       data: {
@@ -146,11 +159,11 @@ export async function POST(request: Request) {
         phone: data.phone || null,
         company: data.company || null,
         position: data.position || null,
-        leadType: 'CONTACT_FORM',
+        leadType: leadType as any,
         projectType: data.projectType || null,
         budget: data.budget || null,
         timeline: data.timeline || null,
-        description: data.description || null,
+        description,
         status: 'NEW',
         priority: priority as any,
         leadScore,

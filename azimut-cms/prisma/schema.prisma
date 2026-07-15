@@ -1479,6 +1479,23 @@ enum LeadType {
   BUDGET_INQUIRY
   VANCOUVER
   EMPATHY_ENGINE
+  GIGRADAR_BETA
+}
+
+// 15/jul/2026 — Logs de diagnóstico enviados pelo botão "Enviar log" do app GigRadar (beta).
+// O testador aperta o botão no app; o log (já redigido/seguro no cliente) chega aqui em vez
+// de só ir pro WhatsApp — centraliza pra dar pra revisar por testador e por data.
+model GigRadarLog {
+  id         String   @id @default(uuid())
+  deviceId   String
+  contact    String? // e-mail/whatsapp do cadastro, quando dá pra linkar (self-service futuro)
+  appVersion String?
+  logText    String
+  aiSummary  String? // resumo/alerta gerado por IA (getAIProvider, mesmo módulo dos Leads) — best-effort, não bloqueia o recebimento
+  createdAt  DateTime @default(now())
+
+  @@index([deviceId])
+  @@index([createdAt])
 }
 
 enum LeadPriority {

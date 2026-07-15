@@ -297,6 +297,45 @@ export const MENU_MANUAL_ITEMS: MenuItemManual[] = [
     ],
   },
   {
+    href: '/admin/leads?leadType=GIGRADAR_BETA',
+    label: '🚗 GigRadar Beta',
+    tooltip: 'Cadastros do beta fechado do app GigRadar (motoristas de app).',
+    description: 'Lista filtrada dos leads que vieram da página /gigradar (cadastro do beta fechado do app de motorista). Mesma tela de Leads, já filtrada pra esse tipo.',
+    howTo: [
+      'Acesse GigRadar Beta no menu',
+      'Veja quem se cadastrou pra testar o app',
+      'Use o WhatsApp/e-mail do lead pra mandar o código de liberação',
+    ],
+    fields: [
+      'Nome, WhatsApp, e-mail, cidade — do formulário /gigradar',
+    ],
+    tips: [
+      'O deviceId do testador chega por WhatsApp, não aqui — gere o código com tools/gr_code.py',
+    ],
+    commonErrors: [],
+  },
+  {
+    href: '/admin/gigradar-logs',
+    label: '🧪 GigRadar Logs',
+    tooltip: 'Logs de diagnóstico enviados pelos beta testers do GigRadar.',
+    description: 'Logs que o app GigRadar manda quando o testador aperta "Enviar log" (fase beta). Cada entrada já vem com um resumo automático por IA. Use pra revisar bugs reportados por testador e data.',
+    howTo: [
+      'Acesse GigRadar Logs no menu',
+      'Leia o resumo por IA (destacado em roxo) de cada entrada',
+      'Abra o log bruto (clique no card) se precisar do detalhe completo',
+    ],
+    fields: [
+      'deviceId — identifica o aparelho (não a pessoa)',
+      'appVersion — versão do app que mandou',
+      'aiSummary — resumo automático gerado por IA',
+      'logText — o log bruto (já redigido/seguro no app antes de enviar)',
+    ],
+    tips: [
+      'Sem log em 7 dias, o próprio app já cobra o testador de novo (bloqueio automático).',
+    ],
+    commonErrors: [],
+  },
+  {
     href: '/admin/leads/game',
     label: '🎮 Leads do Jogo',
     tooltip: 'Leads gerados pelo game neurolinguístico no site.',

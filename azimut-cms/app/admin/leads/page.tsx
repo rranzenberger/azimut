@@ -54,7 +54,20 @@ export default async function LeadsPage({
       where.priority = priority;
     }
     
-    if (leadType && ['CONTACT_FORM', 'BUDGET_INQUIRY', 'VANCOUVER', 'EMPATHY_ENGINE'].includes(leadType)) {
+    if (leadType === 'GIGRADAR_BETA') {
+      // Aba do app GigRadar. O Referer de fetch cross-origin chega SEM o caminho
+      // (política padrão strict-origin-when-cross-origin), então sourceUrl sozinho
+      // não encontra nada: casa também pelo enum (pós-migração) e pela marca que o
+      // site/fallback sempre gravam no texto. AND para não colidir com o OR da busca.
+      where.AND = [{
+        OR: [
+          { leadType: 'GIGRADAR_BETA' as any },
+          { sourceUrl: { contains: 'gigradar' } },
+          { description: { contains: 'GigRadar BETA' } },
+          { description: { contains: '[GIGRADAR]' } },
+        ],
+      }];
+    } else if (leadType && ['CONTACT_FORM', 'BUDGET_INQUIRY', 'VANCOUVER', 'EMPATHY_ENGINE'].includes(leadType)) {
       where.leadType = leadType;
     }
     
