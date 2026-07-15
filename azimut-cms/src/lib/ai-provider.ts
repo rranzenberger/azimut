@@ -97,10 +97,14 @@ class AIProviderService {
         return process.env.GEMINI_MODEL || 'gemini-pro';
       case 'claude':
         // Estratégia inteligente: Opus para dados pesados, Sonnet para normal
-        return process.env.CLAUDE_MODEL || 
-               (process.env.AI_MODE === 'max' || process.env.AI_MODE === 'opus' 
-                 ? 'claude-3-opus-20240229' 
-                 : 'claude-3-5-sonnet-20241022');
+        // 15/jul/2026: os IDs antigos (claude-3-opus-20240229 / claude-3-5-sonnet-20241022)
+        // foram descontinuados pela Anthropic — a chamada dava 404 "model not found" e
+        // qualquer resumo/análise por IA neste backoffice falhava silenciosamente (achado
+        // ao investigar por que o resumo do log do GigRadar nunca gerava).
+        return process.env.CLAUDE_MODEL ||
+               (process.env.AI_MODE === 'max' || process.env.AI_MODE === 'opus'
+                 ? 'claude-opus-4-8'
+                 : 'claude-sonnet-5');
       case 'llama':
         return process.env.LLAMA_MODEL || 'llama3';
     }
