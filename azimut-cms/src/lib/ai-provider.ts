@@ -284,8 +284,13 @@ class AIProviderService {
 
     const data = await response.json();
 
+    // 15/jul/2026: modelos de raciocínio (claude-sonnet-5/claude-opus-4-8) podem devolver
+    // outros tipos de bloco (ex.: "thinking") ANTES do texto de verdade — content[0] direto
+    // não garante mais o texto. Acha o primeiro bloco type:"text" no array (achado: chamada
+    // não dava erro nenhum, mas o resumo salvava undefined e o Prisma ignorava silenciosamente).
+    const textBlock = (data.content || []).find((b: any) => b.type === 'text')
     return {
-      content: data.content[0].text,
+      content: textBlock?.text || '',
       provider: 'claude',
       tokensUsed: data.usage?.input_tokens && data.usage?.output_tokens
         ? data.usage.input_tokens + data.usage.output_tokens
