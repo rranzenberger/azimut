@@ -62,6 +62,14 @@ const content = {
     downloadTitle: '📲 Baixar o GigRadar',
     downloadBtn: '⬇️ Baixar o APK (Android)',
     downloadNote: 'Sempre a versão mais recente — este link se atualiza sozinho a cada nova versão.',
+    codeTitle: '🔓 Já instalou? Libere seu acesso',
+    codeIntro: 'Abra o app, toque em 💎 e copie o "ID de aparelho". Cole aqui com o e-mail ou WhatsApp que você usou no cadastro — o código sai na hora.',
+    codeDevicePh: 'ID de aparelho (da tela 💎)',
+    codeContactPh: 'E-mail ou WhatsApp do cadastro',
+    codeBtn: '🔑 Gerar meu código',
+    codeLoading: 'Gerando…',
+    codeResultTitle: 'Seu código (válido 30 dias):',
+    codeResultHint: 'Copie e cole na tela 💎 do app → Liberar. Guarde: é pessoal e intransferível.',
     setupModesTitle: 'Na primeira abertura, você escolhe como configurar',
     setupModesIntro: 'Não tem certo ou errado — escolha o que combina com você agora. Dá pra mudar tudo depois em Ajustes.',
     setupModes: [
@@ -149,6 +157,14 @@ const content = {
     downloadTitle: '📲 Download GigRadar',
     downloadBtn: '⬇️ Download the APK (Android)',
     downloadNote: 'Always the latest version — this link updates itself with every new release.',
+    codeTitle: '🔓 Already installed? Unlock your access',
+    codeIntro: 'Open the app, tap 💎 and copy your "device ID". Paste it here with the e-mail or WhatsApp you signed up with — your code appears instantly.',
+    codeDevicePh: 'Device ID (from the 💎 screen)',
+    codeContactPh: 'Sign-up e-mail or WhatsApp',
+    codeBtn: '🔑 Generate my code',
+    codeLoading: 'Generating…',
+    codeResultTitle: 'Your code (valid 30 days):',
+    codeResultHint: 'Copy and paste it in the app\'s 💎 screen → Unlock. Keep it: personal and non-transferable.',
     setupModesTitle: 'On first launch, you choose how to set up',
     setupModesIntro: 'There\'s no right or wrong — pick what fits you now. You can change everything later in Settings.',
     setupModes: [
@@ -236,6 +252,14 @@ const content = {
     downloadTitle: '📲 Descargar GigRadar',
     downloadBtn: '⬇️ Descargar el APK (Android)',
     downloadNote: 'Siempre la versión más reciente — este link se actualiza solo con cada nueva versión.',
+    codeTitle: '🔓 ¿Ya instalaste? Libera tu acceso',
+    codeIntro: 'Abre la app, toca 💎 y copia tu "ID de dispositivo". Pégalo aquí con el e-mail o WhatsApp que usaste al registrarte — el código sale al instante.',
+    codeDevicePh: 'ID de dispositivo (de la pantalla 💎)',
+    codeContactPh: 'E-mail o WhatsApp del registro',
+    codeBtn: '🔑 Generar mi código',
+    codeLoading: 'Generando…',
+    codeResultTitle: 'Tu código (válido 30 días):',
+    codeResultHint: 'Cópialo y pégalo en la pantalla 💎 de la app → Desbloquear. Guárdalo: es personal e intransferible.',
     setupModesTitle: 'En la primera apertura, eliges cómo configurar',
     setupModesIntro: 'No hay correcto o incorrecto — elige lo que te convenga ahora. Puedes cambiar todo después en Ajustes.',
     setupModes: [
@@ -323,6 +347,14 @@ const content = {
     downloadTitle: '📲 Télécharger GigRadar',
     downloadBtn: '⬇️ Télécharger l\'APK (Android)',
     downloadNote: 'Toujours la dernière version — ce lien se met à jour automatiquement à chaque nouvelle version.',
+    codeTitle: '🔓 Déjà installé ? Débloquez votre accès',
+    codeIntro: 'Ouvrez l\'app, appuyez sur 💎 et copiez votre « ID d\'appareil ». Collez-le ici avec l\'e-mail ou le WhatsApp de votre inscription — le code apparaît aussitôt.',
+    codeDevicePh: 'ID d\'appareil (écran 💎)',
+    codeContactPh: 'E-mail ou WhatsApp d\'inscription',
+    codeBtn: '🔑 Générer mon code',
+    codeLoading: 'Génération…',
+    codeResultTitle: 'Votre code (valable 30 jours) :',
+    codeResultHint: 'Copiez-le dans l\'écran 💎 de l\'app → Débloquer. Gardez-le : personnel et non transférable.',
     setupModesTitle: 'Au premier lancement, vous choisissez comment configurer',
     setupModesIntro: 'Il n\'y a pas de bon ou mauvais choix — prenez ce qui vous convient maintenant. Vous pourrez tout changer plus tard dans les Réglages.',
     setupModes: [
@@ -376,6 +408,29 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
   const [sent, setSent] = useState(false)
   const [apkVersion, setApkVersion] = useState<string | null>(null)
   const { setTheme } = useTheme()
+
+  // 🔓 Self-service do código de liberação (16/jul): deviceId + contato → código na hora.
+  const [codeDevice, setCodeDevice] = useState('')
+  const [codeContact, setCodeContact] = useState('')
+  const [codeResult, setCodeResult] = useState<string | null>(null)
+  const [codeError, setCodeError] = useState<string | null>(null)
+  const [codeLoading, setCodeLoading] = useState(false)
+
+  const handleGenerateCode = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setCodeError(null)
+    setCodeResult(null)
+    if (!codeDevice.trim() || !codeContact.trim()) return
+    setCodeLoading(true)
+    try {
+      const res = await ApiService.redeemGigRadarCode(codeDevice.trim(), codeContact.trim())
+      setCodeResult(res.code)
+    } catch (err) {
+      setCodeError(err instanceof Error ? err.message : 'Erro ao gerar o código.')
+    } finally {
+      setCodeLoading(false)
+    }
+  }
 
   // 15/jul: no celular o site entra claro por padrão — só nesta página força escuro (GigRadar
   // é radar de motorista, escuro combina mais e reduz brilho à noite). Ao sair, recalcula o
@@ -495,6 +550,57 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
                 </li>
               ))}
             </ol>
+          </section>
+
+          {/* 🔓 Self-service do código de liberação */}
+          <section className="mb-16 mx-auto max-w-2xl rounded-2xl border border-azimut-red/30 bg-azimut-red/5 p-6">
+            <h2 className="mb-2 font-handel text-xl md:text-2xl uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>
+              {t.codeTitle}
+            </h2>
+            <p className="mb-5 text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+              {t.codeIntro}
+            </p>
+            <form onSubmit={handleGenerateCode} className="space-y-3">
+              <input
+                type="text"
+                value={codeDevice}
+                onChange={e => setCodeDevice(e.target.value)}
+                placeholder={t.codeDevicePh}
+                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-azimut-red/60 transition-colors font-mono"
+                style={{ color: 'var(--theme-text)' }}
+              />
+              <input
+                type="text"
+                value={codeContact}
+                onChange={e => setCodeContact(e.target.value)}
+                placeholder={t.codeContactPh}
+                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-azimut-red/60 transition-colors"
+                style={{ color: 'var(--theme-text)' }}
+              />
+              <button
+                type="submit"
+                disabled={codeLoading}
+                className="w-full rounded-xl bg-azimut-red px-6 py-4 font-handel text-sm uppercase tracking-[0.15em] text-white hover:bg-azimut-red/90 transition-colors disabled:opacity-60"
+              >
+                {codeLoading ? t.codeLoading : t.codeBtn}
+              </button>
+            </form>
+
+            {codeError && (
+              <p className="mt-4 rounded-xl border border-amber-400/40 bg-amber-400/10 p-3 text-sm" style={{ color: 'var(--theme-text)' }}>
+                ⚠️ {codeError}
+              </p>
+            )}
+
+            {codeResult && (
+              <div className="mt-5 rounded-xl border border-green-400/40 bg-green-400/10 p-5 text-center">
+                <p className="mb-2 text-sm" style={{ color: 'var(--theme-text-secondary)' }}>{t.codeResultTitle}</p>
+                <p className="font-mono text-2xl md:text-3xl font-bold tracking-[0.2em] select-all" style={{ color: 'var(--theme-text)' }}>
+                  {codeResult}
+                </p>
+                <p className="mt-3 text-xs leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{t.codeResultHint}</p>
+              </div>
+            )}
           </section>
 
           {/* Regras */}

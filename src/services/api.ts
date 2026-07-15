@@ -435,6 +435,24 @@ export class ApiService {
       return false
     }
   }
+
+  /**
+   * Self-service do código de liberação do GigRadar Beta.
+   * Recebe deviceId (copiado da tela 💎 do app) + contato (e-mail/WhatsApp do cadastro),
+   * o backoffice confere o cadastro e devolve o código na hora.
+   */
+  static async redeemGigRadarCode(deviceId: string, contact: string): Promise<{ code: string; days: number }> {
+    const response = await fetch(`${API_URL}/api/public/gigradar-code`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ deviceId, contact }),
+    })
+    const data = await response.json().catch(() => ({}))
+    if (!response.ok) {
+      throw new Error(data.error || 'Não foi possível gerar o código. Tente de novo.')
+    }
+    return data
+  }
 }
 
 // Export singleton instance
