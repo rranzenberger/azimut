@@ -259,8 +259,9 @@ class AIProviderService {
     }));
 
     // 15/jul/2026: os modelos Claude atuais (claude-sonnet-5/claude-opus-4-8) rejeitam
-    // `temperature` explícito ("temperature is deprecated for this model") — só manda o
-    // campo se o chamador pedir de propósito; sem isso, omite (usa o padrão do modelo).
+    // `temperature` sempre ("temperature is deprecated for this model") — o helper
+    // analyzeWithAI() já manda um valor default (nunca undefined), então checar
+    // "!== undefined" não adiantava. Solução: nunca manda esse campo pro Claude.
     const response = await fetch(`${this.config.endpoint}/messages`, {
       method: 'POST',
       headers: {
@@ -271,7 +272,6 @@ class AIProviderService {
       body: JSON.stringify({
         model: this.config.model,
         max_tokens: options?.maxTokens || 4096, // Claude suporta mais tokens
-        ...(options?.temperature !== undefined ? { temperature: options.temperature } : {}),
         system: systemMessage || undefined,
         messages: claudeMessages,
       }),
