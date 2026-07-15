@@ -52,21 +52,26 @@ export async function POST(request: NextRequest) {
     })
 
     // Resumo por IA — mesmo módulo usado nos Leads (getAIProvider: Claude se
-    // ANTHROPIC_API_KEY existir, senão DeepSeek/OpenAI/Gemini). Fire-and-forget:
-    // não atrasa nem quebra o recebimento do log se a IA falhar.
-    analyzeWithAI(
-      `Log de diagnóstico do app GigRadar (motorista de app, fase beta). Resuma em até 3 ` +
-      `frases em português: (1) o que aconteceu de relevante, (2) se há algum problema/erro ` +
-      `visível, (3) se precisa de atenção urgente. Seja direto, sem enrolação.\n\n${log.logText}`,
-      { maxTokens: 300 }
-    )
-      .then((summary) =>
-        prisma.gigRadarLog.update({ where: { id: log.id }, data: { aiSummary: summary } })
+    // ANTHROPIC_API_KEY existir, senão DeepSeek/OpenAI/Gemini). AGUARDA (15/jul):
+    // a versão "fire-and-forget" (sem await) nunca rodava de verdade — em serverless
+    // (Vercel) a instância pode congelar/matar assim que a resposta é enviada, antes
+    // do .then() continuar. Custa ~1-2s a mais na resposta, mas o resumo passa a
+    // funcionar de verdade. Erro na IA não quebra o recebimento do log (try/catch).
+    let aiSummary: string | null = null
+    try {
+      aiSummary = await analyzeWithAI(
+        `Log de diagnóstico do app GigRadar (motorista de app, fase beta). Resuma em até 3 ` +
+        `frases em português: (1) o que aconteceu de relevante, (2) se há algum problema/erro ` +
+        `visível, (3) se precisa de atenção urgente. Seja direto, sem enrolação.\n\n${log.logText}`,
+        { maxTokens: 300 }
       )
-      .catch((err) => console.warn('AI summary (gigradar log) failed (non-critical):', err))
+      await prisma.gigRadarLog.update({ where: { id: log.id }, data: { aiSummary } })
+    } catch (err) {
+      console.warn('AI summary (gigradar log) failed (non-critical):', err)
+    }
 
     return NextResponse.json(
-      { success: true, id: log.id },
+      { success: true, id: log.id, aiSummary },
       { status: 201, headers: corsHeaders }
     )
   } catch (error: any) {
