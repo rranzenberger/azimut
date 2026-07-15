@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { type Lang } from '../i18n'
 import SEO from '../components/SEO'
 import { ApiService } from '../services/api'
+import { useTheme } from '../contexts/ThemeContext'
 
 interface GigRadarProps {
   lang: Lang
@@ -374,6 +375,23 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
   const [acceptedUpdates, setAcceptedUpdates] = useState(false)
   const [sent, setSent] = useState(false)
   const [apkVersion, setApkVersion] = useState<string | null>(null)
+  const { setTheme } = useTheme()
+
+  // 15/jul: no celular o site entra claro por padrão — só nesta página força escuro (GigRadar
+  // é radar de motorista, escuro combina mais e reduz brilho à noite). Ao sair, recalcula o
+  // padrão certo direto do localStorage (mesma regra do ThemeProvider) em vez de confiar numa
+  // variável "anterior" capturada na closure — mais robusto contra o double-effect do React em
+  // dev e não mexe na preferência do usuário nas outras páginas.
+  useEffect(() => {
+    const isMobile = window.innerWidth < 768
+    if (!isMobile) return
+    setTheme('dark')
+    return () => {
+      const manual = localStorage.getItem('azimut-theme-manual') === 'true'
+      const saved = localStorage.getItem('azimut-theme')
+      setTheme(manual && (saved === 'dark' || saved === 'light') ? saved : 'light')
+    }
+  }, [])
 
   useEffect(() => {
     fetch(APK_VERSION_URL)
