@@ -1761,6 +1761,9 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     <LangLink to="/blog" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                       Blog
                     </LangLink>
+                    <LangLink to="/gigradar" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
+                      GigRadar (Beta)
+                    </LangLink>
                   </div>
                 </nav>
               </div>
