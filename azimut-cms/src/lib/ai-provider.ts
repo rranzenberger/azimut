@@ -258,6 +258,9 @@ class AIProviderService {
       content: msg.content,
     }));
 
+    // 15/jul/2026: os modelos Claude atuais (claude-sonnet-5/claude-opus-4-8) rejeitam
+    // `temperature` explícito ("temperature is deprecated for this model") — só manda o
+    // campo se o chamador pedir de propósito; sem isso, omite (usa o padrão do modelo).
     const response = await fetch(`${this.config.endpoint}/messages`, {
       method: 'POST',
       headers: {
@@ -268,7 +271,7 @@ class AIProviderService {
       body: JSON.stringify({
         model: this.config.model,
         max_tokens: options?.maxTokens || 4096, // Claude suporta mais tokens
-        temperature: options?.temperature || 0.3, // Mais determinístico para análise
+        ...(options?.temperature !== undefined ? { temperature: options.temperature } : {}),
         system: systemMessage || undefined,
         messages: claudeMessages,
       }),
