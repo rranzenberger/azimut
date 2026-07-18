@@ -130,7 +130,9 @@ export async function POST(request: NextRequest) {
               role: 'user',
               parts: [{ text: `Idioma da resposta: ${langName}.\n\nRESUMO REAL DO MOTORISTA:\n${summary}` }],
             }],
-            generationConfig: { temperature: 0.4, maxOutputTokens: 512 },
+            // Modelos Gemini atuais "pensam" antes de responder e o raciocínio consome
+            // maxOutputTokens — 512 truncava o conselho no meio. 2048 dá folga pros dois.
+            generationConfig: { temperature: 0.4, maxOutputTokens: 2048 },
           }),
         }
       )
