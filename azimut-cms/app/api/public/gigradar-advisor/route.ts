@@ -113,25 +113,32 @@ export async function POST(request: NextRequest) {
     if (!(await consumeQuota(deviceId))) return jsonError('daily quota reached', 429)
 
     const langName = lang === 'en' ? 'inglês' : lang === 'es' ? 'espanhol' : 'português do Brasil'
-    const geminiUrl =
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`
-    const geminiResponse = await fetch(geminiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      cache: 'no-store',
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-        contents: [{
-          role: 'user',
-          parts: [{ text: `Idioma da resposta: ${langName}.\n\nRESUMO REAL DO MOTORISTA:\n${summary}` }],
-        }],
-        generationConfig: { temperature: 0.4, maxOutputTokens: 512 },
-      }),
-    })
-    if (!geminiResponse.ok) {
-      console.error('gigradar-advisor gemini status:', geminiResponse.status)
-      return jsonError('advisor unavailable', 502)
+    // Google renomeia modelos com frequência (o 2.5-flash deu 404 em 18/jul/2026). Cadeia de
+    // tentativas do alias estável pro específico; o primeiro que responder fica.
+    const MODELS = ['gemini-flash-latest', 'gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash']
+    let geminiResponse: Response | null = null
+    for (const model of MODELS) {
+      const attempt = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          cache: 'no-store',
+          body: JSON.stringify({
+            systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+            contents: [{
+              role: 'user',
+              parts: [{ text: `Idioma da resposta: ${langName}.\n\nRESUMO REAL DO MOTORISTA:\n${summary}` }],
+            }],
+            generationConfig: { temperature: 0.4, maxOutputTokens: 512 },
+          }),
+        }
+      )
+      if (attempt.ok) { geminiResponse = attempt; break }
+      console.error(`gigradar-advisor gemini ${model} status:`, attempt.status)
+      if (attempt.status !== 404) { geminiResponse = attempt; break }  // erro real ≠ nome de modelo
     }
+    if (!geminiResponse || !geminiResponse.ok) return jsonError('advisor unavailable', 502)
     const data = await geminiResponse.json()
     const advice: string = data?.candidates?.[0]?.content?.parts
       ?.map((p: { text?: string }) => p?.text || '')
