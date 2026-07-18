@@ -142,8 +142,10 @@ export async function POST(request: NextRequest) {
     }
     if (!geminiResponse || !geminiResponse.ok) return jsonError('advisor unavailable', 502)
     const data = await geminiResponse.json()
+    // Modelos com raciocínio devolvem partes de "pensamento" (thought: true) — nunca mostrar.
     const advice: string = data?.candidates?.[0]?.content?.parts
-      ?.map((p: { text?: string }) => p?.text || '')
+      ?.filter((p: { thought?: boolean }) => !p?.thought)
+      .map((p: { text?: string }) => p?.text || '')
       .join('')
       .trim() || ''
     if (!advice) return jsonError('advisor unavailable', 502)
