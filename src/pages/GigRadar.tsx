@@ -95,6 +95,26 @@ const content = {
       ['Mudanças e saída', 'Mudanças relevantes nos termos ou no tratamento de dados serão destacadas. Você pode sair do beta e solicitar seus direitos de privacidade pelo canal indicado na Política de Privacidade.'],
     ],
     privacyLink: 'Ler a Política de Privacidade da Azimut',
+    setupStepOne: '1. Permissão de fonte desconhecida (primeira vez)',
+    setupStepOneBody: 'Seu navegador avisa "arquivo perigoso" — é normal, APKs fora da Play Store parecem assim. Android pede: "Permitir que [seu navegador] instale apps desconhecidos?" Toque Permitir (toggle único, só aparece uma vez). Volte ao arquivo e clique nele novamente.',
+    setupStepTwo: '2. Instale o app',
+    setupStepTwoBody: 'O instalador nativo abre com botão "Instalar". Toque Instalar. Aguarde terminar (~30-60s).',
+    setupStepThree: '3. Na primeira abertura',
+    setupStepThreeBody: 'Permissão de Acessibilidade: Settings → Acessibilidade → Serviços → GigRadar (necessária pra o app ler a tela). Permissão de Localização: deixe como "Sempre" ou "Apenas enquanto usa". Permissão de SMS/Notificações: opcional.',
+    setupStepFour: '4. Configuração inicial',
+    setupStepFourBody: 'Você escolhe como configurar (⚡ Simples, 🎯 Guiado, 🔵 Personalizado, ⚙️ Avançado). Não tem certo ou errado — escolha o que combina com você agora. Dá pra mudar tudo depois em Ajustes.',
+    bugReportTitle: '🐞 Encontrou um bug?',
+    bugReportBody: 'Toque o botão de bicho 🐞 no card — exporta um log automático (sem dados pessoais). Mande por WhatsApp/email pra gente. Descreva: qual app (Uber/99/iFood), que categoria, que valor, e o que esperava vs o que viu.',
+    firstRunChecklist: '✅ Checklist de primeiros passos',
+    checklistPerms: '✓ Acessibilidade ativada (Settings → Accessibility → Services → GigRadar)',
+    checklistLoc: '✓ Localização = "Always" ou "While using" (não "Never")',
+    checklistOpen: '✓ App abre sem crash e mostra card roxo/laranja quando Uber/99/iFood é aberto',
+    checklistOffer: '✓ Abra uma oferta real — card aparece em <1s com margem (%), tempo e recomendação 🟢🟡🔴',
+    checklistVoice: '✓ Voz funciona — toque ícone 🎤 ou ouça automático (se fone conectado)',
+    checklistCard: '✓ Card é legível — cores roxo/laranja, não sobrepõe a oferta',
+    checklistHistory: '✓ Histórico — abra Settings → History, vê ofertas passadas',
+    checklistShift: '✓ Modo Turno — inicie turno, confirma cronômetro funciona',
+    checklistTheme: '✓ Temas — mude acento roxo → laranja, volte a roxo',
     formTitle: 'Quero testar o GigRadar',
     namePh: 'Seu nome',
     whatsPh: 'Seu WhatsApp (com DDD)',
@@ -190,6 +210,26 @@ const content = {
       ['Changes and exit', 'Material changes to these terms or data handling will be highlighted. You may leave the beta and request privacy rights through the channel in the Privacy Policy.'],
     ],
     privacyLink: 'Read Azimut\'s Privacy Policy',
+    setupStepOne: '1. Allow unknown source (first time only)',
+    setupStepOneBody: 'Your browser warns "dangerous file" — normal for unsigned APKs. Android asks: "Allow [your browser] to install unknown apps?" Tap Allow (single toggle, appears once). Go back to file and tap it again.',
+    setupStepTwo: '2. Install the app',
+    setupStepTwoBody: 'Native installer opens with Install button. Tap Install. Wait for completion (~30-60s).',
+    setupStepThree: '3. On first launch',
+    setupStepThreeBody: 'Accessibility Service: Settings → Accessibility → Services → GigRadar (required for app to read screen). Location: set to "Always" or "While using". SMS/Notifications: optional.',
+    setupStepFour: '4. Initial setup',
+    setupStepFourBody: 'Choose how to configure (⚡ Simple, 🎯 Guided, 🔵 Custom, ⚙️ Advanced). No right or wrong — pick what fits you now. You can change everything later in Settings.',
+    bugReportTitle: '🐞 Found a bug?',
+    bugReportBody: 'Tap the bug 🐞 button on the card — auto-exports log (no personal data). Send via WhatsApp/email. Describe: which app (Uber/99/iFood), category, value, and what you expected vs saw.',
+    firstRunChecklist: '✅ First-run checklist',
+    checklistPerms: '✓ Accessibility enabled (Settings → Accessibility → Services → GigRadar)',
+    checklistLoc: '✓ Location = "Always" or "While using" (not "Never")',
+    checklistOpen: '✓ App opens without crash and shows purple/orange card when Uber/99/iFood is opened',
+    checklistOffer: '✓ Open a real offer — card appears in <1s with margin (%), time and recommendation 🟢🟡🔴',
+    checklistVoice: '✓ Voice works — tap 🎤 icon or hear auto (if headphone connected)',
+    checklistCard: '✓ Card is readable — purple/orange colors, doesn\'t overlap offer',
+    checklistHistory: '✓ History — open Settings → History, see past offers',
+    checklistShift: '✓ Shift Mode — start shift, confirm timer works',
+    checklistTheme: '✓ Themes — switch accent purple → orange, back to purple',
     formTitle: 'I want to test GigRadar',
     namePh: 'Your name',
     whatsPh: 'Your WhatsApp',
@@ -496,6 +536,23 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
             </p>
             <p className="mt-4 text-sm" style={{ color: 'var(--theme-text-secondary)' }}>{t.madeBy}</p>
             <p className="mt-3 text-sm font-semibold" style={{ color: 'var(--theme-text)' }}>{t.androidOnly}</p>
+
+            {/* Quick download button */}
+            <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center items-center">
+              <a
+                href={APK_URL}
+                download
+                className="inline-block rounded-xl bg-[#1FA46A] px-8 py-4 font-handel text-sm uppercase tracking-[0.15em] text-white hover:opacity-90 transition-opacity font-semibold"
+              >
+                📲 {t.downloadBtn}
+              </a>
+              <a
+                href="/gigradar/"
+                className="inline-block rounded-xl border-2 border-azimut-red px-8 py-4 font-handel text-sm uppercase tracking-[0.15em] text-azimut-red hover:bg-azimut-red/10 transition-colors font-semibold"
+              >
+                ℹ️ Ver página premium
+              </a>
+            </div>
           </div>
 
           {/* Posicionamento do produto */}
