@@ -399,8 +399,209 @@ const content = {
   },
 } as const
 
+// Guia de uso (as 4 abas + card + zonas) — isolado do `content` acima pra não mexer no que já existe.
+const GIG_GUIDE = {
+  pt: {
+    guideTitle: 'Guia rápido: as 4 abas',
+    guideIntro: 'Embaixo da tela ficam Radar, Ganhos, Proteção e Mais — é por aí que você navega tudo.',
+    tabs: [
+      ['◎', 'Radar', 'O coração do app: veredito na hora (aceita / atenção / recusa) com o R$/km e R$/h REAIS. Aqui você liga o leitor e usa o comando de voz.'],
+      ['📈', 'Ganhos', 'Seu dinheiro de verdade. Em "Metas e semáforo" ficam os ajustes de R$ por corrida e por hora (o que define verde/amarelo). Lance abastecimento e custos — o app calcula seu custo/km real e afina os limites sozinho.'],
+      ['🛡️', 'Proteção', 'O diferencial. Mapa com zonas, "Alertas e riscos" (morro, servidão, alagamento, dinheiro à noite — cada um em 🔕 ignora / ⚠️ avisa / 🚫 recusa) e locais a evitar por nome.'],
+      ['⋯', 'Mais', 'Ajustes e avançado: plataformas (Uber, 99 e apps do mundo), seu carro, aparência do card, saúde do carro por OBD2 e a Central de Ajuda.'],
+    ],
+    cardTitle: 'O card é seu — sugestão de padrão',
+    cardIntro: 'Ele aparece por cima do Uber/99. A regra de ouro é não cobrir o que você toca no app de corrida. Nossa sugestão já vem pensada pra isso:',
+    cardDefaults: [
+      'Card único (junto), não separado — ocupa menos e some rápido.',
+      'No topo da tela (~28% de cima pra baixo) — ali o Uber/99 não põe o botão de aceitar.',
+      'Transparência ~85% — você lê o veredito e ainda enxerga o app por baixo.',
+      'Tamanho médio — bate o olho sem tapar o mapa. Arraste e ajuste tudo em Mais → Aparência.',
+    ],
+    zonesTitle: 'Áreas de risco: você marca, ele respeita',
+    zones: [
+      ['✍️', 'Por nome', 'Digite o bairro ou o local a evitar.'],
+      ['🖊️', 'Desenhando', 'Trace a região no mapa com o dedo.'],
+      ['📍', 'Por pin', 'Finque um pin no ponto exato.'],
+    ],
+    extras: 'No fone ele fala tudo; com passageiro a bordo disfarça em código de navegação; o Modo Casa te traz de volta sendo pago. De 0 às 5h, as zonas de risco endurecem sozinhas.',
+    permsTitle: 'As autorizações no telefone, explicadas',
+    permsIntro: 'São 4, feitas uma vez só. Cada uma tem um motivo — e sem elas, algumas partes não funcionam.',
+    perms: [
+      ['👁️', 'Acessibilidade — essencial', 'Deixa o app SÓ LER a oferta na tela do Uber/99. Nunca clica, nunca aceita, nunca faz login. Sem ela, não há veredito.'],
+      ['🪟', 'Sobreposição — essencial', 'Permite o card flutuante aparecer por cima do Uber/99. É o que você vê na hora da oferta.'],
+      ['🔋', 'Bateria sem restrição', 'Pra o Samsung não "matar" o leitor no meio do corre. No Samsung, tire também o app de "Apps em suspensão".'],
+      ['📍', 'Localização', 'Fala o bairro do destino, avisa morro/servidão e o trânsito ao vivo. Quem não liga, usa o resto normal.'],
+    ],
+    moreTitle: 'Mais recursos — ajustes e avançado',
+    more: [
+      ['🌎', 'Plataformas e testes', 'Escolha seus apps (Uber, 99 e outros do mundo) e seu tipo de transporte (carro, moto, bike).'],
+      ['🚗', 'Meu carro (FIPE + avaria)', 'O valor do carro entra no cálculo de desgaste real por km.'],
+      ['🎨', 'Aparência e alertas', 'Tema (claro/escuro) e o ajuste completo do card — tamanho, transparência, posição.'],
+      ['🎯', 'Metas e semáforo', 'Aqui você ajusta o R$ por corrida e por hora que definem o verde/amarelo/vermelho.'],
+      ['🔌', 'Saúde do carro (OBD2)', 'Com o sensor, lê consumo real, RPM e temperatura — precisão máxima e segurança do carro.'],
+      ['❓', 'Central de Ajuda', 'Tudo explicado, sempre à mão, direto no app.'],
+    ],
+    diffTitle: 'Por que o GigRadar é diferente de todos',
+    diffIntro: 'Os outros apps mostram quanto você já ganhou — relatório do passado. O GigRadar decide antes de aceitar e protege o que ninguém protege junto:',
+    diff: [
+      ['💰', 'Seu bolso', 'R$/km e R$/h reais, já com o seu custo. O valor cheio engana — ele mostra o que sobra.'],
+      ['🛡️', 'Seu carro', 'Morro, servidão, alagamento. Bater o carro é o custo escondido que ninguém conta. Ele conta.'],
+      ['🚨', 'Você', 'Zonas que você marca, dinheiro à noite, madrugada. Segurança que vem antes do lucro.'],
+    ],
+  },
+  en: {
+    guideTitle: 'Quick guide: the 4 tabs',
+    guideIntro: 'Radar, Earnings, Protection and More sit at the bottom — that\'s how you get around.',
+    tabs: [
+      ['◎', 'Radar', 'The heart of the app: instant verdict (accept / caution / decline) with your REAL R$/km and R$/h. Turn on the reader and use voice commands here.'],
+      ['📈', 'Earnings', 'Your real money. In "Goals & traffic-light" you set R$ per ride and per hour (what defines green/yellow). Log fuel and costs — the app computes your real cost/km and tunes the limits itself.'],
+      ['🛡️', 'Protection', 'The difference. Map with zones, "Alerts & risks" (hills, alleys, floods, cash at night — each as 🔕 ignore / ⚠️ warn / 🚫 decline) and places to avoid by name.'],
+      ['⋯', 'More', 'Settings and advanced: platforms (Uber, 99 and world apps), your car, card appearance, car health via OBD2, and the Help Center.'],
+    ],
+    cardTitle: 'The card is yours — suggested default',
+    cardIntro: 'It shows on top of Uber/99. The golden rule: don\'t cover what you tap in the ride app. Our default is already built for that:',
+    cardDefaults: [
+      'A single card (joined), not split — smaller footprint.',
+      'At the top of the screen (~28% down) — Uber/99 doesn\'t put the accept button there.',
+      'About 85% opacity — read the verdict and still see the app behind it.',
+      'Medium size — glanceable without hiding the map. Drag and tweak it all in More → Appearance.',
+    ],
+    zonesTitle: 'Risk areas: you mark, it respects',
+    zones: [
+      ['✍️', 'By name', 'Type the neighborhood or place to avoid.'],
+      ['🖊️', 'By drawing', 'Trace the area on the map with your finger.'],
+      ['📍', 'By pin', 'Drop a pin on the exact spot.'],
+    ],
+    extras: 'On earbuds it says everything; with a passenger it disguises as navigation codes; Home Mode brings you back while getting paid. From midnight to 5am, risk zones tighten on their own.',
+    permsTitle: 'The phone permissions, explained',
+    permsIntro: 'Just 4, granted once. Each has a reason — without them, some parts won\'t work.',
+    perms: [
+      ['👁️', 'Accessibility — essential', 'Lets the app ONLY READ the Uber/99 offer on screen. Never taps, accepts, or logs in. Without it, there is no verdict.'],
+      ['🪟', 'Overlay — essential', 'Lets the floating card show on top of Uber/99. It\'s what you see when an offer appears.'],
+      ['🔋', 'Unrestricted battery', 'So Samsung doesn\'t "kill" the reader mid-shift. On Samsung, also remove the app from "Sleeping apps".'],
+      ['📍', 'Location', 'Speaks the destination neighborhood, warns about hills/alleys and live traffic. Without it, everything else still works.'],
+    ],
+    moreTitle: 'More — settings and advanced',
+    more: [
+      ['🌎', 'Platforms and tests', 'Choose your apps (Uber, 99 and others worldwide) and your transport type (car, moto, bike).'],
+      ['🚗', 'My car (book value + damage)', 'Your car value feeds the real wear cost per km.'],
+      ['🎨', 'Appearance and alerts', 'Theme (light/dark) and the full card tweak — size, transparency, position.'],
+      ['🎯', 'Goals & traffic light', 'Set the R$ per ride and per hour that define green/yellow/red.'],
+      ['🔌', 'Car health (OBD2)', 'With the sensor, reads real fuel use, RPM and temperature — top precision and car safety.'],
+      ['❓', 'Help Center', 'Everything explained, always at hand, right in the app.'],
+    ],
+    diffTitle: 'Why GigRadar is different from all the rest',
+    diffIntro: 'Other apps show what you already earned — a report of the past. GigRadar decides before you accept and protects what no one else protects together:',
+    diff: [
+      ['💰', 'Your wallet', 'Real R$/km and R$/h, already with your cost. The sticker price lies — it shows what\'s left.'],
+      ['🛡️', 'Your car', 'Hills, alleys, flooding. Damaging the car is the hidden cost no one counts. It counts it.'],
+      ['🚨', 'You', 'Zones you mark, cash at night, late hours. Safety comes before profit.'],
+    ],
+  },
+  es: {
+    guideTitle: 'Guía rápida: las 4 pestañas',
+    guideIntro: 'Abajo están Radar, Ganancias, Protección y Más — por ahí navegas todo.',
+    tabs: [
+      ['◎', 'Radar', 'El corazón del app: veredicto al instante (acepta / atención / rechaza) con tu R$/km y R$/h REALES. Aquí enciendes el lector y usas el comando de voz.'],
+      ['📈', 'Ganancias', 'Tu dinero de verdad. En "Metas y semáforo" ajustas R$ por viaje y por hora (lo que define verde/amarillo). Registra combustible y costos — el app calcula tu costo/km real y afina los límites solo.'],
+      ['🛡️', 'Protección', 'La diferencia. Mapa con zonas, "Alertas y riesgos" (subidas, callejones, inundación, efectivo de noche — cada uno en 🔕 ignora / ⚠️ avisa / 🚫 rechaza) y lugares a evitar por nombre.'],
+      ['⋯', 'Más', 'Ajustes y avanzado: plataformas (Uber, 99 y apps del mundo), tu auto, apariencia del card, salud del auto por OBD2 y el Centro de Ayuda.'],
+    ],
+    cardTitle: 'El card es tuyo — sugerencia de base',
+    cardIntro: 'Aparece encima de Uber/99. La regla de oro: no tapar lo que tocas en el app de viajes. Nuestra base ya está pensada para eso:',
+    cardDefaults: [
+      'Un solo card (junto), no separado — ocupa menos.',
+      'Arriba de la pantalla (~28%) — ahí Uber/99 no pone el botón de aceptar.',
+      'Transparencia ~85% — lees el veredicto y aún ves el app por debajo.',
+      'Tamaño medio — se ve de un vistazo sin tapar el mapa. Arrastra y ajusta todo en Más → Apariencia.',
+    ],
+    zonesTitle: 'Áreas de riesgo: tú marcas, él respeta',
+    zones: [
+      ['✍️', 'Por nombre', 'Escribe el barrio o lugar a evitar.'],
+      ['🖊️', 'Dibujando', 'Traza la región en el mapa con el dedo.'],
+      ['📍', 'Por pin', 'Clava un pin en el punto exacto.'],
+    ],
+    extras: 'Con audífonos dice todo; con pasajero disfraza en códigos de navegación; el Modo Casa te trae de vuelta ganando. De 0 a 5h, las zonas de riesgo se endurecen solas.',
+    permsTitle: 'Los permisos del teléfono, explicados',
+    permsIntro: 'Son 4, solo una vez. Cada uno tiene un motivo — sin ellos, algunas partes no funcionan.',
+    perms: [
+      ['👁️', 'Accesibilidad — esencial', 'Deja que el app SOLO LEA la oferta de Uber/99 en pantalla. Nunca toca, acepta ni inicia sesión. Sin ella, no hay veredicto.'],
+      ['🪟', 'Superposición — esencial', 'Permite que el card flotante aparezca encima de Uber/99. Es lo que ves al llegar la oferta.'],
+      ['🔋', 'Batería sin restricción', 'Para que Samsung no "mate" el lector a mitad de turno. En Samsung, quita también el app de "Apps en reposo".'],
+      ['📍', 'Ubicación', 'Dice el barrio del destino, avisa subidas/callejones y el tráfico en vivo. Sin ella, el resto sigue funcionando.'],
+    ],
+    moreTitle: 'Más — ajustes y avanzado',
+    more: [
+      ['🌎', 'Plataformas y pruebas', 'Elige tus apps (Uber, 99 y otros del mundo) y tu tipo de transporte (auto, moto, bici).'],
+      ['🚗', 'Mi auto (valor + avería)', 'El valor del auto entra en el cálculo del desgaste real por km.'],
+      ['🎨', 'Apariencia y alertas', 'Tema (claro/oscuro) y el ajuste completo del card — tamaño, transparencia, posición.'],
+      ['🎯', 'Metas y semáforo', 'Aquí ajustas el R$ por viaje y por hora que define verde/amarillo/rojo.'],
+      ['🔌', 'Salud del auto (OBD2)', 'Con el sensor, lee consumo real, RPM y temperatura — máxima precisión y seguridad.'],
+      ['❓', 'Centro de Ayuda', 'Todo explicado, siempre a mano, dentro del app.'],
+    ],
+    diffTitle: 'Por qué GigRadar es diferente de todos',
+    diffIntro: 'Los otros apps muestran lo que ya ganaste — reporte del pasado. GigRadar decide antes de aceptar y protege lo que nadie más protege junto:',
+    diff: [
+      ['💰', 'Tu bolsillo', 'R$/km y R$/h reales, ya con tu costo. El precio completo engaña — muestra lo que sobra.'],
+      ['🛡️', 'Tu auto', 'Subidas, callejones, inundación. Dañar el auto es el costo oculto que nadie cuenta. Él lo cuenta.'],
+      ['🚨', 'Tú', 'Zonas que marcas, efectivo de noche, madrugada. La seguridad viene antes que la ganancia.'],
+    ],
+  },
+  fr: {
+    guideTitle: 'Guide rapide : les 4 onglets',
+    guideIntro: 'Radar, Gains, Protection et Plus sont en bas — c\'est par là que tout se navigue.',
+    tabs: [
+      ['◎', 'Radar', 'Le cœur de l\'app : verdict instantané (accepte / attention / refuse) avec vos R$/km et R$/h RÉELS. On y active le lecteur et la commande vocale.'],
+      ['📈', 'Gains', 'Votre vrai argent. Dans « Objectifs & feu » vous réglez les R$ par course et par heure (ce qui définit vert/jaune). Notez carburant et coûts — l\'app calcule votre coût/km réel et ajuste les seuils tout seul.'],
+      ['🛡️', 'Protection', 'La différence. Carte avec zones, « Alertes & risques » (côtes, ruelles, inondation, espèces la nuit — chacun en 🔕 ignore / ⚠️ prévient / 🚫 refuse) et lieux à éviter par nom.'],
+      ['⋯', 'Plus', 'Réglages et avancé : plateformes (Uber, 99 et apps du monde), votre voiture, apparence du card, santé auto via OBD2 et le Centre d\'aide.'],
+    ],
+    cardTitle: 'Le card est à vous — réglage suggéré',
+    cardIntro: 'Il s\'affiche par-dessus Uber/99. La règle d\'or : ne pas cacher ce que vous touchez dans l\'app de course. Notre réglage est déjà pensé pour ça :',
+    cardDefaults: [
+      'Un seul card (groupé), pas séparé — plus compact.',
+      'En haut de l\'écran (~28 %) — Uber/99 n\'y met pas le bouton accepter.',
+      'Transparence ~85 % — lisez le verdict et voyez l\'app derrière.',
+      'Taille moyenne — visible d\'un coup d\'œil sans cacher la carte. Glissez et ajustez tout dans Plus → Apparence.',
+    ],
+    zonesTitle: 'Zones à risque : vous marquez, il respecte',
+    zones: [
+      ['✍️', 'Par nom', 'Tapez le quartier ou le lieu à éviter.'],
+      ['🖊️', 'En dessinant', 'Tracez la zone sur la carte au doigt.'],
+      ['📍', 'Par épingle', 'Placez une épingle sur le point exact.'],
+    ],
+    extras: 'Au casque il dit tout ; avec un passager il se déguise en codes de navigation ; le Mode Maison vous ramène en étant payé. De 0 h à 5 h, les zones à risque se durcissent seules.',
+    permsTitle: 'Les autorisations du téléphone, expliquées',
+    permsIntro: '4 seulement, accordées une fois. Chacune a une raison — sans elles, certaines parties ne marchent pas.',
+    perms: [
+      ['👁️', 'Accessibilité — essentiel', 'Permet à l\'app de SEULEMENT LIRE l\'offre Uber/99 à l\'écran. Ne touche jamais, n\'accepte jamais, ne se connecte jamais. Sans elle, pas de verdict.'],
+      ['🪟', 'Superposition — essentiel', 'Permet au card flottant d\'apparaître par-dessus Uber/99. C\'est ce que vous voyez à l\'offre.'],
+      ['🔋', 'Batterie sans restriction', 'Pour que Samsung ne "tue" pas le lecteur en pleine course. Sur Samsung, retirez aussi l\'app des "Apps en veille".'],
+      ['📍', 'Localisation', 'Dit le quartier de destination, prévient des côtes/ruelles et du trafic en direct. Sans elle, le reste marche quand même.'],
+    ],
+    moreTitle: 'Plus — réglages et avancé',
+    more: [
+      ['🌎', 'Plateformes et tests', 'Choisissez vos apps (Uber, 99 et autres dans le monde) et votre type de transport (voiture, moto, vélo).'],
+      ['🚗', 'Ma voiture (valeur + dommage)', 'La valeur de la voiture entre dans le calcul de l\'usure réelle au km.'],
+      ['🎨', 'Apparence et alertes', 'Thème (clair/sombre) et le réglage complet du card — taille, transparence, position.'],
+      ['🎯', 'Objectifs et feu', 'Réglez ici les R$ par course et par heure qui définissent vert/jaune/rouge.'],
+      ['🔌', 'Santé auto (OBD2)', 'Avec le capteur, lit la conso réelle, le RPM et la température — précision maximale et sécurité.'],
+      ['❓', 'Centre d\'aide', 'Tout expliqué, toujours à portée de main, dans l\'app.'],
+    ],
+    diffTitle: 'Pourquoi GigRadar est différent de tous',
+    diffIntro: 'Les autres apps montrent ce que vous avez déjà gagné — un rapport du passé. GigRadar décide avant que vous acceptiez et protège ce que personne d\'autre ne protège ensemble :',
+    diff: [
+      ['💰', 'Votre portefeuille', 'R$/km et R$/h réels, déjà avec votre coût. Le prix affiché ment — il montre ce qui reste.'],
+      ['🛡️', 'Votre voiture', 'Côtes, ruelles, inondation. Abîmer la voiture est le coût caché que personne ne compte. Lui, si.'],
+      ['🚨', 'Vous', 'Zones que vous marquez, espèces la nuit, heures tardives. La sécurité avant le profit.'],
+    ],
+  },
+} as const
+
 const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
   const t = content[lang] ?? content.pt
+  const g = GIG_GUIDE[lang] ?? GIG_GUIDE.pt
   const [formData, setFormData] = useState({ name: '', whatsapp: '', email: '', city: '', app: '', phone: '' })
   const [acceptedTerms, setAcceptedTerms] = useState(false)
   const [acceptedFeedback, setAcceptedFeedback] = useState(false)
@@ -550,6 +751,103 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
                 </li>
               ))}
             </ol>
+          </section>
+
+          {/* Guia de uso: as 4 abas + card + zonas de risco */}
+          <section className="mb-16">
+            <h2 className="mb-8 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>
+              {g.guideTitle}
+            </h2>
+            <p className="mx-auto mb-7 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{g.guideIntro}</p>
+            <div className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2">
+              {g.tabs.map(([emoji, tab, desc], i) => (
+                <div key={i} className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                  <div className="mb-2 flex items-center gap-3">
+                    <span
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-lg"
+                      style={{ background: 'linear-gradient(135deg, rgba(109,40,217,.35), rgba(245,158,11,.35))' }}
+                      aria-hidden="true"
+                    >{emoji}</span>
+                    <strong className="font-handel text-sm uppercase tracking-[0.08em]" style={{ color: 'var(--theme-text)' }}>{tab}</strong>
+                  </div>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Card: sugestão de padrão */}
+            <div className="mx-auto mt-6 max-w-3xl rounded-2xl border border-azimut-red/30 bg-azimut-red/5 p-6">
+              <h3 className="mb-2 font-handel text-lg uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>{g.cardTitle}</h3>
+              <p className="mb-3 text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{g.cardIntro}</p>
+              <ul className="space-y-2">
+                {g.cardDefaults.map((d, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                    <span className="text-azimut-red" aria-hidden="true">▸</span>{d}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Zonas de risco */}
+            <div className="mx-auto mt-6 max-w-3xl">
+              <h3 className="mb-4 text-center font-handel text-lg uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>{g.zonesTitle}</h3>
+              <div className="grid gap-4 sm:grid-cols-3">
+                {g.zones.map(([emoji, title, body], i) => (
+                  <div key={i} className="rounded-2xl border border-white/10 bg-white/5 p-5 text-center">
+                    <div className="mb-2 text-2xl">{emoji}</div>
+                    <strong className="mb-1 block text-sm" style={{ color: 'var(--theme-text)' }}>{title}</strong>
+                    <span className="text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{body}</span>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-4 rounded-2xl border border-amber-400/30 bg-amber-400/5 p-5 text-center text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{g.extras}</p>
+            </div>
+
+            {/* Permissões, explicadas item a item pra quem é leigo */}
+            <div className="mx-auto mt-10 max-w-3xl">
+              <h3 className="mb-2 text-center font-handel text-lg uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>{g.permsTitle}</h3>
+              <p className="mx-auto mb-5 max-w-2xl text-center text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{g.permsIntro}</p>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {g.perms.map(([emoji, title, body], i) => (
+                  <div key={i} className="rounded-xl border border-white/10 bg-white/5 p-4">
+                    <div className="mb-1 flex items-center gap-2">
+                      <span className="text-lg">{emoji}</span>
+                      <strong className="text-sm" style={{ color: 'var(--theme-text)' }}>{title}</strong>
+                    </div>
+                    <p className="text-xs leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{body}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Mais recursos: plataformas, carro, aparência, metas, OBD2, ajuda */}
+            <div className="mx-auto mt-10 max-w-3xl">
+              <h3 className="mb-5 text-center font-handel text-lg uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>{g.moreTitle}</h3>
+              <div className="grid gap-3 sm:grid-cols-3">
+                {g.more.map(([emoji, title, body], i) => (
+                  <div key={i} className="rounded-xl border border-white/10 bg-white/5 p-4 text-center">
+                    <div className="mb-1 text-xl">{emoji}</div>
+                    <strong className="mb-1 block text-xs" style={{ color: 'var(--theme-text)' }}>{title}</strong>
+                    <span className="text-xs leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{body}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Diferencial: por que somos diferentes de todos */}
+            <div className="mx-auto mt-10 max-w-3xl rounded-2xl p-7" style={{ background: 'linear-gradient(135deg, rgba(201,35,55,.14), rgba(201,35,55,.04))', border: '1px solid rgba(201,35,55,.25)' }}>
+              <h3 className="mb-2 text-center font-handel text-xl uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>{g.diffTitle}</h3>
+              <p className="mx-auto mb-5 max-w-2xl text-center text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{g.diffIntro}</p>
+              <div className="grid gap-4 sm:grid-cols-3">
+                {g.diff.map(([emoji, title, body], i) => (
+                  <div key={i} className="text-center">
+                    <div className="mb-1 text-2xl">{emoji}</div>
+                    <strong className="mb-1 block text-sm" style={{ color: 'var(--theme-text)' }}>{title}</strong>
+                    <span className="text-xs leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{body}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </section>
 
           {/* 🔓 Self-service do código de liberação */}
