@@ -1,1 +1,10 @@
-{"version":"0.238 (a98594f)","updatedAt":"2026-07-16T14:44:46Z"}
+{
+  "version": "0.325 (860561d)",
+  "version_code": 325,
+  "updatedAt": "2026-07-22T05:13:25Z",
+  "apk_url": "https://www.azmt.com.br/downloads/gigradar-latest.apk",
+  "apk_size_bytes": 76794329,
+  "sha256": "fbd26aefe0badeba458073dffb6116ba228d018ee4c3d25e6d9f171ee2fb6f63",
+  "changelog": "feat(gigradar): relatórios estruturados + UI categorias + auto-update OTA",
+  "is_mandatory": false
+}
