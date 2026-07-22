@@ -608,7 +608,16 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
   const [acceptedUpdates, setAcceptedUpdates] = useState(false)
   const [sent, setSent] = useState(false)
   const [apkVersion, setApkVersion] = useState<string | null>(null)
-  const { setTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
+
+  // Padrão escuro só nesta página (pedido Ranz 22/jul) — restaura o tema anterior ao sair,
+  // sem marcar como escolha manual do usuário nem afetar o resto do site.
+  useEffect(() => {
+    const previous = theme
+    setTheme('dark')
+    return () => setTheme(previous)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // 🔓 Self-service do código de liberação (16/jul): deviceId + contato → código na hora.
   const [codeDevice, setCodeDevice] = useState('')
