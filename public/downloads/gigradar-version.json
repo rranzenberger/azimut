@@ -1,10 +1,10 @@
 {
-  "version": "0.328 (c8743f6)",
-  "version_code": 328,
-  "updatedAt": "2026-07-23T06:38:28Z",
+  "version": "0.329 (b5dc54f)",
+  "version_code": 329,
+  "updatedAt": "2026-07-23T07:04:38Z",
   "apk_url": "https://www.azmt.com.br/downloads/gigradar-latest.apk",
   "apk_size_bytes": 76845760,
-  "sha256": "cef46698561df465c5fb117d546a662294c66025b20454bab44400618923c5f5",
-  "changelog": "fix(gigradar): corrige erro de compilação no UpdateChecker (imports)",
+  "sha256": "403a8d1c91648398e628d15c4c6873b4db390ddbb4fe9616b6aab3d02ea1534f",
+  "changelog": "fix(gigradar): OTA travava em \"Finalizando instalação\"",
   "is_mandatory": false
 }
