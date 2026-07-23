@@ -1,10 +1,10 @@
 {
-  "version": "0.326 (d8d9d9c)",
-  "version_code": 326,
-  "updatedAt": "2026-07-23T03:25:28Z",
+  "version": "0.328 (c8743f6)",
+  "version_code": 328,
+  "updatedAt": "2026-07-23T06:38:28Z",
   "apk_url": "https://www.azmt.com.br/downloads/gigradar-latest.apk",
-  "apk_size_bytes": 76845756,
-  "sha256": "237aca0f73c7f11bbf06bc2d9edd8366987b51faa4d0cfe7bebba1e8c8567ea9",
-  "changelog": "feat(gigradar): histórico clicável, aba Metas, fixes de rua (bairro, trânsito, versão)",
+  "apk_size_bytes": 76845760,
+  "sha256": "cef46698561df465c5fb117d546a662294c66025b20454bab44400618923c5f5",
+  "changelog": "fix(gigradar): corrige erro de compilação no UpdateChecker (imports)",
   "is_mandatory": false
 }
