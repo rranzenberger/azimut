@@ -1,6 +1,7 @@
 'use client';
 
 import { AdminLogo } from './Logo';
+import { GigRadarLogo } from './GigRadarLogo';
 import { AdminLink } from './AdminLink';
 import { MonitorLink } from './MonitorLink';
 import { LogoutButton } from './LogoutButton';
@@ -134,10 +135,24 @@ export function AdminLayoutClient({ children, userData }: AdminLayoutClientProps
           </div>
           <AdminLink href="/admin/analytics" label="📊 Analytics IA" title={TOOLTIP_BY_HREF['/admin/analytics']} />
           <AdminLink href="/admin/leads" label="👥 Leads" title={TOOLTIP_BY_HREF['/admin/leads']} />
-          <AdminLink href="/admin/leads?leadType=GIGRADAR_BETA" label="🚗 GigRadar Beta" title={TOOLTIP_BY_HREF['/admin/leads?leadType=GIGRADAR_BETA']} />
-          <AdminLink href="/admin/gigradar-logs" label="🧪 GigRadar Logs" title={TOOLTIP_BY_HREF['/admin/gigradar-logs']} />
           <AdminLink href="/admin/leads/game" label="🎮 Leads do Jogo" title={TOOLTIP_BY_HREF['/admin/leads/game']} />
           <AdminLink href="/admin/leads/dashboard" label="🎯 Dashboard Leads IA" title={TOOLTIP_BY_HREF['/admin/leads/dashboard']} />
+
+          {/* GigRadar — área própria do app, separada do conteúdo do site. Os cadastros
+              do beta ficam aqui junto com os dados do app, e não perdidos entre os leads. */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 10, fontWeight: 600, color: AZIMUT.textMuted, textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
+            <GigRadarLogo size={14} />
+            GigRadar
+          </div>
+          <AdminLink href="/admin/gigradar" label="📡 Painel" title={TOOLTIP_BY_HREF['/admin/gigradar']} />
+          <AdminLink href="/admin/gigradar/backup" label="💾 Backup e sync" title={TOOLTIP_BY_HREF['/admin/gigradar/backup']} />
+          <AdminLink href="/admin/gigradar/fuel" label="⛽ Combustível e custos" title={TOOLTIP_BY_HREF['/admin/gigradar/fuel']} />
+          <AdminLink href="/admin/gigradar/contas" label="🧾 Contas (bruto/líquido)" title={TOOLTIP_BY_HREF['/admin/gigradar/contas']} />
+          <AdminLink href="/admin/gigradar/mapa" label="🗺️ Mapa de risco" title={TOOLTIP_BY_HREF['/admin/gigradar/mapa']} />
+          <AdminLink href="/admin/gigradar/turnos" label="🕐 Turnos e acerto" title={TOOLTIP_BY_HREF['/admin/gigradar/turnos']} />
+          <AdminLink href="/admin/gigradar/provas" label="📸 Provas (prints)" title={TOOLTIP_BY_HREF['/admin/gigradar/provas']} />
+          <AdminLink href="/admin/gigradar/testers" label="👥 Beta testers" title={TOOLTIP_BY_HREF['/admin/gigradar/testers']} />
+          <AdminLink href="/admin/gigradar-logs" label="🧪 Logs do app" title={TOOLTIP_BY_HREF['/admin/gigradar-logs']} />
 
           <div style={{ fontSize: 10, fontWeight: 600, color: AZIMUT.textMuted, textTransform: 'uppercase', letterSpacing: '0.8px', marginTop: 12, marginBottom: 2, paddingLeft: 4 }}>
             Ferramentas e config

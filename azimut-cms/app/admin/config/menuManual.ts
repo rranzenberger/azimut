@@ -297,26 +297,133 @@ export const MENU_MANUAL_ITEMS: MenuItemManual[] = [
     ],
   },
   {
-    href: '/admin/leads?leadType=GIGRADAR_BETA',
-    label: '🚗 GigRadar Beta',
-    tooltip: 'Cadastros do beta fechado do app GigRadar (motoristas de app).',
-    description: 'Lista filtrada dos leads que vieram da página /gigradar (cadastro do beta fechado do app de motorista). Mesma tela de Leads, já filtrada pra esse tipo.',
+    href: '/admin/gigradar',
+    label: '📡 GigRadar — Painel',
+    tooltip: 'Área própria do app GigRadar: backup, combustível, testers e logs.',
+    description: 'Painel do app de motorista GigRadar, separado do conteúdo do site. Reúne num lugar só o backup dos dados do aparelho, os abastecimentos e custo por km, os cadastros do beta e os logs de diagnóstico. Existe porque o telefone não pode ser a única cópia dos dados do motorista.',
     howTo: [
-      'Acesse GigRadar Beta no menu',
-      'Veja quem se cadastrou pra testar o app',
-      'Use o WhatsApp/e-mail do lead pra mandar o código de liberação',
+      'Acesse GigRadar > Painel no menu',
+      'Veja os números do topo: aparelhos, abastecimentos, corridas, turnos',
+      'Clique num dos cartões para abrir a área correspondente',
+    ],
+    tips: [
+      'Cartão com selo laranja = algo pendente (nunca sincronizou, sem lançamentos)',
+    ],
+  },
+  {
+    href: '/admin/gigradar/backup',
+    label: '💾 GigRadar — Backup e sync',
+    tooltip: 'O que cada aparelho já enviou e há quanto tempo.',
+    description: 'Saúde do backup dos aparelhos. Responde uma pergunta só: se o telefone for resetado agora, o que dá pra recuperar? Mostra o último envio de cada aparelho, quantos gastos/corridas/turnos já subiram e o histórico dos envios.',
+    howTo: [
+      'Acesse GigRadar > Backup e sync',
+      'Aparelho com borda laranja está sem sincronizar há mais de 48h',
+      'Confira o histórico de envios: OK, PARTIAL ou FAIL',
+    ],
+    tips: [
+      'Sem sincronizar, o que o motorista lançou existe só no telefone',
+      'PARTIAL significa que parte das tabelas subiu — veja a mensagem de erro',
+    ],
+  },
+  {
+    href: '/admin/gigradar/fuel',
+    label: '⛽ GigRadar — Combustível',
+    tooltip: 'Abastecimentos, preço real por litro/m³ e custo por km.',
+    description: 'Abastecimentos que o motorista lançou no app, com o preço real por litro (gasolina) ou por m³ (GNV). É esse número que faz o veredito 🟢🟡🔴 ser preciso — sem histórico, o app cai para estimativa.',
+    fields: [
+      'Tipo — 🟢 GNV, ⛽ Gasolina, e também lavagem, óleo, multa e outros gastos',
+      'Valor — R$ gastos no abastecimento',
+      'Quantidade — litros ou m³ (nunca misturados: cada um tem sua conta)',
+    ],
+    tips: [
+      'Referência do Uno GNV: gasolina R$ 0,33/km, GNV R$ 0,078/km, ponderado R$ 0,18/km',
+    ],
+  },
+  {
+    href: '/admin/gigradar/contas',
+    label: '🧾 GigRadar — Contas',
+    tooltip: 'Bruto, gastos, custos fixos e o líquido que sobra de verdade.',
+    description: 'Contabilidade real do motorista nos últimos 30 dias: bruto (o que a plataforma mostrou), combustível e gastos lançados, custos fixos normalizados por semana, e o líquido que sobra. Também compara repasses prometidos com o que caiu na conta.',
+    fields: [
+      'Bruto — soma dos ganhos por dia informados no app',
+      'Gastos — abastecimento, lavagem, manutenção, multas',
+      'Custos fixos — aluguel, parcela, seguro, IPVA (só os ligados)',
+      'Líquido — bruto menos tudo; e o R$/hora real',
+    ],
+    tips: [
+      'O líquido é o número que o veredito 🟢🟡🔴 defende — se ele estiver errado, o veredito também está',
+      'Repasse abaixo do prometido aparece em vermelho: vale conferir o extrato da plataforma',
+    ],
+  },
+  {
+    href: '/admin/gigradar/turnos',
+    label: '🕐 GigRadar — Turnos e acerto',
+    tooltip: 'Turnos fechados e o placar do veredito: falso ruim, falso bom, sem card.',
+    description: 'Cada turno encerrado no app, com bruto por hora, taxa de aceite, % do tempo parado e o que o OBD registrou. Acima, o placar do veredito por plataforma (Uber, 99, outras): quantas vezes o 🟢🟡🔴 acertou e quantas errou.',
+    fields: [
+      'FALSO RUIM — o app disse RED e a corrida era boa: o motorista perdeu dinheiro obedecendo',
+      'FALSO BOM — o app disse GREEN e a corrida era ruim: queima a confiança',
+      'NÃO APARECEU — a oferta existiu e o card não foi desenhado',
+      'SÓ FALOU — falou por voz mas não mostrou o card',
+    ],
+    tips: [
+      'Enquanto falso ruim e falso bom não forem baixos, o veredito não está pronto pra vender',
+      '"Deixado na mesa" soma o líquido das corridas boas recusadas por um RED errado',
+    ],
+  },
+  {
+    href: '/admin/gigradar/provas',
+    label: '📸 GigRadar — Provas',
+    tooltip: 'Prints das ofertas lidas pelo OCR. Somem sozinhos no prazo.',
+    description: 'O print que foi para o OCR em cada oferta. Serve para entender por que o app leu certo ou errado olhando a tela real, em vez de adivinhar pelo log. Cada imagem tem prazo de validade (30 dias) e é apagada automaticamente.',
+    tips: [
+      'Os prints contêm endereço de embarque e destino de passageiros reais',
+      'No aparelho do próprio motorista é diagnóstico; num servidor é dado pessoal de terceiro',
+      'Antes de ligar o envio para os beta testers, borrar o endereço no app — e revisar com o jurídico',
+    ],
+    commonErrors: [
+      'Deixar print sem borrar por muito tempo: o selo ⚠️ marca quais estão assim',
+    ],
+  },
+  {
+    href: '/admin/gigradar/mapa',
+    label: '🗺️ GigRadar — Mapa de risco',
+    tooltip: 'Locais a evitar, riscos, zonas que rendem e postos — o diferencial do app.',
+    description: 'O conhecimento de rua do motorista: servidão que arranha o carro, ladeira íngreme, ponto sem retorno, área perigosa, mercado de embarque lento — e também os bons pontos: zonas que rendem e postos preferidos. Nenhum concorrente (Gridwise, Solo) tem isso, porque não vem de API: vem de quem roda.',
+    fields: [
+      'Locais a evitar — nome, motivo e raio, com link para o mapa',
+      'Riscos temporários — alagamento, obra; expiram sozinhos',
+      'Zonas — score aprendido pelo app e valor médio das ofertas',
+      'Postos — preço por litro/m³ e quais são preferidos',
+    ],
+    tips: [
+      'Categorias iguais às do app: Ladeira íngreme, Sem retorno, Areia/terra, Perigoso, Mercado/restaurante lento, Outro',
+      'Este banco já foi apagado uma vez no aparelho por migração destrutiva — por isso precisa viver aqui também',
+    ],
+  },
+  {
+    href: '/admin/gigradar/testers',
+    label: '👥 GigRadar — Beta testers',
+    tooltip: 'Cadastros do beta fechado do app GigRadar (motoristas de app).',
+    description: 'Quem se cadastrou pela landing /gigradar para testar o app. Fica aqui, junto dos dados do app, em vez de diluído na lista geral de leads do site — é outro público: motorista testando o app, não cliente procurando a Azimut. Cruza cada cadastro com os aparelhos que já sincronizaram, então dá pra ver quem se cadastrou mas nunca chegou a rodar.',
+    howTo: [
+      'Acesse GigRadar > Beta testers no menu',
+      'Veja quem se cadastrou e quem já rodou o app (selo verde com a versão)',
+      'Use o WhatsApp/e-mail para mandar o código de liberação',
     ],
     fields: [
       'Nome, WhatsApp, e-mail, cidade — do formulário /gigradar',
+      'App — versão do aparelho que já sincronizou, ou "sem sinal"',
     ],
     tips: [
       'O deviceId do testador chega por WhatsApp, não aqui — gere o código com tools/gr_code.py',
+      '"Sem sinal" pode ser só quem ainda não instalou — vale um lembrete no WhatsApp',
     ],
     commonErrors: [],
   },
   {
     href: '/admin/gigradar-logs',
-    label: '🧪 GigRadar Logs',
+    label: '🧪 GigRadar — Logs do app',
     tooltip: 'Logs de diagnóstico enviados pelos beta testers do GigRadar.',
     description: 'Logs que o app GigRadar manda quando o testador aperta "Enviar log" (fase beta). Cada entrada já vem com um resumo automático por IA. Use pra revisar bugs reportados por testador e data.',
     howTo: [
