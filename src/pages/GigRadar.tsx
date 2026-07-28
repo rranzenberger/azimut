@@ -15,6 +15,7 @@ interface GigRadarProps {
 const WHATSAPP = '5548999701301'
 const APK_URL = '/downloads/gigradar-latest.apk'
 const APK_VERSION_URL = '/downloads/gigradar-version.json'
+const GIGRADAR_ADMIN_URL = import.meta.env.VITE_GIGRADAR_ADMIN_URL || 'https://cms-gigradar.azmt.com.br'
 
 const content = {
   pt: {
@@ -103,6 +104,7 @@ const content = {
     appPh: 'App que você dirige',
     appOptions: ['Uber', '99', 'Uber e 99', 'Outro / entregas'],
     phonePh: 'Modelo do celular (opcional)',
+    referralPh: 'Código de quem te indicou (opcional)',
     acceptTerms: 'Li e aceito os Termos de Participação do Beta e a Política de Privacidade.',
     acceptFeedback: 'Comprometo-me a enviar um retorno curto por semana, mesmo que não encontre erros. Entendo que 14 dias sem retorno, após um lembrete, podem impedir a renovação da licença Beta.',
     acceptUpdates: 'Quero receber mensagens sobre meu acesso beta, correções e novas versões. (opcional)',
@@ -198,6 +200,7 @@ const content = {
     appPh: 'App you drive for',
     appOptions: ['Uber', '99', 'Uber and 99', 'Other / delivery'],
     phonePh: 'Phone model (optional)',
+    referralPh: "Referral code from who invited you (optional)",
     acceptTerms: 'I have read and accept the Beta Participation Terms and Privacy Policy.',
     acceptFeedback: 'I agree to send one short update per week, even when I find no errors. I understand that 14 days without an update, after a reminder, may prevent renewal of my Beta licence.',
     acceptUpdates: 'I want messages about my beta access, fixes and new versions. (optional)',
@@ -293,6 +296,7 @@ const content = {
     appPh: 'App que manejas',
     appOptions: ['Uber', '99', 'Uber y 99', 'Otra / entregas'],
     phonePh: 'Modelo del teléfono (opcional)',
+    referralPh: 'Código de quien te invitó (opcional)',
     acceptTerms: 'Leí y acepto los Términos de Participación de la Beta y la Política de Privacidad.',
     acceptFeedback: 'Me comprometo a enviar un informe breve por semana, aunque no encuentre errores. Entiendo que 14 días sin informe, después de un recordatorio, pueden impedir la renovación de mi licencia Beta.',
     acceptUpdates: 'Quiero recibir mensajes sobre mi acceso beta, correcciones y nuevas versiones. (opcional)',
@@ -388,6 +392,7 @@ const content = {
     appPh: 'App que vous conduisez',
     appOptions: ['Uber', '99', 'Uber et 99', 'Autre / livraison'],
     phonePh: 'Modèle du téléphone (optionnel)',
+    referralPh: "Code de parrainage (optionnel)",
     acceptTerms: 'J\'ai lu et j\'accepte les Conditions de participation à la bêta et la Politique de confidentialité.',
     acceptFeedback: 'Je m\'engage à envoyer un bref retour chaque semaine, même sans erreur trouvée. Je comprends que 14 jours sans retour, après un rappel, peuvent empêcher le renouvellement de ma licence Bêta.',
     acceptUpdates: 'Je souhaite recevoir des messages sur mon accès bêta, les corrections et les nouvelles versions. (facultatif)',
@@ -602,7 +607,7 @@ const GIG_GUIDE = {
 const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
   const t = content[lang] ?? content.pt
   const g = GIG_GUIDE[lang] ?? GIG_GUIDE.pt
-  const [formData, setFormData] = useState({ name: '', whatsapp: '', email: '', city: '', app: '', phone: '' })
+  const [formData, setFormData] = useState({ name: '', whatsapp: '', email: '', city: '', app: '', phone: '', referral: '' })
   const [acceptedTerms, setAcceptedTerms] = useState(false)
   const [acceptedFeedback, setAcceptedFeedback] = useState(false)
   const [acceptedUpdates, setAcceptedUpdates] = useState(false)
@@ -673,15 +678,18 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
     e.preventDefault()
     if (!acceptedTerms || !acceptedFeedback) return
     try {
-      await ApiService.submitLead({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.whatsapp,
-        leadType: 'gigradar-beta',
-        source: 'gigradar-page',
-        lang,
-        interest: formData.app,
-        message: `GigRadar BETA v1.1\nWhatsApp: ${formData.whatsapp}\nCidade: ${formData.city}\nApp: ${formData.app}\nCelular: ${formData.phone || '—'}\nTermos beta: aceito\nRetorno semanal e regra de 14 dias: aceitos\nDiagnóstico automático: não habilitado\nComunicações de atualização: ${acceptedUpdates ? 'aceitas' : 'não autorizadas'}`,
+      await fetch(`${GIGRADAR_ADMIN_URL}/api/testers`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          whatsapp: formData.whatsapp,
+          city: formData.city,
+          app: formData.app,
+          referredBy: formData.referral || undefined,
+          acceptedTos: acceptedTerms && acceptedFeedback,
+        }),
       })
     } catch {}
     setSent(true)
@@ -1035,6 +1043,7 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
                   { key: 'email', ph: t.emailPh, type: 'email', req: true },
                   { key: 'city', ph: t.cityPh, type: 'text', req: true },
                   { key: 'phone', ph: t.phonePh, type: 'text', req: false },
+                  { key: 'referral', ph: t.referralPh, type: 'text', req: false },
                 ].map(({ key, ph, type, req }) => (
                   <input
                     key={key}
