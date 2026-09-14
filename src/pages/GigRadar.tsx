@@ -41,7 +41,7 @@ const content = {
       ['📷', 'Alerta de radar de velocidade por voz — a Uber não mostra, nós sim'],
       ['🗺️', 'Zonas a evitar desenhadas por você + morro, servidão e alagamento na chuva'],
       ['🏠', 'Modo Casa: volte pra casa sendo pago'],
-      ['📈', 'Financeiro local: lucro real por período — seus dados ficam SÓ no seu telefone'],
+      ['📈', 'Financeiro: lucro real por período, com cópia de segurança pra você não perder nada ao trocar de telefone'],
     ],
     rulesTitle: 'Regras do beta (leia antes de entrar)',
     rules: [
@@ -57,7 +57,7 @@ const content = {
     steps: [
       'Cadastre-se abaixo — a página de download libera na hora, com o APK mais recente e seu convite de código pelo WhatsApp.',
       'Baixe e toque em Instalar (o Android avisa que é fora da Play Store — normal em beta fechado).',
-      'Abra o app e siga o assistente: 3 permissões (Acessibilidade, Sobrepor, Localização).',
+      'Abra o app e siga o assistente (Acessibilidade e Localização). No Android 13 ou mais novo, se a Acessibilidade estiver cinza, libere antes: Configurações → Apps → GigRadar → ⋮ → "Permitir configurações restritas".',
       'Digite seu código em 💎 e roda — o selo aparece sozinho na primeira oferta. 🎉',
     ],
     downloadTitle: '📲 Baixar o GigRadar',
@@ -80,18 +80,28 @@ const content = {
       ['⚙️', 'Avançado', 'Vai direto pras configurações completas — pra quem já sabe exatamente o que quer.'],
     ],
     privacyTitle: 'Privacidade (resumo honesto)',
-    privacy: 'No site coletamos só nome, WhatsApp, e-mail e cidade — pra gerenciar o beta e falar com você. O app não transmite automaticamente corridas, ganhos, zonas ou configurações: esses dados ficam no aparelho, salvo quando você escolhe compartilhar um relatório de diagnóstico. Pra excluir seu cadastro, é só pedir.',
-    diagnosticsNotice: 'Nesta fase, o app não envia logs automaticamente. Quando necessário, você pode revisar e compartilhar voluntariamente o relatório seguro pelo botão de diagnóstico. Uma coleta automática futura só poderá começar após aviso destacado e autorização separada dentro do app. Não envie prints com dados de passageiros, endereços, documentos ou informações bancárias.',
+    privacy: 'No site coletamos nome, WhatsApp, e-mail e cidade — pra gerenciar o beta e falar com você. Durante o beta, o aparelho de cada tester envia sozinho ao GigRadar o registro técnico do app e uma cópia dos dados do app (ofertas lidas, ganhos, gastos, carro, lugares e zonas). É assim que a gente acha os erros, melhora a leitura e garante que você não perca nada se trocar de telefone. Não vendemos nem repassamos esses dados. Pra excluir seu cadastro e seus dados, é só pedir.',
+    diagnosticsNotice: 'Na tela "Enviar pro GigRadar" você manda na hora, vê o que vai (com a contagem de cada grupo e o tamanho) e escreve suas sugestões. O registro técnico não guarda o nome do passageiro. As telas lidas pelo radar podem mostrar endereço de embarque e destino: servem só pra corrigir leituras e não são compartilhadas. Não mande por WhatsApp prints com dados de passageiros, documentos ou dados bancários.',
+    feedbackTitle: 'Sua opinião vira ajuste no app',
+    feedbackIntro: 'No beta, o aparelho manda o registro técnico pra gente achar o erro. Você diz o que achou, do seu jeito. Quem lê é gente.',
+    feedbackPoints: [
+      ['📤', 'Onde fica', 'Na tela inicial do app, card "Você é beta tester" → Enviar log agora.'],
+      ['📋', 'Você vê o que vai', 'Ganhos, gastos, carro, lugares, telas lidas e linhas do log, com a contagem e o tamanho antes de mandar.'],
+      ['💬', 'Fale pra gente', 'O que falhou, o que funcionou, o que faria melhor. Pode pedir coisa nova também.'],
+    ],
+    feedbackAlt1: 'Tela do app: o que vai ser enviado, com a contagem de cada grupo',
+    feedbackAlt2: 'Tela do app: campo Fale pra gente para sugestões',
+    feedbackNote: 'Sem envio em 7 dias, o app pausa até você enviar. É o combinado que faz o beta andar.',
     termsTitle: 'Termos de participação do beta',
-    termsVersion: 'Versão 1.1 · 13 de julho de 2026',
+    termsVersion: 'Versão 1.2 · 14 de setembro de 2026',
     betaTerms: [
       ['Beta experimental', 'O acesso é gratuito, libera todos os recursos disponíveis nesta versão por 30 dias e pode ser alterado, suspenso ou encerrado por necessidade técnica, segurança ou fim do programa.'],
       ['Sem promessa de resultado', 'O GigRadar é um apoio informativo. Não garante ganhos, segurança de rota, valor de corrida, trânsito ou disponibilidade de trabalho.'],
       ['Uso seguro', 'Nunca use o celular de forma que distraia a direção. O motorista decide se aceita uma corrida e deve cumprir as leis de trânsito e as regras das plataformas.'],
       ['Acesso pessoal', 'Não compartilhe APK, link de instalação ou código. Troca de aparelho e extensão do período dependem de solicitação e aprovação da equipe.'],
-      ['Colaboração semanal', 'O participante se compromete a enviar uma vez por semana um retorno curto: se utilizou o app, se funcionou, se encontrou falha e, quando houver, uma sugestão. Informar que testou e não encontrou erros também cumpre a colaboração.'],
+      ['Colaboração semanal', 'O participante se compromete a enviar uma vez por semana um retorno curto — pela tela "Enviar pro GigRadar" (campo "Fale pra gente") ou pelo WhatsApp: se utilizou o app, se funcionou, se encontrou falha e, quando houver, uma sugestão. Informar que testou e não encontrou erros também cumpre a colaboração.'],
       ['Continuidade do acesso', 'Após 14 dias sem retorno e pelo menos um lembrete, a equipe pode não renovar a próxima licença. Compartilhar APK ou código, fraudar o teste, abusar do serviço ou criar risco de segurança pode encerrar a participação.'],
-      ['Diagnóstico técnico', 'O envio de diagnóstico é iniciado pelo participante, que pode revisar o conteúdo antes de compartilhar. O app não envia logs automaticamente nesta fase; eventual coleta futura exigirá aviso e autorização próprios dentro do aplicativo.'],
+      ['Diagnóstico técnico', 'Para melhorar o app, o aparelho do participante envia automaticamente ao servidor do GigRadar, durante o beta, o registro técnico e uma cópia dos dados do app. O participante também pode enviar na hora, ver o que vai e escrever sugestões na tela "Enviar pro GigRadar". Esses dados servem para corrigir falhas, melhorar o app e manter uma cópia de segurança; não são vendidos nem repassados.'],
       ['Dados de cadastro', 'Nome, contato, cidade, aparelho e apps usados são tratados para administrar o beta, enviar instruções e suporte, conforme a Política de Privacidade da Azimut.'],
       ['Mudanças e saída', 'Mudanças relevantes nos termos ou no tratamento de dados serão destacadas. Você pode sair do beta e solicitar seus direitos de privacidade pelo canal indicado na Política de Privacidade.'],
     ],
@@ -137,7 +147,7 @@ const content = {
       ['📷', 'Speed camera alerts by voice — Uber doesn\'t show them, we do'],
       ['🗺️', 'Avoid-zones you draw + hills, alleys and flood risk in the rain'],
       ['🏠', 'Home Mode: get paid to head home'],
-      ['📈', 'Local finance: real profit per period — your data stays ONLY on your phone'],
+      ['📈', 'Finance: real profit per period, with a backup copy so you lose nothing when you change phones'],
     ],
     rulesTitle: 'Beta rules (read before joining)',
     rules: [
@@ -153,7 +163,7 @@ const content = {
     steps: [
       'Sign up below — the download page unlocks instantly, with the latest APK and your unlock code invite on WhatsApp.',
       'Download and tap Install (Android warns it\'s outside the Play Store — normal for a closed beta).',
-      'Open the app and follow the wizard: 3 permissions (Accessibility, Overlay, Location).',
+      'Open the app and follow the wizard (Accessibility and Location). On Android 13 or newer, if Accessibility is greyed out, unlock it first: Settings → Apps → GigRadar → ⋮ → "Allow restricted settings".',
       'Enter your code in 💎 and drive — the badge shows up on the first offer. 🎉',
     ],
     downloadTitle: '📲 Download GigRadar',
@@ -176,18 +186,28 @@ const content = {
       ['⚙️', 'Advanced', 'Goes straight to full settings — for those who already know exactly what they want.'],
     ],
     privacyTitle: 'Privacy (honest summary)',
-    privacy: 'On this site we only collect name, WhatsApp, e-mail and city — to run the beta and talk to you. The app does not automatically transmit rides, earnings, zones or settings: they remain on the device unless you choose to share a diagnostic report. To delete your registration, just ask.',
-    diagnosticsNotice: 'At this stage, the app does not send logs automatically. When needed, you can review and voluntarily share the safe report using the diagnostic button. Any future automatic collection may only begin after a prominent notice and separate authorisation inside the app. Never send screenshots containing passenger data, addresses, documents or banking information.',
+    privacy: 'On this site we collect name, WhatsApp, e-mail and city — to run the beta and talk to you. During the beta, each tester\'s phone automatically sends GigRadar the app\'s technical log and a copy of the app\'s data (offers read, earnings, expenses, vehicle, places and zones). That is how we find bugs, improve reading and make sure you lose nothing if you change phones. We do not sell or share this data. To delete your registration and your data, just ask.',
+    diagnosticsNotice: 'On the "Send to GigRadar" screen you can send right away, see what goes (with the count for each group and the size) and write suggestions. The technical log does not keep the passenger\'s name. Screens read by the radar may show pickup and destination addresses: they are used only to fix readings and are not shared. Never send screenshots with passenger data, documents or banking details over WhatsApp.',
+    feedbackTitle: 'Your feedback becomes an app fix',
+    feedbackIntro: 'During the beta, the phone sends the technical log so we can find the bug. You tell us what you think, your way. A person reads it.',
+    feedbackPoints: [
+      ['📤', 'Where it is', 'On the app\'s home screen, "You\'re a beta tester" card → Send log now.'],
+      ['📋', 'You see what goes', 'Earnings, expenses, vehicle, places, screens read and log lines, with count and size before sending.'],
+      ['💬', 'Talk to us', 'What failed, what worked, what you would improve. You can ask for new things too.'],
+    ],
+    feedbackAlt1: 'App screen: what will be sent, with the count for each group',
+    feedbackAlt2: 'App screen: Talk to us field for suggestions',
+    feedbackNote: 'With no send for 7 days, the app pauses until you send. That\'s the deal that keeps the beta moving.',
     termsTitle: 'Beta participation terms',
-    termsVersion: 'Version 1.1 · July 13, 2026',
+    termsVersion: 'Version 1.2 · September 14, 2026',
     betaTerms: [
       ['Experimental beta', 'Access is free, unlocks every feature available in this version for 30 days and may be changed, suspended or ended for technical needs, safety or the end of the program.'],
       ['No promised outcome', 'GigRadar is an informational aid. It does not guarantee earnings, route safety, ride value, traffic conditions or work availability.'],
       ['Safe use', 'Never use your phone in a way that distracts from driving. The driver decides whether to accept a ride and must follow traffic laws and platform rules.'],
       ['Personal access', 'Do not share the APK, installation link or code. Device changes and trial extensions require a request and team approval.'],
-      ['Weekly collaboration', 'Participants agree to send one short update per week: whether they used the app, whether it worked, whether they found a problem and, when available, a suggestion. Reporting that no errors were found also fulfils this requirement.'],
+      ['Weekly collaboration', 'Participants agree to send one short update per week — through the "Send to GigRadar" screen ("Talk to us" field) or WhatsApp: whether they used the app, whether it worked, whether they found a problem and, when available, a suggestion. Reporting that no errors were found also fulfils this requirement.'],
       ['Continued access', 'After 14 days without an update and at least one reminder, the team may decline to renew the next licence. Sharing the APK or code, test fraud, abuse or a security risk may end participation.'],
-      ['Technical diagnostics', 'Diagnostic sharing is initiated by the participant, who can review the content before sharing. The app does not send logs automatically at this stage; any future collection will require its own in-app notice and authorisation.'],
+      ['Technical diagnostics', 'To improve the app, the participant\'s phone automatically sends GigRadar\'s server, during the beta, the technical log and a copy of the app\'s data. Participants can also send right away, see what goes and write suggestions on the "Send to GigRadar" screen. This data is used to fix bugs, improve the app and keep a backup copy; it is not sold or shared.'],
       ['Registration data', 'Name, contact details, city, device and apps used are processed to manage the beta, send instructions and provide support, under Azimut\'s Privacy Policy.'],
       ['Changes and exit', 'Material changes to these terms or data handling will be highlighted. You may leave the beta and request privacy rights through the channel in the Privacy Policy.'],
     ],
@@ -233,7 +253,7 @@ const content = {
       ['📷', 'Alertas de radar de velocidad por voz — Uber no los muestra, nosotros sí'],
       ['🗺️', 'Zonas a evitar dibujadas por ti + cerros, callejones e inundación con lluvia'],
       ['🏠', 'Modo Casa: vuelve a casa cobrando'],
-      ['📈', 'Finanzas locales: ganancia real por período — tus datos quedan SOLO en tu teléfono'],
+      ['📈', 'Finanzas: ganancia real por período, con copia de seguridad para no perder nada al cambiar de teléfono'],
     ],
     rulesTitle: 'Reglas de la beta (lee antes de entrar)',
     rules: [
@@ -249,7 +269,7 @@ const content = {
     steps: [
       'Regístrate abajo — la página de descarga se abre al instante, con el APK más reciente y tu invitación de código por WhatsApp.',
       'Descarga y toca Instalar (Android avisa que es fuera de Play Store — normal en beta cerrada).',
-      'Abre la app y sigue el asistente: 3 permisos (Accesibilidad, Superposición, Ubicación).',
+      'Abre la app y sigue el asistente (Accesibilidad y Ubicación). En Android 13 o más nuevo, si la Accesibilidad aparece gris, libérala antes: Ajustes → Aplicaciones → GigRadar → ⋮ → "Permitir ajustes restringidos".',
       'Escribe tu código en 💎 y a rodar — el sello aparece solo en la primera oferta. 🎉',
     ],
     downloadTitle: '📲 Descargar GigRadar',
@@ -272,18 +292,28 @@ const content = {
       ['⚙️', 'Avanzado', 'Va directo a la configuración completa — para quien ya sabe exactamente lo que quiere.'],
     ],
     privacyTitle: 'Privacidad (resumen honesto)',
-    privacy: 'En el sitio solo recolectamos nombre, WhatsApp, e-mail y ciudad — para gestionar la beta y hablar contigo. La app no transmite automáticamente viajes, ganancias, zonas o ajustes: permanecen en el dispositivo salvo que elijas compartir un informe de diagnóstico. Para borrar tu registro, solo pídelo.',
-    diagnosticsNotice: 'En esta fase, la app no envía registros automáticamente. Cuando sea necesario, puedes revisar y compartir voluntariamente el informe seguro mediante el botón de diagnóstico. Cualquier recopilación automática futura solo podrá comenzar tras un aviso destacado y una autorización separada dentro de la app. Nunca envíes capturas con datos de pasajeros, direcciones, documentos o información bancaria.',
+    privacy: 'En el sitio recolectamos nombre, WhatsApp, e-mail y ciudad — para gestionar la beta y hablar contigo. Durante la beta, el teléfono de cada tester envía automáticamente a GigRadar el registro técnico de la app y una copia de los datos de la app (ofertas leídas, ganancias, gastos, vehículo, lugares y zonas). Así encontramos errores, mejoramos la lectura y te aseguramos no perder nada si cambias de teléfono. No vendemos ni compartimos estos datos. Para borrar tu registro y tus datos, solo pídelo.',
+    diagnosticsNotice: 'En la pantalla "Enviar a GigRadar" envías al momento, ves lo que se va (con la cantidad de cada grupo y el tamaño) y escribes sugerencias. El registro técnico no guarda el nombre del pasajero. Las pantallas leídas por el radar pueden mostrar direcciones de recogida y destino: sirven solo para corregir lecturas y no se comparten. Nunca envíes por WhatsApp capturas con datos de pasajeros, documentos o información bancaria.',
+    feedbackTitle: 'Tu opinión se vuelve ajuste en la app',
+    feedbackIntro: 'En la beta, el teléfono envía el registro técnico para que encontremos el error. Tú dices lo que piensas, a tu manera. Lo lee una persona.',
+    feedbackPoints: [
+      ['📤', 'Dónde está', 'En la pantalla inicial de la app, tarjeta "¡Eres beta tester!" → Enviar log ahora.'],
+      ['📋', 'Ves lo que se va', 'Ganancias, gastos, vehículo, lugares, pantallas leídas y líneas del log, con cantidad y tamaño antes de enviar.'],
+      ['💬', 'Háblanos', 'Qué falló, qué funcionó, qué harías mejor. También puedes pedir cosas nuevas.'],
+    ],
+    feedbackAlt1: 'Pantalla de la app: lo que se enviará, con la cantidad de cada grupo',
+    feedbackAlt2: 'Pantalla de la app: campo Háblanos para sugerencias',
+    feedbackNote: 'Sin envío en 7 días, la app se pausa hasta que envíes. Es el acuerdo que hace avanzar la beta.',
     termsTitle: 'Términos de participación en la beta',
-    termsVersion: 'Versión 1.1 · 13 de julio de 2026',
+    termsVersion: 'Versión 1.2 · 14 de septiembre de 2026',
     betaTerms: [
       ['Beta experimental', 'El acceso es gratuito, libera todas las funciones disponibles en esta versión por 30 días y puede cambiarse, suspenderse o terminarse por necesidad técnica, seguridad o fin del programa.'],
       ['Sin resultados prometidos', 'GigRadar es una ayuda informativa. No garantiza ingresos, seguridad de ruta, valor de viaje, tráfico o disponibilidad de trabajo.'],
       ['Uso seguro', 'Nunca uses el teléfono de una forma que distraiga al conducir. El conductor decide si acepta un viaje y debe cumplir las leyes y reglas de las plataformas.'],
       ['Acceso personal', 'No compartas el APK, link de instalación o código. Cambios de teléfono y extensiones requieren solicitud y aprobación del equipo.'],
-      ['Colaboración semanal', 'El participante se compromete a enviar una vez por semana un informe breve: si utilizó la app, si funcionó, si encontró un problema y, cuando exista, una sugerencia. Informar que no encontró errores también cumple este requisito.'],
+      ['Colaboración semanal', 'El participante se compromete a enviar una vez por semana un informe breve — por la pantalla "Enviar a GigRadar" (campo "Háblanos") o por WhatsApp: si utilizó la app, si funcionó, si encontró un problema y, cuando exista, una sugerencia. Informar que no encontró errores también cumple este requisito.'],
       ['Continuidad del acceso', 'Tras 14 días sin informe y al menos un recordatorio, el equipo puede no renovar la siguiente licencia. Compartir el APK o el código, fraude en la prueba, abuso o un riesgo de seguridad puede finalizar la participación.'],
-      ['Diagnóstico técnico', 'El envío del diagnóstico lo inicia el participante, que puede revisar el contenido antes de compartirlo. La app no envía registros automáticamente en esta fase; cualquier recopilación futura requerirá su propio aviso y autorización dentro de la aplicación.'],
+      ['Diagnóstico técnico', 'Para mejorar la app, el teléfono del participante envía automáticamente al servidor de GigRadar, durante la beta, el registro técnico y una copia de los datos de la app. El participante también puede enviar al momento, ver lo que se va y escribir sugerencias en la pantalla "Enviar a GigRadar". Estos datos sirven para corregir fallas, mejorar la app y mantener una copia de seguridad; no se venden ni se comparten.'],
       ['Datos de registro', 'Nombre, contacto, ciudad, dispositivo y apps usadas se tratan para gestionar la beta, enviar instrucciones y brindar soporte, conforme a la Política de Privacidad de Azimut.'],
       ['Cambios y salida', 'Los cambios relevantes de estos términos o del tratamiento de datos se destacarán. Puedes salir de la beta y ejercer tus derechos de privacidad por el canal de la Política de Privacidad.'],
     ],
@@ -329,7 +359,7 @@ const content = {
       ['📷', 'Alertes radar de vitesse par la voix — Uber ne les montre pas, nous oui'],
       ['🗺️', 'Zones à éviter dessinées par vous + collines, ruelles et inondations sous la pluie'],
       ['🏠', 'Mode Maison : rentrez chez vous en étant payé'],
-      ['📈', 'Finances locales : profit réel par période — vos données restent SUR votre téléphone'],
+      ['📈', 'Finances : profit réel par période, avec une copie de sauvegarde pour ne rien perdre en changeant de téléphone'],
     ],
     rulesTitle: 'Règles de la bêta',
     rules: [
@@ -345,7 +375,7 @@ const content = {
     steps: [
       'Inscrivez-vous ci-dessous — la page de téléchargement s\'ouvre aussitôt, avec l\'APK le plus récent et votre invitation code sur WhatsApp.',
       'Téléchargez et appuyez sur Installer (Android signale que c\'est hors Play Store — normal en bêta fermée).',
-      'Ouvrez l\'app et suivez l\'assistant : 3 permissions (Accessibilité, Superposition, Localisation).',
+      'Ouvrez l\'app et suivez l\'assistant (Accessibilité et Localisation). Sur Android 13 ou plus récent, si l\'Accessibilité est grisée, débloquez-la d\'abord : Paramètres → Applications → GigRadar → ⋮ → « Autoriser les paramètres restreints ».',
       'Entrez votre code dans 💎 et roulez — le badge apparaît dès la première offre. 🎉',
     ],
     downloadTitle: '📲 Télécharger GigRadar',
@@ -368,18 +398,28 @@ const content = {
       ['⚙️', 'Avancé', 'Va directement aux réglages complets — pour qui sait déjà exactement ce qu\'il veut.'],
     ],
     privacyTitle: 'Confidentialité (résumé honnête)',
-    privacy: 'Sur ce site nous ne collectons que nom, WhatsApp, e-mail et ville — pour gérer la bêta. L\'app ne transmet pas automatiquement les courses, gains, zones ou réglages : ils restent sur l\'appareil sauf si vous choisissez de partager un rapport de diagnostic. Pour supprimer votre inscription, demandez-le simplement.',
-    diagnosticsNotice: 'À ce stade, l\'app n\'envoie pas automatiquement de journaux. Si nécessaire, vous pouvez vérifier et partager volontairement le rapport sécurisé avec le bouton de diagnostic. Toute collecte automatique future ne pourra commencer qu\'après un avis visible et une autorisation séparée dans l\'app. N\'envoyez jamais de captures contenant des données de passagers, adresses, documents ou informations bancaires.',
+    privacy: 'Sur ce site nous collectons nom, WhatsApp, e-mail et ville — pour gérer la bêta et vous contacter. Pendant la bêta, le téléphone de chaque testeur envoie automatiquement à GigRadar le journal technique de l\'app et une copie des données de l\'app (offres lues, gains, dépenses, véhicule, lieux et zones). C\'est ainsi que nous trouvons les erreurs, améliorons la lecture et vous évitons de perdre quoi que ce soit en changeant de téléphone. Nous ne vendons ni ne partageons ces données. Pour supprimer votre inscription et vos données, demandez-le simplement.',
+    diagnosticsNotice: 'Sur l\'écran « Envoyer à GigRadar », vous envoyez tout de suite, voyez ce qui part (avec le nombre par groupe et la taille) et écrivez vos suggestions. Le journal technique ne conserve pas le nom du passager. Les écrans lus par le radar peuvent montrer les adresses de prise en charge et de destination : ils servent uniquement à corriger les lectures et ne sont pas partagés. N\'envoyez jamais par WhatsApp de captures contenant des données de passagers, documents ou informations bancaires.',
+    feedbackTitle: 'Votre avis devient un réglage de l\'app',
+    feedbackIntro: 'Pendant la bêta, le téléphone envoie le journal technique pour que nous trouvions l\'erreur. Vous dites ce que vous en pensez, à votre façon. C\'est une personne qui lit.',
+    feedbackPoints: [
+      ['📤', 'Où c\'est', 'Sur l\'écran d\'accueil de l\'app, carte « Vous êtes bêta-testeur » → Envoyer le log.'],
+      ['📋', 'Vous voyez ce qui part', 'Gains, dépenses, véhicule, lieux, écrans lus et lignes du journal, avec le nombre et la taille avant l\'envoi.'],
+      ['💬', 'Parlez-nous', 'Ce qui a échoué, ce qui a marché, ce que vous feriez mieux. Vous pouvez aussi demander du nouveau.'],
+    ],
+    feedbackAlt1: 'Écran de l\'app : ce qui sera envoyé, avec le nombre par groupe',
+    feedbackAlt2: 'Écran de l\'app : champ Parlez-nous pour les suggestions',
+    feedbackNote: 'Sans envoi pendant 7 jours, l\'app se met en pause jusqu\'à votre envoi. C\'est l\'accord qui fait avancer la bêta.',
     termsTitle: 'Conditions de participation à la bêta',
-    termsVersion: 'Version 1.1 · 13 juillet 2026',
+    termsVersion: 'Version 1.2 · 14 septembre 2026',
     betaTerms: [
       ['Bêta expérimentale', 'L\'accès est gratuit, déverrouille toutes les fonctionnalités disponibles dans cette version pendant 30 jours et peut être modifié, suspendu ou arrêté pour des besoins techniques, de sécurité ou à la fin du programme.'],
       ['Aucun résultat garanti', 'GigRadar est une aide informative. Il ne garantit ni revenus, ni sécurité d\'itinéraire, ni valeur de course, ni trafic, ni disponibilité de travail.'],
       ['Utilisation sûre', 'N\'utilisez jamais le téléphone d\'une manière qui détourne l\'attention de la conduite. Le conducteur décide d\'accepter une course et doit respecter les lois et règles des plateformes.'],
       ['Accès personnel', 'Ne partagez ni APK, ni lien d\'installation, ni code. Les changements d\'appareil et prolongations nécessitent une demande et l\'approbation de l\'équipe.'],
-      ['Collaboration hebdomadaire', 'Les participants s\'engagent à envoyer un bref retour chaque semaine : utilisation de l\'app, bon fonctionnement, problème éventuel et, lorsqu\'elle existe, une suggestion. Indiquer qu\'aucune erreur n\'a été trouvée remplit aussi cette obligation.'],
+      ['Collaboration hebdomadaire', 'Les participants s\'engagent à envoyer un bref retour chaque semaine — via l\'écran « Envoyer à GigRadar » (champ « Parlez-nous ») ou WhatsApp : utilisation de l\'app, bon fonctionnement, problème éventuel et, lorsqu\'elle existe, une suggestion. Indiquer qu\'aucune erreur n\'a été trouvée remplit aussi cette obligation.'],
       ['Continuité de l\'accès', 'Après 14 jours sans retour et au moins un rappel, l\'équipe peut refuser de renouveler la licence suivante. Le partage de l\'APK ou du code, la fraude, l\'abus ou un risque de sécurité peut mettre fin à la participation.'],
-      ['Diagnostic technique', 'Le partage du diagnostic est déclenché par le participant, qui peut vérifier le contenu avant l\'envoi. L\'app n\'envoie pas automatiquement de journaux à ce stade ; toute collecte future exigera son propre avis et une autorisation dans l\'application.'],
+      ['Diagnostic technique', 'Pour améliorer l\'app, le téléphone du participant envoie automatiquement au serveur de GigRadar, pendant la bêta, le journal technique et une copie des données de l\'app. Le participant peut aussi envoyer tout de suite, voir ce qui part et écrire des suggestions sur l\'écran « Envoyer à GigRadar ». Ces données servent à corriger les défauts, améliorer l\'app et conserver une copie de sauvegarde ; elles ne sont ni vendues ni partagées.'],
       ['Données d\'inscription', 'Le nom, le contact, la ville, l\'appareil et les applications utilisées sont traités pour gérer la bêta, envoyer des instructions et assurer le support, conformément à la Politique de confidentialité d\'Azimut.'],
       ['Modifications et sortie', 'Les changements importants de ces conditions ou du traitement des données seront mis en évidence. Vous pouvez quitter la bêta et exercer vos droits via le canal de la Politique de confidentialité.'],
     ],
@@ -404,16 +444,18 @@ const content = {
   },
 } as const
 
-// Guia de uso (as 4 abas + card + zonas) — isolado do `content` acima pra não mexer no que já existe.
+// Guia de uso (as 6 abas + card + zonas) — isolado do `content` acima pra não mexer no que já existe.
 const GIG_GUIDE = {
   pt: {
-    guideTitle: 'Guia rápido: as 4 abas',
-    guideIntro: 'Embaixo da tela ficam Radar, Ganhos, Proteção e Mais — é por aí que você navega tudo.',
+    guideTitle: 'Guia rápido: as 6 abas',
+    guideIntro: 'Embaixo da tela ficam Radar, Ganhos, Metas, Estrada, Visual e Mais — é por aí que você navega tudo.',
     tabs: [
-      ['◎', 'Radar', 'O coração do app: veredito na hora (aceita / atenção / recusa) com o R$/km e R$/h REAIS. Aqui você liga o leitor e usa o comando de voz.'],
-      ['📈', 'Ganhos', 'Seu dinheiro de verdade. Em "Metas e semáforo" ficam os ajustes de R$ por corrida e por hora (o que define verde/amarelo). Lance abastecimento e custos — o app calcula seu custo/km real e afina os limites sozinho.'],
-      ['🛡️', 'Proteção', 'O diferencial. Mapa com zonas, "Alertas e riscos" (morro, servidão, alagamento, dinheiro à noite — cada um em 🔕 ignora / ⚠️ avisa / 🚫 recusa) e locais a evitar por nome.'],
-      ['⋯', 'Mais', 'Ajustes e avançado: plataformas (Uber, 99 e apps do mundo), seu carro, aparência do card, saúde do carro por OBD2 e a Central de Ajuda.'],
+      ['◎', 'Radar', 'Decida rápido e siga seguro. Veredito na hora com R$/km e R$/h REAIS, o leitor ligado e o aviso de quando o seu horário costuma ser bom ou fraco.'],
+      ['📈', 'Ganhos', 'O que entrou, saiu e realmente sobrou. Lance repasse, recebido na hora (Pix/dinheiro), abastecimento, recarga e custos — o app calcula seu custo/km real.'],
+      ['🎯', 'Metas', 'Quanto você quer ganhar. Mostra as metas em vigor (R$ por corrida e por hora, que definem as cores) e de onde elas saem — o app aprende e ajusta com você.'],
+      ['🛡️', 'Estrada', 'Seu carro, suas rotas e o que evitar no caminho. Mapa com zonas, alertas (morro, servidão, alagamento, clima), postos e locais, e a saúde do carro por OBD2.'],
+      ['🎨', 'Visual', 'A cara do card: tamanho, transparência, posição, tema claro/escuro e a voz.'],
+      ['⋯', 'Mais', 'Plataformas (Uber, 99 e outros apps), Central de Ajuda, planos, indique um amigo e reportar problema.'],
     ],
     cardTitle: 'O card é seu — sugestão de padrão',
     cardIntro: 'Ele aparece por cima do Uber/99. A regra de ouro é não cobrir o que você toca no app de corrida. Nossa sugestão já vem pensada pra isso:',
@@ -421,7 +463,7 @@ const GIG_GUIDE = {
       'Card único (junto), não separado — ocupa menos e some rápido.',
       'No topo da tela (~28% de cima pra baixo) — ali o Uber/99 não põe o botão de aceitar.',
       'Transparência ~85% — você lê o veredito e ainda enxerga o app por baixo.',
-      'Tamanho médio — bate o olho sem tapar o mapa. Arraste e ajuste tudo em Mais → Aparência.',
+      'Tamanho médio — bate o olho sem tapar o mapa. Arraste e ajuste tudo na aba Visual.',
     ],
     zonesTitle: 'Áreas de risco: você marca, ele respeita',
     zones: [
@@ -434,7 +476,7 @@ const GIG_GUIDE = {
     permsIntro: 'São 4, feitas uma vez só. Cada uma tem um motivo — e sem elas, algumas partes não funcionam.',
     perms: [
       ['👁️', 'Acessibilidade — essencial', 'Deixa o app SÓ LER a oferta na tela do Uber/99. Nunca clica, nunca aceita, nunca faz login. Sem ela, não há veredito.'],
-      ['🪟', 'Sobreposição — essencial', 'Permite o card flutuante aparecer por cima do Uber/99. É o que você vê na hora da oferta.'],
+      ['🔓', 'Configurações restritas (Android 13+)', 'O Android bloqueia a Acessibilidade de app instalado fora da loja. Libere em Configurações → Apps → GigRadar → ⋮ (canto de cima) → "Permitir configurações restritas". Depois ligue a Acessibilidade.'],
       ['🔋', 'Bateria sem restrição', 'Pra o Samsung não "matar" o leitor no meio do corre. No Samsung, tire também o app de "Apps em suspensão".'],
       ['📍', 'Localização', 'Fala o bairro do destino, avisa morro/servidão e o trânsito ao vivo. Quem não liga, usa o resto normal.'],
     ],
@@ -456,13 +498,15 @@ const GIG_GUIDE = {
     ],
   },
   en: {
-    guideTitle: 'Quick guide: the 4 tabs',
-    guideIntro: 'Radar, Earnings, Protection and More sit at the bottom — that\'s how you get around.',
+    guideTitle: 'Quick guide: the 6 tabs',
+    guideIntro: 'Radar, Earnings, Goals, Road, Visual and More sit at the bottom — that\'s how you get around.',
     tabs: [
-      ['◎', 'Radar', 'The heart of the app: instant verdict (accept / caution / decline) with your REAL R$/km and R$/h. Turn on the reader and use voice commands here.'],
-      ['📈', 'Earnings', 'Your real money. In "Goals & traffic-light" you set R$ per ride and per hour (what defines green/yellow). Log fuel and costs — the app computes your real cost/km and tunes the limits itself.'],
-      ['🛡️', 'Protection', 'The difference. Map with zones, "Alerts & risks" (hills, alleys, floods, cash at night — each as 🔕 ignore / ⚠️ warn / 🚫 decline) and places to avoid by name.'],
-      ['⋯', 'More', 'Settings and advanced: platforms (Uber, 99 and world apps), your car, card appearance, car health via OBD2, and the Help Center.'],
+      ['◎', 'Radar', 'Decide quickly and keep moving safely. Instant verdict with your REAL R$/km and R$/h, the reader switch and a heads-up when your usual hour tends to be strong or weak.'],
+      ['📈', 'Earnings', 'What came in, went out and truly remained. Log payouts, cash/Pix received on the spot, fuel, charging and costs — the app computes your real cost/km.'],
+      ['🎯', 'Goals', 'How much you want to earn. Shows the goals in force (R$ per ride and per hour, which set the colours) and where they come from — the app learns and adjusts with you.'],
+      ['🛡️', 'Road', 'Your car, your routes and what to avoid. Map with zones, alerts (hills, alleys, flooding, weather), stations and places, and car health via OBD2.'],
+      ['🎨', 'Visual', 'How the card looks: size, transparency, position, light/dark theme and the voice.'],
+      ['⋯', 'More', 'Platforms (Uber, 99 and other apps), Help Center, plans, refer a friend and report a problem.'],
     ],
     cardTitle: 'The card is yours — suggested default',
     cardIntro: 'It shows on top of Uber/99. The golden rule: don\'t cover what you tap in the ride app. Our default is already built for that:',
@@ -470,7 +514,7 @@ const GIG_GUIDE = {
       'A single card (joined), not split — smaller footprint.',
       'At the top of the screen (~28% down) — Uber/99 doesn\'t put the accept button there.',
       'About 85% opacity — read the verdict and still see the app behind it.',
-      'Medium size — glanceable without hiding the map. Drag and tweak it all in More → Appearance.',
+      'Medium size — glanceable without hiding the map. Drag and tweak it all in the Visual tab.',
     ],
     zonesTitle: 'Risk areas: you mark, it respects',
     zones: [
@@ -483,7 +527,7 @@ const GIG_GUIDE = {
     permsIntro: 'Just 4, granted once. Each has a reason — without them, some parts won\'t work.',
     perms: [
       ['👁️', 'Accessibility — essential', 'Lets the app ONLY READ the Uber/99 offer on screen. Never taps, accepts, or logs in. Without it, there is no verdict.'],
-      ['🪟', 'Overlay — essential', 'Lets the floating card show on top of Uber/99. It\'s what you see when an offer appears.'],
+      ['🔓', 'Restricted settings (Android 13+)', 'Android blocks Accessibility for apps installed outside the store. Unlock it in Settings → Apps → GigRadar → ⋮ (top corner) → "Allow restricted settings". Then turn on Accessibility.'],
       ['🔋', 'Unrestricted battery', 'So Samsung doesn\'t "kill" the reader mid-shift. On Samsung, also remove the app from "Sleeping apps".'],
       ['📍', 'Location', 'Speaks the destination neighborhood, warns about hills/alleys and live traffic. Without it, everything else still works.'],
     ],
@@ -505,13 +549,15 @@ const GIG_GUIDE = {
     ],
   },
   es: {
-    guideTitle: 'Guía rápida: las 4 pestañas',
-    guideIntro: 'Abajo están Radar, Ganancias, Protección y Más — por ahí navegas todo.',
+    guideTitle: 'Guía rápida: las 6 pestañas',
+    guideIntro: 'Abajo están Radar, Ganancias, Metas, Ruta, Visual y Más — por ahí navegas todo.',
     tabs: [
-      ['◎', 'Radar', 'El corazón del app: veredicto al instante (acepta / atención / rechaza) con tu R$/km y R$/h REALES. Aquí enciendes el lector y usas el comando de voz.'],
-      ['📈', 'Ganancias', 'Tu dinero de verdad. En "Metas y semáforo" ajustas R$ por viaje y por hora (lo que define verde/amarillo). Registra combustible y costos — el app calcula tu costo/km real y afina los límites solo.'],
-      ['🛡️', 'Protección', 'La diferencia. Mapa con zonas, "Alertas y riesgos" (subidas, callejones, inundación, efectivo de noche — cada uno en 🔕 ignora / ⚠️ avisa / 🚫 rechaza) y lugares a evitar por nombre.'],
-      ['⋯', 'Más', 'Ajustes y avanzado: plataformas (Uber, 99 y apps del mundo), tu auto, apariencia del card, salud del auto por OBD2 y el Centro de Ayuda.'],
+      ['◎', 'Radar', 'Decide rápido y sigue con seguridad. Veredicto al instante con tu R$/km y R$/h REALES, el lector encendido y el aviso de cuándo tu horario suele ser bueno o flojo.'],
+      ['📈', 'Ganancias', 'Lo que entró, salió y realmente quedó. Registra repasos, cobros en el momento (Pix/efectivo), combustible, recarga y costos — la app calcula tu costo/km real.'],
+      ['🎯', 'Metas', 'Cuánto quieres ganar. Muestra las metas vigentes (R$ por viaje y por hora, que definen los colores) y de dónde salen — la app aprende y ajusta contigo.'],
+      ['🛡️', 'Ruta', 'Tu auto, tus rutas y lo que evitar. Mapa con zonas, alertas (subidas, callejones, inundación, clima), gasolineras y lugares, y la salud del auto por OBD2.'],
+      ['🎨', 'Visual', 'El aspecto del card: tamaño, transparencia, posición, tema claro/oscuro y la voz.'],
+      ['⋯', 'Más', 'Plataformas (Uber, 99 y otras apps), Centro de Ayuda, planes, invita a un amigo y reportar un problema.'],
     ],
     cardTitle: 'El card es tuyo — sugerencia de base',
     cardIntro: 'Aparece encima de Uber/99. La regla de oro: no tapar lo que tocas en el app de viajes. Nuestra base ya está pensada para eso:',
@@ -519,7 +565,7 @@ const GIG_GUIDE = {
       'Un solo card (junto), no separado — ocupa menos.',
       'Arriba de la pantalla (~28%) — ahí Uber/99 no pone el botón de aceptar.',
       'Transparencia ~85% — lees el veredicto y aún ves el app por debajo.',
-      'Tamaño medio — se ve de un vistazo sin tapar el mapa. Arrastra y ajusta todo en Más → Apariencia.',
+      'Tamaño medio — se ve de un vistazo sin tapar el mapa. Arrastra y ajusta todo en la pestaña Visual.',
     ],
     zonesTitle: 'Áreas de riesgo: tú marcas, él respeta',
     zones: [
@@ -532,7 +578,7 @@ const GIG_GUIDE = {
     permsIntro: 'Son 4, solo una vez. Cada uno tiene un motivo — sin ellos, algunas partes no funcionan.',
     perms: [
       ['👁️', 'Accesibilidad — esencial', 'Deja que el app SOLO LEA la oferta de Uber/99 en pantalla. Nunca toca, acepta ni inicia sesión. Sin ella, no hay veredicto.'],
-      ['🪟', 'Superposición — esencial', 'Permite que el card flotante aparezca encima de Uber/99. Es lo que ves al llegar la oferta.'],
+      ['🔓', 'Ajustes restringidos (Android 13+)', 'Android bloquea la Accesibilidad de apps instaladas fuera de la tienda. Libérala en Ajustes → Aplicaciones → GigRadar → ⋮ (esquina superior) → "Permitir ajustes restringidos". Después activa la Accesibilidad.'],
       ['🔋', 'Batería sin restricción', 'Para que Samsung no "mate" el lector a mitad de turno. En Samsung, quita también el app de "Apps en reposo".'],
       ['📍', 'Ubicación', 'Dice el barrio del destino, avisa subidas/callejones y el tráfico en vivo. Sin ella, el resto sigue funcionando.'],
     ],
@@ -554,13 +600,15 @@ const GIG_GUIDE = {
     ],
   },
   fr: {
-    guideTitle: 'Guide rapide : les 4 onglets',
-    guideIntro: 'Radar, Gains, Protection et Plus sont en bas — c\'est par là que tout se navigue.',
+    guideTitle: 'Guide rapide : les 6 onglets',
+    guideIntro: 'Radar, Gains, Objectifs, Route, Visuel et Plus sont en bas — c\'est par là que tout se navigue.',
     tabs: [
-      ['◎', 'Radar', 'Le cœur de l\'app : verdict instantané (accepte / attention / refuse) avec vos R$/km et R$/h RÉELS. On y active le lecteur et la commande vocale.'],
-      ['📈', 'Gains', 'Votre vrai argent. Dans « Objectifs & feu » vous réglez les R$ par course et par heure (ce qui définit vert/jaune). Notez carburant et coûts — l\'app calcule votre coût/km réel et ajuste les seuils tout seul.'],
-      ['🛡️', 'Protection', 'La différence. Carte avec zones, « Alertes & risques » (côtes, ruelles, inondation, espèces la nuit — chacun en 🔕 ignore / ⚠️ prévient / 🚫 refuse) et lieux à éviter par nom.'],
-      ['⋯', 'Plus', 'Réglages et avancé : plateformes (Uber, 99 et apps du monde), votre voiture, apparence du card, santé auto via OBD2 et le Centre d\'aide.'],
+      ['◎', 'Radar', 'Décidez vite et roulez en sécurité. Verdict instantané avec vos R$/km et R$/h RÉELS, le lecteur activé et l\'avis quand votre créneau est d\'habitude bon ou faible.'],
+      ['📈', 'Gains', 'Ce qui est entré, sorti et vraiment resté. Notez versements, reçus sur place (Pix/espèces), carburant, recharge et coûts — l\'app calcule votre coût/km réel.'],
+      ['🎯', 'Objectifs', 'Combien vous voulez gagner. Montre les objectifs en vigueur (R$ par course et par heure, qui définissent les couleurs) et leur origine — l\'app apprend et s\'ajuste avec vous.'],
+      ['🛡️', 'Route', 'Votre voiture, vos trajets et ce qu\'il faut éviter. Carte avec zones, alertes (côtes, ruelles, inondation, météo), stations et lieux, et santé auto via OBD2.'],
+      ['🎨', 'Visuel', 'L\'allure du card : taille, transparence, position, thème clair/sombre et la voix.'],
+      ['⋯', 'Plus', 'Plateformes (Uber, 99 et autres apps), Centre d\'aide, offres, parrainage et signaler un problème.'],
     ],
     cardTitle: 'Le card est à vous — réglage suggéré',
     cardIntro: 'Il s\'affiche par-dessus Uber/99. La règle d\'or : ne pas cacher ce que vous touchez dans l\'app de course. Notre réglage est déjà pensé pour ça :',
@@ -568,7 +616,7 @@ const GIG_GUIDE = {
       'Un seul card (groupé), pas séparé — plus compact.',
       'En haut de l\'écran (~28 %) — Uber/99 n\'y met pas le bouton accepter.',
       'Transparence ~85 % — lisez le verdict et voyez l\'app derrière.',
-      'Taille moyenne — visible d\'un coup d\'œil sans cacher la carte. Glissez et ajustez tout dans Plus → Apparence.',
+      'Taille moyenne — visible d\'un coup d\'œil sans cacher la carte. Glissez et ajustez tout dans l\'onglet Visuel.',
     ],
     zonesTitle: 'Zones à risque : vous marquez, il respecte',
     zones: [
@@ -581,7 +629,7 @@ const GIG_GUIDE = {
     permsIntro: '4 seulement, accordées une fois. Chacune a une raison — sans elles, certaines parties ne marchent pas.',
     perms: [
       ['👁️', 'Accessibilité — essentiel', 'Permet à l\'app de SEULEMENT LIRE l\'offre Uber/99 à l\'écran. Ne touche jamais, n\'accepte jamais, ne se connecte jamais. Sans elle, pas de verdict.'],
-      ['🪟', 'Superposition — essentiel', 'Permet au card flottant d\'apparaître par-dessus Uber/99. C\'est ce que vous voyez à l\'offre.'],
+      ['🔓', 'Paramètres restreints (Android 13+)', 'Android bloque l\'Accessibilité des apps installées hors du store. Débloquez-la dans Paramètres → Applications → GigRadar → ⋮ (coin supérieur) → « Autoriser les paramètres restreints ». Activez ensuite l\'Accessibilité.'],
       ['🔋', 'Batterie sans restriction', 'Pour que Samsung ne "tue" pas le lecteur en pleine course. Sur Samsung, retirez aussi l\'app des "Apps en veille".'],
       ['📍', 'Localisation', 'Dit le quartier de destination, prévient des côtes/ruelles et du trafic en direct. Sans elle, le reste marche quand même.'],
     ],
@@ -770,7 +818,7 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
             </ol>
           </section>
 
-          {/* Guia de uso: as 4 abas + card + zonas de risco */}
+          {/* Guia de uso: as 6 abas + card + zonas de risco */}
           <section className="mb-16">
             <h2 className="mb-8 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>
               {g.guideTitle}
@@ -863,6 +911,36 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
                     <span className="text-xs leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{body}</span>
                   </div>
                 ))}
+              </div>
+            </div>
+          </section>
+
+          {/* 📤 Envio do tester: o aparelho manda o log, o tester vê o que vai e sugere (14/set) */}
+          <section className="mb-16 mx-auto max-w-3xl">
+            <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>
+              {t.feedbackTitle}
+            </h2>
+            <p className="mx-auto mb-7 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+              {t.feedbackIntro}
+            </p>
+            <div className="grid items-start gap-6 md:grid-cols-[1fr_1fr]">
+              <ul className="space-y-3">
+                {t.feedbackPoints.map(([icon, title, body]) => (
+                  <li key={title} className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                    <div className="mb-1 flex items-center gap-3">
+                      <span className="text-xl" aria-hidden="true">{icon}</span>
+                      <strong style={{ color: 'var(--theme-text)' }}>{title}</strong>
+                    </div>
+                    <p className="text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{body}</p>
+                  </li>
+                ))}
+                <li className="rounded-2xl border border-amber-400/30 bg-amber-400/5 p-4 text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                  {t.feedbackNote}
+                </li>
+              </ul>
+              <div className="grid grid-cols-2 gap-3">
+                <img src="/gigradar/envio-o-que-vai.webp" alt={t.feedbackAlt1} width={540} height={934} loading="lazy" className="w-full rounded-2xl border border-white/10" />
+                <img src="/gigradar/envio-fale-pra-gente.webp" alt={t.feedbackAlt2} width={540} height={1028} loading="lazy" className="w-full rounded-2xl border border-white/10" />
               </div>
             </div>
           </section>
