@@ -692,6 +692,18 @@ function MediaSlot({ m, showSlots, className = '', onMissing }: { m: Midia; show
   const [missing, setMissingState] = useState(false)
   const setMissing = (v: boolean) => { setMissingState(v); if (v) onMissing?.() }
   const src = `/gigradar/${m.file}`
+  // Vídeo ausente NÃO dispara erro: o Vercel devolve o index.html (200) e o <video> fica uma caixa
+  // preta carregando pra sempre. Confere o tipo do arquivo antes de mostrar.
+  const [videoOk, setVideoOk] = useState(false)
+  useEffect(() => {
+    if (m.kind !== 'video') return
+    let vivo = true
+    fetch(src, { method: 'HEAD' })
+      .then((r) => { if (!vivo) return; if (r.ok && (r.headers.get('content-type') || '').startsWith('video/')) setVideoOk(true); else setMissing(true) })
+      .catch(() => { if (vivo) setMissing(true) })
+    return () => { vivo = false }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [src, m.kind])
   if (missing) {
     if (!showSlots) return null
     return (
@@ -707,6 +719,7 @@ function MediaSlot({ m, showSlots, className = '', onMissing }: { m: Midia; show
     )
   }
   if (m.kind === 'video') {
+    if (!videoOk) return null
     return (
       <video
         src={src}
