@@ -486,7 +486,7 @@ const GIG_GUIDE = {
     moreTitle: 'Mais recursos — ajustes e avançado',
     more: [
       ['🌎', 'Plataformas e testes', 'Escolha seus apps (Uber, 99 e outros do mundo) e seu tipo de transporte (carro, moto, bike).'],
-      ['🚗', 'Meu carro (FIPE + avaria)', 'O valor do carro entra no cálculo de desgaste real por km.'],
+      ['🚗', 'Meus veículos', 'Carro, moto ou frota: valor, contrato e gastos de cada veículo entram no custo real por km.'],
       ['🎨', 'Aparência e alertas', 'Tema (claro/escuro) e o ajuste completo do card — tamanho, transparência, posição.'],
       ['🎯', 'Metas e semáforo', 'Aqui você ajusta o R$ por corrida e por hora que definem o verde/amarelo/vermelho.'],
       ['🔌', 'Saúde do carro (OBD2)', 'Com o sensor, lê consumo real, RPM e temperatura — precisão máxima e segurança do carro.'],
@@ -655,9 +655,179 @@ const GIG_GUIDE = {
   },
 } as const
 
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+// 🎬 MÍDIAS DA PÁGINA (14/set). Cada espaço tem NOME DE ARQUIVO fixo em /public/gigradar/.
+// Arquivo ausente = o espaço some no site público (nunca um buraco quebrado). Pra VER os espaços
+// reservados com nome/tamanho/formato, abra a página com ?midias=1 (ou rode em dev).
+// Pra trocar uma mídia: gere com o MESMO nome e formato, jogue em public/gigradar/ e publique.
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+type Midia = { file: string; w: number; h: number; kind: 'image' | 'video'; poster?: string; who: string; alt: string }
+
+const MIDIA = {
+  heroCard: { file: 'hero-card-oferta.webp', w: 1080, h: 1350, kind: 'image', who: 'Gerar no ChatGPT (imagem)', alt: 'Motorista à noite com o card do GigRadar sobre a oferta no celular' },
+  videoOferta: { file: 'video-oferta-chega.mp4', poster: 'video-oferta-chega.webp', w: 1080, h: 1920, kind: 'video', who: 'Gerar no Google Flow (Veo)', alt: 'Vídeo: a oferta chega e o card do GigRadar responde' },
+  ledNoite: { file: 'led-chegou-noite.webp', w: 1600, h: 900, kind: 'image', who: 'Gerar no Gemini ou ChatGPT (imagem)', alt: 'Painel de LED no para-brisa mostrando CHEGOU à noite' },
+  telaCard: { file: 'tela-card-oferta.webp', w: 540, h: 1200, kind: 'image', who: 'Print real: card sobre uma oferta (tapar dados)', alt: 'Print do card do GigRadar sobre uma oferta' },
+  telaRadar: { file: 'tela-radar.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Aba Radar do GigRadar' },
+  telaGanhos: { file: 'tela-ganhos.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Aba Ganhos do GigRadar' },
+  telaMetas: { file: 'tela-metas.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Aba Metas do GigRadar' },
+  telaEstrada: { file: 'tela-estrada.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Aba Estrada do GigRadar' },
+  telaVisual: { file: 'tela-visual.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Aba Visual do GigRadar' },
+  telaVeiculos: { file: 'tela-veiculos.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Tela de veículos do GigRadar' },
+} satisfies Record<string, Midia>
+
+// Print com legenda: se o arquivo ainda não existe no site público, some a legenda junto.
+function GalleryItem({ m, caption, showSlots }: { m: Midia; caption: string; showSlots: boolean }) {
+  const [missing, setMissing] = useState(false)
+  if (missing && !showSlots) return null
+  return (
+    <figure className="m-0">
+      <MediaSlot m={m} showSlots={showSlots} onMissing={() => setMissing(true)} />
+      <figcaption className="mt-2 text-center text-sm" style={{ color: 'var(--theme-text-secondary)' }}>{caption}</figcaption>
+    </figure>
+  )
+}
+
+function MediaSlot({ m, showSlots, className = '', onMissing }: { m: Midia; showSlots: boolean; className?: string; onMissing?: () => void }) {
+  const [missing, setMissingState] = useState(false)
+  const setMissing = (v: boolean) => { setMissingState(v); if (v) onMissing?.() }
+  const src = `/gigradar/${m.file}`
+  if (missing) {
+    if (!showSlots) return null
+    return (
+      <div
+        className={`flex flex-col items-center justify-center gap-1 rounded-2xl border-2 border-dashed border-amber-400/50 bg-amber-400/5 p-4 text-center ${className}`}
+        style={{ aspectRatio: `${m.w} / ${m.h}`, color: 'var(--theme-text-secondary)' }}
+      >
+        <strong className="font-mono text-xs break-all" style={{ color: 'var(--theme-text)' }}>{m.file}</strong>
+        <span className="text-xs">{m.w} × {m.h} px · {m.kind === 'video' ? 'MP4 (H.264), até 8 MB' : 'WebP, até 300 KB'}</span>
+        {m.poster && <span className="text-xs">capa: {m.poster}</span>}
+        <span className="text-xs italic">{m.who}</span>
+      </div>
+    )
+  }
+  if (m.kind === 'video') {
+    return (
+      <video
+        src={src}
+        poster={m.poster ? `/gigradar/${m.poster}` : undefined}
+        width={m.w}
+        height={m.h}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-label={m.alt}
+        onError={() => setMissing(true)}
+        className={`w-full rounded-2xl border border-white/10 bg-black ${className}`}
+      />
+    )
+  }
+  return (
+    <img
+      src={src}
+      alt={m.alt}
+      width={m.w}
+      height={m.h}
+      loading="lazy"
+      onError={() => setMissing(true)}
+      className={`w-full rounded-2xl border border-white/10 ${className}`}
+    />
+  )
+}
+
+// Conteúdo NOVO de 14/set — por ora só em português (pedido Ranz). en/es/fr seguem o texto antigo.
+const NOVO_PT = {
+  sub: 'O radar de corridas que valem a pena. Ele lê a oferta da Uber e da 99 na tela e responde na hora, por cor e por voz, se a corrida paga o seu custo — e diz o porquê. Antes de você aceitar.',
+  videoTitle: 'Em 1 segundo, na tela',
+  videoIntro: 'A oferta chega, o card aparece por cima e a voz fala. Você decide sem tirar o olho da rua.',
+  levelsTitle: '6 níveis, não 3 cores',
+  levelsIntro: 'O veredito usa o SEU custo e as SUAS metas. Cada nível tem cor, símbolo e nome — e a voz fala o motivo.',
+  levels: [
+    ['🔥', 'Ouro', 'Bem acima da sua meta. Corre.'],
+    ['🟢', 'Pega', 'Bateu a meta.'],
+    ['🟡', 'Decide', 'Perto da meta. A decisão é sua — o app não empurra.'],
+    ['🟠', 'Cuidado', 'Acima do mínimo, mas por pouco.'],
+    ['🔴', 'Recusa', 'Abaixo do mínimo.'],
+    ['💸', 'Prejuízo', 'Você paga pra trabalhar.'],
+  ],
+  levelsNote: 'Quando o risco é máximo (clima extremo, por exemplo), o card ganha tarja preta — segurança vem antes do dinheiro.',
+  featTitle: 'O que o GigRadar faz hoje',
+  featIntro: 'O beta cresceu muito desde julho. Tudo abaixo já roda no app — o que depende de acessório está marcado.',
+  groups: [
+    ['🗣️', 'Voz que não atrapalha', [
+      'Fala em português, inglês ou espanhol',
+      'Diz o risco primeiro e o motivo da cor no fim',
+      'Com passageiro a bordo, fala em código',
+      'Não fala por cima do veredito; várias ofertas seguidas viram fala curta',
+    ]],
+    ['🛣️', 'Estrada e riscos', [
+      'Morro, servidão, via estreita e alagamento (inclusive beira de rio)',
+      'Clima extremo, vento lateral e alerta oficial',
+      'Risco avaliado no trajeto da corrida, não só no destino',
+      'Radar em rodovia com o nome da via, e aviso de excesso de velocidade',
+      'Aviso de cansaço por horas seguidas ao volante',
+    ]],
+    ['💰', 'Dinheiro de verdade', [
+      'Repasse semanal e recebido na hora (Pix ou dinheiro)',
+      'Custo fixo item a item: parcela, seguro, IPVA, aluguel',
+      'Metas que o app aprende com o seu turno',
+      'Avisa quando o seu horário costuma ser forte ou fraco',
+    ]],
+    ['🚗', 'Seus veículos', [
+      'Carro, moto ou frota inteira no mesmo app',
+      'Financiamento, aluguel ou assinatura de cada veículo',
+      'Gasto separado por veículo e por motorista',
+    ]],
+    ['⚡', 'Carro elétrico', [
+      'Recarga com %, tempo e potência do carregador',
+      'Curva real: os últimos 20% demoram quase o resto todo',
+      'Energia de casa e de eletroposto separadas no custo/km',
+      'Aviso quando a carga não cabe na corrida',
+    ]],
+    ['🔌', 'Saúde do carro (OBD2) · precisa do sensor', [
+      'Códigos de defeito explicados em linguagem simples, com histórico',
+      'Consumo, RPM e temperatura em carro a combustão',
+      'Só leitura: o app nunca escreve nada no carro',
+    ]],
+    ['📍', 'Seus lugares', [
+      'Postos preferidos com preço e data',
+      'Mercados que o app aprende sozinho',
+      'Vários endereços de casa, com CEP que acha a rua',
+      'Modo Casa: volta pra casa sendo pago, e a voz diz o lado',
+    ]],
+    ['🔄', 'Sempre em dia', [
+      'O app se atualiza sozinho e confere o arquivo antes de instalar',
+      'Cópia de segurança dos seus dados — trocar de telefone não apaga nada',
+      'Indique um amigo com o seu código',
+    ]],
+  ] as [string, string, string[]][],
+  galleryTitle: 'Veja o app por dentro',
+  galleryIntro: 'Telas reais do GigRadar, do telefone de quem roda todo dia.',
+  gallery: [
+    ['telaCard', 'O card sobre a oferta'],
+    ['telaRadar', 'Radar: pronto pra rodar'],
+    ['telaGanhos', 'Ganhos: o que sobrou'],
+    ['telaMetas', 'Metas em vigor'],
+    ['telaEstrada', 'Estrada: riscos e lugares'],
+    ['telaVeiculos', 'Seus veículos'],
+  ],
+  ledTitle: 'Painel de LED: o passageiro acha o seu carro',
+  ledIntro: 'Um painel no para-brisa mostra a plataforma enquanto você chega e acende "CHEGOU" quando você para. Funciona no automático, no semiautomático ou no manual — você escolhe.',
+  ledPoints: [
+    ['🔒', 'Privacidade', 'O nome do passageiro só aparece na chegada. Nunca durante a viagem.'],
+    ['👋', 'Saudações', 'Mensagens de boas-vindas que você liga, desliga e escolhe a favorita.'],
+    ['🧪', 'Acessório em teste', 'Modelo testado: DJU910W, matriz 16 × 64 LEDs, 9,2 × 37,4 cm, 5 V / 2 A, Bluetooth. Painel de outra matriz quebra as letras.'],
+  ],
+}
+
 const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
   const t = content[lang] ?? content.pt
   const g = GIG_GUIDE[lang] ?? GIG_GUIDE.pt
+  const isPt = lang === 'pt'
+  // Espaços de mídia vazios só aparecem em dev ou com ?midias=1 — no site público, somem.
+  const showSlots = import.meta.env.DEV || (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('midias'))
   const [formData, setFormData] = useState({ name: '', whatsapp: '', email: '', city: '', app: '', phone: '', referral: '' })
   const [acceptedTerms, setAcceptedTerms] = useState(false)
   const [acceptedFeedback, setAcceptedFeedback] = useState(false)
@@ -762,11 +932,45 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
               {t.hero}
             </h1>
             <p className="mx-auto max-w-2xl text-lg md:text-xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
-              {t.sub}
+              {isPt ? NOVO_PT.sub : t.sub}
             </p>
             <p className="mt-4 text-sm" style={{ color: 'var(--theme-text-secondary)' }}>{t.madeBy}</p>
             <p className="mt-3 text-sm font-semibold" style={{ color: 'var(--theme-text)' }}>{t.androidOnly}</p>
           </div>
+
+          {/* 🎬 Hero visual + vídeo (14/set, só pt) — somem sozinhos enquanto o arquivo não existir */}
+          {isPt && (
+            <section className="mb-16 mx-auto grid max-w-3xl items-center gap-6 md:grid-cols-2">
+              <MediaSlot m={MIDIA.heroCard} showSlots={showSlots} />
+              <div>
+                <h2 className="mb-3 font-handel text-2xl uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>{NOVO_PT.videoTitle}</h2>
+                <p className="mb-4 text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{NOVO_PT.videoIntro}</p>
+                <div className="mx-auto max-w-[260px]">
+                  <MediaSlot m={MIDIA.videoOferta} showSlots={showSlots} />
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* 🎚️ Os 6 níveis do veredito (14/set, só pt) */}
+          {isPt && (
+            <section className="mb-16 mx-auto max-w-3xl">
+              <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>{NOVO_PT.levelsTitle}</h2>
+              <p className="mx-auto mb-7 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{NOVO_PT.levelsIntro}</p>
+              <ul className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+                {NOVO_PT.levels.map(([icon, name, body]) => (
+                  <li key={name} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <span className="text-2xl leading-none" aria-hidden="true">{icon}</span>
+                    <div>
+                      <strong className="block font-handel text-sm uppercase tracking-[0.08em]" style={{ color: 'var(--theme-text)' }}>{name}</strong>
+                      <span className="text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{body}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 rounded-2xl border border-white/10 bg-black/40 p-4 text-center text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>⬛ {NOVO_PT.levelsNote}</p>
+            </section>
+          )}
 
           {/* Posicionamento do produto */}
           <section className="mb-16 mx-auto max-w-3xl">
@@ -792,7 +996,61 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
             </p>
           </section>
 
-          {/* Features */}
+          {/* Features — pt ganhou a lista de 14/set; en/es/fr seguem a antiga */}
+          {isPt ? (
+            <>
+              <section className="mb-16">
+                <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>{NOVO_PT.featTitle}</h2>
+                <p className="mx-auto mb-8 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{NOVO_PT.featIntro}</p>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {NOVO_PT.groups.map(([icon, title, items]) => (
+                    <div key={title} className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                      <div className="mb-3 flex items-center gap-3">
+                        <span className="text-xl" aria-hidden="true">{icon}</span>
+                        <strong style={{ color: 'var(--theme-text)' }}>{title}</strong>
+                      </div>
+                      <ul className="space-y-1.5">
+                        {items.map((it) => (
+                          <li key={it} className="flex items-start gap-2 text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                            <span className="text-azimut-red" aria-hidden="true">▸</span>{it}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* 📱 Galeria de telas reais */}
+              <section className="mb-16">
+                <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>{NOVO_PT.galleryTitle}</h2>
+                <p className="mx-auto mb-8 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{NOVO_PT.galleryIntro}</p>
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+                  {NOVO_PT.gallery.map(([key, caption]) => (
+                    <GalleryItem key={key} m={MIDIA[key as keyof typeof MIDIA]} caption={caption} showSlots={showSlots} />
+                  ))}
+                </div>
+              </section>
+
+              {/* 📟 Painel de LED */}
+              <section className="mb-16 mx-auto max-w-3xl">
+                <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>{NOVO_PT.ledTitle}</h2>
+                <p className="mx-auto mb-7 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{NOVO_PT.ledIntro}</p>
+                <MediaSlot m={MIDIA.ledNoite} showSlots={showSlots} className="mb-5" />
+                <ul className="grid gap-3 sm:grid-cols-3">
+                  {NOVO_PT.ledPoints.map(([icon, title, body]) => (
+                    <li key={title} className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                      <div className="mb-1 flex items-center gap-2">
+                        <span className="text-lg" aria-hidden="true">{icon}</span>
+                        <strong className="text-sm" style={{ color: 'var(--theme-text)' }}>{title}</strong>
+                      </div>
+                      <p className="text-xs leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{body}</p>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </>
+          ) : (
           <section className="mb-16">
             <h2 className="mb-8 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>
               {t.featTitle}
@@ -806,6 +1064,7 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
               ))}
             </ul>
           </section>
+          )}
 
           {/* Como instala */}
           <section className="mb-16">
