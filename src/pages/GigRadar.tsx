@@ -16,6 +16,9 @@ const WHATSAPP = '5548999701301'
 const APK_URL = '/downloads/gigradar-latest.apk'
 const APK_VERSION_URL = '/downloads/gigradar-version.json'
 const GIGRADAR_ADMIN_URL = import.meta.env.VITE_GIGRADAR_ADMIN_URL || 'https://cms-gigradar.azmt.com.br'
+// Versão dos Termos mostrada abaixo — vai junto no cadastro pro CMS saber quem aceitou qual (14/set).
+// Mudou o texto dos Termos? Suba este número E o `termsVersion` dos 4 idiomas E o TERMOS_ATUAIS do CMS.
+const TERMS_VERSION = '1.2'
 
 const content = {
   pt: {
@@ -737,6 +740,7 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
           app: formData.app,
           referredBy: formData.referral || undefined,
           acceptedTos: acceptedTerms && acceptedFeedback,
+          tosVersion: TERMS_VERSION,
         }),
       })
     } catch {}
