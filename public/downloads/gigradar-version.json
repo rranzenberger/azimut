@@ -1,10 +1,10 @@
 {
-  "version": "0.473 (3b4ec24)",
-  "version_code": 473,
-  "updatedAt": "2026-09-21T18:53:37Z",
+  "version": "0.474 (d21aee3)",
+  "version_code": 474,
+  "updatedAt": "2026-09-21T21:58:15Z",
   "apk_url": "https://www.azmt.com.br/downloads/gigradar-latest.apk",
-  "apk_size_bytes": 71914441,
-  "sha256": "7e67fbd0ee4da2231808248af7ad2f4b58001d697f55fcf3e27ff2cf15d51afb",
-  "changelog": "Novidades: passageiro liga e desliga sozinho, botao Casa, aviso de painel LED travado, telas de limites e metas corrigidas",
+  "apk_size_bytes": 71914437,
+  "sha256": "9b7f83bb1f5dacc9068238b191b07dd3e3bfb6348e8df5c916d44b393fb6a17b",
+  "changelog": "Novidades: seus gastos voltam a ir pro backup (estavam parados desde agosto)",
   "is_mandatory": false
 }
