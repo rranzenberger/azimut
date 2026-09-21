@@ -1,10 +1,10 @@
 {
-  "version": "0.474 (d21aee3)",
-  "version_code": 474,
-  "updatedAt": "2026-09-21T21:58:15Z",
+  "version": "0.475 (e9aad07)",
+  "version_code": 475,
+  "updatedAt": "2026-09-21T23:51:34Z",
   "apk_url": "https://www.azmt.com.br/downloads/gigradar-latest.apk",
-  "apk_size_bytes": 71914437,
-  "sha256": "9b7f83bb1f5dacc9068238b191b07dd3e3bfb6348e8df5c916d44b393fb6a17b",
-  "changelog": "Novidades: seus gastos voltam a ir pro backup (estavam parados desde agosto)",
+  "apk_size_bytes": 71952065,
+  "sha256": "a871b6a111b1298d6937f4f23a7e6b2f0dc76db8f2cb73b1fd8cbab45e5cac93",
+  "changelog": "Novidades: Modo Casa confere o destino antes da cor, backup protegido por codigo, busca curta em metros com veredito",
   "is_mandatory": false
 }
