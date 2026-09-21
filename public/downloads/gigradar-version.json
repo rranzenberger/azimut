@@ -1,10 +1,10 @@
 {
-  "version": "0.472 (842b98f)",
-  "version_code": 472,
-  "updatedAt": "2026-09-21T04:01:43Z",
+  "version": "0.473 (3b4ec24)",
+  "version_code": 473,
+  "updatedAt": "2026-09-21T18:53:37Z",
   "apk_url": "https://www.azmt.com.br/downloads/gigradar-latest.apk",
-  "apk_size_bytes": 71882293,
-  "sha256": "2eb0f24450b99c34aa474cf61ad83f45c7926c48a9fa23f18886fbc7c75b4948",
-  "changelog": "ci: builda so o modulo app na release (lint do prototipo carbridge barrava a publicacao)",
+  "apk_size_bytes": 71914441,
+  "sha256": "7e67fbd0ee4da2231808248af7ad2f4b58001d697f55fcf3e27ff2cf15d51afb",
+  "changelog": "Novidades: passageiro liga e desliga sozinho, botao Casa, aviso de painel LED travado, telas de limites e metas corrigidas",
   "is_mandatory": false
 }
