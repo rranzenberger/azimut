@@ -1,10 +1,10 @@
 {
-  "version": "0.478 (85b97e3)",
-  "version_code": 478,
-  "updatedAt": "2026-09-23T06:15:38Z",
+  "version": "0.479 (65a01e2)",
+  "version_code": 479,
+  "updatedAt": "2026-09-23T06:28:38Z",
   "apk_url": "https://www.azmt.com.br/downloads/gigradar-latest.apk",
-  "apk_size_bytes": 72368996,
-  "sha256": "068d6cba5094b770bd4ff43bdcb63cff345e68fdb2499728ab9cc9c1df89c56c",
-  "changelog": "marca: icone AziRoad — a estrada forma o A e aponta para a estrela-guia",
+  "apk_size_bytes": 72371584,
+  "sha256": "a5b5ba59b1b2c38b8ef26e2300beb1b5f43ae3ff67e76d494f53437ca615d347",
+  "changelog": "marca: icone final = opcao E (estrela oficial Azimut vermelha no topo da estrada-A)",
   "is_mandatory": false
 }
