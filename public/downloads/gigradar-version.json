@@ -1,10 +1,10 @@
 {
-  "version": "0.477 (41aa0bb)",
-  "version_code": 477,
-  "updatedAt": "2026-09-23T06:05:48Z",
+  "version": "0.478 (85b97e3)",
+  "version_code": 478,
+  "updatedAt": "2026-09-23T06:15:38Z",
   "apk_url": "https://www.azmt.com.br/downloads/gigradar-latest.apk",
-  "apk_size_bytes": 72367364,
-  "sha256": "b8981f913ca730f822123a666dce99b1f17febeea50689c8cf188d463b1fb791",
-  "changelog": "Merge branch 'claude/turno-20set-passageiro-led-casa' into claude/app-naming-domain-7bd382",
+  "apk_size_bytes": 72368996,
+  "sha256": "068d6cba5094b770bd4ff43bdcb63cff345e68fdb2499728ab9cc9c1df89c56c",
+  "changelog": "marca: icone AziRoad — a estrada forma o A e aponta para a estrela-guia",
   "is_mandatory": false
 }
