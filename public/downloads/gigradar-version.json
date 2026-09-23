@@ -1,10 +1,10 @@
 {
-  "version": "0.476 (165e3ba)",
-  "version_code": 476,
-  "updatedAt": "2026-09-22T17:49:35Z",
+  "version": "0.477 (41aa0bb)",
+  "version_code": 477,
+  "updatedAt": "2026-09-23T06:05:48Z",
   "apk_url": "https://www.azmt.com.br/downloads/gigradar-latest.apk",
-  "apk_size_bytes": 72282840,
-  "sha256": "8978e5d76cdb9db5dd38a9c77feaee55b97a172c141fd703f8227d7163afdebb",
-  "changelog": "Novidades: proteja seu backup lendo um QR, sem digitar codigo",
+  "apk_size_bytes": 72367364,
+  "sha256": "b8981f913ca730f822123a666dce99b1f17febeea50689c8cf188d463b1fb791",
+  "changelog": "Merge branch 'claude/turno-20set-passageiro-led-casa' into claude/app-naming-domain-7bd382",
   "is_mandatory": false
 }
