@@ -22,14 +22,14 @@ const TERMS_VERSION = '1.2'
 
 const content = {
   pt: {
-    seoTitle: 'GigRadar Beta — o radar de corridas que valem a pena | Azimut',
+    seoTitle: 'AziRoad Beta — o radar de corridas que valem a pena | Azimut',
     seoDesc: 'App para motoristas de aplicativo: lê a oferta da Uber/99 e diz na hora, por cor e por voz, se a corrida paga o seu custo. Teste beta fechado — inscreva-se.',
     badge: '🚧 BETA FECHADO — por convite',
-    hero: 'GigRadar',
+    hero: 'AziRoad',
     sub: 'O radar de corridas que valem a pena. Seu copiloto lê a oferta da Uber/99 na tela e te diz, por cor e por voz, se a corrida paga o seu custo — antes de você aceitar.',
     madeBy: 'Feito por motorista, pra motorista. Um produto Azimut.',
     positionTitle: 'Muito mais que um leitor de ofertas',
-    positionIntro: 'O GigRadar está sendo construído como uma central de decisão para proteger o bolso, o carro e o trabalho do motorista. O Beta valida cada camada na rua antes do lançamento comercial.',
+    positionIntro: 'O AziRoad está sendo construído como uma central de decisão para proteger o bolso, o carro e o trabalho do motorista. O Beta valida cada camada na rua antes do lançamento comercial.',
     pillars: [
       ['💰', 'Seu ganho real', 'Cruza valor, tempo, quilômetros e seus próprios custos para mostrar se o trabalho realmente compensa.'],
       ['🚗', 'Seu carro protegido', 'Considera morros, chuva, alagamentos, vias difíceis e desgaste — porque uma corrida ruim pode custar mais que combustível.'],
@@ -48,22 +48,22 @@ const content = {
     ],
     rulesTitle: 'Regras do beta (leia antes de entrar)',
     rules: [
-      'O GigRadar está em fase de testes: pode apresentar erros e leituras incorretas. Mudanças relevantes serão comunicadas na página ou no aplicativo. Não tome decisões financeiras baseadas só no app.',
+      'O AziRoad está em fase de testes: pode apresentar erros e leituras incorretas. Mudanças relevantes serão comunicadas na página ou no aplicativo. Não tome decisões financeiras baseadas só no app.',
       'O acesso é pessoal e intransferível — não repasse o APK nem o código de liberação.',
       'No beta atual, todos os recursos disponíveis estão liberados por 30 dias. Depois o app bloqueia totalmente — peça um novo código grátis pelo WhatsApp enquanto o beta durar.',
       'Participar do beta inclui enviar um retorno curto por semana, mesmo que seja “testei e não encontrei erros”. Após 14 dias sem retorno e pelo menos um lembrete, a equipe pode não renovar a licença.',
       'O app NÃO faz login na Uber/99 e não altera nada — apenas lê a tela para te informar. A decisão de dirigir, aceitar trabalho ou seguir rota é sempre sua.',
       'Dirija com atenção. Nunca mexa no telefone com o carro em movimento.',
     ],
-    androidOnly: '📱 Disponível apenas para Android (Uber/99 rodam em Android e iPhone, mas o GigRadar por enquanto só lê a tela no Android).',
+    androidOnly: '📱 Disponível apenas para Android (Uber/99 rodam em Android e iPhone, mas o AziRoad por enquanto só lê a tela no Android).',
     stepsTitle: 'Como funciona a instalação',
     steps: [
       'Cadastre-se abaixo — a página de download libera na hora, com o APK mais recente e seu convite de código pelo WhatsApp.',
       'Baixe e toque em Instalar (o Android avisa que é fora da Play Store — normal em beta fechado).',
-      'Abra o app e siga o assistente (Acessibilidade e Localização). No Android 13 ou mais novo, se a Acessibilidade estiver cinza, libere antes: Configurações → Apps → GigRadar → ⋮ → "Permitir configurações restritas".',
+      'Abra o app e siga o assistente (Acessibilidade e Localização). No Android 13 ou mais novo, se a Acessibilidade estiver cinza, libere antes: Configurações → Apps → AziRoad → ⋮ → "Permitir configurações restritas".',
       'Digite seu código em 💎 e roda — o selo aparece sozinho na primeira oferta. 🎉',
     ],
-    downloadTitle: '📲 Baixar o GigRadar',
+    downloadTitle: '📲 Baixar o AziRoad',
     downloadBtn: '⬇️ Baixar o APK (Android)',
     downloadNote: 'Sempre a versão mais recente — este link se atualiza sozinho a cada nova versão.',
     codeTitle: '🔓 Já instalou? Libere seu acesso',
@@ -83,8 +83,8 @@ const content = {
       ['⚙️', 'Avançado', 'Vai direto pras configurações completas — pra quem já sabe exatamente o que quer.'],
     ],
     privacyTitle: 'Privacidade (resumo honesto)',
-    privacy: 'No site coletamos nome, WhatsApp, e-mail e cidade — pra gerenciar o beta e falar com você. Durante o beta, o aparelho de cada tester envia sozinho ao GigRadar o registro técnico do app e uma cópia dos dados do app (ofertas lidas, ganhos, gastos, carro, lugares e zonas). É assim que a gente acha os erros, melhora a leitura e garante que você não perca nada se trocar de telefone. Não vendemos nem repassamos esses dados. Pra excluir seu cadastro e seus dados, é só pedir.',
-    diagnosticsNotice: 'Na tela "Enviar pro GigRadar" você manda na hora, vê o que vai (com a contagem de cada grupo e o tamanho) e escreve suas sugestões. O registro técnico não guarda o nome do passageiro. As telas lidas pelo radar podem mostrar endereço de embarque e destino: servem só pra corrigir leituras e não são compartilhadas. Não mande por WhatsApp prints com dados de passageiros, documentos ou dados bancários.',
+    privacy: 'No site coletamos nome, WhatsApp, e-mail e cidade — pra gerenciar o beta e falar com você. Durante o beta, o aparelho de cada tester envia sozinho ao AziRoad o registro técnico do app e uma cópia dos dados do app (ofertas lidas, ganhos, gastos, carro, lugares e zonas). É assim que a gente acha os erros, melhora a leitura e garante que você não perca nada se trocar de telefone. Não vendemos nem repassamos esses dados. Pra excluir seu cadastro e seus dados, é só pedir.',
+    diagnosticsNotice: 'Na tela "Enviar pro AziRoad" você manda na hora, vê o que vai (com a contagem de cada grupo e o tamanho) e escreve suas sugestões. O registro técnico não guarda o nome do passageiro. As telas lidas pelo radar podem mostrar endereço de embarque e destino: servem só pra corrigir leituras e não são compartilhadas. Não mande por WhatsApp prints com dados de passageiros, documentos ou dados bancários.',
     feedbackTitle: 'Sua opinião vira ajuste no app',
     feedbackIntro: 'No beta, o aparelho manda o registro técnico pra gente achar o erro. Você diz o que achou, do seu jeito. Quem lê é gente.',
     feedbackPoints: [
@@ -109,7 +109,7 @@ const content = {
       ['Mudanças e saída', 'Mudanças relevantes nos termos ou no tratamento de dados serão destacadas. Você pode sair do beta e solicitar seus direitos de privacidade pelo canal indicado na Política de Privacidade.'],
     ],
     privacyLink: 'Ler a Política de Privacidade da Azimut',
-    formTitle: 'Quero testar o GigRadar',
+    formTitle: 'Quero testar o AziRoad',
     namePh: 'Seu nome',
     whatsPh: 'Seu WhatsApp (com DDD)',
     emailPh: 'Seu e-mail',
@@ -122,20 +122,20 @@ const content = {
     acceptFeedback: 'Comprometo-me a enviar um retorno curto por semana, mesmo que não encontre erros. Entendo que 14 dias sem retorno, após um lembrete, podem impedir a renovação da licença Beta.',
     acceptUpdates: 'Quero receber mensagens sobre meu acesso beta, correções e novas versões. (opcional)',
     cta: 'Entrar no beta',
-    sentTitle: '✅ Recebido! Valeu por entrar no ecossistema GigRadar 💚',
+    sentTitle: '✅ Recebido! Valeu por entrar no ecossistema AziRoad 💚',
     sentMsg: 'Você está ajudando a construir a ferramenta que protege o bolso de quem roda. Baixe o app logo abaixo — e te chamamos no WhatsApp com seu código de liberação e o convite do grupo dos testadores.',
     sentBtn: '📱 Chamar no WhatsApp agora',
     back: 'Voltar',
   },
   en: {
-    seoTitle: 'GigRadar Beta — the radar for rides worth taking | Azimut',
+    seoTitle: 'AziRoad Beta — the radar for rides worth taking | Azimut',
     seoDesc: 'App for rideshare drivers: reads the Uber/99 offer on screen and tells you instantly, by color and voice, if the ride covers your cost. Closed beta — sign up.',
     badge: '🚧 CLOSED BETA — invite only',
-    hero: 'GigRadar',
+    hero: 'AziRoad',
     sub: 'The radar for rides worth taking. Your copilot reads the Uber/99 offer on screen and tells you, by color and voice, if the ride pays your cost — before you accept.',
     madeBy: 'Built by a driver, for drivers. An Azimut product.',
     positionTitle: 'Much more than an offer reader',
-    positionIntro: 'GigRadar is being built as a decision centre that protects the driver’s earnings, vehicle and work. The Beta validates each layer on the road before commercial release.',
+    positionIntro: 'AziRoad is being built as a decision centre that protects the driver’s earnings, vehicle and work. The Beta validates each layer on the road before commercial release.',
     pillars: [
       ['💰', 'Your real earnings', 'Combines price, time, distance and your own costs to show whether the job is truly worthwhile.'],
       ['🚗', 'Your vehicle protected', 'Considers hills, rain, flooding, difficult roads and wear — because a bad ride can cost more than fuel.'],
@@ -154,22 +154,22 @@ const content = {
     ],
     rulesTitle: 'Beta rules (read before joining)',
     rules: [
-      'GigRadar is in testing: it may show errors and misreads. Significant changes will be communicated on this page or in the app. Do not make financial decisions based on the app alone.',
+      'AziRoad is in testing: it may show errors and misreads. Significant changes will be communicated on this page or in the app. Do not make financial decisions based on the app alone.',
       'Access is personal and non-transferable — don\'t share the APK or your unlock code.',
       'In the current beta, every available feature is unlocked for 30 days. After that the app locks completely — request a new free code on WhatsApp while the beta lasts.',
       'Joining the beta includes sending one short update per week, even if it only says “tested and found no errors.” After 14 days without an update and at least one reminder, the team may decline to renew the licence.',
       'The app does NOT log into Uber/99 and changes nothing — it only reads the screen to inform you. Driving, work acceptance and route decisions are always yours.',
       'Drive safely. Never touch the phone while the car is moving.',
     ],
-    androidOnly: '📱 Android only for now (Uber/99 run on Android and iPhone, but GigRadar\'s screen-reading only works on Android so far).',
+    androidOnly: '📱 Android only for now (Uber/99 run on Android and iPhone, but AziRoad\'s screen-reading only works on Android so far).',
     stepsTitle: 'How installation works',
     steps: [
       'Sign up below — the download page unlocks instantly, with the latest APK and your unlock code invite on WhatsApp.',
       'Download and tap Install (Android warns it\'s outside the Play Store — normal for a closed beta).',
-      'Open the app and follow the wizard (Accessibility and Location). On Android 13 or newer, if Accessibility is greyed out, unlock it first: Settings → Apps → GigRadar → ⋮ → "Allow restricted settings".',
+      'Open the app and follow the wizard (Accessibility and Location). On Android 13 or newer, if Accessibility is greyed out, unlock it first: Settings → Apps → AziRoad → ⋮ → "Allow restricted settings".',
       'Enter your code in 💎 and drive — the badge shows up on the first offer. 🎉',
     ],
-    downloadTitle: '📲 Download GigRadar',
+    downloadTitle: '📲 Download AziRoad',
     downloadBtn: '⬇️ Download the APK (Android)',
     downloadNote: 'Always the latest version — this link updates itself with every new release.',
     codeTitle: '🔓 Already installed? Unlock your access',
@@ -189,8 +189,8 @@ const content = {
       ['⚙️', 'Advanced', 'Goes straight to full settings — for those who already know exactly what they want.'],
     ],
     privacyTitle: 'Privacy (honest summary)',
-    privacy: 'On this site we collect name, WhatsApp, e-mail and city — to run the beta and talk to you. During the beta, each tester\'s phone automatically sends GigRadar the app\'s technical log and a copy of the app\'s data (offers read, earnings, expenses, vehicle, places and zones). That is how we find bugs, improve reading and make sure you lose nothing if you change phones. We do not sell or share this data. To delete your registration and your data, just ask.',
-    diagnosticsNotice: 'On the "Send to GigRadar" screen you can send right away, see what goes (with the count for each group and the size) and write suggestions. The technical log does not keep the passenger\'s name. Screens read by the radar may show pickup and destination addresses: they are used only to fix readings and are not shared. Never send screenshots with passenger data, documents or banking details over WhatsApp.',
+    privacy: 'On this site we collect name, WhatsApp, e-mail and city — to run the beta and talk to you. During the beta, each tester\'s phone automatically sends AziRoad the app\'s technical log and a copy of the app\'s data (offers read, earnings, expenses, vehicle, places and zones). That is how we find bugs, improve reading and make sure you lose nothing if you change phones. We do not sell or share this data. To delete your registration and your data, just ask.',
+    diagnosticsNotice: 'On the "Send to AziRoad" screen you can send right away, see what goes (with the count for each group and the size) and write suggestions. The technical log does not keep the passenger\'s name. Screens read by the radar may show pickup and destination addresses: they are used only to fix readings and are not shared. Never send screenshots with passenger data, documents or banking details over WhatsApp.',
     feedbackTitle: 'Your feedback becomes an app fix',
     feedbackIntro: 'During the beta, the phone sends the technical log so we can find the bug. You tell us what you think, your way. A person reads it.',
     feedbackPoints: [
@@ -215,7 +215,7 @@ const content = {
       ['Changes and exit', 'Material changes to these terms or data handling will be highlighted. You may leave the beta and request privacy rights through the channel in the Privacy Policy.'],
     ],
     privacyLink: 'Read Azimut\'s Privacy Policy',
-    formTitle: 'I want to test GigRadar',
+    formTitle: 'I want to test AziRoad',
     namePh: 'Your name',
     whatsPh: 'Your WhatsApp',
     emailPh: 'Your e-mail',
@@ -228,20 +228,20 @@ const content = {
     acceptFeedback: 'I agree to send one short update per week, even when I find no errors. I understand that 14 days without an update, after a reminder, may prevent renewal of my Beta licence.',
     acceptUpdates: 'I want messages about my beta access, fixes and new versions. (optional)',
     cta: 'Join the beta',
-    sentTitle: '✅ Received! Thanks for joining the GigRadar ecosystem 💚',
+    sentTitle: '✅ Received! Thanks for joining the AziRoad ecosystem 💚',
     sentMsg: 'You\'re helping build the tool that protects drivers\' pockets. Download the app right below — we\'ll message you on WhatsApp with your unlock code and the testers group invite.',
     sentBtn: '📱 Message us on WhatsApp now',
     back: 'Back',
   },
   es: {
-    seoTitle: 'GigRadar Beta — el radar de viajes que valen la pena | Azimut',
+    seoTitle: 'AziRoad Beta — el radar de viajes que valen la pena | Azimut',
     seoDesc: 'App para conductores: lee la oferta de Uber/99 en pantalla y te dice al instante, por color y voz, si el viaje cubre tu costo. Beta cerrada — inscríbete.',
     badge: '🚧 BETA CERRADA — por invitación',
-    hero: 'GigRadar',
+    hero: 'AziRoad',
     sub: 'El radar de viajes que valen la pena. Tu copiloto lee la oferta de Uber/99 en pantalla y te dice, por color y voz, si el viaje paga tu costo — antes de aceptar.',
     madeBy: 'Hecho por un conductor, para conductores. Un producto Azimut.',
     positionTitle: 'Mucho más que un lector de ofertas',
-    positionIntro: 'GigRadar se está construyendo como una central de decisión para proteger las ganancias, el vehículo y el trabajo del conductor. La Beta valida cada capa en la calle antes del lanzamiento comercial.',
+    positionIntro: 'AziRoad se está construyendo como una central de decisión para proteger las ganancias, el vehículo y el trabajo del conductor. La Beta valida cada capa en la calle antes del lanzamiento comercial.',
     pillars: [
       ['💰', 'Tus ganancias reales', 'Combina valor, tiempo, distancia y tus propios costos para mostrar si el trabajo realmente compensa.'],
       ['🚗', 'Tu vehículo protegido', 'Considera pendientes, lluvia, inundaciones, vías difíciles y desgaste — porque un mal viaje puede costar más que combustible.'],
@@ -260,22 +260,22 @@ const content = {
     ],
     rulesTitle: 'Reglas de la beta (lee antes de entrar)',
     rules: [
-      'GigRadar está en pruebas: puede mostrar errores y lecturas incorrectas. Los cambios relevantes se comunicarán en esta página o en la app. No tomes decisiones financieras solo por la app.',
+      'AziRoad está en pruebas: puede mostrar errores y lecturas incorrectas. Los cambios relevantes se comunicarán en esta página o en la app. No tomes decisiones financieras solo por la app.',
       'El acceso es personal e intransferible — no compartas el APK ni tu código.',
       'En la beta actual, todas las funciones disponibles están liberadas por 30 días. Después la app se bloquea por completo — pide un código nuevo gratis por WhatsApp mientras dure la beta.',
       'Participar en la beta incluye enviar un breve informe por semana, aunque solo diga “probé y no encontré errores”. Tras 14 días sin informe y al menos un recordatorio, el equipo puede no renovar la licencia.',
       'La app NO inicia sesión en Uber/99 y no altera nada — solo lee la pantalla para informarte. Las decisiones de conducir, aceptar trabajo o seguir una ruta siempre son tuyas.',
       'Conduce con atención. Nunca toques el teléfono con el auto en movimiento.',
     ],
-    androidOnly: '📱 Disponible solo para Android por ahora (Uber/99 funcionan en Android y iPhone, pero la lectura de pantalla de GigRadar solo funciona en Android).',
+    androidOnly: '📱 Disponible solo para Android por ahora (Uber/99 funcionan en Android y iPhone, pero la lectura de pantalla de AziRoad solo funciona en Android).',
     stepsTitle: 'Cómo funciona la instalación',
     steps: [
       'Regístrate abajo — la página de descarga se abre al instante, con el APK más reciente y tu invitación de código por WhatsApp.',
       'Descarga y toca Instalar (Android avisa que es fuera de Play Store — normal en beta cerrada).',
-      'Abre la app y sigue el asistente (Accesibilidad y Ubicación). En Android 13 o más nuevo, si la Accesibilidad aparece gris, libérala antes: Ajustes → Aplicaciones → GigRadar → ⋮ → "Permitir ajustes restringidos".',
+      'Abre la app y sigue el asistente (Accesibilidad y Ubicación). En Android 13 o más nuevo, si la Accesibilidad aparece gris, libérala antes: Ajustes → Aplicaciones → AziRoad → ⋮ → "Permitir ajustes restringidos".',
       'Escribe tu código en 💎 y a rodar — el sello aparece solo en la primera oferta. 🎉',
     ],
-    downloadTitle: '📲 Descargar GigRadar',
+    downloadTitle: '📲 Descargar AziRoad',
     downloadBtn: '⬇️ Descargar el APK (Android)',
     downloadNote: 'Siempre la versión más reciente — este link se actualiza solo con cada nueva versión.',
     codeTitle: '🔓 ¿Ya instalaste? Libera tu acceso',
@@ -295,8 +295,8 @@ const content = {
       ['⚙️', 'Avanzado', 'Va directo a la configuración completa — para quien ya sabe exactamente lo que quiere.'],
     ],
     privacyTitle: 'Privacidad (resumen honesto)',
-    privacy: 'En el sitio recolectamos nombre, WhatsApp, e-mail y ciudad — para gestionar la beta y hablar contigo. Durante la beta, el teléfono de cada tester envía automáticamente a GigRadar el registro técnico de la app y una copia de los datos de la app (ofertas leídas, ganancias, gastos, vehículo, lugares y zonas). Así encontramos errores, mejoramos la lectura y te aseguramos no perder nada si cambias de teléfono. No vendemos ni compartimos estos datos. Para borrar tu registro y tus datos, solo pídelo.',
-    diagnosticsNotice: 'En la pantalla "Enviar a GigRadar" envías al momento, ves lo que se va (con la cantidad de cada grupo y el tamaño) y escribes sugerencias. El registro técnico no guarda el nombre del pasajero. Las pantallas leídas por el radar pueden mostrar direcciones de recogida y destino: sirven solo para corregir lecturas y no se comparten. Nunca envíes por WhatsApp capturas con datos de pasajeros, documentos o información bancaria.',
+    privacy: 'En el sitio recolectamos nombre, WhatsApp, e-mail y ciudad — para gestionar la beta y hablar contigo. Durante la beta, el teléfono de cada tester envía automáticamente a AziRoad el registro técnico de la app y una copia de los datos de la app (ofertas leídas, ganancias, gastos, vehículo, lugares y zonas). Así encontramos errores, mejoramos la lectura y te aseguramos no perder nada si cambias de teléfono. No vendemos ni compartimos estos datos. Para borrar tu registro y tus datos, solo pídelo.',
+    diagnosticsNotice: 'En la pantalla "Enviar a AziRoad" envías al momento, ves lo que se va (con la cantidad de cada grupo y el tamaño) y escribes sugerencias. El registro técnico no guarda el nombre del pasajero. Las pantallas leídas por el radar pueden mostrar direcciones de recogida y destino: sirven solo para corregir lecturas y no se comparten. Nunca envíes por WhatsApp capturas con datos de pasajeros, documentos o información bancaria.',
     feedbackTitle: 'Tu opinión se vuelve ajuste en la app',
     feedbackIntro: 'En la beta, el teléfono envía el registro técnico para que encontremos el error. Tú dices lo que piensas, a tu manera. Lo lee una persona.',
     feedbackPoints: [
@@ -321,7 +321,7 @@ const content = {
       ['Cambios y salida', 'Los cambios relevantes de estos términos o del tratamiento de datos se destacarán. Puedes salir de la beta y ejercer tus derechos de privacidad por el canal de la Política de Privacidad.'],
     ],
     privacyLink: 'Leer la Política de Privacidad de Azimut',
-    formTitle: 'Quiero probar GigRadar',
+    formTitle: 'Quiero probar AziRoad',
     namePh: 'Tu nombre',
     whatsPh: 'Tu WhatsApp',
     emailPh: 'Tu e-mail',
@@ -334,20 +334,20 @@ const content = {
     acceptFeedback: 'Me comprometo a enviar un informe breve por semana, aunque no encuentre errores. Entiendo que 14 días sin informe, después de un recordatorio, pueden impedir la renovación de mi licencia Beta.',
     acceptUpdates: 'Quiero recibir mensajes sobre mi acceso beta, correcciones y nuevas versiones. (opcional)',
     cta: 'Entrar a la beta',
-    sentTitle: '✅ ¡Recibido! Gracias por entrar al ecosistema GigRadar 💚',
+    sentTitle: '✅ ¡Recibido! Gracias por entrar al ecosistema AziRoad 💚',
     sentMsg: 'Estás ayudando a construir la herramienta que protege el bolsillo de quien maneja. Descarga la app justo abajo — te escribimos por WhatsApp con tu código y la invitación al grupo.',
     sentBtn: '📱 Escribir por WhatsApp ahora',
     back: 'Volver',
   },
   fr: {
-    seoTitle: 'GigRadar Beta — le radar des courses qui valent la peine | Azimut',
+    seoTitle: 'AziRoad Beta — le radar des courses qui valent la peine | Azimut',
     seoDesc: 'App pour chauffeurs : lit l\'offre Uber/99 à l\'écran et vous dit instantanément, par couleur et par voix, si la course couvre vos coûts. Bêta fermée — inscrivez-vous.',
     badge: '🚧 BÊTA FERMÉE — sur invitation',
-    hero: 'GigRadar',
+    hero: 'AziRoad',
     sub: 'Le radar des courses qui valent la peine. Votre copilote lit l\'offre Uber/99 à l\'écran et vous dit, par couleur et par voix, si la course paie vos coûts — avant d\'accepter.',
     madeBy: 'Créé par un chauffeur, pour les chauffeurs. Un produit Azimut.',
     positionTitle: 'Bien plus qu’un lecteur d’offres',
-    positionIntro: 'GigRadar est conçu comme un centre de décision qui protège les revenus, le véhicule et le travail du chauffeur. La Bêta valide chaque couche sur la route avant le lancement commercial.',
+    positionIntro: 'AziRoad est conçu comme un centre de décision qui protège les revenus, le véhicule et le travail du chauffeur. La Bêta valide chaque couche sur la route avant le lancement commercial.',
     pillars: [
       ['💰', 'Vos revenus réels', 'Combine le prix, le temps, la distance et vos propres coûts pour montrer si le travail est réellement rentable.'],
       ['🚗', 'Votre véhicule protégé', 'Tient compte des pentes, de la pluie, des inondations, des routes difficiles et de l’usure — car une mauvaise course peut coûter plus que le carburant.'],
@@ -366,22 +366,22 @@ const content = {
     ],
     rulesTitle: 'Règles de la bêta',
     rules: [
-      'GigRadar est en phase de test : des erreurs et des lectures incorrectes sont possibles. Les changements importants seront communiqués sur cette page ou dans l\'app. Ne prenez pas de décisions financières sur la seule base de l\'app.',
+      'AziRoad est en phase de test : des erreurs et des lectures incorrectes sont possibles. Les changements importants seront communiqués sur cette page ou dans l\'app. Ne prenez pas de décisions financières sur la seule base de l\'app.',
       'L\'accès est personnel et non transférable — ne partagez ni l\'APK ni votre code.',
       'Dans la bêta actuelle, toutes les fonctionnalités disponibles sont déverrouillées pendant 30 jours. Ensuite l\'app se verrouille totalement — demandez un nouveau code gratuit sur WhatsApp pendant la bêta.',
       'Participer à la bêta implique d\'envoyer un bref retour par semaine, même pour indiquer « testé, aucune erreur trouvée ». Après 14 jours sans retour et au moins un rappel, l\'équipe peut refuser de renouveler la licence.',
       'L\'app ne se connecte PAS à Uber/99 et ne modifie rien — elle lit seulement l\'écran. Les décisions de conduite, d\'acceptation du travail ou d\'itinéraire vous appartiennent toujours.',
       'Conduisez prudemment. Ne touchez jamais le téléphone en roulant.',
     ],
-    androidOnly: '📱 Disponible uniquement sur Android pour l\'instant (Uber/99 fonctionnent sur Android et iPhone, mais la lecture d\'écran de GigRadar ne fonctionne que sur Android).',
+    androidOnly: '📱 Disponible uniquement sur Android pour l\'instant (Uber/99 fonctionnent sur Android et iPhone, mais la lecture d\'écran de AziRoad ne fonctionne que sur Android).',
     stepsTitle: 'Installation',
     steps: [
       'Inscrivez-vous ci-dessous — la page de téléchargement s\'ouvre aussitôt, avec l\'APK le plus récent et votre invitation code sur WhatsApp.',
       'Téléchargez et appuyez sur Installer (Android signale que c\'est hors Play Store — normal en bêta fermée).',
-      'Ouvrez l\'app et suivez l\'assistant (Accessibilité et Localisation). Sur Android 13 ou plus récent, si l\'Accessibilité est grisée, débloquez-la d\'abord : Paramètres → Applications → GigRadar → ⋮ → « Autoriser les paramètres restreints ».',
+      'Ouvrez l\'app et suivez l\'assistant (Accessibilité et Localisation). Sur Android 13 ou plus récent, si l\'Accessibilité est grisée, débloquez-la d\'abord : Paramètres → Applications → AziRoad → ⋮ → « Autoriser les paramètres restreints ».',
       'Entrez votre code dans 💎 et roulez — le badge apparaît dès la première offre. 🎉',
     ],
-    downloadTitle: '📲 Télécharger GigRadar',
+    downloadTitle: '📲 Télécharger AziRoad',
     downloadBtn: '⬇️ Télécharger l\'APK (Android)',
     downloadNote: 'Toujours la dernière version — ce lien se met à jour automatiquement à chaque nouvelle version.',
     codeTitle: '🔓 Déjà installé ? Débloquez votre accès',
@@ -401,8 +401,8 @@ const content = {
       ['⚙️', 'Avancé', 'Va directement aux réglages complets — pour qui sait déjà exactement ce qu\'il veut.'],
     ],
     privacyTitle: 'Confidentialité (résumé honnête)',
-    privacy: 'Sur ce site nous collectons nom, WhatsApp, e-mail et ville — pour gérer la bêta et vous contacter. Pendant la bêta, le téléphone de chaque testeur envoie automatiquement à GigRadar le journal technique de l\'app et une copie des données de l\'app (offres lues, gains, dépenses, véhicule, lieux et zones). C\'est ainsi que nous trouvons les erreurs, améliorons la lecture et vous évitons de perdre quoi que ce soit en changeant de téléphone. Nous ne vendons ni ne partageons ces données. Pour supprimer votre inscription et vos données, demandez-le simplement.',
-    diagnosticsNotice: 'Sur l\'écran « Envoyer à GigRadar », vous envoyez tout de suite, voyez ce qui part (avec le nombre par groupe et la taille) et écrivez vos suggestions. Le journal technique ne conserve pas le nom du passager. Les écrans lus par le radar peuvent montrer les adresses de prise en charge et de destination : ils servent uniquement à corriger les lectures et ne sont pas partagés. N\'envoyez jamais par WhatsApp de captures contenant des données de passagers, documents ou informations bancaires.',
+    privacy: 'Sur ce site nous collectons nom, WhatsApp, e-mail et ville — pour gérer la bêta et vous contacter. Pendant la bêta, le téléphone de chaque testeur envoie automatiquement à AziRoad le journal technique de l\'app et une copie des données de l\'app (offres lues, gains, dépenses, véhicule, lieux et zones). C\'est ainsi que nous trouvons les erreurs, améliorons la lecture et vous évitons de perdre quoi que ce soit en changeant de téléphone. Nous ne vendons ni ne partageons ces données. Pour supprimer votre inscription et vos données, demandez-le simplement.',
+    diagnosticsNotice: 'Sur l\'écran « Envoyer à AziRoad », vous envoyez tout de suite, voyez ce qui part (avec le nombre par groupe et la taille) et écrivez vos suggestions. Le journal technique ne conserve pas le nom du passager. Les écrans lus par le radar peuvent montrer les adresses de prise en charge et de destination : ils servent uniquement à corriger les lectures et ne sont pas partagés. N\'envoyez jamais par WhatsApp de captures contenant des données de passagers, documents ou informations bancaires.',
     feedbackTitle: 'Votre avis devient un réglage de l\'app',
     feedbackIntro: 'Pendant la bêta, le téléphone envoie le journal technique pour que nous trouvions l\'erreur. Vous dites ce que vous en pensez, à votre façon. C\'est une personne qui lit.',
     feedbackPoints: [
@@ -427,7 +427,7 @@ const content = {
       ['Modifications et sortie', 'Les changements importants de ces conditions ou du traitement des données seront mis en évidence. Vous pouvez quitter la bêta et exercer vos droits via le canal de la Politique de confidentialité.'],
     ],
     privacyLink: 'Lire la Politique de confidentialité d\'Azimut',
-    formTitle: 'Je veux tester GigRadar',
+    formTitle: 'Je veux tester AziRoad',
     namePh: 'Votre nom',
     whatsPh: 'Votre WhatsApp',
     emailPh: 'Votre e-mail',
@@ -440,7 +440,7 @@ const content = {
     acceptFeedback: 'Je m\'engage à envoyer un bref retour chaque semaine, même sans erreur trouvée. Je comprends que 14 jours sans retour, après un rappel, peuvent empêcher le renouvellement de ma licence Bêta.',
     acceptUpdates: 'Je souhaite recevoir des messages sur mon accès bêta, les corrections et les nouvelles versions. (facultatif)',
     cta: 'Rejoindre la bêta',
-    sentTitle: '✅ Reçu ! Merci de rejoindre l\'écosystème GigRadar 💚',
+    sentTitle: '✅ Reçu ! Merci de rejoindre l\'écosystème AziRoad 💚',
     sentMsg: 'Téléchargez l\'app juste ci-dessous — nous vous écrivons sur WhatsApp avec votre code et l\'invitation au groupe des testeurs.',
     sentBtn: '📱 Écrire sur WhatsApp maintenant',
     back: 'Retour',
@@ -479,7 +479,7 @@ const GIG_GUIDE = {
     permsIntro: 'São 4, feitas uma vez só. Cada uma tem um motivo — e sem elas, algumas partes não funcionam.',
     perms: [
       ['👁️', 'Acessibilidade — essencial', 'Deixa o app SÓ LER a oferta na tela do Uber/99. Nunca clica, nunca aceita, nunca faz login. Sem ela, não há veredito.'],
-      ['🔓', 'Configurações restritas (Android 13+)', 'O Android bloqueia a Acessibilidade de app instalado fora da loja. Libere em Configurações → Apps → GigRadar → ⋮ (canto de cima) → "Permitir configurações restritas". Depois ligue a Acessibilidade.'],
+      ['🔓', 'Configurações restritas (Android 13+)', 'O Android bloqueia a Acessibilidade de app instalado fora da loja. Libere em Configurações → Apps → AziRoad → ⋮ (canto de cima) → "Permitir configurações restritas". Depois ligue a Acessibilidade.'],
       ['🔋', 'Bateria sem restrição', 'Pra o Samsung não "matar" o leitor no meio do corre. No Samsung, tire também o app de "Apps em suspensão".'],
       ['📍', 'Localização', 'Fala o bairro do destino, avisa morro/servidão e o trânsito ao vivo. Quem não liga, usa o resto normal.'],
     ],
@@ -492,8 +492,8 @@ const GIG_GUIDE = {
       ['🔌', 'Saúde do carro (OBD2)', 'Com o sensor, lê consumo real, RPM e temperatura — precisão máxima e segurança do carro.'],
       ['❓', 'Central de Ajuda', 'Tudo explicado, sempre à mão, direto no app.'],
     ],
-    diffTitle: 'Por que o GigRadar é diferente de todos',
-    diffIntro: 'Os outros apps mostram quanto você já ganhou — relatório do passado. O GigRadar decide antes de aceitar e protege o que ninguém protege junto:',
+    diffTitle: 'Por que o AziRoad é diferente de todos',
+    diffIntro: 'Os outros apps mostram quanto você já ganhou — relatório do passado. O AziRoad decide antes de aceitar e protege o que ninguém protege junto:',
     diff: [
       ['💰', 'Seu bolso', 'R$/km e R$/h reais, já com o seu custo. O valor cheio engana — ele mostra o que sobra.'],
       ['🛡️', 'Seu carro', 'Morro, servidão, alagamento. Bater o carro é o custo escondido que ninguém conta. Ele conta.'],
@@ -530,7 +530,7 @@ const GIG_GUIDE = {
     permsIntro: 'Just 4, granted once. Each has a reason — without them, some parts won\'t work.',
     perms: [
       ['👁️', 'Accessibility — essential', 'Lets the app ONLY READ the Uber/99 offer on screen. Never taps, accepts, or logs in. Without it, there is no verdict.'],
-      ['🔓', 'Restricted settings (Android 13+)', 'Android blocks Accessibility for apps installed outside the store. Unlock it in Settings → Apps → GigRadar → ⋮ (top corner) → "Allow restricted settings". Then turn on Accessibility.'],
+      ['🔓', 'Restricted settings (Android 13+)', 'Android blocks Accessibility for apps installed outside the store. Unlock it in Settings → Apps → AziRoad → ⋮ (top corner) → "Allow restricted settings". Then turn on Accessibility.'],
       ['🔋', 'Unrestricted battery', 'So Samsung doesn\'t "kill" the reader mid-shift. On Samsung, also remove the app from "Sleeping apps".'],
       ['📍', 'Location', 'Speaks the destination neighborhood, warns about hills/alleys and live traffic. Without it, everything else still works.'],
     ],
@@ -543,8 +543,8 @@ const GIG_GUIDE = {
       ['🔌', 'Car health (OBD2)', 'With the sensor, reads real fuel use, RPM and temperature — top precision and car safety.'],
       ['❓', 'Help Center', 'Everything explained, always at hand, right in the app.'],
     ],
-    diffTitle: 'Why GigRadar is different from all the rest',
-    diffIntro: 'Other apps show what you already earned — a report of the past. GigRadar decides before you accept and protects what no one else protects together:',
+    diffTitle: 'Why AziRoad is different from all the rest',
+    diffIntro: 'Other apps show what you already earned — a report of the past. AziRoad decides before you accept and protects what no one else protects together:',
     diff: [
       ['💰', 'Your wallet', 'Real R$/km and R$/h, already with your cost. The sticker price lies — it shows what\'s left.'],
       ['🛡️', 'Your car', 'Hills, alleys, flooding. Damaging the car is the hidden cost no one counts. It counts it.'],
@@ -581,7 +581,7 @@ const GIG_GUIDE = {
     permsIntro: 'Son 4, solo una vez. Cada uno tiene un motivo — sin ellos, algunas partes no funcionan.',
     perms: [
       ['👁️', 'Accesibilidad — esencial', 'Deja que el app SOLO LEA la oferta de Uber/99 en pantalla. Nunca toca, acepta ni inicia sesión. Sin ella, no hay veredicto.'],
-      ['🔓', 'Ajustes restringidos (Android 13+)', 'Android bloquea la Accesibilidad de apps instaladas fuera de la tienda. Libérala en Ajustes → Aplicaciones → GigRadar → ⋮ (esquina superior) → "Permitir ajustes restringidos". Después activa la Accesibilidad.'],
+      ['🔓', 'Ajustes restringidos (Android 13+)', 'Android bloquea la Accesibilidad de apps instaladas fuera de la tienda. Libérala en Ajustes → Aplicaciones → AziRoad → ⋮ (esquina superior) → "Permitir ajustes restringidos". Después activa la Accesibilidad.'],
       ['🔋', 'Batería sin restricción', 'Para que Samsung no "mate" el lector a mitad de turno. En Samsung, quita también el app de "Apps en reposo".'],
       ['📍', 'Ubicación', 'Dice el barrio del destino, avisa subidas/callejones y el tráfico en vivo. Sin ella, el resto sigue funcionando.'],
     ],
@@ -594,8 +594,8 @@ const GIG_GUIDE = {
       ['🔌', 'Salud del auto (OBD2)', 'Con el sensor, lee consumo real, RPM y temperatura — máxima precisión y seguridad.'],
       ['❓', 'Centro de Ayuda', 'Todo explicado, siempre a mano, dentro del app.'],
     ],
-    diffTitle: 'Por qué GigRadar es diferente de todos',
-    diffIntro: 'Los otros apps muestran lo que ya ganaste — reporte del pasado. GigRadar decide antes de aceptar y protege lo que nadie más protege junto:',
+    diffTitle: 'Por qué AziRoad es diferente de todos',
+    diffIntro: 'Los otros apps muestran lo que ya ganaste — reporte del pasado. AziRoad decide antes de aceptar y protege lo que nadie más protege junto:',
     diff: [
       ['💰', 'Tu bolsillo', 'R$/km y R$/h reales, ya con tu costo. El precio completo engaña — muestra lo que sobra.'],
       ['🛡️', 'Tu auto', 'Subidas, callejones, inundación. Dañar el auto es el costo oculto que nadie cuenta. Él lo cuenta.'],
@@ -632,7 +632,7 @@ const GIG_GUIDE = {
     permsIntro: '4 seulement, accordées une fois. Chacune a une raison — sans elles, certaines parties ne marchent pas.',
     perms: [
       ['👁️', 'Accessibilité — essentiel', 'Permet à l\'app de SEULEMENT LIRE l\'offre Uber/99 à l\'écran. Ne touche jamais, n\'accepte jamais, ne se connecte jamais. Sans elle, pas de verdict.'],
-      ['🔓', 'Paramètres restreints (Android 13+)', 'Android bloque l\'Accessibilité des apps installées hors du store. Débloquez-la dans Paramètres → Applications → GigRadar → ⋮ (coin supérieur) → « Autoriser les paramètres restreints ». Activez ensuite l\'Accessibilité.'],
+      ['🔓', 'Paramètres restreints (Android 13+)', 'Android bloque l\'Accessibilité des apps installées hors du store. Débloquez-la dans Paramètres → Applications → AziRoad → ⋮ (coin supérieur) → « Autoriser les paramètres restreints ». Activez ensuite l\'Accessibilité.'],
       ['🔋', 'Batterie sans restriction', 'Pour que Samsung ne "tue" pas le lecteur en pleine course. Sur Samsung, retirez aussi l\'app des "Apps en veille".'],
       ['📍', 'Localisation', 'Dit le quartier de destination, prévient des côtes/ruelles et du trafic en direct. Sans elle, le reste marche quand même.'],
     ],
@@ -645,8 +645,8 @@ const GIG_GUIDE = {
       ['🔌', 'Santé auto (OBD2)', 'Avec le capteur, lit la conso réelle, le RPM et la température — précision maximale et sécurité.'],
       ['❓', 'Centre d\'aide', 'Tout expliqué, toujours à portée de main, dans l\'app.'],
     ],
-    diffTitle: 'Pourquoi GigRadar est différent de tous',
-    diffIntro: 'Les autres apps montrent ce que vous avez déjà gagné — un rapport du passé. GigRadar décide avant que vous acceptiez et protège ce que personne d\'autre ne protège ensemble :',
+    diffTitle: 'Pourquoi AziRoad est différent de tous',
+    diffIntro: 'Les autres apps montrent ce que vous avez déjà gagné — un rapport du passé. AziRoad décide avant que vous acceptiez et protège ce que personne d\'autre ne protège ensemble :',
     diff: [
       ['💰', 'Votre portefeuille', 'R$/km et R$/h réels, déjà avec votre coût. Le prix affiché ment — il montre ce qui reste.'],
       ['🛡️', 'Votre voiture', 'Côtes, ruelles, inondation. Abîmer la voiture est le coût caché que personne ne compte. Lui, si.'],
@@ -664,16 +664,16 @@ const GIG_GUIDE = {
 type Midia = { file: string; w: number; h: number; kind: 'image' | 'video'; poster?: string; who: string; alt: string }
 
 const MIDIA = {
-  heroCard: { file: 'hero-card-oferta.webp', w: 1080, h: 1350, kind: 'image', who: 'Gerar no ChatGPT (imagem)', alt: 'Motorista à noite com o card do GigRadar sobre a oferta no celular' },
-  videoOferta: { file: 'video-oferta-chega.mp4', poster: 'video-oferta-chega.webp', w: 1080, h: 1920, kind: 'video', who: 'Gerar no Google Flow (Veo)', alt: 'Vídeo: a oferta chega e o card do GigRadar responde' },
+  heroCard: { file: 'hero-card-oferta.webp', w: 1080, h: 1350, kind: 'image', who: 'Gerar no ChatGPT (imagem)', alt: 'Motorista à noite com o card do AziRoad sobre a oferta no celular' },
+  videoOferta: { file: 'video-oferta-chega.mp4', poster: 'video-oferta-chega.webp', w: 1080, h: 1920, kind: 'video', who: 'Gerar no Google Flow (Veo)', alt: 'Vídeo: a oferta chega e o card do AziRoad responde' },
   ledNoite: { file: 'led-chegou-noite.webp', w: 1600, h: 900, kind: 'image', who: 'Gerar no Gemini ou ChatGPT (imagem)', alt: 'Painel de LED no para-brisa mostrando CHEGOU à noite' },
-  telaCard: { file: 'tela-card-oferta.webp', w: 540, h: 1200, kind: 'image', who: 'Print real: card sobre uma oferta (tapar dados)', alt: 'Print do card do GigRadar sobre uma oferta' },
-  telaRadar: { file: 'tela-radar.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Aba Radar do GigRadar' },
-  telaGanhos: { file: 'tela-ganhos.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Aba Ganhos do GigRadar' },
-  telaMetas: { file: 'tela-metas.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Aba Metas do GigRadar' },
-  telaEstrada: { file: 'tela-estrada.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Aba Estrada do GigRadar' },
-  telaVisual: { file: 'tela-visual.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Aba Visual do GigRadar' },
-  telaVeiculos: { file: 'tela-veiculos.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Tela de veículos do GigRadar' },
+  telaCard: { file: 'tela-card-oferta.webp', w: 540, h: 1200, kind: 'image', who: 'Print real: card sobre uma oferta (tapar dados)', alt: 'Print do card do AziRoad sobre uma oferta' },
+  telaRadar: { file: 'tela-radar.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Aba Radar do AziRoad' },
+  telaGanhos: { file: 'tela-ganhos.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Aba Ganhos do AziRoad' },
+  telaMetas: { file: 'tela-metas.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Aba Metas do AziRoad' },
+  telaEstrada: { file: 'tela-estrada.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Aba Estrada do AziRoad' },
+  telaVisual: { file: 'tela-visual.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Aba Visual do AziRoad' },
+  telaVeiculos: { file: 'tela-veiculos.webp', w: 540, h: 1200, kind: 'image', who: 'Print do app por adb', alt: 'Tela de veículos do AziRoad' },
 } satisfies Record<string, Midia>
 
 // Print com legenda: se o arquivo ainda não existe no site público, some a legenda junto.
@@ -766,7 +766,7 @@ const NOVO_PT = {
     ['💸', 'Prejuízo', 'Você paga pra trabalhar.'],
   ],
   levelsNote: 'Quando o risco é máximo (clima extremo, por exemplo), o card ganha tarja preta — segurança vem antes do dinheiro.',
-  featTitle: 'O que o GigRadar faz hoje',
+  featTitle: 'O que o AziRoad faz hoje',
   featIntro: 'O beta cresceu muito desde julho. Tudo abaixo já roda no app — o que depende de acessório está marcado.',
   groups: [
     ['🗣️', 'Voz que não atrapalha', [
@@ -817,7 +817,7 @@ const NOVO_PT = {
     ]],
   ] as [string, string, string[]][],
   galleryTitle: 'Veja o app por dentro',
-  galleryIntro: 'Telas reais do GigRadar, do telefone de quem roda todo dia.',
+  galleryIntro: 'Telas reais do AziRoad, do telefone de quem roda todo dia.',
   gallery: [
     ['telaCard', 'O card sobre a oferta'],
     ['telaRadar', 'Radar: pronto pra rodar'],
@@ -835,9 +835,221 @@ const NOVO_PT = {
   ],
 }
 
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+// 🏷️ AZIROAD (26/set): o app mudou de nome e de ícone em 23/set (decisão Ranz). A rota continua
+// /gigradar (links já espalhados) e o APK continua gigradar-latest.apk (o CI publica com esse nome).
+// Termos v1.2 NÃO foram tocados: trocar o texto deles exige subir TERMS_VERSION e o CMS.
+// Cores do card = as MESMAS do app (engine/CorDoGanho.kt e goldBg() do OverlayController.kt).
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+const NIVEL_COR = {
+  ouro: '#FFD760', pega: '#5CF2BB', decide: '#CCAD33', cuidado: '#D8884B', recusa: '#E26861', prejuizo: '#D25767',
+} as const
+type NivelKey = keyof typeof NIVEL_COR
+
+const AZI = {
+  pt: {
+    renamed: 'Novo nome do GigRadar',
+    renamedNote: 'Mesmo app, mesmo código, mesmos dados — só o nome e o ícone mudaram. Quem já testa não precisa reinstalar.',
+    ctaTop: 'Quero testar grátis',
+    goldTitle: 'Corrida ouro: você vê antes de aceitar',
+    goldIntro: 'Quando a oferta passa bem da sua meta, o card fica dourado, pulsa duas vezes e mostra o que sobra no seu bolso — já descontado o seu custo por km. Você não precisa fazer conta no sinal.',
+    goldPoints: [
+      ['🔥', 'Dourado só para o que é ouro', 'Nenhuma outra cor do app usa esse dourado. Bateu o olho, sabe.'],
+      ['💰', 'O que sobra, não o valor cheio', 'R$/km real e o lucro da corrida com combustível, desgaste e custo fixo.'],
+      ['🗣️', 'Voz junto, olho na rua', 'O card fala o veredito — com passageiro, em código.'],
+    ],
+    mock: { dec: ',', label: '🔥 CORRIDA OURO', perKm: 'por km ⭐', ride: 'a corrida', net: 'no seu bolso', offer: 'Oferta da plataforma', trip: '12,4 km · 18 min', pickup: 'Embarque a 1,1 km', example: 'Exemplo ilustrativo, montado com as cores e o desenho reais do card do app.' },
+    levelsTitle: '6 níveis, não 3 cores',
+    levelsIntro: 'O veredito usa o SEU custo e as SUAS metas. Cada nível tem cor, símbolo e palavra — nunca só a cor, pra quem é daltônico ou está no sol.',
+    levels: [
+      ['ouro', '🔥', 'OURO', 'Bem acima da sua meta. Corre.'],
+      ['pega', '✓', 'PEGA', 'Bateu a meta.'],
+      ['decide', '⚠️', 'VOCÊ DECIDE', 'Perto da meta. A decisão é sua — o app não empurra.'],
+      ['cuidado', '🟠', 'CUIDADO', 'Acima do mínimo, mas por pouco.'],
+      ['recusa', '🚫', 'NÃO VALE', 'Abaixo do mínimo.'],
+      ['prejuizo', '💸', 'PREJUÍZO', 'Você paga pra trabalhar.'],
+    ] as [NivelKey, string, string, string][],
+    levelsNote: 'Quando o risco é máximo (clima extremo, por exemplo), o card ganha tarja própria — segurança vem antes do dinheiro.',
+    whyTitle: 'Por que entrar no teste agora',
+    whyIntro: 'O beta é onde o app aprende com a rua. Quem entra agora usa tudo liberado e ajuda a decidir o que vem a seguir.',
+    why: [
+      ['🎁', 'Grátis e com tudo liberado', 'Durante o beta, todos os recursos ficam abertos. O código é renovado de graça pelo WhatsApp.'],
+      ['⏱️', 'Decide em 1 segundo', 'A oferta chega, o card aparece por cima e a voz fala. Sem abrir planilha, sem conta de cabeça.'],
+      ['🧮', 'Mostra o que sobra', 'O valor cheio engana. O AziRoad desconta o SEU custo e mostra o lucro real de cada corrida.'],
+      ['🙌', 'Só lê a tela, nunca toca', 'Não aceita, não recusa, não faz login na Uber ou na 99. A decisão é sempre sua.'],
+      ['🔧', 'Seu retorno vira ajuste', 'Você fala direto com quem faz o app. É por isso que já saíram {v} versões desde julho.'],
+      ['🌙', 'Feito por motorista, na rua', 'Nasceu de turnos reais de madrugada, em Florianópolis, com milhares de ofertas lidas de verdade.'],
+    ],
+    ledPhotosCaption: 'Fotos reais do painel em teste: a plataforma e a categoria acesas no para-brisa.',
+  },
+  en: {
+    renamed: 'GigRadar has a new name',
+    renamedNote: 'Same app, same code, same data — only the name and icon changed. Current testers don\'t need to reinstall.',
+    ctaTop: 'Test it for free',
+    goldTitle: 'Gold ride: you see it before you accept',
+    goldIntro: 'When an offer is well above your goal, the card turns gold, pulses twice and shows what\'s left in your pocket — already net of your cost per km. No mental math at the traffic light.',
+    goldPoints: [
+      ['🔥', 'Gold only means gold', 'No other colour in the app uses this gold. One glance and you know.'],
+      ['💰', 'What\'s left, not the sticker price', 'Real R$/km and ride profit, with fuel, wear and fixed costs.'],
+      ['🗣️', 'Voice too, eyes on the road', 'The card speaks the verdict — in code when a passenger is on board.'],
+    ],
+    mock: { dec: '.', label: '🔥 GOLD RIDE', perKm: 'per km ⭐', ride: 'this ride', net: 'in your pocket', offer: 'Platform offer', trip: '12.4 km · 18 min', pickup: 'Pickup 1.1 km away', example: 'Illustrative example, built with the real colours and layout of the app\'s card.' },
+    levelsTitle: '6 levels, not 3 colours',
+    levelsIntro: 'The verdict uses YOUR cost and YOUR goals. Each level has a colour, a symbol and a word — never colour alone, for colour-blind drivers or bright sun.',
+    levels: [
+      ['ouro', '🔥', 'GOLD', 'Well above your goal. Go.'],
+      ['pega', '✓', 'TAKE IT', 'Goal met.'],
+      ['decide', '⚠️', 'YOU DECIDE', 'Close to your goal. Your call — the app doesn\'t push.'],
+      ['cuidado', '🟠', 'CAREFUL', 'Above your minimum, but barely.'],
+      ['recusa', '🚫', 'NO', 'Below your minimum.'],
+      ['prejuizo', '💸', 'LOSS', 'You\'d pay to work.'],
+    ] as [NivelKey, string, string, string][],
+    levelsNote: 'When risk is at its peak (extreme weather, for example), the card gets its own band — safety comes before money.',
+    whyTitle: 'Why join the test now',
+    whyIntro: 'The beta is where the app learns from the street. Join now to use everything unlocked and help decide what comes next.',
+    why: [
+      ['🎁', 'Free, everything unlocked', 'During the beta every feature is open. Your code is renewed for free on WhatsApp.'],
+      ['⏱️', 'Decide in 1 second', 'The offer arrives, the card appears on top and the voice speaks. No spreadsheet, no mental math.'],
+      ['🧮', 'Shows what\'s left', 'The sticker price lies. AziRoad subtracts YOUR cost and shows each ride\'s real profit.'],
+      ['🙌', 'Only reads, never taps', 'It never accepts, declines or logs into Uber or 99. The decision is always yours.'],
+      ['🔧', 'Your feedback becomes a fix', 'You talk straight to the people building it. That\'s why {v} versions have shipped since July.'],
+      ['🌙', 'Built by a driver, on the road', 'Born from real late-night shifts in Florianópolis, with thousands of real offers read.'],
+    ],
+    ledPhotosCaption: 'Real photos of the panel under test: platform and category lit on the windshield.',
+  },
+  es: {
+    renamed: 'Nuevo nombre de GigRadar',
+    renamedNote: 'Misma app, mismo código, mismos datos — solo cambiaron el nombre y el ícono. Quien ya prueba no necesita reinstalar.',
+    ctaTop: 'Quiero probar gratis',
+    goldTitle: 'Viaje oro: lo ves antes de aceptar',
+    goldIntro: 'Cuando la oferta supera bien tu meta, el card se vuelve dorado, late dos veces y muestra lo que te queda en el bolsillo — ya descontado tu costo por km. Sin cuentas en el semáforo.',
+    goldPoints: [
+      ['🔥', 'Dorado solo para lo que es oro', 'Ningún otro color de la app usa ese dorado. De un vistazo, lo sabes.'],
+      ['💰', 'Lo que queda, no el precio lleno', 'R$/km real y la ganancia del viaje con combustible, desgaste y costo fijo.'],
+      ['🗣️', 'Con voz, ojos en la calle', 'El card dice el veredicto — con pasajero, en código.'],
+    ],
+    mock: { dec: ',', label: '🔥 VIAJE ORO', perKm: 'por km ⭐', ride: 'el viaje', net: 'en tu bolsillo', offer: 'Oferta de la plataforma', trip: '12,4 km · 18 min', pickup: 'Recogida a 1,1 km', example: 'Ejemplo ilustrativo, hecho con los colores y el diseño reales del card de la app.' },
+    levelsTitle: '6 niveles, no 3 colores',
+    levelsIntro: 'El veredicto usa TU costo y TUS metas. Cada nivel tiene color, símbolo y palabra — nunca solo el color, para daltónicos o bajo el sol.',
+    levels: [
+      ['ouro', '🔥', 'ORO', 'Muy por encima de tu meta. Ve.'],
+      ['pega', '✓', 'ACEPTA', 'Cumple la meta.'],
+      ['decide', '⚠️', 'TÚ DECIDES', 'Cerca de la meta. Tú decides — la app no empuja.'],
+      ['cuidado', '🟠', 'OJO', 'Encima del mínimo, pero por poco.'],
+      ['recusa', '🚫', 'NO', 'Debajo del mínimo.'],
+      ['prejuizo', '💸', 'PÉRDIDA', 'Pagas por trabajar.'],
+    ] as [NivelKey, string, string, string][],
+    levelsNote: 'Cuando el riesgo es máximo (clima extremo, por ejemplo), el card gana una franja propia — la seguridad va antes que el dinero.',
+    whyTitle: 'Por qué entrar a la prueba ahora',
+    whyIntro: 'La beta es donde la app aprende de la calle. Quien entra ahora usa todo liberado y ayuda a decidir lo que viene.',
+    why: [
+      ['🎁', 'Gratis y todo liberado', 'Durante la beta todas las funciones están abiertas. El código se renueva gratis por WhatsApp.'],
+      ['⏱️', 'Decide en 1 segundo', 'Llega la oferta, el card aparece encima y la voz habla. Sin planillas ni cuentas de cabeza.'],
+      ['🧮', 'Muestra lo que queda', 'El precio lleno engaña. AziRoad descuenta TU costo y muestra la ganancia real de cada viaje.'],
+      ['🙌', 'Solo lee, nunca toca', 'No acepta, no rechaza, no inicia sesión en Uber ni 99. La decisión siempre es tuya.'],
+      ['🔧', 'Tu opinión se vuelve ajuste', 'Hablas directo con quien hace la app. Por eso ya salieron {v} versiones desde julio.'],
+      ['🌙', 'Hecho por un conductor, en la calle', 'Nació de turnos reales de madrugada en Florianópolis, con miles de ofertas leídas de verdad.'],
+    ],
+    ledPhotosCaption: 'Fotos reales del panel en prueba: plataforma y categoría encendidas en el parabrisas.',
+  },
+  fr: {
+    renamed: 'Le nouveau nom de GigRadar',
+    renamedNote: 'Même app, même code, mêmes données — seuls le nom et l\'icône ont changé. Les testeurs actuels n\'ont rien à réinstaller.',
+    ctaTop: 'Tester gratuitement',
+    goldTitle: 'Course or : vous la voyez avant d\'accepter',
+    goldIntro: 'Quand l\'offre dépasse nettement votre objectif, le card devient doré, pulse deux fois et montre ce qui reste dans votre poche — coût au km déjà déduit. Pas de calcul au feu rouge.',
+    goldPoints: [
+      ['🔥', 'Le doré, seulement pour l\'or', 'Aucune autre couleur de l\'app n\'utilise ce doré. Un coup d\'œil suffit.'],
+      ['💰', 'Ce qui reste, pas le prix affiché', 'R$/km réel et profit de la course, carburant, usure et coûts fixes inclus.'],
+      ['🗣️', 'La voix aussi, les yeux sur la route', 'Le card annonce le verdict — en code avec un passager.'],
+    ],
+    mock: { dec: ',', label: '🔥 COURSE OR', perKm: 'par km ⭐', ride: 'la course', net: 'dans la poche', offer: 'Offre de la plateforme', trip: '12,4 km · 18 min', pickup: 'Prise en charge à 1,1 km', example: 'Exemple illustratif, réalisé avec les vraies couleurs et la vraie mise en page du card de l\'app.' },
+    levelsTitle: '6 niveaux, pas 3 couleurs',
+    levelsIntro: 'Le verdict utilise VOS coûts et VOS objectifs. Chaque niveau a une couleur, un symbole et un mot — jamais la couleur seule, pour les daltoniens ou en plein soleil.',
+    levels: [
+      ['ouro', '🔥', 'OR', 'Bien au-dessus de votre objectif. Foncez.'],
+      ['pega', '✓', 'PRENEZ', 'Objectif atteint.'],
+      ['decide', '⚠️', 'À VOUS', 'Proche de l\'objectif. À vous de voir — l\'app ne pousse pas.'],
+      ['cuidado', '🟠', 'PRUDENCE', 'Au-dessus du minimum, de peu.'],
+      ['recusa', '🚫', 'NON', 'Sous le minimum.'],
+      ['prejuizo', '💸', 'PERTE', 'Vous payez pour travailler.'],
+    ] as [NivelKey, string, string, string][],
+    levelsNote: 'Quand le risque est maximal (météo extrême, par exemple), le card reçoit sa propre bande — la sécurité passe avant l\'argent.',
+    whyTitle: 'Pourquoi rejoindre le test maintenant',
+    whyIntro: 'La bêta, c\'est là où l\'app apprend de la rue. En entrant maintenant, vous avez tout débloqué et vous aidez à décider la suite.',
+    why: [
+      ['🎁', 'Gratuit, tout débloqué', 'Pendant la bêta, toutes les fonctions sont ouvertes. Le code se renouvelle gratuitement sur WhatsApp.'],
+      ['⏱️', 'Décidez en 1 seconde', 'L\'offre arrive, le card s\'affiche par-dessus et la voix parle. Sans tableur ni calcul mental.'],
+      ['🧮', 'Montre ce qui reste', 'Le prix affiché trompe. AziRoad déduit VOS coûts et montre le vrai profit de chaque course.'],
+      ['🙌', 'Lit seulement, ne touche jamais', 'N\'accepte pas, ne refuse pas, ne se connecte pas à Uber ni 99. La décision reste la vôtre.'],
+      ['🔧', 'Votre avis devient un réglage', 'Vous parlez directement à ceux qui font l\'app. D\'où les {v} versions publiées depuis juillet.'],
+      ['🌙', 'Créé par un chauffeur, sur la route', 'Né de vrais services de nuit à Florianópolis, avec des milliers d\'offres réellement lues.'],
+    ],
+    ledPhotosCaption: 'Vraies photos du panneau en test : plateforme et catégorie allumées sur le pare-brise.',
+  },
+} as const
+
+// Celular com o card OURO por cima de uma oferta. Reconstrução em HTML (não é print): os prints
+// reais que o app guarda mostram nome e endereço de passageiro, e nenhum pegou uma corrida ouro.
+// Números coerentes entre si: R$ 38,90 / 12,4 km = R$ 3,14/km; bolso = valor − custo do exemplo.
+function GoldPhone({ m }: { m: (typeof AZI)[keyof typeof AZI]['mock'] }) {
+  const n = (v: string) => v.replace(',', m.dec)
+  return (
+    <figure className="m-0">
+      <div
+        className="relative mx-auto w-full max-w-[300px] overflow-hidden rounded-[2.2rem] border-[6px] border-neutral-800 shadow-2xl"
+        style={{ aspectRatio: '9 / 19', background: 'linear-gradient(160deg,#1b2433 0%,#121826 55%,#0c1019 100%)' }}
+        role="img"
+        aria-label={`${m.label} — R$ ${n('3,14')} ${m.perKm}, R$ ${n('38,90')} ${m.ride}, R$ ${n('27,12')} ${m.net}`}
+      >
+        {/* "mapa" genérico ao fundo — ruas estilizadas, sem lugar real */}
+        <svg className="absolute inset-0 h-full w-full opacity-40" viewBox="0 0 300 630" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M-10 120 L310 200 M-10 300 L310 250 M60 -10 L120 640 M210 -10 L180 640 M-10 470 L310 520" stroke="#3b4a63" strokeWidth="10" fill="none" />
+          <path d="M-10 120 L310 200 M60 -10 L120 640" stroke="#4f6485" strokeWidth="2" fill="none" />
+          <path d="M150 560 C150 470 110 420 160 360 S230 300 205 230" stroke="#38bdf8" strokeWidth="5" fill="none" strokeLinecap="round" />
+        </svg>
+        {/* card OURO a ~28% do topo, como o padrão do app */}
+        <div
+          className="gold-pulse absolute left-3 right-3 top-[17%] rounded-2xl p-3"
+          style={{ background: 'linear-gradient(135deg,#FFD86B,#C8901A)', border: '3px solid rgba(255,233,168,.7)', color: '#2A1A00' }}
+        >
+          <div className="mb-2 flex items-center gap-2">
+            <span className="h-8 w-1.5 rounded-full" style={{ background: '#FFD86B', boxShadow: '0 0 0 1px rgba(58,36,0,.35)' }} aria-hidden="true" />
+            <strong className="text-[1.35rem] font-black leading-none tracking-tight">{m.label}</strong>
+          </div>
+          <div className="grid grid-cols-3 items-end gap-1 text-center" style={{ fontVariantNumeric: 'tabular-nums' }}>
+            <div>
+              <div className="text-[1.9rem] font-black leading-none">{n('3,14')}</div>
+              <div className="text-[0.65rem] font-semibold uppercase">{m.perKm}</div>
+            </div>
+            <div>
+              <div className="text-[1.25rem] font-extrabold leading-none">{n('38,90')}</div>
+              <div className="text-[0.65rem] font-semibold uppercase">{m.ride}</div>
+            </div>
+            <div>
+              <div className="text-[1.5rem] font-black leading-none" style={{ textShadow: '0 1px 0 rgba(255,255,255,.35)' }}>{n('27,12')}</div>
+              <div className="text-[0.65rem] font-semibold uppercase">{m.net}</div>
+            </div>
+          </div>
+        </div>
+        {/* painel da oferta da plataforma (genérico, sem passageiro) */}
+        <div className="absolute inset-x-0 bottom-0 rounded-t-3xl bg-neutral-900/95 p-4 text-white">
+          <div className="mb-1 text-[0.7rem] uppercase tracking-wider text-neutral-400">{m.offer}</div>
+          <div className="text-3xl font-extrabold" style={{ fontVariantNumeric: 'tabular-nums' }}>R$ {n('38,90')}</div>
+          <div className="mt-1 text-sm text-neutral-300">{m.trip}</div>
+          <div className="text-sm text-neutral-400">{m.pickup}</div>
+          <div className="mt-3 h-10 rounded-xl bg-neutral-700/80" aria-hidden="true" />
+        </div>
+      </div>
+      <figcaption className="mx-auto mt-3 max-w-[300px] text-center text-xs italic" style={{ color: 'var(--theme-text-secondary)' }}>{m.example}</figcaption>
+    </figure>
+  )
+}
+
 const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
   const t = content[lang] ?? content.pt
   const g = GIG_GUIDE[lang] ?? GIG_GUIDE.pt
+  const z = AZI[lang] ?? AZI.pt
   const isPt = lang === 'pt'
   // Espaços de mídia vazios só aparecem em dev ou com ?midias=1 — no site público, somem.
   const showSlots = import.meta.env.DEV || (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('midias'))
@@ -847,6 +1059,7 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
   const [acceptedUpdates, setAcceptedUpdates] = useState(false)
   const [sent, setSent] = useState(false)
   const [apkVersion, setApkVersion] = useState<string | null>(null)
+  const [apkVersionCode, setApkVersionCode] = useState<number | null>(null)
   const { theme, setTheme } = useTheme()
 
   // Padrão escuro só nesta página (pedido Ranz 22/jul) — restaura o tema anterior ao sair,
@@ -900,12 +1113,12 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
   useEffect(() => {
     fetch(APK_VERSION_URL)
       .then(r => (r.ok ? r.json() : null))
-      .then(d => setApkVersion(d?.version ?? null))
+      .then(d => { setApkVersion(d?.version ?? null); setApkVersionCode(typeof d?.version_code === 'number' ? d.version_code : null) })
       .catch(() => {})
   }, [])
 
   const waLink = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
-    `Quero testar o GigRadar! Nome: ${formData.name || '—'} · Cidade: ${formData.city || '—'} · App: ${formData.app || '—'}`
+    `Quero testar o AziRoad! Nome: ${formData.name || '—'} · Cidade: ${formData.city || '—'} · App: ${formData.app || '—'}`
   )}`
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -933,6 +1146,8 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
   return (
     <>
       <SEO title={t.seoTitle} description={t.seoDesc} />
+      {/* Pulso do card ouro: 2 batidas, como o flashGold() do app. Desligado para quem pede menos movimento. */}
+      <style>{`@keyframes azi-gold{0%,100%{transform:scale(1)}8%{transform:scale(1.04)}16%{transform:scale(1)}24%{transform:scale(1.04)}32%{transform:scale(1)}}.gold-pulse{animation:azi-gold 3.2s ease-in-out infinite;transform-origin:center}@media (prefers-reduced-motion:reduce){.gold-pulse{animation:none}}`}</style>
       <main className="min-h-screen pt-28 pb-24 px-4">
         <div className="mx-auto max-w-4xl">
 
@@ -941,15 +1156,94 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
             <p className="mb-4 inline-block rounded-full border border-azimut-red/40 bg-azimut-red/10 px-4 py-1 text-xs uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text)' }}>
               {t.badge}
             </p>
-            <h1 className="mb-5 font-handel text-5xl md:text-7xl uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>
+            <img
+              src="/gigradar/aziroad-icone.svg"
+              alt=""
+              width={112}
+              height={112}
+              className="mx-auto mb-5 h-24 w-24 md:h-28 md:w-28 rounded-[1.75rem] shadow-[0_12px_40px_rgba(124,58,237,.45)]"
+            />
+            <h1 className="mb-3 font-handel text-5xl md:text-7xl uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>
               {t.hero}
             </h1>
+            <p className="mx-auto mb-5 inline-block rounded-full border border-violet-400/40 bg-violet-500/10 px-4 py-1.5 text-sm font-semibold" style={{ color: 'var(--theme-text)' }}>
+              🏷️ {z.renamed}
+            </p>
             <p className="mx-auto max-w-2xl text-lg md:text-xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
               {isPt ? NOVO_PT.sub : t.sub}
             </p>
             <p className="mt-4 text-sm" style={{ color: 'var(--theme-text-secondary)' }}>{t.madeBy}</p>
             <p className="mt-3 text-sm font-semibold" style={{ color: 'var(--theme-text)' }}>{t.androidOnly}</p>
+            <p className="mx-auto mt-3 max-w-xl text-xs leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{z.renamedNote}</p>
+            <a
+              href="#quero-testar"
+              className="mt-7 inline-block rounded-xl bg-azimut-red px-8 py-4 font-handel text-sm uppercase tracking-[0.15em] text-white hover:bg-azimut-red/90 transition-colors"
+            >
+              {z.ctaTop} →
+            </a>
           </div>
+
+          {/* 🔥 Corrida ouro — o card do app reconstruído com as cores reais (26/set, todos os idiomas) */}
+          <section className="mb-16 mx-auto grid max-w-4xl items-center gap-10 md:grid-cols-[minmax(0,300px)_1fr]">
+            <GoldPhone m={z.mock} />
+            <div>
+              <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>{z.goldTitle}</h2>
+              <p className="mb-6 text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{z.goldIntro}</p>
+              <ul className="space-y-3">
+                {z.goldPoints.map(([icon, title, body]) => (
+                  <li key={title} className="flex items-start gap-3 rounded-2xl border border-amber-300/25 bg-amber-300/5 p-4">
+                    <span className="text-xl leading-none" aria-hidden="true">{icon}</span>
+                    <div>
+                      <strong className="block text-sm" style={{ color: 'var(--theme-text)' }}>{title}</strong>
+                      <span className="text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{body}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
+          {/* 🎚️ Os 6 níveis do veredito — cada um com a cor real do app + símbolo + palavra */}
+          <section className="mb-16 mx-auto max-w-3xl">
+            <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>{z.levelsTitle}</h2>
+            <p className="mx-auto mb-7 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{z.levelsIntro}</p>
+            <ul className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+              {z.levels.map(([key, icon, name, body]) => (
+                <li key={key} className="flex items-stretch gap-3 overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <span className="w-1.5 shrink-0 rounded-full" style={{ background: NIVEL_COR[key] }} aria-hidden="true" />
+                  <div>
+                    <strong className="mb-1 flex items-center gap-2 font-handel text-sm uppercase tracking-[0.08em]" style={{ color: NIVEL_COR[key] }}>
+                      <span className="text-lg leading-none" aria-hidden="true">{icon}</span>{name}
+                    </strong>
+                    <span className="text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{body}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-4 rounded-2xl border border-white/10 bg-black/40 p-4 text-center text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>⬛ {z.levelsNote}</p>
+          </section>
+
+          {/* 🙌 Por que testar agora (convencimento) */}
+          <section className="mb-16 mx-auto max-w-4xl rounded-3xl p-6 md:p-10" style={{ background: 'linear-gradient(135deg, rgba(124,58,237,.16), rgba(30,17,69,.10))', border: '1px solid rgba(167,139,250,.28)' }}>
+            <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>{z.whyTitle}</h2>
+            <p className="mx-auto mb-8 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{z.whyIntro}</p>
+            <ul className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+              {z.why.map(([icon, title, body]) => (
+                <li key={title} className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                  <div className="mb-2 text-2xl" aria-hidden="true">{icon}</div>
+                  <strong className="mb-1 block text-sm" style={{ color: 'var(--theme-text)' }}>{title}</strong>
+                  <span className="text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                    {body.replace('{v}', apkVersionCode ? String(apkVersionCode) : '480+')}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8 text-center">
+              <a href="#quero-testar" className="inline-block rounded-xl bg-azimut-red px-8 py-4 font-handel text-sm uppercase tracking-[0.15em] text-white hover:bg-azimut-red/90 transition-colors">
+                {z.ctaTop} →
+              </a>
+            </div>
+          </section>
 
           {/* 🎬 Hero visual + vídeo (14/set, só pt) — somem sozinhos enquanto o arquivo não existir */}
           {isPt && (
@@ -962,26 +1256,6 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
                   <MediaSlot m={MIDIA.videoOferta} showSlots={showSlots} />
                 </div>
               </div>
-            </section>
-          )}
-
-          {/* 🎚️ Os 6 níveis do veredito (14/set, só pt) */}
-          {isPt && (
-            <section className="mb-16 mx-auto max-w-3xl">
-              <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>{NOVO_PT.levelsTitle}</h2>
-              <p className="mx-auto mb-7 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{NOVO_PT.levelsIntro}</p>
-              <ul className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
-                {NOVO_PT.levels.map(([icon, name, body]) => (
-                  <li key={name} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <span className="text-2xl leading-none" aria-hidden="true">{icon}</span>
-                    <div>
-                      <strong className="block font-handel text-sm uppercase tracking-[0.08em]" style={{ color: 'var(--theme-text)' }}>{name}</strong>
-                      <span className="text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{body}</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-4 rounded-2xl border border-white/10 bg-black/40 p-4 text-center text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>⬛ {NOVO_PT.levelsNote}</p>
             </section>
           )}
 
@@ -1050,6 +1324,13 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
                 <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>{NOVO_PT.ledTitle}</h2>
                 <p className="mx-auto mb-7 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{NOVO_PT.ledIntro}</p>
                 <MediaSlot m={MIDIA.ledNoite} showSlots={showSlots} className="mb-5" />
+                <figure className="mb-5">
+                  <div className="grid grid-cols-2 gap-3">
+                    <img src="/gigradar/led-real-uber.webp" alt="Painel de LED aceso escrito UBER" width={480} height={270} loading="lazy" className="w-full rounded-2xl border border-white/10" />
+                    <img src="/gigradar/led-real-urbano.webp" alt="Painel de LED aceso escrito Urbano" width={480} height={270} loading="lazy" className="w-full rounded-2xl border border-white/10" />
+                  </div>
+                  <figcaption className="mt-2 text-center text-sm" style={{ color: 'var(--theme-text-secondary)' }}>{z.ledPhotosCaption}</figcaption>
+                </figure>
                 <ul className="grid gap-3 sm:grid-cols-3">
                   {NOVO_PT.ledPoints.map(([icon, title, body]) => (
                     <li key={title} className="rounded-2xl border border-white/10 bg-white/5 p-4">
@@ -1318,7 +1599,7 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
           </section>
 
           {/* Formulário */}
-          <section className="mx-auto max-w-2xl">
+          <section id="quero-testar" className="mx-auto max-w-2xl scroll-mt-28">
             <h2 className="mb-8 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>
               {t.formTitle}
             </h2>
