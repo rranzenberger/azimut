@@ -47,6 +47,8 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
 
     // Mapear paths para nomes legíveis
     const pathNames: Record<string, Record<string, string>> = {
+      // App do motorista: a rota segue /gigradar, mas o nome público é AziRoad desde 23/set/2026.
+      gigradar: { pt: 'AziRoad', en: 'AziRoad', es: 'AziRoad', fr: 'AziRoad' },
       work: {
         pt: 'Projetos',
         en: 'Work',

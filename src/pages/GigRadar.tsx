@@ -1145,7 +1145,14 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
 
   return (
     <>
-      <SEO title={t.seoTitle} description={t.seoDesc} />
+      <SEO
+        title={t.seoTitle}
+        description={t.seoDesc}
+        keywords="AziRoad, GigRadar, app motorista, Uber, 99, calculadora de corrida, vale a pena, R$/km, motorista de aplicativo"
+        // Absoluto: o SEO prefixa caminhos relativos com outro domínio. Card do WhatsApp/redes = arte AziRoad.
+        image="https://www.azmt.com.br/gigradar/aziroad-og.jpg"
+        icon="/gigradar/aziroad-icone-192.png"
+      />
       {/* Pulso do card ouro: 2 batidas, como o flashGold() do app. Desligado para quem pede menos movimento. */}
       <style>{`@keyframes azi-gold{0%,100%{transform:scale(1)}8%{transform:scale(1.04)}16%{transform:scale(1)}24%{transform:scale(1.04)}32%{transform:scale(1)}}.gold-pulse{animation:azi-gold 3.2s ease-in-out infinite;transform-origin:center}@media (prefers-reduced-motion:reduce){.gold-pulse{animation:none}}`}</style>
       <main className="min-h-screen pt-28 pb-24 px-4">
