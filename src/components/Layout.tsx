@@ -1485,9 +1485,11 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 <LangLink to="/press" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{t(lang, 'navPress')}</LangLink>
                 <LangLink to="/partner" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{lang === 'pt' ? 'Parceiros' : lang === 'es' ? 'Socios' : lang === 'fr' ? 'Partenaires' : 'Partners'}</LangLink>
                 <LangLink to="/blog" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">Blog</LangLink>
+                {/* O rodapé de computador tinha o link do app e o do celular não (27/set) */}
+                <LangLink to="/gigradar" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">AziRoad (Beta)</LangLink>
               </nav>
             </div>
-            
+
             {/* Botão CTA Centralizado */}
             <div className="flex justify-center mb-5">
               <LangLink to="/contact"
