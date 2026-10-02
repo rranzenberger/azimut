@@ -493,7 +493,7 @@ const GIG_GUIDE = {
       ['❓', 'Central de Ajuda', 'Tudo explicado, sempre à mão, direto no app.'],
     ],
     diffTitle: 'Por que o AziRoad é diferente de todos',
-    diffIntro: 'Os outros apps mostram quanto você já ganhou — relatório do passado. O AziRoad decide antes de aceitar e protege o que ninguém protege junto:',
+    diffIntro: 'Muitos apps param no R$ por km. O AziRoad faz a conta do que sobra antes de você aceitar e protege o que ninguém protege junto:',
     diff: [
       ['💰', 'Seu bolso', 'R$/km e R$/h reais, já com o seu custo. O valor cheio engana — ele mostra o que sobra.'],
       ['🛡️', 'Seu carro', 'Morro, servidão, alagamento. Bater o carro é o custo escondido que ninguém conta. Ele conta.'],
@@ -544,7 +544,7 @@ const GIG_GUIDE = {
       ['❓', 'Help Center', 'Everything explained, always at hand, right in the app.'],
     ],
     diffTitle: 'Why AziRoad is different from all the rest',
-    diffIntro: 'Other apps show what you already earned — a report of the past. AziRoad decides before you accept and protects what no one else protects together:',
+    diffIntro: 'Many apps stop at pay per km. AziRoad works out what is left before you accept and protects what no one else protects together:',
     diff: [
       ['💰', 'Your wallet', 'Real R$/km and R$/h, already with your cost. The sticker price lies — it shows what\'s left.'],
       ['🛡️', 'Your car', 'Hills, alleys, flooding. Damaging the car is the hidden cost no one counts. It counts it.'],
@@ -595,7 +595,7 @@ const GIG_GUIDE = {
       ['❓', 'Centro de Ayuda', 'Todo explicado, siempre a mano, dentro del app.'],
     ],
     diffTitle: 'Por qué AziRoad es diferente de todos',
-    diffIntro: 'Los otros apps muestran lo que ya ganaste — reporte del pasado. AziRoad decide antes de aceptar y protege lo que nadie más protege junto:',
+    diffIntro: 'Muchos apps se quedan en el R$ por km. AziRoad calcula lo que te queda antes de aceptar y protege lo que nadie más protege junto:',
     diff: [
       ['💰', 'Tu bolsillo', 'R$/km y R$/h reales, ya con tu costo. El precio completo engaña — muestra lo que sobra.'],
       ['🛡️', 'Tu auto', 'Subidas, callejones, inundación. Dañar el auto es el costo oculto que nadie cuenta. Él lo cuenta.'],
@@ -646,7 +646,7 @@ const GIG_GUIDE = {
       ['❓', 'Centre d\'aide', 'Tout expliqué, toujours à portée de main, dans l\'app.'],
     ],
     diffTitle: 'Pourquoi AziRoad est différent de tous',
-    diffIntro: 'Les autres apps montrent ce que vous avez déjà gagné — un rapport du passé. AziRoad décide avant que vous acceptiez et protège ce que personne d\'autre ne protège ensemble :',
+    diffIntro: 'Beaucoup d\'apps s\'arrêtent au R$ par km. AziRoad calcule ce qui vous reste avant que vous acceptiez et protège ce que personne d\'autre ne protège ensemble :',
     diff: [
       ['💰', 'Votre portefeuille', 'R$/km et R$/h réels, déjà avec votre coût. Le prix affiché ment — il montre ce qui reste.'],
       ['🛡️', 'Votre voiture', 'Côtes, ruelles, inondation. Abîmer la voiture est le coût caché que personne ne compte. Lui, si.'],
@@ -1046,8 +1046,111 @@ function GoldPhone({ m }: { m: (typeof AZI)[keyof typeof AZI]['mock'] }) {
   )
 }
 
+// ⚖️ COMPARATIVO (02/out/2026). Regra da casa: só entra o que o próprio concorrente ANUNCIA em
+// site ou loja (fontes no rodapé da seção). 'S' = anunciado · 'N' = não encontramos · texto = o
+// que ele anuncia. Nada aqui vem de engenharia reversa, e nada diz "não tem" — diz "não
+// encontramos", com data. Antes de mexer numa célula, abra a fonte de novo: eles mudam.
+// NÃO prometer "não coletamos endereço": o backup do AziRoad guarda o local da oferta.
+const COMPARE = {
+  pt: {
+    title: 'AziRoad × os outros apps',
+    intro: 'R$ por km todo mundo mostra. A diferença é o que vem depois: o AziRoad faz a conta do que SOBRA e cuida de você, do carro e do passageiro.',
+    goal: 'Nossa meta: ser o copiloto mais completo do mundo para quem vive de corrida.',
+    feature: 'O que o app faz',
+    apps: [['AziRoad', 'Brasil'], ['GigU', 'Brasil'], ['Mobai', 'Brasil'], ['Maxymo', 'EUA'], ['Mystro', 'EUA']],
+    yes: 'Sim', no: 'Não encontramos',
+    rows: [
+      ['Veredito na hora da oferta', 'S', 'S', 'S', 'S', 'S'],
+      ['Faz a conta com o custo do SEU carro', 'S', 'S', 'S', 'Por milha e por hora', 'N'],
+      ['Avisa da volta vazia e da busca sem pagamento', 'S', 'N', 'N', 'N', 'N'],
+      ['Carro elétrico: a corrida cabe na carga?', 'S', 'N', 'N', 'N', 'N'],
+      ['Protege o carro: morro, alagamento, granizo, rua estreita', 'S', 'N', 'N', 'N', 'N'],
+      ['Protege você: zonas que você marca, dinheiro de madrugada', 'S', 'N', 'N', 'N', 'N'],
+      ['Respeita o passageiro: voz discreta com gente a bordo', 'S', 'N', 'N', 'N', 'N'],
+      ['Quem decide é VOCÊ: nunca aceita nem recusa sozinho', 'S', 'N', 'N', 'Aceita e recusa sozinho (Android)', 'Aceita e recusa sozinho'],
+      ['Gravação de segurança da corrida', 'Em breve', 'Câmera', 'Câmera (Android)', 'Áudio (Android)', 'N'],
+      ['iPhone', 'Em estudo', 'Em breve', 'S', 'Só análise', 'S'],
+      ['Preço', 'Grátis no beta', 'Grátis até o fim de 2026', 'R$ 27/mês', 'Não informado', 'Não informado'],
+    ],
+    note: 'Comparativo de outubro de 2026, com o que cada app anuncia no próprio site ou na loja. "Não encontramos" quer dizer isso mesmo: procuramos e não achamos. Viu algo errado? Fale com a gente que a gente corrige.',
+    sourcesLabel: 'Fontes',
+    whyAuto: 'Por que não aceitamos corrida por você: em 2023 a Uber foi à Justiça contra a recusa automática de um app brasileiro e conseguiu uma liminar. Tocar sozinho no app da corrida põe a SUA conta em risco. O AziRoad só informa.',
+    safetyTitle: 'Segurança em três frentes',
+    safety: [
+      ['🚨', 'Você', 'Zonas que você marca no mapa. Dinheiro de madrugada. De 0 às 5h, as zonas de risco endurecem sozinhas.'],
+      ['🛡️', 'Seu carro', 'Morro, rua estreita, alagamento e granizo. Com o sensor OBD2, avisa motor quente. No elétrico, avisa se a corrida não cabe na carga.'],
+      ['🧑‍🤝‍🧑', 'Seu passageiro', 'Com gente a bordo, a voz fica discreta. E nada de câmera escondida: quando a gravação chegar, vai ser com aviso.'],
+    ],
+    soonTitle: 'Vem aí',
+    soon: [
+      ['🎥', 'Gravação de segurança', 'Sua prova se algo der errado. Do jeito certo: com aviso ao passageiro e o vídeo guardado no SEU telefone.'],
+      ['📱', 'iPhone', 'Estamos estudando o caminho. Quem testa o beta fica sabendo primeiro.'],
+    ],
+    trustTitle: 'Por que confiar',
+    trust: [
+      'Só LÊ a oferta. Nunca toca, nunca aceita, nunca pede sua senha da Uber ou da 99.',
+      'Sem anúncio. Sem câmera escondida.',
+      'Cada versão passa por mais de 3.000 testes e é conferida contra mais de 4.400 ofertas reais antes de chegar a você.',
+      'Feito por quem dirige — testado na rua, de madrugada, com passageiro.',
+    ],
+  },
+  en: {
+    title: 'AziRoad vs. the other apps',
+    intro: 'Everyone shows pay per km. The difference is what comes next: AziRoad works out what is LEFT and looks after you, your car and your passenger.',
+    goal: 'Our goal: to be the most complete co-pilot in the world for people who drive for a living.',
+    feature: 'What the app does',
+    apps: [['AziRoad', 'Brazil'], ['GigU', 'Brazil'], ['Mobai', 'Brazil'], ['Maxymo', 'USA'], ['Mystro', 'USA']],
+    yes: 'Yes', no: 'Not found',
+    rows: [
+      ['Verdict the moment the offer appears', 'S', 'S', 'S', 'S', 'S'],
+      ['Uses YOUR car\'s real cost', 'S', 'S', 'S', 'Per mile and per hour', 'N'],
+      ['Warns about the empty trip back and the unpaid pickup', 'S', 'N', 'N', 'N', 'N'],
+      ['Electric car: does the ride fit the charge?', 'S', 'N', 'N', 'N', 'N'],
+      ['Protects the car: hills, flooding, hail, narrow streets', 'S', 'N', 'N', 'N', 'N'],
+      ['Protects you: zones you mark, cash rides late at night', 'S', 'N', 'N', 'N', 'N'],
+      ['Respects the passenger: discreet voice with people on board', 'S', 'N', 'N', 'N', 'N'],
+      ['YOU decide: never accepts or declines by itself', 'S', 'N', 'N', 'Auto-accept and decline (Android)', 'Auto-accept and decline'],
+      ['Safety recording of the ride', 'Coming soon', 'Camera', 'Camera (Android)', 'Audio (Android)', 'N'],
+      ['iPhone', 'Under study', 'Coming soon', 'S', 'Analysis only', 'S'],
+      ['Price', 'Free in beta', 'Free until the end of 2026', 'R$ 27/month', 'Not stated', 'Not stated'],
+    ],
+    note: 'Comparison from October 2026, based on what each app states on its own site or store page. "Not found" means just that: we looked and did not find it. Spotted a mistake? Tell us and we will fix it.',
+    sourcesLabel: 'Sources',
+    whyAuto: 'Why we do not accept rides for you: in 2023 Uber went to court in Brazil over a third-party app\'s automatic declining and obtained an injunction. Tapping the ride app by itself puts YOUR account at risk. AziRoad only informs.',
+    safetyTitle: 'Safety on three fronts',
+    safety: [
+      ['🚨', 'You', 'Zones you mark on the map. Cash rides late at night. From midnight to 5 am, risk zones tighten by themselves.'],
+      ['🛡️', 'Your car', 'Hills, narrow streets, flooding and hail. With the OBD2 sensor it warns about an overheating engine. On an EV, it warns when the ride does not fit the charge.'],
+      ['🧑‍🤝‍🧑', 'Your passenger', 'With people on board the voice goes discreet. And no hidden camera: when recording arrives, it will come with notice.'],
+    ],
+    soonTitle: 'Coming up',
+    soon: [
+      ['🎥', 'Safety recording', 'Your proof if something goes wrong. Done right: with notice to the passenger and the video kept on YOUR phone.'],
+      ['📱', 'iPhone', 'We are studying the path. Beta testers hear about it first.'],
+    ],
+    trustTitle: 'Why trust it',
+    trust: [
+      'It only READS the offer. It never taps, never accepts, never asks for your Uber or 99 password.',
+      'No ads. No hidden camera.',
+      'Every version runs more than 3,000 tests and is checked against more than 4,400 real offers before it reaches you.',
+      'Built by someone who drives — tested on the road, late at night, with passengers.',
+    ],
+  },
+}
+
+const COMPARE_SOURCES: [string, string][] = [
+  ['GigU', 'https://play.google.com/store/apps/details?id=co.gigu.app'],
+  ['GigU (The Rideshare Guy)', 'https://therideshareguy.com/gigu-app-review/'],
+  ['Mobai', 'https://mobaioficial.com.br/'],
+  ['Mobai (App Store)', 'https://apps.apple.com/us/app/mobai-c%C3%A1lculo-de-ganhos/id6760729228'],
+  ['Maxymo', 'https://maxymoapp.com/'],
+  ['Mystro', 'https://mystrodriver.com/blog/best-apps-for-managing-multiple-rideshare-platforms'],
+  ['Uber × StopClub (55content)', 'https://55content.com.br/motorista/uber-processa-stopclub-e-pede-fim-de-recusas-automaticas/'],
+]
+
 const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
   const t = content[lang] ?? content.pt
+  const c = lang === 'pt' ? COMPARE.pt : COMPARE.en
   const g = GIG_GUIDE[lang] ?? GIG_GUIDE.pt
   const z = AZI[lang] ?? AZI.pt
   const isPt = lang === 'pt'
@@ -1475,6 +1578,102 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
                     <span className="text-xs leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{body}</span>
                   </div>
                 ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ⚖️ Comparativo com os outros apps + segurança + o que vem aí (02/out) */}
+          <section id="comparativo" className="mb-16 mx-auto max-w-4xl scroll-mt-28">
+            <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>
+              {c.title}
+            </h2>
+            <p className="mx-auto mb-3 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+              {c.intro}
+            </p>
+            <p className="mx-auto mb-7 max-w-2xl text-center text-base font-semibold leading-relaxed" style={{ color: 'var(--theme-text)' }}>
+              {c.goal}
+            </p>
+
+            <div className="overflow-x-auto rounded-2xl border border-white/10">
+              <table className="w-full min-w-[720px] border-collapse text-left text-sm">
+                <thead>
+                  <tr>
+                    <th scope="col" className="p-3 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--theme-text-secondary)' }}>{c.feature}</th>
+                    {c.apps.map(([name, region], i) => (
+                      <th key={name} scope="col" className="p-3 text-center align-bottom" style={i === 0 ? { background: 'rgba(124,58,237,.18)', color: 'var(--theme-text)' } : { color: 'var(--theme-text)' }}>
+                        <span className="block font-handel text-base uppercase tracking-[0.08em]">{name}</span>
+                        <span className="block text-xs font-normal" style={{ color: 'var(--theme-text-secondary)' }}>{region}</span>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {c.rows.map(([label, ...cells]) => (
+                    <tr key={label} className="border-t border-white/10">
+                      <th scope="row" className="p-3 font-semibold leading-snug" style={{ color: 'var(--theme-text)' }}>{label}</th>
+                      {cells.map((cell, i) => (
+                        <td key={i} className="p-3 text-center leading-snug" style={i === 0 ? { background: 'rgba(124,58,237,.12)', color: 'var(--theme-text)', fontWeight: 600 } : { color: 'var(--theme-text-secondary)' }}>
+                          {cell === 'S' ? <span><span aria-hidden="true">✓ </span>{c.yes}</span>
+                            : cell === 'N' ? <span title={c.no}><span aria-hidden="true">—</span><span className="sr-only">{c.no}</span></span>
+                            : cell}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-3 text-xs leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+              <span aria-hidden="true">✓ </span>{c.yes} · <span aria-hidden="true">— </span>{c.no}. {c.note}
+            </p>
+            <p className="mt-2 text-xs leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+              {c.sourcesLabel}:{' '}
+              {COMPARE_SOURCES.map(([name, url], i) => (
+                <React.Fragment key={url}>
+                  {i > 0 && ' · '}
+                  <a href={url} target="_blank" rel="noopener noreferrer nofollow" className="underline">{name}</a>
+                </React.Fragment>
+              ))}
+            </p>
+
+            <p className="mx-auto mt-6 max-w-3xl rounded-2xl border border-amber-400/30 bg-amber-400/5 p-4 text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+              {c.whyAuto}
+            </p>
+
+            <h3 className="mb-4 mt-10 text-center font-handel text-xl uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>{c.safetyTitle}</h3>
+            <div className="grid gap-4 sm:grid-cols-3">
+              {c.safety.map(([emoji, title, body]) => (
+                <div key={title} className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                  <div className="mb-1 flex items-center gap-3">
+                    <span className="text-xl" aria-hidden="true">{emoji}</span>
+                    <strong style={{ color: 'var(--theme-text)' }}>{title}</strong>
+                  </div>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{body}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 grid gap-6 md:grid-cols-2">
+              <div className="rounded-2xl p-6" style={{ background: 'linear-gradient(135deg, rgba(124,58,237,.16), rgba(124,58,237,.04))', border: '1px solid rgba(124,58,237,.3)' }}>
+                <h3 className="mb-3 font-handel text-lg uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>{c.soonTitle}</h3>
+                <ul className="space-y-3">
+                  {c.soon.map(([emoji, title, body]) => (
+                    <li key={title} className="text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                      <span aria-hidden="true">{emoji} </span>
+                      <strong style={{ color: 'var(--theme-text)' }}>{title}.</strong> {body}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                <h3 className="mb-3 font-handel text-lg uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>{c.trustTitle}</h3>
+                <ul className="space-y-2">
+                  {c.trust.map((line) => (
+                    <li key={line} className="flex gap-2 text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                      <span aria-hidden="true">✓</span><span>{line}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </section>
