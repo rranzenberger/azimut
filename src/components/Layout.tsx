@@ -1486,7 +1486,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                 <LangLink to="/partner" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">{lang === 'pt' ? 'Parceiros' : lang === 'es' ? 'Socios' : lang === 'fr' ? 'Partenaires' : 'Partners'}</LangLink>
                 <LangLink to="/blog" className="text-[0.7rem] text-slate-400 hover:text-azimut-red">Blog</LangLink>
                 {/* O rodapé de computador tinha o link do app e o do celular não (27/set) */}
-                <LangLink to="/gigradar" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">AziRoad (Beta)</LangLink>
+                <LangLink to="/aziroad" className="text-[0.6rem] text-slate-400 hover:text-azimut-red">AziRoad (Beta)</LangLink>
               </nav>
             </div>
 
@@ -1763,7 +1763,7 @@ const Layout: React.FC<LayoutProps> = ({ children, lang, setLang, theme, toggleT
                     <LangLink to="/blog" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                       Blog
                     </LangLink>
-                    <LangLink to="/gigradar" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
+                    <LangLink to="/aziroad" className="text-[0.68rem] sm:text-[0.72rem] md:text-[0.75rem] transition-colors" style={{ color: '#cbd5e1' }} onMouseEnter={(e) => e.currentTarget.style.color = '#8B2332'} onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}>
                       AziRoad (Beta)
                     </LangLink>
                   </div>

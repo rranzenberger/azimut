@@ -39,6 +39,12 @@ const GlobalSearch = lazy(() => import('./components/GlobalSearch').then(m => ({
 //
 // ✅ ATIVO PARA TESTES LOCAIS - Site aberto sem senha
 // ════════════════════════════════════════════════════════════
+// Link antigo (/pt/gigradar) cai no endereço novo, mantendo o idioma e a âncora (#comparativo etc.).
+function GigradarParaAziroad() {
+  const { lang } = useParams()
+  return <Navigate to={`/${lang || 'pt'}/aziroad${typeof window !== 'undefined' ? window.location.hash : ''}`} replace />
+}
+
 const SITE_ABERTO = true // ✅ ATIVO: Site aberto para testes locais
 // ════════════════════════════════════════════════════════════
 
@@ -459,7 +465,9 @@ const App: React.FC = () => {
                     </LangRouteWrapper>
                   </ErrorBoundary>
                 } />
-                <Route path="/:lang/gigradar" element={
+                {/* Endereço público = /aziroad (Ranz 03/out/2026); /gigradar segue vivo só como desvio. */}
+                <Route path="/:lang/gigradar" element={<GigradarParaAziroad />} />
+                <Route path="/:lang/aziroad" element={
                   <ErrorBoundary routeName="GigRadar">
                     <LangRouteWrapper setLang={setLang}>
                       {(routeLang) => <GigRadar lang={routeLang} />}
@@ -730,7 +738,9 @@ const App: React.FC = () => {
                     </LangRouteWrapper>
                   </ErrorBoundary>
                 } />
-                <Route path="/:lang/gigradar" element={
+                {/* Endereço público = /aziroad (Ranz 03/out/2026); /gigradar segue vivo só como desvio. */}
+                <Route path="/:lang/gigradar" element={<GigradarParaAziroad />} />
+                <Route path="/:lang/aziroad" element={
                   <ErrorBoundary routeName="GigRadar">
                     <LangRouteWrapper setLang={setLang}>
                       {(routeLang) => <GigRadar lang={routeLang} />}
