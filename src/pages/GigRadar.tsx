@@ -1058,21 +1058,21 @@ const COMPARE = {
     goal: 'Nossa meta: ser o copiloto mais completo do mundo para quem vive de corrida.',
     feature: 'O que o app faz',
     apps: [['AziRoad', 'Brasil'], ['GigU', 'Brasil'], ['Mobai', 'Brasil'], ['Maxymo', 'EUA'], ['Mystro', 'EUA']],
-    yes: 'Sim', no: 'Não encontramos',
+    yes: 'Sim', no: 'Não anuncia', only: 'Só no AziRoad',
     rows: [
-      ['Veredito na hora da oferta', 'S', 'S', 'S', 'S', 'S'],
-      ['Faz a conta com o custo do SEU carro', 'S', 'S', 'S', 'Por milha e por hora', 'N'],
       ['Avisa da volta vazia e da busca sem pagamento', 'S', 'N', 'N', 'N', 'N'],
       ['Carro elétrico: a corrida cabe na carga?', 'S', 'N', 'N', 'N', 'N'],
       ['Protege o carro: morro, alagamento, granizo, rua estreita', 'S', 'N', 'N', 'N', 'N'],
       ['Protege você: zonas que você marca, dinheiro de madrugada', 'S', 'N', 'N', 'N', 'N'],
       ['Respeita o passageiro: voz discreta com gente a bordo', 'S', 'N', 'N', 'N', 'N'],
       ['Quem decide é VOCÊ: nunca aceita nem recusa sozinho', 'S', 'N', 'N', 'Aceita e recusa sozinho (Android)', 'Aceita e recusa sozinho'],
-      ['Prova da corrida (registro ou gravação)', 'Registro em breve', 'Câmera', 'Câmera (Android)', 'Áudio (Android)', 'N'],
+      ['Faz a conta com o custo do SEU carro', 'S', 'S', 'S', 'Por milha e por hora', 'N'],
+      ['Veredito na hora da oferta', 'S', 'S', 'S', 'S', 'S'],
+      ['Gravação para sua segurança', 'Em desenvolvimento', 'Câmera', 'Câmera (Android)', 'Áudio (Android)', 'N'],
       ['iPhone', 'Em estudo', 'S', 'S', 'Só análise', 'S'],
       ['Preço', 'Grátis no beta', 'Grátis nos EUA até o fim de 2026', 'R$ 27/mês', 'Não informado', 'Não informado'],
     ],
-    note: 'Comparativo de outubro de 2026, com o que cada app anuncia no próprio site ou na loja. "Não encontramos" quer dizer isso mesmo: procuramos e não achamos. Viu algo errado? Fale com a gente que a gente corrige.',
+    note: 'Comparativo de outubro de 2026, com o que cada app anuncia no próprio site ou na loja. Viu algo errado? Fale com a gente que a gente corrige.',
     sourcesLabel: 'Fontes',
     whyAuto: 'Por que não aceitamos corrida por você: em 2023 a Uber foi à Justiça contra a recusa automática de um app brasileiro e conseguiu uma liminar. Tocar sozinho no app da corrida põe a SUA conta em risco. O AziRoad só informa.',
     safetyTitle: 'Segurança em três frentes',
@@ -1083,7 +1083,7 @@ const COMPARE = {
     ],
     soonTitle: 'Vem aí',
     soon: [
-      ['🎥', 'Registro de corrida + câmera do carro', 'Sua prova se algo der errado. O AziRoad guarda a hora e o local de cada corrida, para você achar na hora o vídeo da câmera do seu carro. Do jeito certo: com aviso ao passageiro.'],
+      ['🎥', 'Gravação para sua segurança (em desenvolvimento)', 'É o pedido que mais ouvimos dos motoristas. Sua prova se algo der errado, ligada a cada corrida. Do jeito certo: com aviso ao passageiro, e sem deixar o veredito lento.'],
       ['📱', 'iPhone', 'Estamos estudando o caminho. Quem testa o beta fica sabendo primeiro.'],
     ],
     trustTitle: 'Por que confiar',
@@ -1100,21 +1100,21 @@ const COMPARE = {
     goal: 'Our goal: to be the most complete co-pilot in the world for people who drive for a living.',
     feature: 'What the app does',
     apps: [['AziRoad', 'Brazil'], ['GigU', 'Brazil'], ['Mobai', 'Brazil'], ['Maxymo', 'USA'], ['Mystro', 'USA']],
-    yes: 'Yes', no: 'Not found',
+    yes: 'Yes', no: 'Not advertised', only: 'Only on AziRoad',
     rows: [
-      ['Verdict the moment the offer appears', 'S', 'S', 'S', 'S', 'S'],
-      ['Uses YOUR car\'s real cost', 'S', 'S', 'S', 'Per mile and per hour', 'N'],
       ['Warns about the empty trip back and the unpaid pickup', 'S', 'N', 'N', 'N', 'N'],
       ['Electric car: does the ride fit the charge?', 'S', 'N', 'N', 'N', 'N'],
       ['Protects the car: hills, flooding, hail, narrow streets', 'S', 'N', 'N', 'N', 'N'],
       ['Protects you: zones you mark, cash rides late at night', 'S', 'N', 'N', 'N', 'N'],
       ['Respects the passenger: discreet voice with people on board', 'S', 'N', 'N', 'N', 'N'],
       ['YOU decide: never accepts or declines by itself', 'S', 'N', 'N', 'Auto-accept and decline (Android)', 'Auto-accept and decline'],
-      ['Proof of the ride (record or recording)', 'Record coming soon', 'Camera', 'Camera (Android)', 'Audio (Android)', 'N'],
+      ['Uses YOUR car\'s real cost', 'S', 'S', 'S', 'Per mile and per hour', 'N'],
+      ['Verdict the moment the offer appears', 'S', 'S', 'S', 'S', 'S'],
+      ['Recording for your safety', 'In development', 'Camera', 'Camera (Android)', 'Audio (Android)', 'N'],
       ['iPhone', 'Under study', 'S', 'S', 'Analysis only', 'S'],
       ['Price', 'Free in beta', 'Free in the US until the end of 2026', 'R$ 27/month', 'Not stated', 'Not stated'],
     ],
-    note: 'Comparison from October 2026, based on what each app states on its own site or store page. "Not found" means just that: we looked and did not find it. Spotted a mistake? Tell us and we will fix it.',
+    note: 'Comparison from October 2026, based on what each app states on its own site or store page. Spotted a mistake? Tell us and we will fix it.',
     sourcesLabel: 'Sources',
     whyAuto: 'Why we do not accept rides for you: in 2023 Uber went to court in Brazil over a third-party app\'s automatic declining and obtained an injunction. Tapping the ride app by itself puts YOUR account at risk. AziRoad only informs.',
     safetyTitle: 'Safety on three fronts',
@@ -1125,7 +1125,7 @@ const COMPARE = {
     ],
     soonTitle: 'Coming up',
     soon: [
-      ['🎥', 'Ride record + your car camera', 'Your proof if something goes wrong. AziRoad keeps the time and place of every ride, so you find the clip from your car camera right away. Done right: with notice to the passenger.'],
+      ['🎥', 'Recording for your safety (in development)', 'The request we hear most from drivers. Your proof if something goes wrong, linked to each ride. Done right: with notice to the passenger, and without slowing the verdict down.'],
       ['📱', 'iPhone', 'We are studying the path. Beta testers hear about it first.'],
     ],
     trustTitle: 'Why trust it',
@@ -1136,6 +1136,30 @@ const COMPARE = {
       'Built by someone who drives — tested on the road, late at night, with passengers.',
     ],
   },
+}
+
+// Célula do comparativo: ✓ + palavra (nunca só cor), — para "não anuncia" (texto lido pelo leitor de tela).
+function CompareCell({ cell, yes, no, ours }: { cell: string; yes: string; no: string; ours: boolean }) {
+  if (cell === 'S') {
+    return (
+      <span className="inline-flex items-center gap-1.5">
+        <span aria-hidden="true" className="inline-flex h-5 w-5 items-center justify-center rounded-full text-xs font-bold"
+          style={ours ? { background: '#7C3AED', color: '#fff' } : { border: '1px solid currentColor' }}>✓</span>
+        {yes}
+      </span>
+    )
+  }
+  if (cell === 'N') return <span title={no}><span aria-hidden="true">—</span><span className="sr-only">{no}</span></span>
+  return <>{cell}</>
+}
+
+function CompareOnlyBadge({ text }: { text: string }) {
+  return (
+    <span className="ml-2 inline-block whitespace-nowrap rounded-full px-2 py-0.5 align-middle text-[11px] font-semibold uppercase tracking-wider"
+      style={{ background: 'rgba(124,58,237,.18)', color: 'var(--theme-text)', border: '1px solid rgba(124,58,237,.45)' }}>
+      {text}
+    </span>
+  )
 }
 
 const COMPARE_SOURCES: [string, string][] = [
@@ -1584,7 +1608,7 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
           </section>
 
           {/* ⚖️ Comparativo com os outros apps + segurança + o que vem aí (02/out) */}
-          <section id="comparativo" className="mb-16 mx-auto max-w-4xl scroll-mt-28">
+          <section id="comparativo" className="mb-16 mx-auto max-w-4xl scroll-mt-28 px-4 md:px-0">
             <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>
               {c.title}
             </h2>
@@ -1595,7 +1619,7 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
               {c.goal}
             </p>
 
-            <div className="overflow-x-auto rounded-2xl border border-white/10">
+            <div className="hidden overflow-x-auto rounded-2xl border border-white/10 md:block">
               <table className="w-full min-w-[720px] border-collapse text-left text-sm">
                 <thead>
                   <tr>
@@ -1611,12 +1635,13 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
                 <tbody>
                   {c.rows.map(([label, ...cells]) => (
                     <tr key={label} className="border-t border-white/10">
-                      <th scope="row" className="p-3 font-semibold leading-snug" style={{ color: 'var(--theme-text)' }}>{label}</th>
+                      <th scope="row" className="p-3 font-semibold leading-snug" style={{ color: 'var(--theme-text)' }}>
+                        {label}
+                        {cells.slice(1).every((x) => x === 'N') && <CompareOnlyBadge text={c.only} />}
+                      </th>
                       {cells.map((cell, i) => (
                         <td key={i} className="p-3 text-center leading-snug" style={i === 0 ? { background: 'rgba(124,58,237,.12)', color: 'var(--theme-text)', fontWeight: 600 } : { color: 'var(--theme-text-secondary)' }}>
-                          {cell === 'S' ? <span><span aria-hidden="true">✓ </span>{c.yes}</span>
-                            : cell === 'N' ? <span title={c.no}><span aria-hidden="true">—</span><span className="sr-only">{c.no}</span></span>
-                            : cell}
+                          <CompareCell cell={cell} yes={c.yes} no={c.no} ours={i === 0} />
                         </td>
                       ))}
                     </tr>
@@ -1624,6 +1649,29 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
                 </tbody>
               </table>
             </div>
+
+            {/* No celular a tabela de 6 colunas obriga a arrastar de lado: cada linha vira um cartão. */}
+            <ul className="space-y-3 md:hidden">
+              {c.rows.map(([label, ...cells]) => (
+                <li key={label} className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <p className="font-semibold leading-snug" style={{ color: 'var(--theme-text)' }}>
+                    {label}
+                    {cells.slice(1).every((x) => x === 'N') && <CompareOnlyBadge text={c.only} />}
+                  </p>
+                  <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm">
+                    {cells.map((cell, i) => (
+                      <React.Fragment key={i}>
+                        <dt className="font-semibold" style={{ color: i === 0 ? 'var(--theme-text)' : 'var(--theme-text-secondary)' }}>{c.apps[i][0]}</dt>
+                        <dd style={{ color: i === 0 ? 'var(--theme-text)' : 'var(--theme-text-secondary)', fontWeight: i === 0 ? 600 : 400 }}>
+                          <CompareCell cell={cell} yes={c.yes} no={c.no} ours={i === 0} />
+                        </dd>
+                      </React.Fragment>
+                    ))}
+                  </dl>
+                </li>
+              ))}
+            </ul>
+
             <p className="mt-3 text-xs leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
               <span aria-hidden="true">✓ </span>{c.yes} · <span aria-hidden="true">— </span>{c.no}. {c.note}
             </p>
