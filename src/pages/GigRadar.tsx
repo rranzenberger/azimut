@@ -1051,6 +1051,52 @@ function GoldPhone({ m }: { m: (typeof AZI)[keyof typeof AZI]['mock'] }) {
 // que ele anuncia. Nada aqui vem de engenharia reversa, e nada diz "não tem" — diz "não
 // encontramos", com data. Antes de mexer numa célula, abra a fonte de novo: eles mudam.
 // NÃO prometer "não coletamos endereço": o backup do AziRoad guarda o local da oferta.
+// 🔌 Equipamentos opcionais (04/out/2026, decisão do Ranz): sem equipamento o app funciona inteiro
+// para ler a oferta e dar o veredito; com equipamento homologado conectado, libera mais. Tom cordial:
+// nada bloqueia, só informa. Mesmo texto da tela "Seu carro e equipamentos" do app.
+const EQUIP = {
+  pt: {
+    title: 'Equipamentos (opcionais)',
+    intro: 'Sem nada a mais, o AziRoad já lê a oferta, dá o veredito, fala com você e aprende com o seu uso. Se você tiver um destes equipamentos, conte no app: liberamos mais funções assim que ele conectar.',
+    items: [
+      ['🔌', 'Adaptador OBD (ELM327 v1.5, Bluetooth)', 'Com ele: nível do tanque ou carga lidos do carro, aviso de hora de abastecer ou carregar, e "dá para pegar esta corrida e voltar?" dentro do veredito.', 'Sem ele: a autonomia vem do cadastro do carro ou da carga que você informa. Funciona, só fica menos preciso.'],
+      ['📟', 'Painel de LED na frente (iPixel, Bluetooth)', 'Com ele: o passageiro acha o seu carro. Saudação e plataforma no vidro; o nome dele só na chegada.', 'Sem ele: nada muda no resto do app. Use o painel conforme as regras de trânsito da sua cidade.'],
+    ],
+    skip: 'Na instalação, pode pular essa parte sem problema: depois é só abrir o menu → Meus equipamentos. Se travar em algo, fale com a gente. Ajudamos com prazer.',
+    help: '💬 Falar com a gente',
+  },
+  en: {
+    title: 'Equipment (optional)',
+    intro: 'With nothing extra, AziRoad already reads the offer, gives the verdict, talks to you and learns from your use. If you have one of these devices, tell the app: we unlock more as soon as it connects.',
+    items: [
+      ['🔌', 'OBD adapter (ELM327 v1.5, Bluetooth)', 'With it: fuel level or charge read from the car, time-to-refuel or charge warning, and "can I take this ride and get back?" inside the verdict.', 'Without it: range comes from your car registration or the charge you enter. It works, just less precisely.'],
+      ['📟', 'Front LED panel (iPixel, Bluetooth)', 'With it: the passenger finds your car. Greeting and platform on the glass; their name only on arrival.', 'Without it: nothing changes in the rest of the app. Use the panel according to your local traffic rules.'],
+    ],
+    skip: 'During setup you can skip this part: later, open the menu → My equipment. If you get stuck, talk to us. We are glad to help.',
+    help: '💬 Talk to us',
+  },
+  es: {
+    title: 'Equipos (opcionales)',
+    intro: 'Sin nada más, AziRoad ya lee la oferta, da el veredicto, te habla y aprende con tu uso. Si tienes uno de estos equipos, cuéntalo en la app: liberamos más funciones en cuanto se conecte.',
+    items: [
+      ['🔌', 'Adaptador OBD (ELM327 v1.5, Bluetooth)', 'Con él: nivel del tanque o carga leídos del auto, aviso de hora de repostar o cargar, y "¿puedo tomar este viaje y volver?" dentro del veredicto.', 'Sin él: la autonomía sale del registro del auto o de la carga que informas. Funciona, solo es menos preciso.'],
+      ['📟', 'Panel LED delantero (iPixel, Bluetooth)', 'Con él: el pasajero encuentra tu auto. Saludo y plataforma en el vidrio; su nombre solo al llegar.', 'Sin él: nada cambia en el resto de la app. Usa el panel según las reglas de tránsito de tu ciudad.'],
+    ],
+    skip: 'En la instalación puedes saltar esta parte: después abre el menú → Mis equipos. Si te trabas, háblanos. Te ayudamos con gusto.',
+    help: '💬 Hablar con nosotros',
+  },
+  fr: {
+    title: 'Équipements (optionnels)',
+    intro: "Sans rien de plus, AziRoad lit déjà l'offre, donne le verdict, vous parle et apprend de votre usage. Si vous avez l'un de ces appareils, dites-le dans l'app : nous débloquons davantage dès qu'il se connecte.",
+    items: [
+      ['🔌', 'Adaptateur OBD (ELM327 v1.5, Bluetooth)', 'Avec lui : niveau du réservoir ou charge lus sur la voiture, alerte pour faire le plein ou recharger, et « puis-je prendre cette course et revenir ? » dans le verdict.', "Sans lui : l'autonomie vient de la fiche du véhicule ou de la charge que vous indiquez. Ça marche, en moins précis."],
+      ['📟', 'Panneau LED avant (iPixel, Bluetooth)', "Avec lui : le passager trouve votre voiture. Salutation et plateforme sur la vitre ; son nom seulement à l'arrivée.", "Sans lui : rien ne change dans le reste de l'app. Utilisez le panneau selon le code de la route local."],
+    ],
+    skip: "À l'installation, vous pouvez passer cette étape : ensuite, menu → Mes équipements. En cas de blocage, écrivez-nous. Avec plaisir.",
+    help: '💬 Nous écrire',
+  },
+} as const
+
 const COMPARE = {
   pt: {
     title: 'AziRoad × os outros apps',
@@ -1808,6 +1854,47 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
               </div>
             )}
           </section>
+
+          {/* 🔌 Equipamentos opcionais (04/out) */}
+          {(() => {
+            const eq = EQUIP[lang as keyof typeof EQUIP] ?? EQUIP.pt
+            return (
+              <section id="equipamentos" className="mb-16 mx-auto max-w-3xl scroll-mt-28">
+                <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>
+                  {eq.title}
+                </h2>
+                <p className="mx-auto mb-7 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                  {eq.intro}
+                </p>
+                <ul className="grid gap-4 md:grid-cols-2">
+                  {eq.items.map(([icon, name, withIt, withoutIt]) => (
+                    <li key={name} className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                      <div className="mb-2 flex items-center gap-3">
+                        <span className="text-xl" aria-hidden="true">{icon}</span>
+                        <strong style={{ color: 'var(--theme-text)' }}>{name}</strong>
+                      </div>
+                      <p className="mb-2 text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{withIt}</p>
+                      <p className="text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{withoutIt}</p>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mx-auto mt-6 max-w-2xl text-center text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                  {eq.skip}
+                </p>
+                <div className="mt-4 text-center">
+                  <a
+                    href={`https://wa.me/${WHATSAPP}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block rounded-xl border border-white/15 px-6 py-3 text-sm transition-colors hover:border-azimut-red/60"
+                    style={{ color: 'var(--theme-text)' }}
+                  >
+                    {eq.help}
+                  </a>
+                </div>
+              </section>
+            )
+          })()}
 
           {/* Regras */}
           <section className="mb-16">
