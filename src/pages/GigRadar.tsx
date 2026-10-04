@@ -36,7 +36,7 @@ const content = {
       ['🛡️', 'Sua rota mais consciente', 'Acrescenta contexto de trânsito, incidentes, zonas e alertas sem dirigir, aceitar ou decidir por você.'],
       ['📋', 'Seu trabalho documentado', 'Organiza histórico, ganhos, custos e diagnósticos para você entender o turno e ter registros quando precisar de suporte.'],
     ],
-    cameraPlanned: 'Em desenvolvimento — câmera de segurança e registro de ocorrências: a proposta é permitir que o motorista salve um registro sob seu controle, com data, integridade e exportação. Não é prova judicial garantida; o uso depende do caso e deverá respeitar privacidade e LGPD.',
+    cameraPlanned: 'Em teste — câmera de segurança e registro de ocorrências: o motorista salva um registro sob seu controle, com data, integridade e exportação. Não é prova judicial garantida; o uso depende do caso e deverá respeitar privacidade e LGPD.',
     featTitle: 'O que o app faz',
     feats: [
       ['🟢🟡🔴', 'Veredito instantâneo em cima da oferta (Uber e 99)'],
@@ -142,7 +142,7 @@ const content = {
       ['🛡️', 'A better-informed route', 'Adds traffic, incident, zone and alert context without driving, accepting or deciding for you.'],
       ['📋', 'Your work documented', 'Organises history, earnings, costs and diagnostics so you can understand each shift and keep records for support.'],
     ],
-    cameraPlanned: 'In development — safety camera and incident records: the proposal is to let drivers save a record under their control, with date, integrity and export. It is not guaranteed legal evidence; use depends on the case and must comply with privacy and data-protection rules.',
+    cameraPlanned: 'In testing — safety camera and incident records: drivers save a record under their control, with date, integrity and export. It is not guaranteed legal evidence; use depends on the case and must comply with privacy and data-protection rules.',
     featTitle: 'What the app does',
     feats: [
       ['🟢🟡🔴', 'Instant verdict on top of the offer (Uber and 99)'],
@@ -248,7 +248,7 @@ const content = {
       ['🛡️', 'Una ruta más consciente', 'Añade contexto de tráfico, incidentes, zonas y alertas sin conducir, aceptar ni decidir por ti.'],
       ['📋', 'Tu trabajo documentado', 'Organiza historial, ganancias, costos y diagnósticos para comprender el turno y conservar registros para soporte.'],
     ],
-    cameraPlanned: 'En desarrollo — cámara de seguridad y registro de incidentes: la propuesta es permitir que el conductor guarde un registro bajo su control, con fecha, integridad y exportación. No es una prueba judicial garantizada; su uso depende del caso y deberá respetar la privacidad y las normas de protección de datos.',
+    cameraPlanned: 'En prueba — cámara de seguridad y registro de incidentes: el conductor guarda un registro bajo su control, con fecha, integridad y exportación. No es una prueba judicial garantizada; su uso depende del caso y deberá respetar la privacidad y las normas de protección de datos.',
     featTitle: 'Qué hace la app',
     feats: [
       ['🟢🟡🔴', 'Veredicto instantáneo sobre la oferta (Uber y 99)'],
@@ -354,7 +354,7 @@ const content = {
       ['🛡️', 'Un trajet mieux éclairé', 'Ajoute le contexte du trafic, des incidents, des zones et des alertes sans conduire, accepter ni décider à votre place.'],
       ['📋', 'Votre travail documenté', 'Organise l’historique, les revenus, les coûts et les diagnostics pour comprendre chaque service et conserver des éléments utiles au support.'],
     ],
-    cameraPlanned: 'En développement — caméra de sécurité et registre d’incidents : l’objectif est de permettre au chauffeur de conserver un enregistrement sous son contrôle, avec date, intégrité et exportation. Il ne s’agit pas d’une preuve judiciaire garantie ; son usage dépend du cas et devra respecter la vie privée et la protection des données.',
+    cameraPlanned: 'En test — caméra de sécurité et registre d’incidents : le chauffeur conserve un enregistrement sous son contrôle, avec date, intégrité et exportation. Il ne s’agit pas d’une preuve judiciaire garantie ; son usage dépend du cas et devra respecter la vie privée et la protection des données.',
     featTitle: 'Ce que fait l\'app',
     feats: [
       ['🟢🟡🔴', 'Verdict instantané sur l\'offre (Uber et 99)'],
@@ -1114,7 +1114,7 @@ const COMPARE = {
       ['Quem decide é VOCÊ: nunca aceita nem recusa sozinho', 'S', 'N', 'N', 'N', 'Aceita e recusa sozinho (Android)', 'Aceita e recusa sozinho'],
       ['Faz a conta com o custo do SEU carro', 'S', 'S', 'S', 'S', 'Por milha e por hora', 'N'],
       ['Veredito na hora da oferta', 'S', 'S', 'S', 'S', 'S', 'S'],
-      ['Gravação para sua segurança', 'Em desenvolvimento', 'Câmera', 'Câmera (Android)', 'Câmera', 'Áudio (Android)', 'N'],
+      ['Gravação para sua segurança', 'Em teste', 'Câmera', 'Câmera (Android)', 'Câmera', 'Áudio (Android)', 'N'],
       ['iPhone', 'Em estudo', 'S', 'S', 'Ainda não', 'Só análise', 'S'],
       ['Preço', 'Grátis no beta', 'Grátis nos EUA até o fim de 2026', 'R$ 27/mês', 'R$ 97/ano', 'Não informado', 'Não informado'],
     ],
@@ -1125,11 +1125,18 @@ const COMPARE = {
     safety: [
       ['🚨', 'Você', 'Zonas que você marca no mapa. Dinheiro de madrugada. De 0 às 5h, as zonas de risco endurecem sozinhas.'],
       ['🛡️', 'Seu carro', 'Morro, rua estreita, alagamento e granizo. Com o sensor OBD2, avisa motor quente. No elétrico, avisa se a corrida não cabe na carga.'],
-      ['🧑‍🤝‍🧑', 'Seu passageiro', 'Com gente a bordo, a voz fica discreta. E nada de câmera escondida: quando a gravação chegar, vai ser com aviso.'],
+      ['🧑‍🤝‍🧑', 'Seu passageiro', 'Com gente a bordo, a voz fica discreta. E a gravação é sua, sem som por padrão, e nunca deixa o veredito lento.'],
+    ],
+    newTitle: 'Novo no beta (outubro)',
+    news: [
+      ['🎥', 'Gravação para sua segurança (em teste)', 'A câmera grava em trechos de 3 minutos, sem som por padrão. Se o celular esquentar ou a leitura ficar lenta, ela dá passagem ao veredito. Trecho de ocorrido marcado não é apagado.'],
+      ['⚑', 'Marcar um ocorrido com um toque', 'Puxe a barra do celular e toque: a hora e o lugar ficam guardados. Depois, parado, você escreve o que foi.'],
+      ['🅿️', 'Onde deixei o carro', 'O app guarda sozinho o lugar quando o turno fecha ou o OBD perde o carro. Um toque abre o mapa.'],
+      ['📍', 'Seu limite de busca', 'Você escolhe a partir de quantos km ou quantos MINUTOS de busca sem pagamento o app avisa.'],
+      ['🔌', 'Equipamentos opcionais', 'OBD e painel de LED liberam mais funções. Sem eles, o app funciona inteiro.'],
     ],
     soonTitle: 'Vem aí',
     soon: [
-      ['🎥', 'Gravação para sua segurança (em desenvolvimento)', 'É o pedido que mais ouvimos dos motoristas. Sua prova se algo der errado, ligada a cada corrida. Do jeito certo: com aviso ao passageiro, e sem deixar o veredito lento.'],
       ['📱', 'iPhone', 'Estamos estudando o caminho. Quem testa o beta fica sabendo primeiro.'],
     ],
     trustTitle: 'Por que confiar',
@@ -1156,7 +1163,7 @@ const COMPARE = {
       ['YOU decide: never accepts or declines by itself', 'S', 'N', 'N', 'N', 'Auto-accept and decline (Android)', 'Auto-accept and decline'],
       ['Uses YOUR car\'s real cost', 'S', 'S', 'S', 'S', 'Per mile and per hour', 'N'],
       ['Verdict the moment the offer appears', 'S', 'S', 'S', 'S', 'S', 'S'],
-      ['Recording for your safety', 'In development', 'Camera', 'Camera (Android)', 'Camera', 'Audio (Android)', 'N'],
+      ['Recording for your safety', 'In testing', 'Camera', 'Camera (Android)', 'Camera', 'Audio (Android)', 'N'],
       ['iPhone', 'Under study', 'S', 'S', 'Not yet', 'Analysis only', 'S'],
       ['Price', 'Free in beta', 'Free in the US until the end of 2026', 'R$ 27/month', 'R$ 97/year', 'Not stated', 'Not stated'],
     ],
@@ -1167,11 +1174,18 @@ const COMPARE = {
     safety: [
       ['🚨', 'You', 'Zones you mark on the map. Cash rides late at night. From midnight to 5 am, risk zones tighten by themselves.'],
       ['🛡️', 'Your car', 'Hills, narrow streets, flooding and hail. With the OBD2 sensor it warns about an overheating engine. On an EV, it warns when the ride does not fit the charge.'],
-      ['🧑‍🤝‍🧑', 'Your passenger', 'With people on board the voice goes discreet. And no hidden camera: when recording arrives, it will come with notice.'],
+      ['🧑‍🤝‍🧑', 'Your passenger', 'With people on board the voice goes discreet. Recording is yours, with no sound by default, and it never slows the verdict.'],
+    ],
+    newTitle: 'New in the beta (October)',
+    news: [
+      ['🎥', 'Recording for your safety (in testing)', 'The camera records in 3-minute clips, with no sound by default. If the phone heats up or reading slows down, it steps aside for the verdict. A clip with a marked incident is never deleted.'],
+      ['⚑', 'Mark an incident with one tap', 'Pull down the phone bar and tap: time and place are kept. Later, parked, you write what happened.'],
+      ['🅿️', 'Where I parked', 'The app keeps the spot by itself when the shift ends or the OBD loses the car. One tap opens the map.'],
+      ['📍', 'Your pickup limit', 'You choose after how many km or how many MINUTES of unpaid pickup the app warns you.'],
+      ['🔌', 'Optional equipment', 'OBD and an LED panel unlock more features. Without them, the app works in full.'],
     ],
     soonTitle: 'Coming up',
     soon: [
-      ['🎥', 'Recording for your safety (in development)', 'The request we hear most from drivers. Your proof if something goes wrong, linked to each ride. Done right: with notice to the passenger, and without slowing the verdict down.'],
       ['📱', 'iPhone', 'We are studying the path. Beta testers hear about it first.'],
     ],
     trustTitle: 'Why trust it',
@@ -1747,6 +1761,19 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
                   <p className="text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{body}</p>
                 </div>
               ))}
+            </div>
+
+            {/* 🆕 Novidades do beta (04/out): só o que já está no app */}
+            <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-6">
+              <h3 className="mb-4 font-handel text-lg uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>{c.newTitle}</h3>
+              <ul className="grid gap-4 md:grid-cols-2">
+                {c.news.map(([emoji, title, body]) => (
+                  <li key={title} className="text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                    <span aria-hidden="true">{emoji} </span>
+                    <strong style={{ color: 'var(--theme-text)' }}>{title}.</strong> {body}
+                  </li>
+                ))}
+              </ul>
             </div>
 
             <div className="mt-8 grid gap-6 md:grid-cols-2">
