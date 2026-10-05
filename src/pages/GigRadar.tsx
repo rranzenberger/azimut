@@ -1097,6 +1097,63 @@ const EQUIP = {
   },
 } as const
 
+// 🔑 Como entrar no beta (04/out/2026): baixar pelo QR, instalar, ativar a licença pelo QR que o
+// Ranz manda (gerado no CMS) e deixar o log seguir. Sem prometer o que o app ainda não faz.
+const ENTRAR = {
+  pt: {
+    title: 'Como entrar no beta',
+    qrAlt: 'QR para baixar o AziRoad',
+    qrHint: 'Aponte a câmera do celular Android',
+    download: '📲 Baixar o AziRoad',
+    steps: [
+      ['📲', 'Baixe o app', 'Aponte a câmera para o QR ou toque no botão. O app do beta já vem protegido.'],
+      ['⚙️', 'Instale e abra', 'Siga o passo a passo: idioma, aceite, seu carro, permissões. Pode pular o que quiser e voltar depois.'],
+      ['🔑', 'Ative sua licença', 'Abra "Minha licença", copie o ID do aparelho e mande pra gente. Você recebe um QR de ativação: é só escanear.'],
+      ['📤', 'Deixe o log seguir', 'O app manda o log sozinho. É isso que mantém sua licença ativa, e a gente avisa com antecedência se faltar.'],
+    ],
+    note: 'A licença é gratuita no beta e nunca trava no meio de um turno. Os testers que mais ajudarem ganham acesso estendido.',
+  },
+  en: {
+    title: 'How to join the beta',
+    qrAlt: 'QR to download AziRoad',
+    qrHint: 'Point your Android phone camera',
+    download: '📲 Download AziRoad',
+    steps: [
+      ['📲', 'Download the app', 'Point the camera at the QR or tap the button. The beta app comes protected.'],
+      ['⚙️', 'Install and open', 'Follow the steps: language, consent, your car, permissions. Skip anything and come back later.'],
+      ['🔑', 'Activate your license', 'Open "My license", copy the device ID and send it to us. You get an activation QR: just scan it.'],
+      ['📤', 'Let the log flow', 'The app sends its log by itself. That keeps your license active, and we warn you ahead of time if it stops.'],
+    ],
+    note: 'The license is free during the beta and never locks in the middle of a shift. The testers who help the most get extended access.',
+  },
+  es: {
+    title: 'Cómo entrar en la beta',
+    qrAlt: 'QR para descargar AziRoad',
+    qrHint: 'Apunta la cámara de tu Android',
+    download: '📲 Descargar AziRoad',
+    steps: [
+      ['📲', 'Descarga la app', 'Apunta la cámara al QR o toca el botón. La app de la beta ya viene protegida.'],
+      ['⚙️', 'Instala y abre', 'Sigue los pasos: idioma, aceptación, tu auto, permisos. Puedes saltar lo que quieras y volver después.'],
+      ['🔑', 'Activa tu licencia', 'Abre "Mi licencia", copia el ID del aparato y envíanoslo. Recibes un QR de activación: solo escanéalo.'],
+      ['📤', 'Deja que el log siga', 'La app envía el log sola. Eso mantiene tu licencia activa, y avisamos con anticipación si falta.'],
+    ],
+    note: 'La licencia es gratis en la beta y nunca se bloquea en medio de un turno. Los testers que más ayuden ganan acceso extendido.',
+  },
+  fr: {
+    title: 'Comment rejoindre la bêta',
+    qrAlt: 'QR pour télécharger AziRoad',
+    qrHint: 'Visez avec l’appareil photo de votre Android',
+    download: '📲 Télécharger AziRoad',
+    steps: [
+      ['📲', 'Téléchargez l’app', 'Visez le QR ou touchez le bouton. L’app de la bêta est déjà protégée.'],
+      ['⚙️', 'Installez et ouvrez', 'Suivez les étapes : langue, accord, votre voiture, autorisations. Vous pouvez passer et revenir plus tard.'],
+      ['🔑', 'Activez votre licence', 'Ouvrez « Ma licence », copiez l’ID de l’appareil et envoyez-le-nous. Vous recevez un QR d’activation : il suffit de le scanner.'],
+      ['📤', 'Laissez le journal partir', 'L’app envoie son journal toute seule. C’est ce qui garde votre licence active ; nous prévenons à l’avance s’il manque.'],
+    ],
+    note: 'La licence est gratuite pendant la bêta et ne bloque jamais en plein service. Les testeurs les plus utiles obtiennent un accès prolongé.',
+  },
+} as const
+
 const COMPARE = {
   pt: {
     title: 'AziRoad × os outros apps',
@@ -1919,6 +1976,46 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
                     {eq.help}
                   </a>
                 </div>
+              </section>
+            )
+          })()}
+
+          {/* 🔑 Como entrar no beta (04/out): baixar pelo QR + ativar a licença */}
+          {(() => {
+            const en = ENTRAR[lang as keyof typeof ENTRAR] ?? ENTRAR.pt
+            return (
+              <section id="como-entrar" className="mb-16 mx-auto max-w-3xl scroll-mt-28">
+                <h2 className="mb-6 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>
+                  {en.title}
+                </h2>
+                <div className="grid items-start gap-6 md:grid-cols-[220px_1fr]">
+                  <div className="mx-auto text-center">
+                    <img src="/gigradar/qr-baixar-aziroad.png" alt={en.qrAlt} width={210} height={210} loading="lazy"
+                      className="mx-auto rounded-2xl border border-white/10 bg-white p-2" />
+                    <p className="mt-2 text-xs" style={{ color: 'var(--theme-text-secondary)' }}>{en.qrHint}</p>
+                    <a href="https://www.azmt.com.br/downloads/gigradar-latest.apk"
+                      className="mt-3 inline-block rounded-xl bg-azimut-red px-5 py-3 font-handel text-xs uppercase tracking-[0.15em] text-white hover:bg-azimut-red/90 transition-colors">
+                      {en.download}
+                    </a>
+                  </div>
+                  <ol className="space-y-3">
+                    {en.steps.map(([icon, title, body], i) => (
+                      <li key={title} className="flex gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                        <span className="font-handel text-azimut-red">{i + 1}</span>
+                        <div>
+                          <div className="mb-1 flex items-center gap-2">
+                            <span aria-hidden="true">{icon}</span>
+                            <strong style={{ color: 'var(--theme-text)' }}>{title}</strong>
+                          </div>
+                          <p className="text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{body}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+                <p className="mx-auto mt-5 max-w-2xl text-center text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                  {en.note}
+                </p>
               </section>
             )
           })()}
