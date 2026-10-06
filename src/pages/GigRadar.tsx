@@ -1097,6 +1097,95 @@ const EQUIP = {
   },
 } as const
 
+// 🔑 Como entrar no beta (04/out/2026): baixar pelo QR, instalar, ativar a licença pelo QR que o
+// Ranz manda (gerado no CMS) e deixar o log seguir. Sem prometer o que o app ainda não faz.
+// 🏦 App do banco reclamou (06/out): tester desinstalou achando que o AziRoad "interferia no banco".
+// Bancos bloqueiam quando há SERVIÇO DE ACESSIBILIDADE ligado (o leitor) — desligar só o card não
+// resolve. Saída: atalho das teclas de volume liga/desliga o leitor em 3 s. Nunca desinstalar.
+const BANCO = {
+  pt: {
+    title: 'O app do banco reclamou?',
+    lead: 'Alguns apps de banco não abrem quando há um "serviço de acessibilidade" ligado. O AziRoad usa esse serviço para ler a oferta. Não é vírus nem defeito: é uma proteção do banco.',
+    warn: 'Desligar só o card não resolve: o banco olha o leitor. E não desinstale — você perde o que o app aprendeu no seu celular.',
+    stepsTitle: 'Faça uma vez (1 minuto)',
+    steps: [
+      ['⚙️', 'Abra Configurações → Acessibilidade', 'No Samsung: Acessibilidade → Aplicativos instalados → AziRoad.'],
+      ['🔊', 'Ligue o "Atalho do AziRoad"', 'Escolha: teclas de volume para cima e para baixo.'],
+      ['🏦', 'Antes do banco: segure as 2 teclas de volume', '3 segundos. O AziRoad desliga. Use o banco normalmente.'],
+      ['🚗', 'Depois: segure de novo', 'O AziRoad volta a ler. Olhe a bolinha na tela antes de rodar.'],
+    ],
+    note: 'Sem atalho também dá: Configurações → Acessibilidade → AziRoad → desligar, e religar depois. Qual banco reclamou? Conte pra gente no formulário abaixo.',
+  },
+  en: {
+    title: 'Your bank app complained?',
+    lead: 'Some bank apps refuse to open while an "accessibility service" is on. AziRoad uses that service to read the offer. It is not a virus or a bug: it is the bank protecting you.',
+    warn: 'Turning off only the card does not help: the bank checks the reader. And do not uninstall — you lose what the app learned on your phone.',
+    stepsTitle: 'Do this once (1 minute)',
+    steps: [
+      ['⚙️', 'Open Settings → Accessibility', 'On Samsung: Accessibility → Installed apps → AziRoad.'],
+      ['🔊', 'Turn on the "AziRoad shortcut"', 'Choose: volume up and down keys.'],
+      ['🏦', 'Before the bank: hold both volume keys', '3 seconds. AziRoad turns off. Use your bank as usual.'],
+      ['🚗', 'After: hold them again', 'AziRoad reads again. Check the bubble on screen before driving.'],
+    ],
+    note: 'Without the shortcut: Settings → Accessibility → AziRoad → off, then on again later. Which bank complained? Tell us in the form below.',
+  },
+} as const
+
+const ENTRAR = {
+  pt: {
+    title: 'Como entrar no beta',
+    qrAlt: 'QR para baixar o AziRoad',
+    qrHint: 'Aponte a câmera do celular Android',
+    download: '📲 Baixar o AziRoad',
+    steps: [
+      ['📲', 'Baixe o app', 'Aponte a câmera para o QR ou toque no botão. O app do beta já vem protegido.'],
+      ['⚙️', 'Instale e abra', 'Siga o passo a passo: idioma, aceite, seu carro, permissões. Pode pular o que quiser e voltar depois.'],
+      ['🔑', 'Ative sua licença', 'Abra "Minha licença", copie o ID do aparelho e mande pra gente. Você recebe um QR de ativação: é só escanear.'],
+      ['📤', 'Deixe o log seguir', 'O app manda o log sozinho. É isso que mantém sua licença ativa, e a gente avisa com antecedência se faltar.'],
+    ],
+    note: 'A licença é gratuita no beta e nunca trava no meio de um turno. Os testers que mais ajudarem ganham acesso estendido.',
+  },
+  en: {
+    title: 'How to join the beta',
+    qrAlt: 'QR to download AziRoad',
+    qrHint: 'Point your Android phone camera',
+    download: '📲 Download AziRoad',
+    steps: [
+      ['📲', 'Download the app', 'Point the camera at the QR or tap the button. The beta app comes protected.'],
+      ['⚙️', 'Install and open', 'Follow the steps: language, consent, your car, permissions. Skip anything and come back later.'],
+      ['🔑', 'Activate your license', 'Open "My license", copy the device ID and send it to us. You get an activation QR: just scan it.'],
+      ['📤', 'Let the log flow', 'The app sends its log by itself. That keeps your license active, and we warn you ahead of time if it stops.'],
+    ],
+    note: 'The license is free during the beta and never locks in the middle of a shift. The testers who help the most get extended access.',
+  },
+  es: {
+    title: 'Cómo entrar en la beta',
+    qrAlt: 'QR para descargar AziRoad',
+    qrHint: 'Apunta la cámara de tu Android',
+    download: '📲 Descargar AziRoad',
+    steps: [
+      ['📲', 'Descarga la app', 'Apunta la cámara al QR o toca el botón. La app de la beta ya viene protegida.'],
+      ['⚙️', 'Instala y abre', 'Sigue los pasos: idioma, aceptación, tu auto, permisos. Puedes saltar lo que quieras y volver después.'],
+      ['🔑', 'Activa tu licencia', 'Abre "Mi licencia", copia el ID del aparato y envíanoslo. Recibes un QR de activación: solo escanéalo.'],
+      ['📤', 'Deja que el log siga', 'La app envía el log sola. Eso mantiene tu licencia activa, y avisamos con anticipación si falta.'],
+    ],
+    note: 'La licencia es gratis en la beta y nunca se bloquea en medio de un turno. Los testers que más ayuden ganan acceso extendido.',
+  },
+  fr: {
+    title: 'Comment rejoindre la bêta',
+    qrAlt: 'QR pour télécharger AziRoad',
+    qrHint: 'Visez avec l’appareil photo de votre Android',
+    download: '📲 Télécharger AziRoad',
+    steps: [
+      ['📲', 'Téléchargez l’app', 'Visez le QR ou touchez le bouton. L’app de la bêta est déjà protégée.'],
+      ['⚙️', 'Installez et ouvrez', 'Suivez les étapes : langue, accord, votre voiture, autorisations. Vous pouvez passer et revenir plus tard.'],
+      ['🔑', 'Activez votre licence', 'Ouvrez « Ma licence », copiez l’ID de l’appareil et envoyez-le-nous. Vous recevez un QR d’activation : il suffit de le scanner.'],
+      ['📤', 'Laissez le journal partir', 'L’app envoie son journal toute seule. C’est ce qui garde votre licence active ; nous prévenons à l’avance s’il manque.'],
+    ],
+    note: 'La licence est gratuite pendant la bêta et ne bloque jamais en plein service. Les testeurs les plus utiles obtiennent un accès prolongé.',
+  },
+} as const
+
 const COMPARE = {
   pt: {
     title: 'AziRoad × os outros apps',
@@ -1919,6 +2008,82 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
                     {eq.help}
                   </a>
                 </div>
+              </section>
+            )
+          })()}
+
+          {/* 🔑 Como entrar no beta (04/out): baixar pelo QR + ativar a licença */}
+          {(() => {
+            const en = ENTRAR[lang as keyof typeof ENTRAR] ?? ENTRAR.pt
+            return (
+              <section id="como-entrar" className="mb-16 mx-auto max-w-3xl scroll-mt-28">
+                <h2 className="mb-6 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>
+                  {en.title}
+                </h2>
+                <div className="grid items-start gap-6 md:grid-cols-[220px_1fr]">
+                  <div className="mx-auto text-center">
+                    <img src="/gigradar/qr-baixar-aziroad.png" alt={en.qrAlt} width={210} height={210} loading="lazy"
+                      className="mx-auto rounded-2xl border border-white/10 bg-white p-2" />
+                    <p className="mt-2 text-xs" style={{ color: 'var(--theme-text-secondary)' }}>{en.qrHint}</p>
+                    <a href="https://www.azmt.com.br/downloads/gigradar-latest.apk"
+                      className="mt-3 inline-block rounded-xl bg-azimut-red px-5 py-3 font-handel text-xs uppercase tracking-[0.15em] text-white hover:bg-azimut-red/90 transition-colors">
+                      {en.download}
+                    </a>
+                  </div>
+                  <ol className="space-y-3">
+                    {en.steps.map(([icon, title, body], i) => (
+                      <li key={title} className="flex gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                        <span className="font-handel text-azimut-red">{i + 1}</span>
+                        <div>
+                          <div className="mb-1 flex items-center gap-2">
+                            <span aria-hidden="true">{icon}</span>
+                            <strong style={{ color: 'var(--theme-text)' }}>{title}</strong>
+                          </div>
+                          <p className="text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{body}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+                <p className="mx-auto mt-5 max-w-2xl text-center text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                  {en.note}
+                </p>
+              </section>
+            )
+          })()}
+
+          {/* 🏦 App do banco reclamou (06/out) — logo depois de "Como entrar": é a 1ª dúvida de quem instala */}
+          {(() => {
+            const bk = BANCO[lang as keyof typeof BANCO] ?? BANCO.pt
+            return (
+              <section id="banco" className="mb-16 mx-4 md:mx-auto max-w-3xl scroll-mt-28 rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
+                <h2 className="mb-3 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>
+                  🏦 {bk.title}
+                </h2>
+                <p className="mx-auto mb-4 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                  {bk.lead}
+                </p>
+                <p className="mx-auto mb-6 max-w-2xl rounded-2xl border border-azimut-red/40 bg-azimut-red/10 p-4 text-center text-base font-semibold leading-relaxed" style={{ color: 'var(--theme-text)' }}>
+                  ⚠️ {bk.warn}
+                </p>
+                <h3 className="mb-3 text-center font-handel text-lg uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>{bk.stepsTitle}</h3>
+                <ol className="grid gap-3 md:grid-cols-2">
+                  {bk.steps.map(([icon, title, body], i) => (
+                    <li key={title} className="flex gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                      <span className="font-handel text-xl text-azimut-red">{i + 1}</span>
+                      <div>
+                        <div className="mb-1 flex items-center gap-2">
+                          <span aria-hidden="true" className="text-xl">{icon}</span>
+                          <strong className="text-base" style={{ color: 'var(--theme-text)' }}>{title}</strong>
+                        </div>
+                        <p className="text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{body}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+                <p className="mx-auto mt-5 max-w-2xl text-center text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                  {bk.note}
+                </p>
               </section>
             )
           })()}
