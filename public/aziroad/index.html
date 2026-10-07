@@ -2,7 +2,9 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<!-- Link de divulgação do AziRoad (27/set/2026). O site é SPA: o robô do WhatsApp/Facebook não roda
+<!-- 07/out/2026: também é a entrada de https://aziroad.com/ (vercel.json, rewrite por host) — detecta a língua do
+     celular e abre /pt|en|es|fr/aziroad no próprio aziroad.com.
+     Link de divulgação do AziRoad (27/set/2026). O site é SPA: o robô do WhatsApp/Facebook não roda
      JS e só vê as tags do index.html genérico. Esta página estática leva as tags certas e manda a
      pessoa para a página do app. Vercel serve arquivo estático antes do rewrite para /index.html. -->
 <title>AziRoad — vale a pena ou não, em 1 segundo</title>
@@ -11,20 +13,20 @@
 <meta property="og:site_name" content="Azimut">
 <meta property="og:title" content="AziRoad — vale a pena ou não, em 1 segundo">
 <meta property="og:description" content="Lê a oferta da Uber e da 99 e responde por cor e por voz se a corrida paga o seu custo. Beta grátis para motoristas.">
-<meta property="og:url" content="https://www.azmt.com.br/aziroad">
+<meta property="og:url" content="https://aziroad.com/">
 <meta property="og:image" content="https://www.azmt.com.br/gigradar/aziroad-og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.azmt.com.br/gigradar/aziroad-og.jpg">
 <link rel="icon" href="/gigradar/aziroad-icone-192.png" type="image/png">
-<link rel="canonical" href="https://www.azmt.com.br/pt/gigradar">
-<meta http-equiv="refresh" content="0; url=/pt/gigradar">
+<link rel="canonical" href="https://aziroad.com/">
+<meta http-equiv="refresh" content="0; url=/pt/aziroad">
 <script>
   var l = (navigator.language || 'pt').slice(0, 2).toLowerCase();
-  location.replace('/' + (['pt', 'en', 'es', 'fr'].indexOf(l) >= 0 ? l : 'pt') + '/gigradar' + location.search);
+  location.replace('/' + (['pt', 'en', 'es', 'fr'].indexOf(l) >= 0 ? l : 'pt') + '/aziroad' + location.search);
 </script>
 <style>body{margin:0;background:#1E1145;color:#fff;font:18px system-ui,sans-serif;display:grid;place-items:center;height:100vh}a{color:#D0BCFF}</style>
 </head>
-<body><p>Abrindo o <a href="/pt/gigradar">AziRoad</a>…</p></body>
+<body><p>Abrindo o <a href="/pt/aziroad">AziRoad</a>…</p></body>
 </html>
