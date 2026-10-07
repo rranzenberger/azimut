@@ -851,6 +851,11 @@ const AZI = {
     renamed: 'Novo nome do GigRadar',
     renamedNote: 'Mesmo app, mesmo código, mesmos dados — só o nome e o ícone mudaram. Quem já testa não precisa reinstalar.',
     ctaTop: 'Quero testar grátis',
+    // Topo da página (07/out/2026, Jev: bordão 0,72 · promessa do lucro 0,82)
+    slogan: 'O Azi falou: vamo!',
+    promise: 'A Uber te mostra o preço. O Azi te mostra o lucro.',
+    ctaSecond: 'Ver o comparativo',
+    chips: ['Grátis no beta', 'Só lê, nunca toca', 'Android'],
     goldTitle: 'Corrida ouro: você vê antes de aceitar',
     goldIntro: 'Quando a oferta passa bem da sua meta, o card fica dourado, pulsa duas vezes e mostra o que sobra no seu bolso — já descontado o seu custo por km. Você não precisa fazer conta no sinal.',
     goldPoints: [
@@ -886,6 +891,11 @@ const AZI = {
     renamed: 'GigRadar has a new name',
     renamedNote: 'Same app, same code, same data — only the name and icon changed. Current testers don\'t need to reinstall.',
     ctaTop: 'Test it for free',
+    // Topo da página (07/out/2026, Jev: bordão 0,72 · promessa do lucro 0,82)
+    slogan: 'Azi says: go!',
+    promise: 'Uber shows you the fare. Azi shows you the profit.',
+    ctaSecond: 'See the comparison',
+    chips: ['Free in beta', 'Reads only, never taps', 'Android'],
     goldTitle: 'Gold ride: you see it before you accept',
     goldIntro: 'When an offer is well above your goal, the card turns gold, pulses twice and shows what\'s left in your pocket — already net of your cost per km. No mental math at the traffic light.',
     goldPoints: [
@@ -921,6 +931,11 @@ const AZI = {
     renamed: 'Nuevo nombre de GigRadar',
     renamedNote: 'Misma app, mismo código, mismos datos — solo cambiaron el nombre y el ícono. Quien ya prueba no necesita reinstalar.',
     ctaTop: 'Quiero probar gratis',
+    // Topo da página (07/out/2026, Jev: bordão 0,72 · promessa do lucro 0,82)
+    slogan: 'Azi dijo: ¡vamos!',
+    promise: 'Uber te muestra el precio. Azi te muestra la ganancia.',
+    ctaSecond: 'Ver la comparación',
+    chips: ['Gratis en beta', 'Solo lee, nunca toca', 'Android'],
     goldTitle: 'Viaje oro: lo ves antes de aceptar',
     goldIntro: 'Cuando la oferta supera bien tu meta, el card se vuelve dorado, late dos veces y muestra lo que te queda en el bolsillo — ya descontado tu costo por km. Sin cuentas en el semáforo.',
     goldPoints: [
@@ -956,6 +971,11 @@ const AZI = {
     renamed: 'Le nouveau nom de GigRadar',
     renamedNote: 'Même app, même code, mêmes données — seuls le nom et l\'icône ont changé. Les testeurs actuels n\'ont rien à réinstaller.',
     ctaTop: 'Tester gratuitement',
+    // Topo da página (07/out/2026, Jev: bordão 0,72 · promessa do lucro 0,82)
+    slogan: 'Azi a dit : on y va !',
+    promise: 'Uber vous montre le prix. Azi vous montre le profit.',
+    ctaSecond: 'Voir le comparatif',
+    chips: ['Gratuit en bêta', 'Lit seulement, ne touche jamais', 'Android'],
     goldTitle: 'Course or : vous la voyez avant d\'accepter',
     goldIntro: 'Quand l\'offre dépasse nettement votre objectif, le card devient doré, pulse deux fois et montre ce qui reste dans votre poche — coût au km déjà déduit. Pas de calcul au feu rouge.',
     goldPoints: [
@@ -1436,45 +1456,73 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
       <main className="min-h-screen pt-28 pb-24 px-4">
         <div className="mx-auto max-w-4xl">
 
-          {/* Hero */}
-          <div className="mb-14 text-center">
-            <p className="mb-4 inline-block rounded-full border border-azimut-red/40 bg-azimut-red/10 px-4 py-1 text-xs uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text)' }}>
-              {t.badge}
-            </p>
-            <img
-              src="/gigradar/aziroad-icone.svg"
-              alt=""
-              width={112}
-              height={112}
-              className="mx-auto mb-5 h-24 w-24 md:h-28 md:w-28 rounded-[1.75rem] shadow-[0_12px_40px_rgba(124,58,237,.45)]"
-            />
-            <h1 className="mb-3 font-handel text-5xl md:text-7xl uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>
-              {t.hero}
-            </h1>
-            <p className="mx-auto mb-5 inline-block rounded-full border border-violet-400/40 bg-violet-500/10 px-4 py-1.5 text-sm font-semibold" style={{ color: 'var(--theme-text)' }}>
-              🏷️ {z.renamed}
-            </p>
-            <p className="mx-auto max-w-2xl text-lg md:text-xl leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
-              {isPt ? NOVO_PT.sub : t.sub}
-            </p>
-            <p className="mt-4 text-sm" style={{ color: 'var(--theme-text-secondary)' }}>{t.madeBy}</p>
-            <p className="mt-3 text-sm font-semibold" style={{ color: 'var(--theme-text)' }}>{t.androidOnly}</p>
-            <p className="mx-auto mt-3 max-w-xl text-xs leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{z.renamedNote}</p>
-            <a
-              href="#quero-testar"
-              className="mt-7 inline-block rounded-xl bg-azimut-red px-8 py-4 font-handel text-sm uppercase tracking-[0.15em] text-white hover:bg-azimut-red/90 transition-colors"
-            >
-              {z.ctaTop} →
-            </a>
+          {/* Hero — 07/out/2026 (Ranz: "o logo ficou solto no meio"): marca em linha (ícone + nome), bordão
+              grande, a promessa do lucro, 2 botões e 3 selos à esquerda; o PRODUTO (o card ouro no celular) à
+              direita, já na primeira tela. No celular empilha: texto em cima, o card embaixo. */}
+          <div className="mb-16 grid items-center gap-10 md:grid-cols-[1.15fr_0.85fr]">
+            <div className="text-center md:text-left">
+              <div className="mb-6 flex items-center justify-center gap-4 md:justify-start">
+                <img
+                  src="/gigradar/aziroad-icone.svg"
+                  alt=""
+                  width={72}
+                  height={72}
+                  className="h-16 w-16 md:h-[72px] md:w-[72px] rounded-2xl shadow-[0_10px_30px_rgba(124,58,237,.45)]"
+                />
+                <div className="text-left">
+                  <p className="font-handel text-3xl md:text-4xl uppercase tracking-[0.08em] leading-none" style={{ color: 'var(--theme-text)' }}>{t.hero}</p>
+                  <p className="mt-1.5 text-[0.7rem] uppercase tracking-[0.3em]" style={{ color: 'var(--theme-text-secondary)' }}>by Azimut</p>
+                </div>
+              </div>
+              <p className="mb-5 inline-block rounded-full border border-azimut-red/40 bg-azimut-red/10 px-4 py-1 text-xs uppercase tracking-[0.2em]" style={{ color: 'var(--theme-text)' }}>
+                {t.badge}
+              </p>
+              <h1 className="mb-4 font-handel text-4xl md:text-6xl uppercase leading-[1.05] tracking-[0.04em]" style={{ color: 'var(--theme-text)', textWrap: 'balance' }}>
+                {z.slogan}
+              </h1>
+              <p className="mb-4 text-xl md:text-2xl font-semibold leading-snug" style={{ color: 'var(--theme-text)', textWrap: 'balance' }}>
+                {z.promise}
+              </p>
+              <p className="mx-auto mb-7 max-w-xl text-base leading-relaxed md:mx-0" style={{ color: 'var(--theme-text-secondary)' }}>
+                {isPt ? NOVO_PT.sub : t.sub}
+              </p>
+              <div className="mb-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:justify-start">
+                <a
+                  href="#quero-testar"
+                  className="inline-block whitespace-nowrap rounded-xl bg-azimut-red px-6 py-4 font-handel text-sm uppercase tracking-[0.1em] text-white hover:bg-azimut-red/90 transition-colors"
+                >
+                  {z.ctaTop} →
+                </a>
+                <a
+                  href="#comparativo"
+                  className="inline-block whitespace-nowrap rounded-xl border px-5 py-4 font-handel text-sm uppercase tracking-[0.08em] transition-colors hover:bg-white/5"
+                  style={{ color: 'var(--theme-text)', borderColor: 'rgba(167,139,250,.45)' }}
+                >
+                  {z.ctaSecond}
+                </a>
+              </div>
+              <ul className="mb-5 flex flex-wrap justify-center gap-2 md:justify-start">
+                {z.chips.map((c) => (
+                  <li key={c} className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-semibold" style={{ color: 'var(--theme-text)' }}>
+                    ✓ {c}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-xs leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
+                {t.madeBy} · 🏷️ {z.renamed}
+              </p>
+            </div>
+            <div>
+              <GoldPhone m={z.mock} />
+            </div>
           </div>
 
           {/* 🔥 Corrida ouro — o card do app reconstruído com as cores reais (26/set, todos os idiomas) */}
-          <section className="mb-16 mx-auto grid max-w-4xl items-center gap-10 md:grid-cols-[minmax(0,300px)_1fr]">
-            <GoldPhone m={z.mock} />
+          <section className="mb-16 mx-auto max-w-4xl">
             <div>
               <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>{z.goldTitle}</h2>
               <p className="mb-6 text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{z.goldIntro}</p>
-              <ul className="space-y-3">
+              <ul className="grid gap-3 md:grid-cols-3">
                 {z.goldPoints.map(([icon, title, body]) => (
                   <li key={title} className="flex items-start gap-3 rounded-2xl border border-amber-300/25 bg-amber-300/5 p-4">
                     <span className="text-xl leading-none" aria-hidden="true">{icon}</span>
