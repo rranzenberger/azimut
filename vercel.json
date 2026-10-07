@@ -2,6 +2,149 @@
   "buildCommand": "npm run vercel-build",
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "aziroad.com"
+        }
+      ],
+      "destination": "/aziroad",
+      "permanent": false
+    },
+    {
+      "source": "/:lang(pt|en|es|fr)/aziroad",
+      "has": [
+        {
+          "type": "host",
+          "value": "azmt.com.br"
+        }
+      ],
+      "destination": "https://aziroad.com/:lang/aziroad",
+      "permanent": false
+    },
+    {
+      "source": "/:lang(pt|en|es|fr)/gigradar",
+      "has": [
+        {
+          "type": "host",
+          "value": "azmt.com.br"
+        }
+      ],
+      "destination": "https://aziroad.com/:lang/aziroad",
+      "permanent": false
+    },
+    {
+      "source": "/:lang(pt|en|es|fr)/giradar",
+      "has": [
+        {
+          "type": "host",
+          "value": "azmt.com.br"
+        }
+      ],
+      "destination": "https://aziroad.com/:lang/aziroad",
+      "permanent": false
+    },
+    {
+      "source": "/aziroad",
+      "has": [
+        {
+          "type": "host",
+          "value": "azmt.com.br"
+        }
+      ],
+      "destination": "https://aziroad.com/",
+      "permanent": false
+    },
+    {
+      "source": "/gigradar",
+      "has": [
+        {
+          "type": "host",
+          "value": "azmt.com.br"
+        }
+      ],
+      "destination": "https://aziroad.com/",
+      "permanent": false
+    },
+    {
+      "source": "/beta",
+      "has": [
+        {
+          "type": "host",
+          "value": "azmt.com.br"
+        }
+      ],
+      "destination": "https://aziroad.com/",
+      "permanent": false
+    },
+    {
+      "source": "/:lang(pt|en|es|fr)/aziroad",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.azmt.com.br"
+        }
+      ],
+      "destination": "https://aziroad.com/:lang/aziroad",
+      "permanent": false
+    },
+    {
+      "source": "/:lang(pt|en|es|fr)/gigradar",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.azmt.com.br"
+        }
+      ],
+      "destination": "https://aziroad.com/:lang/aziroad",
+      "permanent": false
+    },
+    {
+      "source": "/:lang(pt|en|es|fr)/giradar",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.azmt.com.br"
+        }
+      ],
+      "destination": "https://aziroad.com/:lang/aziroad",
+      "permanent": false
+    },
+    {
+      "source": "/aziroad",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.azmt.com.br"
+        }
+      ],
+      "destination": "https://aziroad.com/",
+      "permanent": false
+    },
+    {
+      "source": "/gigradar",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.azmt.com.br"
+        }
+      ],
+      "destination": "https://aziroad.com/",
+      "permanent": false
+    },
+    {
+      "source": "/beta",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.azmt.com.br"
+        }
+      ],
+      "destination": "https://aziroad.com/",
+      "permanent": false
+    },
+    {
       "source": "/:path*",
       "has": [
         {
@@ -72,16 +215,6 @@
     }
   ],
   "rewrites": [
-    {
-      "source": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "aziroad.com"
-        }
-      ],
-      "destination": "/aziroad/index.html"
-    },
     {
       "source": "/aziroad",
       "destination": "/aziroad/index.html"
