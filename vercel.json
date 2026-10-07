@@ -2,6 +2,17 @@
   "buildCommand": "npm run vercel-build",
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "aziroad.com"
+        }
+      ],
+      "destination": "/aziroad",
+      "permanent": false
+    },
+    {
       "source": "/:lang(pt|en|es|fr)/aziroad",
       "has": [
         {
@@ -204,16 +215,6 @@
     }
   ],
   "rewrites": [
-    {
-      "source": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "aziroad.com"
-        }
-      ],
-      "destination": "/aziroad/index.html"
-    },
     {
       "source": "/aziroad",
       "destination": "/aziroad/index.html"
