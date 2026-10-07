@@ -6,6 +6,39 @@
       "has": [
         {
           "type": "host",
+          "value": "www.aziroad.com"
+        }
+      ],
+      "destination": "https://aziroad.com/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "aziroad.com.br"
+        }
+      ],
+      "destination": "https://aziroad.com/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.aziroad.com.br"
+        }
+      ],
+      "destination": "https://aziroad.com/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
           "value": "aziroad.com"
         }
       ],
