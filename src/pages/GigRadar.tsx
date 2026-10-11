@@ -1222,6 +1222,11 @@ const COMPARE = {
       ['Respeita o passageiro: voz discreta com gente a bordo', 'S', 'N', 'N', 'N', 'N', 'N'],
       ['Quem decide é VOCÊ: nunca aceita nem recusa sozinho', 'S', 'N', 'N', 'N', 'Aceita e recusa sozinho (Android)', 'Aceita e recusa sozinho'],
       ['Faz a conta com o custo do SEU carro', 'S', 'S', 'S', 'S', 'Por milha e por hora', 'N'],
+      // 11/out/2026: 2 linhas novas. GigU anuncia IA/aprendizado de máquina para ESCOLHER a corrida
+      // (Cherry Picker, catracalivre/startupi); Mystro anuncia alternar apps SOZINHO (App Store). Nenhum
+      // dos 5 anuncia comparar a corrida aceita com a nova de outro app, nem IA sobre a semana do motorista.
+      ['Indo buscar numa plataforma, compara com a oferta nova da outra e diz se vale trocar', 'S', 'N', 'N', 'N', 'N', 'Alterna apps sozinho'],
+      ['IA que analisa a SUA semana com os seus números e dá dicas', 'S', 'IA para escolher corrida', 'N', 'N', 'N', 'N'],
       ['Veredito na hora da oferta', 'S', 'S', 'S', 'S', 'S', 'S'],
       ['Gravação para sua segurança', 'Em teste', 'Câmera', 'Câmera (Android)', 'Câmera', 'Áudio (Android)', 'N'],
       ['iPhone', 'Em estudo', 'S', 'S', 'Ainda não', 'Só análise', 'S'],
@@ -1271,6 +1276,8 @@ const COMPARE = {
       ['Respects the passenger: discreet voice with people on board', 'S', 'N', 'N', 'N', 'N', 'N'],
       ['YOU decide: never accepts or declines by itself', 'S', 'N', 'N', 'N', 'Auto-accept and decline (Android)', 'Auto-accept and decline'],
       ['Uses YOUR car\'s real cost', 'S', 'S', 'S', 'S', 'Per mile and per hour', 'N'],
+      ['Driving to a pickup on one app, compares it with a new offer from the other and says if switching pays', 'S', 'N', 'N', 'N', 'N', 'Switches apps by itself'],
+      ['AI that reviews YOUR week with your own numbers and gives tips', 'S', 'AI to pick rides', 'N', 'N', 'N', 'N'],
       ['Verdict the moment the offer appears', 'S', 'S', 'S', 'S', 'S', 'S'],
       ['Recording for your safety', 'In testing', 'Camera', 'Camera (Android)', 'Camera', 'Audio (Android)', 'N'],
       ['iPhone', 'Under study', 'S', 'S', 'Not yet', 'Analysis only', 'S'],
