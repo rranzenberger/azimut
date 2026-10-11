@@ -835,6 +835,230 @@ const NOVO_PT = {
   ],
 }
 
+// 11/out/2026 (pedido do Ranz: "site em francês e espanhol"): o bloco que era só em português
+// (vídeo, funções em grupos, galeria, painel de LED) agora existe nas 4 línguas. Mesmo conteúdo,
+// sem prometer nada a mais. O app fala pt/en/es — o francês do APP está nas pendências.
+const NOVO_EN = {
+  sub: 'The radar for rides worth taking. It reads the Uber and 99 offer on screen and answers right away, by color and by voice, whether the ride pays your cost — and says why. Before you accept.',
+  videoTitle: 'In 1 second, on screen',
+  videoIntro: 'The offer arrives, the card pops up on top and the voice speaks. You decide without taking your eyes off the road.',
+  featTitle: 'What AziRoad does today',
+  featIntro: 'The beta has grown a lot since July. Everything below already runs in the app — what needs an accessory is marked.',
+  groups: [
+    ['🗣️', 'A voice that does not get in the way', [
+      'Speaks Portuguese, English or Spanish',
+      'Says the risk first and the reason for the color at the end',
+      'With a passenger on board, it speaks in code',
+      'Never talks over the verdict; several offers in a row become a short line',
+    ]],
+    ['🛣️', 'Road and risks', [
+      'Hills, alleys, narrow streets and flooding (riversides included)',
+      'Extreme weather, crosswind and official alerts',
+      'Risk checked along the route, not only at the destination',
+      'Highway speed cameras with the road name, and speeding warning',
+      'Fatigue warning after hours in a row at the wheel',
+    ]],
+    ['💰', 'Real money', [
+      'Weekly payout and instant payments (Pix or cash)',
+      'Fixed costs item by item: installment, insurance, taxes, rent',
+      'Goals the app learns from your shift',
+      'Tells you when your time slot is usually strong or weak',
+    ]],
+    ['🚗', 'Your vehicles', [
+      'Car, motorbike or a whole fleet in one app',
+      'Financing, rental or subscription for each vehicle',
+      'Expenses split by vehicle and by driver',
+    ]],
+    ['⚡', 'Electric car', [
+      'Charging with %, time and charger power',
+      'Real curve: the last 20% take almost as long as the rest',
+      'Home and public charging kept apart in the cost per km',
+      'Warning when the charge does not fit the ride',
+    ]],
+    ['🔌', 'Car health (OBD2) · needs the sensor', [
+      'Fault codes explained in plain words, with history',
+      'Fuel use, RPM and temperature on combustion cars',
+      'Read-only: the app never writes anything to the car',
+    ]],
+    ['📍', 'Your places', [
+      'Favorite gas stations with price and date',
+      'Supermarkets the app learns by itself',
+      'Several home addresses, with a postcode that finds the street',
+      'Home mode: get paid on the way home, and the voice says which side',
+    ]],
+    ['🔄', 'Always up to date', [
+      'The app updates itself and checks the file before installing',
+      'Backup of your data — changing phones erases nothing',
+      'Refer a friend with your code',
+    ]],
+  ] as [string, string, string[]][],
+  galleryTitle: 'See the app inside',
+  galleryIntro: 'Real AziRoad screens, from the phone of someone who drives every day.',
+  gallery: [
+    ['telaCard', 'The card over the offer'],
+    ['telaRadar', 'Radar: ready to drive'],
+    ['telaGanhos', 'Earnings: what is left'],
+    ['telaMetas', 'Goals in force'],
+    ['telaEstrada', 'Road: risks and places'],
+    ['telaVeiculos', 'Your vehicles'],
+  ],
+  ledTitle: 'LED panel: the passenger finds your car',
+  ledIntro: 'A panel on the windshield shows the platform while you arrive and lights up "ARRIVED" when you stop. It works in automatic, semi-automatic or manual mode — you choose.',
+  ledPoints: [
+    ['🔒', 'Privacy', 'The passenger\'s name only shows on arrival. Never during the trip.'],
+    ['👋', 'Greetings', 'Welcome messages you turn on or off and pick your favorite.'],
+    ['🧪', 'Accessory in testing', 'Tested model: DJU910W, 16 × 64 LED matrix, 9.2 × 37.4 cm, 5 V / 2 A, Bluetooth. A panel with another matrix breaks the letters.'],
+  ],
+}
+
+const NOVO_ES = {
+  sub: 'El radar de los viajes que valen la pena. Lee la oferta de Uber y 99 en la pantalla y responde al instante, por color y por voz, si el viaje paga tu costo — y dice por qué. Antes de que aceptes.',
+  videoTitle: 'En 1 segundo, en la pantalla',
+  videoIntro: 'Llega la oferta, la tarjeta aparece encima y la voz habla. Decides sin quitar los ojos de la calle.',
+  featTitle: 'Lo que AziRoad hace hoy',
+  featIntro: 'La beta creció mucho desde julio. Todo lo de abajo ya funciona en la app — lo que necesita accesorio está marcado.',
+  groups: [
+    ['🗣️', 'Una voz que no molesta', [
+      'Habla portugués, inglés o español',
+      'Dice primero el riesgo y al final el motivo del color',
+      'Con pasajero a bordo, habla en código',
+      'No habla encima del veredicto; varias ofertas seguidas se vuelven una frase corta',
+    ]],
+    ['🛣️', 'Ruta y riesgos', [
+      'Cuestas, pasajes, calles angostas e inundaciones (orillas de río incluidas)',
+      'Clima extremo, viento lateral y alertas oficiales',
+      'Riesgo evaluado en el recorrido del viaje, no solo en el destino',
+      'Radares en ruta con el nombre de la vía, y aviso de exceso de velocidad',
+      'Aviso de cansancio tras horas seguidas al volante',
+    ]],
+    ['💰', 'Dinero de verdad', [
+      'Pago semanal y cobros al instante (Pix o efectivo)',
+      'Costos fijos uno por uno: cuota, seguro, impuestos, alquiler',
+      'Metas que la app aprende con tu turno',
+      'Avisa cuando tu horario suele ser fuerte o flojo',
+    ]],
+    ['🚗', 'Tus vehículos', [
+      'Auto, moto o una flota entera en la misma app',
+      'Financiación, alquiler o suscripción de cada vehículo',
+      'Gastos separados por vehículo y por conductor',
+    ]],
+    ['⚡', 'Auto eléctrico', [
+      'Carga con %, tiempo y potencia del cargador',
+      'Curva real: el último 20% tarda casi lo mismo que todo el resto',
+      'Carga en casa y en electrolinera separadas en el costo por km',
+      'Aviso cuando la carga no alcanza para el viaje',
+    ]],
+    ['🔌', 'Salud del auto (OBD2) · necesita el sensor', [
+      'Códigos de falla explicados en lenguaje simple, con historial',
+      'Consumo, RPM y temperatura en autos a combustión',
+      'Solo lectura: la app nunca escribe nada en el auto',
+    ]],
+    ['📍', 'Tus lugares', [
+      'Estaciones de servicio preferidas con precio y fecha',
+      'Supermercados que la app aprende sola',
+      'Varias direcciones de casa, con código postal que encuentra la calle',
+      'Modo Casa: vuelve a casa cobrando, y la voz dice de qué lado',
+    ]],
+    ['🔄', 'Siempre al día', [
+      'La app se actualiza sola y revisa el archivo antes de instalar',
+      'Copia de seguridad de tus datos — cambiar de teléfono no borra nada',
+      'Invita a un amigo con tu código',
+    ]],
+  ] as [string, string, string[]][],
+  galleryTitle: 'Mira la app por dentro',
+  galleryIntro: 'Pantallas reales de AziRoad, del teléfono de quien conduce todos los días.',
+  gallery: [
+    ['telaCard', 'La tarjeta sobre la oferta'],
+    ['telaRadar', 'Radar: listo para salir'],
+    ['telaGanhos', 'Ganancias: lo que queda'],
+    ['telaMetas', 'Metas vigentes'],
+    ['telaEstrada', 'Ruta: riesgos y lugares'],
+    ['telaVeiculos', 'Tus vehículos'],
+  ],
+  ledTitle: 'Panel LED: el pasajero encuentra tu auto',
+  ledIntro: 'Un panel en el parabrisas muestra la plataforma mientras llegas y enciende "LLEGUÉ" cuando te detienes. Funciona en automático, semiautomático o manual — tú eliges.',
+  ledPoints: [
+    ['🔒', 'Privacidad', 'El nombre del pasajero solo aparece al llegar. Nunca durante el viaje.'],
+    ['👋', 'Saludos', 'Mensajes de bienvenida que enciendes, apagas y eliges tu favorito.'],
+    ['🧪', 'Accesorio en prueba', 'Modelo probado: DJU910W, matriz de 16 × 64 LEDs, 9,2 × 37,4 cm, 5 V / 2 A, Bluetooth. Un panel con otra matriz rompe las letras.'],
+  ],
+}
+
+const NOVO_FR = {
+  sub: 'Le radar des courses qui valent la peine. Il lit l\'offre Uber et 99 à l\'écran et répond tout de suite, par couleur et par voix, si la course couvre vos coûts — et dit pourquoi. Avant que vous acceptiez.',
+  videoTitle: 'En 1 seconde, à l\'écran',
+  videoIntro: 'L\'offre arrive, la carte s\'affiche par-dessus et la voix parle. Vous décidez sans quitter la route des yeux.',
+  featTitle: 'Ce qu\'AziRoad fait aujourd\'hui',
+  featIntro: 'La bêta a beaucoup grandi depuis juillet. Tout ce qui suit fonctionne déjà dans l\'app — ce qui demande un accessoire est indiqué.',
+  groups: [
+    ['🗣️', 'Une voix qui ne gêne pas', [
+      'Parle portugais, anglais ou espagnol',
+      'Dit d\'abord le risque, et à la fin la raison de la couleur',
+      'Avec un passager à bord, elle parle en code',
+      'Ne parle pas par-dessus le verdict ; plusieurs offres d\'affilée deviennent une phrase courte',
+    ]],
+    ['🛣️', 'Route et risques', [
+      'Côtes, ruelles, rues étroites et inondations (berges comprises)',
+      'Météo extrême, vent latéral et alertes officielles',
+      'Risque évalué sur le trajet de la course, pas seulement à l\'arrivée',
+      'Radars sur route avec le nom de la voie, et alerte d\'excès de vitesse',
+      'Alerte de fatigue après des heures d\'affilée au volant',
+    ]],
+    ['💰', 'Du vrai argent', [
+      'Versement hebdomadaire et paiements immédiats (Pix ou espèces)',
+      'Coûts fixes poste par poste : mensualité, assurance, taxes, location',
+      'Objectifs que l\'app apprend de votre service',
+      'Signale quand votre créneau est habituellement fort ou faible',
+    ]],
+    ['🚗', 'Vos véhicules', [
+      'Voiture, moto ou flotte entière dans la même app',
+      'Financement, location ou abonnement pour chaque véhicule',
+      'Dépenses séparées par véhicule et par conducteur',
+    ]],
+    ['⚡', 'Voiture électrique', [
+      'Recharge avec %, durée et puissance de la borne',
+      'Courbe réelle : les derniers 20 % prennent presque autant que tout le reste',
+      'Recharge à domicile et sur borne séparées dans le coût au km',
+      'Alerte quand la charge ne suffit pas pour la course',
+    ]],
+    ['🔌', 'Santé de la voiture (OBD2) · capteur nécessaire', [
+      'Codes de panne expliqués simplement, avec historique',
+      'Consommation, régime et température sur les voitures thermiques',
+      'Lecture seule : l\'app n\'écrit jamais rien dans la voiture',
+    ]],
+    ['📍', 'Vos lieux', [
+      'Stations préférées avec prix et date',
+      'Supermarchés que l\'app apprend toute seule',
+      'Plusieurs adresses de domicile, avec un code postal qui trouve la rue',
+      'Mode Maison : rentrez en étant payé, et la voix dit de quel côté',
+    ]],
+    ['🔄', 'Toujours à jour', [
+      'L\'app se met à jour seule et vérifie le fichier avant d\'installer',
+      'Sauvegarde de vos données — changer de téléphone n\'efface rien',
+      'Parrainez un ami avec votre code',
+    ]],
+  ] as [string, string, string[]][],
+  galleryTitle: 'L\'app de l\'intérieur',
+  galleryIntro: 'De vrais écrans d\'AziRoad, sur le téléphone de quelqu\'un qui roule tous les jours.',
+  gallery: [
+    ['telaCard', 'La carte sur l\'offre'],
+    ['telaRadar', 'Radar : prêt à rouler'],
+    ['telaGanhos', 'Gains : ce qui reste'],
+    ['telaMetas', 'Objectifs en vigueur'],
+    ['telaEstrada', 'Route : risques et lieux'],
+    ['telaVeiculos', 'Vos véhicules'],
+  ],
+  ledTitle: 'Panneau LED : le passager trouve votre voiture',
+  ledIntro: 'Un panneau sur le pare-brise affiche la plateforme pendant que vous arrivez et allume « ARRIVÉ » quand vous vous arrêtez. Il fonctionne en automatique, semi-automatique ou manuel — à vous de choisir.',
+  ledPoints: [
+    ['🔒', 'Confidentialité', 'Le nom du passager n\'apparaît qu\'à l\'arrivée. Jamais pendant le trajet.'],
+    ['👋', 'Salutations', 'Messages de bienvenue que vous activez, désactivez et choisissez.'],
+    ['🧪', 'Accessoire en test', 'Modèle testé : DJU910W, matrice 16 × 64 LED, 9,2 × 37,4 cm, 5 V / 2 A, Bluetooth. Un panneau avec une autre matrice casse les lettres.'],
+  ],
+}
+
+const NOVO = { pt: NOVO_PT, en: NOVO_EN, es: NOVO_ES, fr: NOVO_FR }
+
 // ─────────────────────────────────────────────────────────────────────────────────────────────
 // 🏷️ AZIROAD (26/set): o app mudou de nome e de ícone em 23/set (decisão Ranz). A rota continua
 // /gigradar (links já espalhados) e o APK continua gigradar-latest.apk (o CI publica com esse nome).
@@ -1149,6 +1373,33 @@ const BANCO = {
     ],
     note: 'Without the shortcut: Settings → Accessibility → AziRoad → off, then on again later. Which bank complained? Tell us in the form below.',
   },
+  // 11/out/2026: espanhol e francês (antes caíam no português).
+  es: {
+    title: '¿La app del banco se quejó?',
+    lead: 'Algunas apps de banco no abren cuando hay un "servicio de accesibilidad" activado. AziRoad usa ese servicio para leer la oferta. No es un virus ni un error: es una protección del banco.',
+    warn: 'Apagar solo la tarjeta no sirve: el banco mira el lector. Y no desinstales — pierdes lo que la app aprendió en tu teléfono.',
+    stepsTitle: 'Hazlo una vez (1 minuto)',
+    steps: [
+      ['⚙️', 'Abre Ajustes → Accesibilidad', 'En Samsung: Accesibilidad → Aplicaciones instaladas → AziRoad.'],
+      ['🔊', 'Activa el "Atajo de AziRoad"', 'Elige: teclas de volumen arriba y abajo.'],
+      ['🏦', 'Antes del banco: mantén las 2 teclas de volumen', '3 segundos. AziRoad se apaga. Usa el banco con normalidad.'],
+      ['🚗', 'Después: mantenlas de nuevo', 'AziRoad vuelve a leer. Mira la burbuja en la pantalla antes de salir.'],
+    ],
+    note: 'Sin atajo también se puede: Ajustes → Accesibilidad → AziRoad → apagar, y volver a encender después. ¿Qué banco se quejó? Cuéntanos en el formulario de abajo.',
+  },
+  fr: {
+    title: "L'app de votre banque s'est plainte ?",
+    lead: "Certaines apps bancaires refusent de s'ouvrir quand un « service d'accessibilité » est actif. AziRoad utilise ce service pour lire l'offre. Ce n'est ni un virus ni un bug : c'est une protection de la banque.",
+    warn: "Couper seulement le card ne suffit pas : la banque regarde le lecteur. Et ne désinstallez pas — vous perdriez ce que l'app a appris sur votre téléphone.",
+    stepsTitle: 'À faire une fois (1 minute)',
+    steps: [
+      ['⚙️', 'Ouvrez Paramètres → Accessibilité', 'Sur Samsung : Accessibilité → Applications installées → AziRoad.'],
+      ['🔊', 'Activez le « Raccourci AziRoad »', 'Choisissez : touches volume haut et bas.'],
+      ['🏦', 'Avant la banque : maintenez les 2 touches de volume', "3 secondes. AziRoad s'éteint. Utilisez la banque normalement."],
+      ['🚗', 'Après : maintenez-les à nouveau', "AziRoad relit. Regardez la bulle à l'écran avant de rouler."],
+    ],
+    note: "Sans raccourci, c'est possible aussi : Paramètres → Accessibilité → AziRoad → désactiver, puis réactiver ensuite. Quelle banque s'est plainte ? Dites-le-nous dans le formulaire ci-dessous.",
+  },
 } as const
 
 const ENTRAR = {
@@ -1312,6 +1563,108 @@ const COMPARE = {
       'Built by someone who drives — tested on the road, late at night, with passengers.',
     ],
   },
+  es: {
+    title: 'AziRoad × las otras apps',
+    intro: 'El pago por km lo muestran todos. La diferencia es lo que viene después: AziRoad calcula lo que te QUEDA y te cuida a ti, al auto y al pasajero.',
+    goal: 'Nuestra meta: ser el copiloto más completo del mundo para quien vive de los viajes.',
+    feature: 'Lo que hace la app',
+    apps: [['AziRoad', 'Brasil'], ['GigU', 'Brasil'], ['Mobai', 'Brasil'], ['Rota Pro', 'Brasil'], ['Maxymo', 'EE. UU.'], ['Mystro', 'EE. UU.']],
+    yes: 'Sí', no: 'No lo anuncia', only: 'Solo en AziRoad',
+    rows: [
+      ['Avisa del regreso vacío y de la búsqueda sin pago', 'S', 'N', 'N', 'Límite de búsqueda', 'N', 'N'],
+      ['Auto eléctrico: ¿el viaje cabe en la carga?', 'S', 'N', 'N', 'N', 'N', 'N'],
+      ['Protege el auto: cuestas, inundación, granizo, calles angostas', 'S', 'N', 'N', 'N', 'N', 'N'],
+      ['Te protege: zonas que marcas, efectivo de madrugada', 'S', 'N', 'N', 'Direcciones de riesgo', 'N', 'N'],
+      ['Respeta al pasajero: voz discreta con gente a bordo', 'S', 'N', 'N', 'N', 'N', 'N'],
+      ['Decides TÚ: nunca acepta ni rechaza solo', 'S', 'N', 'N', 'N', 'Acepta y rechaza solo (Android)', 'Acepta y rechaza solo'],
+      ['Hace la cuenta con el costo de TU auto', 'S', 'S', 'S', 'S', 'Por milla y por hora', 'N'],
+      ['Yendo a buscar en una plataforma, compara con la oferta nueva de la otra y dice si vale cambiar', 'S', 'N', 'N', 'N', 'N', 'Cambia de app solo'],
+      ['IA que analiza TU semana con tus números y da consejos', 'S', 'IA para elegir viaje', 'N', 'N', 'N', 'N'],
+      ['Veredicto en el momento de la oferta', 'S', 'S', 'S', 'S', 'S', 'S'],
+      ['Grabación para tu seguridad', 'En prueba', 'Cámara', 'Cámara (Android)', 'Cámara', 'Audio (Android)', 'N'],
+      ['iPhone', 'En estudio', 'S', 'S', 'Todavía no', 'Solo análisis', 'S'],
+      ['Precio', 'Gratis en la beta', 'Gratis en EE. UU. hasta fin de 2026', 'R$ 27/mes', 'R$ 97/año', 'No informado', 'No informado'],
+    ],
+    note: 'Comparativo de octubre de 2026, con lo que cada app anuncia en su propio sitio o tienda. ¿Viste un error? Avísanos y lo corregimos.',
+    sourcesLabel: 'Fuentes',
+    whyAuto: 'Por qué no aceptamos viajes por ti: en 2023 Uber fue a la Justicia en Brasil contra el rechazo automático de una app y obtuvo una medida cautelar. Tocar la app del viaje por tu cuenta pone TU cuenta en riesgo. AziRoad solo informa.',
+    safetyTitle: 'Seguridad en tres frentes',
+    safety: [
+      ['🚨', 'Tú', 'Zonas que marcas en el mapa. Efectivo de madrugada. De 0 a 5 h, las zonas de riesgo se endurecen solas.'],
+      ['🛡️', 'Tu auto', 'Cuestas, calles angostas, inundación y granizo. Con el sensor OBD2, avisa motor caliente. En el eléctrico, avisa si el viaje no cabe en la carga.'],
+      ['🧑‍🤝‍🧑', 'Tu pasajero', 'Con gente a bordo, la voz se vuelve discreta. Y la grabación es tuya, sin sonido por defecto, y nunca hace lento el veredicto.'],
+    ],
+    newTitle: 'Nuevo en la beta (octubre)',
+    news: [
+      ['🎥', 'Grabación para tu seguridad (en prueba)', 'La cámara graba en tramos de 3 minutos, sin sonido por defecto. Si el teléfono se calienta o la lectura se pone lenta, cede el paso al veredicto. Un tramo con incidente marcado no se borra.'],
+      ['⚑', 'Marcar un incidente con un toque', 'Baja la barra del teléfono y toca: la hora y el lugar quedan guardados. Después, detenido, escribes lo que pasó.'],
+      ['🅿️', 'Dónde dejé el auto', 'La app guarda sola el lugar cuando cierras el turno o el OBD pierde el auto. Un toque abre el mapa.'],
+      ['📍', 'Tu límite de búsqueda', 'Eliges a partir de cuántos km o cuántos MINUTOS de búsqueda sin pago te avisa la app.'],
+      ['🔌', 'Equipos opcionales', 'OBD y panel LED liberan más funciones. Sin ellos, la app funciona completa.'],
+    ],
+    soonTitle: 'Próximamente',
+    soon: [
+      ['📱', 'iPhone', 'Estamos estudiando el camino. Quien prueba la beta se entera primero.'],
+    ],
+    trustTitle: 'Por qué confiar',
+    trust: [
+      'Solo LEE la oferta. Nunca toca, nunca acepta, nunca pide tu contraseña de Uber o 99.',
+      'Sin anuncios. Sin cámara oculta.',
+      'Cada versión pasa por más de 3.000 pruebas y se revisa contra más de 4.400 ofertas reales antes de llegar a ti.',
+      'Hecha por quien conduce — probada en la calle, de madrugada, con pasajeros.',
+    ],
+  },
+  fr: {
+    title: 'AziRoad × les autres apps',
+    intro: 'Le prix au km, tout le monde l\'affiche. La différence, c\'est la suite : AziRoad calcule ce qui vous RESTE et prend soin de vous, de la voiture et du passager.',
+    goal: 'Notre objectif : être le copilote le plus complet au monde pour ceux qui vivent de la course.',
+    feature: 'Ce que fait l\'app',
+    apps: [['AziRoad', 'Brésil'], ['GigU', 'Brésil'], ['Mobai', 'Brésil'], ['Rota Pro', 'Brésil'], ['Maxymo', 'États-Unis'], ['Mystro', 'États-Unis']],
+    yes: 'Oui', no: 'Non annoncé', only: 'Seulement sur AziRoad',
+    rows: [
+      ['Prévient du retour à vide et de l\'approche non payée', 'S', 'N', 'N', 'Limite d\'approche', 'N', 'N'],
+      ['Voiture électrique : la course tient-elle dans la charge ?', 'S', 'N', 'N', 'N', 'N', 'N'],
+      ['Protège la voiture : côtes, inondation, grêle, rues étroites', 'S', 'N', 'N', 'N', 'N', 'N'],
+      ['Vous protège : zones que vous marquez, espèces la nuit', 'S', 'N', 'N', 'Adresses à risque', 'N', 'N'],
+      ['Respecte le passager : voix discrète avec du monde à bord', 'S', 'N', 'N', 'N', 'N', 'N'],
+      ['C\'est VOUS qui décidez : n\'accepte ni ne refuse jamais tout seul', 'S', 'N', 'N', 'N', 'Accepte et refuse tout seul (Android)', 'Accepte et refuse tout seul'],
+      ['Calcule avec le coût de VOTRE voiture', 'S', 'S', 'S', 'S', 'Par mile et par heure', 'N'],
+      ['En route vers un client sur une plateforme, compare avec la nouvelle offre de l’autre et dit s’il vaut mieux changer', 'S', 'N', 'N', 'N', 'N', 'Change d’app tout seul'],
+      ['IA qui analyse VOTRE semaine avec vos chiffres et donne des conseils', 'S', 'IA pour choisir la course', 'N', 'N', 'N', 'N'],
+      ['Verdict au moment de l\'offre', 'S', 'S', 'S', 'S', 'S', 'S'],
+      ['Enregistrement pour votre sécurité', 'En test', 'Caméra', 'Caméra (Android)', 'Caméra', 'Audio (Android)', 'N'],
+      ['iPhone', 'À l\'étude', 'S', 'S', 'Pas encore', 'Analyse seulement', 'S'],
+      ['Prix', 'Gratuit en bêta', 'Gratuit aux États-Unis jusqu\'à fin 2026', 'R$ 27/mois', 'R$ 97/an', 'Non indiqué', 'Non indiqué'],
+    ],
+    note: 'Comparatif d\'octobre 2026, d\'après ce que chaque app annonce sur son site ou sa page de store. Une erreur ? Dites-le-nous et nous corrigeons.',
+    sourcesLabel: 'Sources',
+    whyAuto: 'Pourquoi nous n\'acceptons pas de course à votre place : en 2023, Uber a saisi la justice au Brésil contre le refus automatique d\'une app et a obtenu une injonction. Toucher l\'app de course tout seul met VOTRE compte en danger. AziRoad informe seulement.',
+    safetyTitle: 'La sécurité sur trois fronts',
+    safety: [
+      ['🚨', 'Vous', 'Zones que vous marquez sur la carte. Espèces la nuit. De minuit à 5 h, les zones à risque se durcissent toutes seules.'],
+      ['🛡️', 'Votre voiture', 'Côtes, rues étroites, inondation et grêle. Avec le capteur OBD2, alerte moteur chaud. En électrique, prévient si la course ne tient pas dans la charge.'],
+      ['🧑‍🤝‍🧑', 'Votre passager', 'Avec du monde à bord, la voix devient discrète. L\'enregistrement vous appartient, sans son par défaut, et ne ralentit jamais le verdict.'],
+    ],
+    newTitle: 'Nouveau dans la bêta (octobre)',
+    news: [
+      ['🎥', 'Enregistrement pour votre sécurité (en test)', 'La caméra enregistre par séquences de 3 minutes, sans son par défaut. Si le téléphone chauffe ou si la lecture ralentit, elle laisse la priorité au verdict. Une séquence avec un incident marqué n\'est jamais effacée.'],
+      ['⚑', 'Marquer un incident en un geste', 'Tirez la barre du téléphone et touchez : l\'heure et le lieu sont gardés. Plus tard, à l\'arrêt, vous écrivez ce qui s\'est passé.'],
+      ['🅿️', 'Où j\'ai garé la voiture', 'L\'app garde le lieu toute seule quand le service se termine ou quand l\'OBD perd la voiture. Un geste ouvre la carte.'],
+      ['📍', 'Votre limite d\'approche', 'Vous choisissez à partir de combien de km ou de MINUTES d\'approche non payée l\'app vous prévient.'],
+      ['🔌', 'Équipements optionnels', 'L\'OBD et le panneau LED débloquent plus de fonctions. Sans eux, l\'app fonctionne entièrement.'],
+    ],
+    soonTitle: 'Bientôt',
+    soon: [
+      ['📱', 'iPhone', 'Nous étudions la voie. Les testeurs de la bêta sont prévenus en premier.'],
+    ],
+    trustTitle: 'Pourquoi faire confiance',
+    trust: [
+      'Il LIT seulement l\'offre. Il ne touche jamais, n\'accepte jamais, ne demande jamais votre mot de passe Uber ou 99.',
+      'Sans publicité. Sans caméra cachée.',
+      'Chaque version passe plus de 3 000 tests et est vérifiée sur plus de 4 400 offres réelles avant de vous parvenir.',
+      'Conçu par quelqu\'un qui conduit — testé sur la route, la nuit, avec des passagers.',
+    ],
+  },
 }
 
 // Célula do comparativo: ✓ + palavra (nunca só cor), — para "não anuncia" (texto lido pelo leitor de tela).
@@ -1352,7 +1705,8 @@ const COMPARE_SOURCES: [string, string][] = [
 
 const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
   const t = content[lang] ?? content.pt
-  const c = lang === 'pt' ? COMPARE.pt : COMPARE.en
+  const c = COMPARE[lang] ?? COMPARE.en
+  const nv = NOVO[lang] ?? NOVO.pt
   const g = GIG_GUIDE[lang] ?? GIG_GUIDE.pt
   const z = AZI[lang] ?? AZI.pt
   const isPt = lang === 'pt'
@@ -1491,7 +1845,7 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
                 {z.promise}
               </p>
               <p className="mx-auto mb-7 max-w-xl text-base leading-relaxed md:mx-0" style={{ color: 'var(--theme-text-secondary)' }}>
-                {isPt ? NOVO_PT.sub : t.sub}
+                {nv.sub}
               </p>
               <div className="mb-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:justify-start">
                 <a
@@ -1585,13 +1939,13 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
             </div>
           </section>
 
-          {/* 🎬 Hero visual + vídeo (14/set, só pt) — somem sozinhos enquanto o arquivo não existir */}
-          {isPt && (
+          {/* 🎬 Hero visual + vídeo (14/set; 4 línguas desde 11/out) — somem sozinhos enquanto o arquivo não existir */}
+          {nv && (
             <section className="mb-16 mx-auto grid max-w-3xl items-center gap-6 md:grid-cols-2">
               <MediaSlot m={MIDIA.heroCard} showSlots={showSlots} />
               <div>
-                <h2 className="mb-3 font-handel text-2xl uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>{NOVO_PT.videoTitle}</h2>
-                <p className="mb-4 text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{NOVO_PT.videoIntro}</p>
+                <h2 className="mb-3 font-handel text-2xl uppercase tracking-[0.1em]" style={{ color: 'var(--theme-text)' }}>{nv.videoTitle}</h2>
+                <p className="mb-4 text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{nv.videoIntro}</p>
                 <div className="mx-auto max-w-[260px]">
                   <MediaSlot m={MIDIA.videoOferta} showSlots={showSlots} />
                 </div>
@@ -1623,14 +1977,14 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
             </p>
           </section>
 
-          {/* Features — pt ganhou a lista de 14/set; en/es/fr seguem a antiga */}
-          {isPt ? (
+          {/* Features — a lista de 14/set agora nas 4 línguas (11/out); o ramo antigo fica de reserva */}
+          {nv ? (
             <>
               <section className="mb-16">
-                <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>{NOVO_PT.featTitle}</h2>
-                <p className="mx-auto mb-8 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{NOVO_PT.featIntro}</p>
+                <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>{nv.featTitle}</h2>
+                <p className="mx-auto mb-8 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{nv.featIntro}</p>
                 <div className="grid gap-4 sm:grid-cols-2">
-                  {NOVO_PT.groups.map(([icon, title, items]) => (
+                  {nv.groups.map(([icon, title, items]) => (
                     <div key={title} className="rounded-2xl border border-white/10 bg-white/5 p-5">
                       <div className="mb-3 flex items-center gap-3">
                         <span className="text-xl" aria-hidden="true">{icon}</span>
@@ -1650,10 +2004,10 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
 
               {/* 📱 Galeria de telas reais */}
               <section className="mb-16">
-                <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>{NOVO_PT.galleryTitle}</h2>
-                <p className="mx-auto mb-8 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{NOVO_PT.galleryIntro}</p>
+                <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>{nv.galleryTitle}</h2>
+                <p className="mx-auto mb-8 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{nv.galleryIntro}</p>
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-                  {NOVO_PT.gallery.map(([key, caption]) => (
+                  {nv.gallery.map(([key, caption]) => (
                     <GalleryItem key={key} m={MIDIA[key as keyof typeof MIDIA]} caption={caption} showSlots={showSlots} />
                   ))}
                 </div>
@@ -1661,8 +2015,8 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
 
               {/* 📟 Painel de LED */}
               <section className="mb-16 mx-auto max-w-3xl">
-                <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>{NOVO_PT.ledTitle}</h2>
-                <p className="mx-auto mb-7 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{NOVO_PT.ledIntro}</p>
+                <h2 className="mb-4 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>{nv.ledTitle}</h2>
+                <p className="mx-auto mb-7 max-w-2xl text-center text-base leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>{nv.ledIntro}</p>
                 <MediaSlot m={MIDIA.ledNoite} showSlots={showSlots} className="mb-5" />
                 <figure className="mb-5">
                   <div className="grid grid-cols-2 gap-3">
@@ -1672,7 +2026,7 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
                   <figcaption className="mt-2 text-center text-sm" style={{ color: 'var(--theme-text-secondary)' }}>{z.ledPhotosCaption}</figcaption>
                 </figure>
                 <ul className="grid gap-3 sm:grid-cols-3">
-                  {NOVO_PT.ledPoints.map(([icon, title, body]) => (
+                  {nv.ledPoints.map(([icon, title, body]) => (
                     <li key={title} className="rounded-2xl border border-white/10 bg-white/5 p-4">
                       <div className="mb-1 flex items-center gap-2">
                         <span className="text-lg" aria-hidden="true">{icon}</span>
@@ -2109,7 +2463,7 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
 
           {/* 🏦 App do banco reclamou (06/out) — logo depois de "Como entrar": é a 1ª dúvida de quem instala */}
           {(() => {
-            const bk = BANCO[lang as keyof typeof BANCO] ?? BANCO.pt
+            const bk = BANCO[lang as keyof typeof BANCO] ?? BANCO.en
             return (
               <section id="banco" className="mb-16 mx-4 md:mx-auto max-w-3xl scroll-mt-28 rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
                 <h2 className="mb-3 font-handel text-2xl md:text-3xl uppercase tracking-[0.1em] text-center" style={{ color: 'var(--theme-text)' }}>
