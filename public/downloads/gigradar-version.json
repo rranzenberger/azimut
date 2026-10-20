@@ -1,10 +1,10 @@
 {
-  "version": "0.483 (ea9b2db)",
-  "version_code": 483,
-  "updatedAt": "2026-10-20T02:56:46Z",
+  "version": "0.484 (6e19071)",
+  "version_code": 484,
+  "updatedAt": "2026-10-20T04:43:23Z",
   "apk_url": "https://www.azmt.com.br/downloads/gigradar-latest.apk",
-  "apk_size_bytes": 50121242,
-  "sha256": "ea5c30a869571f2707df2538b0019fbeaa94128499aa0040de8b1f48b5c63190",
-  "changelog": "ci: mapping.txt vai para o ramo privado ci-mappings, nao para artefato (cota travou a publicacao)",
+  "apk_size_bytes": 50121238,
+  "sha256": "a2ce5b908cf4ba44e5df9841c2cb41237bb900bcf98e16ba78a66a8ecedeec46",
+  "changelog": "ci: mapa do R8 vai comprimido (gz) para o ramo ci-mappings",
   "is_mandatory": false
 }
