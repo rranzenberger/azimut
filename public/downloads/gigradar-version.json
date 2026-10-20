@@ -1,10 +1,10 @@
 {
-  "version": "0.481 (afc77b9)",
-  "version_code": 481,
-  "updatedAt": "2026-09-24T23:46:31Z",
+  "version": "0.483 (ea9b2db)",
+  "version_code": 483,
+  "updatedAt": "2026-10-20T02:56:46Z",
   "apk_url": "https://www.azmt.com.br/downloads/gigradar-latest.apk",
-  "apk_size_bytes": 72388100,
-  "sha256": "1c5557ff96381f4cb843524c8153cacf3d558540e8bedafa74a23e8059bea207",
-  "changelog": "feat(voz): varias ofertas juntas — a melhor fala inteira, a pior diz \"tem melhor\"",
+  "apk_size_bytes": 50121242,
+  "sha256": "ea5c30a869571f2707df2538b0019fbeaa94128499aa0040de8b1f48b5c63190",
+  "changelog": "ci: mapping.txt vai para o ramo privado ci-mappings, nao para artefato (cota travou a publicacao)",
   "is_mandatory": false
 }
