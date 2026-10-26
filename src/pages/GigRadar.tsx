@@ -115,6 +115,8 @@ const content = {
     emailPh: 'Seu e-mail',
     cityPh: 'Cidade / UF',
     appPh: 'App que você dirige',
+    sendError: 'Não conseguimos enviar agora. Confira a internet e tente de novo.',
+    sending: 'Enviando…',
     appOptions: ['Uber', '99', 'Uber e 99', 'Outro / entregas'],
     phonePh: 'Modelo do celular (opcional)',
     referralPh: 'Código de quem te indicou (opcional)',
@@ -221,6 +223,8 @@ const content = {
     emailPh: 'Your e-mail',
     cityPh: 'City / State',
     appPh: 'App you drive for',
+    sendError: 'We couldn\'t send it right now. Check your connection and try again.',
+    sending: 'Sending…',
     appOptions: ['Uber', '99', 'Uber and 99', 'Other / delivery'],
     phonePh: 'Phone model (optional)',
     referralPh: "Referral code from who invited you (optional)",
@@ -327,6 +331,8 @@ const content = {
     emailPh: 'Tu e-mail',
     cityPh: 'Ciudad / Estado',
     appPh: 'App que manejas',
+    sendError: 'No pudimos enviarlo ahora. Revisa tu conexión e inténtalo de nuevo.',
+    sending: 'Enviando…',
     appOptions: ['Uber', '99', 'Uber y 99', 'Otra / entregas'],
     phonePh: 'Modelo del teléfono (opcional)',
     referralPh: 'Código de quien te invitó (opcional)',
@@ -433,6 +439,8 @@ const content = {
     emailPh: 'Votre e-mail',
     cityPh: 'Ville / région',
     appPh: 'App que vous conduisez',
+    sendError: 'Envoi impossible pour le moment. Vérifiez votre connexion et réessayez.',
+    sending: 'Envoi…',
     appOptions: ['Uber', '99', 'Uber et 99', 'Autre / livraison'],
     phonePh: 'Modèle du téléphone (optionnel)',
     referralPh: "Code de parrainage (optionnel)",
@@ -1717,6 +1725,8 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
   const [acceptedFeedback, setAcceptedFeedback] = useState(false)
   const [acceptedUpdates, setAcceptedUpdates] = useState(false)
   const [sent, setSent] = useState(false)
+  const [sendError, setSendError] = useState(false)
+  const [sending, setSending] = useState(false)
   const [apkVersion, setApkVersion] = useState<string | null>(null)
   const [apkVersionCode, setApkVersionCode] = useState<number | null>(null)
   const { theme, setTheme } = useTheme()
@@ -1780,25 +1790,49 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
     `Quero testar o AziRoad! Nome: ${formData.name || '—'} · Cidade: ${formData.city || '—'} · App: ${formData.app || '—'}`
   )}`
 
+  // 25/out/2026 (Ranz: "fiz uma simulação e não recebi nenhum e-mail"): desde 28/jul (11558ecf) o cadastro só ia
+  // para o painel de testers (CMS), que NÃO manda e-mail — a chamada ao backoffice (lead "gigradar-beta", que avisa
+  // por e-mail) tinha sido apagada sem querer. Agora vai para os DOIS, em paralelo. Basta um chegar para o tester ver
+  // "enviado"; se os dois falharem, a página diz isso (antes dizia "enviado" mesmo com erro).
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!acceptedTerms || !acceptedFeedback) return
-    try {
-      await fetch(`${GIGRADAR_ADMIN_URL}/api/testers`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          whatsapp: formData.whatsapp,
-          city: formData.city,
-          app: formData.app,
-          referredBy: formData.referral || undefined,
-          acceptedTos: acceptedTerms && acceptedFeedback,
-          tosVersion: TERMS_VERSION,
-        }),
-      })
-    } catch {}
+    if (!acceptedTerms || !acceptedFeedback || sending) return
+    setSending(true)
+    setSendError(false)
+    const painel = fetch(`${GIGRADAR_ADMIN_URL}/api/testers`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: formData.name,
+        email: formData.email,
+        whatsapp: formData.whatsapp,
+        city: formData.city,
+        app: formData.app,
+        referredBy: formData.referral || undefined,
+        acceptedTos: acceptedTerms && acceptedFeedback,
+        tosVersion: TERMS_VERSION,
+      }),
+    }).then(r => { if (!r.ok) throw new Error(`painel ${r.status}`) })
+    const aviso = ApiService.submitLead({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.whatsapp,
+      leadType: 'gigradar-beta',
+      source: 'aziroad-page',
+      lang,
+      interest: formData.app,
+      message: `AziRoad BETA (${TERMS_VERSION})
+WhatsApp: ${formData.whatsapp}
+Cidade: ${formData.city}
+App: ${formData.app}
+Celular: ${formData.phone || '—'}
+Código de indicação: ${formData.referral || '—'}
+Termos beta e retorno semanal: aceitos
+Comunicações de atualização: ${acceptedUpdates ? 'aceitas' : 'não autorizadas'}`,
+    })
+    const [p, a] = await Promise.allSettled([painel, aviso])
+    setSending(false)
+    if (p.status === 'rejected' && a.status === 'rejected') { setSendError(true); return }
     setSent(true)
   }
 
@@ -2639,8 +2673,9 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
                   required
                   value={formData.app}
                   onChange={e => setFormData(p => ({ ...p, app: e.target.value }))}
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-azimut-red/60 transition-colors"
-                  style={{ color: 'var(--theme-text)' }}
+                  // 25/out: a lista nativa abria BRANCA com texto branco (ilegível). Mesmo estilo dos formulários da
+                  // Azimut: fundo escuro, texto branco, escolhido em vermelho, seta vermelha (index.css .dropdown-azimut).
+                  className="dropdown-azimut w-full rounded-xl text-sm"
                 >
                   <option value="" disabled>{t.appPh}</option>
                   {t.appOptions.map(o => <option key={o} value={o}>{o}</option>)}
@@ -2674,11 +2709,17 @@ const GigRadar: React.FC<GigRadarProps> = ({ lang }) => {
                   />
                   {t.acceptUpdates}
                 </label>
+                {sendError && (
+                  <p role="alert" className="rounded-xl border border-azimut-red/60 bg-azimut-red/10 px-4 py-3 text-sm" style={{ color: 'var(--theme-text)' }}>
+                    ⚠ {t.sendError}
+                  </p>
+                )}
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-azimut-red px-6 py-4 font-handel text-sm uppercase tracking-[0.15em] text-white hover:bg-azimut-red/90 transition-colors"
+                  disabled={sending}
+                  className="w-full rounded-xl bg-azimut-red px-6 py-4 font-handel text-sm uppercase tracking-[0.15em] text-white hover:bg-azimut-red/90 transition-colors disabled:opacity-60"
                 >
-                  {t.cta}
+                  {sending ? t.sending : t.cta}
                 </button>
               </form>
             )}
