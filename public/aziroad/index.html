@@ -305,6 +305,15 @@ footer .row { display: flex; flex-wrap: wrap; justify-content: space-between; ga
 footer nav { display: flex; flex-wrap: wrap; gap: 14px; }
 footer a { text-decoration: none; color: var(--fg-2); }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
+
+/* Formularios do beta (mesmas chamadas do site atual) */
+.frm { display: grid; gap: 12px; margin-top: 20px; }
+.frm input, .frm select { width: 100%; min-height: 48px; padding: 12px 14px; border-radius: 14px; background: var(--card-2); border: 1px solid var(--line-2); color: var(--fg); font: 400 15px/1.4 InterBrand, Inter, sans-serif; }
+.frm input:focus, .frm select:focus { outline: 2px solid var(--red-2); outline-offset: 2px; }
+.frm label.chk { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--fg-2); cursor: pointer; }
+.frm label.chk input { width: 20px; height: 20px; min-height: 20px; accent-color: var(--red); margin-top: 2px; flex: none; }
+.frm .msg { font-size: 14px; color: var(--fg-2); }
+.frm .msg.err { color: #E8746E; }
 </style>
 </head>
 <body>
@@ -765,6 +774,38 @@ footer a { text-decoration: none; color: var(--fg-2); }
       </div>
       <p class="perp">Quem cumpre esses três passos com constância ganha a <b>licença perpétua</b> do AziRoad.</p>
     </div>
+    <div class="card" style="margin-top:28px">
+      <p class="eyebrow">Quero ser beta tester</p>
+      <h3 style="margin-top:8px">Entre na lista do beta</h3>
+      <form id="beta-form" class="frm" novalidate>
+        <input name="name" placeholder="Seu nome" required autocomplete="name">
+        <input name="whatsapp" type="tel" placeholder="Seu WhatsApp (com DDD)" required autocomplete="tel">
+        <input name="email" type="email" placeholder="Seu e-mail" required autocomplete="email">
+        <input name="city" placeholder="Cidade / UF" required>
+        <select name="app" required>
+          <option value="" disabled selected>App que você dirige</option>
+          <option>Uber</option><option>99</option><option>Uber e 99</option><option>Outro / entregas</option>
+        </select>
+        <input name="phone" placeholder="Modelo do celular (opcional)">
+        <label class="chk"><input type="checkbox" name="terms" required> Li e aceito os termos do beta e a política de privacidade.</label>
+        <label class="chk"><input type="checkbox" name="feedback" required> Vou enviar um retorno curto por semana, mesmo sem erros.</label>
+        <label class="chk"><input type="checkbox" name="updates"> Quero receber mensagens sobre o meu acesso beta e novas versões (opcional).</label>
+        <button class="btn btn-primary" type="submit">Entrar no beta</button>
+        <p class="msg" id="beta-msg" aria-live="polite"></p>
+      </form>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <p class="eyebrow">Já instalou?</p>
+      <h3 style="margin-top:8px">Libere seu acesso</h3>
+      <p style="margin-top:8px;color:var(--fg-2);font-size:14.5px">Abra o app, toque em 💎 e copie o ID do aparelho. Cole aqui junto com o e-mail ou WhatsApp do cadastro.</p>
+      <form id="code-form" class="frm" novalidate>
+        <input name="device" placeholder="ID do aparelho (da tela 💎)" required>
+        <input name="contact" placeholder="E-mail ou WhatsApp do cadastro" required>
+        <button class="btn btn-ghost" type="submit">Gerar meu código</button>
+        <p class="msg" id="code-msg" aria-live="polite"></p>
+      </form>
+    </div>
     <div class="steps">
       <div class="step"><h3>Baixe o app</h3><p>Aponte a câmera do celular Android para o QR ou toque no botão.</p></div>
       <div class="step"><h3>Instale e abra</h3><p>Siga o passo a passo: idioma, aceite, seu carro e permissões. Pode pular e voltar depois.</p></div>
@@ -871,5 +912,45 @@ footer a { text-decoration: none; color: var(--fg-2); }
   </div>
 </footer>
 
+<script>
+/* Cadastro e liberacao: mesmas rotas do site atual (backoffice.azmt.com.br) */
+(function () {
+  var API = 'https://backoffice.azmt.com.br';
+  var WA = 'https://wa.me/5548999701301';
+  function setMsg(el, text, err) { el.textContent = text; el.className = 'msg' + (err ? ' err' : ''); }
+  document.getElementById('beta-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = e.target, msg = document.getElementById('beta-msg');
+    if (!f.checkValidity()) { f.reportValidity(); return; }
+    var d = Object.fromEntries(new FormData(f).entries());
+    var body = {
+      name: d.name, email: d.email, phone: d.whatsapp, leadType: 'gigradar-beta', source: 'gigradar-page', lang: 'pt', interest: d.app,
+      message: 'AziRoad BETA (subpagina)
+WhatsApp: ' + d.whatsapp + '
+Cidade: ' + d.city + '
+App: ' + d.app + '
+Celular: ' + (d.phone || '-') + '
+Termos beta: aceito
+Retorno semanal: aceito
+Comunicacoes: ' + (d.updates ? 'aceitas' : 'nao autorizadas')
+    };
+    setMsg(msg, 'Enviando...');
+    fetch(API + '/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function (r) { if (!r.ok) throw new Error('falha'); f.reset(); setMsg(msg, 'Recebido! Te chamamos no WhatsApp com seu código. Se quiser agilizar: ' + WA); })
+      .catch(function () { setMsg(msg, 'Não consegui enviar agora. Tente de novo ou chame no WhatsApp: ' + WA, true); });
+  });
+  document.getElementById('code-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = e.target, msg = document.getElementById('code-msg');
+    if (!f.checkValidity()) { f.reportValidity(); return; }
+    var d = Object.fromEntries(new FormData(f).entries());
+    setMsg(msg, 'Gerando...');
+    fetch(API + '/api/public/gigradar-code', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deviceId: d.device.trim(), contact: d.contact.trim() }) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw new Error(j.error || 'erro'); return j; }); })
+      .then(function (j) { setMsg(msg, 'Seu código (válido ' + (j.days || 30) + ' dias): ' + j.code + ' — copie e cole na tela 💎 do app.'); })
+      .catch(function (err) { setMsg(msg, err.message && err.message !== 'erro' ? err.message : 'Não foi possível gerar o código. Tente de novo.', true); });
+  });
+})();
+</script>
 </body>
 </html>
