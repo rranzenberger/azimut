@@ -74,7 +74,7 @@ p { margin: 0; }
 
 /* Topo com menu em pílulas */
 header.top {
-  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  position: sticky; top: 72px; z-index: 50;
   background: linear-gradient(90deg, transparent, var(--red) 25%, var(--red) 75%, transparent) bottom / 100% 2px no-repeat, rgba(10,14,24,.9);
   backdrop-filter: blur(10px);
   margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
@@ -313,8 +313,6 @@ footer a { text-decoration: none; color: var(--fg-2); }
   <div class="wrap bar">
     <a class="brand" href="#inicio" aria-label="AziRoad, início">
       <img class="app-ic" src="assets/aziroad-icon.svg" alt="Ícone do AziRoad">
-      <img class="star" src="assets/logo-mobile-escuro.svg" alt="Azimut">
-      <span class="sep" aria-hidden="true"></span>
       <span><b>AZIROAD</b><small>by Azimut</small></span>
     </a>
     <a class="btn btn-primary cta-desktop" href="#beta">Quero ser beta tester</a>
@@ -863,7 +861,7 @@ footer a { text-decoration: none; color: var(--fg-2); }
 
 <footer>
   <div class="wrap row">
-    <div style="display:flex;align-items:center;gap:12px"><img src="assets/logo-mobile-escuro.svg" alt="Azimut" style="height:34px;width:auto"><span><strong style="color:var(--fg)">AziRoad</strong> · Feito por motorista, pra motorista. Um produto Azimut.</span></div>
+    <div><strong style="color:var(--fg)">AziRoad</strong> · Feito por motorista, pra motorista. Um produto Azimut.</div>
     <nav aria-label="Rodapé">
       <a href="https://aziroad.com/aziroad">aziroad.com</a>
       <a href="#privacidade">Privacidade</a>
