@@ -93,7 +93,7 @@ header.top .bar { display: flex; align-items: center; justify-content: space-bet
 /* Menu no modelo do site Azimut: linha principal com submenus abaixo + linha de secoes com o item selecionado sublinhado */
 nav.menu { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2px 4px; padding: 6px 0 2px; }
 nav.menu > a, .dd-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 12px; background: none; border: 0; border-bottom: 2px solid transparent; border-radius: 12px; color: var(--fg-2); font: 600 12px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: color .2s, border-color .2s; }
-nav.menu > a:hover, .dd-btn:hover, nav.menu > a[aria-current="true"], .dd:focus-within > .dd-btn { color: var(--fg); }
+nav.menu > a:hover, .dd-btn:hover, .dd:focus-within > .dd-btn { color: #E84D5C; border-bottom: 2px solid #C92337; border-radius: 12px; }
 nav.menu > a[aria-current="true"] { color: #E84D5C; border-bottom: 2px solid #C92337; border-radius: 12px; }
 .dd { position: relative; }
 .dd-btn::after { content: "▾"; font-size: 10px; opacity: .7; }
@@ -105,7 +105,7 @@ nav.menu > a[aria-current="true"] { color: #E84D5C; border-bottom: 2px solid #C9
 .dd-panel small { display: block; margin-top: 3px; font: 400 11px/1.3 InterBrand, Inter, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-3); }
 nav.subrow { display: flex; flex-wrap: nowrap; justify-content: center; gap: 4px 6px; padding: 8px 0 12px; border-top: 1px solid var(--line); }
 nav.subrow a { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-bottom: 2px solid transparent; border-radius: 12px; color: var(--fg-3); font: 600 11px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; transition: color .2s, border-color .2s; }
-nav.subrow a:hover { color: var(--fg); }
+nav.subrow a:hover { color: #fff; border-bottom: 2px solid #C92337; border-radius: 12px; }
 nav.subrow a[aria-current="true"] { color: #fff; border-bottom: 2px solid #C92337; border-radius: 12px; }
 nav.subrow .ic { font-size: 14px; }
 
