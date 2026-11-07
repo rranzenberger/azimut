@@ -314,16 +314,32 @@ footer a { text-decoration: none; color: var(--fg-2); }
 .frm label.chk input { width: 20px; height: 20px; min-height: 20px; accent-color: var(--red); margin-top: 2px; flex: none; }
 .frm .msg { font-size: 14px; color: var(--fg-2); }
 .frm .msg.err { color: #E8746E; }
+/* Marca do cabecalho: produto em caixa baixa (regra Azimut), pingo do i na cor do app, logo horizontal da Azimut apos "by" */
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-col { display: flex; flex-direction: column; gap: 6px; }
+.brand-main { display: inline-flex; flex: none; }
+.app-ic { height: 46px; width: 46px; border-radius: 13px; display: block; }
+.prod-link { text-decoration: none; color: var(--fg); }
+.prod { font: 400 34px/1 HandelGothic, InterBrand, sans-serif; letter-spacing: .01em; }
+.idot { position: relative; display: inline-block; }
+.idot b { position: absolute; left: 50%; top: -.2em; width: .2em; height: .2em; margin-left: -.1em; border-radius: 50%; background: #A78BFA; }
+.by-row { display: flex; align-items: center; gap: 8px; }
+.by { font: 600 11px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-3); }
+.az-logo { height: 20px; width: auto; display: block; }
+@media (max-width: 480px) { .prod { font-size: 28px; } .app-ic { height: 40px; width: 40px; } .az-logo { height: 17px; } }
 </style>
 </head>
 <body>
 
 <header class="top">
   <div class="wrap bar">
-    <a class="brand" href="#inicio" aria-label="AziRoad, início">
-      <img class="app-ic" src="/aziroad/assets/aziroad-icon.svg" alt="Ícone do AziRoad">
-      <span><b>AZIROAD</b><small>by <a href="https://www.azimutimmersive.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--red)">Azimut</a></small></span>
-    </a>
+    <div class="brand">
+      <a class="brand-main" href="#inicio" aria-label="AziRoad, início"><img class="app-ic" src="/aziroad/assets/aziroad-icon.svg" alt=""></a>
+      <div class="brand-col">
+        <a class="prod-link" href="#inicio"><span class="prod">az<span class="idot">ı<b></b></span>road</span></a>
+        <span class="by-row"><span class="by">by</span><a href="https://www.azimutimmersive.com" target="_blank" rel="noopener" aria-label="Azimut"><img class="az-logo" src="/azimut-logo-horizontal.svg" alt="Azimut"></a></span>
+      </div>
+    </div>
     <a class="btn btn-primary cta-desktop" href="#beta">Quero ser beta tester</a>
   </div>
   <div class="wrap">
