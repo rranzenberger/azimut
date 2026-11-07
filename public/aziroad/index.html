@@ -360,6 +360,10 @@ header.top.open .menu-btn span:nth-child(3) { transform: translateY(-7px) rotate
 .gold-nums > div.big b { font-size: 34px; }
 .gold-nums > div:not(.big) b { font-size: 22px; }
 .gold-nums > div:nth-child(3) { border-left: 1px solid rgba(60,40,0,.28); }
+/* Wordmark do aziroad como arquivo (formas da fonte Handel + pingo quadrado do i) */
+.prod-img { display: block; height: 40px; width: auto; }
+.prod-img-f { display: inline-block; height: 26px; width: auto; vertical-align: middle; }
+@media (max-width: 480px) { .prod-img { height: 34px; } }
 </style>
 </head>
 <body>
@@ -369,7 +373,7 @@ header.top.open .menu-btn span:nth-child(3) { transform: translateY(-7px) rotate
     <div class="brand">
       <a class="brand-main" href="#inicio" aria-label="AziRoad, início"><img class="app-ic" src="/aziroad/assets/aziroad-icon.svg" alt=""></a>
       <div class="brand-col">
-        <a class="prod-link" href="#inicio"><span class="prod">az<span class="idot">ı<b></b></span>road</span></a>
+        <a class="prod-link" href="#inicio"><img class="prod-img" src="/aziroad/assets/aziroad-wordmark.svg" alt="aziroad"></a>
         <span class="by-row"><span class="by">by</span><a href="https://www.azimutimmersive.com" target="_blank" rel="noopener" aria-label="Azimut"><img class="az-logo" src="/azimut-logo-horizontal.svg" alt="Azimut"></a></span>
       </div>
     </div>
@@ -980,7 +984,7 @@ header.top.open .menu-btn span:nth-child(3) { transform: translateY(-7px) rotate
 
 <footer>
   <div class="wrap row">
-    <div><span class="prod-f">az<span class="idot">ı<b></b></span>road</span> · Feito por motorista, pra motorista. Um produto <a href="https://www.azimutimmersive.com" target="_blank" rel="noopener" style="color:var(--fg-2);border-bottom:1px solid var(--red);text-decoration:none">Azimut</a>.</div>
+    <div><img class="prod-img-f" src="/aziroad/assets/aziroad-wordmark.svg" alt="aziroad"> · Feito por motorista, pra motorista. Um produto <a href="https://www.azimutimmersive.com" target="_blank" rel="noopener" style="color:var(--fg-2);border-bottom:1px solid var(--red);text-decoration:none">Azimut</a>.</div>
     <nav aria-label="Rodapé">
       <a href="https://aziroad.com/aziroad">aziroad.com</a>
       <a href="#privacidade">Privacidade</a>
