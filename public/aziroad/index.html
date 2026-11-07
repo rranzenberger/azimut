@@ -354,6 +354,13 @@ header.top.open .menu-btn span:nth-child(3) { transform: translateY(-7px) rotate
   nav.subrow a { flex: none; padding: 8px 12px; font-size: 10px; }
   header.top.open nav.subrow { display: none; }
 }
+/* Corrida ouro: valor principal em cima, dois menores embaixo (opcao escolhida com o Jev) */
+.gold-nums { grid-template-columns: 1fr 1fr; }
+.gold-nums > div + div { border-left: 0; }
+.gold-nums > div.big { grid-column: 1 / -1; padding: 0 0 10px; margin-bottom: 10px; border-bottom: 1px solid rgba(60,40,0,.28); }
+.gold-nums > div.big b { font-size: 34px; }
+.gold-nums > div:not(.big) b { font-size: 22px; }
+.gold-nums > div:nth-child(3) { border-left: 1px solid rgba(60,40,0,.28); }
 </style>
 </head>
 <body>
@@ -440,9 +447,9 @@ header.top.open .menu-btn span:nth-child(3) { transform: translateY(-7px) rotate
         <div class="gold">
           <div class="gold-head"><span aria-hidden="true">🔥</span>CORRIDA OURO</div>
           <div class="gold-nums">
+            <div class="big"><b>27,12</b><small>NO SEU BOLSO</small></div>
             <div><b>3,14</b><small>POR KM</small></div>
             <div><b>38,90</b><small>A CORRIDA</small></div>
-            <div><b>27,12</b><small>NO SEU BOLSO</small></div>
           </div>
         </div>
         <div class="sheet">
