@@ -313,10 +313,10 @@ footer a { text-decoration: none; color: var(--fg-2); }
 .frm .msg { font-size: 14px; color: var(--fg-2); }
 .frm .msg.err { color: #E8746E; }
 /* Marca do cabecalho: produto em caixa baixa (regra Azimut), pingo do i na cor do app, logo horizontal da Azimut apos "by" */
-.brand { display: flex; align-items: center; gap: 12px; }
+.brand { display: flex; align-items: stretch; gap: 14px; }
 .brand-col { display: flex; flex-direction: column; gap: 6px; }
-.brand-main { display: inline-flex; flex: none; }
-.app-ic { height: 46px; width: 46px; border-radius: 13px; display: block; }
+.brand-main { display: flex; flex: none; }
+.app-ic { height: 100%; width: auto; aspect-ratio: 1; border-radius: 16px; display: block; }
 .prod-link { text-decoration: none; }
 .prod { font: 400 34px/1 HandelGothic, InterBrand, sans-serif; letter-spacing: .01em; color: #D3D9E4; }
 .idot { position: relative; display: inline-block; }
@@ -326,7 +326,7 @@ footer a { text-decoration: none; color: var(--fg-2); }
 .by { font: 600 11px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-3); }
 .az-logo { height: 20px; width: auto; display: block; }
 .prod-f { font: 400 22px/1 HandelGothic, InterBrand, sans-serif; color: #D3D9E4; }
-@media (max-width: 480px) { .prod { font-size: 28px; } .app-ic { height: 40px; width: 40px; } .az-logo { height: 17px; } }
+@media (max-width: 480px) { .prod { font-size: 28px; } .az-logo { height: 17px; } }
 /* Celular: botao de tres linhas; ao abrir, lista vertical completa (como o site Azimut) */
 .menu-btn { display: none; width: 44px; height: 44px; border: 0; background: none; cursor: pointer; flex-direction: column; justify-content: center; align-items: center; gap: 5px; padding: 0; }
 .menu-btn span { display: block; width: 24px; height: 2px; border-radius: 2px; background: var(--fg); transition: transform .2s, opacity .2s; }
