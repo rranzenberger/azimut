@@ -92,9 +92,9 @@ header.top .bar { display: flex; align-items: center; justify-content: space-bet
 .brand small { font-family: SoraCustom, InterBrand, sans-serif; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; }
 /* Menu no modelo do site Azimut: linha principal com submenus abaixo + linha de secoes com o item selecionado sublinhado */
 nav.menu { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2px 4px; padding: 6px 0 2px; }
-nav.menu > a, .dd-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 12px; background: none; border: 0; border-bottom: 2px solid transparent; color: var(--fg-2); font: 600 12px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: color .2s, border-color .2s; }
+nav.menu > a, .dd-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 12px; background: none; border: 0; border-bottom: 2px solid transparent; border-radius: 12px; color: var(--fg-2); font: 600 12px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: color .2s, border-color .2s; }
 nav.menu > a:hover, .dd-btn:hover, nav.menu > a[aria-current="true"], .dd:focus-within > .dd-btn { color: var(--fg); }
-nav.menu > a[aria-current="true"] { border-bottom-color: var(--red); }
+nav.menu > a[aria-current="true"] { color: #E84D5C; border-bottom: 2px solid #C92337; border-radius: 12px; }
 .dd { position: relative; }
 .dd-btn::after { content: "▾"; font-size: 10px; opacity: .7; }
 .dd-panel { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); z-index: 70; min-width: 250px; padding: 8px; border-radius: 12px; background: rgba(12,18,31,.98); border: 1px solid var(--line-2); box-shadow: 0 18px 40px rgba(0,0,0,.45); }
@@ -104,9 +104,9 @@ nav.menu > a[aria-current="true"] { border-bottom-color: var(--red); }
 .dd-panel b { display: block; font: 600 12px/1.3 SoraCustom, InterBrand, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--fg); }
 .dd-panel small { display: block; margin-top: 3px; font: 400 11px/1.3 InterBrand, Inter, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-3); }
 nav.subrow { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 6px; padding: 8px 0 12px; border-top: 1px solid var(--line); }
-nav.subrow a { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; border-bottom: 2px solid transparent; color: var(--fg-3); font: 600 11px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; transition: color .2s, border-color .2s; }
+nav.subrow a { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-bottom: 2px solid transparent; border-radius: 12px; color: var(--fg-3); font: 600 11px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; transition: color .2s, border-color .2s; }
 nav.subrow a:hover { color: var(--fg); }
-nav.subrow a[aria-current="true"] { color: var(--fg); border-bottom-color: var(--red); }
+nav.subrow a[aria-current="true"] { color: #fff; border-bottom: 2px solid #C92337; border-radius: 12px; }
 nav.subrow .ic { font-size: 14px; }
 
 /* Herói */
