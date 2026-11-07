@@ -50,6 +50,17 @@
       "has": [
         {
           "type": "host",
+          "value": "aziroad.com"
+        }
+      ],
+      "destination": "/aziroad",
+      "permanent": false
+    },
+    {
+      "source": "/:lang(pt|en|es|fr)/aziroad",
+      "has": [
+        {
+          "type": "host",
           "value": "azmt.com.br"
         }
       ],

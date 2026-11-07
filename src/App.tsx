@@ -474,6 +474,13 @@ const App: React.FC = () => {
                     </LangRouteWrapper>
                   </ErrorBoundary>
                 } />
+                <Route path="/:lang/aziroad-antigo" element={
+                  <ErrorBoundary routeName="GigRadar">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <GigRadar lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
+                } />
                 <Route path="/:lang/privacy" element={
                   <ErrorBoundary routeName="Privacy">
                     <LangRouteWrapper setLang={setLang}>
@@ -741,6 +748,13 @@ const App: React.FC = () => {
                 {/* Endereço público = /aziroad (Ranz 03/out/2026); /gigradar segue vivo só como desvio. */}
                 <Route path="/:lang/gigradar" element={<GigradarParaAziroad />} />
                 <Route path="/:lang/aziroad" element={
+                  <ErrorBoundary routeName="GigRadar">
+                    <LangRouteWrapper setLang={setLang}>
+                      {(routeLang) => <GigRadar lang={routeLang} />}
+                    </LangRouteWrapper>
+                  </ErrorBoundary>
+                } />
+                <Route path="/:lang/aziroad-antigo" element={
                   <ErrorBoundary routeName="GigRadar">
                     <LangRouteWrapper setLang={setLang}>
                       {(routeLang) => <GigRadar lang={routeLang} />}
