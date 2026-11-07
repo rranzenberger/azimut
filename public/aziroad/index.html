@@ -48,7 +48,7 @@ img, svg { max-width: 100%; }
 a { color: inherit; }
 :focus-visible { outline: 2px solid var(--red-2); outline-offset: 3px; border-radius: 8px; }
 .wrap { max-width: 1080px; margin: 0 auto; }
-section { padding-block: 56px; scroll-margin-top: 84px; }
+section { padding-block: 56px; scroll-margin-top: calc(var(--hh, 150px) + 12px); }
 .eyebrow { font: 600 12px/1.2 SoraCustom, InterBrand, sans-serif; letter-spacing: .22em; text-transform: uppercase; color: var(--red-2); }
 h1, h2, h3 { font-family: HandelGothic, InterBrand, sans-serif; font-weight: 400; text-wrap: balance; margin: 0; }
 h1 { font-size: clamp(34px, 7vw, 62px); line-height: 1.05; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; }
@@ -74,11 +74,9 @@ p { margin: 0; }
 
 /* Topo com menu em pílulas */
 header.top {
-  position: sticky; top: 0; z-index: 50;
-  background: linear-gradient(90deg, transparent, var(--red) 25%, var(--red) 75%, transparent) bottom / 100% 2px no-repeat, rgba(10,14,24,.9);
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: linear-gradient(90deg, transparent, var(--red) 25%, var(--red) 75%, transparent) bottom / 100% 2px no-repeat, rgba(10,14,24,.96);
   backdrop-filter: blur(10px);
-  margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
-  margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
   padding-inline: max(16px, env(safe-area-inset-left, 0px));
 }
 header.top .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 0; padding-top: 14px; padding-bottom: 8px; }
@@ -364,6 +362,7 @@ header.top.open .menu-btn span:nth-child(3) { transform: translateY(-7px) rotate
 .prod-img { display: block; height: 40px; width: auto; }
 .prod-img-f { display: inline-block; height: 26px; width: auto; vertical-align: middle; }
 @media (max-width: 480px) { .prod-img { height: 34px; } }
+body { padding-top: var(--hh, 150px); }
 </style>
 </head>
 <body>
@@ -1048,6 +1047,21 @@ Comunicacoes: ' + (d.updates ? 'aceitas' : 'nao autorizadas')
   document.querySelectorAll('nav.menu a').forEach(function (a) {
     a.addEventListener('click', function () { header.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); });
   });
+})();
+</script>
+<script>
+/* Cabecalho fixo: reserva a altura dele no topo da pagina (so com o menu fechado) */
+(function () {
+  var header = document.querySelector('header.top');
+  if (!header) return;
+  function setH() {
+    if (header.classList.contains('open')) return;
+    document.documentElement.style.setProperty('--hh', header.offsetHeight + 'px');
+  }
+  setH();
+  window.addEventListener('resize', setH);
+  window.addEventListener('load', setH);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(setH);
 })();
 </script>
 </body>
