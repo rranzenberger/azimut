@@ -88,11 +88,12 @@ header.top .bar { display: flex; align-items: center; justify-content: space-bet
 .brand small { font-family: SoraCustom, InterBrand, sans-serif; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; }
 /* Menu no modelo do site Azimut: linha principal com submenus abaixo + linha de secoes com o item selecionado sublinhado */
 nav.menu { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2px 4px; padding: 6px 0 14px; }
-nav.menu > a, .dd-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 12px; background: none; border: 0; border-bottom: 2px solid transparent; border-radius: 12px; color: var(--fg-2); font: 600 12px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: color .2s, border-color .2s; }
-nav.menu > a:hover, .dd-btn:hover, .dd:focus-within > .dd-btn { color: #E84D5C; border-bottom: 2px solid #C92337; border-radius: 12px; }
-nav.menu > a[aria-current="true"] { color: #E84D5C; border-bottom: 2px solid #C92337; border-radius: 12px; }
+nav.menu > a, .dd-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 12px; background: none; border: 0; border-bottom: 2px solid transparent; border-radius: 0; color: var(--fg-2); font: 600 12px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: color .2s, border-color .2s; }
+nav.menu > a:hover, .dd-btn:hover, .dd:hover > .dd-btn, .dd:focus-within > .dd-btn { color: #E84D5C; border-bottom: 2px solid #C92337; border-radius: 0; }
+nav.menu > a[aria-current="true"], .dd-btn[aria-current="true"] { color: #E84D5C; border-bottom: 2px solid #C92337; border-radius: 0; }
 .dd { position: relative; }
 .dd-btn::after { content: "▾"; font-size: 10px; opacity: .7; }
+.dd:hover > .dd-btn::after, .dd:focus-within > .dd-btn::after { content: "▴"; }
 .dd-panel { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); z-index: 70; min-width: 250px; padding: 8px; border-radius: 12px; background: rgba(12,18,31,.98); border: 1px solid var(--line-2); box-shadow: 0 18px 40px rgba(0,0,0,.45); }
 .dd:hover .dd-panel, .dd:focus-within .dd-panel { display: block; }
 .dd-panel a { display: block; padding: 10px 12px; border-radius: 8px; text-decoration: none; }
