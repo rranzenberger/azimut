@@ -363,6 +363,9 @@ header.top.open .menu-btn span:nth-child(3) { transform: translateY(-7px) rotate
 .prod-img-f { display: inline-block; height: 26px; width: auto; vertical-align: middle; }
 @media (max-width: 480px) { .prod-img { height: 34px; } }
 body { padding-top: var(--hh, 150px); }
+section[hidden] { display: none !important; }
+hr.rule { display: none; }
+nav.subrow:empty { display: none; }
 </style>
 </head>
 <body>
@@ -381,51 +384,45 @@ body { padding-top: var(--hh, 150px); }
   </div>
   <div class="wrap">
     <nav class="menu" id="menu-main" aria-label="Menu principal">
-      <a href="#como-funciona">Como funciona</a>
+      <a href="#/inicio" data-view="inicio">Início</a>
       <div class="dd">
-        <button class="dd-btn" type="button" aria-haspopup="true">Funções</button>
+        <button class="dd-btn" type="button" aria-haspopup="true" data-view="funcoes" data-href="#/funcoes/modos">Funções</button>
         <div class="dd-panel">
-          <a href="#modos"><b>Modos</b><small>Pronto ou aprende com você</small></a>
-          <a href="#botoes"><b>Botões</b><small>Atalhos na tela</small></a>
-          <a href="#casa"><b>Casa</b><small>Volta paga pra casa</small></a>
-          <a href="#trocar"><b>Manter ou trocar</b><small>Entre Uber e 99</small></a>
-          <a href="#passageiro"><b>Passageiro</b><small>O que é falado com gente</small></a>
+          <a href="#/funcoes/modos"><b>Modos</b><small>Pronto ou aprende com você</small></a>
+          <a href="#/funcoes/botoes"><b>Botões</b><small>Atalhos na tela</small></a>
+          <a href="#/funcoes/casa"><b>Casa</b><small>Volta paga pra casa</small></a>
+          <a href="#/funcoes/trocar"><b>Manter ou trocar</b><small>Entre Uber e 99</small></a>
+          <a href="#/funcoes/passageiro"><b>Passageiro</b><small>O que é falado com gente</small></a>
         </div>
       </div>
       <div class="dd">
-        <button class="dd-btn" type="button" aria-haspopup="true">Cuidado</button>
+        <button class="dd-btn" type="button" aria-haspopup="true" data-view="cuidado" data-href="#/cuidado/carro">Cuidado</button>
         <div class="dd-panel">
-          <a href="#cuidado"><b>Carro, você e passageiro</b><small>Saúde, segurança e mapa</small></a>
-          <a href="#controle"><b>Tempo e dinheiro</b><small>Controle do turno</small></a>
+          <a href="#/cuidado/carro"><b>Carro e você</b><small>Saúde, segurança e mapa</small></a>
+          <a href="#/cuidado/tempo"><b>Tempo e dinheiro</b><small>Controle do turno</small></a>
+          <a href="#/cuidado/seguranca"><b>Segurança</b><small>Você, o carro e o passageiro</small></a>
         </div>
       </div>
-      <a href="#comparativo">Estado real</a>
-      <a href="#recursos">Recursos</a>
+      <a href="#/estado" data-view="estado">Estado real</a>
+      <a href="#/recursos" data-view="recursos">Recursos</a>
       <div class="dd">
-        <button class="dd-btn" type="button" aria-haspopup="true">Beta</button>
+        <button class="dd-btn" type="button" aria-haspopup="true" data-view="beta" data-href="#/beta/entrar">Beta</button>
         <div class="dd-panel">
-          <a href="#beta"><b>Como entrar</b><small>Cadastro e liberação</small></a>
-          <a href="#termos"><b>Termos do beta</b><small>Regras simples</small></a>
-          <a href="#privacidade"><b>Privacidade</b><small>O que fica no seu celular</small></a>
-          <a href="#ajuda"><b>Ajuda</b><small>Dúvidas comuns</small></a>
+          <a href="#/beta/entrar"><b>Como entrar</b><small>Cadastro e liberação</small></a>
+          <a href="#/beta/termos"><b>Termos do beta</b><small>Regras simples</small></a>
+          <a href="#/beta/privacidade"><b>Privacidade</b><small>O que fica no seu celular</small></a>
+          <a href="#/beta/ajuda"><b>Ajuda</b><small>Dúvidas comuns</small></a>
         </div>
       </div>
     </nav>
-    <nav class="subrow" aria-label="Seções da página">
-      <a href="#inicio">+ Tudo</a>
-      <a href="#modos"><span class="ic" aria-hidden="true">🧠</span>Modos</a>
-      <a href="#botoes"><span class="ic" aria-hidden="true">⚡</span>Botões</a>
-      <a href="#casa"><span class="ic" aria-hidden="true">🏠</span>Casa</a>
-      <a href="#trocar"><span class="ic" aria-hidden="true">🔄</span>Trocar</a>
-      <a href="#passageiro"><span class="ic" aria-hidden="true">🧑‍🤝‍🧑</span>Passageiro</a>
-    </nav>
+    <nav class="subrow" id="subrow" aria-label="Seções desta aba"></nav>
   </div>
 </header>
 
 <main>
 
 <!-- HERÓI -->
-<section class="hero" id="inicio">
+<section class="hero" id="inicio" data-view="inicio">
   <div class="wrap hero-grid">
     <div>
       <span class="tag">🚧 Beta fechado · por convite</span>
@@ -469,7 +466,7 @@ body { padding-top: var(--hh, 150px); }
 <hr class="rule">
 
 <!-- COMO FUNCIONA -->
-<section id="como-funciona">
+<section id="como-funciona" data-view="inicio">
   <div class="wrap">
     <p class="eyebrow">Em um segundo</p>
     <h2 style="margin-top:10px">A oferta chega. O card aparece. A voz fala.</h2>
@@ -485,7 +482,7 @@ body { padding-top: var(--hh, 150px); }
 <hr class="rule">
 
 <!-- MODOS: PRONTO OU APRENDE -->
-<section id="modos">
+<section id="modos" data-view="funcoes" data-sub="modos">
   <div class="wrap">
     <p class="eyebrow">Você escolhe como começar</p>
     <h2 style="margin-top:10px">Pronto na hora, ou aprendendo com você</h2>
@@ -528,7 +525,7 @@ body { padding-top: var(--hh, 150px); }
 <hr class="rule">
 
 <!-- SEM MEXER EM NADA -->
-<section id="facil">
+<section id="facil" data-view="inicio">
   <div class="wrap">
     <p class="eyebrow">Sem complicação</p>
     <h2 style="margin-top:10px">Não quer mexer em nada? A gente já deixa pronto</h2>
@@ -545,7 +542,7 @@ body { padding-top: var(--hh, 150px); }
 <hr class="rule">
 
 <!-- BOTÕES FLUTUANTES -->
-<section id="botoes">
+<section id="botoes" data-view="funcoes" data-sub="botoes">
   <div class="wrap">
     <p class="eyebrow">Atalhos flutuantes</p>
     <h2 style="margin-top:10px">Um toque, sem sair do app de corrida</h2>
@@ -563,7 +560,7 @@ body { padding-top: var(--hh, 150px); }
 <hr class="rule">
 
 <!-- CASA E ENDEREÇOS -->
-<section id="casa">
+<section id="casa" data-view="funcoes" data-sub="casa">
   <div class="wrap home-grid">
     <div>
       <p class="eyebrow">Modo Casa</p>
@@ -600,7 +597,7 @@ body { padding-top: var(--hh, 150px); }
 <hr class="rule">
 
 <!-- VÁRIOS APPS: MANTER OU TROCAR -->
-<section id="trocar">
+<section id="trocar" data-view="funcoes" data-sub="trocar">
   <div class="wrap">
     <p class="eyebrow">Vários apps ao mesmo tempo</p>
     <h2 style="margin-top:10px">Mantém ou troca? O app diz</h2>
@@ -629,7 +626,7 @@ body { padding-top: var(--hh, 150px); }
 <hr class="rule">
 
 <!-- PASSAGEIRO A BORDO -->
-<section id="passageiro">
+<section id="passageiro" data-view="funcoes" data-sub="passageiro">
   <div class="wrap pax">
     <div>
       <p class="eyebrow">Passageiro a bordo</p>
@@ -668,7 +665,7 @@ body { padding-top: var(--hh, 150px); }
 <hr class="rule">
 
 <!-- CUIDADO COMPLETO: CARRO, VOCÊ, PASSAGEIRO, MAPA, CUSTO -->
-<section id="cuidado">
+<section id="cuidado" data-view="cuidado" data-sub="carro">
   <div class="wrap">
     <p class="eyebrow">Mais do que um veredito</p>
     <h2 style="margin-top:10px">Cuida do carro, de você e de quem vai no banco de trás</h2>
@@ -709,7 +706,7 @@ body { padding-top: var(--hh, 150px); }
 <hr class="rule">
 
 <!-- CONTROLE DE TEMPO E DE RECEBIMENTOS -->
-<section id="controle">
+<section id="controle" data-view="cuidado" data-sub="tempo">
   <div class="wrap">
     <p class="eyebrow">Tempo e dinheiro no seu controle</p>
     <h2 style="margin-top:10px">Cada minuto e cada real entram na conta</h2>
@@ -725,7 +722,7 @@ body { padding-top: var(--hh, 150px); }
 <hr class="rule">
 
 <!-- O QUE O ASIROAD FAZ, COM O ESTADO REAL -->
-<section id="comparativo">
+<section id="comparativo" data-view="estado">
   <div class="wrap">
     <p class="eyebrow">O que já funciona</p>
     <h2 style="margin-top:10px">Cada função, com o estado real</h2>
@@ -747,7 +744,7 @@ body { padding-top: var(--hh, 150px); }
 <hr class="rule">
 
 <!-- RECURSOS (sanfona) -->
-<section id="recursos">
+<section id="recursos" data-view="recursos">
   <div class="wrap">
     <p class="eyebrow">Por tarefa</p>
     <h2 style="margin-top:10px">Tudo organizado por tarefa</h2>
@@ -820,7 +817,7 @@ body { padding-top: var(--hh, 150px); }
 <hr class="rule">
 
 <!-- SEGURANÇA -->
-<section id="seguranca">
+<section id="seguranca" data-view="cuidado" data-sub="seguranca">
   <div class="wrap">
     <p class="eyebrow">Segurança em três frentes</p>
     <h2 style="margin-top:10px">Você, o carro e o passageiro</h2>
@@ -841,7 +838,7 @@ body { padding-top: var(--hh, 150px); }
 <hr class="rule">
 
 <!-- BETA -->
-<section id="beta">
+<section id="beta" data-view="beta" data-sub="entrar">
   <div class="wrap">
     <p class="eyebrow">Beta</p>
     <h2 style="margin-top:10px">Como entrar</h2>
@@ -910,7 +907,7 @@ body { padding-top: var(--hh, 150px); }
 <hr class="rule">
 
 <!-- TERMOS DO BETA -->
-<section id="termos">
+<section id="termos" data-view="beta" data-sub="termos">
   <div class="wrap">
     <p class="eyebrow">Termos do beta</p>
     <h2 style="margin-top:10px">Regras simples, escritas em português claro</h2>
@@ -932,7 +929,7 @@ body { padding-top: var(--hh, 150px); }
 <hr class="rule">
 
 <!-- PRIVACIDADE -->
-<section id="privacidade">
+<section id="privacidade" data-view="beta" data-sub="privacidade">
   <div class="wrap">
     <p class="eyebrow">Privacidade</p>
     <h2 style="margin-top:10px">Resumo honesto: o que fica no seu celular</h2>
@@ -949,7 +946,7 @@ body { padding-top: var(--hh, 150px); }
 <hr class="rule">
 
 <!-- AJUDA -->
-<section id="ajuda">
+<section id="ajuda" data-view="beta" data-sub="ajuda">
   <div class="wrap">
     <p class="eyebrow">Ajuda</p>
     <h2 style="margin-top:10px">Dúvidas comuns</h2>
@@ -966,20 +963,6 @@ body { padding-top: var(--hh, 150px); }
 
 <a class="side-beta" href="#beta">Quero ser beta tester →</a>
 
-<script>
-/* Marca a aba do menu conforme a seção visível (igual ao site Azimut). */
-(function () {
-  var links = [].slice.call(document.querySelectorAll('nav.subrow a[href^="#"]'));
-  var map = links.map(function (a) { return { a: a, el: document.querySelector(a.getAttribute('href')) }; }).filter(function (x) { return x.el; });
-  function update() {
-    var y = window.scrollY + 120, current = map.length ? map[0].a : null;
-    map.forEach(function (x) { if (x.el.offsetTop <= y) current = x.a; });
-    map.forEach(function (x) { x.a.setAttribute('aria-current', x.a === current ? 'true' : 'false'); });
-  }
-  window.addEventListener('scroll', update, { passive: true });
-  update();
-})();
-</script>
 
 <footer>
   <div class="wrap row">
@@ -1062,6 +1045,54 @@ Comunicacoes: ' + (d.updates ? 'aceitas' : 'nao autorizadas')
   window.addEventListener('resize', setH);
   window.addEventListener('load', setH);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(setH);
+})();
+</script>
+<script>
+/* Abas: cada item do menu abre a sua propria tela; o segundo menu mostra as secoes daquela aba */
+(function () {
+  var VIEWS = {
+    inicio: [],
+    funcoes: [['modos','Modos','🧠'],['botoes','Botões','⚡'],['casa','Casa','🏠'],['trocar','Trocar','🔄'],['passageiro','Passageiro','🧑‍🤝‍🧑']],
+    cuidado: [['carro','Carro e você','🛡️'],['tempo','Tempo e dinheiro','⏱️'],['seguranca','Segurança','🚨']],
+    estado: [], recursos: [],
+    beta: [['entrar','Como entrar','🚧'],['termos','Termos','📄'],['privacidade','Privacidade','🔒'],['ajuda','Ajuda','❓']]
+  };
+  var LEGACY = { inicio:'inicio', 'como-funciona':'inicio', facil:'inicio', modos:'funcoes/modos', botoes:'funcoes/botoes', casa:'funcoes/casa', trocar:'funcoes/trocar', passageiro:'funcoes/passageiro', cuidado:'cuidado/carro', controle:'cuidado/tempo', seguranca:'cuidado/seguranca', comparativo:'estado', recursos:'recursos', beta:'beta/entrar', termos:'beta/termos', privacidade:'beta/privacidade', ajuda:'beta/ajuda' };
+  var sections = [].slice.call(document.querySelectorAll('section[data-view]'));
+  var subrow = document.getElementById('subrow');
+  function parse() {
+    var h = (location.hash || '').replace(/^#\/?/, '');
+    if (LEGACY[h]) h = LEGACY[h];
+    var p = h.split('/'), v = VIEWS[p[0]] ? p[0] : 'inicio', subs = VIEWS[v], s = p[1] || '';
+    if (subs.length && !subs.some(function (x) { return x[0] === s; })) s = subs[0][0];
+    if (!subs.length) s = '';
+    return { v: v, s: s };
+  }
+  function render() {
+    var r = parse();
+    sections.forEach(function (el) {
+      var show = el.getAttribute('data-view') === r.v && (!r.s || !el.getAttribute('data-sub') || el.getAttribute('data-sub') === r.s);
+      el.hidden = !show;
+    });
+    subrow.innerHTML = '';
+    VIEWS[r.v].forEach(function (x) {
+      var a = document.createElement('a');
+      a.href = '#/' + r.v + '/' + x[0];
+      a.innerHTML = '<span class="ic" aria-hidden="true">' + x[2] + '</span>' + x[1];
+      a.setAttribute('aria-current', x[0] === r.s ? 'true' : 'false');
+      subrow.appendChild(a);
+    });
+    document.querySelectorAll('nav.menu [data-view]').forEach(function (el) {
+      el.setAttribute('aria-current', el.getAttribute('data-view') === r.v ? 'true' : 'false');
+    });
+    window.scrollTo(0, 0);
+    window.dispatchEvent(new Event('resize'));
+  }
+  document.querySelectorAll('.dd-btn[data-href]').forEach(function (b) {
+    b.addEventListener('click', function () { location.hash = b.getAttribute('data-href'); });
+  });
+  window.addEventListener('hashchange', render);
+  render();
 })();
 </script>
 </body>
