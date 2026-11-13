@@ -711,6 +711,69 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
 .fs b { display: block; font: 800 22px/1 SoraCustom, InterBrand, sans-serif; font-variant-numeric: tabular-nums; }
 .fs span { display: block; margin-top: 6px; font-size: 12.5px; }
 .fs.s1 { background: rgba(204,173,51,.18); color: #CCAD33; } .fs.s2 { background: rgba(216,136,75,.22); color: #D8884B; } .fs.s3 { background: rgba(210,87,103,.28); color: #F08A98; }
+
+/* ===== v5: telas reais e proteção ===== */
+.pf.real { aspect-ratio: auto; max-width: 300px; background: #0B1220; }
+.pf.real img { display: block; width: 100%; height: auto; }
+.pf.real::after { display: none; }
+.frow > * { min-width: 0; }
+.duo { display: flex; max-width: 100%; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; scrollbar-width: thin; }
+.duo > div { flex: 0 0 min(260px, 78vw); scroll-snap-align: start; }
+@media (min-width: 860px) { .frow:has(.duo) { grid-template-columns: 560px 1fr; } .duo { overflow: visible; } .duo > div { flex: 1 1 0; } }
+.chip-fake { display: inline-flex; align-items: center; gap: 6px; padding: 10px 14px; border-radius: 12px; background: var(--card-2); border: 1px solid var(--line-2); font-size: 13.5px; color: var(--fg-2); }
+.sub-h { font-size: 20px; }
+.fatcards { display: grid; gap: 10px; margin-top: 16px; }
+@media (min-width: 860px) { .fatcards { grid-template-columns: repeat(3, 1fr); } }
+.fcard { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; align-items: center; padding: 16px; border-radius: 16px; background: #0D0D12; border: 1px solid rgba(255,255,255,.1); border-top: 5px solid var(--c); }
+.fcard .fh { font: 800 28px/1 SoraCustom, InterBrand, sans-serif; color: var(--c); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fcard .fbody b { font: 800 13px/1.2 SoraCustom, InterBrand, sans-serif; letter-spacing: .06em; color: var(--c); }
+.fcard .fbody p { margin-top: 4px; font-size: 14px; color: var(--fg); font-style: italic; line-height: 1.4; }
+.fcard small { grid-column: 1 / -1; padding-top: 8px; border-top: 1px solid rgba(255,255,255,.1); font-size: 12px; color: var(--fg-3); }
+.bul { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 8px; font-size: 14.5px; color: var(--fg-2); }
+.bul li { padding-left: 18px; position: relative; }
+.bul li::before { content: ""; position: absolute; left: 0; top: .6em; width: 7px; height: 7px; border-radius: 50%; background: var(--red-2); }
+.bul b { color: var(--fg); }
+.radar-scene { position: relative; margin-top: 16px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); width: 100%; height: 230px; }
+.radar-scene svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.radar-card { position: absolute; left: 14px; top: 14px; padding: 12px 16px; border-radius: 16px; background: #0D0D12; border: 1px solid rgba(108,155,255,.5); border-top: 5px solid #6C9BFF; box-shadow: 0 10px 24px rgba(0,0,0,.5); }
+.radar-card b { display: block; font: 800 15px/1.2 SoraCustom, InterBrand, sans-serif; }
+.radar-card span { display: block; margin-top: 4px; font-size: 13px; color: var(--fg-2); font-variant-numeric: tabular-nums; }
+.radar-card em { display: inline-block; margin-top: 6px; padding: 3px 9px; border-radius: 99px; background: #8A4B08; font: 700 11px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .06em; font-style: normal; text-transform: uppercase; }
+.chan { display: grid; gap: 12px; margin-top: 16px; }
+@media (min-width: 800px) { .chan { grid-template-columns: repeat(3, 1fr); } }
+.ch { padding: 18px; border-radius: var(--radius); background: var(--card); border: 1px solid var(--line); }
+.ch.hot { border-color: var(--red); background: linear-gradient(180deg, rgba(201,35,55,.14), var(--card)); }
+.ch .ci { font-size: 26px; margin-bottom: 8px; }
+.ch p { margin-top: 6px; font-size: 14px; color: var(--fg-2); } .ch p i { color: var(--fg); }
+.tarja { margin-top: 24px; }
+.tcard { max-width: 560px; padding: 20px 20px 16px; border-radius: 20px; background: #050507; border: 2px solid #E26861; box-shadow: 0 0 40px rgba(226,104,97,.22); }
+.tcard .tt { font: 800 13px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .12em; color: #E26861; }
+.tcard .tm { margin-top: 12px; font: 400 26px/1.15 HandelGothic, InterBrand, sans-serif; text-transform: uppercase; letter-spacing: .03em; }
+.tcard .td { margin-top: 8px; font-size: 14.5px; color: var(--fg-2); }
+.tcard .ts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.tcard .ts span { padding: 6px 10px; border-radius: 99px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); font-size: 12.5px; }
+.calgrid { display: grid; gap: 10px; margin-top: 14px; }
+@media (min-width: 700px) { .calgrid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .calgrid { grid-template-columns: repeat(3, 1fr); } }
+.cal { display: grid; grid-template-columns: 46px 1fr; gap: 14px; align-items: start; padding: 14px 16px; border-radius: 16px; background: var(--card); border: 1px solid var(--line); border-left: 4px solid #E26861; }
+.cal .cic { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; font-size: 24px; background: var(--card-2); }
+.cal b { font: 700 15px/1.3 SoraCustom, InterBrand, sans-serif; } .cal p { margin-top: 4px; font-size: 13.5px; color: var(--fg-2); }
+
+/* ===== v6: galeria real e proteção na home ===== */
+.gal { display: flex; gap: 16px; margin-top: 26px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; scrollbar-width: thin; }
+.gcard { flex: 0 0 min(230px, 62vw); scroll-snap-align: start; text-decoration: none; color: inherit; transition: transform .2s; }
+.gcard:hover { transform: translateY(-4px); }
+.gcard .pf-cap span { color: var(--red-2); font-weight: 600; }
+@media (min-width: 1040px) { .gal { overflow: visible; } .gcard { flex: 1 1 0; } }
+.prot { display: grid; gap: 14px; margin-top: 26px; }
+@media (min-width: 800px) { .prot { grid-template-columns: repeat(3, 1fr); } }
+.ptile { display: block; border-radius: var(--radius); background: var(--card); border: 1px solid var(--line); overflow: hidden; text-decoration: none; color: inherit; transition: border-color .2s, transform .2s; }
+.ptile:hover { border-color: var(--red); transform: translateY(-3px); }
+.ptile svg { display: block; width: 100%; height: auto; }
+.ptile h3 { padding: 16px 18px 0; font-size: 17px; }
+.ptile p { padding: 6px 18px 0; font-size: 14.5px; color: var(--fg-2); }
+.ptile span { display: block; padding: 12px 18px 18px; font: 700 12px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--red-2); }
+@media (prefers-reduced-motion: reduce) { .gcard, .ptile { transition: none; } }
 </style>
 </head>
 <body>
@@ -754,7 +817,9 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
           <a href="#/app/decide"><b>Como decide</b><small>Dezenas de sinais, não só R$/km</small></a>
           <a href="#/app/veredito"><b>6 níveis</b><small>O que cada cor quer dizer</small></a>
           <a href="#/app/voz"><b>Fone e passageiro</b><small>Voz clara ou disfarçada</small></a>
-          <a href="#/app/riscos"><b>Alertas de risco</b><small>Morro, alagamento, cansaço</small></a>
+          <a href="#/app/riscos"><b>Alertas de risco</b><small>Você escolhe a reação</small></a>
+          <a href="#/app/estrada"><b>Radar e horas</b><small>Proteção do motorista</small></a>
+          <a href="#/app/calamidade"><b>Calamidades</b><small>Alagamento, granizo, vento</small></a>
           <a href="#/app/mapa"><b>Mapa pintado</b><small>Zonas a evitar</small></a>
           <a href="#/app/pinos"><b>Pinos</b><small>Posto, mercado, meu lugar</small></a>
           <a href="#/app/calculo"><b>Custos</b><small>A conta do seu carro</small></a>
@@ -869,7 +934,7 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
   <div class="wrap">
     <p class="eyebrow">Veja na prática</p>
     <h2 style="margin-top:10px">Seis níveis. Um olhar. Você já sabe.</h2>
-    <p class="lead">Não é só verde e vermelho: são seis degraus, cada um com cor, símbolo e palavra, para ler de canto de olho.</p>
+    <p class="lead">Verde ou vermelho é pouco para quem vive de corrida. O AziRoad separa em seis degraus, do prejuízo ao ouro, e você entende num relance, sem tirar o olho da rua.</p>
     <div class="lv6 compact">
         <div class="lvc gold-glow" style="--c:#FFD760"><div class="tag"><span aria-hidden="true">🔥</span>OURO</div><div class="net">+27,12<small>NO SEU BOLSO</small></div><div class="perkm">R$ 3,14 por km</div></div>
         <div class="lvc" style="--c:#5CF2BB"><div class="tag"><span aria-hidden="true">✓</span>PEGA</div><div class="net">+14,30<small>NO SEU BOLSO</small></div><div class="perkm">R$ 2,41 por km</div></div>
@@ -879,6 +944,38 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
         <div class="lvc" style="--c:#D25767"><div class="tag"><span aria-hidden="true">💸</span>PREJUÍZO</div><div class="net">−2,40<small>NO SEU BOLSO</small></div><div class="perkm">R$ 0,98 por km</div></div>
     </div>
     <div class="btn-row" style="margin-top:26px"><a class="btn btn-ghost" href="#/app/decide">Como o app decide →</a><a class="btn btn-ghost" href="#/app/voz">Fone e passageiro</a><a class="btn btn-ghost" href="#/app/mapa">Mapa pintado</a></div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="home-telas" data-view="inicio">
+  <div class="wrap">
+    <p class="eyebrow">Direto do celular</p>
+    <h2 style="margin-top:10px">Não é promessa. É a tela do app</h2>
+    <p class="lead">Capturas reais do AziRoad rodando. Toque numa tela para ver o que ela faz.</p>
+    <div class="gal"><a class="gcard" href="#/app/mapa"><div class="pf real"><img src="/aziroad/assets/real-mapa-zonas.webp" alt="Tela real do mapa com zonas pintadas" width="720" height="1436" loading="lazy"></div><div class="pf-cap"><b>Pinte o que evitar</b><span>Mapa de zonas →</span></div></a><a class="gcard" href="#/app/pinos"><div class="pf real"><img src="/aziroad/assets/real-pinos.webp" alt="Tela real de pinos: postos e lugares" width="720" height="1436" loading="lazy"></div><div class="pf-cap"><b>Marque seus lugares</b><span>Pinos →</span></div></a><a class="gcard" href="#/app/riscos"><div class="pf real"><img src="/aziroad/assets/real-alertas-1.webp" alt="Tela real de alertas e riscos" width="720" height="1436" loading="lazy"></div><div class="pf-cap"><b>Mande nos riscos</b><span>Alertas →</span></div></a><a class="gcard" href="#/app/mapa"><div class="pf real"><img src="/aziroad/assets/real-local-evitar.webp" alt="Tela real de locais a evitar por rua" width="720" height="1436" loading="lazy"></div><div class="pf-cap"><b>Evite uma rua pelo nome</b><span>Locais a evitar →</span></div></a></div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="home-protege" data-view="inicio">
+  <div class="wrap">
+    <p class="eyebrow">Mais do que dinheiro</p>
+    <h2 style="margin-top:10px">Protege você, o carro e quem vai no banco de trás</h2>
+    <p class="lead">Corrida boa é a que paga bem e termina bem. O AziRoad olha o caminho inteiro antes de você aceitar.</p>
+    <div class="prot">
+      <a class="ptile" href="#/app/estrada">
+        <svg viewBox="0 0 320 150" aria-hidden="true"><rect width="320" height="150" fill="#0E1626"/><path d="M110 150 L150 0 L170 0 L230 150Z" fill="#1f2a40"/><path d="M168 150 L160 0" stroke="#E8D9A0" stroke-width="3" stroke-dasharray="12 12"/><g transform="translate(250 34)"><rect x="-3" y="24" width="6" height="60" fill="#4f5b78"/><circle r="26" fill="#fff"/><circle r="22" fill="none" stroke="#C0392B" stroke-width="6"/><text y="8" font-family="SoraCustom,sans-serif" font-weight="800" font-size="20" text-anchor="middle" fill="#111">80</text></g><g transform="translate(64 56)"><circle r="30" fill="none" stroke="#CCAD33" stroke-width="5"/><path d="M0 -16 V0 L12 8" stroke="#CCAD33" stroke-width="5" fill="none" stroke-linecap="round"/></g></svg>
+        <h3>⏱️ Radar e horas ao volante</h3><p>Avisa do radar a tempo e sugere a pausa antes do cansaço virar risco.</p><span>Ver como funciona →</span></a>
+      <a class="ptile" href="#/app/calamidade">
+        <svg viewBox="0 0 320 150" aria-hidden="true"><rect width="320" height="150" fill="#0B1220"/><g fill="#26304A"><ellipse cx="110" cy="48" rx="56" ry="24"/><ellipse cx="170" cy="40" rx="62" ry="28"/><ellipse cx="226" cy="52" rx="48" ry="20"/></g><path d="M168 62 L150 96 H166 L156 126 L190 86 H172 L184 62Z" fill="#FFD760"/><g stroke="#6C9BFF" stroke-width="3" stroke-linecap="round"><path d="M96 84 l-8 18M124 88 l-8 18M214 84 l-8 18M240 80 l-8 18"/></g><path d="M0 132 q20 -10 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 V150 H0Z" fill="#1E5AC8" opacity=".8"/></svg>
+        <h3>⛈️ Clima extremo e calamidades</h3><p>Alagamento, granizo, vendaval: o card fica preto e nenhum valor passa por cima.</p><span>Ver o card preto →</span></a>
+      <a class="ptile" href="#/app/voz">
+        <svg viewBox="0 0 320 150" aria-hidden="true"><rect width="320" height="150" fill="#0E1626"/><g transform="translate(96 78)"><path d="M-34 6 a34 34 0 0 1 68 0" fill="none" stroke="#C6C6C8" stroke-width="6"/><rect x="-44" y="2" width="16" height="30" rx="7" fill="#E0475A"/><rect x="28" y="2" width="16" height="30" rx="7" fill="#E0475A"/></g><g fill="none" stroke="#E0475A" stroke-width="4" stroke-linecap="round"><path d="M176 62 q10 14 0 28"/><path d="M190 52 q18 24 0 48"/></g><g transform="translate(244 76)"><circle cy="-14" r="13" fill="#5A647C"/><path d="M-22 30 a22 22 0 0 1 44 0Z" fill="#5A647C"/></g></svg>
+        <h3>🎧 Fone e passageiro</h3><p>Com gente a bordo, a voz disfarça: o passageiro ouve “céu limpo”, você entende a corrida.</p><span>Ouvir os exemplos →</span></a>
+    </div>
   </div>
 </section>
 
@@ -909,8 +1006,8 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
 <section id="home-led" data-view="inicio">
   <div class="wrap">
     <p class="eyebrow">Para o passageiro</p>
-    <h2 style="margin-top:10px">Painel de LED no para-brisa</h2>
-    <p class="lead">Opcional. Mostra a plataforma e a categoria para quem pediu o carro achar você. Precisa do painel.</p>
+    <h2 style="margin-top:10px">Seu carro se apresenta: painel de LED no para-brisa</h2>
+    <p class="lead">O passageiro acha o carro de longe e entra mais rápido. O painel mostra a plataforma e a categoria da corrida. É opcional e precisa do painel de LED.</p>
     <div class="ledshots">
       <figure><img src="/aziroad/assets/led-real-uber.webp" alt="Painel de LED aceso no para-brisa escrito UBER" width="480" height="270" loading="lazy"><figcaption>Foto real do painel em teste</figcaption></figure>
       <figure><img src="/aziroad/assets/led-real-urbano.webp" alt="Painel de LED aceso escrito Urbano" width="480" height="270" loading="lazy"><figcaption>Foto real do painel em teste</figcaption></figure>
@@ -1193,8 +1290,8 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
 <section id="decide" data-view="app" data-sub="decide">
   <div class="wrap">
     <p class="eyebrow">Não é só R$ por km</p>
-    <h2 style="margin-top:10px">Dezenas de sinais viram um veredito</h2>
-    <p class="lead">A maioria dos apps compara R$ por km com um limite e pinta verde ou vermelho. O AziRoad faz a conta do que sobra e cruza com o caminho, o risco e o seu turno. Depois explica o motivo em poucas palavras.</p>
+    <h2 style="margin-top:10px">Por trás de cada cor, dezenas de contas que você não precisa fazer</h2>
+    <p class="lead">R$ por km engana. Uma corrida “boa” pode esconder busca longa, volta vazia e um morro no caminho. O AziRoad junta tudo, do custo do seu carro ao risco do trajeto, e entrega a resposta pronta em um segundo, com o motivo.</p>
 
     <div class="funnel">
       <div class="fin">
@@ -1301,22 +1398,107 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
 <section id="riscos" data-view="app" data-sub="riscos">
   <div class="wrap">
     <p class="eyebrow">Alertas de risco</p>
-    <h2 style="margin-top:10px">O app olha o caminho, não só o valor</h2>
-    <p class="lead">O maior custo escondido do motorista é o dano ao carro e o risco no trajeto. O AziRoad avalia a rota da corrida inteira, não só o destino, e avisa antes de você aceitar.</p>
-    <div class="rkgrid"><div class="rk warn"><div class="ri" aria-hidden="true">⛰️</div><div><b>Morro e ladeira</b><p>Risco de bater lata, pior na chuva. Mais forte se o carro é GNV.</p></div><span class="lvl">Atenção</span></div><div class="rk warn"><div class="ri" aria-hidden="true">⚠️</div><div><b>Via estreita e servidão</b><p>Ruela onde o carro raspa ou não passa. O app avisa antes de aceitar.</p></div><span class="lvl">Atenção</span></div><div class="rk strong"><div class="ri" aria-hidden="true">🌊</div><div><b>Alagamento</b><p>Inclusive beira de rio. Risco para o motor quando chove.</p></div><span class="lvl">Forte</span></div><div class="rk strong"><div class="ri" aria-hidden="true">⛈️</div><div><b>Clima extremo</b><p>Alerta oficial e vento lateral forte na rota.</p></div><span class="lvl">Forte</span></div><div class="rk info"><div class="ri" aria-hidden="true">🛣️</div><div><b>Radar na rodovia</b><p>Nome da via e aviso de excesso de velocidade.</p></div><span class="lvl">Aviso</span></div><div class="rk strong"><div class="ri" aria-hidden="true">🌙</div><div><b>Madrugada</b><p>Das 0h às 5h as zonas de risco ficam mais rígidas.</p></div><span class="lvl">Forte</span></div><div class="rk strong"><div class="ri" aria-hidden="true">🚫</div><div><b>Zona que você marcou</b><p>O destino cai numa área que você pintou para evitar.</p></div><span class="lvl">Forte</span></div><div class="rk warn"><div class="ri" aria-hidden="true">🔋</div><div><b>Carga do elétrico</b><p>Avisa quando a carga não cobre a corrida ou a volta.</p></div><span class="lvl">Atenção</span></div></div>
-    <div class="shot-alert" aria-label="Exemplo de aviso no card">
-      <div class="al am"><b>🟠 CUIDADO · Embarque em ladeira</b><span>Morro no embarque. Chuva prevista para daqui a 20 minutos.</span></div>
-    </div>
-    <p class="exemplo">Exemplo ilustrativo. Você liga ou desliga cada alerta do seu jeito, em Alertas e Riscos. Nada é obrigatório.</p>
+    <h2 style="margin-top:10px">Cada risco do caminho, do jeito que você mandar</h2>
+    <p class="lead">Uma lata batida num morro apaga uma semana de trabalho. O AziRoad olha o trajeto inteiro da corrida, não só o destino, e avisa antes do toque. E é você quem diz o quanto cada risco pesa.</p>
 
-    <h3 style="margin-top:42px;font-size:22px">😴 Cansaço: três degraus de aviso</h3>
-    <p class="muted" style="margin-top:6px">Conta as horas seguidas ao volante. Uma pausa de 15 minutos zera o contador.</p>
-    <div class="fat" aria-label="Avisos de cansaço">
-      <div class="fs s1"><b>4 h</b><span>Aviso suave</span></div>
-      <div class="fs s2"><b>4 h 30</b><span>Aviso forte</span></div>
-      <div class="fs s3"><b>5 h 30</b><span>Crítico</span></div>
+    <div class="frow" id="riscos-tela">
+      <div>
+        <div class="duo"><div><div class="pf real"><img src="/aziroad/assets/real-alertas-1.webp" alt="Tela real de Alertas e riscos: Morro e ladeira, Servidão e ruela, com as opções Ignora, Avisa, Recusa e De jeito nenhum" width="720" height="1436" loading="lazy"></div></div><div><div class="pf real"><img src="/aziroad/assets/real-alertas-2.webp" alt="Tela real de Alertas e riscos: Alagável na chuva, Granizo e Trânsito parado ao vivo" width="720" height="1436" loading="lazy"></div></div></div>
+        <div class="pf-cap"><b>A tela real de Alertas e riscos</b><span>Captura do app. Deslize para ver a segunda tela.</span></div>
+      </div>
+      <div>
+        <p class="eyebrow">Quatro botões por risco</p>
+        <h3 style="margin-top:8px;font-size:22px">Do “nem comenta” ao “de jeito nenhum”</h3>
+        <div class="legend" style="margin-top:16px">
+          <div><span class="dot sq" style="background:#6b7490"></span><span><b>🔕 Ignora.</b> Nem comenta.</span></div>
+          <div><span class="dot sq" style="background:var(--zy)"></span><span><b>⚠️ Avisa.</b> Você é avisado e decide.</span></div>
+          <div><span class="dot sq" style="background:var(--zr)"></span><span><b>🚫 Recusa.</b> Corrida ruim; só uma tarifa alta compensa.</span></div>
+          <div><span class="dot sq" style="background:#1d3b33;border-color:#34D399"></span><span><b>🖤 De jeito nenhum.</b> Nenhum valor compra esse risco.</span></div>
+        </div>
+        <p class="muted" style="margin-top:14px">O app só informa e recomenda. Aceitar ou recusar a corrida continua sendo um toque seu.</p>
+      </div>
     </div>
-    <p class="exemplo">Referências: UE (4 h 30) e Brasil (Lei 13.103). Estimativa operacional do app, não substitui o seu descanso.</p>
+
+    <div class="rkgrid"><div class="rk warn"><div class="ri" aria-hidden="true">⛰️</div><div><b>Morro e ladeira</b><p>Risco de bater lata, pior na chuva. Mais forte se o carro é GNV.</p></div><span class="lvl">Atenção</span></div><div class="rk warn"><div class="ri" aria-hidden="true">⚠️</div><div><b>Servidão e ruela</b><p>Rua apertada que arranha o carro. O app avisa antes de aceitar.</p></div><span class="lvl">Atenção</span></div><div class="rk strong"><div class="ri" aria-hidden="true">🌊</div><div><b>Alagável na chuva</b><p>Só age quando está chovendo. Risco para o motor, inclusive beira de rio.</p></div><span class="lvl">Forte</span></div><div class="rk strong"><div class="ri" aria-hidden="true">🧊</div><div><b>Granizo</b><p>Pare e abrigue o carro: não é caso de andar devagar.</p></div><span class="lvl">Forte</span></div><div class="rk warn"><div class="ri" aria-hidden="true">🚦</div><div><b>Trânsito parado ao vivo</b><p>Trânsito parado ou incidente na rota, em tempo real.</p></div><span class="lvl">Atenção</span></div><div class="rk strong"><div class="ri" aria-hidden="true">🚫</div><div><b>Zonas que você desenhou</b><p>O destino cai numa área que você pintou para evitar.</p></div><span class="lvl">Forte</span></div><div class="rk strong"><div class="ri" aria-hidden="true">🌙</div><div><b>Madrugada</b><p>Das 0h às 5h as zonas de risco ficam mais rígidas.</p></div><span class="lvl">Forte</span></div><div class="rk warn"><div class="ri" aria-hidden="true">🔋</div><div><b>Carga do elétrico</b><p>Avisa quando a carga não cobre a corrida ou a volta.</p></div><span class="lvl">Atenção</span></div></div>
+    <p class="exemplo">Lista dos alertas do app. Você liga ou desliga cada um do seu jeito, em Alertas e Riscos. Nada é obrigatório.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="estrada" data-view="app" data-sub="estrada">
+  <div class="wrap">
+    <p class="eyebrow">Proteção do motorista</p>
+    <h2 style="margin-top:10px">Um copiloto que cuida de você, sem sermão</h2>
+    <p class="lead">Multa e cansaço comem o lucro do mês. O AziRoad avisa do radar a tempo, com o limite da via, e conta as suas horas ao volante para sugerir a pausa na hora certa. Sem bronca e sem constranger você na frente do passageiro.</p>
+
+    <h3 class="sub-h">⏱️ Horas de trabalho: três degraus</h3>
+    <p class="muted" style="margin-top:6px">Aparece no card e na tarja, e também por voz. Uma pausa de 15 minutos zera o contador.</p>
+    <div class="fatcards">
+      <div class="fcard" style="--c:#CCAD33"><span class="fh">4 h</span><div class="fbody"><b>⚠️ ATENÇÃO</b><p>“4h dirigindo — vale uma pausa logo”</p></div><small>Repete a cada 45 min</small></div>
+      <div class="fcard" style="--c:#D8884B"><span class="fh">4 h 30</span><div class="fbody"><b>🟠 FORTE</b><p>“4h30 sem parar — 15 min já ajudam”</p></div><small>Repete a cada 30 min</small></div>
+      <div class="fcard" style="--c:#E26861"><span class="fh">5 h 30</span><div class="fbody"><b>🛑 CRÍTICO</b><p>“5h30 sem parar — passou da referência de 5h30. Descanse.”</p></div><small>Repete a cada 20 min</small></div>
+    </div>
+    <ul class="bul">
+      <li>Subiu de degrau? Avisa na hora, sem esperar o intervalo.</li>
+      <li>Diz o <b>tempo medido</b>, para você conferir e confiar. Nunca acusa e nunca cita causa que o app não mediu.</li>
+      <li>5h30 é uma <b>referência de segurança</b>, não uma lei que se aplica a motorista de aplicativo.</li>
+    </ul>
+
+    <h3 class="sub-h" style="margin-top:44px">📷 Radar: identifica e avisa</h3>
+    <div class="radar-scene" role="img" aria-label="Ilustração: card de aviso de radar sobre uma estrada">
+      <svg viewBox="0 0 640 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs><linearGradient id="rg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E1626"/><stop offset="1" stop-color="#131c2e"/></linearGradient></defs>
+        <rect width="640" height="260" fill="url(#rg)"/>
+        <path d="M250 260 L300 0 L340 0 L420 260Z" fill="#1f2a40"/>
+        <path d="M335 260 L320 0" stroke="#E8D9A0" stroke-width="3" stroke-dasharray="16 16" opacity=".8"/>
+        <g transform="translate(470 40)"><rect x="-4" y="30" width="8" height="90" fill="#4f5b78"/><rect x="-34" y="-8" width="68" height="46" rx="8" fill="#fff"/><rect x="-30" y="-4" width="60" height="38" rx="6" fill="none" stroke="#C0392B" stroke-width="5"/><text x="0" y="24" font-family="SoraCustom, sans-serif" font-weight="800" font-size="22" fill="#111" text-anchor="middle">100</text></g>
+        <g transform="translate(380 98)"><rect x="-22" y="-14" width="44" height="28" rx="6" fill="#2a3652" stroke="#6C9BFF" stroke-width="2"/><circle cx="0" cy="0" r="8" fill="#0E1626" stroke="#6C9BFF" stroke-width="2"/><circle cx="0" cy="0" r="3" fill="#6C9BFF"/></g>
+        <circle cx="380" cy="98" r="30" fill="none" stroke="#6C9BFF" stroke-width="2" opacity=".5"/><circle cx="380" cy="98" r="48" fill="none" stroke="#6C9BFF" stroke-width="2" opacity=".25"/>
+      </svg>
+      <div class="radar-card"><b>📷 Radar a 300 m</b><span>Limite 100 · Você a 112</span><em>Reduza</em></div>
+    </div>
+    <div class="chan">
+      <div class="ch"><div class="ci">🎧</div><h3>Sem passageiro, ou de fone</h3><p>Fala completo: <i>“Radar. Limite 100. Você a 112. Reduza.”</i></p></div>
+      <div class="ch hot"><div class="ci">🧑‍🤝‍🧑</div><h3>Passageiro e sem fone</h3><p>Fala só <i>“Radar a 300 metros. Limite 100”</i>. A ordem de reduzir fica <b>só na tela</b>, para ninguém ouvir você ser advertido.</p></div>
+      <div class="ch"><div class="ci">📳</div><h3>Toque de radar</h3><p>Dois pulsos curtos no celular, diferentes do toque de oferta. Você reconhece pelo tato.</p></div>
+    </div>
+    <ul class="bul">
+      <li>Mostra o limite do radar e o limite da sua via quando eles são diferentes.</li>
+      <li>No Canadá o termo muda para “photo radar”, sem mudar o tom.</li>
+      <li>O aviso nunca some: muda o canal (voz, tela, vibração), não o aviso.</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="calamidade" data-view="app" data-sub="calamidade">
+  <div class="wrap">
+    <p class="eyebrow">Clima extremo e calamidades</p>
+    <h2 style="margin-top:10px">Quando o tempo vira, o AziRoad avisa antes de você entrar nele</h2>
+    <p class="lead">Rua alagada, granizo, vendaval, neblina: o estrago no carro custa mais do que qualquer corrida paga. O AziRoad vigia o caminho da corrida e, quando o risco é alto, o card fica <b style="color:var(--fg)">preto</b>. O semáforo diz se vale a pena; o card preto diz se é seguro. Nenhum valor, nem ouro, passa por cima. Você, o carro e o passageiro voltam inteiros.</p>
+
+    <div class="tarja" role="img" aria-label="Exemplo do card de risco máximo">
+      <div class="tcard"><div class="tt">🖤 RISCO MÁXIMO</div><div class="tm">Chuva forte na sua rota</div><div class="td">A rua pode alagar. Melhor esperar passar.</div>
+        <div class="ts"><span>🌊 Protege o carro</span><span>🧑 Protege você</span><span>🧑‍🤝‍🧑 Protege o passageiro</span></div></div>
+      <p class="exemplo">Exemplo ilustrativo do card.</p>
+    </div>
+
+    <h3 class="sub-h" style="margin-top:34px">O que deixa o card preto</h3>
+    <div class="calgrid"><div class="cal"><div class="cic" aria-hidden="true">🌧️</div><div><b>Chuva torrencial</b><p>Rua que alaga em minutos. O app avisa antes de você entrar nela.</p></div></div><div class="cal"><div class="cic" aria-hidden="true">🧊</div><div><b>Granizo</b><p>Pare e abrigue o carro. Lataria amassada come o lucro de muitos dias.</p></div></div><div class="cal"><div class="cic" aria-hidden="true">⛈️</div><div><b>Tempestade</b><p>Raios e vento forte. Esperar passar custa minutos; arriscar custa o carro.</p></div></div><div class="cal"><div class="cic" aria-hidden="true">💨</div><div><b>Vento forte</b><p>Rajadas que empurram o carro para fora da pista. O app avisa na hora.</p></div></div><div class="cal"><div class="cic" aria-hidden="true">🌫️</div><div><b>Neblina densa</b><p>Pouca visibilidade. O app segura a recomendação e pede calma.</p></div></div><div class="cal"><div class="cic" aria-hidden="true">❄️</div><div><b>Neve e nevasca</b><p>Para quem roda onde neva: pista fechada e visibilidade zero.</p></div></div></div>
+
+    <div class="grid three" style="margin-top:26px">
+      <div class="card"><div class="ico">🚗</div><h3>Protege o carro</h3><p>Enchente, granizo e vento forte: você fica sabendo antes de entrar na água ou na tempestade.</p></div>
+      <div class="card"><div class="ico">🧑</div><h3>Protege você</h3><p>De madrugada o app fica mais rígido, respeita as zonas que você marcou e conta as horas ao volante.</p></div>
+      <div class="card"><div class="ico">🧑‍🤝‍🧑</div><h3>Protege o passageiro</h3><p>Quando o risco é máximo, o app diz para esperar. Com gente a bordo, a voz fica discreta.</p></div>
+    </div>
+
+    <div class="card accent" style="margin-top:14px">
+      <h3>🌍 Atento a calamidades de verdade</h3>
+      <p>Enchente, ciclone, terremoto: se houver um alerta oficial perto da sua rota, o AziRoad avisa. Funciona no Brasil e fora dele.</p>
+    </div>
+    <p class="exemplo">O app avisa e recomenda. A decisão de aceitar ou esperar é sempre sua.</p>
   </div>
 </section>
 
@@ -1327,51 +1509,40 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
   <div class="wrap">
     <p class="eyebrow">Mapa e zonas</p>
     <h2 style="margin-top:10px">Pinte no mapa o que você quer evitar</h2>
-<!-- MAPA: COMO VOCÊ PINTA -->
-    <div class="frow" id="mapa">
-      <div>
-        <div class="pf" role="img" aria-label="Tela do mapa com áreas pintadas: vermelho para evitar, verde para boa, amarelo para atenção, violeta para não na volta e azul para mercado a evitar">
-          <div class="sb"><span>21:42</span><span>▲ ▮▮▮ 87%</span></div>
-          <svg class="map" viewBox="0 0 272 504" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <rect width="272" height="504" fill="#0E1A2B"/>
-            <path d="M0 410 C60 380 110 420 170 395 S240 370 272 380 L272 504 L0 504Z" fill="#11304F"/>
-            <g stroke="#1F3050" stroke-width="7" fill="none" stroke-linecap="round">
-              <path d="M-10 90 L290 130"/><path d="M-10 230 L290 215"/><path d="M-10 340 L290 330"/>
-              <path d="M60 0 L40 520"/><path d="M150 0 L170 520"/><path d="M235 0 L250 520"/>
-            </g>
-            <g stroke="#182741" stroke-width="3" fill="none">
-              <path d="M-10 160 L290 175"/><path d="M-10 285 L290 275"/><path d="M105 0 L95 520"/><path d="M200 0 L210 520"/>
-            </g>
-            <g fill="#15243B"><rect x="68" y="20" width="30" height="50" rx="3"/><rect x="112" y="30" width="30" height="40" rx="3"/><rect x="178" y="22" width="40" height="50" rx="3"/><rect x="112" y="186" width="30" height="34" rx="3"/><rect x="170" y="186" width="50" height="22" rx="3"/><rect x="112" y="296" width="36" height="28" rx="3"/><rect x="170" y="300" width="50" height="24" rx="3"/><rect x="20" y="234" width="28" height="36" rx="3"/></g>
-            <rect x="172" y="146" width="62" height="34" rx="10" fill="#14412F" fill-opacity=".8"/>
-            <circle class="zone-pulse" cx="88" cy="168" r="54" fill="#C81E1E" fill-opacity=".59" stroke="#FF5252" stroke-width="3"/>
-            <circle class="zone-pulse d2" cx="205" cy="118" r="36" fill="#C8901A" fill-opacity=".43" stroke="#FFC14D" stroke-width="3"/>
-            <circle class="zone-pulse d3" cx="196" cy="252" r="34" fill="#1E9E5A" fill-opacity=".43" stroke="#34D399" stroke-width="3"/>
-            <circle class="zone-pulse d4" cx="66" cy="304" r="30" fill="#6D28D9" fill-opacity=".59" stroke="#B4A0FF" stroke-width="3"/>
-            <circle class="zone-pulse d2" cx="205" cy="338" r="28" fill="#2563EB" fill-opacity=".59" stroke="#6C9BFF" stroke-width="3"/>
-            <g stroke="#fff" stroke-width="2"><circle cx="118" cy="214" r="9" fill="#7C4DDB"/><circle cx="244" cy="204" r="9" fill="#3B72F0"/><circle cx="40" cy="206" r="9" fill="#C73BD6"/></g>
-            <g font-size="10" text-anchor="middle"><text x="118" y="218">⛽</text><text x="244" y="208">🛍️</text><text x="40" y="210">⚡</text></g>
-            <circle cx="132" cy="262" r="9" fill="#14A3C4" stroke="#fff" stroke-width="3"/>
-            <circle cx="132" cy="262" r="20" fill="#14A3C4" fill-opacity=".18"/>
-            <g font-family="InterBrand, sans-serif" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">
-              <text x="88" y="172">EVITAR</text><text x="205" y="121">ATENÇÃO</text><text x="196" y="255">BOA</text><text x="66" y="307">NÃO NA VOLTA</text><text x="205" y="341">MERCADO</text>
-            </g>
-          </svg>
-          <div class="pf-ttl" style="position:relative;z-index:3;padding-top:20px;text-shadow:0 1px 6px #000">🗺️ Zonas e segurança<small>Pinte com o dedo onde cada coisa vale</small></div>
-          <img class="realbar" src="/aziroad/assets/real-zonas-botoes.webp" alt="Botões reais do app: Desenhar, Limpar, Aqui, e os tipos Evitar, Boa, Atenção, Não na volta e Mercado a evitar" width="720" height="370">
-        </div>
-        <div class="pf-cap"><b>Você pinta o mapa</b><span>Mapa ilustrativo (lugares fictícios) · botões: captura real do app</span></div>
-      </div>
+    <p class="lead">Esta é a tela de verdade do app. Você escolhe o tipo de área, pinta com o dedo e dá o nome. O AziRoad passa a avisar antes de você aceitar.</p>
+
+    <div class="frow" id="mapa-tela">
+      <div><div class="pf real"><img src="/aziroad/assets/real-mapa-zonas.webp" alt="Tela real do mapa de zonas do app, com áreas vermelhas pintadas, pinos de posto e os botões Desenhar, Limpar, Aqui, Evitar, Boa, Atenção, Não na volta e Mercado a evitar" width="720" height="1436" loading="lazy"></div><div class="pf-cap"><b>A tela real de zonas</b><span>Captura do app. Nomes de bairros desfocados.</span></div></div>
       <div>
         <p class="eyebrow">Áreas pintadas</p>
-        <h3 style="margin-top:8px;font-size:22px">Marque onde evitar, onde esperar e onde ter cuidado</h3>
-        <p class="lead" style="font-size:15.5px">Morro, ladeira, rua de areia, ponto perigoso: o mapa da Uber não sabe, mas você sabe. Escolha o tipo, pinte com o dedo e dê um nome. O AziRoad passa a avisar antes de você aceitar.</p>
+        <h3 style="margin-top:8px;font-size:22px">Escolha o tipo e pinte com o dedo</h3>
         <div class="legend" style="margin-top:16px">
-          <div><span class="dot" style="background:var(--zr)"></span><span><b>Vermelho · Evitar.</b> Corrida que termina ali vira vermelha no card. De madrugada, a zona de risco fica mais rígida.</span></div>
-          <div><span class="dot" style="background:var(--zg)"></span><span><b>Verde · Boa.</b> Ponto onde costuma sair corrida boa ou onde vale esperar.</span></div>
-          <div><span class="dot" style="background:var(--zy)"></span><span><b>Amarelo · Atenção.</b> Não é proibido, mas pede cuidado.</span></div>
-          <div><span class="dot" style="background:var(--zv)"></span><span><b>Violeta · Não na volta.</b> Serve para trabalhar de dia, mas você não quer terminar a noite ali. Só pesa quando o Modo Casa está ligado.</span></div>
-          <div><span class="dot" style="background:var(--zb)"></span><span><b>Azul · Mercado a evitar.</b> Embarque que demora: fila, carrinho, sacola.</span></div>
+          <div><span class="dot" style="background:var(--zr)"></span><span><b>🔴 Evitar.</b> Corrida que termina ali vira vermelha no card. De madrugada, a zona fica mais rígida.</span></div>
+          <div><span class="dot" style="background:var(--zg)"></span><span><b>🟢 Boa.</b> Ponto onde costuma sair corrida boa ou onde vale esperar.</span></div>
+          <div><span class="dot" style="background:var(--zy)"></span><span><b>🟡 Atenção.</b> Não é proibido, mas pede cuidado.</span></div>
+          <div><span class="dot" style="background:var(--zv)"></span><span><b>🏠 Não na volta.</b> Serve para trabalhar de dia, mas você não quer terminar a noite ali. Só pesa com o Modo Casa ligado.</span></div>
+          <div><span class="dot" style="background:var(--zb)"></span><span><b>🛒 Mercado a evitar.</b> Embarque que demora: fila, carrinho, sacola.</span></div>
+        </div>
+        <div class="legend" style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line)">
+          <div><span class="dot sq" style="background:#6b7490"></span><span><b>✏️ Desenhar · 🗑️ Limpar · 📍 Aqui.</b> Pinta, apaga e marca o ponto onde você está agora.</span></div>
+          <div><span class="dot sq" style="background:#6b7490"></span><span><b>🚧 Risco aqui.</b> Marca um risco no lugar onde você está, num toque.</span></div>
+          <div><span class="dot sq" style="background:#6b7490"></span><span><b>🌧️ Só bloqueia quando chove.</b> A área só vale com chuva (ladeira, alagamento).</span></div>
+          <div><span class="dot sq" style="background:#6b7490"></span><span><b>Pincel.</b> Tamanho da área, em metros. Tocou numa zona, edita ou apaga.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="frow rev" id="mapa-rua">
+      <div><div class="pf real"><img src="/aziroad/assets/real-local-evitar.webp" alt="Tela real de Locais a evitar: rua específica, qual o problema (ladeira íngreme, sem retorno, areia ou terra, perigoso, mercado ou restaurante lento, outro) e raio em metros" width="720" height="1436" loading="lazy"></div><div class="pf-cap"><b>Pin por nome de rua</b><span>Captura do app</span></div></div>
+      <div>
+        <p class="eyebrow">Locais a evitar por nome</p>
+        <h3 style="margin-top:8px;font-size:22px">Não sabe onde fica no mapa? Escreva a rua</h3>
+        <p class="lead" style="font-size:15.5px">Digite a rua, escolha qual é o problema e o raio. Ou toque em “Marcar local ruim” quando estiver no lugar. O app resolve o endereço sozinho.</p>
+        <div class="legend" style="margin-top:16px">
+          <div><span class="dot" style="background:var(--zr)"></span><span><b>Ladeira íngreme · Areia/terra.</b> Risco para o carro, pior na chuva.</span></div>
+          <div><span class="dot" style="background:var(--zr)"></span><span><b>Perigoso.</b> Rua onde você não quer parar, principalmente de noite.</span></div>
+          <div><span class="dot" style="background:var(--zr)"></span><span><b>Sem retorno.</b> Entra fácil, sai difícil: a volta é vazia.</span></div>
+          <div><span class="dot" style="background:var(--zb)"></span><span><b>Mercado/restaurante lento.</b> O embarque demora e o relógio corre.</span></div>
         </div>
       </div>
     </div>
@@ -1401,6 +1572,7 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
     </div>
 
     
+
   </div>
 </section>
 
@@ -1409,40 +1581,24 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
 <section id="pinos" data-view="app" data-sub="pinos">
   <div class="wrap">
     <p class="eyebrow">Pinos e lugares</p>
-    <h2 style="margin-top:10px">Guarde o que vale lembrar</h2>
-<!-- PINOS -->
-    <div class="frow" id="pinos">
-      <div>
-        <div class="pf" role="img" aria-label="Lista de pinos guardados: posto, mercado, meu lugar e recarga elétrica">
-          <div class="sb"><span>16:20</span><span>▲ ▮▮▮ 74%</span></div>
-          <div class="pf-ttl">📌 Meus pinos<small>Lugares que valem a pena lembrar</small></div>
-          <div class="pinlist">
-            <div class="pin"><i style="background:var(--pin-posto)"><span>⛽</span></i><div><strong>Posto da Avenida</strong><small>Gasolina comum · visto hoje</small></div><em>R$ 5,29</em></div>
-            <div class="pin"><i style="background:var(--pin-mercado)"><span>🛍️</span></i><div><strong>Mercado do bairro</strong><small>Embarque demora, sábado cheio</small></div><em>~8 min</em></div>
-            <div class="pin"><i style="background:var(--pin-meu)"><span>●</span></i><div><strong>Ponto do aeroporto</strong><small>Meu lugar · fila curta de manhã</small></div><em>★</em></div>
-            <div class="pin"><i style="background:var(--pin-cidade)"><span>★</span></i><div><strong>Praça central</strong><small>Cidade · bom no almoço</small></div><em>★</em></div>
-            <div class="pin"><i style="background:var(--pin-ev)"><span>⚡</span></i><div><strong>Recarga rápida</strong><small>Ponto elétrico · 50 kW</small></div><em>R$ 1,80</em></div>
-            <div class="pin"><i style="background:#5C6A88"><span>🅿️</span></i><div><strong>Meu carro</strong><small>Salvo ao fechar o turno</small></div><em>→</em></div>
-          </div>
-        </div>
-        <div class="pf-cap"><b>Seus pinos</b><span>Exemplo ilustrativo, lugares fictícios</span></div>
-      </div>
+    <h2 style="margin-top:10px">Seu mapa da cidade, com tudo o que só você sabe</h2>
+    <div class="frow" id="pinos-tela">
+      <div><div class="pf real"><img src="/aziroad/assets/real-pinos.webp" alt="Tela real de Postos preferidos e lugares, com mapa e pinos de posto, meu lugar, cidade e recarga elétrica" width="720" height="1436" loading="lazy"></div><div class="pf-cap"><b>A tela real de pinos</b><span>Captura do app</span></div></div>
       <div>
         <p class="eyebrow">Pinos</p>
-        <h3 style="margin-top:8px;font-size:22px">Prenda um pino: posto, mercado, ponto bom</h3>
-        <p class="lead" style="font-size:15.5px">Toque no mapa, escolha o tipo, escreva uma nota. O preço do posto entra na conta do seu custo. O pino de mercado avisa que ali o embarque demora.</p>
+        <h3 style="margin-top:8px;font-size:22px">Posto, lugar importante, recarga: cada um com cor e desenho</h3>
+        <p class="lead" style="font-size:15.5px">Seus postos preferidos e qualquer lugar que você decide guardar: uma praça, um endereço, uma referência sua. O preço mostra a idade, porque preço antigo não é o preço de hoje.</p>
         <div class="legend" style="margin-top:16px">
-          <div><span class="dot" style="background:var(--pin-posto)"></span><span><b>Violeta, gota · Posto.</b> Guarda o preço do combustível.</span></div>
-          <div><span class="dot" style="background:var(--pin-mercado)"></span><span><b>Azul, sacola · Mercado.</b> Não julga a corrida: só avisa que o embarque pode demorar.</span></div>
-          <div><span class="dot" style="background:var(--pin-meu)"></span><span><b>Ciano, bolinha · Meu lugar.</b> Seu ponto: base, fila boa, onde você descansa.</span></div>
-          <div><span class="dot" style="background:var(--pin-cidade)"></span><span><b>Rosa, estrela · Cidade.</b> Lugar bom para lembrar.</span></div>
-          <div><span class="dot" style="background:var(--pin-ev)"></span><span><b>Magenta, raio · Recarga.</b> Para quem roda de carro elétrico.</span></div>
+          <div><span class="dot" style="background:#C9A6EE"></span><span><b>⛽ Violeta, bomba · Posto.</b> Guarda o preço do combustível e a data.</span></div>
+          <div><span class="dot" style="background:#55E1F2"></span><span><b>● Ciano, bolinha · Meu lugar.</b> Seu ponto: base, fila boa, onde você descansa.</span></div>
+          <div><span class="dot" style="background:#EBB4C6"></span><span><b>★ Rosa, estrela · Cidade.</b> Lugar bom para lembrar.</span></div>
+          <div><span class="dot" style="background:#C98AD8"></span><span><b>⚡ Magenta, raio · Recarga.</b> Para quem roda de carro elétrico.</span></div>
+          <div><span class="dot" style="background:var(--pin-mercado)"></span><span><b>🛍️ Azul, sacola · Mercado.</b> Não julga a corrida: só avisa que o embarque pode demorar.</span></div>
         </div>
-        <p class="muted" style="margin-top:14px">Cada tipo tem cor e desenho próprios: você nunca se confunde olhando só a cor.</p>
+        <div class="btn-row" style="margin-top:18px"><span class="chip-fake">📍 Adicionar posto onde estou</span><span class="chip-fake">✏️ Adicionar na mão</span></div>
+        <p class="muted" style="margin-top:14px">Toque num pin para ver preço e observações. Cada tipo tem cor e desenho próprios: você nunca se confunde olhando só a cor.</p>
       </div>
     </div>
-
-    
   </div>
 </section>
 
@@ -1451,7 +1607,7 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
 <section id="calculo" data-view="app" data-sub="calculo">
   <div class="wrap">
     <p class="eyebrow">Ajustes de cálculo</p>
-    <h2 style="margin-top:10px">A conta do seu carro, sem planilha</h2>
+    <h2 style="margin-top:10px">O lucro de verdade, com a conta do seu carro</h2>
 <!-- AJUSTES DE CÁLCULO -->
     <div class="frow rev" id="calculo">
       <div>
@@ -1881,12 +2037,12 @@ Comunicacoes: ' + (d.updates ? 'aceitas' : 'nao autorizadas')
     inicio: [],
     funcoes: [['modos','Modos','🧠'],['botoes','Botões','⚡'],['casa','Casa','🏠'],['trocar','Trocar','🔄'],['passageiro','Passageiro','🧑‍🤝‍🧑']],
     cuidado: [['carro','Carro e você','🛡️'],['tempo','Tempo e dinheiro','⏱️'],['seguranca','Segurança','🚨']],
-    app: [['decide','Como decide','🧠'],['veredito','6 níveis','🎚️'],['voz','Fone e passageiro','🎧'],['riscos','Riscos','🚨'],['mapa','Mapa','🗺️'],['pinos','Pinos','📌'],['calculo','Custos','🧮']],
+    app: [['decide','Como decide','🧠'],['veredito','6 níveis','🎚️'],['voz','Fone e passageiro','🎧'],['riscos','Alertas','🚨'],['estrada','Radar e horas','⏱️'],['calamidade','Calamidades','⛈️'],['mapa','Mapa','🗺️'],['pinos','Pinos','📌'],['calculo','Custos','🧮']],
     comparar: [],
     estado: [], recursos: [],
     beta: [['entrar','Como entrar','🚧'],['termos','Termos','📄'],['privacidade','Privacidade','🔒'],['ajuda','Ajuda','❓']]
   };
-  var LEGACY = { inicio:'inicio', 'como-funciona':'inicio', facil:'inicio', modos:'funcoes/modos', botoes:'funcoes/botoes', casa:'funcoes/casa', trocar:'funcoes/trocar', passageiro:'funcoes/passageiro', cuidado:'cuidado/carro', controle:'cuidado/tempo', seguranca:'cuidado/seguranca', comparativo:'estado', telas:'app/decide', decide:'app/decide', voz:'app/voz', riscos:'app/riscos', veredito:'app/veredito', mapa:'app/mapa', pinos:'app/pinos', calculo:'app/calculo', comparar:'comparar', 'home-app':'inicio', 'home-comp':'inicio', 'home-led':'inicio', recursos:'recursos', beta:'beta/entrar', termos:'beta/termos', privacidade:'beta/privacidade', ajuda:'beta/ajuda' };
+  var LEGACY = { inicio:'inicio', 'como-funciona':'inicio', facil:'inicio', modos:'funcoes/modos', botoes:'funcoes/botoes', casa:'funcoes/casa', trocar:'funcoes/trocar', passageiro:'funcoes/passageiro', cuidado:'cuidado/carro', controle:'cuidado/tempo', seguranca:'cuidado/seguranca', comparativo:'estado', telas:'app/decide', decide:'app/decide', voz:'app/voz', riscos:'app/riscos', estrada:'app/estrada', calamidade:'app/calamidade', veredito:'app/veredito', mapa:'app/mapa', pinos:'app/pinos', calculo:'app/calculo', comparar:'comparar', 'home-app':'inicio', 'home-telas':'inicio', 'home-protege':'inicio', 'home-comp':'inicio', 'home-led':'inicio', recursos:'recursos', beta:'beta/entrar', termos:'beta/termos', privacidade:'beta/privacidade', ajuda:'beta/ajuda' };
   var sections = [].slice.call(document.querySelectorAll('section[data-view]'));
   var subrow = document.getElementById('subrow');
   function parse() {
