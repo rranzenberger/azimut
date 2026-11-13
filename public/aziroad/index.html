@@ -606,6 +606,111 @@ nav.subrow:empty { display: none; }
 section[data-view="app"] .frow:first-child { margin-top: 28px; }
 nav.menu a.hot, nav.menu .hot { color: #fff; }
 nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background: rgba(201,35,55,.16); }
+
+/* ===== v4: níveis reais, como decide, voz, riscos ===== */
+.ladder { display: flex; height: 14px; border-radius: 99px; overflow: hidden; margin-top: 22px; }
+.ladder i { flex: 1; }
+.ladder-l { display: none; }
+@media (min-width: 760px) { .ladder-l { display: grid; grid-template-columns: repeat(6, 1fr); margin-top: 8px; font: 700 10px/1.2 SoraCustom, InterBrand, sans-serif; letter-spacing: .06em; color: var(--fg-3); text-align: center; } }
+.lv6 { display: grid; gap: 12px; margin-top: 22px; grid-template-columns: 1fr; }
+@media (min-width: 560px) { .lv6 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 960px) { .lv6 { grid-template-columns: repeat(3, 1fr); } }
+.lv6.compact { grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 760px) { .lv6.compact { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1000px) { .lv6.compact { grid-template-columns: repeat(6, 1fr); } }
+.lvc { position: relative; padding: 20px 16px 16px; border-radius: 18px; background: #0D0D12; border: 1px solid rgba(255,255,255,.1); overflow: hidden; }
+.lvc::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: var(--c); }
+.lvc .tag { border: 0; background: none; padding: 0; display: flex; align-items: center; gap: 8px; font: 800 14px/1.1 SoraCustom, InterBrand, sans-serif; letter-spacing: .06em; color: var(--c); }
+.lvc .net { margin-top: 12px; font: 800 36px/1 SoraCustom, InterBrand, sans-serif; color: var(--c); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+.lvc .net small { display: block; margin-top: 6px; font: 700 9px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .12em; color: var(--fg-3); }
+.lvc .perkm { margin-top: 8px; font-size: 13px; color: var(--fg-2); font-variant-numeric: tabular-nums; }
+.lvc .why3 { margin: 12px 0 0; padding: 12px 0 0; border-top: 1px solid rgba(255,255,255,.1); list-style: none; display: grid; gap: 6px; font-size: 13px; color: var(--fg-2); }
+.lvc .why3 li::before { content: "▸ "; color: var(--c); }
+.lvc .mean { margin-top: 12px; font-size: 13.5px; color: var(--fg); line-height: 1.5; }
+.lv6.compact .lvc { padding: 16px 12px 12px; }
+.lv6.compact .lvc .net { font-size: 26px; }
+.lv6.compact .lvc .tag { font-size: 12px; }
+.gold-glow { box-shadow: 0 0 0 1px rgba(255,215,96,.35), 0 0 34px rgba(255,215,96,.18); }
+
+/* Como decide */
+.funnel { display: grid; gap: 14px; margin-top: 30px; align-items: center; }
+@media (min-width: 1000px) { .funnel { grid-template-columns: 1.7fr 40px 1fr; gap: 18px; } }
+.fin { display: grid; gap: 10px; }
+@media (min-width: 640px) { .fin { grid-template-columns: 1fr 1fr; } }
+.fgroup { padding: 14px 14px 12px; border-radius: 16px; background: var(--card); border: 1px solid var(--line); }
+.fgroup h3 { font-size: 14px; display: flex; align-items: center; gap: 8px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.chips span { padding: 6px 10px; border-radius: 99px; background: var(--card-2); border: 1px solid var(--line); font-size: 12.5px; color: var(--fg-2); line-height: 1.2; }
+.fcore { display: none; text-align: center; color: var(--red-2); font-size: 30px; }
+@media (min-width: 1000px) { .fcore { display: block; } }
+.fout { text-align: center; }
+.core { padding: 22px 14px; border-radius: 20px; background: linear-gradient(180deg, #4A1520, #2A1018); border: 2px solid var(--red); box-shadow: 0 0 40px rgba(201,35,55,.28); }
+.core b { display: block; font: 400 22px/1.1 HandelGothic, InterBrand, sans-serif; letter-spacing: .06em; text-transform: uppercase; }
+.core small { display: block; margin-top: 8px; font-size: 12.5px; color: var(--cream); }
+.fres { margin-top: 14px; } .fres .ladder { margin-top: 0; } .fres .ladder-l { font-size: 8px; }
+.fout p { margin-top: 10px; font-size: 13.5px; color: var(--fg-2); }
+.vs2 { display: grid; gap: 12px; margin-top: 18px; }
+@media (min-width: 860px) { .vs2 { grid-template-columns: 1fr 44px 1.25fr; align-items: stretch; } }
+.vs2 .side { padding: 20px; border-radius: var(--radius); background: var(--card); border: 1px solid var(--line); }
+.vs2 .side.us { border: 2px solid var(--red); background: linear-gradient(180deg, rgba(201,35,55,.14), var(--card)); }
+.vs2 small { display: block; font: 700 11px/1.2 SoraCustom, InterBrand, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3); }
+.vs2 .ex { margin-top: 14px; font-size: 14px; color: var(--fg-2); font-variant-numeric: tabular-nums; }
+.vs2 .big { font: 800 44px/1.1 SoraCustom, InterBrand, sans-serif; font-variant-numeric: tabular-nums; margin-top: 4px; }
+.vs2 .big span { font-size: 14px; font-weight: 500; color: var(--fg-3); }
+.vs2 .res { margin-top: 14px; padding: 10px 14px; border-radius: 12px; font: 700 14px/1.3 SoraCustom, InterBrand, sans-serif; }
+.vs2 .res.ok { background: rgba(92,242,187,.12); color: #5CF2BB; border: 1px solid rgba(92,242,187,.4); }
+.vs2 .res.no { background: rgba(226,104,97,.14); color: #E26861; border: 1px solid rgba(226,104,97,.5); }
+.vs2 .side p { margin-top: 12px; font-size: 13.5px; color: var(--fg-3); }
+.vsmid { display: grid; place-items: center; color: var(--red-2); font: 800 13px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+.calc3 { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 8px; }
+.calc3 li { display: flex; justify-content: space-between; gap: 10px; padding: 10px 12px; border-radius: 12px; background: var(--card-2); font-size: 13.5px; color: var(--fg-2); }
+.calc3 li b { color: var(--fg); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.calc3 li.sum { background: rgba(201,35,55,.16); border: 1px solid rgba(201,35,55,.5); }
+
+/* Fone e passageiro */
+.modes3 { display: grid; gap: 12px; margin-top: 28px; }
+@media (min-width: 800px) { .modes3 { grid-template-columns: repeat(3, 1fr); } }
+.mode { padding: 22px; border-radius: var(--radius); background: var(--card); border: 1px solid var(--line); }
+.mode.hot { border-color: var(--red); background: linear-gradient(180deg, rgba(201,35,55,.14), var(--card)); }
+.mode .mi { width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; font-size: 28px; background: var(--card-2); border: 1px solid var(--line); margin-bottom: 14px; }
+.mode p { margin-top: 8px; font-size: 14.5px; color: var(--fg-2); }
+.ftabs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.ftab { cursor: pointer; padding: 11px 18px; min-height: 44px; border-radius: 99px; background: var(--card); border: 1px solid var(--line-2); color: var(--fg-2); font: 700 13px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .04em; }
+.ftab[aria-selected="true"] { border-color: var(--red); background: rgba(201,35,55,.16); color: #fff; }
+.dtable { display: grid; gap: 10px; margin-top: 16px; }
+.drow { display: grid; gap: 8px; padding: 14px; border-radius: 16px; background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--c); align-items: center; }
+@media (min-width: 700px) { .drow { grid-template-columns: 1fr 34px 1.2fr; gap: 14px; } }
+.drow small { display: block; font: 700 10px/1.2 SoraCustom, InterBrand, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3); }
+.drow .hear b { display: block; margin-top: 4px; font: 600 18px/1.3 InterBrand, sans-serif; font-style: italic; color: var(--fg); }
+.drow .arr { color: var(--red-2); font-size: 22px; text-align: center; }
+@media (max-width: 699px) { .drow .arr { transform: rotate(90deg); } }
+.drow .know b { display: block; margin-top: 4px; font: 800 16px/1.2 SoraCustom, InterBrand, sans-serif; color: var(--c); }
+.drow .know span { display: block; margin-top: 3px; font-size: 13px; color: var(--fg-2); }
+.timeline3 { display: grid; gap: 12px; margin-top: 30px; }
+@media (min-width: 800px) { .timeline3 { grid-template-columns: repeat(3, 1fr); } }
+.tl { position: relative; padding: 20px; border-radius: var(--radius); background: var(--card); border: 1px solid var(--line); }
+.tl .tn { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--red); font: 800 13px/1 SoraCustom, InterBrand, sans-serif; margin-bottom: 10px; }
+.tl p { margin-top: 6px; font-size: 14px; color: var(--fg-2); }
+
+/* Riscos */
+.rkgrid { display: grid; gap: 10px; margin-top: 26px; }
+@media (min-width: 700px) { .rkgrid { grid-template-columns: repeat(2, 1fr); } }
+.rk { position: relative; display: grid; grid-template-columns: 48px 1fr auto; gap: 14px; align-items: start; padding: 14px 16px; border-radius: 16px; background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--k); }
+.rk.warn { --k: #D8884B; } .rk.strong { --k: #E26861; } .rk.info { --k: #6C9BFF; }
+.rk .ri { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; font-size: 24px; background: var(--card-2); }
+.rk b { font: 700 15px/1.3 SoraCustom, InterBrand, sans-serif; }
+.rk p { margin-top: 4px; font-size: 13.5px; color: var(--fg-2); }
+.rk .lvl { align-self: start; padding: 4px 8px; border-radius: 99px; font: 700 9.5px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--k); border: 1px solid var(--k); }
+.shot-alert { margin-top: 18px; }
+.al { padding: 14px 16px; border-radius: 16px; color: #fff; background: #8E1C1C; box-shadow: 0 10px 24px rgba(0,0,0,.4); max-width: 520px; }
+.al.am { background: #8A4B08; }
+.al b { display: block; font: 800 14px/1.2 SoraCustom, InterBrand, sans-serif; letter-spacing: .03em; }
+.al span { display: block; margin-top: 5px; font-size: 13px; opacity: .95; }
+.fat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 16px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); }
+.fs { padding: 16px 10px; text-align: center; }
+.fs b { display: block; font: 800 22px/1 SoraCustom, InterBrand, sans-serif; font-variant-numeric: tabular-nums; }
+.fs span { display: block; margin-top: 6px; font-size: 12.5px; }
+.fs.s1 { background: rgba(204,173,51,.18); color: #CCAD33; } .fs.s2 { background: rgba(216,136,75,.22); color: #D8884B; } .fs.s3 { background: rgba(210,87,103,.28); color: #F08A98; }
 </style>
 </head>
 <body>
@@ -644,10 +749,13 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
         </div>
       </div>
       <div class="dd">
-        <button class="dd-btn" type="button" aria-haspopup="true" data-view="app" data-href="#/app/veredito">O app</button>
+        <button class="dd-btn" type="button" aria-haspopup="true" data-view="app" data-href="#/app/decide">O app</button>
         <div class="dd-panel">
-          <a href="#/app/veredito"><b>As 4 cores</b><small>O que cada veredito quer dizer</small></a>
-          <a href="#/app/mapa"><b>Mapa pintado</b><small>Zonas a evitar e como aparecem</small></a>
+          <a href="#/app/decide"><b>Como decide</b><small>Dezenas de sinais, não só R$/km</small></a>
+          <a href="#/app/veredito"><b>6 níveis</b><small>O que cada cor quer dizer</small></a>
+          <a href="#/app/voz"><b>Fone e passageiro</b><small>Voz clara ou disfarçada</small></a>
+          <a href="#/app/riscos"><b>Alertas de risco</b><small>Morro, alagamento, cansaço</small></a>
+          <a href="#/app/mapa"><b>Mapa pintado</b><small>Zonas a evitar</small></a>
           <a href="#/app/pinos"><b>Pinos</b><small>Posto, mercado, meu lugar</small></a>
           <a href="#/app/calculo"><b>Custos</b><small>A conta do seu carro</small></a>
         </div>
@@ -760,27 +868,17 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
 <section id="home-app" data-view="inicio">
   <div class="wrap">
     <p class="eyebrow">Veja na prática</p>
-    <h2 style="margin-top:10px">Quatro cores. Um olhar. Você já sabe.</h2>
-    <p class="lead">Cor, símbolo e palavra juntos, no tamanho certo para ler de canto de olho. E o mapa, os pinos e os custos do seu jeito.</p>
-    <div class="vd">
-      <div class="vd-item">
-        <div class="vcard ouro"><div class="h">🔥 CORRIDA OURO</div><div class="n"><div><b>3,14</b><small>POR KM</small></div><div><b>27,12</b><small>NO SEU BOLSO</small></div></div><div class="why">Paga bem acima da sua meta.</div></div>
-        <p><b>Ouro: aceite.</b> Rara. Passa da meta com folga, no seu custo e no seu horário.</p>
-      </div>
-      <div class="vd-item">
-        <div class="vcard verde"><div class="h">✓ ACEITA</div><div class="n"><div><b>2,41</b><small>POR KM</small></div><div><b>14,30</b><small>NO SEU BOLSO</small></div></div><div class="why">Cobre o custo e bate a meta.</div></div>
-        <p><b>Verde: vale.</b> Sobra dinheiro depois de combustível e desgaste.</p>
-      </div>
-      <div class="vd-item">
-        <div class="vcard amarelo"><div class="h">⚠ ATENÇÃO</div><div class="n"><div><b>1,62</b><small>POR KM</small></div><div><b>6,10</b><small>NO SEU BOLSO</small></div></div><div class="why">Embarque longe. Pensa antes.</div></div>
-        <p><b>Amarelo: depende.</b> Paga pouco, ou tem um risco que o valor esconde. O card diz qual.</p>
-      </div>
-      <div class="vd-item">
-        <div class="vcard vermelho"><div class="h">✕ RECUSA</div><div class="n"><div><b>1,08</b><small>POR KM</small></div><div><b>−2,40</b><small>NO SEU BOLSO</small></div></div><div class="why">Você sai no prejuízo.</div></div>
-        <p><b>Vermelho: não vale.</b> Depois do seu custo a conta fica negativa. Ou cai numa zona que você marcou para evitar.</p>
-      </div>
+    <h2 style="margin-top:10px">Seis níveis. Um olhar. Você já sabe.</h2>
+    <p class="lead">Não é só verde e vermelho: são seis degraus, cada um com cor, símbolo e palavra, para ler de canto de olho.</p>
+    <div class="lv6 compact">
+        <div class="lvc gold-glow" style="--c:#FFD760"><div class="tag"><span aria-hidden="true">🔥</span>OURO</div><div class="net">+27,12<small>NO SEU BOLSO</small></div><div class="perkm">R$ 3,14 por km</div></div>
+        <div class="lvc" style="--c:#5CF2BB"><div class="tag"><span aria-hidden="true">✓</span>PEGA</div><div class="net">+14,30<small>NO SEU BOLSO</small></div><div class="perkm">R$ 2,41 por km</div></div>
+        <div class="lvc" style="--c:#CCAD33"><div class="tag"><span aria-hidden="true">⚠️</span>VOCÊ DECIDE</div><div class="net">+9,80<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,85 por km</div></div>
+        <div class="lvc" style="--c:#D8884B"><div class="tag"><span aria-hidden="true">🟠</span>CUIDADO</div><div class="net">+5,40<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,52 por km</div></div>
+        <div class="lvc" style="--c:#E26861"><div class="tag"><span aria-hidden="true">🚫</span>NÃO VALE</div><div class="net">+1,90<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,12 por km</div></div>
+        <div class="lvc" style="--c:#D25767"><div class="tag"><span aria-hidden="true">💸</span>PREJUÍZO</div><div class="net">−2,40<small>NO SEU BOLSO</small></div><div class="perkm">R$ 0,98 por km</div></div>
     </div>
-    <div class="btn-row" style="margin-top:26px"><a class="btn btn-ghost" href="#/app/veredito">Ver o app por dentro →</a><a class="btn btn-ghost" href="#/app/mapa">Ver o mapa pintado</a></div>
+    <div class="btn-row" style="margin-top:26px"><a class="btn btn-ghost" href="#/app/decide">Como o app decide →</a><a class="btn btn-ghost" href="#/app/voz">Fone e passageiro</a><a class="btn btn-ghost" href="#/app/mapa">Mapa pintado</a></div>
   </div>
 </section>
 
@@ -1092,35 +1190,136 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
 
 <hr class="rule">
 
-<section id="veredito" data-view="app" data-sub="veredito">
+<section id="decide" data-view="app" data-sub="decide">
   <div class="wrap">
+    <p class="eyebrow">Não é só R$ por km</p>
+    <h2 style="margin-top:10px">Dezenas de sinais viram um veredito</h2>
+    <p class="lead">A maioria dos apps compara R$ por km com um limite e pinta verde ou vermelho. O AziRoad faz a conta do que sobra e cruza com o caminho, o risco e o seu turno. Depois explica o motivo em poucas palavras.</p>
 
-  
-    <p class="eyebrow">O app por dentro</p>
-    <h2 style="margin-top:10px">Veja o que aparece na sua tela e o que cada cor quer dizer</h2>
-    <p class="lead">Quatro cores no card. Você bate o olho e sabe. É sempre uma recomendação: quem aceita ou recusa a corrida é você.</p>
-
-    <div class="vd" id="veredito">
-      <div class="vd-item">
-        <div class="vcard ouro"><div class="h">🔥 CORRIDA OURO</div><div class="n"><div><b>3,14</b><small>POR KM</small></div><div><b>27,12</b><small>NO SEU BOLSO</small></div></div><div class="why">Paga bem acima da sua meta.</div></div>
-        <p><b>Ouro: aceite.</b> Rara. Passa da meta com folga, no seu custo e no seu horário.</p>
+    <div class="funnel">
+      <div class="fin">
+      <div class="fgroup"><h3><span aria-hidden="true">💰</span>Seu dinheiro</h3><div class="chips"><span>Combustível por km</span><span>Manutenção e pneus</span><span>Desgaste do carro</span><span>Aluguel, parcela e seguro pelo tempo</span><span>Tempo morto entre corridas</span><span>Reserva para manutenção e multas</span></div></div>
+      <div class="fgroup"><h3><span aria-hidden="true">🚗</span>A corrida</h3><div class="chips"><span>R$ por km do card</span><span>R$ por hora líquido</span><span>Embarque sem pagamento</span><span>Viagem longa</span><span>Corrida com paradas</span><span>Nota do passageiro</span><span>Trânsito da rota</span></div></div>
+      <div class="fgroup"><h3><span aria-hidden="true">🛣️</span>O caminho</h3><div class="chips"><span>Volta vazia e chance de volta</span><span>Direção de casa</span><span>Morro, via estreita, alagamento</span><span>Clima e vento lateral</span><span>Zonas que você marcou</span><span>Madrugada</span></div></div>
+      <div class="fgroup"><h3><span aria-hidden="true">🧑</span>Você e o carro</h3><div class="chips"><span>Cansaço ao volante</span><span>Carga do carro elétrico</span><span>Horário forte ou fraco</span><span>Metas que o app aprende com o seu turno</span></div></div>
       </div>
-      <div class="vd-item">
-        <div class="vcard verde"><div class="h">✓ ACEITA</div><div class="n"><div><b>2,41</b><small>POR KM</small></div><div><b>14,30</b><small>NO SEU BOLSO</small></div></div><div class="why">Cobre o custo e bate a meta.</div></div>
-        <p><b>Verde: vale.</b> Sobra dinheiro depois de combustível e desgaste.</p>
-      </div>
-      <div class="vd-item">
-        <div class="vcard amarelo"><div class="h">⚠ ATENÇÃO</div><div class="n"><div><b>1,62</b><small>POR KM</small></div><div><b>6,10</b><small>NO SEU BOLSO</small></div></div><div class="why">Embarque longe. Pensa antes.</div></div>
-        <p><b>Amarelo: depende.</b> Paga pouco, ou tem um risco que o valor esconde. O card diz qual.</p>
-      </div>
-      <div class="vd-item">
-        <div class="vcard vermelho"><div class="h">✕ RECUSA</div><div class="n"><div><b>1,08</b><small>POR KM</small></div><div><b>−2,40</b><small>NO SEU BOLSO</small></div></div><div class="why">Você sai no prejuízo.</div></div>
-        <p><b>Vermelho: não vale.</b> Depois do seu custo a conta fica negativa. Ou cai numa zona que você marcou para evitar.</p>
+      <div class="fcore" aria-hidden="true"><span class="arrow">➜</span></div>
+      <div class="fout">
+        <div class="core"><b>Motor AziRoad</b><small>aprende as suas metas com o seu turno</small></div>
+        <div class="fres"><div class="ladder" aria-hidden="true"><i style="background:#D25767"></i><i style="background:#E26861"></i><i style="background:#D8884B"></i><i style="background:#CCAD33"></i><i style="background:#5CF2BB"></i><i style="background:#FFD760"></i></div><div class="ladder-l" aria-hidden="true"><span>PREJUÍZO</span><span>NÃO VALE</span><span>CUIDADO</span><span>VOCÊ DECIDE</span><span>PEGA</span><span>OURO</span></div></div>
+        <p>Seis níveis, com o motivo em até três linhas.</p>
       </div>
     </div>
-    <p class="exemplo">Números fictícios, só para mostrar o desenho. Cor nunca vem sozinha: sempre vai junto com símbolo e palavra.</p>
+
+    <h3 style="margin-top:46px;font-size:22px">Mesma corrida, dois resultados</h3>
+    <div class="vs2">
+      <div class="side old">
+        <small>App que só olha R$ por km</small>
+        <div class="ex">R$ 22,00 ÷ 11 km</div>
+        <div class="big">2,00<span> por km</span></div>
+        <div class="res ok">✓ Parece boa</div>
+        <p>Não vê o embarque, o tempo parado nem o custo do seu carro.</p>
+      </div>
+      <div class="vsmid" aria-hidden="true">vs</div>
+      <div class="side us">
+        <small>AziRoad</small>
+        <ol class="calc3">
+          <li><span>Embarque de 4 km sem pagamento</span><b>15 km rodados</b></li>
+          <li><span>15 km × R$ 0,88 de custo</span><b>− R$ 13,20</b></li>
+          <li><span>12 + 22 min + 5 min de espera</span><b>0,65 h</b></li>
+          <li class="sum"><span>Sobra no seu bolso</span><b>R$ 8,80 · 13,54/h</b></li>
+        </ol>
+        <div class="res no">🚫 NÃO VALE · abaixo da sua meta de R$ 31/h</div>
+      </div>
+    </div>
+    <p class="exemplo">Exemplo fictício, só para mostrar a conta. O custo por km e a meta são os que você cadastra, ou os que o app aprende.</p>
+    <div class="btn-row" style="margin-top:22px"><a class="btn btn-ghost" href="#/app/veredito">Ver os seis níveis →</a><a class="btn btn-ghost" href="#/app/calculo">Ajustar os custos</a></div>
   </div>
 </section>
+
+<hr class="rule">
+
+<section id="veredito" data-view="app" data-sub="veredito">
+  <div class="wrap">
+    <p class="eyebrow">O que cada cor quer dizer</p>
+    <h2 style="margin-top:10px">Seis níveis, não só verde e vermelho</h2>
+    <p class="lead">Entre “vale” e “não vale” existe muita coisa. O AziRoad separa em seis degraus, cada um com cor, símbolo e palavra, e o número do bolso muda de cor junto. É sempre uma recomendação: quem aceita ou recusa é você.</p>
+    <div class="ladder" aria-hidden="true"><i style="background:#D25767"></i><i style="background:#E26861"></i><i style="background:#D8884B"></i><i style="background:#CCAD33"></i><i style="background:#5CF2BB"></i><i style="background:#FFD760"></i></div><div class="ladder-l" aria-hidden="true"><span>PREJUÍZO</span><span>NÃO VALE</span><span>CUIDADO</span><span>VOCÊ DECIDE</span><span>PEGA</span><span>OURO</span></div>
+    <p class="muted" style="text-align:center;margin-top:6px">← pior corrida · melhor corrida →</p>
+    <div class="lv6">
+        <div class="lvc gold-glow" style="--c:#FFD760"><div class="tag"><span aria-hidden="true">🔥</span>OURO</div><div class="net">+27,12<small>NO SEU BOLSO</small></div><div class="perkm">R$ 3,14 por km</div><ul class="why3"><li>Bem acima da meta, por km e por hora</li><li>Embarque curto: 1,1 km</li></ul><p class="mean">Bem acima da meta, nos dois eixos. É rara. Pode pegar sem medo.</p></div>
+        <div class="lvc" style="--c:#5CF2BB"><div class="tag"><span aria-hidden="true">✓</span>PEGA</div><div class="net">+14,30<small>NO SEU BOLSO</small></div><div class="perkm">R$ 2,41 por km</div><ul class="why3"><li>Bate a sua meta por hora</li><li>Volta com chance de corrida</li></ul><p class="mean">Bateu a sua meta. Pode pegar.</p></div>
+        <div class="lvc" style="--c:#CCAD33"><div class="tag"><span aria-hidden="true">⚠️</span>VOCÊ DECIDE</div><div class="net">+9,80<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,85 por km</div><ul class="why3"><li>Perto da sua meta</li><li>Passageiro com nota 4,7</li></ul><p class="mean">Perto da meta. Aqui a decisão é legitimamente sua: o app não empurra para lado nenhum.</p></div>
+        <div class="lvc" style="--c:#D8884B"><div class="tag"><span aria-hidden="true">🟠</span>CUIDADO</div><div class="net">+5,40<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,52 por km</div><ul class="why3"><li>Passa do mínimo, mas por pouco</li><li>Embarque de 3,4 km sem pagamento</li></ul><p class="mean">Dá para pegar, mas olhe bem o que está aceitando.</p></div>
+        <div class="lvc" style="--c:#E26861"><div class="tag"><span aria-hidden="true">🚫</span>NÃO VALE</div><div class="net">+1,90<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,12 por km</div><ul class="why3"><li>Abaixo do seu mínimo por km</li><li>Volta vazia: pouca corrida no destino</li></ul><p class="mean">Abaixo do seu mínimo, sem prejuízo. Você perde a oportunidade, não o dinheiro.</p></div>
+        <div class="lvc" style="--c:#D25767"><div class="tag"><span aria-hidden="true">💸</span>PREJUÍZO</div><div class="net">−2,40<small>NO SEU BOLSO</small></div><div class="perkm">R$ 0,98 por km</div><ul class="why3"><li>Não paga o custo do carro</li><li>Corrida longa, volta sem chance</li></ul><p class="mean">Você paga para trabalhar. O número vira vermelho profundo, com o sinal de menos.</p></div>
+    </div>
+    <p class="exemplo">Números fictícios, só para mostrar o desenho. No card real aparecem no máximo três motivos, um por linha. Cor nunca vai sozinha: junto vão a palavra, o símbolo e o sinal de + ou −.</p>
+    <div class="grid three" style="margin-top:22px">
+      <div class="card"><div class="ico">👁️</div><h3>Feito para ler de canto de olho</h3><p>Número grande, palavra curta e uma faixa de cor no topo. Quem tem daltonismo lê a palavra e o degrau de claridade, não só a cor.</p></div>
+      <div class="card"><div class="ico">⚖️</div><h3>Metas são suas</h3><p>Os cortes entre os níveis acompanham o seu mínimo e a sua meta, não um valor fixo em reais.</p></div>
+      <div class="card"><div class="ico">🤝</div><h3>“Você decide” é honesto</h3><p>Quando a corrida está perto da meta, o app não empurra para nenhum lado. A decisão é sua mesmo.</p></div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="voz" data-view="app" data-sub="voz">
+  <div class="wrap">
+    <p class="eyebrow">Fone e passageiro</p>
+    <h2 style="margin-top:10px">Com gente no carro, só você entende</h2>
+    <p class="lead">Dirigir com passageiro é o momento mais delicado: ouvir “corrida ruim” ou o quanto você ganha em voz alta constrange. O AziRoad tem três jeitos de falar, e você escolhe.</p>
+
+    <div class="modes3">
+      <div class="mode"><div class="mi">🎧</div><h3>Fala tudo no fone</h3><p>Com fone conectado, só você escuta o veredito completo: valor, risco e motivo. O botão “Só no fone” deixa a voz muda se o fone cair, em vez de tocar alto.</p></div>
+      <div class="mode"><div class="mi">📺</div><h3>Só na tela</h3><p>Sem voz nenhuma. Cor, símbolo e palavra aparecem no card. Silêncio total para quem prefere só olhar.</p></div>
+      <div class="mode hot"><div class="mi">🎭</div><h3>Voz disfarçada</h3><p>O app “fala” como Waze, previsão do tempo, rádio ou notificação. O passageiro ouve uma frase comum. Você entende a corrida.</p></div>
+    </div>
+
+    <h3 style="margin-top:44px;font-size:22px">Toque e veja como o disfarce soa</h3>
+    <p class="muted" style="margin-top:6px">Escolha o estilo. À esquerda, o que o passageiro ouve; à direita, o que você entende.</p>
+    <div class="ftabs" role="tablist" aria-label="Estilo do disfarce (demonstração)"><button type="button" role="tab" class="ftab" data-f="waze" aria-selected="true">🧭 Trânsito</button><button type="button" role="tab" class="ftab" data-f="clima" aria-selected="false">🌦️ Clima</button><button type="button" role="tab" class="ftab" data-f="radio" aria-selected="false">📻 Rádio</button><button type="button" role="tab" class="ftab" data-f="notif" aria-selected="false">🔔 Notificação</button></div>
+    <div class="dtable" id="dtable" aria-live="polite"><div class="drow" style="--c:#FFD760"><div class="hear"><small>O passageiro ouve</small><b data-i="0">“rota expressa”</b></div><div class="arr" aria-hidden="true">➜</div><div class="know"><small>Você entende</small><b>🔥 OURO</b><span>Corrida ouro</span></div></div><div class="drow" style="--c:#5CF2BB"><div class="hear"><small>O passageiro ouve</small><b data-i="1">“pista totalmente livre”</b></div><div class="arr" aria-hidden="true">➜</div><div class="know"><small>Você entende</small><b>✓ PEGA</b><span>Pode pegar</span></div></div><div class="drow" style="--c:#CCAD33"><div class="hear"><small>O passageiro ouve</small><b data-i="2">“lentidão mais à frente”</b></div><div class="arr" aria-hidden="true">➜</div><div class="know"><small>Você entende</small><b>⚠️ VOCÊ DECIDE</b><span>A decisão é sua</span></div></div><div class="drow" style="--c:#E26861"><div class="hear"><small>O passageiro ouve</small><b data-i="3">“acidente mais à frente”</b></div><div class="arr" aria-hidden="true">➜</div><div class="know"><small>Você entende</small><b>🚫 NÃO VALE</b><span>Não vale</span></div></div></div>
+    <p class="exemplo">Frases reais do app (em português; também existem em inglês e espanhol). Cada corrida sorteia uma frase do mesmo estilo, e o app nunca repete a mesma seguida.</p>
+
+    <div class="timeline3">
+      <div class="tl"><span class="tn">1</span><h3>O passageiro entra</h3><p>O app percebe pela tela da plataforma que a viagem começou e liga o disfarce sozinho.</p></div>
+      <div class="tl"><span class="tn">2</span><h3>A sua mão manda</h3><p>Pode ligar ou desligar quando quiser. O que você decidir vale até a corrida acabar.</p></div>
+      <div class="tl"><span class="tn">3</span><h3>O passageiro desce</h3><p>A corrida termina e a voz volta ao normal. Nada fica preso para a próxima.</p></div>
+    </div>
+
+    <div class="card accent" style="margin-top:22px">
+      <h3>🧠 O disfarce não se desmente</h3>
+      <p>Frase que o passageiro consegue conferir chama atenção. Por isso o app olha a janela: de madrugada com a rua livre não fala “trânsito parado”, à noite não diz “sol”, com céu limpo não promete tempestade. Troca por uma frase do mesmo sentido que ninguém consegue conferir, como “acidente mais à frente”.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="riscos" data-view="app" data-sub="riscos">
+  <div class="wrap">
+    <p class="eyebrow">Alertas de risco</p>
+    <h2 style="margin-top:10px">O app olha o caminho, não só o valor</h2>
+    <p class="lead">O maior custo escondido do motorista é o dano ao carro e o risco no trajeto. O AziRoad avalia a rota da corrida inteira, não só o destino, e avisa antes de você aceitar.</p>
+    <div class="rkgrid"><div class="rk warn"><div class="ri" aria-hidden="true">⛰️</div><div><b>Morro e ladeira</b><p>Risco de bater lata, pior na chuva. Mais forte se o carro é GNV.</p></div><span class="lvl">Atenção</span></div><div class="rk warn"><div class="ri" aria-hidden="true">⚠️</div><div><b>Via estreita e servidão</b><p>Ruela onde o carro raspa ou não passa. O app avisa antes de aceitar.</p></div><span class="lvl">Atenção</span></div><div class="rk strong"><div class="ri" aria-hidden="true">🌊</div><div><b>Alagamento</b><p>Inclusive beira de rio. Risco para o motor quando chove.</p></div><span class="lvl">Forte</span></div><div class="rk strong"><div class="ri" aria-hidden="true">⛈️</div><div><b>Clima extremo</b><p>Alerta oficial e vento lateral forte na rota.</p></div><span class="lvl">Forte</span></div><div class="rk info"><div class="ri" aria-hidden="true">🛣️</div><div><b>Radar na rodovia</b><p>Nome da via e aviso de excesso de velocidade.</p></div><span class="lvl">Aviso</span></div><div class="rk strong"><div class="ri" aria-hidden="true">🌙</div><div><b>Madrugada</b><p>Das 0h às 5h as zonas de risco ficam mais rígidas.</p></div><span class="lvl">Forte</span></div><div class="rk strong"><div class="ri" aria-hidden="true">🚫</div><div><b>Zona que você marcou</b><p>O destino cai numa área que você pintou para evitar.</p></div><span class="lvl">Forte</span></div><div class="rk warn"><div class="ri" aria-hidden="true">🔋</div><div><b>Carga do elétrico</b><p>Avisa quando a carga não cobre a corrida ou a volta.</p></div><span class="lvl">Atenção</span></div></div>
+    <div class="shot-alert" aria-label="Exemplo de aviso no card">
+      <div class="al am"><b>🟠 CUIDADO · Embarque em ladeira</b><span>Morro no embarque. Chuva prevista para daqui a 20 minutos.</span></div>
+    </div>
+    <p class="exemplo">Exemplo ilustrativo. Você liga ou desliga cada alerta do seu jeito, em Alertas e Riscos. Nada é obrigatório.</p>
+
+    <h3 style="margin-top:42px;font-size:22px">😴 Cansaço: três degraus de aviso</h3>
+    <p class="muted" style="margin-top:6px">Conta as horas seguidas ao volante. Uma pausa de 15 minutos zera o contador.</p>
+    <div class="fat" aria-label="Avisos de cansaço">
+      <div class="fs s1"><b>4 h</b><span>Aviso suave</span></div>
+      <div class="fs s2"><b>4 h 30</b><span>Aviso forte</span></div>
+      <div class="fs s3"><b>5 h 30</b><span>Crítico</span></div>
+    </div>
+    <p class="exemplo">Referências: UE (4 h 30) e Brasil (Lei 13.103). Estimativa operacional do app, não substitui o seu descanso.</p>
+  </div>
+</section>
+
 
 <hr class="rule">
 
@@ -1682,12 +1881,12 @@ Comunicacoes: ' + (d.updates ? 'aceitas' : 'nao autorizadas')
     inicio: [],
     funcoes: [['modos','Modos','🧠'],['botoes','Botões','⚡'],['casa','Casa','🏠'],['trocar','Trocar','🔄'],['passageiro','Passageiro','🧑‍🤝‍🧑']],
     cuidado: [['carro','Carro e você','🛡️'],['tempo','Tempo e dinheiro','⏱️'],['seguranca','Segurança','🚨']],
-    app: [['veredito','Cores','🎨'],['mapa','Mapa','🗺️'],['pinos','Pinos','📌'],['calculo','Custos','🧮']],
+    app: [['decide','Como decide','🧠'],['veredito','6 níveis','🎚️'],['voz','Fone e passageiro','🎧'],['riscos','Riscos','🚨'],['mapa','Mapa','🗺️'],['pinos','Pinos','📌'],['calculo','Custos','🧮']],
     comparar: [],
     estado: [], recursos: [],
     beta: [['entrar','Como entrar','🚧'],['termos','Termos','📄'],['privacidade','Privacidade','🔒'],['ajuda','Ajuda','❓']]
   };
-  var LEGACY = { inicio:'inicio', 'como-funciona':'inicio', facil:'inicio', modos:'funcoes/modos', botoes:'funcoes/botoes', casa:'funcoes/casa', trocar:'funcoes/trocar', passageiro:'funcoes/passageiro', cuidado:'cuidado/carro', controle:'cuidado/tempo', seguranca:'cuidado/seguranca', comparativo:'estado', telas:'app/veredito', veredito:'app/veredito', mapa:'app/mapa', pinos:'app/pinos', calculo:'app/calculo', comparar:'comparar', 'home-app':'inicio', 'home-comp':'inicio', 'home-led':'inicio', recursos:'recursos', beta:'beta/entrar', termos:'beta/termos', privacidade:'beta/privacidade', ajuda:'beta/ajuda' };
+  var LEGACY = { inicio:'inicio', 'como-funciona':'inicio', facil:'inicio', modos:'funcoes/modos', botoes:'funcoes/botoes', casa:'funcoes/casa', trocar:'funcoes/trocar', passageiro:'funcoes/passageiro', cuidado:'cuidado/carro', controle:'cuidado/tempo', seguranca:'cuidado/seguranca', comparativo:'estado', telas:'app/decide', decide:'app/decide', voz:'app/voz', riscos:'app/riscos', veredito:'app/veredito', mapa:'app/mapa', pinos:'app/pinos', calculo:'app/calculo', comparar:'comparar', 'home-app':'inicio', 'home-comp':'inicio', 'home-led':'inicio', recursos:'recursos', beta:'beta/entrar', termos:'beta/termos', privacidade:'beta/privacidade', ajuda:'beta/ajuda' };
   var sections = [].slice.call(document.querySelectorAll('section[data-view]'));
   var subrow = document.getElementById('subrow');
   function parse() {
@@ -1766,6 +1965,19 @@ Comunicacoes: ' + (d.updates ? 'aceitas' : 'nao autorizadas')
     });
   });
   setVoice(); paint();
+})();
+</script>
+
+<script>
+/* Fone e passageiro: o estilo do disfarce (frases reais do app). */
+(function () {
+  var F = {"waze": ["rota expressa", "pista totalmente livre", "lentidão mais à frente", "acidente mais à frente"], "clima": ["sol pleno", "céu limpo", "nublado", "chuva forte"], "radio": ["prioridade máxima", "dez quatro", "fica a seu critério", "sem retorno"], "notif": ["urgente", "confirmado", "em análise", "não aprovado"]};
+  var tabs = document.querySelectorAll('.ftab'); if (!tabs.length) return;
+  tabs.forEach(function (t) { t.addEventListener('click', function () {
+    var k = t.getAttribute('data-f');
+    tabs.forEach(function (x) { x.setAttribute('aria-selected', x === t ? 'true' : 'false'); });
+    document.querySelectorAll('#dtable .hear b').forEach(function (b) { b.textContent = '\u201c' + F[k][+b.getAttribute('data-i')] + '\u201d'; });
+  }); });
 })();
 </script>
 </body>
