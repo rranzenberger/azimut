@@ -810,6 +810,18 @@ nav.subrow a { white-space: nowrap; }
 
 .drow.lock { border-left-style: dashed; background: transparent; }
 .drow.lock .hear b { color: var(--fg-3); }
+
+/* ===== v9: fundos reais do app (VerdictPalette) ===== */
+.lvc { background: linear-gradient(180deg, var(--g1), var(--g2)); color: var(--tx); }
+.lvc .tag, .lvc .net, .lvc .net small, .lvc .perkm, .lvc .why3, .lvc .why3 li::before, .lvc .mean { color: var(--tx); }
+.lvc .why3 { border-top-color: color-mix(in srgb, var(--tx) 30%, transparent); }
+.lvc .net small { opacity: .9; }
+
+/* ===== v10: sete cartões reais ===== */
+.lvc .tag { flex-wrap: wrap; row-gap: 4px; }
+.lvc .tag .lab { margin-left: auto; padding: 3px 7px; border-radius: 99px; background: rgba(0,0,0,.78); color: #fff; font: 700 9px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .1em; font-style: normal; }
+@media (min-width: 1000px) { .lv6.compact { grid-template-columns: repeat(7, 1fr); } .lv6.compact .lvc .net { font-size: 22px; } .lv6.compact .lvc .tag { font-size: 10.5px; } }
+.ladder-l { grid-template-columns: repeat(7, 1fr) !important; }
 </style>
 </head>
 <body>
@@ -851,7 +863,7 @@ nav.subrow a { white-space: nowrap; }
         <button class="dd-btn" type="button" aria-haspopup="true" data-view="app" data-href="#/app/decide">O app</button>
         <div class="dd-panel">
           <a href="#/app/decide"><b>Como decide</b><small>Dezenas de sinais, não só R$/km</small></a>
-          <a href="#/app/veredito"><b>6 níveis</b><small>O que cada cor quer dizer</small></a>
+          <a href="#/app/veredito"><b>7 níveis</b><small>O que cada cor quer dizer</small></a>
           <a href="#/app/voz"><b>Fone e passageiro</b><small>Voz clara ou disfarçada</small></a>
           <a href="#/app/riscos"><b>Alertas de risco</b><small>Você escolhe a reação</small></a>
           <a href="#/app/estrada"><b>Estrada</b><small>Radar e horas ao volante</small></a>
@@ -970,15 +982,16 @@ nav.subrow a { white-space: nowrap; }
 <section id="home-app" data-view="inicio">
   <div class="wrap">
     <p class="eyebrow">Veja na prática</p>
-    <h2 style="margin-top:10px">Seis níveis. Um olhar. Você já sabe.</h2>
-    <p class="lead">Verde ou vermelho é pouco para quem vive de corrida. O AziRoad separa em seis degraus, do prejuízo ao ouro, e você entende num relance, sem tirar o olho da rua.</p>
+    <h2 style="margin-top:10px">Sete cartões. Um olhar. Você já sabe.</h2>
+    <p class="lead">Verde ou vermelho é pouco para quem vive de corrida. O AziRoad separa em sete degraus, do prejuízo ao ouro, e você entende num relance, sem tirar o olho da rua.</p>
     <div class="lv6 compact">
-        <div class="lvc gold-glow" style="--c:#FFD760"><div class="tag"><span aria-hidden="true">🔥</span>OURO</div><div class="net">+27,12<small>NO SEU BOLSO</small></div><div class="perkm">R$ 3,14 por km</div></div>
-        <div class="lvc" style="--c:#5CF2BB"><div class="tag"><span aria-hidden="true">✓</span>PEGA</div><div class="net">+14,30<small>NO SEU BOLSO</small></div><div class="perkm">R$ 2,41 por km</div></div>
-        <div class="lvc" style="--c:#CCAD33"><div class="tag"><span aria-hidden="true">⚠️</span>VOCÊ DECIDE</div><div class="net">+9,80<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,85 por km</div></div>
-        <div class="lvc" style="--c:#D8884B"><div class="tag"><span aria-hidden="true">🟠</span>CUIDADO</div><div class="net">+5,40<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,52 por km</div></div>
-        <div class="lvc" style="--c:#E26861"><div class="tag"><span aria-hidden="true">🚫</span>NÃO VALE</div><div class="net">+1,90<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,12 por km</div></div>
-        <div class="lvc" style="--c:#D25767"><div class="tag"><span aria-hidden="true">💸</span>PREJUÍZO</div><div class="net">−2,40<small>NO SEU BOLSO</small></div><div class="perkm">R$ 0,98 por km</div></div>
+        <div class="lvc gold-glow" style="--c:#FFD86B;--g1:#FFD86B;--g2:#C8901A;--tx:#14110A"><div class="tag"><span aria-hidden="true">🔥</span>CORRIDA OURO</div><div class="net">+27,12<small>NO SEU BOLSO</small></div><div class="perkm">R$ 3,14 por km</div></div>
+        <div class="lvc" style="--c:#3DDC7F;--g1:#3DDC7F;--g2:#16A34A;--tx:#000000"><div class="tag"><span aria-hidden="true">✓</span>ACEITA</div><div class="net">+14,30<small>NO SEU BOLSO</small></div><div class="perkm">R$ 2,41 por km</div></div>
+        <div class="lvc" style="--c:#C4F5D6;--g1:#C4F5D6;--g2:#8FE3B0;--tx:#000000"><div class="tag"><span aria-hidden="true">✓</span>PODE ACEITAR<em class="lab">EM TESTE</em></div><div class="net">+10,60<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,93 por km</div></div>
+        <div class="lvc" style="--c:#FFB454;--g1:#FFB454;--g2:#D97706;--tx:#000000"><div class="tag"><span aria-hidden="true">⚠️</span>ATENÇÃO</div><div class="net">+8,10<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,71 por km</div></div>
+        <div class="lvc" style="--c:#FF8A6B;--g1:#FF8A6B;--g2:#E8663C;--tx:#000000"><div class="tag"><span aria-hidden="true">🟠</span>CUIDADO</div><div class="net">+5,40<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,52 por km</div></div>
+        <div class="lvc" style="--c:#B3261E;--g1:#B3261E;--g2:#7F1D1D;--tx:#FFFFFF"><div class="tag"><span aria-hidden="true">🚫</span>RECUSA</div><div class="net">+1,90<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,12 por km</div></div>
+        <div class="lvc" style="--c:#5C100A;--g1:#5C100A;--g2:#300803;--tx:#FFF1EC"><div class="tag"><span aria-hidden="true">💸</span>PREJUÍZO</div><div class="net">−2,40<small>NO SEU BOLSO</small></div><div class="perkm">R$ 0,98 por km</div></div>
     </div>
     <div class="btn-row" style="margin-top:26px"><a class="btn btn-ghost" href="#/app/decide">Como o app decide →</a><a class="btn btn-ghost" href="#/app/voz">Fone e passageiro</a><a class="btn btn-ghost" href="#/app/mapa">Mapa pintado</a></div>
   </div>
@@ -1376,8 +1389,8 @@ nav.subrow a { white-space: nowrap; }
       <div class="fcore" aria-hidden="true"><span class="arrow">➜</span></div>
       <div class="fout">
         <div class="core"><b>Motor AziRoad</b><small>aprende as suas metas com o seu turno</small></div>
-        <div class="fres"><div class="ladder" aria-hidden="true"><i style="background:#D25767"></i><i style="background:#E26861"></i><i style="background:#D8884B"></i><i style="background:#CCAD33"></i><i style="background:#5CF2BB"></i><i style="background:#FFD760"></i></div><div class="ladder-l" aria-hidden="true"><span>PREJUÍZO</span><span>NÃO VALE</span><span>CUIDADO</span><span>VOCÊ DECIDE</span><span>PEGA</span><span>OURO</span></div></div>
-        <p>Seis níveis, com o motivo em até três linhas.</p>
+        <div class="fres"><div class="ladder" aria-hidden="true"><i style="background:#5C100A"></i><i style="background:#B3261E"></i><i style="background:#FF8A6B"></i><i style="background:#FFB454"></i><i style="background:#C4F5D6"></i><i style="background:#3DDC7F"></i><i style="background:#FFD86B"></i></div><div class="ladder-l" aria-hidden="true"><span>PREJUÍZO</span><span>RECUSA</span><span>CUIDADO</span><span>ATENÇÃO</span><span>PODE ACEITAR</span><span>ACEITA</span><span>OURO</span></div></div>
+        <p>Sete degraus, com o motivo em até três linhas.</p>
       </div>
     </div>
 
@@ -1399,11 +1412,11 @@ nav.subrow a { white-space: nowrap; }
           <li><span>Tempo da corrida e da espera</span><b>0,65 h</b></li>
           <li class="sum"><span>Sobra no seu bolso</span><b>R$ 8,80 · 13,54/h</b></li>
         </ol>
-        <div class="res no">🚫 NÃO VALE · abaixo da sua meta de R$ 31/h</div>
+        <div class="res no">🚫 RECUSA · abaixo da sua meta de R$ 31/h</div>
       </div>
     </div>
     <p class="exemplo">Exemplo fictício, só para mostrar a conta. O custo por km e a meta são os que você cadastra, ou os que o app aprende.</p>
-    <div class="btn-row" style="margin-top:22px"><a class="btn btn-ghost" href="#/app/veredito">Ver os seis níveis →</a><a class="btn btn-ghost" href="#/app/calculo">Ajustar os custos</a></div>
+    <div class="btn-row" style="margin-top:22px"><a class="btn btn-ghost" href="#/app/veredito">Ver os sete níveis →</a><a class="btn btn-ghost" href="#/app/calculo">Ajustar os custos</a></div>
   </div>
 </section>
 
@@ -1412,23 +1425,24 @@ nav.subrow a { white-space: nowrap; }
 <section id="veredito" data-view="app" data-sub="veredito">
   <div class="wrap">
     <p class="eyebrow">O que cada cor quer dizer</p>
-    <h2 style="margin-top:10px">Seis níveis, não só verde e vermelho</h2>
-    <p class="lead">Entre “vale” e “não vale” existe muita coisa. O AziRoad separa em seis degraus, cada um com cor, símbolo e palavra, e o número do bolso muda de cor junto. É sempre uma recomendação: quem aceita ou recusa é você.</p>
-    <div class="ladder" aria-hidden="true"><i style="background:#D25767"></i><i style="background:#E26861"></i><i style="background:#D8884B"></i><i style="background:#CCAD33"></i><i style="background:#5CF2BB"></i><i style="background:#FFD760"></i></div><div class="ladder-l" aria-hidden="true"><span>PREJUÍZO</span><span>NÃO VALE</span><span>CUIDADO</span><span>VOCÊ DECIDE</span><span>PEGA</span><span>OURO</span></div>
+    <h2 style="margin-top:10px">Sete cartões, e até dois verdes</h2>
+    <p class="lead">Entre “vale” e “não vale” existe muita coisa. O AziRoad separa em sete degraus, cada um com cor, símbolo e palavra, e o número do bolso muda de cor junto. É sempre uma recomendação: quem aceita ou recusa é você.</p>
+    <div class="ladder" aria-hidden="true"><i style="background:#5C100A"></i><i style="background:#B3261E"></i><i style="background:#FF8A6B"></i><i style="background:#FFB454"></i><i style="background:#C4F5D6"></i><i style="background:#3DDC7F"></i><i style="background:#FFD86B"></i></div><div class="ladder-l" aria-hidden="true"><span>PREJUÍZO</span><span>RECUSA</span><span>CUIDADO</span><span>ATENÇÃO</span><span>PODE ACEITAR</span><span>ACEITA</span><span>OURO</span></div>
     <p class="muted" style="text-align:center;margin-top:6px">← pior corrida · melhor corrida →</p>
     <div class="lv6">
-        <div class="lvc gold-glow" style="--c:#FFD760"><div class="tag"><span aria-hidden="true">🔥</span>OURO</div><div class="net">+27,12<small>NO SEU BOLSO</small></div><div class="perkm">R$ 3,14 por km</div><ul class="why3"><li>Bem acima da meta, por km e por hora</li><li>Embarque curto: 1,1 km</li></ul><p class="mean">Bem acima da meta, nos dois eixos. É rara. Pode pegar sem medo.</p></div>
-        <div class="lvc" style="--c:#5CF2BB"><div class="tag"><span aria-hidden="true">✓</span>PEGA</div><div class="net">+14,30<small>NO SEU BOLSO</small></div><div class="perkm">R$ 2,41 por km</div><ul class="why3"><li>Bate a sua meta por hora</li><li>Volta com chance de corrida</li></ul><p class="mean">Bateu a sua meta. Pode pegar.</p></div>
-        <div class="lvc" style="--c:#CCAD33"><div class="tag"><span aria-hidden="true">⚠️</span>VOCÊ DECIDE</div><div class="net">+9,80<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,85 por km</div><ul class="why3"><li>Perto da sua meta</li><li>Passageiro com nota 4,7</li></ul><p class="mean">Perto da meta. Aqui a decisão é legitimamente sua: o app não empurra para lado nenhum.</p></div>
-        <div class="lvc" style="--c:#D8884B"><div class="tag"><span aria-hidden="true">🟠</span>CUIDADO</div><div class="net">+5,40<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,52 por km</div><ul class="why3"><li>Passa do mínimo, mas por pouco</li><li>Embarque de 3,4 km sem pagamento</li></ul><p class="mean">Dá para pegar, mas olhe bem o que está aceitando.</p></div>
-        <div class="lvc" style="--c:#E26861"><div class="tag"><span aria-hidden="true">🚫</span>NÃO VALE</div><div class="net">+1,90<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,12 por km</div><ul class="why3"><li>Abaixo do seu mínimo por km</li><li>Volta vazia: pouca corrida no destino</li></ul><p class="mean">Abaixo do seu mínimo, sem prejuízo. Você perde a oportunidade, não o dinheiro.</p></div>
-        <div class="lvc" style="--c:#D25767"><div class="tag"><span aria-hidden="true">💸</span>PREJUÍZO</div><div class="net">−2,40<small>NO SEU BOLSO</small></div><div class="perkm">R$ 0,98 por km</div><ul class="why3"><li>Não paga o custo do carro</li><li>Corrida longa, volta sem chance</li></ul><p class="mean">Você paga para trabalhar. O número vira vermelho profundo, com o sinal de menos.</p></div>
+        <div class="lvc gold-glow" style="--c:#FFD86B;--g1:#FFD86B;--g2:#C8901A;--tx:#14110A"><div class="tag"><span aria-hidden="true">🔥</span>CORRIDA OURO</div><div class="net">+27,12<small>NO SEU BOLSO</small></div><div class="perkm">R$ 3,14 por km</div><ul class="why3"><li>Bem acima da meta, por km e por hora</li><li>Embarque curto: 1,1 km</li></ul><p class="mean">Bem acima da meta, nos dois eixos. É rara. Pode pegar sem medo.</p></div>
+        <div class="lvc" style="--c:#3DDC7F;--g1:#3DDC7F;--g2:#16A34A;--tx:#000000"><div class="tag"><span aria-hidden="true">✓</span>ACEITA</div><div class="net">+14,30<small>NO SEU BOLSO</small></div><div class="perkm">R$ 2,41 por km</div><ul class="why3"><li>Bate a sua meta por hora</li><li>Volta com chance de corrida</li></ul><p class="mean">Bateu a sua meta. Verde cheio: pode pegar.</p></div>
+        <div class="lvc" style="--c:#C4F5D6;--g1:#C4F5D6;--g2:#8FE3B0;--tx:#000000"><div class="tag"><span aria-hidden="true">✓</span>PODE ACEITAR<em class="lab">EM TESTE</em></div><div class="net">+10,60<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,93 por km</div><ul class="why3"><li>Cobre o seu custo, mas fica abaixo da meta</li><li>Trânsito ainda calculando</li></ul><p class="mean">Verde claro: cobre o seu custo, mas fica abaixo da meta, ou ainda tem uma dúvida aberta (trânsito calculando, volta fraca, busca longa). Dá para pegar, olhando o motivo.</p></div>
+        <div class="lvc" style="--c:#FFB454;--g1:#FFB454;--g2:#D97706;--tx:#000000"><div class="tag"><span aria-hidden="true">⚠️</span>ATENÇÃO</div><div class="net">+8,10<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,71 por km</div><ul class="why3"><li>Perto da sua meta</li><li>Passageiro com nota 4,7</li></ul><p class="mean">Perto da meta. Aqui a decisão é legitimamente sua: o app não empurra para lado nenhum.</p></div>
+        <div class="lvc" style="--c:#FF8A6B;--g1:#FF8A6B;--g2:#E8663C;--tx:#000000"><div class="tag"><span aria-hidden="true">🟠</span>CUIDADO</div><div class="net">+5,40<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,52 por km</div><ul class="why3"><li>Passa do mínimo, mas por pouco</li><li>Embarque de 3,4 km sem pagamento</li></ul><p class="mean">Dá para pegar, mas olhe bem o que está aceitando.</p></div>
+        <div class="lvc" style="--c:#B3261E;--g1:#B3261E;--g2:#7F1D1D;--tx:#FFFFFF"><div class="tag"><span aria-hidden="true">🚫</span>RECUSA</div><div class="net">+1,90<small>NO SEU BOLSO</small></div><div class="perkm">R$ 1,12 por km</div><ul class="why3"><li>Abaixo do seu mínimo por km</li><li>Volta vazia: pouca corrida no destino</li></ul><p class="mean">Abaixo do seu mínimo, sem prejuízo. Você perde a oportunidade, não o dinheiro.</p></div>
+        <div class="lvc" style="--c:#5C100A;--g1:#5C100A;--g2:#300803;--tx:#FFF1EC"><div class="tag"><span aria-hidden="true">💸</span>PREJUÍZO</div><div class="net">−2,40<small>NO SEU BOLSO</small></div><div class="perkm">R$ 0,98 por km</div><ul class="why3"><li>Não paga o custo do carro</li><li>Corrida longa, volta sem chance</li></ul><p class="mean">Você paga para trabalhar. O líquido fica negativo e o número leva o sinal de menos.</p></div>
     </div>
     <p class="exemplo">Números fictícios, só para mostrar o desenho. No card real aparecem no máximo três motivos, um por linha. Cor nunca vai sozinha: junto vão a palavra, o símbolo e o sinal de + ou −.</p>
     <div class="grid three" style="margin-top:22px">
       <div class="card"><div class="ico">👁️</div><h3>Feito para ler de canto de olho</h3><p>Número grande, palavra curta e uma faixa de cor no topo. Quem tem daltonismo lê a palavra e o degrau de claridade, não só a cor.</p></div>
       <div class="card"><div class="ico">⚖️</div><h3>Metas são suas</h3><p>Os cortes entre os níveis acompanham o seu mínimo e a sua meta, não um valor fixo em reais.</p></div>
-      <div class="card"><div class="ico">🤝</div><h3>“Você decide” é honesto</h3><p>Quando a corrida está perto da meta, o app não empurra para nenhum lado. A decisão é sua mesmo.</p></div>
+      <div class="card"><div class="ico">🤝</div><h3>“Atenção” é honesto</h3><p>Quando a corrida está perto da meta, o app não empurra para nenhum lado. A decisão é sua mesmo.</p></div>
     </div>
   </div>
 </section>
@@ -1451,7 +1465,7 @@ nav.subrow a { white-space: nowrap; }
     <p class="muted" style="margin-top:6px">Escolha o estilo. À esquerda, o que o passageiro ouve; à direita, o que você entende.</p>
     <div class="ftabs" role="tablist" aria-label="Estilo do disfarce (demonstração)"><button type="button" role="tab" class="ftab" data-f="waze" aria-selected="true">🧭 Trânsito</button><button type="button" role="tab" class="ftab" data-f="clima" aria-selected="false">🌦️ Clima</button><button type="button" role="tab" class="ftab" data-f="radio" aria-selected="false">📻 Rádio</button><button type="button" role="tab" class="ftab" data-f="notif" aria-selected="false">🔔 Notificação</button></div>
     <div class="dtable" id="dtable" aria-live="polite">
-      <div class="drow" style="--c:#FFD760"><div class="hear"><small>O passageiro ouve</small><b data-i="0">“rota expressa”</b></div><div class="arr" aria-hidden="true">➜</div><div class="know"><small>Você entende</small><b>🔥 OURO</b><span>Corrida ouro</span></div></div>
+      <div class="drow" style="--c:#FFD760"><div class="hear"><small>O passageiro ouve</small><b data-i="0">“rota expressa”</b></div><div class="arr" aria-hidden="true">➜</div><div class="know"><small>Você entende</small><b>🔥 CORRIDA OURO</b><span>Corrida ouro</span></div></div>
       <div class="drow lock" style="--c:#8D93A3"><div class="hear"><small>E nas outras corridas?</small><b>“…”</b></div><div class="arr" aria-hidden="true">➜</div><div class="know"><small>Só você sabe</small><b>🔒 O resto fica com você</b><span>Cada nível tem as suas frases, e elas mudam a cada corrida.</span></div></div>
     </div>
     <p class="exemplo">Um exemplo. O app tem muitas frases por estilo, em português, inglês e espanhol, e nunca repete a mesma em seguida.</p>
@@ -2113,7 +2127,7 @@ Comunicacoes: ' + (d.updates ? 'aceitas' : 'nao autorizadas')
     inicio: [],
     funcoes: [['modos','Modos','🧠'],['botoes','Botões','⚡'],['casa','Casa','🏠'],['trocar','Trocar','🔄'],['passageiro','Passageiro','🧑‍🤝‍🧑']],
     cuidado: [['carro','Carro e você','🛡️'],['tempo','Tempo e dinheiro','⏱️'],['seguranca','Segurança','🚨']],
-    app: [['decide','Como decide','🧠'],['veredito','6 níveis','🎚️'],['voz','Fone e passageiro','🎧'],['riscos','Alertas','🚨'],['estrada','Estrada','🛣️'],['calamidade','Calamidades','⛈️'],['mapa','Mapa','🗺️'],['pinos','Pinos','📌'],['calculo','Custos','🧮']],
+    app: [['decide','Como decide','🧠'],['veredito','7 níveis','🎚️'],['voz','Fone e passageiro','🎧'],['riscos','Alertas','🚨'],['estrada','Estrada','🛣️'],['calamidade','Calamidades','⛈️'],['mapa','Mapa','🗺️'],['pinos','Pinos','📌'],['calculo','Custos','🧮']],
     comparar: [],
     estado: [], recursos: [],
     beta: [['entrar','Como entrar','🚧'],['termos','Termos','📄'],['privacidade','Privacidade','🔒'],['ajuda','Ajuda','❓']]
