@@ -774,6 +774,42 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
 .ptile p { padding: 6px 18px 0; font-size: 14.5px; color: var(--fg-2); }
 .ptile span { display: block; padding: 12px 18px 18px; font: 700 12px/1 SoraCustom, InterBrand, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--red-2); }
 @media (prefers-reduced-motion: reduce) { .gcard, .ptile { transition: none; } }
+
+/* ===== v7: cartões dos níveis com a cor por dentro (texto escuro, contraste medido ≥ 4,7:1) ===== */
+.lvc { background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0) 55%), var(--c); border: 0; color: #14110A; }
+.lvc::before { display: none; }
+.lvc .tag, .lvc .net, .lvc .net small, .lvc .perkm, .lvc .why3, .lvc .why3 li::before, .lvc .mean { color: #14110A; }
+.lvc .net small { opacity: 1; font-weight: 800; }
+.lvc .why3 { border-top: 1px solid rgba(20,17,10,.28); }
+.lvc .mean { font-weight: 600; }
+.gold-glow { box-shadow: 0 0 0 1px rgba(255,215,96,.5), 0 0 34px rgba(255,215,96,.28); }
+nav.subrow a { white-space: nowrap; }
+
+/* ===== v8: feito para o mundo ===== */
+.glob { display: grid; gap: 14px; margin-top: 26px; }
+@media (min-width: 900px) { .glob { grid-template-columns: 1fr 1.25fr; } }
+.gcol { position: relative; padding: 22px; border-radius: var(--radius); background: var(--card); border: 1px solid var(--line); overflow: hidden; }
+.gcol h3 { font-size: 18px; }
+.gcol > p { margin-top: 8px; font-size: 14.5px; color: var(--fg-2); }
+.langs { display: grid; gap: 8px; margin-top: 16px; }
+.lang { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; background: var(--card-2); border: 1px solid var(--line-2); font: 700 15px/1.2 SoraCustom, InterBrand, sans-serif; }
+.lang i { font-style: normal; font-size: 24px; }
+.lang.on { border-color: rgba(52,211,153,.5); }
+.lang.on::after { content: "✓"; margin-left: auto; color: var(--green); }
+.lang.next { border-style: dashed; color: var(--fg-2); flex-wrap: wrap; }
+.lang em { font: 600 11px/1.2 SoraCustom, InterBrand, sans-serif; letter-spacing: .06em; font-style: normal; text-transform: uppercase; color: var(--amber); margin-left: auto; }
+.chips.big { margin-top: 12px; }
+.chips.big span { padding: 10px 18px; font: 800 16px/1 SoraCustom, InterBrand, sans-serif; }
+.chips span.live { background: rgba(52,211,153,.12); border-color: rgba(52,211,153,.5); color: #fff; }
+.chips span.live::before { content: "● "; color: var(--green); }
+.chips span.soon { background: transparent; border-style: dashed; color: var(--fg-3); }
+.regs { display: grid; gap: 10px; margin-top: 12px; }
+@media (min-width: 560px) { .regs { grid-template-columns: 1fr 1fr; } }
+.reg b { font: 700 12px/1.2 SoraCustom, InterBrand, sans-serif; letter-spacing: .04em; color: var(--fg-2); }
+.reg .chips { margin-top: 8px; }
+
+.drow.lock { border-left-style: dashed; background: transparent; }
+.drow.lock .hear b { color: var(--fg-3); }
 </style>
 </head>
 <body>
@@ -818,7 +854,7 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
           <a href="#/app/veredito"><b>6 níveis</b><small>O que cada cor quer dizer</small></a>
           <a href="#/app/voz"><b>Fone e passageiro</b><small>Voz clara ou disfarçada</small></a>
           <a href="#/app/riscos"><b>Alertas de risco</b><small>Você escolhe a reação</small></a>
-          <a href="#/app/estrada"><b>Radar e horas</b><small>Proteção do motorista</small></a>
+          <a href="#/app/estrada"><b>Estrada</b><small>Radar e horas ao volante</small></a>
           <a href="#/app/calamidade"><b>Calamidades</b><small>Alagamento, granizo, vento</small></a>
           <a href="#/app/mapa"><b>Mapa pintado</b><small>Zonas a evitar</small></a>
           <a href="#/app/pinos"><b>Pinos</b><small>Posto, mercado, meu lugar</small></a>
@@ -859,6 +895,7 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
         <span>Grátis no beta</span>
         <span>Só lê, nunca toca</span>
         <span>Android</span>
+        <span>Português, English e Español</span>
       </div>
       <p class="perp">Gostaria de ter o AziRoad de forma perpétua? <a href="#beta">Seja um beta tester</a></p>
     </div>
@@ -968,7 +1005,7 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
     <div class="prot">
       <a class="ptile" href="#/app/estrada">
         <svg viewBox="0 0 320 150" aria-hidden="true"><rect width="320" height="150" fill="#0E1626"/><path d="M110 150 L150 0 L170 0 L230 150Z" fill="#1f2a40"/><path d="M168 150 L160 0" stroke="#E8D9A0" stroke-width="3" stroke-dasharray="12 12"/><g transform="translate(250 34)"><rect x="-3" y="24" width="6" height="60" fill="#4f5b78"/><circle r="26" fill="#fff"/><circle r="22" fill="none" stroke="#C0392B" stroke-width="6"/><text y="8" font-family="SoraCustom,sans-serif" font-weight="800" font-size="20" text-anchor="middle" fill="#111">80</text></g><g transform="translate(64 56)"><circle r="30" fill="none" stroke="#CCAD33" stroke-width="5"/><path d="M0 -16 V0 L12 8" stroke="#CCAD33" stroke-width="5" fill="none" stroke-linecap="round"/></g></svg>
-        <h3>⏱️ Radar e horas ao volante</h3><p>Avisa do radar a tempo e sugere a pausa antes do cansaço virar risco.</p><span>Ver como funciona →</span></a>
+        <h3>🛣️ Radar e horas ao volante</h3><p>Avisa do radar a tempo e sugere a pausa antes do cansaço virar risco.</p><span>Ver como funciona →</span></a>
       <a class="ptile" href="#/app/calamidade">
         <svg viewBox="0 0 320 150" aria-hidden="true"><rect width="320" height="150" fill="#0B1220"/><g fill="#26304A"><ellipse cx="110" cy="48" rx="56" ry="24"/><ellipse cx="170" cy="40" rx="62" ry="28"/><ellipse cx="226" cy="52" rx="48" ry="20"/></g><path d="M168 62 L150 96 H166 L156 126 L190 86 H172 L184 62Z" fill="#FFD760"/><g stroke="#6C9BFF" stroke-width="3" stroke-linecap="round"><path d="M96 84 l-8 18M124 88 l-8 18M214 84 l-8 18M240 80 l-8 18"/></g><path d="M0 132 q20 -10 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 V150 H0Z" fill="#1E5AC8" opacity=".8"/></svg>
         <h3>⛈️ Clima extremo e calamidades</h3><p>Alagamento, granizo, vendaval: o card fica preto e nenhum valor passa por cima.</p><span>Ver o card preto →</span></a>
@@ -998,6 +1035,42 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
       <div class="r"><span>Maxymo</span><span class="track"><i style="width:29%"></i></span><b>2 de 7</b></div>
       <div class="r"><span>Mystro</span><span class="track"><i style="width:14%"></i></span><b>1 de 7</b></div>
       <small>Cada função anunciada vale 1 ponto; função parcial vale meio. Critérios escolhidos pelo AziRoad. “Não anuncia” não quer dizer que o outro app não tenha: quer dizer que não achamos no site ou na loja dele. Não contamos “quem decide é você”, porque os outros não declaram o contrário.</small>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="home-global" data-view="inicio">
+  <div class="wrap">
+    <p class="eyebrow">Feito para o mundo</p>
+    <h2 style="margin-top:10px">Seu idioma, sua plataforma, onde você rodar</h2>
+    <p class="lead">O AziRoad não nasceu preso a um app nem a um país. Fala a sua língua, lê as principais plataformas de corrida e entrega, e está pronto para crescer com você.</p>
+
+    <div class="glob">
+      <div class="gcol">
+        <h3>🗣️ Em vários idiomas</h3>
+        <p>Tela, voz e avisos no idioma que você escolher, e dá para trocar a qualquer hora.</p>
+        <div class="langs">
+          <span class="lang on"><i aria-hidden="true">🇧🇷</i>Português</span>
+          <span class="lang on"><i aria-hidden="true">🇺🇸</i>English</span>
+          <span class="lang on"><i aria-hidden="true">🇪🇸</i>Español</span>
+          <span class="lang next"><i aria-hidden="true">🇫🇷</i>Français <em>a caminho · Canadá</em></span>
+        </div>
+      </div>
+      <div class="gcol">
+        <h3>🚗 Lê as principais plataformas</h3>
+        <p>Hoje, no dia a dia do motorista e do entregador:</p>
+        <div class="chips big"><span class="live">Uber</span><span class="live">99</span><span class="live">inDrive</span><span class="live">iFood</span></div>
+        <p style="margin-top:14px">E um catálogo global, com mais de 30 plataformas, que entra à medida que cada uma é testada com ofertas reais:</p>
+        <div class="regs"><div class="reg"><b>🌎 Américas</b><div class="chips"><span class="soon">Lyft</span><span class="soon">DoorDash</span><span class="soon">Cabify</span></div></div><div class="reg"><b>🌍 Europa</b><div class="chips"><span class="soon">Bolt</span><span class="soon">FREE NOW</span><span class="soon">Wolt</span></div></div><div class="reg"><b>🕌 África e Oriente Médio</b><div class="chips"><span class="soon">Careem</span><span class="soon">Talabat</span></div></div><div class="reg"><b>🌏 Ásia</b><div class="chips"><span class="soon">Grab</span><span class="soon">Gojek</span><span class="soon">Ola</span></div></div></div>
+      </div>
+    </div>
+
+    <div class="grid three" style="margin-top:16px">
+      <div class="card"><div class="ico">🍁</div><h3>Pronto para fora do Brasil</h3><p>Modo Canadá com o “photo radar”, custos e metas que se adaptam à região, e alertas de clima e calamidades que valem em qualquer país.</p></div>
+      <div class="card"><div class="ico">🧪</div><h3>Plataforma nova só com teste de verdade</h3><p>Antes de liberar uma plataforma, o app é calibrado com ofertas reais dela. Prefira um “em teste” honesto a um veredito chutado.</p></div>
+      <div class="card"><div class="ico">🤝</div><h3>Peça a sua</h3><p>Roda numa plataforma que não está na lista? Fale com a gente pelo próprio app: quem testa o beta ajuda a decidir a próxima.</p></div>
+    </div>
   </div>
 </section>
 
@@ -1188,7 +1261,7 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
           <label>
             <input type="radio" name="pax" value="codigo">
             <span class="radio" aria-hidden="true"></span>
-            <span><strong>🔢 Fala em código</strong><small>Sem fone, a voz disfarça: um código curto que só você entende, e vibra junto com o veredito.</small><span class="mean">Para quem fica sem fone: o passageiro ouve só um número.</span></span>
+            <span><strong>🎭 Voz disfarçada</strong><small>Sem fone, o app fala como previsão do tempo, trânsito, rádio ou notificação. O passageiro ouve uma frase comum; você entende a corrida.</small><span class="mean">Para quem fica sem fone: o passageiro ouve “céu limpo”, e só você sabe o que isso quer dizer.</span></span>
           </label>
         </div>
       </div>
@@ -1295,10 +1368,10 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
 
     <div class="funnel">
       <div class="fin">
-      <div class="fgroup"><h3><span aria-hidden="true">💰</span>Seu dinheiro</h3><div class="chips"><span>Combustível por km</span><span>Manutenção e pneus</span><span>Desgaste do carro</span><span>Aluguel, parcela e seguro pelo tempo</span><span>Tempo morto entre corridas</span><span>Reserva para manutenção e multas</span></div></div>
+      <div class="fgroup"><h3><span aria-hidden="true">💰</span>Seu dinheiro</h3><div class="chips"><span>Combustível por km</span><span>Manutenção e pneus</span><span>Desgaste do carro</span><span>Aluguel, parcela e seguro pelo tempo</span><span>Tempo parado</span><span>Custos de manter o carro</span></div></div>
       <div class="fgroup"><h3><span aria-hidden="true">🚗</span>A corrida</h3><div class="chips"><span>R$ por km do card</span><span>R$ por hora líquido</span><span>Embarque sem pagamento</span><span>Viagem longa</span><span>Corrida com paradas</span><span>Nota do passageiro</span><span>Trânsito da rota</span></div></div>
-      <div class="fgroup"><h3><span aria-hidden="true">🛣️</span>O caminho</h3><div class="chips"><span>Volta vazia e chance de volta</span><span>Direção de casa</span><span>Morro, via estreita, alagamento</span><span>Clima e vento lateral</span><span>Zonas que você marcou</span><span>Madrugada</span></div></div>
-      <div class="fgroup"><h3><span aria-hidden="true">🧑</span>Você e o carro</h3><div class="chips"><span>Cansaço ao volante</span><span>Carga do carro elétrico</span><span>Horário forte ou fraco</span><span>Metas que o app aprende com o seu turno</span></div></div>
+      <div class="fgroup"><h3><span aria-hidden="true">🛣️</span>O caminho</h3><div class="chips"><span>Volta vazia</span><span>Direção de casa</span><span>Morro, via estreita, alagamento</span><span>Clima e vento lateral</span><span>Zonas que você marcou</span><span>Madrugada</span></div></div>
+      <div class="fgroup"><h3><span aria-hidden="true">🧑</span>Você e o carro</h3><div class="chips"><span>Cansaço ao volante</span><span>Carga do carro elétrico</span><span>O seu horário</span><span>Metas que o app aprende com o seu turno</span></div></div>
       </div>
       <div class="fcore" aria-hidden="true"><span class="arrow">➜</span></div>
       <div class="fout">
@@ -1323,7 +1396,7 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
         <ol class="calc3">
           <li><span>Embarque de 4 km sem pagamento</span><b>15 km rodados</b></li>
           <li><span>15 km × R$ 0,88 de custo</span><b>− R$ 13,20</b></li>
-          <li><span>12 + 22 min + 5 min de espera</span><b>0,65 h</b></li>
+          <li><span>Tempo da corrida e da espera</span><b>0,65 h</b></li>
           <li class="sum"><span>Sobra no seu bolso</span><b>R$ 8,80 · 13,54/h</b></li>
         </ol>
         <div class="res no">🚫 NÃO VALE · abaixo da sua meta de R$ 31/h</div>
@@ -1377,18 +1450,21 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
     <h3 style="margin-top:44px;font-size:22px">Toque e veja como o disfarce soa</h3>
     <p class="muted" style="margin-top:6px">Escolha o estilo. À esquerda, o que o passageiro ouve; à direita, o que você entende.</p>
     <div class="ftabs" role="tablist" aria-label="Estilo do disfarce (demonstração)"><button type="button" role="tab" class="ftab" data-f="waze" aria-selected="true">🧭 Trânsito</button><button type="button" role="tab" class="ftab" data-f="clima" aria-selected="false">🌦️ Clima</button><button type="button" role="tab" class="ftab" data-f="radio" aria-selected="false">📻 Rádio</button><button type="button" role="tab" class="ftab" data-f="notif" aria-selected="false">🔔 Notificação</button></div>
-    <div class="dtable" id="dtable" aria-live="polite"><div class="drow" style="--c:#FFD760"><div class="hear"><small>O passageiro ouve</small><b data-i="0">“rota expressa”</b></div><div class="arr" aria-hidden="true">➜</div><div class="know"><small>Você entende</small><b>🔥 OURO</b><span>Corrida ouro</span></div></div><div class="drow" style="--c:#5CF2BB"><div class="hear"><small>O passageiro ouve</small><b data-i="1">“pista totalmente livre”</b></div><div class="arr" aria-hidden="true">➜</div><div class="know"><small>Você entende</small><b>✓ PEGA</b><span>Pode pegar</span></div></div><div class="drow" style="--c:#CCAD33"><div class="hear"><small>O passageiro ouve</small><b data-i="2">“lentidão mais à frente”</b></div><div class="arr" aria-hidden="true">➜</div><div class="know"><small>Você entende</small><b>⚠️ VOCÊ DECIDE</b><span>A decisão é sua</span></div></div><div class="drow" style="--c:#E26861"><div class="hear"><small>O passageiro ouve</small><b data-i="3">“acidente mais à frente”</b></div><div class="arr" aria-hidden="true">➜</div><div class="know"><small>Você entende</small><b>🚫 NÃO VALE</b><span>Não vale</span></div></div></div>
-    <p class="exemplo">Frases reais do app (em português; também existem em inglês e espanhol). Cada corrida sorteia uma frase do mesmo estilo, e o app nunca repete a mesma seguida.</p>
+    <div class="dtable" id="dtable" aria-live="polite">
+      <div class="drow" style="--c:#FFD760"><div class="hear"><small>O passageiro ouve</small><b data-i="0">“rota expressa”</b></div><div class="arr" aria-hidden="true">➜</div><div class="know"><small>Você entende</small><b>🔥 OURO</b><span>Corrida ouro</span></div></div>
+      <div class="drow lock" style="--c:#8D93A3"><div class="hear"><small>E nas outras corridas?</small><b>“…”</b></div><div class="arr" aria-hidden="true">➜</div><div class="know"><small>Só você sabe</small><b>🔒 O resto fica com você</b><span>Cada nível tem as suas frases, e elas mudam a cada corrida.</span></div></div>
+    </div>
+    <p class="exemplo">Um exemplo. O app tem muitas frases por estilo, em português, inglês e espanhol, e nunca repete a mesma em seguida.</p>
 
     <div class="timeline3">
-      <div class="tl"><span class="tn">1</span><h3>O passageiro entra</h3><p>O app percebe pela tela da plataforma que a viagem começou e liga o disfarce sozinho.</p></div>
+      <div class="tl"><span class="tn">1</span><h3>O passageiro entra</h3><p>O app percebe sozinho que a viagem começou e liga o disfarce.</p></div>
       <div class="tl"><span class="tn">2</span><h3>A sua mão manda</h3><p>Pode ligar ou desligar quando quiser. O que você decidir vale até a corrida acabar.</p></div>
       <div class="tl"><span class="tn">3</span><h3>O passageiro desce</h3><p>A corrida termina e a voz volta ao normal. Nada fica preso para a próxima.</p></div>
     </div>
 
     <div class="card accent" style="margin-top:22px">
-      <h3>🧠 O disfarce não se desmente</h3>
-      <p>Frase que o passageiro consegue conferir chama atenção. Por isso o app olha a janela: de madrugada com a rua livre não fala “trânsito parado”, à noite não diz “sol”, com céu limpo não promete tempestade. Troca por uma frase do mesmo sentido que ninguém consegue conferir, como “acidente mais à frente”.</p>
+      <h3>🧠 O disfarce combina com o momento</h3>
+      <p>As frases acompanham a hora, o tempo e a rua. O passageiro nunca ouve algo que ele mesmo consiga desmentir olhando pela janela.</p>
     </div>
   </div>
 </section>
@@ -1432,12 +1508,12 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
     <h2 style="margin-top:10px">Um copiloto que cuida de você, sem sermão</h2>
     <p class="lead">Multa e cansaço comem o lucro do mês. O AziRoad avisa do radar a tempo, com o limite da via, e conta as suas horas ao volante para sugerir a pausa na hora certa. Sem bronca e sem constranger você na frente do passageiro.</p>
 
-    <h3 class="sub-h">⏱️ Horas de trabalho: três degraus</h3>
+    <h3 class="sub-h">🕓 Horas ao volante: três degraus</h3>
     <p class="muted" style="margin-top:6px">Aparece no card e na tarja, e também por voz. Uma pausa de 15 minutos zera o contador.</p>
     <div class="fatcards">
-      <div class="fcard" style="--c:#CCAD33"><span class="fh">4 h</span><div class="fbody"><b>⚠️ ATENÇÃO</b><p>“4h dirigindo — vale uma pausa logo”</p></div><small>Repete a cada 45 min</small></div>
-      <div class="fcard" style="--c:#D8884B"><span class="fh">4 h 30</span><div class="fbody"><b>🟠 FORTE</b><p>“4h30 sem parar — 15 min já ajudam”</p></div><small>Repete a cada 30 min</small></div>
-      <div class="fcard" style="--c:#E26861"><span class="fh">5 h 30</span><div class="fbody"><b>🛑 CRÍTICO</b><p>“5h30 sem parar — passou da referência de 5h30. Descanse.”</p></div><small>Repete a cada 20 min</small></div>
+      <div class="fcard" style="--c:#CCAD33"><span class="fh">4 h</span><div class="fbody"><b>⚠️ ATENÇÃO</b><p>“4h dirigindo — vale uma pausa logo”</p></div></div>
+      <div class="fcard" style="--c:#D8884B"><span class="fh">4 h 30</span><div class="fbody"><b>🟠 FORTE</b><p>“4h30 sem parar — 15 min já ajudam”</p></div></div>
+      <div class="fcard" style="--c:#E26861"><span class="fh">5 h 30</span><div class="fbody"><b>🛑 CRÍTICO</b><p>“5h30 sem parar — passou da referência de 5h30. Descanse.”</p></div></div>
     </div>
     <ul class="bul">
       <li>Subiu de degrau? Avisa na hora, sem esperar o intervalo.</li>
@@ -1739,7 +1815,7 @@ nav.menu a.hot { border: 1px solid var(--red); border-radius: 999px; background:
         <ul>
           <li>Fala em português, inglês ou espanhol</li>
           <li>Diz o risco primeiro e o motivo da cor no fim</li>
-          <li>Com passageiro a bordo, fala em código</li>
+          <li>Com passageiro a bordo, a voz é disfarçada</li>
           <li>Não fala por cima do veredito; várias ofertas seguidas viram fala curta</li>
         </ul>
       </details>
@@ -2037,12 +2113,12 @@ Comunicacoes: ' + (d.updates ? 'aceitas' : 'nao autorizadas')
     inicio: [],
     funcoes: [['modos','Modos','🧠'],['botoes','Botões','⚡'],['casa','Casa','🏠'],['trocar','Trocar','🔄'],['passageiro','Passageiro','🧑‍🤝‍🧑']],
     cuidado: [['carro','Carro e você','🛡️'],['tempo','Tempo e dinheiro','⏱️'],['seguranca','Segurança','🚨']],
-    app: [['decide','Como decide','🧠'],['veredito','6 níveis','🎚️'],['voz','Fone e passageiro','🎧'],['riscos','Alertas','🚨'],['estrada','Radar e horas','⏱️'],['calamidade','Calamidades','⛈️'],['mapa','Mapa','🗺️'],['pinos','Pinos','📌'],['calculo','Custos','🧮']],
+    app: [['decide','Como decide','🧠'],['veredito','6 níveis','🎚️'],['voz','Fone e passageiro','🎧'],['riscos','Alertas','🚨'],['estrada','Estrada','🛣️'],['calamidade','Calamidades','⛈️'],['mapa','Mapa','🗺️'],['pinos','Pinos','📌'],['calculo','Custos','🧮']],
     comparar: [],
     estado: [], recursos: [],
     beta: [['entrar','Como entrar','🚧'],['termos','Termos','📄'],['privacidade','Privacidade','🔒'],['ajuda','Ajuda','❓']]
   };
-  var LEGACY = { inicio:'inicio', 'como-funciona':'inicio', facil:'inicio', modos:'funcoes/modos', botoes:'funcoes/botoes', casa:'funcoes/casa', trocar:'funcoes/trocar', passageiro:'funcoes/passageiro', cuidado:'cuidado/carro', controle:'cuidado/tempo', seguranca:'cuidado/seguranca', comparativo:'estado', telas:'app/decide', decide:'app/decide', voz:'app/voz', riscos:'app/riscos', estrada:'app/estrada', calamidade:'app/calamidade', veredito:'app/veredito', mapa:'app/mapa', pinos:'app/pinos', calculo:'app/calculo', comparar:'comparar', 'home-app':'inicio', 'home-telas':'inicio', 'home-protege':'inicio', 'home-comp':'inicio', 'home-led':'inicio', recursos:'recursos', beta:'beta/entrar', termos:'beta/termos', privacidade:'beta/privacidade', ajuda:'beta/ajuda' };
+  var LEGACY = { inicio:'inicio', 'como-funciona':'inicio', facil:'inicio', modos:'funcoes/modos', botoes:'funcoes/botoes', casa:'funcoes/casa', trocar:'funcoes/trocar', passageiro:'funcoes/passageiro', cuidado:'cuidado/carro', controle:'cuidado/tempo', seguranca:'cuidado/seguranca', comparativo:'estado', telas:'app/decide', decide:'app/decide', voz:'app/voz', riscos:'app/riscos', estrada:'app/estrada', calamidade:'app/calamidade', veredito:'app/veredito', mapa:'app/mapa', pinos:'app/pinos', calculo:'app/calculo', comparar:'comparar', 'home-app':'inicio', 'home-telas':'inicio', 'home-protege':'inicio', 'home-comp':'inicio', 'home-global':'inicio', 'home-led':'inicio', recursos:'recursos', beta:'beta/entrar', termos:'beta/termos', privacidade:'beta/privacidade', ajuda:'beta/ajuda' };
   var sections = [].slice.call(document.querySelectorAll('section[data-view]'));
   var subrow = document.getElementById('subrow');
   function parse() {
@@ -2096,7 +2172,7 @@ Comunicacoes: ' + (d.updates ? 'aceitas' : 'nao autorizadas')
   var voz = {
     fone:   { ic: '🎧', html: '<b>Só no seu fone:</b> “Boa. Quatorze reais no bolso.”', mute: false },
     tela:   { ic: '🔇', html: '<b>Sem voz.</b> Você só olha a cor, o símbolo e a palavra no card.', mute: true },
-    codigo: { ic: '🔢', html: '<b>Alto-falante:</b> “Código três.” Só você sabe que é a corrida boa. O celular vibra.', mute: false }
+    codigo: { ic: '🎭', html: '<b>Alto-falante:</b> “Céu limpo.” Parece previsão do tempo; só você sabe que é uma corrida boa.', mute: false }
   };
   function setVoice() {
     var r = document.querySelector('input[name="pax"]:checked'), v = voz[r ? r.value : 'fone'];
@@ -2127,12 +2203,12 @@ Comunicacoes: ' + (d.updates ? 'aceitas' : 'nao autorizadas')
 <script>
 /* Fone e passageiro: o estilo do disfarce (frases reais do app). */
 (function () {
-  var F = {"waze": ["rota expressa", "pista totalmente livre", "lentidão mais à frente", "acidente mais à frente"], "clima": ["sol pleno", "céu limpo", "nublado", "chuva forte"], "radio": ["prioridade máxima", "dez quatro", "fica a seu critério", "sem retorno"], "notif": ["urgente", "confirmado", "em análise", "não aprovado"]};
+  var F = {"waze": ["rota expressa"], "clima": ["sol pleno"], "radio": ["prioridade máxima"], "notif": ["urgente"]};
   var tabs = document.querySelectorAll('.ftab'); if (!tabs.length) return;
   tabs.forEach(function (t) { t.addEventListener('click', function () {
     var k = t.getAttribute('data-f');
     tabs.forEach(function (x) { x.setAttribute('aria-selected', x === t ? 'true' : 'false'); });
-    document.querySelectorAll('#dtable .hear b').forEach(function (b) { b.textContent = '\u201c' + F[k][+b.getAttribute('data-i')] + '\u201d'; });
+    document.querySelectorAll('#dtable .hear b[data-i]').forEach(function (b) { b.textContent = '\u201c' + F[k][+b.getAttribute('data-i')] + '\u201d'; });
   }); });
 })();
 </script>
