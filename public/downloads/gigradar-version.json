@@ -1,10 +1,10 @@
 {
-  "version": "0.484 (6e19071)",
-  "version_code": 484,
-  "updatedAt": "2026-10-20T04:43:23Z",
+  "version": "0.485 (1659b40)",
+  "version_code": 485,
+  "updatedAt": "2026-11-26T20:43:24Z",
   "apk_url": "https://www.azmt.com.br/downloads/gigradar-latest.apk",
-  "apk_size_bytes": 50121238,
-  "sha256": "a2ce5b908cf4ba44e5df9841c2cb41237bb900bcf98e16ba78a66a8ecedeec46",
-  "changelog": "ci: mapa do R8 vai comprimido (gz) para o ramo ci-mappings",
+  "apk_size_bytes": 50121234,
+  "sha256": "4ae004ec74fdf6d9e3a4e508ad5e4f3c791152a7c540b7b6a0e16bae8948f8ac",
+  "changelog": "feat(conselheiro): app chama o Conselheiro IA no CMS do AziRoad, nao mais no backoffice da Azimut",
   "is_mandatory": false
 }
