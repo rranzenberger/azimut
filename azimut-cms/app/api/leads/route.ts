@@ -90,6 +90,16 @@ export async function POST(request: Request) {
   try {
     const data = await request.json()
 
+    // 26/nov/2026 (Ranz): AziRoad/GigRadar NAO entra mais neste CMS. Sao dois CMS separados:
+    // cadastro de tester do AziRoad vai so ao CMS do AziRoad (cms-gigradar.azmt.com.br/api/testers).
+    const tipo = String(data?.leadType || '').toLowerCase()
+    if (tipo === 'gigradar-beta' || tipo === 'gigradar_beta') {
+      return NextResponse.json(
+        { error: 'gone', message: 'Cadastro do AziRoad mudou para https://aziroad.com' },
+        { status: 410, headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, X-API-Key' } }
+      )
+    }
+
     // Calcular score e prioridade
     let leadScore = calculateLeadScore(data)
     let priority = determinePriority(leadScore)
