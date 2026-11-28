@@ -1,10 +1,10 @@
 {
-  "version": "0.485 (1659b40)",
-  "version_code": 485,
-  "updatedAt": "2026-11-26T20:43:24Z",
+  "version": "0.486 (fe29357)",
+  "version_code": 486,
+  "updatedAt": "2026-11-28T05:54:04Z",
   "apk_url": "https://www.azmt.com.br/downloads/gigradar-latest.apk",
-  "apk_size_bytes": 50121234,
-  "sha256": "4ae004ec74fdf6d9e3a4e508ad5e4f3c791152a7c540b7b6a0e16bae8948f8ac",
-  "changelog": "feat(conselheiro): app chama o Conselheiro IA no CMS do AziRoad, nao mais no backoffice da Azimut",
+  "apk_size_bytes": 50599790,
+  "sha256": "e3f4172db0780427b7a07221c94e889446d18c57752f73a70cb7fa04925784c7",
+  "changelog": "fix(privacidade): app dos testers sem foto de oferta e com lugar da oferta desligado de fabrica",
   "is_mandatory": false
 }
